@@ -66,7 +66,7 @@
     <div class="boxOne3">
         <div class="container">
             <div class="voorBlock">
-                <p class="wordDeBestText2" style="font-weight: bold">Ontdek ✔️ , ontwikkel en maak carrière </p>
+                <p class="wordDeBestText2" style="font-weight: bold">Ontdek, ontwikkel en maak carrière </p>
                 <p class="altijdText2">Er valt altijd iets nieuws te leren, maak gratis jouw skills paspoort en word expert.</p>
                 <form action="/product-search" method="POST">
                     <input id="search" type="search" class="jAuto searchInputHome form-control"
