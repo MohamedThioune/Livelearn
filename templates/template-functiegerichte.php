@@ -34,7 +34,7 @@
 <div class="boxOne3-1">
     <div class="container">
         <div class="BaangerichteBlock">
-            <p class="wordDeBestText2">Functiegerichte groei 💯 xx</p>
+            <p class="wordDeBestText2">Functiegerichte groei xx 💯</p>
             <p class="altijdText2 paddingElement">De partener in professionele- en Persoonlijke groei met ons complete aanbod van Groeipaden. Opleidingen en Assessments.</p>
         </div>
     </div>
