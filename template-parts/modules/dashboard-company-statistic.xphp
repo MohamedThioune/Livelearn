@@ -1,0 +1,322 @@
+<div class="contentActivity">
+    <h1 class="activityTitle">Statistics</h1>
+    <div class="row">
+        <div class="col-lg-3 col-md-2 col-sm-6">
+            <div class="cardHeadActivity">
+                <div class="blockImgCardActivity bleu">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/vaadin_line-bar-chart.png" alt="">
+                </div>
+                <div class="detailCardActivity">
+                    <p class="numberActivity">422</p>
+                    <p class="nameCardActivity">Total Audiance</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-2 col-sm-6">
+            <div class="cardHeadActivity red">
+                <div class="blockImgCardActivity">
+                    <img id="student" src="<?php echo get_stylesheet_directory_uri();?>/img/ph_student.png" alt="">
+                </div>
+                <div class="detailCardActivity">
+                    <p class="numberActivity">12</p>
+                    <p class="nameCardActivity">Total Student</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-2 col-sm-6">
+            <div class="cardHeadActivity yellow">
+                <div class="blockImgCardActivity">
+                    <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/cil_money.png" alt="">
+                </div>
+                <div class="detailCardActivity">
+                    <p class="numberActivity">74</p>
+                    <p class="nameCardActivity">Total Sells</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-2 col-sm-6">
+            <div class="cardHeadActivity green">
+                <div class="blockImgCardActivity bleu">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/glif.png" alt="">
+                </div>
+                <div class="detailCardActivity">
+                    <p class="numberActivity">3</p>
+                    <p class="nameCardActivity">Active Members</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="cardEngagedAudiance">
+                <h2>Engaged Audiance</h2>
+                <div class="wrapper w-100">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="cardNotification">
+                <h2>The most popular courses</h2>
+                <div class="cartPopularCourse">
+                    <div class="circle_percent" data-percent="90">
+                        <div class="circle_inner">
+                            <div class="round_per">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="elementCardPopularCourse"> <b>Design Thinking</b> </p>
+                        <p class="elementCardPopularCourse">By : Livelearn</p>
+                        <a href="" class="btn btnViewListRe">View list registered</a>
+                    </div>
+                </div>
+                <div class="cartPopularCourse">
+                    <div class="circle_percent" data-percent="85">
+                        <div class="circle_inner">
+                            <div class="round_per">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="elementCardPopularCourse"> <b>Design Thinking</b> </p>
+                        <p class="elementCardPopularCourse">By : Livelearn</p>
+                        <a href="" class="btn btnViewListRe">View list registered</a>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+    <div class="row">
+        <div class="col-lg-4 colModifeStats">
+            <div class="cardStats">
+                <h2>Sales stats</h2>
+                <div class="contentStats">
+                    <div class="contentImgName">
+                        <div class="statsImgCours">
+                            <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                        </div>
+                       <div>
+                           <p class="nameCoursSales">Adobe xd Part 01</p>
+                           <p class="categoriesNameCours">UX-UI Design</p>
+                       </div>
+                    </div>
+                    <p class="price">20 $</p>
+                </div>
+                <div class="contentStats">
+                    <div class="contentImgName">
+                        <div class="statsImgCours">
+                            <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                        </div>
+                       <div>
+                           <p class="nameCoursSales">Adobe xd Part 01</p>
+                           <p class="categoriesNameCours">UX-UI Design</p>
+                       </div>
+                    </div>
+                    <p class="price">20 $</p>
+                </div>
+                <div class="contentStats">
+                    <div class="contentImgName">
+                        <div class="statsImgCours">
+                            <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                        </div>
+                       <div>
+                           <p class="nameCoursSales">Adobe xd Part 01</p>
+                           <p class="categoriesNameCours">UX-UI Design</p>
+                       </div>
+                    </div>
+                    <p class="price">20 $</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 colModifeStats">
+            <div class="cardStats">
+                <h2>Earnings history</h2>
+                <div class="contentStats">
+                    <div class="contentImgName">
+                        <div class="statsImgCours">
+                            <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                        </div>
+                       <div>
+                           <p class="nameCoursSales">Adobe xd Part 01</p>
+                           <p class="categoriesNameCours">UX-UI Design</p>
+                       </div>
+                    </div>
+                    <p class="priceHistory">20 $</p>
+                </div>
+                <div class="contentStats">
+                    <div class="contentImgName">
+                        <div class="statsImgCours">
+                            <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                        </div>
+                       <div>
+                           <p class="nameCoursSales">Adobe xd Part 01</p>
+                           <p class="categoriesNameCours">UX-UI Design</p>
+                       </div>
+                    </div>
+                    <p class="priceHistory">20 $</p>
+                </div>
+                <div class="contentStats">
+                    <div class="contentImgName">
+                        <div class="statsImgCours">
+                            <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                        </div>
+                       <div>
+                           <p class="nameCoursSales">Adobe xd Part 01</p>
+                           <p class="categoriesNameCours">UX-UI Design</p>
+                       </div>
+                    </div>
+                    <p class="priceHistory">20 $</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 colModifeStats">
+            <div class="cardStats">
+                <h2>Most active members</h2>
+                <div class="contentStats">
+                    <div class="contentImgName">
+                        <div class="statsImgCours">
+                            <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
+                        </div>
+                       <div>
+                           <p class="nameCoursSales">Daniel</p>
+                           <p class="categoriesNameCours">Manager at Livelearn</p>
+                       </div>
+                    </div>
+                    <a href="" class="btn btnViewProfilActiveM">View Profil</a>
+                </div>
+                <div class="contentStats">
+                    <div class="contentImgName">
+                        <div class="statsImgCours">
+                            <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/Maurice_Veraa_.jpeg" alt="">
+                        </div>
+                       <div>
+                           <p class="nameCoursSales">Maurice</p>
+                           <p class="categoriesNameCours">Teach Lead Liverlearn</p>
+                       </div>
+                    </div>
+                    <a href="" class="btn btnViewProfilActiveM">View Profil</a>
+                </div>
+                <div class="contentStats">
+                    <div class="contentImgName">
+                        <div class="statsImgCours">
+                            <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/cute-boy.jpg" alt="">
+                        </div>
+                       <div>
+                           <p class="nameCoursSales">Mouhamed</p>
+                           <p class="categoriesNameCours">Back Dev Livelearn</p>
+                       </div>
+                    </div>
+                    <a href="" class="btn btnViewProfilActiveM">View Profil</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+</div>
+
+
+<script src="<?php echo get_stylesheet_directory_uri();?>/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script >
+
+    $(".circle_percent").each(function() {
+        var $this = $(this),
+            $dataV = $this.data("percent"),
+            $dataDeg = $dataV * 3.6,
+            $round = $this.find(".round_per");
+        $round.css("transform", "rotate(" + parseInt($dataDeg + 180) + "deg)");
+        $this.append('<div class="circle_inbox"><span class="percent_text"></span></div>');
+        $this.prop('Counter', 0).animate({Counter: $dataV},
+            {
+                duration: 2000,
+                easing: 'swing',
+                step: function (now) {
+                    $this.find(".percent_text").text(Math.ceil(now)+"%");
+                }
+            });
+        if($dataV >= 51){
+            $round.css("transform", "rotate(" + 360 + "deg)");
+            setTimeout(function(){
+                $this.addClass("percent_more");
+            },1000);
+            setTimeout(function(){
+                $round.css("transform", "rotate(" + parseInt($dataDeg + 180) + "deg)");
+            },1000);
+        }
+    });
+
+</script>
+
+<script>
+    var ctx = document.getElementById('myChart').getContext("2d");
+
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SPT", "OTB", "NVB", "DEC"],
+            datasets: [{
+                label: "Data",
+                fill: false,
+                borderWidth: 1,
+                tension: 0.1,
+                borderColor: 'rgb(75, 192, 192)',
+                data: [100, 120, 150, 170, 180, 170, 160, 170, 170, 170, 170, 150]
+            }]
+        },
+        options: {
+            legend: {
+                position: "bottom"
+            },
+
+        }
+    });
+
+</script>
+<script>
+    var cont = 0
+    var initialTime = $('.chart').data('percent');
+    $(function() {
+        //create instance
+        $('.chart').easyPieChart({
+            size: 230,
+            barColor: "#EE4224",
+            scaleLength: 0,
+            lineWidth: 10,
+            trackColor: "",
+            lineCap: "circle",
+            animate: 1000,
+        });
+
+        var interval = setInterval(function() {
+
+            cont = cont + 0.3
+            $('.chart').data('easyPieChart').update(initialTime + cont);
+
+            console.log(initialTime + cont)
+
+            if(initialTime + cont >= 100){
+                clearInterval(interval)
+            }
+        }, 1000);
+
+    });
+
+</script>

@@ -1,0 +1,97 @@
+<?php
+    $user_id = get_current_user_id();
+    $allocate_basic = get_field('managed', 'user_'.$user_id);
+    if(!$allocate_basic)
+        $allocate_basic = array();
+
+    extract($_POST);
+    
+    if(isset($allocate_push))
+        if($allocate){
+            //Employee precision
+            foreach($allocate as $locate){
+                if(!in_array($locate, $allocate_normal))
+                    array_push($allocate_basic, $locate);
+                update_field('ismanaged', $user_id, 'user_'.$locate);
+            }
+            //Manager precision
+            update_field('managed', $allocate_basic, 'user_'.$user_id);
+
+            $success = true;
+            $message = "Successfully assigning employees as their manager";
+        }
+
+    $grant = get_field('manager',  'user_' . $user->ID);
+
+?>
+
+<div class="row">
+    <div class="col-md-5 col-lg-7">
+        <div class="cardCoursGlocal">
+            <div id="basis" class="w-100">
+                <?php
+                if(isset($message))
+                    if($success)
+                        echo "<span class='alert alert-success'>" . $message . "</span><br><br>";
+
+                $user = get_users(array('include'=> $user_id))[0];
+                if(!empty($user->roles)){
+                    if($user->roles[0] == 'manager' || $grant){
+                        echo '<div class="titleOpleidingstype"><h2>You are not able to grant privileges</h2></div>';
+                    }
+                    else{                        
+                        echo '<div class="titleOpleidingstype"><h2>Manage your team</h2></div>';
+                        $company = get_field('company',  'user_' . $user_id );
+                        $company_connected = $company[0]->post_title;
+
+                        $users = get_users();
+                ?>
+                        <form action="/dashboard/company/allocate" method="post">
+                            <div class="acf-field">
+                                <label for="locate">Become the manager of one of the employees :</label><br>
+                                <div class="form-group">
+                                    <select name="allocate[]" id="form-control" multiple>
+                                        <?php
+                                        //Get users from company
+                                        foreach($users as $used){
+                                            $companies = get_field('company',  'user_' . $used->ID);
+                                            if( !empty($company) && $user_id != $used->ID && !in_array($used->ID, $allocate_basic) ){
+                                                $companie = $companies[0]->post_title;
+                                                if($companie == $company_connected){
+                                                    if($used->first_name)
+                                                        echo "<option value='" . $used->ID ."'>" . $used->first_name . ' ' . $used->last_name . "</option>";
+                                                    else 
+                                                        echo "<option value='" . $used->ID ."'>" . $used->user_email ."</option>";
+                                                } 
+                                            }
+                                        }
+                                    ?>
+                                    </select>
+                                </div>
+                                <button type="submit" name="allocate_push" class="btn btn-info">Valid</button>
+                            </div>
+                        </form>
+                <?php
+                                
+                    }
+                }else
+                    echo '<h2>You are not able to manage a member of your team</h2>';
+                ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-lg-2 col-sm-12">
+        
+        <div class="blockCourseToevoegen">
+            <p class="courseToevoegenText">Assignment</p>
+            <div class="contentBlockRight">
+                <a href="#" class="contentBlockCourse">
+                    <div class="circleIndicator passEtape"></div>
+                    <p class="textOpleidRight">Manage user</p>
+                </a>
+               
+            </div>
+        </div>
+    </div>
+</div>
+

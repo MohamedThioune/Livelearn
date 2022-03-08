@@ -1,0 +1,207 @@
+<?php
+
+if(get_current_user_id())
+    $id_user = get_current_user_id();
+
+$user = get_users(array('include'=> $id_user))[0]->data;
+
+$image = get_field('profile_img',  'user_' . $user->ID);
+if(!$image)
+    $image = get_stylesheet_directory_uri() . '/img/Ellipse17.png';
+
+$telnr = get_field('telnr',  'user_' . $user->ID);
+$company = get_field('company',  'user_' . $user->ID);
+$function = get_field('role',  'user_' . $user->ID);
+
+
+$biographical_info = get_field('biographical_info',  'user_' . $user->ID);
+
+if(!empty($company))
+    $company = $company[0]->post_title;
+    
+?>
+<div class="content-settings">
+    <h1 class="titleSetting">Settings Profil</h1>
+    <p class="textReady">Ready to jump back in?</p>
+    <div class="contentBlockSetting">
+        <?php $options = array(
+            'post_id' => 'user_'. get_current_user_id(),
+            'form' => true, 
+            'fields' => array('profile_img', 'function', 'telnr', 'experience', 'country', 'age', 'gender', 'education_level', 'language', 'biographical_info'),
+            'html_before_fields' => '',
+            'html_after_fields' => '',
+            'html_updated_message'  => '<div id="message" class="alert alert-success updated">Informations user updated<p></p></div>',
+
+            'submit_value' => 'SAVE' 
+        );
+        acf_form( $options );
+        ?>
+    </div>
+  <div class="contentBlockSetting">
+        <div class="group-input-settings">
+            <label for="">Education</label>
+            <button class="btn btnAddEdu" data-toggle="modal" data-target="#exampleModalEdu"> Add Education
+                <img src="<?php echo get_stylesheet_directory_uri();?>/img/plus.png" alt="">
+            </button>
+           <div class="elementInputImgSetting">
+               <!-- Modal education -->
+               <div class="modal modalEdu fade" id="exampleModalEdu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                   <div class="modal-dialog" role="document">
+                       <div class="modal-content">
+                           <div class="modal-header">
+                               <h5 class="modal-title" id="exampleModalLabel">Add New Education</h5>
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                   <span aria-hidden="true">&times;</span>
+                               </button>
+                           </div>
+                           <div class="modal-body">
+                               <div class="row">
+                                   <div class="col-lg-12 col-md-12">
+                                       <div class="group-input-settings">
+                                           <label for="">School</label>
+                                           <input type="text" placeholder="SOnatel Academy">
+                                       </div>
+                                   </div>
+                                   <div class="col-lg-12 col-md-12">
+                                       <div class="group-input-settings">
+                                           <label for="">Degree</label>
+                                           <input type="text" placeholder="Master">
+                                       </div>
+                                   </div>
+                                   <div class="col-lg-12 col-md-12">
+                                       <div class="group-input-settings">
+                                           <label for="">start Date</label>
+                                           <input type="date" placeholder="">
+                                       </div>
+                                   </div>
+                                   <div class="col-lg-12 col-md-12">
+                                       <div class="group-input-settings">
+                                           <label for="">End Date</label>
+                                           <input type="date" placeholder="">
+                                       </div>
+                                   </div>
+                                   <div class="col-lg-12 col-md-12">
+                                       <div class="group-input-settings">
+                                           <label for="">Commentary</label>
+                                           <textarea name="" id="" rows="4"></textarea>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="modal-footer">
+                               <button class="btn btnSaveSetting" data-dismiss="modal">Save</button>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+           </div>
+        </div>
+
+      <div class="group-input-settings">
+          <label for="">Work Experience</label>
+          <button class="btn btnAddEdu" data-toggle="modal" data-target="#exampleModalWork"> Add Work Experience
+              <img src="<?php echo get_stylesheet_directory_uri();?>/img/plus.png" alt="">
+          </button>
+          <div class="elementInputImgSetting">
+              <!-- Modal Work Experience -->
+              <div class="modal modalEdu fade show" id="exampleModalWork" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Add New Work & Experience</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                              <div class="row">
+                                  <div class="col-lg-12 col-md-12">
+                                      <div class="group-input-settings">
+                                          <label for="">Job</label>
+                                          <input type="text" placeholder="Engineer">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-12 col-md-12">
+                                      <div class="group-input-settings">
+                                          <label for="">Company</label>
+                                          <input type="text" placeholder="LiveLearn">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-12 col-md-12">
+                                      <div class="group-input-settings">
+                                          <label for="">start Date</label>
+                                          <input type="date" placeholder="">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-12 col-md-12">
+                                      <div class="group-input-settings">
+                                          <label for="">End Date</label>
+                                          <input type="date" placeholder="">
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-12 col-md-12">
+                                      <div class="group-input-settings">
+                                          <label for="">Commentary</label>
+                                          <textarea name="" id="" rows="4"></textarea>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                              <button class="btn btnSaveSetting" data-dismiss="modal">Save</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+          </div>
+      </div>
+    </div>
+    <!-- <div class="contentBlockSetting">
+        <div class="group-input-settings">
+            <label for="">Social Network</label>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="group-input-settings">
+                    <label for="">Facebook</label>
+                    <input type="text" placeholder="www.facebook.com/Invision">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="group-input-settings">
+                    <label for="">Twitter</label>
+                    <input type="text" placeholder="">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="group-input-settings">
+                    <label for="">Linkedin</label>
+                    <input type="text" placeholder="">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="group-input-settings">
+                    <label for="">Google Plus (Gmail)</label>
+                    <input type="text" placeholder="">
+                </div>
+            </div>
+        </div>
+        <button class="btn btnSaveSetting">Save</button>
+    </div> -->
+
+    <div class="contentBlockSetting">
+        <?php $options = array(
+            'post_id' => 'user_'. get_current_user_id(),
+            'form' => true, 
+            'fields' => array('facebook', 'twitter', 'linkedin', 'instagram'),
+            'html_before_fields' => '',
+            'html_after_fields' => '',
+            'updated_message' => false,
+            'submit_value' => 'SAVE' 
+        );
+        acf_form( $options );
+        ?>
+    </div>
+</div>
