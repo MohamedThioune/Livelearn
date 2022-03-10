@@ -1,5 +1,29 @@
 jQuery(function($){
+    
+    //variable for offline courses date input
+    $('.block2evens').each(function(){
+        console.log('enting for reservations done');
+        var dateNameStart = $(this).find('input[data-attr="dateNameStart"]').val();
+        $(this).find('.yith-wapo-option input').val(dateNameStart);
+    });
 
+    //scroll down
+    $(function() {
+        $('.bntStarted').click (function() {
+            $('html, body').animate({scrollTop: $('.blockFormDeveloper').offset().top }, 'slow');
+            return false;
+        });
+    });
+    
+    //header on scroll fix
+    var height = ($('nav.navbar').css('height'));
+    $('body').css('padding-top', height)
+
+    $(".navModife4").click(function() {
+        console.log('menu toggled');
+        $(".dropdownMenuDashboard").toggle();
+
+    });
 
     //variable for offline courses date input
     $('.block2evens').each(function(){
@@ -24,6 +48,10 @@ jQuery(function($){
             $(".b2").hide();
             $(".b1").show();
         });
+    });
+
+    $(".bntNotification").click(function() {
+        $(".alertNotification").hide();
     });
 
     $(".btnCopy").click(function() {
@@ -114,7 +142,7 @@ jQuery(function($){
     });
 
     $("#burger").click(function() {
-        $("#croieProfil").hide();
+        $("#firstBlockVoeg").hide();
         $(".headSousMobileProfile").hide();
         $(".searchInputHedear").hide();
         $("#croieSearch").hide();
@@ -122,6 +150,34 @@ jQuery(function($){
         $("#searchIcone").show();
         $("#profilView").show();
 
+    });
+
+    //Pour le modal feedback
+
+    $("#boxVoeg1").click(function() {
+        $(".firstBlockVoeg").hide();
+        $(".secondBlockVoeg").show();
+    });
+    $("#boxVoeg2").click(function() {
+        $(".firstBlockVoeg").hide();
+        $(".treeBlockVoeg").show();
+    });
+    $("#boxVoeg3").click(function() {
+        $(".firstBlockVoeg").hide();
+        $(".fourBlockVoeg").show();
+    });
+    $("#boxVoeg4").click(function() {
+        $(".firstBlockVoeg").hide();
+        $(".fiveBlockVoeg").show();
+    });
+    $("#volgende1").click(function() {
+        $(".sousBlockFourBlockVoeg1").hide();
+        $(".sousBlockFourBlockVoeg2").show();
+    });
+    $("#volgende2").click(function() {
+        $(".sousBlockFourBlockVoeg1").hide();
+        $(".sousBlockFourBlockVoeg2").hide();
+        $(".sousBlockFourBlockVoeg3").show();
     });
 
 
@@ -267,11 +323,6 @@ jQuery(function($){
         });
     }
 
-
-    $(".navModife4").click(function() {
-        $(".dropdownMenuDashboard").toggle();
-
-    });
 
     var select = $('#select');
     var selected = $('#selected');
