@@ -21,7 +21,7 @@
   $users = get_users(); 
    
   //Get the URL content
-  $file = get_stylesheet_directory_uri()."/duoro-20220112.1155.xml";
+  $file = get_stylesheet_directory_uri()."/beeckestijn-20220310.2055.xml";
   $xml = simplexml_load_file($file);
   $data_xml = $xml->program;
 
