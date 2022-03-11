@@ -219,6 +219,48 @@
 
       update_field('category_xml', $tags, $post_id);
 
+
+      $arg = array(
+          'ID' => $post_id,
+          'post_author' => $author_id,
+      );
+      wp_update_post($arg); 
+    
+      $data_locaties_xml = array();
+    
+      //Modify the dates 
+      foreach($datum->programSchedule->programRun as $program){
+        $info = array();
+        $infos = "";
+        $row = "";
+        foreach($program->courseDay as $key => $courseDay){
+          $dates = explode('-',strval($courseDay->date));
+          //format date 
+          $date = $dates[2] . "/" .  $dates[1] . "/" . $dates[0];
+          
+          $info['start_date'] = $date . " ". strval($courseDay->startTime);
+          $info['end_date'] = $date . " ". strval($courseDay->endTime);
+          $info['location'] = strval($courseDay->location->city);
+          $info['adress'] = strval($courseDay->location->address);
+      
+          $row = $info['start_date']. '-' . $info['end_date'] . '-' . $info['location'] . '-' . $info['adress'] ;
+
+          $infos .= $row ; 
+
+          $infos .= ';' ; 
+            
+        }
+
+        if(substr($infos, -1) == ';')
+          $infos = rtrim($infos, ';');
+
+        array_push($data_locaties_xml, $infos);
+        
+        echo $infos .'<br>';
+        update_field('data_locaties_xml', $data_locaties_xml, $post_id);
+
+      }
+      
       /*  
       ** 
       */
@@ -355,14 +397,13 @@
 
         update_field('category_xml', $tags, $meta_course);
 
-       /*
+       
         $arg = array(
             'ID' => $meta_course,
             'post_author' => $author_id,
         );
         wp_update_post($arg); 
-        */
-
+      
         $data_locaties_xml = array();
        
         //Modify the dates 
