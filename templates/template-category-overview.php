@@ -264,7 +264,7 @@
             </form> 
                 <?php
                 
-                if($user_id == 0)
+                if($user_id == 0){
                 ?> 
                 <div>
                     <button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='btn rounded-pill text-white font-weight-bold p-1 px-2'
@@ -273,6 +273,7 @@
                 </div>
 
                 <?php
+                }
                 ?>
         </div>
 
