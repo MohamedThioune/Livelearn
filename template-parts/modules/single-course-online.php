@@ -255,7 +255,7 @@ $favoured = count(get_field('favorited', $post->ID));
                                         <div>
                                             <p class="klikText">Klik om link te kopieren</p>
                                             <div class="input-group input-group-copy formCopyLink">
-                                                <input id="test1" type="text" class="linkTextCopy form-control" value="https://g.co/kgs/K1k9oA" readonly>
+                                                <input id="test1" type="text" class="linkTextCopy form-control" value="<?php echo get_permalink($post->ID) ?>" readonly>
                                                 <span class="input-group-btn">
                                                 <button class="btn btn-default btnCopy">Copy</button>
                                                 </span>

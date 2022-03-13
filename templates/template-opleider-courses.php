@@ -1,4 +1,52 @@
 <?php /** Template Name: opleider courses */ ?>
+<style>
+     .checkmarkUpdated{
+        background-color: white !important;
+        border: 2px solid #043356 !important;
+    }
+    .LeerBlock {
+        border-bottom: 2px solid #043356 !important;
+    }
+    .border-right-adapt {
+        border-top-left-radius: 25px; border-bottom-left-radius: 25px;
+    }
+    .border-left-adapt {
+        border-top-right-radius: 25px; border-bottom-right-radius: 25px;
+    }
+    .modal-dialog{
+         width: 40% !important;
+    }
+    @media all and (max-width: 753px) {
+        .modal-dialog{
+             width: 90% !important;
+        }  
+        .swipeContaineEvens .swiper-wrapper .swiper-slide {
+            width: 170px !important;
+        }
+        .custom_slide{
+            width: 170px !important; 
+        }
+    }
+    @media all and (min-width: 753px) and (max-width: 900px) {
+        .modal-dialog{
+             width: 70% !important;
+        } 
+    }
+
+    @media all and (max-width: 764px) {
+        .border-right-adapt {
+            border-radius: 0px;
+        }
+        .border-left-adapt {
+            border-radius: 0px;
+        }
+    }
+    .modal-backdrop.show { /* to remove gray side on the bottom */
+        opacity: .5;
+        display: none;
+    }
+    
+</style>
 <body>
 <?php wp_head(); ?>
 <?php get_header(); ?>
@@ -79,7 +127,73 @@
 <body>
 <div class="contentOne">
 </div>
-<div class="head2">
+
+<!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
+
+    <!-- Modal Sign End -->
+    <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         style="position: absolute; ">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Registreren</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body  px-md-5 p-3">
+                    <?php
+                    echo (do_shortcode('[user_registration_form id="59"]'));
+                    ?>
+
+                    <div class="text-center">
+                        <p>Al een account? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                                data-toggle="modal" data-target="#exampleModalCenter">Log-in</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
+
+    <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
+
+    <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         style="position: absolute; ">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Inloggen</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body  px-md-5 p-3">
+                    <?php
+                    wp_login_form([
+                        'redirect' => 'http://wp12.influid.nl/dashboard/user/',
+                        'remember' => false,
+                        'label_username' => 'Wat is je e-mailadres?',
+                        'placeholder_email' => 'E-mailadress',
+                        'label_password' => 'Wat is je wachtwoord?'
+                    ]);
+                    ?>
+                    <div class="text-center">
+                        <p>Nog geen account?  <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                              data-toggle="modal" data-target="#SignInWithEmail">Meld je aan</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
+
+
+<!-- ------------------------------------------ start Header -------------------------------------- -->
+
+<div class="head2" style="margin-top: -10px !important;">
     <div class="comp1">
         <img src="<?php echo $logo; ?>" alt="">
     </div>
@@ -106,114 +220,140 @@
 ?>
     <div class="firstBlock">
         <div class="row">
-            <div class="col-md-3">
-                <div class="sousProductTest Mobelement">
-                    <form action="/product-search/" method="POST">
-                        <div class="LeerBlock">
-                            <div class="leerv">
-                                <p class="sousProduct1Title">LEERVORM</p>
-                                <button class="btn btnClose" id="hide"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/X.png" alt=""></button>
-                            </div>
-                            <div class="checkFilter">
-                                <label class="contModifeCheck">Opleiding
-                                    <input type="checkbox" id="opleiding" name="leervom[]" value="Opleidingen">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <div class="checkFilter">
-                                <label class="contModifeCheck">Masterclass
-                                    <input type="checkbox" id="masterclass" name="leervom[]" value="Masterclass">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <div class="checkFilter">
-                                <label class="contModifeCheck">Workshop
-                                    <input type="checkbox" id="workshop" name="leervom[]" value="Workshop">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <div class="checkFilter">
-                                <label class="contModifeCheck">E-Learning
-                                    <input type="checkbox" id="learning" name="leervom[]" value="E-learning">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <div class="checkFilter">
-                                <label class="contModifeCheck">Event
-                                    <input type="checkbox" id="event" name="leervom[]" value="Event">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <div class="checkFilter">
-                                <label class="contModifeCheck">Video
-                                    <input type="checkbox" id="video" name="leervom[]" value="Video">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <br>
-                        </div>
-                        <div class="LeerBlock">
-                            <p class="sousProduct1Title">PRIJS</p>
-                            <div class="prijsSousBlock">
-                                <span class="vanafText">Vanaf</span>
-                                <input name="min" style="width:50px;" class="btn btnmin" placeholder="€min">
-                                <span class="vanafText">tot</span>
-                                <input name="max" style="width:50px;" class="btn btnmin" placeholder="€max">                
-                            </div>
-                            <div class="checkFilter">
-                                <label class="contModifeCheck">Alleen gratis
-                                    <input type="checkbox" id="Allen" name="gratis">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="LeerBlock">
-                            <p class="sousProduct1Title">LOCATIE</p>
-                            <div class="inputSearchFilter">
-                                <input type="hidden" name="choice" value="3">
-                                <input type="search" name="locate" class="searchLocFilter" placeholder="&nbsp;Postcode">
-                                <input type="search" name="range" class="btb btnSubmitFilter" placeholder="&nbsp;Afstand(m)"> 
-                            </div>               
-                            <div class="checkFilter">
-                                <label class="contModifeCheck">Alleen online
-                                    <input type="checkbox" id="Alleen-online" name="online" value="0">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="LeerBlock">
-                            <p class="sousProduct1Title">EXPERTS</p>
-                            <?php
-                                foreach($teachers as $teacher){
-                                    if($teacher != $user_id)
-                                        $name = get_userdata($teacher)->data->display_name;
-                                    else
-                                        $name = "Ikzelf";                              
-                            ?>
-                            <div class="checkFilter">
-                                <label class="contModifeCheck"><?php echo $name ?>
-                                    <input type="checkbox" id="sales" name="expert[]" value="<?php echo $teacher; ?>">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            <?php
-                                }
-                            ?>
-                            <br><button type="submit" class="btn btn-default" style="background:#C0E9F4; padding:5px 20px;">Apply</button>
 
+        <!-- ------------------------------------ Start Slide bar ---------------------------------------- -->
+        <div class="col-md-3 ">
+            <div class="sousProductTest Mobelement pr-4" style="background: #F4F7F6;color: #043356;">
+                <form action="/product-search/" method="POST">
+                    <div class="LeerBlock pl-4" style="">
+                        <div class="leerv">
+                            <p class="sousProduct1Title" style="color: #043356;">LEERVORM</p>
+                            <button class="btn btnClose" id="hide">
+                                <!-- <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/X.png" alt=""> -->
+                                <i class="bi bi-x text-dark" style="font-size: 35px"></i>
+                            </button>
                         </div>
-                    </form>
+                        <input type="hidden" name="opleider" value="<?php echo $_GET['companie'] ?>">
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">Opleiding
+                                <input style="color:red;" type="checkbox" id="opleiding" name="leervom[]" value="Opleidingen">
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div>
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">Masterclass
+                                <input type="checkbox" id="masterclass" name="leervom[]" value="Masterclass">
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div>
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">Workshop
+                                <input type="checkbox" id="workshop" name="leervom[]" value="Workshop">
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div>
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">E-Learning
+                                <input type="checkbox" id="learning" name="leervom[]" value="E-learning">
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div>
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">Event
+                                <input type="checkbox" id="event" name="leervom[]" value="Event">
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div> 
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">Video
+                                <input type="checkbox" id="event" name="leervom[]" value="Video">
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div>
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">Training
+                                <input type="checkbox" id="event" name="leervom[]" value="Training">
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div> 
+                        <br>
+                    </div>
+                    <div class="LeerBlock pl-4" >
+                        <p class="sousProduct1Title" style="color: #043356;">PRIJS</p>
+                        <div class="prijsSousBlock" style="color: #043356;">
+                            <span class="vanafText" style="color: #043356">Vanaf</span>
+                            <input name="min" style="width:100px;" class="btn btnmin text-left" placeholder="€min">              
+                        </div>
+                        <div class="prijsSousBlock" style="color: #043356;">
+                            <span class="vanafText" style="color: #043356">tot</span>
+                            &nbsp; &nbsp;&nbsp;&nbsp;
+                            <input name="max" style="width:100px" class="btn btnmin text-left" placeholder="€max">                
+                        </div>
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">Alleen gratis
+                                <input type="checkbox" id="Allen" name="gratis">
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="LeerBlock pl-4">
+                        <p class="sousProduct1Title" style="color: #043356;">LOCATIE</p>
+                        <div class="inputSearchFilter">
+                            <input type="hidden" name="choice" value="3">
+                            <input type="search" name="locate" style="width:150px"  class="searchLocFilter" placeholder="&nbsp;Postcode">
+                        </div>    
+                        <div class="inputSearchFilter">
+                            <input type="hidden" name="choice" value="3">
+                            <input type="search" name="range" style="width:150px"  class="searchLocFilter" placeholder="&nbsp;Afstand(m)">
+                            <!-- <input type="search" name="range" class="btb btnSubmitFilter" placeholder="">  -->
+                        </div>               
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">Alleen online
+                                <input type="checkbox" id="Alleen-online" name="online" value="0">
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div>
+                    </div>
 
-                </div>
-                <div class="mob filterBlock">
-                    <p class="fliterElementText">Filter</p>
-                    <button class="btn btnIcone8" id="show"><img src="<?php echo get_stylesheet_directory_uri();?>/img/filter.png" alt=""></button>
-                </div>
+                    <div class="LeerBlock pl-4">
+                        <p class="sousProduct1Title" style="color: #043356;">EXPERTS</p>
+                        <?php
+                            foreach($teachers as $teacher){
+                                if($teacher != $user_id)
+                                    $name = get_userdata($teacher)->data->display_name;
+                                else
+                                    $name = "Ikzelf";                                
+                        ?>
+                        <div class="checkFilter">
+                            <label class="contModifeCheck"><?php echo $name ?>
+                                <input type="checkbox" id="sales" name="experties[]" value="<?php echo $teacher; ?>">
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div>
+                        <?php
+                            }
+                        ?>
+
+                        <br><button type="submit" class="btn btn-default" style="background:#C0E9F4; padding:5px 20px;">Apply</button> 
+                    </div>
+
+
+                </form>
+
             </div>
-            <?php 
-                if(isset($courses) && !empty($courses)){
-                ?>
-            <div class="col-md-9">
+            <div class="mob filterBlock">
+                <p class="fliterElementText">Filter</p>
+                <button class="btn btnIcone8" id="show"><img src="<?php echo get_stylesheet_directory_uri();?>/img/filter.png" alt=""></button>
+            </div>
+        </div>
+        <!-- ------------------------------------ End  Slide bar ---------------------------------------- -->                    
+
+        <br><br>
+
+        <?php 
+            if(isset($courses) && !empty($courses)){
+            ?>
+        <div class="col-md-9">
                 <?php
                     if(!empty($opleidingen)){
                         
@@ -368,15 +508,14 @@
                                     <?php
                                     foreach($teachers as $teacher){
                                     $image = get_field('profile_img',  'user_' . $teacher);
+                                    $path = "../user-overview?id=" . $teacher;
                                     if(!$image)
                                         $image = get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                    if($teacher != $user_id){
+
+                                    if($teacher != $user_id)
                                         $name = get_userdata($teacher)->data->display_name;
-                                        $path = "../user-overview?id=" . $teacher;
-                                    }else{
+                                    else
                                         $name = "Ikzelf";
-                                        $path = "/dashboard/company/profile/";
-                                    }
                                     ?>
                                     <div class="swiper-slide swipeExpert">
                                         <div class="cardblockOnder cardExpert">
@@ -1120,7 +1259,7 @@
                     }
                 ?>
 
-<?php
+            <?php
                 if(!empty($trainings)){
             ?>
             <div class="sousBlockProduct2">

@@ -316,14 +316,7 @@
             <?php
                 echo do_shortcode("[gravityform id='4' title='false' description='false' ajax='true']");
             ?>
-           <!--  <form action="" class="formDirect">
-                
-                <div class="blockinputDirect">
-                    <input class="inputDirect" type="Email" placeholder="Naam">
-                    <input class="inputDirect" type="text" placeholder="E-mailadres">
-                    <button class="btn btnContactOp" type="submit">Neem contact op</button>
-                </div>
-            </form> -->
+         
         </div>
     </div>
 </div>

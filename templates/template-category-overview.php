@@ -169,7 +169,6 @@
 <div class="contentOne">
 </div>
 
-
 <!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
 
     <!-- Modal Sign End -->
@@ -229,7 +228,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
 
@@ -377,6 +375,12 @@
                         <div class="checkFilter">
                             <label class="contModifeCheck">Video
                                 <input type="checkbox" id="event" name="leervom[]" value="Video">
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div> 
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">Training
+                                <input type="checkbox" id="event" name="leervom[]" value="Training">
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div> 
