@@ -72,17 +72,15 @@
                             foreach($categories_id as $categorie)                    
                                 $categories = explode(',', $categorie['value']);
                     }
+
+                    $experts = get_field('experts', $course->ID);
         
-        
-                    if(in_array($category, $trees) || $categories)
-                        if(in_array($category, $trees) || in_array($category, $categories)){
-                            array_push($courses, $course);
-                            if(!in_array($course->post_author, $teachers))
-                                array_push($teachers, $course->post_author);
-                            foreach($experts as $expert)
-                                if(!in_array($expert, $teachers))
-                                    array_push($teachers, $expert);
-                        }
+                    if(!in_array($course->post_author, $profes))
+                        array_push($profes, $course->post_author);
+
+                    foreach($experts as $expertie)
+                        if(!in_array($expertie, $teachers))
+                            array_push($profes, $expertie);
                 }
             ## SIDE PRODUCT USERS
             }else if(isset($user)){
@@ -123,15 +121,45 @@
                         
                         if(!in_array($category, $categories) && $category != '')
                             array_push($categories, $category);
-                        
-                        $experts = get_field('experts', $course->ID);
-                        if(!in_array($course->post_author, $profes))
-                            array_push($profes, $course->post_author);
-                        foreach($experts as $expert)
-                            if(!in_array($expert, $teachers))
-                                array_push($teachers, $expert);
                     }
                 }            
+            }
+            else if(isset($opleider)){
+                $args = array(
+                    'post_type' => 'company', 
+                    'posts_per_page' => 1,
+                    'include' => $opleider
+                );
+        
+                $company = get_posts($args)[0];
+        
+                $users = get_users();
+                $users_companie = array();
+                foreach($users as $user) {
+                    $company_user = get_field('company',  'user_' . $user->ID);
+                    if(!empty($company_user) && !empty($company))
+                        if($company_user[0]->ID == $company->ID)
+                            array_push($users_companie, $user->ID);
+                }
+        
+                $args = array(
+                    'post_type' => 'course', 
+                    'posts_per_page' => -1,
+                    'author__in' => $users_companie,  
+                );
+        
+                $courses = get_posts($args);
+
+                foreach($courses as $course)
+                {
+                    $experts = get_field('experts', $course->ID);
+                    if(!in_array($course->post_author, $profes))
+                        array_push($profes, $course->post_author);
+                    foreach($experts as $expert)
+                        if(!in_array($expert, $profes))
+                            array_push($profes, $expert);
+                }
+
             }else{
                 $args = array(
                     'post_type' => 'course', 
@@ -426,6 +454,12 @@
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div> 
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">Training
+                                <input type="checkbox" id="event" name="leervom[]" value="Training" <?php if(isset($leervom)) if(in_array('Training', $leervom)) echo "checked" ; else echo ""  ?> >
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div> 
                         <br>
                     </div>
                     <div class="LeerBlock pl-4" >
@@ -464,20 +498,17 @@
                     </div>
                             
                     <div class="LeerBlock pl-4">
-                        <p class="sousProduct1Title" style="color: #043356;">EXPERT</p>
-
-                        <?php
-                        if(isset($_POST['category']))
-
-                            if(!isset($user)){
+                        <?php 
+                        if(isset($_POST['category']) || isset($_POST['opleider'])){
                         ?>
+                        <p class="sousProduct1Title" style="color: #043356;">EXPERT</p>
                             <?php
                                 foreach($profes as $profe){
                                     $name = get_userdata($profe)->data->display_name;
                             ?>
                             <div class="checkFilter">
                                 <label class="contModifeCheck"><?php echo $name ?>
-                                    <input type="checkbox" id="sales" name="expert[]" value="<?php echo $profe; ?>" <?php if(!empty($expert)) if(in_array($profe, $expert)) echo "checked" ; else echo ""  ?> >
+                                    <input type="checkbox" id="sales" name="experties[]" value="<?php echo $profe; ?>" <?php if(!empty($experties)) if(in_array($profe, $experties)) echo "checked" ; else echo ""  ?> >
                                     <span class="checkmark checkmarkUpdated"></span>
                                 </label>
                             </div>
@@ -485,7 +516,7 @@
                                 }
                             ?>
                         <?php
-                            }
+                        }
                         ?>
 
                         <br><button type="submit" class="btn btn-default" style="background:#C0E9F4; padding:5px 20px;">Apply</button>

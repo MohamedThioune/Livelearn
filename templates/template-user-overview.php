@@ -407,6 +407,12 @@
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div> 
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">Training
+                                <input type="checkbox" id="event" name="leervom[]" value="Training">
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div> 
                         <br>
                     </div>
                     <div class="LeerBlock pl-4" >
