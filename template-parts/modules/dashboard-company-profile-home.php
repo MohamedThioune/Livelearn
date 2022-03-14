@@ -303,7 +303,10 @@
                                             ?>
                                         </div>
 
-                                        <?php }
+                                        <?php 
+                                        }else {
+                                            echo "<p>No topics yet</p>" ;
+                                        }
                                         ?>
                                     </form>
                                 </div>
@@ -326,7 +329,10 @@
                                             ?>
                                         </div>
 
-                                    <?php }
+                                    <?php 
+                                    }else {
+                                       echo "<p>No topics yet</p>" ;
+                                    }
                                     ?>
 
                                     </div>
