@@ -300,7 +300,7 @@
                                                 <input type='hidden' name='user_id' value='". $user->ID . "' id=''>
                                                 <input type='hidden' name='meta_key' value='topic_affiliate' id=''>";
                                       
-                                                echo "<p> <button type='submit' name='delete' style='border:none;backhground:#C7D8F5'><i class='fa fa-trash'></i>".(String)get_the_category_by_ID($value)."</button></p>";
+                                                echo "<p> <button type='submit' name='delete' style='border:none;background:#C7D8F5'><i style='font-size 0.7em; color:white'class='fa fa-trash'></i>&nbsp;".(String)get_the_category_by_ID($value)."</button></p>";
                                                 echo "</form>";
 
                                             ?>
