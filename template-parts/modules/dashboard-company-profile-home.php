@@ -1,22 +1,19 @@
 <?php
      
-     
-     /*
+    /*
     ** Categories - all  * 
     */
 
-    //var_dump(get_user_meta($id_user,'topic_affiliate'));
+    $categories = array();
 
-     $categories = array();
-
-     $cats = get_categories( 
-         array(
-         'taxonomy'   => 'course_category',  //Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-         'orderby'    => 'name',
-         'exclude' => 'Uncategorized',
-         'parent'     => 0,
-         'hide_empty' => 0, // change to 1 to hide categores not having a single post
-     ) 
+    $cats = get_categories( 
+        array(
+        'taxonomy'   => 'course_category',  //Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'orderby'    => 'name',
+        'exclude' => 'Uncategorized',
+        'parent'     => 0,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) 
     );
 
 
@@ -317,7 +314,7 @@
                                     <?php
                                     if (!empty (get_user_meta($user->ID,'topic')))
                                     {
-                                        $external_growth_subtopics= get_user_meta($user->ID,'topic');
+                                        $external_growth_subtopics = get_user_meta($user->ID,'topic');
                                     ?>            
 
                                         <div class="inputGroein">
@@ -513,19 +510,13 @@
                                     <div class="col-lg-12 col-md-12">
                                         <div class="group-input-settings">
                                             <label for="">Heb je hierbij hulp nodig ?</label>
-                                            <textarea name="hulp_text" id="" rows="4"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12">
-                                        <div class="group-input-settings">
-                                            <label for="">Heb je hierbij hulp nodig ?</label>
                                             <div class="d-flex">
                                                 <div class="mr-3">
                                                     <input type="radio" id="JA" name="hulp_radio_JA" value="JA">
                                                         <label for="JA">JA</label>
                                                 </div>
                                                 <div>
-                                                    <input type="radio" id="NEE" name="hulp_radio_NEE" value="NEE">
+                                                    <input type="radio" id="NEE" name="hulp_radio_JA" value="NEE">
                                                         <label for="NEE">NEE</label>
                                                 </div>
                                             </div>
