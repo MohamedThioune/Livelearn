@@ -4,6 +4,9 @@ if(is_user_logged_in()){
     acf_form_head();
 } 
 
+$user = get_current_user_id();
+$message = ""; 
+
 extract($_POST); 
 
  // delete_user_meta(33,'topic_affiliate'); // Delete topics affiliate by manager
@@ -25,7 +28,7 @@ if(isset($_POST['expert_add'])){
     header('Location:' . $path);
 }
 
-if(isset($_POST['topic_add'])){
+else if(isset($_POST['topic_add'])){
 
     $categories = array();
     $banger = "";
@@ -75,7 +78,7 @@ if(isset($_POST['topic_add'])){
     update_field('categories', $categories, $_GET['id']);
 }
  
-if(isset($_POST['add_todo'])){
+else if(isset($_POST['add_todo'])){
 
     $id_user = $_POST['id_user'];
     $label = $_POST['label'];
@@ -95,7 +98,7 @@ if(isset($_POST['add_todo'])){
     header("Location: ". $message);
 }
 
-if(isset($_POST['edit_education'])){
+else if(isset($_POST['edit_education'])){
     $bunch = array();
     $fields = " ";
     foreach($educations as $key => $value){
@@ -109,13 +112,12 @@ if(isset($_POST['edit_education'])){
 
 }
 
-$user = get_current_user_id();
-$message = ""; 
+
 /*
 * * Push saved  
 */
 
-if(isset($interest_save)){
+else if(isset($interest_save)){
     if($meta_value != null){
         $meta_data = get_user_meta($user_id, $meta_key);
         if(!in_array($meta_value,$meta_data)){
@@ -133,7 +135,7 @@ if(isset($interest_save)){
  * Start Feedback Handling
  */
 // Feedback saving
-if(isset($_POST['add_todo_feedback'])){
+else if(isset($_POST['add_todo_feedback'])){
     $id_user = $_POST['id_user'];
     $title_feedback = $_POST['title_feedback'];
     $type = $_POST['type'];
@@ -159,7 +161,7 @@ if(isset($_POST['add_todo_feedback'])){
 }
 
 // Complimentsaving
-if(isset($_POST['add_todo_compliment'])){
+else if(isset($_POST['add_todo_compliment'])){
 
     $id_user = $_POST['id_user'];
     $title_compliment = $_POST['title_compliment'];
@@ -186,7 +188,7 @@ if(isset($_POST['add_todo_compliment'])){
 }
 
 // Beoordelingsgesprek saving
-if(isset($_POST['add_todo_beoordelingsgesprek'])){
+else if(isset($_POST['add_todo_beoordelingsgesprek'])){
     $id_user = $_POST['id_user'];
     $title_beoordelingsgesprek = $_POST['title_beoordelingsgesprek'];
     $type = $_POST['type'];
@@ -217,7 +219,7 @@ if(isset($_POST['add_todo_beoordelingsgesprek'])){
 }
 
 //Persoonlijk ontwikkelplan saving
-if(isset($_POST['add_todo_persoonlijk'])){
+else if(isset($_POST['add_todo_persoonlijk'])){
     $id_user = $_POST['id_user'];
     $title_persoonlijk = $_POST['title_persoonlijk'];
     $onderwerp_pop = '';
@@ -250,7 +252,7 @@ if(isset($_POST['add_todo_persoonlijk'])){
     header("Location: ". $message);
 }
 
-if (isset($_POST['add_internal_growth'])){
+else if (isset($_POST['add_internal_growth'])){
     $id_user = $_POST['id_user'];
     $manager = get_current_user_id();
     $selected_subtopics = $_POST['selected_subtopics'];
@@ -279,7 +281,7 @@ if (isset($_POST['add_internal_growth'])){
 * * Push interests  
 */
 
-if(isset($interest_push)){
+else if(isset($interest_push)){
     if($meta_value != null){
         $meta_data = get_user_meta($user_id, $meta_key);
         if(!in_array($meta_value,$meta_data)){
@@ -302,29 +304,26 @@ if(isset($interest_push)){
 * * Delete interests  
 */
 
-if(isset($delete))
+else if(isset($delete))
     if($meta_value != null){
-        if(delete_user_meta($user_id, $meta_key, $meta_value))
+        if(delete_user_meta($user_id, $meta_key, $meta_value)){
             $message = "Met succes verwijderd";
-        
-        header("location:/dashboard/user/?message=".$message);
-
+            if($meta_value = "topic")
+                header("location:/dashboard/user/?message=".$message);
+            else{
+                $user_connected = get_current_user_id();
+                $content = "/dashboard/company/profile/?id=" . $user_id . '&manager='. $user_connected . "?message=" . $message; 
+                header("location:".$content);
+            }
+        }
     }
 
-if(isset($delete_internal))
-    if($meta_value != null){
-        if(delete_user_meta($user_id, $meta_key, $meta_value))
-            $message = "Met succes verwijderd";
-        
-        header("location:/dashboard/user/?message=".$message);
-
-    }
 
 /*
 * * Delete Favorite  
 */
 
-if(isset($delete_favorite))
+else if(isset($delete_favorite))
     if($meta_value != null){
         if(delete_user_meta($user_id, "course", $meta_value))
             $message = "Met succes verwijderd";
