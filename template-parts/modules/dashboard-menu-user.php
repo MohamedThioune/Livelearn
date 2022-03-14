@@ -22,7 +22,6 @@ if(!empty($company))
 $topics_internal = get_user_meta($id_user,'topic_affiliate');
 $topics_external = get_user_meta($id_user,'topic');
 
-$topics = array_merge($topics_external,$topics_internal);
 $experts = get_user_meta($user->ID, 'expert');
 
 /*
@@ -56,13 +55,32 @@ $experts = get_user_meta($user->ID, 'expert');
         <li class="elementTextDashboard">
             <?php
            
-            if(!empty($topics))
-                foreach($topics as $topic){
+            if(!empty($topics_external))
+                foreach($topics_external as $topic){
                     $name = (String)get_the_category_by_ID($topic);
                     echo "
                     <a href='/category-overview/?category=". $topic ."' class='d-flex'>
                         <div class='iconeElement'>
-                            <form action='../../dashboard/user/' method='POST'>
+                            <form action='dashboard/user/' method='POST'>
+                                <input type='hidden' name='meta_value' value='". $topic . "' id=''>
+                                <input type='hidden' name='user_id' value='". $user->ID . "' id=''>
+                                <input type='hidden' name='meta_key' value='topic' id=''>
+                                <button type='submit' class='btn toevoegenText' name='delete'><i class='fa fa-trash'></i></button>
+                            </form> 
+                        </div>
+                        <br><br>
+                        <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
+                    </a>
+                    ";
+                }
+
+            if(!empty($topics_internal))
+                foreach($topics_internal as $topic){
+                    $name = (String)get_the_category_by_ID($topic);
+                    echo "
+                    <a href='/category-overview/?category=". $topic ."' class='d-flex'>
+                        <div class='iconeElement'>
+                            <form action='dashboard/user/' method='POST'>
                                 <input type='hidden' name='meta_value' value='". $topic . "' id=''>
                                 <input type='hidden' name='user_id' value='". $user->ID . "' id=''>
                                 <input type='hidden' name='meta_key' value='topic' id=''>
