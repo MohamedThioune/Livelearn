@@ -50,7 +50,7 @@
                             <div class="acf-field">
                                 <label for="locate">Become the manager of one of the employees :</label><br>
                                 <div class="form-group">
-                                    <select name="allocate[]" id="form-control" multiple>
+                                    <select name="allocate[]" class="multipleSelect2" multiple="true">
                                         <?php
                                         //Get users from company
                                         foreach($users as $used){
@@ -95,3 +95,4 @@
     </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

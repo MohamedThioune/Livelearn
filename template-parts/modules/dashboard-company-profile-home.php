@@ -139,11 +139,12 @@
                                         <h2 class="titleCategorieDetailCandidat">Candidates About bio</h2>
                                         <p class="textDetailCategorie"><?php echo $biographical_info;  ?></p>
                                     </div>
+                                    <?php
+                                    if($educations){
+                                    ?>
                                     <div class="categorieDetailCandidat">
                                         <h2 class="titleCategorieDetailCandidat">Education</h2>
                                         <?php
-                                        if($educations)
-                                        if(!empty($educations))
                                         foreach($educations as $value) { 
                                             $value = explode(";", $value);
                                             $year_start = explode("-", $value[2])[0]; 
@@ -166,8 +167,14 @@
                                             <p class="textDetailCategorie"><?php echo $value[4]?: ''; ?></p>
                                         </div>
                                         <?php } ?>
-                                        
                                     </div>
+                                    <?php
+                                    }
+                                    ?>
+
+                                    <?php
+                                    if($experiences){
+                                    ?>
                                     <div class="categorieDetailCandidat workExperiece">
                                         <h2 class="titleCategorieDetailCandidat ex">Work & Experience</h2>
                                         <?php
@@ -198,6 +205,9 @@
 
                                             <?php } ?>
                                     </div>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                                 <div id="block-simple-text-2" class="tab-pane  block block-layout-builder block-inline-blockqfcc-blocktype-simple-text" role="tabpanel" aria-labelledby="block-simple-text-2-tab">
 
@@ -697,6 +707,9 @@
     </div>
 
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 <script>
     /**
      * Defines the bootstrap tabs handler.

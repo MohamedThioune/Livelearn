@@ -475,7 +475,7 @@
                         </div>
                         <div class="checkFilter">
                             <label class="contModifeCheck">Alleen gratis
-                                <input type="checkbox" id="Allen" name="gratis">
+                                <input type="checkbox" id="Allen" name="gratis"  <?php if(isset($gratis)) echo 'checked'; else  echo  '' ?>>
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div>
@@ -491,7 +491,7 @@
                         </div>               
                         <div class="checkFilter">
                             <label class="contModifeCheck">Alleen online
-                                <input type="checkbox" id="Alleen-online" name="online" <?php if(isset($online)) echo 'checked'; else  echo  '' ?>>
+                                <input type="checkbox" id="Alleen-online" name="online" <?php if(isset($online)) echo 'checked'; else  echo  '' ?> >
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div>
