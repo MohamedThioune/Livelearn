@@ -323,14 +323,14 @@ else if(isset($delete))
 * * Delete Favorite  
 */
 
-else if(isset($delete_favorite))
+else if(isset($delete_favorite)){
     if($meta_value != null){
         if(delete_user_meta($user_id, "course", $meta_value))
             $message = "Met succes verwijderd";
         
         header("location:/dashboard/user/activity/?message=".$message);
     }
-
+}
 
 /*  */
 /*

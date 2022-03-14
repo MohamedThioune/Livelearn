@@ -273,12 +273,12 @@
                                         <div class="form-group formModifeChoose">
                                         
                                             <select class="multipleSelect2" name="selected_subtopics[]" multiple="true">
-                                                        <?php
+                                                <?php
                                                     //Subtopics
                                                     foreach($subtopics as $value){
                                                         echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
                                                     }
-                                                    ?>
+                                                ?>
                                             </select>
                                             <input type="hidden" name="manager" value=<?=$manager->ID?> >
                                             <input type="hidden" name="id_user" value=<?=$user->ID?> >
@@ -294,9 +294,21 @@
                                         <div class="inputGroein">
                                             <?php                                       
                                             foreach($internal_growth_subtopics as $value){
-                                                echo "<p>".(String)get_the_category_by_ID($value)."</p>";
-                                            }
+                                                echo "
+                                                <form action='/dashboard/user/' method='POST'>
+                                                <input type='hidden' name='meta_value' value='". $topic . "' id=''>
+                                                <input type='hidden' name='user_id' value='". $user->ID . "' id=''>
+                                                <input type='hidden' name='meta_key' value='topic_affiliate' id=''>
+                                                <button type='submit' class='btn toevoegenText' name='delete'><i class='fa fa-trash'></i></button>";
+                                      
+                                                echo "<p> <i class='fa-solid fa-circle-minus'></i>".(String)get_the_category_by_ID($value)."</p>";
+                                                echo "</form>";
+
+                                            ?>
                                             
+
+                                            <?php
+                                            }
                                             ?>
                                         </div>
 

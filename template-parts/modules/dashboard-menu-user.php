@@ -83,7 +83,7 @@ $experts = get_user_meta($user->ID, 'expert');
                             <form action='/dashboard/user/' method='POST'>
                                 <input type='hidden' name='meta_value' value='". $topic . "' id=''>
                                 <input type='hidden' name='user_id' value='". $user->ID . "' id=''>
-                                <input type='hidden' name='meta_key' value='topic' id=''>
+                                <input type='hidden' name='meta_key' value='topic_affiliate' id=''>
                                 <button type='submit' class='btn toevoegenText' name='delete'><i class='fa fa-trash'></i></button>
                             </form> 
                         </div>
