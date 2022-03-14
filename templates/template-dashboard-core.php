@@ -311,6 +311,15 @@ if(isset($delete))
 
     }
 
+if(isset($delete_internal))
+    if($meta_value != null){
+        if(delete_user_meta($user_id, $meta_key, $meta_value))
+            $message = "Met succes verwijderd";
+        
+        header("location:/dashboard/user/?message=".$message);
+
+    }
+
 /*
 * * Delete Favorite  
 */
