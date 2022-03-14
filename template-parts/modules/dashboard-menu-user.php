@@ -61,7 +61,7 @@ $experts = get_user_meta($user->ID, 'expert');
                     echo "
                     <a href='/category-overview/?category=". $topic ."' class='d-flex'>
                         <div class='iconeElement'>
-                            <form action='dashboard/user/' method='POST'>
+                            <form action='/dashboard/user/' method='POST'>
                                 <input type='hidden' name='meta_value' value='". $topic . "' id=''>
                                 <input type='hidden' name='user_id' value='". $user->ID . "' id=''>
                                 <input type='hidden' name='meta_key' value='topic' id=''>
