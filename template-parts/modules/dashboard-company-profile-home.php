@@ -298,10 +298,9 @@
                                                 <form action='/dashboard/user/' method='POST'>
                                                 <input type='hidden' name='meta_value' value='". $topic . "' id=''>
                                                 <input type='hidden' name='user_id' value='". $user->ID . "' id=''>
-                                                <input type='hidden' name='meta_key' value='topic_affiliate' id=''>
-                                                <button type='submit' class='btn toevoegenText' name='delete'><i class='fa fa-trash'></i></button>";
+                                                <input type='hidden' name='meta_key' value='topic_affiliate' id=''>";
                                       
-                                                echo "<p> <button type='submit' name='delete'><i class='fa fa-circle-minus'></i></button>".(String)get_the_category_by_ID($value)."</p>";
+                                                echo "<p> <button type='submit' name='delete'><i class='fa fa-trash'></i></button>".(String)get_the_category_by_ID($value)."</p>";
                                                 echo "</form>";
 
                                             ?>
