@@ -280,7 +280,7 @@
                                         
                                         <div class="form-group formModifeChoose">
                                         
-                                            <select class="multipleSelect2" name="selected_subtopics[]" multiple="true">
+                                            <select class="multipleSelect2" name="selected_subtopics[]" multiple="true" required>
                                                 <?php
                                                     //Subtopics
                                                     foreach($subtopics as $value){
@@ -391,7 +391,7 @@
                     <form action="" method="POST">
                         <input type="hidden" name="id" value="<?php echo $key; ?>">
                         <input type="hidden" name="user_id" value="<?php echo $user->ID; ?>">
-                        <button class="btn btn-danger" style="color:white" name="delete_todos" type="submit"><i class="fa fa-trash"></i></button>
+                        <button class="btn btn-danger" style="color:white" name="delete_todos" type="submit"><i class="fa fa-2x fa-trash"></i></button>
                     </form>
                </div>
                 <?php } 
@@ -456,14 +456,14 @@
                                 <div class="col-lg-12 col-md-12">
                                     <div class="group-input-settings">
                                         <label for="">Title feedback</label>
-                                        <input name="title_feedback" type="text">
+                                        <input name="title_feedback" type="text" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="group-input-settings">
                                         <label for="">Onderwerp feedback</label>
                                         <div class="form-group formModifeChoose">
-                                            <select id="form-control-skills" name="onderwerp_feedback[]"  class="multipleSelect2" multiple="true">
+                                            <select id="form-control-skills" name="onderwerp_feedback[]"  class="multipleSelect2" multiple="true" required>
 
                                             <?php
                                                 //Subtopics
@@ -499,14 +499,14 @@
                                     <div class="col-lg-12 col-md-12">
                                         <div class="group-input-settings">
                                             <label for="">Title persoonlijk ontwikwikkelplan</label>
-                                            <input name="title_persoonlijk" type="text">
+                                            <input name="title_persoonlijk" type="text" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-md-12">
                                         <div class="group-input-settings">
                                             <label for="">Onderwerp PoP</label>
                                             <div class="form-group formModifeChoose">
-                                                <select id="form-control-skills" class="multipleSelect2" name="onderwerp_pop[]" multiple="true">
+                                                <select id="form-control-skills" class="multipleSelect2" name="onderwerp_pop[]" multiple="true" required>
 
                                                 <?php
                                                 //Subtopics
@@ -665,14 +665,14 @@
                                 <div class="col-lg-12 col-md-12">
                                     <div class="group-input-settings">
                                         <label for="">Title compliment</label>
-                                        <input name="title_compliment" type="text">
+                                        <input name="title_compliment" type="text" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="group-input-settings">
                                         <label for="">Onderwerp compliment</label>
                                         <div class="form-group formModifeChoose">
-                                            <select id="form-control-skills" name="onderwerp_compliment[]" class="multipleSelect2" multiple="true">
+                                            <select id="form-control-skills" name="onderwerp_compliment[]" class="multipleSelect2" multiple="true" required>
                                                 
                                             <?php
                                                 //Subtopics
