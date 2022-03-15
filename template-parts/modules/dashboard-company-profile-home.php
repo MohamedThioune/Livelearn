@@ -367,7 +367,7 @@
                 
                     if($todos)
                         if(!empty($todos))
-                            foreach($todos as $todo) { 
+                            foreach($todos as $key=>$todo) { 
                                 $value = explode(";", $todo);
                                 $image = get_field('profile_img',  'user_' . $manager->ID);
                                 $manager = get_users(array('include'=> $value[2]))[0]->data;
@@ -375,25 +375,25 @@
                                     $image = get_stylesheet_directory_uri() . '/img/Group216.png';
                                                    
                 ?>
-               <div class="activiteRecent">
-                    <img width="25" src="<?php echo $image ?>" alt="">
-                    <div class="contentRecentActivite">
-                        <p class="titleActivite"><?php echo $value[0] ; ?> by <span style="font-weight:bold">
-                        <?php 
-                        if(isset($manager->nice_name)) echo $manager->nice_name ; 
-                        else echo $manager->display_name; 
-                        
-                        
-                        ?>
-                    </span></p>
-                        <p class="activiteRecent"><?php echo $value[1]; ?></p>
-                    </div>
-                    <form action="" method="POST">
-                        <input type="hidden" name="id" value="<?php echo $key; ?>">
-                        <input type="hidden" name="user_id" value="<?php echo $user->ID; ?>">
-                        <button class="btn btn-danger" style="color:white" name="delete_todos" type="submit"><i class="fa fa-trash"></i></button>
-                    </form>
-               </div>
+                            <div class="activiteRecent">
+                                <img width="25" src="<?php echo $image ?>" alt="">
+                                <div class="contentRecentActivite">
+                                    <p class="titleActivite"><?php echo $value[0] ; ?> by <span style="font-weight:bold">
+                                    <?php 
+                                    if(isset($manager->nice_name)) echo $manager->nice_name ; 
+                                    else echo $manager->display_name; 
+                                    
+                                    
+                                    ?>
+                                </span></p>
+                                    <p class="activiteRecent"><?php echo $value[1]; ?></p>
+                                </div>
+                                <form action="" method="POST">
+                                    <input type="hidden" name="id" value="<?php echo $key; ?>">
+                                    <input type="hidden" name="user_id" value="<?php echo $user->ID; ?>">
+                                    <button class="btn btn-danger" style="color:white" name="delete_todos" type="submit"><i class="fa fa-trash"></i></button>
+                                </form>
+                            </div>
                 <?php } 
                     
                 ?>

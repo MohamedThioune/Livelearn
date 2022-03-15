@@ -332,6 +332,29 @@ else if(isset($delete_favorite)){
     }
 }
 
+/*
+* * Delete Feedbacks   
+*/ 
+
+else if(isset($delete_todos)){
+    $message = "Met succes verwijderd";
+    $user_connected = get_current_user_id();
+    $todos = get_field('todos',  'user_' . $user_id);
+    $bunch = array();
+    foreach($todos as $key => $value){
+        if($key == $id)
+            continue;
+        else
+            array_push($bunch,$value);
+    }
+    update_field('todos', $bunch, 'user_'. $user->ID);
+
+    $content = "/dashboard/company/profile/?id=" . $user_id . '&manager='. $user_connected . "?message=" . $message; 
+    $todos = get_field('todos',  'user_' . $user_id);
+
+    header("location:".$content);
+
+}
 
  
 ?>
