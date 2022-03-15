@@ -333,7 +333,7 @@ else if(isset($delete_favorite)){
 }
 
 
-
+ 
 ?>
 <?php wp_head(); ?>
 
