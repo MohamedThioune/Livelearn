@@ -1,3 +1,4 @@
+
 <?php
     $todos = get_field('todos',  'user_' . $user->ID);
     if(isset($todos[$_GET['todo']])){
@@ -29,12 +30,22 @@
                         </div>
                         <div class="blockType">
                             <p class="">Type :</p>
-                            <p>Feedback</p>
+                            <p><?php echo $value[3]; ?> </p>
                         </div>
                     </div>
                     <div>
                         <h3 class="titleContentNotification">Content Notification</h3>
-                        <p class="NotificationFeedback"><?php echo $value[0]; ?> </p>
+                        <p class="NotificationFeedback"><?php echo $value[1]; ?> </p>
+                        <?php 
+                        echo '\n <br>';
+                            if ($value[3]=='Beoordeling Gesprek')
+                            {
+                                echo '\n Title: '.$value[0];
+                                echo '\n Title: '.$value[0];
+                            }
+                                
+
+                        ?>
                     </div>
                 </div>
                 </div>
@@ -49,7 +60,6 @@
                     <?php 
                     
                     foreach($todos as $key=>$todo) {
-
                         $value = explode(";", $todo);
                         $manager = get_users(array('include'=> $value[2]))[0]->data;
                         $image = get_field('profile_img',  'user_' . $manager->ID);
@@ -61,7 +71,8 @@
                                 <div class="circleNotification">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification 1.png" alt="">
                                 </div>
-                                <p class="feddBackNotification"><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?> send you a  <span>Feedback</span></p>
+                                <p class="feddBackNotification">
+                                    <?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?> send you a  <span>Feedback</span></p>
                             </div>
                             <!-- <p class="hoursText">0 hours ago</p> -->                    
                         </div>

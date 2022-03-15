@@ -47,7 +47,7 @@ $todos = get_field('todos',  'user_' . $user->ID);
                <thead class="thead-light">
                 <tr>
                     <th scope="col">Title</th>
-                    <th scope="col-4">Alert Query</th>
+                    <th scope="col-4">Alert </th>
                     <th scope="col">By</th>
                     <th scope="col">Times</th>
                     <th scope="col">Actions</th>
@@ -66,17 +66,18 @@ $todos = get_field('todos',  'user_' . $user->ID);
                     if(!$image)
                         $image = get_stylesheet_directory_uri() . '/img/Group216.png';
                 ?>
-               <tr>
-                   <th scope="row">Feedback</th>
-                   <td class="descriptionNotification"><?php echo $value[0]; ?></td>
-                   <td><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?></td>
-                   <td>Weekly</td>
-                   <td>
-                       <button class="btn bntDelete">
-                           <img src="<?php echo get_stylesheet_directory_uri();?>/img/delete.png">
-                       </button>
-                   </td>
-               </tr>
+                <tr>                
+                        <td scope="row"><a href="/dashboard/user/detail-notification/?todo=<?php echo $key; ?>"> <strong><?php echo $value[0]; ?></strong> </a></td>
+                        <td class="descriptionNotification"><a href="dashboard/user/detail-notification/todos=<?php echo $key; ?>"><?php echo $value[1]; ?> </a></td>
+                        <td><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?></td>
+                        <td>Weekly</td>
+                        <td>
+                            <button class="btn bntDelete">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/delete.png">
+                            </button>
+                        </td>
+                   </a>
+                </tr>
                <?php
                     }
                 ?>

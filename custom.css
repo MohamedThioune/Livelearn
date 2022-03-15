@@ -1716,9 +1716,6 @@ input:focus-visible {
 #Details{
     display: none;
 }
-.table-responsive{
-    display: table !important;
-}
 .cardOverviewCours {
     background: white;
     border-radius: 8px;
@@ -2026,9 +2023,6 @@ input:focus-visible {
     border-radius: .25rem;
 }
 .elementMobile{
-    display: none;
-}
-.logoMobile{
     display: none;
 }
 
@@ -3379,6 +3373,7 @@ body .gform_wrapper ul li.gfield {
     padding: 13px 10px;
     background: #e7f8ff !important;
     margin-bottom: 15px;
+    width: 100%;
 }
 .group-input-settings select{
     border: 1px solid #F0F5F7;
@@ -5151,8 +5146,23 @@ overflow: -moz-scrollbars-none;  // Firefox
 .select2-container--default .select2-selection--multiple {
     border: 1px solid #848484 !important;
 }
-
-
+.logoMobile{
+    display: none;
+}
+.second-element-mobile{
+    display: none;
+}
+.elementHeaderUser {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+#salesInput{
+    display: none;
+}
+#FeedbackInput{
+    display: none;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -5195,15 +5205,14 @@ overflow: -moz-scrollbars-none;  // Firefox
     .elementMobile{
         display: block;
         display: flex;
-        flex-direction: row-reverse;
     }
     .searchInputHome{
         width: 100%;
     }
     .logoMobile{
+        width: 35px !important;
+        margin: 0 auto;
         display: block;
-        width: 58px !important;
-        margin-left: -45px;
     }
     .logoMobile img{
         width: 100%;
@@ -5349,21 +5358,13 @@ overflow: -moz-scrollbars-none;  // Firefox
     }
 
     .headerdashboard .container-fluid .navBrand{
-        margin-left: 30px;
-    }
-    .headerdashboard .container-fluid .collapse{
-        width: 50%;
-        flex-wrap: nowrap;
-        margin-left: auto;
+        display: none;
     }
     .managerOverviewMensen .blockSidbarMobile2 {
         padding: 40px 30px 25px;
         background: #dfeef3;
     }
 
-    .headerdashboard .container-fluid .collapse ul{
-        display: contents !important;
-    }
     .headerdashboard .container-fluid .collapse ul li .dropdown-menu{
         position: absolute;
         margin-right: 0;
@@ -6031,10 +6032,12 @@ overflow: -moz-scrollbars-none;  // Firefox
     .headerdashboard {
         display: block !important;
         width: -webkit-fill-available;
+        padding-top: 11px !important;
     }
     .userBlockNav {
-        width: 40px;
-        margin: 0 22px;
+        width: 35px;
+        margin: 0;
+        height: 35px;
     }
 
     .headerdashboard .container-fluid {
@@ -6049,10 +6052,6 @@ overflow: -moz-scrollbars-none;  // Firefox
     .contentManagerDash .row .col-md-10{
         padding: 0 !important;
     }
-
-    .headerdashboard .container-fluid .navBrand{
-        margin-left: 30px;
-    }
     .headerdashboard .container-fluid .collapse{
         display: contents !important;
         width: 50%;
@@ -6061,7 +6060,7 @@ overflow: -moz-scrollbars-none;  // Firefox
     }
 
     .headerdashboard .container-fluid .collapse ul{
-        display: contents !important;
+        display: contents ;
     }
     .headerdashboard .container-fluid .collapse ul li .dropdown-menu{
         position: absolute;
@@ -6352,10 +6351,6 @@ overflow: -moz-scrollbars-none;  // Firefox
         border: 1px solid;
         margin: 7px 0;
         width: 43px;
-    }
-    .companyButton{
-        position: absolute;
-        right: 26px;
     }
     .allBlockWorjforce{
         padding-left: 17px;
@@ -6753,7 +6748,18 @@ overflow: -moz-scrollbars-none;  // Firefox
         width: 25px;
         height: 27px;
     }
-
+    .elementHeaderUser{
+        display: flex !important;
+        width: fit-content;
+        padding-right: 18px;
+        margin-left: unset;
+    }
+    .second-element-mobile{
+        display: block;
+    }
+    .companyButton{
+        padding: 0;
+    }
 
 
 }
@@ -6764,6 +6770,7 @@ overflow: -moz-scrollbars-none;  // Firefox
     .headerdashboard {
         display: block !important;
         width: -webkit-fill-available;
+
     }
     .userBlockNav {
         width: 40px;
@@ -6775,6 +6782,7 @@ overflow: -moz-scrollbars-none;  // Firefox
         flex-wrap: nowrap;
         width: 100%;
         justify-content: space-between;
+        align-items: center;
     }
 
     .swiper-slide4 {
@@ -6856,7 +6864,7 @@ overflow: -moz-scrollbars-none;  // Firefox
     }
 
     .headerdashboard .container-fluid .collapse ul{
-        display: contents !important;
+        display: contents ;
     }
     .headerdashboard .container-fluid .collapse ul li .dropdown-menu{
         position: absolute;
@@ -6913,15 +6921,6 @@ overflow: -moz-scrollbars-none;  // Firefox
     .elementMobile{
         display: block;
         display: flex;
-        flex-direction: row-reverse;
-    }
-    .logoMobile{
-        display: none;
-        width: 58px !important;
-        margin-left: -32px;
-    }
-    .logoMobile img{
-        width: 100%;
     }
     .elementWeb{
         display: none;
