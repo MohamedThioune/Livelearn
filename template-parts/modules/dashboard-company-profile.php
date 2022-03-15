@@ -60,7 +60,10 @@ if(!empty($company))
 * * Get interests topics and experts
 */
 
-$topics = get_user_meta($user->ID, 'topic');
+$topics_internal = get_user_meta($user->ID,'topic_affiliate');
+$topics_external = get_user_meta($user->ID,'topic');
+$topics = array_merge($topics_internal, $topics_external); 
+
 $experts = get_user_meta($user->ID, 'expert');
 ?>
 <div class="theme-content">
