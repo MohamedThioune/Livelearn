@@ -347,13 +347,11 @@ else if(isset($delete_todos)){
         else
             array_push($bunch,$value);
     }
-    update_field('todos', $bunch, 'user_'. $user->ID);
-
-    $content = "/dashboard/company/profile/?id=" . $user_id . '&manager='. $user_connected . "?message=" . $message; 
+    update_field('todos', $bunch, 'user_'. $user_id);
     $todos = get_field('todos',  'user_' . $user_id);
 
+    $content = "/dashboard/company/profile/?id=" . $user_id . '&manager='. $user_connected . "?message=" . $message; 
     header("location:".$content);
-
 }
 
  
