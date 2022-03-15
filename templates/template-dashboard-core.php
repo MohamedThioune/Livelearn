@@ -304,7 +304,7 @@ else if(isset($interest_push)){
 * * Delete interests  
 */
 
-else if(isset($delete))
+else if(isset($delete)){
     if($meta_value != null){
         if(delete_user_meta($user_id, $meta_key, $meta_value)){
             $message = "Met succes verwijderd";
@@ -317,7 +317,7 @@ else if(isset($delete))
             }
         }
     }
-
+}
 
 /*
 * * Delete Favorite  
