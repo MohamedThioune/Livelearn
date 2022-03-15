@@ -391,7 +391,7 @@
                     <form action="" method="POST">
                         <input type="hidden" name="id" value="<?php echo $key; ?>">
                         <input type="hidden" name="user_id" value="<?php echo $user->ID; ?>">
-                        <button class="btn btn-danger" style="color:white" name="delete_todos" type="submit"><i class="fa fa-2x fa-trash"></i></button>
+                        <button class="btn btn-danger" style="color:white" name="delete_todos" type="submit"><i class="fa fa-trash"></i></button>
                     </form>
                </div>
                 <?php } 
