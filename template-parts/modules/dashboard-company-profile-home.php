@@ -35,7 +35,6 @@
              'hide_empty' => 0, // change to 1 to hide categores not having a single post
          ) 
      );
-     //var_dump($topicss);   
          foreach ($topicss as  $value) {
              $subtopic = get_categories( 
                  array(
@@ -69,9 +68,11 @@
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-3" aria-selected="false" aria-controls="block-simple-text-3" id="block-simple-text-3-tab">Certificates</a>
                             </li>
-                            <li class="nav-item">
+                           <!--  
+                               <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-4" aria-selected="false" aria-controls="block-simple-text-4" id="block-simple-text-4-tab">Feedback</a>
-                            </li>
+                                </li>
+                             -->
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-5" aria-selected="false" aria-controls="block-simple-text-5" id="block-simple-text-5-tab">Statistics</a>
                             </li>
@@ -209,7 +210,10 @@
                                 <div id="block-simple-text-2" class="tab-pane  block block-layout-builder block-inline-blockqfcc-blocktype-simple-text" role="tabpanel" aria-labelledby="block-simple-text-2-tab">
 
                                     <h2 class="titleCategorieDetailCandidat">Skills</h2>
-                                        <?php foreach($topics as $topic){ 
+
+                                    <?php
+                                    if(!empty($topics)){ 
+                                        foreach($topics as $topic){ 
                                             $name = (String)get_the_category_by_ID($topic);    
                                         ?>
                                             <div class="skillBar">
@@ -220,9 +224,11 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                    <?php } ?>
-
-                                    <p class="textDetailCategorie">we do not have statistics at this time </p>
+                                    <?php }
+                                    }else {
+                                        echo "<p class='textDetailCategorie'>we do not have statistics at this time </p>";
+                                    } 
+                                    ?>
 
                                 </div>
                                 <div id="block-simple-text-3" class="tab-pane  block block-layout-builder block-inline-blockqfcc-blocktype-simple-text" role="tabpanel" aria-labelledby="block-simple-text-3-tab">
@@ -257,10 +263,12 @@
                                     </div>
                                 </div>
 
-                                <div id="block-simple-text-4" class="tab-pane  block block-layout-builder block-inline-blockqfcc-blocktype-simple-text" role="tabpanel" aria-labelledby="block-simple-text-4-tab">
+                               <!--  
+                                   <div id="block-simple-text-4" class="tab-pane  block block-layout-builder block-inline-blockqfcc-blocktype-simple-text" role="tabpanel" aria-labelledby="block-simple-text-4-tab">
                                     <h2 class="titleCategorieDetailCandidat ex">Feedback</h2>
                                     <p class="textDetailCategorie">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>
-                                </div>
+                                   </div> 
+                                -->
                                 <div id="block-simple-text-5" class="tab-pane  block block-layout-builder block-inline-blockqfcc-blocktype-simple-text" role="tabpanel" aria-labelledby="block-simple-text-4-tab">
                                     <h2 class="titleCategorieDetailCandidat ex">Statistic</h2>
                                     <p class="textDetailCategorie">we do not have statistics at this time </p>
@@ -380,7 +388,12 @@
                     </span></p>
                         <p class="activiteRecent"><?php echo $value[1]; ?></p>
                     </div>
-                </div>
+                    <form action="" method="POST">
+                        <input type="hidden" name="id" value="<?php echo $key; ?>">
+                        <input type="hidden" name="user_id" value="<?php echo $user->ID; ?>">
+                        <button class="btn btn-danger" style="color:white" name="delete_todos" type="submit"><i class="fa fa-trash"></i></button>
+                    </form>
+               </div>
                 <?php } 
                     
                 ?>

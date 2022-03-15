@@ -332,10 +332,27 @@ else if(isset($delete_favorite)){
     }
 }
 
-/*  */
+/* 
+
+
 /*
-* *
-*/
+* * Delete Feedbacks   
+*/ 
+
+else if(isset($delete_todos)){
+    $todos = get_field('todos',  'user_' . $user->ID);
+    $bunch = array();
+    foreach($todos as $key => $value){
+        if($key == $id)
+            continue;
+        else
+            array_push($bunch,$value);
+    }
+    update_field('todos', $bunch, 'user_'. $user->ID);
+    $todos = get_field('todos',  'user_' . $user->ID);
+}
+
+/*
 
 ?>
 <?php wp_head(); ?>
