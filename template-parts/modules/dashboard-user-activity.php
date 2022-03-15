@@ -255,7 +255,7 @@ $todos = array_reverse($todos);
         ?>
         <div class="col-lg-5">
             <div class="cardNotification">
-                <h2>Notifications</h2>
+                <h2>Notification</h2>
                 <?php 
                 
                 foreach($todos as $key=>$todo) {
@@ -273,7 +273,7 @@ $todos = array_reverse($todos);
                             <div class="circleNotification">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification 1.png" alt="">
                             </div>
-                            <p class="feddBackNotification"><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?> send you a  <span><?php if(isset($value[3])) echo $value[3]. " - " ; ?></span></p>
+                            <p class="feddBackNotification"><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?> send you a  <span><?php if(isset($value[3])) echo $value[3]; ?></span></p>
                         </div>
                         <br>
                     <!-- div><p class="hoursText"></p></div> -->                    
