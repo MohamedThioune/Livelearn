@@ -81,10 +81,10 @@ $todos = get_field('todos',  'user_' . $user->ID);
                                         $value = explode(";", $todos);
                                         $manager = get_users(array('include'=> $value[2]))[0]->data;
                                     ?>
-                                    <div class="modal-content-body">
+                                    <a href="/dashboard/user/detail-notification/?todo=<?php echo $key ?>" class="modal-content-body">
                                         <p class="feedbackText">Feedback : <span><?php echo $value[0]; ?></span></p>
                                         <p class="feedbackText">By: <span><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?></span></p>
-                                    </div>
+                                    </a>
                                     <?php 
                                         }
                                     ?>
@@ -174,10 +174,10 @@ $todos = get_field('todos',  'user_' . $user->ID);
                                         $value = explode(";", $todo);
                                         $manager = get_users(array('include'=> $value[2]))[0]->data;
                                     ?>
-                                    <div class="modal-content-body">
+                                    <a href="/dashboard/user/detail-notification/?todo=<?php echo $key ?>" class="modal-content-body">
                                         <p class="feedbackText">Feedback : <span><?php echo $value[0]; ?></span></p>
                                         <p class="feedbackText">By: <span><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?></span></p>
-                                    </div>
+                                    </a>
                                     <?php 
                                         }
                                     ?>
