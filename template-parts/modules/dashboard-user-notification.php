@@ -29,6 +29,7 @@ $experts = get_user_meta($user->ID, 'expert');
 * * Get todos
 */
 $todos = get_field('todos',  'user_' . $user->ID);
+$todos = array_reverse($todos);
 /*
 * * End
 */
