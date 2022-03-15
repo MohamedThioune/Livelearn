@@ -262,6 +262,7 @@ $todos = get_field('todos',  'user_' . $user->ID);
                         break;
 
                     $value = explode(";", $todo);
+                    var_dump($value);
                     $manager = get_users(array('include'=> $value[2]))[0]->data;
                     $image = get_field('profile_img',  'user_' . $manager->ID);
                     if(!$image)
