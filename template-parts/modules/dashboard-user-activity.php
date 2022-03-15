@@ -274,7 +274,8 @@ $todos = get_field('todos',  'user_' . $user->ID);
                             </div>
                             <p class="feddBackNotification"><?php if(isset($value[3])) echo $value[3]. " - " ; if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?> send you a  <span>Feedback</span></p>
                         </div>
-                        <br><p class="hoursText"><?php echo $value[0]; ?></p>                    
+                        <br>
+                        <div><p class="hoursText"><?php echo $value[0]; ?></p></div>                
                     </a>
                 <?php
                     }
