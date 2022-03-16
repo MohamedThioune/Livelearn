@@ -37,7 +37,6 @@
                         <h3 class="titleContentNotification">Content Notification</h3>
                         <p class="NotificationFeedback">
                             <?php
-                            echo "<b>Beschrijving:</b> " . $value[1] . "<br>"; 
                             switch ($value[3]) {
                                 //Pour afficher les infos de type Beoordeling Gesprek
                                 case 'Beoordeling Gesprek':
@@ -45,7 +44,7 @@
                                     echo '<br> <b>Algemene beoordeling:</b> '.$value[1];
                                     $stopics_rates_comment = explode('~',$value[4]);
                                     echo '<div class="bloclCijfers">';
-                                        for($i=0; $i<count($stopics_rates_comment); $i+=2)
+                                        for($i=0; $i<count($stopics_rates_comment); $i++)
                                         {
                                             echo '<p class="mb-0" style="width: 20%;">'. (String)get_the_category_by_ID($stopics_rates_comment[$i]) . '</p>';
                                             echo '<div class="rate">';
@@ -56,7 +55,8 @@
                                                         echo '<input type="radio" id="star'.$index.'__" name="sales_rate_'.$index.'" value=""  disabled="true"/>';
                                                 }
                                             echo "</div>";
-                                            echo '<p class="mb-0" style="width: 20%;">'. (String)get_the_category_by_ID($stopics_rates_comment[$i+2]) . '</p>';
+                                            echo '<p class="mb-0" style="width: 20%;">'. $stopics_rates_comment[$i+2] . '</p>';
+                                            $i = $i + 2;
                                         }
                                     echo '</div>';
                                     break;
