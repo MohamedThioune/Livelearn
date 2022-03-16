@@ -741,7 +741,7 @@ ul.sub-menu li a {
 
 .titleOpleidingstype {
     margin-bottom: 14px;
-    width: 100%%;
+    width: 100%;
     background: white;
     border-radius: 10px;
     padding-bottom: 15px;
@@ -4244,6 +4244,7 @@ body .gform_wrapper ul li.gfield {
 .bloclCijfers{
     display: flex;
     align-items: center;
+    flex-wrap: wrap !important;
 }
 .fourBlockVoeg{
     display: none;
@@ -5104,6 +5105,8 @@ overflow: -moz-scrollbars-none;  // Firefox
     float: left;
     height: 46px;
     padding: 0 10px;
+    width: 70%;
+    margin-right: auto;
 }
 .rate:not(:checked) > input {
     position:absolute;
@@ -5111,7 +5114,7 @@ overflow: -moz-scrollbars-none;  // Firefox
     clip:rect(0,0,0,0);
 }
 .rate:not(:checked) > label {
-    float:right;
+    float:left;
     width:1em;
     overflow:hidden;
     white-space:nowrap;
@@ -5163,6 +5166,90 @@ overflow: -moz-scrollbars-none;  // Firefox
 #FeedbackInput{
     display: none;
 }
+
+#field_6_1 legend{
+    display: none;
+}
+#field_6_1 #input_6_1{
+    display: grid;
+    margin-bottom: -30px;
+}
+
+#input_6_1 input{
+    color: #023356 !important;
+    font-size: 14px;
+    padding: 10px 20px !important;
+    background: #FFFFFF !important;
+    border-radius: 8px;
+    border: 1px solid #023356 !important;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+#input_6_1 span{
+    padding: 0 !important;
+}
+
+.ginput_complex label {
+    font-size: 15px !important;
+}
+.ginput_complex #field_6_2 input{
+    color: #023356 !important;
+    font-size: 14px;
+    padding: 10px 20px !important;
+    background: #FFFFFF !important;
+    border-radius: 8px;
+    border: 1px solid #023356 !important;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.ginput_complex #field_6_3 input{
+    color: #023356 !important;
+    font-size: 14px;
+    padding: 10px 20px !important;
+    background: #FFFFFF !important;
+    border-radius: 8px;
+    border: 1px solid #023356 !important;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.ginput_complex #field_6_4 {
+    grid-column: span 12 !important;
+}
+.ginput_complex #field_6_5 {
+    grid-column: span 12 !important;
+}
+
+.ginput_complex #field_6_4 input{
+    color: #023356 !important;
+    font-size: 14px;
+    padding: 10px 20px !important;
+    background: #FFFFFF !important;
+    border-radius: 8px;
+    border: 1px solid #023356 !important;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.ginput_complex #field_6_5 input{
+    color: #023356 !important;
+    font-size: 14px;
+    padding: 10px 20px !important;
+    background: #FFFFFF !important;
+    border-radius: 8px;
+    border: 1px solid #023356 !important;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.gform_footer input{
+    background: #023356;
+    color: white;
+    padding: 8px 25px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+
+
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -6332,6 +6419,7 @@ overflow: -moz-scrollbars-none;  // Firefox
     }
     .boxOne3 {
         height: 430px;
+        justify-content: center;
     }
     .altijdText2 {
         width: 100%;
@@ -6760,29 +6848,22 @@ overflow: -moz-scrollbars-none;  // Firefox
     .companyButton{
         padding: 0;
     }
+    .item4 .dropdown-menu {
+        position: absolute;
+        left: -30px;
+        top: 40px;
+    }
 
 
 }
 
 
 
-@media screen and (max-width: 1023px) and (min-width: 768px) {
+@media screen and (max-width: 1079px) and (min-width: 768px) {
     .headerdashboard {
         display: block !important;
         width: -webkit-fill-available;
-
-    }
-    .userBlockNav {
-        width: 40px;
-        margin: 0 15px;
-    }
-
-    .headerdashboard .container-fluid {
-        display: flex;
-        flex-wrap: nowrap;
-        width: 100%;
-        justify-content: space-between;
-        align-items: center;
+        padding-top: 11px !important;
     }
 
     .swiper-slide4 {
@@ -6853,25 +6934,7 @@ overflow: -moz-scrollbars-none;  // Firefox
         width: 100%;
         flex-wrap: wrap;
     }
-    .headerdashboard .container-fluid .navBrand{
-        margin-left: 30px;
-    }
-    .headerdashboard .container-fluid .collapse{
-        display: contents !important;
-        width: 50%;
-        flex-wrap: nowrap;
-        margin-left: auto;
-    }
 
-    .headerdashboard .container-fluid .collapse ul{
-        display: contents ;
-    }
-    .headerdashboard .container-fluid .collapse ul li .dropdown-menu{
-        position: absolute;
-        margin-right: 0;
-        left: -107px;
-        top: 51px;
-    }
     body {
         overflow-x: hidden !important;
     }
@@ -6965,7 +7028,120 @@ overflow: -moz-scrollbars-none;  // Firefox
         margin-right: 15px;
         margin-bottom: 65px;
     }
-    .btnElementSousMenu{
+
+    .navMobile{
+        top: 0;
+        padding: 25px 15px 8px !important;
+        height: auto !important;
+    }
+    .searchInputHedear {
+        margin-top: 0px !important;
+    }
+    .ProfilGraduatioBlock {
+        align-items: center;
+        margin-top: -7px;
+        display: flex;
+        justify-content: space-between;
+    }
+    .sousNav1 {
+        display: flex;
+        width: 30%;
+    }
+    #profil-element-first {
+        margin-left: -6px;
+        width: 43px
+    }
+    .first-element-mobile {
+        width: 43px;
+    }
+    .boxImgNav2 {
+        width: 32px;
+        padding-top: 1px;
+        position: relative;
+    }
+    .logoMobile {
+        width: 35px !important;
+        margin: 0 auto;
+        display: block;
+    }
+    .logoMobile img {
+        width: 100%;
+    }
+    .sousNav3 {
+        width: 30%;
+        display: flex;
+        justify-content: flex-end;
+    }
+    .second-element-mobile {
+        display: block;
+        width: 25px;
+        height: 27px;
+    }
+    .searchInputHedear {
+        margin-top: 0px !important;
+    }
+    .dropdown-menuSearch {
+        left: 0;
+        width: 100%;
+    }
+    .sousMenuNavMobil {
+        top: 66px !important;
+        padding-top: 10px;
+        width: 100%;
+        float: right;
+        background: #E0EFF4;
+        position: fixed;
+        z-index: 999999999;
+        right: 0;
+        min-height: 100vh;
+        overflow-y: scroll;
+    }
+    .elementGroupGroeien {
+        margin-bottom: 20px;
+    }
+    .firstContentHeadSousMobile {
+        display: block;
+    }
+    .btnElementSousMenu img {
+        width: 11px;
+        float: right;
+    }
+    .secondContentHeadMobile {
+        display: block;
+    }
+    .secondContentHeadMobile .block {
+        display: none;
+    }
+    .sousElementGroeien-binnen-block {
+        display: inline-grid;
+        width: 100%;
+    }
+    .block1 {
+        margin-bottom: 15px;
+        display: grid;
+        margin-top: 25px;
+    }
+    .profilText {
+        font-size: 28px;
+    }
+    .elementsousMenuNav {
+        color: #023356;
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+    .boxImgNav2 {
+        width: 32px;
+        padding-top: 1px;
+        position: relative;
+        margin-left: 4px;
+    }
+    .notification {
+        top: -8px;
+    }
+    .boxOne3 {
+        justify-content: center;
+    }
+    .btnElementSousMenu {
         padding: 0;
         display: flex;
         width: 100%;
@@ -6976,20 +7152,102 @@ overflow: -moz-scrollbars-none;  // Firefox
         margin-bottom: 7px;
         text-transform: none !important;
     }
-    .btnElementSousMenu img{
-        width: 11px;
-        float: right;
+    #burgerCroie {
+        margin-top: 0;
     }
-    .elementSkills {
-        width: 30%;
-        margin: 0 9px 20px;
-    }
-    .boxImgNav {
-        width: 27px;
-        margin-right: 13px;
+
+
+
+
+    .bntNotification{
         position: relative;
     }
 
+    .alertNotification {
+        left: 16px;
+        top: 0px;
+    }
+    #dropdownNavButton1 img {
+        width: 28px;
+        height: 28px;
+    }
+    #dropdownNavButton1 {
+        padding: 0px 0 !important;
+    }
+    .headerdashboard .container-fluid .navBrand {
+        display: none;
+    }
+    .headerdashboard .container-fluid .collapse {
+        display: contents !important;
+        width: 50%;
+        flex-wrap: nowrap;
+        margin-left: auto;
+    }
+    .elementHeaderUser {
+        display: flex !important;
+        width: fit-content;
+        padding-right: 18px;
+        margin-left: unset;
+    }
+    .companyButton {
+        padding: 0;
+    }
+    .boxSousNav3-2 {
+        width: 28px;
+        padding: 0 !important;
+    }
+    .second-element-mobile .croie {
+        margin-top: 0;
+        width: 28px;
+        padding: 0 !important;
+    }
+    .containerModife {
+        padding: 0px 20px 0px 30px !important;
+    }
+
+
+}
+@media screen and (max-width: 1079px) and (min-width: 1023px){
+    #searchIconeTablet{
+        display: none !important;
+    }
+    .nav-link {
+        font-size: 9px;
+    }
+    .container-fluid {
+        padding: 0 20px !important;
+    }
+    .logoModife {
+        width: 100px;
+    }
+    .form-control {
+        display: block !important;
+    }
+    .inputSearch {
+        min-width: 333px;
+        padding-left: 25px;
+    }
+}
+@media screen and (max-width: 1330px) and (min-width: 1080px){
+    #searchIconeTablet{
+        display: none !important;
+    }
+    .nav-link {
+        font-size: 12px;
+    }
+    .container-fluid {
+        padding: 0 20px !important;
+    }
+    .logoModife {
+        width: 117px;
+    }
+    .form-control {
+        display: block !important;
+    }
+    .inputSearch {
+        min-width: 275px;
+        padding-left: 25px;
+    }
 }
 @media screen and (max-width: 2560px) and (min-width: 1400px){
     .container-fluid {

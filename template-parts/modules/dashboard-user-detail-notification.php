@@ -46,18 +46,24 @@
                                     echo '<div class="bloclCijfers">';
                                         for($i=0; $i<count($stopics_rates_comment); $i++)
                                         {
+                                            $stars = intval($stopics_rates_comment[$i]);
                                             echo '<p class="mb-0" style="width: 20%;">'. (String)get_the_category_by_ID(intval($stopics_rates_comment[$i])) . '</p>';
                                             echo '<div class="rate">';
-                                                for($index=5; $index >= 1; $index--){
-                                                    if($index == intval($stopics_rates_comment[$i+1]))
-                                                        echo '<input type="radio" id="star'.$index.'__" name="sales_rate_'.$index.'" value="" checked="checked" disabled="true"/>
-                                                              <label class="ma_link" for="star'.$index.'__" title="text">'.$index.' stars</label>';
-                                                    else 
-                                                        echo '<input type="radio" id="star'.$index.'__" name="sales_rate_'.$index.'" value=""  disabled="true"/>
-                                                              <label class="ma_link" for="star'.$index.'__" title="text">'.$index.' stars</label>';
-                                                }
+                                                for($index=$stars; $index >= 1; $index--)
+                                                    echo '<input type="radio" id="star'.$index.'__" name="sales_rate_'.$index.'" value="" checked="checked" disabled="true"/>
+                                                          <label class="ma_link" for="star'.$index.'__" title="text">'.$index.' stars</label>';
+                                                
+                                                $suit = 5-$stars;
+                                                if($suit != 0)
+                                                    for($index=1; $index <= $suit; $index++){
+                                                        $pos = $index + $stars;
+                                                        echo '<input type="radio" id="star'.$pos.'__" name="sales_rate_'.$pos.'" value=""  disabled="true"/>
+                                                              <label class="ma_link" for="star'.$pos.'__" title="text">'.$pos.' stars</label>';
+                                                    }
+
+                                                
                                             echo "</div><br>";
-                                            echo '<div class="mb-0" style="width: 20%;">'. $stopics_rates_comment[$i+2] . '</div>';
+                                            echo '<div class="mb-0" style="width: 100%;">'. $stopics_rates_comment[$i+2] . '</div>';
                                             $i = $i + 2;
                                         }
                                     echo '</div>';
