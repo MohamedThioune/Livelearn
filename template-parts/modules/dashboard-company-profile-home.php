@@ -98,7 +98,7 @@
                                         </div>
                                         <div class="overviewSecondBlock">
                                             <p class="professionCandidat"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . '' . $user->last_name; else echo $user->display_name?>
-                                            <p class="professionCandidat"><?php echo $user->email; ?></p>
+                                            <p class="professionCandidat"><?php if(isset($user->email)) echo $user->email; ?></p>
                                             <?php if($country) { ?>
                                             <p class="professionCandidat"><?php echo $country; ?></p>
                                             <?php } ?>
@@ -484,7 +484,7 @@
                             
                                     <input type="hidden" name="manager" value=<?=$manager->ID?> >
                                     <input type="hidden" name="id_user" value=<?=$user->ID?> >
-                                    <input type="hidden" name="type" value="feedback"> 
+                                    <input type="hidden" name="type" value="Feedback"> 
                                 </div>
                                 <div class="">
                                     <button class="btn btnSaveSetting" name="add_todo_feedback" >Save</button>
@@ -555,7 +555,7 @@
                                         <button class="btn btnSaveSetting" name="add_todo_persoonlijk" >Save</button>
                                         <input type="hidden" name="manager" value=<?=$manager->ID?> >
                                         <input type="hidden" name="id_user" value=<?=$user->ID?> >
-                                        <input type="hidden" name="type" value="persoonlijk_ontwikkelplan"> 
+                                        <input type="hidden" name="type" value="Persoonlijk ontwikkelplan"> 
                                     </div>
                                 </form> 
                             </div>
@@ -572,47 +572,48 @@
                                 <div class="col-lg-12 col-md-12">
                                     <div class="group-input-settings">
                                         <label for="">Cijfers interne groei</label>
-                                        <div class="bloclCijfers">
-                                            <p class="mb-0" style="width: 20%;">Sales</p>
-                                            <div class="rate">
-                                                <input type="radio" id="star5" name="sales_rate" value="5" />
-                                                <label class="ma_link" for="star5" title="text">5 stars</label>
-                                                <input type="radio" id="star4" name="sales_rate" value="4" />
-                                                <label class="ma_link" for="star4" title="text">4 stars</label>
-                                                <input type="radio" id="star3" name="sales_rate" value="3" />
-                                                <label class="ma_link" for="star3" title="text">3 stars</label>
-                                                <input type="radio" id="star2" name="sales_rate" value="2" />
-                                                <label class="ma_link" for="star2" title="text">2 stars</label>
-                                                <input type="radio" id="star1" name="sales_rate" value="1" />
-                                                <label class="ma_link" for="star1" title="text">1 star</label>
-                                            </div>
+                                           
+                                        
+                                            <?php
+                                            if (!empty (get_user_meta($user->ID,'topic_affiliate')))
+                                            {
+                                                $internal_growth_subtopics= get_user_meta($user->ID,'topic_affiliate');   
+                                                foreach($internal_growth_subtopics as $key =>  $value){
+                                                     echo '<div class="bloclCijfers">';
+                                                     echo '<p class="mb-0" style="width: 20%;">'.lcfirst((String)get_the_category_by_ID($value)).'</p>';
+                                                     echo '<div class="rate">
+                                                     <input type="radio" id="star5_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="5" />
+                                                     <label class="ma_link" for="star5_'.$key.'" title="text">5 stars</label>
+                                                     <input type="radio" id="star4_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="4" />
+                                                     <label class="ma_link" for="star4_'.$key.'" title="text">4 stars</label>
+                                                     <input type="radio" id="star3_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="3" />
+                                                     <label class="ma_link" for="star3_'.$key.'" title="text">3 stars</label>
+                                                     <input type="radio" id="star2_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="2" />
+                                                     <label class="ma_link" for="star2_'.$key.'" title="text">2 stars</label>
+                                                     <input type="radio" id="star1_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="1" />
+                                                     <label class="ma_link" for="star1_'.$key.'" title="text">1 star</label>
+                                                    </div>';
+                                                     echo '</div>';
+                                                    }
+                                            }
+                                                
+                                            ?>
+                                            
+                                            
                                         </div>
-                                        <div class="bloclCijfers">
-                                            <p class="mb-0" style="width: 20%;">Feedback geven</p>
-                                            <div class="rate">
-                                                <input type="radio" id="star5_" name="feedback_geven_rate" value="5" />
-                                                <label class="ma_link" for="star5_" title="text">5 stars</label>
-                                                <input type="radio" id="star4_" name="feedback_geven_rate" value="4" />
-                                                <label class="ma_link" for="star4_" title="text">4 stars</label>
-                                                <input type="radio" id="star3_" name="feedback_geven_rate" value="3" />
-                                                <label class="ma_link" for="star3_" title="text">3 stars</label>
-                                                <input type="radio" id="star2_" name="feedback_geven_rate" value="2" />
-                                                <label class="ma_link" for="star2_" title="text">2 stars</label>
-                                                <input type="radio" id="star1_" name="feedback_geven_rate" value="1" />
-                                                <label class="ma_link" for="star1_" title="text">1 star</label>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
-                                </div>
-                                <div class="">
+                                    <div class="">
                                 <input type="button" value="Volgende"  class="btn btnSaveSetting" id="volgende1">
                                 </div>
+                                </div>
+                                
                             </div>
                             <div class="sousBlockFourBlockVoeg2">
                                 <h2 class="voegToeText">Beoordelingsgesprek</h2>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="group-input-settings">
-                                        <div class="bloclCijfers">
+                                        <!-- <div class="bloclCijfers">
                                             <p class="mb-0" >Sales</p>
                                             <div class="rate">
                                                 <input type="radio" id="star5__" name="sales_rate_2" value="5" />
@@ -626,15 +627,27 @@
                                                 <input type="radio" id="star1__" name="sales_rate_2" value="1" />
                                                 <label class="ma_link" for="star1__" title="text">1 star</label>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
-                                    <div class="group-input-settings">
-                                        <label for="">Sales toelichting</label>
-                                        <textarea name="sales_toelichting" id="" rows="4"></textarea>
-                                    </div>
+                                
+
+                                <?php
+                                            if (!empty (get_user_meta($user->ID,'topic_affiliate')))
+                                            {
+                                                $internal_growth_subtopics= get_user_meta($user->ID,'topic_affiliate');   
+                                                foreach($internal_growth_subtopics as $key =>  $value){
+                                                    echo ' <div class="group-input-settings">
+                                                    <label for="">'.lcfirst((String)get_the_category_by_ID($value)).' toelichting</label>
+                                                    <textarea name="'.lcfirst((String)get_the_category_by_ID($value)).'_toelichting" id="" rows="4"></textarea>
+                                                    </div>';
+                                                    }
+                                            }
+                                                
+                                            ?>
                                 </div>
+
                                 <div class="">
                                     <input type="button" value="Volgende" class="btn btnSaveSetting" id="volgende2">
                                 </div>
@@ -651,7 +664,7 @@
                                 <div class="">
                                 <input type="hidden" name="manager" value=<?=$manager->ID?> >
                                     <input type="hidden" name="id_user" value=<?=$user->ID?> >
-                                    <input type="hidden" name="type" value="beoordelingsgesprek">
+                                    <input type="hidden" name="type" value="Beoordeling Gesprek">
                                     <input type="submit" name="add_todo_beoordelingsgesprek" value="Save"  class="btn btnSaveSetting" id="volgende1">
                                 </div>
                             </div>
@@ -692,7 +705,7 @@
                                 <div class="">
                                     <input type="hidden" name="manager" value=<?=$manager->ID?> >
                                     <input type="hidden" name="id_user" value=<?=$user->ID?> >
-                                    <input type="hidden" name="type" value="compliment">
+                                    <input type="hidden" name="type" value="Compliment">
                                     <button class="btn btnSaveSetting" name="add_todo_compliment" >Save</button>
                                 </div>
                             

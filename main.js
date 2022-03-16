@@ -61,6 +61,7 @@ jQuery(function($){
     $(".burgerElement").click(function() {
         $(".headSousMobilePrincipale").show();
         $(".boxSousNav3-2").hide();
+        $("#croieProfil").hide();
         $(".croie").toggle();
     });
 
@@ -68,6 +69,7 @@ jQuery(function($){
         $(".headSousMobilePrincipale").hide();
         $(".burgerElement").show();
         $("#croieSearch").hide();
+        $("#croieProfil").hide();
         $(".croie").toggle();
     });
 
@@ -153,6 +155,16 @@ jQuery(function($){
     });
 
     //Pour le modal feedback
+    $(".close").click(function() {
+        $(".secondBlockVoeg").hide();
+        $(".treeBlockVoeg").hide();
+        $(".fourBlockVoeg").hide();
+        $(".fiveBlockVoeg").hide();
+        $(".sousBlockFourBlockVoeg1").hide();
+        $(".sousBlockFourBlockVoeg2").hide();
+        $(".sousBlockFourBlockVoeg3").hide();
+        $(".firstBlockVoeg").show();
+    });
 
     $("#boxVoeg1").click(function() {
         $(".firstBlockVoeg").hide();
@@ -165,6 +177,7 @@ jQuery(function($){
     $("#boxVoeg3").click(function() {
         $(".firstBlockVoeg").hide();
         $(".fourBlockVoeg").show();
+        $(".sousBlockFourBlockVoeg1").show();
     });
     $("#boxVoeg4").click(function() {
         $(".firstBlockVoeg").hide();
@@ -178,6 +191,15 @@ jQuery(function($){
         $(".sousBlockFourBlockVoeg1").hide();
         $(".sousBlockFourBlockVoeg2").hide();
         $(".sousBlockFourBlockVoeg3").show();
+    });
+    // fedback
+    $(".buttonFeedback").click(function() {
+        $("#FeedbackInput").hide();
+        $("#salesInput").show();
+    });
+    $(".buttonFeedback2").click(function() {
+        $("#FeedbackInput").show();
+        $("#salesInput").hide();
     });
 
 
