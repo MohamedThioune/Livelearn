@@ -11,7 +11,6 @@ $user = wp_get_current_user();
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/custom.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css'>
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css'>
         <!-- get bootstrap icons -->
@@ -57,7 +56,6 @@ $user = wp_get_current_user();
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="nav-item item4 dropdown">
                         <a href="#" class="nav-link navModife4 btn dropdown-toggle " type="button" id="dropdownNavButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -182,5 +180,4 @@ $user = wp_get_current_user();
                 </div>
             </div>
         </nav>
-
      </body>
