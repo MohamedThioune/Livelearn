@@ -1,10 +1,15 @@
 <?php
-     $users = get_users();
-     $data_user = wp_get_current_user();
-     $user_connected = $data_user->data->ID;
-     $company = get_field('company',  'user_' . $user_connected);
-     if(!empty($company))
-         $company_connected = $company[0]->post_title;
+    $users = get_users();
+    $data_user = wp_get_current_user();
+    $user_connected = $data_user->data->ID;
+    $company = get_field('company',  'user_' . $user_connected);
+    $members = array();
+    if(!empty($company))
+        $company_connected = $company[0]->post_title;
+
+    foreach($users as $user)
+        if(in_array( 'author', $user->roles ) )
+            array_push($members, $user);   
 ?>
     <div class="row">
         <div class="col-md-5 col-lg-8">
@@ -17,10 +22,17 @@
                         <div class="acf-field">
                             <label for="locate">Wijs andere experts uit uw team aan voor deze cursus :</label><br>
                             <div class="form-group formModifeChoose" >
-                                <input type="search" name="search_expert" id="search_expert" class="form-control">
-                                <br>
-                                <div></div>
-                                <select name="experts[]" class="form-select form-select-lg mb-3" multiple="true" id="autocomplete"></select>
+                                <div class="form-group formModifeChoose">
+
+                                    <select name="experts[]" id="autocomplete" class="multipleSelect2" multiple="true">
+                                        <?php 
+                                            foreach($members as $member) {
+                                                echo "<option value='" . $member->ID ."'>" . $member->display_name . "</option>";
+                                            }
+                                        ?>
+                                    </select>
+
+                                </div>
                             </div>
                             <button type="submit" name="expert_add" class="btn btn-info">Finish</button> 
                         </div>
@@ -54,32 +66,19 @@
                         <div class="circleIndicator passEtape"></div>
                         <p class="textOpleidRight">Details en onderwepren</p>
                     </a>
+                    <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&step=5" class="contentBlockCourse">
+                        <div class="circleIndicator passEtape"></div>
+                        <p class="textOpleidRight">Tags</p>
+                    </a>
+                    <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&step=6" class="contentBlockCourse">
+                        <div class="circleIndicator passEtape2"></div>
+                        <p class="textOpleidRight">Experts</p>
+                    </a>
                 </div>
             </div>
         </div>
         
     </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-    $("#search_expert").keyup(()=>
-    { 
-        var search=$("#search_expert").val()
-        console.log(search)
-        $.ajax({
-                    url:"/fetch-expert",
-                    method:"post",
-                    data:{
-                     search_expert:search
-                    },
-                    dataType:"text",
-                    success: function(data){
-                        console.log("reussit");
-                        $('#autocomplete').html(data);
-                    }
-                });
-    })
-</script>
 
 
     
