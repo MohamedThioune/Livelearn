@@ -47,7 +47,7 @@
                                     echo '<div class="bloclCijfers">';
                                         for($i=0; $i<count($stopics_rates_comment); $i++)
                                         {
-                                            //echo '<p class="mb-0" style="width: 20%;">'. (String)get_the_category_by_ID($stopics_rates_comment[$i]) . '</p>';
+                                            echo '<p class="mb-0" style="width: 20%;">'. (String)get_the_category_by_ID(intval($stopics_rates_comment[$i])) . '</p>';
                                             echo '<div class="rate">';
                                                 for($index=1; $index <= 5; $index++){
                                                     if($index == $stopics_rates_comment[$i+1])
