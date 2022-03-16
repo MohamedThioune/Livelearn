@@ -200,7 +200,7 @@ else if(isset($_POST['add_todo_beoordelingsgesprek'])){
         foreach ($topic_affiliate as $value) {
             $rate_topic=$_POST[lcfirst((String)get_the_category_by_ID($value)).'_rate'];
             $comment_topic=$_POST[lcfirst((String)get_the_category_by_ID($value)).'_toelichting'];
-            $rates_comments=$rates_comments.$rate_topic.'~'.$comment_topic.'~';
+            $rates_comments=$rates_comments.$value.'~'.$rate_topic.'~'.$comment_topic.'~';
         }
         $rates_comments=substr_replace($rates_comments ,"",-1);
     }

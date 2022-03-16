@@ -642,7 +642,7 @@
                                                     <label for="">'.lcfirst((String)get_the_category_by_ID($value)).' toelichting</label>
                                                     <textarea name="'.lcfirst((String)get_the_category_by_ID($value)).'_toelichting" id="" rows="4"></textarea>
                                                     </div>';
-                                                    }
+                                                }
                                             }
                                                 
                                             ?>
