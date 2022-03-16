@@ -268,7 +268,7 @@ $todos = array_reverse($todos);
                     if(!$image)
                         $image = get_stylesheet_directory_uri() . '/img/Group216.png';
                 ?>
-                    <a href="/dashboard/user/detail-notification/?todo=<?php echo $key ?>" class="SousBlockNotification">
+                    <a href="/dashboard/user/detail-notification/?todo=<?= $path ?>p echo " class="SousBlockNotification">
                         <div class="d-flex align-items-center">
                             <div class="circleNotification">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification 1.png" alt="">
