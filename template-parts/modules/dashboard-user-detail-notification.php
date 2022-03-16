@@ -46,7 +46,7 @@
                                     echo '<div class="bloclCijfers">';
                                         for($i=0; $i<count($stopics_rates_comment); $i++)
                                         {
-                                            $stars = intval($stopics_rates_comment[$i]);
+                                            $stars = intval($stopics_rates_comment[$i+1]);
                                             echo '<p class="mb-0" style="width: 20%;">'. (String)get_the_category_by_ID(intval($stopics_rates_comment[$i])) . '</p>';
                                             echo '<div class="rate">';
                                                 for($index=$stars; $index >= 1; $index--)
