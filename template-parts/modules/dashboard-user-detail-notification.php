@@ -35,55 +35,58 @@
                     </div>
                     <div>
                         <h3 class="titleContentNotification">Content Notification</h3>
-                        <p class="NotificationFeedback"><?php echo $value[1]; ?> </p>
-                        <?php 
-                        echo '\n <br>';
-                        switch ($value[3]) {
-                            //Pour afficher les infos de type Beoordeling Gesprek
-                            case 'Beoordeling Gesprek':
-                                echo '\n Title: '.$value[0];
-                                echo '\n Algemene beoordeling: '.$value[1];
-                                $stopics_rates_comment= explode('~',$value[4]);
-                                for($i=0;$i<count($stopics_rates_comment); $i++)
-                                {
-                                   echo '\n'.(String)get_the_category_by_ID($stopics_rates_comment[$i]).'; Stars: '.$stopics_rates_comment[$i+1].'; Comment '.$stopics_rates_comment[$i+2];
-                                   $i=$i+2;
-                                }
-                                break;
-                                //Pour afficher les infos de type Persoonlijk Ontwikkelplan
-                            case 'Persoonlijk Ontwikkelplan' :
-                                echo '\n Title: '.$value[0];
-                                $stopics= explode('~',$value[4]);
-                                for($i=0;$i<count($stopics_rates_comment); $i++)
-                                {
-                                   echo '\n'.(String)get_the_category_by_ID($stopics[$i]);
-                                }
-                               echo '\n Wat wil je bereiken ?';
-                               echo  $value[5];
-                               echo '\n Hoe ga je dit bereiken ?';
-                               echo  $value[6];
-                               echo '\n Heb je hierbij hulp nodig ?';
-                               echo  $value[7];
-                               echo '\n Opmerkingen: '.$value[1];
-                               
-                                
-                                break;
-                                // Pour afficher les infos de type feedback ou compliment vu qu'ils ont le meme format
-                            default :
-                                    echo '\n Title: '.$value[0];
-                                    echo '\n Beschrijving: '.$value[1];
+                        <p class="NotificationFeedback">
+                            <?php
+                            echo "<b>Beschrijving:</b> " . $value[1] . "<br>"; 
+                            switch ($value[3]) {
+                                //Pour afficher les infos de type Beoordeling Gesprek
+                                case 'Beoordeling Gesprek':
+                                    echo '<br> <b>Title:</b> '.$value[0];
+                                    echo '<br> <b>Algemene beoordeling:</b> '.$value[1];
+                                    $stopics_rates_comment = explode('~',$value[4]);
+                                    echo '<div class="bloclCijfers">';
+                                        for($i=0;$i<count($stopics_rates_comment); $i+2)
+                                        {
+                                            echo '<p class="mb-0" style="width: 20%;">'. (String)get_the_category_by_ID($stopics_rates_comment[$i]) . '</p>';
+                                            echo '<div class="rate">';
+                                                for($index=1; $index <= $stopics_rates_comment[$i+1]; $index++){
+                                                    echo '<input type="radio" id="star'.$key.'__" name="sales_rate_'.$key.'" value="" />';
+                                                }
+                                            echo "</div>";
+                                            echo '<p class="mb-0" style="width: 20%;">'. (String)get_the_category_by_ID($stopics_rates_comment[$i+2]) . '</p>';
+                                        }
+                                    echo '</div>';
+                                    break;
+                                    //Pour afficher les infos de type Persoonlijk Ontwikkelplan
+                                case 'Persoonlijk Ontwikkelplan' :
+                                    echo '<br> <b>Title:</b> '.$value[0];
                                     $stopics= explode('~',$value[4]);
-                                    echo '\n Topics: ';
-                                    for($i=0;$i<count($stopics); $i++)
+                                    for($i=0;$i<count($stopics_rates_comment); $i++)
                                     {
-                                        echo '\n'.(String)get_the_category_by_ID($stopics[$i]);
+                                    echo '<br>'.(String)get_the_category_by_ID($stopics[$i]);
                                     }
-                                break;
-                        }
-                            
-                                
-
-                        ?>
+                                    echo '<br> <b>Wat wil je bereiken ?</b>';
+                                    echo  $value[5];
+                                    echo '<br> <b>Hoe ga je dit bereiken ?</b>';
+                                    echo  $value[6];
+                                    echo '<br> <b>Heb je hierbij hulp nodig ?</b>';
+                                    echo  $value[7];
+                                    echo '<br> <b>Opmerkingen:</b> '.$value[1];
+                                    break;
+                                    // Pour afficher les infos de type feedback ou compliment vu qu'ils ont le meme format
+                                default :
+                                        echo '<br> Title: '.$value[0];
+                                        echo '<br> Beschrijving: '.$value[1];
+                                        $stopics= explode('~',$value[4]);
+                                        echo '<br> Topics: ';
+                                        for($i=0;$i<count($stopics); $i++)
+                                        {
+                                            echo '<br>'.(String)get_the_category_by_ID($stopics[$i]);
+                                        }
+                                    break;
+                            }       
+                            ?>
+                        </p>
                     </div>
                 </div>
                 </div>

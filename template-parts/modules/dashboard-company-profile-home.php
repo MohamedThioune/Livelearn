@@ -378,12 +378,12 @@
                             <div class="activiteRecent">
                                 <img width="25" src="<?php echo $image ?>" alt="">
                                 <div class="contentRecentActivite">
-                                    <a href="/dashboard/user/detail-notification/?todo=<?php echo $key; ?>" class="titleActivite"><?php echo $value[0] ; ?> by <span style="font-weight:bold">
+                                    <div class="titleActivite"><?php echo $value[0] ; ?> by <span style="font-weight:bold">
                                     <?php 
                                     if(isset($manager->nice_name)) echo $manager->nice_name ; else echo $manager->display_name; 
                                     ?>
                                     </span>
-                                    </a>
+                                    </div>
                                     <p class="activiteRecent"><?php echo $value[1]; ?></p>
                                 </div>&nbsp;&nbsp;&nbsp;&nbsp;
                                 <form action="" method="POST">
