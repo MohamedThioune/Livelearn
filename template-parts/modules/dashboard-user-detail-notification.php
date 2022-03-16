@@ -45,12 +45,12 @@
                                     echo '<br> <b>Algemene beoordeling:</b> '.$value[1];
                                     $stopics_rates_comment = explode('~',$value[4]);
                                     echo '<div class="bloclCijfers">';
-                                        for($i=0;$i<count($stopics_rates_comment); $i+=2)
+                                        for($i=0; $i<count($stopics_rates_comment); $i+2)
                                         {
                                             echo '<p class="mb-0" style="width: 20%;">'. (String)get_the_category_by_ID($stopics_rates_comment[$i]) . '</p>';
                                             echo '<div class="rate">';
                                                 for($index=1; $index <= $stopics_rates_comment[$i+1]; $index++){
-                                                    echo '<input type="radio" id="star'.$key.'__" name="sales_rate_'.$key.'" value="" disabled="true"/>';
+                                                    echo '<input type="radio" id="star'.$index.'__" name="sales_rate_'.$index.'" value="" disabled="true"/>';
                                                 }
                                             echo "</div>";
                                             echo '<p class="mb-0" style="width: 20%;">'. (String)get_the_category_by_ID($stopics_rates_comment[$i+2]) . '</p>';
