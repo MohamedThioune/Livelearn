@@ -741,7 +741,7 @@ ul.sub-menu li a {
 
 .titleOpleidingstype {
     margin-bottom: 14px;
-    width: 100%;
+    width: 100%%;
     background: white;
     border-radius: 10px;
     padding-bottom: 15px;
@@ -4244,7 +4244,6 @@ body .gform_wrapper ul li.gfield {
 .bloclCijfers{
     display: flex;
     align-items: center;
-    flex-wrap: wrap !important;
 }
 .fourBlockVoeg{
     display: none;
@@ -5105,8 +5104,6 @@ overflow: -moz-scrollbars-none;  // Firefox
     float: left;
     height: 46px;
     padding: 0 10px;
-    width: 70%;
-    margin-right: auto;
 }
 .rate:not(:checked) > input {
     position:absolute;
@@ -5114,7 +5111,7 @@ overflow: -moz-scrollbars-none;  // Firefox
     clip:rect(0,0,0,0);
 }
 .rate:not(:checked) > label {
-    float:left;
+    float:right;
     width:1em;
     overflow:hidden;
     white-space:nowrap;
@@ -5166,90 +5163,6 @@ overflow: -moz-scrollbars-none;  // Firefox
 #FeedbackInput{
     display: none;
 }
-
-#field_6_1 legend{
-    display: none;
-}
-#field_6_1 #input_6_1{
-    display: grid;
-    margin-bottom: -30px;
-}
-
-#input_6_1 input{
-    color: #023356 !important;
-    font-size: 14px;
-    padding: 10px 20px !important;
-    background: #FFFFFF !important;
-    border-radius: 8px;
-    border: 1px solid #023356 !important;
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
-#input_6_1 span{
-    padding: 0 !important;
-}
-
-.ginput_complex label {
-    font-size: 15px !important;
-}
-.ginput_complex #field_6_2 input{
-    color: #023356 !important;
-    font-size: 14px;
-    padding: 10px 20px !important;
-    background: #FFFFFF !important;
-    border-radius: 8px;
-    border: 1px solid #023356 !important;
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
-.ginput_complex #field_6_3 input{
-    color: #023356 !important;
-    font-size: 14px;
-    padding: 10px 20px !important;
-    background: #FFFFFF !important;
-    border-radius: 8px;
-    border: 1px solid #023356 !important;
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
-
-.ginput_complex #field_6_4 {
-    grid-column: span 12 !important;
-}
-.ginput_complex #field_6_5 {
-    grid-column: span 12 !important;
-}
-
-.ginput_complex #field_6_4 input{
-    color: #023356 !important;
-    font-size: 14px;
-    padding: 10px 20px !important;
-    background: #FFFFFF !important;
-    border-radius: 8px;
-    border: 1px solid #023356 !important;
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
-.ginput_complex #field_6_5 input{
-    color: #023356 !important;
-    font-size: 14px;
-    padding: 10px 20px !important;
-    background: #FFFFFF !important;
-    border-radius: 8px;
-    border: 1px solid #023356 !important;
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
-.gform_footer input{
-    background: #023356;
-    color: white;
-    padding: 8px 25px;
-    border-radius: 10px;
-    margin-top: 20px;
-}
-
-
-
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
