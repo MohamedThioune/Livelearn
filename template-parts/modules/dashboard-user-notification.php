@@ -66,18 +66,19 @@ $todos = array_reverse($todos);
                     $image = get_field('profile_img',  'user_' . $manager->ID);
                     if(!$image)
                         $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+
+                    $path = count($todos) - ($key + 1);
                 ?>
                 <tr>                
-                        <td scope="row"><a href="/dashboard/user/detail-notification/?todo=<?php echo $key; ?>"> <strong><?php echo $value[0]; ?></strong> </a></td>
-                        <td class="descriptionNotification"><a href="dashboard/user/detail-notification/todos=<?php echo $key; ?>"><?php echo $value[1]; ?> </a></td>
-                        <td><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?></td>
-                        <td>Weekly</td>
-                        <td>
-                            <button class="btn bntDelete">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/delete.png">
-                            </button>
-                        </td>
-                   </a>
+                    <td scope="row"><a href="/dashboard/user/detail-notification/?todo=<?php echo $path; ?>"> <strong><?php echo $value[0]; ?></strong> </a></td>
+                    <td class="descriptionNotification"><a href="dashboard/user/detail-notification/todos=<?php echo $key; ?>"><?php echo $value[1]; ?> </a></td>
+                    <td><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?></td>
+                    <td>Weekly</td>
+                    <td>
+                        <button class="btn bntDelete">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/delete.png">
+                        </button>
+                    </td>
                 </tr>
                <?php
                     }
