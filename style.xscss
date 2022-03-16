@@ -1,0 +1,5748 @@
+/*
+ Theme Name:   Fluidify child
+ Theme URI:    https://www.influid.nl/
+ Description:  Fluidify Child Theme
+ Author:       Influid
+ Author URI:   https://www.influid.nl/
+ Template:     fluidify
+ Version:      1.0.0
+ Tags:         custom child
+ Text Domain:  fluidify-child
+*/
+@font-face {
+	font-family: "Ubuntu-Bold";
+	src: url("./font/Ubuntu-Bold.woff2") format("woff2"), url("./font/Ubuntu-Bold.woff") format("woff");
+}
+@font-face {
+	font-family: "Ubuntu-BoldItalic";
+	src: url("./font/Ubuntu-BoldItalic.woff2") format("woff2"), url("./font/Ubuntu-BoldItalic.woff") format("woff");
+}
+@font-face {
+	font-family: "Ubuntu-Italic";
+	src: url("./font/Ubuntu-Italic.woff2") format("woff2"), url("./font/Ubuntu-Italic.woff") format("woff");
+}
+@font-face {
+	font-family: "Ubuntu-Light";
+	src: url("./font/Ubuntu-Light.woff2") format("woff2"), url("./font/Ubuntu-Light.woff") format("woff");
+}
+@font-face {
+	font-family: "Ubuntu-LightItalic";
+	src: url("./font/Ubuntu-LightItalic.woff2") format("woff2"), url("./font/Ubuntu-LightItalic.woff") format("woff");
+}
+@font-face {
+	font-family: "Ubuntu-Medium";
+	src: url("./font/Ubuntu-Medium.woff2") format("woff2"), url("./font/Ubuntu-Medium.woff") format("woff");
+}
+@font-face {
+	font-family: "Ubuntu-MediumItalic";
+	src: url("./font/Ubuntu-MediumItalic.woff2") format("woff2"), url("./font/Ubuntu-MediumItalic.woff") format("woff");
+}
+@font-face {
+	font-family: "Ubuntu-Regular";
+	src: url("./font/Ubuntu-Regular.woff2") format("woff2"), url("./font/Ubuntu-Regular.woff") format("woff");
+}
+/*padding: 15px 20px;*/
+/* The contModifeCheck  */
+/* Hide the browser's default checkbox */
+/* Create a custom checkbox */
+/* On mouse-over, add a grey background color */
+/* When the checkbox is checked, add a blue background */
+/* Create the checkmark/indicator (hidden when not checked) */
+/* Show the checkmark when checked */
+/* Style the checkmark/indicator */
+/*# sourceMappingURL=style.css.map */
+/*# sourceMappingURL=style.css.map */
+body {
+	overflow-x: hidden;
+	font-family: "Ubuntu-Regular";
+}
+.ccn_context_frontend {
+	header.ccnHeader1.header-nav.menu_style_home_one {
+		display: none !important;
+	}
+}
+#ccn-main-region {
+	padding-top: unset !important;
+	padding-bottom: unset !important;
+}
+.headerdashboard {
+	background: #023356;
+	color: #ffffff !important;
+	border-bottom: 1px solid #7070706e;
+	padding: 0 !important;
+	margin: 0 -15px;
+	position: fixed !important;
+	width: -webkit-fill-available;
+	z-index: 1111;
+	display: flex;
+}
+.headerdashboard-content {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	padding: 2px 15px 0;
+	align-items: center;
+}
+.dropdownMenuDashboard {
+	background: white !important;
+	color: #0a0a0a !important;
+	position: relative;
+	z-index: 111;
+	display: none;
+}
+.navModife4 {
+	&:focus {
+		outline: 0;
+		-webkit-box-shadow: unset !important;
+		box-shadow: unset !important;
+	}
+	&::after {
+		display: none !important;
+	}
+}
+.navModife {
+	background: #023356;
+	color: #ffffff !important;
+	border-bottom: 1px solid #7070706e;
+	padding: 0 !important;
+}
+.userBlockNav {
+	width: 40px;
+	height: 40px;
+	overflow: hidden;
+	border-radius: 100%;
+	border: 1px solid #00a78e;
+	img {
+		width: 100%;
+	}
+}
+.nav-item {
+	.dropdown-menu {
+		a {
+			color: #000 !important;
+			font-size: 14px;
+			border-bottom: 1px solid #b7b7b757;
+		}
+	}
+}
+.item4 {
+	.dropdown-menu {
+		position: absolute;
+		left: -53px;
+	}
+}
+.bntNotification {
+	width: 30px;
+	padding: 0 !important;
+	img {
+		width: 100%;
+	}
+}
+.navbar-expand-lg {
+	.navbar-nav {
+		.nav-link {
+			padding-right: 5px;
+			padding-left: 5px;
+		}
+	}
+}
+.navbar-nav {
+	align-items: center;
+}
+.logoModife {
+	width: 138px;
+	img {
+		width: 100%;
+		height: auto;
+	}
+}
+.dropdown-menu {
+	background: #043356;
+	color: white;
+	a {
+		color: white;
+		font-size: 14px;
+		border-bottom: 1px solid #b7b7b757;
+		&:last-child {
+			border-bottom: 0 !important;
+		}
+	}
+}
+.navBrand {
+	padding: 0 !important;
+}
+.nav-link {
+	color: #ffffff !important;
+	margin: 0 10px !important;
+	font-weight: 500;
+	font-size: 14px;
+}
+.show {
+	position: relative;
+}
+.worden {
+	background: #00A89D;
+	font-weight: bold;
+	border-radius: 30px;
+	padding: 8px 15px !important;
+	margin: 0 0px !important;
+}
+.inputSearch {
+	min-width: 360px;
+	padding-left: 25px;
+}
+.boxOne {
+	height: 90vh;
+	background: #043356;
+	color: white;
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+.VoorOrganisaties {
+	height: 100vh;
+	background: #E0EFF4;
+	color: white;
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+.boxOne3 {
+	height: 425px;
+	background: url("./img/bg1.png") no-repeat;
+	color: white;
+	position: relative;
+	background-size: cover;
+	display: flex;
+	align-items: center;
+}
+.wordenBlock {
+	padding-top: 170px;
+	display: flex;
+}
+.wordenBlock-2 {
+	display: flex;
+}
+.wordDeBestText {
+	font-size: 32px;
+	font-weight: bold;
+	max-width: 485px;
+	line-height: 36px;
+	margin-bottom: 4px;
+}
+.wordDeBestText2 {
+	font-size: 35px;
+	font-family: "Ubuntu-Medium";
+	max-width: 485px;
+	line-height: 36px;
+	color: #023356;
+	margin: 0px auto 6px;
+}
+.wordDeBestText3 {
+	font-size: 32px;
+	font-weight: bold;
+	max-width: 485px;
+	line-height: 36px;
+	margin-bottom: 4px;
+	color: #FFFFFF;
+}
+.altijdText {
+	font-weight: 500;
+	font-size: 20px;
+	margin-bottom: 20px;
+}
+.altijdText2 {
+	font-weight: 500;
+	font-size: 16px;
+	margin-bottom: 15px;
+	color: #023356;
+}
+.searchFront {
+	color: #707070;
+	border: none;
+	padding: 17px;
+	width: 910px;
+	background: white;
+	border-radius: 13px;
+	margin-bottom: 10px;
+	&:focus {
+		border: none !important;
+		outline: none !important;
+	}
+}
+.altijdText3 {
+	font-weight: 500;
+	font-size: 20px;
+	margin-bottom: 20px;
+	color: #FFFFFF;
+	max-width: 750px;
+}
+.wordlBtn {
+	color: white;
+	font-size: 14px;
+	font-weight: bold;
+	border: 1px solid white;
+	border-radius: 35px;
+	padding: 6px 45px 6px 20px;
+	width: 100%;
+}
+.wordlBtn2 {
+	color: white;
+	font-size: 14px;
+	font-weight: bold;
+	border: 1px solid white;
+	border-radius: 35px;
+	padding: 8px 25px 10px 20px;
+	width: 197px;
+	background: #043356;
+}
+.featherBlock {
+	text-align: center;
+	img {
+		width: 50px;
+		margin-top: 30px;
+	}
+}
+.meetText {
+	color: #42454D;
+	margin-bottom: 0;
+	margin-top: 10px;
+	margin-left: 20px;
+}
+.titleTwo {
+	text-align: center;
+	margin-bottom: 25px;
+}
+.blijenText {
+	color: #023356;
+	font-weight: bold;
+	font-size: 27px;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 478px;
+	margin-bottom: 6px;
+	line-height: 33px;
+}
+.voorText {
+	color: #023356;
+	font-size: 16px;
+	margin-bottom: 50px;
+}
+.contentTwo {
+	padding: 45px 0px;
+	margin-bottom: 70px;
+}
+.imgComponent1 {
+	width: 300px;
+	margin-top: -100px;
+	margin-left: 125px;
+	img {
+		width: 100%;
+	}
+}
+.imgComponent2 {
+	width: 390px;
+	margin-top: -30px;
+	margin-left: auto;
+	margin-right: auto;
+	img {
+		width: 100%;
+	}
+}
+.d-flex {
+	display: flex;
+}
+.boxIconeDow {
+	position: absolute;
+	bottom: 50px;
+	left: 0;
+	right: 0;
+	width: 85px;
+	margin-left: auto;
+	margin-right: auto;
+	img {
+		width: 100%;
+	}
+}
+.boxImgCard {
+	width: 221px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+	height: 118px;
+	img {
+		width: 100%;
+		height: 100%;
+	}
+}
+.cardModife {
+	padding: 30px 20px 2px !important;
+	text-align: center;
+	border: 1px solid #FFEBEB;
+	box-shadow: 0px 0px 20px #9C9FA2;
+}
+.cardModife3 {
+	padding: 30px 20px 2px !important;
+	border: 1px solid #FFEBEB;
+	box-shadow: 0px 0px 20px #9c9fa2;
+	text-align: left;
+	max-width: 350px;
+	border-radius: 20px;
+	height: 450px;
+	position: relative;
+}
+.titleGroupText {
+	color: #023356;
+	font-size: 18px;
+	margin-bottom: 20px;
+	font-family: "Ubuntu-Medium";
+}
+.TextZorg {
+	color: #707070;
+	margin-bottom: 6px;
+}
+.blockGroupText {
+	margin-bottom: 35px;
+	margin-bottom: 20px;
+}
+.formDirect {
+	display: block;
+	text-align: center;
+	width: 76%;
+}
+.blockinputDirect {
+	display: flex;
+	justify-content: space-between;
+}
+.onzeText {
+	font-size: 18px;
+	margin-bottom: 15px;
+	color: #023356;
+}
+.titleCard {
+	color: #023356;
+	font-weight: bold;
+	font-size: 25px;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 333px;
+	margin-bottom: 6px;
+	line-height: 33px;
+}
+.blockButton {
+	display: flex;
+	justify-content: space-between;
+	max-width: 500px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.btnCorporates {
+	color: #FFFFFF !important;
+	font-weight: bold;
+	font-size: 15px;
+	padding: 4px 20px;
+	background: #00A89D;
+	border-radius: 5px;
+	margin-top: -3px;
+	&:hover {
+		color: #FFFFFF !important;
+	}
+}
+.MKbText {
+	color: #42454D;
+	font-size: 15px;
+	text-decoration: underline;
+}
+.titleVoor {
+	font-size: 15px;
+	line-height: 20px;
+}
+.contentTree {
+	display: flex;
+	justify-content: space-between;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 730px;
+	margin-bottom: 40px;
+}
+.contentTreeFront {
+	display: flex;
+	justify-content: space-between;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 40px;
+}
+.contentTree2 {
+	display: flex;
+	justify-content: space-between;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 880px;
+	margin-bottom: 40px;
+	margin-top: 90px;
+}
+.MaakBtn {
+	font-weight: bold;
+	color: #FFFFFF;
+	background: #043356;
+	padding: 8px 23px 9px;
+	border-radius: 17px;
+	&:hover {
+		color: white;
+	}
+}
+.margin4 {
+	margin-bottom: 20px;
+}
+.imgGroup7 {
+	width: 330px;
+	margin-left: 88px;
+	margin-top: -44px;
+}
+.imgGroup7-2 {
+	width: 330px;
+	margin-left: 0;
+	margin-top: -44px;
+}
+.boxCards {
+	display: flex;
+	flex-wrap: wrap;
+}
+.boxCards2 {
+	display: flex;
+	flex-wrap: wrap;
+}
+.cardBleu {
+	background: #E0EFF4;
+	text-align: center;
+	align-items: center;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	width: 291px;
+	padding: 35px 0 0;
+	border-radius: 10px;
+	img {
+		width: 116px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+.cardBleu2 {
+	background: #E0EFF4;
+	text-align: center;
+	align-items: center;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	width: 18.5%;
+	height: 133px;
+	padding: 35px 0 0;
+	border-radius: 10px;
+	position: relative;
+}
+.textCardBleu2 {
+	position: absolute;
+	bottom: 5px;
+	left: 0;
+	right: 0;
+	font-size: 14px;
+	font-weight: 600;
+	color: #023356;
+}
+.BleuImg1 {
+	width: 76px !important;
+}
+.BleuImg2 {
+	width: 150px !important;
+	margin-top: 5px;
+}
+.generalBlock {
+	display: flex;
+	justify-content: space-between;
+}
+.oneBlock {
+	width: 57%;
+}
+.textGroei {
+	font-size: 15px;
+	font-weight: bold;
+	margin-bottom: 21px;
+	color: #023356;
+}
+.twoBlock {
+	width: 46%;
+	padding: 10% 45px;
+}
+.marginElement {
+	margin-right: 133px;
+}
+.contentFour {
+	margin-bottom: 40px;
+}
+.BlockOneFive {
+	text-align: left;
+	width: 30%;
+	padding: 6% 0;
+}
+.margin2 {
+	margin-bottom: 23px !important;
+}
+.BlockTwoFive {
+	width: 68%;
+	display: flex;
+	margin-left: 45px;
+	justify-content: space-between;
+}
+.cardModife2 {
+	border: 1px solid #FFEBEB;
+	box-shadow: 0px 0px 20px #9C9FA2;
+	height: 241px;
+	width: 265px;
+	border-radius: 3%;
+}
+.contentdetail {
+	display: flex;
+}
+.contentSix {
+	display: flex;
+	justify-content: space-between;
+}
+.cardBoxSix {
+	width: 24%;
+	background: #E0EFF4;
+	border-radius: 5px;
+	box-shadow: 0px 0px 3px #00000057;
+	padding: 20px 40px 12px;
+	margin-bottom: 50px;
+}
+.textAlloOP {
+	font-size: 20px;
+	color: #023356;
+	font-weight: bold;
+}
+.imgPolygone {
+	width: 12px;
+	float: right;
+	margin-top: 30px;
+	margin-right: -15px;
+}
+.contentFive {
+	margin-bottom: 35px;
+}
+.margin3 {
+	margin-bottom: 70px;
+}
+.bock1Word2 {
+	width: 52%;
+	text-align: left;
+	padding: 10px 20px;
+}
+.contentVoorView {
+	text-align: left;
+	max-width: 563px;
+	padding-left: 180px;
+	margin: 35px 0;
+}
+.blockHr8 {
+	display: flex;
+	margin-top: 60px;
+	margin-bottom: 65px;
+}
+.cardHr {
+	width: 33.33%;
+	background: #043356;
+	padding-top: 40px;
+	height: 320px;
+	text-align: center;
+}
+.carsDirect {
+	width: 33.33%;
+	background: #00A89D;
+	padding-top: 40px;
+	height: 320px;
+	text-align: center;
+}
+.cardEige {
+	width: 33.33%;
+	background: #E0EFF4;
+	padding-top: 40px;
+	height: 320px;
+	text-align: center;
+}
+.textHr {
+	font-size: 18px;
+	font-weight: bold;
+	color: #FFFFFF;
+}
+.textEige {
+	font-size: 18px;
+	font-weight: bold;
+	color: #42454D;
+}
+.titleSectoren {
+	font-weight: bold;
+	font-size: 25px;
+	margin-bottom: 30px;
+	color: #023356;
+}
+.graduationImg {
+	width: 25px;
+	position: absolute;
+	right: 17px;
+}
+.btnGroup {
+	display: flex;
+	position: relative;
+	width: 52%;
+	justify-content: space-between;
+	margin: 0 auto;
+	a {
+		&:hover {
+			color: #FFFFFF !important;
+		}
+	}
+}
+.daaromText {
+	text-align: center;
+	margin-top: 40px;
+	color: #848484;
+}
+.btnIndiggen {
+	background: #043356;
+	color: white;
+	font-weight: bold;
+	font-size: 15px;
+	padding: 8px 5px;
+	text-align: center;
+	width: 280px;
+	border-radius: 10px;
+	margin-bottom: 13px;
+}
+.btnLtf {
+	background: #47a99e;
+	color: white;
+	font-weight: bold;
+	font-size: 15px;
+	padding: 8px 5px;
+	text-align: center;
+	width: 280px;
+	border-radius: 10px;
+	margin-bottom: 13px;
+}
+.btnMaak {
+	border: 2px solid white;
+	background: none;
+	color: white;
+	font-weight: bold;
+	font-size: 15px;
+	padding: 3px 5px;
+	text-align: center;
+	width: 280px;
+	border-radius: 10px;
+	margin-bottom: 13px;
+}
+.srtatGratis {
+	color: #FFFFFF;
+	font-size: 11px;
+	position: absolute;
+	bottom: 1.5px;
+	background: #F69405;
+	border: 1px solid white;
+	border-radius: 5px;
+	padding: 0px 16px;
+	right: 32px;
+}
+.imgIbou {
+	width: 391px;
+	margin-top: -60px;
+	margin-left: -2px;
+	img {
+		width: 100%;
+	}
+}
+.paddingElement {
+	padding-right: 45px;
+}
+.card3 {
+	width: 24%;
+	background: #E0EFF4;
+	text-align: center;
+	padding: 20px 72px;
+	border-radius: 10px;
+	border: 3px solid #FFFFFF;
+	z-index: 11111;
+	position: relative;
+}
+.textCard3 {
+	color: #023356;
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 0;
+}
+.box1Img {
+	width: 90px;
+	height: 66px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 13px;
+	img {
+		width: 100%;
+	}
+}
+#imgBoxx1 {
+	width: 54px;
+}
+.boxCard3 {
+	padding: 0 115px;
+	margin-top: -20px;
+	display: flex;
+	justify-content: space-between;
+}
+.sponsortBlock {
+	display: flex;
+	padding: 0px 165px 20px;
+	img {
+		width: 50%;
+	}
+}
+.paddingElement7 {
+	padding: 7px 50px;
+	margin-right: -40px;
+}
+.boxImgCard3 {
+	width: 190px;
+	height: 184px;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	img {
+		width: 100%;
+	}
+}
+.voorText2 {
+	font-weight: bold;
+	margin-bottom: 10px;
+	color: #023356;
+}
+.dePaterneText {
+	margin-bottom: 10px;
+	color: #023356;
+	font-size: 16px;
+	text-align: center;
+}
+.merrText {
+	margin-bottom: 3px;
+	color: #023356;
+	font-size: 14px;
+	font-weight: bold;
+	position: absolute;
+	bottom: 23px;
+	left: 0;
+	right: 0;
+}
+.text-center {
+	text-align: center;
+}
+.textGroup {
+	margin: 0 -20px;
+	padding: 20px;
+	border-top: 1px solid #707070;
+}
+.startGratis {
+	position: absolute;
+	top: -2px;
+	right: -13px;
+	color: #FFFFFF;
+	background: #F69405;
+	border-radius: 14px;
+	border: 2px solid white;
+	font-size: 12px;
+	font-weight: bold;
+	padding: 3px 20px;
+	&:hover {
+		color: #FFFFFF;
+	}
+}
+.cardVoor {
+	margin-bottom: 60px;
+}
+.learningBlock {
+	padding: 5px 50px;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 50px;
+}
+.imgBlockLeraning {
+	width: 60%;
+	padding-left: 225px;
+	img {
+		width: 76%;
+	}
+}
+.eenText {
+	font-size: 25px;
+	font-weight: bold;
+	margin-bottom: 5px;
+	color: #023356;
+}
+.bijText {
+	color: #023356;
+	margin-bottom: 20px;
+	font-size: 15px;
+}
+.groupText2 {
+	width: 46%;
+	padding-right: 162px;
+}
+.leftElement {
+	margin-left: -120px;
+}
+.stratGrtisBleu {
+	border-radius: 10px;
+	background: #023356;
+	color: #FFFFFF;
+	font-size: 14px;
+	font-weight: bold;
+	padding: 4px 15px 6px;
+}
+.bottomText {
+	margin-bottom: 13px;
+}
+.alJoum {
+	background: #E0EFF4;
+	padding: 30px 20px 25px;
+	display: flex;
+	border-radius: 15px;
+	margin-top: 75px;
+	margin-bottom: 60px;
+}
+.blockImGDaniel {
+	width: 130px;
+	margin-right: 30px;
+	margin-top: 11px;
+	img {
+		width: 100%;
+	}
+}
+.textDirect {
+	font-size: 22px;
+	color: #023356;
+	text-align: center;
+}
+.inputDirect {
+	border: none !important;
+	height: 40px;
+	border-radius: 8px;
+	padding: 0 20px;
+	width: 40%;
+	color: #707070;
+}
+.btnContactOp {
+	background: #47a99e !important;
+	border-radius: 8px !important;
+	color: white !important;
+}
+.OfMaanBlock {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 50px;
+}
+.ofWordBlock {
+	width: 48%;
+	background: #e0eff4;
+	padding: 45px 40px 25px;
+}
+.ofWordText {
+	margin-bottom: 2px;
+	font-size: 28px;
+	color: #023356;
+	font-family: "Ubuntu-Bold";
+}
+.pookBlock {
+	width: 48%;
+}
+.blockMinute {
+	width: 20%;
+	display: grid;
+	padding-left: 125px;
+}
+.minuteriImg {
+	width: 100px;
+}
+.ellipse {
+	width: 85px;
+}
+.blockTextImg2 {
+	width: 70%;
+	text-align: center;
+}
+.textAlJoum {
+	font-size: 25px;
+	color: #023356;
+}
+.inputModife {
+	border: none;
+	min-width: 295px;
+	border-radius: 13px;
+}
+.inputModife2 {
+	border: none;
+	min-width: 295px;
+	border-radius: 13px;
+}
+.btnSub3 {
+	width: 31px;
+	height: 21px;
+	border: none;
+	background: #00A89D;
+	position: relative;
+	top: 4px;
+	border-radius: 4px;
+}
+.titleAgenda {
+	font-size: 30px;
+	color: #023356;
+	font-weight: bold;
+	margin-bottom: 1px;
+}
+.blockText8 {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 491px;
+	text-align: center;
+	margin-bottom: 20px;
+}
+.oneBlockAgenda {
+	display: flex;
+}
+.blockDate {
+	width: 15%;
+	margin-top: -5px;
+}
+.blockN {
+	width: 15%;
+	margin-top: -5px;
+}
+.SousblockDate {
+	width: 100%;
+	position: relative;
+	padding: 13px 25px 25px;
+	background: #023356;
+	border-radius: 10px;
+	z-index: 1;
+}
+.dateElement {
+	font-size: 34px;
+	font-weight: bold;
+	color: #FFFFFF;
+	line-height: 30px;
+	margin-bottom: 0;
+	span {
+		font-size: 18px;
+	}
+}
+.blockAgenda {
+	margin-bottom: 70px;
+	display: block;
+}
+.block2agenda {
+	padding: 0 15px;
+}
+.borderElement {
+	height: 20px;
+	width: 5px;
+	background: #707070;
+	position: relative;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	top: 3px;
+}
+.evenement {
+	background: #e0eff4;
+	padding: 15px 20px;
+	border-radius: 5px;
+	margin-left: 8px;
+	width: 85%;
+	margin-top: 15px;
+}
+.sousBlockOne {
+	display: flex;
+}
+.sousBlockTwo2 {
+	display: flex;
+	justify-content: space-between;
+}
+.titleEvenement {
+	margin-bottom: 10px;
+	height: fit-content;
+	background: white;
+	font-size: 14px;
+	color: #707070;
+	font-weight: bold;
+	padding: 6px 15px;
+	border-radius: 10px;
+	margin-right: 17px;
+}
+.titleEvenement2 {
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: bold;
+	margin-top: 6px;
+}
+.detailEvenement {
+	font-size: 13px;
+	margin-bottom: 0;
+	color: #707070;
+	margin-top: 3px;
+	margin-left: 2px;
+}
+.pointText {
+	display: flex;
+}
+.point {
+	width: 25px;
+	height: 25px;
+	border-radius: 100%;
+	background: white;
+	align-items: center;
+	text-align: center;
+	padding-top: 4px;
+	img {
+		width: 12px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+.iconeAgenda {
+	width: 12px;
+	float: right;
+	margin-right: -10px;
+}
+.polygoneBlanc {
+	position: absolute;
+	top: 36px;
+	bottom: 0;
+	right: 8px;
+	width: 15px;
+}
+.ButtonAllEvens {
+	display: flex;
+	p {
+		color: #FFFFFF;
+		font-size: 20px;
+		font-weight: bold;
+		margin-bottom: 0;
+		width: 117%;
+		margin-left: -91px;
+		padding-top: 33px;
+	}
+}
+.btnBiss2 {
+	background: #043356;
+	border-bottom-right-radius: 5px;
+	border-top-right-radius: 5px;
+	margin-left: 0;
+	width: 85%;
+	margin-top: 15px;
+	text-align: center;
+	position: relative;
+}
+.leftParth {
+	width: 100%;
+	position: relative;
+	background: #043356;
+	border-bottom-left-radius: 5px;
+	border-top-left-radius: 5px;
+	z-index: 1;
+	height: 98px;
+}
+.sousBlockDebeste {
+	display: flex;
+	justify-content: space-between;
+}
+.deBesteText {
+	font-size: 23px;
+	font-weight: bold;
+	margin-bottom: 2px;
+	color: #023356;
+}
+.TitleWat {
+	font-size: 23px;
+	font-family: "Ubuntu-Medium";
+	margin-bottom: 15px;
+	color: #023356;
+}
+.enZorgenText {
+	color: #023356;
+}
+.deBesteElement {
+	width: 22%;
+	align-self: center;
+	top: 10px;
+	position: relative;
+}
+.ensembleCard {
+	width: 72%;
+	display: flex;
+	justify-content: space-between;
+}
+.imgCard4 {
+	width: 191px;
+	height: 157px;
+	margin-left: auto;
+	margin-right: auto;
+	img {
+		width: 100%;
+	}
+}
+.ontdexText {
+	color: #023356;
+	width: 100%;
+	text-align: center;
+	font-weight: bold;
+	font-size: 15px;
+}
+.cardModife4 {
+	padding: 30px 20px 4px !important;
+	border: 1px solid #FFEBEB;
+	box-shadow: 0px 0px 15px #9c9fa2;
+	text-align: left;
+	width: 282px;
+	margin-right: 10px;
+	border-radius: 10px;
+}
+.blockDeBeste {
+	margin-bottom: 63px;
+}
+.titleTopBanen {
+	color: #023356;
+	font-size: 25px;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+.titleTopBanen2 {
+	color: #707070;
+	font-size: 25px;
+	margin-bottom: 15px;
+}
+.contentCardTop {
+	display: flex;
+	justify-content: space-between;
+}
+.cardTop {
+	height: 185px;
+	padding: 30px 20px 4px !important;
+	border: 1px solid #FFEBEB;
+	box-shadow: 0px 0px 10px #9c9fa2;
+	text-align: center;
+	border-radius: 10px;
+	position: relative;
+	width: 13%;
+}
+.blockCardBleu {
+	width: 13% !important;
+	.cardTop {
+		width: 100% !important;
+	}
+}
+.blockSwipCard {
+	width: 85%;
+	.swiper-container {
+		height: 100% !important;
+		.swiper-wrapper {
+			height: 100% !important;
+		}
+	}
+}
+.bleu {
+	background: #023356;
+}
+.polyBlanc2 {
+	right: 35px;
+	width: 15px;
+	position: absolute;
+}
+.bekijText {
+	color: #707070;
+	font-size: 13px;
+	font-weight: bold;
+}
+.bleuT {
+	color: #FFFFFF !important;
+}
+.d-Beji7 {
+	display: flex;
+	justify-content: space-between;
+	position: absolute;
+	bottom: 20px;
+	width: 100%;
+}
+.blockTopBanen {
+	margin-bottom: 30px;
+}
+.Mob {
+	display: none;
+}
+.swiper-wrapper {
+	height: auto !important;
+}
+.swiper-slide1 {
+	width: 60% !important;
+}
+.swiper-slide3 {
+	width: 85% !important;
+}
+.webBan {
+	display: flex;
+}
+.MobBan {
+	display: none;
+}
+.overElement {
+	display: flex;
+	justify-content: space-between;
+}
+.blockOneOver {
+	width: 57%;
+}
+.blockTwoOver {
+	width: 40%;
+}
+.titleBlock {
+	display: flex;
+}
+.roundBlack {
+	width: 25px;
+	height: 25px;
+	border-radius: 100%;
+	background: black;
+}
+.livelearnText2 {
+	font-weight: 600;
+	margin-left: 20px;
+	margin-bottom: 0;
+	margin-top: 1px;
+}
+.btnPhilo {
+	color: #FFFFFF !important;
+	background: #F69405 !important;
+	font-size: 13px !important;
+	padding: 1px 9px !important;
+	border-radius: 5px !important;
+	font-weight: bold !important;
+	margin-left: 20px;
+	height: fit-content;
+}
+.e-learningTitle {
+	font-size: 21px;
+	font-weight: bold;
+	margin-top: 14px;
+	margin-bottom: 40px;
+}
+.blockIconeLearning {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 30px;
+	margin-top: 20px;
+}
+.sousBlockLearningOne {
+	display: flex;
+}
+.voorBlock {
+	text-align: center;
+	padding-top: 15px;
+}
+.textIconeLearning {
+	font-weight: bold;
+	font-size: 16px;
+	text-align: center;
+	color: #42454d;
+}
+.liveOverBlock {
+	padding-top: 50px;
+}
+.blockImgCour {
+	width: 100%;
+	height: 443px;
+	overflow: hidden;
+	img {
+		width: 100%;
+		min-height: 443px;
+	}
+}
+.iconeCours {
+	height: 23px;
+	margin-bottom: 5px;
+}
+.iconeText {
+	margin-right: 35px;
+	text-align: center;
+}
+.descriptionCours {
+	color: #707070;
+	margin-bottom: 20px;
+	padding-right: 2px;
+}
+.btnGrou10 {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	margin-bottom: -10px;
+}
+.btnContact {
+	padding: 15px 20px;
+	background: #E0EFF4;
+	font-weight: bold;
+	font-size: 15px;
+	color: #023356;
+	justify-content: space-between;
+	width: 48%;
+	text-align: center;
+	margin-bottom: 15px;
+	img {
+		margin-right: 10px;
+		height: 23px;
+	}
+}
+.afspeeText {
+	font-weight: bold;
+	font-size: 20px;
+	color: #023356;
+}
+.sousBlockCours {
+	display: flex;
+	padding: 10px 15px;
+	margin-bottom: 7px;
+}
+.playElement {
+	margin-right: 15px;
+	height: 25px;
+}
+.textChapitreCours {
+	color: #023356;
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 5px;
+	width: 100%;
+	margin-top: 2px;
+	text-overflow: ellipsis;
+}
+.startTextBtn {
+	color: #FFFFFF;
+	background: #023356;
+	width: 100% !important;
+	height: 48px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+	padding-top: 12px;
+	margin-top: 6px;
+}
+.imgCardPrice {
+	width: 65px;
+	height: 65px;
+	border-radius: 100%;
+	background-color: #42454D;
+	margin: 0 auto 10px;
+	img {
+		width: 100%;
+	}
+}
+.liveTextCadPrice {
+	font-weight: bold;
+	color: #023356;
+	margin-bottom: 10px;
+}
+.btnLeerom {
+	padding: 10px 15px;
+	color: #FFFFFF;
+	background-color: #00A89D;
+	font-weight: bold;
+	font-size: 15px;
+	margin-bottom: 15px;
+	border-radius: 9px;
+	line-height: 28px;
+}
+.PrisText {
+	font-weight: bold;
+	color: #023356;
+	margin-bottom: 3px;
+	margin-top: 10px;
+}
+.opeleidingText {
+	color: #023356;
+	margin-bottom: 15px;
+}
+.btwText {
+	color: #023356;
+	margin-bottom: 3px;
+}
+.btnKoop {
+	background-color: #023356;
+	color: #FFFFFF;
+	font-weight: bold;
+	padding: 10px 22px;
+	border-radius: 10px;
+	margin-top: 4px;
+}
+.CardpriceLive {
+	width: 100%;
+	text-align: center;
+	margin-top: 35px;
+	background-color: #E0EFF4;
+	padding: 50px;
+}
+.boxLOginCardOne {
+	height: 160px;
+	padding: 25px;
+	margin-bottom: 10px;
+	border: 3px solid #e5eaee;
+	text-align: center;
+	display: flex;
+}
+.textNog {
+	color: #023356;
+	font-weight: bold;
+}
+.boxCardForm {
+	width: 90%;
+	background: #E0EFF4;
+	padding: 15px 60px 50px;
+	margin-left: 25px;
+}
+.TitleForm {
+	color: #023356;
+	font-size: 25px;
+	margin-bottom: 30px;
+	font-weight: bold;
+}
+.block-input-form {
+	color: #023356;
+	font-size: 14px;
+	padding: 10px 21px !important;
+	margin-bottom: 8px;
+	background: #FFFFFF !important;
+	border-radius: 8px;
+	border: unset;
+	width: 100%;
+	&::placeholder {
+		color: #023356;
+	}
+}
+.btnLogin {
+	width: 100%;
+	font-size: 14px !important;
+	font-weight: bold !important;
+	background: #023356 !important;
+	color: #FFFFFF !important;
+	text-align: center !important;
+	padding: 10px !important;
+	margin-bottom: 5px;
+	&:hover {
+		color: #FFFFFF !important;
+	}
+}
+.redirectionText {
+	color: #023356;
+	font-size: 14px;
+}
+.contentLogin {
+	padding: 38px 0;
+}
+.bloxkWorldMembre {
+	width: 100%;
+	background: #E0EFF4;
+	padding: 25px;
+	text-align: center;
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+.wordnuText {
+	font-size: 27px;
+	color: #023356;
+	margin-bottom: 15px;
+}
+.btnPlan {
+	background: #023356 !important;
+	font-size: 15px !important;
+	color: #FFFFFF !important;
+	padding: 4px 40px !important;
+	border-radius: 10px !important;
+	&:hover {
+		color: #FFFFFF;
+	}
+}
+.CardBlockEvenement {
+	background: #FFFFFF;
+	box-shadow: 0 0 20px #707070;
+	padding: 20px 15px 10px;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 15px;
+}
+.dateText1 {
+	color: #000000;
+	font-size: 22px;
+	margin-bottom: 8px;
+	font-weight: bold;
+}
+.dateBlock {
+	width: 32%;
+}
+.BlocknumberEvenement {
+	width: 42%;
+}
+.blockPriceEvens {
+	width: 23%;
+	text-align: right;
+	position: relative;
+}
+.inclusiefText {
+	color: #707070;
+	font-size: 15px;
+}
+.numberEvens {
+	font-size: 13px;
+	background: #023356;
+	color: #FFFFFF;
+	font-weight: bold;
+	border-radius: 100%;
+	padding: 2px 10px;
+	margin-bottom: 1px;
+	height: fit-content;
+	padding-top: 4px;
+	padding-bottom: 3px;
+}
+.dateEvens {
+	color: #707070;
+	font-size: 13px;
+	padding: 2px 15px;
+	width: 316px;
+	border: 1px solid #D6E0DF;
+	border-radius: 11px;
+	margin-bottom: 8px;
+}
+.block7 {
+	float: right;
+}
+.prixEvens {
+	font-weight: bold;
+	font-size: 18px;
+	margin-bottom: 0px;
+}
+.exText {
+	font-size: 13px;
+	color: #707070;
+}
+.btnSchrijf {
+	position: absolute;
+	right: 0;
+	bottom: 8px;
+	background: #023356;
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 14px;
+	padding: 2px 23px;
+	border-radius: 18px;
+	&:hover {
+		color: #FFFFFF;
+	}
+}
+.block2evens {
+	width: 57%;
+}
+.head2 {
+	padding: 20px;
+	background: #E0EFF4;
+	text-align: center;
+}
+.comp1 {
+	width: 65px;
+	height: 65px;
+	border-radius: 100%;
+	background: #42454D;
+	margin: 0 auto;
+	overflow: hidden;
+	img {
+		width: 100%;
+	}
+}
+.liverTilteHead2 {
+	font-weight: bold;
+	font-size: 30px;
+	color: #023356;
+	margin-bottom: 9px;
+	margin-left: 70px;
+	margin-top: 3px;
+}
+.opeleiTextHead1 {
+	color: #707070;
+	font-size: 15px;
+	margin-left: 13px;
+	position: relative;
+	top: 22px;
+}
+.toevoegenText {
+	color: #FFFFFF !important;
+	background: #00A89D !important;
+	font-size: 15px !important;
+	font-weight: bold !important;
+	padding: 10px 10px !important;
+	margin: 0 auto;
+	&:hover {
+		color: #FFFFFF;
+	}
+}
+.firstBlock {
+	overflow-x: hidden;
+}
+.elementText3 {
+	margin: 0 auto;
+	justify-content: center;
+}
+.productBlockGeneral {
+	display: flex;
+}
+.sousProduct1 {
+	background: #023356;
+	color: #FFFFFF;
+	padding: 25px 0px;
+	min-height: 100vh;
+	position: static;
+}
+.sousProduct1Title {
+	color: #FFFFFF;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+.LeerBlock {
+	border-bottom: 1px solid white;
+	padding: 0 15px 10px;
+	margin-bottom: 20px;
+	&:last-child {
+		border-bottom: none !important;
+	}
+}
+.contModifeCheck {
+	display: block;
+	position: relative;
+	padding-left: 26px;
+	position: relative;
+	cursor: pointer;
+	font-size: 15px;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	input {
+		position: absolute;
+		opacity: 0;
+		cursor: pointer;
+		height: 0;
+		width: 0;
+		&:checked {
+			~ {
+				.checkmark {
+					background-color: #ffffff;
+					&:after {
+						display: block;
+					}
+				}
+			}
+		}
+	}
+	&:hover {
+		input {
+			~ {
+				.checkmark {
+					background-color: #ccc;
+				}
+			}
+		}
+	}
+	.checkmark {
+		&:after {
+			left: 5px;
+			top: 1px;
+			width: 5px;
+			height: 10px;
+			border: solid #043356;
+			border-width: 0 3px 3px 0;
+			-webkit-transform: rotate(45deg);
+			-ms-transform: rotate(45deg);
+			transform: rotate(45deg);
+		}
+	}
+}
+.checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 18px;
+	width: 18px;
+	background-color: #043356;
+	border: 2px solid white;
+	border-radius: 5px;
+	&:after {
+		content: "";
+		position: absolute;
+		display: none;
+	}
+}
+.prijsSousBlock {
+	display: flex;
+}
+.vanafText {
+	color: #FFFFFF;
+	font-size: 15px;
+}
+.btnmin {
+	color: #707070;
+	background: #E0EFF4 !important;
+	font-size: 15px;
+	padding: 0px 5px !important;
+	margin: 0 7px;
+	border-radius: 6px;
+	margin-bottom: 8px;
+}
+.inputSearchFilter {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 16px;
+}
+.searchLocFilter {
+	min-width: 58%;
+	background: #E0EFF4;
+	color: #023356;
+	margin-right: 15px;
+	border-radius: 10px;
+	border: unset;
+}
+.btnSubmitFilter {
+	color: #023356;
+	background: #E0EFF4;
+	min-width: 27%;
+	height: max-content;
+	min-height: 32px;
+	border-radius: 10px;
+	border: unset;
+}
+.sousProduct2 {
+	background: #FFFFFF;
+	padding: 30px;
+}
+.sousBlockTitleProduct {
+	color: #023356;
+	font-size: 30px;
+	margin-bottom: 15px;
+	font-weight: bold;
+}
+.sousBlockTitleProduct2 {
+	color: #023356;
+	font-size: 25px;
+	margin-bottom: 15px;
+	font-weight: bold;
+}
+.blockCardOpleidingen {
+	display: flex;
+}
+.cardKraam {
+	width: 100%;
+	margin-right: 25px;
+	width: 100%;
+	margin-right: 25px;
+	background: white;
+	box-shadow: 0 0 20px #707070;
+	border-radius: 10px;
+}
+.headCardKraam {
+	height: 150px;
+	background: #42454D;
+	position: relative;
+	overflow: hidden;
+	border-radius: 10px;
+	img {
+		width: 100%;
+	}
+}
+.cardKraam2 {
+	width: 100%;
+	margin-right: 25px;
+	background: white;
+	border-radius: 10px;	
+	height: 100%;
+}
+.sousProductTest {
+	width: 100%;
+	background: #023356;
+	color: #FFFFFF;
+	padding: 25px 0px;
+	position: static;
+	display: block;
+	height: 100%;
+}
+.cardKraamTest {
+	width: 100% !important;
+	margin-right: 25px;
+	background: white;
+	box-shadow: 0 0 9px #70707080;
+	border-radius: 10px;
+	border: 1px solid #7070706e;
+}
+.swipeContaineVerkoop {
+	.swiper-wrapper {
+		.swiper-slide {
+			.cardblockOnder {
+				width: 100%;
+				margin-right: 20px;
+				text-align: center;
+				padding: 20px;
+				box-shadow: unset;
+				border: 1px solid #bfbcbc;
+			}
+		}
+	}
+}
+.col-md-12 {
+	.blockCardFront {
+		width: 100%;
+	}
+}
+.blockgroup7 {
+	position: absolute;
+	bottom: 15px;
+	background: #023356;
+	color: #D6E0DF;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	border-radius: 14px;
+	padding: 6px 10px 9px;
+}
+.sousiconeTextKraa {
+	display: flex;
+}
+.iconeTextKraa {
+	display: flex;
+}
+.icon7 {
+	width: 15px !important;
+	height: 15px;
+}
+.kraaText {
+	font-size: 12px;
+	font-weight: bold;
+	margin-left: 2px;
+	margin-bottom: 0;
+	margin-right: 3px;
+	margin-top: 2px;
+	overflow: hidden;
+	width: 100px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.imgTitleCours {
+	display: flex;
+}
+.imgCoursProd {
+	width: 25px;
+	height: 25px;
+	background: #707070;
+	border-radius: 100%;
+	margin-top: -4px;
+	margin-bottom: 15px;
+	overflow: hidden;
+	img {
+		width: 100%;
+	}
+}
+.blockImgCardCour {
+	height: 170px;
+	overflow: hidden;
+	img {
+		width: 100%;
+		height: fit-content;
+	}
+}
+.blockImgCardCour2 {
+	height: 150px;
+	overflow: hidden;
+	img {
+		width: 100%;
+		height: fit-content;
+	}
+}
+.contentCardProd {
+	padding: 20px 15px;
+}
+.group8 {
+	display: flex;
+	justify-content: space-between;
+}
+.group9 {
+	display: flex;
+}
+.iconAm {
+	width: 18px;
+	height: 11px;
+	margin-right: 5px;
+	margin-top: 1px;
+}
+.iconAm1 {
+	height: 16px;
+	width: 12px;
+	margin-top: 1px;
+	margin-right: 5px;
+}
+.blockOpein {
+	display: flex;
+}
+.lieuAm {
+	font-size: 12px;
+	font-weight: bold;
+	margin-right: 10px;
+	margin-bottom: 0;
+	color: #42454D;
+}
+.nameCoursProd {
+	color: #42454D;
+	font-size: 12px;
+	font-weight: bold;
+	margin-right: 10px;
+	margin-bottom: 0;
+	margin-top: 0px;
+	margin-left: 5px;
+}
+.werkText {
+	color: #42454D;
+	font-weight: bold;
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+.descriptionPlatform {
+	color: #42454D;
+	font-size: 14px;
+	margin-bottom: 5px;
+}
+.sousBlockProduct2 {
+	margin-bottom: 25px;
+}
+.blockSousblockTitle {
+	display: flex;
+	margin-bottom: 34px;
+}
+.cardblockOnder {
+	width: 18%;
+	margin-right: 20px;
+	text-align: center;
+	padding: 20px;
+	box-shadow: 0 3px 6px #707070;
+}
+.imgBlockCardonder {
+	width: 75px;
+	height: 75px;
+	border-radius: 100%;
+	background: #42454D;
+	margin: 0 auto 10px;
+	text-align: center;
+	overflow: hidden;
+	img {
+		width: 100%;
+	}
+}
+.btnClose {
+	display: none !important;
+	display: none;
+}
+.verkop {
+	font-weight: bold;
+	color: #42454D;
+	margin-bottom: 8px;
+}
+.btnMeer {
+	padding: 2px 30px !important;
+	color: white;
+	background: #023356;
+	border-radius: 10px;
+	font-size: 14px;
+	font-weight: bold;
+}
+.sousBlockProduct3 {
+	margin-bottom: 20px;
+}
+.dateElement2 {
+	font-size: 25px;
+	font-weight: bold;
+	color: #FFFFFF;
+	line-height: 25px;
+	margin-bottom: 0;
+	span {
+		font-size: 16px;
+	}
+}
+.titleEvenement22 {
+	margin-bottom: 10px;
+	height: fit-content;
+	background: white;
+	font-size: 12px;
+	color: #707070;
+	font-weight: bold;
+	padding: 6px 15px;
+	border-radius: 10px;
+	margin-right: 17px;
+}
+.titleEvenement2B {
+	margin-bottom: 0;
+	font-size: 12px;
+	font-weight: bold;
+	margin-top: 3px;
+}
+.detailEvenement2b {
+	font-size: 10px;
+	margin-bottom: 0;
+	color: #707070;
+	margin-top: 3px;
+	margin-left: 2px;
+}
+.point2B {
+	width: 23px;
+	height: 23px;
+	border-radius: 100%;
+	background: white;
+	align-items: center;
+	text-align: center;
+	padding-top: 4px;
+}
+.dateElement2b {
+	font-size: 28px;
+	font-weight: bold;
+	color: #FFFFFF;
+	line-height: 27px;
+	margin-bottom: 0;
+	span {
+		font-size: 16px;
+	}
+}
+.sousBlockProduct4 {
+	margin-bottom: 25px;
+}
+.sousBlockProduct5 {
+	margin-bottom: 25px;
+}
+.sousBlockProduct6 {
+	margin-bottom: 25px;
+}
+.mob {
+	display: none;
+}
+.mobile {
+	display: none;
+}
+.cardKraam1 {
+	width: 100% !important;
+	background: white;
+	box-shadow: 0 0 10px #707070;
+	border-radius: 10px;
+	height: 100%;
+}
+.wordenBlockBaan {
+	p {
+		text-align: center !important;
+		color: #023356 !important;
+	}
+}
+.wordenBlock2 {
+	padding-top: 140px;
+	display: flex;
+}
+.wordenBlock3 {
+	padding-top: 140px;
+	display: flex;
+}
+.MoisText {
+	color: #023356;
+	font-size: 20px;
+	margin-bottom: 12px;
+	margin-left: 14px;
+}
+.mb22 {
+	margin-bottom: 22px;
+}
+.boxOne4 {
+	height: 85vh;
+	background: #00A89D;
+	color: white;
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+.boxOne3-1 {
+	height: 234px;
+	background: url("./img/bg1.png") no-repeat;
+	color: white;
+	position: relative;
+	background-size: cover;
+	display: flex;
+	align-items: center;
+}
+.boxbaan {
+	height: 200px;
+	background: url("./img/bg1.png") no-repeat;
+	text-align: center;
+	position: relative;
+	background-size: cover;
+	padding: 33px 0;
+}
+.btnZorg {
+	background: #E0EFF4;
+	color: #707070;
+	font-size: 15px;
+	font-weight: bold;
+	border-radius: 20px;
+	padding: 5px 8px !important;
+	text-align: center;
+	min-width: 210px;
+	min-height: 34px;
+}
+.btnZorg2 {
+	background: #E0EFF4;
+	color: #707070;
+	font-size: 15px;
+	font-weight: bold;
+	border-radius: 20px;
+	padding: 5px 8px !important;
+	text-align: center;
+	min-width: 180px;
+	min-height: 34px;
+	background: #E0EFF4;
+	color: #707070;
+	font-size: 15px;
+	font-weight: bold;
+	border-radius: 20px;
+	padding: 5px 8px !important;
+	text-align: center;
+	min-width: 160px;
+	min-height: 34px;
+}
+.groupBtn {
+	margin: 30px 0;
+}
+.swiper-slideM1 {
+	width: 15% !important;
+}
+.swiper-slideM2 {
+	width: 15% !important;
+}
+.blockBlij {
+	background: #E0EFF4;
+	padding: 20px 10px 32px;
+	margin-bottom: 55px;
+}
+.blijfOpText {
+	color: #023356;
+	font-size: 25px;
+	text-align: center;
+}
+.inputModifSearch {
+	min-width: 310px;
+	border: none;
+	border-radius: 10px;
+	margin: 0 auto;
+}
+.search7 {
+	width: 22%;
+	margin: 0 auto;
+}
+.BlocOneSearch {
+	display: flex;
+}
+.blockresult1 {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	padding: 22px 25px;
+	border-bottom: 1px solid #0000006b;
+}
+.wekkaText {
+	font-size: 25px;
+	font-weight: bold;
+	margin-bottom: 15px;
+	width: 335px;
+	line-height: 28px;
+}
+.imgGroup9 {
+	margin-right: 20px;
+	display: flex;
+}
+.s-ImgText {
+	width: 35px;
+	height: 35px;
+	background: #707070;
+	border-radius: 100%;
+	margin-top: -4px;
+	margin-bottom: 15px;
+}
+.textDetailCardSearch {
+	color: #42454D;
+	font-size: 14px;
+	font-weight: bold;
+	margin-bottom: 0;
+	margin-top: 0px;
+	margin-left: 5px;
+}
+.imgGroupIcone1 {
+	width: 15px;
+	height: 15px;
+	margin-right: 0px;
+	margin-top: 4px;
+}
+.imgGroupIcone2 {
+	height: 18px;
+}
+.textPartener {
+	width: 622px;
+	color: #707070;
+}
+.resultBlock {
+	width: 83%;
+}
+.blockWerkka {
+	width: 70%;
+}
+.group15 {
+	background: #D9D9D9;
+	padding: 20px 10px;
+	width: 30%;
+}
+.sousgroup15 {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	background: #023356;
+	padding: 5px 10px;
+	border-radius: 20px;
+}
+.iconGroup15 {
+	display: flex;
+}
+.imgGroup19 {
+	width: 10px;
+	height: 13px;
+	margin-top: 4px;
+	margin-right: 6px;
+}
+.textDagdelen {
+	color: #FFFFFF;
+	font-size: 15px;
+	font-weight: bold;
+	margin-bottom: 2px;
+}
+.MobResult {
+	display: none;
+}
+.navMobile {
+	display: none;
+}
+.sousMenuNavMobil {
+	display: none;
+}
+.croie {
+	display: none;
+}
+.Groeien-binnen-block {
+	display: none;
+}
+.Ontwikkel-specifieke-block {
+	display: none;
+}
+.Ontwikkel-persoonlijke-block {
+	display: none;
+}
+.imgBlock7 {
+	display: none;
+}
+.btnElementZonder {
+	width: 100%;
+	margin-top: 30px;
+	margin-bottom: 35px;
+}
+.text-bero {
+	color: #023356;
+	font-size: 18px;
+	margin-bottom: 15px;
+	font-weight: bold;
+}
+.textAupair {
+	color: #023356;
+	margin-bottom: 10px;
+}
+.cardTopBaan {
+	height: 210px;
+	padding: 30px 20px 4px !important;
+	border: 1px solid #e2e2e200;
+	box-shadow: 0px 0px 2px #9c9fa280;
+	text-align: center;
+	border-radius: 10px;
+	position: relative;
+	width: 15%;
+	background: #E0EFF4;
+	margin-right: 10px;
+	margin-bottom: 15px;
+}
+.imgZorgCard {
+	width: 136px;
+	margin: 0 auto;
+	height: 106px;
+}
+.zorgTextCard {
+	color: #023356;
+	margin-top: 10px;
+}
+.contentCardTop2 {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	margin-bottom: 15px;
+}
+.jouLeer {
+	color: #023356;
+	font-size: 30px;
+	font-weight: bold;
+	margin-bottom: 15px;
+	line-height: 32px;
+	padding-right: 50px;
+}
+.swipeContaineEvens {
+	align-self: stretch !important;
+	.swiper-wrapper {
+		.swiper-slide {
+			height: auto !important;
+		}
+	}
+}
+.beheer-text {
+	color: #023356;
+	font-size: 25px;
+	margin-bottom: 25px;
+	line-height: 28px;
+	padding-right: 50px;
+}
+.meldText {
+	background: #023356;
+	color: #FFFFFF;
+	font-size: 18px;
+	font-weight: bold;
+	border-radius: 15px;
+	margin-bottom: 30px;
+	padding: 10px 30px;
+}
+.conten2 {
+	padding: 0 50px;
+	margin-top: 50px;
+}
+.blockGroup8 {
+	display: flex;
+	justify-content: space-between;
+}
+.card3Maandeli {
+	background: #FFFFFF;
+	box-shadow: 0px 5px 10px #9c9fa2;
+	padding: 25px 20px;
+	width: 284px;
+	height: 195px;
+	position: relative;
+	img {
+		width: 100%;
+	}
+}
+.maandeliTEXT {
+	margin-bottom: 0;
+	position: absolute;
+	left: 26px;
+	top: 108px;
+	width: 175px;
+	font-weight: bold;
+	span {
+		text-decoration: underline;
+	}
+}
+.trait2 {
+	height: 85px;
+	border-left: 1px solid;
+	margin-left: 6px;
+}
+.of-Text {
+	margin-bottom: 0;
+}
+ul {
+	padding: 0;
+	margin: 0;
+}
+li {
+	list-style: none;
+}
+a {
+	&:focus {
+		text-decoration: none;
+		-webkit-transition: 0.3s ease;
+		-o-transition: 0.3s ease;
+		transition: 0.3s ease;
+	}
+	&:hover {
+		text-decoration: none;
+		-webkit-transition: 0.3s ease;
+		-o-transition: 0.3s ease;
+		transition: 0.3s ease;
+	}
+}
+.blockFooter {
+	display: flex;
+	justify-content: space-between;
+}
+.sousBlockFooter {
+	width: 19%;
+}
+.no-padding {
+	padding: 0 !important;
+}
+.footer-big {
+	padding: 40px 0 20px 0;
+	.footer-widget {
+		margin-bottom: 40px;
+	}
+	.footer-menu {
+		ul {
+			li {
+				a {
+					color: #d0d0d0;
+				}
+			}
+		}
+	}
+	p {
+		color: #d0d0d0;
+	}
+	ul {
+		li {
+			color: #d0d0d0;
+		}
+	}
+}
+.footerLive {
+	background: #043356;
+}
+.footer-menu {
+	ul {
+		li {
+			a {
+				font-size: 15px;
+				line-height: 32px;
+				-webkit-transition: 0.3s;
+				-o-transition: 0.3s;
+				transition: 0.3s;
+				&:hover {
+					color: #d0d0d0;
+				}
+			}
+		}
+	}
+}
+.footer-menu--1 {
+	width: 100%;
+}
+.footer-widget-title {
+	line-height: 42px;
+	margin-bottom: 10px;
+	font-size: 18px;
+	color: white;
+}
+.widget-about {
+	img {
+		display: block;
+		margin-bottom: 0;
+		width: 150px;
+	}
+	p {
+		font-weight: 400;
+	}
+	.contact-details {
+		margin: 30px 0 0 0;
+		li {
+			margin-bottom: 10px;
+			&:last-child {
+				margin-bottom: 0;
+			}
+			span {
+				padding-right: 12px;
+			}
+			a {
+				color: #47a99e;
+			}
+		}
+	}
+}
+.listeP {
+	font-size: 25px;
+	font-weight: bold;
+	margin-top: 23px;
+	margin-bottom: 30px;
+}
+.mapText {
+	margin-bottom: 11px;
+	a {
+		color: #023356;
+		font-size: 18px;
+	}
+}
+.krijgText {
+	font-size: 20px;
+	margin-bottom: 20px;
+	line-height: 25px;
+	color: #023356;
+}
+.ikWil {
+	padding: 12px 30px;
+	background: #47a99e;
+	border-radius: 10px;
+	color: white;
+	font-family: "Ubuntu-Regular";
+}
+.ookBlock {
+	background: url("./img/libay.png") no-repeat;
+	background-size: cover;
+	position: relative;
+	width: 48%;
+}
+.textmaand {
+	background: #47a99e;
+	width: fit-content;
+	padding: 15px 20px;
+	color: white;
+	position: absolute;
+	top: 38px;
+	font-size: 20px;
+	border-bottom-right-radius: 10px;
+	border-top-right-radius: 10px;
+	font-family: "Ubuntu-Medium";
+}
+.textOok {
+	width: 275px;
+	right: 0;
+	position: absolute;
+	bottom: 25px;
+	background: white;
+	padding: 18px 20px;
+	line-height: 18px;
+	font-size: 20px;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	font-family: "Ubuntu-Medium";
+}
+.blockCardFront {
+	width: 49%;
+	background: white;
+	box-shadow: 2px 1px 13px rgba(0, 0, 0, 0.1);
+	padding: 10px 15px;
+	display: flex;
+	margin-top: 15px;
+}
+.blockCardFront2 {
+	width: 100%;
+	background: white;
+	box-shadow: 2px 1px 13px rgba(0, 0, 0, 0.1);
+	padding: 10px 15px;
+	display: flex;
+	margin-top: 15px;
+}
+.workshopBlock {
+	width: 125px;
+	margin-right: 20px;
+	height: 100px;
+	position: relative;
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 10%;
+	}
+}
+.deToekomstBlock {
+	width: 75%;
+}
+.containWorkshopAgenda {
+	position: absolute;
+	top: 0;
+}
+.detaiElementAgenda {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+.janBlock {
+	display: flex;
+}
+.euroBlock {
+	display: flex;
+}
+.zwoleBlock {
+	display: flex;
+}
+.facilityBlock {
+	display: flex;
+}
+.workshopText {
+	font-size: 13px;
+	background: white;
+	width: fit-content;
+	padding: 3px 10px;
+	margin-top: 15px;
+	border-bottom-right-radius: 5px;
+	border-top-right-radius: 5px;
+	margin-bottom: 8px;
+}
+.blockDateFront {
+	background: #023356;
+	color: white;
+	width: 80%;
+	opacity: 11;
+	position: relative;
+	border-bottom-right-radius: 5px;
+	border-top-right-radius: 5px;
+	text-align: center;
+	padding: 5px 0;
+}
+.moiText {
+	font-size: 11px;
+	margin-bottom: 0;
+	font-family: "Ubuntu-Medium";
+}
+.dateText {
+	margin-bottom: 0px;
+	font-size: 20px;
+	margin-top: -6px;
+	font-family: "Ubuntu-Medium";
+}
+.deToekomstText {
+	font-size: 14px;
+	margin-bottom: 5px;
+	font-weight: bold;
+	margin-top: 6px;
+}
+.platformText {
+	font-size: 13px;
+	color: #707070;
+	margin-bottom: 6px;
+}
+.colorFront {
+	width: 15px;
+	height: 15px;
+	background: #707070;
+	border-radius: 100%;
+	margin-top: 1px;
+}
+.textJan {
+	font-size: 13px;
+	margin-bottom: 2px;
+	color: #707070;
+	margin-left: 4px;
+}
+.euroImg {
+	height: 13px;
+	margin-top: 3px;
+}
+.ss {
+	height: 15px;
+	margin-top: 2px;
+}
+.faciltyImg {
+	height: 14px;
+	margin-top: 3px;
+}
+.sousBlockFrontAgenda {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+.productBlock3 {
+	margin-bottom: 60px;
+}
+.sousBlockGroupText {
+	margin-top: 20px;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	.TextZorg {
+		min-width: 25%;
+	}
+}
+.blockTextdescript {
+	-ms-flex: 0 0 25%;
+	flex: 0 0 25%;
+	max-width: 25%;
+}
+.form-inline {
+	position: relative;
+}
+.navbar-collapse {
+	.form-inline {
+		margin-right: auto !important;
+		margin-left: auto !important;
+	}
+}
+.autocomplete-suggestions {
+	padding-top: 20px;
+	background-color: #fff;
+	position: absolute;
+	max-height: 300px;
+	z-index: 999999;
+	width: 290px;
+	top: 35px;
+	border-radius: 5px;
+	display: none;
+	a {
+		padding: 6px 12px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		color: #000;
+		background-color: #fff;
+		margin-bottom: 0px;
+		font-size: 15px;
+	}
+	.theme-mastersearch-divider {
+		padding: 6px 12px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		color: #000;
+		background-color: #fff;
+		margin-bottom: 0px;
+		font-size: 15px;
+	}
+}
+.theme-mastersearch-divider {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	color: #000;
+	background-color: #fff;
+	padding: 6px 12px;
+	&::after {
+		content: "";
+		width: 100%;
+		height: 2px;
+		margin-left: 12px;
+		display: block;
+		background-color: #DDD;
+	}
+}
+.icon9 {
+	width: 18px;
+	height: 18px;
+	margin-right: 6px;
+}
+.active {
+	.autocomplete-suggestions {
+		display: block;
+	}
+}
+form {
+	position: relative;
+}
+.autocomplete-suggestions2 {
+	padding-top: 20px;
+	background-color: #fff;
+	position: absolute;
+	max-height: 300px;
+	z-index: 999999;
+	width: 300px;
+	left: 100px !important;
+	top: 48px;
+	border-radius: 5px;
+	display: none;
+}
+.sousBlockFrontProdcut {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	margin-top: -5px;
+	.blockCardFront {
+		.deToekomstBlock {
+			.deToekomstText {
+				font-size: 13px;
+			}
+			.detaiElementAgenda {
+				.janBlock {
+					.textJan {
+						font-size: 12px;
+					}
+				}
+			}
+		}
+	}
+}
+.facilityText {
+	font-size: 12px;
+}
+.MobileFooter {
+	display: none;
+}
+.detaiElementAgendaModife {
+	width: 53%;
+	justify-content: space-between;
+}
+.detaiElementAgendaModife2 {
+	width: 100%;
+	justify-content: space-between;
+}
+.headsousBlockProduct4 {
+	display: flex;
+	align-items: center;
+}
+.showallLink {
+	color: #043356;
+	font-weight: bold;
+	text-decoration: revert;
+	&:hover {
+		color: #043356 !important;
+	}
+}
+.elementIconeRight {
+	width: 32px;
+	height: 12px;
+	margin: 0 20px;
+	img {
+		width: 100%;
+	}
+}
+.blockCardFrontModife {
+	width: 100%;
+}
+.blockproduct {
+	.row {
+		.col-md-3 {
+			background: #023356;
+		}
+	}
+}
+.swiper-container-3 {
+	.swiper-wrapper {
+		align-self: stretch !important;
+		.swiper-slide {
+			width: 327px !important;
+			height: auto !important;
+			background: white;
+			box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.1);
+			border-radius: 10px;
+			border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+		}
+	}
+}
+.groupTextZoe {
+	p {
+		color: #023356 !important;
+	}
+}
+.agenda-text {
+	margin-left: 0 !important;
+}
+.swiper-container {
+	overflow: hidden !important;
+}
+.container-fluid {
+	padding: 0 50px !important;
+}
+.beschiBlockText {
+	width: 100%;
+	text-align: center;
+	background: #043356;
+	color: white;
+	padding: 13px;
+	font-weight: bold;
+	border-radius: 11px;
+	font-size: 14px;
+}
+.boxBlijven {
+	background: #043356;
+	color: white;
+	height: 100vh;
+	padding-top: 26vh;
+}
+.altjidText {
+	margin-bottom: 30px;
+}
+.beljikBtn {
+	color: #ffffff;
+	font-weight: bold;
+	border: 1px solid #ffffff;
+	padding: 13px 20px;
+	border-radius: 20px;
+	font-size: 14px;
+}
+.btnMaakEenGratis {
+	color: #ffffff !important;
+	font-weight: bold;
+	padding: 13px 20px;
+	border-radius: 20px;
+	font-size: 14px !important;
+	background: #043356 !important;
+	margin-top: 15px;
+}
+.BlijvenText {
+	font-family: "Ubuntu-Bold";
+	font-size: 38px;
+	color: #ffffff;
+}
+.CreeerText {
+	font-family: "Ubuntu-Bold";
+	font-size: 38px;
+	color: #043356;
+}
+.StimuleerText {
+	color: #043356;
+	margin-bottom: 30px;
+}
+.blockForm {
+	background: #E0EFF4;
+	display: block;
+	color: #043356;
+	padding: 25px 20px 15px;
+	border-radius: 10px;
+	text-align: center;
+	width: 73%;
+	margin-left: auto;
+	margin-top: -10vh;
+	position: relative;
+}
+.formBoekGratis {
+	input {
+		width: 100%;
+		color: #043356;
+		padding: 6px 15px;
+		font-size: 14px;
+		border: 1px solid white;
+		border-radius: 14px;
+		margin-bottom: 10px;
+		box-shadow: 4px 5px #e0eff4;
+		&:focus-visible {
+			outline: -webkit-focus-ring-color auto 0px !important;
+		}
+	}
+}
+.btnAanvraag {
+	width: 100%;
+	text-align: center;
+	background: #47a99e !important;
+	color: #ffffff !important;
+}
+.blockArrow {
+	padding: 40px 0;
+	background: #e0eff4;
+	text-align: center;
+	img {
+		width: 100px;
+	}
+}
+.blockScholingsadvies {
+	background: #043356;
+	color: #ffffff;
+	text-align: center;
+	padding: 50px 0 25px;
+}
+.blockOnzeService {
+	background: #ffffff;
+	text-align: center;
+	padding: 50px 0 25px;
+}
+.blockTextScholingsadvies {
+	max-width: 480px;
+	margin: 0 auto 45px;
+}
+.cardScholingsadvies {
+	background: white;
+	color: #043356;
+	border-radius: 10px;
+	position: relative;
+	height: 450px;
+}
+.cardOnzeServices {
+	background: #e0eff4;
+	color: #043356;
+	border-radius: 10px;
+	position: relative;
+	height: 450px;
+	box-shadow: -1px 1px 2px 2px #dadada;
+}
+.gratisText {
+	position: absolute;
+	background: #f5953b;
+	color: white;
+	padding: 4px 20px 5px;
+	font-size: 13px;
+	border-radius: 8px;
+	font-weight: bold;
+	right: 20px;
+	top: 15px;
+}
+.gratisText2 {
+	right: 0;
+}
+.headCard {
+	height: 210px;
+	width: 200px;
+	margin: 0 auto 13px;
+	padding-top: 40px;
+	img {
+		width: 100%;
+	}
+}
+.contentCardGratis {
+	padding: 0 25px 30px;
+	.gratisTitle {
+		font-family: "Ubuntu-Bold";
+		margin-bottom: 6px;
+	}
+	.gratisContent {
+		font-size: 14px;
+		margin-bottom: 25px;
+	}
+}
+.btnPlanEen {
+	background: none !important;
+	border: 1px solid #043356 !important;
+	width: 89%;
+	color: #043356 !important;
+	font-size: 14px !important;
+	font-family: "Ubuntu-Bold";
+	position: absolute;
+	left: 20px;
+	bottom: 30px;
+}
+.btnPlanEen2 {
+	background: #043356 !important;
+	border: 1px solid #47a99e !important;
+	width: 100%;
+	color: #ffffff !important;
+	font-size: 14px !important;
+	font-family: "Ubuntu-Bold";
+	position: absolute;
+	left: 0px;
+	bottom: 0px;
+	padding: 18px !important;
+	text-align: center;
+}
+.meldBtn {
+	background: #47a99e !important;
+}
+.elementImgWerkzoekend {
+	display: flex;
+	align-items: center;
+	margin-bottom: 15px;
+}
+.blockWanneer {
+	background: #e0eff4;
+	padding: 50px 0;
+	p {
+		color: #043356;
+	}
+}
+.blockImgWerkzoekend {
+	width: 50px;
+	height: 50px;
+	border-radius: 100%;
+	overflow: hidden;
+	border: 2px solid #043356;
+	margin-right: 15px;
+	img {
+		width: 100%;
+	}
+}
+.wannerText {
+	font-size: 35px;
+	line-height: 38px;
+	font-family: "Ubuntu-Medium";
+}
+.heelText {
+	color: #043356;
+	font-size: 14px;
+	margin-bottom: 0;
+	width: 80%;
+}
+.blockImgZeggen {
+	display: flex;
+	width: 50px;
+	height: 50px;
+	border-radius: 100%;
+	overflow: hidden;
+	margin-right: 25px;
+	img {
+		width: 100%;
+	}
+}
+.anderenText {
+	font-size: 20px;
+	font-family: "Ubuntu-Medium";
+	margin-top: 20px;
+	color: #043356 !important;
+}
+.cardZeggen {
+	display: flex;
+	background: white;
+	border-radius: 10px;
+	margin-bottom: 15px;
+	box-shadow: 1px 2px 4px 1px #cccccc;
+	padding: 10px 15px;
+}
+.Voorbeelden {
+	display: block;
+	background: white;
+	border-radius: 10px;
+	margin-bottom: 15px;
+	box-shadow: 1px 2px 4px 1px #cccccc;
+	padding-bottom: 20px;
+	p {
+		font-size: 13px;
+		margin-bottom: 2px;
+		padding: 0px 20px;
+	}
+}
+.headVoorbeelden {
+	height: 160px;
+	overflow: hidden;
+	margin-bottom: 10px;
+	img {
+		width: 100%;
+	}
+}
+.blockleerJezelf {
+	display: flex;
+	max-width: 607px;
+	margin: 45px auto;
+	p {
+		margin-right: 30px;
+	}
+}
+.blockVaan {
+	display: flex;
+	flex-wrap: wrap;
+	background: #e0eff4;
+	padding: 15px 0 30px;
+}
+.contentCardEen {
+	display: flex;
+	flex-wrap: wrap;
+}
+.cardEen {
+	display: flex;
+	padding: 10px 20px;
+	background: white;
+	margin-right: 15px;
+	box-shadow: 1px 2px 4px 1px #cccccc;
+	margin-bottom: 15px;
+	align-items: center;
+	p {
+		font-size: 14px;
+		margin-bottom: 0;
+		color: #043356;
+	}
+}
+.imgBaan {
+	width: 45px;
+	margin-left: 10px;
+	img {
+		width: 100%;
+	}
+}
+.bottomTextMaak {
+	margin-bottom: 10px;
+}
+.elementArrow {
+	width: 100px;
+	margin: 30px auto 0;
+	img {
+		width: 100%;
+	}
+}
+.blockOnsTeam {
+	display: flex;
+	margin: 50px auto 0;
+	align-items: center;
+}
+.blockOnsTeam2 {
+	display: flex;
+	margin: 50px auto 70px;
+	align-items: center;
+}
+.imgOnsTeam {
+	width: 325px;
+	height: 250px;
+	overflow: hidden;
+	margin-right: 60px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+}
+.imgOnsTeam2 {
+	width: 325px;
+	height: 250px;
+	overflow: hidden;
+	margin-left: 70px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+}
+.TextScholingsadvies {
+	font-family: "Ubuntu-Bold";
+}
+.voorJouText {
+	font-size: 14px;
+}
+.onsTeamText {
+	font-family: "Ubuntu-Medium";
+	font-size: 18px;
+	margin-bottom: 10px;
+	color: #043356;
+}
+.voorJouText2 {
+	font-size: 15px;
+	margin-bottom: 16px;
+	color: #043356;
+}
+.btnLeesMeer {
+	font-family: "Ubuntu-Medium";
+	background: #043356 !important;
+	color: white !important;
+	border-radius: 30px !important;
+	padding: 5px 40px !important;
+	border: 1px solid white !important;
+	margin-bottom: 30px;
+}
+.contentOnsTeam {
+	width: 40%;
+}
+.contentOnsTeam2 {
+	width: 40%;
+	margin-left: auto;
+}
+.blockMaandelijks {
+	background: #043356;
+	color: white;
+	padding: 40px 0 60px;
+	text-align: center;
+}
+.blockImgSeconContentMaandelijks {
+	display: flex;
+	align-items: center;
+	margin: 0 auto;
+	width: 540px;
+	margin-top: 15px;
+}
+.elementImgMaandelijks {
+	width: 180px;
+	overflow: hidden;
+	margin-right: 11px;
+	img {
+		width: 100%;
+	}
+}
+.blockBull {
+	position: relative;
+}
+.bull {
+	width: 30px;
+	height: 30px;
+	overflow: hidden;
+	border-radius: 100%;
+	background: white;
+	margin-bottom: 10px;
+	margin-right: 13px;
+}
+.titleBlockMaandelijs {
+	width: 590px;
+	margin: 0 auto;
+	font-size: 30px;
+	font-weight: bold;
+	line-height: 40px;
+	margin-bottom: 15px;
+}
+.bullText {
+	text-align: left;
+	padding-top: 11px;
+}
+.hrBull {
+	position: absolute;
+	border-top: unset;
+	border-left: 3px solid white;
+	height: -webkit-fill-available;
+	left: 13px;
+}
+.blockValOpEnVerbind {
+	background: #e0eff4;
+	color: #043356;
+	text-align: center;
+	padding: 55px 0 50px;
+}
+.TitleblockValOpEnVerbind {
+	font-size: 30px;
+	font-weight: 600;
+	width: 558px;
+	margin: 0 auto;
+	line-height: 40px;
+	margin-bottom: 15px;
+}
+.subTitleblockValOpEnVerbind {
+	width: 640px;
+	margin: 0 auto 35px;
+}
+.cardBlockValOpEnVerbind {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 50px;
+}
+.OnecardBlockValOpEnVerbind {
+	background: white;
+	box-shadow: 0px 3px 4px 3px #d2d2d2;
+	text-align: center;
+	position: relative;
+	padding: 35px 25px 17px;
+	width: 335px;
+	margin: 0 20px;
+}
+.CardQuestion {
+	background: white;
+	box-shadow: 0px 3px 4px 3px #d2d2d2;
+	text-align: center;
+	position: relative;
+	padding: 35px 25px 17px;
+	width: 100%;
+}
+.headcardBlockValOpEnVerbind {
+	height: 170px;
+	margin-bottom: 25px;
+	img {
+		height: 100%;
+		object-fit: cover;
+	}
+}
+.headCardQuestion {
+	height: 170px;
+	margin-bottom: 25px;
+	img {
+		height: 100%;
+		object-fit: cover;
+	}
+}
+.titlecardBlockValOpEnVerbind {
+	font-weight: bold;
+	margin-bottom: 10px;
+	font-size: 20px;
+}
+.titleCardQuestion {
+	font-weight: bold;
+	margin-bottom: 10px;
+	font-size: 20px;
+}
+.imgGroup222 {
+	height: unset !important;
+	width: 100%;
+	margin-top: 30px;
+}
+.blockForm2 {
+	background: #043356;
+	display: block;
+	color: #ffffff;
+	padding: 25px 20px 15px;
+	border-radius: 10px;
+	text-align: center;
+	width: 73%;
+	margin-left: auto;
+	margin-top: -10vh;
+	position: relative;
+	.formBoekGratis {
+		input {
+			box-shadow: 4px 5px #043356;
+		}
+	}
+}
+.blockLiftLid {
+	padding: 45px 0;
+	p {
+		color: #043356;
+	}
+}
+.LIFTText {
+	margin-bottom: 0;
+	font-size: 13px;
+	color: #F69405 !important;
+	font-weight: 600;
+}
+.StimuleerEnText {
+	color: #043356;
+	font-weight: bold;
+	font-size: 30px;
+	width: 65%;
+	line-height: 28px;
+	margin-bottom: 13px;
+}
+.StimuleerImg {
+	width: 284px;
+	margin-left: auto;
+	img {
+		width: 100%;
+	}
+}
+.ImgcardVoorOrganisaties {
+	width: 30px;
+	margin-right: 20px;
+}
+.bullStyle {
+	width: 15px;
+	height: 15px;
+	background: #42454d;
+	border-radius: 100%;
+	margin-right: 13px;
+}
+.ulListeModife {
+	li {
+		list-style: inside !important;
+		color: #043356;
+		font-size: 15px;
+		margin-bottom: 5px;
+		&::marker {
+			width: 15px;
+			height: 15px;
+			background: #42454d;
+			border-radius: 100%;
+		}
+	}
+}
+.btnHoppa {
+	background: #47a99e;
+	color: white;
+	padding: 11px 30px;
+	border-radius: 18px;
+	font-size: 14px;
+	font-weight: bold;
+	margin: 20px 0 15px;
+	display: block;
+	width: fit-content;
+	&:hover {
+		color: white;
+	}
+}
+.inJeCarriere {
+	width: 145px;
+	position: relative;
+	float: right;
+	top: -50px;
+}
+.blocKCardVoorOrganisaties {
+	margin: 50px 0;
+	.row {
+		width: 100%;
+	}
+}
+.cardVoorOrganisaties {
+	width: 90%;
+	background: white;
+	box-shadow: 1px 1px 2px 4px #e4e4e4;
+	display: flex;
+	align-items: center;
+	padding: 15px 10px;
+	box-sizing: border-box;
+	border: 1px solid #f9f9f9;
+	p {
+		margin-bottom: 0;
+		font-size: 15px;
+		font-weight: bold;
+	}
+}
+.blockDaarom {
+	padding: 20px 0;
+	text-align: center;
+}
+.DaaromText {
+	color: #42454d;
+	margin-bottom: 8px;
+}
+.DeBasisText {
+	margin-top: 0px;
+	font-size: 35px;
+	color: #0e1851;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+.DeBasisText2 {
+	font-size: 35px;
+	color: #0e1851;
+	font-weight: bold;
+	width: 580px;
+	margin: 0 auto 30px;
+}
+.accordion {
+	margin-bottom: 70px;
+}
+.JijText {
+	color: #0e1851;
+	margin-bottom: 8px;
+	font-size: 20px;
+}
+.VoorJouText {
+	color: #0e1851;
+	max-width: 412px;
+	margin: 0 auto 20px;
+}
+.imgTableau {
+	width: 600px;
+	margin: 0 auto 50px;
+	img {
+		width: 100%;
+	}
+}
+.Blockfaq {
+	margin: 0 auto;
+}
+.btn-Collapsibe {
+	display: flex !important;
+	align-items: center !important;
+	color: #42454d !important;
+	width: 100%;
+	&:focus {
+		outline: 0;
+		box-shadow: none !important;
+	}
+	&::after {
+		flex-shrink: 0;
+		width: 1.25rem;
+		height: 1.25rem;
+		margin-left: auto;
+		content: "";
+		background-image: url("./img/Icon-feather-chevrons-down-1.png");
+		background-repeat: no-repeat;
+		background-size: 1.25rem;
+		position: absolute;
+		right: 30px;
+	}
+	&:not(.collapsed) {
+		&::after {
+			background-image: url("./img/Icon-feather-chevrons-up.png");
+		}
+	}
+}
+.blockImgCarLogin {
+	width: 170px;
+	margin-right: 30px;
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+	}
+}
+.register {
+	p {
+		width: 203px;
+		margin-left: auto;
+		text-align: left;
+	}
+}
+@media all and (min-width: 300px) and (max-width: 767px) {
+	.webReult {
+		display: none;
+	}
+	swipeContaine1 {
+		margin-left: 20px;
+	}
+	.swiper-container-3 {
+		padding-left: 0 !important;
+		.swiper-wrapper {
+			.swiper-slide {
+				width: 100% !important;
+			}
+		}
+	}
+	.swiper-container {
+		overflow-x: hidden !important;
+	}
+	.mobile-menu {
+		background: #043356 !important;
+	}
+	.MobResult {
+		display: block;
+	}
+	.desktopFooter {
+		display: none;
+	}
+	.MobileFooter {
+		display: block;
+	}
+	.footer-big {
+		padding: 20px 0 20px 0;
+		width: 100%;
+		overflow-x: hidden;
+		.footer-menu {
+			ul {
+				li {
+					a {
+						color: #ffffff;
+					}
+				}
+			}
+		}
+		p {
+			color: #ffffff;
+		}
+		ul {
+			li {
+				color: #ffffff;
+			}
+		}
+	}
+	.accordion {
+		background-color: #043356;
+		color: #fff;
+		cursor: pointer;
+		border-bottom: 1px solid white;
+		padding: 15px;
+		border-top: none;
+		border-left: none;
+		width: 100%;
+		text-align: left;
+		outline: none;
+		font-size: 15px;
+		transition: 0.4s;
+		-webkit-transition: 0.4s;
+		-moz-transition: 0.4s;
+		-ms-transition: 0.4s;
+		-o-transition: 0.4s;
+	}
+	.boxbaan {
+		height: 115px;
+	}
+	.blockCardBleu {
+		width: 55% !important;
+	}
+	.blockSwipCard {
+		width: 45% !important;
+		margin-left: 10px;
+		.swiper-container {
+			.swiper-wrapper {
+				.cardTop {
+					width: 135px !important;
+					margin-right: 20px;
+				}
+			}
+		}
+	}
+	.panel {
+		padding: 0 18px;
+		display: none;
+		background-color: #043356;
+		overflow: hidden;
+		ul {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-around;
+			color: white;
+			padding-top: 15px;
+			li {
+				width: 48%;
+				a {
+					color: #ffffff !important;
+				}
+			}
+		}
+	}
+	.element8 {
+		display: grid;
+		text-align: center;
+		a {
+			color: #FFFFFF;
+			padding-bottom: 10px;
+		}
+	}
+	.btnZorg2 {
+		min-width: 120px;
+	}
+	.MoisText {
+		font-size: 18px;
+		margin-left: 0;
+	}
+	.btnClose {
+		display: block !important;
+		margin-top: -16px;
+		display: block;
+		&:focus {
+			box-shadow: unset !important;
+		}
+	}
+	.wordDeBestText3 {
+		font-size: 23px;
+		line-height: 31px;
+		margin-bottom: 4px;
+		margin-top: 21px;
+	}
+	.btnMaak {
+		margin: 0 auto;
+	}
+	.conten2 {
+		padding: 0 15px;
+		margin-top: 35px;
+	}
+	.jouLeer {
+		font-size: 22px;
+		line-height: 30px;
+		text-align: center;
+		max-width: 255px;
+		margin: 0 auto;
+		padding-right: 0;
+	}
+	.beheer-text {
+		font-size: 16px;
+		line-height: 17px;
+		padding-right: 0;
+		margin-top: 13px;
+	}
+	.center2 {
+		text-align: center !important;
+	}
+	.sousBlockGroupText {
+		.TextZorg {
+			min-width: 47%;
+			font-size: 14px;
+			text-align: left;
+		}
+	}
+	.meldText {
+		font-size: 16px;
+		margin-bottom: 39px;
+	}
+	.blockGroup8 {
+		display: block;
+		margin-top: 50px;
+	}
+	.card3Maandeli {
+		margin: 0 auto;
+	}
+	.ofBlock {
+		display: flex;
+		display: flex;
+		margin-left: -15px;
+		margin-right: -15px;
+		margin-top: 23px;
+		margin-bottom: 22px;
+		color: #023356;
+	}
+	.trait2 {
+		height: 10px;
+		border-left: unset;
+		margin-left: 0;
+		border-top: 1px solid #023356;
+		width: 50%;
+		margin-top: 10px;
+	}
+	.imgBlock7 {
+		width: 150px;
+		margin: 0 auto;
+		display: block;
+		img {
+			width: 100%;
+		}
+	}
+	.of-Text {
+		margin-bottom: 0;
+		width: 25px;
+		background: white;
+		z-index: 1111;
+	}
+	.form-inline {
+		margin-top: 20px;
+	}
+	.inputSearch {
+		min-width: 347px;
+		margin-bottom: 11px;
+	}
+	.worden {
+		padding: 8px 15px !important;
+		margin: 15px 5px !important;
+		width: 118px;
+	}
+	.cardTopBaan {
+		width: 46%;
+		margin-right: 10px;
+		height: 193px;
+	}
+	.head2 {
+		margin-top: 45px;
+	}
+	.swipeContaineEvens {
+		.swiper-wrapper {
+			.swiper-slide {
+				height: auto !important;
+				width: 250px !important;
+			}
+		}
+	}
+	.btnZorg {
+		min-width: 173px;
+	}
+	.imgZorgCard {
+		width: 116px;
+		margin: 0 auto;
+		height: 91px;
+	}
+	.groupBtn2 {
+		padding: 20px 5px 3px 10px !important;
+	}
+	.box1Ban {
+		margin-right: -25px;
+		margin-left: -5px;
+	}
+	.boxOne3-1 {
+		height: 45vh !important;
+		background-position: center;
+		height: 77vh;
+	}
+	.bottomCol {
+		margin-bottom: 16px;
+	}
+	.groupTextZoe {
+		text-align: center;
+		margin-top: 20px;
+		padding-bottom: 20px;
+	}
+	.imgComponent2 {
+		width: 100%;
+		margin-top: 20px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.imgComponent1 {
+		width: 454px;
+		margin-top: -13px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.cardModife {
+		margin-bottom: 40px;
+	}
+	.wordenBlock {
+		padding-top: 70px;
+		display: flex;
+		flex-direction: column-reverse;
+	}
+	.VoorOrganisaties {
+		height: auto;
+	}
+	.wordenBlock1 {
+		margin-top: 65px;
+	}
+	.CreeerText {
+		font-size: 34px;
+		color: #043356;
+	}
+	.blockForm2 {
+		width: 100%;
+		margin-top: 27px;
+		margin-bottom: 125px;
+	}
+	.inJeCarriere {
+		top: unset;
+	}
+	.CardQuestion {
+		margin-bottom: 30px;
+	}
+	.imgTableau {
+		width: 100%;
+	}
+	.DeBasisText2 {
+		font-size: 30px;
+		width: 100%;
+	}
+	.blockLiftLid {
+		padding: 45px 0 0;
+	}
+	.blockAgenda {
+		display: block;
+		padding: 0 20px;
+		margin-bottom: 30px;
+		.filterBlock {
+			background: #023356;
+			text-align: center;
+			padding: 8px 10px;
+			margin: 20px 0px !important;
+			border-radius: 11px;
+			margin-top: 5px !important;
+		}
+	}
+	.block2agenda {
+		padding: 0;
+	}
+	.wordenBlock-2 {
+		padding-top: 46px;
+		display: flex;
+		flex-direction: column-reverse;
+		align-items: center;
+	}
+	.wordenBlock2 {
+		padding-top: 70px;
+		display: flex;
+		flex-direction: column-reverse;
+	}
+	.wordenBlock3 {
+		padding-top: 70px;
+		display: flex;
+		flex-direction: column-reverse;
+	}
+	.wordenTextBlock {
+		text-align: center;
+	}
+	.contentTree {
+		flex-direction: column-reverse;
+		max-width: 100%;
+		flex-wrap: wrap;
+	}
+	.contentTree2 {
+		flex-direction: column-reverse;
+		max-width: 100%;
+		flex-wrap: wrap;
+	}
+	.contentTreeFront {
+		flex-direction: column-reverse;
+		max-width: 100%;
+		flex-wrap: wrap;
+	}
+	.boxImg2 {
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 80px;
+	}
+	.imgGroup7 {
+		width: 311px;
+		margin-left: 0;
+		margin-top: -50px;
+	}
+	.imgGroup7-2 {
+		width: 311px;
+		margin-left: 0;
+		margin-top: -50px;
+	}
+	.bock1Word {
+		text-align: center;
+		padding: 10px 20px;
+	}
+	.generalBlock {
+		flex-wrap: wrap;
+	}
+	.oneBlock {
+		width: 100%;
+	}
+	.boxCards {
+		justify-content: space-between;
+	}
+	.boxCards2 {
+		justify-content: space-between;
+	}
+	.cardBleu {
+		background: #E0EFF4;
+		text-align: center;
+		align-items: center;
+		margin-right: 0;
+		margin-bottom: 15px;
+		width: 48%;
+		padding: 35px 0 0;
+		border-radius: 10px;
+	}
+	.cardBleu2 {
+		background: #E0EFF4;
+		text-align: center;
+		align-items: center;
+		margin-right: 0;
+		margin-bottom: 15px;
+		width: 48%;
+		padding: 35px 0 0;
+		border-radius: 10px;
+	}
+	.twoBlock {
+		width: 100%;
+		padding: 10px 0;
+		text-align: center;
+	}
+	.marginElement {
+		margin-right: 0;
+	}
+	.contentdetail {
+		flex-wrap: wrap;
+	}
+	.BlockOneFive {
+		text-align: center;
+		width: 100%;
+		padding: 0% 0;
+	}
+	.BlockTwoFive {
+		width: 100%;
+		display: flex;
+		margin-left: 0;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		margin-top: -20px;
+	}
+	.cardModife2 {
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 20px;
+	}
+	.cardModife3a {
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 20px;
+	}
+	.contentFive {
+		margin-bottom: 50px;
+	}
+	.contentSix {
+		flex-wrap: wrap;
+		padding: 0 20px;
+	}
+	.showallLink {
+		margin-top: -13px;
+	}
+	.elementIconeRight {
+		margin-top: -10px;
+	}
+	.cardBoxSix {
+		width: 100%;
+		box-shadow: 0px 0px 3px #00000057;
+		padding: 18px 32px 11px;
+		margin-bottom: 20px;
+	}
+	.textAlloOP {
+		line-height: 22px;
+	}
+	.blijenText {
+		max-width: 100%;
+		text-align: center;
+	}
+	.bock1Word2 {
+		width: 100%;
+		text-align: left;
+		padding: 10px 20px;
+	}
+	.contentVoorView {
+		text-align: left;
+		max-width: 100%;
+		padding: 0px 50px;
+		margin: 35px 0;
+	}
+	.blockHr8 {
+		flex-wrap: wrap;
+	}
+	.carsDirect {
+		width: 49.33%;
+		margin-bottom: 25px;
+	}
+	.cardHr {
+		width: 49.33%;
+		margin-bottom: 25px;
+	}
+	.cardEige {
+		width: 49.33%;
+		margin-bottom: 25px;
+	}
+	.imgIbou {
+		width: 255px;
+		margin-top: -30px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.paddingElement {
+		padding-right: 0;
+	}
+	.btnGroup {
+		display: flex;
+		position: relative;
+		width: 100%;
+		justify-content: space-between;
+	}
+	.boxOne3 {
+		background-position: center;
+		height: 71vh;
+	}
+	.boxCard3 {
+		padding: 0 15px;
+		margin-top: -20px;
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		margin-right: -5px;
+	}
+	.swiper-slideM2 {
+		width: 35% !important;
+	}
+	.card3 {
+		width: 49%;
+		padding: 20px 15px;
+	}
+	.btnIndiggen {
+		width: 175px;
+	}
+	.btnLtf {
+		width: 240px;
+		margin-right: 0px;
+		margin-left: 23px;
+	}
+	.srtatGratis {
+		right: -6px;
+	}
+	.sponsortBlock {
+		display: flex;
+		padding: 0 30px 10px;
+		flex-wrap: wrap;
+		img {
+			width: 85%;
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+	.cardModife3 {
+		margin-bottom: 30px;
+		box-shadow: 0px 0px 3px #9c9fa2;
+	}
+	.learningBlock {
+		padding: 5px 20px;
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 50px;
+		flex-wrap: wrap;
+	}
+	.groupText2 {
+		width: 100%;
+		padding-right: 0;
+	}
+	.imgBlockLeraning {
+		width: 100%;
+		padding-left: 75px;
+		margin-bottom: 30px;
+		img {
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+	.leftElement {
+		margin-left: 0;
+	}
+	.alJoum {
+		background: #E0EFF4;
+		padding: 25px 5px 20px;
+		display: block;
+		border-radius: 15px;
+		text-align: center;
+	}
+	.textAlJoum {
+		font-size: 18px;
+	}
+	.blockTextImg2 {
+		width: 100%;
+		text-align: center;
+		margin-left: 0;
+	}
+	.formModife3 {
+		padding: 0 51px;
+	}
+	.btnSub3 {
+		width: 31px;
+		height: 21px;
+		border: none;
+		background: #00A89D;
+		position: relative;
+		top: 15px;
+		border-radius: 4px;
+	}
+	.titleAgenda {
+		font-size: 23px;
+	}
+	.dePaterneText {
+		font-size: 14px;
+		text-align: center;
+	}
+	.blockText8 {
+		margin-bottom: 15px;
+	}
+	.SousblockDate {
+		padding: 8px 9px 25px;
+		height: 87%;
+		text-align: center;
+		align-items: center;
+		align-self: center;
+	}
+	.dateElement {
+		font-size: 29px;
+		font-size: 29px;
+		margin-top: 7vh;
+		transform: translateY(-43%);
+		span {
+			font-size: 15px;
+		}
+	}
+	.evenement {
+		padding: 10px 10px;
+		margin-left: 8px;
+		width: 85%;
+		margin-top: 15px;
+	}
+	.titleEvenement {
+		margin-bottom: 10px;
+		font-size: 12px;
+		padding: 6px 15px;
+		margin-right: 17px;
+	}
+	.titleEvenement2 {
+		font-size: 12px;
+		margin-top: 1px;
+		margin-bottom: 10px;
+	}
+	.sousBlockTwo2 {
+		flex-wrap: wrap;
+	}
+	.pointText {
+		margin-bottom: 10px;
+	}
+	.iconeAgenda {
+		width: 13px;
+		float: right;
+		margin-right: 0px;
+		height: 18px;
+	}
+	.sousBlockDebeste {
+		margin-left: -20px;
+		margin-right: -20px;
+		flex-wrap: wrap;
+	}
+	.deBesteElement {
+		width: 100%;
+		text-align: center;
+		top: 10px;
+		position: relative;
+		padding: 0 20px;
+	}
+	.blockMinute {
+		display: none;
+	}
+	.Mob {
+		display: block;
+	}
+	.web {
+		display: none;
+		display: none;
+	}
+	.enZorgenText {
+		margin-bottom: 35px;
+	}
+	.cardModife4 {
+		box-shadow: 0px 0px 3px #9c9fa2;
+	}
+	.cardTop {
+		width: 100%;
+	}
+	.swiper-slide2 {
+		width: 53% !important;
+		margin-right: 30px;
+	}
+	.imgBlockFooter {
+		margin: 0 auto;
+		text-align: center;
+		padding-top: 15px;
+	}
+	.resauxsociaux {
+		text-align: center;
+		margin: 20px auto;
+		a {
+			img {
+				width: 30px;
+				padding: 2px;
+				margin: 0 6px;
+			}
+		}
+		.face {
+			width: 18px;
+		}
+	}
+	.contentOne {
+		width: 100%;
+		overflow-x: hidden;
+	}
+	.blockTopBanen {
+		margin-bottom: 30px;
+		margin-left: 0px;
+		margin-right: -50px;
+		padding-left: 20px;
+		padding-right: 20px;
+		width: 100%;
+		overflow-x: hidden;
+	}
+	.titleTopBanen {
+		color: #023356;
+		font-size: 22px;
+		font-weight: bold;
+		margin-bottom: 15px;
+	}
+	.webBan {
+		display: none;
+	}
+	.MobBan {
+		display: block;
+	}
+	.overElement {
+		display: block;
+	}
+	.blockOneOver {
+		width: 100%;
+		padding: 20px 15px 0;
+		overflow-x: hidden;
+	}
+	.blockTwoOver {
+		width: 100%;
+		padding: 20px 15px 0;
+		overflow-x: hidden;
+	}
+	.blockImgCour {
+		width: 100%;
+		height: auto;
+	}
+	.e-learningTitle {
+		font-size: 19px;
+		font-weight: bold;
+		margin-top: 14px;
+		margin-bottom: 24px;
+	}
+	.blockIconeLearning {
+		margin-bottom: 20px;
+		margin-top: 25px;
+	}
+	.textIconeLearning {
+		font-weight: bold;
+		font-size: 14px;
+	}
+	.iconeCours {
+		width: 17px;
+		height: 17px;
+		margin-bottom: 5px;
+	}
+	.descriptionCours {
+		font-size: 15px;
+	}
+	.btnContact {
+		padding: 15px 15px;
+		width: 100%;
+	}
+	.sousBlockCours {
+		display: flex;
+		padding: 10px 10px;
+		margin-bottom: 5px;
+		align-items: center;
+	}
+	.playElement {
+		width: 18px;
+		margin-right: 8px;
+		height: fit-content;
+	}
+	.textChapitreCours {
+		color: #023356;
+		font-size: 13px;
+	}
+	.startTextBtn {
+		font-size: 15px;
+	}
+	.btnKoop {
+		font-size: 15px;
+	}
+	.rowModife {
+		flex-flow: wrap-reverse !important;
+	}
+	.contentLogin {
+		padding: 15px 0;
+	}
+	.blockImgCarLogin {
+		width: 83px;
+		margin-right: 30px;
+	}
+	.boxCardForm {
+		width: 100%;
+		background: #E0EFF4;
+		padding: 15px 25px 49px;
+		margin-left: 0px;
+		margin-bottom: 45px;
+		margin-top: 35px;
+	}
+	.boxLOginCardOne {
+		height: 140px;
+		padding: 25px;
+		margin-bottom: 10px;
+		border: 1px solid #E0EFF4;
+		text-align: center;
+		background: #e0eff4;
+	}
+	.CardpriceLive {
+		margin-bottom: 50px;
+	}
+	.wordnuText {
+		font-size: 21px;
+		line-height: 31px;
+	}
+	.bloxkWorldMembre {
+		margin-bottom: 25px;
+	}
+	.block2evens {
+		width: 100%;
+	}
+	.CardBlockEvenement {
+		display: block;
+	}
+	.dateBlock {
+		width: 100%;
+		text-align: center;
+	}
+	.BlocknumberEvenement {
+		width: 100%;
+		text-align: center;
+	}
+	.blockPriceEvens {
+		width: 100%;
+		text-align: center;
+		position: relative;
+		width: 100%;
+		text-align: center;
+		position: relative;
+	}
+	.btnSchrijf {
+		position: relative;
+		bottom: 1px;
+		margin-bottom: 15px;
+	}
+	.prixEvens {
+		font-weight: bold;
+		font-size: 22px;
+		margin-bottom: 0px;
+		margin-top: 10px;
+	}
+	.mob {
+		display: block;
+	}
+	.sousProduct2 {
+		width: 100%;
+		width: 83%;
+		background: #FFFFFF;
+		padding: 15px;
+	}
+	.fliterElementText {
+		color: #FFFFFF;
+		font-size: 15px;
+		font-weight: bold;
+		margin-bottom: 0;
+	}
+	.filterBlock {
+		background: #023356;
+		text-align: center;
+		padding: 8px 10px;
+		margin: 0 15px;
+		border-radius: 11px;
+		margin-top: 20px;
+		position: relative;
+	}
+	.BlocOneSearch {
+		display: block;
+	}
+	.blockresult1 {
+		display: block;
+	}
+	.wekkaText {
+		font-size: 22px;
+		line-height: 24px;
+	}
+	.s-ImgText {
+		width: 25px;
+		height: 25px;
+		margin-bottom: 0;
+	}
+	.imgGroup9 {
+		margin-bottom: 9px;
+	}
+	.textPartener {
+		width: auto;
+	}
+	.group15 {
+		width: 100%;
+		min-height: 150px;
+	}
+	.blockWerkka {
+		width: 100%;
+	}
+	.block8 {
+		flex-wrap: wrap;
+	}
+	.resultBlock {
+		width: 100%;
+	}
+	.productBlockGeneral {
+		display: block;
+	}
+	.sousBlockTitleProduct {
+		font-size: 25px;
+	}
+	.btnIcone8 {
+		position: absolute;
+		top: 13px;
+		right: 15px;
+		color: unset !important;
+		border: unset !important;
+		padding: 0 !important;
+		&:focus {
+			outline: 0;
+			box-shadow: unset !important;
+		}
+	}
+	.btnIcone8.focus {
+		outline: 0;
+		box-shadow: unset !important;
+	}
+	.sousProduct1 {
+		width: 100%;
+		background: #023356;
+		color: #FFFFFF;
+		padding: 25px 0px;
+		min-height: 100vh;
+		position: fixed;
+		top: 0;
+		z-index: 1111;
+		height: 100%;
+		display: none;
+	}
+	.leerv {
+		display: flex;
+		justify-content: space-between;
+	}
+	.btnClose.focus {
+		box-shadow: unset !important;
+	}
+	.mobile {
+		display: block;
+	}
+	.webBlock {
+		display: none;
+	}
+	.cardKraam {
+		width: 100%;
+	}
+	.opleiBlock {
+		width: 100%;
+	}
+	.swipeContaine4 {
+		padding-left: 0 !important;
+	}
+	.swiper-slide4 {
+		width: 87% !important;
+	}
+	.cardblockOnder {
+		width: 100%;
+	}
+	.swiper-slide5 {
+		width: 58% !important;
+	}
+	.swiper-slide6 {
+		width: 68% !important;
+	}
+	.cardKraam1 {
+		width: 100%;
+	}
+	.titleEvenement22 {
+		display: none;
+	}
+	.pointTex1 {
+		display: none;
+	}
+	.groupBtn {
+		padding: 20px 5px 30px 10px;
+	}
+	.swiper-slideM1 {
+		width: 50% !important;
+	}
+	.search7 {
+		width: 80%;
+		margin: 0 auto;
+	}
+	.navWeb {
+		display: none !important;
+	}
+	.navMobile {
+		display: block;
+		background: #023356;
+		padding: 10px 20px;
+		position: fixed;
+		width: 100%;
+		z-index: 999;
+	}
+	.ProfilGraduatioBlock {
+		display: flex;
+		justify-content: space-between;
+	}
+	.sousBlockProduct4 {
+		padding-left: 15px;
+	}
+	.sousBlockProduct2 {
+		padding-left: 15px;
+	}
+	.sousBlockProduct6 {
+		padding-left: 15px;
+	}
+	.AgendaDate2 {
+		padding: 8px 9px 6px !important;
+	}
+	.even2 {
+		padding: 5px 10px 0px;
+	}
+	.sousNav1 {
+		display: flex;
+		width: 30%;
+	}
+	.boxImgNav {
+		width: 25px;
+		margin-right: 13px;
+		position: relative;
+		img {
+			width: 100%;
+		}
+	}
+	.notification {
+		position: absolute;
+		width: 15px;
+		height: 15px;
+		background: #DE5A5A;
+		color: #FFFFFF;
+		top: 0;
+		border-radius: 100%;
+		font-size: 10px;
+		font-weight: bold;
+		right: 0;
+		text-align: center;
+	}
+	.sousNav2 {
+		margin: 0 auto;
+		width: 47px;
+		img {
+			width: 100%;
+		}
+	}
+	.sousNav3 {
+		width: 30%;
+		display: flex;
+		justify-content: flex-end;
+	}
+	.boxSousNav3-1 {
+		width: 22px;
+		margin-right: 12px;
+		padding-top: 2px;
+		img {
+			width: 100%;
+		}
+	}
+	.boxSousNav3-2 {
+		width: 28px;
+		padding: 0 !important;
+		img {
+			width: 100%;
+		}
+	}
+	.croie {
+		width: 20px;
+		padding: 0 !important;
+		height: 25px;
+		img {
+			width: 100%;
+			margin-top: -9px;
+		}
+	}
+	.boxImgNav2 {
+		width: 32px;
+		padding-top: 1px;
+		position: relative;
+		img {
+			width: 100%;
+		}
+	}
+	.sousMenuNavMobil {
+		width: 100%;
+		float: right;
+		background: #E0EFF4;
+		padding: 25px 20px;
+		position: fixed;
+		z-index: 999999999;
+		top: 45px;
+		right: 0;
+		min-height: 100vh;
+		overflow-y: scroll;
+	}
+	.elementsousMenuNav {
+		color: #023356;
+		font-size: 15px;
+		margin-bottom: 10px;
+	}
+	.block1 {
+		margin-bottom: 25px;
+		display: grid;
+	}
+	.btnRegistreren {
+		background: #00A89D;
+		color: #FFFFFF;
+		font-size: 15px;
+		width: 100%;
+		text-align: center;
+		padding: 9px;
+		margin-bottom: 15px;
+		border-radius: 10px;
+		font-weight: bold;
+	}
+	.btnInloggen {
+		background: #023356;
+		color: #FFFFFF;
+		font-size: 15px;
+		width: 100%;
+		text-align: center;
+		padding: 9px;
+		margin-bottom: 15px;
+		border-radius: 10px;
+		font-weight: bold;
+	}
+	.groupGroein {
+		justify-content: space-between;
+		display: flex;
+	}
+	.btnsousgroeien {
+		padding: 0;
+		width: 13px;
+		margin-top: -10px;
+		img {
+			width: 100%;
+		}
+	}
+	.btnModifeMenue {
+		padding: 0;
+		width: 39px;
+		margin-top: -10px;
+	}
+	button {
+		&:focus {
+			outline: unset !important;
+			outline: unset !important;
+			box-shadow: unset !important;
+		}
+	}
+	.elementGroupGroeien {
+		margin-bottom: 20px;
+	}
+	.fleG1 {
+		width: 17px;
+		float: right;
+		cursor: pointer;
+	}
+	.sousElementGroeien-binnen-block {
+		display: inline-grid;
+		width: 100%;
+	}
+	.footer-menu {
+		padding-left: 0;
+	}
+	.wordDeBestText2 {
+		font-size: 30px;
+		font-family: "Ubuntu-Medium";
+		line-height: 30px;
+		margin: 0px auto 15px;
+	}
+	.searchFront {
+		width: 100%;
+		font-size: 14px;
+	}
+	.onzeText {
+		margin-bottom: 15px;
+		color: #023356;
+		margin-left: 20px;
+	}
+	.cardVoor {
+		margin-bottom: 20px;
+	}
+	.block9 {
+		.container-fluid {
+			padding-right: 20px !important;
+			padding-left: 20px !important;
+		}
+	}
+	.titleGroupText {
+		font-size: 18px;
+		margin-bottom: 10px;
+		font-family: "Ubuntu-Medium";
+	}
+	.blockTextdescript {
+		-ms-flex: 0 0 50%;
+		flex: 0 0 50%;
+		max-width: 50%;
+	}
+	.blockImGDaniel {
+		width: 130px;
+		margin-right: auto;
+		margin-top: 11px;
+		margin-left: auto;
+		margin-bottom: 10px;
+	}
+	.formDirect {
+		text-align: center;
+		width: 100%;
+	}
+	.blockinputDirect {
+		display: block;
+		padding: 0 20px;
+	}
+	.inputDirect {
+		width: 100%;
+		color: #707070;
+		margin-bottom: 10px;
+	}
+	.btnContactOp {
+		width: 99%;
+		margin-left: 2px;
+	}
+	.OfMaanBlock {
+		display: block;
+		margin-bottom: 30px;
+	}
+	.ofWordBlock {
+		width: 100%;
+		background: #e0eff4;
+		padding: 20px 15px 32px;
+	}
+	.ofWordText {
+		margin-bottom: 2px;
+		font-size: 24px;
+		color: #023356;
+		font-family: "Ubuntu-Bold";
+	}
+	.krijgText {
+		font-size: 16px;
+		margin-bottom: 20px;
+		line-height: 25px;
+		color: #023356;
+	}
+	.ookBlock {
+		width: 100%;
+		height: 234px;
+		margin-top: 13px;
+		border-radius: 5px;
+	}
+	.textOok {
+		font-size: 18px;
+	}
+	.sousBlockFrontAgenda {
+		display: block;
+		justify-content: unset;
+		flex-wrap: unset;
+		margin-left: 20px;
+	}
+	.blockCardFront {
+		width: 100%;
+		background: white;
+		box-shadow: 2px 1px 13px rgba(0, 0, 0, 0.1);
+		padding: 10px 15px;
+		display: flex;
+		margin-top: 15px;
+	}
+	.blockFrontAgenda {
+		margin-left: -18px;
+		margin-right: 0px;
+	}
+	.deToekomstBlock {
+		width: 72%;
+	}
+	.deToekomstText {
+		font-size: 12px;
+	}
+	.platformText {
+		font-size: 11px;
+	}
+	.detaiElementAgenda {
+		display: none;
+	}
+	.workshopText {
+		font-size: 12px;
+	}
+	.productBlock3 {
+		margin-bottom: 25px;
+		padding: 0 20px;
+	}
+	.swipeContaine1 {
+		margin-left: 20px;
+	}
+	.swiperSlideModife {
+		width: 323.0256px !important;
+		margin-right: 10px !important;
+	}
+	.imgCard4 {
+		width: 153px;
+		height: 127px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.cardKraamTest {
+		width: 100% !important;
+	}
+	.sousProductTest {
+		display: none;
+		width: 100%;
+		background: #023356;
+		color: #FFFFFF;
+		padding: 25px 0px;
+		min-height: 100vh;
+		position: fixed;
+		top: 0;
+		z-index: 1111;
+		height: 100%;
+	}
+	.container-fluid {
+		padding: unset !important;
+	}
+	.cardScholingsadvies {
+		margin-bottom: 20px;
+	}
+	.blockleerJezelf {
+		display: block;
+		max-width: unset;
+		margin: 35px auto;
+	}
+	.boxBlijven {
+		padding-top: 80px;
+		height: auto;
+		padding-bottom: 30px;
+	}
+	.BlijvenText {
+		font-family: "Ubuntu-Bold";
+		font-size: 28px;
+	}
+	.blockForm {
+		background: #E0EFF4;
+		display: block;
+		color: #043356;
+		padding: 15px 10px 5px;
+		border-radius: 10px;
+		text-align: center;
+		width: 100%;
+		margin-top: 35px;
+	}
+	.wannerText {
+		font-size: 26px;
+		line-height: 30px;
+	}
+	.blockOnsTeam {
+		display: block;
+	}
+	.contentOnsTeam {
+		width: 100%;
+		margin-top: 20px;
+	}
+	.blockOnsTeam2 {
+		display: block;
+	}
+	.contentOnsTeam2 {
+		width: 100%;
+		margin-left: auto;
+	}
+	.imgOnsTeam2 {
+		margin-left: 0;
+	}
+	.titleBlockMaandelijs {
+		width: 100%;
+		margin: 0 auto;
+		font-size: 25px;
+		line-height: 31px;
+		margin-bottom: 15px;
+	}
+	.blockImgSeconContentMaandelijks {
+		display: flex;
+		align-items: center;
+		margin: 0 auto;
+		width: 100%;
+		flex-wrap: wrap;
+	}
+	.elementImgMaandelijks {
+		width: 298px;
+		margin: 0 auto;
+	}
+	.bullText {
+		text-align: left;
+		padding-top: 30px;
+		width: 85%;
+	}
+	.TitleblockValOpEnVerbind {
+		font-size: 25px;
+		font-weight: 600;
+		width: 100%;
+		margin: 0 auto;
+		line-height: 29px;
+		margin-bottom: 15px;
+	}
+	.subTitleblockValOpEnVerbind {
+		width: 100%;
+		margin: 0 auto 35px;
+	}
+	.cardBlockValOpEnVerbind {
+		display: flex;
+		justify-content: center;
+		margin-bottom: 20px;
+		flex-wrap: wrap;
+	}
+	.OnecardBlockValOpEnVerbind {
+		margin: 0 20px 30px;
+	}
+	.blockValOpEnVerbind {
+		padding: 55px 0 30px;
+	}
+	.headCardQuestion {
+		img {
+			height: unset;
+			object-fit: cover;
+			width: 100%;
+		}
+	}
+}
+@media screen and (max-width: 1023px) and (min-width: 768px) {
+	.imgComponent1 {
+		width: 300px;
+		margin-top: -25px;
+		margin-left: 76px;
+	}
+	.swiper-container-3 {
+		padding-left: 0px !important;
+		.swiper-wrapper {
+			.swiper-slide {
+				width: unset !important;
+				width: auto !important;
+			}
+		}
+	}
+	.swiper-slideM1 {
+		width: 45% !important;
+		width: 30% !important;
+	}
+	.imgComponent2 {
+		width: 600px;
+		margin-top: -25px;
+		margin-left: 76px;
+	}
+	.cardModife {
+		margin-bottom: 30px;
+	}
+	.contentTwo {
+		padding: 45px 0px;
+		margin-bottom: 55px;
+	}
+	.imgGroup7 {
+		width: 305px;
+		margin-left: 48px;
+		margin-top: -44px;
+	}
+	.imgGroup7-2 {
+		width: 305px;
+		margin-left: 0;
+		margin-top: -44px;
+	}
+	.contentTree {
+		max-width: 100%;
+		margin-bottom: 40px;
+		padding: 0 50px;
+		padding: 0 20px;
+	}
+	.contentTree2 {
+		max-width: 100%;
+		margin-bottom: 40px;
+		padding: 0 50px;
+	}
+	.contentTreeFront {
+		max-width: 100%;
+		margin-bottom: 40px;
+		padding: 0 50px;
+	}
+	.generalBlock {
+		flex-wrap: wrap;
+		flex-direction: column-reverse;
+	}
+	.oneBlock {
+		width: 100%;
+	}
+	.boxCards {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
+	.boxCards2 {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
+	.cardBleu {
+		background: #E0EFF4;
+		text-align: center;
+		align-items: center;
+		margin-right: 0;
+		margin-bottom: 15px;
+		width: 30%;
+		padding: 35px 0 0;
+		border-radius: 10px;
+	}
+	.cardBleu2 {
+		background: #E0EFF4;
+		text-align: center;
+		align-items: center;
+		margin-right: 0;
+		margin-bottom: 15px;
+		width: 30%;
+		padding: 35px 0 0;
+		border-radius: 10px;
+	}
+	.twoBlock {
+		width: 100%;
+		padding: 0%;
+		text-align: center;
+	}
+	.marginElement {
+		margin-right: 0;
+	}
+	.contentdetail {
+		display: flex;
+		flex-wrap: wrap;
+	}
+	.BlockOneFive {
+		text-align: center;
+		width: 100%;
+		padding: 0;
+		margin-top: 30px;
+	}
+	.BlockTwoFive {
+		width: 100%;
+		display: flex;
+		margin-left: 45px;
+		justify-content: space-between;
+		flex-wrap: wrap;
+	}
+	.cardModife2 {
+		width: 30%;
+		border-radius: 3%;
+		margin-bottom: 50px;
+	}
+	.contentVoorView {
+		text-align: left;
+		max-width: 100%;
+		padding: 0px 50px;
+		margin: 35px 0;
+	}
+	.elementBtnText {
+		display: block !important;
+	}
+	.meetText {
+		margin-top: 20px;
+		margin-left: 0;
+	}
+	.boxOne3 {
+		height: 63vh;
+		background-size: initial;
+	}
+	.boxOne3-1 {
+		height: 63vh;
+		background-size: initial;
+	}
+	.btnIndiggen {
+		width: 200px;
+	}
+	.btnLtf {
+		width: 240px;
+		margin-right: 0px;
+		margin-left: 23px;
+	}
+	.btnGroup {
+		display: flex;
+		position: relative;
+		width: fit-content;
+		justify-content: end;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	.srtatGratis {
+		right: -53px;
+	}
+	.boxCard3 {
+		padding: 0 20px;
+		flex-wrap: wrap;
+	}
+	.card3 {
+		padding: 20px 20px;
+	}
+	.sponsortBlock {
+		padding: 30px 20px;
+	}
+	.cardModife3 {
+		margin-bottom: 25px;
+	}
+	.imgBlockLeraning {
+		padding-left: 20px;
+	}
+	.groupText2 {
+		width: 71%;
+		padding-right: 20px;
+	}
+	.leftElement {
+		margin-left: 0px;
+	}
+	.alJoum {
+		padding: 30px 10px 20px;
+		margin-bottom: 50px;
+	}
+	.blockMinute {
+		padding-left: 0;
+	}
+	.SousblockDate {
+		padding: 13px 30px 25px;
+		text-align: center;
+	}
+	.sousBlockDebeste {
+		flex-wrap: wrap;
+		margin-left: 15px;
+	}
+	.deBesteElement {
+		width: 60%;
+		margin-bottom: 34px;
+		margin-left: 20px;
+	}
+	.ensembleCard {
+		width: 58%;
+		flex-wrap: wrap;
+	}
+	.cardModife4 {
+		max-width: 245px;
+		margin-bottom: 30px;
+	}
+	.webBan {
+		display: none;
+	}
+	.MobBan {
+		display: block;
+	}
+	.swiper-slide2 {
+		width: 45% !important;
+		margin-right: 30px;
+		width: 28% !important;
+		margin-right: 30px;
+	}
+	.swiper-slide3 {
+		width: 85% !important;
+		width: 37% !important;
+	}
+	.swiper-slide1 {
+		width: 28% !important;
+	}
+	.cardTop {
+		width: 100%;
+	}
+	.cardBoxSix {
+		padding: 20px 28px 12px;
+	}
+	.overElement {
+		display: block;
+	}
+	.blockOneOver {
+		width: 100%;
+		width: 100%;
+		padding: 20px 15px 0;
+		overflow-x: hidden;
+	}
+	.blockTwoOver {
+		width: 100%;
+	}
+	.blockImgCour {
+		width: 100%;
+		height: auto;
+	}
+	.blockIconeLearning {
+		margin-top: 18px;
+	}
+	.boxCardForm {
+		width: 90%;
+		background: #E0EFF4;
+		padding: 15px 25px;
+		margin-left: 25px;
+	}
+	.worden {
+		width: 114px;
+		position: relative;
+		left: -13px;
+		margin-top: 9px !important;
+		margin-bottom: 20px !important;
+	}
+	.block2evens {
+		width: 100%;
+		margin-top: 45px;
+		margin-bottom: 40px;
+	}
+	.BlocknumberEvenement {
+		width: 43%;
+	}
+	.dateText1 {
+		color: #000000;
+		font-size: 21px;
+	}
+	.inclusiefText {
+		color: #707070;
+		font-size: 14px;
+	}
+	.mobile {
+		display: block;
+	}
+	.webBlock {
+		display: none;
+	}
+	.cardKraam {
+		width: 100%;
+	}
+	.opleiBlock {
+		width: 100%;
+	}
+	.swiper-slide4 {
+		width: 85% !important;
+		width: 48% !important;
+	}
+	.cardblockOnder {
+		width: 100%;
+	}
+	.swiper-slide5 {
+		width: 58% !important;
+		width: 33% !important;
+	}
+	.swiper-slide6 {
+		width: 68% !important;
+		width: 40% !important;
+	}
+	.cardKraam1 {
+		width: 100%;
+	}
+	.Mob {
+		display: block;
+	}
+	.filterBlock {
+		display: none;
+	}
+	.sousProduct1 {
+		width: 35%;
+	}
+	.btnClose {
+		display: none;
+	}
+	.sousProduct2 {
+		width: 83%;
+		padding: 15px;
+	}
+	.search7 {
+		width: 42%;
+		margin: 0 auto;
+	}
+	.webReult {
+		display: none;
+	}
+	.MobResult {
+		display: block;
+	}
+	.navMobile {
+		z-index: 999;
+		display: block;
+		background: #023356;
+		padding: 15px 20px;
+		position: fixed;
+		width: 100%;
+		height: auto;
+		display: block;
+		background: #023356;
+		padding: 10px 20px;
+	}
+	.navWeb {
+		display: none;
+		display: none !important;
+	}
+	.ProfilGraduatioBlock {
+		display: flex;
+		width: 100%;
+		justify-content: space-between;
+	}
+	.sousNav1 {
+		display: flex;
+	}
+	.boxImgNav2 {
+		width: 32px;
+		padding-top: 1px;
+		position: relative;
+		margin-left: 10px;
+		img {
+			width: 100%;
+		}
+	}
+	.notification {
+		position: absolute;
+		width: 15px;
+		height: 15px;
+		background: #DE5A5A;
+		color: #FFFFFF;
+		top: 0;
+		border-radius: 100%;
+		font-size: 10px;
+		font-weight: bold;
+		right: 0;
+		text-align: center;
+	}
+	.boxSousNav3-1 {
+		width: 22px;
+		margin-right: 12px;
+		padding-top: 7px;
+		img {
+			width: 100%;
+		}
+	}
+	.sousMenuNavMobil {
+		width: 100%;
+		float: right;
+		background: #E0EFF4;
+		padding: 25px 20px;
+		position: fixed;
+		z-index: 999999999;
+		top: 45px;
+		right: 0;
+		min-height: 100vh;
+		overflow-y: scroll;
+		display: none;
+	}
+	.elementsousMenuNav {
+		color: #023356;
+		font-size: 15px;
+		margin-bottom: 10px;
+	}
+	.block1 {
+		margin-bottom: 25px;
+		display: grid;
+	}
+	.elementGroupGroeien {
+		margin-bottom: 20px;
+	}
+	.fleG1 {
+		width: 17px;
+		float: right;
+		cursor: pointer;
+	}
+	.sousElementGroeien-binnen-block {
+		display: inline-grid;
+		width: 100%;
+	}
+	.groupGroein {
+		justify-content: space-between;
+		display: flex;
+	}
+	.btnsousgroeien {
+		padding: 0;
+		width: 13px;
+		margin-top: -10px;
+		img {
+			width: 100%;
+		}
+	}
+	button {
+		&:focus {
+			outline: unset !important;
+			outline: unset !important;
+			box-shadow: unset !important;
+		}
+	}
+	.croie {
+		margin-top: -10px;
+	}
+	.swiper-slideM2 {
+		width: 19% !important;
+	}
+	.voorBlock {
+		text-align: center;
+		padding-top: 110px;
+	}
+	.searchFront {
+		width: 100%;
+	}
+	.cardVoor {
+		.web {
+			display: none;
+		}
+	}
+	.onzeText {
+		margin-left: 20px;
+	}
+	.btnContactOp {
+		font-size: 13px;
+	}
+	.inputDirect {
+		width: 37%;
+	}
+	.ofWordBlock {
+		width: 48%;
+		background: #e0eff4;
+		padding: 20px 23px 25px;
+	}
+	.ofWordText {
+		margin-bottom: 2px;
+		font-size: 25px;
+	}
+	.krijgText {
+		font-size: 16px;
+	}
+	.textmaand {
+		padding: 10px 19px;
+		top: 28px;
+		font-size: 16px;
+	}
+	.textOok {
+		width: 207px;
+		padding: 14px 10px;
+		font-size: 16px;
+	}
+	.dePaterneText {
+		font-size: 16px;
+		text-align: center;
+	}
+	.container-fluid {
+		padding-right: 15px !important;
+		padding-left: 15px !important;
+		padding: unset !important;
+	}
+	.sousBlockFrontAgenda {
+		display: block;
+		justify-content: unset;
+		flex-wrap: unset;
+	}
+	.blockCardFront {
+		width: 100%;
+	}
+	.workshopBlock {
+		width: 142px;
+	}
+	.productBlock3 {
+		margin-bottom: 30px;
+	}
+	.web {
+		display: none;
+	}
+	.blockAgenda {
+		margin-bottom: 25px;
+		display: block;
+	}
+	.blockTopBanen {
+		margin-bottom: 35px;
+	}
+	.titleTopBanen {
+		color: #023356;
+		font-size: 22px;
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+	.btnGrou10 {
+		display: flex;
+		justify-content: unset;
+		margin-bottom: 27px;
+		margin-left: 20px;
+	}
+	.btnContact {
+		margin-right: 20px;
+	}
+	.sousNav3 {
+		display: flex;
+	}
+	.cardScholingsadvies {
+		height: 535px;
+	}
+	.wannerText {
+		font-size: 26px;
+		line-height: 34px;
+		font-family: "Ubuntu-Medium";
+	}
+	.boxBlijven {
+		height: unset;
+		padding-top: 191px;
+		padding-bottom: 80px;
+	}
+	.inJeCarriere {
+		width: 145px;
+		position: relative;
+		float: right;
+		top: unset;
+	}
+	.headCardQuestion {
+		height: 134px;
+		margin-bottom: 25px;
+		img {
+			height: unset;
+			object-fit: cover;
+			width: 100%;
+		}
+	}
+	.cardVoorOrganisaties {
+		width: 100%;
+	}
+}
+@media screen and (max-width: 2560px) and (min-width: 1400px) {
+	.container-fluid {
+		max-width: 1380px !important;
+	}
+	.boxCard3 {
+		padding: unset;
+		margin-top: -20px;
+		display: flex;
+		justify-content: space-between;
+		margin: 0 auto;
+	}
+	.sponsortBlock {
+		display: flex;
+		padding: unset;
+		margin: 0 auto;
+		max-width: 1380px;
+	}
+	.croie {
+		display: none;
+	}
+	.blockText8 {
+		margin-left: auto;
+		margin-right: auto;
+		max-width: 511px;
+		text-align: center;
+		margin-bottom: 20px;
+	}
+	.prijsSousBlock {
+		flex-wrap: wrap;
+	}
+	.swiper-slide4 {
+		width: 60% !important;
+		width: 60% !important;
+	}
+	.swipeContaineEvens {
+		.swiper-wrapper {
+			.swiper-slide {
+				height: auto !important;
+				width: 35% !important;
+			}
+		}
+	}
+	.sousNav3 {
+		display: flex;
+	}
+}
