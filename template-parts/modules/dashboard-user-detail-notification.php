@@ -35,7 +35,7 @@
                     </div>
                     <div>
                         <h3 class="titleContentNotification">Content Notification</h3>
-                        <p class="NotificationFeedback">
+                        <div class="NotificationFeedback">
                             <?php
                             switch ($value[3]) {
                                 //Pour afficher les infos de type Beoordeling Gesprek
@@ -50,7 +50,8 @@
                                             echo '<div class="rate">';
                                                 for($index=1; $index <= 5; $index++){
                                                     if($index == intval($stopics_rates_comment[$i+1]))
-                                                        echo '<input type="radio" id="star'.$index.'__" name="sales_rate_'.$index.'" value="" checked="checked" disabled="true"/>';
+                                                        echo '<input type="radio" id="star'.$index.'__" name="sales_rate_'.$index.'" value="" checked="checked" disabled="true"/>
+                                                              <label class="ma_link" for="star'.$index.'__" title="text">'.$index.' stars</label>';
                                                     else 
                                                         echo '<input type="radio" id="star'.$index.'__" name="sales_rate_'.$index.'" value=""  disabled="true"/>';
                                                 }
@@ -90,7 +91,7 @@
                                     break;
                             }       
                             ?>
-                        </p>
+                        </div>
                     </div>
                 </div>
                 </div>
