@@ -48,7 +48,7 @@
                                         {
                                             echo '<p class="mb-0" style="width: 20%;">'. (String)get_the_category_by_ID(intval($stopics_rates_comment[$i])) . '</p>';
                                             echo '<div class="rate">';
-                                                for($index=5; $index == 0; $index--){
+                                                for($index=5; $index >= 1; $index--){
                                                     if($index == intval($stopics_rates_comment[$i+1]))
                                                         echo '<input type="radio" id="star'.$index.'__" name="sales_rate_'.$index.'" value="" checked="checked" disabled="true"/>
                                                               <label class="ma_link" for="star'.$index.'__" title="text">'.$index.' stars</label>';
