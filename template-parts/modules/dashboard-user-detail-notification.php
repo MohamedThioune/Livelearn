@@ -82,9 +82,10 @@
                                         echo '<br> Beschrijving: '.$value[1];
                                         $stopics= explode('~',$value[4]);
                                         echo '<br> Topics: ';
-                                        for($x=0;$x<count($stopics); $x++)
+                                        foreach($stopics as $stopic)
                                         {
-                                            echo '<br>'.(String)get_the_category_by_ID($stopics[$i]);
+                                            if($stopic != "")
+                                            echo '<br>'.(String)get_the_category_by_ID($stopic);
                                         }
                                     break;
                             }       
@@ -134,8 +135,9 @@
         <div class="row">
             <div class="col-lg-7">
                 <div class="cardRecentlyEnrolled">
-                <div class="w-100">
-                    <h2 class="notificationBy"> Error occured , when try to find this notification.</h2>
+                    <div class="w-100">
+                        <h2 class="notificationBy"> Error occured , when try to find this notification.</h2>
+                    </div>
                 </div>
             </div>
         </div>
