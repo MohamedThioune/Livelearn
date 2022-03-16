@@ -55,8 +55,8 @@
                                                 
                                                 $suit = 5-$stars;
                                                 if($suit != 0)
-                                                    for($index = 1; $index <= $suit; $index++){
-                                                        $pos = $index + $suit;
+                                                    for($a = 1; $a <= $suit; $a++){
+                                                        $pos = $a + $suit;
                                                         echo '<input type="radio" id="star'.$pos.'__" name="sales_rate_'.$pos.'" value=""  disabled="true"/>
                                                               <label class="ma_link" for="star'.$pos.'__" title="text">'.$pos.' stars</label>';
                                                     }
