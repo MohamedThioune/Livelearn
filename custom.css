@@ -4261,6 +4261,14 @@ body .gform_wrapper ul li.gfield {
 .group-input-settings input {
     margin-bottom: 0;
 }
+
+.footer-big .footer-menu ul li a, .footer-big p, .footer-big ul li {
+    color: #d0d0d0 !important;
+}
+.widget-about .contact-details li a {
+    color: #47a99e !important;
+}
+
 @media not all and (min-resolution:.001dpcm)
 { @supports (-webkit-appearance:none) and (stroke-color:transparent) {
 
