@@ -192,15 +192,38 @@ jQuery(function($){
         $(".sousBlockFourBlockVoeg2").hide();
         $(".sousBlockFourBlockVoeg3").show();
     });
+
     // fedback
     $(".buttonFeedback").click(function() {
         $("#FeedbackInput").hide();
-        $("#salesInput").show();
     });
-    $(".buttonFeedback2").click(function() {
-        $("#FeedbackInput").show();
-        $("#salesInput").hide();
+    $(".btf1").click(function() {
+        $("#FeedbackInput").hide();
+        $("#FeedbackInput1").Show();
     });
+
+
+    for ( var i = 0; i < 21; i++ ) {
+        $( ".btf" ).appendTo( document.body );
+    }
+
+    for ( var i = 0; i < 21; i++ ) {
+        $( ".I-feddback" ).appendTo( document.body );
+    }
+
+    $( "div" ).click(function() {
+        $(".FeedbackInput").hide();
+        $("I-feddback").Show();
+    });
+
+
+
+
+
+
+
+
+
 
 
     //POur inuput recherche coté responsivité
