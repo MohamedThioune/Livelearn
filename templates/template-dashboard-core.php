@@ -10,7 +10,7 @@ $message = "";
 extract($_POST); 
 
  // delete_user_meta(33,'topic_affiliate'); // Delete topics affiliate by manager
- //   delete_user_meta(33,'todos'); //   Delete todos affiliate by manager
+   // delete_user_meta(33,'todos'); //   Delete todos affiliate by manager
 if(isset($_POST['expert_add'])){
     $bunch = get_field('experts', $_GET['id']);
     if(!empty($bunch)){
@@ -193,29 +193,33 @@ else if(isset($_POST['add_todo_beoordelingsgesprek'])){
     $title_beoordelingsgesprek = $_POST['title_beoordelingsgesprek'];
     $type = $_POST['type'];
     $algemene_beoordeling = $_POST['algemene_beoordeling'];
-    $sales_toelichting = $_POST['sales_toelichting'];
-    $sales_rate_2 = $_POST['sales_rate_2'];
-    $sales_rate = $_POST['sales_rate'];
-    $feedback_geven_rate = $_POST['feedback_geven_rate'];
+    $rates_comments='';
     $topic_affiliate = get_user_meta($id_user,'topic_affiliate');
-    $onderwerp_beoordelingsgesprek='';
     if (isset ($topic_affiliate) &&  !empty($topic_affiliate))
+    {
         foreach ($topic_affiliate as $value) {
-            $onderwerp_beoordelingsgesprek.=$value.';';        
+            $rate_topic=$_POST[lcfirst((String)get_the_category_by_ID($value)).'_rate'];
+            $comment_topic=$_POST[lcfirst((String)get_the_category_by_ID($value)).'_toelichting'];
+            $rates_comments=$rates_comments.$rate_topic.'~'.$comment_topic.'~';
         }
+        $rates_comments=substr_replace($rates_comments ,"",-1);
+    }
     $bunch = array();
-    $fields = " ";
     $state = 0;
     $bunch = get_field('todos',  'user_' . $id_user);
-    $fields = $title_beoordelingsgesprek . ';' .$algemene_beoordeling . ';' .get_current_user_id() . ';'. $type .';'. $feedback_geven_rate . ';'. $sales_rate_2. ';'.$sales_toelichting. ';' .$sales_rate. ';' .$algemene_beoordeling. ';'.$onderwerp_beoordelingsgesprek. ';'.$state;
-    array_push($bunch, $fields);  
-    if(!empty($bunch))
-        update_field('todos', $bunch, 'user_'. $id_user);
-    else
-        update_field('todos', $fields, 'user_'.$id_user);
+    $fields = $title_beoordelingsgesprek . ';' .$algemene_beoordeling . ';' .get_current_user_id() . ';'. $type . ';' .$rates_comments. ';' .$state;
+    $new_fields=explode(';',$fields);
+    $topics=explode ('~',$new_fields[4]);
+     var_dump($fields);
+     var_dump($new_fields);
+      array_push($bunch, $fields);  
+      if(!empty($bunch))
+          update_field('todos', $bunch, 'user_'. $id_user);
+      else
+          update_field('todos', $fields, 'user_'.$id_user);
 
-    $message = "/dashboard/company/profile/?id=". $id_user. "&manager=" . get_current_user_id() . "&message=Uw actie is met succes beïnvloed"; 
-    header("Location: ". $message);
+      $message = "/dashboard/company/profile/?id=". $id_user. "&manager=" . get_current_user_id() . "&message=Uw actie is met succes beïnvloed"; 
+      header("Location: ". $message);
 }
 
 //Persoonlijk ontwikkelplan saving

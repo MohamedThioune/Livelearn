@@ -1,3 +1,4 @@
+
 <?php
     $todos = get_field('todos',  'user_' . $user->ID);
     if(isset($todos[$_GET['todo']])){
@@ -29,12 +30,60 @@
                         </div>
                         <div class="blockType">
                             <p class="">Type :</p>
-                            <p>Feedback</p>
+                            <p><?php echo $value[3]; ?> </p>
                         </div>
                     </div>
                     <div>
                         <h3 class="titleContentNotification">Content Notification</h3>
-                        <p class="NotificationFeedback"><?php echo $value[0]; ?> </p>
+                        <p class="NotificationFeedback"><?php echo $value[1]; ?> </p>
+                        <?php 
+                        echo '\n <br>';
+                        switch ($value[3]) {
+                            //Pour afficher les infos de type Beoordeling Gesprek
+                            case 'Beoordeling Gesprek':
+                                echo '\n Title: '.$value[0];
+                                echo '\n Algemene beoordeling: '.$value[1];
+                                $stopics_rates_comment= explode('~',$value[4]);
+                                for($i=0;$i<count($stopics_rates_comment); $i++)
+                                {
+                                   echo '\n'.(String)get_the_category_by_ID($stopics_rates_comment[$i]).'; Stars: '.$stopics_rates_comment[$i+1].'; Comment '.$stopics_rates_comment[$i+2];
+                                   $i=$i+2;
+                                }
+                                break;
+                                //Pour afficher les infos de type Persoonlijk Ontwikkelplan
+                            case 'Persoonlijk Ontwikkelplan' :
+                                echo '\n Title: '.$value[0];
+                                $stopics= explode('~',$value[4]);
+                                for($i=0;$i<count($stopics_rates_comment); $i++)
+                                {
+                                   echo '\n'.(String)get_the_category_by_ID($stopics[$i]);
+                                }
+                               echo '\n Wat wil je bereiken ?';
+                               echo  $value[5];
+                               echo '\n Hoe ga je dit bereiken ?';
+                               echo  $value[6];
+                               echo '\n Heb je hierbij hulp nodig ?';
+                               echo  $value[7];
+                               echo '\n Opmerkingen: '.$value[1];
+                               
+                                
+                                break;
+                                // Pour afficher les infos de type feedback ou compliment vu qu'ils ont le meme format
+                            default :
+                                    echo '\n Title: '.$value[0];
+                                    echo '\n Beschrijving: '.$value[1];
+                                    $stopics= explode('~',$value[4]);
+                                    echo '\n Topics: ';
+                                    for($i=0;$i<count($stopics); $i++)
+                                    {
+                                        echo '\n'.(String)get_the_category_by_ID($stopics[$i]);
+                                    }
+                                break;
+                        }
+                            
+                                
+
+                        ?>
                     </div>
                 </div>
                 </div>
@@ -49,7 +98,6 @@
                     <?php 
                     
                     foreach($todos as $key=>$todo) {
-
                         $value = explode(";", $todo);
                         $manager = get_users(array('include'=> $value[2]))[0]->data;
                         $image = get_field('profile_img',  'user_' . $manager->ID);
@@ -61,7 +109,8 @@
                                 <div class="circleNotification">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification 1.png" alt="">
                                 </div>
-                                <p class="feddBackNotification"><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?> send you a  <span>Feedback</span></p>
+                                <p class="feddBackNotification">
+                                    <?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?> send you a  <span>Feedback</span></p>
                             </div>
                             <!-- <p class="hoursText">0 hours ago</p> -->                    
                         </div>

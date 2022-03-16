@@ -69,57 +69,130 @@ if (is_array(get_field('favorited', $post->ID)) || is_object(get_field('favorite
 $favoured = count(get_field('favorited', $post->ID));
 ?>
 
-
 <style>
-    .swiper {
-        width: 600px;
-        /* height: 300px; */
+    body{
+        padding-top: 0px !important;
     }
-    .swiper-moved{
-        color: #023356 !important;
-        font-size: 12px;
-    }
-     /* ------------------- Show more Text -------------- */
-     .text-limit p,.text-limit .moreText{
-        display:none;
-    }
-    .text-limit p:first-child, .text-limit{
-        display:block;
-         overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 4; /** number of line to display! */
-        -webkit-box-orient: vertical;   
-    }
-    .text-limit.show-more .moreText, .text-limit.show-more p, .text-limit.show-more {
-        display: block;
-    }
-    .lees_alles:hover {
-        color: #fff;
-        background-color: #023356;
-    }
-    .modal-dialog{
-         width: 40%;
-    }
-    @media all and (max-width: 753px) {
-        .modal-dialog{
-             width: 90%;
-        }  
-    }
-    @media all and (min-width: 753px) and (max-width: 900px) {
-        .modal-dialog{
-             width: 70%;
-        } 
+    a{
+        text-decoration: none !important;
+        color: black !important;
     }
 </style>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
 
+<!-- ---------------------------------------- Start modals ---------------------------------------------- -->
+<div class="modal fade" id="direct-contact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Direct contact</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="text-center">
+                <a href="" class="mx-2">
+                    <img class="mb-2"
+                    src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
+                </a>
+                <a href="" class="mx-3">
+                    <i style="font-size: 20px"
+                    class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white"></i>
+                    <!-- border border-3 border-success rounded-circle p-2 -->
+                </a>
+                <a href="" class="mx-3">
+                    <i style="font-size: 30px" class="fa fa-comment"></i>
+                </a>
+                <a href="" class="mx-2 test bg-primary" style="height: 85rem">
+                    <!-- <div class=""> -->
+                        <i style="font-size: 40px;"  class="fab fa-whatsapp text-success"></i>
+                    <!-- </div> -->
+                </a>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>
 
-<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+<div class="modal fade" id="incompany" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Incompany</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+            
+                
+                <?php 
+                    echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true'] "); 
+                ?>
+
+                
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="offerte" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Brochure</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                
+            <?php 
+                    echo do_shortcode("[gravityform id='6' title='false' description='false' ajax='true'] "); 
+                ?>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="voor-wie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Voor Wie</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+</div>
+<!-- ------------------------------------------ End modals ---------------------------------------------- -->
+
+
 <div class="liveOverBlock">
     <div class="container-fluid">
-        <div class="overElement">
+        <div class="overElement">           
             <div class="blockOneOver">
+
+                <!-- modal -->
+                <!-- Button trigger modal -->
+                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#direct-conatact">
+                    Launch demo modal
+                </button> -->
+
+                <!-- modal -->
+
                 <!-- ------------------------------ Start Title livelearn ---------------------------------- -->
 
                 <div class="titleBlock">
@@ -287,28 +360,27 @@ $favoured = count(get_field('favorited', $post->ID));
                     <div class="text-limit">
                         <?php echo $long_description; ?>
 
-                        <div class=" moreText"> 
+                        <div class="moreText"> 
                            <?php
                                 if($agenda){
-                            ?>
+                                    ?>
                                     <h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Agenda :</b></h6>
-                                    <?php echo $agenda; ?> <br><br>
+                                    <span> <?php echo $agenda; ?> </span>
                                     <?php
                                 }
 
                                 if($who){
                                     ?>  
-                                    <h6 class="textDirect" style="text-align: left"><b>For who :</b></h6>
-                                    <?php echo $who; ?> <br><br>
+                                    <h6 class="textDirect mt-3" style="text-align: left"><b>For who :</b></h6>
+                                    </span> <?php echo $who; ?> </span>
                                     <?php
                                 }
 
                                 if($results){
                                     ?>  
-                                    <h6 class="textDirect p-0" style="text-align: left"><b>Results :</b></h6>
-                                    <p > <?php echo $results; ?> </p> 
-
-                            <?php
+                                    <h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Results :</b></h6>
+                                    <span > <?php echo $results; ?> </span>
+                                    <?php
                                 }
                             ?>
                         </div>    
@@ -316,7 +388,7 @@ $favoured = count(get_field('favorited', $post->ID));
                        
                    </div>
 
-                    <button type="button" class="btn btn-lg lees_alles mb-5 w-md-25 px-4 border border-3 border-dark read-more-btn"
+                    <button type="button" class="btn btn-lg lees_alles my-4 w-md-25 px-4 border border-1 border-dark read-more-btn"
                      >Lees alles</button>
                 </div>
                 <!--------------------------------------- end Text description -------------------------------------- -->
@@ -337,7 +409,7 @@ $favoured = count(get_field('favorited', $post->ID));
                         </div>
                         <div class="modal-body  px-md-5 p-3">
                             <?php
-                            echo (do_shortcode('[user_registration_form id="59"]'));
+                                echo (do_shortcode('[user_registration_form id="59"]'));
                             ?>
 
                             <div class="text-center">
@@ -384,19 +456,19 @@ $favoured = count(get_field('favorited', $post->ID));
         <!-- ----------------------------------- Right side: small dashboard ------------------------------------- -->
         <div class="blockTwoOver">
             <div class="btnGrou10">
-                <a href="" class="btnContact">
+                <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#direct-contact">
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
                     Direct contact
                 </a>
-                <a href="" class="btnContact">
+                <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#incompany">
                     <i class="fas fa-house-damage px-2" style="font-size: 20px"></i>
                     Incompany
                 </a>
-                <a href="" class="btnContact">
+                <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#offerte">
                     <i class="fab fa-buffer px-2" style="font-size: 20px"></i>
-                    Offerte
+                    Brochure
                 </a>
-                <a href="" class="btnContact">
+                <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#voor-wie">
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/question.png" alt="">
                     Voor wie
                 </a>
@@ -404,7 +476,8 @@ $favoured = count(get_field('favorited', $post->ID));
 
             <div class="CardpriceLive">
                 <?php
-                    if(!empty($company)){
+                    if(!empty($company))
+                    {
                         $company_id = $company[0]->ID;
                         $company_title = $company[0]->post_title;
                         $company_logo = get_field('company_logo', $company_id);
@@ -510,11 +583,6 @@ $favoured = count(get_field('favorited', $post->ID));
             </div>  
 
         </div>
-
-
-
-
-
 
 
         
@@ -763,7 +831,6 @@ $favoured = count(get_field('favorited', $post->ID));
     </div>
 
     
-
         <!-- début Modal deel -->
         <div class="modal" id="modal1" data-animation="fadeIn">
         <div class="modal-dialog modal-dialog-deel" role="document">
@@ -827,11 +894,15 @@ $favoured = count(get_field('favorited', $post->ID));
     </div>
     <!-- fin Modal deel -->
 
+
 </div>
 
 
-
+<!-- scritpt for modal -->
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 
 <script>
     $("#btn_favorite").click((e)=>
@@ -857,8 +928,6 @@ $favoured = count(get_field('favorited', $post->ID));
     })
 </script>
 
-<!-- scritpt for modal -->
-<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 
 <script>
  
