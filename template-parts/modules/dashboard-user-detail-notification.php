@@ -43,6 +43,7 @@
                                     echo '<br> <b>Title:</b> '.$value[0];
                                     echo '<br> <b>Algemene beoordeling:</b> '.$value[1];
                                     $stopics_rates_comment = explode('~',$value[4]);
+                                    var_dump($stopics_rates_comment);
                                     echo '<div class="bloclCijfers">';
                                         for($i=0; $i<count($stopics_rates_comment); $i++)
                                         {
