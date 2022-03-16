@@ -229,7 +229,7 @@
                     <div class="d-flex flex-row">
                         <div id="profil-element-first" class="first-element-mobile">
                             <div id="croieProfil" class="btn">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/XMobile.png" alt="">
+                                <i class="bi bi-x-lg text-white" style="font-size: 25px"></i>
                                 <!-- <i class="bi bi-x-lg text-white" style="font-size: 25px"></i> -->
                             </div>
                             <div id="profilView" class="btn">
@@ -251,21 +251,12 @@
                     </div>
                 </div>
 
-                <a href="/" class="sousNav2 pt-1 text-center">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn_white.png"
-                         style="width: 28px !important" alt="" class="mb-1">
+                <a href="/" class="logoMobile">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn_white.png" alt="LogoMobile">
                 </a>
                 <div class="sousNav3">
 
-                    <div class="d-flex flex-row-reverse">
-                        <div class="second-element-mobile">
-                            <button id="burger" class=" btn burgerElement boxSousNav3-2">
-                                <i class="fa fa-bars text-white" style="font-size: 25px"></i>
-                            </button>
-                            <button id="burgerCroie" class="btn croie">
-                                <i class="bi bi-x-lg text-white" style="font-size: 25px"></i>
-                            </button>
-                        </div>
+                    <div class="d-flex">
                         <div class="second-element-mobile">
                             <div id="searchIcone" class="mt-1">
                                 <i class="bi bi-search text-white" style="font-size: 20px"></i>
@@ -274,6 +265,14 @@
                                 <i class="bi bi-x-lg text-white" style="font-size: 25px"></i>
                                 <!-- <img src="<?php echo get_stylesheet_directory_uri();?>/img/XMobile.png" alt=""> -->
                             </div>
+                        </div>
+                        <div class="second-element-mobile">
+                            <button id="burger" class=" btn burgerElement boxSousNav3-2">
+                                <i class="fa fa-bars text-white" style="font-size: 25px"></i>
+                            </button>
+                            <button id="burgerCroie" class="btn croie">
+                                <i class="bi bi-x-lg text-white" style="font-size: 25px"></i>
+                            </button>
                         </div>
 
                     </div>
@@ -401,7 +400,6 @@
     </div>
 
     <div id="main">
-
         <script>
             $("#searchIconeTablet").click(function() {
                 // alert('cooooooll!');
