@@ -1,0 +1,451 @@
+/*
+ Theme Name:   Fluidify child
+ Theme URI:    https://www.influid.nl/
+ Description:  Fluidify Child Theme
+ Author:       Influid
+ Author URI:   https://www.influid.nl/
+ Template:     fluidify
+ Version:      1.0.0
+ Tags:         custom child
+ Text Domain:  fluidify-child
+*/
+$light-blue: #E0EFF4;
+$aqua-blue: #2AA89D;
+$dark-blue: #023356;
+$dark-gray: #42454D;
+$font-body: 'Umbuntu', sans-serif;
+
+
+body {
+    margin:0;
+    padding:0;
+    overflow-x: hidden;
+    width: 100%;
+    font-size: 14px;
+    font-family: $font-body
+}
+
+.theme-header {
+    background-color: $dark-blue;
+    color: #ffffff;
+    width: 100%;
+    min-height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.theme-header__logo img {
+    height: 30px;
+}
+
+.theme-header__menu {
+    display: flex;
+    align-items: center;
+}
+
+.theme-header__menu-notification {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+.theme-header__profile-picture {
+    background-color: $aqua-blue;
+    border: none;
+    border-radius: 35px;
+    padding: 15px;
+    font-size: 12px;
+    display: block;
+}
+
+.theme-header__profile-menu {
+    position: absolute;
+    z-index: 10;
+    right: 20px;
+    color: #000000;
+    background-color: #ffffff;
+    padding: 24px;
+    display: none;
+}
+
+.theme-header__profile-menu.active {
+    display: block;
+}
+
+.theme-side-menu {
+    min-width: 300px;
+    display: flex;
+    max-height: 100%;
+    background-color: #ffffff;
+}
+
+.theme-menu__title {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding-left: 20px;
+    margin-top: 30px;
+}
+
+.theme-menu__title:not(:first-of-type) {
+    margin-top: 40px;
+}
+
+.theme-side-menu__item.active {
+    font-weight: bold;
+}
+
+.theme-side-menu__list ul {
+    list-style: none;
+    padding-left: 20px;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.theme-side-menu__list ul li {
+    margin: 10px 0;
+}
+
+.theme-side-menu__list ul li:before {
+    content: "⚪️";
+    padding-right: 15px;
+}
+
+.theme-menu__add {
+    background-color: $light-blue;
+    margin-left: 20px;
+    padding-right: 10px;
+    display: flex;
+    align-items: center;
+    height: 26px;
+    border-radius: 16px;
+    max-width: 244px;
+}
+
+a.theme-menu__add:hover {
+    background-color: $dark-blue;
+    color: #ffffff;
+    transition-duration: .2s;
+}
+
+.theme-menu__add,
+.theme-menu__add:visited {
+    color: #000000;
+    text-decoration: none;
+}
+
+.theme-menu__add:before {
+    content: '+';
+    font-weight: bold;
+    margin-right: 20px;
+    padding: 3px 7px;
+    background-color: #ffffff;
+    color: #747373;
+    border: 2px solid #747373;
+    border-radius: 20px;
+}
+
+.theme-content {
+    min-height: 100vh;
+    overflow: hidden;
+    display: flex;
+    background-color: $light-blue;
+}
+
+.theme-learning,
+.theme-form,
+.theme-content__button-group,
+.theme-dashboard-blocks {
+    width: 100%;
+    padding: 25px;
+}
+
+.theme-learning {
+    min-width: 0;
+}
+
+.theme-content__center,
+.theme-content__side,
+.theme-content__button-group,
+.theme-content__learning,
+.theme-dashboard-blocks {
+    padding: 0 24px;
+}
+
+.theme-content__title {
+    padding: 16px 0;
+    font-size: 26px;
+    font-weight: 600;
+    color: $dark-blue;
+}
+
+
+.theme-content__upload {
+    width: 100%;
+    background-color: #ffffff;
+    height: 100px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.theme-content__small-input input,
+.theme-content__large-input textarea,
+.theme-content__medium-input textarea {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.theme-content__small-input,
+.theme-content__large-input,
+.theme-content__dropdown-large {
+    margin: 10px 0;
+}
+
+.theme-content__large-input {
+    display: flex;
+    flex-direction: column;
+}
+
+.theme-content__large-input textarea {
+    min-height: 200px;
+    margin-top: 5px;
+}
+
+.theme-content__button-group {
+    display: flex;
+    justify-content: space-between;
+}
+.theme-content__button-group button {
+    width: 49%;
+    border: none;
+    border-radius: 10px;
+    background-color: $dark-blue;
+    color: #ffffff;
+    text-align: left;
+    padding: 10px;
+}
+
+.theme-content__button-group button:first-of-type {
+    background-color: $aqua-blue;
+}
+
+.theme-content__dropdown-large select {
+    width: 100%;
+    border-radius: 15px;
+    border: none;
+    padding: 10px;
+}
+
+.menu-button {
+    display: none;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width:50px;
+    height:50px;
+    background-color:$dark-blue;
+    border-radius:50%;
+    position:fixed;
+    bottom:20px;
+    left:0;
+    right:0;
+    margin:0 auto;
+}
+.menu-button span{
+    width:30px;
+    height:2px;
+    background-color:#fff;
+    margin:0 auto;
+}
+
+.theme-card__large-course {
+    margin-bottom: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.theme-card__header-area {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.theme-card__header-image {
+    border-radius: 16px 16px 0 0;
+    background-color: $dark-gray;
+    z-index: 1;
+    width: 100%;
+    position: relative;
+}
+
+.theme-card__large-course .theme-card__header-image {
+    height: 160px;
+}
+
+.theme-card__small-course .theme-card__header-image {
+    height: 114px;
+}
+
+.theme-card__header-info {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    z-index: 2;
+    position: absolute;
+    padding: 10px 0;
+    bottom: 20px;
+    width: 95%;
+    border-radius: 10px;
+    background-color: $dark-blue;
+    color: #ffffff;
+}
+
+.theme-card__header-info * {
+    display: flex;
+    align-items: center;
+}
+
+.theme-card__header-info *:before {
+    content: "";
+    display: inline-block;
+    margin-right: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+.theme-card__course-info {
+    border-radius: 0 0 16px 16px;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 24px 16px;
+}
+
+.theme-card__course-info-top * {
+    display: flex;
+    align-items: center;
+    color: $dark-gray;
+    font-weight: 600;
+}
+
+.theme-card__course-info-top * div div:before {
+    content: "";
+    display: inline-block;
+    margin-right: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    background-color: $dark-gray;
+}
+
+.theme-card__title {
+    margin: 8px 0 4px 0;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.theme-card__content {
+    font-size: 12px;
+}
+
+.theme-card__small-course .theme-card__header-info {
+    bottom: 10px
+}
+
+.theme-card__small-course .theme-card__content {
+    font-size: 14px;
+}
+
+.theme-dashboard__card {
+    background-color: #ffffff;
+    height: 200px;
+    margin: 20px 0;
+    border-radius: 8px;
+    padding: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.theme-dashboard-card__title {
+    display: flex;
+    justify-content: center;
+}
+
+.theme-dashboard-card__title p {
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.theme-dashboard-card__image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.theme-dashboard-card__image img {
+    width: 110px;
+}
+@media screen and (max-width: 768px) {
+    .theme-header {
+        position: fixed;
+        z-index: 11;
+    }
+
+    .theme-header__logo img {
+        height: 30px;
+    }
+
+    .theme-side-menu {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        top: 0;
+        margin-top: 60px;
+        overflow-y: scroll;
+        padding-bottom: 150px
+    }
+
+    .theme-side-menu.active {
+        display: block;
+    }
+
+    .menu-button {
+        display: flex;
+        z-index: 10;
+    }
+
+    .menu-button.active span{
+        position: absolute;
+    }
+
+    .menu-button.active span:nth-of-type(1) {
+        transform: rotate(40deg);
+    }
+
+    .menu-button.active span:nth-of-type(2) {
+        transform: rotate(320deg);
+    }
+
+    .menu-button.active span:last-of-type {
+        display: none
+    }
+
+    .theme-content {
+        padding-top: 85px;
+    }
+
+}
