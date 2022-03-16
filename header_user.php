@@ -166,7 +166,6 @@ $todos = get_field('todos',  'user_' . $user->ID);
                                 <div>
                                     <?php
                                   
-                                    $todos = array_reverse($todos);
                                     foreach($todos as $key=>$todo) {
                                         if($key == 4)
                                             break;
