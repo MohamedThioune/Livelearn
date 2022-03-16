@@ -176,7 +176,20 @@
             }     
         ?>
     </div>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script id="rendered-js" >
+    $(document).ready(function () {
+        //Chosen
+        $(".multipleChosen").chosen({
+            placeholder_text_multiple: "What's your rating" //placeholder
+        });
+        //Select2
+        $(".multipleSelect2").select2({
+            placeholder: "What's your rating" //placeholder
+        });
+    });
+    //# sourceURL=pen.js
+</script>
 <script>
     $("#btn-ajax").click((e)=>
     {
