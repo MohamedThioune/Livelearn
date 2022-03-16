@@ -5247,7 +5247,9 @@ overflow: -moz-scrollbars-none;  // Firefox
     border-radius: 10px;
     margin-top: 20px;
 }
-
+.footer-big .footer-menu ul li a, .footer-big p, .footer-big ul li {
+    color: #d0d0d0 !important;
+}
 
 
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
