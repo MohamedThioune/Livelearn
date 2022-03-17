@@ -41,13 +41,14 @@
                                 //Pour afficher les infos de type Beoordeling Gesprek
                                 case 'Beoordeling Gesprek':
                                     echo '<br> <b>Title:</b> '.$value[0];
-                                    echo '<br> <b>Algemene beoordeling:</b> '.$value[1];
+                                    echo '<br> <b>Algemene beoordeling:</b> '.$value[1]. '<br>';
                                     $stopics_rates_comment = explode('~',$value[4]);
                                     echo '<div class="bloclCijfers">';
                                         for($i=0; $i<count($stopics_rates_comment); $i++)
                                         {
                                             $stars = intval($stopics_rates_comment[$i+1]);
-                                            echo '<p class="mb-0" style="width: 20%;">'. (String)get_the_category_by_ID(intval($stopics_rates_comment[$i])) . '</p>';
+                                            echo '<p class="mb-0" style="width: 20%;"><b>'. (String)get_the_category_by_ID(intval($stopics_rates_comment[$i])) . '<b></p>';
+
                                             echo '<div class="rate">';
                                                 for($index=$stars; $index >= 1; $index--)
                                                     echo '<input type="radio" id="star'.$index.'__" name="sales_rate_'.$index.'" value="" checked="checked" disabled="true"/>
@@ -60,10 +61,9 @@
                                                         echo '<input type="radio" id="star'.$pos.'__" name="sales_rate_'.$pos.'" value=""  disabled="true"/>
                                                               <label class="ma_link" for="star'.$pos.'__" title="text">'.$pos.' stars</label>';
                                                     }
-
-                                                
+                                            
+                                            echo '<p class="mb-0" style="width: 100%;">'. $stopics_rates_comment[$i+2] . '</p><br>';
                                             echo "</div><br>";
-                                            echo '<div class="mb-0" style="width: 100%;">'. $stopics_rates_comment[$i+2] . '</div>';
                                             $i = $i + 2;
                                         }
                                     echo '</div>';
