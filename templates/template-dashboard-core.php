@@ -139,27 +139,34 @@ else if(isset($_POST['add_todo_feedback'])){
     $id_user = $_POST['id_user'];
     $title_feedback = $_POST['title_feedback'];
     $type = $_POST['type'];
+    $manager = $_POST['manager'];
     $onderwerp_feedback='';
     if (isset ($_POST['onderwerp_feedback']) &&  !empty($_POST['onderwerp_feedback']))
         foreach ($_POST['onderwerp_feedback']as  $value) {
             $onderwerp_feedback.=$value.';';        
         }
     $beschrijving_feedback = $_POST['beschrijving_feedback'];
-    $bunch = array();
-    $fields = " ";
-    $state = 0;
-    $bunch = get_field('todos',  'user_' . $id_user);
-    $fields = $title_feedback . ';' . $beschrijving_feedback . ';' .get_current_user_id() . ';'. $type .';'. $onderwerp_feedback .';'. $state;
-    array_push($bunch, $fields);  
-    if(!empty($bunch))
-        update_field('todos', $bunch, 'user_'. $id_user);
-    else
-        update_field('todos', $fields, 'user_'.$id_user);
+
+    //Data to create the feedback
+    $post_data = array(
+        'post_title' => $title_feedback,
+        'post_author' => $id_user,
+        'post_type' => 'feedback',
+        'post_status' => 'publish'
+      );
+
+    //Create the feedback
+    $post_id = wp_insert_post($post_data);
+
+    //Add further informations for feedback
+    update_field('onderwerp_feedback', $onderwerp_feedback, $post_id);
+    update_field('manager', $manager, $post_id);
+    update_field('type', $type, $post_id);
+    update_field('beschrijving_feedback', $beschrijving_feedback, $post_id);
 
     $message = "/dashboard/company/profile/?id=". $id_user. "&manager=" . get_current_user_id() . "&message=Uw actie is met succes beïnvloed"; 
     header("Location: ". $message);
 }
-
 // Complimentsaving
 else if(isset($_POST['add_todo_compliment'])){
 
@@ -369,6 +376,7 @@ else if(isset($delete_todos)){
 <?php
 
 global $post;
+
 
 $parents = get_post_ancestors( $post->ID );
 
