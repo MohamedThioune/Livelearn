@@ -741,7 +741,7 @@ ul.sub-menu li a {
 
 .titleOpleidingstype {
     margin-bottom: 14px;
-    width: 100%%;
+    width: 100%;
     background: white;
     border-radius: 10px;
     padding-bottom: 15px;
@@ -4274,8 +4274,8 @@ body .gform_wrapper ul li.gfield {
     display: none;
 }
 .swipeContaine2{
-    -ms-overflow-style: none;  // IE 10+
-overflow: -moz-scrollbars-none;  // Firefox
+    -ms-overflow-style: none;  
+overflow: -moz-scrollbars-none;  
 }
 .elemntImgRecrutement{
     width: 500px;
@@ -4726,8 +4726,8 @@ overflow: -moz-scrollbars-none;  // Firefox
     background: #F0F5F7;
     border-radius: 8px;
 }
-#ModalNotification {
-    widht: 200px;
+#ModalNotification {    
+    width: 200px;
     position: absolute;
     top: 44px;
     left: -155px;

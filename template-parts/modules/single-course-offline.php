@@ -78,10 +78,16 @@ $gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
         text-decoration: none !important;
         color: black !important;
     }
-    body {
+    body {              
         padding-top: 0px !important;
     }
-</style>
+    @media all and (min-width: 300px) and (max-width: 767px) {
+        .textIconeLearning {
+            font-size: 13px;
+        }
+	}
+
+</style> 
 
 <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -240,24 +246,24 @@ $gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
                 <!-- -------------------------------------- Start Icons row ------------------------------------->
                 <div class="d-flex justify-content-md-between justify-content-around mx-md-2 mx-sm-2 text-center">
                     <div class="d-flex flex-row">
-                        <div class="d-flex flex-column mx-md-3 mx-2">
+                        <div class="d-flex flex-column mx-md-3 mx-1">
                             <input type="hidden" id="user_id" value="<?php echo $user_id; ?>">
                             <input type="hidden" id="course_id" value="<?php echo $post->ID; ?>">
                             <!-- <img class="iconeCours" src="<?php echo get_stylesheet_directory_uri();?>/img/love.png" alt=""> -->
                             <button id="btn_favorite" style="background:white; border:none"><i class="far fa-heart" style="font-size: 25px;"></i></button>
                             <span class="textIconeLearning mt-1" id="autocomplete_favoured"><?php echo $favoured; ?></span>
                         </div>
-                        <div class="d-flex flex-column mx-md-3 mx-2">
+                        <div class="d-flex flex-column mx-md-3 mx-1">
                             <i class="fas fa-calendar-alt" style="font-size: 25px;"></i>
                             <span class="textIconeLearning mt-1">I dagdee</span>
                         </div>
-                        <div class="d-flex flex-column mx-md-3 mx-2">
+                        <div class="d-flex flex-column mx-md-3 mx-1">
                             <i class="fas fa-graduation-cap" style="font-size: 25px;"></i>
                             <span class="textIconeLearning mt-1"><?php if($course_type) echo $course_type; else echo "Undefined"; ?></span>
                         </div>
                     </div>
                     <div class="d-flex flex-row">
-                        <div class="d-flex flex-column mx-md-3 mx-2">
+                        <div class="d-flex flex-column mx-md-3 mx-1">
                             <form action="../../dashboard/user/" method="POST">
                                 <input type="hidden" name="meta_value" value="<?php echo $post->ID; ?>" id="">
                                 <input type="hidden" name="user_id" value="<?php echo $user_id; ?>" id="">
@@ -282,7 +288,7 @@ $gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
                                 ";
                             ?>
                         </div>
-                        <div class="d-flex flex-column mx-md-3 mx-2">
+                        <div class="d-flex flex-column mx-md-3 mx-1">
                             <?php
                             if($user_id != $post->post_author){
                             ?>
@@ -369,7 +375,7 @@ $gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
                 <div class="blockTextGlovale mt-3">
                     <div class="text-limit">
 
-                        <div><?php echo $long_description; ?></div>
+                      <div><?php echo $long_description; ?></div>  
 
                         <div class=" moreText"> 
                            <?php
