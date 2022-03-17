@@ -135,7 +135,7 @@ else if(isset($interest_save)){
  * Start Feedback Handling
  */
 // Feedback saving
-else if(isset($_POST['add_todo_feedback'])){
+else if(isset($_POST['add_todo_feedback']) || isset($_POST['add_todo_compliment']) ){
     $id_user = $_POST['id_user'];
     $title_feedback = $_POST['title_feedback'];
     $type = $_POST['type'];
