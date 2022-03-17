@@ -676,14 +676,14 @@
                                 <div class="col-lg-12 col-md-12">
                                     <div class="group-input-settings">
                                         <label for="">Title compliment</label>
-                                        <input name="title_compliment" type="text" required>
+                                        <input name="title_feedback" type="text" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="group-input-settings">
                                         <label for="">Onderwerp compliment</label>
                                         <div class="form-group formModifeChoose">
-                                            <select id="form-control-skills" name="onderwerp_compliment[]" class="multipleSelect2" multiple="true" required>
+                                            <select id="form-control-skills" name="onderwerp_feedback[]" class="multipleSelect2" multiple="true" required>
                                                 
                                             <?php
                                                 //Subtopics
@@ -699,7 +699,7 @@
                                 <div class="col-lg-12 col-md-12">
                                     <div class="group-input-settings">
                                         <label for="">Beschrijving compliment</label>
-                                        <textarea name="beschrijving_compliment" id="" rows="4"></textarea>
+                                        <textarea name="beschrijving_feedback" id="" rows="4"></textarea>
                                     </div>
                                 </div>
                                 <div class="">
