@@ -54,12 +54,10 @@
                                                     echo '<input type="radio" id="star'.$index.'__" name="sales_rate_'.$index.'" value="" checked="checked" disabled="true"/>
                                                           <label class="ma_link" for="star'.$index.'__" title="text">'.$index.' stars</label>';
                                                 
-                                                $suit = 5-$stars;
-                                                if($suit != 0)
-                                                    for($index=$suit; $index >= 1; $index++){
-                                                        echo '<input type="radio" id="star'.$suit.'__" name="sales_rate_'.$suit.'" value=""  disabled="true"/>
-                                                              <label class="ma_link" for="star'.$suit.'__" title="text">'.$suit.' stars</label>';
-                                                    }
+                                                for($index=$suit; $index >= 1; $index++){
+                                                    echo '<input type="radio" id="star'.$suit.'__" name="sales_rate_'.$suit.'" value=""  disabled="true"/>
+                                                          <label class="ma_link" for="star'.$suit.'__" title="text">'.$suit.' stars</label>';
+                                                }
 
                                                 
                                             echo "</div><br>";
