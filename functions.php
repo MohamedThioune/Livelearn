@@ -20,9 +20,9 @@ function enqueue_parent_styles() {
 function cpt_taxonomies() {
     // Add new taxonomy, make it hierarchical (like categories)
     $labels = array(
-        'name'              => _x( 'Categorieën', 'course_categories', 'textdomain' ),
+        'name'              => _x( 'Categorieï¿½n', 'course_categories', 'textdomain' ),
         'singular_name'     => _x( 'Categorie', 'Categorie', 'textdomain' ),
-        'search_items'      => __( 'Zoek categoriën', 'textdomain' ),
+        'search_items'      => __( 'Zoek categoriï¿½n', 'textdomain' ),
         'all_items'         => __( 'All Cats', 'textdomain' ),
         'parent_item'       => __( 'Parent category', 'textdomain' ),
         'parent_item_colon' => __( 'Parent category:', 'textdomain' ),
@@ -130,6 +130,50 @@ function custom_post_type() {
     );
 
     register_post_type( 'learnpath', $learnpath_args );
+
+    //M.A.X B.I.R.D WAS THERE - POST TYPE ~ FEEDBACK ~
+
+    $feedback = array(
+        'name'                => _x( 'Feedbacks', 'Feedback', 'feedback' ),
+        'singular_name'       => _x( 'Feedback', 'Feedback', 'feedback' ),
+        'menu_name'           => __( 'Feedbacks', 'feedback' ),
+        //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
+        'all_items'           => __( 'All feedbacks', 'feedback' ),
+        'view_item'           => __( 'View feedback', 'view_feedback' ),
+        'add_new_item'        => __( 'New feedback', 'add_new_feedback' ),
+        'add_new'             => __( 'New feedback', 'text_domain' ),
+        'edit_item'           => __( 'Edit Item', 'text_domain' ),
+        'update_item'         => __( 'Update Item', 'text_domain' ),
+        'search_items'        => __( 'Search Item', 'text_domain' ),
+        'not_found'           => __( 'Not found', 'text_domain' ),
+        'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
+    );
+
+    $feedback_args = array(
+        'label'               => __( 'feedback', 'text_domain' ),
+        'description'         => __( 'Post type for feedback', 'text_domain' ),
+        'labels'              => $feedback,
+        'supports'            => array('title', 'author', 'custom-fields', 'excerpt', 'thumbnail' ),
+        //'taxonomies'          => array('category', 'post_tag'),
+        'hierarchical'        => false,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => true,
+        'show_in_admin_bar'   => true,
+        'menu_position'       => 5,
+        'menu_icon'           => '',
+        'can_export'          => true,
+        'rewrite'             => array('slug' => 'feedback'),
+        'has_archive'         => true,
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'capability_type'     => 'page',
+
+    );
+
+    register_post_type( 'feedback', $feedback_args );
+
 
     $assign = array(
         'name'                => _x( 'Assigns', 'Assigns', 'assign' ),
