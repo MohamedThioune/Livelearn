@@ -61,8 +61,8 @@
                                                               <label class="ma_link" for="star'.$a.'__" title="text">'.$a.' stars</label>';
                                                     }
                                             
-                                            echo '<p class="mb-0" style="width: 100%;">'. $stopics_rates_comment[$i+2] . '</p><br>';
                                             echo "</div><br>";
+                                            echo '<p class="mb-0" style="width: 100%;">'. $stopics_rates_comment[$i+2] . '</p><br>';
                                             $i = $i + 2;
                                         }
                                     echo '</div>';
