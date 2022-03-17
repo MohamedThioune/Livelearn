@@ -50,7 +50,7 @@
                                             echo '<p class="mb-0" style="width: 20%;"><b>'. (String)get_the_category_by_ID(intval($stopics_rates_comment[$i])) . '</b></p>';
                                             $suit = 5-$stars;
                                             echo '<div class="rate">';
-                                                for($index=5; $index > $suit; $index--)
+                                                for($index=5; $index > $stars; $index--)
                                                     echo '<input type="radio" id="star'.$index.'__" name="sales_rate_'.$index.'" value="" disabled="true"/>
                                                           <label class="ma_link" for="star'.$index.'__" title="text">'.$index.' stars</label>';
                                                 
