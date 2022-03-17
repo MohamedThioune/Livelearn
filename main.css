@@ -38,16 +38,16 @@ body{
     font-size: 12px;
 }
 /* ------------------- Show more Text -------------- */
-.text-limit p,.text-limit .moreText{
+.text-limit p:not(:first-child),.text-limit .moreText{
     display:none;
 }
-.text-limit{
+.text-limit, .text-limit p:first-child{
     display:block;
-     overflow: hidden;
+    overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 4; /** number of line to display! */
-    -webkit-box-orient: vertical;   
+    -webkit-box-orient: vertical; 
 }
 .text-limit.show-more .moreText, .text-limit.show-more p, .text-limit.show-more {
     display: block;
@@ -62,11 +62,6 @@ body{
     -webkit-box-orient: vertical;
 }
 
-/* @media all and (max-width: 753px) {
-    .modal-dialog{
-         width: 90% !important;
-    }  
-} */
 @media all and (min-width: 763px) and (max-width: 900px) {
     .modal-dialog{
          width: 70% !important;
@@ -97,3 +92,17 @@ body{
 /* category-overview */
 /* course online */
 /* course offline */
+
+
+/* homepage css */
+@media screen and (max-width: 1023px) and (min-width: 768px) {
+    .boxOne3 {
+        height: 430px !important;
+        background-size: initial;
+    }
+}
+@media screen and (max-width: 1270px){ 
+    .card3 {
+        padding: 20px !important;
+    }
+}
