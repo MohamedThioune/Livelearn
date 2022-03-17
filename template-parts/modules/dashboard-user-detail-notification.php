@@ -48,18 +48,17 @@
                                         {
                                             $stars = intval($stopics_rates_comment[$i+1]);
                                             echo '<p class="mb-0" style="width: 20%;"><b>'. (String)get_the_category_by_ID(intval($stopics_rates_comment[$i])) . '</b></p>';
-
+                                            $suit = 5-$stars;
                                             echo '<div class="rate">';
-                                                for($index=$stars; $index >= 1; $index--)
+                                                for($index=5; $index > $suit; $index--)
                                                     echo '<input type="radio" id="star'.$index.'__" name="sales_rate_'.$index.'" value="" checked="checked" disabled="true"/>
                                                           <label class="ma_link" for="star'.$index.'__" title="text">'.$index.' stars</label>';
                                                 
                                                 $suit = 5-$stars;
                                                 if($suit != 0)
-                                                    for($a = 1; $a <= $suit; $a++){
-                                                        $pos = $a + $suit;
-                                                        echo '<input type="radio" id="star'.$pos.'__" name="sales_rate_'.$pos.'" value=""  disabled="true"/>
-                                                              <label class="ma_link" for="star'.$pos.'__" title="text">'.$pos.' stars</label>';
+                                                    for($index=$suit; $index >= 1; $index++){
+                                                        echo '<input type="radio" id="star'.$suit.'__" name="sales_rate_'.$suit.'" value=""  disabled="true"/>
+                                                              <label class="ma_link" for="star'.$suit.'__" title="text">'.$suit.' stars</label>';
                                                     }
 
                                                 
