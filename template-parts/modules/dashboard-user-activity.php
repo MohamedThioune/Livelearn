@@ -86,8 +86,16 @@ if(!empty($saved)){
 /*
 * * Feedbacks
 */
-$todos = get_field('todos',  'user_' . $user->ID);
-$todos = array_reverse($todos);
+
+$args = array(
+    'post_type' => 'feedback', 
+    'author' => $user->ID,
+    'orderby' => 'post_date',
+    'order' => 'DESC',
+    'posts_per_page' => -1,
+);
+
+$todos = get_posts($args);
 
 ?>
 
@@ -250,7 +258,6 @@ $todos = array_reverse($todos);
             </div>
         </div>
         <?php 
-        if($todos)
             if(!empty($todos)){
         ?>
         <div class="col-lg-5">
@@ -262,18 +269,20 @@ $todos = array_reverse($todos);
                     if($key == 6)
                         break;
 
-                    $value = explode(";", $todo);
-                    $manager = get_users(array('include'=> $value[2]))[0]->data;
+                    $type = get_field('type_feedback', $todo->ID);
+                    $manager = get_field('manager_feedback', $todo->ID);
+
                     $image = get_field('profile_img',  'user_' . $manager->ID);
                     if(!$image)
                         $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+                
                 ?>
-                    <a href="/dashboard/user/detail-notification/?todo=<?= $path ?>p echo " class="SousBlockNotification">
+                    <a href="/dashboard/user/detail-notification/?todo=<?= $todo->ID ?>" class="SousBlockNotification">
                         <div class="d-flex align-items-center">
                             <div class="circleNotification">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification 1.png" alt="">
                             </div>
-                            <p class="feddBackNotification"><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?> send you a  <span><?php if(isset($value[3])) echo $value[3]; ?></span></p>
+                            <p class="feddBackNotification"><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?> send you a  <span><?=$type;?></span></p>
                         </div>
                         <br>
                     <!-- div><p class="hoursText"></p></div> -->                    

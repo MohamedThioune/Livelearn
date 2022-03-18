@@ -18,39 +18,37 @@
 
 
     
-     foreach($cats as $category){
-         $cat_id = strval($category->cat_ID);
-         $category = intval($cat_id);
-         array_push($categories, $category);
-     }
+    foreach($cats as $category){
+        $cat_id = strval($category->cat_ID);
+        $category = intval($cat_id);
+        array_push($categories, $category);
+    }
 
      $subtopics = array();
      
-     foreach($categories as $categ){
-         //Topics
-         $topicss = get_categories(
-             array(
-             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-             'parent'  => $categ,
-             'hide_empty' => 0, // change to 1 to hide categores not having a single post
-         ) 
-     );
-         foreach ($topicss as  $value) {
-             $subtopic = get_categories( 
+    foreach($categories as $categ){
+        //Topics
+        $topicss = get_categories(
+            array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $categ,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            ) 
+        );
+
+        foreach ($topicss as  $value) {
+            $subtopic = get_categories( 
                  array(
                  'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
                  'parent'  => $value->cat_ID,
                  'hide_empty' => 0,
                   //  change to 1 to hide categores not having a single post
-             ) 
-         );
-         
-             $subtopics = array_merge($subtopics, $subtopic);      
-         
+                ) 
+            );
+            $subtopics = array_merge($subtopics, $subtopic);      
         }
-        
-     }
-     //var_dump($subtopics);
+    }
+
 ?>
 <div class="contentProilView">
     <div id="profilVIewDetail" class="detailContentCandidat">
@@ -364,34 +362,43 @@
             <div class="otherSkills">
                 <button class="btn btnAddToDo"  data-toggle="modal" data-target="#exampleModalWork">Add to do</button>
                 <?php
-                
-                    if($todos)
-                        if(!empty($todos))
-                            foreach($todos as $key=>$todo) { 
-                                $value = explode(";", $todo);
-                                $image = get_field('profile_img',  'user_' . $manager->ID);
-                                $manager = get_users(array('include'=> $value[2]))[0]->data;
-                                if(!$image)
-                                    $image = get_stylesheet_directory_uri() . '/img/Group216.png';
-                                                   
+                    if(!empty($todos))
+                        foreach($todos as $key=>$todo) { 
+                            if($key == 8)
+                                break;
+
+                            $type = get_field('type_feedback', $todo->ID);
+                            $manager = get_field('manager_feedback', $todo->ID);
+
+                            $image = get_field('profile_img',  'user_' . $manager->ID);
+                            if(!$image)
+                                $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+
+                            if($type == "Feedback" || $type == "Compliment")
+                                $beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
+                            else if($type == "Persoonlijk ontwikkelplan")
+                                $beschrijving_feedback = get_field('opmerkingen', $todo->ID);
+                            else if($type == "Beoordeling Gesprek")
+                                $beschrijving_feedback = get_field('algemene_beoordeling', $todo->ID);
+                                                
                 ?>
-                            <div class="activiteRecent">
-                                <img width="25" src="<?php echo $image ?>" alt="">
-                                <div class="contentRecentActivite">
-                                    <div class="titleActivite"><?php echo $value[0] ; ?> by <span style="font-weight:bold">
-                                    <?php 
-                                    if(isset($manager->nice_name)) echo $manager->nice_name ; else echo $manager->display_name; 
-                                    ?>
-                                    </span>
-                                    </div>
-                                    <p class="activiteRecent"><?php echo $value[1]; ?></p>
-                                </div>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <form action="" method="POST">
-                                    <input type="hidden" name="id" value="<?php echo $key; ?>">
-                                    <input type="hidden" name="user_id" value="<?php echo $user->ID; ?>">
-                                    <button class="btn btn-danger" style="color:white" name="delete_todos" type="submit"><i class="fa fa-trash"></i></button>
-                                </form>
-                            </div>
+                        <div class="activiteRecent">
+                            <img width="25" src="<?php echo $image ?>" alt="">
+                            <div class="contentRecentActivite">
+                                <div class="titleActivite"><?=$todo->post_title;?> by <span style="font-weight:bold">
+                                <?php 
+                                if(isset($manager->first_name)) echo $manager->first_name ; else echo $manager->display_name; 
+                                ?>
+                                </span>
+                                </div>
+                                <p class="activiteRecent"><?php if($beschrijving_feedback) echo $beschrijving_feedback; else echo ""; ?></p>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <form action="" method="POST">
+                                <input type="hidden" name="id" value="<?php echo $key; ?>">
+                                <input type="hidden" name="user_id" value="<?php echo $user->ID; ?>">
+                                <button class="btn btn-danger" style="color:white" name="delete_todos" type="submit"><i class="fa fa-trash"></i></button>
+                            </form>
+                        </div>
                 <?php } 
                     
                 ?>
