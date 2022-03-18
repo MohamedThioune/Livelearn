@@ -23,6 +23,7 @@
         <div class="container">
             <div class="BaangerichteBlock">
                 <p class="wordDeBestText2"> <?php echo $name ?> </p>
+                <a href="/ecosystem/" class="btn btnCommunity">Community</a>
             </div>
         </div>
     </div>
