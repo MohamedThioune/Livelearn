@@ -3817,7 +3817,9 @@ body .gform_wrapper ul li.gfield {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 35px;
+    margin: 0 auto 35px;
+    width: 580px;
+    flex-wrap: wrap;
 }
 .headCollections p{
     font-size: 24px;
@@ -3826,11 +3828,17 @@ body .gform_wrapper ul li.gfield {
     font-weight: bold;
 }
 .btn-collection {
-    color: #007dda;
+    color: #000;
     font-size: 22px;
     padding: 0;
     font-weight: bold;
     margin-left: 7px;
+}
+.btn-collection b{
+    color: #47a99e
+}
+.headCollections p b{
+    color: #47a99e
 }
 .content-ecosysteme{
     background: #F4F7F6;
@@ -3840,7 +3848,7 @@ body .gform_wrapper ul li.gfield {
 }
 .topCollection{
     background: white;
-    padding: 35px 30px;
+    padding: 35px 0px;
     margin-bottom: 55px;
 }
 .boxCollections{
@@ -5159,6 +5167,7 @@ overflow: -moz-scrollbars-none;  // Firefox
     display: flex;
     align-items: center;
     margin-left: auto;
+    margin-bottom: 0 !important;
 }
 #salesInput{
     display: none;
@@ -5192,7 +5201,7 @@ overflow: -moz-scrollbars-none;  // Firefox
 .ginput_complex label {
     font-size: 15px !important;
 }
-.ginput_complex #field_6_2 input{
+#field_6_2 .ginput_container_text input{
     color: #023356 !important;
     font-size: 14px;
     padding: 10px 20px !important;
@@ -5202,7 +5211,7 @@ overflow: -moz-scrollbars-none;  // Firefox
     margin-top: 0px;
     margin-bottom: 0px;
 }
-.ginput_complex #field_6_3 input{
+#field_6_3 .ginput_container_text input{
     color: #023356 !important;
     font-size: 14px;
     padding: 10px 20px !important;
@@ -5213,14 +5222,13 @@ overflow: -moz-scrollbars-none;  // Firefox
     margin-bottom: 0px;
 }
 
-.ginput_complex #field_6_4 {
+.gform_fields #field_6_4 {
     grid-column: span 12 !important;
 }
-.ginput_complex #field_6_5 {
+.gform_fields #field_6_5 {
     grid-column: span 12 !important;
 }
-
-.ginput_complex #field_6_4 input{
+.gform_fields #field_6_4 .ginput_container_text input{
     color: #023356 !important;
     font-size: 14px;
     padding: 10px 20px !important;
@@ -5230,7 +5238,7 @@ overflow: -moz-scrollbars-none;  // Firefox
     margin-top: 0px;
     margin-bottom: 0px;
 }
-.ginput_complex #field_6_5 input{
+.ginput_complex #field_6_5 .ginput_container_text input{
     color: #023356 !important;
     font-size: 14px;
     padding: 10px 20px !important;
@@ -5250,8 +5258,26 @@ overflow: -moz-scrollbars-none;  // Firefox
 .footer-big .footer-menu ul li a, .footer-big p, .footer-big ul li {
     color: #d0d0d0 !important;
 }
-
-
+.groeipadenBlock {
+    margin-bottom: 30px;
+}
+.UitgelichteBlock{
+    margin-bottom: 30px;
+}
+.hulpBox{
+    margin-bottom: 90px;
+}
+.btnCommunity{
+    background: #47a99e;
+    color: white;
+    padding: 9px 25px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+.dropdownModifeEcosysteme {
+    left: unset !important;
+    right: 0 !important;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -6654,6 +6680,7 @@ overflow: -moz-scrollbars-none;  // Firefox
     }
     .headCollections p {
         font-size: 16px;
+        width: 100%;
     }
     .btn-collection {
         color: #007dda;
@@ -6854,6 +6881,16 @@ overflow: -moz-scrollbars-none;  // Firefox
         position: absolute;
         left: -30px;
         top: 40px;
+    }
+    .groeipadenBlock {
+        padding-left: 15px;
+    }
+    .UitgelichteBlock {
+        padding-left: 15px;
+    }
+    .headCollections {
+        width: 100%;
+        flex-wrap: wrap;
     }
 
 
