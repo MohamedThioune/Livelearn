@@ -338,13 +338,11 @@ else if(isset($delete_favorite)){
 else if(isset($delete_todos)){
     $message = "Met succes verwijderd";
     $user_connected = get_current_user_id();
-    wp_delete_post($id);
+    wp_delete_post($_POST['id']);
 
     $content = "/dashboard/company/profile/?id=" . $user_id . '&manager='. $user_connected . "?message=" . $message; 
     header("location:".$content);
 }
-
-var_dump($manager);
  
 ?>
 <?php wp_head(); ?>
