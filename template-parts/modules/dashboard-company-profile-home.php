@@ -394,7 +394,7 @@
                                 <p class="activiteRecent"><?php if($beschrijving_feedback) echo $beschrijving_feedback; else echo ""; ?></p>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;
                             <form action="" method="POST">
-                                <input type="hidden" name="id" value="<?php echo $key; ?>">
+                                <input type="hidden" name="id" value="<?php echo $todo->ID; ?>">
                                 <input type="hidden" name="user_id" value="<?php echo $user->ID; ?>">
                                 <button class="btn btn-danger" style="color:white" name="delete_todos" type="submit"><i class="fa fa-trash"></i></button>
                             </form>
