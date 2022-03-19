@@ -611,7 +611,7 @@
                                         
                                     </div>
                                     <div class="">
-                                <input type="button" value="Volgende"  class="btn btnSaveSetting" id="volgende1">
+                                <input type="button" value="Volgende"  class="btn btnSaveSetting" id="volgende2">
                                 </div>
                                 </div>
                                 
@@ -637,27 +637,6 @@
                                         </div> -->
                                     </div>
                                 </div>
-                                <div class="col-lg-12 col-md-12">
-                                
-
-                                <?php
-                                            if (!empty (get_user_meta($user->ID,'topic_affiliate')))
-                                            {
-                                                $internal_growth_subtopics= get_user_meta($user->ID,'topic_affiliate');   
-                                                foreach($internal_growth_subtopics as $key =>  $value){
-                                                    echo ' <div class="group-input-settings">
-                                                    <label for="">'.lcfirst((String)get_the_category_by_ID($value)).' toelichting</label>
-                                                    <textarea name="'.lcfirst((String)get_the_category_by_ID($value)).'_toelichting" id="" rows="4"></textarea>
-                                                    </div>';
-                                                }
-                                            }
-                                                
-                                            ?>
-                                </div>
-
-                                <div class="">
-                                    <input type="button" value="Volgende" class="btn btnSaveSetting" id="volgende2">
-                                </div>
                             
                         </div>
                             <div class="sousBlockFourBlockVoeg3">
@@ -672,7 +651,7 @@
                                 <input type="hidden" name="manager" value=<?=$manager->ID?> >
                                     <input type="hidden" name="id_user" value=<?=$user->ID?> >
                                     <input type="hidden" name="type" value="Beoordeling Gesprek">
-                                    <input type="submit" name="add_todo_beoordelingsgesprek" value="Save"  class="btn btnSaveSetting" id="volgende1">
+                                    <input type="submit" name="add_todo_beoordelingsgesprek" value="Save"  class="btn btnSaveSetting" >
                                 </div>
                             </div>
                         </div>
