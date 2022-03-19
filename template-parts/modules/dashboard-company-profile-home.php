@@ -92,7 +92,7 @@
                                     if(isset($_GET['message'])) if($_GET['message']) echo "<span class='alert alert-success alert-dismissible fade show' role='alert'>" . $_GET['message'] . "</span>"; ?><br><br>
                                     <div class="overviewFirstBlock">
                                         <div class="blockImageCandidat">
-                                            <img src="<?php echo $image;?>" alt="">
+                                            <img src="<?php echo $image; ?>" alt="">
                                         </div>
                                         <div class="overviewSecondBlock">
                                             <p class="professionCandidat"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . '' . $user->last_name; else echo $user->display_name?>
@@ -586,21 +586,29 @@
                                             {
                                                 $internal_growth_subtopics= get_user_meta($user->ID,'topic_affiliate');   
                                                 foreach($internal_growth_subtopics as $key =>  $value){
-                                                     echo '<div class="bloclCijfers">';
-                                                     echo '<p class="mb-0" style="width: 20%;">'.lcfirst((String)get_the_category_by_ID($value)).'</p>';
-                                                     echo '<div class="rate">
-                                                     <input type="radio" id="star5_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="5" />
-                                                     <label class="ma_link" for="star5_'.$key.'" title="text">5 stars</label>
-                                                     <input type="radio" id="star4_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="4" />
-                                                     <label class="ma_link" for="star4_'.$key.'" title="text">4 stars</label>
-                                                     <input type="radio" id="star3_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="3" />
-                                                     <label class="ma_link" for="star3_'.$key.'" title="text">3 stars</label>
-                                                     <input type="radio" id="star2_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="2" />
-                                                     <label class="ma_link" for="star2_'.$key.'" title="text">2 stars</label>
-                                                     <input type="radio" id="star1_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="1" />
-                                                     <label class="ma_link" for="star1_'.$key.'" title="text">1 star</label>
-                                                    </div>';
-                                                     echo '</div>';
+                                                     
+                                                    echo '<div class="bloclCijfers">';
+                                                    echo '<p class="mb-0" style="width: 20%;">'.lcfirst((String)get_the_category_by_ID($value)).'</p>';
+                                                    echo '<div class="rate feedback" id="selected_stars_'.($key+1).'">
+                                                    <input type="radio" id="star1_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="1" />
+                                                    <label class="ma_link" for="star1_'.$key.'" title="text">1 star</label>
+                                                    <input type="radio" id="star2_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="2" />
+                                                    <label class="ma_link" for="star2_'.$key.'" title="text">2 stars</label>
+                                                    <input type="radio" id="star3_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="3" />
+                                                    <label class="ma_link" for="star3_'.$key.'" title="text">3 stars</label>
+                                                    <input type="radio" id="star4_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="4" />
+                                                    <label class="ma_link" for="star4_'.$key.'" title="text">4 stars</label>
+                                                    <input type="radio" id="star5_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="5" />
+                                                    <label class="ma_link" for="star5_'.$key.'" title="text">5 stars</label>
+                                                   </div>';
+                                                   echo '</div>';
+                                                   echo '
+                                                   <div class="col-lg-12 col-md-12">
+                                                        <div hidden class="group-input-settings" id="commentaire_hidden_'.($key+1).'">
+                                                            <label for="">'.lcfirst((String)get_the_category_by_ID($value)).' toelichting</label>
+                                                            <textarea name="'.lcfirst((String)get_the_category_by_ID($value)).'_toelichting" id="" rows="5"></textarea>
+                                                        </div>
+                                                   </div>';
                                                     }
                                             }
                                                 
@@ -616,29 +624,7 @@
                                 </div>
                                 
                             </div>
-                            <div class="sousBlockFourBlockVoeg2">
-                                <h2 class="voegToeText">Beoordelingsgesprek</h2>
-                                <div class="col-lg-12 col-md-12">
-                                    <div class="group-input-settings">
-                                        <!-- <div class="bloclCijfers">
-                                            <p class="mb-0" >Sales</p>
-                                            <div class="rate">
-                                                <input type="radio" id="star5__" name="sales_rate_2" value="5" />
-                                                <label class="ma_link" for="star5__" title="text">5 stars</label>
-                                                <input type="radio" id="star4__" name="sales_rate_2" value="4" />
-                                                <label class="ma_link" for="star4__" title="text">4 stars</label>
-                                                <input type="radio" id="star3__" name="sales_rate_2" value="3" />
-                                                <label class="ma_link" for="star3__" title="text">3 stars</label>
-                                                <input type="radio" id="star2__" name="sales_rate_2" value="2" />
-                                                <label class="ma_link" for="star2__" title="text">2 stars</label>
-                                                <input type="radio" id="star1__" name="sales_rate_2" value="1" />
-                                                <label class="ma_link" for="star1__" title="text">1 star</label>
-                                            </div>
-                                        </div> -->
-                                    </div>
-                                </div>
                             
-                        </div>
                             <div class="sousBlockFourBlockVoeg3">
                                 <h2 class="voegToeText">Beoordelingsgesprek</h2>
                                 <div class="col-lg-12 col-md-12">
@@ -729,6 +715,18 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script>
+
+    
+    // Afficher un champ de commentaire spécifique aprés avoir noté un topics sur le modal des feedbacks
+    $(".rate.feedback").click(function() {
+        var id = $(this).attr('id');
+        console.log("#commentaire_hidden_"+id.substr(-1));
+        $("#commentaire_hidden_"+id.substr(-1)).attr("hidden",function(n, v){
+      return false;
+    });
+    });
+
+
     /**
      * Defines the bootstrap tabs handler.
      *

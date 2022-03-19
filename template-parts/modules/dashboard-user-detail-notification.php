@@ -56,22 +56,23 @@
                                 //Pour afficher les infos de type Beoordeling Gesprek
                                 case 'Beoordeling Gesprek':
                                     echo '<br> <b>Title:</b> '.$value->post_title;
-                                    echo '<br> <b>Algemene beoordeling:</b> '.$value[1]. '<br>';
-                                    $stopics_rates_comment = explode('~',$value[4]);
-                                    echo '<div class="bloclCijfers">';
+                                    echo '<br> <b>Algemene beoordeling:</b> '. get_field('algemene_beoordeling', $value->ID). '<br>';
+                                    $stopics_rates_comment = explode(';',get_field('rate_comments', $value->ID));
+                                    echo '<div class="bloclCijfers inputGroein">';
                                         for($i=0; $i<count($stopics_rates_comment); $i++)
                                         {
                                             $stars = intval($stopics_rates_comment[$i+1]);
-                                            echo '<p class="mb-0" style="width: 20%;"><b>'. (String)get_the_category_by_ID(intval($stopics_rates_comment[$i])) . '</b></p>';
+                                            $topics=(String)get_the_category_by_ID(intval($stopics_rates_comment[$i]));
+                                                
+                                                    if($topics!= "")
+                                                        echo '<p>'.$topics.'</p>';
+                                                
                                             echo '<div class="rate">';
 
-                                                /* for($index=5; $index > $stars; $index--)
-                                                    echo '<input type="radio" id="star'.$index.'__" name="sales_rate_'.$index.'" value="" disabled="true"/>
-                                                          <label class="ma_link" for="star'.$index.'__" title="text">'.$index.' stars</label>';*/
                                                 
-                                                for($in=$stars; $in >= 1; $in--)
-                                                    echo '<input type="radio" id="star'.$in.'__" name="sales_rate_'.$in.'" value="" disabled="true"/>
-                                                        <label class="ma_link" for="star'.$in.'__" title="text">'.$in.' stars</label>'; 
+                                            for($in=$stars; $in >= 1; $in--)
+                                                echo "⭐";
+                                                                                            
                                                       
                                             echo "</div><br>";
                                             echo '<div class="mb-0" style="width: 100%;">'. $stopics_rates_comment[$i+2] . '</div>';
@@ -79,7 +80,7 @@
                                         }
                                     echo '</div>';
                                     break;
-                                    //Pour afficher les infos de type Persoonlijk Ontwikkelplan
+                                //Pour afficher les infos de type Persoonlijk Ontwikkelplan
                                 case 'Persoonlijk Ontwikkelplan' :
 
                                     echo '<br> <b>Title:</b> '. $value->post_title;
