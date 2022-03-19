@@ -7,7 +7,7 @@ if(isset($_GET['manager'])){
     if(isset($id_user))
         $managed = get_field('managed',  'user_' . get_current_user_id());
         if(in_array($id_user, $managed))
-            $manager = get_users(array('include'=> $_GET['manager']))[0]->data;
+            $superior = get_users(array('include'=> $_GET['manager']))[0]->data;
 }else{ 
     if(isset($_GET['id']))
         $id = intval($_GET['id']);
@@ -81,7 +81,7 @@ $experts = get_user_meta($user->ID, 'expert');
 <div class="theme-content">
     <div class="theme-side-menu">
         <?php 
-            if(isset($manager)){
+            if(isset($superior)){
                 include_once('dashboard-menu-company.php');
             }else{
                 include_once('dashboard-menu-user.php');
@@ -90,7 +90,7 @@ $experts = get_user_meta($user->ID, 'expert');
     </div>
     <div class="theme-learning">
         <?php 
-            if(isset($manager)){
+            if(isset($superior)){
                 include_once('dashboard-company-profile-home.php');
             }else{
                 include_once('dashboard-user-profile-home.php');

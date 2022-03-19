@@ -489,7 +489,7 @@
                                 </div>
                                 <div>
                             
-                                    <input type="hidden" name="manager" value=<?=$manager->ID?> >
+                                    <input type="hidden" name="manager" value=<?=$superior->ID?> >
                                     <input type="hidden" name="id_user" value=<?=$user->ID?> >
                                     <input type="hidden" name="type" value="Feedback"> 
                                 </div>
@@ -560,7 +560,7 @@
                                     </div>
                                     <div class="">
                                         <button class="btn btnSaveSetting" name="add_todo_persoonlijk" >Save</button>
-                                        <input type="hidden" name="manager" value=<?=$manager->ID?> >
+                                        <input type="hidden" name="manager" value=<?=$superior->ID?> >
                                         <input type="hidden" name="id_user" value=<?=$user->ID?> >
                                         <input type="hidden" name="type" value="Persoonlijk ontwikkelplan"> 
                                     </div>
@@ -590,25 +590,25 @@
                                                     echo '<div class="bloclCijfers">';
                                                     echo '<p class="mb-0" style="width: 20%;">'.lcfirst((String)get_the_category_by_ID($value)).'</p>';
                                                     echo '<div class="rate feedback" id="selected_stars_'.($key+1).'">
-                                                    <input type="radio" id="star1_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="1" />
-                                                    <label class="ma_link" for="star1_'.$key.'" title="text">1 star</label>
-                                                    <input type="radio" id="star2_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="2" />
-                                                    <label class="ma_link" for="star2_'.$key.'" title="text">2 stars</label>
-                                                    <input type="radio" id="star3_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="3" />
-                                                    <label class="ma_link" for="star3_'.$key.'" title="text">3 stars</label>
-                                                    <input type="radio" id="star4_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="4" />
-                                                    <label class="ma_link" for="star4_'.$key.'" title="text">4 stars</label>
-                                                    <input type="radio" id="star5_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="5" />
-                                                    <label class="ma_link" for="star5_'.$key.'" title="text">5 stars</label>
-                                                   </div>';
+                                                            <input type="radio" id="star1_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="1" />
+                                                            <label class="ma_link" for="star1_'.$key.'" title="text">1 star</label>
+                                                            <input type="radio" id="star2_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="2" />
+                                                            <label class="ma_link" for="star2_'.$key.'" title="text">2 stars</label>
+                                                            <input type="radio" id="star3_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="3" />
+                                                            <label class="ma_link" for="star3_'.$key.'" title="text">3 stars</label>
+                                                            <input type="radio" id="star4_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="4" />
+                                                            <label class="ma_link" for="star4_'.$key.'" title="text">4 stars</label>
+                                                            <input type="radio" id="star5_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="5" />
+                                                            <label class="ma_link" for="star5_'.$key.'" title="text">5 stars</label>
+                                                        </div>';
+                                                   echo '<div class="">
+                                                            <div hidden class="group-input-settings" id="commentaire_hidden_'.($key+1).'">
+                                                                <label for="">'.lcfirst((String)get_the_category_by_ID($value)).' toelichting</label>
+                                                                <textarea name="'.lcfirst((String)get_the_category_by_ID($value)).'_toelichting" id="" rows="5" cols="40"></textarea>
+                                                            </div>
+                                                        </div>';
                                                    echo '</div>';
-                                                   echo '
-                                                   <div class="col-lg-12 col-md-12">
-                                                        <div hidden class="group-input-settings" id="commentaire_hidden_'.($key+1).'">
-                                                            <label for="">'.lcfirst((String)get_the_category_by_ID($value)).' toelichting</label>
-                                                            <textarea name="'.lcfirst((String)get_the_category_by_ID($value)).'_toelichting" id="" rows="5"></textarea>
-                                                        </div>
-                                                   </div>';
+                                                  
                                                     }
                                             }
                                                 
@@ -634,7 +634,7 @@
                                     </div>
                                 </div>
                                 <div class="">
-                                <input type="hidden" name="manager" value=<?=$manager->ID?> >
+                                    <input type="hidden" name="manager" value=<?=$superior->ID?> >
                                     <input type="hidden" name="id_user" value=<?=$user->ID?> >
                                     <input type="hidden" name="type" value="Beoordeling Gesprek">
                                     <input type="submit" name="add_todo_beoordelingsgesprek" value="Save"  class="btn btnSaveSetting" >
@@ -675,7 +675,7 @@
                                     </div>
                                 </div>
                                 <div class="">
-                                    <input type="hidden" name="manager" value=<?=$manager->ID?> >
+                                    <input type="hidden" name="manager" value=<?=$superior->ID?> >
                                     <input type="hidden" name="id_user" value=<?=$user->ID?> >
                                     <input type="hidden" name="type" value="Compliment">
                                     <button class="btn btnSaveSetting" name="add_todo_compliment" >Save</button>
