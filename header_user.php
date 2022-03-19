@@ -1,8 +1,23 @@
 <?php
 $user = wp_get_current_user();
-$todos = get_field('todos',  'user_' . $user->ID);
-$todos = array_reverse($todos);
-?><!DOCTYPE html>
+
+/*
+* * Feedbacks
+*/
+
+$args = array(
+    'post_type' => 'feedback', 
+    'author' => $user->ID,
+    'orderby' => 'post_date',
+    'order' => 'DESC',
+    'posts_per_page' => -1,
+);
+
+$todos = get_posts($args);
+
+?>
+
+<!DOCTYPE html>
 <html>
     <head>
         <meta name="description" content="Fluidify">
@@ -40,22 +55,31 @@ $todos = array_reverse($todos);
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    
-                                    <div class="modal-content-body">
-                                        <p class="feedbackText">Feedback : <span>Correct your English</span></p>
-                                        <p class="feedbackText">By: <span>Mouhamed Dev</span></p>
-                                    </div>
-                                    <div class="modal-content-body">
-                                        <p class="feedbackText">Feedback : <span>Correct your English</span></p>
-                                        <p class="feedbackText">By: <span>Mouhamed Dev</span></p>
-                                    </div>
-                                    <div class="modal-content-body">
-                                        <p class="feedbackText">Feedback : <span>Correct your English</span></p>
-                                        <p class="feedbackText">By: <span>Mouhamed Dev</span></p>
-                                    </div>
-                                    <div>
-                                        <a href="" class="btn btnSee">See</a>
-                                    </div>
+                                    <?php
+                                        if(!empty($todos)){
+                                            foreach($todos as $todo){
+                                                if($key == 4)
+                                                    break;
+
+                                                $type = get_field('type_feedback', $todo->ID);
+                                                $manager = get_field('manager_feedback', $todo->ID);
+                                        ?> 
+                                            <a href="/dashboard/user/detail-notification/?todo=<?=$todo->ID;?>" class="modal-content-body">
+                                                <p class="feedbackText"><?=$type;?> : <span><?=$todo->post_title;?></span></p>
+                                                <p class="feedbackText">By: <span> <?php if(!empty($manager->first_name)){echo $manager->first_name;}else{echo $manager->display_name;}?> </span></p>
+                                            </a>
+                                    <?php
+                                            }
+                                        }else{
+                                    ?>
+                                            <div>
+                                                <div class="modal-content-body">
+                                                    <p class="feedbackText">Empty until now ...</p>
+                                                </div>
+                                            </div>
+                                    <?php
+                                        }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -149,41 +173,32 @@ $todos = array_reverse($todos);
                             </button>
                             <div class="dropdown-menu dropdownNotificationWeb" aria-labelledby="dropdownMenuButton">
                                 <h5 class="modal-title" id="exampleModalLabel">Notifications</h5>
-                                <?php 
+                                <?php
                                     if(!empty($todos)){
-                                ?>
-                                <div>
-                                    <?php
-                                  
-                                    foreach($todos as $key=>$todo) {
-                                        if($key == 4)
-                                            break;
+                                        foreach($todos as $todo){
+                                            if($key == 4)
+                                                break;
 
-                                        $value = explode(";", $todo);
-                                        $manager = get_users(array('include'=> $value[2]))[0]->data;
+                                            $type = get_field('type_feedback', $todo->ID);
+                                            $manager = get_field('manager_feedback', $todo->ID);
 
-                                        $path = count($todos) - ($key + 1);
-
-                                    ?>
-                                    <a href="/dashboard/user/detail-notification/?todo=<?php echo $path ?>" class="modal-content-body">
-                                        <p class="feedbackText"><?php if(isset($value[3])) echo $value[3]; ?> : <span><?php echo $value[0]; ?></span></p>
-                                        <p class="feedbackText">By: <span><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?></span></p>
-                                    </a>
-                                    <?php 
+                                    ?> 
+                                        <a href="/dashboard/user/detail-notification/?todo=<?=$todo->ID;?>" class="modal-content-body">
+                                            <p class="feedbackText"><?=$type;?> : <span><?=$todo->post_title;?></span></p>
+                                            <p class="feedbackText">By: <span> <?php if(!empty($manager->first_name)){echo $manager->first_name;}else{echo $manager->display_name;}?> </span></p>
+                                        </a>
+                                <?php
                                         }
-                                    ?>
-                                   <div>
-                                       <a href="/dashboard/user/notification" class="btn btnSee">See all</a>
-                                   </div>
-                                    
-                                </div>
-                                <?php } else { ?>
-                                    <div>
-                                    <div class="modal-content-body">
-                                        <p class="feedbackText">Empty until now ...</p>
-                                    </div>
-                                    </div>
-                                <?php } ?>
+                                    }else{
+                                ?>
+                                        <div>
+                                            <div class="modal-content-body">
+                                                <p class="feedbackText">Empty until now ...</p>
+                                            </div>
+                                        </div>
+                                <?php
+                                    }
+                                ?>
                             </div>
                         </li>
 

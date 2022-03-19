@@ -51,7 +51,19 @@ $educations = get_field('education',  'user_' . $user->ID);
 $portfolios = get_field('portfolio',  'user_' . $user->ID);
 $awards = get_field('awards',  'user_' . $user->ID);
 
-$todos = get_field('todos',  'user_' . $user->ID);
+/*
+* * Feedbacks
+*/
+
+$args = array(
+    'post_type' => 'feedback', 
+    'author' => $user->ID,
+    'orderby' => 'post_date',
+    'order' => 'DESC',
+    'posts_per_page' => -1,
+);
+
+$todos = get_posts($args);
 
 if(!empty($company))
     $company = $company[0]->post_title;

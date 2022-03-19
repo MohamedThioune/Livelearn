@@ -18,39 +18,37 @@
 
 
     
-     foreach($cats as $category){
-         $cat_id = strval($category->cat_ID);
-         $category = intval($cat_id);
-         array_push($categories, $category);
-     }
+    foreach($cats as $category){
+        $cat_id = strval($category->cat_ID);
+        $category = intval($cat_id);
+        array_push($categories, $category);
+    }
 
      $subtopics = array();
      
-     foreach($categories as $categ){
-         //Topics
-         $topicss = get_categories(
-             array(
-             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-             'parent'  => $categ,
-             'hide_empty' => 0, // change to 1 to hide categores not having a single post
-         ) 
-     );
-         foreach ($topicss as  $value) {
-             $subtopic = get_categories( 
+    foreach($categories as $categ){
+        //Topics
+        $topicss = get_categories(
+            array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $categ,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            ) 
+        );
+
+        foreach ($topicss as  $value) {
+            $subtopic = get_categories( 
                  array(
                  'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
                  'parent'  => $value->cat_ID,
                  'hide_empty' => 0,
                   //  change to 1 to hide categores not having a single post
-             ) 
-         );
-         
-             $subtopics = array_merge($subtopics, $subtopic);      
-         
+                ) 
+            );
+            $subtopics = array_merge($subtopics, $subtopic);      
         }
-        
-     }
-     //var_dump($subtopics);
+    }
+
 ?>
 <div class="contentProilView">
     <div id="profilVIewDetail" class="detailContentCandidat">
@@ -94,7 +92,7 @@
                                     if(isset($_GET['message'])) if($_GET['message']) echo "<span class='alert alert-success alert-dismissible fade show' role='alert'>" . $_GET['message'] . "</span>"; ?><br><br>
                                     <div class="overviewFirstBlock">
                                         <div class="blockImageCandidat">
-                                            <img src="<?php echo $image;?>" alt="">
+                                            <img src="<?php echo $image; ?>" alt="">
                                         </div>
                                         <div class="overviewSecondBlock">
                                             <p class="professionCandidat"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . '' . $user->last_name; else echo $user->display_name?>
@@ -364,34 +362,43 @@
             <div class="otherSkills">
                 <button class="btn btnAddToDo"  data-toggle="modal" data-target="#exampleModalWork">Add to do</button>
                 <?php
-                
-                    if($todos)
-                        if(!empty($todos))
-                            foreach($todos as $key=>$todo) { 
-                                $value = explode(";", $todo);
-                                $image = get_field('profile_img',  'user_' . $manager->ID);
-                                $manager = get_users(array('include'=> $value[2]))[0]->data;
-                                if(!$image)
-                                    $image = get_stylesheet_directory_uri() . '/img/Group216.png';
-                                                   
+                    if(!empty($todos))
+                        foreach($todos as $key=>$todo) { 
+                            if($key == 8)
+                                break;
+
+                            $type = get_field('type_feedback', $todo->ID);
+                            $manager = get_field('manager_feedback', $todo->ID);
+
+                            $image = get_field('profile_img',  'user_' . $manager->ID);
+                            if(!$image)
+                                $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+
+                            if($type == "Feedback" || $type == "Compliment")
+                                $beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
+                            else if($type == "Persoonlijk ontwikkelplan")
+                                $beschrijving_feedback = get_field('opmerkingen', $todo->ID);
+                            else if($type == "Beoordeling Gesprek")
+                                $beschrijving_feedback = get_field('algemene_beoordeling', $todo->ID);
+                                                
                 ?>
-                            <div class="activiteRecent">
-                                <img width="25" src="<?php echo $image ?>" alt="">
-                                <div class="contentRecentActivite">
-                                    <div class="titleActivite"><?php echo $value[0] ; ?> by <span style="font-weight:bold">
-                                    <?php 
-                                    if(isset($manager->nice_name)) echo $manager->nice_name ; else echo $manager->display_name; 
-                                    ?>
-                                    </span>
-                                    </div>
-                                    <p class="activiteRecent"><?php echo $value[1]; ?></p>
-                                </div>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <form action="" method="POST">
-                                    <input type="hidden" name="id" value="<?php echo $key; ?>">
-                                    <input type="hidden" name="user_id" value="<?php echo $user->ID; ?>">
-                                    <button class="btn btn-danger" style="color:white" name="delete_todos" type="submit"><i class="fa fa-trash"></i></button>
-                                </form>
-                            </div>
+                        <div class="activiteRecent">
+                            <img width="25" src="<?php echo $image ?>" alt="">
+                            <div class="contentRecentActivite">
+                                <div class="titleActivite"><?=$todo->post_title;?> by <span style="font-weight:bold">
+                                <?php 
+                                if(isset($manager->first_name)) echo $manager->first_name ; else echo $manager->display_name; 
+                                ?>
+                                </span>
+                                </div>
+                                <p class="activiteRecent"><?php if($beschrijving_feedback) echo $beschrijving_feedback; else echo ""; ?></p>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <form action="" method="POST">
+                                <input type="hidden" name="id" value="<?php echo $key; ?>">
+                                <input type="hidden" name="user_id" value="<?php echo $user->ID; ?>">
+                                <button class="btn btn-danger" style="color:white" name="delete_todos" type="submit"><i class="fa fa-trash"></i></button>
+                            </form>
+                        </div>
                 <?php } 
                     
                 ?>
@@ -579,21 +586,29 @@
                                             {
                                                 $internal_growth_subtopics= get_user_meta($user->ID,'topic_affiliate');   
                                                 foreach($internal_growth_subtopics as $key =>  $value){
-                                                     echo '<div class="bloclCijfers">';
-                                                     echo '<p class="mb-0" style="width: 20%;">'.lcfirst((String)get_the_category_by_ID($value)).'</p>';
-                                                     echo '<div class="rate">
-                                                     <input type="radio" id="star5_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="5" />
-                                                     <label class="ma_link" for="star5_'.$key.'" title="text">5 stars</label>
-                                                     <input type="radio" id="star4_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="4" />
-                                                     <label class="ma_link" for="star4_'.$key.'" title="text">4 stars</label>
-                                                     <input type="radio" id="star3_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="3" />
-                                                     <label class="ma_link" for="star3_'.$key.'" title="text">3 stars</label>
-                                                     <input type="radio" id="star2_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="2" />
-                                                     <label class="ma_link" for="star2_'.$key.'" title="text">2 stars</label>
-                                                     <input type="radio" id="star1_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="1" />
-                                                     <label class="ma_link" for="star1_'.$key.'" title="text">1 star</label>
-                                                    </div>';
-                                                     echo '</div>';
+                                                     
+                                                    echo '<div class="bloclCijfers">';
+                                                    echo '<p class="mb-0" style="width: 20%;">'.lcfirst((String)get_the_category_by_ID($value)).'</p>';
+                                                    echo '<div class="rate feedback" id="selected_stars_'.($key+1).'">
+                                                    <input type="radio" id="star1_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="1" />
+                                                    <label class="ma_link" for="star1_'.$key.'" title="text">1 star</label>
+                                                    <input type="radio" id="star2_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="2" />
+                                                    <label class="ma_link" for="star2_'.$key.'" title="text">2 stars</label>
+                                                    <input type="radio" id="star3_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="3" />
+                                                    <label class="ma_link" for="star3_'.$key.'" title="text">3 stars</label>
+                                                    <input type="radio" id="star4_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="4" />
+                                                    <label class="ma_link" for="star4_'.$key.'" title="text">4 stars</label>
+                                                    <input type="radio" id="star5_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="5" />
+                                                    <label class="ma_link" for="star5_'.$key.'" title="text">5 stars</label>
+                                                   </div>';
+                                                   echo '</div>';
+                                                   echo '
+                                                   <div class="col-lg-12 col-md-12">
+                                                        <div hidden class="group-input-settings" id="commentaire_hidden_'.($key+1).'">
+                                                            <label for="">'.lcfirst((String)get_the_category_by_ID($value)).' toelichting</label>
+                                                            <textarea name="'.lcfirst((String)get_the_category_by_ID($value)).'_toelichting" id="" rows="5"></textarea>
+                                                        </div>
+                                                   </div>';
                                                     }
                                             }
                                                 
@@ -604,55 +619,12 @@
                                         
                                     </div>
                                     <div class="">
-                                <input type="button" value="Volgende"  class="btn btnSaveSetting" id="volgende1">
+                                <input type="button" value="Volgende"  class="btn btnSaveSetting" id="volgende2">
                                 </div>
                                 </div>
                                 
                             </div>
-                            <div class="sousBlockFourBlockVoeg2">
-                                <h2 class="voegToeText">Beoordelingsgesprek</h2>
-                                <div class="col-lg-12 col-md-12">
-                                    <div class="group-input-settings">
-                                        <!-- <div class="bloclCijfers">
-                                            <p class="mb-0" >Sales</p>
-                                            <div class="rate">
-                                                <input type="radio" id="star5__" name="sales_rate_2" value="5" />
-                                                <label class="ma_link" for="star5__" title="text">5 stars</label>
-                                                <input type="radio" id="star4__" name="sales_rate_2" value="4" />
-                                                <label class="ma_link" for="star4__" title="text">4 stars</label>
-                                                <input type="radio" id="star3__" name="sales_rate_2" value="3" />
-                                                <label class="ma_link" for="star3__" title="text">3 stars</label>
-                                                <input type="radio" id="star2__" name="sales_rate_2" value="2" />
-                                                <label class="ma_link" for="star2__" title="text">2 stars</label>
-                                                <input type="radio" id="star1__" name="sales_rate_2" value="1" />
-                                                <label class="ma_link" for="star1__" title="text">1 star</label>
-                                            </div>
-                                        </div> -->
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-md-12">
-                                
-
-                                <?php
-                                            if (!empty (get_user_meta($user->ID,'topic_affiliate')))
-                                            {
-                                                $internal_growth_subtopics= get_user_meta($user->ID,'topic_affiliate');   
-                                                foreach($internal_growth_subtopics as $key =>  $value){
-                                                    echo ' <div class="group-input-settings">
-                                                    <label for="">'.lcfirst((String)get_the_category_by_ID($value)).' toelichting</label>
-                                                    <textarea name="'.lcfirst((String)get_the_category_by_ID($value)).'_toelichting" id="" rows="4"></textarea>
-                                                    </div>';
-                                                }
-                                            }
-                                                
-                                            ?>
-                                </div>
-
-                                <div class="">
-                                    <input type="button" value="Volgende" class="btn btnSaveSetting" id="volgende2">
-                                </div>
                             
-                        </div>
                             <div class="sousBlockFourBlockVoeg3">
                                 <h2 class="voegToeText">Beoordelingsgesprek</h2>
                                 <div class="col-lg-12 col-md-12">
@@ -743,6 +715,18 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script>
+
+    
+    // Afficher un champ de commentaire spécifique aprés avoir noté un topics sur le modal des feedbacks
+    $(".rate.feedback").click(function() {
+        var id = $(this).attr('id');
+        console.log("#commentaire_hidden_"+id.substr(-1));
+        $("#commentaire_hidden_"+id.substr(-1)).attr("hidden",function(n, v){
+      return false;
+    });
+    });
+
+
     /**
      * Defines the bootstrap tabs handler.
      *

@@ -26,10 +26,18 @@ $experts = get_user_meta($user->ID, 'expert');
 */
 
 /*
-* * Get todos
+* * Feedbacks
 */
-$todos = get_field('todos',  'user_' . $user->ID);
-$todos = array_reverse($todos);
+$args = array(
+    'post_type' => 'feedback', 
+    'author' => $user->ID,
+    'orderby' => 'post_date',
+    'order' => 'DESC',
+    'posts_per_page' => -1,
+);
+
+$todos = get_posts($args);
+
 /*
 * * End
 */
@@ -50,35 +58,42 @@ $todos = array_reverse($todos);
                     <th scope="col">Title</th>
                     <th scope="col-4">Alert </th>
                     <th scope="col">By</th>
+                    <!-- 
                     <th scope="col">Times</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">Actions</th> -->
                 </tr>
                </thead>
                <tbody>
                <?php 
                 
                 foreach($todos as $key=>$todo) {
-                    if($key == 6)
-                        break;
 
-                    $value = explode(";", $todo);
-                    $manager = get_users(array('include'=> $value[2]))[0]->data;
+                    $type = get_field('type_feedback', $todo->ID);
+                    $manager = get_field('manager_feedback', $todo->ID);
+
                     $image = get_field('profile_img',  'user_' . $manager->ID);
                     if(!$image)
                         $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 
-                    $path = count($todos) - ($key + 1);
+                    if($type == "Feedback" || $type == "Compliment")
+                        $beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
+                    else if($type == "Persoonlijk ontwikkelplan")
+                        $beschrijving_feedback = get_field('opmerkingen', $todo->ID);
+                    else if($type == "Beoordeling Gesprek")
+                        $beschrijving_feedback = get_field('algemene_beoordeling', $todo->ID);
+                
                 ?>
                 <tr>                
-                    <td scope="row"><a href="/dashboard/user/detail-notification/?todo=<?php echo $path; ?>"> <strong><?php echo $value[0]; ?></strong> </a></td>
-                    <td class="descriptionNotification"><a href="dashboard/user/detail-notification/todos=<?php echo $key; ?>"><?php echo $value[1]; ?> </a></td>
+                    <td scope="row"><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"> <strong><?=$todo->post_title;?></strong> </a></td>
+                    <td class="descriptionNotification"><a href="dashboard/user/detail-notification/todos=<?php echo $key; ?>"><?=$beschrijving_feedback?> </a></td>
                     <td><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?></td>
+                    <!-- 
                     <td>Weekly</td>
                     <td>
                         <button class="btn bntDelete">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/delete.png">
                         </button>
-                    </td>
+                    </td> -->
                 </tr>
                <?php
                     }
