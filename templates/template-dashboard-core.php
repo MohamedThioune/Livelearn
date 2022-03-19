@@ -141,6 +141,7 @@ else if(isset($_POST['add_todo_feedback']) || isset($_POST['add_todo_compliment'
     $title_feedback = $_POST['title_feedback'];
     $type = $_POST['type'];
     $manager = get_user_by('id',$_POST['manager']);
+
     $onderwerp_feedback='';
     if (isset ($_POST['onderwerp_feedback']) &&  !empty($_POST['onderwerp_feedback']))
         foreach ($_POST['onderwerp_feedback']as  $value) {
@@ -161,8 +162,6 @@ else if(isset($_POST['add_todo_feedback']) || isset($_POST['add_todo_compliment'
 
     //Add further informations for feedback
     update_field('onderwerp_feedback', $onderwerp_feedback, $post_id);
-    //update_field('manager', get_current_user_id(), $post_id);
-    //update_field('type', $type, $post_id);
     update_field('manager_feedback', $manager, $post_id);
     update_field('type_feedback', $type, $post_id);
     update_field('beschrijving_feedback', $beschrijving_feedback, $post_id);
@@ -176,6 +175,8 @@ else if(isset($_POST['add_todo_beoordelingsgesprek'])){
     $id_user = $_POST['id_user'];
     $title_beoordelingsgesprek = $_POST['title_beoordelingsgesprek'];
     $type = $_POST['type'];
+    $manager = get_user_by('id',$_POST['manager']);
+
     $algemene_beoordeling = $_POST['algemene_beoordeling'];
     $rates_comments='';
     $topic_affiliate = get_user_meta($id_user,'topic_affiliate');
@@ -218,6 +219,7 @@ else if(isset($_POST['add_todo_persoonlijk']))
     $title_feedback = $_POST['title_persoonlijk'];
     $type = $_POST['type'];
     $manager = get_user_by('id',$_POST['manager']);
+
     $onderwerp_feedback = '';
     if (isset ($_POST['onderwerp_pop']) &&  !empty($_POST['onderwerp_pop']))
         foreach ($_POST['onderwerp_pop'] as $value) {
@@ -336,21 +338,13 @@ else if(isset($delete_favorite)){
 else if(isset($delete_todos)){
     $message = "Met succes verwijderd";
     $user_connected = get_current_user_id();
-    $todos = get_field('todos',  'user_' . $user_id);
-    $bunch = array();
-    foreach($todos as $key => $value){
-        if($key == $id)
-            continue;
-        else
-            array_push($bunch,$value);
-    }
-    update_field('todos', $bunch, 'user_'. $user_id);
-    $todos = get_field('todos',  'user_' . $user_id);
+    wp_delete_post($id);
 
     $content = "/dashboard/company/profile/?id=" . $user_id . '&manager='. $user_connected . "?message=" . $message; 
     header("location:".$content);
 }
 
+var_dump($manager);
  
 ?>
 <?php wp_head(); ?>
