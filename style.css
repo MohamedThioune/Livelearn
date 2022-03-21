@@ -5858,7 +5858,11 @@ form {
         margin-left: 0;
     }
     .boxOne3 {
+<<<<<<< HEAD
         height: 315px;
+=======
+        height: 400px;
+>>>>>>> origin/mamadouBranch
         background-size: initial;
     }
     .boxOne3-1 {

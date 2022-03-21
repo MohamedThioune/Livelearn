@@ -67,59 +67,94 @@ $author = array($post->post_author);
 $experts = array_merge($expert, $author);
 if (is_array(get_field('favorited', $post->ID)) || is_object(get_field('favorited', $post->ID)))
 $favoured = count(get_field('favorited', $post->ID));
+if(!$favoured)
+    $favoured = 0;
+
+$gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
+
 ?>
 
 <style>
-    body{
-        padding-top: 0px !important;
-    }
     a{
         text-decoration: none !important;
         color: black !important;
     }
-</style>
+    body {              
+        padding-top: 0px !important;
+    }
+    @media all and (min-width: 300px) and (max-width: 767px) {
+        .textIconeLearning {
+            font-size: 13px;
+        }
+	}
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</style> 
+
 <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
 <!-- ---------------------------------------- Start modals ---------------------------------------------- -->
-<div class="modal fade" id="direct-contact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade ml-md-0 ml-2" id="direct-contact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Direct contact</h5>
+        <div class="modal-header mx-4" style="border-bottom: none !important">
+            <div></div>
+            <h5 class="modal-title fw-bold" id="exampleModalLabel" style="color: #023356">Direct contact</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-            <div class="text-center">
-                <a href="" class="mx-2">
-                    <img class="mb-2"
-                    src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
-                </a>
-                <a href="" class="mx-3">
-                    <i style="font-size: 20px"
-                    class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white"></i>
-                    <!-- border border-3 border-success rounded-circle p-2 -->
-                </a>
-                <a href="" class="mx-3">
-                    <i style="font-size: 30px" class="fa fa-comment"></i>
-                </a>
-                <a href="" class="mx-2 test bg-primary" style="height: 85rem">
-                    <!-- <div class=""> -->
-                        <i style="font-size: 40px;"  class="fab fa-whatsapp text-success"></i>
-                    <!-- </div> -->
-                </a>
+        <div class="modal-body">    
+            <div class="d-flex justify-content-center">
+               
+                <div>
+                    <a href="#" class="mx-3 d-flex flex-column ">
+                        <i style="font-size: 50px; height: 49px; margin-top: -4px;" 
+                            class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>                                           
+                    </a>
+                    <div class="mt-3 text-center">
+                        <span class="bd-highlight fw-bold text-success mt-2">whatsapp</span>
+                    </div>
+                </div>
+                <div>
+                    <a href="#" class="mx-3 d-flex flex-column ">
+                        <i style="font-size: 25px"
+                        class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>                     
+                        <!-- <span class="bd-highlight fw-bold text-primary mt-2">email</span> -->
+                    </a>
+                    <div class="mt-3 text-center">
+                         <span class="bd-highlight fw-bold text-danger mt-5">email</span>
+                    </div>  
+                </div>
+                <div>
+                    <a href="#" class="mx-3 d-flex flex-column ">
+                        <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>                     
+                    </a>
+                    <div class="mt-3 text-center">
+                         <span class="bd-highlight fw-bold text-secondary mt-5">message</span>
+                    </div>
+                </div>
+
+                <div>
+                    <a href="#" class="mx-3 d-flex flex-column ">
+                        <i class="bd-highlight bi bi-telephone-x border border-3 border-primary rounded-circle text-primary shadow"
+                        style="font-size: 20px; padding: 6px 11px;"></i>
+                        <!-- <span class="bd-highlight fw-bold text-primary mt-2">call</span> -->
+                    </a>
+                    <div class="mt-3 text-center">
+                         <span class="bd-highlight fw-bold text-primary mt-5">call</span>
+                    </div>
+                </div>
                 
             </div>
+
         </div>
-        <div class="modal-footer">
+        <!-- <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
+        </div> -->
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="incompany" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade ml-md-0 ml-2" id="incompany" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -141,7 +176,7 @@ $favoured = count(get_field('favorited', $post->ID));
     </div>
 </div>
 
-<div class="modal fade" id="offerte" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade ml-md-0 ml-2" id="offerte" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -159,40 +194,34 @@ $favoured = count(get_field('favorited', $post->ID));
     </div>
 </div>
 
-<div class="modal fade" id="voor-wie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade ml-md-0 ml-2" id="voor-wie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Voor Wie</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            
-
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+            <div class="modal-body">
+                <div class="">
+                    <!-- <img alt="course design_undrawn" 
+                     src="<?php echo get_stylesheet_directory_uri(); ?>/img/voorwie.png"> -->
+                    
+                    <div class="content-text p-4 py-0">
+                        <?php $voor_wie = get_user_by('id', $post->post_author);?>
+                        <h4>Voor wie ?</h4>
+                        <p class="m-0"><strong>This course is followed up by <?=$voor_wie->display_name?></strong></p>
+                        <p class="m-0"><em>This line rendered as italicized text.</em></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+
 </div>
 <!-- ------------------------------------------ End modals ---------------------------------------------- -->
 
 
 <div class="liveOverBlock">
     <div class="container-fluid">
-        <div class="overElement">           
+        <div class="overElement">
             <div class="blockOneOver">
-
-                <!-- modal -->
-                <!-- Button trigger modal -->
-                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#direct-conatact">
-                    Launch demo modal
-                </button> -->
-
-                <!-- modal -->
-
                 <!-- ------------------------------ Start Title livelearn ---------------------------------- -->
 
                 <div class="titleBlock">
@@ -230,24 +259,24 @@ $favoured = count(get_field('favorited', $post->ID));
                 <!-- -------------------------------------- Start Icons row ------------------------------------->
                 <div class="d-flex justify-content-md-between justify-content-around mx-md-2 mx-sm-2 text-center">
                     <div class="d-flex flex-row">
-                        <div class="d-flex flex-column mx-md-3 mx-2">
+                        <div class="d-flex flex-column mx-md-3 mx-1">
                             <input type="hidden" id="user_id" value="<?php echo $user_id; ?>">
                             <input type="hidden" id="course_id" value="<?php echo $post->ID; ?>">
                             <!-- <img class="iconeCours" src="<?php echo get_stylesheet_directory_uri();?>/img/love.png" alt=""> -->
                             <button id="btn_favorite" style="background:white; border:none"><i class="far fa-heart" style="font-size: 25px;"></i></button>
                             <span class="textIconeLearning mt-1" id="autocomplete_favoured"><?php echo $favoured; ?></span>
                         </div>
-                        <div class="d-flex flex-column mx-md-3 mx-2">
+                        <div class="d-flex flex-column mx-md-3 mx-1">
                             <i class="fas fa-calendar-alt" style="font-size: 25px;"></i>
                             <span class="textIconeLearning mt-1">I dagdee</span>
                         </div>
-                        <div class="d-flex flex-column mx-md-3 mx-2">
+                        <div class="d-flex flex-column mx-md-3 mx-1">
                             <i class="fas fa-graduation-cap" style="font-size: 25px;"></i>
                             <span class="textIconeLearning mt-1"><?php if($course_type) echo $course_type; else echo "Undefined"; ?></span>
                         </div>
                     </div>
                     <div class="d-flex flex-row">
-                        <div class="d-flex flex-column mx-md-3 mx-2">
+                        <div class="d-flex flex-column mx-md-3 mx-1">
                             <form action="../../dashboard/user/" method="POST">
                                 <input type="hidden" name="meta_value" value="<?php echo $post->ID; ?>" id="">
                                 <input type="hidden" name="user_id" value="<?php echo $user_id; ?>" id="">
@@ -272,7 +301,7 @@ $favoured = count(get_field('favorited', $post->ID));
                                 ";
                             ?>
                         </div>
-                        <div class="d-flex flex-column mx-md-3 mx-2">
+                        <div class="d-flex flex-column mx-md-3 mx-1">
                             <?php
                             if($user_id != $post->post_author){
                             ?>
@@ -358,29 +387,31 @@ $favoured = count(get_field('favorited', $post->ID));
                 <!--------------------------------------- start Text description -------------------------------------- -->
                 <div class="blockTextGlovale mt-3">
                     <div class="text-limit">
-                        <?php echo $long_description; ?>
 
-                        <div class="moreText"> 
+                      <div><?php echo $long_description; ?></div>  
+
+                        <div class=" moreText"> 
                            <?php
                                 if($agenda){
-                                    ?>
+                            ?>
                                     <h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Agenda :</b></h6>
-                                    <span> <?php echo $agenda; ?> </span>
+                                    <?php echo $agenda; ?>
                                     <?php
                                 }
 
                                 if($who){
                                     ?>  
                                     <h6 class="textDirect mt-3" style="text-align: left"><b>For who :</b></h6>
-                                    </span> <?php echo $who; ?> </span>
+                                    <?php echo $who; ?>
                                     <?php
                                 }
 
                                 if($results){
                                     ?>  
                                     <h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Results :</b></h6>
-                                    <span > <?php echo $results; ?> </span>
-                                    <?php
+                                    <p> <?php echo $results; ?> </p> 
+
+                            <?php
                                 }
                             ?>
                         </div>    
@@ -388,10 +419,11 @@ $favoured = count(get_field('favorited', $post->ID));
                        
                    </div>
 
-                    <button type="button" class="btn btn-lg lees_alles my-4 w-md-25 px-4 border border-1 border-dark read-more-btn"
+                    <button type="button" class="btn btn-lg lees_alles mt-3 mb-5 w-md-25 px-4 border border-2 border-dark read-more-btn"
                      >Lees alles</button>
                 </div>
                 <!--------------------------------------- end Text description -------------------------------------- -->
+            
             </div>
             
             <!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
@@ -409,13 +441,31 @@ $favoured = count(get_field('favorited', $post->ID));
                         </div>
                         <div class="modal-body  px-md-5 p-3">
                             <?php
-                                echo (do_shortcode('[user_registration_form id="59"]'));
+                            echo (do_shortcode('[user_registration_form id="59"]'));
                             ?>
 
                             <div class="text-center">
+                                <p class="mb-1">Sign in with:</p>
+                            </div>
+                            <div class="text-center mb-4">
+                                <div class="contentElementPartage">
+                                    <button id="linkedin" class="btn contentIcone">
+                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/linkedin.png" alt="">
+                                    </button>
+                                    <button class="btn contentIcone">
+                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/facebook.png" alt="">
+                                    </button>
+                                    <button class="btn contentIcone">
+                                        <img src="https://tse3.mm.bing.net/th?id=OIP.saxsZDd8Ucx0G1Bc1Swq5AHaFK&pid=Api&P=0&w=234&h=163" alt="">
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-2">
                                 <p>Already a member? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
                                                         data-toggle="modal" data-target="#exampleModalCenter">Sign up</a></p>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -443,10 +493,29 @@ $favoured = count(get_field('favorited', $post->ID));
                                 'label_password' => 'Wat is je wachtwoord?'
                             ]);
                             ?>
+
+                            <div class="text-center">
+                                <p class="mb-1">Sign up with:</p>
+                            </div>
+                            <div class="text-center mb-4">
+                                <div class="contentElementPartage">
+                                    <button id="linkedin" class="btn contentIcone">
+                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/linkedin.png" alt="">
+                                    </button>
+                                    <button class="btn contentIcone">
+                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/facebook.png" alt="">
+                                    </button>
+                                    <button class="btn contentIcone">
+                                        <img src="https://tse3.mm.bing.net/th?id=OIP.saxsZDd8Ucx0G1Bc1Swq5AHaFK&pid=Api&P=0&w=234&h=163" alt="">
+                                    </button>
+                                </div>
+                            </div>
+
                             <div class="text-center">
                                 <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                    data-toggle="modal" data-target="#SignInWithEmail">Sign in</a></p>
+                                    data-toggle="modal" data-target="#SignInWithEmail">Sign in</a></p>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -476,8 +545,7 @@ $favoured = count(get_field('favorited', $post->ID));
 
             <div class="CardpriceLive">
                 <?php
-                    if(!empty($company))
-                    {
+                    if(!empty($company)){
                         $company_id = $company[0]->ID;
                         $company_title = $company[0]->post_title;
                         $company_logo = get_field('company_logo', $company_id);
@@ -894,7 +962,6 @@ $favoured = count(get_field('favorited', $post->ID));
     </div>
     <!-- fin Modal deel -->
 
-
 </div>
 
 
@@ -927,7 +994,6 @@ $favoured = count(get_field('favorited', $post->ID));
         });
     })
 </script>
-
 
 <script>
  

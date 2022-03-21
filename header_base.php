@@ -52,6 +52,7 @@
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/custom.css" />
+        <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/main.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -400,6 +401,7 @@
     </div>
 
     <div id="main">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script>
             $("#searchIconeTablet").click(function() {
                 // alert('cooooooll!');
