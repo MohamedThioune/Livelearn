@@ -503,7 +503,7 @@
                                     <h2 class="voegToeText">Persoonlijk ontwikkelplan</h2>
                                     <div class="col-lg-12 col-md-12">
                                         <div class="group-input-settings">
-                                            <label for="">Title persoonlijk ontwikwikkelplan</label>
+                                            <label for="">Title persoonlijk ontwikkelplan</label>
                                             <input name="title_persoonlijk" type="text" required>
                                         </div>
                                     </div>
