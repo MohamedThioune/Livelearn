@@ -191,6 +191,7 @@
         <div>
             <form action="../dashboard/user/" method="POST">
                 <input type="hidden" name="meta_value" value="<?php echo $category ?>" id="">
+                <input type="hidden" name="user_id" value="<?=$user_id;?>" id="">
                 <div>
                     <?php
                         if($user_id != 0)
