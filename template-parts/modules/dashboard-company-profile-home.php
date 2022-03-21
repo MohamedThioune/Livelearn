@@ -132,7 +132,7 @@
                                         </div>
                                     </div>
                                     <div class="categorieDetailCandidat">
-                                        <h2 class="titleCategorieDetailCandidat">Candidates About bio</h2>
+                                        <h2 class="titleCategorieDetailCandidat">Over</h2>
                                         <p class="textDetailCategorie"><?php echo $biographical_info;  ?></p>
                                     </div>
                                     <?php
