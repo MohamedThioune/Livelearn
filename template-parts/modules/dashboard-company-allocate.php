@@ -40,7 +40,7 @@
                         echo '<div class="titleOpleidingstype"><h2>You are not able to grant privileges</h2></div>';
                     }
                     else{                        
-                        echo '<div class="titleOpleidingstype"><h2>Manage your team</h2></div>';
+                        echo '<div class="titleOpleidingstype"><h2>Manage je team</h2></div>';
                         $company = get_field('company',  'user_' . $user_id );
                         $company_connected = $company[0]->post_title;
 
