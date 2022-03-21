@@ -256,9 +256,11 @@
                             else if(in_array($category, $topics_external)){
                                 echo '<input type="hidden" name="meta_key" value="topic" id="">';
                                 echo "<button type='submit' class='btn btn-danger rounded-pill text-white font-weight-bold p-1 px-2' name='delete' >verwijder uit leeromgeving</button>";
-                            }else
+                            }else{
+                                echo '<input type="hidden" name="meta_key" value="topic" id="">';
                                 echo "<button type='submit' style='background: #00A89D'
-                                class='btn btn-success rounded-pill text-white font-weight-bold p-1 px-2' name='interest_push' >Toevoegen aan Leeromgeving</button>";       
+                                class='btn btn-success rounded-pill text-white font-weight-bold p-1 px-2' name='interest_push' >Toevoegen aan Leeromgeving</button>";   
+                            }    
 
                             echo "<img style='height: 30px;' class='rounded-pill' src='" . $logo_livelearn . "' alt=''>";
                         }
