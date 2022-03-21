@@ -26,7 +26,7 @@
 ?>
 
 <div class="row">
-    <div class="col-md-5 col-lg-7">
+    <div class="col-md-5 col-lg-12">
         <div class="cardCoursGlocal">
             <div id="basis" class="w-100">
                 <?php
@@ -48,7 +48,7 @@
                 ?>
                         <form action="/dashboard/company/allocate" method="post">
                             <div class="acf-field">
-                                <label for="locate">Become the manager of one of the employees :</label><br>
+                                <label for="locate">Word de manager van de volgende medewerkers:</label><br>
                                 <div class="form-group">
                                     <select name="allocate[]" class="multipleSelect2" multiple="true">
                                         <?php
@@ -68,28 +68,15 @@
                                     ?>
                                     </select>
                                 </div>
-                                <button type="submit" name="allocate_push" class="btn btn-info">Valid</button>
+                                <button type="submit" name="allocate_push" class="btn btn-info">Activeer</button>
                             </div>
                         </form>
                 <?php
                                 
                     }
                 }else
-                    echo '<h2>You are not able to manage a member of your team</h2>';
+                    echo '<h3>Je hebt niet de rol manager binnen de organisatie, neem contact op met beheerder van jullie zakelijke omgeving</h3>';
                 ?>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 col-lg-2 col-sm-12">
-        
-        <div class="blockCourseToevoegen">
-            <p class="courseToevoegenText">Assignment</p>
-            <div class="contentBlockRight">
-                <a href="#" class="contentBlockCourse">
-                    <div class="circleIndicator passEtape"></div>
-                    <p class="textOpleidRight">Manage user</p>
-                </a>
-               
             </div>
         </div>
     </div>
