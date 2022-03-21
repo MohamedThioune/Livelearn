@@ -307,7 +307,7 @@ else if(isset($delete)){
     if($meta_value != null){
         if(delete_user_meta($user_id, $meta_key, $meta_value)){
             $message = "Met succes verwijderd";
-            if($meta_key == "topic")
+            if($meta_key == "topic" || $meta_key == "topic_affiliate")
                 header("location:/dashboard/user/?message=".$message);
             else{
                 $user_connected = get_current_user_id();

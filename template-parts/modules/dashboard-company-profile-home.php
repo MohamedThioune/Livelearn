@@ -102,7 +102,7 @@
                                             <?php } ?>
                                         </div>
                                         <div class="overviewTreeBlock">
-                                            <p class="titleOvervien">Manager : <span><?php if(isset($manager->first_name) && isset($manager->last_name)) echo $manager->first_name . '' . $manager->last_name; else echo $manager->display_name; ?></span></p>
+                                            <p class="titleOvervien">Manager : <span><?php if(isset($superior->first_name) && isset($superior->last_name)) echo $superior->first_name . '' . $superior->last_name; else echo $superior->display_name; ?></span></p>
                                             <p class="titleOvervien">Company : <span><?php echo $company; ?></span></p>
                                         </div>
                                         <br>
@@ -604,7 +604,7 @@
                                                    echo '<div class="">
                                                             <div hidden class="group-input-settings" id="commentaire_hidden_'.($key+1).'">
                                                                 <label for="">'.lcfirst((String)get_the_category_by_ID($value)).' toelichting</label>
-                                                                <textarea name="'.lcfirst((String)get_the_category_by_ID($value)).'_toelichting" id="" rows="5" cols="40"></textarea>
+                                                                <textarea name="'.lcfirst((String)get_the_category_by_ID($value)).'_toelichting" id="" rows="5" cols="80"></textarea>
                                                             </div>
                                                         </div>';
                                                    echo '</div>';
