@@ -1,8 +1,15 @@
+<?php 
+$user_in = wp_get_current_user();
+?>
+
 <div class="contentListeCourse">
     <div class="cardOverviewCours">
         <div class="headListeCourse">
             <p class="JouwOpleid">Jouw leerpaden</p>
-            <a href="" class="btnNewCourse">Nieuwe course</a>
+            <?php 
+                if ( in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
+                    echo '<a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>';
+            ?>
         </div>
         <div class="contentCardListeCourse">
             <table class="table table-responsive">
