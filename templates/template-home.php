@@ -4,11 +4,11 @@
 <?php get_header(); ?>
 <?php
     $args = array(
-                    'post_type' => 'course',
-                    'post_status' => 'publish',
-                    'posts_per_page' => -1,
-                    'order' => 'DESC',
-                );
+        'post_type' => 'course',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+    );
 
     $courses = get_posts($args);
 
@@ -61,10 +61,24 @@
 
 ?>
 
+<style>
+    /* @media screen and (max-width: 1023px) and (min-width: 768px) {
+        .boxOne3 {
+            height: 430px !important;
+            background-size: initial;
+        }
+    }
+    @media screen and (max-width: 1270px){ 
+        .card3 {
+            padding: 20px !important;
+        }
+    } */
+</style>
+
 <div class="contentOne">
   
     <div class="boxOne3">
-        <div class="container">
+        <div class="container mt-md-5">
             <div class="voorBlock">
                 <p class="wordDeBestText2" style="font-weight: bold">Ontdek, ontwikkel en maak carrière </p>
                 <p class="altijdText2">Er valt altijd iets nieuws te leren, maak gratis jouw skills paspoort en word expert.</p>
@@ -108,6 +122,7 @@
             </a>
         </div>
     </div>
+    
     <div>
         <p class="daaromText">Daarom maken meer dan 250 organisaties, experts en opleiders gebruik van LiveLearn</p>
        <div class="container">

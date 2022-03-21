@@ -68,34 +68,26 @@ $todos = get_posts($args);
                <?php 
                 
                 foreach($todos as $key=>$todo) {
+                    if($key == 6)
+                        break;
 
-                    $type = get_field('type_feedback', $todo->ID);
-                    $manager = get_field('manager_feedback', $todo->ID);
-
+                    $value = explode(";", $todo);
+                    $manager = get_users(array('include'=> $value[2]))[0]->data;
                     $image = get_field('profile_img',  'user_' . $manager->ID);
                     if(!$image)
                         $image = get_stylesheet_directory_uri() . '/img/Group216.png';
-
-                    if($type == "Feedback" || $type == "Compliment")
-                        $beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
-                    else if($type == "Persoonlijk ontwikkelplan")
-                        $beschrijving_feedback = get_field('opmerkingen', $todo->ID);
-                    else if($type == "Beoordeling Gesprek")
-                        $beschrijving_feedback = get_field('algemene_beoordeling', $todo->ID);
-                
                 ?>
                 <tr>                
-                    <td scope="row"><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"> <strong><?=$todo->post_title;?></strong> </a></td>
-                    <td><?=$type?></td>
-                    <td class="descriptionNotification"><a href="dashboard/user/detail-notification/todos=<?php echo $key; ?>"><?=$beschrijving_feedback?> </a></td>
-                    <td><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name; else echo $manager->display_name; ?></td>
-                    <!-- 
-                    <td>Weekly</td>
-                    <td>
-                        <button class="btn bntDelete">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/delete.png">
-                        </button>
-                    </td> -->
+                        <td scope="row"><a href="/dashboard/user/detail-notification/?todo=<?php echo $key; ?>"> <strong><?php echo $value[0]; ?></strong> </a></td>
+                        <td class="descriptionNotification"><a href="dashboard/user/detail-notification/todos=<?php echo $key; ?>"><?php echo $value[1]; ?> </a></td>
+                        <td><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?></td>
+                        <td>Weekly</td>
+                        <td>
+                            <button class="btn bntDelete">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/delete.png">
+                            </button>
+                        </td>
+                   </a>
                 </tr>
                <?php
                     }

@@ -108,7 +108,10 @@
         $activitiens = count($courses);
 
         //Volgend
-        $topics_volgers = count(get_user_meta($user->ID, 'topic'));
+        $topics_internal = get_user_meta($user->ID,'topic_affiliate');
+        $topics_external = get_user_meta($user->ID,'topic');
+        $topics_volgers = array_merge($topics_internal, $topics_external);
+        $topics_volgers = count($topics_volgers);
         $experts_volgers = count(get_user_meta($user->ID, 'expert'));
         $volgend = $topics_volgers + $experts_volgers;
 
@@ -131,64 +134,9 @@
 
 ?>
 
-<style>
-    .checkmarkUpdated{
-        background-color: white !important;
-        border: 2px solid #043356 !important;
-    }
-    .LeerBlock {
-        border-bottom: 2px solid #043356 !important;
-    }
-    /* .buttonSelected{
-        border-bottom: 3px solid #00A89D !important;
-    } */
-    .nav-link.active {
-        border-bottom: 3px solid #00A89D !important;
-        background-color: #E0EFF4 !important;
-    }
-    .border-right-adapt {
-        border-top-left-radius: 25px; border-bottom-left-radius: 25px;
-    }
-    .border-left-adapt {
-        border-top-right-radius: 25px; border-bottom-right-radius: 25px;
-    }
-    @media all and (max-width: 764px) {
-        .border-right-adapt {
-            border-radius: 0px;
-        }
-        .border-left-adapt {
-            border-radius: 0px;
-        }
-        .skill-text{
-            font-size: 1rem; 
-        }
-    }
-    .modal-dialog{
-         width: 40% !important;
-    }
-    @media all and (max-width: 753px) {
-        .modal-dialog{
-             width: 90% !important;
 
-        }  
-    }
-    @media all and (min-width: 753px) and (max-width: 900px) {
-        .modal-dialog{
-             width: 70% !important;
-        } 
-    }
-    .modal-backdrop.show { /* to remove gray side on the bottom */
-        opacity: .5;
-        display: none;
-    }
-</style>
-
-
-
-<body>
+<body >
 <div class="contentOne"></div>
-
-
 
 <!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
 
@@ -198,7 +146,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>Sign In</h2>
+                    <h2>Sign Up</h2>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -210,7 +158,7 @@
 
                     <div class="text-center">
                         <p>Already a member? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                data-toggle="modal" data-target="#exampleModalCenter">Sign up</a></p>
+                                                data-toggle="modal" data-target="#exampleModalCenter">Sign In</a></p>
                     </div>
                 </div>
             </div>
@@ -226,7 +174,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>Sign Up</h2>
+                    <h2>Sign In</h2>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -243,7 +191,7 @@
                     ?>
                     <div class="text-center">
                         <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                              data-toggle="modal" data-target="#SignInWithEmail">Sign in</a></p>
+                                              data-toggle="modal" data-target="#SignInWithEmail">Sign Up</a></p>
                     </div>
                 </div>
             </div>
@@ -254,7 +202,7 @@
     <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
 
 <!-- ------------------------------------------ start Header -------------------------------------- -->
-<div class="head2" style="margin-top: 1px !important;">
+<div class="head2" style="padding-top: 80px !important;">
     <div class="comp1">
         <img src="<?php echo $image_author; ?>" alt="">
     </div>
@@ -1696,7 +1644,9 @@
          <!-- ========================================== SKILLS===========================================  -->
         <div  class="col-md-9 pl-0 tab-pane fade pt-md-4" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
             <?php 
-            $topics = get_user_meta($user->ID, 'topic');
+            $topics_internal = get_user_meta($user->ID,'topic_affiliate');
+            $topics_external = get_user_meta($user->ID,'topic');
+            $topics = array_merge($topics_internal, $topics_external);
 
             $company = get_field('company',  'user_' . $user->ID);
             $function = get_field('role',  'user_' . $user->ID);
@@ -1952,10 +1902,16 @@
     $(document).ready(function(){
         $("#hide").click(function(){
             event.preventDefault();
+<<<<<<< HEAD
             // alert('cool here');
             $(".sousProductTest").hide();
         });
         $("#show").click(function(){
+=======
+            $(".sousProductTest").hide();
+        });
+        $("#show").click(function(){                
+>>>>>>> origin/mamadouBranch
             event.preventDefault();
             $(".sousProductTest").show();
         });
