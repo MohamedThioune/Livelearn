@@ -251,7 +251,7 @@
                             $topics_external = get_user_meta($user_id,'topic');
                             if (in_array($category, $topics_internal)){
                                 echo '<input type="hidden" name="meta_key" value="topic_affiliate" id="">';
-                                echo "<a href='#' class='btn btn-default rounded-pill text-white font-weight-bold p-1 px-2'>verwijder uit leeromgeving</a>";
+                                echo "<a href='#' class='btn btn-info rounded-pill text-white font-weight-bold p-1 px-2'>verwijder uit leeromgeving</a>";
                             }
                             else if(in_array($category, $topics_external)){
                                 echo '<input type="hidden" name="meta_key" value="topic" id="">';
