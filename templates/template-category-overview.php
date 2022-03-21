@@ -196,10 +196,9 @@
                     <?php
                         if($user_id != 0)
                         {
-                            $topics_internal = get_user_meta($user->ID,'topic_affiliate');
-                            $topics_external = get_user_meta($user->ID,'topic');
+                            $topics_internal = get_user_meta($user_id,'topic_affiliate');
+                            $topics_external = get_user_meta($user_id,'topic');
                             $topics_volgers = array_merge($topics_internal, $topics_external);
-                            var_dump($topics_volgers);
                             if (in_array($category,$topics_volgers))
                                 echo "<button type='submit' class='btn btn-danger rounded-pill text-white font-weight-bold p-1 px-2' name='delete' >verwijder uit leeromgeving</button>";
                             else
