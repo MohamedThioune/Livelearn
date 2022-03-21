@@ -153,8 +153,11 @@
                     <?php 
                     
                     foreach($todos as $key=>$todo) {
-                        $value = explode(";", $todo);
-                        $manager = get_users(array('include'=> $value[2]))[0]->data;
+                        if($key == 10)
+                            break;
+
+                        $type = get_field('type_feedback', $todo->ID);
+                        $manager = get_field('manager_feedback', $todo->ID);
                         $image = get_field('profile_img',  'user_' . $manager->ID);
                         if(!$image)
                             $image = get_stylesheet_directory_uri() . '/img/Group216.png';
@@ -162,10 +165,10 @@
                         <div class="SousBlockNotification">
                             <div class="d-flex align-items-center">
                                 <div class="circleNotification">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification 1.png" alt="">
+                                    <img src="<?php echo $image ?>" alt="">
                                 </div>
                                 <p class="feddBackNotification">
-                                    <?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?> send you a  <span>Feedback</span></p>
+                                    <?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?> send you a  <span><?=$type?></span></p>
                             </div>
                             <!-- <p class="hoursText">0 hours ago</p> -->                    
                         </div>

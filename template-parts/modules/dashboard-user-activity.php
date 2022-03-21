@@ -282,7 +282,7 @@ $todos = get_posts($args);
                             <div class="circleNotification">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification 1.png" alt="">
                             </div>
-                            <p class="feddBackNotification"><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?> send you a  <span><?=$type;?></span></p>
+                            <p class="feddBackNotification"><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name; else echo $manager->display_name; ?> send you a  <span><?=$type;?></span></p>
                         </div>
                         <br>
                     <!-- div><p class="hoursText"></p></div> -->                    
