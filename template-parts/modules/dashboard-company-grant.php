@@ -30,7 +30,7 @@
                         echo '<div class="titleOpleidingstype"><h2>You are not able to manage a member</h2></div>';
                     }
                     else{                        
-                        echo '<div class="titleOpleidingstype"><h2>Define your hierachy</h2></div>';
+                        echo '<div class="titleOpleidingstype"><h2>Selecteer je managers</h2></div>';
                         $company = get_field('company',  'user_' . $user_id );
                         $company_connected = $company[0]->post_title;
 
@@ -38,7 +38,7 @@
                 ?>
                         <form action="/dashboard/company/grant" method="post">
                             <div class="acf-field">
-                                <label for="locate">Grant a user the role 'manager' to your employee:</label><br>
+                                <label for="locate">Geef een gebruiker de 'rol' manager om een team aan te sturen :</label><br>
                                 <div class="form-group">
                                         <?php
                                         //Get users from company
@@ -61,7 +61,7 @@
                                     ?>
                                 </div>
                                 <input type="hidden" name="manager_id" value="<?php echo $user_id; ?>">
-                                <button type="submit" name="granted_push" class="btn btn-info">Grant</button>
+                                <button type="submit" name="granted_push" class="btn btn-info">Activeer</button>
                             </div>
                         </form>
                 <?php
