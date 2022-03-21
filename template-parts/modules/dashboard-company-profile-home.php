@@ -288,7 +288,7 @@
                                             </select>
                                             <input type="hidden" name="manager" value=<?=$manager->ID?> >
                                             <input type="hidden" name="id_user" value=<?=$user->ID?> >
-                                            <button name="add_internal_growth" class="btn btnKoop" type="submit">Refresh</button>
+                                            <button name="add_internal_growth" class="btn btnKoop" type="submit">Voeg toe</button>
                                         </div>
 
                                         <?php
