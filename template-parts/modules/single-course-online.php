@@ -626,7 +626,8 @@ $favoured = count(get_field('favorited', $post->ID));
 
 </div>
 
-<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+
 <!-- scritpt for modal -->
 <script>
     const openEls = document.querySelectorAll("[data-open]");
