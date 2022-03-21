@@ -604,7 +604,7 @@
                                                    echo '<div class="">
                                                             <div hidden class="group-input-settings" id="commentaire_hidden_'.($key+1).'">
                                                                 <label for="">'.lcfirst((String)get_the_category_by_ID($value)).' toelichting</label>
-                                                                <textarea name="'.lcfirst((String)get_the_category_by_ID($value)).'_toelichting" id="" rows="5" cols="80"></textarea>
+                                                                <textarea name="'.lcfirst((String)get_the_category_by_ID($value)).'_toelichting" id="" rows="5" cols="85"></textarea>
                                                             </div>
                                                         </div>';
                                                    echo '</div>';
