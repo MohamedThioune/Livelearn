@@ -4341,12 +4341,14 @@ overflow: -moz-scrollbars-none;  // Firefox
 }
 .alertNotification{
     position: absolute;
-    width: 13px;
-    height: 13px;
+    width: 17px;
+    height: 17px;
     background: red;
     border-radius: 100%;
     left: 0px;
     top: 0px;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .activityTitle{
