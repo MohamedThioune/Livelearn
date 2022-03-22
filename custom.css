@@ -5397,11 +5397,11 @@ overflow: -moz-scrollbars-none;  // Firefox
     margin-right: 51px;
 }
 
-.dropdown-menu{
+.dropdown-menu-dashboard{
     background-color: #043356 !important;
     color: white !important;
 }
-.dropdown-menu a {
+.dropdown-menu-dashboard a {
     color: white !important;
 }
 a:hover {
