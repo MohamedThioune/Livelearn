@@ -56,7 +56,7 @@
                                     'label_password' => 'Wat is je wachtwoord?'
                                 ]);
                                 ?>
-                                <a href="registreren/" class="redirectionText">Wachtwoord vergeten ?</a>
+                                <a href="<?= wp_lostpassword_url('');?>" class="redirectionText">Wachtwoord vergeten ?</a>
                             </div>
                         </div>
                     </div>
