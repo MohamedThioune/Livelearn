@@ -57,6 +57,8 @@
                                 ]);
                                 ?>
                                 <a href="<?= wp_lostpassword_url('');?>" class="redirectionText">Wachtwoord vergeten ?</a>
+                                <a href="/registreren" class="redirectionText pull-right">U hoeft geen account aan te maken in een </a>
+                                
                             </div>
                         </div>
                     </div>
