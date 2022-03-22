@@ -70,8 +70,32 @@ $favoured = count(get_field('favorited', $post->ID));
 ?>
 
 <style>
-    body{
-        padding-top: 0px !important;
+    .swiper {
+        width: 600px;
+        /* height: 300px; */
+    }
+    .swiper-moved{
+        color: #023356 !important;
+        font-size: 12px;
+    }
+    #burgerCroie {
+        display: none;
+        margin-top: -6px;
+    }
+     /* ------------------- Show more Text -------------- */
+     .text-limit p,.text-limit .moreText{
+        display:none;
+    }
+    .text-limit p:first-child, .text-limit{
+        display:block;
+         overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 4; /** number of line to display! */
+        -webkit-box-orient: vertical;   
+    }
+    .text-limit.show-more .moreText, .text-limit.show-more p, .text-limit.show-more {
+        display: block;
     }
     a{
         text-decoration: none !important;
@@ -898,7 +922,6 @@ $favoured = count(get_field('favorited', $post->ID));
 </div>
 
 
-<!-- scritpt for modal -->
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 
 <script>
