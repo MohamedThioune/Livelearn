@@ -477,18 +477,18 @@ $experts = get_user_meta($user->ID, 'expert');
                                             <textarea name="commentary" id="" rows="4"></textarea>
                                         </div>
                                         <div class="bloclCijfers">
-                                            <p class="mb-0" style="width: 20%;">Feedback geven</p>
+                                            <p class="mb-0" style="width: 20%;">Feedback geven25</p>
                                             <div class="rate">
-                                                <input type="radio" id="star5" name="rate" value="5" />
-                                                <label class="ma_link buttonFeedback2" for="star5" title="text">5 stars</label>
-                                                <input  type="radio" id="star4" name="rate" value="4" />
-                                                <label class="ma_link buttonFeedback2" for="star4" title="text">4 stars</label>
-                                                <input  type="radio" id="star3" name="rate" value="3" />
-                                                <label class="ma_link buttonFeedback2" for="star3" title="text">3 stars</label>
+                                                <input type="radio" id="star1" name="rate" value="1" />
+                                                <label class="ma_link buttonFeedback2" for="star1" title="text">1 stars</label>
                                                 <input  type="radio" id="star2" name="rate" value="2" />
                                                 <label class="ma_link buttonFeedback2" for="star2" title="text">2 stars</label>
-                                                <input  type="radio" id="star1" name="rate" value="1" />
-                                                <label class="ma_link buttonFeedback2" for="star1" title="text">1 star</label>
+                                                <input  type="radio" id="star3" name="rate" value="3" />
+                                                <label class="ma_link buttonFeedback2" for="star3" title="text">3 stars</label>
+                                                <input  type="radio" id="star4" name="rate" value="4" />
+                                                <label class="ma_link buttonFeedback4" for="star4" title="text">4 stars</label>
+                                                <input  type="radio" id="star5" name="rate" value="5" />
+                                                <label class="ma_link buttonFeedback2" for="star5" title="text">5 star</label>
                                             </div>
                                         </div>
                                         <div class="group-input-settings" id="FeedbackInput">
