@@ -7063,7 +7063,7 @@ overflow: -moz-scrollbars-none;  // Firefox
         display: block;
     }
     .companyButton{
-        padding: 0;
+        padding: 0 !important;
     }
     .item4 .dropdown-menu {
         position: absolute;
@@ -7079,6 +7079,9 @@ overflow: -moz-scrollbars-none;  // Firefox
     .headCollections {
         width: 100%;
         flex-wrap: wrap;
+    }
+    .modal-backdrop.show {
+        display: none !important;
     }
 
 
@@ -7413,8 +7416,9 @@ overflow: -moz-scrollbars-none;  // Firefox
     .elementHeaderUser {
         display: flex !important;
         width: fit-content;
-        padding-right: 18px;
-        margin-left: unset;
+        padding-right: 15px;
+        margin-left: 0;
+        padding-left: 0;
     }
     .companyButton {
         padding: 0;
