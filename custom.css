@@ -5404,9 +5404,6 @@ overflow: -moz-scrollbars-none;  // Firefox
 .dropdown-menu-dashboard a {
     color: white !important;
 }
-a:hover {
-    color: white !important;
-}
 
 #gform_fields_6 .gfield input {
     color: #023356 !important;
@@ -7066,7 +7063,7 @@ a:hover {
         display: block;
     }
     .companyButton{
-        padding: 0;
+        padding: 0 !important;
     }
     .item4 .dropdown-menu {
         position: absolute;
@@ -7082,6 +7079,9 @@ a:hover {
     .headCollections {
         width: 100%;
         flex-wrap: wrap;
+    }
+    .modal-backdrop.show {
+        display: none !important;
     }
 
 
@@ -7416,8 +7416,9 @@ a:hover {
     .elementHeaderUser {
         display: flex !important;
         width: fit-content;
-        padding-right: 18px;
-        margin-left: unset;
+        padding-right: 15px;
+        margin-left: 0;
+        padding-left: 0;
     }
     .companyButton {
         padding: 0;
