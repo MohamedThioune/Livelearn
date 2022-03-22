@@ -5,18 +5,32 @@ global $post;
 
 $posttags = get_the_tags();
 
- //Image
- $image = get_the_post_thumbnail_url($post->ID);
- if(!$image)
-     $image = get_stylesheet_directory_uri() . 'img/blog/2.jpg';
- 
- $author = get_field('profile_img',  'user_' . $post->post_author);
- if(!$author)
-     $author = get_stylesheet_directory_uri() . 'img/blog/blog-author.jpg';
 
- $biographical = get_field('biographical_info',  'user_' . $post->post_author);
+//Image
+$image = get_the_post_thumbnail_url($post->ID);
+if(!$image)
+    $image = get_field('preview', $post->ID)['url'];
+else if(!$image)
+    $image = get_stylesheet_directory_uri() . '/img/libay.png';
 
- $functie = get_field('role',  'user_' . $post->post_author);
+$author = get_field('profile_img',  'user_' . $post->post_author);
+if(!$author)
+    $author = get_stylesheet_directory_uri() . 'img/blog/blog-author.jpg';
+
+$biographical = get_field('biographical_info',  'user_' . $post->post_author);
+
+$functie = get_field('role',  'user_' . $post->post_author);
+
+if($tag = ''){
+    $tagS = intval(explode(',', get_field('categories',  $blog->ID)[0]['value'])[0]);
+    $tagI = intval(get_field('category_xml',  $blog->ID)[0]['value']);
+    if($tagS != 0)
+        $tag = (String)get_the_category_by_ID($tagS);
+    else if($tagI != 0)
+        $tag = (String)get_the_category_by_ID($tagI);                                    
+}
+
+$content = get_field('article_itself',  $blog->ID);
 
 ?>
 
@@ -29,7 +43,7 @@ $posttags = get_the_tags();
                     <div class="row">
                         <div class="col-lg-12 mb-5">
                             <div class="single-blog-item">
-                                <img src="<?php echo $image; ?>" alt="" class="img-fluid rounded">
+                                <img src="<?php echo$image; ?>" alt="" class="img-fluid rounded">
 
                                 <div class="blog-item-content bg-white blogPadding">
                                     <div class="blog-item-meta bg-gray py-1 px-2">
@@ -39,14 +53,21 @@ $posttags = get_the_tags();
                                     </div> 
 
                                     <h2 class="mt-3 mb-4"><?php echo the_title();?></h2>
-                                    <?php the_content();?>
+                                    <?php 
+                                        if(!the_content())
+                                            echo $content;
+                                    ?>
 
                                     <div class="tag-option mt-5 clearfix">
                                         <ul class="float-left list-inline"> 
                                             <li>Tags:</li> 
-                                            <?php foreach($posttags as $posttag) { ?>
-                                                <li class="list-inline-item"><a href="#" rel="tag"><?php echo $posttag->name; ?></a></li>
-                                            <?php } ?>
+                                            <?php
+                                                if(!empty($posttags))
+                                                    foreach($posttags as $posttag) 
+                                                        echo '<li class="list-inline-item"><a href="#" rel="tag">' . $posttag->name . '</a></li>';
+                                                else
+                                                    echo '<li class="list-inline-item"><a href="#" rel="tag">' . $tag . '</a></li>';
+                                            ?>
                                         </ul>        
 
                                         <ul class="float-right list-inline">
