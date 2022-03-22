@@ -7,7 +7,6 @@
                     <h2>2.Article Itself</h2>
                 </div>
                 <?php 
-                    update_field('course_type', 'article', $_GET['id']);
                     acf_form(array(
                     'post_id'       => $_GET['id'],
                     'fields' => array('article_itself'),
