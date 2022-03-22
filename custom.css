@@ -5404,9 +5404,7 @@ overflow: -moz-scrollbars-none;  // Firefox
 .dropdown-menu-dashboard a {
     color: white !important;
 }
-a:hover {
-    color: white !important;
-}
+
 
 #gform_fields_6 .gfield input {
     color: #023356 !important;
