@@ -67,35 +67,24 @@ $author = array($post->post_author);
 $experts = array_merge($expert, $author);
 if (is_array(get_field('favorited', $post->ID)) || is_object(get_field('favorited', $post->ID)))
 $favoured = count(get_field('favorited', $post->ID));
-if(!$favoured)
-    $favoured = 0;
-
-$gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
-
 ?>
 
 <style>
+    body{
+        padding-top: 0px !important;
+    }
     a{
         text-decoration: none !important;
         color: black !important;
     }
-    body {              
-        padding-top: 0px !important;
-    }
-    @media all and (min-width: 300px) and (max-width: 767px) {
-        .textIconeLearning {
-            font-size: 13px;
-        }
-	}
+</style>
 
-</style> 
-
-<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
 
 <!-- ---------------------------------------- Start modals ---------------------------------------------- -->
-<div class="modal fade ml-md-0 ml-2" id="direct-contact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="direct-contact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
         <div class="modal-content">
         <div class="modal-header mx-4" style="border-bottom: none !important">
             <div></div>
@@ -154,47 +143,41 @@ $gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
     </div>
 </div>
 
-<div class="modal fade ml-md-0 ml-2" id="incompany" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="incompany" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Incompany</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-
-            
+            <div class="modal-body">            
                 
                 <?php 
                     echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true'] "); 
-                ?>
-
-                
+                ?>                
 
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade ml-md-0 ml-2" id="offerte" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="offerte" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Brochure</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                
-            <?php 
+            <div class="modal-body">                
+               <?php 
                     echo do_shortcode("[gravityform id='6' title='false' description='false' ajax='true'] "); 
                 ?>
-
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade ml-md-0 ml-2" id="voor-wie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="voor-wie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
@@ -202,26 +185,33 @@ $gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
                     <!-- <img alt="course design_undrawn" 
                      src="<?php echo get_stylesheet_directory_uri(); ?>/img/voorwie.png"> -->
                     
-                    <div class="content-text p-4 py-0">
-                        <?php $voor_wie = get_user_by('id', $post->post_author);?>
-                        <h4>Voor wie ?</h4>
-                        <p class="m-0"><strong>This course is followed up by <?=$voor_wie->display_name?></strong></p>
-                        <p class="m-0"><em>This line rendered as italicized text.</em></p>
+                    <div class="content-text p-4 pb-0">
+                
+                        <h4 class="text-dark">Voor wie ?</h4>
+                        <p class="m-0"><strong>This course is followed up by modou</strong></p>
+                        <p><em>This line rendered as italicized text.</em></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 </div>
 <!-- ------------------------------------------ End modals ---------------------------------------------- -->
 
 
 <div class="liveOverBlock">
     <div class="container-fluid">
-        <div class="overElement">
+        <div class="overElement">           
             <div class="blockOneOver">
+
+                <!-- modal -->
+                <!-- Button trigger modal -->
+                <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#direct-conatact">
+                    Launch demo modal
+                </button> -->
+
+                <!-- modal -->
+
                 <!-- ------------------------------ Start Title livelearn ---------------------------------- -->
 
                 <div class="titleBlock">
@@ -259,24 +249,24 @@ $gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
                 <!-- -------------------------------------- Start Icons row ------------------------------------->
                 <div class="d-flex justify-content-md-between justify-content-around mx-md-2 mx-sm-2 text-center">
                     <div class="d-flex flex-row">
-                        <div class="d-flex flex-column mx-md-3 mx-1">
+                        <div class="d-flex flex-column mx-md-3 mx-2">
                             <input type="hidden" id="user_id" value="<?php echo $user_id; ?>">
                             <input type="hidden" id="course_id" value="<?php echo $post->ID; ?>">
                             <!-- <img class="iconeCours" src="<?php echo get_stylesheet_directory_uri();?>/img/love.png" alt=""> -->
                             <button id="btn_favorite" style="background:white; border:none"><i class="far fa-heart" style="font-size: 25px;"></i></button>
                             <span class="textIconeLearning mt-1" id="autocomplete_favoured"><?php echo $favoured; ?></span>
                         </div>
-                        <div class="d-flex flex-column mx-md-3 mx-1">
+                        <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-calendar-alt" style="font-size: 25px;"></i>
                             <span class="textIconeLearning mt-1">I dagdee</span>
                         </div>
-                        <div class="d-flex flex-column mx-md-3 mx-1">
+                        <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-graduation-cap" style="font-size: 25px;"></i>
                             <span class="textIconeLearning mt-1"><?php if($course_type) echo $course_type; else echo "Undefined"; ?></span>
                         </div>
                     </div>
                     <div class="d-flex flex-row">
-                        <div class="d-flex flex-column mx-md-3 mx-1">
+                        <div class="d-flex flex-column mx-md-3 mx-2">
                             <form action="../../dashboard/user/" method="POST">
                                 <input type="hidden" name="meta_value" value="<?php echo $post->ID; ?>" id="">
                                 <input type="hidden" name="user_id" value="<?php echo $user_id; ?>" id="">
@@ -301,7 +291,7 @@ $gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
                                 ";
                             ?>
                         </div>
-                        <div class="d-flex flex-column mx-md-3 mx-1">
+                        <div class="d-flex flex-column mx-md-3 mx-2">
                             <?php
                             if($user_id != $post->post_author){
                             ?>
@@ -387,31 +377,29 @@ $gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
                 <!--------------------------------------- start Text description -------------------------------------- -->
                 <div class="blockTextGlovale mt-3">
                     <div class="text-limit">
+                        <?php echo $long_description; ?>
 
-                      <div><?php echo $long_description; ?></div>  
-
-                        <div class=" moreText"> 
+                        <div class="moreText"> 
                            <?php
                                 if($agenda){
-                            ?>
+                                    ?>
                                     <h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Agenda :</b></h6>
-                                    <?php echo $agenda; ?>
+                                    <span> <?php echo $agenda; ?> </span>
                                     <?php
                                 }
 
                                 if($who){
                                     ?>  
                                     <h6 class="textDirect mt-3" style="text-align: left"><b>For who :</b></h6>
-                                    <?php echo $who; ?>
+                                    </span> <?php echo $who; ?> </span>
                                     <?php
                                 }
 
                                 if($results){
                                     ?>  
                                     <h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Results :</b></h6>
-                                    <p> <?php echo $results; ?> </p> 
-
-                            <?php
+                                    <span > <?php echo $results; ?> </span>
+                                    <?php
                                 }
                             ?>
                         </div>    
@@ -419,11 +407,10 @@ $gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
                        
                    </div>
 
-                    <button type="button" class="btn btn-lg lees_alles mt-3 mb-5 w-md-25 px-4 border border-2 border-dark read-more-btn"
+                    <button type="button" class="btn btn-lg lees_alles my-4 w-md-25 px-4 border border-1 border-dark read-more-btn"
                      >Lees alles</button>
                 </div>
                 <!--------------------------------------- end Text description -------------------------------------- -->
-            
             </div>
             
             <!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
@@ -441,31 +428,13 @@ $gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
                         </div>
                         <div class="modal-body  px-md-5 p-3">
                             <?php
-                            echo (do_shortcode('[user_registration_form id="59"]'));
+                                echo (do_shortcode('[user_registration_form id="59"]'));
                             ?>
 
                             <div class="text-center">
-                                <p class="mb-1">Sign in with:</p>
-                            </div>
-                            <div class="text-center mb-4">
-                                <div class="contentElementPartage">
-                                    <button id="linkedin" class="btn contentIcone">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/linkedin.png" alt="">
-                                    </button>
-                                    <button class="btn contentIcone">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/facebook.png" alt="">
-                                    </button>
-                                    <button class="btn contentIcone">
-                                        <img src="https://tse3.mm.bing.net/th?id=OIP.saxsZDd8Ucx0G1Bc1Swq5AHaFK&pid=Api&P=0&w=234&h=163" alt="">
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="text-center mt-2">
                                 <p>Already a member? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
                                                         data-toggle="modal" data-target="#exampleModalCenter">Sign up</a></p>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -493,29 +462,10 @@ $gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
                                 'label_password' => 'Wat is je wachtwoord?'
                             ]);
                             ?>
-
-                            <div class="text-center">
-                                <p class="mb-1">Sign up with:</p>
-                            </div>
-                            <div class="text-center mb-4">
-                                <div class="contentElementPartage">
-                                    <button id="linkedin" class="btn contentIcone">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/linkedin.png" alt="">
-                                    </button>
-                                    <button class="btn contentIcone">
-                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/facebook.png" alt="">
-                                    </button>
-                                    <button class="btn contentIcone">
-                                        <img src="https://tse3.mm.bing.net/th?id=OIP.saxsZDd8Ucx0G1Bc1Swq5AHaFK&pid=Api&P=0&w=234&h=163" alt="">
-                                    </button>
-                                </div>
-                            </div>
-
                             <div class="text-center">
                                 <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                    data-toggle="modal" data-target="#SignInWithEmail">Sign in</a></p>
+                                                    data-toggle="modal" data-target="#SignInWithEmail">Sign in</a></p>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -545,7 +495,8 @@ $gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
 
             <div class="CardpriceLive">
                 <?php
-                    if(!empty($company)){
+                    if(!empty($company))
+                    {
                         $company_id = $company[0]->ID;
                         $company_title = $company[0]->post_title;
                         $company_logo = get_field('company_logo', $company_id);
@@ -599,7 +550,7 @@ $gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
                 <p class="btwText">LIFT member korting: 28%</p>
                 
                 
-                <a href="#bookdates" class="btn btnKoop">Koop deze <?php echo $course_type; ?></a>
+                <button href="#bookdates" class="btn btnKoop text-white PrisText" style="background: #043356">Koop deze <?php echo $course_type; ?></button>
             </div>
 
             <div class="col-12 my-5" style="background-color: #E0EFF4">
@@ -962,6 +913,7 @@ $gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
     </div>
     <!-- fin Modal deel -->
 
+
 </div>
 
 
@@ -969,6 +921,7 @@ $gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 
 
 <script>
@@ -994,6 +947,7 @@ $gmail = get_stylesheet_directory_uri() . '/img/gmail.png';
         });
     })
 </script>
+
 
 <script>
  

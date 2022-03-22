@@ -36,7 +36,7 @@
                     <div class="globalnotificationBy">
                         <div class="contentImgName">
                             <div class="contentImg">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" alt="">
+                                <img src="<?=$image?>" alt="">
                             </div>
                             <div>
                                 <p class="name"><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->last_name; else echo $manager->display_name; ?></p>

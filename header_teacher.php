@@ -11,6 +11,7 @@
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css'>
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css'>
 
+
         <title><?php bloginfo('name'); ?></title>
         <?php wp_head(); ?>
     </head>
