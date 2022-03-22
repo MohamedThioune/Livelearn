@@ -256,9 +256,9 @@
                 </a>
                 <div class="sousNav3">
 
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div class="second-element-mobile">
-                            <div id="searchIcone" class="mt-1">
+                            <div id="searchIcone">
                                 <i class="bi bi-search text-white" style="font-size: 20px"></i>
                             </div>
                             <div id="croieSearch" class="btn">

@@ -79,6 +79,10 @@ $favoured = count(get_field('favorited', $post->ID));
         color: #023356 !important;
         font-size: 12px;
     }
+    #burgerCroie {
+        display: none;
+        margin-top: -6px;
+    }
      /* ------------------- Show more Text -------------- */
      .text-limit p,.text-limit .moreText{
         display:none;
@@ -831,7 +835,7 @@ $favoured = count(get_field('favorited', $post->ID));
 
 
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 
 <script>
     $("#btn_favorite").click((e)=>
