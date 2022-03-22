@@ -864,7 +864,7 @@ $favoured = count(get_field('favorited', $post->ID));
                     <button id="whatsapp"  class="btn contentIcone">
                         <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/whatsapp.png" alt="">
                     </button>
-                    <p class="titleIcone">WhatsApp</p>
+                    <p class="titleIcone">WhatsAppp</p>
                 </div>
                 <div class="contentElementPartage">
                     <button class="btn contentIcone">
