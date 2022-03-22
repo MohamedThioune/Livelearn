@@ -122,7 +122,7 @@
     $(document).ready(function () {
         //Select2
         $(".multipleSelect2").select2({
-            placeholder: "Make en euze" //placeholder
+            placeholder: "Maak uw keuze" //placeholder
         });
     });
     //# sourceURL=pen.js
