@@ -1,7 +1,56 @@
 <?php /** Template Name: category overview */ ?>
+<style>
+     .checkmarkUpdated{
+        background-color: white !important;
+        border: 2px solid #043356 !important;
+    }
+    .LeerBlock {
+        border-bottom: 2px solid #043356 !important;
+    }
+    .border-right-adapt {
+        border-top-left-radius: 25px; border-bottom-left-radius: 25px;
+    }
+    .border-left-adapt {
+        border-top-right-radius: 25px; border-bottom-right-radius: 25px;
+    }
+    .modal-dialog{
+         width: 40% !important;
+    }
+    @media all and (max-width: 753px) {
+        .modal-dialog{
+             width: 90% !important;
+        }  
+        .swipeContaineEvens .swiper-wrapper .swiper-slide {
+            width: 170px !important;
+        }
+        .custom_slide{
+            width: 170px !important; 
+        }
+    }
+    @media all and (min-width: 753px) and (max-width: 900px) {
+        .modal-dialog{
+             width: 70% !important;
+        } 
+    }
+
+    @media all and (max-width: 764px) {
+        .border-right-adapt {
+            border-radius: 0px;
+        }
+        .border-left-adapt {
+            border-radius: 0px;
+        }
+    }
+    .modal-backdrop.show { /* to remove gray side on the bottom */
+        opacity: .5;
+        display: none;
+    }
+    
+</style>
 <body>
 <?php wp_head(); ?>
 <?php get_header(); ?>
+
 
 <?php 
 
@@ -106,9 +155,7 @@
         $users=get_users();
         foreach($users as $user)
         {
-            $topics_internal = get_user_meta($user->ID,'topic_affiliate');
-            $topics_external = get_user_meta($user->ID,'topic');
-            $topics_volgers = array_merge($topics_internal, $topics_external);
+            $topics_volgers = get_user_meta($user->ID, 'topic');
             if(in_array($_GET['category'], $topics_volgers))
                 $volgers++;
         }
@@ -122,7 +169,9 @@
 <div class="contentOne">
 </div>
 
-    <!-- ------------------------------------- Start Modal Sign In ------------------------------- -->
+<!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
+
+    <!-- Modal Sign End -->
     <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
          style="position: absolute; ">
         <div class="modal-dialog" role="document">
@@ -146,10 +195,11 @@
             </div>
         </div>
     </div>
-    <!-- ------------------------------------ End Modal Sign In----------------------------------- -->
 
+    <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
 
-    <!-- ----------------------------------- Start Modal Sign Up --------------------------------- -->
+    <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
+
     <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
          style="position: absolute; ">
         <div class="modal-dialog" role="document">
@@ -178,11 +228,12 @@
             </div>
         </div>
     </div>
-    <!-- ------------------------------------ End Modal Sign Up----------------------------------- -->
+
+    <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
 
 
 <!-- ------------------------------------------ start Header -------------------------------------- -->
-<div class="head2" style="margin-top: 0px !important; padding-top: 80px !important;">
+<div class="head2" style="margin-top: -10px !important;">
     <div class="comp1">
         <img src="<?php echo $image_category; ?>" alt="">
     </div>
@@ -200,14 +251,16 @@
                             $topics_external = get_user_meta($user_id,'topic');
                             if (in_array($category, $topics_internal)){
                                 echo '<input type="hidden" name="meta_key" value="topic_affiliate" id="">';
-                                echo "<button type='submit' class='btn btn-danger rounded-pill text-white font-weight-bold p-1 px-2' name='delete' >verwijder uit leeromgeving</button>";
+                                echo "<a href='#' class='btn btn-info rounded-pill text-white font-weight-bold p-1 px-2'>verwijder uit leeromgeving</a>";
                             }
                             else if(in_array($category, $topics_external)){
                                 echo '<input type="hidden" name="meta_key" value="topic" id="">';
                                 echo "<button type='submit' class='btn btn-danger rounded-pill text-white font-weight-bold p-1 px-2' name='delete' >verwijder uit leeromgeving</button>";
-                            }else
+                            }else{
+                                echo '<input type="hidden" name="meta_key" value="topic" id="">';
                                 echo "<button type='submit' style='background: #00A89D'
-                                class='btn btn-success rounded-pill text-white font-weight-bold p-1 px-2' name='interest_push' >Toevoegen aan Leeromgeving</button>";       
+                                class='btn btn-success rounded-pill text-white font-weight-bold p-1 px-2' name='interest_push' >Toevoegen aan Leeromgeving</button>";   
+                            }    
 
                             echo "<img style='height: 30px;' class='rounded-pill' src='" . $logo_livelearn . "' alt=''>";
                         }
@@ -215,6 +268,7 @@
                     ?>
                 </div>
             </form> 
+
                 <?php
                 
                 if($user_id == 0){

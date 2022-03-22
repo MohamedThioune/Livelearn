@@ -64,7 +64,7 @@
                                 <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-2" aria-selected="false" aria-controls="block-simple-text-2" id="block-simple-text-2-tab">Skills</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-3" aria-selected="false" aria-controls="block-simple-text-3" id="block-simple-text-3-tab">Certificates</a>
+                                <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-3" aria-selected="false" aria-controls="block-simple-text-3" id="block-simple-text-3-tab">Certificaten</a>
                             </li>
                            <!--  
                                <li class="nav-item">
@@ -72,13 +72,13 @@
                                 </li>
                              -->
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-5" aria-selected="false" aria-controls="block-simple-text-5" id="block-simple-text-5-tab">Statistics</a>
+                                <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-5" aria-selected="false" aria-controls="block-simple-text-5" id="block-simple-text-5-tab">Statistieken</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-6" aria-selected="false" aria-controls="block-simple-text-6" id="block-simple-text-6-tab">Internal growth</a>
+                                <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-6" aria-selected="false" aria-controls="block-simple-text-6" id="block-simple-text-6-tab">Interne groei</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-7" aria-selected="false" aria-controls="block-simple-text-7" id="block-simple-text-7-tab">External growth</a>
+                                <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-7" aria-selected="false" aria-controls="block-simple-text-7" id="block-simple-text-7-tab">Externe groei</a>
                             </li>
 
                         </ul>
@@ -102,7 +102,7 @@
                                             <?php } ?>
                                         </div>
                                         <div class="overviewTreeBlock">
-                                            <p class="titleOvervien">Manager : <span><?php if(isset($manager->first_name) && isset($manager->last_name)) echo $manager->first_name . '' . $manager->last_name; else echo $manager->display_name; ?></span></p>
+                                            <p class="titleOvervien">Manager : <span><?php if(isset($superior->first_name) && isset($superior->last_name)) echo $superior->first_name . '' . $superior->last_name; else echo $superior->display_name; ?></span></p>
                                             <p class="titleOvervien">Company : <span><?php echo $company; ?></span></p>
                                         </div>
                                         <br>
@@ -132,7 +132,7 @@
                                         </div>
                                     </div>
                                     <div class="categorieDetailCandidat">
-                                        <h2 class="titleCategorieDetailCandidat">Candidates About bio</h2>
+                                        <h2 class="titleCategorieDetailCandidat">Over</h2>
                                         <p class="textDetailCategorie"><?php echo $biographical_info;  ?></p>
                                     </div>
                                     <?php
@@ -288,7 +288,7 @@
                                             </select>
                                             <input type="hidden" name="manager" value=<?=$manager->ID?> >
                                             <input type="hidden" name="id_user" value=<?=$user->ID?> >
-                                            <button name="add_internal_growth" class="btn btnKoop" type="submit">Refresh</button>
+                                            <button name="add_internal_growth" class="btn btnKoop" type="submit">Voeg toe</button>
                                         </div>
 
                                         <?php
@@ -503,7 +503,7 @@
                                     <h2 class="voegToeText">Persoonlijk ontwikkelplan</h2>
                                     <div class="col-lg-12 col-md-12">
                                         <div class="group-input-settings">
-                                            <label for="">Title persoonlijk ontwikwikkelplan</label>
+                                            <label for="">Title persoonlijk ontwikkelplan</label>
                                             <input name="title_persoonlijk" type="text" required>
                                         </div>
                                     </div>
@@ -604,7 +604,7 @@
                                                    echo '<div class="">
                                                             <div hidden class="group-input-settings" id="commentaire_hidden_'.($key+1).'">
                                                                 <label for="">'.lcfirst((String)get_the_category_by_ID($value)).' toelichting</label>
-                                                                <textarea name="'.lcfirst((String)get_the_category_by_ID($value)).'_toelichting" id="" rows="5" cols="40"></textarea>
+                                                                <textarea name="'.lcfirst((String)get_the_category_by_ID($value)).'_toelichting" id="" rows="5" cols="85"></textarea>
                                                             </div>
                                                         </div>';
                                                    echo '</div>';
@@ -711,8 +711,6 @@
     </div>
 
 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script>
 

@@ -10,7 +10,7 @@ $message = "";
 extract($_POST); 
 
  // delete_user_meta(33,'topic_affiliate'); // Delete topics affiliate by manager
- // delete_user_meta(33,'todos'); //   Delete todos affiliate by manager
+   // delete_user_meta(33,'todos'); //   Delete todos affiliate by manager
 if(isset($_POST['expert_add'])){
     $bunch = get_field('experts', $_GET['id']);
     if(!empty($bunch)){
@@ -354,6 +354,7 @@ else if(isset($delete_todos)){
 <?php
 
 global $post;
+
 
 $parents = get_post_ancestors( $post->ID );
 
