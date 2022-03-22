@@ -5192,7 +5192,7 @@ overflow: -moz-scrollbars-none;  // Firefox
 }
 #field_6_1 #input_6_1{
     display: grid;
-    margin-bottom: -30px;
+    margin-bottom: -20px;
 }
 
 #input_6_1 input{
@@ -5397,9 +5397,76 @@ overflow: -moz-scrollbars-none;  // Firefox
     margin-right: 51px;
 }
 
-.dropdown-menu{
-    background: #043356;
-    color: white;
+.dropdown-menu-dashboard{
+    background-color: #043356 !important;
+    color: white !important;
+}
+.dropdown-menu-dashboard a {
+    color: white !important;
+}
+a:hover {
+    color: white !important;
+}
+
+#gform_fields_6 .gfield input {
+    color: #023356 !important;
+    font-size: 14px;
+    padding: 10px 20px !important;
+    background: #FFFFFF !important;
+    border-radius: 8px;
+    border: 1px solid #023356 !important;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    width: 100%;
+}
+#field_6_1 #input_6_1 {
+    display: grid;
+    margin-bottom: -30px;
+    width: 100%;
+}
+.gform_wrapper textarea.large {
+    color: #023356 !important;
+    font-size: 14px;
+    padding: 10px 20px !important;
+    background: #FFFFFF !important;
+    border-radius: 8px;
+    border: 1px solid #023356 !important;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    width: 100%;
+}
+
+#field_6_1 .gfield_label_before_complex {
+    display: none;
+}
+#field_5_11 input{
+    color: #023356 !important;
+    font-size: 14px;
+    padding: 10px 20px !important;
+    background: #FFFFFF !important;
+    border-radius: 8px;
+    border: 1px solid #023356 !important;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+#input_5_11_6_container{
+    margin-bottom: 0px !important;
+}
+#field_5_11 .gfield_label_before_complex {
+    display: none;
+}
+#gform_fields_5 .gfield_label{
+    font-size: 15px !important;
+}
+#gform_fields_5 .gfield input{
+    color: #023356 !important;
+    font-size: 14px;
+    padding: 10px 20px !important;
+    background: #FFFFFF !important;
+    border-radius: 8px;
+    border: 1px solid #023356 !important;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */

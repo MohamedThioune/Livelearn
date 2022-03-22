@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/header_base.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,11 +31,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/custom.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="81000">
-              <caret line="5400" column="24" selection-start-line="5400" selection-start-column="24" selection-end-line="5400" selection-end-column="24" />
+            <state relative-caret-position="286">
+              <caret line="5410" column="31" lean-forward="true" selection-start-line="5410" selection-start-column="31" selection-end-line="5410" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -44,25 +43,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/header_base.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
+            <state relative-caret-position="4350">
               <caret line="290" column="61" selection-start-line="290" selection-start-column="20" selection-end-line="290" selection-end-column="61" />
-              <folding>
-                <element signature="n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
-              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="982" lean-forward="true" selection-start-line="982" selection-end-line="982" />
-              <folding>
-                <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="14730">
+              <caret line="982" selection-start-line="982" selection-end-line="982" />
             </state>
           </provider>
         </entry>
@@ -80,10 +71,16 @@
       <find>ma_link buttonFeedback2</find>
       <find>@media</find>
       <find>sousMenuNavMobil headSousMobilePrincipale</find>
+      <find>.dropdown-menu</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -91,9 +88,9 @@
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-road-path.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-user-profile2.php" />
         <option value="$PROJECT_DIR$/footer.php" />
-        <option value="$PROJECT_DIR$/custom.css" />
         <option value="$PROJECT_DIR$/header_base.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" />
+        <option value="$PROJECT_DIR$/custom.css" />
       </list>
     </option>
   </component>
@@ -120,6 +117,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -143,7 +141,6 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -184,17 +181,21 @@
       <workItem from="1647884901415" duration="696000" />
       <workItem from="1647943266261" duration="1486000" />
       <workItem from="1647944952853" duration="391000" />
+      <workItem from="1647964342255" duration="1661000" />
+      <workItem from="1647966149574" duration="1581000" />
+      <workItem from="1647970489882" duration="411000" />
+      <workItem from="1647978723899" duration="177000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11210000" />
+    <option name="totallyTimeSpent" value="15040000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1689394" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17878787" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -209,7 +210,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.32952693" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.27079934" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -230,13 +231,7 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-profile2.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9870">
-          <caret line="694" column="6" selection-start-line="694" selection-start-column="6" selection-end-line="694" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-profile2.php" />
     <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-road-path.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
@@ -268,24 +263,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/custom.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81000">
-          <caret line="5400" column="24" selection-start-line="5400" selection-start-column="24" selection-end-line="5400" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/header_base.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="290" column="61" selection-start-line="290" selection-start-column="20" selection-end-line="290" selection-end-column="61" />
-          <folding>
-            <element signature="n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/functions.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -293,14 +270,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/header_base.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4350">
+          <caret line="290" column="61" selection-start-line="290" selection-start-column="20" selection-end-line="290" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="982" lean-forward="true" selection-start-line="982" selection-end-line="982" />
-          <folding>
-            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="14730">
+          <caret line="982" selection-start-line="982" selection-end-line="982" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/custom.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="5410" column="31" lean-forward="true" selection-start-line="5410" selection-start-column="31" selection-end-line="5410" selection-end-column="31" />
         </state>
       </provider>
     </entry>
