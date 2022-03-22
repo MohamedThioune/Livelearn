@@ -34,8 +34,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/custom.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="5407" column="10" selection-start-line="5407" selection-start-column="10" selection-end-line="5407" selection-end-column="10" />
+            <state relative-caret-position="286">
+              <caret line="5410" column="31" lean-forward="true" selection-start-line="5410" selection-start-column="31" selection-end-line="5410" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -76,6 +76,11 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -112,6 +117,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -134,7 +140,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -178,16 +183,19 @@
       <workItem from="1647944952853" duration="391000" />
       <workItem from="1647964342255" duration="1661000" />
       <workItem from="1647966149574" duration="1581000" />
+      <workItem from="1647970489882" duration="411000" />
+      <workItem from="1647978723899" duration="177000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14452000" />
+    <option name="totallyTimeSpent" value="15040000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17348485" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17878787" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -278,8 +286,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/custom.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="5407" column="10" selection-start-line="5407" selection-start-column="10" selection-end-line="5407" selection-end-column="10" />
+        <state relative-caret-position="286">
+          <caret line="5410" column="31" lean-forward="true" selection-start-line="5410" selection-start-column="31" selection-end-line="5410" selection-end-column="31" />
         </state>
       </provider>
     </entry>
