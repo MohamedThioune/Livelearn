@@ -36,17 +36,6 @@
                         <div class="boxCardForm">
                             <p class="TitleForm">Jouw leeromgeving</p>
                             <div class="form-block">
-                                <!--
-<div class="form-item">
-<input type="text" id="name" placeholder="Gebruilekersnaam" class="block-input-form" required>
-</div>
-<div class="form-item">
-<input type="text" id="password" placeholder="E-mailadres" class="block-input-form" required>
-</div>
-<button type="button" id="submit" type="button" value="Submit" class="btn btnLogin">Log-in</button>
-<a href="" class="redirectionText">Wachtwoord vergeten ?</a>
--->
-
                                 <?php
                                 wp_login_form([
                                     'redirect' => 'http://wp12.influid.nl/dashboard/user/',
@@ -56,7 +45,7 @@
                                     'label_password' => 'Wat is je wachtwoord?'
                                 ]);
                                 ?>
-                                <a href="<?= wp_lostpassword_url('');?>" class="redirectionText">Wachtwoord vergeten ?</a>
+                                <a href="<?= wp_lostpassword_url('');?>" class="redirectionText">Wachtwoord vergeten ?&nbsp; | &nbsp;</a>
                                 <a href="/registreren" class="redirectionText pull-right">U hoeft geen account aan te maken in een </a>
                                 
                             </div>

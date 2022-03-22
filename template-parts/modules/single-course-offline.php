@@ -65,8 +65,11 @@ $expert = get_field('experts', $post->ID);
 $author = array($post->post_author);
 
 $experts = array_merge($expert, $author);
-if (is_array(get_field('favorited', $post->ID)) || is_object(get_field('favorited', $post->ID)))
+
 $favoured = count(get_field('favorited', $post->ID));
+if(!$favoured)
+    $favoured = 0;
+
 ?>
 
 <style>
@@ -83,7 +86,7 @@ $favoured = count(get_field('favorited', $post->ID));
         margin-top: -6px;
     }
      /* ------------------- Show more Text -------------- */
-     .text-limit p,.text-limit .moreText{
+    .text-limit p,.text-limit .moreText{
         display:none;
     }
     .text-limit p:first-child, .text-limit{
@@ -209,10 +212,12 @@ $favoured = count(get_field('favorited', $post->ID));
                     <!-- <img alt="course design_undrawn" 
                      src="<?php echo get_stylesheet_directory_uri(); ?>/img/voorwie.png"> -->
                     
+                    <?php
+                        $author = get_user_by('id', $post->post_author);
+                    ?>
                     <div class="content-text p-4 pb-0">
-                
                         <h4 class="text-dark">Voor wie ?</h4>
-                        <p class="m-0"><strong>This course is followed up by modou</strong></p>
+                        <p class="m-0"><strong>This course is followed up by <?php if(isset($author->first_name) && isset($author->last_name)) echo $author->first_name . '' . $author->last_name; else echo $author->display_name; ?> </strong></p>
                         <p><em>This line rendered as italicized text.</em></p>
                     </div>
                 </div>
@@ -252,7 +257,6 @@ $favoured = count(get_field('favorited', $post->ID));
                     <?php
                         }
                     ?>
-                    <!-- <button class="btn btnPhilo"> <?php echo $category; ?> </button> -->
                     <a href="category-overview?category=<?php echo $id_category ?>" class="bd-highlight ">
                             <button class="btn py-0 btnPhilo"> <span class="text-white"><?php echo $category; ?></span></button>
                     </a>
@@ -525,10 +529,10 @@ $favoured = count(get_field('favorited', $post->ID));
                         $company_title = $company[0]->post_title;
                         $company_logo = get_field('company_logo', $company_id);
                 ?>
-                <div href="/opleider-courses?companie=<?php echo $company_id ; ?>"  class="imgCardPrice">
-                <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" ><img src="<?php echo $company_logo; ?>" alt="company logo"></a>
-                </div>
-                <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="liveTextCadPrice h5"><?php echo $company_title; ?></a>
+                    <div href="/opleider-courses?companie=<?php echo $company_id ; ?>"  class="imgCardPrice">
+                    <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" ><img src="<?php echo $company_logo; ?>" alt="company logo"></a>
+                    </div>
+                    <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="liveTextCadPrice h5"><?php echo $company_title; ?></a>
                 
                 <?php
                     }
@@ -620,7 +624,6 @@ $favoured = count(get_field('favorited', $post->ID));
                         <!-- If we need scrollbar -->
                         <!-- <div class="swiper-scrollbar"></div> -->
                     </div>
-
 
                 </div>
             </div>  
@@ -940,10 +943,9 @@ $favoured = count(get_field('favorited', $post->ID));
 
 </div>
 
-
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script>
     $("#btn_favorite").click((e)=>
     {
