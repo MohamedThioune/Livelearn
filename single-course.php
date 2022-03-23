@@ -53,10 +53,6 @@ if(in_array($course_type, $online)){
 
 ?> 
 
-
-
-
-
 <?php
 
 get_footer();

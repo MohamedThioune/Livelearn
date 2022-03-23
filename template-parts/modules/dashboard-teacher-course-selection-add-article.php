@@ -13,13 +13,14 @@
                         'post_id'       => $_GET['id'],
                         'post_title'   => true,
                         'post_excerpt'   => true,
-                        'fields' => array('preview','price','short_description','visibility'),
+                        'fields' => array('preview','price','short_description'),
                         'submit_value'  => __('Opslaan & verder'),
                         'return' => '?func=add-add-article&id='.$_GET['id'].'&step=2'
                     ));
                 }else{
                     
-                    acf_form(array(
+                    acf_form(
+                        array(
                         'post_id'       => 'new_post',
                         'new_post' => array(
                             'post_type'     => 'post',
@@ -27,7 +28,7 @@
                         ),
                         'post_title'   => true,
                         'post_excerpt'   => true,
-                        'fields' => array('preview','price','short_description','visibility'),
+                        'fields' => array('preview','price','short_description'),
                         'submit_value'  => __('Opslaan & verder'),
                         'return' => '?func=add-add-article&id=%post_id%&step=2'
                     )); 
@@ -40,26 +41,22 @@
         <div class="blockCourseToevoegen">
             <p class="courseToevoegenText">Course toevoegen</p>
             <div class="contentBlockRight">
-                <!-- <a href="/dashboard/teacher/course-selection/" class="contentBlockCourse">
-                    <div class="circleIndicator passEtape"></div>
-                    <p class="textOpleidRight">Opleidingstype</p>
-                </a> -->
                 <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=1" class="contentBlockCourse">
-                            <div class="circleIndicator  passEtape2"></div>
-                            <p class="textOpleidRight">Basis informatie</p>
-                        </a>
-                        <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=2" class="contentBlockCourse">
-                            <div class="circleIndicator passEtape2"></div>
-                            <p class="textOpleidRight">Article Itself</p>
-                        </a>
-                        <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=3" class="contentBlockCourse">
-                            <div class="circleIndicator passEtape2"></div>
-                            <p class="textOpleidRight">Tags</p>
-                        </a>
-                        <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=4" class="contentBlockCourse">
-                            <div class="circleIndicator passEtape2"></div>
-                            <p class="textOpleidRight">Experts</p>
-                        </a>
+                    <div class="circleIndicator  passEtape2"></div>
+                    <p class="textOpleidRight">Basis informatie</p>
+                </a>
+                <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=2" class="contentBlockCourse">
+                    <div class="circleIndicator "></div>
+                    <p class="textOpleidRight">Article Itself</p>
+                </a>
+                <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=3" class="contentBlockCourse">
+                    <div class="circleIndicator "></div>
+                    <p class="textOpleidRight">Tags</p>
+                </a>
+                <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=4" class="contentBlockCourse">
+                    <div class="circleIndicator "></div>
+                    <p class="textOpleidRight">Experts</p>
+                </a>
             </div>
         </div>
     </div>

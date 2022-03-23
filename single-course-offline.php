@@ -12,9 +12,7 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
 
 $data = get_field('data_locaties', $post->ID);
 $price = get_field('price', $post->ID) ?: 'Gratis';
-
 $prijsvat = get_field('prijsvat', $post->ID);
-
 $agenda = get_field('agenda', $post->ID);
 $who = get_field('for_who', $post->ID);
 $results = get_field('results', $post->ID);
@@ -239,7 +237,8 @@ $favoured = count(get_field('favorited', $post->ID));
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-calendar-alt" style="font-size: 25px;"></i>
-                            <span class="textIconeLearning mt-1">I dagdee</span>
+                            <span class="textIconeLearning mt-1"><?=$date_start?></span>
+                            n,bnv
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-graduation-cap" style="font-size: 25px;"></i>
@@ -340,11 +339,7 @@ $favoured = count(get_field('favorited', $post->ID));
                                         </div>
                                     </div>
                                     <div id="Intern" class="tabcontent">
-                                        <form action="" class="formShare">
-                                            <input type="text" placeholder="Gebruikersnaam">
-                                            <input type="text" placeholder="Wachtwoord">
-                                            <button class="btn btnLoginModife">Log-in</button>
-                                        </form>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -595,7 +590,6 @@ $favoured = count(get_field('favorited', $post->ID));
     }
 
     if(!isset($xml_parse)){
-
         if(!empty($data)){
             foreach($data as $datum) {
                 $date_end = '';
@@ -883,11 +877,7 @@ $favoured = count(get_field('favorited', $post->ID));
                     </div>
                 </div>
                 <div id="Intern" class="tabcontent">
-                    <form action="" class="formShare">
-                        <input type="text" placeholder="Gebruikersnaam">
-                        <input type="text" placeholder="Wachtwoord">
-                        <button class="btn btnLoginModife">Log-in</button>
-                    </form>
+                    
                 </div>
             </div>
         </div>
