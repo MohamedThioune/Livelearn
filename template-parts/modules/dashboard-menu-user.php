@@ -78,7 +78,7 @@ $experts = get_user_meta($user->ID, 'expert');
                 foreach($topics_internal as $topic){
                     $name = (String)get_the_category_by_ID($topic);
                     echo "<a href='/category-overview/?category=". $topic ."' class='d-flex'>
-                            <br><br>
+                            <button type='button' class='btn toevoegenText'><i class='fa fa-do-not-enter'></i></button>
                             <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
                           </a>";
                     /* echo "
