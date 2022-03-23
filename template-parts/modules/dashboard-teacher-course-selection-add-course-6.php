@@ -1,11 +1,8 @@
 <?php
     $users = get_users();
     $data_user = wp_get_current_user();
-    $user_connected = $data_user->data->ID;
-    $company = get_field('company',  'user_' . $user_connected);
+  
     $members = array();
-    if(!empty($company))
-        $company_connected = $company[0]->post_title;
 
     foreach($users as $user)
         if(in_array( 'author', $user->roles ) )
@@ -80,5 +77,6 @@
         
     </div>
 
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 
     

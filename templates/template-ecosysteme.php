@@ -13,8 +13,6 @@ $args = array(
 );
 
 $blogs = get_posts($args);
-// Thumbnail : get_the_post_thumbnail($blog->id);
-// Tags : get_the_category
 
 $artikel = $blogs[0];
 
@@ -87,7 +85,6 @@ $users = get_users();
 
     <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
 </div>
-
 
 <div class="content-ecosysteme ">
     <div class="head-content-ecosysteme">
@@ -288,31 +285,44 @@ $users = get_users();
                     <div class="swiper-container swipeContaine4">
                         <div class="swiper-wrapper">
                             <?php
-                            $i = 0;
                             foreach($blogs as $blog) {
 
                             $tag = '';
-                            if($i == 0){
-                            $i+=1;
-                            continue;
-                            }
+                            $image = null;
 
                             //Image
                             $image = get_the_post_thumbnail_url($blog->ID);
                             if(!$image)
-                            $image = get_stylesheet_directory_uri() . '/img/libay.png';
+                                $image = get_field('preview', $blog->ID)['url'];
+                                    if(!$image){
+                                        $image = get_field('url_image_xml', $course->ID);
+                                        if(!$image)
+                                            $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                                    }
 
                             $author = get_field('profile_img',  'user_' . $blog->post_author);
 
                             //Summary
                             $summary = get_the_excerpt($blog->ID);
 
+                            if(!$summary)
+                                $summary = get_field('short_description', $blog->ID);
+
                             //Tags
                             $tree = get_the_tags($blog->ID);
 
                             if($tree)
-                            if(isset($tree[2]))
-                            $tag = $tree[2]->name;
+                                if(isset($tree[2]))
+                                    $tag = $tree[2]->name;
+
+                            if($tag = ''){
+                                $tagS = intval(explode(',', get_field('categories',  $blog->ID)[0]['value'])[0]);
+                                $tagI = intval(get_field('category_xml',  $blog->ID)[0]['value']);
+                                if($tagS != 0)
+                                    $tag = (String)get_the_category_by_ID($tagS);
+                                else if($tagI != 0)
+                                    $tag = (String)get_the_category_by_ID($tagI);                                    
+                            }
                             ?>
                             <a href="<?php echo get_permalink($blog->ID) ?>" class="swiper-slide swiper-slide4">
                                 <div class="cardKraam2">
@@ -428,69 +438,80 @@ $users = get_users();
                     <div class="swiper-container swipeContaine4">
                         <div class="swiper-wrapper">
                             <?php
-                            $i = 0;
                             foreach($blogs as $blog) {
 
-                                $tag = '';
-                                if($i == 0){
-                                    $i+=1;
-                                    continue;
-                                }
+                            $tag = '';
+                            $image = null;
 
-                                //Image
-                                $image = get_the_post_thumbnail_url($blog->ID);
-                                if(!$image)
-                                    $image = get_stylesheet_directory_uri() . '/img/libay.png';
+                            //Image
+                            $image = get_the_post_thumbnail_url($blog->ID);
+                            if(!$image)
+                                $image = get_field('preview', $blog->ID)['url'];
+                            else if(!$image)
+                                $image = get_stylesheet_directory_uri() . '/img/libay.png';
+                                    
 
-                                $author = get_field('profile_img',  'user_' . $blog->post_author);
+                            $author = get_field('profile_img',  'user_' . $blog->post_author);
 
-                                //Summary
-                                $summary = get_the_excerpt($blog->ID);
+                            //Summary
+                            $summary = get_the_excerpt($blog->ID);
 
-                                //Tags
-                                $tree = get_the_tags($blog->ID);
+                            if(!$summary)
+                                $summary = get_field('short_description', $blog->ID);
 
-                                if($tree)
-                                    if(isset($tree[2]))
-                                        $tag = $tree[2]->name;
-                                ?>
-                                <a href="<?php echo get_permalink($blog->ID) ?>" class="swiper-slide swiper-slide4">
-                                    <div class="cardKraam2">
-                                        <div class="headCardKraam">
-                                            <img src="<?php echo $image; ?>" alt="">
-                                        </div>
-                                        <button class="btn btnImgCoeurEcosysteme">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/coeur1.png" alt="">
-                                        </button>
-                                        <div class="contentCardProd">
-                                            <div class="group8">
-                                                <div class="imgTitleCours">
-                                                    <div class="imgCoursProd">
-                                                        <img src="<?php echo $author; ?>" alt="">
-                                                    </div>
-                                                    <p class="nameCoursProd"><?php echo(get_userdata($blog->post_author)->data->display_name); ?></p>
-                                                </div>
-                                                <div class="group9">
-                                                    <div class="blockOpein">
-                                                        <img class="iconAm" src="<?php echo get_stylesheet_directory_uri();?>/img/graduat.png" alt="">
-                                                        <p class="lieuAm">Artikel</p>
-                                                    </div>
-                                                    <?php if($tag != '') { ?>
-                                                        <div class="blockOpein">
-                                                            &#x0023;&#xFE0F;&#x20E3;
-                                                            <p class="lieuAm"><?php echo $tag; ?></p>
-                                                        </div>
-                                                    <?php } ?>
-                                                </div>
-                                            </div>
-                                            <p class="werkText"><?php echo $blog->post_title; ?></p>
-                                            <p class="descriptionPlatform">
-                                                <?php echo $summary; ?>
-                                            </p>
-                                        </div>
+                            //Tags
+                            $tree = get_the_tags($blog->ID);
+
+                            if($tree)
+                                if(isset($tree[2]))
+                                    $tag = $tree[2]->name;
+
+                            if($tag = ''){
+                                $tagS = intval(explode(',', get_field('categories',  $blog->ID)[0]['value'])[0]);
+                                $tagI = intval(get_field('category_xml',  $blog->ID)[0]['value']);
+                                if($tagS != 0)
+                                    $tag = (String)get_the_category_by_ID($tagS);
+                                else if($tagI != 0)
+                                    $tag = (String)get_the_category_by_ID($tagI);                                    
+                            }
+                            ?>
+                            <a href="<?php echo get_permalink($blog->ID) ?>" class="swiper-slide swiper-slide4">
+                                <div class="cardKraam2">
+                                    <div class="headCardKraam">
+                                        <img src="<?php echo $image; ?>" alt="">
                                     </div>
-                                </a>
-                                <?php
+                                    <button class="btn btnImgCoeurEcosysteme">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/coeur1.png" alt="">
+                                    </button>
+                                    <div class="contentCardProd">
+                                        <div class="group8">
+                                            <div class="imgTitleCours">
+                                                <div class="imgCoursProd">
+                                                    <img src="<?php echo $author; ?>" alt="">
+                                                </div>
+                                                <p class="nameCoursProd"><?php echo(get_userdata($blog->post_author)->data->display_name); ?></p>
+                                            </div>
+                                            <div class="group9">
+                                                <div class="blockOpein">
+                                                    <img class="iconAm" src="<?php echo get_stylesheet_directory_uri();?>/img/graduat.png" alt="">
+                                                    <p class="lieuAm">Artikel</p>
+                                                </div>
+                                                <?php if($tag != '') { ?>
+                                                <div class="blockOpein">
+                                                    &#x0023;&#xFE0F;&#x20E3;
+                                                    <p class="lieuAm"><?php echo $tag; ?></p>
+                                                </div>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                        <p class="werkText"><?php echo $blog->post_title; ?></p>
+                                        <p class="descriptionPlatform">
+                                            <?php echo $summary; ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            <?php
                             }
                             ?>
                         </div>

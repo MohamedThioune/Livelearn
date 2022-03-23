@@ -134,10 +134,6 @@
                 <div class="blockCourseToevoegen">
                     <p class="courseToevoegenText">Course toevoegen</p>
                     <div class="contentBlockRight">
-                        <!-- <a href="/dashboard/teacher/course-selection/" class="contentBlockCourse">
-                            <div class="circleIndicator passEtape"></div>
-                            <p class="textOpleidRight">Opleidingstype</p>
-                        </a> -->
                         <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=1" class="contentBlockCourse">
                             <div class="circleIndicator  passEtape"></div>
                             <p class="textOpleidRight">Basis informatie</p>
@@ -161,7 +157,7 @@
         
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 
 <script>
     $("#btn-ajax").click((e)=>
