@@ -3618,6 +3618,7 @@ body .gform_wrapper ul li.gfield {
 }
 #basis #acf-form .acf-field .acf-input .acf-input-wrap input {
     padding: 10px 20px !important;
+    width: 100%;
 }
 #acf-form .acf-fields>.acf-field {
     position: relative;
@@ -3817,7 +3818,9 @@ body .gform_wrapper ul li.gfield {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 35px;
+    margin: 0 auto 35px;
+    width: 580px;
+    flex-wrap: wrap;
 }
 .headCollections p{
     font-size: 24px;
@@ -3826,11 +3829,17 @@ body .gform_wrapper ul li.gfield {
     font-weight: bold;
 }
 .btn-collection {
-    color: #007dda;
+    color: #000;
     font-size: 22px;
     padding: 0;
     font-weight: bold;
     margin-left: 7px;
+}
+.btn-collection b{
+    color: #47a99e
+}
+.headCollections p b{
+    color: #47a99e
 }
 .content-ecosysteme{
     background: #F4F7F6;
@@ -3840,7 +3849,7 @@ body .gform_wrapper ul li.gfield {
 }
 .topCollection{
     background: white;
-    padding: 35px 30px;
+    padding: 35px 0px;
     margin-bottom: 55px;
 }
 .boxCollections{
@@ -4333,12 +4342,14 @@ overflow: -moz-scrollbars-none;  // Firefox
 }
 .alertNotification{
     position: absolute;
-    width: 13px;
-    height: 13px;
+    width: 17px;
+    height: 17px;
     background: red;
     border-radius: 100%;
     left: 0px;
     top: 0px;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .activityTitle{
@@ -5167,6 +5178,7 @@ overflow: -moz-scrollbars-none;  // Firefox
     display: flex;
     align-items: center;
     margin-left: auto;
+    margin-bottom: 0 !important;
 }
 #salesInput{
     display: none;
@@ -5180,7 +5192,7 @@ overflow: -moz-scrollbars-none;  // Firefox
 }
 #field_6_1 #input_6_1{
     display: grid;
-    margin-bottom: -30px;
+    margin-bottom: -20px;
 }
 
 #input_6_1 input{
@@ -5200,7 +5212,7 @@ overflow: -moz-scrollbars-none;  // Firefox
 .ginput_complex label {
     font-size: 15px !important;
 }
-.ginput_complex #field_6_2 input{
+#field_6_2 .ginput_container_text input{
     color: #023356 !important;
     font-size: 14px;
     padding: 10px 20px !important;
@@ -5210,7 +5222,7 @@ overflow: -moz-scrollbars-none;  // Firefox
     margin-top: 0px;
     margin-bottom: 0px;
 }
-.ginput_complex #field_6_3 input{
+#field_6_3 .ginput_container_text input{
     color: #023356 !important;
     font-size: 14px;
     padding: 10px 20px !important;
@@ -5221,14 +5233,13 @@ overflow: -moz-scrollbars-none;  // Firefox
     margin-bottom: 0px;
 }
 
-.ginput_complex #field_6_4 {
+.gform_fields #field_6_4 {
     grid-column: span 12 !important;
 }
-.ginput_complex #field_6_5 {
+.gform_fields #field_6_5 {
     grid-column: span 12 !important;
 }
-
-.ginput_complex #field_6_4 input{
+.gform_fields #field_6_4 .ginput_container_text input{
     color: #023356 !important;
     font-size: 14px;
     padding: 10px 20px !important;
@@ -5238,7 +5249,7 @@ overflow: -moz-scrollbars-none;  // Firefox
     margin-top: 0px;
     margin-bottom: 0px;
 }
-.ginput_complex #field_6_5 input{
+.ginput_complex #field_6_5 .ginput_container_text input{
     color: #023356 !important;
     font-size: 14px;
     padding: 10px 20px !important;
@@ -5255,8 +5266,205 @@ overflow: -moz-scrollbars-none;  // Firefox
     border-radius: 10px;
     margin-top: 20px;
 }
+.footer-big .footer-menu ul li a, .footer-big p, .footer-big ul li {
+    color: #d0d0d0 !important;
+}
+.groeipadenBlock {
+    margin-bottom: 30px;
+}
+.UitgelichteBlock{
+    margin-bottom: 30px;
+}
+.hulpBox{
+    margin-bottom: 90px;
+}
+.btnCommunity{
+    background: #47a99e;
+    color: white;
+    padding: 9px 25px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+.dropdownModifeEcosysteme {
+    left: unset !important;
+    right: 0 !important;
+}
+.roadCourTitle {
+    font-size: 26px;
+    margin-bottom: 30px;
+}
+.contentItemsRoad{
+    margin: 0 -25px;
+}
+#sortable {
+    list-style-type: none;
+    margin: 0;
+    width: 100%;
+    border-top: 1px solid #BDBDBD;
+    border-bottom: 1px solid #BDBDBD;
+}
+#sortable li {
+    margin: 0 1px 20px 3px;
+    padding: 0 20px 20px;
+    cursor: move;
+    border-bottom: 1px solid #BDBDBD;
+}
+#sortable li:last-child {
+    padding: 0 20 0px;
+    cursor: move;
+    border-bottom: 0px solid #BDBDBD;
+}
+#sortable li span {
+    position: absolute;
+    margin-left: -1.3em;
+}
+.contentImgCardCour{
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    position: absolute;
+    padding-top: 0;
+    right: 15px;
+    bottom: 15px;
+}
+.contentImgCardCour img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin-top: 0;
+}
+.blockCardCoursRoad {
+    width: 100%;
+    background: white;
+    box-shadow: 1px 1px 5px rgb(0 0 0 / 3%);
+    padding: 10px 15px 25px;
+    display: flex;
+    margin-top: 15px;
+    position: relative;
+}
+.btnTroisPoint{
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+.roadIcone {
+    width: 30px;
+    height: 47px;
+    margin-left: -8px;
+    margin-right: 8px;
+    margin-top: 3%;
+}
+.imgCoursRoad {
+    width: 162px;
+    height: 100px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 5px;
+}
+.imgCoursRoad img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.titleCoursRoad{
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    color: #000000;
+    margin-bottom: 5px;
+    padding: 4px 15px;
+}
+.sousBlockCategorieRoad {
+    padding-left: 15px;
+    align-items: center;
+    display: flex;
+}
+.categoryText{
+    font-size: 16px;
+    line-height: 24px;
+    color: #43454D;
+    margin-bottom: 0;
+    margin-left: 6px;
+}
+.descriptionTextRoad{
+    font-size: 15px;
+    line-height: 24px;
+    color: #707070;
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-right: 51px;
+}
 
+.dropdown-menu-dashboard{
+    background-color: #043356 !important;
+    color: white !important;
+}
+.dropdown-menu-dashboard a {
+    color: white !important;
+}
 
+#gform_fields_6 .gfield input {
+    color: #023356 !important;
+    font-size: 14px;
+    padding: 10px 20px !important;
+    background: #FFFFFF !important;
+    border-radius: 8px;
+    border: 1px solid #023356 !important;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    width: 100%;
+}
+#field_6_1 #input_6_1 {
+    display: grid;
+    margin-bottom: -30px;
+    width: 100%;
+}
+.gform_wrapper textarea.large {
+    color: #023356 !important;
+    font-size: 14px;
+    padding: 10px 20px !important;
+    background: #FFFFFF !important;
+    border-radius: 8px;
+    border: 1px solid #023356 !important;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    width: 100%;
+}
+
+#field_6_1 .gfield_label_before_complex {
+    display: none;
+}
+#field_5_11 input{
+    color: #023356 !important;
+    font-size: 14px;
+    padding: 10px 20px !important;
+    background: #FFFFFF !important;
+    border-radius: 8px;
+    border: 1px solid #023356 !important;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+#input_5_11_6_container{
+    margin-bottom: 0px !important;
+}
+#field_5_11 .gfield_label_before_complex {
+    display: none;
+}
+#gform_fields_5 .gfield_label{
+    font-size: 15px !important;
+}
+#gform_fields_5 .gfield input{
+    color: #023356 !important;
+    font-size: 14px;
+    padding: 10px 20px !important;
+    background: #FFFFFF !important;
+    border-radius: 8px;
+    border: 1px solid #023356 !important;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
 
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -6660,6 +6868,7 @@ overflow: -moz-scrollbars-none;  // Firefox
     }
     .headCollections p {
         font-size: 16px;
+        width: 100%;
     }
     .btn-collection {
         color: #007dda;
@@ -6854,12 +7063,25 @@ overflow: -moz-scrollbars-none;  // Firefox
         display: block;
     }
     .companyButton{
-        padding: 0;
+        padding: 0 !important;
     }
     .item4 .dropdown-menu {
         position: absolute;
         left: -30px;
         top: 40px;
+    }
+    .groeipadenBlock {
+        padding-left: 15px;
+    }
+    .UitgelichteBlock {
+        padding-left: 15px;
+    }
+    .headCollections {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    .modal-backdrop.show {
+        display: none !important;
     }
 
 
@@ -7194,8 +7416,9 @@ overflow: -moz-scrollbars-none;  // Firefox
     .elementHeaderUser {
         display: flex !important;
         width: fit-content;
-        padding-right: 18px;
-        margin-left: unset;
+        padding-right: 15px;
+        margin-left: 0;
+        padding-left: 0;
     }
     .companyButton {
         padding: 0;

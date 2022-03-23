@@ -13,8 +13,6 @@ $args = array(
 );
 
 $blogs = get_posts($args);
-// Thumbnail : get_the_post_thumbnail($blog->id);
-// Tags : get_the_category
 
 $artikel = $blogs[0];
 
@@ -88,7 +86,6 @@ $users = get_users();
     <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
 </div>
 
-
 <div class="content-ecosysteme ">
     <div class="head-content-ecosysteme">
     
@@ -153,43 +150,25 @@ $users = get_users();
 
         </div>
     </div>
-    <div class="container">
-
-
-      <!--  <div class="parteners-block">
-            <p class="title-parteners">Partners:</p>
-            <div class="block-logo-parteners">
-                <div class="imgElement">
-                    <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Image50.png" alt="">
-                </div>
-                <div class="imgElement">
-                    <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Image51.png" alt="">
-                </div>
-                <div class="imgElement">
-                    <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Image52.png" alt="">
-                </div>
-                <div class="imgElement">
-                    <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Image50.png" alt="">
-                </div>
-                <div class="imgElement">
-                    <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Image51.png" alt="">
-                </div>
-                <div class="imgElement">
-                    <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Image52.png" alt="">
-                </div>
-                <div class="imgElement">
-                    <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Image50.png" alt="">
-                </div>
-            </div>
-        </div>-->
-        <div class="topCollection">
+    <div class="topCollection">
+        <div class="container">
             <div class="headCollections">
-              <p>Top collections over</p>
+                <div class="dropdown show">
+                    <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownHuman" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Top experts binnen <b>Human Resources</b>
+                    </a>
+                    <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownHuman">
+                        <a class="dropdown-item" href="#">Financieel</a>
+                        <a class="dropdown-item" href="#">Legal</a>
+                        <a class="dropdown-item" href="#">Verkoop / Sales</a>
+                        <a class="dropdown-item" href="#">Logistiek</a>
+                    </div>
+                </div>
                 <div class="dropdown show">
                     <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                       last 7 days
+                        Over de <b>laatste 7 dagen</b>
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownMenuLink">
                         <a class="dropdown-item" href="#">Last 7 days</a>
                         <a class="dropdown-item" href="#"> last moth</a>
                         <a class="dropdown-item" href="#"> last 7 year</a>
@@ -225,110 +204,327 @@ $users = get_users();
                 <?php } ?>
             </div>
         </div>
-        <div class="block-form-card">
-            <div class="blockFormNiet">
-                <p class="Niet-text">Niet alles hoeft geld te kosten, <br> Meld je gratis aan:</p>
-                <?php echo do_shortcode("[gravityform id='2' title='false' description='false' ajax='true'] "); ?>
-            </div>
-            <?php
-            /*
-            * * Last Artikel 
-            */
-           
-            //Image
-            $image = get_the_post_thumbnail_url($artikel->ID);
-            if(!$image)
-                $image = get_stylesheet_directory_uri() . '/img/libay.png';
-
-            //Summary
-            $summary = get_the_excerpt($artikel->ID);
-
-          
-
-            ?>
-            <a href="<?php echo get_permalink($artikel->ID) ?>" class="card-element-niet">
-                <div class="head-card-niet">
-                    <img src="<?php echo $image; ?>" alt="">
+    </div>
+    <div class="hulpBox">
+        <div class="container-fluid">
+            <div class="alJoum">
+                <div class="blockImGDaniel">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/daniel.png" alt="">
                 </div>
-                <div class="content-card-element-niet">
-                    <p class=""><?php echo $artikel->post_title; ?></p>
-                    <p class="descriptionCardBlog"><?php echo $summary; ?></p>
-                </div>
-            </a>
-        </div>
-        <div class="block-card-ecosysteme">
-           <div class="row">
-               <?php
-                $i = 0;
-                foreach($blogs as $blog) { 
-
-                    $tag = '';
-                    if($i == 0){
-                        $i+=1;
-                        continue;
-                    }
-
-                    //Image
-                    $image = get_the_post_thumbnail_url($blog->ID);
-                    if(!$image)
-                        $image = get_stylesheet_directory_uri() . '/img/libay.png';
-                    
-                    $author = get_field('profile_img',  'user_' . $blog->post_author);
-
-                    //Summary
-                    $summary = get_the_excerpt($blog->ID);
-
-                    //Tags
-                    $tree = get_the_tags($blog->ID);
-
-                    if($tree)
-                        if(isset($tree[2]))
-                            $tag = $tree[2]->name;
+                <?php
+                echo do_shortcode("[gravityform id='4' title='false' description='false' ajax='true']");
                 ?>
-                    <a href="<?php echo get_permalink($blog->ID) ?>" class="col-lg-4 col-md-4 col-12 mb-4">
-                        <div class="cardKraam2">
-                            <div class="headCardKraam">
-                                <img src="<?php echo $image; ?>" alt="">
-                            </div>
-                            <button class="btn btnImgCoeurEcosysteme">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/coeur1.png" alt="">
-                            </button>
-                            <div class="contentCardProd">
-                                <div class="group8">
-                                    <div class="imgTitleCours">
-                                        <div class="imgCoursProd">
-                                            <img src="<?php echo $author; ?>" alt="">
-                                        </div>
-                                        <p class="nameCoursProd"><?php echo(get_userdata($blog->post_author)->data->display_name); ?></p>
+            </div>
+            <div class="groeipadenBlock">
+                <p class="sousBlockTitleProduct">Groeipaden</p>
+                <div class="blockSousblockTitle">
+                    <div class="swiper-container swipeContaineEvens">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide swipeExpert custom_slide">
+                                <div class="cardblockOnder cardExpert">
+                                    <div class="imgBlockCardonder">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-45.png" alt="">
                                     </div>
-                                    <div class="group9">
-                                        <div class="blockOpein">
-                                            <img class="iconAm" src="<?php echo get_stylesheet_directory_uri();?>/img/graduat.png" alt="">
-                                            <p class="lieuAm">Artikel</p>
-                                        </div> 
-                                        <?php if($tag != '') { ?> 
-                                        <div class="blockOpein">
-                                            &#x0023;&#xFE0F;&#x20E3;
-                                            <p class="lieuAm"><?php echo $tag; ?></p>
-                                        </div>
-                                        <?php } ?>
-                                    </div>
+                                    <p class="verkop">Verkoop en sales</p>
+                                    <a href="" class="btn btnMeer">Meer</a>
                                 </div>
-                                <p class="werkText"><?php echo $blog->post_title; ?></p>
-                                <p class="descriptionPlatform">
-                                    <?php echo $summary; ?>
-                                </p>
+                            </div>
+                            <div class="swiper-slide swipeExpert custom_slide">
+                                <div class="cardblockOnder cardExpert">
+                                    <div class="imgBlockCardonder">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-45.png" alt="">
+                                    </div>
+                                    <p class="verkop">Verkoop en sales</p>
+                                    <a href="" class="btn btnMeer">Meer</a>
+                                </div>
+                            </div>
+                            <div class="swiper-slide swipeExpert custom_slide">
+                                <div class="cardblockOnder cardExpert">
+                                    <div class="imgBlockCardonder">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-45.png" alt="">
+                                    </div>
+                                    <p class="verkop">Leiderschap</p>
+                                    <a href="" class="btn btnMeer">Meer</a>
+                                </div>
+                            </div>
+                            <div class="swiper-slide swipeExpert custom_slide">
+                                <div class="cardblockOnder cardExpert">
+                                    <div class="imgBlockCardonder">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-45.png" alt="">
+                                    </div>
+                                    <p class="verkop">Excel</p>
+                                    <a href="" class="btn btnMeer">Meer</a>
+                                </div>
+                            </div>
+                            <div class="swiper-slide swipeExpert custom_slide">
+                                <div class="cardblockOnder cardExpert">
+                                    <div class="imgBlockCardonder">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-45.png" alt="">
+                                    </div>
+                                    <p class="verkop">HRM</p>
+                                    <a href="" class="btn btnMeer">Meer</a>
+                                </div>
+                            </div>
+                            <div class="swiper-slide swipeExpert custom_slide">
+                                <div class="cardblockOnder cardExpert">
+                                    <div class="imgBlockCardonder">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-45.png" alt="">
+                                    </div>
+                                    <p class="verkop">Marktkoopman</p>
+                                    <a href="" class="btn btnMeer">Meer</a>
+                                </div>
                             </div>
                         </div>
-                    </a>
-               <?php
-                 }
-               ?>
-           </div>
-        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="UitgelichteBlock">
+                <p class="sousBlockTitleProduct">Aankomende events</p>
+                <div class="blockCardOpleidingen ">
 
+                    <div class="swiper-container swipeContaine4">
+                        <div class="swiper-wrapper">
+                            <?php
+                            foreach($blogs as $blog) {
+
+                            $tag = '';
+                            $image = null;
+
+                            //Image
+                            $image = get_the_post_thumbnail_url($blog->ID);
+                            if(!$image)
+                                $image = get_field('preview', $blog->ID)['url'];
+                                    if(!$image){
+                                        $image = get_field('url_image_xml', $course->ID);
+                                        if(!$image)
+                                            $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                                    }
+
+                            $author = get_field('profile_img',  'user_' . $blog->post_author);
+
+                            //Summary
+                            $summary = get_the_excerpt($blog->ID);
+
+                            if(!$summary)
+                                $summary = get_field('short_description', $blog->ID);
+
+                            //Tags
+                            $tree = get_the_tags($blog->ID);
+
+                            if($tree)
+                                if(isset($tree[2]))
+                                    $tag = $tree[2]->name;
+
+                            if($tag = ''){
+                                $tagS = intval(explode(',', get_field('categories',  $blog->ID)[0]['value'])[0]);
+                                $tagI = intval(get_field('category_xml',  $blog->ID)[0]['value']);
+                                if($tagS != 0)
+                                    $tag = (String)get_the_category_by_ID($tagS);
+                                else if($tagI != 0)
+                                    $tag = (String)get_the_category_by_ID($tagI);                                    
+                            }
+                            ?>
+                            <a href="<?php echo get_permalink($blog->ID) ?>" class="swiper-slide swiper-slide4">
+                                <div class="cardKraam2">
+                                    <div class="headCardKraam">
+                                        <img src="<?php echo $image; ?>" alt="">
+                                    </div>
+                                    <button class="btn btnImgCoeurEcosysteme">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/coeur1.png" alt="">
+                                    </button>
+                                    <div class="contentCardProd">
+                                        <div class="group8">
+                                            <div class="imgTitleCours">
+                                                <div class="imgCoursProd">
+                                                    <img src="<?php echo $author; ?>" alt="">
+                                                </div>
+                                                <p class="nameCoursProd"><?php echo(get_userdata($blog->post_author)->data->display_name); ?></p>
+                                            </div>
+                                            <div class="group9">
+                                                <div class="blockOpein">
+                                                    <img class="iconAm" src="<?php echo get_stylesheet_directory_uri();?>/img/graduat.png" alt="">
+                                                    <p class="lieuAm">Artikel</p>
+                                                </div>
+                                                <?php if($tag != '') { ?>
+                                                <div class="blockOpein">
+                                                    &#x0023;&#xFE0F;&#x20E3;
+                                                    <p class="lieuAm"><?php echo $tag; ?></p>
+                                                </div>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                        <p class="werkText"><?php echo $blog->post_title; ?></p>
+                                        <p class="descriptionPlatform">
+                                            <?php echo $summary; ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="groeipadenBlock">
+                <p class="sousBlockTitleProduct">Onderwerpen</p>
+                <div class="blockSousblockTitle">
+                    <div class="swiper-container swipeContaineEvens">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide swipeExpert custom_slide">
+                                <div class="cardblockOnder cardExpert">
+                                    <div class="imgBlockCardonder">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-45.png" alt="">
+                                    </div>
+                                    <p class="verkop">Verkoop en sales</p>
+                                    <a href="" class="btn btnMeer">Meer</a>
+                                </div>
+                            </div>
+                            <div class="swiper-slide swipeExpert custom_slide">
+                                <div class="cardblockOnder cardExpert">
+                                    <div class="imgBlockCardonder">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-45.png" alt="">
+                                    </div>
+                                    <p class="verkop">Verkoop en sales</p>
+                                    <a href="" class="btn btnMeer">Meer</a>
+                                </div>
+                            </div>
+                            <div class="swiper-slide swipeExpert custom_slide">
+                                <div class="cardblockOnder cardExpert">
+                                    <div class="imgBlockCardonder">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-45.png" alt="">
+                                    </div>
+                                    <p class="verkop">Leiderschap</p>
+                                    <a href="" class="btn btnMeer">Meer</a>
+                                </div>
+                            </div>
+                            <div class="swiper-slide swipeExpert custom_slide">
+                                <div class="cardblockOnder cardExpert">
+                                    <div class="imgBlockCardonder">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-45.png" alt="">
+                                    </div>
+                                    <p class="verkop">Excel</p>
+                                    <a href="" class="btn btnMeer">Meer</a>
+                                </div>
+                            </div>
+                            <div class="swiper-slide swipeExpert custom_slide">
+                                <div class="cardblockOnder cardExpert">
+                                    <div class="imgBlockCardonder">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-45.png" alt="">
+                                    </div>
+                                    <p class="verkop">HRM</p>
+                                    <a href="" class="btn btnMeer">Meer</a>
+                                </div>
+                            </div>
+                            <div class="swiper-slide swipeExpert custom_slide">
+                                <div class="cardblockOnder cardExpert">
+                                    <div class="imgBlockCardonder">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-45.png" alt="">
+                                    </div>
+                                    <p class="verkop">Marktkoopman</p>
+                                    <a href="" class="btn btnMeer">Meer</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="UitgelichteBlock">
+                <p class="sousBlockTitleProduct">Uitgelichte artikelen</p>
+                <div class="blockCardOpleidingen ">
+
+                    <div class="swiper-container swipeContaine4">
+                        <div class="swiper-wrapper">
+                            <?php
+                            foreach($blogs as $blog) {
+
+                            $tag = '';
+                            $image = null;
+
+                            //Image
+                            $image = get_the_post_thumbnail_url($blog->ID);
+                            if(!$image)
+                                $image = get_field('preview', $blog->ID)['url'];
+                            else if(!$image)
+                                $image = get_stylesheet_directory_uri() . '/img/libay.png';
+                                    
+
+                            $author = get_field('profile_img',  'user_' . $blog->post_author);
+
+                            //Summary
+                            $summary = get_the_excerpt($blog->ID);
+
+                            if(!$summary)
+                                $summary = get_field('short_description', $blog->ID);
+
+                            //Tags
+                            $tree = get_the_tags($blog->ID);
+
+                            if($tree)
+                                if(isset($tree[2]))
+                                    $tag = $tree[2]->name;
+
+                            if($tag = ''){
+                                $tagS = intval(explode(',', get_field('categories',  $blog->ID)[0]['value'])[0]);
+                                $tagI = intval(get_field('category_xml',  $blog->ID)[0]['value']);
+                                if($tagS != 0)
+                                    $tag = (String)get_the_category_by_ID($tagS);
+                                else if($tagI != 0)
+                                    $tag = (String)get_the_category_by_ID($tagI);                                    
+                            }
+                            ?>
+                            <a href="<?php echo get_permalink($blog->ID) ?>" class="swiper-slide swiper-slide4">
+                                <div class="cardKraam2">
+                                    <div class="headCardKraam">
+                                        <img src="<?php echo $image; ?>" alt="">
+                                    </div>
+                                    <button class="btn btnImgCoeurEcosysteme">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/coeur1.png" alt="">
+                                    </button>
+                                    <div class="contentCardProd">
+                                        <div class="group8">
+                                            <div class="imgTitleCours">
+                                                <div class="imgCoursProd">
+                                                    <img src="<?php echo $author; ?>" alt="">
+                                                </div>
+                                                <p class="nameCoursProd"><?php echo(get_userdata($blog->post_author)->data->display_name); ?></p>
+                                            </div>
+                                            <div class="group9">
+                                                <div class="blockOpein">
+                                                    <img class="iconAm" src="<?php echo get_stylesheet_directory_uri();?>/img/graduat.png" alt="">
+                                                    <p class="lieuAm">Artikel</p>
+                                                </div>
+                                                <?php if($tag != '') { ?>
+                                                <div class="blockOpein">
+                                                    &#x0023;&#xFE0F;&#x20E3;
+                                                    <p class="lieuAm"><?php echo $tag; ?></p>
+                                                </div>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                        <p class="werkText"><?php echo $blog->post_title; ?></p>
+                                        <p class="descriptionPlatform">
+                                            <?php echo $summary; ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
+
+
 <script>
     $('#exampleModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
@@ -355,6 +551,29 @@ $users = get_users();
             }
         });
     });
+</script>
+
+<script>
+    var swiper = new Swiper('.swipeContaineEvens', {
+        slidesPerView: '5',
+        spaceBetween: 20,
+        breakpoints: {
+            780: {
+                slidesPerView: 1,
+                spaceBetween: 40,
+            },
+            1230: {
+                slidesPerView: 3.9,
+                spaceBetween: 20,
+            }
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+
+    });
+
 </script>
 
 <script>

@@ -56,6 +56,7 @@ $todos = get_posts($args);
                <thead class="thead-light">
                 <tr>
                     <th scope="col">Title</th>
+                    <th scope="col">Type</th>
                     <th scope="col-4">Alert </th>
                     <th scope="col">By</th>
                     <!-- 
@@ -85,8 +86,9 @@ $todos = get_posts($args);
                 ?>
                 <tr>                
                     <td scope="row"><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"> <strong><?=$todo->post_title;?></strong> </a></td>
+                    <td><?=$type?></td>
                     <td class="descriptionNotification"><a href="dashboard/user/detail-notification/todos=<?php echo $key; ?>"><?=$beschrijving_feedback?> </a></td>
-                    <td><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?></td>
+                    <td><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name; else echo $manager->display_name; ?></td>
                     <!-- 
                     <td>Weekly</td>
                     <td>

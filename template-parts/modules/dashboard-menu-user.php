@@ -77,7 +77,11 @@ $experts = get_user_meta($user->ID, 'expert');
             if(!empty($topics_internal))
                 foreach($topics_internal as $topic){
                     $name = (String)get_the_category_by_ID($topic);
-                    echo "
+                    echo "<a href='/category-overview/?category=". $topic ."' class='d-flex'>
+                            <br><br>
+                            <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
+                          </a>";
+                    /* echo "
                     <a href='/category-overview/?category=". $topic ."' class='d-flex'>
                         <div class='iconeElement'>
                             <form action='/dashboard/user/' method='POST'>
@@ -90,7 +94,7 @@ $experts = get_user_meta($user->ID, 'expert');
                         <br><br>
                         <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
                     </a>
-                    ";
+                    "; */
                 }
             ?>
             <a href="/onderwer"class="btn btnOnderwerp"><div><i class="fa fa-plus faPLusModife"></i></div>Onderwerp toevoegen</a>

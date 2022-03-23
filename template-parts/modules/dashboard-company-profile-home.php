@@ -64,7 +64,7 @@
                                 <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-2" aria-selected="false" aria-controls="block-simple-text-2" id="block-simple-text-2-tab">Skills</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-3" aria-selected="false" aria-controls="block-simple-text-3" id="block-simple-text-3-tab">Certificates</a>
+                                <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-3" aria-selected="false" aria-controls="block-simple-text-3" id="block-simple-text-3-tab">Certificaten</a>
                             </li>
                            <!--  
                                <li class="nav-item">
@@ -72,13 +72,13 @@
                                 </li>
                              -->
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-5" aria-selected="false" aria-controls="block-simple-text-5" id="block-simple-text-5-tab">Statistics</a>
+                                <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-5" aria-selected="false" aria-controls="block-simple-text-5" id="block-simple-text-5-tab">Statistieken</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-6" aria-selected="false" aria-controls="block-simple-text-6" id="block-simple-text-6-tab">Internal growth</a>
+                                <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-6" aria-selected="false" aria-controls="block-simple-text-6" id="block-simple-text-6-tab">Interne groei</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-7" aria-selected="false" aria-controls="block-simple-text-7" id="block-simple-text-7-tab">External growth</a>
+                                <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-7" aria-selected="false" aria-controls="block-simple-text-7" id="block-simple-text-7-tab">Externe groei</a>
                             </li>
 
                         </ul>
@@ -102,7 +102,7 @@
                                             <?php } ?>
                                         </div>
                                         <div class="overviewTreeBlock">
-                                            <p class="titleOvervien">Manager : <span><?php if(isset($manager->first_name) && isset($manager->last_name)) echo $manager->first_name . '' . $manager->last_name; else echo $manager->display_name; ?></span></p>
+                                            <p class="titleOvervien">Manager : <span><?php if(isset($superior->first_name) && isset($superior->last_name)) echo $superior->first_name . '' . $superior->last_name; else echo $superior->display_name; ?></span></p>
                                             <p class="titleOvervien">Company : <span><?php echo $company; ?></span></p>
                                         </div>
                                         <br>
@@ -132,7 +132,7 @@
                                         </div>
                                     </div>
                                     <div class="categorieDetailCandidat">
-                                        <h2 class="titleCategorieDetailCandidat">Candidates About bio</h2>
+                                        <h2 class="titleCategorieDetailCandidat">Over</h2>
                                         <p class="textDetailCategorie"><?php echo $biographical_info;  ?></p>
                                     </div>
                                     <?php
@@ -288,7 +288,7 @@
                                             </select>
                                             <input type="hidden" name="manager" value=<?=$manager->ID?> >
                                             <input type="hidden" name="id_user" value=<?=$user->ID?> >
-                                            <button name="add_internal_growth" class="btn btnKoop" type="submit">Refresh</button>
+                                            <button name="add_internal_growth" class="btn btnKoop" type="submit">Voeg toe</button>
                                         </div>
 
                                         <?php
@@ -394,7 +394,7 @@
                                 <p class="activiteRecent"><?php if($beschrijving_feedback) echo $beschrijving_feedback; else echo ""; ?></p>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;
                             <form action="" method="POST">
-                                <input type="hidden" name="id" value="<?php echo $key; ?>">
+                                <input type="hidden" name="id" value="<?php echo $todo->ID; ?>">
                                 <input type="hidden" name="user_id" value="<?php echo $user->ID; ?>">
                                 <button class="btn btn-danger" style="color:white" name="delete_todos" type="submit"><i class="fa fa-trash"></i></button>
                             </form>
@@ -489,7 +489,7 @@
                                 </div>
                                 <div>
                             
-                                    <input type="hidden" name="manager" value=<?=$manager->ID?> >
+                                    <input type="hidden" name="manager" value=<?=$superior->ID?> >
                                     <input type="hidden" name="id_user" value=<?=$user->ID?> >
                                     <input type="hidden" name="type" value="Feedback"> 
                                 </div>
@@ -503,7 +503,7 @@
                                     <h2 class="voegToeText">Persoonlijk ontwikkelplan</h2>
                                     <div class="col-lg-12 col-md-12">
                                         <div class="group-input-settings">
-                                            <label for="">Title persoonlijk ontwikwikkelplan</label>
+                                            <label for="">Title persoonlijk ontwikkelplan</label>
                                             <input name="title_persoonlijk" type="text" required>
                                         </div>
                                     </div>
@@ -560,7 +560,7 @@
                                     </div>
                                     <div class="">
                                         <button class="btn btnSaveSetting" name="add_todo_persoonlijk" >Save</button>
-                                        <input type="hidden" name="manager" value=<?=$manager->ID?> >
+                                        <input type="hidden" name="manager" value=<?=$superior->ID?> >
                                         <input type="hidden" name="id_user" value=<?=$user->ID?> >
                                         <input type="hidden" name="type" value="Persoonlijk ontwikkelplan"> 
                                     </div>
@@ -590,25 +590,25 @@
                                                     echo '<div class="bloclCijfers">';
                                                     echo '<p class="mb-0" style="width: 20%;">'.lcfirst((String)get_the_category_by_ID($value)).'</p>';
                                                     echo '<div class="rate feedback" id="selected_stars_'.($key+1).'">
-                                                    <input type="radio" id="star1_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="1" />
-                                                    <label class="ma_link" for="star1_'.$key.'" title="text">1 star</label>
-                                                    <input type="radio" id="star2_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="2" />
-                                                    <label class="ma_link" for="star2_'.$key.'" title="text">2 stars</label>
-                                                    <input type="radio" id="star3_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="3" />
-                                                    <label class="ma_link" for="star3_'.$key.'" title="text">3 stars</label>
-                                                    <input type="radio" id="star4_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="4" />
-                                                    <label class="ma_link" for="star4_'.$key.'" title="text">4 stars</label>
-                                                    <input type="radio" id="star5_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="5" />
-                                                    <label class="ma_link" for="star5_'.$key.'" title="text">5 stars</label>
-                                                   </div>';
+                                                            <input type="radio" id="star1_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="1" />
+                                                            <label class="ma_link" for="star1_'.$key.'" title="text">1 star</label>
+                                                            <input type="radio" id="star2_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="2" />
+                                                            <label class="ma_link" for="star2_'.$key.'" title="text">2 stars</label>
+                                                            <input type="radio" id="star3_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="3" />
+                                                            <label class="ma_link" for="star3_'.$key.'" title="text">3 stars</label>
+                                                            <input type="radio" id="star4_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="4" />
+                                                            <label class="ma_link" for="star4_'.$key.'" title="text">4 stars</label>
+                                                            <input type="radio" id="star5_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="5" />
+                                                            <label class="ma_link" for="star5_'.$key.'" title="text">5 stars</label>
+                                                        </div>';
+                                                   echo '<div class="">
+                                                            <div hidden class="group-input-settings" id="commentaire_hidden_'.($key+1).'">
+                                                                <label for="">'.lcfirst((String)get_the_category_by_ID($value)).' toelichting</label>
+                                                                <textarea name="'.lcfirst((String)get_the_category_by_ID($value)).'_toelichting" id="" rows="5" cols="85"></textarea>
+                                                            </div>
+                                                        </div>';
                                                    echo '</div>';
-                                                   echo '
-                                                   <div class="col-lg-12 col-md-12">
-                                                        <div hidden class="group-input-settings" id="commentaire_hidden_'.($key+1).'">
-                                                            <label for="">'.lcfirst((String)get_the_category_by_ID($value)).' toelichting</label>
-                                                            <textarea name="'.lcfirst((String)get_the_category_by_ID($value)).'_toelichting" id="" rows="5"></textarea>
-                                                        </div>
-                                                   </div>';
+                                                  
                                                     }
                                             }
                                                 
@@ -634,10 +634,10 @@
                                     </div>
                                 </div>
                                 <div class="">
-                                <input type="hidden" name="manager" value=<?=$manager->ID?> >
+                                    <input type="hidden" name="manager" value=<?=$superior->ID?> >
                                     <input type="hidden" name="id_user" value=<?=$user->ID?> >
                                     <input type="hidden" name="type" value="Beoordeling Gesprek">
-                                    <input type="submit" name="add_todo_beoordelingsgesprek" value="Save"  class="btn btnSaveSetting" id="volgende1">
+                                    <input type="submit" name="add_todo_beoordelingsgesprek" value="Save"  class="btn btnSaveSetting" >
                                 </div>
                             </div>
                         </div>
@@ -675,7 +675,7 @@
                                     </div>
                                 </div>
                                 <div class="">
-                                    <input type="hidden" name="manager" value=<?=$manager->ID?> >
+                                    <input type="hidden" name="manager" value=<?=$superior->ID?> >
                                     <input type="hidden" name="id_user" value=<?=$user->ID?> >
                                     <input type="hidden" name="type" value="Compliment">
                                     <button class="btn btnSaveSetting" name="add_todo_compliment" >Save</button>
@@ -711,8 +711,6 @@
     </div>
 
 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script>
 
