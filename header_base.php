@@ -263,7 +263,6 @@
                             </div>
                             <div id="croieSearch" class="btn">
                                 <i class="bi bi-x-lg text-white" style="font-size: 25px"></i>
-                                <!-- <img src="<?php echo get_stylesheet_directory_uri();?>/img/XMobile.png" alt=""> -->
                             </div>
                         </div>
                         <div class="second-element-mobile">
