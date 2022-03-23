@@ -259,7 +259,7 @@
                     <div class="d-flex align-items-center">
                         <div class="second-element-mobile">
                             <div id="searchIcone">
-                                <i class="bi bi-search text-white" style="font-size: 20px"></i>
+                                <i class="bi bi-search text-white" style="font-size: 22px"></i>
                             </div>
                             <div id="croieSearch" class="btn">
                                 <i class="bi bi-x-lg text-white" style="font-size: 25px"></i>
