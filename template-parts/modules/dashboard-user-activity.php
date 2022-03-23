@@ -277,12 +277,12 @@ $todos = get_posts($args);
                         $image = get_stylesheet_directory_uri() . '/img/Group216.png';
                 
                 ?>
-                    <a href="/dashboard/user/detail-notification/?todo=<?= $todo->ID ?>" class="SousBlockNotification">
+                    <a href="/dashboard/user/detail-notification/?todo=<?=$todo->ID?>" class="SousBlockNotification">
                         <div class="d-flex align-items-center">
                             <div class="circleNotification">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification 1.png" alt="">
                             </div>
-                            <p class="feddBackNotification"><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?> send you a  <span><?=$type;?></span></p>
+                            <p class="feddBackNotification"><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name; else echo $manager->display_name; ?> send you a  <span><?=$type;?></span></p>
                         </div>
                         <br>
                     <!-- div><p class="hoursText"></p></div> -->                    

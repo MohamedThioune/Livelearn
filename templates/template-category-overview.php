@@ -242,17 +242,25 @@
         <div>
             <form action="../dashboard/user/" method="POST">
                 <input type="hidden" name="meta_value" value="<?php echo $category ?>" id="">
-                <input type="hidden" name="meta_key" value="topic" id="">
+                <input type="hidden" name="user_id" value="<?=$user_id;?>" id="">
                 <div>
                     <?php
                         if($user_id != 0)
                         {
-                            $topics_volgers = get_user_meta($user_id, 'topic');
-                            if (in_array($category,$topics_volgers))
+                            $topics_internal = get_user_meta($user_id,'topic_affiliate');
+                            $topics_external = get_user_meta($user_id,'topic');
+                            if (in_array($category, $topics_internal)){
+                                echo '<input type="hidden" name="meta_key" value="topic_affiliate" id="">';
+                                echo "<a href='#' class='btn btn-info rounded-pill text-white font-weight-bold p-1 px-2'>verwijder uit leeromgeving</a>";
+                            }
+                            else if(in_array($category, $topics_external)){
+                                echo '<input type="hidden" name="meta_key" value="topic" id="">';
                                 echo "<button type='submit' class='btn btn-danger rounded-pill text-white font-weight-bold p-1 px-2' name='delete' >verwijder uit leeromgeving</button>";
-                            else
+                            }else{
+                                echo '<input type="hidden" name="meta_key" value="topic" id="">';
                                 echo "<button type='submit' style='background: #00A89D'
-                                class='btn btn-success rounded-pill text-white font-weight-bold p-1 px-2' name='interest_push' >Toevoegen aan Leeromgeving</button>";       
+                                class='btn btn-success rounded-pill text-white font-weight-bold p-1 px-2' name='interest_push' >Toevoegen aan Leeromgeving</button>";   
+                            }    
 
                             echo "<img style='height: 30px;' class='rounded-pill' src='" . $logo_livelearn . "' alt=''>";
                         }
@@ -260,6 +268,7 @@
                     ?>
                 </div>
             </form> 
+
                 <?php
                 
                 if($user_id == 0){

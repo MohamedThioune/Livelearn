@@ -36,7 +36,7 @@
                     <div class="globalnotificationBy">
                         <div class="contentImgName">
                             <div class="contentImg">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" alt="">
+                                <img src="<?=$image?>" alt="">
                             </div>
                             <div>
                                 <p class="name"><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->last_name; else echo $manager->display_name; ?></p>
@@ -58,28 +58,21 @@
                                     echo '<br> <b>Title:</b> '.$value->post_title;
                                     echo '<br> <b>Algemene beoordeling:</b> '. get_field('algemene_beoordeling', $value->ID). '<br>';
                                     $stopics_rates_comment = explode(';',get_field('rate_comments', $value->ID));
-                                    echo '<div class="bloclCijfers">';
+                                    echo '<div class="bloclCijfers inputGroein">';
                                         for($i=0; $i<count($stopics_rates_comment); $i++)
                                         {
                                             $stars = intval($stopics_rates_comment[$i+1]);
                                             $topics=(String)get_the_category_by_ID(intval($stopics_rates_comment[$i]));
-                                            //echo '<p class="mb-0" style="width: 20%;"><b>'. (String)get_the_category_by_ID(intval($stopics_rates_comment[$i])) . '</b></p>';
                                                 
                                                     if($topics!= "")
                                                         echo '<p>'.$topics.'</p>';
                                                 
                                             echo '<div class="rate">';
 
-                                                /* for($index=5; $index > $stars; $index--)
-                                                    echo '<input type="radio" id="star'.$index.'__" name="sales_rate_'.$index.'" value="" disabled="true"/>
-                                                          <label class="ma_link" for="star'.$index.'__" title="text">'.$index.' stars</label>';*/
                                                 
-                                                for($in=$stars; $in >= 1; $in--)
+                                            for($in=$stars; $in >= 1; $in--)
                                                 echo "⭐";
-                                                
-                                               
-                                                // echo '<input type="radio" id="star'.$in.'__" name="sales_rate_'.$in.'" value="" disabled="true"/>
-                                                //         <label class="ma_link" for="star'.$in.'__" title="text">'.$in.' stars</label>'; 
+                                                                                            
                                                       
                                             echo "</div><br>";
                                             echo '<div class="mb-0" style="width: 100%;">'. $stopics_rates_comment[$i+2] . '</div>';
@@ -87,7 +80,7 @@
                                         }
                                     echo '</div>';
                                     break;
-                                    //Pour afficher les infos de type Persoonlijk Ontwikkelplan
+                                //Pour afficher les infos de type Persoonlijk Ontwikkelplan
                                 case 'Persoonlijk Ontwikkelplan' :
 
                                     echo '<br> <b>Title:</b> '. $value->post_title;
@@ -160,8 +153,11 @@
                     <?php 
                     
                     foreach($todos as $key=>$todo) {
-                        $value = explode(";", $todo);
-                        $manager = get_users(array('include'=> $value[2]))[0]->data;
+                        if($key == 10)
+                            break;
+
+                        $type = get_field('type_feedback', $todo->ID);
+                        $manager = get_field('manager_feedback', $todo->ID);
                         $image = get_field('profile_img',  'user_' . $manager->ID);
                         if(!$image)
                             $image = get_stylesheet_directory_uri() . '/img/Group216.png';
@@ -169,10 +165,10 @@
                         <div class="SousBlockNotification">
                             <div class="d-flex align-items-center">
                                 <div class="circleNotification">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification 1.png" alt="">
+                                    <img src="<?php echo $image ?>" alt="">
                                 </div>
                                 <p class="feddBackNotification">
-                                    <?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?> send you a  <span>Feedback</span></p>
+                                    <?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?> send you a  <span><?=$type?></span></p>
                             </div>
                             <!-- <p class="hoursText">0 hours ago</p> -->                    
                         </div>

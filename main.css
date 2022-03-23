@@ -1,0 +1,98 @@
+body, html {
+    overflow-x: hidden !important;
+}
+body{
+    padding-right: 0px !important;
+}
+.LeerBlock {
+    border-bottom: 2px solid #043356 !important;
+}
+.checkmarkUpdated{
+    background-color: white !important;
+    border: 2px solid #043356 !important;
+}
+.modal-backdrop.show { /* to remove gray side on the bottom */
+    opacity: .5;
+    display: none;
+}
+.border-right-adapt {
+    border-top-left-radius: 25px; border-bottom-left-radius: 25px;
+}
+.border-left-adapt {
+    border-top-right-radius: 25px; border-bottom-right-radius: 25px;
+}
+.modal-dialog{
+    width: 40% !important;
+}
+
+.lees_alles:hover {
+    color: #fff !important;
+    background-color: #023356;
+}
+.swiper {
+    width: 600px;
+}
+.swiper-moved{
+    color: #023356 !important;
+    font-size: 12px;
+}
+/* ------------------- Show more Text -------------- */
+.text-limit p,.text-limit .moreText{
+    display:none;
+}
+.text-limit{
+    display:block;
+     overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /** number of line to display! */
+    -webkit-box-orient: vertical;   
+}
+.text-limit.show-more .moreText, .text-limit.show-more p, .text-limit.show-more {
+    display: block;
+}
+
+.text-limit_product { /* for product search */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box; 
+    -webkit-line-clamp: 2; /* number of lines to show */
+            line-clamp: 2; 
+    -webkit-box-orient: vertical;
+}
+
+/* @media all and (max-width: 753px) {
+    .modal-dialog{
+         width: 90% !important;
+    }  
+} */
+@media all and (min-width: 763px) and (max-width: 900px) {
+    .modal-dialog{
+         width: 70% !important;
+    } 
+}
+
+@media all and (max-width: 764px) {
+    .border-right-adapt {
+        border-radius: 0px;
+    }
+    .border-left-adapt {
+        border-radius: 0px;
+    }
+    .skill-text{
+        font-size: 1rem; 
+    }
+    .modal-dialog{
+        width: 90% !important;
+    }  
+}
+
+
+/* style user-overview */
+.nav-link.active {
+    border-bottom: 3px solid #00A89D !important;
+    background-color: #E0EFF4 !important;
+}
+/* category-overview */
+/* course online */
+/* course offline */

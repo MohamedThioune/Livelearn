@@ -19,7 +19,20 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
 ?>
     <div class="cardPeople">
         <div class="headListeCourse">
-            <p class="JouwOpleid">Werknemers (5)</p>
+            <?php
+                $count = 0;
+                foreach($users as $user)
+                    if($user_connected != $user->ID ){
+                        $company = get_field('company',  'user_' . $user->ID);
+                        if(!empty($company)){
+                            $company = $company[0]->post_title;
+                            if($company == $company_connected)
+                                $count++;
+                        }
+                    }
+            ?>
+            
+            <p class="JouwOpleid">Werknemers (<?=$count;?>)</p>
             <form action="" method="POST" class="form-inline ml-auto mb-0">
                 <input class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" id="search_text">
             </form>

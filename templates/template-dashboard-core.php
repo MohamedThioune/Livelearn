@@ -133,13 +133,15 @@ else if(isset($interest_save)){
 
 /**
  * Start Feedback Handling
- */
+*/
+
 // Feedback & compliment saving 
 else if(isset($_POST['add_todo_feedback']) || isset($_POST['add_todo_compliment']) ){
     $id_user = $_POST['id_user'];
     $title_feedback = $_POST['title_feedback'];
     $type = $_POST['type'];
     $manager = get_user_by('id',$_POST['manager']);
+
     $onderwerp_feedback='';
     if (isset ($_POST['onderwerp_feedback']) &&  !empty($_POST['onderwerp_feedback']))
         foreach ($_POST['onderwerp_feedback']as  $value) {
@@ -160,8 +162,6 @@ else if(isset($_POST['add_todo_feedback']) || isset($_POST['add_todo_compliment'
 
     //Add further informations for feedback
     update_field('onderwerp_feedback', $onderwerp_feedback, $post_id);
-    //update_field('manager', get_current_user_id(), $post_id);
-    //update_field('type', $type, $post_id);
     update_field('manager_feedback', $manager, $post_id);
     update_field('type_feedback', $type, $post_id);
     update_field('beschrijving_feedback', $beschrijving_feedback, $post_id);
@@ -169,38 +169,14 @@ else if(isset($_POST['add_todo_feedback']) || isset($_POST['add_todo_compliment'
     $message = "/dashboard/company/profile/?id=". $id_user. "&manager=" . get_current_user_id() . "&message=Uw actie is met succes beïnvloed"; 
     header("Location: ". $message);
 }
-// // Complimentsaving
-// else if(isset($_POST['add_todo_compliment'])){
-
-//     $id_user = $_POST['id_user'];
-//     $title_compliment = $_POST['title_compliment'];
-//     $type = $_POST['type'];
-//     $onderwerp_compliment = '';
-//     if (isset ($_POST['onderwerp_compliment']) &&  !empty($_POST['onderwerp_compliment']))
-//         foreach ($_POST['onderwerp_compliment'] as $value) {
-//             $onderwerp_compliment.=$value.';';        
-//         }
-//     $beschrijving_compliment = $_POST['beschrijving_compliment'];
-//     $bunch = array();
-//     $fields = " ";
-//     $state = 0;
-//     $bunch = get_field('todos',  'user_' . $id_user);
-//     $fields = $title_compliment . ';' . $beschrijving_compliment . ';'.get_current_user_id(). ';' . $type . ';' . $onderwerp_compliment . ';' . $state;
-//     array_push($bunch, $fields);  
-//     if(!empty($bunch))
-//         update_field('todos', $bunch, 'user_'. $id_user);
-//     else
-//         update_field('todos', $fields, 'user_'.$id_user);
-
-//     $message = "/dashboard/company/profile/?id=". $id_user. "&manager=" . get_current_user_id() . "&message=Uw actie is met succes beïnvloed"; 
-//     header("Location: ". $message);
-// }
 
 // Beoordelingsgesprek saving
 else if(isset($_POST['add_todo_beoordelingsgesprek'])){
     $id_user = $_POST['id_user'];
     $title_beoordelingsgesprek = $_POST['title_beoordelingsgesprek'];
     $type = $_POST['type'];
+    $manager = get_user_by('id',$_POST['manager']);
+
     $algemene_beoordeling = $_POST['algemene_beoordeling'];
     $rates_comments='';
     $topic_affiliate = get_user_meta($id_user,'topic_affiliate');
@@ -230,20 +206,9 @@ else if(isset($_POST['add_todo_beoordelingsgesprek'])){
     update_field('manager_feedback', $manager, $post_id);
     update_field('type_feedback', $type, $post_id);
     update_field('algemene_beoordeling', $algemene_beoordeling, $post_id);
-    // $bunch = get_field('todos',  'user_' . $id_user);
-    // $fields = $title_beoordelingsgesprek . ';' .$algemene_beoordeling . ';' .get_current_user_id() . ';'. $type . ';' .$rates_comments. ';' .$state;
-    // $new_fields=explode(';',$fields);
-    // $topics=explode ('~',$new_fields[4]);
-    //  //var_dump($fields);
-    //  //var_dump($new_fields);
-    //   array_push($bunch, $fields);  
-    //   if(!empty($bunch))
-    //       update_field('todos', $bunch, 'user_'. $id_user);
-    //   else
-    //       update_field('todos', $fields, 'user_'.$id_user);
 
-      $message = "/dashboard/company/profile/?id=". $id_user. "&manager=" . get_current_user_id() . "&message=Uw actie is met succes beïnvloed"; 
-      header("Location: ". $message);
+    $message = "/dashboard/company/profile/?id=". $id_user. "&manager=" . get_current_user_id() . "&message=Uw actie is met succes beïnvloed"; 
+    header("Location: ". $message);
 }
 
 //Persoonlijk ontwikkelplan saving
@@ -253,6 +218,7 @@ else if(isset($_POST['add_todo_persoonlijk']))
     $title_feedback = $_POST['title_persoonlijk'];
     $type = $_POST['type'];
     $manager = get_user_by('id',$_POST['manager']);
+
     $onderwerp_feedback = '';
     if (isset ($_POST['onderwerp_pop']) &&  !empty($_POST['onderwerp_pop']))
         foreach ($_POST['onderwerp_pop'] as $value) {
@@ -304,16 +270,10 @@ else if (isset($_POST['add_internal_growth'])){
 }
 
     
-
 /**
  * End Feedback Handling
- */
-
-
-
-/*
-* *
 */
+
 
 /*
 * * Push interests  
@@ -346,7 +306,7 @@ else if(isset($delete)){
     if($meta_value != null){
         if(delete_user_meta($user_id, $meta_key, $meta_value)){
             $message = "Met succes verwijderd";
-            if($meta_key == "topic")
+            if($meta_key == "topic" || $meta_key == "topic_affiliate")
                 header("location:/dashboard/user/?message=".$message);
             else{
                 $user_connected = get_current_user_id();
@@ -377,21 +337,11 @@ else if(isset($delete_favorite)){
 else if(isset($delete_todos)){
     $message = "Met succes verwijderd";
     $user_connected = get_current_user_id();
-    $todos = get_field('todos',  'user_' . $user_id);
-    $bunch = array();
-    foreach($todos as $key => $value){
-        if($key == $id)
-            continue;
-        else
-            array_push($bunch,$value);
-    }
-    update_field('todos', $bunch, 'user_'. $user_id);
-    $todos = get_field('todos',  'user_' . $user_id);
+    wp_delete_post($_POST['id']);
 
     $content = "/dashboard/company/profile/?id=" . $user_id . '&manager='. $user_connected . "?message=" . $message; 
     header("location:".$content);
 }
-
  
 ?>
 <?php wp_head(); ?>
@@ -464,3 +414,4 @@ else{
 
 <?php get_footer();?>
 <?php wp_footer(); ?>
+

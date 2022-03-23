@@ -151,17 +151,47 @@ $expert = get_field('experts', $post->ID);
 $author = array($post->post_author);
 
 $experts = array_merge($expert, $author);
-if (is_array(get_field('favorited', $post->ID)) || is_object(get_field('favorited', $post->ID)))
+
 $favoured = count(get_field('favorited', $post->ID));
+if(!$favoured)
+    $favoured = 0;
+
 ?>
 
 <style>
-    body{
-        padding-top: 0px !important;
+    .swiper {
+        width: 600px;
+        /* height: 300px; */
+    }
+    .swiper-moved{
+        color: #023356 !important;
+        font-size: 12px;
+    }
+    #burgerCroie {
+        display: none;
+        margin-top: -6px;
+    }
+     /* ------------------- Show more Text -------------- */
+    .text-limit p,.text-limit .moreText{
+        display:none;
+    }
+    .text-limit p:first-child, .text-limit{
+        display:block;
+         overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 4; /** number of line to display! */
+        -webkit-box-orient: vertical;   
+    }
+    .text-limit.show-more .moreText, .text-limit.show-more p, .text-limit.show-more {
+        display: block;
     }
     a{
         text-decoration: none !important;
         color: black !important;
+    }
+    body{
+        padding-top: 0 !important;
     }
 </style>
 
@@ -170,37 +200,61 @@ $favoured = count(get_field('favorited', $post->ID));
 
 <!-- ---------------------------------------- Start modals ---------------------------------------------- -->
 <div class="modal fade" id="direct-contact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal-dialog">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Direct contact</h5>
+        <div class="modal-header mx-4" style="border-bottom: none !important">
+            <div></div>
+            <h5 class="modal-title fw-bold" id="exampleModalLabel" style="color: #023356">Direct contact</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-            <div class="text-center">
-                <a href="" class="mx-2">
-                    <img class="mb-2"
-                    src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
-                </a>
-                <a href="" class="mx-3">
-                    <i style="font-size: 20px"
-                    class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white"></i>
-                    <!-- border border-3 border-success rounded-circle p-2 -->
-                </a>
-                <a href="" class="mx-3">
-                    <i style="font-size: 30px" class="fa fa-comment"></i>
-                </a>
-                <a href="" class="mx-2 test bg-primary" style="height: 85rem">
-                    <!-- <div class=""> -->
-                        <i style="font-size: 40px;"  class="fab fa-whatsapp text-success"></i>
-                    <!-- </div> -->
-                </a>
+        <div class="modal-body">    
+            <div class="d-flex justify-content-center">
+               
+                <div>
+                    <a href="#" class="mx-3 d-flex flex-column ">
+                        <i style="font-size: 50px; height: 49px; margin-top: -4px;" 
+                            class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>                                           
+                    </a>
+                    <div class="mt-3 text-center">
+                        <span class="bd-highlight fw-bold text-success mt-2">whatsapp</span>
+                    </div>
+                </div>
+                <div>
+                    <a href="#" class="mx-3 d-flex flex-column ">
+                        <i style="font-size: 25px"
+                        class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>                     
+                        <!-- <span class="bd-highlight fw-bold text-primary mt-2">email</span> -->
+                    </a>
+                    <div class="mt-3 text-center">
+                         <span class="bd-highlight fw-bold text-danger mt-5">email</span>
+                    </div>  
+                </div>
+                <div>
+                    <a href="#" class="mx-3 d-flex flex-column ">
+                        <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>                     
+                    </a>
+                    <div class="mt-3 text-center">
+                         <span class="bd-highlight fw-bold text-secondary mt-5">message</span>
+                    </div>
+                </div>
+
+                <div>
+                    <a href="#" class="mx-3 d-flex flex-column ">
+                        <i class="bd-highlight bi bi-telephone-x border border-3 border-primary rounded-circle text-primary shadow"
+                        style="font-size: 20px; padding: 6px 11px;"></i>
+                        <!-- <span class="bd-highlight fw-bold text-primary mt-2">call</span> -->
+                    </a>
+                    <div class="mt-3 text-center">
+                         <span class="bd-highlight fw-bold text-primary mt-5">call</span>
+                    </div>
+                </div>
                 
             </div>
+
         </div>
-        <div class="modal-footer">
+        <!-- <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
+        </div> -->
         </div>
     </div>
 </div>
@@ -212,15 +266,11 @@ $favoured = count(get_field('favorited', $post->ID));
                 <h5 class="modal-title" id="exampleModalLabel">Incompany</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-
-            
+            <div class="modal-body">            
                 
                 <?php 
                     echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true'] "); 
-                ?>
-
-                
+                ?>                
 
             </div>
         </div>
@@ -234,12 +284,10 @@ $favoured = count(get_field('favorited', $post->ID));
                 <h5 class="modal-title" id="exampleModalLabel">Brochure</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                
-            <?php 
+            <div class="modal-body">                
+               <?php 
                     echo do_shortcode("[gravityform id='6' title='false' description='false' ajax='true'] "); 
                 ?>
-
             </div>
         </div>
     </div>
@@ -248,18 +296,21 @@ $favoured = count(get_field('favorited', $post->ID));
 <div class="modal fade" id="voor-wie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Voor Wie</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            
-
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+            <div class="modal-body">
+                <div class="">
+                    <!-- <img alt="course design_undrawn" 
+                     src="<?php echo get_stylesheet_directory_uri(); ?>/img/voorwie.png"> -->
+                    
+                    <?php
+                        $author = get_user_by('id', $post->post_author);
+                    ?>
+                    <div class="content-text p-4 pb-0">
+                        <h4 class="text-dark">Voor wie ?</h4>
+                        <p class="m-0"><strong>This course is followed up by <?php if(isset($author->first_name) && isset($author->last_name)) echo $author->first_name . '' . $author->last_name; else echo $author->display_name; ?> </strong></p>
+                        <p><em>This line rendered as italicized text.</em></p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -295,7 +346,6 @@ $favoured = count(get_field('favorited', $post->ID));
                     <?php
                         }
                     ?>
-                    <!-- <button class="btn btnPhilo"> <?php echo $category; ?> </button> -->
                     <a href="category-overview?category=<?php echo $id_category ?>" class="bd-highlight ">
                             <button class="btn py-0 btnPhilo"> <span class="text-white"><?php echo $category; ?></span></button>
                     </a>
@@ -587,10 +637,10 @@ $favoured = count(get_field('favorited', $post->ID));
                         $company_title = $company[0]->post_title;
                         $company_logo = get_field('company_logo', $company_id);
                 ?>
-                <div href="/opleider-courses?companie=<?php echo $company_id ; ?>"  class="imgCardPrice">
-                <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" ><img src="<?php echo $company_logo; ?>" alt="company logo"></a>
-                </div>
-                <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="liveTextCadPrice h5"><?php echo $company_title; ?></a>
+                    <div href="/opleider-courses?companie=<?php echo $company_id ; ?>"  class="imgCardPrice">
+                    <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" ><img src="<?php echo $company_logo; ?>" alt="company logo"></a>
+                    </div>
+                    <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="liveTextCadPrice h5"><?php echo $company_title; ?></a>
                 
                 <?php
                     }
@@ -636,7 +686,7 @@ $favoured = count(get_field('favorited', $post->ID));
                 <p class="btwText">LIFT member korting: 28%</p>
                 
                 
-                <a href="#bookdates" class="btn btnKoop">Koop deze <?php echo $course_type; ?></a>
+                <button href="#bookdates" class="btn btnKoop text-white PrisText" style="background: #043356">Koop deze <?php echo $course_type; ?></button>
             </div>
 
             <div class="col-12 my-5" style="background-color: #E0EFF4">
@@ -682,7 +732,6 @@ $favoured = count(get_field('favorited', $post->ID));
                         <!-- If we need scrollbar -->
                         <!-- <div class="swiper-scrollbar"></div> -->
                     </div>
-
 
                 </div>
             </div>  
@@ -952,7 +1001,7 @@ $favoured = count(get_field('favorited', $post->ID));
                     <button id="whatsapp"  class="btn contentIcone">
                         <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/whatsapp.png" alt="">
                     </button>
-                    <p class="titleIcone">WhatsApp</p>
+                    <p class="titleIcone">WhatsAppp</p>
                 </div>
                 <div class="contentElementPartage">
                     <button class="btn contentIcone">
@@ -1011,13 +1060,9 @@ $favoured = count(get_field('favorited', $post->ID));
 
 </div>
 
-
-<!-- scritpt for modal -->
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-
 <script>
     $("#btn_favorite").click((e)=>
     {

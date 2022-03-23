@@ -1,10 +1,11 @@
 <?php
-     $users = get_users();
-     $data_user = wp_get_current_user();
-     $user_connected = $data_user->data->ID;
-     $company = get_field('company',  'user_' . $user_connected);
-     if(!empty($company))
-         $company_connected = $company[0]->post_title;
+    $users = get_users();
+
+    $members = array();
+
+    foreach($users as $user)
+        if(in_array( 'author', $user->roles ) )
+            array_push($members, $user);   
 ?>
     <div class="row">
         <div class="col-md-5 col-lg-8">
@@ -17,12 +18,15 @@
                         <div class="acf-field">
                             <label for="locate">Wijs andere experts uit uw team aan voor deze cursus :</label><br>
                             <div class="form-group formModifeChoose" >
-                                <input type="search" name="search_expert" id="search_expert" class="form-control">
-                                <br>
-
+                                
                                 <div class="form-group formModifeChoose">
-
+                                    
                                     <select name="experts[]" id="autocomplete" class="multipleSelect2" multiple="true">
+                                        <?php 
+                                            foreach($members as $member) {
+                                                echo "<option value='" . $member->ID ."'>" . $member->display_name . "</option>";
+                                            }
+                                        ?>
                                     </select>
 
                                 </div>
@@ -61,6 +65,8 @@
         </div>
         
     </div>
+
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 
     <script>
     $("#search_expert").keyup(()=>

@@ -52,6 +52,7 @@
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/custom.css" />
+        <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/main.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -89,8 +90,7 @@
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ));
 
-
-
+    
     foreach($cats as $category){
         $cat_id = strval($category->cat_ID);
         $category = intval($cat_id);
@@ -256,9 +256,9 @@
                 </a>
                 <div class="sousNav3">
 
-                    <div class="d-flex">
+                    <div class="d-flex align-items-center">
                         <div class="second-element-mobile">
-                            <div id="searchIcone" class="mt-1">
+                            <div id="searchIcone">
                                 <i class="bi bi-search text-white" style="font-size: 20px"></i>
                             </div>
                             <div id="croieSearch" class="btn">
