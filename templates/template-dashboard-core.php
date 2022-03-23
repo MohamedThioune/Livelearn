@@ -224,8 +224,7 @@ else if(isset($_POST['add_todo_beoordelingsgesprek'])){
         'post_status' => 'publish'
       );
 
-      $post_id = wp_insert_post($post_data);
-
+    $post_id = wp_insert_post($post_data);
     //Add further informations for Beoordelingsgesprek
     update_field('rate_comments', $rates_comments, $post_id);
     update_field('manager_feedback', $manager, $post_id);
