@@ -4,25 +4,112 @@
 global $post;
 $product = wc_get_product( get_field('connected_product', $post->ID) ); 
 $long_description = get_field('long_description', $post->ID);
+$data = get_field('data_locaties', $post->ID);
+    if(!$data){
+        $data = get_field('data_locaties_xml', $post->ID);
+        $xml_parse = true;
+    }
+
+    if(!isset($xml_parse)){
+        if(!empty($data)){
+            foreach($data as $datum) {
+                $date_end = '';
+                $date_start = ''; 
+                $agenda_start = '';
+                $agenda_end = '';
+                if(!empty($datum['data'])) {
+                    $date_start = $datum['data'][0]['start_date'];
+                    if($date_start)
+                        if(count($datum['data']) >= 1){
+                            $date_end = $datum['data'][count($datum['data'])-1]['start_date'];
+                            $agenda_start = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
+                            if($date_end)
+                                $agenda_end = explode('/', explode(' ', $date_end)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_end)[0])[1]];
+                        }
+                }
+
+                // if(!empty($datum['data'])) {
+                //     echo $agenda_start;
+                //             if($date_start != '' && $date_end != '') 
+                //             {
+                //                 echo ' - '; 
+                //                 echo $agenda_end;
+                //             }
+                //             for($i = 0; $i < count($datum['data']); $i++) { 
+                //                 $date_start = $datum['data'][$i]['start_date'];
+                //                 $location = $datum['data'][$i]['location'];
+                //                 if($date_start != null) {
+                //                     $day = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
+                //                     $hour = explode(' ', $date_start)[1];
+                //                 }
+            
+                //             }
+                //         }
+                    
+                }
+            }
+        }
+            else
+                        if($data){
+                            $it = 0;
+                            foreach($data as $datum) {
+                                $infos = explode(';', $datum['value']);
+                                $number = count($infos)-1;
+                                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];    
+                                $date_start = explode(' ', $infos[0]);
+                                $date_end = explode(' ', $infos[$number]);
+                                $d_start = explode('/',$date_start[0]);
+                                $d_end = explode('/',$date_end[0]);
+                                $h_start = explode('-', $date[1])[0];
+                                $h_end = explode('-', $date_end[1])[0];
+                                $agenda_start = $d_start[0] . ' ' . $calendar[$d_start[1]];
+                                $agenda_end = $d_end[0] . ' ' . $calendar[$d_end[1]];
+                            }
+                        }
+    if (isset($xml_parse))
+    {
+        $start=explode('/',$date_start[0]);
+        $end=explode('/',$date_end[0]);
+        //var_dump($date_start[0],$date_end[0]);
+        $month_start = date('F', mktime(0, 0, 0, $start[1], 10));
+        $month_end = date('F', mktime(0, 0, 0, $end[1], 10));
+        $number_course_day=((strtotime($end[0].' '.$month_end.' '.$end[2]) - strtotime($start[0].' '.$month_start.' '.$start[2]))/86400);
+    
+    }
+    else
+    {
+        $start=explode('/',$date_start);
+        $end=explode('/',$date_end);
+        $year_start=explode(' ',$start[2]);
+        $year_end=explode(' ',$end[2]);
+        //var_dump($date_start,$date_end);
+        $month_start = date('F', mktime(0, 0, 0, $start[1], 10));
+        $month_end = date('F', mktime(0, 0, 0, $end[1], 10));
+        $number_course_day= ((strtotime($end[0].' '.$month_end.' '.$year_end[0]) - strtotime($start[0].' '.$month_start.' '.$year_start[0]))/86400);
+    }
+    if (($number_course_day==0 ))
+    $number_course_day=1;
+                
+            
+            
+        
+
+
+
 
 /*
 *  Date and Location
-*/ 
+*/
 $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
 
 $data = get_field('data_locaties', $post->ID);
 $price = get_field('price', $post->ID) ?: 'Gratis';
-
 $prijsvat = get_field('prijsvat', $post->ID);
-
 $agenda = get_field('agenda', $post->ID);
 $who = get_field('for_who', $post->ID);
 $results = get_field('results', $post->ID);
-
 $course_type = get_field('course_type', $post->ID);
-
 $category = " ";
-
 $tree = get_the_terms($post->ID, 'course_category'); 
 if($tree)
     if(isset($tree[2])){
@@ -48,7 +135,6 @@ if($category == ' '){
 }
 
 $user_id = get_current_user_id();
-
 $image_author = get_field('profile_img',  'user_' . $post->post_author);
 if(!$image_author)
     $image_author = get_stylesheet_directory_uri() ."/img/placeholder_user.png";
@@ -239,7 +325,7 @@ $favoured = count(get_field('favorited', $post->ID));
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-calendar-alt" style="font-size: 25px;"></i>
-                            <span class="textIconeLearning mt-1">I dagdee</span>
+                            <span class="textIconeLearning mt-1"><?= $number_course_day." dagdeel" ?></span>
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-graduation-cap" style="font-size: 25px;"></i>
@@ -295,7 +381,15 @@ $favoured = count(get_field('favorited', $post->ID));
                                     <div class="tab">
                                         <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                                         <hr class="hrModifeDeel">
+                                        <?php
+                                       if ($user_id==0)
+                                       {
+                                        ?>
                                         <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
+                                        <?php
+                                       
+                                        }
+                                        ?>
                                     </div>
                                     <div id="Extern" class="tabcontent">
                                     <div class="contentElementPartage">
@@ -339,13 +433,24 @@ $favoured = count(get_field('favorited', $post->ID));
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="Intern" class="tabcontent">
-                                        <form action="" class="formShare">
-                                            <input type="text" placeholder="Gebruikersnaam">
-                                            <input type="text" placeholder="Wachtwoord">
-                                            <button class="btn btnLoginModife">Log-in</button>
-                                        </form>
-                                    </div>
+                                    <?php
+                                       if ($user_id==0)
+                                       {
+                                        ?>  
+                                        <div id='Intern' class='tabcontent px-md-5 p-3'>
+                                        <?php        
+                                        wp_login_form([
+                                                'redirect' => 'http://wp12.influid.nl/dashboard/user/',
+                                                'remember' => false,
+                                                'label_username' => 'Wat is je e-mailadres?',
+                                                'placeholder_email' => 'E-mailadress',
+                                                'label_password' => 'Wat is je wachtwoord?'
+                                        ]);
+                                        ?>
+                                            </div>
+                                            <?php
+                                       }
+                                            ?>
                                 </div>
                             </div>
                         </div>
@@ -595,14 +700,12 @@ $favoured = count(get_field('favorited', $post->ID));
     }
 
     if(!isset($xml_parse)){
-
         if(!empty($data)){
             foreach($data as $datum) {
                 $date_end = '';
                 $date_start = ''; 
                 $agenda_start = '';
                 $agenda_end = '';
-
                 if(!empty($datum['data'])){
                     $date_start = $datum['data'][0]['start_date'];
                     if($date_start)
@@ -641,9 +744,8 @@ $favoured = count(get_field('favorited', $post->ID));
 
                             for($i = 0; $i < count($datum['data']); $i++) { 
                                 $date_start = $datum['data'][$i]['start_date'];
-
                                 $location = $datum['data'][$i]['location'];
-                                if($date_start != null){
+                                if($date_start != null) {
                                     $day = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
                                     $hour = explode(' ', $date_start)[1];
 
@@ -672,7 +774,6 @@ $favoured = count(get_field('favorited', $post->ID));
                                 <!-- <a href="" class="btn btnReserveer">Reserveer<br><br></a> -->
                                 <!-- <a href="" class="btn btnSchrijf">Schrijf mij in!</a> -->
                                 <?php do_action( 'woocommerce_before_add_to_cart_form' ); ?>
-
                                 <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
                                     <?php do_action( 'woocommerce_before_add_to_cart_button' ); ?>
                                     <?php
@@ -727,7 +828,6 @@ $favoured = count(get_field('favorited', $post->ID));
                 $d_end = explode('/',$date_end[0]);
                 $h_start = explode('-', $date[1])[0];
                 $h_end = explode('-', $date_end[1])[0];
-        
                 $agenda_start = $d_start[0] . ' ' . $calendar[$d_start[1]];
                 $agenda_end = $d_end[0] . ' ' . $calendar[$d_end[1]];
         ?>
@@ -838,7 +938,14 @@ $favoured = count(get_field('favorited', $post->ID));
                 <div class="tab">
                     <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                     <hr class="hrModifeDeel">
+                    <?php
+                        if ($user_id==0)
+                            {
+                    ?>
                     <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
+                    <?php
+                        }
+                    ?>
                 </div>
                 <div id="Extern" class="tabcontent">
                 <div class="contentElementPartage">
@@ -882,6 +989,10 @@ $favoured = count(get_field('favorited', $post->ID));
                         </div>
                     </div>
                 </div>
+                <?php
+                                       if ($user_id==0)
+                                       {
+                                        ?>
                 <div id="Intern" class="tabcontent">
                     <form action="" class="formShare">
                         <input type="text" placeholder="Gebruikersnaam">
@@ -889,6 +1000,9 @@ $favoured = count(get_field('favorited', $post->ID));
                         <button class="btn btnLoginModife">Log-in</button>
                     </form>
                 </div>
+                <?php
+                                       }
+                                        ?>
             </div>
         </div>
     </div>
