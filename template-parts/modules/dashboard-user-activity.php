@@ -391,12 +391,16 @@ $todos = get_posts($args);
                         </div>
                     </div>
                     <div class="d-flex">
+                       <!--  
                         <button class="btn btnViewCours">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/viewC.png" alt="">
-                        </button>
-                        <button class="btn btnViewCours">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/trashC.png" alt="">
-                        </button>
+                        </button> 
+                        -->
+                        <form action="" method="POST">
+                            <button type="submit" class="btn btnViewCours">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/trashC.png" alt="">
+                            </button>
+                        </form>
                     </div>
                 </div>
             </a>

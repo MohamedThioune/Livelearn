@@ -27,6 +27,7 @@
                     <div class="circleIndicator  passEtape"></div>
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>
+                <?php if(isset($_GET['id'])){ ?>
                 <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&step=2" class="contentBlockCourse">
                     <div class="circleIndicator passEtape"></div>
                     <p class="textOpleidRight">Uitgebreide beschrijving</p>
@@ -47,6 +48,8 @@
                     <div class="circleIndicator"></div>
                     <p class="textOpleidRight">Experts</p>
                 </a>
+                <?php } ?>
+
             </div>
         </div>
     </div>

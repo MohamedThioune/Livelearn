@@ -59,7 +59,7 @@
                     </div>
                     <form id="step1">
                         <div class="acf-field">
-                            <label for="locate">Specifieke baan :</label><br>
+                            <label for="locate">Baangerichte :</label><br>
                             <div class="form-group formModifeChoose">
 
                                 <select id="form-control-bangers"  form="foo_form" class="multipleSelect2 dropdown" multiple="true">
@@ -73,7 +73,7 @@
 
                             </div>
 
-                            <label for="locate">Functies :</label><br>
+                            <label for="locate">Functiegerichte :</label><br>
                             <div class="form-group formModifeChoose">
 
                                 <select id="form-control-functs" class="multipleSelect2" multiple="true">
@@ -87,7 +87,7 @@
 
                             </div>
 
-                            <label for="locate">Skills :</label><br>
+                            <label for="locate">Skill :</label><br>
                             <div class="form-group formModifeChoose">
 
                                 <select id="form-control-skills" class="multipleSelect2" multiple="true">
@@ -101,7 +101,7 @@
 
                             </div>
 
-                            <label for="locate">Persoonlikje interesses :</label><br>
+                            <label for="locate">Persoonlijke :</label><br>
                             <div class="form-group formModifeChoose">
 
                                 <select id="form-control-interess" class="multipleSelect2" multiple="true">
@@ -134,7 +134,7 @@
                 <div class="blockCourseToevoegen">
                     <p class="courseToevoegenText">Course toevoegen</p>
                     <div class="contentBlockRight">
-                        <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=1" class="contentBlockCourse">
+                        <a href="/dashboard/teacher/course-selection/?func=add-article&id=<?php echo $_GET['id'];?>&step=1" class="contentBlockCourse">
                             <div class="circleIndicator  passEtape"></div>
                             <p class="textOpleidRight">Basis informatie</p>
                         </a>

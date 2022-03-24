@@ -43,7 +43,7 @@
             <div class="blockCourseToevoegen">
                 <p class="courseToevoegenText">Course toevoegen</p>
                 <div class="contentBlockRight">
-                    <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=1" class="contentBlockCourse">
+                    <a href="/dashboard/teacher/course-selection/?func=add-article&id=<?php echo $_GET['id'];?>&step=1" class="contentBlockCourse">
                         <div class="circleIndicator passEtape"></div>
                         <p class="textOpleidRight">Basis informatie</p>
                     </a>
