@@ -5291,7 +5291,7 @@ overflow: -moz-scrollbars-none;  // Firefox
 }
 .roadCourTitle {
     font-size: 26px;
-    margin-bottom: 30px;
+    margin-bottom: 0px;
 }
 .contentItemsRoad{
     margin: 0 -25px;
@@ -5349,6 +5349,9 @@ overflow: -moz-scrollbars-none;  // Firefox
     right: 15px;
     top: 15px;
 }
+.btnTroisPoint .dropdown-toggle::after{
+    display: none !important;
+}
 .roadIcone {
     width: 30px;
     height: 47px;
@@ -5403,6 +5406,21 @@ overflow: -moz-scrollbars-none;  // Firefox
 }
 .dropdown-menu-dashboard a {
     color: white !important;
+}
+.dropdownRoadMap{
+    background-color: #FFFFFF !important;
+    color: black !important;
+}
+.dropdownRoadMap a {
+    color: black;
+    font-size: 15px;
+}
+.dropdownRoadMap button {
+    font-size: 15px;
+}
+.dropdownRoadMap img{
+    width: 18px;
+    margin-right: 5px;
 }
 
 #gform_fields_6 .gfield input {
@@ -5466,6 +5484,55 @@ overflow: -moz-scrollbars-none;  // Firefox
     margin-bottom: 10px;
 }
 
+.btnAddRoadMap{
+    background: #101C5D;
+    border-radius: 10px;
+    padding: 8px 32px;
+    color: #FFFFFF;
+    height: fit-content;
+}
+.btnAddRoadMap:hover{
+    color: #FFFFFF !important;
+}
+.headContentRoad {
+    padding: 20px 0;
+    align-items: center;
+}
+td .blockCardCoursRoad {
+    padding: 0;
+    margin-top: 4px;
+    position: relative;
+}
+.table td, .table th {
+    padding: 10px !important;
+}
+td .blockCardCoursRoad .descriptionTextRoad {
+    font-size: 15px;
+    line-height: 24px;
+    color: #707070;
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-right: 0;
+    width: 88%;
+}
+.searchCoursMap{
+    float: right;
+    position: relative;
+    width: fit-content;
+}
+.searchCoursMap input{
+    padding: 5px;
+    border-radius: 9px;
+}
+.searchCoursMap img{
+    position: absolute;
+    right: 12px;
+    top: 7px;
+}
+.row-select-submit {
+    background: #043356 !important;
+    color: #FFFFFF;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -7082,6 +7149,9 @@ overflow: -moz-scrollbars-none;  // Firefox
     }
     .modal-backdrop.show {
         display: none !important;
+    }
+    #searchIcone{
+        margin-top: 2px;
     }
 
 
