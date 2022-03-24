@@ -4298,6 +4298,10 @@ body .gform_wrapper ul li.gfield {
     color: #47a99e !important;
 }
 
+#gform_10 .gform_wrapper .gform_footer {     
+    margin: 0px 0 -3px !important; 
+}
+
 @media not all and (min-resolution:.001dpcm)
 { @supports (-webkit-appearance:none) and (stroke-color:transparent) {
 
