@@ -100,12 +100,6 @@ body, html {
     display: none !important;
 }
 
-.nav-item .dropdown-menu a {
-    color: #FFFFFF !important;
-    font-size: 14px;
-    border-bottom: 1px solid #b7b7b757;
-}
-
 .item4 .dropdown-menu {
     position: absolute;
     left: -53px;
@@ -134,14 +128,26 @@ body, html {
 }
 
 .dropdown-menu {
-    background: #043356;
-    color: white;
+    background: #043356 !important;
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 1rem;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0.25rem;
 }
 
-.dropdown-menu a {
-    color: white;
+.dropdown-menu a{
+    background: #043356 !important;
+    color: white !important;
     font-size: 14px;
     border-bottom: 1px solid #b7b7b757;
+}
+.dropdown-menu a:hover {
+    color: black !important;
+    text-decoration: none;
+    background-color: #f8f9fa !important;
+
 }
 
 .dropdown-menu a:last-child {
