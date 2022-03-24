@@ -834,4 +834,3 @@
     tabsAction.setup();
 
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Readmore.js/2.0.2/readmore.js"  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
