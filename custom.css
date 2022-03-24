@@ -4316,8 +4316,8 @@ body .gform_wrapper ul li.gfield {
     display: none;
 }
 .swipeContaine2{
-    -ms-overflow-style: none;  // IE 10+
-overflow: -moz-scrollbars-none;  // Firefox
+    -ms-overflow-style: none; 
+overflow: -moz-scrollbars-none; 
 }
 .elemntImgRecrutement{
     width: 500px;
