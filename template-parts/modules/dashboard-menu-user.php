@@ -21,7 +21,6 @@ if(!empty($company))
 
 $topics_internal = get_user_meta($user->ID,'topic_affiliate');
 $topics_external = get_user_meta($user->ID,'topic');
-
 $experts = get_user_meta($user->ID, 'expert');
 
 /*
