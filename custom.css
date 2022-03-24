@@ -3675,7 +3675,20 @@ body .gform_wrapper ul li.gfield {
     display: flex;
     width: 100%;
 }
+#gform_fields_10{
+    flex-wrap: wrap;
+    display: flex;
+    width: 100%;
+}
 #gform_fields_4 .inputDirect{
+    width: 50% !important;
+    border: none !important;
+    height: 40px;
+    border-radius: 8px;
+    padding: 0 20px;
+    color: #707070;
+}
+#gform_fields_10 .inputDirect{
     width: 50% !important;
     border: none !important;
     height: 40px;
@@ -3744,6 +3757,13 @@ body .gform_wrapper ul li.gfield {
     margin-bottom: 0;
 }
 #gform_fields_4 .inputDirect input{
+    border: none !important;
+    height: 40px;
+    border-radius: 8px;
+    padding: 0 20px;
+    color: #707070;
+}
+#gform_fields_10 .inputDirect input{
     border: none !important;
     height: 40px;
     border-radius: 8px;
@@ -5533,6 +5553,9 @@ td .blockCardCoursRoad .descriptionTextRoad {
     background: #043356 !important;
     color: #FFFFFF;
 }
+.dropdownNotificationWeb {
+    background: unset !important;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -6914,7 +6937,14 @@ td .blockCardCoursRoad .descriptionTextRoad {
     #gform_fields_4 .inputDirect {
         width: 100% !important;
     }
+    #gform_fields_10 .inputDirect {
+        width: 100% !important;
+    }
     .alJoum #gform_4 .gform_footer #gform_submit_button_4 {
+        position: relative;
+        width: 100%;
+    }
+    .alJoum #gform_10 .gform_footer #gform_submit_button_4 {
         position: relative;
         width: 100%;
     }
