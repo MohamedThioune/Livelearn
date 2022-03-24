@@ -974,8 +974,8 @@ if(!$image){
                     <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                     <hr class="hrModifeDeel">
                     <?php
-                        if ($user_id==0)
-                            {
+                    if ($user_id==0)
+                        {
                     ?>
                     <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
                     <?php
@@ -1025,19 +1025,19 @@ if(!$image){
                     </div>
                 </div>
                 <?php
-                                       if ($user_id==0)
-                                       {
-                                        ?>
-                <div id="Intern" class="tabcontent">
-                    <form action="" class="formShare">
-                        <input type="text" placeholder="Gebruikersnaam">
-                        <input type="text" placeholder="Wachtwoord">
-                        <button class="btn btnLoginModife">Log-in</button>
-                    </form>
-                </div>
+                    if ($user_id==0)
+                    {
+                ?>
+                    <div id="Intern" class="tabcontent">
+                        <form action="" class="formShare">
+                            <input type="text" placeholder="Gebruikersnaam">
+                            <input type="text" placeholder="Wachtwoord">
+                            <button class="btn btnLoginModife">Log-in</button>
+                        </form>
+                    </div>
                 <?php
-                                       }
-                                        ?>
+                    }
+                ?>
             </div>
         </div>
     </div>
