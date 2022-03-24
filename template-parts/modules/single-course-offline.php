@@ -133,6 +133,15 @@ $favoured = count(get_field('favorited', $post->ID));
 if(!$favoured)
     $favoured = 0;
 
+/*
+* Thumbnails
+*/
+$image = get_field('preview', $course->ID)['url'];
+if(!$image){
+    $image = get_field('url_image_xml', $course->ID);
+    if(!$image)
+        $image = "https://cdn.pixabay.com/photo/2021/09/18/12/40/pier-6635035_960_720.jpg";
+}
 ?>
 
 <style>
@@ -334,7 +343,7 @@ if(!$favoured)
                 <!-- Image -->
                 <div class="pb-3 text-center">
                     <img class="img-fluid" style="height: 280px; width: 727px; border-radius: 8px"
-                        src="https://cdn.pixabay.com/photo/2021/09/18/12/40/pier-6635035_960_720.jpg" alt="">
+                        src="<?=$image?>" alt="">
                 </div>
               
                 
