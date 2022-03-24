@@ -27,45 +27,28 @@ $data = get_field('data_locaties', $post->ID);
                                 $agenda_end = explode('/', explode(' ', $date_end)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_end)[0])[1]];
                         }
                 }
-
-                // if(!empty($datum['data'])) {
-                //     echo $agenda_start;
-                //             if($date_start != '' && $date_end != '') 
-                //             {
-                //                 echo ' - '; 
-                //                 echo $agenda_end;
-                //             }
-                //             for($i = 0; $i < count($datum['data']); $i++) { 
-                //                 $date_start = $datum['data'][$i]['start_date'];
-                //                 $location = $datum['data'][$i]['location'];
-                //                 if($date_start != null) {
-                //                     $day = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
-                //                     $hour = explode(' ', $date_start)[1];
-                //                 }
-            
-                //             }
-                //         }
                     
-                }
             }
         }
-            else
-                        if($data){
-                            $it = 0;
-                            foreach($data as $datum) {
-                                $infos = explode(';', $datum['value']);
-                                $number = count($infos)-1;
-                                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];    
-                                $date_start = explode(' ', $infos[0]);
-                                $date_end = explode(' ', $infos[$number]);
-                                $d_start = explode('/',$date_start[0]);
-                                $d_end = explode('/',$date_end[0]);
-                                $h_start = explode('-', $date[1])[0];
-                                $h_end = explode('-', $date_end[1])[0];
-                                $agenda_start = $d_start[0] . ' ' . $calendar[$d_start[1]];
-                                $agenda_end = $d_end[0] . ' ' . $calendar[$d_end[1]];
-                            }
-                        }
+    }
+    else
+        if($data){
+            $it = 0;
+            foreach($data as $datum) {
+                $infos = explode(';', $datum['value']);
+                $number = count($infos)-1;
+                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];    
+                $date_start = explode(' ', $infos[0]);
+                $date_end = explode(' ', $infos[$number]);
+                $d_start = explode('/',$date_start[0]);
+                $d_end = explode('/',$date_end[0]);
+                $h_start = explode('-', $date[1])[0];
+                $h_end = explode('-', $date_end[1])[0];
+                $agenda_start = $d_start[0] . ' ' . $calendar[$d_start[1]];
+                $agenda_end = $d_end[0] . ' ' . $calendar[$d_end[1]];
+            }
+        }
+        
     if (isset($xml_parse))
     {
         $start=explode('/',$date_start[0]);
@@ -87,16 +70,10 @@ $data = get_field('data_locaties', $post->ID);
         $month_end = date('F', mktime(0, 0, 0, $end[1], 10));
         $number_course_day= ((strtotime($end[0].' '.$month_end.' '.$year_end[0]) - strtotime($start[0].' '.$month_start.' '.$year_start[0]))/86400);
     }
-    if (($number_course_day==0 ))
-    $number_course_day=1;
+
+    if($number_course_day==0)
+        $number_course_day=1;
                 
-            
-            
-        
-
-
-
-
 /*
 *  Date and Location
 */

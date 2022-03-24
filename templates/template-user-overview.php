@@ -1730,10 +1730,15 @@
                     <!-- <hr class="border-3" style="background-color: #023356"> -->
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-8 col-11 ">
+                            <?php if($biographical_info) { ?>
                             <div class="candidates-about">
                                 <span class="text-dark h5 p-1 mt-2">Candidates About</span>
                                 <p class="text-dark p-1 mt-2"><?php echo $biographical_info; ?></p>
                             </div>
+                            <?php 
+                            } 
+                            if(!empty($topics)){
+                            ?>
                             <div class="skills-side">
                                 <span class="text-dark h5 p-1 mt-2">My skills</span>
                                 
@@ -1749,12 +1754,13 @@
                                     </div>
                                 <?php } ?>
                             </div>    
-                            
+                            <?php 
+                            }
+                            if(!empty($educations)){ 
+                            ?>
                             <div class="education">
                                 <span class="text-dark h5 p-1 mt-2">Education</span>
                                 <?php
-                                if($educations)
-                                if(!empty($educations))
                                 foreach($educations as $value) { 
                                     $value = explode(";", $value);
                                     $year_start = explode("-", $value[2])[0]; 
@@ -1782,13 +1788,14 @@
                                     </div>
                                 <?php } ?>
 
-                            </div>        
-                            
+                            </div>
+                            <?php 
+                            }
+                            if(!empty($experiences)){ 
+                            ?>          
                             <div class="work&experience">
                                 <span class="text-dark h5 p-1 mt-2">Work & Experience</span>
                                 <?php
-                                if($experiences)
-                                if(!empty($experiences))
                                 foreach($experiences as $value) { 
                                     $value = explode(";", $value);
                                     $year_start = explode("-", $value[2])[0]; 
@@ -1816,7 +1823,8 @@
 
                                 </div>
                                 <?php } ?>
-                            </div>   
+                            </div>  
+                            <?php } ?> 
                             
                         </div>
 
