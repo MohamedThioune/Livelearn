@@ -4299,8 +4299,8 @@ body .gform_wrapper ul li.gfield {
     color: #47a99e !important;
 }
 
-#gform_submit_button_10{  
-    margin: 0px 0 -3px !important; 
+#gform_submit_button_10 {
+    margin: 0px 0 15px !important;
 }
 
 @media not all and (min-resolution:.001dpcm)
