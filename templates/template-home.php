@@ -58,8 +58,109 @@
         'parent'  => $categories[2],
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
-
+    //var_dump(get_field('is_first_login','user_' . get_current_user_id()));
 ?>
+
+<?php
+
+
+
+    
+
+     $subtopics = array();
+     
+    foreach($categories as $categ){
+        //Topics
+        $topicss = get_categories(
+            array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $categ,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            ) 
+        );
+
+        foreach ($topicss as  $value) {
+            $subtopic = get_categories( 
+                 array(
+                 'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                 'parent'  => $value->cat_ID,
+                 'hide_empty' => 0,
+                  //  change to 1 to hide categores not having a single post
+                ) 
+            );
+            $subtopics = array_merge($subtopics, $subtopic);      
+        }
+    }
+   // delete_user_meta(get_current_user_id(),'topic');
+        if (isset($_POST['start_adding_topics']))
+            {
+                unset($_POST['start_adding_topics']);
+                //var_dump($_POST);
+                for ($i=1; $i <= count($_POST)  ; $i++) { 
+                    add_user_meta(get_current_user_id(),'topic',$_POST["choice_".$i]);    
+                }
+
+                update_field('is_first_login', true, 'user_'.get_current_user_id());
+                
+            }
+        $is_first_login=(get_field('is_first_login','user_' . get_current_user_id()));
+        if (!$is_first_login && get_current_user_id() !=0 )
+            {
+            
+?>    
+                         <!-- Modal First Connection --> 
+
+    <div class="contentModalFirst">
+        <div id="myFirstModal" >
+            <div class="">
+                <div class="modalContent">
+                    <div class="modalHeader">
+                        <h5 class="modal-title text-center" id="exampleModalLabel">Welcome to livelearn</h5>
+                        <p class="pickText">Pick your favorite topics to set up your feeds</p>
+                        <div class="text-center">
+                            <p class="orText">or</p>
+                            <p>Go to <a href="/">Home <b> Page </b></a></p>
+                        </div>
+                        <div class="hiddenCB">
+
+                            <form action="" method="post">
+                                
+                                <div>
+                                    <?php   
+                                        foreach($subtopics as $key => $value)
+                                        {
+                                            //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                            echo '<input type="checkbox" name="choice_'.($key+1).'" value= '.$value->cat_ID .' id="cb'.($key+1).'" /><label class="labelChoose" for="cb'.($key+1).'">'. $value->cat_name .'</label>';
+                                        }
+                                    ?>                   
+                    
+                                </div>
+
+                                <div>
+                                    <input type="submit" name="start_adding_topics" value="Save"  class="btn btnSaveSetting" >
+                                </div>
+
+                            </form>
+                            
+                            
+                        
+                        </div>
+                        
+                        
+
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+    <?php
+            }  
+    ?>
+
+
+
 
 <div class="contentOne">
   

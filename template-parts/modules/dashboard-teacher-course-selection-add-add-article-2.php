@@ -6,15 +6,8 @@
                 <div class="titleOpleidingstype">
                     <h2>2.Article Itself</h2>
                 </div>
-<<<<<<< HEAD
-                <?php
-                    //update_field('course_type', 'article', $_GET['id']);
-                    acf_form(
-                    array(
-=======
                 <?php 
                     acf_form(array(
->>>>>>> c1677d20852c91cb3e3288d800eade572a7f9f2a
                     'post_id'       => $_GET['id'],
                     'fields' => array('article_itself'),
                     'submit_value'  => __('Opslaan & verder'),
