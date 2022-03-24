@@ -4231,11 +4231,24 @@ form {
 .searchBlock .vanafText {
     color: #043356;
 }
+.btnElementSousMenu {
+    padding: 0;
+    display: flex;
+    width: 100%;
+    position: relative;
+    color: #023356;
+    font-size: 15px;
+    justify-content: space-between;
+    margin-bottom: 7px;
+    text-transform: none !important;
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .webReult {
         display: none;
     }
-
+    #searchIcone {
+        margin-top: -4px;
+    }
     swipeContaine1 {
         margin-left: 20px;
     }
@@ -5727,6 +5740,10 @@ form {
         width: 100%;
         height: 100%;
         object-fit: cover;
+    }
+    .btnElementSousMenu img {
+        width: 11px;
+        float: right;
     }
 
 

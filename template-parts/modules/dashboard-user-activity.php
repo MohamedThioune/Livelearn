@@ -391,12 +391,17 @@ $todos = get_posts($args);
                         </div>
                     </div>
                     <div class="d-flex">
+                       <!--  
                         <button class="btn btnViewCours">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/viewC.png" alt="">
-                        </button>
-                        <button class="btn btnViewCours">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/trashC.png" alt="">
-                        </button>
+                        </button> 
+                        -->
+                        <form action="" method="POST">
+                            <input type="hidden" name="meta_value" value="<?=$course->ID;?>">
+                            <button type="submit" name="delete_favorite" class="btn btnViewCours">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/trashC.png" alt="">
+                            </button>
+                        </form>
                     </div>
                 </div>
             </a>
