@@ -415,8 +415,8 @@
                             echo "<input type='hidden' name='category' value='".$category."'>";
                         else if(isset($_POST['user']))
                             echo "<input type='hidden' name='user' value='".$user."'>";
-                        else if(isset($_POST['company']))
-                            echo "<input type='hidden' name='user' value='".$user."'>";
+                        else if(isset($_POST['companie']))
+                            echo "<input type='hidden' name='companie' value='".$companie."'>";
                         ?>
                         <div class="checkFilter">
                             <label class="contModifeCheck">Opleiding
