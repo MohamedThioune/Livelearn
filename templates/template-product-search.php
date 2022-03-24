@@ -132,6 +132,32 @@
                                 array_push($teachers, $expert);
                     }
                 }            
+            }
+            else if(isset($companie)) {
+                $args = array(
+                    'post_type' => 'company', 
+                    'posts_per_page' => 1,
+                    'include' => $companie
+                );
+        
+                $company = get_posts($args)[0];
+        
+                $users = get_users();
+                $users_companie = array();
+                foreach($users as $user) {
+                    $company_user = get_field('company',  'user_' . $user->ID);
+                    if(!empty($company_user) && !empty($company))
+                        if($company_user[0]->ID == $company->ID)
+                            array_push($users_companie, $user->ID);
+                }
+        
+                $args = array(
+                    'post_type' => 'course', 
+                    'posts_per_page' => -1,
+                    'author__in' => $users_companie,  
+                );
+        
+                $courses = get_posts($args);
             }else{
                 $args = array(
                     'post_type' => 'course', 
@@ -388,6 +414,8 @@
                         if(isset($_POST['category']))
                             echo "<input type='hidden' name='category' value='".$category."'>";
                         else if(isset($_POST['user']))
+                            echo "<input type='hidden' name='user' value='".$user."'>";
+                        else if(isset($_POST['company']))
                             echo "<input type='hidden' name='user' value='".$user."'>";
                         ?>
                         <div class="checkFilter">
