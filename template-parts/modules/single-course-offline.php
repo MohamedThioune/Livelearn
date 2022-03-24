@@ -133,6 +133,15 @@ $favoured = count(get_field('favorited', $post->ID));
 if(!$favoured)
     $favoured = 0;
 
+/*
+* Thumbnails
+*/
+$image = get_field('preview', $course->ID)['url'];
+if(!$image){
+    $image = get_field('url_image_xml', $course->ID);
+    if(!$image)
+        $image = "https://cdn.pixabay.com/photo/2021/09/18/12/40/pier-6635035_960_720.jpg";
+}
 ?>
 
 <style>
@@ -334,7 +343,7 @@ if(!$favoured)
                 <!-- Image -->
                 <div class="pb-3 text-center">
                     <img class="img-fluid" style="height: 280px; width: 727px; border-radius: 8px"
-                        src="https://cdn.pixabay.com/photo/2021/09/18/12/40/pier-6635035_960_720.jpg" alt="">
+                        src="<?=$image?>" alt="">
                 </div>
               
                 
@@ -762,7 +771,7 @@ if(!$favoured)
                                 ?>
                             </p>
                             <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
-                            <a href="" class="btn btnZetAjenda">Zet in je ajenda <img src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-calendar-plus.png" alt=""></a>
+                            <a href="" class="btn btnZetAjenda">Zet in je agenda <img src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-calendar-plus.png" alt=""></a>
                         </div>
                         <div class="BlocknumberEvenement">
 
@@ -872,7 +881,7 @@ if(!$favoured)
                             ?>
                         </p>
                         <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
-                        <a href="" class="btn btnZetAjenda">Zet in je ajenda <img src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-calendar-plus.png" alt=""></a>
+                        <a href="" class="btn btnZetAjenda">Zet in je agenda <img src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-calendar-plus.png" alt=""></a>
                     </div>
                     <div class="BlocknumberEvenement">
 
@@ -965,8 +974,8 @@ if(!$favoured)
                     <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                     <hr class="hrModifeDeel">
                     <?php
-                        if ($user_id==0)
-                            {
+                    if ($user_id==0)
+                        {
                     ?>
                     <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
                     <?php
@@ -1016,19 +1025,19 @@ if(!$favoured)
                     </div>
                 </div>
                 <?php
-                                       if ($user_id==0)
-                                       {
-                                        ?>
-                <div id="Intern" class="tabcontent">
-                    <form action="" class="formShare">
-                        <input type="text" placeholder="Gebruikersnaam">
-                        <input type="text" placeholder="Wachtwoord">
-                        <button class="btn btnLoginModife">Log-in</button>
-                    </form>
-                </div>
+                    if ($user_id==0)
+                    {
+                ?>
+                    <div id="Intern" class="tabcontent">
+                        <form action="" class="formShare">
+                            <input type="text" placeholder="Gebruikersnaam">
+                            <input type="text" placeholder="Wachtwoord">
+                            <button class="btn btnLoginModife">Log-in</button>
+                        </form>
+                    </div>
                 <?php
-                                       }
-                                        ?>
+                    }
+                ?>
             </div>
         </div>
     </div>

@@ -117,7 +117,23 @@ jQuery(function($){
         $(".sousMenuBlock4").hide();
         $(".btnUp").hide();
     });
-
+//POur inuput recherche coté responsivité
+    $("#searchIcone").click(function() {
+        $("#searchIcone").hide();
+        $("#burgerCroie").hide();
+        $("#headOne").hide();
+        $("#croieProfil").hide();
+        $("#headTwo").hide();
+        $(".searchInputHedear").show();
+        $("#burger").show();
+        $("#croieSearch").show();
+        $("#profilView").show();
+    });
+    $("#croieSearch").click(function() {
+        $("#searchIcone").show();
+        $(".searchInputHedear").hide();
+        $("#croieSearch").hide();
+    });
 
     $("#profilView").click(function() {
         $("#croieProfil").show();
@@ -152,23 +168,6 @@ jQuery(function($){
         $("#searchIcone").show();
         $("#profilView").show();
 
-    });
-    //POur inuput recherche coté responsivité
-    $("#searchIcone").click(function() {
-        $("#searchIcone").hide();
-        $("#burgerCroie").hide();
-        $("#headOne").hide();
-        $("#croieProfil").hide();
-        $("#headTwo").hide();
-        $("#burger").show();
-        $("#croieSearch").show();
-        $("#profilView").show();
-        $(".searchInputHedear").show();
-    });
-    $("#croieSearch").click(function() {
-        $("#searchIcone").show();
-        $(".searchInputHedear").hide();
-        $("#croieSearch").hide();
     });
 
     //Pour le modal feedback
@@ -232,6 +231,7 @@ jQuery(function($){
         $(".FeedbackInput").hide();
         $("I-feddback").Show();
     });
+
 
 
     // début pour show more partie user profil passport

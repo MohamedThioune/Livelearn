@@ -72,15 +72,17 @@
                             foreach($categories_id as $categorie)                    
                                 $categories = explode(',', $categorie['value']);
                     }
-
-                    $experts = get_field('experts', $course->ID);
         
-                    if(!in_array($course->post_author, $profes))
-                        array_push($profes, $course->post_author);
-
-                    foreach($experts as $expertie)
-                        if(!in_array($expertie, $teachers))
-                            array_push($profes, $expertie);
+        
+                    if(in_array($category, $trees) || $categories)
+                        if(in_array($category, $trees) || in_array($category, $categories)){
+                            array_push($courses, $course);
+                            if(!in_array($course->post_author, $teachers))
+                                array_push($teachers, $course->post_author);
+                            foreach($experts as $expert)
+                                if(!in_array($expert, $teachers))
+                                    array_push($teachers, $expert);
+                        }
                 }
             ## SIDE PRODUCT USERS
             }else if(isset($user)){
@@ -121,14 +123,21 @@
                         
                         if(!in_array($category, $categories) && $category != '')
                             array_push($categories, $category);
+                        
+                        $experts = get_field('experts', $course->ID);
+                        if(!in_array($course->post_author, $profes))
+                            array_push($profes, $course->post_author);
+                        foreach($experts as $expert)
+                            if(!in_array($expert, $teachers))
+                                array_push($teachers, $expert);
                     }
                 }            
             }
-            else if(isset($opleider)){
+            else if(isset($companie)) {
                 $args = array(
                     'post_type' => 'company', 
                     'posts_per_page' => 1,
-                    'include' => $opleider
+                    'include' => $companie
                 );
         
                 $company = get_posts($args)[0];
@@ -149,17 +158,6 @@
                 );
         
                 $courses = get_posts($args);
-
-                foreach($courses as $course)
-                {
-                    $experts = get_field('experts', $course->ID);
-                    if(!in_array($course->post_author, $profes))
-                        array_push($profes, $course->post_author);
-                    foreach($experts as $expert)
-                        if(!in_array($expert, $profes))
-                            array_push($profes, $expert);
-                }
-
             }else{
                 $args = array(
                     'post_type' => 'course', 
@@ -417,6 +415,8 @@
                             echo "<input type='hidden' name='category' value='".$category."'>";
                         else if(isset($_POST['user']))
                             echo "<input type='hidden' name='user' value='".$user."'>";
+                        else if(isset($_POST['companie']))
+                            echo "<input type='hidden' name='companie' value='".$companie."'>";
                         ?>
                         <div class="checkFilter">
                             <label class="contModifeCheck">Opleiding
@@ -475,7 +475,7 @@
                         </div>
                         <div class="checkFilter">
                             <label class="contModifeCheck">Alleen gratis
-                                <input type="checkbox" id="Allen" name="gratis"  <?php if(isset($gratis)) echo 'checked'; else  echo  '' ?>>
+                                <input type="checkbox" id="Allen" name="gratis" <?php if(isset($gratis)) echo 'checked'; else  echo  '' ?>>
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div>
@@ -491,24 +491,27 @@
                         </div>               
                         <div class="checkFilter">
                             <label class="contModifeCheck">Alleen online
-                                <input type="checkbox" id="Alleen-online" name="online" <?php if(isset($online)) echo 'checked'; else  echo  '' ?> >
+                                <input type="checkbox" id="Alleen-online" name="online" <?php if(isset($online)) echo 'checked'; else  echo  '' ?>>
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div>
                     </div>
                             
                     <div class="LeerBlock pl-4">
-                        <?php 
-                        if(isset($_POST['category']) || isset($_POST['opleider'])){
-                        ?>
                         <p class="sousProduct1Title" style="color: #043356;">EXPERT</p>
+
+                        <?php
+                        if(isset($_POST['category']))
+
+                            if(!isset($user)){
+                        ?>
                             <?php
                                 foreach($profes as $profe){
                                     $name = get_userdata($profe)->data->display_name;
                             ?>
                             <div class="checkFilter">
                                 <label class="contModifeCheck"><?php echo $name ?>
-                                    <input type="checkbox" id="sales" name="experties[]" value="<?php echo $profe; ?>" <?php if(!empty($experties)) if(in_array($profe, $experties)) echo "checked" ; else echo ""  ?> >
+                                    <input type="checkbox" id="sales" name="expert[]" value="<?php echo $profe; ?>" <?php if(!empty($expert)) if(in_array($profe, $expert)) echo "checked" ; else echo ""  ?> >
                                     <span class="checkmark checkmarkUpdated"></span>
                                 </label>
                             </div>
@@ -516,7 +519,7 @@
                                 }
                             ?>
                         <?php
-                        }
+                            }
                         ?>
 
                         <br><button type="submit" class="btn btn-default" style="background:#C0E9F4; padding:5px 20px;">Apply</button>
