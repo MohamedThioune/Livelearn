@@ -233,7 +233,7 @@
                                 <i class="bi bi-x text-dark" style="font-size: 35px"></i>
                             </button>
                         </div>
-                        <input type="hidden" name="opleider" value="<?php echo $_GET['companie'] ?>">
+                        <input type="hidden" name="companie" value="<?php echo $_GET['companie'] ?>">
                         <div class="checkFilter">
                             <label class="contModifeCheck">Opleiding
                                 <input style="color:red;" type="checkbox" id="opleiding" name="leervom[]" value="Opleidingen">
