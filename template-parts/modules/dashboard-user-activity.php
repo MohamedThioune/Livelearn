@@ -397,6 +397,7 @@ $todos = get_posts($args);
                         </button> 
                         -->
                         <form action="" method="POST">
+                            <input type="hidden" name="meta_value" value="<?=$course->ID;?>">
                             <button type="submit" class="btn btnViewCours">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/trashC.png" alt="">
                             </button>

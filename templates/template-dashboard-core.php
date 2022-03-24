@@ -322,6 +322,7 @@ else if(isset($delete)){
 */
 
 else if(isset($delete_favorite)){
+    $user_id = get_current_user_id();
     if($meta_value != null){
         if(delete_user_meta($user_id, "course", $meta_value))
             $message = "Met succes verwijderd";
