@@ -235,28 +235,33 @@
                                         <h2 class="titleCategorieDetailCandidat ex">Certificates</h2>
                                         <?php
                                             if($awards)
-                                            if(!empty($awards))
-                                            foreach($awards as $value) { 
-                                                $value = explode(";", $value);
-                                                $year_start = explode("-", $value[2])[0]; 
-                                                $year_end = explode("-", $value[3])[0];
-                                                if($year_start && !$year_end)
-                                                    $year = $year_start;
-                                                else if($year_end && !$year_start)
-                                                    $year = $year_end;
-                                                else if($year_end != $year_start)
-                                                    $year = $year_start .'-'. $year_end;
-                                            ?>
-                                            <div class="contentEducationCandidat">
-                                                <div class="titleDateEducation">
-                                                    <p class="titleCoursCandiddat"><?php echo $value[0]; ?> </p>
-                                                    <?php if($year) { ?>
-                                                        <p class="dateCourCandidat"><?php echo $year; ?></p>
-                                                    <?php } ?>
+                                            if(!empty($awards)){
+                                                foreach($awards as $value) { 
+                                                    $value = explode(";", $value);
+                                                    $year_start = explode("-", $value[2])[0]; 
+                                                    $year_end = explode("-", $value[3])[0];
+                                                    if($year_start && !$year_end)
+                                                        $year = $year_start;
+                                                    else if($year_end && !$year_start)
+                                                        $year = $year_end;
+                                                    else if($year_end != $year_start)
+                                                        $year = $year_start .'-'. $year_end;
+                                                ?>
+                                                <div class="contentEducationCandidat">
+                                                    <div class="titleDateEducation">
+                                                        <p class="titleCoursCandiddat"><?php echo $value[0]; ?> </p>
+                                                        <?php if($year) { ?>
+                                                            <p class="dateCourCandidat"><?php echo $year; ?></p>
+                                                        <?php } ?>
+                                                    </div>
+                                                    <p class="textDetailCategorie"><?php echo $value[1]; ?></p>
                                                 </div>
-                                                <p class="textDetailCategorie"><?php echo $value[1]; ?></p>
-                                            </div>
-                                    <?php } ?>
+                                            <?php 
+                                                }
+                                            }
+                                            else
+                                                echo "<p class='textDetailCategorie'>we do not have statistics at this time </p>";
+                                        ?>
 
                                     </div>
                                 </div>

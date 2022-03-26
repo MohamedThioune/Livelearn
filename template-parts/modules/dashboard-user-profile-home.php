@@ -64,7 +64,7 @@
                 ?>
                     <div class="skillBar">
                         <label for=""><?php echo $name;  ?></label>
-                        <div data-progress="react" data-value="<?php echo rand(5, 100); ?>">
+                        <div data-progress="react" data-value="<?php echo rand(5, 100); ?>"> 
                             <span class="progress">
                                 <span id="react" class="progress-bar orange"></span>
                             </span>
