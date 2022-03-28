@@ -314,7 +314,7 @@
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/daniel.png" alt="">
             </div>
             <?php
-                echo do_shortcode("[gravityform id='4' title='false' description='false' ajax='true']");
+                echo do_shortcode("[gravityform id='10' title='false' description='false' ajax='true']");
             ?>
          
         </div>

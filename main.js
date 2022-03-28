@@ -233,7 +233,6 @@ jQuery(function($){
     });
 
 
-
     // début pour show more partie user profil passport
 
     $(document).ready(function() {
