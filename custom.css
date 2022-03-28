@@ -741,11 +741,12 @@ ul.sub-menu li a {
 
 .titleOpleidingstype {
     margin-bottom: 14px;
-    width: 100%%;
+    width: 100%;
     background: white;
     border-radius: 10px;
     padding-bottom: 15px;
 }
+
 .titleOpleidingstype h2{
     color: #023356;
     font-size: 18px;
@@ -4298,6 +4299,10 @@ body .gform_wrapper ul li.gfield {
     color: #47a99e !important;
 }
 
+#gform_submit_button_10 {
+    margin: 0px 0 15px !important;
+}
+
 @media not all and (min-resolution:.001dpcm)
 { @supports (-webkit-appearance:none) and (stroke-color:transparent) {
 
@@ -4312,8 +4317,8 @@ body .gform_wrapper ul li.gfield {
     display: none;
 }
 .swipeContaine2{
-    -ms-overflow-style: none;  // IE 10+
-overflow: -moz-scrollbars-none;  // Firefox
+    -ms-overflow-style: none; 
+overflow: -moz-scrollbars-none; 
 }
 .elemntImgRecrutement{
     width: 500px;
