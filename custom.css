@@ -5556,6 +5556,9 @@ td .blockCardCoursRoad .descriptionTextRoad {
 .dropdownNotificationWeb {
     background: unset !important;
 }
+#gform_10 .gform_wrapper .gform_footer{
+    margin: 0px 0 -3px !important;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
