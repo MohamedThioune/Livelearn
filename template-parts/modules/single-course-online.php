@@ -59,10 +59,12 @@ $photo_daniel = get_stylesheet_directory_uri() . '/img/daniel.png';
 */
 $expert = get_field('experts', $post->ID);
 $author = array($post->post_author);
-
 $experts = array_merge($expert, $author);
 
 $favoured = count(get_field('favorited', $post->ID));
+$duration_day = get_field('duration_day', $post->ID);
+
+$attachments_xml = get_field('attachment_xml', $post->ID);
 
 ?>
 
@@ -163,7 +165,7 @@ $favoured = count(get_field('favorited', $post->ID));
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-calendar-alt" style="font-size: 25px;"></i>
-                            <span class="textIconeLearning mt-1">I dagdee</span>
+                            <span class="textIconeLearning mt-1"><?= $duration_day; ?> dagdee</span>
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-graduation-cap" style="font-size: 25px;"></i>
@@ -316,6 +318,17 @@ $favoured = count(get_field('favorited', $post->ID));
                     
                 </div>
                 <!----------------------------------- End Text description ----------------------------------- -->
+                <?php
+                    foreach ($attachments_xml as $key => $attachment) {
+                        $i = $key+1;
+                        if($key == 3)
+                            break;
+
+                        $text = "<a href='". $attachment . "' target='_blank' class='beschiBlockText'>Bijlage " . $i . "  </a>";
+                            
+                        echo $text;
+                    }
+                ?>
             </div>
             
 
@@ -626,7 +639,10 @@ $favoured = count(get_field('favorited', $post->ID));
 
 </div>
 
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 
 <!-- scritpt for modal -->
 <script>
