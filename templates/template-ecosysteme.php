@@ -18,6 +18,20 @@ $artikel = $blogs[0];
 
 $users = get_users();
 
+$topic = ($_GET['topic']) ? $_GET['topic'] : ' ';
+$name_topic = (String)get_the_category_by_ID($topic);
+
+if($topic != ' '){
+    $name = (String)get_the_category_by_ID($subtopic);
+    
+    $categories = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'orderby'    => 'name',
+        'parent'     => $topic,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+}
+
 ?>
 
 <div>
@@ -155,13 +169,14 @@ $users = get_users();
             <div class="headCollections">
                 <div class="dropdown show">
                     <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownHuman" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Top experts binnen <b>Human Resources</b>
+                        Top experts binnen <b><?= $name_topic; ?></b>
                     </a>
                     <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownHuman">
-                        <a class="dropdown-item" href="#">Financieel</a>
-                        <a class="dropdown-item" href="#">Legal</a>
-                        <a class="dropdown-item" href="#">Verkoop / Sales</a>
-                        <a class="dropdown-item" href="#">Logistiek</a>
+                        <?php 
+                        foreach($categories as $category){
+                            echo '<a class="dropdown-item" href="category-overview?category=' . $category->cat_ID . '">' . $category->cat_name .'</a>';
+                        }
+                        ?>
                     </div>
                 </div>
                 <div class="dropdown show">
@@ -278,7 +293,7 @@ $users = get_users();
                     </div>
                 </div>
             </div>
-            <div class="UitgelichteBlock">
+           <!--  <div class="UitgelichteBlock">
                 <p class="sousBlockTitleProduct">Aankomende events</p>
                 <div class="blockCardOpleidingen ">
 
@@ -367,7 +382,7 @@ $users = get_users();
                     </div>
 
                 </div>
-            </div>
+            </div> -->
             <div class="groeipadenBlock">
                 <p class="sousBlockTitleProduct">Onderwerpen</p>
                 <div class="blockSousblockTitle">
