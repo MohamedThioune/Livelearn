@@ -101,6 +101,8 @@ jQuery(function($){
         $(".sousMenuBlock3").show();
         $("#upBlock3").show();
     });
+
+
     $("#upBlock3").click(function() {
         $(".firstContentHeadSousMobile").show();
         $(".sousMenuBlock3").hide();
@@ -117,6 +119,39 @@ jQuery(function($){
         $(".sousMenuBlock4").hide();
         $(".btnUp").hide();
     });
+
+    // Pour first modal after login btnBaangerichte
+    $(".btnBaangerichte").click(function() {
+        $(".subtopicBaangerichte").show();
+    });
+
+    $(".btnFunctiegericht").click(function() {
+        $(".subtopicFunctiegericht").show();
+    });
+
+    $(".btnSkills").click(function() {
+        $(".subtopicSkills").show();
+    });
+
+    $(".btnPersonal").click(function() {
+        $(".subtopicPersonal").show();
+    });
+
+    $("#nextblockBaangerichte").click(function() {
+        $(".blockfunctiegericht").show();
+        $(".blockBaangerichte").hide();
+    });
+
+    $("#nextFunctiegericht").click(function() {
+        $(".blockSkills").show();
+        $(".blockfunctiegericht").hide();
+    });
+
+    $("#nextSkills").click(function() {
+        $(".blockPersonal").show();
+        $(".blockSkills").hide();
+    });
+
 //POur inuput recherche coté responsivité
     $("#searchIcone").click(function() {
         $("#searchIcone").hide();

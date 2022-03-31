@@ -5031,6 +5031,9 @@ overflow: -moz-scrollbars-none;
     background-clip: padding-box;
     border: 1px solid rgba(0,0,0,.2);
     border-radius: 0.3rem;
+    display: block;
+    right: 0;
+    height: fit-content;
 }
 .pickText{
     text-align: center;
@@ -5437,8 +5440,9 @@ overflow: -moz-scrollbars-none;
     color: black !important;
 }
 .dropdownRoadMap a {
-    color: black;
+    color: black !important;
     font-size: 15px;
+    background: none !important;
 }
 .dropdownRoadMap button {
     font-size: 15px;
@@ -5560,6 +5564,55 @@ td .blockCardCoursRoad .descriptionTextRoad {
 }
 .dropdownNotificationWeb {
     background: unset !important;
+}
+#gform_10 .gform_wrapper .gform_footer{
+    margin: 0px 0 -3px !important;
+}
+#modalRoadMap .modal-dialog {
+    width: 85% !important;
+}
+.titleSubTopic {
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #043356;
+}
+.hiddenCB{
+    margin-bottom: 30px;
+}
+.hiddenCB{
+    margin: 0 -5px 20px !important;
+}
+.btnNext {
+    background: #043356;
+    color: white;
+    padding: 8px 20px;
+    position: relative;
+    margin-bottom: 20px;
+}
+.btnNext:hover{
+    color: white !important;
+}
+.subtopicBaangerichte{
+    display: none;
+}
+.subtopicFunctiegericht{
+    display: none;
+}
+.subtopicSkills{
+    display: none;
+}
+.subtopicPersonal{
+    display: none;
+}
+
+.blockfunctiegericht{
+    display: none;
+}
+.blockSkills{
+    display: none;
+}
+.blockPersonal{
+    display: none;
 }
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -7187,6 +7240,37 @@ td .blockCardCoursRoad .descriptionTextRoad {
     }
     #searchIcone{
         margin-top: 2px;
+    }
+    .roadCourTitle {
+        font-size: 23px;
+        margin-bottom: 0px;
+        padding-left: 15px;
+    }
+    .btnAddRoadMap {
+        padding: 8px 20px;
+        font-size: 14px;
+        margin-right: 15px;
+    }
+    .imgCoursRoad {
+        width: 255px;
+    }
+    .titleCoursRoad {
+        font-weight: 500;
+        font-size: 15px;
+    }
+    .descriptionTextRoad {
+        font-size: 14px;
+        margin-left: 10px;
+        margin-top: 10px;
+        margin-right: 15px;
+    }
+    #modalRoadMap .modal-dialog {
+        width: 96% !important;
+    }
+    .dropdownRoadMap img {
+        width: 18px;
+        margin-right: 5px;
+        float: left;
     }
 
 
