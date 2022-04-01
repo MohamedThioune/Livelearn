@@ -29,6 +29,11 @@ $blogs = array();
 $others = array();
 $teachers = array();
 
+$categoriees = array(); 
+
+if(isset($categories))
+    foreach($categories as $category)
+        array_push($categoriees, $category->cat_ID);
 
 foreach($global_blogs as $blog)
 {
@@ -56,26 +61,24 @@ foreach($global_blogs as $blog)
     if($categories_xml)
         foreach($categories_xml as $categorie){
             $categorie = $categorie['value'];
-            if(!in_array($categorie, $categoris))
-                array_push($categoris, $categorie);
+            if(!in_array($categorie, $categories))
+                array_push($categories, $categorie);
         }
 
     if($categories_id)
         if(!empty($categories_id)){
             $categories = array();  
             foreach($categories_id as $categorie)                    
-                $categoris = explode(',', $categorie['value']);
+                $categories = explode(',', $categorie['value']);
         }
 
-    foreach($categories as $category){
-        if(in_array($category, $trees) || $categoris)
-            if(in_array($category, $trees) || in_array($category, $categoris))
+    foreach($categoriees as $category){
+        if(in_array($category, $trees) || $categories)
+            if(in_array($category, $trees) || in_array($category, $categories))
                 array_push($blogs, $blog);
         else
             array_push($others, $blog);
     }
-
-    
     /*
      *
     */ 
