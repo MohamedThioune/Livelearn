@@ -14,10 +14,6 @@ $args = array(
 
 $blogs = get_posts($args);
 
-$artikel = $blogs[0];
-
-$users = get_users();
-
 $topic = ($_GET['topic']) ? $_GET['topic'] : ' ';
 $name_topic = (String)get_the_category_by_ID($topic);
 
@@ -31,6 +27,8 @@ if($topic != ' '){
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
 }
+
+
 
 ?>
 
