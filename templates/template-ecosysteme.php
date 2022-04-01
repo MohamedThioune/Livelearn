@@ -86,7 +86,7 @@ foreach($global_blogs as $blog)
     /*
     * Push experts 
     */ 
-    if(!in_array($course->post_author, $teachers))
+    if(!in_array($blog->post_author, $teachers))
         array_push($teachers, $blog->post_author);
 
     foreach($experts as $expertie)
@@ -262,28 +262,31 @@ foreach($global_blogs as $blog)
             <div class="row">
                 <?php 
                 $num = 1;
-
-                foreach($teachers as $user) {
-                    $image_user = get_field('profile_img',  'user_' . $user->ID);
-                    $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                ?>
-                    <a href="/dashboard/user-overview/?id=<?php echo $user->ID; ?>" class="col-md-4">
-                        <div class="boxCollections">
-                            <p class="numberList"><?php echo $num++ ; ?></p>
-                            <div class="circleImgCollection">
-                                <img src="<?php echo $image_user ?>" alt="">
-                            </div>
-                            <div class="secondBlockElementCollection ">
-                                <p class="nameListeCollection"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . '' . $user->last_name; else echo $user->display_name; ?></p>
-                                <div class="iconeTextListCollection">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/ethereum.png" alt="">
-                                    <p>16.300,44</p>
+                if(!empty($teachers)){
+                    foreach($teachers as $user) {
+                        $image_user = get_field('profile_img',  'user_' . $user->ID);
+                        $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                    ?>
+                        <a href="/dashboard/user-overview/?id=<?php echo $user->ID; ?>" class="col-md-4">
+                            <div class="boxCollections">
+                                <p class="numberList"><?php echo $num++ ; ?></p>
+                                <div class="circleImgCollection">
+                                    <img src="<?php echo $image_user ?>" alt="">
                                 </div>
+                                <div class="secondBlockElementCollection ">
+                                    <p class="nameListeCollection"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . '' . $user->last_name; else echo $user->display_name; ?></p>
+                                    <div class="iconeTextListCollection">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/ethereum.png" alt="">
+                                        <p>16.300,44</p>
+                                    </div>
+                                </div>
+                                <p class="pourcentageCollection">-35.21%</p>
                             </div>
-                            <p class="pourcentageCollection">-35.21%</p>
-                        </div>
-                    </a>
-                <?php } ?>
+                        </a>
+                    <?php }
+                }else
+                    echo '<p class="verkop"> Geen deskundigen beschikbaar </p>';
+                ?>
             </div>
         </div>
     </div>
