@@ -12,14 +12,74 @@ $args = array(
     'order' => 'DESC',
 );
 
-$blogs = get_posts($args);
+$global_blogs = get_posts($args);
+$blogs = array();
+$others = array();
+$teachers = array();
+
+foreach($global_blogs as $blog)
+{
+    /*
+    * Categories
+    */ 
+
+    $category_id = 0;
+    $experts = get_field('experts', $blog->ID);
+    
+    $trees = array();
+    $tree = get_the_terms($blog->ID, 'course_category');
+    foreach($tree as $tre)
+        array_push($trees, $tre->term_id);
+    
+    $categories_id = get_field('categories',  $blog->ID);
+    $categories_xml = get_field('category_xml',  $blog->ID);
+    $categories = array();
+
+    /*
+    * Merge categories from customize and xml
+    */ 
+    if($categories_xml)
+        foreach($categories_xml as $categorie){
+            $categorie = $categorie['value'];
+            if(!in_array($categorie, $categories))
+                array_push($categories, $categorie);
+        }
+
+    if($categories_id)
+        if(!empty($categories_id)){
+            $categories = array();  
+            foreach($categories_id as $categorie)                    
+                $categories = explode(',', $categorie['value']);
+        }
+
+    if(in_array($category, $trees) || $categories)
+        if(in_array($category, $trees) || in_array($category, $categories))
+            array_push($blogs, $blog);
+    else
+        array_push($others, $blog);
+    /*
+     *
+    */ 
+    
+    /*
+    * Push experts 
+    */ 
+    if(!in_array($course->post_author, $teachers))
+        array_push($teachers, $blog->post_author);
+
+    foreach($experts as $expertie)
+    if(!in_array($expertie, $teachers))
+        array_push($teachers, $expertie);
+    /*
+     *
+    */ 
+        
+}
 
 $topic = ($_GET['topic']) ? $_GET['topic'] : ' ';
 $name_topic = (String)get_the_category_by_ID($topic);
 
-if($topic != ' '){
-    $name = (String)get_the_category_by_ID($subtopic);
-    
+if($topic != ' '){    
     $categories = get_categories( array(
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
         'orderby'    => 'name',
@@ -27,7 +87,6 @@ if($topic != ' '){
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
 }
-
 
 
 ?>
@@ -167,7 +226,7 @@ if($topic != ' '){
             <div class="headCollections">
                 <div class="dropdown show">
                     <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownHuman" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Top experts binnen <b><?= $name_topic; ?></b>
+                        Top experts binnen <b><?= $name_topic; ?></b><br>
                     </a>
                     <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownHuman">
                         <?php 
@@ -192,9 +251,7 @@ if($topic != ' '){
                 <?php 
                 $num = 1;
 
-                foreach($users as $user) {
-                    if(!in_array( 'author', $user->roles ))
-                        continue;
+                foreach($teachers as $user) {
                     $image_user = get_field('profile_img',  'user_' . $user->ID);
                     $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                 ?>
@@ -225,10 +282,10 @@ if($topic != ' '){
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/daniel.png" alt="">
                 </div>
                 <?php
-                echo do_shortcode("[gravityform id='4' title='false' description='false' ajax='true']");
+                echo do_shortcode("[gravityform id='10' title='false' description='false' ajax='true']");
                 ?>
             </div>
-            <div class="groeipadenBlock">
+            <!--  <div class="groeipadenBlock">
                 <p class="sousBlockTitleProduct">Groeipaden</p>
                 <div class="blockSousblockTitle">
                     <div class="swiper-container swipeContaineEvens">
@@ -290,15 +347,18 @@ if($topic != ' '){
                         </div>
                     </div>
                 </div>
-            </div>
-           <!--  <div class="UitgelichteBlock">
-                <p class="sousBlockTitleProduct">Aankomende events</p>
+            </div> -->
+            <?php 
+            if(!empty($others)){
+            ?>
+            <div class="UitgelichteBlock">
+                <p class="sousBlockTitleProduct">Andere artikelen</p>
                 <div class="blockCardOpleidingen ">
 
                     <div class="swiper-container swipeContaine4">
                         <div class="swiper-wrapper">
                             <?php
-                            foreach($blogs as $blog) {
+                            foreach($others as $blog) {
 
                             $tag = '';
                             $image = null;
@@ -380,70 +440,40 @@ if($topic != ' '){
                     </div>
 
                 </div>
-            </div> -->
+            </div>
+            <?php
+            }
+            ?>
+
             <div class="groeipadenBlock">
                 <p class="sousBlockTitleProduct">Onderwerpen</p>
                 <div class="blockSousblockTitle">
                     <div class="swiper-container swipeContaineEvens">
                         <div class="swiper-wrapper">
+                            <?php 
+                            foreach($categories as $category){
+                                $image_category = get_field('image', 'category_'. $category->cat_ID);
+                                $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/Image-45.png';
+                            ?>
                             <div class="swiper-slide swipeExpert custom_slide">
                                 <div class="cardblockOnder cardExpert">
                                     <div class="imgBlockCardonder">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-45.png" alt="">
+                                        <img src="<?= $image_category; ?>" alt="">
                                     </div>
-                                    <p class="verkop">Verkoop en sales</p>
-                                    <a href="" class="btn btnMeer">Meer</a>
+                                    <p class="verkop"><?= $category->cat_name; ?></p>
+                                    <a href="<?php echo 'category-overview?category=' . $category->cat_ID; ?>" class="btn btnMeer">Meer</a>
                                 </div>
                             </div>
-                            <div class="swiper-slide swipeExpert custom_slide">
-                                <div class="cardblockOnder cardExpert">
-                                    <div class="imgBlockCardonder">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-45.png" alt="">
-                                    </div>
-                                    <p class="verkop">Verkoop en sales</p>
-                                    <a href="" class="btn btnMeer">Meer</a>
-                                </div>
-                            </div>
-                            <div class="swiper-slide swipeExpert custom_slide">
-                                <div class="cardblockOnder cardExpert">
-                                    <div class="imgBlockCardonder">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-45.png" alt="">
-                                    </div>
-                                    <p class="verkop">Leiderschap</p>
-                                    <a href="" class="btn btnMeer">Meer</a>
-                                </div>
-                            </div>
-                            <div class="swiper-slide swipeExpert custom_slide">
-                                <div class="cardblockOnder cardExpert">
-                                    <div class="imgBlockCardonder">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-45.png" alt="">
-                                    </div>
-                                    <p class="verkop">Excel</p>
-                                    <a href="" class="btn btnMeer">Meer</a>
-                                </div>
-                            </div>
-                            <div class="swiper-slide swipeExpert custom_slide">
-                                <div class="cardblockOnder cardExpert">
-                                    <div class="imgBlockCardonder">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-45.png" alt="">
-                                    </div>
-                                    <p class="verkop">HRM</p>
-                                    <a href="" class="btn btnMeer">Meer</a>
-                                </div>
-                            </div>
-                            <div class="swiper-slide swipeExpert custom_slide">
-                                <div class="cardblockOnder cardExpert">
-                                    <div class="imgBlockCardonder">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-45.png" alt="">
-                                    </div>
-                                    <p class="verkop">Marktkoopman</p>
-                                    <a href="" class="btn btnMeer">Meer</a>
-                                </div>
-                            </div>
+                            <?php 
+                            }
+                            ?>
                         </div>
                     </div>
                 </div>
             </div>
+            <?php 
+            if(!empty($blogs)){
+            ?>
             <div class="UitgelichteBlock">
                 <p class="sousBlockTitleProduct">Uitgelichte artikelen</p>
                 <div class="blockCardOpleidingen ">
@@ -532,7 +562,9 @@ if($topic != ' '){
 
                 </div>
             </div>
-
+            <?php
+            }
+            ?>
         </div>
     </div>
 </div>
