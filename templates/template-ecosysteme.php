@@ -5,6 +5,18 @@
 
 <?php 
 
+$topic = ($_GET['topic']) ? $_GET['topic'] : ' ';
+$name_topic = (String)get_the_category_by_ID($topic);
+
+if($topic != ' '){    
+    $categories = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'orderby'    => 'name',
+        'parent'     => $topic,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+}
+
 $args = array(
     'post_type' => 'post',
     'post_status' => 'publish',
@@ -16,6 +28,7 @@ $global_blogs = get_posts($args);
 $blogs = array();
 $others = array();
 $teachers = array();
+
 
 foreach($global_blogs as $blog)
 {
@@ -38,25 +51,31 @@ foreach($global_blogs as $blog)
     /*
     * Merge categories from customize and xml
     */ 
+
+
     if($categories_xml)
         foreach($categories_xml as $categorie){
             $categorie = $categorie['value'];
-            if(!in_array($categorie, $categories))
-                array_push($categories, $categorie);
+            if(!in_array($categorie, $categoris))
+                array_push($categoris, $categorie);
         }
 
     if($categories_id)
         if(!empty($categories_id)){
             $categories = array();  
             foreach($categories_id as $categorie)                    
-                $categories = explode(',', $categorie['value']);
+                $categoris = explode(',', $categorie['value']);
         }
 
-    if(in_array($category, $trees) || $categories)
-        if(in_array($category, $trees) || in_array($category, $categories))
-            array_push($blogs, $blog);
-    else
-        array_push($others, $blog);
+    foreach($categories as $category){
+        if(in_array($category, $trees) || $categoris)
+            if(in_array($category, $trees) || in_array($category, $categoris))
+                array_push($blogs, $blog);
+        else
+            array_push($others, $blog);
+    }
+
+    
     /*
      *
     */ 
@@ -76,17 +95,7 @@ foreach($global_blogs as $blog)
         
 }
 
-$topic = ($_GET['topic']) ? $_GET['topic'] : ' ';
-$name_topic = (String)get_the_category_by_ID($topic);
 
-if($topic != ' '){    
-    $categories = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'orderby'    => 'name',
-        'parent'     => $topic,
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
-}
 
 
 ?>
