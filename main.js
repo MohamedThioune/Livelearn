@@ -120,7 +120,7 @@ jQuery(function($){
         $(".btnUp").hide();
     });
 
-    // Pour first modal after login btnBaangerichte
+    // Pour first modal after login
     $(".btnBaangerichte").click(function() {
         $(".subtopicBaangerichte").show();
     });
