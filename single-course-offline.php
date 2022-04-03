@@ -320,7 +320,7 @@ if(!$image){
                 <p class="beschiBlockText">Beschikbaarheid en prijs</p>
 
                 <!-- -------------------------------------- Start Icons row ------------------------------------->
-                <div class="d-flex justify-content-md-between justify-content-around mx-md-2 mx-sm-2 text-center">
+                <div class="d-flex justify-content-md-between justify-content-around sousBlock mx-md-2 mx-sm-2 text-center">
                     <div class="d-flex flex-row">
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <input type="hidden" id="user_id" value="<?php echo $user_id; ?>">

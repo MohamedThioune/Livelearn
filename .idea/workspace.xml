@@ -3,8 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog.css" beforeDir="false" afterPath="$PROJECT_DIR$/blog.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/single-course-offline.php" beforeDir="false" afterPath="$PROJECT_DIR$/single-course-offline.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/single.php" beforeDir="false" afterPath="$PROJECT_DIR$/single.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/template-firstModal.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-firstModal.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,10 +19,22 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/template-firstModal.php">
+        <entry file="file://$PROJECT_DIR$/single.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+            <state relative-caret-position="91">
+              <caret line="67" column="25" lean-forward="true" selection-start-line="67" selection-start-column="25" selection-end-line="67" selection-end-column="25" />
+              <folding>
+                <element signature="e#16811#18514#0#HTML" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/single-course-offline.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="363" column="23" selection-start-line="363" selection-start-column="23" selection-end-line="363" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -27,8 +42,26 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/custom.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="5035" column="23" selection-start-line="5035" selection-start-column="23" selection-end-line="5035" selection-end-column="23" />
+            <state relative-caret-position="46">
+              <caret line="7324" column="30" selection-start-line="7324" selection-start-column="30" selection-end-line="7324" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/template-firstModal.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3840">
+              <caret line="256" selection-start-line="256" selection-end-line="256" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/blog.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1125">
+              <caret line="75" column="21" selection-start-line="75" selection-start-column="21" selection-end-line="75" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -36,8 +69,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="152" column="7" lean-forward="true" selection-start-line="152" selection-start-column="7" selection-end-line="152" selection-end-column="7" />
+            <state relative-caret-position="1830">
+              <caret line="122" column="35" selection-start-line="122" selection-start-column="35" selection-end-line="122" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -46,17 +79,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>#sortable</find>
-      <find>sousBlockFrontAgenda</find>
-      <find>containWorkshopAgenda</find>
-      <find>.roadIcone</find>
-      <find>.blockCardCoursRoad</find>
-      <find>#sortable li</find>
-      <find>ma_link buttonFeedback2</find>
-      <find>sousMenuNavMobil headSousMobilePrincipale</find>
-      <find>.companyButton</find>
-      <find>dropdown-menu</find>
-      <find>href=&quot;&quot;</find>
       <find>.roadCourTitle</find>
       <find>modal-body</find>
       <find>close</find>
@@ -70,9 +92,27 @@
       <find>searchInputHedear</find>
       <find>#gform_fields_4</find>
       <find>@</find>
-      <find>@media</find>
+      <find>.section</find>
+      <find>single-blog-item</find>
+      <find>d-flex justify-content-md-between justify-content-around mx-md-2 mx-sm-2 text-center</find>
+      <find>&lt;!-- début Modal deel --&gt;</find>
+      <find>.block-single-blog-item</find>
+      <find>fas fa-calendar-alt</find>
+      <find>far</find>
+      <find>blog-item-meta bg-gray py-1 px-2</find>
       <find>#myFirstModal</find>
+      <find>h2</find>
+      <find>.blogPadding</find>
+      <find>posts-nav</find>
+      <find>sidebar-wrap</find>
+      <find>h6</find>
+      <find>.sousblockArticles1</find>
+      <find>#modalShare</find>
+      <find>@media</find>
     </findStrings>
+    <replaceStrings>
+      <replace>h4</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -91,10 +131,12 @@
         <option value="$PROJECT_DIR$/header_user.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-road-path.php" />
         <option value="$PROJECT_DIR$/header_base.php" />
-        <option value="$PROJECT_DIR$/single-course-offline.php" />
         <option value="$PROJECT_DIR$/style.css" />
         <option value="$PROJECT_DIR$/main.js" />
+        <option value="$PROJECT_DIR$/single-course-offline.php" />
         <option value="$PROJECT_DIR$/templates/template-firstModal.php" />
+        <option value="$PROJECT_DIR$/blog.css" />
+        <option value="$PROJECT_DIR$/single.php" />
         <option value="$PROJECT_DIR$/custom.css" />
       </list>
     </option>
@@ -138,14 +180,14 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1648136443686" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1648817935377" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -206,16 +248,27 @@
       <workItem from="1648569307381" duration="856000" />
       <workItem from="1648637641331" duration="901000" />
       <workItem from="1648639378391" duration="2379000" />
+      <workItem from="1648642915578" duration="1285000" />
+      <workItem from="1648728025184" duration="1748000" />
+      <workItem from="1648731458612" duration="1692000" />
+      <workItem from="1648734118876" duration="1870000" />
+      <workItem from="1648810109152" duration="1188000" />
+      <workItem from="1648813682052" duration="1683000" />
+      <workItem from="1648815882954" duration="1841000" />
+      <workItem from="1648818331748" duration="1547000" />
+      <workItem from="1648829701526" duration="1292000" />
+      <workItem from="1648974955005" duration="882000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44347000" />
+    <option name="totallyTimeSpent" value="59375000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24848485" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22651514" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -313,11 +366,6 @@
     <entry file="file://$PROJECT_DIR$/main-user.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/single-course.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-595" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.js~HEAD">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
@@ -346,16 +394,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/single-course-offline.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2190">
-          <caret line="146" column="7" selection-start-line="146" selection-start-column="7" selection-end-line="146" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/single.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/header.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -373,24 +411,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.js">
+    <entry file="file://$PROJECT_DIR$/single-course.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/web-forms.rnc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="152" column="7" lean-forward="true" selection-start-line="152" selection-start-column="7" selection-end-line="152" selection-end-column="7" />
+        <state relative-caret-position="50">
+          <caret line="8" column="13" lean-forward="true" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/template-firstModal.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
+        <state relative-caret-position="3840">
+          <caret line="256" selection-start-line="256" selection-end-line="256" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blog.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1125">
+          <caret line="75" column="21" selection-start-line="75" selection-start-column="21" selection-end-line="75" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1830">
+          <caret line="122" column="35" selection-start-line="122" selection-start-column="35" selection-end-line="122" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/single-course-offline.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="363" column="23" selection-start-line="363" selection-start-column="23" selection-end-line="363" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/single.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="91">
+          <caret line="67" column="25" lean-forward="true" selection-start-line="67" selection-start-column="25" selection-end-line="67" selection-end-column="25" />
+          <folding>
+            <element signature="e#16811#18514#0#HTML" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/custom.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="5035" column="23" selection-start-line="5035" selection-start-column="23" selection-end-line="5035" selection-end-column="23" />
+        <state relative-caret-position="46">
+          <caret line="7324" column="30" selection-start-line="7324" selection-start-column="30" selection-end-line="7324" selection-end-column="30" />
         </state>
       </provider>
     </entry>
