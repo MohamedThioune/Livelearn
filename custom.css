@@ -741,11 +741,12 @@ ul.sub-menu li a {
 
 .titleOpleidingstype {
     margin-bottom: 14px;
-    width: 100%%;
+    width: 100%;
     background: white;
     border-radius: 10px;
     padding-bottom: 15px;
 }
+
 .titleOpleidingstype h2{
     color: #023356;
     font-size: 18px;
@@ -2791,7 +2792,8 @@ input:focus-visible {
     margin-right: 7px
 }
 .blogPadding{
-    padding: 3rem;
+    padding: 2rem;
+    border: 1px solid #e5e5e5;
 }
 .block-initiative:last-child {
     margin-top: -5px;
@@ -3675,7 +3677,20 @@ body .gform_wrapper ul li.gfield {
     display: flex;
     width: 100%;
 }
+#gform_fields_10{
+    flex-wrap: wrap;
+    display: flex;
+    width: 100%;
+}
 #gform_fields_4 .inputDirect{
+    width: 50% !important;
+    border: none !important;
+    height: 40px;
+    border-radius: 8px;
+    padding: 0 20px;
+    color: #707070;
+}
+#gform_fields_10 .inputDirect{
     width: 50% !important;
     border: none !important;
     height: 40px;
@@ -3744,6 +3759,13 @@ body .gform_wrapper ul li.gfield {
     margin-bottom: 0;
 }
 #gform_fields_4 .inputDirect input{
+    border: none !important;
+    height: 40px;
+    border-radius: 8px;
+    padding: 0 20px;
+    color: #707070;
+}
+#gform_fields_10 .inputDirect input{
     border: none !important;
     height: 40px;
     border-radius: 8px;
@@ -4278,6 +4300,10 @@ body .gform_wrapper ul li.gfield {
     color: #47a99e !important;
 }
 
+#gform_submit_button_10 {
+    margin: 0px 0 15px !important;
+}
+
 @media not all and (min-resolution:.001dpcm)
 { @supports (-webkit-appearance:none) and (stroke-color:transparent) {
 
@@ -4292,8 +4318,8 @@ body .gform_wrapper ul li.gfield {
     display: none;
 }
 .swipeContaine2{
-    -ms-overflow-style: none;  // IE 10+
-overflow: -moz-scrollbars-none;  // Firefox
+    -ms-overflow-style: none; 
+overflow: -moz-scrollbars-none; 
 }
 .elemntImgRecrutement{
     width: 500px;
@@ -5002,10 +5028,16 @@ overflow: -moz-scrollbars-none;  // Firefox
     background: white;
     width: 50%;
     margin: 50px auto;
-    padding: 25px 30px;
+    padding: 25px 10px;
     background-clip: padding-box;
     border: 1px solid rgba(0,0,0,.2);
     border-radius: 0.3rem;
+    display: block;
+    right: 0;
+    height: fit-content;
+    max-height: calc(100% - 120px);
+    overflow-y: auto;
+    box-sizing: content-box;
 }
 .pickText{
     text-align: center;
@@ -5031,7 +5063,7 @@ overflow: -moz-scrollbars-none;  // Firefox
 
 .hiddenCB label {
     cursor: pointer;
-    margin-left: 15px;
+    margin-left: 14px;
     margin-bottom: 15px;
 }
 
@@ -5291,7 +5323,7 @@ overflow: -moz-scrollbars-none;  // Firefox
 }
 .roadCourTitle {
     font-size: 26px;
-    margin-bottom: 30px;
+    margin-bottom: 0px;
 }
 .contentItemsRoad{
     margin: 0 -25px;
@@ -5349,6 +5381,9 @@ overflow: -moz-scrollbars-none;  // Firefox
     right: 15px;
     top: 15px;
 }
+.btnTroisPoint .dropdown-toggle::after{
+    display: none !important;
+}
 .roadIcone {
     width: 30px;
     height: 47px;
@@ -5403,6 +5438,22 @@ overflow: -moz-scrollbars-none;  // Firefox
 }
 .dropdown-menu-dashboard a {
     color: white !important;
+}
+.dropdownRoadMap{
+    background-color: #FFFFFF !important;
+    color: black !important;
+}
+.dropdownRoadMap a {
+    color: black !important;
+    font-size: 15px;
+    background: none !important;
+}
+.dropdownRoadMap button {
+    font-size: 15px;
+}
+.dropdownRoadMap img{
+    width: 18px;
+    margin-right: 5px;
 }
 
 #gform_fields_6 .gfield input {
@@ -5466,6 +5517,152 @@ overflow: -moz-scrollbars-none;  // Firefox
     margin-bottom: 10px;
 }
 
+.btnAddRoadMap{
+    background: #101C5D;
+    border-radius: 10px;
+    padding: 8px 32px;
+    color: #FFFFFF;
+    height: fit-content;
+}
+.btnAddRoadMap:hover{
+    color: #FFFFFF !important;
+}
+.headContentRoad {
+    padding: 20px 0;
+    align-items: center;
+}
+td .blockCardCoursRoad {
+    padding: 0;
+    margin-top: 4px;
+    position: relative;
+}
+.table td, .table th {
+    padding: 10px !important;
+}
+td .blockCardCoursRoad .descriptionTextRoad {
+    font-size: 15px;
+    line-height: 24px;
+    color: #707070;
+    margin-left: 15px;
+    margin-top: 10px;
+    margin-right: 0;
+    width: 88%;
+}
+.searchCoursMap{
+    float: right;
+    position: relative;
+    width: fit-content;
+}
+.searchCoursMap input{
+    padding: 5px;
+    border-radius: 9px;
+}
+.searchCoursMap img{
+    position: absolute;
+    right: 12px;
+    top: 7px;
+}
+.row-select-submit {
+    background: #043356 !important;
+    color: #FFFFFF;
+}
+.dropdownNotificationWeb {
+    background: unset !important;
+}
+#gform_10 .gform_wrapper .gform_footer{
+    margin: 0px 0 -3px !important;
+}
+#modalRoadMap .modal-dialog {
+    width: 85% !important;
+}
+.titleSubTopic {
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #043356;
+}
+.hiddenCB{
+    margin-bottom: 30px;
+}
+.hiddenCB{
+    margin: 0 -5px 20px !important;
+}
+.btnNext {
+    background: #043356;
+    color: white;
+    padding: 8px 20px;
+    position: relative;
+    margin-bottom: 20px;
+}
+.btnNext:hover{
+    color: white !important;
+}
+.subtopicBaangerichte{
+    display: none;
+}
+.subtopicFunctiegericht{
+    display: none;
+}
+.subtopicSkills{
+    display: none;
+}
+.subtopicPersonal{
+    display: none;
+}
+
+.blockfunctiegericht{
+    display: none;
+}
+.blockSkills{
+    display: none;
+}
+.blockPersonal{
+    display: none;
+}
+
+.block-single-blog-item {
+    height: 350px;
+    margin-bottom: 25px;
+}
+.block-single-blog-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 0px 0;
+}
+#modalShare {
+    position: fixed !important;
+}
+button:focus {
+    outline: 0px auto -webkit-focus-ring-color !important;
+}
+#myFirstModal .modal-content{
+    border: 0;
+    padding: 0;
+}
+#myFirstModal .modal-dialog {
+    width: 100% !important;
+    border: none;
+    margin: 0;
+    padding: 0;
+    max-width: unset;
+}
+.sousblockArticles1 {
+    margin-bottom: 30px;
+}
+.posts-nav{
+    border: 1px solid #e5e5e5;
+}
+.nav-posts-element {
+    font-size: 15px;
+    color: #212529;
+    font-weight: 500;
+}
+.sidebar-widget-autor {
+    background-color: #E0EFF4;
+    color: #023356;
+    border-radius: 5px;
+    margin-bottom: 7px;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -6847,7 +7044,14 @@ overflow: -moz-scrollbars-none;  // Firefox
     #gform_fields_4 .inputDirect {
         width: 100% !important;
     }
+    #gform_fields_10 .inputDirect {
+        width: 100% !important;
+    }
     .alJoum #gform_4 .gform_footer #gform_submit_button_4 {
+        position: relative;
+        width: 100%;
+    }
+    .alJoum #gform_10 .gform_footer #gform_submit_button_4 {
         position: relative;
         width: 100%;
     }
@@ -7082,6 +7286,43 @@ overflow: -moz-scrollbars-none;  // Firefox
     }
     .modal-backdrop.show {
         display: none !important;
+    }
+    #searchIcone{
+        margin-top: 2px;
+    }
+    .roadCourTitle {
+        font-size: 23px;
+        margin-bottom: 0px;
+        padding-left: 15px;
+    }
+    .btnAddRoadMap {
+        padding: 8px 20px;
+        font-size: 14px;
+        margin-right: 15px;
+    }
+    .imgCoursRoad {
+        width: 255px;
+    }
+    .titleCoursRoad {
+        font-weight: 500;
+        font-size: 15px;
+    }
+    .descriptionTextRoad {
+        font-size: 14px;
+        margin-left: 10px;
+        margin-top: 10px;
+        margin-right: 15px;
+    }
+    #modalRoadMap .modal-dialog {
+        width: 96% !important;
+    }
+    .dropdownRoadMap img {
+        width: 18px;
+        margin-right: 5px;
+        float: left;
+    }
+    .btnModalBlog{
+        padding: 0 !important;
     }
 
 

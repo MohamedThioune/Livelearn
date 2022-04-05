@@ -101,6 +101,8 @@ jQuery(function($){
         $(".sousMenuBlock3").show();
         $("#upBlock3").show();
     });
+
+
     $("#upBlock3").click(function() {
         $(".firstContentHeadSousMobile").show();
         $(".sousMenuBlock3").hide();
@@ -118,6 +120,68 @@ jQuery(function($){
         $(".btnUp").hide();
     });
 
+    // Pour first modal after login
+    $(".btnBaangerichte").click(function() {
+        $(".subtopicBaangerichte").show();
+        let cl =$(this).attr('class').split(' ')[3];
+        hidden=($(".cb_topics_bangricht_"+cl).attr('hidden'));
+        $(".cb_topics_bangricht_"+cl).attr('hidden', !hidden);
+        
+    });
+
+    $(".btnFunctiegericht").click(function() {
+        $(".subtopicFunctiegericht").show();
+        let cl =$(this).attr('class').split(' ')[3];
+        hidden=($(".cb_topics_funct_"+cl).attr('hidden'));
+        $(".cb_topics_funct_"+cl).attr('hidden', !hidden);
+    });
+
+    $(".btnSkills").click(function() {
+        $(".subtopicSkills").show();
+        let cl =$(this).attr('class').split(' ')[3];
+        hidden=($(".cb_topics_skills_"+cl).attr('hidden'));
+        $(".cb_topics_skills_"+cl).attr('hidden', !hidden);
+    });
+
+    $(".btnPersonal").click(function() {
+        $(".subtopicPersonal").show();
+        let cl =$(this).attr('class').split(' ')[3];
+        hidden=($(".cb_topics_personal_"+cl).attr('hidden'));
+        $(".cb_topics_personal_"+cl).attr('hidden', !hidden);
+    });
+
+    $("#nextblockBaangerichte").click(function() {
+        $(".blockfunctiegericht").show();
+        $(".blockBaangerichte").hide();
+    });
+
+    $("#nextFunctiegericht").click(function() {
+        $(".blockSkills").show();
+        $(".blockfunctiegericht").hide();
+    });
+
+    $("#nextSkills").click(function() {
+        $(".blockPersonal").show();
+        $(".blockSkills").hide();
+    });
+
+//POur inuput recherche coté responsivité
+    $("#searchIcone").click(function() {
+        $("#searchIcone").hide();
+        $("#burgerCroie").hide();
+        $("#headOne").hide();
+        $("#croieProfil").hide();
+        $("#headTwo").hide();
+        $(".searchInputHedear").show();
+        $("#burger").show();
+        $("#croieSearch").show();
+        $("#profilView").show();
+    });
+    $("#croieSearch").click(function() {
+        $("#searchIcone").show();
+        $(".searchInputHedear").hide();
+        $("#croieSearch").hide();
+    });
 
     $("#profilView").click(function() {
         $("#croieProfil").show();
@@ -216,33 +280,6 @@ jQuery(function($){
         $("I-feddback").Show();
     });
 
-
-
-
-
-
-
-
-
-
-
-    //POur inuput recherche coté responsivité
-    $("#searchIcone").click(function() {
-        $("#searchIcone").hide();
-        $("#burgerCroie").hide();
-        $("#headOne").hide();
-        $("#croieProfil").hide();
-        $("#headTwo").hide();
-        $(".searchInputHedear").show();
-        $("#burger").show();
-        $("#croieSearch").show();
-        $("#profilView").show();
-    });
-    $("#croieSearch").click(function() {
-        $("#searchIcone").show();
-        $(".searchInputHedear").hide();
-        $("#croieSearch").hide();
-    });
 
     // début pour show more partie user profil passport
 
@@ -435,5 +472,4 @@ jQuery(function($){
     }
 
 });
-
 
