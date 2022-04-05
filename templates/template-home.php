@@ -26,8 +26,6 @@
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
 
-
-
     foreach($cats as $category){
         $cat_id = strval($category->cat_ID);
         $category = intval($cat_id);
@@ -594,7 +592,7 @@
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/daniel.png" alt="">
             </div>
             <?php
-                echo do_shortcode("[gravityform id='4' title='false' description='false' ajax='true']");
+                echo do_shortcode("[gravityform id='10' title='false' description='false' ajax='true']");
             ?>
          
         </div>
@@ -686,7 +684,7 @@
                             */
                             $thumbnail = get_field('preview', $course->ID)['url'];
                             if(!$thumbnail){
-                                $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
+                                $thumbnail = get_field('url_image_xml', $course->ID);
                                 if(!$thumbnail)
                                     $thumbnail = get_stylesheet_directory_uri() . '/img/placeholder.png';
                             }
@@ -1159,16 +1157,16 @@
                             $image_category = get_field('image', 'category_'. $value->cat_ID);
                             $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/maternite.jpg';
                     ?>
-                    <a href="sub-topic?subtopic=<?php echo $value->cat_ID; ?>" class="swiper-slide swiper-slide2">
-                        <div class="cardTop ">
-                            <div class="contentImg">
-                                <img src="<?php echo $image_category; ?>" alt="">
-                            </div>
-                            <p class="bekijText"><?php echo $value->cat_name; ?></p>
+                        <a href="sub-topic?subtopic=<?php echo $value->cat_ID; ?>" class="swiper-slide swiper-slide2">
+                            <div class="cardTop ">
+                                <div class="contentImg">
+                                    <img src="<?php echo $image_category; ?>" alt="">
+                                </div>
+                                <p class="bekijText"><?php echo $value->cat_name; ?></p>
 
-                        </div>
-                    </a>
-                    <?php
+                            </div>
+                        </a>
+                        <?php
 
                         }
                     ?>
@@ -1177,7 +1175,7 @@
     </div>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>

@@ -258,5 +258,6 @@ $content = get_field('article_itself',  $blog->ID);
 
 </div>
 
-
 <?php get_footer();?>
+<?php wp_footer(); ?>
+

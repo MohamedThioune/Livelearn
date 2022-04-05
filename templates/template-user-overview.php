@@ -629,11 +629,6 @@
                     </div>
                 </div>
 
-                <!-- <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">..test 1.</div>
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"> test222222222.</div>
-                </div>  -->
-
             </div>
             <?php
                 }

@@ -87,7 +87,7 @@
             */ 
 
             $category_id = 0;
-            $experts = get_field('experts', $post->ID);
+            $experts = get_field('experts', $course->ID);
                         
             $tree = get_the_terms($course->ID, 'course_category');
             $tree = $tree[2]->ID;
@@ -102,12 +102,12 @@
                         array_push($categories, $categorie);
                 }
 
-            if($categories_id){
-                if(!empty($categories_id))
+            if($categories_id)
+                if(!empty($categories_id)){
                     $categories = array();  
                     foreach($categories_id as $categorie)                    
                         $categories = explode(',', $categorie['value']);
-            }
+                }
 
 
             if(in_array($category, $trees) || $categories)
@@ -1659,7 +1659,6 @@
                 </a>
                 <?php
                 }            
-                    
                 ?>
             </div>
         </div>
