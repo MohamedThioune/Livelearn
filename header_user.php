@@ -169,7 +169,7 @@ $todos = get_posts($args);
                         <li class="position-relative dropdown dropdownNotificationToggle">
                             <button class="btn bntNotification elementWeb dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
-                                <span style="color:white" class="alertNotification"><?=count($todos);?></span>
+                                <?php if(!empty($todos)){ ?> <span style="color:white" class="alertNotification"><?=count($todos);?></span> <?php } ?>
                             </button>
                             <div class="dropdown-menu dropdownNotificationWeb" aria-labelledby="dropdownMenuButton">
                                 <h5 class="modal-title" id="exampleModalLabel">Notifications</h5>
@@ -208,7 +208,7 @@ $todos = get_posts($args);
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="/dashboard/user/">Dashboard</a>
-                                <a class="dropdown-item" href="/dashboard/user/profile">Mijn profiel</a>
+                                <a class="dropdown-item" href="/dashboard/company/profile">Mijn profiel</a>
                                 <a class="dropdown-item" href="<?php echo wp_logout_url('/'); ?>">Uitloggen</a>
                             </div>
                         </li>

@@ -12,7 +12,7 @@
                 update_field('course_type', $_GET['type'], $_GET['id']);
 
                 // If user choose online (radio button value)
-              if   (get_field('online_location', $_GET['id'])=="online")
+              if (get_field('online_location', $_GET['id'])=="online")
                 {
                         acf_form(array(
                         'post_id'=> $_GET['id'],

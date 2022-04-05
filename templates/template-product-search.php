@@ -132,6 +132,32 @@
                                 array_push($teachers, $expert);
                     }
                 }            
+            }
+            else if(isset($companie)) {
+                $args = array(
+                    'post_type' => 'company', 
+                    'posts_per_page' => 1,
+                    'include' => $companie
+                );
+        
+                $company = get_posts($args)[0];
+        
+                $users = get_users();
+                $users_companie = array();
+                foreach($users as $user) {
+                    $company_user = get_field('company',  'user_' . $user->ID);
+                    if(!empty($company_user) && !empty($company))
+                        if($company_user[0]->ID == $company->ID)
+                            array_push($users_companie, $user->ID);
+                }
+        
+                $args = array(
+                    'post_type' => 'course', 
+                    'posts_per_page' => -1,
+                    'author__in' => $users_companie,  
+                );
+        
+                $courses = get_posts($args);
             }else{
                 $args = array(
                     'post_type' => 'course', 
@@ -389,6 +415,8 @@
                             echo "<input type='hidden' name='category' value='".$category."'>";
                         else if(isset($_POST['user']))
                             echo "<input type='hidden' name='user' value='".$user."'>";
+                        else if(isset($_POST['companie']))
+                            echo "<input type='hidden' name='companie' value='".$companie."'>";
                         ?>
                         <div class="checkFilter">
                             <label class="contModifeCheck">Opleiding
@@ -423,6 +451,12 @@
                         <div class="checkFilter">
                             <label class="contModifeCheck">Video
                                 <input type="checkbox" id="event" name="leervom[]" value="Video" <?php if(isset($leervom)) if(in_array('Video', $leervom)) echo "checked" ; else echo ""  ?> >
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div> 
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">Training
+                                <input type="checkbox" id="event" name="leervom[]" value="Training" <?php if(isset($leervom)) if(in_array('Training', $leervom)) echo "checked" ; else echo ""  ?> >
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div> 

@@ -21,7 +21,7 @@
   $users = get_users(); 
    
   //Get the URL content
-  $file = get_stylesheet_directory_uri()."/beeckestijn-20220310.2055.xml";
+  $file = get_stylesheet_directory_uri()."/buro-brand-20220308.1748.xml";
   $xml = simplexml_load_file($file);
   $data_xml = $xml->program;
 
@@ -31,6 +31,7 @@
   $author_id = 0;
   //Retrieve courses
   foreach($data_xml as $datum){
+    $attachment_xml = array();
     $data_locaties_xml = array();
 
     //Check the existing value with metadata
@@ -46,23 +47,30 @@
     }
 
     //Get the url media image to display on front
-    foreach($datum->programDescriptions->media as $media)
-      if($media->type == "image"){
+    $attachment = "";
+    foreach($datum->programDescriptions->media as $media){
+      if($media->type == "image")
         $image = $media->url;
-        break;
-      }
+      else
+        array_push($attachment_xml, $media->url);
+    }    
       
+    if($datum->programDescriptions->programDescriptionHtml)
+      $descriptionHtml = $datum->programDescriptions->programDescriptionHtml;
+    else
+      $descriptionHtml = $datum->programDescriptions->programDescriptionText;
 
     $post = array(
-      'short_description' =>  $datum->programDescriptions->programSummaryText,
-      'long_description' => $datum->programDescriptions->programDescriptionHtml,
+      'short_description' => $datum->programDescriptions->programSummaryText,
+      'long_description' => $descriptionHtml,
       'agenda' => $datum->programDescriptions->programDescriptionText,
-      'url_image' =>  $image,
+      'url_image' => $image,
       'prijs' => $datum->programSchedule->genericProgramRun->cost->amount,
       'prijsvat' => $datum->programSchedule->genericProgramRun->cost->amountVAT,
       'degree' => $datum->programClassification->degree,
       'teacher_id' => $datum->programCurriculum->teacher->id,
       'org' => $datum->programClassification->orgUnitId,
+      'duration_day' => $datum->programClassification->programDuration,
     );
 
     /* 
@@ -84,7 +92,7 @@
     }
     
     if(!in_array($meta_value, $meta_xmls)){  
-
+      continue;
       //Modify the dates 
       foreach($datum->programSchedule->programRun as $program){
         $info = array();
@@ -111,7 +119,6 @@
 
         array_push($data_locaties_xml, $infos);
         
-        echo $infos .'<br>';
         update_field('data_locaties_xml', $data_locaties_xml, $meta_course);
       }
 
@@ -172,6 +179,9 @@
       update_field('short_description', strval($post['short_description']), $post_id);
       update_field('long_description', strval($post['long_description']), $post_id);
       update_field('degree', strval($post['degree']), $post_id);
+      update_field('duration_day', intval($post['duration_day']), $post_id);
+
+      update_field('attachment_xml', $attachment_xml, $post_id);
 
       update_field('data_locaties_xml', $data_locaties_xml , $post_id);
 
@@ -184,11 +194,11 @@
       
       if(in_array('masterclass:', $keywords) || in_array('Masterclass', $keywords) || in_array('masterclass', $keywords)){
         update_field('course_type', 'masterclass', $post_id);
-      }else if(in_array('training', $keywords)){
+      }else if(in_array('(training)', $keywords) || in_array('training', $keywords)){
         update_field('course_type', 'training', $post_id);
       }else if(in_array('live', $keywords) && in_array('seminar', $keywords)){
         update_field('course_type', 'webinar', $post_id);
-      }else if(in_array('Live', $keywords) || in_array('Online', $keywords)){
+      }else if(in_array('Live', $keywords) || in_array('Online', $keywords) || in_array('E-learning', $keywords) ){
         update_field('course_type', 'elearning', $post_id);
       }else{ 
         update_field('course_type', 'course', $post_id);
@@ -218,7 +228,6 @@
       }
 
       update_field('category_xml', $tags, $post_id);
-
 
       $arg = array(
           'ID' => $post_id,
@@ -256,7 +265,6 @@
 
         array_push($data_locaties_xml, $infos);
         
-        echo $infos .'<br>';
         update_field('data_locaties_xml', $data_locaties_xml, $post_id);
 
       }
@@ -287,6 +295,8 @@
       $course = get_posts($args);
       $meta = $meta_value . '-' . $meta_course;
 
+      update_field('attachment_xml', $attachment_xml, $meta_course);
+
       if(empty($course)){
         delete_user_meta(1, $meta_key, $meta);
         echo "****** Course # " . $meta_value . " not detected anymore<br><br>";
@@ -303,6 +313,7 @@
         $long_description = get_field('long_description', $meta_course);
         $agenda = get_field('agenda', $meta_course);
         $degree = get_field('degree', $meta_course);
+        $duration_day = get_field('duration_day', $meta_course);
 
         /*  
         ** Course type
@@ -311,17 +322,16 @@
         $description = explode(' ', strval($datum->programDescriptions->programSummaryText));
         $keywords = array_merge($title, $description);
 
-        if(in_array('masterclass:', $keywords) || in_array('Masterclass', $keywords) || in_array('masterclass', $keywords)){
+        if(in_array('masterclass:', $keywords) || in_array('Masterclass', $keywords) || in_array('masterclass', $keywords))
           update_field('course_type', 'masterclass', $meta_course);
-        }else if(in_array('training', $keywords)){
+        else if(in_array('(training)', $keywords) || in_array('training', $keywords))
           update_field('course_type', 'training', $meta_course);
-        }else if(in_array('Live', $keywords) || in_array('Online', $keywords) ){
+        else if(in_array('Live', $keywords) || in_array('Online', $keywords))
           update_field('course_type', 'elearning', $meta_course);
-        }else if(in_array('live', $keywords) && in_array('seminar', $keywords)){
-        update_field('course_type', 'webinar', $meta_course);
-        }else{ 
+        else if(in_array('Live', $keywords) || in_array('Online', $keywords) || in_array('E-learning', $keywords) )
+          update_field('course_type', 'webinar', $meta_course);
+        else 
           update_field('course_type', 'course', $meta_course);
-        }
 
         echo "<span class='textLiDashboard'>Course_ID: " . $datum->programClassification->programId . " - Already in your database <br><span class='werkText'>Searching for changes ...</span><br></span>";
       
@@ -362,6 +372,13 @@
           echo '****** Degree - ' . $message;
           $change = true;
         }
+
+        if($duration_day != intval($post['duration_day'])){
+          update_field('duration_day', intval($post['duration_day']), $meta_course); 
+          echo '****** Program Duration Day - ' . $message;
+          $change = true;
+        }
+
         
         if(!$change)
           echo '*** ~ *** No change found for this course ! *** ~ ***<br><br>';
@@ -434,7 +451,6 @@
 
             array_push($data_locaties_xml, $infos);
             
-            echo $infos .'<br>';
             update_field('data_locaties_xml', $data_locaties_xml, $meta_course);
 
         }
