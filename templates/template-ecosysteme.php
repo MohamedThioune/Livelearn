@@ -9,7 +9,7 @@ $topic = ($_GET['topic']) ? $_GET['topic'] : ' ';
 $name_topic = (String)get_the_category_by_ID($topic);
 
 if($topic != ' '){    
-    $categories = get_categories( array(
+    $categories_topic = get_categories( array(
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
         'orderby'    => 'name',
         'parent'     => $topic,
@@ -31,8 +31,8 @@ $teachers = array();
 
 $categoriees = array(); 
 
-if(isset($categories))
-    foreach($categories as $category)
+if(isset($categories_topic))
+    foreach($categories_topic as $category)
         array_push($categoriees, $category->cat_ID);
 
 foreach($global_blogs as $blog)
@@ -71,35 +71,38 @@ foreach($global_blogs as $blog)
             foreach($categories_id as $categorie)                    
                 $categories = explode(',', $categorie['value']);
         }
-
-    foreach($categoriees as $category){
-        if(in_array($category, $trees) || $categories)
-            if(in_array($category, $trees) || in_array($category, $categories))
+    $born = false;
+    foreach($categoriees as $categoriee){
+        if(in_array($categoriee, $trees) || $categories)
+            if(in_array($categoriee, $trees) || in_array($categoriee, $categories)){
                 array_push($blogs, $blog);
-        else
-            array_push($others, $blog);
+                $born = true;
+                /*
+                 ** Push experts 
+                */ 
+                if(!in_array($blog->post_author, $teachers))
+                array_push($teachers, $blog->post_author);
+
+                foreach($experts as $expertie)
+                    if(!in_array($expertie, $teachers))
+                        array_push($teachers, $expertie);
+                /*
+                 **
+                */ 
+                break;
+                
+            }
     }
+    if(!$born)
+        array_push($others, $blog);
+
     /*
-     *
+     **
     */ 
     
-    /*
-    * Push experts 
-    */ 
-    if(!in_array($blog->post_author, $teachers))
-        array_push($teachers, $blog->post_author);
-
-    foreach($experts as $expertie)
-    if(!in_array($expertie, $teachers))
-        array_push($teachers, $expertie);
-    /*
-     *
-    */ 
+    
         
 }
-
-
-
 
 ?>
 
@@ -242,7 +245,7 @@ foreach($global_blogs as $blog)
                     </a>
                     <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownHuman">
                         <?php 
-                        foreach($categories as $category){
+                        foreach($categories_topic as $category){
                             echo '<a class="dropdown-item" href="category-overview?category=' . $category->cat_ID . '">' . $category->cat_name .'</a>';
                         }
                         ?>
@@ -264,6 +267,7 @@ foreach($global_blogs as $blog)
                 $num = 1;
                 if(!empty($teachers)){
                     foreach($teachers as $user) {
+                        $user = get_userdata($user);
                         $image_user = get_field('profile_img',  'user_' . $user->ID);
                         $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                     ?>
@@ -364,16 +368,16 @@ foreach($global_blogs as $blog)
                 </div>
             </div> -->
             <?php 
-            if(!empty($others)){
+            if(!empty($blogs)){
             ?>
             <div class="UitgelichteBlock">
-                <p class="sousBlockTitleProduct">Andere artikelen</p>
+                <p class="sousBlockTitleProduct">Uitgelichte artikelen</p>
                 <div class="blockCardOpleidingen ">
 
                     <div class="swiper-container swipeContaine4">
                         <div class="swiper-wrapper">
                             <?php
-                            foreach($others as $blog) {
+                            foreach($blogs as $blog) {
 
                             $tag = '';
                             $image = null;
@@ -466,7 +470,7 @@ foreach($global_blogs as $blog)
                     <div class="swiper-container swipeContaineEvens">
                         <div class="swiper-wrapper">
                             <?php 
-                            foreach($categories as $category){
+                            foreach($categories_topic as $category){
                                 $image_category = get_field('image', 'category_'. $category->cat_ID);
                                 $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/Image-45.png';
                             ?>
@@ -487,16 +491,16 @@ foreach($global_blogs as $blog)
                 </div>
             </div>
             <?php 
-            if(!empty($blogs)){
+            if(!empty($others)){
             ?>
             <div class="UitgelichteBlock">
-                <p class="sousBlockTitleProduct">Uitgelichte artikelen</p>
+                <p class="sousBlockTitleProduct">Andere artikelen</p>
                 <div class="blockCardOpleidingen ">
 
                     <div class="swiper-container swipeContaine4">
                         <div class="swiper-wrapper">
                             <?php
-                            foreach($blogs as $blog) {
+                            foreach($others as $blog) {
 
                             $tag = '';
                             $image = null;
