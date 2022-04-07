@@ -286,7 +286,7 @@ foreach($global_blogs as $blog)
                                         <p><?php echo number_format(rand(0,100000), 2, '.', ','); ?></p>
                                     </div>
                                 </div>
-                                <p class="pourcentageCollection"><?php echo number_format(rand(0,100), 2, '.', ','); ?> %</p>
+                                <p class="pourcentageCollection"><?php echo number_format(rand(0,100), 2, '.', ','); ?>%</p>
                             </div>
                         </a>
                     <?php }
