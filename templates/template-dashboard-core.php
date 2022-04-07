@@ -11,7 +11,7 @@ extract($_POST);
 
  // delete_user_meta(33,'topic_affiliate'); // Delete topics affiliate by manager
    // delete_user_meta(33,'todos'); //   Delete todos affiliate by manager
-if(isset($_POST['expert_add'])){
+if(isset($_POST['expert_add']) || isset($_POST['expert_add_artikel'])){
     $bunch = get_field('experts', $_GET['id']);
     if(!empty($bunch)){
         $experts = $_POST['experts'];
@@ -23,8 +23,11 @@ if(isset($_POST['expert_add'])){
         $bunch = $_POST['experts'];
     
     update_field('experts', $bunch, $_GET['id']);
+    if(isset($_POST['expert_add']))
+        $path = "/dashboard/teacher/course-overview/?message=Cursus succesvol bijgewerkt ✔️";
+    else
+        $path = "/blogs/?message=Artikel succesvol bijgewerkt ✔️";
 
-    $path = "/dashboard/teacher/course-overview/?message=Cursus succesvol bijgewerkt ✔️";
     header('Location:' . $path);
 }
 
