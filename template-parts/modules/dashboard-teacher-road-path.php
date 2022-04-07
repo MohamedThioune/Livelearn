@@ -1,3 +1,8 @@
+<?php 
+
+$user_id = get_current_user_id();
+$road_paths = get_field('road_path', 'user_' . $user_id);
+?>
 <div class="contentRoadMap">
    <div class="d-flex justify-content-between headContentRoad">
        <h1 class="roadCourTitle">Road Cours Path</h1>
@@ -211,9 +216,20 @@
     </div>
 
 
-
     <div class="contentItemsRoad">
         <ul id="sortable">
+            <?php
+            if(!empty($road_paths))
+                foreach($road_paths as $course){
+
+                ?>
+
+                <?php
+                }
+            else
+                echo '<li class="ui-state-default" id="1"><div class="blockCardCoursRoad"></div></li>'
+            ?>
+           <!--  
             <li class="ui-state-default" id="1">
                 <div class="blockCardCoursRoad">
                     <img class="roadIcone" src="<?php echo get_stylesheet_directory_uri();?>/img/roadIcone.png" alt="">
@@ -247,143 +263,9 @@
                         </div>
                     </div>
                 </div>
-            </li>
-            <li class="ui-state-default" id="2">
-                <div href="" class="blockCardCoursRoad">
-                    <img class="roadIcone" src="<?php echo get_stylesheet_directory_uri();?>/img/roadIcone.png" alt="">
-                    <div class="dropdown btnTroisPoint">
-                        <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/troisPoint.png" alt="">
-                        </button>
-                        <div class="dropdown-menu dropdownRoadMap" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">
-                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_edit.png" alt="">
-                                Edit
-                            </a>
-                            <button type="button" class="btn dropdown-item" href="#">
-                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
-                                Remove
-                            </button>
-                        </div>
-                    </div>
-                    <div class="imgCoursRoad">
-                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
-                    </div>
-                    <div class="">
-                        <p class="titleCoursRoad">WordPress gevorderden training (virtueel) 2</p>
-                        <div class="sousBlockCategorieRoad ">
-                            <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/grad-search.png" alt="">
-                            <p class="categoryText">Training</p>
-                        </div>
-                        <p class="descriptionTextRoad">In de WordPress specialist training verkrijg je praktisch inzicht in hoe jij zonder enige technische kennis zelf een professionele website kunt opzetten.</p>
-                        <div class="contentImgCardCour">
-                            <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="ui-state-default" id="3">
-                <div href="" class="blockCardCoursRoad">
-                    <img class="roadIcone" src="<?php echo get_stylesheet_directory_uri();?>/img/roadIcone.png" alt="">
-                    <div class="dropdown btnTroisPoint">
-                        <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/troisPoint.png" alt="">
-                        </button>
-                        <div class="dropdown-menu dropdownRoadMap" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">
-                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_edit.png" alt="">
-                                Edit
-                            </a>
-                            <button type="button" class="btn dropdown-item" href="#">
-                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
-                                Remove
-                            </button>
-                        </div>
-                    </div>
-                    <div class="imgCoursRoad">
-                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
-                    </div>
-                    <div class="">
-                        <p class="titleCoursRoad">WordPress gevorderden training (virtueel) 3</p>
-                        <div class="sousBlockCategorieRoad ">
-                            <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/grad-search.png" alt="">
-                            <p class="categoryText">Training</p>
-                        </div>
-                        <p class="descriptionTextRoad">In de WordPress specialist training verkrijg je praktisch inzicht in hoe jij zonder enige technische kennis zelf een professionele website kunt opzetten.</p>
-                        <div class="contentImgCardCour">
-                            <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="ui-state-default" id="4">
-                <div href="" class="blockCardCoursRoad">
-                    <img class="roadIcone" src="<?php echo get_stylesheet_directory_uri();?>/img/roadIcone.png" alt="">
-                    <div class="dropdown btnTroisPoint">
-                        <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/troisPoint.png" alt="">
-                        </button>
-                        <div class="dropdown-menu dropdownRoadMap" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">
-                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_edit.png" alt="">
-                                Edit
-                            </a>
-                            <button type="button" class="btn dropdown-item" href="#">
-                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
-                                Remove
-                            </button>
-                        </div>
-                    </div>
-                    <div class="imgCoursRoad">
-                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
-                    </div>
-                    <div class="">
-                        <p class="titleCoursRoad">WordPress gevorderden training (virtueel) 4</p>
-                        <div class="sousBlockCategorieRoad ">
-                            <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/grad-search.png" alt="">
-                            <p class="categoryText">Training</p>
-                        </div>
-                        <p class="descriptionTextRoad">In de WordPress specialist training verkrijg je praktisch inzicht in hoe jij zonder enige technische kennis zelf een professionele website kunt opzetten.</p>
-                        <div class="contentImgCardCour">
-                            <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="ui-state-default" id="5">
-                <div href="" class="blockCardCoursRoad">
-                    <img class="roadIcone" src="<?php echo get_stylesheet_directory_uri();?>/img/roadIcone.png" alt="">
-                    <div class="dropdown btnTroisPoint">
-                        <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/troisPoint.png" alt="">
-                        </button>
-                        <div class="dropdown-menu dropdownRoadMap" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">
-                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_edit.png" alt="">
-                                Edit
-                            </a>
-                            <button type="button" class="btn dropdown-item" href="#">
-                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
-                                Remove
-                            </button>
-                        </div>
-                    </div>
-                    <div class="imgCoursRoad">
-                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
-                    </div>
-                    <div class="">
-                        <p class="titleCoursRoad">WordPress gevorderden training (virtueel) 5</p>
-                        <div class="sousBlockCategorieRoad ">
-                            <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/grad-search.png" alt="">
-                            <p class="categoryText">Training</p>
-                        </div>
-                        <p class="descriptionTextRoad">In de WordPress specialist training verkrijg je praktisch inzicht in hoe jij zonder enige technische kennis zelf een professionele website kunt opzetten.</p>
-                        <div class="contentImgCardCour">
-                            <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
-                        </div>
-                    </div>
-                </div>
-            </li>
+            </li> 
+            -->
+            
         </ul>
     </div>
 

@@ -5,10 +5,10 @@
 
 <?php 
 
-$topic = ($_GET['topic']) ? $_GET['topic'] : ' ';
-$name_topic = (String)get_the_category_by_ID($topic);
+$topic = (isset($_GET['topic'])) ? $_GET['topic'] : 0;
+$name_topic =  ($topic != 0) ? (String)get_the_category_by_ID($topic) : '';
 
-if($topic != ' '){    
+if($topic != 0){    
     $categories_topic = get_categories( array(
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
         'orderby'    => 'name',
@@ -16,7 +16,6 @@ if($topic != ' '){
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
 }
-
 $args = array(
     'post_type' => 'post',
     'post_status' => 'publish',
@@ -28,6 +27,7 @@ $global_blogs = get_posts($args);
 $blogs = array();
 $others = array();
 $teachers = array();
+$teachers_all = array();
 
 $categoriees = array(); 
 
@@ -81,7 +81,7 @@ foreach($global_blogs as $blog)
                  ** Push experts 
                 */ 
                 if(!in_array($blog->post_author, $teachers))
-                array_push($teachers, $blog->post_author);
+                    array_push($teachers, $blog->post_author);
 
                 foreach($experts as $expertie)
                     if(!in_array($expertie, $teachers))
@@ -93,15 +93,15 @@ foreach($global_blogs as $blog)
                 
             }
     }
-    if(!$born)
+    if(!$born){
         array_push($others, $blog);
-
+        if(!in_array($blog->post_author, $teachers_all))
+            array_push($teachers_all, $blog->post_author);
+        
+    }
     /*
      **
     */ 
-    
-    
-        
 }
 
 ?>
@@ -241,7 +241,7 @@ foreach($global_blogs as $blog)
             <div class="headCollections">
                 <div class="dropdown show">
                     <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownHuman" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Top experts binnen <b><?= $name_topic; ?></b><br>
+                        Top experts binnen <b><?= $name_topic; ?></b>
                     </a>
                     <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownHuman">
                         <?php 
@@ -265,9 +265,11 @@ foreach($global_blogs as $blog)
             <div class="row">
                 <?php 
                 $num = 1;
+                if($topic == 0)
+                    $teachers = $teachers_all;
                 if(!empty($teachers)){
-                    foreach($teachers as $user) {
-                        $user = get_userdata($user);
+                    foreach($teachers as $teacher) {
+                        $user = get_users(array('include'=> $teacher))[0]->data;
                         $image_user = get_field('profile_img',  'user_' . $user->ID);
                         $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                     ?>
@@ -281,10 +283,10 @@ foreach($global_blogs as $blog)
                                     <p class="nameListeCollection"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . '' . $user->last_name; else echo $user->display_name; ?></p>
                                     <div class="iconeTextListCollection">
                                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/ethereum.png" alt="">
-                                        <p>16.300,44</p>
+                                        <p><?php echo number_format(rand(0,100000), 2, '.', ','); ?></p>
                                     </div>
                                 </div>
-                                <p class="pourcentageCollection">-35.21%</p>
+                                <p class="pourcentageCollection"><?php echo number_format(rand(0,100), 2, '.', ','); ?> %</p>
                             </div>
                         </a>
                     <?php }
@@ -462,8 +464,9 @@ foreach($global_blogs as $blog)
             </div>
             <?php
             }
-            ?>
 
+            if(!empty($categories_topic)){
+            ?>
             <div class="groeipadenBlock">
                 <p class="sousBlockTitleProduct">Onderwerpen</p>
                 <div class="blockSousblockTitle">
@@ -491,6 +494,7 @@ foreach($global_blogs as $blog)
                 </div>
             </div>
             <?php 
+            }
             if(!empty($others)){
             ?>
             <div class="UitgelichteBlock">
