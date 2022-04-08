@@ -1,4 +1,5 @@
 <?php 
+$user_id = get_current_user_id();
 
 $road_paths = get_field('road_path', 'user_' . $user_id);
 $road_path_s = array(); 
@@ -10,7 +11,6 @@ foreach($road_paths as $road_path)
 ** Courses - owned * 
 */
 $courses = array();
-$user_id = get_current_user_id();
 
 $args = array(
     'post_type' => 'course',
@@ -74,8 +74,10 @@ foreach($global_courses as $course)
                                 <tbody>
                                     <?php
                                     foreach($courses as $key=>$course){
-                                        if ($key == 4)
-                                             break;
+
+                                        if(in_array($course->ID, $road_path_s))
+                                            continue;
+
                                         $type_course = get_field('course_type', $course->ID);
                                         $short_description = get_field('short_description', $course->ID);
 
@@ -154,7 +156,6 @@ foreach($global_courses as $course)
         <ul id="sortable">
             <?php
                 foreach($road_paths as $key=>$course){
-
                     $type_course = get_field('course_type', $course->ID);
                     $short_description = get_field('short_description', $course->ID);
 
@@ -183,7 +184,7 @@ foreach($global_courses as $course)
                                 <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/troisPoint.png" alt="">
                             </button>
                             <div class="dropdown-menu dropdownRoadMap" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $course->ID;?>&edit">
                                     <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_edit.png" alt="">
                                     Edit
                                 </a>
