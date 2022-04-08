@@ -1,14 +1,46 @@
 <?php 
 
-$user_id = get_current_user_id();
 $road_paths = get_field('road_path', 'user_' . $user_id);
+$road_path_s = array(); 
+
+foreach($road_paths as $road_path)
+    array_push($road_path_s, $road_path->ID);
+
+/*
+** Courses - owned * 
+*/
+$courses = array();
+$user_id = get_current_user_id();
+
+$args = array(
+    'post_type' => 'course',
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'order' => 'DESC',
+);
+
+$global_courses = get_posts($args);
+
+foreach($global_courses as $course)
+{  
+    $experts = get_field('experts', $course->ID);    
+    if($course->post_author == $user_id || in_array($user_id, $experts) ){
+        array_push($courses, $course);
+    }
+
+}
+
 ?>
 <div class="contentRoadMap">
    <div class="d-flex justify-content-between headContentRoad">
        <h1 class="roadCourTitle">Road Cours Path</h1>
        <button class="btn btnAddRoadMap" type="button" data-toggle="modal" data-target="#modalRoadMap">Add new course</button>
    </div>
-
+   <?php
+        if(isset($_GET['message']))
+            if($_GET['message'])
+                echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>";
+    ?>
     <!-- Modal Road map -->
     <div class="modal fade" id="modalRoadMap" tabindex="-1" role="dialog" aria-labelledby="modalRoadMapLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -19,255 +51,180 @@ $road_paths = get_field('road_path', 'user_' . $user_id);
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="">
-                    <div class="row">
-                        <table class="table row-select">
-                            <thead>
-                            <tr class="head">
-                                <th class="">
-                                    <div class="checkbox table-checkbox ">
-                                        <label class="block-label d-flex align-items-center selection-button-checkbox">
-                                        <input type="checkbox" name="all" class="mr-2" value="all" id="toggleAll" tabindex="0"></label>
-                                    </div>
-                                </th>
-                                <th>
-                                    <div class="searchCoursMap ">
-                                        <input type="search" class="">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png" alt="">
-                                    </div>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <div class="checkbox table-checkbox">
-                                        <label class="block-label selection-button-checkbox">
-                                            <input type="checkbox" name="ck1" value="ck1"> </label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="blockCardCoursRoad">
-                                        <div class="dropdown btnTroisPoint">
-                                            <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/troisPoint.png" alt="">
-                                            </button>
-                                            <div class="dropdown-menu dropdownRoadMap" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="#">
-                                                    <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_edit.png" alt="">
-                                                    Edit
-                                                </a>
-                                                <button type="button" class="btn dropdown-item" href="#">
-                                                    <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
-                                                    Remove
-                                                </button>
-                                            </div>
+                <form action="" method="POST">
+                    <div class="">
+                        <div class="row">
+                            <table class="table row-select">
+                                <thead>
+                                <tr class="head">
+                                    <th class="">
+                                        <div class="checkbox table-checkbox ">
+                                            <label class="block-label d-flex align-items-center selection-button-checkbox">
+                                            <input type="checkbox" name="all" class="mr-2" value="all" id="toggleAll" tabindex="0"></label>
                                         </div>
-                                        <div class="imgCoursRoad">
-                                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                                    </th>
+                                    <th>
+                                        <div class="searchCoursMap ">
+                                            <input type="search" class="">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png" alt="">
                                         </div>
-                                        <div class="">
-                                            <p class="titleCoursRoad">WordPress gevorderden training (virtueel) 1</p>
-                                            <div class="sousBlockCategorieRoad ">
-                                                <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/grad-search.png" alt="">
-                                                <p class="categoryText">Training</p>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    foreach($courses as $key=>$course){
+                                        if ($key == 4)
+                                             break;
+                                        $type_course = get_field('course_type', $course->ID);
+                                        $short_description = get_field('short_description', $course->ID);
+
+                                        /*
+                                        * Experts
+                                        */
+                                        $expert = get_field('experts', $course->ID);
+                                        $author = array($course->post_author);
+                                        $experts = array_merge($expert, $author);
+
+                                        /*
+                                        * Thumbnails
+                                        */
+                                        $image = get_field('preview', $course->ID)['url'];
+                                        if(!$image){
+                                            $image = get_field('url_image_xml', $course->ID);
+                                            if(!$image)
+                                                $image = "https://cdn.pixabay.com/photo/2021/09/18/12/40/pier-6635035_960_720.jpg";
+                                        }
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="checkbox table-checkbox">
+                                                <label class="block-label selection-button-checkbox">
+                                                    <input type="checkbox" name="road_path[]" value="<?= $course->ID; ?>"> </label>
                                             </div>
-                                            <p class="descriptionTextRoad">In de WordPress specialist training verkrijg je praktisch inzicht in hoe jij zonder enige technische kennis zelf een professionele website kunt opzetten.</p>
-                                            <div class="contentImgCardCour">
-                                                <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
+                                        </td>
+                                        <td>
+                                            <div class="blockCardCoursRoad">
+                                                <div class="imgCoursRoad">
+                                                    <img class="" src="<?= $image; ?>" alt="">
+                                                </div>
+                                                <div class="">
+                                                    <p class="titleCoursRoad"><?= $course->post_title; ?></p>
+                                                    <div class="sousBlockCategorieRoad ">
+                                                        <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/grad-search.png" alt="">
+                                                        <p class="categoryText"><?= $type_course; ?></p>
+                                                    </div>
+                                                    <p class="descriptionTextRoad"><?= $short_description; ?></p>
+                                                    <div class="contentImgCardCour">
+                                                    <?php
+                                                        foreach($experts as $expert){
+                                                            $image_author = get_field('profile_img',  'user_' . $expert);
+                                                            if(!$image_author)
+                                                                $image_author = get_stylesheet_directory_uri() ."/img/placeholder_user.png";
+                                                            echo '<img class="euroImg" src="' . $image_author . '" alt="">';
+                                                        }
+                                                    ?>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="checkbox table-checkbox">
-                                        <label class="block-label selection-button-checkbox row-select">
-                                            <input type="checkbox" name="ck2" value="ck2"> </label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="blockCardCoursRoad">
-                                        <div class="dropdown btnTroisPoint">
-                                            <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/troisPoint.png" alt="">
-                                            </button>
-                                            <div class="dropdown-menu dropdownRoadMap" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="#">
-                                                    <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_edit.png" alt="">
-                                                    Edit
-                                                </a>
-                                                <button type="button" class="btn dropdown-item" href="#">
-                                                    <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
-                                                    Remove
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="imgCoursRoad">
-                                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
-                                        </div>
-                                        <div class="">
-                                            <p class="titleCoursRoad">WordPress gevorderden training (virtueel) 1</p>
-                                            <div class="sousBlockCategorieRoad ">
-                                                <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/grad-search.png" alt="">
-                                                <p class="categoryText">Training</p>
-                                            </div>
-                                            <p class="descriptionTextRoad">In de WordPress specialist training verkrijg je praktisch inzicht in hoe jij zonder enige technische kennis zelf een professionele website kunt opzetten.</p>
-                                            <div class="contentImgCardCour">
-                                                <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="checkbox table-checkbox">
-                                        <label class="block-label selection-button-checkbox row-select">
-                                        <input type="checkbox" name="ck3" value="ck3"> </label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="blockCardCoursRoad">
-                                        <div class="dropdown btnTroisPoint">
-                                            <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/troisPoint.png" alt="">
-                                            </button>
-                                            <div class="dropdown-menu dropdownRoadMap" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="#">
-                                                    <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_edit.png" alt="">
-                                                    Edit
-                                                </a>
-                                                <button type="button" class="btn dropdown-item" href="#">
-                                                    <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
-                                                    Remove
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="imgCoursRoad">
-                                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
-                                        </div>
-                                        <div class="">
-                                            <p class="titleCoursRoad">WordPress gevorderden training (virtueel) 1</p>
-                                            <div class="sousBlockCategorieRoad ">
-                                                <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/grad-search.png" alt="">
-                                                <p class="categoryText">Training</p>
-                                            </div>
-                                            <p class="descriptionTextRoad">In de WordPress specialist training verkrijg je praktisch inzicht in hoe jij zonder enige technische kennis zelf een professionele website kunt opzetten.</p>
-                                            <div class="contentImgCardCour">
-                                                <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="checkbox table-checkbox">
-                                        <label class="block-label selection-button-checkbox row-select">
-                                        <input type="checkbox" name="ck4" value="ck4"> </label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="blockCardCoursRoad">
-                                        <div class="dropdown btnTroisPoint">
-                                            <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/troisPoint.png" alt="">
-                                            </button>
-                                            <div class="dropdown-menu dropdownRoadMap" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="#">
-                                                    <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_edit.png" alt="">
-                                                    Edit
-                                                </a>
-                                                <button type="button" class="btn dropdown-item" href="#">
-                                                    <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
-                                                    Remove
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="imgCoursRoad">
-                                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
-                                        </div>
-                                        <div class="">
-                                            <p class="titleCoursRoad">WordPress gevorderden training (virtueel) 1</p>
-                                            <div class="sousBlockCategorieRoad ">
-                                                <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/grad-search.png" alt="">
-                                                <p class="categoryText">Training</p>
-                                            </div>
-                                            <p class="descriptionTextRoad">In de WordPress specialist training verkrijg je praktisch inzicht in hoe jij zonder enige technische kennis zelf een professionele website kunt opzetten.</p>
-                                            <div class="contentImgCardCour">
-                                                <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn row-select-submit">Approve selected</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-light" data-dismiss="modal">Close</button>
+                        <button type="submit" name="road_path_selected" class="btn row-select-submit">Approve selected</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
-
+    <?php 
+    if(empty($road_paths))
+        echo '<li class="ui-state-default" id="1"><div class="blockCardCoursRoad"><h6>Geen selectie, maak er een 😉</h6></div></li>';
+    else{    
+    ?>
     <div class="contentItemsRoad">
         <ul id="sortable">
             <?php
-            if(!empty($road_paths))
-                foreach($road_paths as $course){
+                foreach($road_paths as $key=>$course){
 
+                    $type_course = get_field('course_type', $course->ID);
+                    $short_description = get_field('short_description', $course->ID);
+
+                    /*
+                    * Experts
+                    */
+                    $expert = get_field('experts', $course->ID);
+                    $author = array($course->post_author);
+                    $experts = array_merge($expert, $author);
+
+                    /*
+                    * Thumbnails
+                    */
+                    $image = get_field('preview', $course->ID)['url'];
+                    if(!$image){
+                        $image = get_field('url_image_xml', $course->ID);
+                        if(!$image)
+                            $image = "https://cdn.pixabay.com/photo/2021/09/18/12/40/pier-6635035_960_720.jpg";
+                    }
                 ?>
-
+                <li class="ui-state-default" id="<?= $key; ?>">
+                    <div class="blockCardCoursRoad">
+                        <img class="roadIcone" src="<?php echo get_stylesheet_directory_uri();?>/img/roadIcone.png" alt="">
+                        <div class="dropdown btnTroisPoint">
+                            <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/troisPoint.png" alt="">
+                            </button>
+                            <div class="dropdown-menu dropdownRoadMap" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">
+                                    <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_edit.png" alt="">
+                                    Edit
+                                </a>
+                                <button type="button" class="btn dropdown-item" href="#">
+                                    <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                        <div class="imgCoursRoad">
+                            <?php echo '<img class="" src="' . $image . '" alt="">'; ?>
+                        </div>
+                        <div class="">
+                            <p class="titleCoursRoad"><?= $course->post_title; ?></p>
+                            <div class="sousBlockCategorieRoad ">
+                                <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/grad-search.png" alt="">
+                                <p class="categoryText"><?= $type_course; ?></p>
+                            </div>
+                            <p class="descriptionTextRoad"><?= $short_description; ?></p>
+                            <div class="contentImgCardCour">
+                                <?php
+                                foreach($experts as $expert){
+                                    $image_author = get_field('profile_img',  'user_' . $expert);
+                                    if(!$image_author)
+                                        $image_author = get_stylesheet_directory_uri() ."/img/placeholder_user.png";
+                                    echo '<img class="euroImg" src="' . $image_author . '" alt="">';
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </li> 
                 <?php
                 }
-            else
-                echo '<li class="ui-state-default" id="1"><div class="blockCardCoursRoad"></div></li>'
             ?>
-           <!--  
-            <li class="ui-state-default" id="1">
-                <div class="blockCardCoursRoad">
-                    <img class="roadIcone" src="<?php echo get_stylesheet_directory_uri();?>/img/roadIcone.png" alt="">
-                    <div class="dropdown btnTroisPoint">
-                        <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/troisPoint.png" alt="">
-                        </button>
-                        <div class="dropdown-menu dropdownRoadMap" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">
-                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_edit.png" alt="">
-                                Edit
-                            </a>
-                            <button type="button" class="btn dropdown-item" href="#">
-                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
-                                Remove
-                            </button>
-                        </div>
-                    </div>
-                    <div class="imgCoursRoad">
-                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
-                    </div>
-                    <div class="">
-                        <p class="titleCoursRoad">WordPress gevorderden training (virtueel) 1</p>
-                        <div class="sousBlockCategorieRoad ">
-                            <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/grad-search.png" alt="">
-                            <p class="categoryText">Training</p>
-                        </div>
-                        <p class="descriptionTextRoad">In de WordPress specialist training verkrijg je praktisch inzicht in hoe jij zonder enige technische kennis zelf een professionele website kunt opzetten.</p>
-                        <div class="contentImgCardCour">
-                            <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
-                        </div>
-                    </div>
-                </div>
-            </li> 
-            -->
             
         </ul>
     </div>
+    <?php
+    }
+    ?>
 
 
 </div>
