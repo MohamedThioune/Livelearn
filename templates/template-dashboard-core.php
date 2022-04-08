@@ -347,6 +347,25 @@ else if(isset($delete_todos)){
     header("location:".$content);
 }
  
+else if(isset($road_path_selected)){
+    $user_id = get_current_user_id();
+    $args = array(
+        'post_type' => 'course', 
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'include' => $road_path,  
+    );
+
+    $courses = get_posts($args);
+    $road_paths = get_field('road_path', 'user_'. $user_id);
+
+    if(!empty($road_paths))
+        $courses = array_merge($road_paths, $courses);
+
+    update_field('road_path', $courses, 'user_'. $user_id);
+    header("location: /dashboard/teacher/road-path/?message=Succesvolle cursus selectie");
+
+}
 ?>
 <?php wp_head(); ?>
 
