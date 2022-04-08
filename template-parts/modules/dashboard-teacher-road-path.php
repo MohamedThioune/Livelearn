@@ -65,13 +65,13 @@ foreach($global_courses as $course)
                                     </th>
                                     <th>
                                         <div class="searchCoursMap ">
-                                            <input type="search" class="">
+                                            <input id="search_path" type="search" autocomplete="off">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png" alt="">
                                         </div>
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="autocomplete">
                                     <?php
                                     foreach($courses as $key=>$course){
 
@@ -229,8 +229,33 @@ foreach($global_courses as $course)
 
 
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" defer></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" defer></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" ></script>
+<script>
+     $('#search_path').keyup(function(){
+        var txt = $(this).val();
+        event.stopPropagation();
+
+        if(txt){
+            $.ajax({
+
+                url:"/fetch-ajax",
+                method:"post",
+                data:{
+                    search_path:txt,
+                },
+                dataType:"text",
+                success: function(data){
+                    console.log(data);
+                    $('#autocomplete').html(data);
+                }
+            });
+        }
+        else
+            $('#autocomplete').html("<center> <small>Typing ... </small> <center>");
+    });
+</script>
+
 <script>
     $(document).ready(function (e) {
         $("#sortable").sortable();
