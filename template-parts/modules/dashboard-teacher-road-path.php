@@ -30,6 +30,55 @@ foreach($global_courses as $course)
 
 }
 
+/*
+** Categories - all  * 
+*/
+
+$categories = array();
+
+$cats = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'orderby'    => 'name',
+    'exclude' => 'Uncategorized',
+    'parent'     => 0,
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+foreach($cats as $category){
+    $cat_id = strval($category->cat_ID);
+    $category = intval($cat_id);
+    array_push($categories, $category);
+}
+
+$bangerichts = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[1],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$functies = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[0],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$skills = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[3],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$interesses = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[2],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+
+//
+
+$title_road_path = get_field('title_road_path', 'user_'.$user_id);
+
 ?>
 <div class="contentRoadMap">
    <div class="d-flex justify-content-between headContentRoad">
@@ -98,7 +147,7 @@ foreach($global_courses as $course)
                                                 $image = "https://cdn.pixabay.com/photo/2021/09/18/12/40/pier-6635035_960_720.jpg";
                                         }
                                     ?>
-                                    <tr>
+                                    <tr id="<?php echo $course->ID;?>" >
                                         <td>
                                             <div class="checkbox table-checkbox">
                                                 <label class="block-label selection-button-checkbox">
@@ -153,6 +202,7 @@ foreach($global_courses as $course)
     else{    
     ?>
     <div class="contentItemsRoad">
+        <form action="" method="POST">
         <ul id="sortable">
             <?php
                 foreach($road_paths as $key=>$course){
@@ -176,7 +226,8 @@ foreach($global_courses as $course)
                             $image = "https://cdn.pixabay.com/photo/2021/09/18/12/40/pier-6635035_960_720.jpg";
                     }
                 ?>
-                <li class="ui-state-default" id="<?= $key; ?>">
+                <li class="ui-state-default" id="<?= $course->ID; ?>">
+                    <input type="hidden" name="course_id[]" value="<?= $course->ID?>">
                     <div class="blockCardCoursRoad">
                         <img class="roadIcone" src="<?php echo get_stylesheet_directory_uri();?>/img/roadIcone.png" alt="">
                         <div class="dropdown btnTroisPoint">
@@ -188,7 +239,7 @@ foreach($global_courses as $course)
                                     <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_edit.png" alt="">
                                     Edit
                                 </a>
-                                <button type="button" class="btn dropdown-item" href="#">
+                                <button type="button" class="btn dropdown-item remove" href="#">
                                     <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
                                     Remove
                                 </button>
@@ -220,8 +271,78 @@ foreach($global_courses as $course)
                 <?php
                 }
             ?>
-            
         </ul>
+        <div class="acf-field">
+            <label for="locate">Baangerichte :</label><br>
+            <div class="form-group formModifeChoose">
+
+                <select id="form-control-bangers" class="multipleSelect2 dropdown" name="topics[]" >
+                    <option value=""> Maak en keuze</option>
+                    <?php
+                    //Baangerichts
+                    foreach($bangerichts as $value){
+                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                    }
+                    ?>
+                </select>
+
+            </div>
+
+            <label for="locate">Functiegerichte :</label><br>
+            <div class="form-group formModifeChoose">
+
+                <select id="form-control-functs" class="multipleSelect2" name="topics[]">
+                    <option value=""> Maak en keuze</option>
+
+                    <?php
+                    //Functies
+                    foreach($functies as $value){
+                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                    }
+                    ?>
+                </select>
+
+            </div>
+
+            <label for="locate">Skill :</label><br>
+            <div class="form-group formModifeChoose">
+
+                <select id="form-control-skills" class="multipleSelect2" name="topics[]">
+                    <option value=""> Maak en keuze</option>
+
+                    <?php
+                    //Skills
+                    foreach($skills as $value){
+                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                    }
+                    ?>
+                </select>
+
+            </div>
+
+            <label for="locate">Persoonlijke :</label><br>
+            <div class="form-group formModifeChoose">
+
+                <select id="form-control-interess" class="multipleSelect2" name="topics[]">
+                <option value=""> Maak en keuze</option>
+
+                    <?php
+                    //Persoonlikje interesses
+                    foreach($interesses as $value){
+                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                    }
+                    ?>
+                </select>
+
+            </div>
+            <div class="form-group">
+                <label> Title learning path : </label>
+                <input class="form-control" type="text" name="title_road_path" id="" value="" placeholder="<?= $title_road_path; ?>">
+            </div>
+
+            <button type="submit" name="road_path_created" class="btn row-select-submit">Validate your learning path</button>
+        </div>
+        </form>
     </div>
     <?php
     }
@@ -255,6 +376,28 @@ foreach($global_courses as $course)
             $('#autocomplete').html("<center> <small>Typing ... </small> <center>");
     });
 </script>
+<script>
+    $(".remove").click(function(){
+        var id = $(this).parents("li").attr("id");
+
+        if(confirm('Are you sure to remove this record ?'))
+        {
+            $.ajax({
+               url: '/delete-course',
+               type: 'GET',
+               data: {road_path: id},
+               error: function() {
+                  alert('Something is wrong');
+               },
+               success: function(data) {
+                    $("#"+id).remove();
+                    alert("Record removed successfully");  
+               }
+            });
+        }
+    });
+
+</script>
 
 <script>
     $(document).ready(function (e) {
@@ -271,6 +414,7 @@ foreach($global_courses as $course)
     });
 
 </script>
+
 <script>
     $(function () {
         $("body").addClass("js-enabled");
