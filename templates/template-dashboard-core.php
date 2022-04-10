@@ -366,6 +366,26 @@ else if(isset($road_path_selected)){
     header("location: /dashboard/teacher/road-path/?message=Succesvolle cursus selectie");
 
 }
+else if(isset($road_path_created)){
+
+    $user_id = get_current_user_id();
+
+    $courses = array();
+
+    foreach($course_id as $id)
+        array_push($courses, get_post($id));
+
+    foreach($topics as $topic)
+        if($topic != '')
+            update_field('topic_road_path', $topic, 'user_'. $user_id);
+        
+    if($title_road_path)
+        update_field('title_road_path', $title_road_path, 'user_'. $user_id);
+
+    update_field('road_path', null, 'user_'. $user_id);
+    update_field('road_path', $courses, 'user_'. $user_id);
+
+}
 ?>
 <?php wp_head(); ?>
 
