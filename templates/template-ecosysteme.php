@@ -407,9 +407,9 @@ foreach($global_blogs as $blog)
                             if(!$image)
                                 $image = get_field('preview', $blog->ID)['url'];
                                     if(!$image){
-                                        $image = get_field('url_image_xml', $course->ID);
+                                        $image = get_field('url_image_xml', $blog->ID);
                                         if(!$image)
-                                            $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                                            $image = get_stylesheet_directory_uri() . '/img/libay.png';
                                     }
 
                             $author = get_field('profile_img',  'user_' . $blog->post_author);
@@ -507,9 +507,9 @@ foreach($global_blogs as $blog)
                             if(!$image)
                                 $image = get_field('preview', $blog->ID)['url'];
                                     if(!$image){
-                                        $image = get_field('url_image_xml', $course->ID);
+                                        $image = get_field('url_image_xml', $blog->ID);
                                         if(!$image)
-                                            $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                                            $image = get_stylesheet_directory_uri() . '/img/libay.png';
                                     }
 
                             $author = get_field('profile_img',  'user_' . $blog->post_author);
