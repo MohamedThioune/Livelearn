@@ -384,7 +384,7 @@ $title_road_path = get_field('title_road_path', 'user_'.$user_id);
         {
             $.ajax({
                url: '/delete-course',
-               type: 'GET',
+               type: 'POST',
                data: {road_path: id},
                error: function() {
                   alert('Something is wrong');
