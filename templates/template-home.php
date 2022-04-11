@@ -320,7 +320,7 @@
                                     echo $row_interesses;
                                     ?>
                                 </div>
-                                <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Next</button>
+                                <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Save</button>
                             </div>
                         </div>
                       </form>
