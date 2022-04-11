@@ -11,6 +11,7 @@ $blogs = $query->posts;
 global $post;
 ?>
 
+<?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span>"?>
 
 <div class="main-wrapper ">
 
@@ -24,15 +25,22 @@ global $post;
             
             <div class="row">
                 <?php
-                foreach($blogs as $blog) {?>
+                foreach($blogs as $blog) {
+                //Image
+                $image = get_the_post_thumbnail_url($blog->ID);
+                if(!$image)
+                    $image = get_field('preview', $blog->ID)['url'];
+                else 
+                    $image = get_stylesheet_directory_uri() . '/img/blog/1.jpg' 
+                ?>
                 <div class="col-lg-6 col-md-6 mb-5">
                     <div class="blog-item">
-                        <img src="img/blog/1.jpg" alt="" class="img-fluid rounded">
+                        <img src="<?= $image; ?>" alt="" class="img-fluid rounded">
 
                         <div class="blog-item-content bg-white p-5">
                             <div class="blog-item-meta bg-gray py-1 px-2">
                                 <span class="text-muted text-capitalize mr-3"><i class="ti-pencil-alt mr-2"></i><?php the_author_meta( 'user_nicename' , $blog->post_author ); ?></span>
-                                <!--                                <span class="text-muted text-capitalize mr-3"><i class="ti-comment mr-2"></i>5 Comments</span>-->
+                                <!-- <span class="text-muted text-capitalize mr-3"><i class="ti-comment mr-2"></i>5 Comments</span> -->
                                 <span class="text-black text-capitalize mr-3"><i class="ti-time mr-1"></i> <?php echo get_the_date('d-m-Y', $blog->ID);?></span>
                             </div> 
 

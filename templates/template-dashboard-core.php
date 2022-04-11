@@ -11,7 +11,7 @@ extract($_POST);
 
  // delete_user_meta(33,'topic_affiliate'); // Delete topics affiliate by manager
    // delete_user_meta(33,'todos'); //   Delete todos affiliate by manager
-if(isset($_POST['expert_add'])){
+if(isset($_POST['expert_add']) || isset($_POST['expert_add_artikel'])){
     $bunch = get_field('experts', $_GET['id']);
     if(!empty($bunch)){
         $experts = $_POST['experts'];
@@ -23,8 +23,11 @@ if(isset($_POST['expert_add'])){
         $bunch = $_POST['experts'];
     
     update_field('experts', $bunch, $_GET['id']);
+    if(isset($_POST['expert_add']))
+        $path = "/dashboard/teacher/course-overview/?message=Cursus succesvol bijgewerkt ✔️";
+    else
+        $path = "/blogs/?message=Artikel succesvol bijgewerkt ✔️";
 
-    $path = "/dashboard/teacher/course-overview/?message=Cursus succesvol bijgewerkt ✔️";
     header('Location:' . $path);
 }
 
@@ -344,6 +347,45 @@ else if(isset($delete_todos)){
     header("location:".$content);
 }
  
+else if(isset($road_path_selected)){
+    $user_id = get_current_user_id();
+    $args = array(
+        'post_type' => 'course', 
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'include' => $road_path,  
+    );
+
+    $courses = get_posts($args);
+    $road_paths = get_field('road_path', 'user_'. $user_id);
+
+    if(!empty($road_paths))
+        $courses = array_merge($road_paths, $courses);
+
+    update_field('road_path', $courses, 'user_'. $user_id);
+    header("location: /dashboard/teacher/road-path/?message=Succesvolle cursus selectie");
+
+}
+else if(isset($road_path_created)){
+
+    $user_id = get_current_user_id();
+
+    $courses = array();
+
+    foreach($course_id as $id)
+        array_push($courses, get_post($id));
+
+    foreach($topics as $topic)
+        if($topic != '')
+            update_field('topic_road_path', $topic, 'user_'. $user_id);
+        
+    if($title_road_path)
+        update_field('title_road_path', $title_road_path, 'user_'. $user_id);
+
+    update_field('road_path', null, 'user_'. $user_id);
+    update_field('road_path', $courses, 'user_'. $user_id);
+
+}
 ?>
 <?php wp_head(); ?>
 

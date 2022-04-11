@@ -5,18 +5,35 @@
 
 <?php 
 
-$topic = ($_GET['topic']) ? $_GET['topic'] : ' ';
-$name_topic = (String)get_the_category_by_ID($topic);
+$topic = (isset($_GET['topic'])) ? $_GET['topic'] : 0;
+$name_topic =  ($topic != 0) ? (String)get_the_category_by_ID($topic) : '';
 
-if($topic != ' '){    
-    $categories = get_categories( array(
+
+$users = get_users();
+
+$road_paths = array();
+$topic_road_path = 0;
+$title_road_path = "";
+
+foreach($users as $element){
+    $road_path = get_field('road_path', 'user_' . $element->ID);
+    $topic_road_path = get_field('topic_road_path', 'user_' . $element->ID);
+    if( $topic == $topic_road_path && empty($road_paths) ){
+        $expert_road_path = get_userdata($element->ID)->data->display_name;
+        $road_paths = $road_path;
+        $title_road_path = get_field('title_road_path', 'user_' . $element->ID);
+    }
+}
+
+
+if($topic != 0){    
+    $categories_topic = get_categories( array(
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
         'orderby'    => 'name',
         'parent'     => $topic,
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
 }
-
 $args = array(
     'post_type' => 'post',
     'post_status' => 'publish',
@@ -28,11 +45,12 @@ $global_blogs = get_posts($args);
 $blogs = array();
 $others = array();
 $teachers = array();
+$teachers_all = array();
 
 $categoriees = array(); 
 
-if(isset($categories))
-    foreach($categories as $category)
+if(isset($categories_topic))
+    foreach($categories_topic as $category)
         array_push($categoriees, $category->cat_ID);
 
 foreach($global_blogs as $blog)
@@ -71,36 +89,38 @@ foreach($global_blogs as $blog)
             foreach($categories_id as $categorie)                    
                 $categories = explode(',', $categorie['value']);
         }
-
-    foreach($categoriees as $category){
-        if(in_array($category, $trees) || $categories)
-            if(in_array($category, $trees) || in_array($category, $categories))
+    $born = false;
+    foreach($categoriees as $categoriee){
+        if(in_array($categoriee, $trees) || $categories)
+            if(in_array($categoriee, $trees) || in_array($categoriee, $categories)){
                 array_push($blogs, $blog);
-        else
-            array_push($others, $blog);
+                $born = true;
+                /*
+                 ** Push experts 
+                */ 
+                if(!in_array($blog->post_author, $teachers))
+                    array_push($teachers, $blog->post_author);
+
+                foreach($experts as $expertie)
+                    if(!in_array($expertie, $teachers))
+                        array_push($teachers, $expertie);
+                /*
+                 **
+                */ 
+                break;
+                
+            }
+    }
+    if(!$born){
+        array_push($others, $blog);
+        if(!in_array($blog->post_author, $teachers_all))
+            array_push($teachers_all, $blog->post_author);
+        
     }
     /*
-     *
+     **
     */ 
-    
-    /*
-    * Push experts 
-    */ 
-    if(!in_array($blog->post_author, $teachers))
-        array_push($teachers, $blog->post_author);
-
-    foreach($experts as $expertie)
-    if(!in_array($expertie, $teachers))
-        array_push($teachers, $expertie);
-    /*
-     *
-    */ 
-        
 }
-
-
-
-
 ?>
 
 <div>
@@ -238,11 +258,11 @@ foreach($global_blogs as $blog)
             <div class="headCollections">
                 <div class="dropdown show">
                     <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownHuman" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Top experts binnen <b><?= $name_topic; ?></b><br>
+                        Tot experts binnen <b><?= $name_topic; ?></b>
                     </a>
                     <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownHuman">
                         <?php 
-                        foreach($categories as $category){
+                        foreach($categories_topic as $category){
                             echo '<a class="dropdown-item" href="category-overview?category=' . $category->cat_ID . '">' . $category->cat_name .'</a>';
                         }
                         ?>
@@ -254,7 +274,7 @@ foreach($global_blogs as $blog)
                     </a>
                     <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownMenuLink">
                         <a class="dropdown-item" href="#">Last 7 days</a>
-                        <a class="dropdown-item" href="#"> last moth</a>
+                        <a class="dropdown-item" href="#"> last month</a>
                         <a class="dropdown-item" href="#"> last 7 year</a>
                     </div>
                 </div>
@@ -262,8 +282,11 @@ foreach($global_blogs as $blog)
             <div class="row">
                 <?php 
                 $num = 1;
+                if($topic == 0)
+                    $teachers = $teachers_all;
                 if(!empty($teachers)){
-                    foreach($teachers as $user) {
+                    foreach($teachers as $teacher) {
+                        $user = get_users(array('include'=> $teacher))[0]->data;
                         $image_user = get_field('profile_img',  'user_' . $user->ID);
                         $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                     ?>
@@ -277,10 +300,10 @@ foreach($global_blogs as $blog)
                                     <p class="nameListeCollection"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . '' . $user->last_name; else echo $user->display_name; ?></p>
                                     <div class="iconeTextListCollection">
                                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/ethereum.png" alt="">
-                                        <p>16.300,44</p>
+                                        <p><?php echo number_format(rand(0,100000), 2, '.', ','); ?></p>
                                     </div>
                                 </div>
-                                <p class="pourcentageCollection">-35.21%</p>
+                                <p class="pourcentageCollection"><?php echo number_format(rand(0,100), 2, '.', ','); ?>%</p>
                             </div>
                         </a>
                     <?php }
@@ -363,17 +386,18 @@ foreach($global_blogs as $blog)
                     </div>
                 </div>
             </div> -->
+
             <?php 
-            if(!empty($others)){
+            if(!empty($road_paths)){
             ?>
             <div class="UitgelichteBlock">
-                <p class="sousBlockTitleProduct">Andere artikelen</p>
+                <p class="sousBlockTitleProduct"> Roadpath "<?php if( isset($title_road_path) && isset($expert_road_path) ) echo $title_road_path . '" by ' . $expert_road_path; ?> </p>
                 <div class="blockCardOpleidingen ">
 
                     <div class="swiper-container swipeContaine4">
                         <div class="swiper-wrapper">
                             <?php
-                            foreach($others as $blog) {
+                            foreach($road_paths as $blog) {
 
                             $tag = '';
                             $image = null;
@@ -383,9 +407,109 @@ foreach($global_blogs as $blog)
                             if(!$image)
                                 $image = get_field('preview', $blog->ID)['url'];
                                     if(!$image){
-                                        $image = get_field('url_image_xml', $course->ID);
+                                        $image = get_field('url_image_xml', $blog->ID);
                                         if(!$image)
-                                            $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                                            $image = get_stylesheet_directory_uri() . '/img/libay.png';
+                                    }
+
+                            $author = get_field('profile_img',  'user_' . $blog->post_author);
+
+                            //Summary
+                            $summary = get_the_excerpt($blog->ID);
+
+                            if(!$summary)
+                                $summary = get_field('short_description', $blog->ID);
+
+                            //Tags
+                            $tree = get_the_tags($blog->ID);
+
+                            if($tree)
+                                if(isset($tree[2]))
+                                    $tag = $tree[2]->name;
+
+                            if($tag = ''){
+                                $tagS = intval(explode(',', get_field('categories',  $blog->ID)[0]['value'])[0]);
+                                $tagI = intval(get_field('category_xml',  $blog->ID)[0]['value']);
+                                if($tagS != 0)
+                                    $tag = (String)get_the_category_by_ID($tagS);
+                                else if($tagI != 0)
+                                    $tag = (String)get_the_category_by_ID($tagI);                                    
+                            }
+
+                            $type_course = get_field('course_type', $blog->ID);
+                            ?>
+                            <a href="<?php echo get_permalink($blog->ID) ?>" class="swiper-slide swiper-slide4">
+                                <div class="cardKraam2">
+                                    <div class="headCardKraam">
+                                        <img src="<?php echo $image; ?>" alt="">
+                                    </div>
+                                    <button class="btn btnImgCoeurEcosysteme">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/coeur1.png" alt="">
+                                    </button>
+                                    <div class="contentCardProd">
+                                        <div class="group8">
+                                            <div class="imgTitleCours">
+                                                <div class="imgCoursProd">
+                                                    <img src="<?php echo $author; ?>" alt="">
+                                                </div>
+                                                <p class="nameCoursProd"><?php echo(get_userdata($blog->post_author)->data->display_name); ?></p>
+                                            </div>
+                                            <div class="group9">
+                                                <div class="blockOpein">
+                                                    <img class="iconAm" src="<?php echo get_stylesheet_directory_uri();?>/img/graduat.png" alt="">
+                                                    <p class="lieuAm"><?= $type_course; ?></p>
+                                                </div>
+                                                <?php if($tag != '') { ?>
+                                                <div class="blockOpein">
+                                                    &#x0023;&#xFE0F;&#x20E3;
+                                                    <p class="lieuAm"><?php echo $tag; ?></p>
+                                                </div>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                        <p class="werkText"><?php echo $blog->post_title; ?></p>
+                                        <p class="descriptionPlatform">
+                                            <?php echo $summary; ?>
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <?php
+            }
+
+            ?>
+            
+            <?php 
+            if(!empty($blogs)){
+            ?>
+            <div class="UitgelichteBlock">
+                <p class="sousBlockTitleProduct">Uitgelichte artikelen</p>
+                <div class="blockCardOpleidingen ">
+
+                    <div class="swiper-container swipeContaine4">
+                        <div class="swiper-wrapper">
+                            <?php
+                            foreach($blogs as $blog) {
+
+                            $tag = '';
+                            $image = null;
+
+                            //Image
+                            $image = get_the_post_thumbnail_url($blog->ID);
+                            if(!$image)
+                                $image = get_field('preview', $blog->ID)['url'];
+                                    if(!$image){
+                                        $image = get_field('url_image_xml', $blog->ID);
+                                        if(!$image)
+                                            $image = get_stylesheet_directory_uri() . '/img/libay.png';
                                     }
 
                             $author = get_field('profile_img',  'user_' . $blog->post_author);
@@ -458,15 +582,16 @@ foreach($global_blogs as $blog)
             </div>
             <?php
             }
-            ?>
 
+            if(!empty($categories_topic)){
+            ?>
             <div class="groeipadenBlock">
                 <p class="sousBlockTitleProduct">Onderwerpen</p>
                 <div class="blockSousblockTitle">
                     <div class="swiper-container swipeContaineEvens">
                         <div class="swiper-wrapper">
                             <?php 
-                            foreach($categories as $category){
+                            foreach($categories_topic as $category){
                                 $image_category = get_field('image', 'category_'. $category->cat_ID);
                                 $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/Image-45.png';
                             ?>
@@ -487,16 +612,17 @@ foreach($global_blogs as $blog)
                 </div>
             </div>
             <?php 
-            if(!empty($blogs)){
+            }
+            if(!empty($others)){
             ?>
             <div class="UitgelichteBlock">
-                <p class="sousBlockTitleProduct">Uitgelichte artikelen</p>
+                <p class="sousBlockTitleProduct">Andere artikelen</p>
                 <div class="blockCardOpleidingen ">
 
                     <div class="swiper-container swipeContaine4">
                         <div class="swiper-wrapper">
                             <?php
-                            foreach($blogs as $blog) {
+                            foreach($others as $blog) {
 
                             $tag = '';
                             $image = null;

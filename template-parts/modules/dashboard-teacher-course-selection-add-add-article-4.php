@@ -31,7 +31,7 @@
 
                                 </div>
                             </div>
-                            <button type="submit" name="expert_add" class="btn btn-info">Finish</button> 
+                            <button type="submit" name="expert_add_artikel" class="btn btn-info">Finish</button> 
                         </div>
                     </form>
 
