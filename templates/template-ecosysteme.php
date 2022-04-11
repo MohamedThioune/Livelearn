@@ -258,7 +258,7 @@ foreach($global_blogs as $blog)
             <div class="headCollections">
                 <div class="dropdown show">
                     <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownHuman" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Top experts binnen <b><?= $name_topic; ?></b>
+                        Tot experts binnen <b><?= $name_topic; ?></b>
                     </a>
                     <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownHuman">
                         <?php 
