@@ -274,7 +274,7 @@ foreach($global_blogs as $blog)
                     </a>
                     <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownMenuLink">
                         <a class="dropdown-item" href="#">Last 7 days</a>
-                        <a class="dropdown-item" href="#"> last moth</a>
+                        <a class="dropdown-item" href="#"> last month</a>
                         <a class="dropdown-item" href="#"> last 7 year</a>
                     </div>
                 </div>
