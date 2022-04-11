@@ -1,13 +1,13 @@
 <?php 
     /** Template Name: Trash Course */ 
 
-    if(isset($_GET['road_path'])){
+    if(isset($_POST['road_path'])){
         $user_id = get_current_user_id();
         $road_path_final = array();
         $road_paths = get_field('road_path', 'user_'. $user_id);
-        if($_GET['road_path']){
+        if($_POST['road_path']){
             foreach($road_paths as $course){
-                if($course->ID != $_GET['road_path'])
+                if($course->ID != $_POST['road_path'])
                     array_push($road_path_final, $course);
             }
         }
