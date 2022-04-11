@@ -5,74 +5,6 @@ global $post;
 $product = wc_get_product( get_field('connected_product', $post->ID) ); 
 $long_description = get_field('long_description', $post->ID);
 $data = get_field('data_locaties', $post->ID);
-    if(!$data){
-        $data = get_field('data_locaties_xml', $post->ID);
-        $xml_parse = true;
-    }
-
-    if(!isset($xml_parse)){
-        if(!empty($data)){
-            foreach($data as $datum) {
-                $date_end = '';
-                $date_start = ''; 
-                $agenda_start = '';
-                $agenda_end = '';
-                if(!empty($datum['data'])) {
-                    $date_start = $datum['data'][0]['start_date'];
-                    if($date_start)
-                        if(count($datum['data']) >= 1){
-                            $date_end = $datum['data'][count($datum['data'])-1]['start_date'];
-                            $agenda_start = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
-                            if($date_end)
-                                $agenda_end = explode('/', explode(' ', $date_end)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_end)[0])[1]];
-                        }
-                }
-                    
-            }
-        }
-    }
-    else
-        if($data){
-            $it = 0;
-            foreach($data as $datum) {
-                $infos = explode(';', $datum['value']);
-                $number = count($infos)-1;
-                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];    
-                $date_start = explode(' ', $infos[0]);
-                $date_end = explode(' ', $infos[$number]);
-                $d_start = explode('/',$date_start[0]);
-                $d_end = explode('/',$date_end[0]);
-                $h_start = explode('-', $date[1])[0];
-                $h_end = explode('-', $date_end[1])[0];
-                $agenda_start = $d_start[0] . ' ' . $calendar[$d_start[1]];
-                $agenda_end = $d_end[0] . ' ' . $calendar[$d_end[1]];
-            }
-        }
-        
-    if (isset($xml_parse))
-    {
-        $start=explode('/',$date_start[0]);
-        $end=explode('/',$date_end[0]);
-        //var_dump($date_start[0],$date_end[0]);
-        $month_start = date('F', mktime(0, 0, 0, $start[1], 10));
-        $month_end = date('F', mktime(0, 0, 0, $end[1], 10));
-        $number_course_day=((strtotime($end[0].' '.$month_end.' '.$end[2]) - strtotime($start[0].' '.$month_start.' '.$start[2]))/86400);
-    
-    }
-    else
-    {
-        $start=explode('/',$date_start);
-        $end=explode('/',$date_end);
-        $year_start=explode(' ',$start[2]);
-        $year_end=explode(' ',$end[2]);
-        //var_dump($date_start,$date_end);
-        $month_start = date('F', mktime(0, 0, 0, $start[1], 10));
-        $month_end = date('F', mktime(0, 0, 0, $end[1], 10));
-        $number_course_day= ((strtotime($end[0].' '.$month_end.' '.$year_end[0]) - strtotime($start[0].' '.$month_start.' '.$year_start[0]))/86400);
-    }
-
-    if($number_course_day==0)
-        $number_course_day=1;
                 
 /*
 *  Date and Location
@@ -136,12 +68,17 @@ if(!$favoured)
 /*
 * Thumbnails
 */
-$image = get_field('preview', $course->ID)['url'];
+$image = get_field('preview', $post->ID)['url'];
 if(!$image){
-    $image = get_field('url_image_xml', $course->ID);
+    $image = get_field('url_image_xml', $post->ID);
     if(!$image)
         $image = "https://cdn.pixabay.com/photo/2021/09/18/12/40/pier-6635035_960_720.jpg";
 }
+
+$duration_day = get_field('duration_day', $post->ID);
+
+$attachments_xml = get_field('attachment_xml', $post->ID);
+
 ?>
 
 <style>
@@ -361,7 +298,7 @@ if(!$image){
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-calendar-alt" style="font-size: 25px;"></i>
-                            <span class="textIconeLearning mt-1"><?= $number_course_day." dagdeel" ?></span>
+                            <span class="textIconeLearning mt-1"><?= $duration_day." dagdeel" ?></span>
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-graduation-cap" style="font-size: 25px;"></i>
@@ -954,12 +891,23 @@ if(!$image){
 
                 </div>
             </div>
+            <br>
         <?php
             $it++;
             if($it == 4)
                 break;
             }
         }
+        }
+        
+        foreach ($attachments_xml as $key => $attachment) {
+            $i = $key+1;
+            if($key == 3)
+                break;
+
+            $text = "<a style='color:white' href='". $attachment . "' target='_blank' class='beschiBlockText'>Bijlage " . $i . "  </a>";
+                
+            echo $text;
         }
     ?>
 
