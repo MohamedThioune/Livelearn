@@ -96,6 +96,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
         margin-top: -6px;
     }
     #burger {
+        /*burger fixed*/
         margin-top: 5px;
     }
      /* ------------------- Show more Text -------------- */
