@@ -4,14 +4,11 @@ if(is_user_logged_in()){
     acf_form_head();
 } 
 
-$user = get_current_user_id();
-$message = ""; 
-
 extract($_POST); 
 
  // delete_user_meta(33,'topic_affiliate'); // Delete topics affiliate by manager
-   // delete_user_meta(33,'todos'); //   Delete todos affiliate by manager
-if(isset($_POST['expert_add']) || isset($_POST['expert_add_artikel'])){
+ //   delete_user_meta(33,'todos'); //   Delete todos affiliate by manager
+if(isset($_POST['expert_add'])){
     $bunch = get_field('experts', $_GET['id']);
     if(!empty($bunch)){
         $experts = $_POST['experts'];
@@ -23,15 +20,12 @@ if(isset($_POST['expert_add']) || isset($_POST['expert_add_artikel'])){
         $bunch = $_POST['experts'];
     
     update_field('experts', $bunch, $_GET['id']);
-    if(isset($_POST['expert_add']))
-        $path = "/dashboard/teacher/course-overview/?message=Cursus succesvol bijgewerkt ✔️";
-    else
-        $path = "/blogs/?message=Artikel succesvol bijgewerkt ✔️";
 
+    $path = "/dashboard/teacher/course-overview/?message=Cursus succesvol bijgewerkt ✔️";
     header('Location:' . $path);
 }
 
-else if(isset($_POST['topic_add'])){
+if(isset($_POST['topic_add'])){
 
     $categories = array();
     $banger = "";
@@ -81,7 +75,7 @@ else if(isset($_POST['topic_add'])){
     update_field('categories', $categories, $_GET['id']);
 }
  
-else if(isset($_POST['add_todo'])){
+if(isset($_POST['add_todo'])){
 
     $id_user = $_POST['id_user'];
     $label = $_POST['label'];
@@ -101,7 +95,7 @@ else if(isset($_POST['add_todo'])){
     header("Location: ". $message);
 }
 
-else if(isset($_POST['edit_education'])){
+if(isset($_POST['edit_education'])){
     $bunch = array();
     $fields = " ";
     foreach($educations as $key => $value){
@@ -115,12 +109,13 @@ else if(isset($_POST['edit_education'])){
 
 }
 
-
+$user = get_current_user_id();
+$message = ""; 
 /*
 * * Push saved  
 */
 
-else if(isset($interest_save)){
+if(isset($interest_save)){
     if($meta_value != null){
         $meta_data = get_user_meta($user_id, $meta_key);
         if(!in_array($meta_value,$meta_data)){
@@ -136,130 +131,126 @@ else if(isset($interest_save)){
 
 /**
  * Start Feedback Handling
-*/
-
-// Feedback & compliment saving 
-else if(isset($_POST['add_todo_feedback']) || isset($_POST['add_todo_compliment']) ){
+ */
+// Feedback saving
+if(isset($_POST['add_todo_feedback'])){
     $id_user = $_POST['id_user'];
     $title_feedback = $_POST['title_feedback'];
     $type = $_POST['type'];
-    $manager = get_user_by('id',$_POST['manager']);
-
     $onderwerp_feedback='';
     if (isset ($_POST['onderwerp_feedback']) &&  !empty($_POST['onderwerp_feedback']))
         foreach ($_POST['onderwerp_feedback']as  $value) {
             $onderwerp_feedback.=$value.';';        
         }
     $beschrijving_feedback = $_POST['beschrijving_feedback'];
+    $bunch = array();
+    $fields = " ";
+    $state = 0;
+    $bunch = get_field('todos',  'user_' . $id_user);
+    $fields = $title_feedback . ';' . $beschrijving_feedback . ';' .get_current_user_id() . ';'. $type .';'. $onderwerp_feedback .';'. $state;
+    array_push($bunch, $fields);  
+    if(!empty($bunch))
+        update_field('todos', $bunch, 'user_'. $id_user);
+    else
+        update_field('todos', $fields, 'user_'.$id_user);
 
-    //Data to create the feedback
-    $post_data = array(
-        'post_title' => $title_feedback,
-        'post_author' => $id_user,
-        'post_type' => 'feedback',
-        'post_status' => 'publish'
-      );
+    $message = "/dashboard/company/profile/?id=". $id_user. "&manager=" . get_current_user_id() . "&message=Uw actie is met succes beïnvloed"; 
+    header("Location: ". $message);
+}
 
-    //Create the feedback
-    $post_id = wp_insert_post($post_data);
+// Complimentsaving
+if(isset($_POST['add_todo_compliment'])){
 
-    //Add further informations for feedback
-    update_field('onderwerp_feedback', $onderwerp_feedback, $post_id);
-    update_field('manager_feedback', $manager, $post_id);
-    update_field('type_feedback', $type, $post_id);
-    update_field('beschrijving_feedback', $beschrijving_feedback, $post_id);
+    $id_user = $_POST['id_user'];
+    $title_compliment = $_POST['title_compliment'];
+    $type = $_POST['type'];
+    $onderwerp_compliment = '';
+    if (isset ($_POST['onderwerp_compliment']) &&  !empty($_POST['onderwerp_compliment']))
+        foreach ($_POST['onderwerp_compliment'] as $value) {
+            $onderwerp_compliment.=$value.';';        
+        }
+    $beschrijving_compliment = $_POST['beschrijving_compliment'];
+    $bunch = array();
+    $fields = " ";
+    $state = 0;
+    $bunch = get_field('todos',  'user_' . $id_user);
+    $fields = $title_compliment . ';' . $beschrijving_compliment . ';'.get_current_user_id(). ';' . $type . ';' . $onderwerp_compliment . ';' . $state;
+    array_push($bunch, $fields);  
+    if(!empty($bunch))
+        update_field('todos', $bunch, 'user_'. $id_user);
+    else
+        update_field('todos', $fields, 'user_'.$id_user);
 
     $message = "/dashboard/company/profile/?id=". $id_user. "&manager=" . get_current_user_id() . "&message=Uw actie is met succes beïnvloed"; 
     header("Location: ". $message);
 }
 
 // Beoordelingsgesprek saving
-else if(isset($_POST['add_todo_beoordelingsgesprek'])){
+if(isset($_POST['add_todo_beoordelingsgesprek'])){
     $id_user = $_POST['id_user'];
     $title_beoordelingsgesprek = $_POST['title_beoordelingsgesprek'];
     $type = $_POST['type'];
-    $manager = get_user_by('id',$_POST['manager']);
-
     $algemene_beoordeling = $_POST['algemene_beoordeling'];
-    $rates_comments='';
+    $sales_toelichting = $_POST['sales_toelichting'];
+    $sales_rate_2 = $_POST['sales_rate_2'];
+    $sales_rate = $_POST['sales_rate'];
+    $feedback_geven_rate = $_POST['feedback_geven_rate'];
     $topic_affiliate = get_user_meta($id_user,'topic_affiliate');
+    $onderwerp_beoordelingsgesprek='';
     if (isset ($topic_affiliate) &&  !empty($topic_affiliate))
-    {
         foreach ($topic_affiliate as $value) {
-            $rate_topic=$_POST[lcfirst((String)get_the_category_by_ID($value)).'_rate'];
-            $comment_topic=$_POST[lcfirst((String)get_the_category_by_ID($value)).'_toelichting'];
-            $rates_comments=$rates_comments.$value.';'.$rate_topic.';'.$comment_topic.';';
+            $onderwerp_beoordelingsgesprek.=$value.';';        
         }
-        $rates_comments=substr_replace($rates_comments ,"",-1);
-    }
     $bunch = array();
+    $fields = " ";
     $state = 0;
-
-    //Data to create the Beoordelingsgesprek feedback
-    $post_data = array(
-        'post_title' => $title_beoordelingsgesprek,
-        'post_author' => $id_user,
-        'post_type' => 'feedback',
-        'post_status' => 'publish'
-      );
-
-    $post_id = wp_insert_post($post_data);
-    //Add further informations for Beoordelingsgesprek
-    update_field('rate_comments', $rates_comments, $post_id);
-    update_field('manager_feedback', $manager, $post_id);
-    update_field('type_feedback', $type, $post_id);
-    update_field('algemene_beoordeling', $algemene_beoordeling, $post_id);
+    $bunch = get_field('todos',  'user_' . $id_user);
+    $fields = $title_beoordelingsgesprek . ';' .$algemene_beoordeling . ';' .get_current_user_id() . ';'. $type .';'. $feedback_geven_rate . ';'. $sales_rate_2. ';'.$sales_toelichting. ';' .$sales_rate. ';' .$algemene_beoordeling. ';'.$onderwerp_beoordelingsgesprek. ';'.$state;
+    array_push($bunch, $fields);  
+    if(!empty($bunch))
+        update_field('todos', $bunch, 'user_'. $id_user);
+    else
+        update_field('todos', $fields, 'user_'.$id_user);
 
     $message = "/dashboard/company/profile/?id=". $id_user. "&manager=" . get_current_user_id() . "&message=Uw actie is met succes beïnvloed"; 
     header("Location: ". $message);
 }
 
 //Persoonlijk ontwikkelplan saving
-else if(isset($_POST['add_todo_persoonlijk']))
-{
+if(isset($_POST['add_todo_persoonlijk'])){
     $id_user = $_POST['id_user'];
-    $title_feedback = $_POST['title_persoonlijk'];
-    $type = $_POST['type'];
-    $manager = get_user_by('id',$_POST['manager']);
-
-    $onderwerp_feedback = '';
+    $title_persoonlijk = $_POST['title_persoonlijk'];
+    $onderwerp_pop = '';
     if (isset ($_POST['onderwerp_pop']) &&  !empty($_POST['onderwerp_pop']))
         foreach ($_POST['onderwerp_pop'] as $value) {
-            $onderwerp_feedback.=$value.';';        
+            $onderwerp_pop.=$value.';';        
         }
-    $wat_bereiken = $_POST['wat_bereiken'];  
+    $wat_bereiken = $_POST['wat_bereiken'];
     $hoe_bereiken = $_POST['hoe_bereiken'];
     $hulp_text = $_POST['hulp_text'];
     $opmerkingen = $_POST['opmerkingen'];
-
     if (isset($_POST['hulp_radio_JA']) && !empty ($_POST['hulp_radio_JA']))
         $hulp_radio=$_POST['hulp_radio_JA'];
+    else
+        if (isset($_POST['hulp_radio_NEE']) && !empty ($_POST['hulp_radio_NEE']))
+            $hulp_radio=$_POST['hulp_radio_NEE'];
             
-    //Data to create the feedback
-    $post_data = array(
-        'post_title' => $title_feedback,
-        'post_author' => $id_user,
-        'post_type' => 'feedback',
-        'post_status' => 'publish'
-      );
-
-    //Create the feedback
-    $post_id = wp_insert_post($post_data);
-
-    //Add further informations for feedback
-    update_field('onderwerp_feedback', $onderwerp_feedback, $post_id);
-    update_field('je_bereiken', $wat_bereiken, $post_id);
-    update_field('je_dit_bereike', $hoe_bereiken, $post_id);
-    update_field('hulp_nodig', $hulp_radio_JA, $post_id);
-    update_field('manager_feedback', $manager, $post_id);
-    update_field('type_feedback', $type, $post_id);
-    update_field('opmerkingen', $opmerkingen, $post_id);
+    $bunch = array();
+    $fields = " ";
+    $state = 0;
+    $bunch = get_field('todos',  'user_' . $id_user);
+    $fields = $title_persoonlijk . ';'. $opmerkingen .';' .get_current_user_id() .';'. $type. ';'.$onderwerp_pop . ';' . $wat_bereiken . ';'  . $hoe_bereiken . ';' . $hulp_text . ';' . $hulp_radio . ';'  . $state;
+    array_push($bunch, $fields);  
+    if(!empty($bunch))
+        update_field('todos', $bunch, 'user_'. $id_user);
+    else
+        update_field('todos', $fields, 'user_'.$id_user);
 
     $message = "/dashboard/company/profile/?id=". $id_user. "&manager=" . get_current_user_id() . "&message=Uw actie is met succes beïnvloed"; 
     header("Location: ". $message);
 }
 
-else if (isset($_POST['add_internal_growth'])){
+if (isset($_POST['add_internal_growth'])){
     $id_user = $_POST['id_user'];
     $manager = get_current_user_id();
     $selected_subtopics = $_POST['selected_subtopics'];
@@ -273,16 +264,22 @@ else if (isset($_POST['add_internal_growth'])){
 }
 
     
+
 /**
  * End Feedback Handling
-*/
+ */
 
+
+
+/*
+* *
+*/
 
 /*
 * * Push interests  
 */
 
-else if(isset($interest_push)){
+if(isset($interest_push)){
     if($meta_value != null){
         $meta_data = get_user_meta($user_id, $meta_key);
         if(!in_array($meta_value,$meta_data)){
@@ -305,87 +302,33 @@ else if(isset($interest_push)){
 * * Delete interests  
 */
 
-else if(isset($delete)){
+if(isset($delete))
     if($meta_value != null){
-        if(delete_user_meta($user_id, $meta_key, $meta_value)){
+        if(delete_user_meta($user_id, $meta_key, $meta_value))
             $message = "Met succes verwijderd";
-            if($meta_key == "topic" || $meta_key == "topic_affiliate")
-                header("location:/dashboard/user/?message=".$message);
-            else{
-                $user_connected = get_current_user_id();
-                $content = "/dashboard/company/profile/?id=" . $user_id . '&manager='. $user_connected . "?message=" . $message; 
-                header("location:".$content);
-            }
-        }
+        
+        header("location:/dashboard/user/?message=".$message);
+
     }
-}
 
 /*
 * * Delete Favorite  
 */
 
-else if(isset($delete_favorite)){
-    $user_id = get_current_user_id();
+if(isset($delete_favorite))
     if($meta_value != null){
         if(delete_user_meta($user_id, "course", $meta_value))
             $message = "Met succes verwijderd";
         
         header("location:/dashboard/user/activity/?message=".$message);
     }
-}
 
+
+/*  */
 /*
-* * Delete Feedbacks   
-*/ 
+* *
+*/
 
-else if(isset($delete_todos)){
-    $message = "Met succes verwijderd";
-    $user_connected = get_current_user_id();
-    wp_delete_post($_POST['id']);
-
-    $content = "/dashboard/company/profile/?id=" . $user_id . '&manager='. $user_connected . "?message=" . $message; 
-    header("location:".$content);
-}
- 
-else if(isset($road_path_selected)){
-    $user_id = get_current_user_id();
-    $args = array(
-        'post_type' => 'course', 
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'include' => $road_path,  
-    );
-
-    $courses = get_posts($args);
-    $road_paths = get_field('road_path', 'user_'. $user_id);
-
-    if(!empty($road_paths))
-        $courses = array_merge($road_paths, $courses);
-
-    update_field('road_path', $courses, 'user_'. $user_id);
-    header("location: /dashboard/teacher/road-path/?message=Succesvolle cursus selectie");
-
-}
-else if(isset($road_path_created)){
-
-    $user_id = get_current_user_id();
-
-    $courses = array();
-
-    foreach($course_id as $id)
-        array_push($courses, get_post($id));
-
-    foreach($topics as $topic)
-        if($topic != '')
-            update_field('topic_road_path', $topic, 'user_'. $user_id);
-        
-    if($title_road_path)
-        update_field('title_road_path', $title_road_path, 'user_'. $user_id);
-
-    update_field('road_path', null, 'user_'. $user_id);
-    update_field('road_path', $courses, 'user_'. $user_id);
-
-}
 ?>
 <?php wp_head(); ?>
 
@@ -396,7 +339,6 @@ else if(isset($road_path_created)){
 <?php
 
 global $post;
-
 
 $parents = get_post_ancestors( $post->ID );
 
@@ -435,6 +377,7 @@ foreach($cats as $category){
 
 ?>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <?php
 if($dashboard == 'company' && $dashboard_page == 'profile'){
@@ -457,4 +400,3 @@ else{
 
 <?php get_footer();?>
 <?php wp_footer(); ?>
-
