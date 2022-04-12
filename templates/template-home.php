@@ -114,7 +114,7 @@
       {
         
         //Topics
-        $cats_functies = get_categories( 
+        $cats_functies = get_categories(
             array(
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
             'parent' => $tag->cat_ID,
@@ -179,14 +179,20 @@
 
 
 
-    //delete_user_meta(get_current_user_id(),'topic');
+   //   delete_user_meta(get_current_user_id(),'topic');
         if (isset($_POST["subtopics_first_login"]))
             {
                 unset($_POST["subtopics_first_login"]);
-                //var_dump($_POST);
-                 foreach ($_POST as $key => $subtopics) { 
+                $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
+                foreach ($_POST as $key => $subtopics) { 
                     if (isset($_POST[$key]))
-                        add_user_meta(get_current_user_id(),'topic',$_POST[$key]); 
+                    {
+                        if (!(in_array($_POST[$key], $subtopics_already_selected)))
+                        {
+                            add_user_meta(get_current_user_id(),'topic',$_POST[$key]);  
+                        }
+                        
+                    }
                 }
                  update_field('is_first_login', true, 'user_'.get_current_user_id());
                 
@@ -196,7 +202,7 @@
         if (!$is_first_login && get_current_user_id() !=0 )
             {
             
-?>    
+    ?>    
                          <!-- Modal First Connection --> 
 
 
@@ -258,8 +264,7 @@
                                 <div class="hiddenCB">
                                     <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
                                     <?php
-
-                                    echo $row_functies;
+                                        echo $row_functies;
                                     ?>
                                 </div>
                                 <button type="button" class="btn btnNext" id="nextFunctiegericht">Next</button>
@@ -273,7 +278,7 @@
                                     <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnSkills" for="cb1">Choice A</label> -->
 
                                     <?php
-                                    foreach($functies as $key => $value)
+                                    foreach($skills as $key => $value)
                                     {
                                         //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
                                         echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_skills'.($key+1).'" /><label class="labelChoose btnSkills subtopics_skills_'.($key+1).' '.($key+1).'" for=cb_skills'.($key+1).'>'. $value->cat_name .'</label>';
@@ -287,8 +292,7 @@
                                     <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
                                     <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
                                     <?php
-
-                                    echo $row_skills;
+                                        echo $row_skills;
                                     ?>
                                 </div>
                                 <button type="button" class="btn btnNext" id="nextSkills">Next</button>
@@ -316,8 +320,7 @@
                                     <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
                                     <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
                                     <?php
-
-                                    echo $row_interesses;
+                                        echo $row_interesses;
                                     ?>
                                 </div>
                                 <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Save</button>
