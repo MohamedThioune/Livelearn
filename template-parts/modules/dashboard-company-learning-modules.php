@@ -34,6 +34,7 @@ $order_args = array(
 );
 $orders = wc_get_orders($order_args);
 
+var_dump($orders);
 
 ?>
 <div class="contentListeCourse">
