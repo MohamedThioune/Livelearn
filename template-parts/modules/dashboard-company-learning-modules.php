@@ -28,8 +28,8 @@ $user_in = wp_get_current_user();
 
 //bought courses
 $order_args = array(
-    'customer_id' => get_current_user_id(),
-    'post_status' => array_keys(wc_get_order_statuses()), 'post_status' => array('wc-processing'),
+    'post_status' => array_keys(wc_get_order_statuses()), 
+    'post_status' => array('wc-processing'),
 
 );
 $orders = wc_get_orders($order_args);
