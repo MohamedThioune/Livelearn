@@ -1,33 +1,5 @@
 <?php
 
-
-
-function signups($courseid){
-    global $wpdb;
-    $courseid = intval($courseid + 1);
-    $results = $wpdb->get_results( "SELECT entry_id FROM wpe7_gf_entry_meta WHERE form_id = 1 AND meta_value =" . $courseid);
-    $entries = array();
-    foreach($results as $value)
-        array_push($entries,$value->entry_id);
-    
-    $data = array();
-    foreach($entries as $entry)
-    {
-        $results = $wpdb->get_results('SELECT meta_key, meta_value FROM wpe7_gf_entry_meta WHERE entry_id = '. $entry );
-        $subscribers = array();
-
-        foreach($results as $datum){
-            if($datum->meta_key == 2)
-                $subscribers['voornaam'] = $datum->meta_value;
-            if($datum->meta_key == 3)
-                $subscribers['achternaam'] = $datum->meta_value;
-        }
-        array_push($data,$subscribers);
-    }
-
-    return $data;
-}
-
 if(isset($_GET['parse'])){
     $courseid = intval($_GET['parse']);
     if(gettype($courseid) == 'integer'){
@@ -41,8 +13,6 @@ if(isset($_GET['parse'])){
         
         $date = get_field('data_locaties', $post->ID);
         $calendar = ['01' => 'Januari',  '02' => 'Februari',  '03' => 'Maart', '04' => 'April', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Augustus', '09' => 'September', '10' => 'Oktober',  '11' => 'November', '12' => 'December'];    
-        
-        $subscribers = signups($courseid);
     }
     else
         $post = array(); 
@@ -56,6 +26,31 @@ if(!$data){
 
 $price = get_field('price', $post->ID);
 
+$subscriber_bool = false;
+
+//get woo roders from user
+$args = array(
+    'limit' => -1,
+);
+$bunch_orders = wc_get_orders($args);
+$orders = array();
+$item_order = array();
+
+foreach($bunch_orders as $order){
+    $item_order['id'] = $order->data['customer_id'];
+    $item_order['first_name'] = $order->data['billing']['first_name'];
+    $item_order['last_name'] = $order->data['billing']['last_name'];
+    foreach ($order->get_items() as $item_id => $item ) {
+        $course_id = intval($item->get_product_id()) - 1;
+        if($course_id == $_GET['parse']){
+            $item_order['name']= $item->get_name();
+            $item_order['datenr'] = $item->get_meta_data('Option')[0]->value;
+            $item_order['companie_title'] = get_field('company',  'user_' . $customer_id)[0]->post_title;
+            $item_order['function']  = get_field('role',  'user_' . $customer_id);
+            array_push($orders, $item_order);  
+        }
+    }
+}
 ?>
 
 <div class="contentPageManager">
@@ -108,7 +103,7 @@ $price = get_field('price', $post->ID);
                     <div class="blockCardAcqureren">
                         <div class="cardAcqureren">
                             <p class="titleCardAcqureren">Aantal inschrijvingen</p>
-                            <p class="numberCardAcqureren"><?php echo count($subscribers) ?></p>
+                            <p class="numberCardAcqureren"><?php echo count($orders) ?></p>
                         </div>
                         <div class="cardAcqureren">
                             <p class="titleCardAcqureren">Inkomsten</p>
@@ -133,7 +128,7 @@ $price = get_field('price', $post->ID);
                         </div>
                         <div class="contentCardListeCourse">
                             <?php
-                            if(!empty($subscribers)){
+                            if(!empty($orders)){
                             ?>
                             <table class="table table-responsive">
                                 <thead>
@@ -143,33 +138,36 @@ $price = get_field('price', $post->ID);
                                     <th scope="col">Achternaam</th>
                                     <th scope="col">Bedrijf</th>
                                     <th scope="col">Functie</th>
-                                    <th scope="col">Betaaid</th>
+                                    <th scope="col">Prijs</th>
                                     <th scope="col">Betaaid</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                        foreach($subscribers as $datum){ ?>
-                                            <tr>
-                                                <td class="textTh pl-3 thModife">
-                                                    <input type="checkbox">
-                                                </td>
-                                                <td class="textTh"><?php echo $datum['voornaam'] ?></td>
-                                                <td class="textTh"><?php echo $datum['achternaam'] ?></td>
-                                                <td class="textTh">Livelearn</td>
-                                                <td class="textTh">OPrichter</td>
-                                                <td class="textTh">€ <?php echo $price ?></td>
-                                                <td class="textTh">Prive</td>
-                                            </tr>
-                                    <?php }
+                                    $subscriber_bool = false;
+                                    foreach($orders as $order){
+                                   
+                                    ?>
+                                        <tr>
+                                            <td class="textTh pl-3 thModife">
+                                                <input type="checkbox">
+                                            </td>
+                                            <td class="textTh"><?= $order['first_name']; ?></td>
+                                            <td class="textTh"><?= $order['last_name']; ?></td>
+                                            <td class="textTh"><?= $order['companie_title'];?></td>
+                                            <td class="textTh"><?= $order['function'];; ?></td>
+                                            <td class="textTh">€ <?php echo $price ?></td>
+                                            <td class="textTh">Prive</td>
+                                        </tr>
+                                    <?php 
+                                    }
                                     ?>
                                 </tbody>
                             </table>
                             <?php
                             }
-                            else{
-                                    echo"<center style = 'color:#00A89D; font-weight:bold;'>No subscribers for this course yet.<center>";
-                                }
+                            else
+                                echo"<center style = 'color:#00A89D; font-weight:bold;'>No subscribers for this course yet.<center>";
                             ?>
                         </div>
                     </div>

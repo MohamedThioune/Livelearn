@@ -21,8 +21,6 @@
             $message = "Successfully assigning employees as their manager";
         }
 
-    $grant = get_field('manager',  'user_' . $user->ID);
-
 ?>
 
 <div class="row">
@@ -35,8 +33,8 @@
                         echo "<span class='alert alert-success'>" . $message . "</span><br><br>";
 
                 $user = get_users(array('include'=> $user_id))[0];
-                if(!empty($user->roles)){
-                    if($user->roles[0] == 'manager' || $grant){
+                if (!empty($user->roles)){
+                    if ( !in_array('manager', $user->roles) && !in_array('administrator', $user->roles) ){
                         echo '<div class="titleOpleidingstype"><h2>You are not able to grant privileges</h2></div>';
                     }
                     else{                        

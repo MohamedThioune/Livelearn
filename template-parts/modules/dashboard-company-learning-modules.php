@@ -24,17 +24,15 @@ $courses = get_posts($args);
 $user_in = wp_get_current_user();
 
 
-
-
 //bought courses
 $order_args = array(
+    'customer_id' => get_current_user_id(),
     'post_status' => array_keys(wc_get_order_statuses()), 
     'post_status' => array('wc-processing'),
 
 );
 $orders = wc_get_orders($order_args);
 
-var_dump($orders);
 
 ?>
 <div class="contentListeCourse">
@@ -56,9 +54,7 @@ var_dump($orders);
                 </thead>
                 <tbody>
                     <?php
-
-    foreach($orders as $order){        
-
+                    foreach($orders as $order){        
                     ?>
                     <tr>
                         <td class="textTh"><a href="/dashboard/company/assign/?payment_id=<?php echo $order->get_id();?>">Openen</a></td>
@@ -66,7 +62,9 @@ var_dump($orders);
                         <td class="textTh"><?php echo $order->get_date_paid();?></td>
                         <td class="textTh"><?php echo $order->get_status();?></td>
                     </tr>
-                    <?php }?>
+                    <?php 
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
