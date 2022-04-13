@@ -2,12 +2,11 @@
   /** Template Name: topic ajax */ 
   extract($_POST);
   $output = "";
-  
   $banger = "";
   $functie = "";
   $skill = "";
   $interes = "";
-
+  
   foreach($bangers as $key=>$tag){
     if($key==0)
       $banger = "<h4 class='titleSelectStep'>Banen : </h4>";
@@ -20,7 +19,7 @@
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
         'parent' => $tag,
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
+    ));
 
     $row_secondary .= "<label for='locate'>" . (String)get_the_category_by_ID($tag) . ": </label><br> 
                        <div class='form-group formModifeChoose'>
