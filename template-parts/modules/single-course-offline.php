@@ -283,9 +283,8 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
 
                 <p class="e-learningTitle"><?php echo $post->post_title;?></p>
                 <!-- Image -->
-                <div class="pb-3 text-center">
-                    <img class="img-fluid" style="height: 280px; width: 727px; border-radius: 8px"
-                        src="<?=$image?>" alt="">
+                <div class="img-fluid-course">
+                    <img src="<?=$image?>" alt="">
                 </div>
               
                 
