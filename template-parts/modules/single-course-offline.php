@@ -81,6 +81,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
 
 ?>
 
+
 <style>
     .swiper {
         width: 600px;
@@ -93,6 +94,10 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
     #burgerCroie {
         display: none;
         margin-top: -6px;
+    }
+    #burger {
+        /*burger fixed*/
+        margin-top: 5px;
     }
      /* ------------------- Show more Text -------------- */
     .text-limit p,.text-limit .moreText{
