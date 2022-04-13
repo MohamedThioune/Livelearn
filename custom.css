@@ -43,6 +43,9 @@ body {
 ul.sub-menu li a {
     color: #0a0a0a !important;
 }
+.navbar-nav li {
+   position: relative;
+}
 
 /*
 #ccn-main-region {
@@ -451,8 +454,7 @@ ul.sub-menu li a {
 }
 
 .iconeElement img{
-
-    width: 100%;
+    width: 26px;
 }
 
 .respMenu li a {
@@ -2530,10 +2532,10 @@ input:focus-visible {
 }
 .cardModife3 {
     border: none !important;
-    box-shadow: 0px 0px 10px #9c9fa2 !important;
+    box-shadow: 0px 0px 3px #9c9fa2 !important;
 }
 .cardModife3:hover {
-    box-shadow: 0px 0px 20px #9c9fa2 !important;
+    box-shadow: 0px 0px 10px #9c9fa2 !important;
 }
 .headCardKraam{
     border: none !important;
@@ -3563,10 +3565,13 @@ body .gform_wrapper ul li.gfield {
     color: #023356 !important;
     font-size: 14px;
     padding: 10px 20px !important;
-    margin-bottom: 3px;
+    margin-bottom: 12px;
     background: #FFFFFF !important;
     border-radius: 8px;
     border: unset;
+}
+#user-registration-form-59 form .ur-form-row input::placeholder{
+    color: #041d2f !important;
 }
 .register .ur-submit-button{
     width: 100%;
@@ -3756,7 +3761,7 @@ body .gform_wrapper ul li.gfield {
 }
 .textDirect {
     padding-left: 103px;
-    margin-bottom: 0;
+    margin-bottom: 25px;
 }
 #gform_fields_4 .inputDirect input{
     border: none !important;
@@ -4798,7 +4803,7 @@ overflow: -moz-scrollbars-none;
     left: -203px;
     width: 320px;
     top: 41px !important;
-    background: white;
+    background: white !important;
     padding: 21px 25px;
     border: 1px solid #ECEDF2;
     box-shadow: 0px 6px 15px rgb(64 79 104 / 5%);
@@ -4831,6 +4836,9 @@ overflow: -moz-scrollbars-none;
   text-align: center;
   color: #fff;
 } */
+nav .show{
+    position: relative;
+}
 
 .container .box .chart {
     position: relative;
@@ -5566,9 +5574,6 @@ td .blockCardCoursRoad .descriptionTextRoad {
     background: #043356 !important;
     color: #FFFFFF;
 }
-.dropdownNotificationWeb {
-    background: unset !important;
-}
 #gform_10 .gform_wrapper .gform_footer{
     margin: 0px 0 -3px !important;
 }
@@ -5969,6 +5974,95 @@ input:checked ~ .assassment {
 .frontElementstep{
     display: none;
 }
+.buttonAssessment {
+    width: fit-content;
+}
+.img-fluid-course{
+    height: 320px;
+    width: 710px;
+    border-radius: 8px;
+}
+.img-fluid-course img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.blockIconeWidth{
+    margin-top: 1px;
+}
+.extensive .textLiDashboard{
+    display: none;
+}
+.extensive {
+    width: 80px;
+    min-width: 80px;
+}
+.iconAssesment{
+    display: none;
+}
+.extensive .btnOnderwerp{
+   background: none !important;
+    padding: 0 !important;
+}
+.extensive .btnOnderwerp i{
+    display: none;
+}
+.extensive .textOnder{
+    display: none;
+}
+.extensive .btnOnderwerp span{
+    display: none;
+}
+.extensive .iconAssesment{
+    display: block;
+}
+.extensive .iconeElement {
+    width: unset;
+    height: auto;
+    margin-right: 9px;
+    margin-left: -8px;
+    margin-bottom: 8px;
+    margin-top: unset !important;
+}
+#acustomer {
+    width: 38px;
+    margin-top: -5px;
+}
+#assessmentIcone img{
+    width: 29px;
+}
+#ajoutSujet img{
+    width: 33px;
+}
+.btnOnderwerp span {
+    color: #FFFFFF !important;
+    font-size: 16px;
+}
+#assessmentIcone{
+    margin-top: 21px;
+    margin-bottom: 25px;
+}
+
+.extensive .sidBarDashboard .elementTextDashboard a span {
+    display: none;
+}
+.extensive .elementImgSidebar {
+    width: unset;
+    margin-right: 10px;
+}
+.extensive .elementImgSidebar img {
+    width: 26px;
+    margin-bottom: 13px;
+}
+.extensive .theme-side-menu__list{
+    color: #212529;
+    margin-top: -11px;
+}
+.extensive .sidBarDashboard{
+    height: auto;
+    min-height: 100vh;
+}
+
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 

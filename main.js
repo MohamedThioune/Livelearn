@@ -246,6 +246,14 @@ jQuery(function($){
     });
 
 
+    // for menu large
+    $("#burger-web").click(function() {
+        $(".theme-side-menu").addClass("extensive");
+    });
+    // for menu large
+    $("#burgerCroie-web").click(function() {
+        $(".theme-side-menu").removeClass("extensive");
+    });
 
 
 

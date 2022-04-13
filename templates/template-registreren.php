@@ -75,13 +75,22 @@
            <div class="contentLogin">
                 <div class="row  ">
                     <div class="col-lg-6  col-md-5">
-                        <div class="boxLOginCardOne register">
+                        <div class="boxLOginCardOne">
+                            <div class="blockImgCarLogin">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Composant1.png" alt="">
+                            </div>
                             <p class="textNog"> Al lid? Ga dan direct naar je persoonlijke omgeving</p>
                         </div>
-                        <div class="boxLOginCardOne register">
+                        <div class="boxLOginCardOne">
+                            <div class="blockImgCarLogin">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Groupe8.png" alt="">
+                            </div>
                             <p class="textNog"> Ben jij een opleider of expert? Meld je hier aan.</p>
                         </div>
-                        <div class="boxLOginCardOne register">
+                        <div class="boxLOginCardOne">
+                            <div class="blockImgCarLogin">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/headWeb8.png" alt="">
+                            </div>
                             <p class="textNog">De eerste maad helemaal vrijblijvend</p>
                         </div>
                     </div>
