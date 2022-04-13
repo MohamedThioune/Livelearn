@@ -5668,8 +5668,6 @@ button:focus {
     border-radius: 5px;
     margin-bottom: 7px;
 }
-<<<<<<< HEAD
-=======
 .titleAssessment{
     color: #202124;
     font-size: 28px;
@@ -6064,8 +6062,54 @@ input:checked ~ .assassment {
     height: auto;
     min-height: 100vh;
 }
+.contentBtnCardProduct .single_add_to_cart_button.button.alt:hover {
+    background-color: #043356 !important;
+}
+.single-blog-item {
+    height: 350px;
+    margin-bottom: 25px;
+    width: 100%;
+}
+.single-blog-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 0px 0;
+}
+.sidebar-wrap .sidebar-widget {
+    background: #e0eff4;
+}
+.blog-item-content {
+    margin-top: 50px;
+    padding: 20px 25px;
+}
+.blog-item-content h2 {
+    font-size: 22px;
+}
 
->>>>>>> origin/frontseydou
+.nsl-container-buttons{
+    width: 100% !important;
+}
+.customSocialMedia {
+    background-color: #fff;
+    box-shadow: none !important;
+    margin-bottom: 10px;
+    border-radius: 7px;
+}
+.customSocialMedia .nsl-button-svg-container {
+    width: 38% !important;
+    align-items: end !important;
+    display: block !important;
+    float: right !important;
+}
+.customSocialMedia .nsl-button-svg-container svg {
+    float: right !important;
+}
+.customSocialMedia .nsl-button-label-container{
+    text-align: left !important;
+    margin-left: 0 !important;
+}
+
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -7727,8 +7771,6 @@ input:checked ~ .assassment {
     .btnModalBlog{
         padding: 0 !important;
     }
-<<<<<<< HEAD
-=======
     .titleAssessment {
         font-size: 24px;
     }
@@ -7787,7 +7829,6 @@ input:checked ~ .assassment {
         width: 100%;
         margin: 20px auto;
     }
->>>>>>> origin/frontseydou
 
 
 }
