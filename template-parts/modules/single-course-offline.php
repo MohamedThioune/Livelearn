@@ -2,14 +2,82 @@
 
 <?php
 global $post;
-$product = wc_get_product( get_field('connected_product', $post->ID) ); 
+$product = wc_get_product( get_field('connected_product', $post->ID) );
 $long_description = get_field('long_description', $post->ID);
 $data = get_field('data_locaties', $post->ID);
-                
+    if(!$data){
+        $data = get_field('data_locaties_xml', $post->ID);
+        $xml_parse = true;
+    }
+
+    if(!isset($xml_parse)){
+        if(!empty($data)){
+            foreach($data as $datum) {
+                $date_end = '';
+                $date_start = '';
+                $agenda_start = '';
+                $agenda_end = '';
+                if(!empty($datum['data'])) {
+                    $date_start = $datum['data'][0]['start_date'];
+                    if($date_start)
+                        if(count($datum['data']) >= 1){
+                            $date_end = $datum['data'][count($datum['data'])-1]['start_date'];
+                            $agenda_start = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
+                            if($date_end)
+                                $agenda_end = explode('/', explode(' ', $date_end)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_end)[0])[1]];
+                        }
+                }
+
+            }
+        }
+    }
+    else
+        if($data){
+            $it = 0;
+            foreach($data as $datum) {
+                $infos = explode(';', $datum['value']);
+                $number = count($infos)-1;
+                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];
+                $date_start = explode(' ', $infos[0]);
+                $date_end = explode(' ', $infos[$number]);
+                $d_start = explode('/',$date_start[0]);
+                $d_end = explode('/',$date_end[0]);
+                $h_start = explode('-', $date[1])[0];
+                $h_end = explode('-', $date_end[1])[0];
+                $agenda_start = $d_start[0] . ' ' . $calendar[$d_start[1]];
+                $agenda_end = $d_end[0] . ' ' . $calendar[$d_end[1]];
+            }
+        }
+
+    if (isset($xml_parse))
+    {
+        $start=explode('/',$date_start[0]);
+        $end=explode('/',$date_end[0]);
+        //var_dump($date_start[0],$date_end[0]);
+        $month_start = date('F', mktime(0, 0, 0, $start[1], 10));
+        $month_end = date('F', mktime(0, 0, 0, $end[1], 10));
+        $number_course_day=((strtotime($end[0].' '.$month_end.' '.$end[2]) - strtotime($start[0].' '.$month_start.' '.$start[2]))/86400);
+
+    }
+    else
+    {
+        $start=explode('/',$date_start);
+        $end=explode('/',$date_end);
+        $year_start=explode(' ',$start[2]);
+        $year_end=explode(' ',$end[2]);
+        //var_dump($date_start,$date_end);
+        $month_start = date('F', mktime(0, 0, 0, $start[1], 10));
+        $month_end = date('F', mktime(0, 0, 0, $end[1], 10));
+        $number_course_day= ((strtotime($end[0].' '.$month_end.' '.$year_end[0]) - strtotime($start[0].' '.$month_start.' '.$year_start[0]))/86400);
+    }
+
+    if($number_course_day==0)
+        $number_course_day=1;
+
 /*
 *  Date and Location
 */
-$calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
+$calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
 $data = get_field('data_locaties', $post->ID);
 $price = get_field('price', $post->ID) ?: 'Gratis';
@@ -19,7 +87,7 @@ $who = get_field('for_who', $post->ID);
 $results = get_field('results', $post->ID);
 $course_type = get_field('course_type', $post->ID);
 $category = " ";
-$tree = get_the_terms($post->ID, 'course_category'); 
+$tree = get_the_terms($post->ID, 'course_category');
 if($tree)
     if(isset($tree[2])){
         $category = $tree[2]->name;
@@ -27,9 +95,9 @@ if($tree)
     }
 
 $category_id = 0;
- 
+
 if($category == ' '){
-    $category_id = intval(explode(',', get_field('categories',  $post->ID)[0]['value'])[0]); 
+    $category_id = intval(explode(',', get_field('categories',  $post->ID)[0]['value'])[0]);
     $category_xml = intval(get_field('category_xml',  $post->ID)[0]['value']);
     if($category_xml)
         if($category_xml != 0){
@@ -40,7 +108,7 @@ if($category == ' '){
         if($category_id != 0){
             $id_category = $category_id;
             $category = (String)get_the_category_by_ID($category_id);
-        }                                            
+        }
 }
 
 $user_id = get_current_user_id();
@@ -50,7 +118,7 @@ if(!$image_author)
 
 /*
 * Companies
-*/ 
+*/
 $company = get_field('company',  'user_' . $post->post_author);
 
 /*
@@ -68,52 +136,15 @@ if(!$favoured)
 /*
 * Thumbnails
 */
-$image = get_field('preview', $post->ID)['url'];
+$image = get_field('preview', $course->ID)['url'];
 if(!$image){
-    $image = get_field('url_image_xml', $post->ID);
+    $image = get_field('url_image_xml', $course->ID);
     if(!$image)
         $image = "https://cdn.pixabay.com/photo/2021/09/18/12/40/pier-6635035_960_720.jpg";
 }
-
-$duration_day = get_field('duration_day', $post->ID);
-
-$attachments_xml = get_field('attachment_xml', $post->ID);
-
 ?>
 
-
 <style>
-    .swiper {
-        width: 600px;
-        /* height: 300px; */
-    }
-    .swiper-moved{
-        color: #023356 !important;
-        font-size: 12px;
-    }
-    #burgerCroie {
-        display: none;
-        margin-top: -6px;
-    }
-    #burger {
-        /*burger fixed*/
-        margin-top: 5px;
-    }
-     /* ------------------- Show more Text -------------- */
-    .text-limit p,.text-limit .moreText{
-        display:none;
-    }
-    .text-limit p:first-child, .text-limit{
-        display:block;
-         overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 4; /** number of line to display! */
-        -webkit-box-orient: vertical;   
-    }
-    .text-limit.show-more .moreText, .text-limit.show-more p, .text-limit.show-more {
-        display: block;
-    }
     a{
         text-decoration: none !important;
         color: black !important;
@@ -122,9 +153,6 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
         padding-top: 0 !important;
     }
 </style>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
 
 <!-- ---------------------------------------- Start modals ---------------------------------------------- -->
 <div class="modal fade" id="direct-contact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -135,13 +163,13 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
             <h5 class="modal-title fw-bold" id="exampleModalLabel" style="color: #023356">Direct contact</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">    
+        <div class="modal-body">
             <div class="d-flex justify-content-center">
-               
+
                 <div>
                     <a href="#" class="mx-3 d-flex flex-column ">
-                        <i style="font-size: 50px; height: 49px; margin-top: -4px;" 
-                            class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>                                           
+                        <i style="font-size: 50px; height: 49px; margin-top: -4px;"
+                            class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>
                     </a>
                     <div class="mt-3 text-center">
                         <span class="bd-highlight fw-bold text-success mt-2">whatsapp</span>
@@ -150,16 +178,16 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                 <div>
                     <a href="#" class="mx-3 d-flex flex-column ">
                         <i style="font-size: 25px"
-                        class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>                     
+                        class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
                         <!-- <span class="bd-highlight fw-bold text-primary mt-2">email</span> -->
                     </a>
                     <div class="mt-3 text-center">
                          <span class="bd-highlight fw-bold text-danger mt-5">email</span>
-                    </div>  
+                    </div>
                 </div>
                 <div>
                     <a href="#" class="mx-3 d-flex flex-column ">
-                        <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>                     
+                        <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>
                     </a>
                     <div class="mt-3 text-center">
                          <span class="bd-highlight fw-bold text-secondary mt-5">message</span>
@@ -176,7 +204,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                          <span class="bd-highlight fw-bold text-primary mt-5">call</span>
                     </div>
                 </div>
-                
+
             </div>
 
         </div>
@@ -194,11 +222,11 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                 <h5 class="modal-title" id="exampleModalLabel">Incompany</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">            
-                
-                <?php 
-                    echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true'] "); 
-                ?>                
+            <div class="modal-body">
+
+                <?php
+                    echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true'] ");
+                ?>
 
             </div>
         </div>
@@ -212,9 +240,9 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                 <h5 class="modal-title" id="exampleModalLabel">Brochure</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">                
-               <?php 
-                    echo do_shortcode("[gravityform id='6' title='false' description='false' ajax='true'] "); 
+            <div class="modal-body">
+               <?php
+                    echo do_shortcode("[gravityform id='6' title='false' description='false' ajax='true'] ");
                 ?>
             </div>
         </div>
@@ -226,9 +254,9 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
         <div class="modal-content">
             <div class="modal-body">
                 <div class="">
-                    <!-- <img alt="course design_undrawn" 
+                    <!-- <img alt="course design_undrawn"
                      src="<?php echo get_stylesheet_directory_uri(); ?>/img/voorwie.png"> -->
-                    
+
                     <?php
                         $author = get_user_by('id', $post->post_author);
                     ?>
@@ -247,7 +275,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
 
 <div class="liveOverBlock">
     <div class="container-fluid">
-        <div class="overElement">           
+        <div class="overElement">
             <div class="blockOneOver">
 
                 <!-- modal -->
@@ -286,12 +314,12 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                 <div class="img-fluid-course">
                     <img src="<?=$image?>" alt="">
                 </div>
-              
-                
+
+
                 <p class="beschiBlockText">Beschikbaarheid en prijs</p>
 
                 <!-- -------------------------------------- Start Icons row ------------------------------------->
-                <div class="d-flex justify-content-md-between justify-content-around mx-md-2 mx-sm-2 text-center">
+                <div class="d-flex justify-content-md-between justify-content-around sousBlock mx-md-2 mx-sm-2 text-center">
                     <div class="d-flex flex-row">
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <input type="hidden" id="user_id" value="<?php echo $user_id; ?>">
@@ -302,7 +330,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-calendar-alt" style="font-size: 25px;"></i>
-                            <span class="textIconeLearning mt-1"><?= $duration_day." dagdeel" ?></span>
+                            <span class="textIconeLearning mt-1"><?= $number_course_day." dagdeel" ?></span>
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-graduation-cap" style="font-size: 25px;"></i>
@@ -323,7 +351,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                                             <span class='textIconeLearning mt-1'>Bewaar</span>
                                         </button>
                                         ";
-                                ?>                                      
+                                ?>
                             </form>
                             <?php
                             if($user_id == 0)
@@ -364,7 +392,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                                         ?>
                                         <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
                                         <?php
-                                       
+
                                         }
                                         ?>
                                     </div>
@@ -413,9 +441,9 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                                     <?php
                                        if ($user_id==0)
                                        {
-                                        ?>  
+                                        ?>
                                         <div id='Intern' class='tabcontent px-md-5 p-3'>
-                                        <?php        
+                                        <?php
                                         wp_login_form([
                                                 'redirect' => 'http://wp12.influid.nl/dashboard/user/',
                                                 'remember' => false,
@@ -442,7 +470,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                     <div class="text-limit">
                         <?php echo $long_description; ?>
 
-                        <div class="moreText"> 
+                        <div class="moreText">
                            <?php
                                 if($agenda){
                                     ?>
@@ -452,22 +480,22 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                                 }
 
                                 if($who){
-                                    ?>  
+                                    ?>
                                     <h6 class="textDirect mt-3" style="text-align: left"><b>For who :</b></h6>
                                     </span> <?php echo $who; ?> </span>
                                     <?php
                                 }
 
                                 if($results){
-                                    ?>  
+                                    ?>
                                     <h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Results :</b></h6>
                                     <span > <?php echo $results; ?> </span>
                                     <?php
                                 }
                             ?>
-                        </div>    
+                        </div>
                        <br>
-                       
+
                    </div>
 
                     <button type="button" class="btn btn-lg lees_alles my-4 w-md-25 px-4 border border-1 border-dark read-more-btn"
@@ -475,7 +503,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                 </div>
                 <!--------------------------------------- end Text description -------------------------------------- -->
             </div>
-            
+
             <!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
 
             <!-- Modal Sign End -->
@@ -568,7 +596,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                     <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" ><img src="<?php echo $company_logo; ?>" alt="company logo"></a>
                     </div>
                     <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="liveTextCadPrice h5"><?php echo $company_title; ?></a>
-                
+
                 <?php
                     }
                 ?>
@@ -581,11 +609,11 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                         echo "<input type='submit' class='btnLeerom' style='border:none' name='interest_push' value='+ Leeromgeving'>";
                     ?>
                 </form>
-                <?php 
+                <?php
                 if($user_id == 0 )
                     echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> + Leeromgeving </button>";
                 ?>
-                
+
 
                 <!-- <div class="p-1">
                      <button class="btn px-3 py-2 btnPhilo m-0" style="background-color: #00A89D !important;">
@@ -593,8 +621,8 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                           <span class="text-white" style="font-size: 17px">Direct contact</span>
                     </button>
                 </div> -->
-                
-                <?php    
+
+                <?php
                     $data = get_field('data_locaties', $course->ID);
                     if($data)
                         $location = $data[0]['data'][0]['location'];
@@ -611,21 +639,21 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                 <p class="opeleidingText">Opleiding: € <?php echo $price ?></p>
                 <p class="btwText">BTW: € <?php echo $prijsvat ?></p>
                 <p class="btwText">LIFT member korting: 28%</p>
-                
-                
+
+
                 <button href="#bookdates" class="btn btnKoop text-white PrisText" style="background: #043356">Koop deze <?php echo $course_type; ?></button>
             </div>
 
             <div class="col-12 my-5" style="background-color: #E0EFF4">
-                <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around 
+                <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around
                 justify-content-center">
 
                     <!-- --------------------------------------- Swiper ------------------------------------ -->
                     <!-- Slider main container -->
                     <div class="swiper">
                         <div class="swiper-wrapper">
-                            <?php 
-                                foreach($experts as $expert){ 
+                            <?php
+                                foreach($experts as $expert){
                                     $expert = get_users(array('include'=> $expert))[0]->data;
                                     $company = get_field('company',  'user_' . $expert->ID);
                                     $title = $company[0]->post_title;
@@ -640,12 +668,12 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                                         <span><?php echo $title; ?></span>
                                     </div>
                                 </a>
-                             <?php } ?> 
-                        
-                            </div> 
-                     
-                        </div>   
- 
+                             <?php } ?>
+
+                            </div>
+
+                        </div>
+
                         <!-- If we need pagination -->
                         <!-- <div class="swiper-pagination"></div> -->
 
@@ -661,12 +689,12 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                     </div>
 
                 </div>
-            </div>  
+            </div>
 
         </div>
 
 
-        
+
     <?php
 
     $data = get_field('data_locaties', $post->ID);
@@ -679,7 +707,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
         if(!empty($data)){
             foreach($data as $datum) {
                 $date_end = '';
-                $date_start = ''; 
+                $date_start = '';
                 $agenda_start = '';
                 $agenda_end = '';
                 if(!empty($datum['data'])){
@@ -704,11 +732,11 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                         <div class="dateBlock">
                             <p class="dateText1"><?php
                             echo $agenda_start;
-                            if($date_start != '' && $date_end != '') 
+                            if($date_start != '' && $date_end != '')
                             {
-                                echo ' - '; 
+                                echo ' - ';
                                 echo $agenda_end;
-                            } 
+                            }
                                 ?>
                             </p>
                             <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
@@ -716,9 +744,9 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                         </div>
                         <div class="BlocknumberEvenement">
 
-                            <?php 
+                            <?php
 
-                            for($i = 0; $i < count($datum['data']); $i++) { 
+                            for($i = 0; $i < count($datum['data']); $i++) {
                                 $date_start = $datum['data'][$i]['start_date'];
                                 $location = $datum['data'][$i]['location'];
                                 if($date_start != null) {
@@ -733,7 +761,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                                 <p class="numberEvens"><?php echo $i+1 ?></p>
                                 <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
                             </div>
-                            <?php 
+                            <?php
                                 }
                             }
                             ?>
@@ -769,11 +797,11 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                                     ?>
                                             <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="single_add_to_cart_button button alt">Reserveren</button>
 
-                                    <?php } 
+                                    <?php }
                                             do_action( 'woocommerce_after_add_to_cart_button' ); ?>
                                 </form>
-                                        
-                                <?php 
+
+                                <?php
                                     if($user_id == 0)
                                         echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
                                     do_action( 'woocommerce_after_add_to_cart_form' ); ?>
@@ -782,13 +810,13 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
 
                     </div>
                 </div>
-                
+
                 <!-------------------------------------------- End cards on bottom --------------------------- -->
 
 
                 <?php
                         }
-            
+
             }
         }
     }else{
@@ -797,7 +825,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
             foreach($data as $datum){
                 $infos = explode(';', $datum['value']);
                 $number = count($infos)-1;
-                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];    
+                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];
                 $date_start = explode(' ', $infos[0]);
                 $date_end = explode(' ', $infos[$number]);
                 $d_start = explode('/',$date_start[0]);
@@ -814,11 +842,11 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                     <div class="dateBlock">
                         <p class="dateText1"><?php
                         echo $agenda_start;
-                        if($date_start != $date_end) 
+                        if($date_start != $date_end)
                         {
-                            echo ' - '; 
+                            echo ' - ';
                             echo $agenda_end;
-                        } 
+                        }
                             ?>
                         </p>
                         <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
@@ -826,7 +854,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                     </div>
                     <div class="BlocknumberEvenement">
 
-                    <?php 
+                    <?php
                         if(!empty($infos))
                         $x = 0;
                         foreach($infos as $key=>$info) {
@@ -843,7 +871,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                                 <p class="numberEvens"><?php echo $x+1 ?></p>
                                 <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
                             </div>
-                        <?php 
+                        <?php
                             $x+=1;
                             }
                         ?>
@@ -857,46 +885,44 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
 
                         </div>
                         <div class="contentBtnCardProduct">
-
+                            <!-- <a href="" class="btn btnReserveer">Reserveer<br><br></a> -->
+                            <!-- <a href="" class="btn btnSchrijf">Schrijf mij in!</a> -->
                             <?php do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 
                             <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
-                                <?php 
-                                do_action( 'woocommerce_before_add_to_cart_button' ); ?>
+                                <?php do_action( 'woocommerce_before_add_to_cart_button' ); ?>
                                 <?php
-                                do_action( 'woocommerce_before_add_to_cart_quantity' );
+                                    do_action( 'woocommerce_before_add_to_cart_quantity' );
 
-                                woocommerce_quantity_input(
-                                    array(
-                                        'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
-                                        'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
-                                        'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
-                                    )
-                                );
+                                    woocommerce_quantity_input(
+                                        array(
+                                            'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
+                                            'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
+                                            'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
+                                        )
+                                    );
 
-                                do_action( 'woocommerce_after_add_to_cart_quantity' );
-                                if($user_id != 0 && $user_id != $post->post_author){
+                                    do_action( 'woocommerce_after_add_to_cart_quantity' );
+                                    if($user_id != 0 && $user_id != $post->post_author){
                                 ?>
                                     <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="single_add_to_cart_button button alt">Reserveren</button>
 
-                                <?php 
-                                }
-                                do_action( 'woocommerce_after_add_to_cart_button' ); 
-                                ?>
+                                <?php }
+
+                                    do_action( 'woocommerce_after_add_to_cart_button' ); ?>
                             </form>
 
 
                             <?php
                                 if($user_id == 0)
                                     echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
-                                    
+
                                 do_action( 'woocommerce_after_add_to_cart_form' ); ?>
                         </div>
-                    </div> 
+                    </div>
 
                 </div>
             </div>
-            <br>
         <?php
             $it++;
             if($it == 4)
@@ -904,21 +930,11 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
             }
         }
         }
-        
-        foreach ($attachments_xml as $key => $attachment) {
-            $i = $key+1;
-            if($key == 3)
-                break;
-
-            $text = "<a style='color:white' href='". $attachment . "' target='_blank' class='beschiBlockText'>Bijlage " . $i . "  </a>";
-                
-            echo $text;
-        }
     ?>
 
     </div>
 
-    
+
         <!-- début Modal deel -->
         <div class="modal" id="modal1" data-animation="fadeIn">
         <div class="modal-dialog modal-dialog-deel" role="document">
@@ -1028,7 +1044,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
 
 
 <script>
- 
+
     const swiper = new Swiper('.swiper', {
         // Optional parameters
         // direction: 'vertical',
@@ -1105,7 +1121,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
     // see more text ----course offline and online ------------------ //
     const readMoreBtn = document.querySelector('.read-more-btn');
     const text = document.querySelector('.text-limit');
-    
+
     readMoreBtn.addEventListener('click', (e) => {
     //    alert('test');
         text.classList.toggle('show-more'); // add show more class

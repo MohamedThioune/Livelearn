@@ -191,7 +191,7 @@ $todos = get_posts($args);
                                             $manager = get_field('manager_feedback', $todo->ID);
 
                                     ?> 
-                                        <a href="/dashboard/user/detail-notification/?todo=<?=$todo->ID;?>" class="modal-content-body">
+                                        <a href="/dashboard/user/detail-notification/?todo=<?=$todo->ID;?>" class="">
                                             <p class="feedbackText"><?=$type;?> : <span><?=$todo->post_title;?></span></p>
                                             <p class="feedbackText">By: <span> <?php if(!empty($manager->first_name)){echo $manager->first_name;}else{echo $manager->display_name;}?> </span></p>
                                         </a>
@@ -200,7 +200,7 @@ $todos = get_posts($args);
                                     }else{
                                 ?>
                                         <div>
-                                            <div class="modal-content-body">
+                                            <div class="">
                                                 <p class="feedbackText">Empty until now ...</p>
                                             </div>
                                         </div>
