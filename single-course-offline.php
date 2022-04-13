@@ -4,6 +4,10 @@
 global $post;
 $product = wc_get_product( get_field('connected_product', $post->ID) ); 
 $long_description = get_field('long_description', $post->ID);
+
+/*
+*  Date and Location
+*/ 
 $data = get_field('data_locaties', $post->ID);
     if(!$data){
         $data = get_field('data_locaties_xml', $post->ID);
@@ -85,6 +89,11 @@ $prijsvat = get_field('prijsvat', $post->ID);
 $agenda = get_field('agenda', $post->ID);
 $who = get_field('for_who', $post->ID);
 $results = get_field('results', $post->ID);
+
+$course_type = get_field('course_type', $post->ID);
+
+$category = " ";
+
 $course_type = get_field('course_type', $post->ID);
 $category = " ";
 $tree = get_the_terms($post->ID, 'course_category'); 
@@ -112,6 +121,7 @@ if($category == ' '){
 }
 
 $user_id = get_current_user_id();
+
 $image_author = get_field('profile_img',  'user_' . $post->post_author);
 if(!$image_author)
     $image_author = get_stylesheet_directory_uri() ."/img/placeholder_user.png";
@@ -128,6 +138,14 @@ $expert = get_field('experts', $post->ID);
 $author = array($post->post_author);
 
 $experts = array_merge($expert, $author);
+if (is_array(get_field('favorited', $post->ID)) || is_object(get_field('favorited', $post->ID)))
+$favoured = count(get_field('favorited', $post->ID));
+?>
+
+<style>
+    body{
+        padding-top: 0px !important;
+    }
 
 $favoured = count(get_field('favorited', $post->ID));
 if(!$favoured)
@@ -149,6 +167,44 @@ if(!$image){
         text-decoration: none !important;
         color: black !important;
     }
+</style>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+
+<!-- ---------------------------------------- Start modals ---------------------------------------------- -->
+<div class="modal fade" id="direct-contact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Direct contact</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="text-center">
+                <a href="" class="mx-2">
+                    <img class="mb-2"
+                    src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
+                </a>
+                <a href="" class="mx-3">
+                    <i style="font-size: 20px"
+                    class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white"></i>
+                    <!-- border border-3 border-success rounded-circle p-2 -->
+                </a>
+                <a href="" class="mx-3">
+                    <i style="font-size: 30px" class="fa fa-comment"></i>
+                </a>
+                <a href="" class="mx-2 test bg-primary" style="height: 85rem">
+                    <!-- <div class=""> -->
+                        <i style="font-size: 40px;"  class="fab fa-whatsapp text-success"></i>
+                    <!-- </div> -->
+                </a>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
     body{
         padding-top: 0 !important;
     }
@@ -222,6 +278,15 @@ if(!$image){
                 <h5 class="modal-title" id="exampleModalLabel">Incompany</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body">
+
+            
+                
+                <?php 
+                    echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true'] "); 
+                ?>
+
+                
             <div class="modal-body">            
                 
                 <?php 
@@ -240,6 +305,12 @@ if(!$image){
                 <h5 class="modal-title" id="exampleModalLabel">Brochure</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body">
+                
+            <?php 
+                    echo do_shortcode("[gravityform id='6' title='false' description='false' ajax='true'] "); 
+                ?>
+
             <div class="modal-body">                
                <?php 
                     echo do_shortcode("[gravityform id='6' title='false' description='false' ajax='true'] "); 
@@ -252,6 +323,18 @@ if(!$image){
 <div class="modal fade" id="voor-wie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Voor Wie</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
             <div class="modal-body">
                 <div class="">
                     <!-- <img alt="course design_undrawn" 
@@ -302,6 +385,7 @@ if(!$image){
                     <?php
                         }
                     ?>
+                    <!-- <button class="btn btnPhilo"> <?php echo $category; ?> </button> -->
                     <a href="category-overview?category=<?php echo $id_category ?>" class="bd-highlight ">
                             <button class="btn py-0 btnPhilo"> <span class="text-white"><?php echo $category; ?></span></button>
                     </a>
@@ -313,7 +397,11 @@ if(!$image){
                 <!-- Image -->
                 <div class="pb-3 text-center">
                     <img class="img-fluid" style="height: 280px; width: 727px; border-radius: 8px"
+<<<<<<< HEAD
+                        src="https://cdn.pixabay.com/photo/2021/09/18/12/40/pier-6635035_960_720.jpg" alt="">
+=======
                         src="<?=$image?>" alt="">
+>>>>>>> cb38c187777a3e65cf4e7edf35ade9c24007edf6
                 </div>
               
                 
@@ -331,6 +419,7 @@ if(!$image){
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-calendar-alt" style="font-size: 25px;"></i>
+                            <span class="textIconeLearning mt-1">I dagdee</span>
                             <span class="textIconeLearning mt-1"><?= $number_course_day." dagdeel" ?></span>
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
@@ -387,6 +476,7 @@ if(!$image){
                                     <div class="tab">
                                         <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                                         <hr class="hrModifeDeel">
+                                        <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
                                         <?php
                                        if ($user_id==0)
                                        {
@@ -431,6 +521,7 @@ if(!$image){
                                         <div>
                                             <p class="klikText">Klik om link te kopieren</p>
                                             <div class="input-group input-group-copy formCopyLink">
+                                                <input id="test1" type="text" class="linkTextCopy form-control" value="https://g.co/kgs/K1k9oA" readonly>
                                                 <input id="test1" type="text" class="linkTextCopy form-control" value="<?php echo get_permalink($post->ID) ?>" readonly>
                                                 <span class="input-group-btn">
                                                 <button class="btn btn-default btnCopy">Copy</button>
@@ -438,6 +529,9 @@ if(!$image){
                                                 <span class="linkCopied">link copied</span>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div id="Intern" class="tabcontent">
+                                        
                                     </div>
                                     <?php
                                        if ($user_id==0)
@@ -593,6 +687,10 @@ if(!$image){
                         $company_title = $company[0]->post_title;
                         $company_logo = get_field('company_logo', $company_id);
                 ?>
+                <div href="/opleider-courses?companie=<?php echo $company_id ; ?>"  class="imgCardPrice">
+                <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" ><img src="<?php echo $company_logo; ?>" alt="company logo"></a>
+                </div>
+                <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="liveTextCadPrice h5"><?php echo $company_title; ?></a>
                     <div href="/opleider-courses?companie=<?php echo $company_id ; ?>"  class="imgCardPrice">
                     <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" ><img src="<?php echo $company_logo; ?>" alt="company logo"></a>
                     </div>
@@ -642,6 +740,7 @@ if(!$image){
                 <p class="btwText">LIFT member korting: 28%</p>
                 
                 
+                <a href="#bookdates" class="btn btnKoop">Koop deze <?php echo $course_type; ?></a>
                 <button href="#bookdates" class="btn btnKoop text-white PrisText" style="background: #043356">Koop deze <?php echo $course_type; ?></button>
             </div>
 
@@ -689,6 +788,7 @@ if(!$image){
                         <!-- <div class="swiper-scrollbar"></div> -->
                     </div>
 
+
                 </div>
             </div>  
 
@@ -711,6 +811,7 @@ if(!$image){
                 $date_start = ''; 
                 $agenda_start = '';
                 $agenda_end = '';
+
                 if(!empty($datum['data'])){
                     $date_start = $datum['data'][0]['start_date'];
                     if($date_start)
@@ -741,6 +842,7 @@ if(!$image){
                                 ?>
                             </p>
                             <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
+                            <a href="" class="btn btnZetAjenda">Zet in je ajenda <img src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-calendar-plus.png" alt=""></a>
                             <a href="" class="btn btnZetAjenda">Zet in je agenda <img src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-calendar-plus.png" alt=""></a>
                         </div>
                         <div class="BlocknumberEvenement">
@@ -749,6 +851,9 @@ if(!$image){
 
                             for($i = 0; $i < count($datum['data']); $i++) { 
                                 $date_start = $datum['data'][$i]['start_date'];
+
+                                $location = $datum['data'][$i]['location'];
+                                if($date_start != null){
                                 $location = $datum['data'][$i]['location'];
                                 if($date_start != null) {
                                     $day = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
@@ -780,8 +885,6 @@ if(!$image){
                                 <!-- <a href="" class="btn btnSchrijf">Schrijf mij in!</a> -->
                                 <?php do_action( 'woocommerce_before_add_to_cart_form' ); ?>
                                 <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
-                                    <?php do_action( 'woocommerce_before_add_to_cart_button' ); ?>
-                                    <?php
                                         do_action( 'woocommerce_before_add_to_cart_quantity' );
 
                                         woocommerce_quantity_input(
@@ -833,6 +936,7 @@ if(!$image){
                 $d_end = explode('/',$date_end[0]);
                 $h_start = explode('-', $date[1])[0];
                 $h_end = explode('-', $date_end[1])[0];
+        
                 $agenda_start = $d_start[0] . ' ' . $calendar[$d_start[1]];
                 $agenda_end = $d_end[0] . ' ' . $calendar[$d_end[1]];
         ?>
@@ -851,6 +955,7 @@ if(!$image){
                             ?>
                         </p>
                         <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
+                        <a href="" class="btn btnZetAjenda">Zet in je ajenda <img src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-calendar-plus.png" alt=""></a>
                         <a href="" class="btn btnZetAjenda">Zet in je agenda <img src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-calendar-plus.png" alt=""></a>
                     </div>
                     <div class="BlocknumberEvenement">
@@ -943,6 +1048,7 @@ if(!$image){
                 <div class="tab">
                     <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                     <hr class="hrModifeDeel">
+                    <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
                     <?php
                     if ($user_id==0)
                         {
@@ -957,6 +1063,7 @@ if(!$image){
                     <button id="whatsapp"  class="btn contentIcone">
                         <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/whatsapp.png" alt="">
                     </button>
+                    <p class="titleIcone">WhatsApp</p>
                     <p class="titleIcone">WhatsAppp</p>
                 </div>
                 <div class="contentElementPartage">
@@ -994,6 +1101,9 @@ if(!$image){
                         </div>
                     </div>
                 </div>
+                <div id="Intern" class="tabcontent">
+                    
+                </div>
                 <?php
                     if ($user_id==0)
                     {
@@ -1015,6 +1125,13 @@ if(!$image){
 
 
 </div>
+
+
+<!-- scritpt for modal -->
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
 
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
