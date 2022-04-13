@@ -6,7 +6,7 @@ if(is_user_logged_in()){
 
 extract($_POST); 
 
- // delete_user_meta(33,'topic_affiliate'); // Delete topics affiliate by manager
+ //      // Delete topics affiliate by manager
  //   delete_user_meta(33,'todos'); //   Delete todos affiliate by manager
 if(isset($_POST['expert_add'])){
     $bunch = get_field('experts', $_GET['id']);
