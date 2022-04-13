@@ -123,18 +123,31 @@ jQuery(function($){
     // Pour first modal after login
     $(".btnBaangerichte").click(function() {
         $(".subtopicBaangerichte").show();
+        let cl =$(this).attr('class').split(' ')[3];
+        hidden=($(".cb_topics_bangricht_"+cl).attr('hidden'));
+        $(".cb_topics_bangricht_"+cl).attr('hidden', !hidden);
+        
     });
 
     $(".btnFunctiegericht").click(function() {
         $(".subtopicFunctiegericht").show();
+        let cl =$(this).attr('class').split(' ')[3];
+        hidden=($(".cb_topics_funct_"+cl).attr('hidden'));
+        $(".cb_topics_funct_"+cl).attr('hidden', !hidden);
     });
 
     $(".btnSkills").click(function() {
         $(".subtopicSkills").show();
+        let cl =$(this).attr('class').split(' ')[3];
+        hidden=($(".cb_topics_skills_"+cl).attr('hidden'));
+        $(".cb_topics_skills_"+cl).attr('hidden', !hidden);
     });
 
     $(".btnPersonal").click(function() {
         $(".subtopicPersonal").show();
+        let cl =$(this).attr('class').split(' ')[3];
+        hidden=($(".cb_topics_personal_"+cl).attr('hidden'));
+        $(".cb_topics_personal_"+cl).attr('hidden', !hidden);
     });
 
     $("#nextblockBaangerichte").click(function() {
@@ -565,5 +578,4 @@ jQuery(function($){
     }
 
 });
-
 

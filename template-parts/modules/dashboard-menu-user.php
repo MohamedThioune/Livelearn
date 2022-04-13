@@ -21,7 +21,6 @@ if(!empty($company))
 
 $topics_internal = get_user_meta($user->ID,'topic_affiliate');
 $topics_external = get_user_meta($user->ID,'topic');
-
 $experts = get_user_meta($user->ID, 'expert');
 
 /*
@@ -64,7 +63,7 @@ $experts = get_user_meta($user->ID, 'expert');
                 foreach($topics_external as $topic){
                     $name = (String)get_the_category_by_ID($topic);
                     echo "
-                    <a href='/category-overview/?category=". $topic ."' class='d-flex'>
+                    <a href='/category-overview/?category='". $topic ."' class='d-flex'>
                         <div class='iconeElement'>
                             <form action='/dashboard/user/' method='POST'>
                                 <input type='hidden' name='meta_value' value='". $topic . "' id=''>
