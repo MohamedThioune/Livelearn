@@ -50,6 +50,11 @@ $experts = get_user_meta($user->ID, 'expert');
                 <p class="textLiDashboard">Mijn Activiteiten</p>
             </a>
         </li>
+        <li class="elementTextDashboard">
+            <a href="/assessment"class="btn btnOnderwerp buttonAssessment" id="assessmentIcone"><div><i class="fa fa-plus faPLusModife"></i></div><span>Assessments</span>
+                <img class="iconAssesment" src="<?php echo get_stylesheet_directory_uri();?>/img/assessment.png" alt="">
+            </a>
+        </li>
         <p class="textOnder">ONDERWERPEN</p>
         <li class="elementTextDashboard">
             <?php
@@ -95,7 +100,9 @@ $experts = get_user_meta($user->ID, 'expert');
                     "; */
                 }
             ?>
-            <a href="/onderwer"class="btn btnOnderwerp"><div><i class="fa fa-plus faPLusModife"></i></div>Onderwerp toevoegen</a>
+            <a href="/onderwer"class="btn btnOnderwerp" id="ajoutSujet"><div><i class="fa fa-plus faPLusModife"></i></div> <span>Onderwerp toevoegen</span>
+                <img class="iconAssesment" src="<?php echo get_stylesheet_directory_uri();?>/img/ajouterSujet.png" alt="">
+            </a>
 
         </li>
         <p class="textOnder">EXPERTS / OPLEIDERS</p>
@@ -121,7 +128,9 @@ $experts = get_user_meta($user->ID, 'expert');
                     ";
                 }
             ?>
-            <a href="/opleiders" class="btn btnOnderwerp"><div><i class="fa fa-plus faPLusModife"></i></div>Expert toevoegen</a>
+            <a href="/opleiders" class="btn btnOnderwerp"><div><i class="fa fa-plus faPLusModife"></i></div> <span>Expert toevoegen</span>
+                <img id="acustomer" class="iconAssesment" src="<?php echo get_stylesheet_directory_uri();?>/img/acustomer.png" alt="">
+            </a>
         </li>
     </ul>
 </section>
