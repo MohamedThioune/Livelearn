@@ -2,7 +2,7 @@
 
 <?php
 global $post;
-$product = wc_get_product( get_field('connected_product', $post->ID) ); 
+$product = wc_get_product( get_field('connected_product', $post->ID) );
 $long_description = get_field('long_description', $post->ID);
 $data = get_field('data_locaties', $post->ID);
     if(!$data){
@@ -14,7 +14,7 @@ $data = get_field('data_locaties', $post->ID);
         if(!empty($data)){
             foreach($data as $datum) {
                 $date_end = '';
-                $date_start = ''; 
+                $date_start = '';
                 $agenda_start = '';
                 $agenda_end = '';
                 if(!empty($datum['data'])) {
@@ -27,7 +27,7 @@ $data = get_field('data_locaties', $post->ID);
                                 $agenda_end = explode('/', explode(' ', $date_end)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_end)[0])[1]];
                         }
                 }
-                    
+
             }
         }
     }
@@ -37,7 +37,7 @@ $data = get_field('data_locaties', $post->ID);
             foreach($data as $datum) {
                 $infos = explode(';', $datum['value']);
                 $number = count($infos)-1;
-                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];    
+                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];
                 $date_start = explode(' ', $infos[0]);
                 $date_end = explode(' ', $infos[$number]);
                 $d_start = explode('/',$date_start[0]);
@@ -48,7 +48,7 @@ $data = get_field('data_locaties', $post->ID);
                 $agenda_end = $d_end[0] . ' ' . $calendar[$d_end[1]];
             }
         }
-        
+
     if (isset($xml_parse))
     {
         $start=explode('/',$date_start[0]);
@@ -57,7 +57,7 @@ $data = get_field('data_locaties', $post->ID);
         $month_start = date('F', mktime(0, 0, 0, $start[1], 10));
         $month_end = date('F', mktime(0, 0, 0, $end[1], 10));
         $number_course_day=((strtotime($end[0].' '.$month_end.' '.$end[2]) - strtotime($start[0].' '.$month_start.' '.$start[2]))/86400);
-    
+
     }
     else
     {
@@ -73,11 +73,11 @@ $data = get_field('data_locaties', $post->ID);
 
     if($number_course_day==0)
         $number_course_day=1;
-                
+
 /*
 *  Date and Location
 */
-$calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
+$calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
 $data = get_field('data_locaties', $post->ID);
 $price = get_field('price', $post->ID) ?: 'Gratis';
@@ -87,7 +87,7 @@ $who = get_field('for_who', $post->ID);
 $results = get_field('results', $post->ID);
 $course_type = get_field('course_type', $post->ID);
 $category = " ";
-$tree = get_the_terms($post->ID, 'course_category'); 
+$tree = get_the_terms($post->ID, 'course_category');
 if($tree)
     if(isset($tree[2])){
         $category = $tree[2]->name;
@@ -95,9 +95,9 @@ if($tree)
     }
 
 $category_id = 0;
- 
+
 if($category == ' '){
-    $category_id = intval(explode(',', get_field('categories',  $post->ID)[0]['value'])[0]); 
+    $category_id = intval(explode(',', get_field('categories',  $post->ID)[0]['value'])[0]);
     $category_xml = intval(get_field('category_xml',  $post->ID)[0]['value']);
     if($category_xml)
         if($category_xml != 0){
@@ -108,7 +108,7 @@ if($category == ' '){
         if($category_id != 0){
             $id_category = $category_id;
             $category = (String)get_the_category_by_ID($category_id);
-        }                                            
+        }
 }
 
 $user_id = get_current_user_id();
@@ -118,7 +118,7 @@ if(!$image_author)
 
 /*
 * Companies
-*/ 
+*/
 $company = get_field('company',  'user_' . $post->post_author);
 
 /*
@@ -163,13 +163,13 @@ if(!$image){
             <h5 class="modal-title fw-bold" id="exampleModalLabel" style="color: #023356">Direct contact</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">    
+        <div class="modal-body">
             <div class="d-flex justify-content-center">
-               
+
                 <div>
                     <a href="#" class="mx-3 d-flex flex-column ">
-                        <i style="font-size: 50px; height: 49px; margin-top: -4px;" 
-                            class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>                                           
+                        <i style="font-size: 50px; height: 49px; margin-top: -4px;"
+                            class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>
                     </a>
                     <div class="mt-3 text-center">
                         <span class="bd-highlight fw-bold text-success mt-2">whatsapp</span>
@@ -178,16 +178,16 @@ if(!$image){
                 <div>
                     <a href="#" class="mx-3 d-flex flex-column ">
                         <i style="font-size: 25px"
-                        class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>                     
+                        class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
                         <!-- <span class="bd-highlight fw-bold text-primary mt-2">email</span> -->
                     </a>
                     <div class="mt-3 text-center">
                          <span class="bd-highlight fw-bold text-danger mt-5">email</span>
-                    </div>  
+                    </div>
                 </div>
                 <div>
                     <a href="#" class="mx-3 d-flex flex-column ">
-                        <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>                     
+                        <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>
                     </a>
                     <div class="mt-3 text-center">
                          <span class="bd-highlight fw-bold text-secondary mt-5">message</span>
@@ -204,7 +204,7 @@ if(!$image){
                          <span class="bd-highlight fw-bold text-primary mt-5">call</span>
                     </div>
                 </div>
-                
+
             </div>
 
         </div>
@@ -222,11 +222,11 @@ if(!$image){
                 <h5 class="modal-title" id="exampleModalLabel">Incompany</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">            
-                
-                <?php 
-                    echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true'] "); 
-                ?>                
+            <div class="modal-body">
+
+                <?php
+                    echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true'] ");
+                ?>
 
             </div>
         </div>
@@ -240,9 +240,9 @@ if(!$image){
                 <h5 class="modal-title" id="exampleModalLabel">Brochure</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">                
-               <?php 
-                    echo do_shortcode("[gravityform id='6' title='false' description='false' ajax='true'] "); 
+            <div class="modal-body">
+               <?php
+                    echo do_shortcode("[gravityform id='6' title='false' description='false' ajax='true'] ");
                 ?>
             </div>
         </div>
@@ -254,9 +254,9 @@ if(!$image){
         <div class="modal-content">
             <div class="modal-body">
                 <div class="">
-                    <!-- <img alt="course design_undrawn" 
+                    <!-- <img alt="course design_undrawn"
                      src="<?php echo get_stylesheet_directory_uri(); ?>/img/voorwie.png"> -->
-                    
+
                     <?php
                         $author = get_user_by('id', $post->post_author);
                     ?>
@@ -275,7 +275,7 @@ if(!$image){
 
 <div class="liveOverBlock">
     <div class="container-fluid">
-        <div class="overElement">           
+        <div class="overElement">
             <div class="blockOneOver">
 
                 <!-- modal -->
@@ -311,12 +311,11 @@ if(!$image){
 
                 <p class="e-learningTitle"><?php echo $post->post_title;?></p>
                 <!-- Image -->
-                <div class="pb-3 text-center">
-                    <img class="img-fluid" style="height: 280px; width: 727px; border-radius: 8px"
-                        src="<?=$image?>" alt="">
+                <div class="img-fluid-course">
+                    <img src="<?=$image?>" alt="">
                 </div>
-              
-                
+
+
                 <p class="beschiBlockText">Beschikbaarheid en prijs</p>
 
                 <!-- -------------------------------------- Start Icons row ------------------------------------->
@@ -352,7 +351,7 @@ if(!$image){
                                             <span class='textIconeLearning mt-1'>Bewaar</span>
                                         </button>
                                         ";
-                                ?>                                      
+                                ?>
                             </form>
                             <?php
                             if($user_id == 0)
@@ -393,7 +392,7 @@ if(!$image){
                                         ?>
                                         <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
                                         <?php
-                                       
+
                                         }
                                         ?>
                                     </div>
@@ -442,9 +441,9 @@ if(!$image){
                                     <?php
                                        if ($user_id==0)
                                        {
-                                        ?>  
+                                        ?>
                                         <div id='Intern' class='tabcontent px-md-5 p-3'>
-                                        <?php        
+                                        <?php
                                         wp_login_form([
                                                 'redirect' => 'http://wp12.influid.nl/dashboard/user/',
                                                 'remember' => false,
@@ -471,7 +470,7 @@ if(!$image){
                     <div class="text-limit">
                         <?php echo $long_description; ?>
 
-                        <div class="moreText"> 
+                        <div class="moreText">
                            <?php
                                 if($agenda){
                                     ?>
@@ -481,22 +480,22 @@ if(!$image){
                                 }
 
                                 if($who){
-                                    ?>  
+                                    ?>
                                     <h6 class="textDirect mt-3" style="text-align: left"><b>For who :</b></h6>
                                     </span> <?php echo $who; ?> </span>
                                     <?php
                                 }
 
                                 if($results){
-                                    ?>  
+                                    ?>
                                     <h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Results :</b></h6>
                                     <span > <?php echo $results; ?> </span>
                                     <?php
                                 }
                             ?>
-                        </div>    
+                        </div>
                        <br>
-                       
+
                    </div>
 
                     <button type="button" class="btn btn-lg lees_alles my-4 w-md-25 px-4 border border-1 border-dark read-more-btn"
@@ -504,7 +503,7 @@ if(!$image){
                 </div>
                 <!--------------------------------------- end Text description -------------------------------------- -->
             </div>
-            
+
             <!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
 
             <!-- Modal Sign End -->
@@ -597,7 +596,7 @@ if(!$image){
                     <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" ><img src="<?php echo $company_logo; ?>" alt="company logo"></a>
                     </div>
                     <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="liveTextCadPrice h5"><?php echo $company_title; ?></a>
-                
+
                 <?php
                     }
                 ?>
@@ -610,11 +609,11 @@ if(!$image){
                         echo "<input type='submit' class='btnLeerom' style='border:none' name='interest_push' value='+ Leeromgeving'>";
                     ?>
                 </form>
-                <?php 
+                <?php
                 if($user_id == 0 )
                     echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> + Leeromgeving </button>";
                 ?>
-                
+
 
                 <!-- <div class="p-1">
                      <button class="btn px-3 py-2 btnPhilo m-0" style="background-color: #00A89D !important;">
@@ -622,8 +621,8 @@ if(!$image){
                           <span class="text-white" style="font-size: 17px">Direct contact</span>
                     </button>
                 </div> -->
-                
-                <?php    
+
+                <?php
                     $data = get_field('data_locaties', $course->ID);
                     if($data)
                         $location = $data[0]['data'][0]['location'];
@@ -640,21 +639,21 @@ if(!$image){
                 <p class="opeleidingText">Opleiding: € <?php echo $price ?></p>
                 <p class="btwText">BTW: € <?php echo $prijsvat ?></p>
                 <p class="btwText">LIFT member korting: 28%</p>
-                
-                
+
+
                 <button href="#bookdates" class="btn btnKoop text-white PrisText" style="background: #043356">Koop deze <?php echo $course_type; ?></button>
             </div>
 
             <div class="col-12 my-5" style="background-color: #E0EFF4">
-                <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around 
+                <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around
                 justify-content-center">
 
                     <!-- --------------------------------------- Swiper ------------------------------------ -->
                     <!-- Slider main container -->
                     <div class="swiper">
                         <div class="swiper-wrapper">
-                            <?php 
-                                foreach($experts as $expert){ 
+                            <?php
+                                foreach($experts as $expert){
                                     $expert = get_users(array('include'=> $expert))[0]->data;
                                     $company = get_field('company',  'user_' . $expert->ID);
                                     $title = $company[0]->post_title;
@@ -669,12 +668,12 @@ if(!$image){
                                         <span><?php echo $title; ?></span>
                                     </div>
                                 </a>
-                             <?php } ?> 
-                        
-                            </div> 
-                     
-                        </div>   
- 
+                             <?php } ?>
+
+                            </div>
+
+                        </div>
+
                         <!-- If we need pagination -->
                         <!-- <div class="swiper-pagination"></div> -->
 
@@ -690,12 +689,12 @@ if(!$image){
                     </div>
 
                 </div>
-            </div>  
+            </div>
 
         </div>
 
 
-        
+
     <?php
 
     $data = get_field('data_locaties', $post->ID);
@@ -708,7 +707,7 @@ if(!$image){
         if(!empty($data)){
             foreach($data as $datum) {
                 $date_end = '';
-                $date_start = ''; 
+                $date_start = '';
                 $agenda_start = '';
                 $agenda_end = '';
                 if(!empty($datum['data'])){
@@ -733,11 +732,11 @@ if(!$image){
                         <div class="dateBlock">
                             <p class="dateText1"><?php
                             echo $agenda_start;
-                            if($date_start != '' && $date_end != '') 
+                            if($date_start != '' && $date_end != '')
                             {
-                                echo ' - '; 
+                                echo ' - ';
                                 echo $agenda_end;
-                            } 
+                            }
                                 ?>
                             </p>
                             <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
@@ -745,9 +744,9 @@ if(!$image){
                         </div>
                         <div class="BlocknumberEvenement">
 
-                            <?php 
+                            <?php
 
-                            for($i = 0; $i < count($datum['data']); $i++) { 
+                            for($i = 0; $i < count($datum['data']); $i++) {
                                 $date_start = $datum['data'][$i]['start_date'];
                                 $location = $datum['data'][$i]['location'];
                                 if($date_start != null) {
@@ -762,7 +761,7 @@ if(!$image){
                                 <p class="numberEvens"><?php echo $i+1 ?></p>
                                 <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
                             </div>
-                            <?php 
+                            <?php
                                 }
                             }
                             ?>
@@ -798,11 +797,11 @@ if(!$image){
                                     ?>
                                             <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="single_add_to_cart_button button alt">Reserveren</button>
 
-                                    <?php } 
+                                    <?php }
                                             do_action( 'woocommerce_after_add_to_cart_button' ); ?>
                                 </form>
-                                        
-                                <?php 
+
+                                <?php
                                     if($user_id == 0)
                                         echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
                                     do_action( 'woocommerce_after_add_to_cart_form' ); ?>
@@ -811,13 +810,13 @@ if(!$image){
 
                     </div>
                 </div>
-                
+
                 <!-------------------------------------------- End cards on bottom --------------------------- -->
 
 
                 <?php
                         }
-            
+
             }
         }
     }else{
@@ -826,7 +825,7 @@ if(!$image){
             foreach($data as $datum){
                 $infos = explode(';', $datum['value']);
                 $number = count($infos)-1;
-                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];    
+                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];
                 $date_start = explode(' ', $infos[0]);
                 $date_end = explode(' ', $infos[$number]);
                 $d_start = explode('/',$date_start[0]);
@@ -843,11 +842,11 @@ if(!$image){
                     <div class="dateBlock">
                         <p class="dateText1"><?php
                         echo $agenda_start;
-                        if($date_start != $date_end) 
+                        if($date_start != $date_end)
                         {
-                            echo ' - '; 
+                            echo ' - ';
                             echo $agenda_end;
-                        } 
+                        }
                             ?>
                         </p>
                         <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
@@ -855,7 +854,7 @@ if(!$image){
                     </div>
                     <div class="BlocknumberEvenement">
 
-                    <?php 
+                    <?php
                         if(!empty($infos))
                         $x = 0;
                         foreach($infos as $key=>$info) {
@@ -872,7 +871,7 @@ if(!$image){
                                 <p class="numberEvens"><?php echo $x+1 ?></p>
                                 <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
                             </div>
-                        <?php 
+                        <?php
                             $x+=1;
                             }
                         ?>
@@ -909,7 +908,7 @@ if(!$image){
                                     <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="single_add_to_cart_button button alt">Reserveren</button>
 
                                 <?php }
-                
+
                                     do_action( 'woocommerce_after_add_to_cart_button' ); ?>
                             </form>
 
@@ -917,10 +916,10 @@ if(!$image){
                             <?php
                                 if($user_id == 0)
                                     echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
-                                    
+
                                 do_action( 'woocommerce_after_add_to_cart_form' ); ?>
                         </div>
-                    </div> 
+                    </div>
 
                 </div>
             </div>
@@ -935,7 +934,7 @@ if(!$image){
 
     </div>
 
-    
+
         <!-- début Modal deel -->
         <div class="modal" id="modal1" data-animation="fadeIn">
         <div class="modal-dialog modal-dialog-deel" role="document">
@@ -1045,7 +1044,7 @@ if(!$image){
 
 
 <script>
- 
+
     const swiper = new Swiper('.swiper', {
         // Optional parameters
         // direction: 'vertical',
@@ -1122,7 +1121,7 @@ if(!$image){
     // see more text ----course offline and online ------------------ //
     const readMoreBtn = document.querySelector('.read-more-btn');
     const text = document.querySelector('.text-limit');
-    
+
     readMoreBtn.addEventListener('click', (e) => {
     //    alert('test');
         text.classList.toggle('show-more'); // add show more class

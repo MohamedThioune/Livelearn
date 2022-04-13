@@ -108,6 +108,7 @@ $todos = get_posts($args);
                         </div>
                     </div>
                 </div>
+
                 <a class="navbar-brand navBrand" href="/">
                     <div class="logoModife logoWeb">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_white.png" alt="">
@@ -116,7 +117,7 @@ $todos = get_posts($args);
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn_white.png" alt="LogoMobile" >
                     </a>
                 </a>
-                <div class="elementWeb">
+                <div class="elementWeb d-flex">
                     <a href="#" class="nav-link navModife4 btn dropdown-toggle " type="button" id="dropdownNavButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Dashboards <img class="imgArrowDropDown" src="<?php echo get_stylesheet_directory_uri();?>/img/down-chevron.svg" alt="">
                     </a>
@@ -137,6 +138,14 @@ $todos = get_posts($args);
                             ?>
                         <a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>
                         <?php }?>
+                    </div>
+                    <div class="blockIconeWidth">
+                        <button id="burger-web" class=" btn burgerElement boxSousNav3-2">
+                            <i class="fa fa-bars text-white" style="font-size: 25px"></i>
+                        </button>
+                        <button id="burgerCroie-web" class="btn croie">
+                            <i class="bi bi-x-lg text-white" style="font-size: 25px"></i>
+                        </button>
                     </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
