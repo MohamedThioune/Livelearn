@@ -144,16 +144,15 @@ $todos = get_posts($args);
                         <?php
 
                         if(!empty($company)){
-                            if ( in_array( 'manager', $user->roles ) || in_array('administrator', $user->roles)) {
                                 $company_id = $company[0]->ID;
                                 $company_logo = get_field('company_logo', $company_id);
                         ?>
                         <li class="nav-link companyButton">
-                            <a href="/dashboard/company">
+                            <a href=" <?php if (in_array( 'manager', $user->roles ) || in_array('administrator', $user->roles) ) echo "/dashboard/company";; ?>">
                                 <img class="userBlockNav" src="<?php echo $company_logo;?>" alt="">
                             </a>
                         </li>
-                        <?php }
+                        <?php 
                         }
                         ?>
                         <div class="second-element-mobile">

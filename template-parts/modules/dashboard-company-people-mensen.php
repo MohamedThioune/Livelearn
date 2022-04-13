@@ -56,11 +56,11 @@
                 'user_pass' => 'p@ssword1234.',
                 'user_login' => $login,
                 'user_email' => $email,
-                'user_url' => 'http://wp12.influid.nl/',
+                'user_url' => 'https://livelearn.nl/inloggen/',
                 'display_name' => $first_name,
                 'first_name' => $first_name,
                 'last_name' => $last_name,
-                'role' => 'subscriber'
+                'role' => 'klant'
             );
 
             $user_id = wp_insert_user(wp_slash($userdata));
@@ -80,7 +80,7 @@
                     <h1>Hello " . $first_name  . "</h1><br> 
                     Your are successfully registered , welcome onboard<br>
                     Your LOGIN-ID is <b style='color:blue'>" . $login . "</b> and password <b>p@ssword1234.</b><br><br>
-                    <h4><a href='http://wp12.influid.nl/inloggen'> Connexion </a></h4>
+                    <h4><a href='https://livelearn.nl/inloggen/'> Connexion </a></h4>
                     ";
                 
                     $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
