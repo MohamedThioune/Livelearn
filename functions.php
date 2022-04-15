@@ -137,7 +137,6 @@ function custom_post_type() {
         'name'                => _x( 'Feedbacks', 'Feedback', 'feedback' ),
         'singular_name'       => _x( 'Feedback', 'Feedback', 'feedback' ),
         'menu_name'           => __( 'Feedbacks', 'feedback' ),
-        //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
         'all_items'           => __( 'All feedbacks', 'feedback' ),
         'view_item'           => __( 'View feedback', 'view_feedback' ),
         'add_new_item'        => __( 'New feedback', 'add_new_feedback' ),
