@@ -7834,7 +7834,7 @@ input:checked ~ .assassment {
 
 @media all and (max-width: 400px) {
     .textIconeLearning {
-        font-size: 12px;
+        font-size: 11px;
     }
 }
 
