@@ -364,7 +364,6 @@ else if(isset($road_path_selected)){
 
     update_field('road_path', $courses, 'user_'. $user_id);
     header("location: /dashboard/teacher/road-path/?message=Succesvolle cursus selectie");
-
 }
 else if(isset($road_path_created)){
 
@@ -384,7 +383,7 @@ else if(isset($road_path_created)){
 
     update_field('road_path', null, 'user_'. $user_id);
     update_field('road_path', $courses, 'user_'. $user_id);
-
+    
 }
 ?>
 <?php wp_head(); ?>
