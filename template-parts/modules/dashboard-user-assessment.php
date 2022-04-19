@@ -136,7 +136,7 @@
                                 <p class="secondElement">Medium</p>
                             </div>
                         </div>
-                        <button class="btn btnStratModal medium" id="btnStratModal1"  data-dismiss="modal">Strat</button>
+                        <button class="btn btnStratModal medium" id="btnStartModal1"  data-dismiss="modal">Start</button>
                     </div>
                 </div>
             </div>
@@ -187,7 +187,7 @@
             <div id="step3OverviewAssessmentBackend">
                 <div class="head3OverviewAssessment">
                     <p class="assessmentNUmber">Question 1 / 30</p>
-                    <p class="assessmentTime">4 : 05</p>
+                    <p class="assessmentTime" id="chrono-back"></p>
                 </div>
                 <p class="chooseTechnoTitle">Select the correct sql query <span>(Multiple choose posible)</span></p>
                 <div class="listAnswer">
@@ -771,6 +771,24 @@
         $(".multipleSelect3").select2({
             placeholder: "" //placeholder
         });
+        $("#btnStartModal1").click(()=>{
+            var m=25,s=59;    
+            setInterval(function(){
+            if (s==59)
+            {
+                m--;
+            }
+            if (s==0)
+            {
+                s=59;
+            }
+            s--;
+            $("#chrono-back").text(m+" : "+s)
+        },1000);
+        });
+        
+        
     });
     //# sourceURL=pen.js
 </script>
+
