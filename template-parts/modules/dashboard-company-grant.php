@@ -7,6 +7,12 @@
     if(isset($granted_push))
         if(!empty($granted)){
             foreach($granted as $grant)
+                {
+                    $u = new WP_User($grant);
+                    // Add role
+                    $u->set_role( 'manager' );
+                    $u->add_role( 'teacher' );
+                }
                 update_field('manager', 1, 'user_'.$grant);
             
             $success = true;
@@ -20,13 +26,13 @@
         <div class="cardCoursGlocal">
             <div id="basis" class="w-100">
                 <?php
-                if(isset($message))
-                    if($success)
+                if (isset($message))
+                    if ($success)
                         echo "<span class='alert alert-success'>" . $message . "</span><br><br>";
 
                 $user = get_users(array('include'=> $user_id))[0];
-                if(!empty($user->roles)){
-                    if( !in_array('administrator', $user->roles) && !in_array('manager', $user->roles) ){
+                if (!empty($user->roles)){
+                    if ( !in_array('administrator', $user->roles) && !in_array('manager', $user->roles) ){
                         echo '<div class="titleOpleidingstype"><h2>You are not able to manage a member</h2></div>';
                     }
                     else{                        
