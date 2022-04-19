@@ -578,4 +578,3 @@ jQuery(function($){
     }
 
 });
-
