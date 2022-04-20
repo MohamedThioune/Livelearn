@@ -219,14 +219,14 @@ function custom_post_type() {
     // - -- -
 
     $response_assessment = array(
-        'name'                => _x( 'Response assessments', 'Response assessment', 'response_assessment' ),
-        'singular_name'       => _x( 'Response assessment', 'Response assessment', 'response_assessment' ),
-        'menu_name'           => __( 'Response assessments', 'response_assessment' ),
+        'name'                => _x( 'Responses', 'Response', 'response_assessment' ),
+        'singular_name'       => _x( 'Response', 'Response', 'response_assessment' ),
+        'menu_name'           => __( 'Responses', 'response_assessment' ),
         //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
-        'all_items'           => __( 'All response_assessments', 'response_assessment' ),
-        'view_item'           => __( 'View response_assessment', 'view_response_assessment' ),
-        'add_new_item'        => __( 'New response_assessment', 'add_new_response_assessment' ),
-        'add_new'             => __( 'New response_assessment', 'text_domain' ),
+        'all_items'           => __( 'All responses', 'response' ),
+        'view_item'           => __( 'View response', 'view_response' ),
+        'add_new_item'        => __( 'New response', 'add_new_response' ),
+        'add_new'             => __( 'New response', 'text_domain' ),
         'edit_item'           => __( 'Edit Item', 'text_domain' ),
         'update_item'         => __( 'Update Item', 'text_domain' ),
         'search_items'        => __( 'Search Item', 'text_domain' ),
@@ -234,9 +234,9 @@ function custom_post_type() {
         'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
     );
 
-    $response_assessment_args = array(
-        'label'               => __( 'response_assessment', 'text_domain' ),
-        'description'         => __( 'Post type for response_assessment', 'text_domain' ),
+    $response_args = array(
+        'label'               => __( 'response', 'text_domain' ),
+        'description'         => __( 'Post type for response', 'text_domain' ),
         'labels'              => $response_assessment,
         'supports'            => array('title', 'author', 'custom-fields', 'excerpt', 'thumbnail' ),
         //'taxonomies'          => array('category', 'post_tag'),
@@ -257,7 +257,7 @@ function custom_post_type() {
 
     );
 
-    register_post_type( 'response_assessment', $response_assessment_args );
+    register_post_type( 'response_assessment', $response_args );
 
 
     $assign = array(
