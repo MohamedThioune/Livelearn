@@ -75,6 +75,15 @@
 
             </div>
         </div>
+        <div class="col-md-12 col-lg-12">
+            <div class="cardCoursGlocal">
+                <a href="/dashboard/teacher/road-path" class="cardCours cardCoursInitial" >
+                    <p class="contentText">
+                        <b>Road Path</b>
+                    </p>
+                </a>
+            </div>
+        </div>
        <!-- <div class="col-md-3 col-lg-4 col-sm-12">
             <div class="importBlock2">
                 <p class="kiesText">Import meerdere</p>
