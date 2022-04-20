@@ -6319,6 +6319,84 @@ input:checked ~ .assassment {
     margin-bottom: 10px;
     color: #043356;
 }
+.cardRoadPath{
+    padding: 20px 15px;
+    border: 1px solid lightgrey !important;
+    border-radius: 13px;
+    background: #FFFFFF;
+}
+.titleRoadPath {
+    font-size: 17px;
+    color: #043356;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+.seeRoadPath{
+    display: flex;
+    align-items: center;
+}
+.btnRemoveRoadPath{
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+.categoriesRoadPath{
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.categoriesRoadPath img{
+    height: 13px;
+    margin-right: 6px;
+}
+.categoriesRoadPath p{
+    margin-bottom: 0;
+    font-size: 15px;
+}
+.footer-road-path{
+    display: flex;
+    justify-content: space-between;
+}
+.seeRoadPath span{
+    font-size: 16px;
+    font-weight: 500;
+    color: #043356;
+}
+.seeRoadPath img{
+    width: 20px;
+    margin-right: 5px;
+}
+.btnRemoveRoadPath img{
+    width: 16px;
+    padding-top: 4px;
+    margin-right: 2px;
+}
+.btnRemoveRoadPath span{
+    font-size: 14px;
+    color: #ff5353;
+}
+#step2RoadPath .select2-container {
+    width: 100% !important;
+}
+#step2RoadPath{
+    display: none;
+}
+.row-select-submit:hover{
+    color: #FFFFFF !important;
+    cursor: pointer;
+}
+#validatePath {
+    background: #043356 !important;
+    color: #FFFFFF;
+    margin-left: 20px;
+    margin-top: 30px;
+    padding: 10px 25px;
+}
+.backtolistRoadPath img{
+    height: 26px;
+    margin-right: 20px;
+}
+
 
 
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
