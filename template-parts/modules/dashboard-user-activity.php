@@ -256,20 +256,17 @@ $enrolled_courses = get_posts($args);
                     <?php
                     } 
                 }
-                else{
+                else
                     echo "empty until now";
-                }
                 ?>
             </div>
         </div>
-        <?php 
-            if(!empty($todos)){
-        ?>
+      
         <div class="col-lg-5">
             <div class="cardNotification">
                 <h2>Notificaties</h2>
                 <?php 
-                
+                if(!empty($todos)){
                 foreach($todos as $key=>$todo) {
                     if($key == 6)
                         break;
@@ -296,12 +293,13 @@ $enrolled_courses = get_posts($args);
                     }
                 ?>
                  <a href="/dashboard/user/notification" class="btn btnOnderwerp">See all</a>
-
+                 <?php
+                    }
+                    else 
+                        echo "empty until now";
+                ?>
             </div>
         </div>
-        <?php
-            }
-        ?>
     </div>
     <div class="cardFavoriteCourses">
         <div class="d-flex aligncenter justify-content-between">
