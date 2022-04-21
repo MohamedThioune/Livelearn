@@ -108,18 +108,24 @@ foreach($global_courses as $course)
                     array_push($trainings, $course);
                 else if(get_field('course_type', $course->ID) == "Video")
                     array_push($videos, $course);
-                
-                if(!in_array($course->post_author, $teachers))
-                    array_push($teachers, $course->post_author);
-
-                foreach($experts as $expertie)
-                    if(!in_array($expertie, $teachers))
-                        array_push($teachers, $expertie);
         }
     }
-    //Activitien
-    $activitiens  = count($courses);
+
+    foreach($experts as $topic_expert){
+        $experties = get_field('experts', $course->ID);    
+        if($course->post_author == $topic_expert || in_array($topic_expert, $experties) ){
+            if(!in_array($course->ID,$courses_id)){
+                array_push($courses, $course);
+                array_push($courses_id, $course->ID);
+                break;
+            }
+        }
+    }
+   
 }
+
+ //Activitien
+ $activitiens = count($courses);
 
 /*
 * *   
