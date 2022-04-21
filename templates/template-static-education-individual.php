@@ -76,7 +76,7 @@
                 <p class="altjidText bottomTextMaak">-Maak meteen een gratis en persoonlijke leeromgeving</p>
                 <p class="altjidText bottomTextMaak">-Altijd direct antwoord op je vragen over opleiden geving</p>
                 <p class="altjidText bottomTextMaak">-Het grootste aanbod van zakelijke trainingen EN persoonlijke interesses</p>
-                <button  class="btn btnMeerInformation">Meer informatie</button>
+                <a href="/static-education-advice"  class="btn btnMeerInformation">Meer informatie</a>
             </div>
             <div class="col-md-6 col-sm-12">
                 <div class="blockForm">
@@ -102,7 +102,7 @@
         </div>
     </div>
 </div>
-<div class="blockEducationIndividualPage">
+<!-- <div class="blockEducationIndividualPage">
     <div class="blockOnzeService">
         <div class="container">
             <div class="blockTextScholingsadvies">
@@ -228,7 +228,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 
 <?php get_footer(); ?>
