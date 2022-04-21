@@ -3421,6 +3421,9 @@ body .gform_wrapper ul li.gfield {
 .croie{
     display: none;
 }
+#burgerCroie-web{
+    display: none;
+}
 .richting-bineen-block{
     display: none;
 }
@@ -5915,12 +5918,16 @@ button:focus {
 .checkmark {
     position: absolute;
     top: 0;
-    border-radius: 100%;
-    right: 0;
-    height: 25px;
-    width: 25px;
-    background-color: #eee;
-    left: unset;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: #043356;
+    border: 2px solid white;
+    border-radius: 5px;
+}
+.sousProductTest .checkmark {
+    background-color: white !important;
+    border: 2px solid #043356 !important;
 }
 
 .container-checkbox:hover input ~ .checkmark {
@@ -6021,13 +6028,13 @@ tbody{
 #sectionDashboard1 .iconeElement img {
     width: 22px;
 }
-#sectionDashboard1 .iconeElement:first-child{
+.userdash .iconeElement:first-child{
     margin-top: 2px;
     width: 24px;
     height: 24px;
     overflow: hidden;
 }
-#sectionDashboard1 .iconeElement:first-child img {
+.userdash .iconeElement:first-child img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -6428,7 +6435,6 @@ tbody{
     height: 26px;
     margin-right: 20px;
 }
-
 
 
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
@@ -8221,6 +8227,9 @@ tbody{
         margin-bottom: 5px;
         color: #043356;
     }
+    #burger-web{
+        display: none !important;
+    }
 
 
 
@@ -8233,6 +8242,10 @@ tbody{
     .textIconeLearning {
         font-size: 11px;
     }
+    #burger-web{
+        display: none !important;
+    }
+
 }
 
 
@@ -8533,8 +8546,9 @@ tbody{
         margin-top: 0;
     }
 
-
-
+    #burger-web{
+        display: none !important;
+    }
 
     .bntNotification{
         position: relative;

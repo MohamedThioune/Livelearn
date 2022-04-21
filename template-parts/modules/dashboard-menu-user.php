@@ -33,7 +33,7 @@ $experts = get_user_meta($user->ID, 'expert');
     </button>
     <ul class="">
         <li class="elementTextDashboard">
-            <a href="/dashboard/company/profile/" class="d-flex">
+            <a href="/dashboard/company/profile/" class="d-flex userdash">
                 <div class="iconeElement"> <img src="<?php echo $image ?>" alt="profile photo"> </div>
                 <p class="textLiDashboard"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . '' . $user->last_name; else echo $user->display_name; ?></p>
             </a>

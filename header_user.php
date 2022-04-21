@@ -39,10 +39,10 @@ $todos = get_posts($args);
     <body class="header-user canhas">
         <nav class="navbar navbar-expand-lg navbar-dark headerdashboard">
             <div class="blockIconeWidth">
-                <button id="burger-web" class=" btn burgerElement boxSousNav3-2">
+                <button id="burger-web" class="largeElement btn">
                     <i class="fa fa-bars text-white" style="font-size: 25px"></i>
                 </button>
-                <button id="burgerCroie-web" class="btn croie">
+                <button id="burgerCroie-web" class="btn ">
                     <i class="bi bi-x-lg text-white" style="font-size: 25px"></i>
                 </button>
             </div>
