@@ -37,38 +37,6 @@ $args = array(
 
 $courses = get_posts($args);
 
-/*
-* * Enrolled courses
-*/
-$enrolled_courses = array();
-$outros = array();
-
-foreach($courses as $course){
-    global $wpdb;
-    $courseid = intval($course->ID) + 1;
-    $results = $wpdb->get_results( "SELECT meta_value FROM wpe7_gf_entry_meta WHERE form_id = 1 AND meta_value =" . $courseid);
-    if(!empty($results)){
-        foreach($results as $value){
-            $value = intval($value->meta_value) - 1;
-            if(!in_array($value, $outros))
-                array_push($outros,$value);
-        }
-    }
-}
-
-$outros = array_reverse($outros);
-
-if(!empty($outros)){
-    $args = array(
-        'post_type' => 'course', 
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'include' => $outros,  
-    );
-
-    $enrolled_courses = get_posts($args);
-}
-
 // Saved courses
 $saved = get_user_meta($user->ID, 'course');
 
@@ -97,10 +65,40 @@ $args = array(
 
 $todos = get_posts($args);
 
+//Orders  
+$args = array(
+    'customer_id' => $user->ID,
+    'limit' => -1,
+);
+
+$bunch_orders = wc_get_orders($args);
+$orders = array();
+$item_order = array();
+
+foreach($bunch_orders as $order){
+    foreach ($order->get_items() as $item_id => $item ) {
+        $course_id = intval($item->get_product_id()) - 1;
+        array_push($enrolled, $course_id);
+    }
+}
+
+/*
+* * Enrolled courses
+*/
+$args = array(
+    'post_type' => 'course', 
+    'posts_per_page' => -1,
+    'orderby' => 'post_date',
+    'order' => 'DESC',
+    'include' => $enrolled,  
+);
+
+$enrolled_courses = get_posts($args);
+
 ?>
 
 <div class="contentActivity">
-    <h1 class="activityTitle">Activity</h1>
+    <h1 class="activityTitle">Activiteiten</h1>
     <?php
         if(isset($_GET['message']))
             if($_GET['message'])
@@ -155,7 +153,7 @@ $todos = get_posts($args);
     <div class="row">
         <div class="col-lg-7">
             <div class="cardRecentlyEnrolled">
-                <h2>Recently enrolled courses </h2>
+                <h2>Laatst opgedane kennis</h2>
                 <?php 
                 foreach($enrolled_courses as $key=>$course) {
                     if($key == 2)
@@ -262,7 +260,7 @@ $todos = get_posts($args);
         ?>
         <div class="col-lg-5">
             <div class="cardNotification">
-                <h2>Notification</h2>
+                <h2>Notificaties</h2>
                 <?php 
                 
                 foreach($todos as $key=>$todo) {
@@ -300,7 +298,7 @@ $todos = get_posts($args);
     </div>
     <div class="cardFavoriteCourses">
         <div class="d-flex aligncenter justify-content-between">
-            <h2>Favorite courses</h2>
+            <h2>Favoriete kennisproducten</h2>
             <input type="search" placeholder="search" class="inputSearchCourse">
         </div>
         <div class="globalCoursElement">
