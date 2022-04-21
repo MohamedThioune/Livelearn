@@ -268,6 +268,12 @@ jQuery(function($){
         $(".theme-side-menu").removeClass("extensive");
     });
 
+    // for road path
+    $("#bntContinueRoad").click(function() {
+        $("#step2RoadPath").show("");
+        $("#step1RoadPath").hide("");
+    });
+
 
 
 
