@@ -1,5 +1,7 @@
 <?php
 
+var_dump($_POST);
+
 $user_connected = get_current_user_id();
 $company_connected = get_field('company',  'user_' . $user_connected);
 $users_companie = array();
@@ -32,6 +34,57 @@ $order_args = array(
 
 );
 $orders = wc_get_orders($order_args);
+
+
+
+/*
+    ** Categories - all  * 
+    */
+
+    $categories = array();
+
+    $cats = get_categories( 
+        array(
+        'taxonomy'   => 'course_category',  //Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'orderby'    => 'name',
+        'exclude' => 'Uncategorized',
+        'parent'     => 0,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) 
+    );
+
+
+    
+    foreach($cats as $category){
+        $cat_id = strval($category->cat_ID);
+        $category = intval($cat_id);
+        array_push($categories, $category);
+    }
+
+     $subtopics = array();
+     
+    foreach($categories as $categ){
+        //Topics
+        $topicss = get_categories(
+            array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $categ,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            ) 
+        );
+
+        foreach ($topicss as  $value) {
+            $subtopic = get_categories( 
+                 array(
+                 'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                 'parent'  => $value->cat_ID,
+                 'hide_empty' => 0,
+                  //  change to 1 to hide categores not having a single post
+                ) 
+            );
+            $subtopics = array_merge($subtopics, $subtopic);      
+        }
+    }
 
 
 ?>
@@ -274,13 +327,12 @@ $orders = wc_get_orders($order_args);
                         $course_type = get_field('course_type', $course->ID) 
 
                     ?>
-                    <tr  >
+                    <tr>
                         <td class="textTh"><a style="color:#212529;" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
                         <td class="textTh"><?php echo $course_type; ?></td>
                         <td class="textTh"><?php echo $price; ?></td>
                         <!-- <td class="textTh" data-toggle="modal" data-target="#exampleModal"><?php echo $category; ?></td> -->
-                        <td class="textTh" data-toggle="modal" data-target="#exampleModal">
-                            <?php echo $category; ?> 
+                        <td id= <?php echo $course->ID; ?> class="textTh"  data-toggle="modal" data-target="#exampleModal">
                             <p id="result"></p>             
                         </td>
                         <td class="textTh"><?php echo $day; ?></td>
@@ -315,50 +367,50 @@ $orders = wc_get_orders($order_args);
       </div>
       <div class="modal-body">
         <section class="ftco-section">
+        <form name="add_subtopics" method="post">
             <p id="result"></p>
             <div class="container">
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-4 d-flex justify-content-center align-items-center">
-                        <select class="js-select2" id="sel" multiple="multiple">
-                            <option value="substopic1" data-badge="">Option1</option>
-                            <option value="substopic2" data-badge="">Option2</option>
-                            <option value="substopic3" data-badge="">Option3</option>
-                            <option value="substopic4" data-badge="">Option4</option>
-                            <option value="substopic5" data-badge="">Option5</option>
-                            <option value="substopic6" data-badge="">Option6</option>
-                            <option value="substopic7" data-badge="">Option7</option>
-                            <option value="substopic8" data-badge="">Option8</option>
-                            <option value="substopic9" data-badge="">Option9</option>
-                            <option value="substopic10" data-badge="">Option10</option>
-                            <option value="substopic11" data-badge="">Option11</option>
-                            <option value="substopic12" data-badge="">Option12</option>
-                            <option value="substopic13" data-badge="">Option13</option>
+                        <select name="value_subtopics[]" class="js-select2" id="sel" multiple="multiple">
+                            <!-- <option value="substopic1" data-badge="">Option1</option> -->
+                            <?php
+                                                    //Subtopics
+                                                    foreach($subtopics as $value){
+                                                        echo "<option value='" . $value->cat_name . "'>" . $value->cat_name . "</option>";
+                                                    }
+                            ?>
                         </select>
+                     
                     </div>
 
                 </div>
             </div>
 
             <div class="text-center">
-                <button class="btn text-white"  style="background: #023356;"
+            <input hidden="hidden" id="hide" name="course" value="">
+            <button  class="btn text-white" id="btn_save"  style="background: #023356;"
                 onclick="listboxresult();">Save</button>
             </div>
-
+        </form>
         </section>
                     
       </div>
     </div>
   </div>
 </div>
-
 <script>
+ $('.textTh').click((e)=>{
+     var td=e.target.id
+     $('#hide').attr("value",td)
+ })
+
+
 
      function listboxresult() {
-
          var spanresult = document.getElementById("result");
          spanresult.value=""
          var x = document.getElementById("sel");
-
          for (let index = 0; index < x.options.length; index++) {
              if (x.options[index].selected === true) {
                  spanresult.value += x.options[index].value + ", ";
