@@ -196,7 +196,7 @@
                         
                     }
                 }
-                 update_field('is_first_login', true, 'user_'.get_current_user_id());
+                update_field('is_first_login', true, 'user_'.get_current_user_id());
                 
             }
         
@@ -205,140 +205,135 @@
             {
             
     ?>    
-                         <!-- Modal First Connection --> 
+        <!-- Modal First Connection --> 
+        <div class="contentModalFirst">
+            <div class="modal" id="myFirstModal" tabindex="-1" role="dialog" aria-labelledby="myFirstModalScrollableTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modalHeader">
+                            <h5 class="modal-title text-center" id="exampleModalLabel">Welcome to livelearn</h5>
+                            <p class="pickText">Pick your favorite topics to set up your feeds</p>
+                        </div>
+                        <div class="modal-body">
+                        <form method="post">
+                            <div class="blockBaangerichte">
+                                <h1 class="titleSubTopic">Baangerichte</h1>
+                                <div class="hiddenCB">
+                                    <div>
+                                        <?php
+                                        foreach($bangerichts as $key => $value)
+                                        {
+                                            //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                            echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_bangricht'.($key+1).'" /><label class="labelChoose btnBaangerichte subtopics_bangricht_'.($key+1).' '.($key+1).'" for="cb_topics_bangricht'.($key+1).'">'. $value->cat_name .'</label>';
+                                        }
+                                        ?>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnBaangerichte" for="cb1">Choice A</label> -->
 
+                                    </div>
+                                </div>
+                                <div class="subtopicBaangerichte">
 
-    <div class="contentModalFirst">
-        <div class="modal" id="myFirstModal" tabindex="-1" role="dialog" aria-labelledby="myFirstModalScrollableTitle" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modalHeader">
-                        <h5 class="modal-title text-center" id="exampleModalLabel">Welcome to livelearn</h5>
-                        <p class="pickText">Pick your favorite topics to set up your feeds</p>
-                    </div>
-                    <div class="modal-body">
-                      <form method="post">
-                        <div class="blockBaangerichte">
-                            <h1 class="titleSubTopic">Baangerichte</h1>
-                            <div class="hiddenCB">
-                                <div>
-                                    <?php
-                                    foreach($bangerichts as $key => $value)
-                                    {
-                                        //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                        echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_bangricht'.($key+1).'" /><label class="labelChoose btnBaangerichte subtopics_bangricht_'.($key+1).' '.($key+1).'" for="cb_topics_bangricht'.($key+1).'">'. $value->cat_name .'</label>';
-                                    }
-                                    ?>
-                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnBaangerichte" for="cb1">Choice A</label> -->
+                                    <div class="hiddenCB">
+                                        <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
+                                        <?php
+                                        echo $row_bangrichts;
+                                        ?>
+                                    </div>
 
+                                    <button type="button" class="btn btnNext" id="nextblockBaangerichte">Next</button>
                                 </div>
                             </div>
-                            <div class="subtopicBaangerichte">
 
+                            <div class="blockfunctiegericht">
+                                <h1 class="titleSubTopic">functiegericht</h1>
                                 <div class="hiddenCB">
+                                    <div>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnFunctiegericht" for="cb1">Choice A</label> -->
+                                        <?php
+                                        foreach($functies as $key => $value)
+                                        {
+                                            //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                            echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_funct'.($key+1).'" /><label class="labelChoose btnFunctiegericht subtopics_funct_'.($key+1).' '.($key+1).'"  for="cb_topics_funct'.($key+1).'">'. $value->cat_name .'</label>';
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="subtopicFunctiegericht">
                                     <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
-                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
-                                    <?php
-                                    echo $row_bangrichts;
-                                    ?>
-                                </div>
-
-                                <button type="button" class="btn btnNext" id="nextblockBaangerichte">Next</button>
-                            </div>
-                        </div>
-
-                        <div class="blockfunctiegericht">
-                            <h1 class="titleSubTopic">functiegericht</h1>
-                            <div class="hiddenCB">
-                                <div>
-                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnFunctiegericht" for="cb1">Choice A</label> -->
-                                    <?php
-                                    foreach($functies as $key => $value)
-                                    {
-                                        //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                        echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_funct'.($key+1).'" /><label class="labelChoose btnFunctiegericht subtopics_funct_'.($key+1).' '.($key+1).'"  for="cb_topics_funct'.($key+1).'">'. $value->cat_name .'</label>';
-                                    }
-                                    ?>
+                                    <div class="hiddenCB">
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
+                                        <?php
+                                            echo $row_functies;
+                                        ?>
+                                    </div>
+                                    <button type="button" class="btn btnNext" id="nextFunctiegericht">Next</button>
                                 </div>
                             </div>
-                            <div class="subtopicFunctiegericht">
-                                <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
+
+                            <div class="blockSkills">
+                                <h1 class="titleSubTopic">Skills</h1>
                                 <div class="hiddenCB">
-                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
-                                    <?php
-                                        echo $row_functies;
-                                    ?>
+                                    <div>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnSkills" for="cb1">Choice A</label> -->
+
+                                        <?php
+                                        foreach($skills as $key => $value)
+                                        {
+                                            //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                            echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_skills'.($key+1).'" /><label class="labelChoose btnSkills subtopics_skills_'.($key+1).' '.($key+1).'" for=cb_skills'.($key+1).'>'. $value->cat_name .'</label>';
+                                        }
+                                        ?>
+
+                                    </div>
                                 </div>
-                                <button type="button" class="btn btnNext" id="nextFunctiegericht">Next</button>
-                            </div>
-                        </div>
-
-                        <div class="blockSkills">
-                            <h1 class="titleSubTopic">Skills</h1>
-                            <div class="hiddenCB">
-                                <div>
-                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnSkills" for="cb1">Choice A</label> -->
-
-                                    <?php
-                                    foreach($skills as $key => $value)
-                                    {
-                                        //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                        echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_skills'.($key+1).'" /><label class="labelChoose btnSkills subtopics_skills_'.($key+1).' '.($key+1).'" for=cb_skills'.($key+1).'>'. $value->cat_name .'</label>';
-                                    }
-                                    ?>
-
+                                <div class="subtopicSkills">
+                                    <div class="hiddenCB">
+                                        <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
+                                        <?php
+                                            echo $row_skills;
+                                        ?>
+                                    </div>
+                                    <button type="button" class="btn btnNext" id="nextSkills">Next</button>
                                 </div>
                             </div>
-                            <div class="subtopicSkills">
+
+                            <div class="blockPersonal">
+                                <h1 class="titleSubTopic">Personal interest </h1>
                                 <div class="hiddenCB">
-                                    <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
-                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
-                                    <?php
-                                        echo $row_skills;
-                                    ?>
+                                    <div>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnPersonal" for="cb1">Choice A</label> -->
+
+                                        <?php
+                                        foreach($interesses as $key => $value)
+                                        {
+                                            //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                            echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_personal'.($key+1).'" /><label class="labelChoose btnPersonal subtopics_personal_'.($key+1).' '.($key+1).'" for="cb_topics_personal'.($key+1).'">'. $value->cat_name .'</label>';
+                                        }
+                                        ?>
+
+                                    </div>
                                 </div>
-                                <button type="button" class="btn btnNext" id="nextSkills">Next</button>
+                                <div class="subtopicPersonal">
+                                    <div class="hiddenCB">
+                                        <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
+                                        <?php
+                                            echo $row_interesses;
+                                        ?>
+                                    </div>
+                                    <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Save</button>
+                                </div>
                             </div>
+                        </form>
                         </div>
-
-                        <div class="blockPersonal">
-                            <h1 class="titleSubTopic">Personal interest </h1>
-                            <div class="hiddenCB">
-                                <div>
-                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnPersonal" for="cb1">Choice A</label> -->
-
-                                    <?php
-                                    foreach($interesses as $key => $value)
-                                    {
-                                        //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                        echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_personal'.($key+1).'" /><label class="labelChoose btnPersonal subtopics_personal_'.($key+1).' '.($key+1).'" for="cb_topics_personal'.($key+1).'">'. $value->cat_name .'</label>';
-                                    }
-                                    ?>
-
-                                </div>
-                            </div>
-                            <div class="subtopicPersonal">
-                                <div class="hiddenCB">
-                                    <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
-                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
-                                    <?php
-                                        echo $row_interesses;
-                                    ?>
-                                </div>
-                                <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Save</button>
-                            </div>
-                        </div>
-                      </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-
-
-    <?php
-            }  
+        <?php
+        }  
     ?>
 
 
