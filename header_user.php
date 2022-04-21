@@ -98,10 +98,10 @@ $todos = get_posts($args);
                             <img class="imgArrowDropDown" src="<?php echo get_stylesheet_directory_uri();?>/img/three-stars.png" alt="">
                         </a>
                         <div class="dropdown-menu dropdown-menu-dashboard" aria-labelledby="dropdownMenuButton1">
-                            <a class="dropdown-item" href="/dashboard/user">Eigen leeromgeving</a>
-                            
                             <?php
                             $company = get_field('company',  'user_' . $user->ID);
+                            if(!empty($user->roles))
+                                echo '<a class="dropdown-item" href="/dashboard/user">Eigen leeromgeving</a>';
 
                             if(!empty($company)){
                                 if ( in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') {

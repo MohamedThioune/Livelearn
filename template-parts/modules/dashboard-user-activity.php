@@ -75,6 +75,7 @@ $bunch_orders = wc_get_orders($args);
 $orders = array();
 $item_order = array();
 $enrolled = array();
+$enrolled_courses = array();
 
 foreach($bunch_orders as $order){
     foreach ($order->get_items() as $item_id => $item ) {
@@ -87,15 +88,18 @@ foreach($bunch_orders as $order){
 /*
 * * Enrolled courses
 */
-$args = array(
-    'post_type' => 'course', 
-    'posts_per_page' => -1,
-    'orderby' => 'post_date',
-    'order' => 'DESC',
-    'include' => $enrolled,  
-);
+if(!empty($enrolled))
+{
+    $args = array(
+        'post_type' => 'course', 
+        'posts_per_page' => -1,
+        'orderby' => 'post_date',
+        'order' => 'DESC',
+        'include' => $enrolled,  
+    );
 
-$enrolled_courses = get_posts($args);
+    $enrolled_courses = get_posts($args);
+}
 
 ?>
 
