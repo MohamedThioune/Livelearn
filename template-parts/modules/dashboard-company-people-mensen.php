@@ -60,7 +60,7 @@
                 'display_name' => $first_name,
                 'first_name' => $first_name,
                 'last_name' => $last_name,
-                'role' => 'subscriber'
+                'role' => 'klant'
             );
 
             $user_id = wp_insert_user(wp_slash($userdata));
