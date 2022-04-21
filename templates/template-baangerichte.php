@@ -2,8 +2,7 @@
 <body>
 <?php wp_head(); ?>
 <?php get_header(); ?>
-<div class="contentOne">
-</div>
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <?php   
     
     $categories = array();

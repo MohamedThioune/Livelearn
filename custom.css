@@ -5989,6 +5989,11 @@ input:checked ~ .assassment {
 }
 .blockIconeWidth{
     margin-top: 1px;
+    position: absolute;
+    left: 24px;
+}
+.logoDashboard{
+    margin-left: 40px;
 }
 .extensive .textLiDashboard{
     display: none;
