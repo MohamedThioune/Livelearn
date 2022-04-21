@@ -89,7 +89,6 @@ function custom_post_type() {
 
     register_post_type( 'course', $course_args );
 
-
     $learnpath = array(
         'name'                => _x( 'Leerpaden', 'Leerpaden', 'learnpath' ),
         'singular_name'       => _x( 'Leerpad', 'Leerpad', 'learnpath' ),
@@ -258,7 +257,6 @@ function custom_post_type() {
     );
 
     register_post_type( 'response_assessment', $response_args );
-
 
     $assign = array(
         'name'                => _x( 'Assigns', 'Assigns', 'assign' ),
