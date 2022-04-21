@@ -38,6 +38,14 @@ $todos = get_posts($args);
     </head>
     <body class="header-user canhas">
         <nav class="navbar navbar-expand-lg navbar-dark headerdashboard">
+            <div class="blockIconeWidth">
+                <button id="burger-web" class=" btn burgerElement boxSousNav3-2">
+                    <i class="fa fa-bars text-white" style="font-size: 25px"></i>
+                </button>
+                <button id="burgerCroie-web" class="btn croie">
+                    <i class="bi bi-x-lg text-white" style="font-size: 25px"></i>
+                </button>
+            </div>
             <div class="container-fluid containerModife">
                 <div class="elementMobile groupBtnMobile">
                     <div class="nav-item" href="#">
@@ -77,6 +85,7 @@ $todos = get_posts($args);
                                                     <p class="feedbackText">Empty until now ...</p>
                                                 </div>
                                             </div>
+
                                     <?php
                                         }
                                     ?>
@@ -139,14 +148,6 @@ $todos = get_posts($args);
                         <a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>
                         <?php }?>
                     </div>
-                    <div class="blockIconeWidth">
-                        <button id="burger-web" class=" btn burgerElement boxSousNav3-2">
-                            <i class="fa fa-bars text-white" style="font-size: 25px"></i>
-                        </button>
-                        <button id="burgerCroie-web" class="btn croie">
-                            <i class="bi bi-x-lg text-white" style="font-size: 25px"></i>
-                        </button>
-                    </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="elementHeaderUser ">
@@ -202,6 +203,7 @@ $todos = get_posts($args);
                                         <div>
                                             <div class="">
                                                 <p class="feedbackText">Empty until now ...</p>
+                                                <a href="/dashboard/user/activity" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                             </div>
                                         </div>
                                 <?php

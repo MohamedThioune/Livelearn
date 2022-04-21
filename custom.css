@@ -5995,8 +5995,18 @@ input:checked ~ .assassment {
 .logoDashboard{
     margin-left: 40px;
 }
+.BekijkNotifications{
+    margin-top: 20px;
+    padding: 8px 15px;
+    border-radius: 7px;
+    background: #043356 !important;
+    color: white !important;
+}
 .extensive .textLiDashboard{
     display: none;
+}
+tbody{
+    color: #043356 !important;
 }
 .extensive {
     width: 80px;
@@ -6010,6 +6020,17 @@ input:checked ~ .assassment {
 }
 #sectionDashboard1 .iconeElement img {
     width: 22px;
+}
+#sectionDashboard1 .iconeElement:first-child{
+    margin-top: 2px;
+    width: 24px;
+    height: 24px;
+    overflow: hidden;
+}
+#sectionDashboard1 .iconeElement:first-child img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 .extensive .btnOnderwerp{
    background: none !important;

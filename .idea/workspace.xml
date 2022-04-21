@@ -2,36 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/header_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_user.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-Onderwer.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-Onderwer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-baangerichte.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-baangerichte.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-candidat-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-candidat-home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-category-overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-category-overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-ecosysteme.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-ecosysteme.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-functiegerichte.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-functiegerichte.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-inloggen.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-inloggen.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-opleider-courses.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-opleider-courses.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-opleiders.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-opleiders.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-persoonlijke.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-persoonlijke.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-pricing.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-pricing.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-product-search.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-product-search.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-recruitement.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-recruitement.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-registreren.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-registreren.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-single.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-single.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-skill.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-skill.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-static-education-advice.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-static-education-advice.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-static-education-individual.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-static-education-individual.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-sub-topic.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-sub-topic.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-topic.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-topic.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-user-overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-user-overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-video-course.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-video-course.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-voor-organisaties.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-organisaties.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-voor-teacher-detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-teacher-detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-voor-teacher.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-teacher.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/topic.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/topic.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,12 +11,29 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/header_user.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3075">
+              <caret line="205" column="143" selection-start-line="205" selection-start-column="143" selection-end-line="205" selection-end-column="143" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/custom.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="167">
+              <caret line="6023" column="45" lean-forward="true" selection-start-line="6023" selection-start-column="45" selection-end-line="6023" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>step2OverviewAssessmentBackend</find>
-      <find>.textDirect</find>
       <find>.cardModife3</find>
       <find>img-fluid</find>
       <find>pb-3 text-center</find>
@@ -74,6 +62,8 @@
       <find>Mijn Activiteiten</find>
       <find>.blockIconeWidth</find>
       <find>logoModife logoWeb</find>
+      <find>blockIconeWidth</find>
+      <find>Empty until now ...</find>
     </findStrings>
     <replaceStrings>
       <replace>h4</replace>
@@ -114,8 +104,6 @@
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-road-path.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php" />
-        <option value="$PROJECT_DIR$/header_user.php" />
-        <option value="$PROJECT_DIR$/custom.css" />
         <option value="$PROJECT_DIR$/templates/template-baangerichte.php" />
         <option value="$PROJECT_DIR$/template.css" />
         <option value="$PROJECT_DIR$/templates/template-candidat-home.php" />
@@ -144,6 +132,8 @@
         <option value="$PROJECT_DIR$/templates/template-voor-teacher.php" />
         <option value="$PROJECT_DIR$/templates/template-voor-teacher-detail.php" />
         <option value="$PROJECT_DIR$/templates/topic.php" />
+        <option value="$PROJECT_DIR$/header_user.php" />
+        <option value="$PROJECT_DIR$/custom.css" />
       </list>
     </option>
   </component>
@@ -183,11 +173,6 @@
               <item name="fluidify-child" type="462c0819:PsiDirectoryNode" />
               <item name="template-parts" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="fluidify-child" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fluidify-child" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -198,7 +183,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1650540179559" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1650540894180" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -325,17 +310,20 @@
       <workItem from="1650462005764" duration="1294000" />
       <workItem from="1650473026565" duration="1914000" />
       <workItem from="1650537253236" duration="1792000" />
-      <workItem from="1650539179053" duration="992000" />
+      <workItem from="1650539179053" duration="1758000" />
+      <workItem from="1650541102901" duration="1681000" />
+      <workItem from="1650542892674" duration="1028000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="144282000" />
+    <option name="totallyTimeSpent" value="147757000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2189394" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22651514" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -350,7 +338,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.26916802" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.26916802" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -492,20 +480,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/custom.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="5989" selection-start-line="5989" selection-end-line="5996" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/header_user.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="26" column="4" lean-forward="true" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/template-baangerichte.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -531,9 +505,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="690">
           <caret line="46" column="5" lean-forward="true" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="5" />
-          <folding>
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -720,9 +691,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="185" lean-forward="true" selection-start-line="185" selection-end-line="185" />
-          <folding>
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -730,6 +698,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/header_user.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3075">
+          <caret line="205" column="143" selection-start-line="205" selection-start-column="143" selection-end-line="205" selection-end-column="143" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/custom.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="6023" column="45" lean-forward="true" selection-start-line="6023" selection-start-column="45" selection-end-line="6023" selection-end-column="45" />
         </state>
       </provider>
     </entry>
