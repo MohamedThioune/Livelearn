@@ -4,9 +4,8 @@
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/header_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_user.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/style.scss" beforeDir="false" afterPath="$PROJECT_DIR$/style.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,11 +24,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/custom.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="8276" column="39" lean-forward="true" selection-start-line="8276" selection-start-column="39" selection-end-line="8276" selection-end-column="39" />
+            <state relative-caret-position="276">
+              <caret line="8314" lean-forward="true" selection-start-line="8314" selection-end-line="8314" />
             </state>
           </provider>
         </entry>
@@ -46,17 +45,56 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-online.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2715">
-              <caret line="181" column="19" selection-start-line="181" selection-start-column="19" selection-end-line="181" selection-end-column="19" />
+            <state relative-caret-position="152">
+              <caret line="405" column="50" lean-forward="true" selection-start-line="405" selection-start-column="50" selection-end-line="405" selection-end-column="50" />
+              <folding>
+                <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5310">
-              <caret line="354" column="29" selection-start-line="354" selection-start-column="29" selection-end-line="354" selection-end-column="29" />
+            <state relative-caret-position="202">
+              <caret line="404" column="55" lean-forward="true" selection-start-line="404" selection-start-column="55" selection-end-line="404" selection-end-column="55" />
+              <folding>
+                <element signature="e#6249#6256#1#HTML" expanded="true" />
+                <element signature="e#6490#6546#0#HTML" expanded="true" />
+                <element signature="e#7003#7026#0#HTML" expanded="true" />
+                <element signature="e#7586#7609#0#HTML" expanded="true" />
+                <element signature="e#8177#8220#0#HTML" expanded="true" />
+                <element signature="e#9176#9183#1#HTML" expanded="true" />
+                <element signature="e#9860#9867#1#HTML" expanded="true" />
+                <element signature="e#10540#10547#1#HTML" expanded="true" />
+                <element signature="e#14353#14390#0#HTML" expanded="true" />
+                <element signature="e#14415#14439#0#HTML" expanded="true" />
+                <element signature="e#14738#14762#0#HTML" expanded="true" />
+                <element signature="e#15039#15063#0#HTML" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#button#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#button#0;n#!!top" expanded="true" />
+                <element signature="e#17417#17441#0#HTML" expanded="true" />
+                <element signature="e#17739#17763#0#HTML" expanded="true" />
+                <element signature="e#24113#24137#0#HTML" expanded="true" />
+                <element signature="e#24455#24479#0#HTML" expanded="true" />
+                <element signature="e#24804#24828#0#HTML" expanded="true" />
+                <element signature="e#25792#25820#0#HTML" expanded="true" />
+                <element signature="e#26207#26214#1#HTML" expanded="true" />
+                <element signature="e#27379#27407#0#HTML" expanded="true" />
+                <element signature="e#27794#27801#1#HTML" expanded="true" />
+                <element signature="e#29609#29632#0#HTML" expanded="true" />
+                <element signature="e#29835#29858#0#HTML" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+                <element signature="e#33173#33200#0#HTML" expanded="true" />
+                <element signature="e#33305#33338#0#HTML" expanded="true" />
+                <element signature="e#34533#34565#0#HTML" expanded="true" />
+                <element signature="e#35468#35501#0#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -106,12 +144,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>.categoriesRoadPath</find>
-      <find>add</find>
-      <find>a href=&quot;&quot; class=&quot;seeRoadPath&quot;</find>
-      <find>@medi</find>
-      <find>a</find>
-      <find>Mijn Activiteiten</find>
       <find>.blockIconeWidth</find>
       <find>logoModife logoWeb</find>
       <find>blockIconeWidth</find>
@@ -136,12 +168,19 @@
       <find>.elementHeaderUser</find>
       <find>.elementcourseIcone</find>
       <find>beschiBlockText</find>
+      <find>&lt;button type=&quot;button&quot; class=&quot;btn-close&quot; data-bs-dismiss=&quot;modal&quot; aria-label=&quot;Close&quot;&gt;&lt;/button&gt;</find>
+      <find>Direct</find>
+      <find>Incompany</find>
+      <find>Voor</find>
+      <find>modal-dialog</find>
+      <find>Direct contact</find>
     </findStrings>
     <replaceStrings>
       <replace>h4</replace>
       <replace>contentImgAssessment</replace>
       <replace>value=&quot;&quot;</replace>
       <replace>a href=&quot;/dashboard/teacher/road-path/&quot; class=&quot;seeRoadPath&quot;</replace>
+      <replace>modal-dialog modal-dialog-course</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -200,11 +239,11 @@
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php" />
         <option value="$PROJECT_DIR$/template.css" />
         <option value="$PROJECT_DIR$/single-course-online.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/single-course-online.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" />
         <option value="$PROJECT_DIR$/style.scss" />
         <option value="$PROJECT_DIR$/style.css" />
         <option value="$PROJECT_DIR$/header_user.php" />
+        <option value="$PROJECT_DIR$/template-parts/modules/single-course-online.php" />
+        <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" />
         <option value="$PROJECT_DIR$/custom.css" />
       </list>
     </option>
@@ -232,6 +271,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -255,7 +295,6 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -397,18 +436,19 @@
       <workItem from="1650551302573" duration="1005000" />
       <workItem from="1650553668717" duration="1744000" />
       <workItem from="1650555587722" duration="1862000" />
-      <workItem from="1650557490409" duration="723000" />
+      <workItem from="1650557490409" duration="1748000" />
+      <workItem from="1650559374828" duration="786000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="159064000" />
+    <option name="totallyTimeSpent" value="160875000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2090909" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21212122" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -752,20 +792,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-online.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2715">
-          <caret line="181" column="19" selection-start-line="181" selection-start-column="19" selection-end-line="181" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5310">
-          <caret line="354" column="29" selection-start-line="354" selection-start-column="29" selection-end-line="354" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/header_user.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3060">
@@ -799,8 +825,61 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/custom.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="8276" column="39" lean-forward="true" selection-start-line="8276" selection-start-column="39" selection-end-line="8276" selection-end-column="39" />
+        <state relative-caret-position="276">
+          <caret line="8314" lean-forward="true" selection-start-line="8314" selection-end-line="8314" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-online.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="405" column="50" lean-forward="true" selection-start-line="405" selection-start-column="50" selection-end-line="405" selection-end-column="50" />
+          <folding>
+            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="404" column="55" lean-forward="true" selection-start-line="404" selection-start-column="55" selection-end-line="404" selection-end-column="55" />
+          <folding>
+            <element signature="e#6249#6256#1#HTML" expanded="true" />
+            <element signature="e#6490#6546#0#HTML" expanded="true" />
+            <element signature="e#7003#7026#0#HTML" expanded="true" />
+            <element signature="e#7586#7609#0#HTML" expanded="true" />
+            <element signature="e#8177#8220#0#HTML" expanded="true" />
+            <element signature="e#9176#9183#1#HTML" expanded="true" />
+            <element signature="e#9860#9867#1#HTML" expanded="true" />
+            <element signature="e#10540#10547#1#HTML" expanded="true" />
+            <element signature="e#14353#14390#0#HTML" expanded="true" />
+            <element signature="e#14415#14439#0#HTML" expanded="true" />
+            <element signature="e#14738#14762#0#HTML" expanded="true" />
+            <element signature="e#15039#15063#0#HTML" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#button#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#button#0;n#!!top" expanded="true" />
+            <element signature="e#17417#17441#0#HTML" expanded="true" />
+            <element signature="e#17739#17763#0#HTML" expanded="true" />
+            <element signature="e#24113#24137#0#HTML" expanded="true" />
+            <element signature="e#24455#24479#0#HTML" expanded="true" />
+            <element signature="e#24804#24828#0#HTML" expanded="true" />
+            <element signature="e#25792#25820#0#HTML" expanded="true" />
+            <element signature="e#26207#26214#1#HTML" expanded="true" />
+            <element signature="e#27379#27407#0#HTML" expanded="true" />
+            <element signature="e#27794#27801#1#HTML" expanded="true" />
+            <element signature="e#29609#29632#0#HTML" expanded="true" />
+            <element signature="e#29835#29858#0#HTML" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+            <element signature="e#33173#33200#0#HTML" expanded="true" />
+            <element signature="e#33305#33338#0#HTML" expanded="true" />
+            <element signature="e#34533#34565#0#HTML" expanded="true" />
+            <element signature="e#35468#35501#0#HTML" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

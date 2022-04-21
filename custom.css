@@ -8304,6 +8304,9 @@ tbody{
     .dropdown-menu {
         text-align: left !important;
     }
+   .modal-dialog-course {
+        width: unset !important;
+    }
 
 
 
