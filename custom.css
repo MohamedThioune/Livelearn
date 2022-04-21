@@ -5986,8 +5986,15 @@ input:checked ~ .assassment {
 }
 .img-fluid-course{
     height: 320px;
-    width: 710px;
+    width: 100%;
     border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+.beschiBlockText {
+    border-radius: unset !important;
+    font-size: 15px;
+    margin-bottom: 30px;
 }
 .img-fluid-course img{
     width: 100%;
@@ -6435,8 +6442,22 @@ tbody{
     height: 26px;
     margin-right: 20px;
 }
-
-
+.titleBlock {
+    align-items: center;
+}
+.swiper-button-next, .swiper-button-prev{
+    color: #043356 !important;
+}
+.swiper-button-next:after, .swiper-button-prev:after{
+    font-size: 33px;
+}
+.elementcourseIcone{
+    flex-wrap: wrap;
+    justify-content: space-between !important;
+}
+.dashboardsElement{
+    display: flex;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -8230,8 +8251,35 @@ tbody{
     #burger-web{
         display: none !important;
     }
-
-
+    .elementcourseIcone{
+        flex-wrap: wrap;
+        justify-content: space-between !important;
+    }
+    .elementcourseIcone .block1{
+        width: 100%;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+    .elementcourseIcone .block2 {
+        width: 65%;
+        justify-content: space-between;
+    }
+    .elementcourseIcone .block2 .d-flex:first-child{
+        margin-left: -3px !important;
+    }
+    .liveOverBlock {
+        padding-top: 30px;
+    }
+    .CardBlockEvenement {
+        display: block;
+        margin: 0 15px 25px;
+        box-shadow: 0 0 10px #707070;
+        padding-bottom: 30px;
+    }
+    .element8 a {
+        color: #FFFFFF !important;
+        padding-bottom: 10px;
+    }
 
 
 
