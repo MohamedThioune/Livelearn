@@ -63,8 +63,13 @@ $experts = get_user_meta($user->ID, 'expert');
             if(!empty($topics_external))
                 foreach($topics_external as $topic){
                     $name = (String)get_the_category_by_ID($topic);
+                    $image_category = get_field('image', 'category_'. $topic);
+                    $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/placeholder.png';
                     echo "
                     <a href='/category-overview/?category=". $topic ."' class='d-flex'>
+                        <div class='iconeElement'>
+                            <img src='". $image_category ."' alt='image category'>
+                        </div>  
                         <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
                     </a><br>";
                 }
@@ -72,7 +77,12 @@ $experts = get_user_meta($user->ID, 'expert');
             if(!empty($topics_internal))
                 foreach($topics_internal as $topic){
                     $name = (String)get_the_category_by_ID($topic);
+                    $image_category = get_field('image', 'category_'. $topic);
+                    $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/placeholder.png';
                     echo "<a href='/category-overview/?category=". $topic ."' class='d-flex'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class='iconeElement'>
+                                <img src='". $image_category ."' alt='image category'>
+                            </div>
                             <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
                           </a>";
                     /* echo "
@@ -103,10 +113,15 @@ $experts = get_user_meta($user->ID, 'expert');
             if(!empty($experts))
                 foreach($experts as $expert){
                     $name = get_userdata($expert)->data->display_name;
+                    $image_author = get_field('profile_img',  'user_' . $expert);
+                    $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                     echo "
                     <a href='/user-overview/?id=". $expert ."' class='d-flex'>
+                        <div class='iconeElement'>
+                            <img src='". $image_author ."' alt='image utilisateur'>
+                        </div>
                         <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
-                    </a>";
+                    </a><br>";
                      /*  
                      <div class='iconeElement'>
                         <form action='../../dashboard/user/' method='POST'>
