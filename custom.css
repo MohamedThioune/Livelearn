@@ -6005,6 +6005,9 @@ input:checked ~ .assassment {
 .extensive .textLiDashboard{
     display: none;
 }
+tbody{
+    color: #043356 !important;
+}
 .extensive {
     width: 80px;
     min-width: 80px;
