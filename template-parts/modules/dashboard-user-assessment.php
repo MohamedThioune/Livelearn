@@ -1,7 +1,9 @@
 <div class="content-assessment">
     <div class="contentAsessment">
-        <h1 class="titleAssessment">Assessments</h1>
-        <p class="descriptionAssessment">Stand out from other job seekers by completing an assessment ! Livelearn will feature top performers to employers</p>
+        <center>
+            <h1 class="titleAssessment">Assessments</h1>
+            <p class="descriptionAssessment">Stand out from other job seekers by completing an assessment ! Livelearn will feature top performers to employers</p>
+        </center>
         <div class="contentCardAssessment">
             <div class="cardAssessement" data-target="#ModalBackEnd" data-toggle="modal">
                 <div class="contentImgAssessment">
