@@ -40,34 +40,86 @@ $topics = get_user_meta($user, 'topic');
 
 $experts = get_user_meta($user, 'expert');
 
-$course_topics = array();
-$course_experts = array();
+$args = array(
+    'post_type' => 'course', 
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+);
 
-if(!empty($topics)){
-    $args = array(
-        'post_type' => 'course', 
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'category__in' => $topics,  
-    );
+$global_courses = get_posts($args);
 
-    $course_topics = get_posts($args);
-    $courses = array_merge($courses, $course_topics);
+$opleidingen = array();
+$workshops = array();
+$masterclasses = array();
+$events = array();
+$e_learnings = array();
+$trainings = array();
+$videos = array();
+$courses_id = array();
+
+foreach($global_courses as $course)
+{
+    /*
+    * Categories
+    */ 
+
+    $category_id = 0;
+    $experts = get_field('experts', $course->ID);
+                
+    $tree = get_the_terms($course->ID, 'course_category');
+    $tree = $tree[2]->ID;
+    $categories_id = get_field('categories',  $course->ID);
+    $categories_xml = get_field('category_xml',  $course->ID);
+    $categories = array();
+
+    if($categories_xml)
+        foreach($categories_xml as $categorie){
+            $categorie = $categorie['value'];
+            if(!in_array($categorie, $categories))
+                array_push($categories, $categorie);
+        }
+
+    if($categories_id)
+        if(!empty($categories_id)){
+            $categories = array();  
+            foreach($categories_id as $categorie)                    
+                $categories = explode(',', $categorie['value']);
+        }
+
+    foreach($topics as $topic_value){
+        if(in_array($topic_value, $trees) || $categories)
+            if(in_array($topic_value, $trees) || in_array($topic_value, $categories) ){
+                if(!in_array($course->ID,$courses_id)){
+                    array_push($courses, $course);
+                    array_push($courses_id, $course->ID);
+                    break;
+                }
+                if(get_field('course_type', $course->ID) == "Opleidingen")
+                    array_push($opleidingen, $course);
+                else if(get_field('course_type', $course->ID) == "Workshop")
+                    array_push($workshops, $course);
+                else if(get_field('course_type', $course->ID) == "Masterclass")
+                    array_push($masterclasses, $course);
+                else if(get_field('course_type', $course->ID) == "Event")
+                    array_push($events, $course);
+                else if(get_field('course_type', $course->ID) == "E-learning")
+                    array_push($e_learnings, $course);
+                else if(get_field('course_type', $course->ID) == "Training")
+                    array_push($trainings, $course);
+                else if(get_field('course_type', $course->ID) == "Video")
+                    array_push($videos, $course);
+                
+                if(!in_array($course->post_author, $teachers))
+                    array_push($teachers, $course->post_author);
+
+                foreach($experts as $expertie)
+                    if(!in_array($expertie, $teachers))
+                        array_push($teachers, $expertie);
+        }
+    }
+    //Activitien
+    $activitiens  = count($courses);
 }
-
-
-if(!empty($experts)){
-    $args = array(
-        'post_type' => 'course', 
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'author__in' => $experts,  
-    );
-
-    $course_experts = get_posts($args);
-    $courses = array_merge($courses, $course_experts);
-}
-
 
 /*
 * *   
@@ -1466,7 +1518,7 @@ if(isset($_GET['message']))
                             <p class="pickText">Pick your favorite topics to set up your feeds</p>
                         </div>
                         <div class="modal-body">
-                        <form method="post">
+                        <form action="" method="post">
                             <div class="blockBaangerichte">
                                 <h1 class="titleSubTopic">Baangerichte</h1>
                                 <div class="hiddenCB">
