@@ -271,16 +271,13 @@
     <section class="py-4 px-3" style="background-color: #E0EFF4;">
         <div class="container my-5">
              <div class="row">
-                 <div class="col-md-6">
-                        <h1 class="CreeerText text-dark">
-                            Word onderdeel van het grootste expert / opleidersnetwerk
-                        </h1>
-                 </div>
-                 <div class="col-md-6">
-                    <h3 class="text-dark">Vind de onderwerpen waar jij interesse in hebt. </h3>
+                <div class="col-md-6">
+                    <h1 class="CreeerText text-dark">
+                    Vind de onderwerpen waar jij interesse in hebt.
+                    </h1>
                     Of ontdek verborgen talenten.
-                 </div>
-             </div>
+                </div>
+                <!--  <div class="col-md-6"><h3 class="text-dark">Vind de onderwerpen waar jij interesse in hebt. </h3></div> -->             </div>
         </div>
     </section>
 
@@ -290,9 +287,6 @@
                  <div class="col-md-6 p-3">
                     <h1 class="CreeerText text-dark">
                     Zorg dat je meegaat met de tijd door je te blijven ontwikkelen</h1>
-                    nt recusandae ullam nisi tempore quisquam cupiditate sunt! Impedit.
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero quia tempora si
-                    nt recusandae ullam nisi tempore quisquam cupiditate sunt! Impedit.
                  </div>
                  <div class="col-md-6 p-3 d-flex justify-content-center align-self-center">
                      <button type="submit" class="btn btn-outline-dark rounded-pill p-2 px-4"
