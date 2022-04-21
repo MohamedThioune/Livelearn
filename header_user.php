@@ -165,15 +165,6 @@ $todos = get_posts($args);
                         <?php 
                         }
                         ?>
-                        <div class="second-element-mobile">
-                            <button id="burger" class=" btn burgerElement boxSousNav3-2">
-                                <i class="fa fa-bars text-white" style="font-size: 25px"></i>
-                            </button>
-                            <button id="burgerCroie" class="btn croie">
-                                <i class="bi bi-x-lg text-white" style="font-size: 25px"></i>
-                            </button>
-                        </div>
-
 
                         <li class="position-relative dropdown dropdownNotificationToggle">
                             <button class="btn bntNotification elementWeb dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -211,8 +202,7 @@ $todos = get_posts($args);
                                 ?>
                             </div>
                         </li>
-
-                        <li class="nav-item item4 dropdown elementWeb">
+                        <li class="nav-item item4 dropdown">
                             <a href="/dashboard/user/profile/" class="nav-link navModife4 btn dropdown-toggle" type="button" id="dropdownNavButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="userBlockNav" src="<?php echo get_field('profile_img',  'user_' . $user->ID);?>" alt="">
                             </a>
