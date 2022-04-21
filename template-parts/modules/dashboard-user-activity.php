@@ -157,103 +157,108 @@ $enrolled_courses = get_posts($args);
             <div class="cardRecentlyEnrolled">
                 <h2>Laatst opgedane kennis</h2>
                 <?php 
-                foreach($enrolled_courses as $key=>$course) {
-                    if($key == 2)
-                        break;
+                if(!empty($enrolled_courses)){
+                    foreach($enrolled_courses as $key=>$course) {
+                        if($key == 2)
+                            break;
 
-                    /*
-                    * Location
-                    */
-                    $location = 'Virtual';
-                    $data = get_field('data_locaties', $course->ID);
-                    if($data){
-                        if($data[0]['data'][0]['location'])
-                            $location = $data[0]['data'][0]['location'];
-                    }
-                    else{         
-                        $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                        if($data[2])
-                            $location = $data[2];
-                    }
+                        /*
+                        * Location
+                        */
+                        $location = 'Virtual';
+                        $data = get_field('data_locaties', $course->ID);
+                        if($data){
+                            if($data[0]['data'][0]['location'])
+                                $location = $data[0]['data'][0]['location'];
+                        }
+                        else{         
+                            $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
+                            if($data[2])
+                                $location = $data[2];
+                        }
 
-                    /*
-                    * Categories
-                    */
-                
-                    $category = ' ';
-                                
-                    $category_id = 0;
-                    $category_string = " ";
-
-                    $tree = get_the_terms($course->ID, 'course_category'); 
-                        if($tree)
-                            if(isset($tree[2]))
-                                $category = $tree[2]->name;
+                        /*
+                        * Categories
+                        */
                     
-                    if($category == ' '){
-                        $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
-                        $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                        if($category_str != 0)
-                            $category = (String)get_the_category_by_ID($category_str);
-                        else if($category_id != 0)
-                            $category = (String)get_the_category_by_ID($category_id);                                    
-                    }
+                        $category = ' ';
+                                    
+                        $category_id = 0;
+                        $category_string = " ";
 
-                    /*
-                    * Price
-                    */
-                    $p = get_field('price', $course->ID);
-                    if($p != "0")
-                        $price =  number_format($p, 2, '.', ',');
-                    else
-                        $price = 'Gratis';
+                        $tree = get_the_terms($course->ID, 'course_category'); 
+                            if($tree)
+                                if(isset($tree[2]))
+                                    $category = $tree[2]->name;
+                        
+                        if($category == ' '){
+                            $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
+                            $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
+                            if($category_str != 0)
+                                $category = (String)get_the_category_by_ID($category_str);
+                            else if($category_id != 0)
+                                $category = (String)get_the_category_by_ID($category_id);                                    
+                        }
 
-                    /*
-                    * Thumbnails
-                    */
-                    $thumbnail = get_field('preview', $course->ID)['url'];
-                    if(!$thumbnail){
-                        $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
-                        if(!$thumbnail)
-                            $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
-                    }
+                        /*
+                        * Price
+                        */
+                        $p = get_field('price', $course->ID);
+                        if($p != "0")
+                            $price =  number_format($p, 2, '.', ',');
+                        else
+                            $price = 'Gratis';
 
-                ?>
-                <a href="<?php echo get_permalink($course->ID); ?>" class="coursElement">
-                    <div class="imgBlockCoursElement">
-                        <img src="<?php echo $thumbnail; ?>" alt="">
-                    </div>
-                    <div class="detailTwoCoursElement">
-                        <div class="d-block">
-                            <div class="subDetailTwoCoursElement">
-                                <p class="nameCours"><?php echo $course->post_title; ?></p>
-                                <div class="d-flex">
-                                    <div class="d-flex mr-3">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/iconsMap.png" alt="">
-                                        <p class="mapLocalisation"><?php echo $location; ?></p>
-                                    </div>
+                        /*
+                        * Thumbnails
+                        */
+                        $thumbnail = get_field('preview', $course->ID)['url'];
+                        if(!$thumbnail){
+                            $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
+                            if(!$thumbnail)
+                                $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                        }
+
+                    ?>
+                    <a href="<?php echo get_permalink($course->ID); ?>" class="coursElement">
+                        <div class="imgBlockCoursElement">
+                            <img src="<?php echo $thumbnail; ?>" alt="">
+                        </div>
+                        <div class="detailTwoCoursElement">
+                            <div class="d-block">
+                                <div class="subDetailTwoCoursElement">
+                                    <p class="nameCours"><?php echo $course->post_title; ?></p>
                                     <div class="d-flex">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/moneyElement.png" alt="">
-                                        <p class="mapLocalisation"><?php echo $price; ?></p>
+                                        <div class="d-flex mr-3">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/iconsMap.png" alt="">
+                                            <p class="mapLocalisation"><?php echo $location; ?></p>
+                                        </div>
+                                        <div class="d-flex">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/moneyElement.png" alt="">
+                                            <p class="mapLocalisation"><?php echo $price; ?></p>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="tagElementBlock">
+                                    <p><?php echo $category; ?></p>
+                                </div>
                             </div>
-                            <div class="tagElementBlock">
-                                <p><?php echo $category; ?></p>
-                            </div>
+                            <!-- <div class="d-flex">
+                                <button class="btn btnViewCours">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/viewC.png" alt="">
+                                </button>
+                                <button class="btn btnViewCours">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/trashC.png" alt="">
+                                </button>
+                            </div> -->
                         </div>
-                        <!-- <div class="d-flex">
-                            <button class="btn btnViewCours">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/viewC.png" alt="">
-                            </button>
-                            <button class="btn btnViewCours">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/trashC.png" alt="">
-                            </button>
-                        </div> -->
-                    </div>
-                </a>
-                <?php
+                    </a>
+                    <?php
                     } 
+                }
+                else{
+                    echo "empty until now";
+                }
                 ?>
             </div>
         </div>
