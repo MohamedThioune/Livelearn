@@ -57,6 +57,16 @@ $trainings = array();
 $videos = array();
 $courses_id = array();
 
+
+$args = array(
+    'post_type' => 'course', 
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'author__in' => $experts,
+);
+
+$expert_courses = get_posts($args);
+
 foreach($global_courses as $course)
 {
     /*
@@ -114,7 +124,6 @@ foreach($global_courses as $course)
     foreach($experts as $topic_expert){
         $experties = get_field('experts', $course->ID);    
         if($course->post_author == $topic_expert || in_array($topic_expert, $experties) ){
-            echo $course->ID;
             if(!in_array($course->ID,$courses_id)){
                 array_push($courses, $course);
                 array_push($courses_id, $course->ID);
@@ -125,6 +134,7 @@ foreach($global_courses as $course)
    
 }
 
+$courses = array_merge($courses, $expert_courses);
  //Activitien
  $activitiens = count($courses);
 
