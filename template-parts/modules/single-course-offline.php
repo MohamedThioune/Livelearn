@@ -159,17 +159,21 @@ if(!$image){
         top: -5px;
         position: relative;
     }
+    .bi-search {
+        font-size: 22px;
+        top: -5px;
+        position: relative;
+    }
 </style>
 
 <!-- ---------------------------------------- Start modals ---------------------------------------------- -->
-<div class="modal fade" id="direct-contact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog">
+    <div class="modal fade" id="direct-contact" tabindex="-1" aria-labelledby="direct-contactModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-course">
         <div class="modal-content">
-        <div class="modal-header mx-4" style="border-bottom: none !important">
-            <div></div>
-            <h5 class="modal-title fw-bold" id="exampleModalLabel" style="color: #023356">Direct contact</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="direct-contactModalLongTitle">Direct contact</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+            </div>
         <div class="modal-body">
             <div class="d-flex justify-content-center">
 
@@ -223,11 +227,11 @@ if(!$image){
 </div>
 
 <div class="modal fade" id="incompany" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-course">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Incompany</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
             </div>
             <div class="modal-body">
 
@@ -241,11 +245,11 @@ if(!$image){
 </div>
 
 <div class="modal fade" id="offerte" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-course">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Brochure</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
             </div>
             <div class="modal-body">
                <?php
@@ -256,9 +260,13 @@ if(!$image){
     </div>
 </div>
 
-<div class="modal fade" id="voor-wie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="voor-wie" tabindex="-1" aria-labelledby="voor-wieModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-course">
         <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="voor-wieModalLongTitle"></h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+            </div>
             <div class="modal-body">
                 <div class="">
                     <!-- <img alt="course design_undrawn"
@@ -388,7 +396,7 @@ if(!$image){
                         </div>
                         <!-- début Modal deel -->
                         <div class="modal" id="modal1" data-animation="fadeIn">
-                            <div class="modal-dialog modal-dialog-deel" role="document">
+                            <div class="modal-dialog modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
                                 <div class="modal-content">
                                     <div class="tab">
                                         <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
@@ -516,7 +524,7 @@ if(!$image){
             <!-- Modal Sign End -->
             <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
                 style="position: absolute; ">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-dialog-course" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h2>Sign In</h2>
@@ -542,7 +550,7 @@ if(!$image){
             <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
             <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
                 style="position: absolute; ">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-dialog-course" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h2>Sign Up</h2>
@@ -944,7 +952,7 @@ if(!$image){
 
         <!-- début Modal deel -->
         <div class="modal" id="modal1" data-animation="fadeIn">
-        <div class="modal-dialog modal-dialog-deel" role="document">
+        <div class="modal-dialog modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
             <div class="modal-content">
                 <div class="tab">
                     <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>

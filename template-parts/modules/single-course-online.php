@@ -95,6 +95,11 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
         color: #fff;
         background-color: #023356;
     }
+    .bi-search {
+        font-size: 22px;
+        top: -5px;
+        position: relative;
+    }
 </style>
 <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
 <div class="liveOverBlock">
