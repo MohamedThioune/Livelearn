@@ -84,9 +84,6 @@ foreach($bunch_orders as $order){
     }
 }
 
-
-var_dump($course_id);
-
 /*
 * * Enrolled courses
 */
