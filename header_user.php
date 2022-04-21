@@ -1,9 +1,6 @@
 <?php
 $user = wp_get_current_user();
 
-$users = get_users();
-var_dump($users);
-
 /*
 * * Feedbacks
 */
