@@ -64,25 +64,15 @@ $experts = get_user_meta($user->ID, 'expert');
                 foreach($topics_external as $topic){
                     $name = (String)get_the_category_by_ID($topic);
                     echo "
-                    <a href='/category-overview/?category='". $topic ."' class='d-flex'>
-                        <div class='iconeElement'>
-                            <form action='/dashboard/user/' method='POST'>
-                                <input type='hidden' name='meta_value' value='". $topic . "' id=''>
-                                <input type='hidden' name='user_id' value='". $user->ID . "' id=''>
-                                <input type='hidden' name='meta_key' value='topic' id=''>
-                                <button type='submit' class='btn toevoegenText' name='delete'><i class='fa fa-trash'></i></button>
-                            </form> 
-                        </div>
-                        <br><br>
+                    <a href='/category-overview/?category='. $topic .' class='d-flex'>
                         <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
-                    </a>
-                    ";
+                    </a><br>";
                 }
 
             if(!empty($topics_internal))
                 foreach($topics_internal as $topic){
                     $name = (String)get_the_category_by_ID($topic);
-                    echo "<a href='/category-overview/?category=". $topic ."' class='d-flex'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    echo "<a href='/category-overview/?category=". $topic ." class='d-flex'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
                           </a><br>";
                     /* echo "
