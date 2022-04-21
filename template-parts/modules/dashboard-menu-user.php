@@ -84,7 +84,7 @@ $experts = get_user_meta($user->ID, 'expert');
                                 <img src='". $image_category ."' alt='image category'>
                             </div>
                             <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
-                          </a>";
+                          </a><br>";
                     /* echo "
                     <a href='/category-overview/?category=". $topic ."' class='d-flex'>
                         <div class='iconeElement'>
