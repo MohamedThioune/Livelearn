@@ -171,7 +171,7 @@ $title_road_path = get_field('title_road_path', 'user_'.$user_id);
                 }
             ?>
         </ul>
-            <button type="submit" name="road_path_created" id="validatePath" class="btn row-select-submit">Validate your learning path</button>
+            <button type="submit" name="road_path_created" id="validatePath" class="btn row-select-submit">Refresh 🔃</button>
         </form>
     </div>
     <?php

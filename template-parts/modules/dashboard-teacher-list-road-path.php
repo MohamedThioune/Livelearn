@@ -1,15 +1,29 @@
 <?php
 $user_id = get_current_user_id();
 
-$road_paths = get_field('road_path', 'user_' . $user_id);
+/*
+* * Road path
+*/
+
+$args = array(
+    'post_type' => 'learnpath', 
+    'author' => $user_id,
+    'orderby' => 'post_date',
+    'order' => 'DESC',
+    'posts_per_page' => -1,
+);
+
+$road_paths = get_posts($args);
+
 $road_path_s = array();
 
 foreach($road_paths as $road_path)
     array_push($road_path_s, $road_path->ID);
 
 /*
-** Courses - owned *
+** Courses  owned *
 */
+
 $courses = array();
 
 $args = array(
@@ -284,48 +298,6 @@ $title_road_path = get_field('title_road_path', 'user_'.$user_id);
     else{
     ?>
     <div class="row">
-        <div class="col-lg-4">
-            <div class="cardRoadPath">
-                <div class="headRoadPath">
-                    <p class="titleRoadPath ">The first learning path</p>
-                </div>
-                <div class="categoriesRoadPath">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/op-seach.png" alt="">
-                    <p class="">E-learnning</p>
-                </div>
-                <div class="footer-road-path">
-                    <button class="btn btnRemoveRoadPath">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
-                        <span>Remove</span>
-                    </button>
-                    <a href="/dashboard/teacher/road-path/" class="seeRoadPath">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/oeil.png" alt="">
-                        <span>see</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="cardRoadPath">
-                <div class="headRoadPath">
-                    <p class="titleRoadPath ">The first learning path</p>
-                </div>
-                <div class="categoriesRoadPath">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/op-seach.png" alt="">
-                    <p class="">E-learnning</p>
-                </div>
-                <div class="footer-road-path">
-                    <button class="btn btnRemoveRoadPath">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
-                        <span>Remove</span>
-                    </button>
-                    <a href="/dashboard/teacher/road-path/" class="seeRoadPath">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/oeil.png" alt="">
-                        <span>see</span>
-                    </a>
-                </div>
-            </div>
-        </div>
         <div class="col-lg-4">
             <div class="cardRoadPath">
                 <div class="headRoadPath">
