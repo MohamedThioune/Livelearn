@@ -3421,6 +3421,9 @@ body .gform_wrapper ul li.gfield {
 .croie{
     display: none;
 }
+#burgerCroie-web{
+    display: none;
+}
 .richting-bineen-block{
     display: none;
 }
@@ -6430,7 +6433,6 @@ tbody{
 }
 
 
-
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -8221,6 +8223,9 @@ tbody{
         margin-bottom: 5px;
         color: #043356;
     }
+    #burger-web{
+        display: none !important;
+    }
 
 
 
@@ -8233,6 +8238,10 @@ tbody{
     .textIconeLearning {
         font-size: 11px;
     }
+    #burger-web{
+        display: none !important;
+    }
+
 }
 
 
@@ -8533,8 +8542,9 @@ tbody{
         margin-top: 0;
     }
 
-
-
+    #burger-web{
+        display: none !important;
+    }
 
     .bntNotification{
         position: relative;
