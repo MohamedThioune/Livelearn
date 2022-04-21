@@ -114,6 +114,7 @@ foreach($global_courses as $course)
     foreach($experts as $topic_expert){
         $experties = get_field('experts', $course->ID);    
         if($course->post_author == $topic_expert || in_array($topic_expert, $experties) ){
+            echo $course->ID;
             if(!in_array($course->ID,$courses_id)){
                 array_push($courses, $course);
                 array_push($courses_id, $course->ID);
