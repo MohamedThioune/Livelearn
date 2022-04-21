@@ -64,7 +64,7 @@ $experts = get_user_meta($user->ID, 'expert');
                 foreach($topics_external as $topic){
                     $name = (String)get_the_category_by_ID($topic);
                     echo "
-                    <a href='/category-overview/?category='. $topic .' class='d-flex'>
+                    <a href='/category-overview/?category=". $topic ."' class='d-flex'>
                         <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
                     </a><br>";
                 }
@@ -72,9 +72,9 @@ $experts = get_user_meta($user->ID, 'expert');
             if(!empty($topics_internal))
                 foreach($topics_internal as $topic){
                     $name = (String)get_the_category_by_ID($topic);
-                    echo "<a href='/category-overview/?category=". $topic ." class='d-flex'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    echo "<a href='/category-overview/?category=". $topic ."' class='d-flex'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
-                          </a><br>";
+                          </a>";
                     /* echo "
                     <a href='/category-overview/?category=". $topic ."' class='d-flex'>
                         <div class='iconeElement'>
@@ -105,18 +105,17 @@ $experts = get_user_meta($user->ID, 'expert');
                     $name = get_userdata($expert)->data->display_name;
                     echo "
                     <a href='/user-overview/?id=". $expert ."' class='d-flex'>
-                        <div class='iconeElement'>
+                        <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
+                    </a>";
+                     /*  
+                     <div class='iconeElement'>
                         <form action='../../dashboard/user/' method='POST'>
                             <input type='hidden' name='meta_value' value='". $expert . "' id=''>
                             <input type='hidden' name='user_id' value='". $user->ID . "' id=''>
                             <input type='hidden' name='meta_key' value='expert' id=''>
                             <button type='submit' class='btn toevoegenText' name='delete'><i class='fa fa-trash'></i></button>
                         </form> 
-                        </div>
-                        <br><br>
-                        <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
-                    </a>
-                    ";
+                    </div> */
                 }
             ?>
             <a href="/opleiders" class="btn btnOnderwerp"><div><i class="fa fa-plus faPLusModife"></i></div> <span>Expert toevoegen</span>
