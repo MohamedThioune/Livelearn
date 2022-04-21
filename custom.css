@@ -5995,6 +5995,13 @@ input:checked ~ .assassment {
 .logoDashboard{
     margin-left: 40px;
 }
+.BekijkNotifications{
+    margin-top: 20px;
+    padding: 8px 15px;
+    border-radius: 7px;
+    background: #043356 !important;
+    color: white !important;
+}
 .extensive .textLiDashboard{
     display: none;
 }
