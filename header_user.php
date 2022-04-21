@@ -110,7 +110,7 @@ $todos = get_posts($args);
                 </div>
 
                 <a class="navbar-brand navBrand" href="/">
-                    <div class="logoModife logoWeb">
+                    <div class="logoModife logoWeb logoDashboard">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_white.png" alt="">
                     </div>
                     <a href="/" class="logoMobile">
