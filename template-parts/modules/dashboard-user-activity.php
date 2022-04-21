@@ -74,13 +74,18 @@ $args = array(
 $bunch_orders = wc_get_orders($args);
 $orders = array();
 $item_order = array();
+$enrolled = array();
 
 foreach($bunch_orders as $order){
     foreach ($order->get_items() as $item_id => $item ) {
         $course_id = intval($item->get_product_id()) - 1;
-        array_push($enrolled, $course_id);
+        if(!in_array($course_id, $enrolled))
+            array_push($enrolled, $course_id);
     }
 }
+
+
+var_dump($course_id);
 
 /*
 * * Enrolled courses
