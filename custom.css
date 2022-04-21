@@ -6000,6 +6000,12 @@ input:checked ~ .assassment {
 .iconAssesment{
     display: none;
 }
+.iconAssesment1{
+    width: 25px;
+}
+#sectionDashboard1 .iconeElement img {
+    width: 22px;
+}
 .extensive .btnOnderwerp{
    background: none !important;
     padding: 0 !important;
