@@ -6021,6 +6021,17 @@ tbody{
 #sectionDashboard1 .iconeElement img {
     width: 22px;
 }
+#sectionDashboard1 .iconeElement:first-child{
+    margin-top: 2px;
+    width: 24px;
+    height: 24px;
+    overflow: hidden;
+}
+#sectionDashboard1 .iconeElement:first-child img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 .extensive .btnOnderwerp{
    background: none !important;
     padding: 0 !important;
