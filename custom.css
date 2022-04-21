@@ -5444,12 +5444,14 @@ nav .show{
 }
 
 .dropdown-menu-dashboard{
-    background-color: #043356 !important;
-    color: white !important;
+    background-color: white !important;
+    color: #043356 !important;
 }
 .dropdown-menu-dashboard a {
-    color: white !important;
+    color: #043356 !important;
+    background-color: white !important;
 }
+
 .dropdownRoadMap{
     background-color: #FFFFFF !important;
     color: black !important;
@@ -6009,13 +6011,7 @@ input:checked ~ .assassment {
 .logoDashboard{
     margin-left: 40px;
 }
-.BekijkNotifications{
-    margin-top: 20px;
-    padding: 8px 15px;
-    border-radius: 7px;
-    background: #043356 !important;
-    color: white !important;
-}
+
 .extensive .textLiDashboard{
     display: none;
 }
@@ -6452,12 +6448,29 @@ tbody{
     font-size: 33px;
 }
 .elementcourseIcone{
-    flex-wrap: wrap;
     justify-content: space-between !important;
 }
 .dashboardsElement{
     display: flex;
 }
+.dropdown-menu-dashboard a:hover {
+    color: #043356 !important;
+}
+.dropdown-menu .BekijkNotifications{
+    margin-top: 20px;
+    padding: 8px 15px;
+    border-radius: 7px;
+    background: #043356 !important;
+    color: white !important;
+}
+.dropdown-menu .BekijkNotifications:hover{
+    background: #043356 !important;
+    color: white !important;
+}
+.dropdown-item {
+    background-color: #ffffff !important;
+}
+
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -6664,7 +6677,7 @@ tbody{
         position: absolute;
         margin-right: 0;
         left: -107px;
-        top: 51px;
+        top: 46px;
     }
     .footerLive{
         width: 100%;
@@ -8055,7 +8068,7 @@ tbody{
     .elementHeaderUser{
         display: flex !important;
         width: fit-content;
-        padding-right: 18px;
+        padding-right: 3px;
         margin-left: unset;
     }
     .second-element-mobile{
@@ -8252,23 +8265,25 @@ tbody{
         display: none !important;
     }
     .elementcourseIcone{
-        flex-wrap: wrap;
         justify-content: space-between !important;
+        align-items: center;
     }
     .elementcourseIcone .block1{
         width: 100%;
         justify-content: space-between;
-        margin-bottom: 15px;
     }
     .elementcourseIcone .block2 {
-        width: 65%;
+        width: 74%;
         justify-content: space-between;
+        margin-right: -30px;
+        margin-left: 8px;
+        padding-top: 8px;
     }
-    .elementcourseIcone .block2 .d-flex:first-child{
-        margin-left: -3px !important;
+    .beschiBlockText {
+        margin-bottom: 4px;
     }
     .liveOverBlock {
-        padding-top: 30px;
+        padding-top: 55px;
     }
     .CardBlockEvenement {
         display: block;
@@ -8279,6 +8294,15 @@ tbody{
     .element8 a {
         color: #FFFFFF !important;
         padding-bottom: 10px;
+    }
+    .nav-link {
+        padding: 0 !important;
+    }
+    .modal-dialog {
+        width: fit-content !important;
+    }
+    .dropdown-menu {
+        text-align: left !important;
     }
 
 
@@ -8625,7 +8649,7 @@ tbody{
     .elementHeaderUser {
         display: flex !important;
         width: fit-content;
-        padding-right: 15px;
+        padding-right: 2px;
         margin-left: 0;
         padding-left: 0;
     }
