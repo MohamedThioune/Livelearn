@@ -51,8 +51,9 @@ $experts = get_user_meta($user->ID, 'expert');
             </a>
         </li>
         <li class="elementTextDashboard">
-            <a href="/assessment"class="btn btnOnderwerp buttonAssessment" id="assessmentIcone"><div><i class="fa fa-plus faPLusModife"></i></div><span>Assessments</span>
-                <img class="iconAssesment" src="<?php echo get_stylesheet_directory_uri();?>/img/assessment.png" alt="">
+            <a href="/assessment" class="d-flex">
+                <div class="iconeElement"><img class="iconAssesment1" src="<?php echo get_stylesheet_directory_uri();?>/img/assessment.png" alt=""></div>
+                <p class="textLiDashboard">Assessments</p>
             </a>
         </li>
         <p class="textOnder">ONDERWERPEN</p>

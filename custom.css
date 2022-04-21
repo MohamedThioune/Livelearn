@@ -5989,6 +5989,11 @@ input:checked ~ .assassment {
 }
 .blockIconeWidth{
     margin-top: 1px;
+    position: absolute;
+    left: 24px;
+}
+.logoDashboard{
+    margin-left: 40px;
 }
 .extensive .textLiDashboard{
     display: none;
@@ -5999,6 +6004,12 @@ input:checked ~ .assassment {
 }
 .iconAssesment{
     display: none;
+}
+.iconAssesment1{
+    width: 25px;
+}
+#sectionDashboard1 .iconeElement img {
+    width: 22px;
 }
 .extensive .btnOnderwerp{
    background: none !important;

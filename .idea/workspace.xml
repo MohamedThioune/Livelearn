@@ -4,9 +4,34 @@
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-road-path.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-road-path.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/header_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-Onderwer.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-Onderwer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-baangerichte.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-baangerichte.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-candidat-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-candidat-home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-category-overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-category-overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-ecosysteme.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-ecosysteme.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-functiegerichte.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-functiegerichte.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-inloggen.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-inloggen.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-opleider-courses.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-opleider-courses.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-opleiders.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-opleiders.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-persoonlijke.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-persoonlijke.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-pricing.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-pricing.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-product-search.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-product-search.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-recruitement.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-recruitement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-registreren.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-registreren.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-single.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-single.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-skill.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-skill.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-static-education-advice.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-static-education-advice.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-static-education-individual.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-static-education-individual.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-sub-topic.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-sub-topic.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-topic.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-topic.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-user-overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-user-overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-video-course.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-video-course.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-voor-organisaties.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-organisaties.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-voor-teacher-detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-teacher-detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-voor-teacher.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-teacher.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/topic.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/topic.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,84 +40,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-road-path.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="83" column="56" selection-start-line="83" selection-start-column="56" selection-end-line="83" selection-end-column="56" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/custom.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="117">
-              <caret line="6394" column="24" lean-forward="true" selection-start-line="6394" selection-start-column="24" selection-end-line="6394" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-road-path.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="297" column="95" selection-start-line="297" selection-start-column="95" selection-end-line="297" selection-end-column="95" />
-              <folding>
-                <element signature="n#div#1;n#div#0;n#!!top" />
-                <element signature="e#3601#3608#1#HTML" expanded="true" />
-                <element signature="e#10194#10201#1#HTML" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="756">
-              <caret line="79" column="24" lean-forward="true" selection-start-line="79" selection-start-column="24" selection-end-line="79" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/woo.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" column="32" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/header_user.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2970">
-              <caret line="198" column="41" selection-start-line="198" selection-start-column="41" selection-end-line="198" selection-end-column="41" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4140">
-              <caret line="276" selection-start-line="276" selection-end-line="276" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>btnStart3front</find>
-      <find>step1OverviewAssessmentBackend</find>
       <find>step2OverviewAssessmentBackend</find>
       <find>.textDirect</find>
-      <find>Mijn Activiteiten</find>
       <find>.cardModife3</find>
       <find>img-fluid</find>
       <find>pb-3 text-center</find>
@@ -118,6 +71,9 @@
       <find>a href=&quot;&quot; class=&quot;seeRoadPath&quot;</find>
       <find>@medi</find>
       <find>a</find>
+      <find>Mijn Activiteiten</find>
+      <find>.blockIconeWidth</find>
+      <find>logoModife logoWeb</find>
     </findStrings>
     <replaceStrings>
       <replace>h4</replace>
@@ -137,7 +93,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-user-profile2.php" />
         <option value="$PROJECT_DIR$/footer.php" />
         <option value="$PROJECT_DIR$/templates/template-firstModal.php" />
         <option value="$PROJECT_DIR$/blog.css" />
@@ -151,17 +106,44 @@
         <option value="$PROJECT_DIR$/single-course.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/single-course-online.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" />
-        <option value="$PROJECT_DIR$/templates/template-registreren.php" />
         <option value="$PROJECT_DIR$/header_base.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php" />
-        <option value="$PROJECT_DIR$/header_user.php" />
         <option value="$PROJECT_DIR$/woo.scss" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course.php" />
         <option value="$PROJECT_DIR$/main.js" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-road-path.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-road-path.php" />
+        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php" />
+        <option value="$PROJECT_DIR$/header_user.php" />
         <option value="$PROJECT_DIR$/custom.css" />
+        <option value="$PROJECT_DIR$/templates/template-baangerichte.php" />
+        <option value="$PROJECT_DIR$/template.css" />
+        <option value="$PROJECT_DIR$/templates/template-candidat-home.php" />
+        <option value="$PROJECT_DIR$/templates/template-category-overview.php" />
+        <option value="$PROJECT_DIR$/templates/template-ecosysteme.php" />
+        <option value="$PROJECT_DIR$/templates/template-functiegerichte.php" />
+        <option value="$PROJECT_DIR$/templates/template-home.php" />
+        <option value="$PROJECT_DIR$/templates/template-inloggen.php" />
+        <option value="$PROJECT_DIR$/templates/template-Onderwer.php" />
+        <option value="$PROJECT_DIR$/templates/template-opleider-courses.php" />
+        <option value="$PROJECT_DIR$/templates/template-opleiders.php" />
+        <option value="$PROJECT_DIR$/templates/template-persoonlijke.php" />
+        <option value="$PROJECT_DIR$/templates/template-pricing.php" />
+        <option value="$PROJECT_DIR$/templates/template-product-search.php" />
+        <option value="$PROJECT_DIR$/templates/template-recruitement.php" />
+        <option value="$PROJECT_DIR$/templates/template-registreren.php" />
+        <option value="$PROJECT_DIR$/templates/template-single.php" />
+        <option value="$PROJECT_DIR$/templates/template-skill.php" />
+        <option value="$PROJECT_DIR$/templates/template-static-education-advice.php" />
+        <option value="$PROJECT_DIR$/templates/template-static-education-individual.php" />
+        <option value="$PROJECT_DIR$/templates/template-sub-topic.php" />
+        <option value="$PROJECT_DIR$/templates/template-topic.php" />
+        <option value="$PROJECT_DIR$/templates/template-user-overview.php" />
+        <option value="$PROJECT_DIR$/templates/template-video-course.php" />
+        <option value="$PROJECT_DIR$/templates/template-voor-organisaties.php" />
+        <option value="$PROJECT_DIR$/templates/template-voor-teacher.php" />
+        <option value="$PROJECT_DIR$/templates/template-voor-teacher-detail.php" />
+        <option value="$PROJECT_DIR$/templates/topic.php" />
       </list>
     </option>
   </component>
@@ -188,6 +170,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -203,24 +186,27 @@
             <path>
               <item name="fluidify-child" type="b2602c69:ProjectViewProjectNode" />
               <item name="fluidify-child" type="462c0819:PsiDirectoryNode" />
-              <item name="template-parts" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1650366116782" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1650540179559" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -337,18 +323,19 @@
       <workItem from="1650458196304" duration="1718000" />
       <workItem from="1650460156241" duration="1673000" />
       <workItem from="1650462005764" duration="1294000" />
-      <workItem from="1650473026565" duration="1259000" />
+      <workItem from="1650473026565" duration="1914000" />
+      <workItem from="1650537253236" duration="1792000" />
+      <workItem from="1650539179053" duration="992000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="140843000" />
+    <option name="totallyTimeSpent" value="144282000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2128788" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2189394" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -363,7 +350,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.26916802" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.26916802" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -413,113 +400,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-profile2.php" />
-    <entry file="file://$PROJECT_DIR$/../../../../../liveLearn-wordpressZippé/wordpressLIvelearn/wp-content/themes/fluidify-child/template-parts/modules/dashboard-user-profile2.php" />
-    <entry file="file://$PROJECT_DIR$/templates/template-home.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="329">
-          <caret line="427" column="16" selection-start-line="427" selection-start-column="16" selection-end-line="481" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/functions.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="33" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="97" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main-user.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.js~HEAD">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="429" selection-start-line="429" selection-end-line="429" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/header.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/web-forms.rnc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="8" column="13" lean-forward="true" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Téléchargements/template-homefadel.php" />
-    <entry file="file://$PROJECT_DIR$/templates/template-firstModal.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="3" selection-start-line="3" selection-start-column="3" selection-end-line="246" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/blog.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1125">
-          <caret line="75" column="21" selection-start-line="75" selection-start-column="21" selection-end-line="75" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-company.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="20" lean-forward="true" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="97" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="170" column="1" selection-start-line="170" selection-start-column="1" selection-end-line="170" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/footer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2670">
-          <caret line="178" column="24" selection-start-line="178" selection-start-column="24" selection-end-line="178" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-5.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1005">
-          <caret line="69" column="105" selection-start-line="69" selection-start-column="90" selection-end-line="69" selection-end-column="105" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="882" column="27" selection-start-line="882" selection-start-column="27" selection-end-line="882" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-assessment.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9405">
-          <caret line="627" column="6" selection-start-line="627" selection-start-column="6" selection-end-line="627" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/single.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="570">
-          <caret line="38" column="47" selection-start-line="38" selection-start-column="47" selection-end-line="38" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/single-course.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="795">
-          <caret line="53" column="3" selection-start-line="53" selection-start-column="3" selection-end-line="53" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/style.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3885">
@@ -552,20 +432,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-registreren.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1275">
-          <caret line="85" column="21" selection-start-line="85" selection-start-column="21" selection-end-line="85" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-inloggen.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="30" column="34" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="156">
@@ -579,10 +445,24 @@
     <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-overview.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php">
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-road-path.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1665">
-          <caret line="111" column="7" selection-start-line="111" selection-start-column="7" selection-end-line="111" selection-end-column="7" />
+        <state relative-caret-position="1245">
+          <caret line="83" column="56" selection-start-line="83" selection-start-column="56" selection-end-line="83" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-road-path.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4455">
+          <caret line="300" column="30" selection-start-line="300" selection-start-column="30" selection-end-line="300" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1185">
+          <caret line="79" column="24" selection-start-line="79" selection-start-column="24" selection-end-line="79" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -593,10 +473,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/header_user.php">
+    <entry file="file://$PROJECT_DIR$/header_teacher.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2970">
-          <caret line="198" column="41" selection-start-line="198" selection-start-column="41" selection-end-line="198" selection-end-column="41" />
+        <state relative-caret-position="-30" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="810">
+          <caret line="54" column="68" selection-start-line="54" selection-start-column="68" selection-end-line="54" selection-end-column="68" />
         </state>
       </provider>
     </entry>
@@ -607,36 +492,244 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection.php">
+    <entry file="file://$PROJECT_DIR$/custom.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="79" column="24" lean-forward="true" selection-start-line="79" selection-start-column="24" selection-end-line="79" selection-end-column="24" />
+        <state relative-caret-position="122">
+          <caret line="5989" selection-start-line="5989" selection-end-line="5996" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-road-path.php">
+    <entry file="file://$PROJECT_DIR$/header_user.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="297" column="95" selection-start-line="297" selection-start-column="95" selection-end-line="297" selection-end-column="95" />
+        <state relative-caret-position="120">
+          <caret line="26" column="4" lean-forward="true" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-baangerichte.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="90" lean-forward="true" selection-start-line="4" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="32" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-candidat-home.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="67" column="90" selection-start-line="67" selection-start-column="90" selection-end-line="67" selection-end-column="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-category-overview.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="690">
+          <caret line="46" column="5" lean-forward="true" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="5" />
           <folding>
-            <element signature="n#div#1;n#div#0;n#!!top" />
-            <element signature="e#3601#3608#1#HTML" expanded="true" />
-            <element signature="e#10194#10201#1#HTML" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-road-path.php">
+    <entry file="file://$PROJECT_DIR$/templates/template-ecosysteme.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="83" column="56" selection-start-line="83" selection-start-column="56" selection-end-line="83" selection-end-column="56" />
+        <state relative-caret-position="60">
+          <caret line="4" column="39" lean-forward="true" selection-start-line="4" selection-start-column="39" selection-end-line="4" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/custom.css">
+    <entry file="file://$PROJECT_DIR$/templates/template-firstModal.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="6394" column="24" lean-forward="true" selection-start-line="6394" selection-start-column="24" selection-end-line="6394" selection-end-column="24" />
+        <state relative-caret-position="-3353">
+          <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-functiegerichte.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="4" lean-forward="true" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-home.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="44" lean-forward="true" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-inloggen.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-manager-leer-databank.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-Onderwer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-opleider-courses.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-opleiders.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-persoonlijke.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-pricing.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="6" lean-forward="true" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-product-search.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-recruitement.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-registreren.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-single.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-skill.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-static-education-advice.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-static-education-individual.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="68" lean-forward="true" selection-start-line="68" selection-end-line="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-sub-topic.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/trash-course.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/trash-user.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="56" selection-start-line="5" selection-start-column="56" selection-end-line="5" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/topic-ajax.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1614" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/topic.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="90" selection-start-column="90" selection-end-column="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-voor-teacher-detail.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-voor-teacher.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-voor-organisaties.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-video-course.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-user-overview.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="185" lean-forward="true" selection-start-line="185" selection-end-line="185" />
+          <folding>
+            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-topic.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>
