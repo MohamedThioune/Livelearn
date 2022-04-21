@@ -154,8 +154,8 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                 </div>
 
                 <!-- -------------------------------------- Start Icons row ------------------------------------->
-                <div class="d-flex justify-content-md-between justify-content-around mx-md-2 my-3 mx-sm-2 text-center">
-                    <div class="d-flex flex-row">
+                <div class="d-flex elementcourseIcone justify-content-md-between justify-content-around mx-md-2 my-3 mx-sm-2 text-center">
+                    <div class="d-flex flex-row block1">
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <input type="hidden" id="user_id" value="<?php echo $user_id; ?>">
                             <input type="hidden" id="course_id" value="<?php echo $post->ID; ?>">
@@ -172,7 +172,7 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                             <span class="textIconeLearning mt-1"><?php if($course_type) echo $course_type; else echo "Undefined"; ?></span>
                         </div>
                     </div>
-                    <div class="d-flex flex-row">
+                    <div class="d-flex flex-row block2">
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <form action="../../dashboard/user/" method="POST">
                                 <input type="hidden" name="meta_value" value="<?php echo $post->ID; ?>" id="">
