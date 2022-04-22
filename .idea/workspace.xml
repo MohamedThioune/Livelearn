@@ -4,8 +4,10 @@
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/header_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_user.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template.css" beforeDir="false" afterPath="$PROJECT_DIR$/template.css" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,28 +18,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="585">
-              <caret line="39" column="41" selection-start-line="39" selection-start-column="41" selection-end-line="39" selection-end-column="41" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/custom.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="8314" lean-forward="true" selection-start-line="8314" selection-end-line="8314" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/style.scss">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1950">
-              <caret line="130" column="8" selection-start-line="130" selection-start-column="8" selection-end-line="130" selection-end-column="8" />
+            <state relative-caret-position="32">
+              <caret line="6474" column="1" selection-start-line="6474" selection-start-column="1" selection-end-line="6474" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -45,56 +29,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-online.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="405" column="50" lean-forward="true" selection-start-line="405" selection-start-column="50" selection-end-line="405" selection-end-column="50" />
-              <folding>
-                <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="167">
+              <caret line="94" column="20" lean-forward="true" selection-start-line="94" selection-start-column="20" selection-end-line="94" selection-end-column="20" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="404" column="55" lean-forward="true" selection-start-line="404" selection-start-column="55" selection-end-line="404" selection-end-column="55" />
-              <folding>
-                <element signature="e#6249#6256#1#HTML" expanded="true" />
-                <element signature="e#6490#6546#0#HTML" expanded="true" />
-                <element signature="e#7003#7026#0#HTML" expanded="true" />
-                <element signature="e#7586#7609#0#HTML" expanded="true" />
-                <element signature="e#8177#8220#0#HTML" expanded="true" />
-                <element signature="e#9176#9183#1#HTML" expanded="true" />
-                <element signature="e#9860#9867#1#HTML" expanded="true" />
-                <element signature="e#10540#10547#1#HTML" expanded="true" />
-                <element signature="e#14353#14390#0#HTML" expanded="true" />
-                <element signature="e#14415#14439#0#HTML" expanded="true" />
-                <element signature="e#14738#14762#0#HTML" expanded="true" />
-                <element signature="e#15039#15063#0#HTML" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#button#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#i#0;n#button#0;n#!!top" expanded="true" />
-                <element signature="e#17417#17441#0#HTML" expanded="true" />
-                <element signature="e#17739#17763#0#HTML" expanded="true" />
-                <element signature="e#24113#24137#0#HTML" expanded="true" />
-                <element signature="e#24455#24479#0#HTML" expanded="true" />
-                <element signature="e#24804#24828#0#HTML" expanded="true" />
-                <element signature="e#25792#25820#0#HTML" expanded="true" />
-                <element signature="e#26207#26214#1#HTML" expanded="true" />
-                <element signature="e#27379#27407#0#HTML" expanded="true" />
-                <element signature="e#27794#27801#1#HTML" expanded="true" />
-                <element signature="e#29609#29632#0#HTML" expanded="true" />
-                <element signature="e#29835#29858#0#HTML" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-                <element signature="e#33173#33200#0#HTML" expanded="true" />
-                <element signature="e#33305#33338#0#HTML" expanded="true" />
-                <element signature="e#34533#34565#0#HTML" expanded="true" />
-                <element signature="e#35468#35501#0#HTML" expanded="true" />
-              </folding>
+            <state relative-caret-position="-8">
+              <caret line="150" column="5" lean-forward="true" selection-start-line="150" selection-start-column="5" selection-end-line="150" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -102,26 +47,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/header_user.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3060">
-              <caret line="204" column="58" selection-start-line="204" selection-start-column="58" selection-end-line="204" selection-end-column="58" />
+            <state relative-caret-position="127">
+              <caret line="211" column="34" lean-forward="true" selection-start-line="211" selection-start-column="34" selection-end-line="211" selection-end-column="34" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2085">
-              <caret line="139" column="17" selection-start-line="139" selection-start-column="17" selection-end-line="139" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/template.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" selection-start-line="7" selection-end-line="7" />
+            <state relative-caret-position="111">
+              <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -144,8 +80,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>.blockIconeWidth</find>
-      <find>logoModife logoWeb</find>
       <find>blockIconeWidth</find>
       <find>Empty until now ...</find>
       <find>burger-web</find>
@@ -164,8 +98,6 @@
       <find>burger</find>
       <find>userBlockNav</find>
       <find>.modal-dialog</find>
-      <find>@media</find>
-      <find>.elementHeaderUser</find>
       <find>.elementcourseIcone</find>
       <find>beschiBlockText</find>
       <find>&lt;button type=&quot;button&quot; class=&quot;btn-close&quot; data-bs-dismiss=&quot;modal&quot; aria-label=&quot;Close&quot;&gt;&lt;/button&gt;</find>
@@ -174,6 +106,10 @@
       <find>Voor</find>
       <find>modal-dialog</find>
       <find>Direct contact</find>
+      <find>dashboardsElement</find>
+      <find>.elementHeaderUser</find>
+      <find>@media</find>
+      <find>second-element-mobile</find>
     </findStrings>
     <replaceStrings>
       <replace>h4</replace>
@@ -237,13 +173,13 @@
         <option value="$PROJECT_DIR$/templates/topic.php" />
         <option value="$PROJECT_DIR$/main.js" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php" />
-        <option value="$PROJECT_DIR$/template.css" />
         <option value="$PROJECT_DIR$/single-course-online.php" />
         <option value="$PROJECT_DIR$/style.scss" />
         <option value="$PROJECT_DIR$/style.css" />
-        <option value="$PROJECT_DIR$/header_user.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/single-course-online.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" />
+        <option value="$PROJECT_DIR$/header_user.php" />
+        <option value="$PROJECT_DIR$/template.css" />
         <option value="$PROJECT_DIR$/custom.css" />
       </list>
     </option>
@@ -271,7 +207,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -287,20 +222,20 @@
             <path>
               <item name="fluidify-child" type="b2602c69:ProjectViewProjectNode" />
               <item name="fluidify-child" type="462c0819:PsiDirectoryNode" />
-              <item name="template-parts" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1650540894180" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1650623101785" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -438,17 +373,19 @@
       <workItem from="1650555587722" duration="1862000" />
       <workItem from="1650557490409" duration="1748000" />
       <workItem from="1650559374828" duration="786000" />
+      <workItem from="1650621427098" duration="1670000" />
+      <workItem from="1650623317297" duration="792000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="160875000" />
+    <option name="totallyTimeSpent" value="163337000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21212122" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21818182" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -550,13 +487,6 @@
     <entry file="file://$PROJECT_DIR$/header_teacher.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-30" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-baangerichte.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="90" lean-forward="true" selection-start-line="4" selection-end-line="5" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/template-candidat-home.php">
@@ -792,13 +722,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/header_user.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3060">
-          <caret line="204" column="58" selection-start-line="204" selection-start-column="58" selection-end-line="204" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2085">
@@ -806,10 +729,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/template.css">
+    <entry file="file://$PROJECT_DIR$/templates/template-baangerichte.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        <state relative-caret-position="60">
+          <caret line="4" column="90" lean-forward="true" selection-start-line="4" selection-end-line="5" />
         </state>
       </provider>
     </entry>
@@ -825,61 +748,36 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/custom.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="8314" lean-forward="true" selection-start-line="8314" selection-end-line="8314" />
+        <state relative-caret-position="32">
+          <caret line="6474" column="1" selection-start-line="6474" selection-start-column="1" selection-end-line="6474" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-online.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="405" column="50" lean-forward="true" selection-start-line="405" selection-start-column="50" selection-end-line="405" selection-end-column="50" />
-          <folding>
-            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="167">
+          <caret line="94" column="20" lean-forward="true" selection-start-line="94" selection-start-column="20" selection-end-line="94" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="404" column="55" lean-forward="true" selection-start-line="404" selection-start-column="55" selection-end-line="404" selection-end-column="55" />
-          <folding>
-            <element signature="e#6249#6256#1#HTML" expanded="true" />
-            <element signature="e#6490#6546#0#HTML" expanded="true" />
-            <element signature="e#7003#7026#0#HTML" expanded="true" />
-            <element signature="e#7586#7609#0#HTML" expanded="true" />
-            <element signature="e#8177#8220#0#HTML" expanded="true" />
-            <element signature="e#9176#9183#1#HTML" expanded="true" />
-            <element signature="e#9860#9867#1#HTML" expanded="true" />
-            <element signature="e#10540#10547#1#HTML" expanded="true" />
-            <element signature="e#14353#14390#0#HTML" expanded="true" />
-            <element signature="e#14415#14439#0#HTML" expanded="true" />
-            <element signature="e#14738#14762#0#HTML" expanded="true" />
-            <element signature="e#15039#15063#0#HTML" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#button#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#i#0;n#button#0;n#!!top" expanded="true" />
-            <element signature="e#17417#17441#0#HTML" expanded="true" />
-            <element signature="e#17739#17763#0#HTML" expanded="true" />
-            <element signature="e#24113#24137#0#HTML" expanded="true" />
-            <element signature="e#24455#24479#0#HTML" expanded="true" />
-            <element signature="e#24804#24828#0#HTML" expanded="true" />
-            <element signature="e#25792#25820#0#HTML" expanded="true" />
-            <element signature="e#26207#26214#1#HTML" expanded="true" />
-            <element signature="e#27379#27407#0#HTML" expanded="true" />
-            <element signature="e#27794#27801#1#HTML" expanded="true" />
-            <element signature="e#29609#29632#0#HTML" expanded="true" />
-            <element signature="e#29835#29858#0#HTML" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-            <element signature="e#33173#33200#0#HTML" expanded="true" />
-            <element signature="e#33305#33338#0#HTML" expanded="true" />
-            <element signature="e#34533#34565#0#HTML" expanded="true" />
-            <element signature="e#35468#35501#0#HTML" expanded="true" />
-          </folding>
+        <state relative-caret-position="-8">
+          <caret line="150" column="5" lean-forward="true" selection-start-line="150" selection-start-column="5" selection-end-line="150" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/header_user.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="127">
+          <caret line="211" column="34" lean-forward="true" selection-start-line="211" selection-start-column="34" selection-end-line="211" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="11" column="1" lean-forward="true" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
         </state>
       </provider>
     </entry>

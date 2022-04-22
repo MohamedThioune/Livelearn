@@ -152,9 +152,6 @@ if(!$image){
     body{
         padding-top: 0 !important;
     }
-    .elementWeb {
-        display: none !important;
-    }
     .bi-x-lg::before {
         top: -5px;
         position: relative;
@@ -165,6 +162,7 @@ if(!$image){
         position: relative;
     }
 </style>
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
 <!-- ---------------------------------------- Start modals ---------------------------------------------- -->
     <div class="modal fade" id="direct-contact" tabindex="-1" aria-labelledby="direct-contactModalLabel" aria-hidden="true">
