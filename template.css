@@ -4,4 +4,22 @@
 .logoDashboard{
     margin-left: 0px !important;
 }
-
+#burgerAndbelief{
+    display: none !important;
+}
+#profilDropdown{
+    display: block !important;
+}
+.elementHeaderUser {
+    padding-right: 2px;
+}
+#profilDropdown a{
+    color: #ffffff !important;
+    margin: 0 5px !important;
+    font-weight: 500;
+    font-size: 14px;
+}
+.logoMobile img {
+    width: 100%;
+    margin-left: 4px;
+}

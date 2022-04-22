@@ -6470,7 +6470,9 @@ tbody{
 .dropdown-item {
     background-color: #ffffff !important;
 }
-
+.liveOverBlock {
+    padding-top: 100px;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -8068,7 +8070,7 @@ tbody{
     .elementHeaderUser{
         display: flex !important;
         width: fit-content;
-        padding-right: 3px;
+        padding-right: 13px;
         margin-left: unset;
     }
     .second-element-mobile{
