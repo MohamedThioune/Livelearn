@@ -102,6 +102,8 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
     }
 </style>
 <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+
 <div class="liveOverBlock">
     <div class="container-fluid">
         <div class="overElement">
