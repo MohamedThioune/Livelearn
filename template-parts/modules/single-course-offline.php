@@ -510,9 +510,12 @@ if(!$image){
                        <br>
 
                    </div>
-
-                    <button type="button" class="btn btn-lg lees_alles my-4 w-md-25 px-4 border border-1 border-dark read-more-btn"
-                     >Lees alles</button>
+                    <?php 
+                        if($long_description || $agenda || $who || $results ) 
+                            echo '<button type="button" class="btn btn-lg lees_alles my-4 w-md-25 px-4 border border-1 border-dark read-more-btn">Lees alles</button>';
+                        else 
+                            echo '<h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Leeg tot nu toe ...</b></h6>';
+                    ?>
                 </div>
                 <!--------------------------------------- end Text description -------------------------------------- -->
             </div>

@@ -58,7 +58,6 @@
         'parent'  => $categories[2],
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
-    //var_dump(get_field('is_first_login','user_' . get_current_user_id()));
 ?>
 
 <?php
@@ -112,8 +111,8 @@
       
     }
 
-      foreach($functies as $key1 =>$tag)
-      {
+    foreach($functies as $key1 =>$tag)
+    {
         
         //Topics
         $cats_functies = get_categories(
@@ -134,7 +133,7 @@
         }
     }
 
-      foreach($skills as $key1=>$tag){
+    foreach($skills as $key1=>$tag){
         //Topics
         $cats_skills = get_categories( array(
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
@@ -154,7 +153,7 @@
       
     }
 
-      foreach($interesses as $key1=>$tag){
+    foreach($interesses as $key1=>$tag){
         //Topics
             $cats_interesses = get_categories( array(
                 'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
@@ -174,40 +173,30 @@
       
     }
       
-
-      
-
-
-
-
-
-   //   delete_user_meta(get_current_user_id(),'topic');
-        if (isset($_POST["subtopics_first_login"]))
-            {
-                unset($_POST["subtopics_first_login"]);
-                $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
-                foreach ($_POST as $key => $subtopics) { 
-                    if (isset($_POST[$key]))
+    if (isset($_POST["subtopics_first_login"]))
+        {
+            unset($_POST["subtopics_first_login"]);
+            $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
+            foreach ($_POST as $key => $subtopics) { 
+                if (isset($_POST[$key]))
+                {
+                    if (!(in_array($_POST[$key], $subtopics_already_selected)))
                     {
-                        if (!(in_array($_POST[$key], $subtopics_already_selected)))
-                        {
-                            add_user_meta(get_current_user_id(),'topic',$_POST[$key]);  
-                        }
-                        
+                        add_user_meta(get_current_user_id(),'topic',$_POST[$key]);  
                     }
+                    
                 }
-                 update_field('is_first_login', true, 'user_'.get_current_user_id());
-                
             }
-        
-        $is_first_login=(get_field('is_first_login','user_' . get_current_user_id()));
-        if (!$is_first_login && get_current_user_id() !=0 )
-            {
+            update_field('is_first_login', true, 'user_'.get_current_user_id());
             
+        }
+    
+    $is_first_login=(get_field('is_first_login','user_' . get_current_user_id()));
+    if (!$is_first_login && get_current_user_id() !=0 )
+        {
+        
     ?>    
-                         <!-- Modal First Connection --> 
-
-
+    <!-- Modal First Connection --> 
     <div class="contentModalFirst">
         <div class="modal" id="myFirstModal" tabindex="-1" role="dialog" aria-labelledby="myFirstModalScrollableTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -217,7 +206,7 @@
                         <p class="pickText">Pick your favorite topics to set up your feeds</p>
                     </div>
                     <div class="modal-body">
-                      <form method="post">
+                    <form method="post">
                         <div class="blockBaangerichte">
                             <h1 class="titleSubTopic">Baangerichte</h1>
                             <div class="hiddenCB">
@@ -328,17 +317,14 @@
                                 <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Save</button>
                             </div>
                         </div>
-                      </form>
+                    </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
     <?php
-            }  
+    }  
     ?>
 
 

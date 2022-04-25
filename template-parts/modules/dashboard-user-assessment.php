@@ -1,7 +1,9 @@
 <div class="content-assessment">
     <div class="contentAsessment">
-        <h1 class="titleAssessment">Assessments</h1>
-        <p class="descriptionAssessment">Stand out from other job seekers by completing an assessment ! Livelearn will feature top performers to employers</p>
+        <center>
+            <h1 class="titleAssessment">Assessments</h1>
+            <p class="descriptionAssessment">Stand out from other job seekers by completing an assessment ! Livelearn will feature top performers to employers</p>
+        </center>
         <div class="contentCardAssessment">
             <div class="cardAssessement" data-target="#ModalBackEnd" data-toggle="modal">
                 <div class="contentImgAssessment">
@@ -136,7 +138,7 @@
                                 <p class="secondElement">Medium</p>
                             </div>
                         </div>
-                        <button class="btn btnStratModal medium" id="btnStratModal1"  data-dismiss="modal">Strat</button>
+                        <button class="btn btnStratModal medium" id="btnStratModal1"  data-dismiss="modal">Start</button>
                     </div>
                 </div>
             </div>
@@ -167,7 +169,7 @@
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/VectorPoly.png">
                     <p class="descriptionlistElement">You may exit the quiz and resume later, but you'll forgo points for the question you’re on when you exit</p>
                 </div>
-                <button class="btn btnStratModal medium" id="btnStart2">Strat</button>
+                <button class="btn btnStratModal medium" id="btnStart2">Start</button>
             </div>
 
             <div id="step2OverviewAssessmentBackend" class="stepchooseTech">
@@ -271,7 +273,7 @@
                                 <p class="secondElement">Medium</p>
                             </div>
                         </div>
-                        <button class="btn btnStratModal medium" id="btnStratModalfront"  data-dismiss="modal">Strat</button>
+                        <button class="btn btnStratModal medium" id="btnStratModalfront"  data-dismiss="modal">Start</button>
                     </div>
                 </div>
             </div>
@@ -302,7 +304,7 @@
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/VectorPoly.png">
                     <p class="descriptionlistElement">You may exit the quiz and resume later, but you'll forgo points for the question you’re on when you exit</p>
                 </div>
-                <button class="btn btnStratModal medium" id="btnStart2front">Strat</button>
+                <button class="btn btnStratModal medium" id="btnStart2front">Start</button>
             </div>
 
             <div class="frontElementstep stepchooseTech" id="step2OverviewAssessmentfront">
@@ -406,7 +408,7 @@
                                 <p class="secondElement">Medium</p>
                             </div>
                         </div>
-                        <button class="btn btnStratModal medium" id="btnStratModalfull"  data-dismiss="modal">Strat</button>
+                        <button class="btn btnStratModal medium" id="btnStratModalfull"  data-dismiss="modal">Start</button>
                     </div>
                 </div>
             </div>
@@ -437,7 +439,7 @@
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/VectorPoly.png">
                     <p class="descriptionlistElement">You may exit the quiz and resume later, but you'll forgo points for the question you’re on when you exit</p>
                 </div>
-                <button class="btn btnStratModal medium" id="btnStart2full">Strat</button>
+                <button class="btn btnStratModal medium" id="btnStart2full">Start</button>
             </div>
 
             <div class="frontElementstep stepchooseTech" id="step2OverviewAssessmentfull">
@@ -541,7 +543,7 @@
                                 <p class="secondElement">Medium</p>
                             </div>
                         </div>
-                        <button class="btn btnStratModal medium" id="btnStratModalAndroid"  data-dismiss="modal">Strat</button>
+                        <button class="btn btnStratModal medium" id="btnStratModalAndroid"  data-dismiss="modal">Start</button>
                     </div>
                 </div>
             </div>
@@ -572,7 +574,7 @@
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/VectorPoly.png">
                     <p class="descriptionlistElement">You may exit the quiz and resume later, but you'll forgo points for the question you’re on when you exit</p>
                 </div>
-                <button class="btn btnStratModal medium" id="btnStart2Android">Strat</button>
+                <button class="btn btnStratModal medium" id="btnStart2Android">Start</button>
             </div>
 
             <div class="frontElementstep stepchooseTech" id="step2OverviewAssessmentAndroid">
@@ -676,7 +678,7 @@
                                 <p class="secondElement">Medium</p>
                             </div>
                         </div>
-                        <button class="btn btnStratModal medium" id="btnStratModalIOS"  data-dismiss="modal">Strat</button>
+                        <button class="btn btnStratModal medium" id="btnStratModalIOS"  data-dismiss="modal">Start</button>
                     </div>
                 </div>
             </div>
@@ -707,7 +709,7 @@
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/VectorPoly.png">
                     <p class="descriptionlistElement">You may exit the quiz and resume later, but you'll forgo points for the question you’re on when you exit</p>
                 </div>
-                <button class="btn btnStratModal medium" id="btnStart2IOS">Strat</button>
+                <button class="btn btnStratModal medium" id="btnStart2IOS">Start</button>
             </div>
 
             <div class="frontElementstep stepchooseTech" id="step2OverviewAssessmentIOS">

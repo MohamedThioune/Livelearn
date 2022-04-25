@@ -7,10 +7,13 @@ if(is_user_logged_in()){
 $user = get_current_user_id();
 $message = ""; 
 
-extract($_POST); 
+extract($_POST);
 
- // delete_user_meta(33,'topic_affiliate'); // Delete topics affiliate by manager
-   // delete_user_meta(33,'todos'); //   Delete todos affiliate by manager
+$user_data = wp_get_current_user();
+
+if(empty($user_data->roles))
+    header('Location:/');
+
 if(isset($_POST['expert_add']) || isset($_POST['expert_add_artikel'])){
     $bunch = get_field('experts', $_GET['id']);
     if(!empty($bunch)){
