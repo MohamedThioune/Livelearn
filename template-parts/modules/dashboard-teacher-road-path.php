@@ -1,11 +1,20 @@
 <?php 
 $user_id = get_current_user_id();
 
-$road_paths = get_field('road_path', 'user_' . $user_id);
+/*
+** Leerpaden * 
+*/
+if(isset($_GET['id']))
+    if($_GET['id'])
+        $id = $_GET['id'];
+
+$leerpad = get_post($id);
+
+$road_paths = get_field('road_path', $leerpad->ID);
 $road_path_s = array(); 
 
-foreach($road_paths as $road_path)
-    array_push($road_path_s, $road_path->ID);
+foreach($road_paths as $value)
+    array_push($road_path_s, $value->ID);
 
 /*
 ** Courses - owned * 
@@ -85,7 +94,7 @@ $title_road_path = get_field('title_road_path', 'user_'.$user_id);
        <a href="/dashboard/teacher/list-road-path/" class="backtolistRoadPath">
            <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/bi_arrow-left.png" alt="">
        </a>
-       <h1 class="roadCourTitle">Road Cours Path</h1>
+       <h1 class="roadCourTitle"><?= $leerpad->post_title ?></h1>
    </div>
    <?php
         if(isset($_GET['message']))
@@ -103,6 +112,7 @@ $title_road_path = get_field('title_road_path', 'user_'.$user_id);
     <div class="contentItemsRoad">
         <form action="" method="POST">
         <ul id="sortable">
+            <input type="hidden" name="id" value="<?= $leerpad->ID ?>">
             <?php
                 foreach($road_paths as $key=>$course){
                     $type_course = get_field('course_type', $course->ID);
@@ -126,7 +136,7 @@ $title_road_path = get_field('title_road_path', 'user_'.$user_id);
                     }
                 ?>
                 <li class="ui-state-default" id="<?= $course->ID; ?>">
-                    <input type="hidden" name="course_id[]" value="<?= $course->ID?>">
+                    <input type="hidden" name="road_path[]" value="<?= $course->ID?>">
                     <div class="blockCardCoursRoad">
                         <img class="roadIcone" src="<?php echo get_stylesheet_directory_uri();?>/img/roadIcone.png" alt="">
                         <div class="dropdown btnTroisPoint">
@@ -171,7 +181,7 @@ $title_road_path = get_field('title_road_path', 'user_'.$user_id);
                 }
             ?>
         </ul>
-            <button type="submit" name="road_path_created" id="validatePath" class="btn row-select-submit">Refresh 🔃</button>
+            <button type="submit" name="road_path_edited" id="validatePath" class="btn row-select-submit">Refresh 🔃</button>
         </form>
     </div>
     <?php

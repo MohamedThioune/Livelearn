@@ -9,23 +9,40 @@
 $topic = (isset($_GET['topic'])) ? $_GET['topic'] : 0;
 $name_topic =  ($topic != 0) ? (String)get_the_category_by_ID($topic) : '';
 
+/*
+** Further informations category
+*/
+$title_category = get_field('title_category', 'category_'. $topic) ? get_field('title_category', 'category_'. $topic) : 'Leeg' ;
+$descriptor_category = get_field('descriptor_category', 'category_'. $topic) ? get_field('descriptor_category', 'category_'. $topic) : 'Geen inhoud' ;
+$partners_category = get_field('partners_category', 'category_'. $topic);
+var_dump($partners_category);
+$banner_category = get_field('banner_category', 'category_'. $topic) ? get_field('banner_category', 'category_'. $topic)['url'] : get_stylesheet_directory_uri() .'/ecosystemHeadImg.png' ;
 
-$users = get_users();
+/*
+** Leerpaden  owned *
+*/
+
+$args = array(
+    'post_type' => 'learnpath',
+    'post_status' => 'publish',
+    'posts_per_page' => -1
+);
+
+$leerpaden = get_posts($args);
 
 $road_paths = array();
 $topic_road_path = 0;
 $title_road_path = "";
 
-foreach($users as $element){
-    $road_path = get_field('road_path', 'user_' . $element->ID);
-    $topic_road_path = get_field('topic_road_path', 'user_' . $element->ID);
+foreach($leerpaden as $leerpad){
+    $road_path = get_field('road_path', $leerpad->ID);
+    $topic_road_path = get_field('topic_road_path', $leerpad->ID);
     if( $topic == $topic_road_path && empty($road_paths) ){
-        $expert_road_path = get_userdata($element->ID)->data->display_name;
+        $expert_road_path = get_userdata($leerpad->post_author)->data->display_name;
         $road_paths = $road_path;
-        $title_road_path = get_field('title_road_path', 'user_' . $element->ID);
+        $title_road_path = $leerpad->post_title;
     }
 }
-
 
 if($topic != 0){    
     $categories_topic = get_categories( array(
