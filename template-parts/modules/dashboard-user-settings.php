@@ -764,7 +764,7 @@ else if(isset($delete_awards)){
             </div>
 
             <div>
-                <button type="submit" name="change_password" class="btn button-info">SAVE</button>
+                <button type="submit" name="change_password" class="btn btn-info">SAVE</button>
             </div>
         </form>
     </div>
