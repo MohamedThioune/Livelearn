@@ -425,7 +425,7 @@ else if(isset($road_path_edited)){
 else if(isset($change_password)){
     $user = wp_get_current_user();
 
-    if(user_pass_ok($user->email, $old_password )) 
+    if(!user_pass_ok($user->email, $old_password )) 
         $message = "/dashboard/user/settings/?message_password=The password entered does not match your password";  
     else if($password != $password_confirmation)
         $message = "/dashboard/user/settings/?message_password=The two passwords are not identical";
