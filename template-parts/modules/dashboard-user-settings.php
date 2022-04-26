@@ -752,7 +752,7 @@ else if(isset($delete_awards)){
 
     <div class="contentBlockSetting">
         <h4 class="titleSetting">Password</h4>
-        <?php if(isset($_GET['message_password'])) echo "<span class='alert alert-info'>" . $_GET['message_password'] . "</span>" ; ?>
+        <?php if(isset($_GET['message_password'])) echo "<span class='alert alert-info'>" . $_GET['message_password'] . "</span>" ; ?><br>
         <form action="" method="POST">
             <div class="group-input-settings">
                 <label for="">Enter your actual password :</label>
