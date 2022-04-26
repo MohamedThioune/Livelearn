@@ -425,15 +425,15 @@ else if(isset($road_path_edited)){
 else if(isset($change_password)){
     $user = wp_get_current_user();
 
-    if($password != $password_confirmation)
-        $message = "/dashboard/user/settings/?message_password=The two passwords are not identical"; 
+    if(user_pass_ok($user->email, $old_password )) 
+        $message = "/dashboard/user/settings/?message_password=The password entered does not match your password";  
+    else if($password != $password_confirmation)
+        $message = "/dashboard/user/settings/?message_password=The two passwords are not identical";
     else 
         if(reset_password($user, $password ))
             $message = "/dashboard/user/settings/?message_password=Password updated successfully"; 
         else
             $message = "/dashboard/user/settings/?message_password=Something is wrong !"; 
-
-
 
     header("Location: ". $message);
 
