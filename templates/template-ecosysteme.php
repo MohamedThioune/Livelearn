@@ -16,7 +16,7 @@ $title_category = get_field('title_category', 'category_'. $topic) ? get_field('
 $descriptor_category = get_field('descriptor_category', 'category_'. $topic) ? get_field('descriptor_category', 'category_'. $topic) : 'Geen inhoud' ;
 $partners_category = get_field('partners_category', 'category_'. $topic);
 
-$banner_category = get_field('image', 'category_'. $topic) ? get_field('image', 'category_'. $topic) : get_stylesheet_directory_uri() .'/ecosystemHeadImg.png' ;
+$banner_category = get_field('image', 'category_'. $topic) ? get_field('image', 'category_'. $topic) : get_stylesheet_directory_uri() .'/img/ecosystemHeadImg.png' ;
 
 /*
 ** Leerpaden  owned *
@@ -238,12 +238,12 @@ foreach($global_blogs as $blog)
                         <div class="block-consultant">
                             <div class="block-initiative">
                                <div class="imgLivelearnLogo">
-                                   <img src="<?php echo $partners_category[0]['image']; ?>" alt="" >
+                                   <img src="<?php echo $partners_category[0]['image'] ? $partners_category[0]['image'] : get_stylesheet_directory_uri() . '/img/logo_right.png'; ?>" alt="" >
                                </div>
                             </div>
                             <div class="block-initiative block-initiative2">
                                <div class="imgLivelearnLogo">
-                                   <img src="<?php echo $partners_category[1]['image']; ?>" alt="" >
+                                   <img src="<?php echo $partners_category[1]['image'] ? $partners_category[1]['image'] : get_stylesheet_directory_uri() . '/img/Image49.png'; ?>" alt="" >
                                </div>                            
                             </div>
                         </div>

@@ -755,14 +755,16 @@ else if(isset($delete_awards)){
         <?php if(isset($_GET['message_password'])) echo "<span class='alert alert-success'>" . $_GET['message_password'] . "</span>" ; ?>
         <form action="" method="POST">
             <div class="group-input-settings">
+                <label for="">Enter your actual password :</label>
+                <input name="old_password" type="password" required>
                 <label for="">Define your new pasword :</label>
                 <input name="password" type="password" required>
                 <label for="">Confirm the pasword :</label>
                 <input name="password_confirmation" type="password" required>
             </div>
 
-            <div >
-                <button type="submit" name="change_password" class="button button-primary">SAVE</button>
+            <div>
+                <button type="submit" name="change_password" class="btn button-primary">SAVE</button>
             </div>
         </form>
     </div>
