@@ -753,15 +753,17 @@ else if(isset($delete_awards)){
     <div class="contentBlockSetting">
         <h4 class="titleSetting">Password</h4>
         <?php if(isset($_GET['message_password'])) echo "<span class='alert alert-success'>" . $_GET['message_password'] . "</span>" ; ?>
-        <div class="group-input-settings">
-            <label for="">Define your new pasword :</label>
-            <input name="password" type="password" required>
-            <label for="">Confirm the pasword :</label>
-            <input name="password_confirmation" type="password" required>
-        </div>
+        <form action="" method="POST">
+            <div class="group-input-settings">
+                <label for="">Define your new pasword :</label>
+                <input name="password" type="password" required>
+                <label for="">Confirm the pasword :</label>
+                <input name="password_confirmation" type="password" required>
+            </div>
 
-        <div class="">
-            <button type="submit" name="change_password" class="button-primary button-large">SAVE</button>
-        </div>
+            <div >
+                <button type="submit" name="change_password" class="button button-primary">SAVE</button>
+            </div>
+        </form>
     </div>
 </div>
