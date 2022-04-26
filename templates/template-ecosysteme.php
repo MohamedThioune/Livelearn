@@ -15,8 +15,11 @@ $name_topic =  ($topic != 0) ? (String)get_the_category_by_ID($topic) : '';
 $title_category = get_field('title_category', 'category_'. $topic) ? get_field('title_category', 'category_'. $topic) : 'Leeg' ;
 $descriptor_category = get_field('descriptor_category', 'category_'. $topic) ? get_field('descriptor_category', 'category_'. $topic) : 'Geen inhoud' ;
 $partners_category = get_field('partners_category', 'category_'. $topic);
-var_dump($partners_category);
+
+$image_category = get_field('image', 'category_'. $topic) ? get_field('image', 'category_'. $topic)['url'] : get_stylesheet_directory_uri() .'/ecosystemHeadImg.png' ;
+
 $banner_category = get_field('banner_category', 'category_'. $topic) ? get_field('banner_category', 'category_'. $topic)['url'] : get_stylesheet_directory_uri() .'/ecosystemHeadImg.png' ;
+
 
 /*
 ** Leerpaden  owned *
@@ -214,8 +217,8 @@ foreach($global_blogs as $blog)
             <div class="col-lg-6">
                 <div class="container">
                     <div class="content-head-ecosystem">
-                        <h1>Bijven leren en ontwikkelen, dat is ons streven | Join de community</h1>
-                        <p class="description-head">Het ecosysteem waar HR- en L&D-professionals op strategisch niveau samenkomen om invulling te geven aan vraagstukken omtrent workforce career management en het creëren van een high performing organisatie.</p>
+                        <h1><?= $title_category; ?>| Join de community</h1>
+                        <p class="description-head"><?= $descriptor_category; ?></p>
                         
                         <div class="groupBtnEcosysteme">
                             <div class="p-2 my-3">
@@ -239,24 +242,12 @@ foreach($global_blogs as $blog)
                             <div class="block-initiative">
                                <div class="imgLivelearnLogo">
                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_right.png" alt="" >
-                               </div><!--
-                                <div class="auteur-initiative">
-                                    <div class="imgAuteur">
-                                        <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Image53.png" alt="">
-                                    </div>
-                                    <p>Lieselotte van der <br> Meer <br> Principal <br> consultant</p>
-                                </div>-->
+                               </div>
                             </div>
                             <div class="block-initiative block-initiative2">
                                <div class="imgLivelearnLogo">
                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image49.png" alt="" >
-                               </div><!--
-                                <div class="auteur-initiative">
-                                    <div class="imgAuteur">
-                                        <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Image54.png" alt="">
-                                    </div>
-                                    <p>Daniel van der Kolk <br> Oprichter</p>
-                                </div>-->
+                               </div>                            
                             </div>
                         </div>
 
@@ -265,7 +256,7 @@ foreach($global_blogs as $blog)
             </div>
             <div class="col-lg-6">
                 <div class="img-head-ecosysteme">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/ecosystemHeadImg.png" alt="">
+                    <img src="<?php echo $image_category; ?>" alt="">
                 </div>
             </div>
 
