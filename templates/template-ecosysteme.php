@@ -16,7 +16,7 @@ $title_category = get_field('title_category', 'category_'. $topic) ? get_field('
 $descriptor_category = get_field('descriptor_category', 'category_'. $topic) ? get_field('descriptor_category', 'category_'. $topic) : 'Geen inhoud' ;
 $partners_category = get_field('partners_category', 'category_'. $topic);
 
-$banner_category = get_field('image', 'category_'. $topic) ? get_field('image', 'category_'. $topic)['url'] : get_stylesheet_directory_uri() .'/ecosystemHeadImg.png' ;
+$banner_category = get_field('image', 'category_'. $topic) ? get_field('image', 'category_'. $topic) : get_stylesheet_directory_uri() .'/ecosystemHeadImg.png' ;
 
 /*
 ** Leerpaden  owned *
