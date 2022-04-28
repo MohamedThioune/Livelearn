@@ -1,11 +1,10 @@
 <?php
 
-var_dump($_POST);
 
 $user_connected = get_current_user_id();
 $company_connected = get_field('company',  'user_' . $user_connected);
 $users_companie = array();
-
+$course = get_field('categories', $_POST['id_course']);
 $users = get_users();
 
 foreach($users as $user) {
@@ -82,7 +81,8 @@ $orders = wc_get_orders($order_args);
                   //  change to 1 to hide categores not having a single post
                 ) 
             );
-            $subtopics = array_merge($subtopics, $subtopic);      
+            $subtopics = array_merge($subtopics, $subtopic);  
+            //var_dump($subtopics);    
         }
     }
 
@@ -277,7 +277,8 @@ $orders = wc_get_orders($order_args);
                 </thead>
                 <tbody>
                     <?php 
-                    foreach($courses as $course){
+                    foreach($courses as $key=> $course){
+                        
                         /*
                             * Categories
                             */
@@ -333,7 +334,26 @@ $orders = wc_get_orders($order_args);
                         <td class="textTh"><?php echo $price; ?></td>
                         <!-- <td class="textTh" data-toggle="modal" data-target="#exampleModal"><?php echo $category; ?></td> -->
                         <td id= <?php echo $course->ID; ?> class="textTh"  data-toggle="modal" data-target="#exampleModal">
-                            <p id="result"></p>             
+                            
+                                <?php 
+                                    $course_subtopics = get_field('categories', $course->ID);
+                                    
+                                    $field='';
+                                    if($course_subtopics!=null){
+                                       
+                                    if (is_array($course_subtopics) || is_object($course_subtopics)){
+                                        foreach ($course_subtopics as $key =>  $course_subtopic) {
+                                               if ($course_subtopic!="" && $course_subtopic!="Array")
+                                                   $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                      }
+                                         $field=substr($field,0,-1);
+                                         echo $field;
+                                    
+                                }
+                            }
+                                    
+                                ?>
+                            </p>             
                         </td>
                         <td class="textTh"><?php echo $day; ?></td>
                         <td class="textTh" id="live">Live</td>
@@ -372,12 +392,12 @@ $orders = wc_get_orders($order_args);
             <div class="container">
                 <div class="row d-flex justify-content-center">
                     <div class="col-lg-4 d-flex justify-content-center align-items-center">
-                        <select name="value_subtopics[]" class="js-select2" id="sel" multiple="multiple">
+                        <select name="value_subtopics[]" id="value_subtopics" class="js-select2" id="sel" multiple="multiple">
                             <!-- <option value="substopic1" data-badge="">Option1</option> -->
                             <?php
                                                     //Subtopics
                                                     foreach($subtopics as $value){
-                                                        echo "<option value='" . $value->cat_name . "'>" . $value->cat_name . "</option>";
+                                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
                                                     }
                             ?>
                         </select>
@@ -388,11 +408,14 @@ $orders = wc_get_orders($order_args);
             </div>
 
             <div class="text-center">
-            <input hidden="hidden" id="hide" name="course" value="">
-            <button  class="btn text-white" id="btn_save"  style="background: #023356;"
+
+            <button   class="btn text-white" id="btn_save"  style="background: #023356;"
                 onclick="listboxresult();">Save</button>
             </div>
         </form>
+        <div id="test">
+
+        </div>
         </section>
                     
       </div>
@@ -400,9 +423,30 @@ $orders = wc_get_orders($order_args);
   </div>
 </div>
 <script>
- $('.textTh').click((e)=>{
-     var td=e.target.id
-     $('#hide').attr("value",td)
+    var id_course;
+    $('.textTh').click((e)=>{
+        id_course = e.target.id;
+    });
+ $('#btn_save').click((e)=>{
+     e.preventDefault();
+     var subtopics = $('#value_subtopics').val()
+     //alert(subtopics)
+    $.ajax({
+
+url:"/fetch-subtopics-course",
+method:"post",
+data:{
+    subtopics:subtopics,
+    id_course:id_course
+},
+dataType:"text",
+success: function(data){
+    console.log(data);
+    $('#'+id_course).html(data)
+    //$('#test').html(data);
+}
+});
+    // $('#hide').attr("value",td)
  })
 
 
@@ -431,7 +475,7 @@ $orders = wc_get_orders($order_args);
         "use strict";
         $(".js-select2").select2({
             closeOnSelect : false,
-            placeholder : "Click to select an option",
+            placeholder : "Click to select a subtopic",
             allowHtml: true,
             allowClear: true,
             tags: true // создает новые опции на лету
