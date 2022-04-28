@@ -1,3 +1,26 @@
+<?php
+$args = array(  
+        'post_type' => 'assessment',
+        'post_status' => 'publish',
+        //'posts_per_page' => 8, 
+        //'orderby' => 'title', 
+        'order' => 'ASC', 
+    );
+    
+    $loop = new WP_Query( $args ); 
+    $count=0;
+    while ( $loop->have_posts() ) : $loop->the_post(); 
+        $count++;
+        $post_id = get_the_ID();
+        $question=get_field( "question", $post_id );
+        //var_dump($question);
+        // print the_title(); 
+        // the_excerpt(); 
+    endwhile;
+
+
+    ?>
+
 <div class="content-assessment">
     <div class="contentAsessment">
         <h1 class="titleAssessment">Assessments</h1>
@@ -175,9 +198,9 @@
                 <div class="form-group formModifeChoose">
 
                     <select id="foo_select" class="dropdown multipleSelect3" form="foo_form" multiple data-placeholder="Click to select an Techno">
-                        <option value="null">PHP</option>
-                        <option value="null">Laravel</option>
-                        <option value="null">SQL</option>
+                        <option value="PHP">PHP</option>
+                        <option value="Laravel">Laravel</option>
+                        <option value="SQL">SQL</option>
                     </select>
                     <button class="btn btnStratModal" id="btnStart3">Continue</button>
                 </div>
@@ -186,37 +209,38 @@
 
             <div id="step3OverviewAssessmentBackend">
                 <div class="head3OverviewAssessment">
-                    <p class="assessmentNUmber">Question 1 / 30</p>
-                    <p class="assessmentTime">4 : 05</p>
+                    <p class="assessmentNUmber">Question 1 / <?php echo $count; ?></p>
+                    <p class="assessmentTime" id="backendTime"><?php echo $question[0]['timer'] ?></p>
                 </div>
-                <p class="chooseTechnoTitle">Select the correct sql query <span>(Multiple choose posible)</span></p>
+                <p class="chooseTechnoTitle"><?php echo $question[0]['wording'] ?><span> (Multiple choose posible)</span></p>
                 <div class="listAnswer">
                     <label class="container-checkbox">
                         <span class="numberAssassment">A.</span>
-                        <span class="assassment">SELECT * FROM table_name_0;</span>
+                        <span class="assassment"><?php echo $question[0]['responses'][0] ?></span>
                         <input type="checkbox">
                         <span class="checkmark"></span>
                     </label>
+
                     <label class="container-checkbox">
                         <span class="numberAssassment">B.</span>
-                        <span class="assassment">SELECT DISTINCT column1, column2, ... FROM table_name;</span>
+                        <span class="assassment"><?php echo $question[0]['responses'][1] ?></span>
                         <input type="checkbox">
                         <span class="checkmark"></span>
                     </label>
                     <label class="container-checkbox">
                         <span class="numberAssassment">C.</span>
-                        <span class="assassment">SELECT * FROM table_name_0;</span>
+                        <span class="assassment"> <?php echo $question[0]['responses'][2] ?></span>
                         <input type="checkbox">
                         <span class="checkmark"></span>
                     </label>
                     <label class="container-checkbox">
                         <span class="numberAssassment">D.</span>
-                        <span class="assassment">SELECT * FROM table_name_0;</span>
+                        <span class="assassment"><?php echo $question[0]['responses'][3] ?></span>
                         <input type="checkbox">
                         <span class="checkmark"></span>
                     </label>
                 </div>
-                <button class="btn btnStratModal" >Continue</button>
+                <button class="btn btnStratModal" id="btnBackend">Continue</button>
             </div>
         </div>
     </div>
@@ -765,6 +789,36 @@
 
 </div>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<script>
+    $(document).ready(function(){
+
+       var time=$('#backendTime').html();
+       time = time.split(':');
+       var minutes = time[0], seconds = time[1];
+         var interval = setInterval(function() {
+             if (seconds > 0 )
+                seconds = seconds - 1;
+              if (minutes >0) {
+                if (seconds <= 0) {
+                    minutes = minutes - 1;
+                    seconds = 59;
+                }
+              }
+              if (seconds < 10 && seconds > 0) {
+                    seconds = "0" + seconds;
+                }
+              else
+              if (minutes <= 0 && seconds <= 0) {
+                $('#backendTime').html("00 : 00");
+                clearInterval(interval);
+              }
+              $('#backendTime').html(minutes + ":" + seconds);
+            }, 1000);
+        $('#btnBackend').click(()=>{
+            alert('backend');            
+        });
+    });
+</script>
 <script id="rendered-js" >
     $(document).ready(function () {
         //Select2
