@@ -5541,8 +5541,12 @@ nav .show{
     color: #FFFFFF !important;
 }
 .headContentRoad {
-    padding: 20px 0;
+    padding: 5px 0 0px;
     align-items: center;
+}
+
+.headRoad{
+    margin-bottom: 33px;
 }
 td .blockCardCoursRoad {
     padding: 0;
@@ -5688,9 +5692,9 @@ button:focus {
 .contentCardAssessment{
     display: flex;
     flex-wrap: wrap;
+    display: flex;
 }
 .cardAssessement {
-    display: flex;
     background: #FFFFFF;
     border: 1px solid #FFFFFF;
     box-shadow: 0px 0px 0px 1px rgb(0 0 0 / 10%);
@@ -5699,7 +5703,10 @@ button:focus {
     width: 32%;
     margin-right: 10px;
     margin-bottom: 20px;
-    cursor: pointer;
+}
+.bodyCardAssessment{
+    display: flex;
+    margin-bottom: 20px;
 }
 .contentImgAssessment img {
     width: 50px;
@@ -6393,7 +6400,7 @@ tbody{
 }
 .categoriesRoadPath p{
     margin-bottom: 0;
-    font-size: 15px;
+    font-size: 14px;
 }
 .footer-road-path{
     display: flex;
@@ -6473,6 +6480,537 @@ tbody{
 .liveOverBlock {
     padding-top: 100px;
 }
+.footerCardSkillsssessment{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.btnDetailsAssessment{
+    border: 1px solid #043356;
+    font-size: 14px;
+    padding: 4px 15px !important;
+}
+.btnGetStartAssessment {
+    background: #49aa97;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 4px 13px;
+    border-radius: 5px;
+}
+.btnGetStartAssessment:hover{
+    color: #FFFFFF;
+}
+.roundBlack img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.title-assessment-test{
+    color: #333;
+    font-size: 22px;
+    font-weight: 500;
+    border-bottom: 3px solid #333;
+    width: fit-content;
+    padding-right: 16px;
+}
+.ulAssessment li {
+    list-style: circle;
+    color: #5b5b5b;
+    font-size: 15px;
+    margin-left: 33px;
+    margin-bottom: 13px;
+}
+.ulAssessment li::marker {
+    font-size: 25px;
+    color: #043356;
+}
+.description-assessment-test{
+    color: #333;
+    font-size: 15px;
+}
+.ulAssessment{
+    margin-bottom: 25px;
+}
+.blockOneOver .btnGetStartAssessment {
+    font-size: 19px;
+    font-weight: 500;
+    padding: 6px 25px;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+.blockElementCardDetailLive{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background: #e0eff4;
+    padding: 26px 10px 0px;
+    position: relative;
+}
+.blockElementCardDetailLive .CarddetailLive{
+    display: flex;
+    width: 48%;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+.tg-card{
+    text-align: center;
+}
+.tg-card img{
+    width: 26px;
+    margin-bottom: 5px;
+}
+.tg-card .tg-title {
+    color: #043356;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+.tg-element {
+    color: #181818;
+    font-size: 15px;
+    margin-bottom: 0;
+}
+.horizontalHr{
+    position: absolute;
+    height: 100%;
+    border-top: 0;
+    border-left: 1px solid rgba(0,0,0,.1);
+    left: 50%;
+    top: -15px;
+}
+.verticalHr{
+    position: absolute;
+    width: 100%;
+    border-top: 1px solid rgba(0,0,0,.1);
+    top: 41%;
+    left: 0px;
+}
+.headPoadCast{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.headPoadCast h1{
+    font-size: 28px;
+    color: #043356;
+    margin-bottom: 0;
+}
+.btnPoadCast{
+    background-color: #043356;
+    color: #FFFFFF;
+    padding: 7px 15px;
+    border-radius: 9px;
+}
+.cardPoadCast .imgPoadCast{
+    width: 100%;
+    height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.cardPoadCast .imgPoadCast img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.cardPoadCast .playbox {
+    margin-right: 0;
+    height: 40px;
+    margin-top: -35px;
+    background: url("img/Subtract.svg") no-repeat;
+    position: relative;
+    z-index: 22;
+    width: 100%;
+}
+.cardPoadCast .playbox a{
+    position: absolute;
+    left: 25px;
+    bottom: 12px;
+    z-index: 2;
+    display: block;
+    width: 54px;
+    height: 54px;
+    border-radius: 48px;
+    background-color: #fff;
+    text-align: center;
+}
+.cardPoadCast .playbox a::after {
+    position: absolute;
+    right: 19px;
+    top: 21px;
+    z-index: 1;
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-left: 13px solid #043356;
+    transition: all .3s;
+}
+.cardPoadCast {
+    background: white;
+    margin-bottom: 28px;
+    position: relative;
+}
+.cardPoadCast:hover .btnRemovePodcast{
+    opacity: 1;
+}
+.post-content-podCast{
+    padding: 4px 15px;
+}
+.post-content-podCast .post-title{
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+.post-content-podCast ul{
+    display: flex;
+    padding-left: 20px;
+}
+.post-content-podCast li {
+    list-style: disc;
+    margin-right: 40px;
+}
+.post-content-podCast .description {
+    font-size: 15px;
+    margin-top: 10px;
+}
+.post-content-podCast li ::marker {
+    color: #043356;
+}
+.btnRemovePodcast{
+    position: absolute;
+    background: #ff0000e0;
+    color: white;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 2px 15px;
+    top: 10px;
+    right: 10px;
+    opacity: 0;
+}
+.audioBar{
+    display: flex;
+    z-index: 9000;
+    color: #ffffff;
+    background: #040d1c;
+    align-items: center;
+    height: 120px;
+    width: 100%;
+    max-width: 100%;
+    float: left;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    font-size: 16px;
+    transition: all .2s ease-in-out;
+}
+.codeless-player-toggle{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 45px;
+    background: rgba(255,255,255,.1);
+    transition: all .2s ease-in-out;
+    padding: 5px 10px;
+    text-decoration: none;
+    border: none;
+    width: 45px;
+}
+.codeless-player-toggle img{
+    width: 90%;
+    height: 90%;
+    object-fit: cover;
+}
+.codeless-player-nav{
+    display: flex;
+}
+.codeless-player-info {
+    display: flex;
+    align-items: center;
+    width: 40%;
+}
+.codeless-player-nav button {
+    -webkit-appearance: button;
+    width: 44px;
+    height: 44px;
+    border-radius: 100%;
+    text-align: center;
+    background: rgba(255,255,255,.1);
+    color: white;
+    border: none;
+    font-size: 23px;
+}
+.codeless-player-nav .previous {
+    margin-right: 15px;
+}
+.codeless-player-content{
+    text-align: initial;
+    margin-left: 23px;
+}
+.codeless-player-content .categorie{
+    margin: 0;
+    font-size: 14px;
+    color: #00A89D;
+}
+.codeless-player-content h4 {
+    margin-bottom: 5px;
+}
+.codeless-player-audio {
+    width: 58%;
+}
+.codeless-player-audio audio{
+    width: 100%;
+}
+.ulpodcast span{
+    background: #47a99e;
+    padding: 6px 15px;
+    border-radius: 25px;
+    color: #fff;
+    font-size: 13px;
+    margin-right: 12px;
+}
+.ulpodcast li {
+    list-style: none;
+    margin-bottom: 25px;
+}
+.ulpodcast li a{
+    font-weight: 500;
+    font-size: 17px;
+}
+.ulpodcast{
+    padding: 25px 40px;
+    border-radius: 15px;
+    background-size: cover;
+    box-shadow: 0 0 10px 0px rgb(22 12 96 / 5%);
+    margin-top: 15px;
+}
+.elementWeb a:hover{
+    color: unset !important;
+}
+.less .codeless-element{
+    display: none;
+}
+.less {
+    height: 45px;
+    width: 45px;
+    right: 0;
+}
+#up-chevron{
+    display: none;
+}
+.less #up-chevron{
+    display: block;
+}
+.less #down-chevron{
+    display: none;
+}
+.content-road-path h1{
+    font-size: 30px;
+    color: #043356;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.subTitleRoad {
+    font-size: 25px;
+    font-weight: 500;
+    color: #42454d;
+    margin-bottom: 18px;
+}
+.subTitleRoad a{
+    text-decoration: underline;
+    color: #00A89D;
+}
+.blockCardOpleidingen{
+    margin-bottom: 30px;
+}
+
+@media not all and (min-resolution:.001dpcm)
+{ @supports (-webkit-appearance:none) and (stroke-color:transparent) {
+
+    .cardKraam2 {
+        border: 0px solid lightgrey !important;
+    }
+}}
+
+.headHulpbox{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-top: 8px;
+}
+.searchElementPath{
+    width: fit-content;
+    position: relative;
+}
+.searchElementPath img{
+    position: absolute;
+    right: 15px;
+    top: 13px;
+    width: 18px;
+}
+.searchElementPath input{
+    padding: 10px 15px;
+    background: white;
+    border: 1px solid lightgrey !important;
+    border-radius: 13px;
+    min-width: 270px;
+}
+.content-road-path-card{
+    position: relative;
+    width: 25%;
+    padding: 0 13px;
+    margin-bottom: 30px;
+}
+.swiper-slide5 .content-road-path-card{
+    width: 100%;
+    padding: 0;
+    margin-bottom: 0px;
+}
+.swiper-slide5 {
+    width: 25% !important;
+    box-shadow: 0px 0px 16px rgb(0 0 0 / 10%);
+    border-radius: 10px;
+    border-bottom: 2px solid rgb(0 0 0 / 10%);
+    height: auto !important;
+    background: white;
+}
+.roadpathBlockNumber {
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    right: 0px;
+    color: rgb(214, 224, 223);
+    width: 50%;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    flex-wrap: wrap;
+    background: rgb(2 51 86 / 95%);
+    padding: 5px 12px;
+    border-radius: 9px;
+}
+.roadpathBlockNumber img{
+    width: 30px !important;
+    height: fit-content !important;
+}
+.roadpathBlockNumber p{
+    font-weight: bold;
+    font-size: 20px;
+    width: 100%;
+    margin-bottom: 9px;
+}
+.element-content-roadPath{
+    display: flex;
+    flex-wrap: wrap;
+}
+.element-content-road-path-card{
+    width: 100%;
+    height: 135px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    overflow: hidden;
+}
+.element-content-road-path-card img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.content-road-path-card .imgCoursProd {
+    width: 40px;
+    height: 40px;
+    margin-top: 0;
+    margin-bottom: 0;
+    overflow: hidden;
+}
+
+.description-content-roadPath {
+    padding: 13px 12px;
+    border: 1px solid lightgrey !important;
+    border-radius: 0;
+}
+.description-content-roadPath .imgTitleCours {
+    display: flex;
+    align-items: center;
+    margin-bottom: 13px;
+}
+.description-content-roadPath .nameCoursProd {
+    color: #043356;
+    font-size: 15px;
+    font-weight: 600;
+    margin-right: 10px;
+    margin-bottom: 0;
+    margin-top: 0px;
+    margin-left: 15px;
+}
+.btnDiscover {
+    font-size: 15px;
+    padding: 3px 13px;
+    background: #47a99e;
+    color: white;
+    font-weight: 500;
+    border-radius: 5px;
+    opacity: 0;
+}
+.content-road-path-card:hover .btnDiscover{
+    color: white !important;
+    opacity: 1;
+}
+.play-road-element .title{
+    font-size: 15px;
+    margin-bottom: 0;
+    font-weight: 600;
+    color: #043356;
+}
+.play-road-element .number{
+    font-size: 15px;
+    margin-bottom: 0;
+    color: #043356;
+    font-weight: 500;
+}
+.content-play-road-element{
+    display: flex;
+    margin: 0 -24px 10px;
+    padding: 0 24px 12px;
+    border-bottom: 1px solid #c3c3c3;
+}
+.content-play-road-element .secondBlock {
+    width: 69%;
+}
+.content-play-road-element .image-play-road{
+    width: 29%;
+    height: 88px;
+    margin-right: 10px;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.content-play-road-element .image-play-road img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.name-course-road{
+    font-weight: 500;
+    font-size: 15px;
+    color: #0e1851;
+    margin-bottom: 9px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 45px;
+}
+.play-road-element{
+    background: #e0eff4;
+    padding: 24px;
+    margin-top: 52px;
+    border-radius: 10px;
+    height: 319px;
+    overflow-y: scroll;
+}
+
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -8308,6 +8846,88 @@ tbody{
     }
    .modal-dialog-course {
         width: unset !important;
+    }
+    .content-play-road-element {
+        display: flex;
+        margin: 0px -20px 10px;
+        padding: 0 10px 12px;
+        border-bottom: 1px solid #c3c3c3;
+    }
+    .play-road-element {
+        padding: 18px;
+    }
+    .headHulpbox {
+        display: block;
+    }
+    .content-road-path h1 {
+        font-size: 25px;
+        text-align: left;
+        margin-bottom: 15px !important;
+        padding: 0 15px;
+    }
+    .searchElementPath input {
+        margin: 0 15px;
+    }
+    .content-road-path-card {
+        width: 50%;
+        padding: 0 8px;
+        margin-bottom: 20px;
+    }
+    .element-content-road-path-card {
+        height: 110px;
+    }
+    .roadpathBlockNumber p {
+        font-size: 16px;
+    }
+    .roadpathBlockNumber img {
+        width: 25px !important;
+    }
+    .content-road-path-card .imgCoursProd {
+        width: 30px;
+        height: 30px;
+        margin-top: 0;
+        margin-bottom: 0;
+        overflow: hidden;
+    }
+    .btnDiscover {
+        color: white !important;
+        opacity: 1;
+        margin-top: 13px;
+        font-size: 13px;
+    }
+    .description-content-roadPath .imgTitleCours {
+        display: block;
+    }
+    .swiper-slide5 {
+        width: 65% !important;
+    }
+    .audioBar {
+        height: 180px;
+    }
+    .codeless-player-info {
+        display: block;
+        align-items: center;
+        width: 43%;
+    }
+    .codeless-player-nav {
+        margin-bottom: 10px;
+        padding-left: 15px;
+    }
+    .codeless-player-content {
+        margin-left: 15px;
+    }
+    .codeless-player-content h4 {
+        margin-bottom: 5px;
+        font-size: 16px;
+    }
+    .contentPoadCast {
+        padding: 10px;
+    }
+    .headPoadCast h1 {
+        font-size: 25px;
+    }
+    .btnPoadCast {
+        font-size: 13px;
     }
 
 
