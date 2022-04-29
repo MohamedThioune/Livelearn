@@ -44,14 +44,7 @@
                 </a>
                 <a href="?func=add-assessment" class="cardCours cardCoursInitial" >
                     <p class="contentText">
-                        <b>Assessment</b><br />
-                        <small>Coming soon!</small>
-                    </p>
-                </a>
-                <a href="?func=add-assessment" class="cardCours cardCoursInitial" >
-                    <p class="contentText">
-                        <b>Assessment</b><br />
-                        <small></small>
+                        <b>Assessment</b>
                     </p>
                 </a>
                 <a href="?func=add-white&type=reading" class="cardCours cardCoursInitial" >
@@ -72,13 +65,16 @@
                         <small>Coming soon!</small>
                     </p>
                 </a>
-                <div class="cardCoursGlocal">
-                    <a href="/dashboard/teacher/list-road-path" class="cardCours cardCoursInitial" >
-                        <p class="contentText">
-                            <b>Road Path</b>
-                        </p>
-                    </a>
-                </div>
+                <a href="/dashboard/teacher/list-road-path" class="cardCours cardCoursInitial" >
+                    <p class="contentText">
+                        <b>Road Path</b>
+                    </p>
+                </a>
+                <a href="" class="cardCours cardCoursInitial" >
+                    <p class="contentText">
+                        <b>Podcast</b>
+                    </p>
+                </a>
             </div>
         </div>
 

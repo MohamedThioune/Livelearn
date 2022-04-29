@@ -130,6 +130,24 @@ jQuery(function($){
         $(".btnUp").hide();
     });
 
+    // for product podcast
+    $(".codeless-player-toggle").click(function() {
+        $(".audioBar").toggleClass("less");
+    });
+
+    //focus
+
+    $(function(){
+        $("#inputSearchElementPath").focus(function(){
+            $('.searchElementPath img').hide();
+        });
+
+        $("#inputSearchElementPath").focusout(function(){
+            $('.searchElementPath img').show();
+        });
+    })
+
+
     // Pour first modal after login
     $(".btnBaangerichte").click(function() {
         $(".subtopicBaangerichte").show();

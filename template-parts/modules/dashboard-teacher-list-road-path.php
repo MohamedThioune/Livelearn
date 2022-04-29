@@ -292,7 +292,7 @@ $title_road_path = get_field('title_road_path', 'user_'.$user_id);
     </div>
 
     <?php
-    if(empty($road_paths))
+    if(!empty($road_paths))
         echo '<li class="ui-state-default" id="1"><div class="blockCardCoursRoad"><h6>Geen selectie, maak er een 😉</h6></div></li>';
 
     else{
