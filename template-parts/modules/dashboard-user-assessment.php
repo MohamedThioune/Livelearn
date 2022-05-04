@@ -5,74 +5,104 @@
             <p class="descriptionAssessment">Stand out from other job seekers by completing an assessment ! Livelearn will feature top performers to employers</p>
         </center>
         <div class="contentCardAssessment">
-            <div class="cardAssessement" data-target="#ModalBackEnd" data-toggle="modal">
-                <div class="contentImgAssessment">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/backend1.png">
-                </div>
-                <div>
-                    <p class="textMutliSelect">Multiple Choice Quiz</p>
-                    <p class="categoryCours">Back-End Web</p>
-                    <p class="elementCategory">Algorithms, data structures, databases, HTTP, web frameworks</p>
-                    <div class="d-flex align-items-center">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/mdi_timer-sand.png">
-                        <p class="timeAssessement">25 Minutes</p>
+            <div class="cardAssessement" >
+                <div class="bodyCardAssessment">
+                    <div class="contentImgAssessment">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/backend1.png">
                     </div>
+                    <div>
+                        <p class="textMutliSelect">Multiple Choice Quiz</p>
+                        <p class="categoryCours">Back-End Web</p>
+                        <p class="elementCategory">Algorithms, data structures, databases, HTTP, web frameworks</p>
+                        <div class="d-flex align-items-center">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/mdi_timer-sand.png">
+                            <p class="timeAssessement">25 Minutes</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="footerCardSkillsssessment">
+                    <a href="/detail-assessment" class="btn btnDetailsAssessment">Details</a>
+                    <button class="btn btnGetStartAssessment" data-target="#ModalBackEnd" data-toggle="modal">Get Started</button>
                 </div>
             </div>
-            <div class="cardAssessement" data-target="#ModalFrontEnd" data-toggle="modal">
-                <div class="contentImgAssessment">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/front1.png">
-                </div>
-                <div>
-                    <p class="textMutliSelect">Multiple Choice Quiz</p>
-                    <p class="categoryCours">Front-end</p>
-                    <p class="elementCategory">React, HTML, CSS, JavaScript & DOM, HTTP</p>
-                    <div class="d-flex align-items-center">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/mdi_timer-sand.png">
-                        <p class="timeAssessement">25 Minutes</p>
+          <div class="cardAssessement">
+              <div class="bodyCardAssessment">
+                  <div class="contentImgAssessment">
+                      <img src="<?php echo get_stylesheet_directory_uri();?>/img/front1.png">
+                  </div>
+                  <div>
+                      <p class="textMutliSelect">Multiple Choice Quiz</p>
+                      <p class="categoryCours">Front-end</p>
+                      <p class="elementCategory">React, HTML, CSS, JavaScript & DOM, HTTP</p>
+                      <div class="d-flex align-items-center">
+                          <img src="<?php echo get_stylesheet_directory_uri();?>/img/mdi_timer-sand.png">
+                          <p class="timeAssessement">25 Minutes</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="footerCardSkillsssessment">
+                  <a href="/detail-assessment" class="btn btnDetailsAssessment">Details</a>
+                  <button class="btn btnGetStartAssessment"  data-target="#ModalFrontEnd" data-toggle="modal">Get Started</button>
+              </div>
+            </div>
+            <div class="cardAssessement" >
+                <div class="bodyCardAssessment">
+                    <div class="contentImgAssessment">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/fullstack1.png">
                     </div>
+                    <div>
+                        <p class="textMutliSelect">Multiple Choice Quiz</p>
+                        <p class="categoryCours">Full-stack</p>
+                        <p class="elementCategory">Front-end and back-end web development</p>
+                        <div class="d-flex align-items-center">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/mdi_timer-sand.png">
+                            <p class="timeAssessement">25 Minutes</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="footerCardSkillsssessment">
+                    <a href="/detail-assessment" class="btn btnDetailsAssessment">Details</a>
+                    <button class="btn btnGetStartAssessment" data-target="#ModalFull" data-toggle="modal">Get Started</button>
                 </div>
             </div>
-            <div class="cardAssessement" data-target="#ModalFull" data-toggle="modal">
-                <div class="contentImgAssessment">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/fullstack1.png">
-                </div>
-                <div>
-                    <p class="textMutliSelect">Multiple Choice Quiz</p>
-                    <p class="categoryCours">Full-stack</p>
-                    <p class="elementCategory">Front-end and back-end web development</p>
-                    <div class="d-flex align-items-center">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/mdi_timer-sand.png">
-                        <p class="timeAssessement">25 Minutes</p>
+            <div class="cardAssessement">
+                <div class="bodyCardAssessment">
+                    <div class="contentImgAssessment">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/android1.png">
                     </div>
+                    <div>
+                        <p class="textMutliSelect">Multiple Choice Quiz</p>
+                        <p class="categoryCours">Android</p>
+                        <p class="elementCategory">Android SDK, Kotlin, and Java</p>
+                        <div class="d-flex align-items-center">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/mdi_timer-sand.png">
+                            <p class="timeAssessement">25 Minutes</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="footerCardSkillsssessment">
+                    <a href="/detail-assessment" class="btn btnDetailsAssessment">Details</a>
+                    <button class="btn btnGetStartAssessment" data-target="#ModalAndroid" data-toggle="modal">Get Started</button>
                 </div>
             </div>
-            <div class="cardAssessement" data-target="#ModalAndroid" data-toggle="modal">
-                <div class="contentImgAssessment">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/android1.png">
-                </div>
-                <div>
-                    <p class="textMutliSelect">Multiple Choice Quiz</p>
-                    <p class="categoryCours">Android</p>
-                    <p class="elementCategory">Android SDK, Kotlin, and Java</p>
-                    <div class="d-flex align-items-center">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/mdi_timer-sand.png">
-                        <p class="timeAssessement">25 Minutes</p>
+            <div class="cardAssessement" >
+                <div class="bodyCardAssessment">
+                    <div class="contentImgAssessment">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/apple1.png">
+                    </div>
+                    <div>
+                        <p class="textMutliSelect">Multiple Choice Quiz</p>
+                        <p class="categoryCours">IOS</p>
+                        <p class="elementCategory">iOS SDK, Swift, and Objective-C</p>
+                        <div class="d-flex align-items-center">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/mdi_timer-sand.png">
+                            <p class="timeAssessement">25 Minutes</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="cardAssessement" data-target="#ModalIOS" data-toggle="modal">
-                <div class="contentImgAssessment">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/apple1.png">
-                </div>
-                <div>
-                    <p class="textMutliSelect">Multiple Choice Quiz</p>
-                    <p class="categoryCours">IOS</p>
-                    <p class="elementCategory">iOS SDK, Swift, and Objective-C</p>
-                    <div class="d-flex align-items-center">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/mdi_timer-sand.png">
-                        <p class="timeAssessement">25 Minutes</p>
-                    </div>
+                <div class="footerCardSkillsssessment">
+                    <a href="/detail-assessment" class="btn btnDetailsAssessment">Details</a>
+                    <button class="btn btnGetStartAssessment" data-target="#ModalIOS" data-toggle="modal">Get Started</button>
                 </div>
             </div>
         </div>
