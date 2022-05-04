@@ -6514,24 +6514,7 @@ tbody{
     width: fit-content;
     padding-right: 16px;
 }
-.ulAssessment li {
-    list-style: circle;
-    color: #5b5b5b;
-    font-size: 15px;
-    margin-left: 33px;
-    margin-bottom: 13px;
-}
-.ulAssessment li::marker {
-    font-size: 25px;
-    color: #043356;
-}
-.description-assessment-test{
-    color: #333;
-    font-size: 15px;
-}
-.ulAssessment{
-    margin-bottom: 25px;
-}
+
 .blockOneOver .btnGetStartAssessment {
     font-size: 19px;
     font-weight: 500;
@@ -7011,6 +6994,199 @@ tbody{
     overflow-y: scroll;
 }
 
+
+/* Tabs */
+.customTabs .tabs {
+    border-bottom: 1px solid #cdcfd5;
+    width: fit-content;
+    width: 100%;
+}
+.customTabs ul#tabs-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0 5px;
+    overflow: hidden;
+    border-bottom: 1px solid #cdcfd5;
+}
+.customTabs ul#tabs-nav li {
+    float: left;
+    font-weight: bold;
+    margin-right: 2px;
+    padding: 0px 10px;
+    cursor: pointer;
+}
+.customTabs ul#tabs-nav li:hover,
+ul#tabs-nav li.active {
+    color: #043356;
+    border-bottom: 1px solid #043356;
+}
+
+.customTabs #tabs-nav li a {
+    text-decoration: none;
+    color: #1d1d1d;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 15px 20px;
+}
+.customTabs ul#tabs-nav li:hover, ul#tabs-nav li.active a {
+    color: #043356 !important;
+    font-weight: 600;
+    font-size: 18px;
+}
+.customTabs #tabs-content {
+    padding-top: 30px;
+}
+.customTabs #tabs-content h2{
+    font-size: 20px;
+    margin-bottom: 25px;
+    color: #3b3b3b;
+    font-weight: 400;
+}
+.CardBlockEvenement {
+    box-shadow: 0 0 5px #707070 !important;
+}
+.blockTextGlovale button {
+    font-size: 14px;
+    padding: 6px 5px;
+    width: fit-content;
+}
+.blockTextGlovale {
+    margin-bottom: 20px;
+}
+.review-info-card{
+    border: 0.2px solid #cdcfd5cf;
+    border-radius: 6px;
+    padding: 25px 25px;
+    margin-bottom: 25px;
+}
+.review-user-mini-profile .user-photo {
+    width: 45px;
+    height: 45px;
+    margin-right: 15px;
+    overflow: hidden;
+    border-radius: 100%;
+}
+.review-user-mini-profile .user-photo img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.review-info-card .review-user-mini-profile{
+    display: flex;
+    margin-bottom: 14px;
+}
+.user-name p{
+    color: #212327;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+.reviewsText {
+    color: #40434a;
+    font-size: 16px;
+    margin-bottom: 0;
+}
+
+.rating-element {
+
+}
+.rating-element #rating-container {
+    display: inline-block;
+    border-radius: 8px;
+    margin: 0px auto 0px -7px;
+}
+.rating-element #rating-container > div {
+    float: left;
+    padding: 0px 1px;
+    font-size: 22px;
+    color: #a9a9a9;
+    cursor: pointer;
+}
+.rating-element #rating-container > div.active,
+.rating-element #rating-container > div.selected{
+    color: #fcd000;
+}
+.rating-stats{
+    display: flex;
+    margin-top: -15px;
+    align-items: center;
+}
+.rating-stats .hours-element{
+    color: #615c66;
+    font-size: 15px;
+    margin-left: 8px;
+    margin-bottom: 0;
+}
+.block2evens {
+    width: 100%;
+}
+#tabs-content .form-group textarea{
+    border: 1px solid #ced4da;
+}
+
+.btn-sendRating{
+    background: #043356;
+    color: white;
+    padding: 8px 30px;
+    margin-bottom: 40px;
+    margin-top: 15px;
+    font-weight: 600;
+}
+.btn-sendRating:hover{
+    color: white !important;
+}
+
+
+.tab-content ul {
+    display:flex;
+    align-items:center;
+}
+
+.tab-content li {
+    display:block;
+    cursor:pointer;
+    font-size:25px;
+}
+
+.tab-content li:after {
+    content: "\2606";
+}
+
+.tab-content .hover:after,
+.tab-content .selected:after {
+    content: "\2605";
+    color: #ffce08;
+}
+.tab-content .disabled:after {
+    content: "\2606";
+}
+.tab-content .disabled:after, .hover:after {
+    content: "\2606";
+    color: unset;
+}
+
+.ulAssessment li {
+    list-style: circle !important;
+    color: #5b5b5b !important;
+    font-size: 15px !important;
+    margin-left: 33px !important;
+    margin-bottom: 13px;
+}
+.ulAssessment li:after {
+    content: unset !important;
+}
+.ulAssessment li::marker {
+    font-size: 25px !important;
+    color: #043356;
+}
+.description-assessment-test{
+    color: #333;
+    font-size: 15px;
+}
+.ulAssessment{
+    margin-bottom: 25px;
+    display: block !important;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -7096,9 +7272,6 @@ tbody{
     .col-lg-2{
         flex: unset !important;
         max-width: unset !important;
-    }
-    .col-sm-12{
-        width: 100% !important;
     }
     .videoUpload {
         display: block;
@@ -8928,6 +9101,18 @@ tbody{
     }
     .btnPoadCast {
         font-size: 13px;
+    }
+    .customTabs #tabs-nav li a {
+        font-size: 14px;
+        font-weight: 400;
+        padding: 10px 10px;
+    }
+    .col-sm-12{
+        width: 100% !important;
+    }
+    .col-6 {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
     }
 
 

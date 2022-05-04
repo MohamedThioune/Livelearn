@@ -236,6 +236,131 @@
                             <p>In de WordPress webshop training verkrijg je diepgaand inzicht in hoe je een WordPress webshop kunt creëren. Van het installeren en implementeren van de WooCommerce plug-in en e-commerce thema’s tot het gebruik van voorbeeldbestanden; alle belangrijke elementen voor het bouwen en beheren van een WordPress webshop passeren de revue.</p>
                         </div>
                     </div>
+                    <div class="customTabs">
+                        <div class="tabs">
+                            <ul id="tabs-nav">
+                                <li><a href="#tab2">Reviews</a></li>
+                                <li><a href="#tab3">Add Reviews</a></li>
+                            </ul> <!-- END tabs-nav -->
+                            <div id="tabs-content">
+                                <div id="tab2" class="tab-content">
+                                    <h2>Reviews</h2>
+                                    <div class="review-info-card">
+                                        <div class="review-user-mini-profile">
+                                            <div class="user-photo">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <div class="user-name">
+                                                <p>Daniel</p>
+                                                <div class="rating-element">
+                                                    <div class="rating-stats">
+                                                        <div id="rating-container-custom">
+                                                            <ul class="list-show">
+                                                                <li class="selected"></li>
+                                                                <li class="selected"></li>
+                                                                <li class="selected"></li>
+                                                                <li class="disabled"></li>
+                                                                <li class="disabled"></li>
+                                                            </ul>
+                                                        </div>
+                                                        <p class="hours-element">18 hours ago</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="reviewsText">Half the lanes don't work! But it's decent for the price. Waited over 30 minutes for our drinks!!!! But yes I recommend it. It's not great but it's OK I guess</p>
+
+                                    </div>
+                                    <div class="review-info-card">
+                                        <div class="review-user-mini-profile">
+                                            <div class="user-photo">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <div class="user-name">
+                                                <p>Daniel</p>
+                                                <div class="rating-element">
+                                                    <div class="rating-stats">
+                                                        <div id="rating-container">
+                                                            <ul class="list-show">
+                                                                <li class="selected"></li>
+                                                                <li class="selected"></li>
+                                                                <li class="selected"></li>
+                                                                <li class="disabled"></li>
+                                                                <li class="disabled"></li>
+                                                            </ul>
+                                                        </div>
+                                                        <p class="hours-element">18 hours ago</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="reviewsText">Half the lanes don't work! But it's decent for the price. Waited over 30 minutes for our drinks!!!! But yes I recommend it. It's not great but it's OK I guess</p>
+
+                                    </div>
+                                    <div class="review-info-card">
+                                        <div class="review-user-mini-profile">
+                                            <div class="user-photo">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
+                                            </div>
+                                            <div class="user-name">
+                                                <p>Daniel</p>
+                                                <div class="rating-element">
+                                                    <div class="rating-stats">
+                                                        <div id="rating-container">
+                                                            <ul class="list-show">
+                                                                <li class="selected"></li>
+                                                                <li class="selected"></li>
+                                                                <li class="selected"></li>
+                                                                <li class="disabled"></li>
+                                                                <li class="disabled"></li>
+                                                            </ul>
+                                                        </div>
+                                                        <p class="hours-element">18 hours ago</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="reviewsText">Half the lanes don't work! But it's decent for the price. Waited over 30 minutes for our drinks!!!! But yes I recommend it. It's not great but it's OK I guess</p>
+
+                                    </div>
+                                </div>
+                                <div id="tab3" class="tab-content">
+                                    <h2>Add review</h2>
+                                    <form>
+                                        <div class="row">
+                                            <div class="form-group col-6">
+                                                <label for="exampleInputEmail1">Name</label>
+                                                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Name">
+                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                            </div>
+                                            <div class="form- col-6">
+                                                <label for="exampleInputEmail1">Email address</label>
+                                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="rating-container-custom">Rating</label>
+                                            <div id="rating-container-custom">
+                                                <ul class="list">
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                    <li></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1">Feedback</label>
+                                            <textarea name="" id=""  rows="10"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-sendRating">Send</button>
+                                    </form>
+                                </div>
+                            </div> <!-- END tabs-content -->
+                        </div> <!-- END tabs -->
+                    </div>
                 </div>
 
 
@@ -416,6 +541,7 @@
 
                         <button href="#bookdates" class="btn btnKoop text-white PrisText" style="background: #043356">Koop deze <?php echo $course_type; ?></button>
                     </div>
+
                 </div>
 
             </div>
@@ -527,7 +653,41 @@
             });
         })
     </script>
+    <script>
+        // Rating
+        const list = document.querySelector('.list')
+        const lis = list.children;
 
+        for (var i = 0; i < lis.length; i++) {
+            lis[i].id = i;
+            lis[i].addEventListener('mouseenter', handleEnter);
+            lis[i].addEventListener('mouseleave', handleLeave);
+            lis[i].addEventListener('click', handleClick);
+        }
+
+        function handleEnter(e) {
+            e.target.classList.add('hover');
+            for (var i = 0; i <= e.target.id; i++) {
+                lis[i].classList.add('hover');
+            }
+        }
+
+        function handleLeave(e) {
+            [...lis].forEach(item => {
+                item.classList.remove('hover');
+            });
+        }
+
+        function handleClick(e){
+            [...lis].forEach((item,i) => {
+                item.classList.remove('selected');
+                if(i <= e.target.id){
+                    item.classList.add('selected');
+                }
+            });
+        }
+
+    </script>
 
     <script>
 
