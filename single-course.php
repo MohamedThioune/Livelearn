@@ -12,6 +12,8 @@ $image_author = get_field('profile_img',  'user_'.$post->post_author);
 
 $courses = get_field('data_virtual', $cid);
 
+$youtube_videos = get_field('youtube_videos', $cid);
+
 $tree = get_the_category($cid);
 
 if($tree){
