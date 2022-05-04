@@ -397,13 +397,145 @@ foreach($global_blogs as $blog)
             if(!empty($road_paths)){
             ?>
             <div class="UitgelichteBlock">
-                <p class="sousBlockTitleProduct"> Roadpath "<?php if( isset($title_road_path) && isset($expert_road_path) ) echo $title_road_path . '" by ' . $expert_road_path; ?> </p>
+
+                <div class="blockCardOpleidingen ">
+
+                    <div class="swiper-container swipeContaine4">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide swiper-slide5">
+                                <div class="content-road-path-card">
+                                    <div class="position-relative element-content-road-path-card">
+                                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                                        <div class="roadpathBlockNumber">
+                                            <p>7</p>
+                                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/folder.png" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="description-content-roadPath">
+                                        <div class="imgTitleCours justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <div class="imgCoursProd">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image54.png" alt="">
+                                                </div>
+                                                <p class="nameCoursProd">Daniel</p>
+                                            </div>
+                                            <a href="/detail-product-road" class="btn btnDiscover">Discover</a>
+                                        </div>
+                                        <p class="werkText">Doorbreek gedachtepatronen</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide swiper-slide5">
+                                <div class="content-road-path-card">
+                                    <div class="position-relative element-content-road-path-card">
+                                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/sport.jpg" alt="">
+                                        <div class="roadpathBlockNumber">
+                                            <p>7</p>
+                                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/folder.png" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="description-content-roadPath">
+                                        <div class="imgTitleCours justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <div class="imgCoursProd">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
+                                                </div>
+                                                <p class="nameCoursProd">Mouhamed</p>
+                                            </div>
+                                            <a href="/detail-product-road" class="btn btnDiscover">Discover</a>
+                                        </div>
+                                        <p class="werkText">Doorbreek gedachtepatronen</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide swiper-slide5">
+                                <div class="content-road-path-card">
+                                    <div class="position-relative element-content-road-path-card">
+                                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/card2.png" alt="">
+                                        <div class="roadpathBlockNumber">
+                                            <p>7</p>
+                                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/folder.png" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="description-content-roadPath">
+                                        <div class="imgTitleCours justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <div class="imgCoursProd">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
+                                                </div>
+                                                <p class="nameCoursProd">Mamadou</p>
+                                            </div>
+                                            <a href="/detail-product-road" class="btn btnDiscover">Discover</a>
+                                        </div>
+                                        <p class="werkText">Doorbreek gedachtepatronen</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide swiper-slide5">
+                                <div class="content-road-path-card">
+                                    <div class="position-relative element-content-road-path-card">
+                                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Public-real-estate.jpeg" alt="">
+                                        <div class="roadpathBlockNumber">
+                                            <p>3</p>
+                                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/folder.png" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="description-content-roadPath">
+                                        <div class="imgTitleCours justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <div class="imgCoursProd">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
+                                                </div>
+                                                <p class="nameCoursProd">Fadel</p>
+                                            </div>
+                                            <a href="/detail-product-road" class="btn btnDiscover">Discover</a>
+                                        </div>
+                                        <p class="werkText">Doorbreek gedachtepatronen</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide swiper-slide5">
+                                <div class="content-road-path-card">
+                                    <div class="position-relative element-content-road-path-card">
+                                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/hr.jpg" alt="">
+                                        <div class="roadpathBlockNumber">
+                                            <p>7</p>
+                                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/folder.png" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="description-content-roadPath">
+                                        <div class="imgTitleCours justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <div class="imgCoursProd">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Maurice_Veraa_.jpeg" alt="">
+                                                </div>
+                                                <p class="nameCoursProd">Influid</p>
+                                            </div>
+                                            <a href="/detail-product-road" class="btn btnDiscover">Discover</a>
+                                        </div>
+                                        <p class="werkText">Doorbreek gedachtepatronen</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+          <!--      <p class="sousBlockTitleProduct"> Roadpath "<?php /*if( isset($title_road_path) && isset($expert_road_path) ) echo $title_road_path . '" by ' . $expert_road_path; */?> </p>
                 <div class="blockCardOpleidingen ">
 
                     <div class="swiper-container swipeContaine4">
                         <div class="swiper-wrapper">
                             <?php
-                            foreach($road_paths as $blog) {
+/*                            foreach($road_paths as $blog) {
 
                             $tag = '';
                             $image = null;
@@ -443,50 +575,50 @@ foreach($global_blogs as $blog)
                             }
 
                             $type_course = get_field('course_type', $blog->ID);
-                            ?>
-                            <a href="<?php echo get_permalink($blog->ID) ?>" class="swiper-slide swiper-slide4">
+                            */?>
+                            <a href="<?php /*echo get_permalink($blog->ID) */?>" class="swiper-slide swiper-slide4">
                                 <div class="cardKraam2">
                                     <div class="headCardKraam">
-                                        <img src="<?php echo $image; ?>" alt="">
+                                        <img src="<?php /*echo $image; */?>" alt="">
                                     </div>
                                     <button class="btn btnImgCoeurEcosysteme">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/coeur1.png" alt="">
+                                        <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/coeur1.png" alt="">
                                     </button>
                                     <div class="contentCardProd">
                                         <div class="group8">
                                             <div class="imgTitleCours">
                                                 <div class="imgCoursProd">
-                                                    <img src="<?php echo $author; ?>" alt="">
+                                                    <img src="<?php /*echo $author; */?>" alt="">
                                                 </div>
-                                                <p class="nameCoursProd"><?php echo(get_userdata($blog->post_author)->data->display_name); ?></p>
+                                                <p class="nameCoursProd"><?php /*echo(get_userdata($blog->post_author)->data->display_name); */?></p>
                                             </div>
                                             <div class="group9">
                                                 <div class="blockOpein">
-                                                    <img class="iconAm" src="<?php echo get_stylesheet_directory_uri();?>/img/graduat.png" alt="">
-                                                    <p class="lieuAm"><?= $type_course; ?></p>
+                                                    <img class="iconAm" src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/graduat.png" alt="">
+                                                    <p class="lieuAm"><?/*= $type_course; */?></p>
                                                 </div>
-                                                <?php if($tag != '') { ?>
+                                                <?php /*if($tag != '') { */?>
                                                 <div class="blockOpein">
                                                     &#x0023;&#xFE0F;&#x20E3;
-                                                    <p class="lieuAm"><?php echo $tag; ?></p>
+                                                    <p class="lieuAm"><?php /*echo $tag; */?></p>
                                                 </div>
-                                                <?php } ?>
+                                                <?php /*} */?>
                                             </div>
                                         </div>
-                                        <p class="werkText"><?php echo $blog->post_title; ?></p>
+                                        <p class="werkText"><?php /*echo $blog->post_title; */?></p>
                                         <p class="descriptionPlatform">
-                                            <?php echo $summary; ?>
+                                            <?php /*echo $summary; */?>
                                         </p>
                                     </div>
                                 </div>
                             </a>
                             <?php
-                            }
-                            ?>
+/*                            }
+                            */?>
                         </div>
                     </div>
 
-                </div>
+                </div>-->
             </div>
             <?php
             }

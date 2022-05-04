@@ -288,7 +288,7 @@ $interesses = get_categories( array(
     </div>
 
     <?php
-    if(empty($road_paths))
+    if(!empty($road_paths))
         echo '<li class="ui-state-default" id="1"><div class="blockCardCoursRoad"><h6>Geen selectie, maak er een 😉</h6></div></li>';
 
     else{
