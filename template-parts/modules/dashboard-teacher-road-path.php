@@ -97,7 +97,7 @@ $title_road_path = get_field('title_road_path', 'user_'.$user_id);
            </a>
            <h1 class="roadCourTitle"><?= $leerpad->post_title ?></h1>
        </div>
-       <button class="btn btnAddRoadMap" type="button" data-toggle="modal" data-target="#modalRoadMap">Edit</button>
+       <button class="btn btnAddRoadMap" type="button" data-toggle="modal" data-target="#modalRoadMap">Add</button>
 
    </div>
    <?php
@@ -118,6 +118,7 @@ $title_road_path = get_field('title_road_path', 'user_'.$user_id);
                         </button>
                     </div>
                     <form action="" method="POST">
+                        <input type="hidden" name="leerpad_id" value="<?= $leerpad->ID; ?>">
                         <div class="">
                             <div class="row">
                                 <table class="table row-select">
@@ -138,156 +139,76 @@ $title_road_path = get_field('title_road_path', 'user_'.$user_id);
                                     </tr>
                                     </thead>
                                     <tbody id="autocomplete">
-                                    <?php
-                                    foreach($courses as $key=>$course){
+                                        <?php
+                                        foreach($courses as $key=>$course){
 
-                                        if(in_array($course->ID, $road_path_s))
-                                            continue;
+                                            if(in_array($course->ID, $road_path_s))
+                                                continue;
 
-                                        $type_course = get_field('course_type', $course->ID);
-                                        $short_description = get_field('short_description', $course->ID);
+                                            $type_course = get_field('course_type', $course->ID);
+                                            $short_description = get_field('short_description', $course->ID);
 
-                                        /*
-                                        * Experts
-                                        */
-                                        $expert = get_field('experts', $course->ID);
-                                        $author = array($course->post_author);
-                                        $experts = array_merge($expert, $author);
+                                            /*
+                                            * Experts
+                                            */
+                                            $expert = get_field('experts', $course->ID);
+                                            $author = array($course->post_author);
+                                            $experts = array_merge($expert, $author);
 
-                                        /*
-                                        * Thumbnails
-                                        */
-                                        $image = get_field('preview', $course->ID)['url'];
-                                        if(!$image){
-                                            $image = get_field('url_image_xml', $course->ID);
-                                            if(!$image)
-                                                $image = "https://cdn.pixabay.com/photo/2021/09/18/12/40/pier-6635035_960_720.jpg";
+                                            /*
+                                            * Thumbnails
+                                            */
+                                            $image = get_field('preview', $course->ID)['url'];
+                                            if(!$image){
+                                                $image = get_field('url_image_xml', $course->ID);
+                                                if(!$image)
+                                                    $image = "https://cdn.pixabay.com/photo/2021/09/18/12/40/pier-6635035_960_720.jpg";
+                                            }
+                                            ?>
+                                            <tr id="<?php echo $course->ID;?>" >
+                                                <td>
+                                                    <div class="checkbox table-checkbox">
+                                                        <label class="block-label selection-button-checkbox">
+                                                            <input type="checkbox" name="road_path[]" value="<?= $course->ID; ?>"> </label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="blockCardCoursRoad">
+                                                        <div class="imgCoursRoad">
+                                                            <img class="" src="<?= $image; ?>" alt="">
+                                                        </div>
+                                                        <div class="">
+                                                            <p class="titleCoursRoad"><?= $course->post_title; ?></p>
+                                                            <div class="sousBlockCategorieRoad ">
+                                                                <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/grad-search.png" alt="">
+                                                                <p class="categoryText"><?= $type_course; ?></p>
+                                                            </div>
+                                                            <p class="descriptionTextRoad"><?= $short_description; ?></p>
+                                                            <div class="contentImgCardCour">
+                                                                <?php
+                                                                foreach($experts as $expert){
+                                                                    $image_author = get_field('profile_img',  'user_' . $expert);
+                                                                    if(!$image_author)
+                                                                        $image_author = get_stylesheet_directory_uri() ."/img/placeholder_user.png";
+                                                                    echo '<img class="euroImg" src="' . $image_author . '" alt="">';
+                                                                }
+                                                                ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <?php
                                         }
                                         ?>
-                                        <tr id="<?php echo $course->ID;?>" >
-                                            <td>
-                                                <div class="checkbox table-checkbox">
-                                                    <label class="block-label selection-button-checkbox">
-                                                        <input type="checkbox" name="road_path[]" value="<?= $course->ID; ?>"> </label>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="blockCardCoursRoad">
-                                                    <div class="imgCoursRoad">
-                                                        <img class="" src="<?= $image; ?>" alt="">
-                                                    </div>
-                                                    <div class="">
-                                                        <p class="titleCoursRoad"><?= $course->post_title; ?></p>
-                                                        <div class="sousBlockCategorieRoad ">
-                                                            <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/grad-search.png" alt="">
-                                                            <p class="categoryText"><?= $type_course; ?></p>
-                                                        </div>
-                                                        <p class="descriptionTextRoad"><?= $short_description; ?></p>
-                                                        <div class="contentImgCardCour">
-                                                            <?php
-                                                            foreach($experts as $expert){
-                                                                $image_author = get_field('profile_img',  'user_' . $expert);
-                                                                if(!$image_author)
-                                                                    $image_author = get_stylesheet_directory_uri() ."/img/placeholder_user.png";
-                                                                echo '<img class="euroImg" src="' . $image_author . '" alt="">';
-                                                            }
-                                                            ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <?php
-                                    }
-                                    ?>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" id="bntContinueRoad" class="btn row-select-submit">Continue</button>
+                            <button type="submit" id="" name="road_course_add" class="btn row-select-submit">Add new</button>
                         </div>
                     </form>
-                </div>
-                <div id="step2RoadPath">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">step 2 </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="acf-field">
-                        <label for="locate">Baangerichte :</label><br>
-                        <div class="form-group formModifeChoose">
-
-                            <select id="form-control-bangers" class="multipleSelect2 dropdown" name="topics[]" >
-                                <option value=""> Maak en keuze</option>
-                                <?php
-                                //Baangerichts
-                                foreach($bangerichts as $value){
-                                    echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                }
-                                ?>
-                            </select>
-
-                        </div>
-
-                        <label for="locate">Functiegerichte :</label><br>
-                        <div class="form-group formModifeChoose">
-
-                            <select id="form-control-functs" class="multipleSelect2" name="topics[]">
-                                <option value=""> Maak en keuze</option>
-
-                                <?php
-                                //Functies
-                                foreach($functies as $value){
-                                    echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                }
-                                ?>
-                            </select>
-
-                        </div>
-
-                        <label for="locate">Skill :</label><br>
-                        <div class="form-group formModifeChoose">
-
-                            <select id="form-control-skills" class="multipleSelect2" name="topics[]">
-                                <option value=""> Maak en keuze</option>
-
-                                <?php
-                                //Skills
-                                foreach($skills as $value){
-                                    echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                }
-                                ?>
-                            </select>
-
-                        </div>
-
-                        <label for="locate">Persoonlijke :</label><br>
-                        <div class="form-group formModifeChoose">
-
-                            <select id="form-control-interess" class="multipleSelect2" name="topics[]">
-                                <option value=""> Maak en keuze</option>
-
-                                <?php
-                                //Persoonlikje interesses
-                                foreach($interesses as $value){
-                                    echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                }
-                                ?>
-                            </select>
-
-                        </div>
-                        <div class="form-group">
-                            <label> Title learning path : </label>
-                            <input class="form-control" type="text" name="title_road_path" id="" value="" placeholder="<?= $title_road_path; ?>">
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" name="road_path_selected" class="btn row-select-submit">Approve selected</button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

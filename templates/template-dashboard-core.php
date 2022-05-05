@@ -354,24 +354,6 @@ else if(isset($delete_todos)){
 /*
 * * Road path   
 */ 
-else if(isset($road_path_selected)){
-    $user_id = get_current_user_id();
-    $args = array(
-        'post_type' => 'course', 
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'include' => $road_path,  
-    );
-
-    $courses = get_posts($args);
-    $road_paths = get_field('road_path', 'user_'. $user_id);
-
-    if(!empty($road_paths))
-        $courses = array_merge($road_paths, $courses);
-
-    update_field('road_path', $courses, 'user_'. $user_id);
-    header("location: /dashboard/teacher/road-path/?message=Succesvolle cursus selectie");
-}
 
 else if(isset($road_path_created)){
 
@@ -407,15 +389,17 @@ else if(isset($road_path_created)){
     
 }
 
-else if(isset($road_path_edited)){
+else if(isset($road_course_add)){
     $courses = array();
-    
+
+    $leerpaden = get_field('road_path', $leerpad_id);
+
     foreach($road_path as $road)
         array_push($courses, get_post($road));
 
     if(!empty($courses)){
-        delete_field('road_path',$id);
-        update_field('road_path', $courses, $id);
+        $road_path = array_merge($leerpaden, $courses);
+        update_field('road_path', $road_path, $id);
     }
 
     $message = "/dashboard/teacher/road-path/?id=". $id . "&message=Road path updated successfully"; 
