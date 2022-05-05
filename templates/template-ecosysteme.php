@@ -44,8 +44,6 @@ foreach($leerpaden as $leerpad){
     }
 }
 
-var_dump($road_paths);
-
 if($topic != 0){    
     $categories_topic = get_categories( array(
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
@@ -406,13 +404,28 @@ foreach($global_blogs as $blog)
                         <div class="swiper-wrapper">
                             <?php 
                             foreach($road_paths as $road_path){
+                                $road_path_title = $road_path['title'];
+                                $road_path_expert = $road_path['expert'];
+                                $roadpath = get_field('road_path',$road_path->id);
+
+                                $preview = get_field('preview', $roadpath[0]->ID)['url'];
+                                if(!$preview){
+                                    $preview = get_field('url_image_xml', $roadpath[0]->ID);
+                                    if(!$preview)
+                                        $preview = get_stylesheet_directory_uri() . "/img/libay.png";
+                                }
+
+                                $profile_picture = get_field('profile_img',  'user_' . $road_path_expert);
+                                if(!$profile_picture)
+                                    $profile_picture = get_stylesheet_directory_uri() ."/img/placeholder_user.png";
+                                $name = get_userdata($road_path_expert)->data->display_name;
                             ?>
                             <div class="swiper-slide swiper-slide5">
                                 <div class="content-road-path-card">
                                     <div class="position-relative element-content-road-path-card">
-                                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                                        <img class="" src="<?= $preview; ?>" alt="">
                                         <div class="roadpathBlockNumber">
-                                            <p>7</p>
+                                            <p><?= count($roadpath); ?></p>
                                             <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/folder.png" alt="">
                                         </div>
                                     </div>
@@ -420,13 +433,13 @@ foreach($global_blogs as $blog)
                                         <div class="imgTitleCours justify-content-between">
                                             <div class="d-flex align-items-center">
                                                 <div class="imgCoursProd">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image54.png" alt="">
+                                                    <img src="<?= $profile_picture; ?>" alt="">
                                                 </div>
-                                                <p class="nameCoursProd">Daniel</p>
+                                                <p class="nameCoursProd"><?= $name; ?></p>
                                             </div>
-                                            <a href="/detail-product-road" class="btn btnDiscover">Discover</a>
+                                            <a href="/product-road-path?id=<?= $road_path->ID; ?>" class="btn btnDiscover">Discover</a>
                                         </div>
-                                        <p class="werkText">Doorbreek gedachtepatronen</p>
+                                        <p class="werkText"><?= $road_path_title; ?></p>
                                     </div>
                                 </div>
                             </div>
