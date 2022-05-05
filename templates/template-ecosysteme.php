@@ -406,7 +406,7 @@ foreach($global_blogs as $blog)
                             foreach($road_paths as $road_path){
                                 $road_path_title = $road_path['title'];
                                 $road_path_expert = $road_path['expert'];
-                                $roadpath = get_field('road_path',$road_path->id);
+                                $roadpath = get_field('road_path',$road_path->ID);
 
                                 $preview = get_field('preview', $roadpath[0]->ID)['url'];
                                 if(!$preview){
