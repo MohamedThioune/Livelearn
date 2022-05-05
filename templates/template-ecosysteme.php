@@ -40,8 +40,10 @@ foreach($leerpaden as $leerpad){
     if( $topic == $topic_road_path){
         $road_path['title'] = $leerpad->post_title; 
         $road_path['expert'] = $leerpad->post_author;
+        $road_path['ID'] = $leerpad->ID;
         array_push($road_paths, $road_path);
     }
+    
 }
 
 if($topic != 0){    
@@ -403,14 +405,12 @@ foreach($global_blogs as $blog)
                     <div class="swiper-container swipeContaine4">
                         <div class="swiper-wrapper">
                             <?php 
-                            foreach($road_paths as $road_path){
-                                $road_path_title = $road_path['title'];
-                                $road_path_expert = $road_path['expert'];
-                                $roadpath = get_field('road_path',$road_path->ID);
-
-                                $preview = get_field('preview', $roadpath[0]->ID)['url'];
+                            foreach($road_paths as $value){
+                                $road_path_title = $value['title'];
+                                $road_path_expert = $value['expert'];
+                                $preview = get_field('preview', $value[0]->ID)['url'];
                                 if(!$preview){
-                                    $preview = get_field('url_image_xml', $roadpath[0]->ID);
+                                    $preview = get_field('url_image_xml', $value[0]->ID);
                                     if(!$preview)
                                         $preview = get_stylesheet_directory_uri() . "/img/libay.png";
                                 }
@@ -425,7 +425,7 @@ foreach($global_blogs as $blog)
                                     <div class="position-relative element-content-road-path-card">
                                         <img class="" src="<?= $preview; ?>" alt="">
                                         <div class="roadpathBlockNumber">
-                                            <p><?= count($roadpath); ?></p>
+                                            <p><?= count($value)-3; ?></p>
                                             <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/folder.png" alt="">
                                         </div>
                                     </div>
@@ -437,7 +437,7 @@ foreach($global_blogs as $blog)
                                                 </div>
                                                 <p class="nameCoursProd"><?= $name; ?></p>
                                             </div>
-                                            <a href="/product-road-path?id=<?= $road_path->ID; ?>" class="btn btnDiscover">Discover</a>
+                                            <a href="/detail-product-road?id=<?= $value['ID']; ?>" class="btn btnDiscover">Discover</a>
                                         </div>
                                         <p class="werkText"><?= $road_path_title; ?></p>
                                     </div>
