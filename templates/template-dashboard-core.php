@@ -389,6 +389,21 @@ else if(isset($road_path_created)){
     
 }
 
+else if(isset($road_path_edited)){
+    $courses = array();
+    
+    foreach($road_path as $road)
+        array_push($courses, get_post($road));
+
+    if(!empty($courses)){
+        delete_field('road_path',$id);
+        update_field('road_path', $courses, $id);
+    }
+
+    $message = "/dashboard/teacher/road-path/?id=". $id . "&message=Road path updated successfully"; 
+    header("Location: ". $message);
+} 
+
 else if(isset($road_course_add)){
     $courses = array();
 
