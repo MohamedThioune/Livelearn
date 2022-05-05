@@ -414,10 +414,10 @@ else if(isset($road_course_add)){
 
     if(!empty($courses)){
         $road_path = array_merge($leerpaden, $courses);
-        update_field('road_path', $road_path, $id);
+        update_field('road_path', $road_path, $leerpad_id);
     }
 
-    $message = "/dashboard/teacher/road-path/?id=". $id . "&message=Road path updated successfully"; 
+    $message = "/dashboard/teacher/road-path/?id=". $leerpad_id . "&message=Road path updated successfully"; 
     header("Location: ". $message);
 } 
 
