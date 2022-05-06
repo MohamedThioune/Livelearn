@@ -164,8 +164,8 @@ if(!$favoured)
                     <div class="d-flex elementcourseIcone sousBlock mx-md-2 mx-sm-2 text-center">
                         <div class="d-flex flex-row block1">
                             <div class="d-flex flex-column mx-md-3 mx-2">
-                                <input type="hidden" id="user_id" value="0">
-                                <input type="hidden" id="course_id" value="0">
+                                <input type="hidden" id="user_id" value="<?php echo $user_id; ?>">
+                                <input type="hidden" id="course_id" value="<?php echo $leerpad->ID; ?>">
                                 <!-- <img class="iconeCours" src="<?php echo get_stylesheet_directory_uri();?>/img/love.png" alt=""> -->
                                 <button id="btn_favorite" style="background:white; border:none"><i class="far fa-heart" style="font-size: 25px;"></i></button>
                                 <span class="textIconeLearning mt-1" id="autocomplete_favoured"><?php echo $favoured; ?></span>
@@ -196,7 +196,7 @@ if(!$favoured)
                                 <?php
                                 if($user_id == 0)
                                     echo "
-                                    <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='' style='border:none; background:white'> 
+                                    <button data-toggle='modal' style='margin-top:-10px' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='' style='border:none; background:white'> 
                                         <i class='fas fa-bell' style='font-size: 25px;'></i><br>
                                         <span class='textIconeLearning mt-1'>Bewaar</spanz>
                                     </button>
