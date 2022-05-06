@@ -7200,6 +7200,27 @@ ul#tabs-nav li.active {
     margin-bottom: 25px;
     display: block !important;
 }
+.blockChapitreCours .sousBlockCours {
+    display: flex;
+    flex-wrap: wrap;
+}
+.blockChapitreCours .textChapitreCours:first-child {
+    margin-bottom: 16px !important;
+    width: 100% !important;
+}
+.blockChapitreCours .textChapitreCours {
+    margin-bottom: 0px !important;
+    width: 100% !important;
+}
+.contentListVidoeCourse{
+    margin-bottom: 16px !important;
+}
+.contentListVidoeCourse img{
+    width: 75px;
+    height: 100%;
+    border-radius: 8px;
+    margin-right: 15px;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
