@@ -565,8 +565,13 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                                     <?php 
                                         if(!empty($course['course_topic']['course_topic_lessons']))
                                             foreach($course['course_topic']['course_topic_lessons'] as $sand => $value){
-                                                if(isset($lesson)) if($lesson == $sand) { ?><img class="playElement" src="<?php echo get_stylesheet_directory_uri() ?>/img/play.png" alt=""> <?php } ?>
-                                                <a href="?topic=<?php echo (int)$key; ?>&lesson=<?php echo (int)$sand; ?>" class="textChapitreCours"><?php echo ($value['course_lesson']['course_lesson_title']);?></a><br><br>
+                                                if(isset($lesson)) if($lesson == $sand) { ?>
+                                                    <div class="d-flex contentListVidoeCourse">
+                                                         <img class="playElement mr-3" src="<?php echo get_stylesheet_directory_uri() ?>/img/play.png" alt=""> <?php } ?>
+                                                          <a href="?topic=<?php echo (int)$key; ?>&lesson=<?php echo (int)$sand; ?>" class="textChapitreCours"><?php echo ($value['course_lesson']['course_lesson_title']);?></a>
+                                                    </div>
+
+
                                     <?php
                                             }
                                     ?>
