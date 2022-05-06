@@ -3,6 +3,7 @@
 <?php get_header(); ?>
 
 <?php
+$user_id = get_current_user_id();
 
 $leerpad =  ($_GET['id'] != 0) ? get_post($_GET['id']) : null;
 
@@ -258,7 +259,7 @@ if(!$favoured)
                                             <div>
                                                 <p class="klikText">Klik om link te kopieren</p>
                                                 <div class="input-group input-group-copy formCopyLink">
-                                                    <input id="test1" type="text" class="linkTextCopy form-control" value="<?php echo "/detail-product-road/?id=" . $leerpad->ID; ?>" readonly>
+                                                    <input id="test1" type="text" class="linkTextCopy form-control" value="<?php echo "livelearn.nl/detail-product-road/?id=" . $leerpad->ID; ?>" readonly>
                                                     <span class="input-group-btn">
                                                 <button class="btn btn-default btnCopy">Copy</button>
                                                 </span>
