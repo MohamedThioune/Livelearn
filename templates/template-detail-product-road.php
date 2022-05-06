@@ -181,9 +181,7 @@ if(!$favoured)
                         <div class="d-flex flex-row block2">
                             <div class="d-flex flex-column mx-md-3 mx-2">
                                 <form action="/dashboard/user/" method="POST">
-                                <input type="hidden" name="meta_value" value="<?php echo $leerpad->ID; ?>" id="">
-                                <input type="hidden" name="user_id" value="<?php echo $user_id; ?>" id="">
-                                <input type="hidden" name="meta_key" value="roadpath" id="">
+                               
                                 <?php
                                 if($user_id != $leerpad->post_author && $user_id != 0)
                                     echo "
