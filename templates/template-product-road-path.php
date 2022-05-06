@@ -5,7 +5,7 @@
 
 <?php 
 
-$user = (isset($_GET['id'])) ? get_userdata($road_path_expert)->data : 0;
+$user = (isset($_GET['id'])) ? get_userdata($_GET['id'])->data : 0;
 
 /*
 ** Leerpaden  owned *
