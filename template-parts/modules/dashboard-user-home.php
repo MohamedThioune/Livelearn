@@ -135,8 +135,9 @@ foreach($global_courses as $course)
 }
 
 $courses = array_merge($courses, $expert_courses);
- //Activitien
- $activitiens = count($courses);
+ 
+//Activitien
+$activitiens = count($courses);
 
 /*
 * *   

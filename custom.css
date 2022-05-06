@@ -2820,7 +2820,7 @@ body .gform_wrapper ul li.gfield {
 .gform_wrapper .field_sublabel_below .ginput_complex.ginput_container label, .gform_wrapper .field_sublabel_below div[class*=gfield_time_].ginput_container label {
     margin: 1px 0 9px 1px;
     position: absolute !important;
-    top: -20px;
+    top: -33px;
 }
 #gform_submit_button_2 {
     background: #47a99e !important;
@@ -2839,7 +2839,10 @@ body .gform_wrapper ul li.gfield {
 .gform_wrapper .gform_footer {
     margin: 0px 0 -18px !important;
 }
-
+#input_5_11 {
+    height: 60px;
+    top: 15px;
+}
 .sidebar-widget .img-fluid {
     width: 100px !important;
     height: 100px !important;
@@ -5235,7 +5238,10 @@ nav .show{
 }
 #field_6_1 #input_6_1{
     display: grid;
-    margin-bottom: -20px;
+    margin-bottom: -30px;
+    width: 99%;
+    top: 15px;
+    height: 180px;
 }
 
 #input_6_1 input{
@@ -5529,7 +5535,9 @@ nav .show{
     margin-top: 5px;
     margin-bottom: 10px;
 }
-
+.modal {
+    padding-right: 0px !important;
+}
 .btnAddRoadMap{
     background: #101C5D;
     border-radius: 10px;
@@ -9120,6 +9128,11 @@ ul#tabs-nav li.active {
 
 }
 
+@media all and (max-width: 640px) {
+    #field_5_3 {
+        padding-top: 100px;
+    }
+}
 @media all and (max-width: 400px) {
     .textIconeLearning {
         font-size: 11px;
@@ -9127,7 +9140,6 @@ ul#tabs-nav li.active {
     #burger-web{
         display: none !important;
     }
-
 }
 
 

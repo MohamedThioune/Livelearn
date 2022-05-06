@@ -213,7 +213,7 @@ $todos = get_posts($args);
                         </li>
 
                         <li class="nav-item item4 dropdown elementWeb" id="profilDropdown">
-                            <a href="/dashboard/user/profile/" class="nav-link navModife4 btn dropdown-toggle" type="button" id="dropdownNavButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a href="#" class="nav-link navModife4 btn dropdown-toggle" type="button" id="dropdownNavButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="userBlockNav" src="<?php echo get_field('profile_img',  'user_' . $user->ID);?>" alt="">
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

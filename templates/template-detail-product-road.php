@@ -2,6 +2,41 @@
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
+<?php
+$leerpad =  ($_GET['id'] != 0) ? get_post($_GET['id']) : null;
+
+$leerpadden = get_field('road_path', $leerpad->ID);
+
+$profile_picture = get_field('profile_img',  'user_' . $leerpad->post_author);
+if(!$profile_picture)
+    $profile_picture = get_stylesheet_directory_uri() ."/img/placeholder_user.png";
+$name = get_userdata($leerpad->post_author)->data->display_name;
+
+if(isset($_GET['position']))
+    $position = $_GET['position'];
+else
+    $position = 0; 
+
+/*
+* * Playlist playing ... *
+*/
+
+$actual_infos = $leerpadden[$position]->post_title;
+
+$preview = get_field('preview', $leerpadden[$position]->ID)['url'];
+if(!$preview){
+    $preview = get_field('url_image_xml', $leerpadden[$position]->ID);
+    if(!$preview)
+        $preview = get_stylesheet_directory_uri() . "/img/libay.png";
+}
+
+$description = get_field('long_description', $leerpadden[$position]->ID);
+
+/*
+* *
+*/
+?>
+
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
     <!-- ---------------------------------------- Start modals ---------------------------------------------- -->
@@ -98,18 +133,18 @@
                 <div class="blockOneOver">
                     <div class="titleBlock">
                         <div class="roundBlack" >
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image54.png" alt="company logo">
+                            <img src="<?= $profile_picture; ?>" alt="company logo">
                         </div>
-                        <p class="livelearnText2 text-uppercase">Daniel</p>
+                        <p class="livelearnText2 text-uppercase"><?= $name; ?></p>
                     </div>
 
 
-                    <p class="e-learningTitle">Doorbreek gedachtepatronen</p>
+                    <p class="e-learningTitle"><?= $leerpad->post_title; ?></p>
                     <!-- Image -->
                     <div class="img-fluid-course">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/sport.jpg" alt="">
+                        <img src="<?= $preview; ?>" alt="">
                     </div>
-                    <p class="beschiBlockText">Webshop training (virtueel)</p>
+                    <p class="beschiBlockText"><?= $actual_infos; ?></p>
 
                     <!-- -------------------------------------- Start Icons row ------------------------------------->
                     <div class="d-flex elementcourseIcone sousBlock mx-md-2 mx-sm-2 text-center">
@@ -232,8 +267,7 @@
 
                     <div class="blockTextGlovale mt-3">
                         <div class="text-limit">
-                           <p>Je wilt dolgraag een professionele webshop en niet afhankelijk zijn van een webdesigner of programmeur. Met WordPress – het meest gebruikte en gewaardeerde CMS ter wereld – kan iedereen eenvoudig een eigen webshop bouwen en onderhouden. Maar hoe bouw je een WordPress webshop?</p>
-                            <p>In de WordPress webshop training verkrijg je diepgaand inzicht in hoe je een WordPress webshop kunt creëren. Van het installeren en implementeren van de WooCommerce plug-in en e-commerce thema’s tot het gebruik van voorbeeldbestanden; alle belangrijke elementen voor het bouwen en beheren van een WordPress webshop passeren de revue.</p>
+                           <p><?= $description; ?></p>
                         </div>
                     </div>
                     <div class="customTabs">
@@ -436,57 +470,41 @@
 
                     <div class="play-road-element">
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <p class="title">Doorbreek gedachtepatronen</p>
-                            <p class="number">7 Courses</p>
+                            <p class="title"><?= $leerpad->post_title; ?></p>
+                            <p class="number"><?= count($leerpadden); ?> Courses</p>
                         </div>
-                        <div class="content-play-road-element">
+                        <?php
+                            foreach($leerpadden as $key => $course){
+                                $title = $course->post_title;
+
+                                /*
+                                * * Image
+                                */
+                                $image = get_field('preview', $course->ID)['url'];
+                                if(!$image){
+                                    $image = get_field('url_image_xml', $course->ID);
+                                    if(!$image)
+                                        $image = get_stylesheet_directory_uri() . '/img/libay.png';
+                                }
+
+                                $type = get_field('course_type', $course->ID);
+                        ?>
+                        <a href="detail-product-road/?id=<?php echo $leerpad->ID . '&position=' . $key; ?>" class="content-play-road-element">
                             <div class="image-play-road">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/sport.jpg" alt="">
+                                <img src="<?= $image; ?>" alt="">
                             </div>
                             <div class="secondBlock ">
-                                <p class="name-course-road">webshop training (WooCommerce) (virtueel)</p>
+                                <p class="name-course-road"><?= $title; ?></p>
                                 <div class="categoriesRoadPath">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/op-seach.png" alt="">
-                                    <p class="">E-learnning</p>
+                                    <p class=""><?= $type; ?></p></p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="content-play-road-element">
-                            <div class="image-play-road">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/sport.jpg" alt="">
-                            </div>
-                            <div class="secondBlock ">
-                                <p class="name-course-road">webshop training (WooCommerce) (virtueel)</p>
-                                <div class="categoriesRoadPath">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/op-seach.png" alt="">
-                                    <p class="">E-learnning</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="content-play-road-element">
-                            <div class="image-play-road">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/sport.jpg" alt="">
-                            </div>
-                            <div class="secondBlock ">
-                                <p class="name-course-road">webshop training (WooCommerce) (virtueel)</p>
-                                <div class="categoriesRoadPath">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/op-seach.png" alt="">
-                                    <p class="">E-learnning</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="content-play-road-element">
-                            <div class="image-play-road">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/sport.jpg" alt="">
-                            </div>
-                            <div class="secondBlock ">
-                                <p class="name-course-road">webshop training (WooCommerce) (virtueel)</p>
-                                <div class="categoriesRoadPath">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/op-seach.png" alt="">
-                                    <p class="">E-learnning</p>
-                                </div>
-                            </div>
-                        </div>
+                        </a>
+                        <?php
+                            }
+                        ?>
+                        
                     </div>
 
 

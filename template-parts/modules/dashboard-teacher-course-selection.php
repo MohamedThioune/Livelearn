@@ -70,7 +70,7 @@
                         <b>Road Path</b>
                     </p>
                 </a>
-                <a href="" class="cardCours cardCoursInitial" >
+                <a href="/dashboard/teacher/list-podcast" class="cardCours cardCoursInitial" >
                     <p class="contentText">
                         <b>Podcast</b>
                     </p>

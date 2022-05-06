@@ -1,5 +1,6 @@
 <?php /** Template Name: dashboard core */ ?>
 <?php
+
 if(is_user_logged_in()){
     acf_form_head();
 } 
@@ -350,43 +351,92 @@ else if(isset($delete_todos)){
     header("location:".$content);
 }
  
-else if(isset($road_path_selected)){
-    $user_id = get_current_user_id();
-    $args = array(
-        'post_type' => 'course', 
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'include' => $road_path,  
-    );
+/*
+* * Road path   
+*/ 
 
-    $courses = get_posts($args);
-    $road_paths = get_field('road_path', 'user_'. $user_id);
-
-    if(!empty($road_paths))
-        $courses = array_merge($road_paths, $courses);
-
-    update_field('road_path', $courses, 'user_'. $user_id);
-    header("location: /dashboard/teacher/road-path/?message=Succesvolle cursus selectie");
-}
 else if(isset($road_path_created)){
 
     $user_id = get_current_user_id();
 
     $courses = array();
+    
+    foreach($road_path as $id)
+        array_push($courses, get_post($id));    
 
-    foreach($course_id as $id)
-        array_push($courses, get_post($id));
+    //Data to create the feedback
+    $post_data = array(
+        'post_title' => $title_road_path,
+        'post_author' => $user_id,
+        'post_type' => 'learnpath',
+        'post_status' => 'publish'
+      );
+
+    //Create the feedback
+    $post_id = wp_insert_post($post_data);
+
+    /*
+    * Add further informations for feedback
+    */
+    update_field('road_path', $courses, $post_id);
 
     foreach($topics as $topic)
         if($topic != '')
-            update_field('topic_road_path', $topic, 'user_'. $user_id);
-        
-    if($title_road_path)
-        update_field('title_road_path', $title_road_path, 'user_'. $user_id);
+            update_field('topic_road_path', $topic, $post_id);
 
-    update_field('road_path', null, 'user_'. $user_id);
-    update_field('road_path', $courses, 'user_'. $user_id);
+    $message = "/dashboard/teacher/road-path/?id=". $post_id . "&message=Road path created successfully"; 
+    header("Location: ". $message);
     
+}
+
+else if(isset($road_path_edited)){
+    $courses = array();
+    
+    foreach($road_path as $road)
+        array_push($courses, get_post($road));
+
+    if(!empty($courses)){
+        delete_field('road_path',$id);
+        update_field('road_path', $courses, $id);
+    }
+
+    $message = "/dashboard/teacher/road-path/?id=". $id . "&message=Road path updated successfully"; 
+    header("Location: ". $message);
+} 
+
+else if(isset($road_course_add)){
+    $courses = array();
+
+    $leerpaden = get_field('road_path', $leerpad_id);
+
+    foreach($road_path as $road)
+        array_push($courses, get_post($road));
+
+    if(!empty($courses)){
+        $road_path = array_merge($leerpaden, $courses);
+        update_field('road_path', $road_path, $leerpad_id);
+    }
+
+    $message = "/dashboard/teacher/road-path/?id=". $leerpad_id . "&message=Road path updated successfully"; 
+    header("Location: ". $message);
+} 
+
+else if(isset($change_password)){
+    $user = wp_get_current_user();
+
+    if(!user_pass_ok($user->email, $old_password )) 
+        $message = "/dashboard/user/settings/?message_password=The password entered does not match your password";  
+    else if($password != $password_confirmation)
+        $message = "/dashboard/user/settings/?message_password=The two passwords are not identical";
+    else 
+        if(reset_password($user, $password ))
+            $message = "/dashboard/user/settings/?message_password=Password updated successfully"; 
+        else
+            $message = "/dashboard/user/settings/?message_password=Something is wrong !"; 
+
+    header("Location: ". $message);
+
+
 }
 ?>
 <?php wp_head(); ?>

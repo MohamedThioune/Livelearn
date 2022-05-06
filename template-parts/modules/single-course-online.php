@@ -1,6 +1,7 @@
 <?php
 
 extract($_GET);
+
 $long_description = get_field('long_description', $post->ID);
 
 $course_type = get_field('course_type', $post->ID);
@@ -134,27 +135,35 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                 <div class="blockImgCour">
                     <?php 
                      
-                     if(!$courses){
-                        if(!empty(get_field('preview', $post->ID))){
+                    if(!empty($courses) && !empty($youtube_videos) ){
+                        if(!empty(get_field('preview', $post->ID)))
                             echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
-                        }else{
+                        else
                             echo "<img src='" . $thumbnail . "' alt='thumbnail placeholder'>";
+                    }else{
+                        if(!empty($courses)){
+                            if(isset($topic) && isset($lesson))
+                                echo " <video class='blockImgCour' poster='' controls>
+                                            <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
+                                            <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/webm; codecs='vp8, vorbis'' />
+                                            <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
+                                        </video>";
+                            else
+                                if(!empty(get_field('preview', $post->ID)))
+                                    echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
+                                else
+                                    echo "<img src='" . $thumbnail . "' alt='thumbnail placeholder'>"; 
                         }
-                    }else
-                        
-                        if(isset($topic) && isset($lesson))
-                            echo " <video class='blockImgCour' poster='' controls>
-                                        <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
-                                        <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/webm; codecs='vp8, vorbis'' />
-                                        <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
-                                    </video>";
-                        
-                        if(isset($topic))
-                            echo " <video class='blockImgCour' poster='' controls>
-                                        <source src='" . $courses[$topic]['course_topic']['course_topic_preview'] . "' type='video/mp4;charset=UTF-8' />
-                                        <source src='" . $courses[$topic]['course_topic']['course_topic_preview'] . "' type='video/webm; codecs='vp8, vorbis'' />
-                                        <source src='" . $courses[$topic]['course_topic']['course_topic_preview'] . "' type='video/ogg; codecs='theora, vorbis'' />
-                                    </video>";
+                        else{
+                            if(isset($lesson))
+                                echo '<iframe width="730" height="433" src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                            else 
+                                if(!empty(get_field('preview', $post->ID)))
+                                    echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
+                                else
+                                    echo "<img src='" . $thumbnail . "' alt='thumbnail placeholder'>"; 
+                        }
+                    }
                         
                     ?>
 
@@ -418,29 +427,52 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                 <div class="blockChapitreCours">
 
                     <?php 
-                    if(!$courses)
+                    if(!empty($courses) && !empty($youtube_videos))
                         echo "<div class='sousBlockCours'>
                                 <span> No lesson as far, soon available </span>
                             </div>";
                     else
-                        foreach($courses as $key => $course){
-                    ?>
-
-                    <div class="sousBlockCours">
-                        <?php if(isset($topic)) if($topic == $key) { ?><img class="playElement" src="<?php echo get_stylesheet_directory_uri() ?>/img/play.png" alt=""> <?php } ?>
-                        <a style="color:#F79403" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo ($course['course_topic']['course_topic_title']);?></a>
-
-                            <?php 
-                                if(!empty($course['course_topic']['course_topic_lessons']))
-                                    foreach($course['course_topic']['course_topic_lessons'] as $sand => $value){
-                                        if(isset($lesson)) if($lesson == $sand) { ?><img class="playElement" src="<?php echo get_stylesheet_directory_uri() ?>/img/play.png" alt=""> <?php } ?>
-                                        <a href="?topic=<?php echo (int)$key; ?>&lesson=<?php echo (int)$sand; ?>" class="textChapitreCours"><?php echo ($value['course_lesson']['course_lesson_title']);?></a><br><br>
-                            <?php
-                                    }
-                            ?>
-                    </div>
-
-                    <?php } ?>
+                        if(!empty($courses)){
+                            foreach($courses as $key => $course){
+                        ?>
+                            <div class="sousBlockCours">
+                                <?php if(isset($topic)) if($topic == $key) { ?><img class="playElement" src="<?php echo get_stylesheet_directory_uri() ?>/img/play.png" alt=""> <?php } ?>
+                                <a style="color:#F79403" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo ($course['course_topic']['course_topic_title']);?></a>
+                                    <?php 
+                                        if(!empty($course['course_topic']['course_topic_lessons']))
+                                            foreach($course['course_topic']['course_topic_lessons'] as $sand => $value){
+                                                if(isset($lesson)) if($lesson == $sand) { ?><img class="playElement" src="<?php echo get_stylesheet_directory_uri() ?>/img/play.png" alt=""> <?php } ?>
+                                                <a href="?topic=<?php echo (int)$key; ?>&lesson=<?php echo (int)$sand; ?>" class="textChapitreCours"><?php echo ($value['course_lesson']['course_lesson_title']);?></a><br><br>
+                                    <?php
+                                            }
+                                    ?>
+                            </div>
+                        <?php }
+                            }
+                        else{
+                        ?>
+                            <div class="sousBlockCours">
+                                <?php 
+                                if(isset($topic)) 
+                                    if($topic == $key) { 
+                                        echo '<img class="playElement" src="'.  get_stylesheet_directory_uri() . '/img/play.png" alt="">';
+                                    } 
+                                ?>
+                                <a style="color:#F79403" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo $post->post_title; ?></a>
+                                <?php 
+                                foreach($youtube_videos as $key => $video){
+                                    if(isset($lesson)) 
+                                        if($lesson == $key)
+                                            echo '<img class="playElement" src="'.  get_stylesheet_directory_uri() . '/img/play.png" alt="">';
+                                    
+                                    echo '<img class="" width="35px" height="20px" src="'. $video['thumbnail_url'] . '" alt="">';
+                                    echo '<a href="?topic=0&lesson='. $key .'" class="textChapitreCours">' . $video['title'] . '</a><br><br>';
+                                }
+                                ?>
+                            </div>
+                        <?php
+                        }
+                        ?>
 
                     <a href="/cart/?add-to-cart=<?php echo get_field('connected_product', $post->ID);?>" class="startTextBtn btn">Start nu voor <?php echo $course_price;?></a>
                 </div>
