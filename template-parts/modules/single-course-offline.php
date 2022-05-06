@@ -380,20 +380,10 @@ if(!$image){
                             ?>
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
-                            <?php
-                            if($user_id != $post->post_author){
-                            ?>
                             <button class="btn iconeText open-modal" data-open="modal1">
                                 <i class="fa fa-share" style="font-size: 25px;"></i><br>
                                 <span class="textIconeLearning mt-1">Deel</span>
                             </button>
-                            <?php }else{ ?>
-                            <button class="btn iconeText open-modal">
-                                <i class="fa fa-share" style="font-size: 25px;"></i><br>
-                                <span class="textIconeLearning mt-1">Deel</span>
-                            </button>
-                            <?php } ?>
-
                         </div>
                         <!-- début Modal deel -->
                         <div class="modal" id="modal1" data-animation="fadeIn">

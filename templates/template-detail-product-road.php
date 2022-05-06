@@ -203,7 +203,7 @@ if(!$favoured)
                                 ?>
                             </div>
                             <div class="d-flex flex-column mx-md-3 mx-2">
-                                <button class="btn iconeText open-modal">
+                                <button class="btn iconeText open-modal" data-open="modal1">
                                     <i class="fa fa-share" style="font-size: 25px;"></i><br>
                                     <span class="textIconeLearning mt-1">Deel</span>
                                 </button>
