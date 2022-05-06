@@ -2,24 +2,58 @@
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
+
+<?php 
+
+$user = (isset($_GET['id'])) ? get_userdata($road_path_expert)->data : 0;
+
+/*
+** Leerpaden  owned *
+*/
+
+$args = array(
+    'post_type' => 'learnpath',
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'author' => $user->ID,
+);
+
+$leerpaden = get_posts($args);
+?>
+
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
 <div class="content-road-path">
     <div class="hulpBox">
         <div class="container-fluid">
            <div class="headHulpbox">
-               <h1 class="mb-0">Product Road Cours Path</h1>
+               <h1 class="mb-0"><?= $user->displayName ?> - Road Course Path</h1>
                <div class="searchElementPath">
                    <input id="inputSearchElementPath" type="search" placeholder="Search an author or teacher">
                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png" class="" alt="">
                </div>
            </div>
             <div class="element-content-roadPath">
+                <?php
+                foreach($leerpaden as $leerpad){
+                    $title = $leerpad->post_title;
+                    $road_path = get_field('road_path', $leerpad->ID);
+                    $preview = get_field('preview', $road_path[0]->ID)['url'];
+                    if(!$preview){
+                        $preview = get_field('url_image_xml', $road_path[0]->ID);
+                        if(!$preview)
+                            $preview = get_stylesheet_directory_uri() . "/img/libay.png";
+                    }
+
+                    $profile_picture = get_field('profile_img',  'user_' . $user->ID);
+                    if(!$profile_picture)
+                        $profile_picture = get_stylesheet_directory_uri() ."/img/placeholder_user.png";
+                ?>
                 <div class="content-road-path-card">
                     <div class="position-relative element-content-road-path-card">
-                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                        <img class="" src="<?= $preview; ?>" alt="">
                         <div class="roadpathBlockNumber">
-                            <p>7</p>
+                            <p><?= count($road_path); ?></p>
                             <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/folder.png" alt="">
                         </div>
                     </div>
@@ -29,99 +63,16 @@
                                <div class="imgCoursProd">
                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image54.png" alt="">
                                </div>
-                               <p class="nameCoursProd">Daniel</p>
+                               <p class="nameCoursProd"><?= $user->ID; ?></p>
                            </div>
-                            <a href="/detail-product-road" class="btn btnDiscover">Discover</a>
+                            <a href="/detail-product-road?id=<?= $leerpad->ID; ?>" class="btn btnDiscover">Discover</a>
                         </div>
-                        <p class="werkText">Doorbreek gedachtepatronen</p>
+                        <p class="werkText"><?= $title; ?></p>
                     </div>
                 </div>
-                <div class="content-road-path-card">
-                    <div class="position-relative element-content-road-path-card">
-                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/sport.jpg" alt="">
-                        <div class="roadpathBlockNumber">
-                            <p>7</p>
-                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/folder.png" alt="">
-                        </div>
-                    </div>
-                    <div class="description-content-roadPath">
-                        <div class="imgTitleCours justify-content-between">
-                           <div class="d-flex align-items-center">
-                               <div class="imgCoursProd">
-                                   <img src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
-                               </div>
-                               <p class="nameCoursProd">Mouhamed</p>
-                           </div>
-                            <a href="/detail-product-road" class="btn btnDiscover">Discover</a>
-                        </div>
-                        <p class="werkText">Doorbreek gedachtepatronen</p>
-                    </div>
-                </div>
-                <div class="content-road-path-card">
-                    <div class="position-relative element-content-road-path-card">
-                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/card2.png" alt="">
-                        <div class="roadpathBlockNumber">
-                            <p>7</p>
-                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/folder.png" alt="">
-                        </div>
-                    </div>
-                    <div class="description-content-roadPath">
-                        <div class="imgTitleCours justify-content-between">
-                           <div class="d-flex align-items-center">
-                               <div class="imgCoursProd">
-                                   <img src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
-                               </div>
-                               <p class="nameCoursProd">Mamadou</p>
-                           </div>
-                            <a href="/detail-product-road" class="btn btnDiscover">Discover</a>
-                        </div>
-                        <p class="werkText">Doorbreek gedachtepatronen</p>
-
-                    </div>
-                </div>
-                <div class="content-road-path-card">
-                    <div class="position-relative element-content-road-path-card">
-                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Public-real-estate.jpeg" alt="">
-                        <div class="roadpathBlockNumber">
-                            <p>3</p>
-                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/folder.png" alt="">
-                        </div>
-                    </div>
-                    <div class="description-content-roadPath">
-                        <div class="imgTitleCours justify-content-between">
-                           <div class="d-flex align-items-center">
-                               <div class="imgCoursProd">
-                                   <img src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
-                               </div>
-                               <p class="nameCoursProd">Fadel</p>
-                           </div>
-                            <a href="/detail-product-road" class="btn btnDiscover">Discover</a>
-                        </div>
-                        <p class="werkText">Doorbreek gedachtepatronen</p>
-                    </div>
-                </div>
-                <div class="content-road-path-card">
-                    <div class="position-relative element-content-road-path-card">
-                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/hr.jpg" alt="">
-                        <div class="roadpathBlockNumber">
-                            <p>7</p>
-                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/folder.png" alt="">
-                        </div>
-                    </div>
-                    <div class="description-content-roadPath">
-                        <div class="imgTitleCours justify-content-between">
-                            <div class="d-flex align-items-center">
-                                <div class="imgCoursProd">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Maurice_Veraa_.jpeg" alt="">
-                                </div>
-                                <p class="nameCoursProd">Influid</p>
-                            </div>
-                            <a href="/detail-product-road" class="btn btnDiscover">Discover</a>
-                        </div>
-                        <p class="werkText">Doorbreek gedachtepatronen</p>
-
-                    </div>
-                </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
     </div>
