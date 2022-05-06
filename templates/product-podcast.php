@@ -149,7 +149,6 @@
                         <li><a href="" class=""><span class="time">00:35</span>Ecofarm</a></li>
                     </ul>
 
-
                     <div class="customTabs">
                         <div class="tabs">
                             <ul id="tabs-nav">

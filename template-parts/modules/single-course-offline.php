@@ -1191,7 +1191,6 @@ if(!$image){
         });
     })
 </script>
-
     <script>
         // Rating
         const list = document.querySelector('.list')
