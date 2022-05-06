@@ -183,7 +183,7 @@ if(!$favoured)
                                 <form action="/dashboard/user/" method="POST">
                                
                                 <?php
-                                if($user_id != $leerpad->post_author && $user_id != 0)
+                                if($user_id != 0)
                                     echo "
                                         <button type='submit' class='' name='interest_save' style='border:none; background:white'> 
                                             <i class='fas fa-bell' style='font-size: 25px;'></i><br>
