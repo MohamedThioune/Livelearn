@@ -263,7 +263,7 @@ $description = get_field('long_description', $leerpadden[$position]->ID);
                             <!-- fin Modal deel -->
                         </div>
                     </div>
-                    <!-- -------------------------------------- End Icons row ------------------------------------->
+                    <!-- -------- ------------------------------ End Icons row ------------------------------------->
 
                     <div class="blockTextGlovale mt-3">
                         <div class="text-limit">
