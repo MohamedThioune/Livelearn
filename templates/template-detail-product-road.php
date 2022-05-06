@@ -3,6 +3,7 @@
 <?php get_header(); ?>
 
 <?php
+
 $leerpad =  ($_GET['id'] != 0) ? get_post($_GET['id']) : null;
 
 $leerpadden = get_field('road_path', $leerpad->ID);
@@ -35,6 +36,18 @@ $description = get_field('long_description', $leerpadden[$position]->ID);
 /*
 * *
 */
+
+/*
+* Likes
+*/
+$favoured = count(get_field('favorited', $leerpad->ID));
+if(!$favoured)
+    $favoured = 0;
+/*
+* *
+*/
+
+
 ?>
 
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
@@ -112,7 +125,7 @@ $description = get_field('long_description', $leerpadden[$position]->ID);
                      src="<?php echo get_stylesheet_directory_uri(); ?>/img/voorwie.png"> -->
 
                         <?php
-                        $author = get_user_by('id', $post->post_author);
+                        $author = get_user_by('id', $leerpad->post_author);
                         ?>
                         <div class="content-text p-4 pb-0">
                             <h4 class="text-dark">Voor wie ?</h4>
@@ -154,7 +167,7 @@ $description = get_field('long_description', $leerpadden[$position]->ID);
                                 <input type="hidden" id="course_id" value="0">
                                 <!-- <img class="iconeCours" src="<?php echo get_stylesheet_directory_uri();?>/img/love.png" alt=""> -->
                                 <button id="btn_favorite" style="background:white; border:none"><i class="far fa-heart" style="font-size: 25px;"></i></button>
-                                <span class="textIconeLearning mt-1" id="autocomplete_favoured">5</span>
+                                <span class="textIconeLearning mt-1" id="autocomplete_favoured"><?php echo $favoured; ?></span>
                             </div>
                             <div class="d-flex flex-column mx-md-3 mx-2">
                                 <i class="fas fa-calendar-alt" style="font-size: 25px;"></i>
@@ -162,17 +175,34 @@ $description = get_field('long_description', $leerpadden[$position]->ID);
                             </div>
                             <div class="d-flex flex-column mx-md-3 mx-2">
                                 <i class="fas fa-graduation-cap" style="font-size: 25px;"></i>
-                                <span class="textIconeLearning mt-1">Training</span>
+                                <span class="textIconeLearning mt-1">Road Path</span>
                             </div>
                         </div>
                         <div class="d-flex flex-row block2">
                             <div class="d-flex flex-column mx-md-3 mx-2">
-                                <form action="../../dashboard/user/" method="POST">
-                                    <button type='submit' class='' name='interest_save' style='border:none; background:white'>
-                                        <i class='fas fa-bell' style='font-size: 25px;'></i><br>
-                                        <span class='textIconeLearning mt-1'>Bewaar</span>
-                                    </button>
+                                <form action="/dashboard/user/" method="POST">
+                                <input type="hidden" name="meta_value" value="<?php echo $leerpad->ID; ?>" id="">
+                                <input type="hidden" name="user_id" value="<?php echo $user_id; ?>" id="">
+                                <input type="hidden" name="meta_key" value="roadpath" id="">
+                                <?php
+                                if($user_id != $leerpad->post_author && $user_id != 0)
+                                    echo "
+                                        <button type='submit' class='' name='interest_save' style='border:none; background:white'> 
+                                            <i class='fas fa-bell' style='font-size: 25px;'></i><br>
+                                            <span class='textIconeLearning mt-1'>Bewaar</span>
+                                        </button>
+                                        ";
+                                ?>
                                 </form>
+                                <?php
+                                if($user_id == 0)
+                                    echo "
+                                    <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='' style='border:none; background:white'> 
+                                        <i class='fas fa-bell' style='font-size: 25px;'></i><br>
+                                        <span class='textIconeLearning mt-1'>Bewaar</spanz>
+                                    </button>
+                                    ";
+                                ?>
                             </div>
                             <div class="d-flex flex-column mx-md-3 mx-2">
                                 <button class="btn iconeText open-modal">
@@ -193,7 +223,6 @@ $description = get_field('long_description', $leerpadden[$position]->ID);
                                                 ?>
                                                 <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
                                                 <?php
-
                                             }
                                             ?>
                                         </div>
@@ -231,7 +260,7 @@ $description = get_field('long_description', $leerpadden[$position]->ID);
                                             <div>
                                                 <p class="klikText">Klik om link te kopieren</p>
                                                 <div class="input-group input-group-copy formCopyLink">
-                                                    <input id="test1" type="text" class="linkTextCopy form-control" value="<?php echo get_permalink($post->ID) ?>" readonly>
+                                                    <input id="test1" type="text" class="linkTextCopy form-control" value="<?php echo "/detail-product-road/?id=" . $leerpad->ID; ?>" readonly>
                                                     <span class="input-group-btn">
                                                 <button class="btn btn-default btnCopy">Copy</button>
                                                 </span>
@@ -525,11 +554,11 @@ $description = get_field('long_description', $leerpadden[$position]->ID);
                         }
                         ?>
                         <form action="/dashboard/user/" method="POST">
-                            <input type="hidden" name="meta_value" value="<?php echo $post->post_author ?>" id="">
+                            <input type="hidden" name="meta_value" value="<?php echo $leerpad->post_author ?>" id="">
                             <input type="hidden" name="user_id" value="<?php echo $user_id ?>" id="">
                             <input type="hidden" name="meta_key" value="expert" id="">
                             <?php
-                            if($user_id != 0 && $user_id != $post->post_author)
+                            if($user_id != 0 && $user_id != $leerpad->post_author)
                                 echo "<input type='submit' class='btnLeerom' style='border:none' name='interest_push' value='+ Leeromgeving'>";
                             ?>
                         </form>
