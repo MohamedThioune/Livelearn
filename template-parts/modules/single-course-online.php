@@ -593,9 +593,11 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                                     if(isset($lesson)) 
                                         if($lesson == $key)
                                             echo '<img class="playElement" src="'.  get_stylesheet_directory_uri() . '/img/play.png" alt="">';
-                                    
-                                    echo '<img class="" width="35px" height="20px" src="'. $video['thumbnail_url'] . '" alt="">';
-                                    echo '<a href="?topic=0&lesson='. $key .'" class="textChapitreCours">' . $video['title'] . '</a><br><br>';
+
+                                    echo '  <div class="d-flex contentListVidoeCourse">
+                                                         <img class="" width="35px" height="20px" src="'. $video['thumbnail_url'] . '" alt="">
+                                                         '<a href="?topic=0&lesson='. $key ." class="textChapitreCours">' . $video['title'] . '</a>'
+                                                    </div>';
                                 }
                                 ?>
                             </div>
