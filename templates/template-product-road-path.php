@@ -27,7 +27,7 @@ $leerpaden = get_posts($args);
     <div class="hulpBox">
         <div class="container-fluid">
            <div class="headHulpbox">
-               <h1 class="mb-0"><?= $user->displayName ?> - Road Course Path</h1>
+               <h1 class="mb-0"><?= $user->display_name ?> - Road Course Path</h1>
                <div class="searchElementPath">
                    <input id="inputSearchElementPath" type="search" placeholder="Search an author or teacher">
                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png" class="" alt="">
@@ -61,9 +61,9 @@ $leerpaden = get_posts($args);
                         <div class="imgTitleCours justify-content-between">
                            <div class="d-flex align-items-center">
                                <div class="imgCoursProd">
-                                   <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image54.png" alt="">
+                                   <img src="<?= $profile_picture ?>" alt="">
                                </div>
-                               <p class="nameCoursProd"><?= $user->ID; ?></p>
+                               <p class="nameCoursProd"><?= $user->display_name; ?></p>
                            </div>
                             <a href="/detail-product-road?id=<?= $leerpad->ID; ?>" class="btn btnDiscover">Discover</a>
                         </div>
