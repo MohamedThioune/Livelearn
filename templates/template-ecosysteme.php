@@ -432,10 +432,10 @@ foreach($global_blogs as $blog)
                                     <div class="description-content-roadPath">
                                         <div class="imgTitleCours justify-content-between">
                                             <div class="d-flex align-items-center">
-                                                <div class="imgCoursProd">
+                                                <a href="product-road-path?id=<?= $road_path_expert ?>" class="imgCoursProd">
                                                     <img src="<?= $profile_picture; ?>" alt="">
-                                                </div>
-                                                <p class="nameCoursProd"><?= $name; ?></p>
+                                                </a>
+                                                <a href="product-road-path?id=<?= $road_path_expert ?>" class="nameCoursProd"><?= $name; ?></a>
                                             </div>
                                             <a href="/detail-product-road?id=<?= $value['ID']; ?>" class="btn btnDiscover">Discover</a>
                                         </div>

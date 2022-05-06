@@ -129,6 +129,9 @@ $author = array($post->post_author);
 
 $experts = array_merge($expert, $author);
 
+/*
+* Likes
+*/
 $favoured = count(get_field('favorited', $post->ID));
 if(!$favoured)
     $favoured = 0;
