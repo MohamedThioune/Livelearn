@@ -6823,6 +6823,10 @@ tbody{
     .cardKraam2 {
         border: 0px solid lightgrey !important;
     }
+    .roadpathBlockNumber img {
+        width: 30px !important;
+        height: 30px !important;
+    }
 }}
 
 .headHulpbox{
@@ -6887,7 +6891,7 @@ tbody{
 }
 .roadpathBlockNumber img{
     width: 30px !important;
-    height: fit-content !important;
+    height: 30px !important;
 }
 .roadpathBlockNumber p{
     font-weight: bold;
