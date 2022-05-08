@@ -422,8 +422,6 @@ else if(isset($road_course_add)){
 } 
 
 if(isset($review_post)){
-    echo 'Hello'. $course_id;
-
     $reviews = get_field('reviews', $course_id);
     $review = array();
     $review['name'] = $name;
@@ -431,9 +429,6 @@ if(isset($review_post)){
     $review['rating'] = 0;
     $review['feedback'] = $feedback;
     array_push($reviews,$review);
-
-    var_dump($reviews);
-
 
     update_field('reviews',$reviews, $course_id);
     $message = get_permalink($course_id) . '/?message=Your review added successfully'; 

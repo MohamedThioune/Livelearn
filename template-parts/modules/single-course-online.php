@@ -397,7 +397,7 @@ $reviews = get_field('reviews', $post->ID);
                                 ?>
                             </div>
                             <div id="tab3" class="tab-content">
-                                <form action="" method="POST">
+                                <form action="../../dashboard/user/" method="POST">
                                     <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
                                     <div class="row">
                                         <div class="form-group col-6">
