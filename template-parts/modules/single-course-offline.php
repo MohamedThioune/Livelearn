@@ -798,12 +798,12 @@ if(!$image){
                             ?>
                             </div>
                             <div id="tab3" class="tab-content">
-                                <form action="" method="POST">
+                                <form action="../../dashboard/user/" method="POST">
                                     <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
                                     <div class="row">
                                         <div class="form-group col-6">
                                             <label for="name">Name</label>
-                                            <input type="text" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Name" required>
+                                            <input type="text" name="first_name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Name" required>
                                         </div>
                                         <div class="form- col-6">
                                             <label for="exampleInputEmail1">Email address</label>
@@ -827,7 +827,7 @@ if(!$image){
                                         <label for="exampleInputPassword1">Feedback</label>
                                         <textarea name="feedback" id=""  rows="10" required></textarea>
                                     </div>
-                                    <button type="submit" name="review_course" class="btn btn-sendRating">Send</button>
+                                    <button type="submit" name="review_post" class="btn btn-sendRating">Send</button>
                                 </form>
                             </div>
                         </div> <!-- END tabs-content -->
