@@ -804,12 +804,11 @@ if(!$image){
                                         <div class="form-group col-6">
                                             <label for="name">Name</label>
                                             <input type="text" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Name" required>
-                                            <small id="name" class="form-text text-muted">We'll never share your personal information with anyone else.</small>
                                         </div>
                                         <div class="form- col-6">
                                             <label for="exampleInputEmail1">Email address</label>
                                             <input type="email" name="email_adress" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
-                                            <small id="exampleInputEmail1" class="form-text text-muted">We'll never share your personal information with anyone else.</small>
+                                            <small id="exampleInputEmail1" class="form-text text-muted">We'll never share your email with anyone else.</small>
                                         </div>
                                     </div>
                                     <div class="form-group">
