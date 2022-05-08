@@ -442,6 +442,7 @@ else if(isset($review_course)){
     $review = array();
     $review['name'] = $name;
     $review['email_adress'] = $email_adress;
+    $review['rating'] = 0;
     $review['feedback'] = $feedback;
     array_push($reviews,$review);
 
