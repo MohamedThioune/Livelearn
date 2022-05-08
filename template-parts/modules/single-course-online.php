@@ -360,37 +360,40 @@ $reviews = get_field('reviews', $post->ID);
                         <div id="tabs-content">
                             <div id="tab2" class="tab-content">
                                 <?php
-                                if(!empty($reviews))
-                                foreach($reviews as $review){
-                                ?>
-                                <div class="review-info-card">
-                                    <div class="review-user-mini-profile">
-                                        <div class="user-photo">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/user.png" alt="">
-                                        </div>
-                                        <div class="user-name">
-                                            <p><?= $review->name; ?></p>
-                                            <div class="rating-element">
-                                                <div class="rating-stats">
-                                                    <div id="rating-container-custom">
-                                                        <ul class="list-show">
-                                                            <li class="selected"></li>
-                                                            <li class="selected"></li>
-                                                            <li class="selected"></li>
-                                                            <li class="disabled"></li>
-                                                            <li class="disabled"></li>
-                                                        </ul>
+                                if(!empty($reviews)){
+                                    foreach($reviews as $review){
+                                    ?>
+                                    <div class="review-info-card">
+                                        <div class="review-user-mini-profile">
+                                            <div class="user-photo">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/user.png" alt="">
+                                            </div>
+                                            <div class="user-name">
+                                                <p><?= $review->name; ?></p>
+                                                <div class="rating-element">
+                                                    <div class="rating-stats">
+                                                        <div id="rating-container-custom">
+                                                            <ul class="list-show">
+                                                                <li class="disabled"></li>
+                                                                <li class="disabled"></li>
+                                                                <li class="disabled"></li>
+                                                                <li class="disabled"></li>
+                                                                <li class="disabled"></li>
+                                                            </ul>
+                                                        </div>
+                                                        <!-- <p class="hours-element">18 hours ago</p> -->
                                                     </div>
-                                                    <!-- <p class="hours-element">18 hours ago</p> -->
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <p class="reviewsText"><?= $review->feedback; ?></p>
+                                        <p class="reviewsText"><?= $review->feedback; ?></p>
 
-                                </div>
+                                    </div>
                                 <?php
+                                    }
                                 }
+                                else 
+                                    echo "<h2>No reviews for this course ...</h2>";
                                 ?>
                             </div>
                             <div id="tab3" class="tab-content">
