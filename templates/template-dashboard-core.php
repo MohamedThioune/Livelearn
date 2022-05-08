@@ -421,7 +421,7 @@ else if(isset($road_course_add)){
     header("Location: ". $message);
 } 
 
-else if(isset($review_post)){
+else if(isset($_POST['review_post'])){
     $reviews = get_field('reviews', $course_id);
     $review = array();
     $review['name'] = $name;
@@ -433,7 +433,7 @@ else if(isset($review_post)){
     update_field('reviews',$reviews, $course_id);
     $message = get_permalink($course_id) . '/?message=Your review added successfully'; 
 
-    //header("Location: ". $message);
+    header("Location: ". $message);
 
 }
 

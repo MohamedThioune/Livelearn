@@ -397,7 +397,7 @@ $reviews = get_field('reviews', $post->ID);
                                 ?>
                             </div>
                             <div id="tab3" class="tab-content">
-                                <form action="../../dashboard/user/" method="POST">
+                                <form action="/dashboard/user/" method="POST">
                                     <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
                                     <div class="row">
                                         <div class="form-group col-6">
@@ -426,7 +426,8 @@ $reviews = get_field('reviews', $post->ID);
                                         <label for="exampleInputPassword1">Feedback</label>
                                         <textarea name="feedback" id=""  rows="10" required></textarea>
                                     </div>
-                                    <button type="submit" name="review_post" class="btn btn-sendRating">Send</button>
+                                    <input type='submit' class='btn btn-sendRating' name='review_post' value='Send'>
+
                                 </form>
                             </div>
                         </div> <!-- END tabs-content -->
