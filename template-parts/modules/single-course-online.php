@@ -397,12 +397,12 @@ $reviews = get_field('reviews', $post->ID);
                                 ?>
                             </div>
                             <div id="tab3" class="tab-content">
-                                <form method="POST">
+                                <form action="" method="POST">
                                     <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
                                     <div class="row">
                                         <div class="form-group col-6">
                                             <label for="name">Name</label>
-                                            <input type="text" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Name" required>
+                                            <input type="text" name="first_name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Name" required>
                                         </div>
                                         <div class="form- col-6">
                                             <label for="exampleInputEmail1">Email address</label>
