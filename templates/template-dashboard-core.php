@@ -421,7 +421,7 @@ else if(isset($road_course_add)){
     header("Location: ". $message);
 } 
 
-else if(isset($review_post)){
+if(isset($review_post)){
     echo 'Hello'. $course_id;
 
     $reviews = get_field('reviews', $course_id);
