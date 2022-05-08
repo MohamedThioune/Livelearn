@@ -393,7 +393,7 @@ $reviews = get_field('reviews', $post->ID);
                                     }
                                 }
                                 else 
-                                    echo "<h2>No reviews for this course ...</h2>";
+                                    echo "<h4>No reviews for this course ...</h4>";
                                 ?>
                             </div>
                             <div id="tab3" class="tab-content">
