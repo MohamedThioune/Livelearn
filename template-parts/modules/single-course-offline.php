@@ -521,7 +521,6 @@ if(!$image){
                         </ul> <!-- END tabs-nav -->
                         <div id="tabs-content">
                             <div id="tab1" class="tab-content">
-                                <h2>Evens</h2>
                                 <?php
 
                                 $data = get_field('data_locaties', $post->ID);
@@ -761,101 +760,59 @@ if(!$image){
 
                             </div>
                             <div id="tab2" class="tab-content">
-                                <h2>Reviews</h2>
+                            <?php
+                            if(!empty($reviews)){
+                                foreach($reviews as $review){
+                                ?>
                                 <div class="review-info-card">
                                     <div class="review-user-mini-profile">
                                         <div class="user-photo">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/user.png" alt="">
                                         </div>
                                         <div class="user-name">
-                                            <p>Daniel</p>
+                                            <p><?= $review->name; ?></p>
                                             <div class="rating-element">
                                                 <div class="rating-stats">
                                                     <div id="rating-container-custom">
                                                         <ul class="list-show">
-                                                            <li class="selected"></li>
-                                                            <li class="selected"></li>
-                                                            <li class="selected"></li>
                                                             <li class="disabled"></li>
                                                             <li class="disabled"></li>
-                                                        </ul>
-                                                    </div>
-                                                    <p class="hours-element">18 hours ago</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="reviewsText">Half the lanes don't work! But it's decent for the price. Waited over 30 minutes for our drinks!!!! But yes I recommend it. It's not great but it's OK I guess</p>
-
-                                </div>
-                                <div class="review-info-card">
-                                    <div class="review-user-mini-profile">
-                                        <div class="user-photo">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
-                                        </div>
-                                        <div class="user-name">
-                                            <p>Daniel</p>
-                                            <div class="rating-element">
-                                                <div class="rating-stats">
-                                                    <div id="rating-container">
-                                                        <ul class="list-show">
-                                                            <li class="selected"></li>
-                                                            <li class="selected"></li>
-                                                            <li class="selected"></li>
+                                                            <li class="disabled"></li>
                                                             <li class="disabled"></li>
                                                             <li class="disabled"></li>
                                                         </ul>
                                                     </div>
-                                                    <p class="hours-element">18 hours ago</p>
+                                                    <!-- <p class="hours-element">18 hours ago</p> -->
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="reviewsText">Half the lanes don't work! But it's decent for the price. Waited over 30 minutes for our drinks!!!! But yes I recommend it. It's not great but it's OK I guess</p>
+                                    <p class="reviewsText"><?= $review->feedback; ?></p>
 
                                 </div>
-                                <div class="review-info-card">
-                                    <div class="review-user-mini-profile">
-                                        <div class="user-photo">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
-                                        </div>
-                                        <div class="user-name">
-                                            <p>Daniel</p>
-                                            <div class="rating-element">
-                                                <div class="rating-stats">
-                                                    <div id="rating-container">
-                                                        <ul class="list-show">
-                                                            <li class="selected"></li>
-                                                            <li class="selected"></li>
-                                                            <li class="selected"></li>
-                                                            <li class="disabled"></li>
-                                                            <li class="disabled"></li>
-                                                        </ul>
-                                                    </div>
-                                                    <p class="hours-element">18 hours ago</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="reviewsText">Half the lanes don't work! But it's decent for the price. Waited over 30 minutes for our drinks!!!! But yes I recommend it. It's not great but it's OK I guess</p>
-
-                                </div>
+                            <?php
+                                }
+                            }
+                            else 
+                                echo "<h4>No reviews for this course ...</h4>";
+                            ?>
                             </div>
                             <div id="tab3" class="tab-content">
                                 <h2>Add review</h2>
-                                <form>
-                                  <div class="row">
-                                      <div class="form-group col-6">
-                                          <label for="exampleInputEmail1">Name</label>
-                                          <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Name">
-                                          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                                      </div>
-                                      <div class="form- col-6">
-                                          <label for="exampleInputEmail1">Email address</label>
-                                          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                                          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                                      </div>
-                                  </div>
+                                <form action="" method="POST">
+                                    <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
+                                    <div class="row">
+                                        <div class="form-group col-6">
+                                            <label for="name">Name</label>
+                                            <input type="text" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Name" required>
+                                            <small id="name" class="form-text text-muted">We'll never share your personal information with anyone else.</small>
+                                        </div>
+                                        <div class="form- col-6">
+                                            <label for="exampleInputEmail1">Email address</label>
+                                            <input type="email" name="email_adress" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+                                            <small id="exampleInputEmail1" class="form-text text-muted">We'll never share your personal information with anyone else.</small>
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label for="rating-container-custom">Rating</label>
                                         <div id="rating-container-custom">
@@ -870,9 +827,9 @@ if(!$image){
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Feedback</label>
-                                        <textarea name="" id=""  rows="10"></textarea>
+                                        <textarea name="feedback" id=""  rows="10" required></textarea>
                                     </div>
-                                    <button type="submit" class="btn btn-sendRating">Send</button>
+                                    <button type="submit" name="review_course" class="btn btn-sendRating">Send</button>
                                 </form>
                             </div>
                         </div> <!-- END tabs-content -->

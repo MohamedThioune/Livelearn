@@ -445,8 +445,8 @@ else if(isset($review_course)){
     $review['feedback'] = $feedback;
     array_push($reviews,$review);
 
-    $message = get_permalink($course->ID) . '?message=Your review added successfully'; 
     update_field('reviews',$reviews, $course_id);
+    $message = get_permalink($course_id) . '/?message=Your review added successfully'; 
 
     header("Location: ". $message);
 
