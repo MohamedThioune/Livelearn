@@ -114,7 +114,7 @@ $reviews = get_field('reviews', $post->ID);
             <div class="blockOneOver">
                   <?php 
                   if(isset($_GET["message"]))
-                    echo "<span class='alert alert-infos'>" . $_GET['message'] . "</span>";
+                    echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>";
                   ?>
                   <!-- ------------------------------ Start Title livelearn ---------------------------------- -->
                   <div class="titleBlock">
@@ -369,7 +369,7 @@ $reviews = get_field('reviews', $post->ID);
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/user.png" alt="">
                                             </div>
                                             <div class="user-name">
-                                                <p><?= $review->name; ?></p>
+                                                <p><?= $review['name']; ?></p>
                                                 <div class="rating-element">
                                                     <div class="rating-stats">
                                                         <div id="rating-container-custom">
@@ -386,7 +386,7 @@ $reviews = get_field('reviews', $post->ID);
                                                 </div>
                                             </div>
                                         </div>
-                                        <p class="reviewsText"><?= $review->feedback; ?></p>
+                                        <p class="reviewsText"><?= $review['feedback']; ?></p>
 
                                     </div>
                                 <?php
@@ -402,7 +402,7 @@ $reviews = get_field('reviews', $post->ID);
                                     <div class="row">
                                         <div class="form-group col-6">
                                             <label for="name">Name</label>
-                                            <input type="text" name="first_name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Name" required>
+                                            <input type="text" name="fullname" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Name" required>
                                         </div>
                                         <div class="form- col-6">
                                             <label for="exampleInputEmail1">Email address</label>
@@ -410,7 +410,7 @@ $reviews = get_field('reviews', $post->ID);
                                             <small id="exampleInputEmail1" class="form-text text-muted">We'll never share your email with anyone else.</small>
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!--<div class="form-group">
                                         <label for="rating-container-custom">Rating</label>
                                         <div id="rating-container-custom">
                                             <ul class="list">
@@ -421,12 +421,12 @@ $reviews = get_field('reviews', $post->ID);
                                                 <li></li>
                                             </ul>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
-                                        <label for="exampleInputPassword1">Feedback</label>
-                                        <textarea name="feedback" id=""  rows="10" required></textarea>
+                                        <label for="">Feedback</label>
+                                        <textarea name="feedback_content" rows="10"></textarea>
                                     </div>
-                                    <input type='submit' class='btn btn-sendRating' name='interest_push' value='Send'>
+                                    <input type='submit' class='btn btn-sendRating' name='review_post' value='Send'>
                                 </form>
                             </div>
                         </div> <!-- END tabs-content -->

@@ -296,22 +296,8 @@ else if(isset($interest_push)){
             $message = "Reeds aanwezig in jouw favorieten";
         }
         header("location:../../dashboard/user/?message=".$message);
+        
     }
-    else
-        if(isset($course_id)){
-            $reviews = get_field('reviews', $course_id);
-            $review = array();
-            $review['name'] = $name;
-            $review['email_adress'] = $email_adress;
-            $review['rating'] = 0;
-            $review['feedback'] = $feedback;
-            array_push($reviews,$review);
-        
-            update_field('reviews',$reviews, $course_id);
-            $message = get_permalink($course_id) . '/?message=Your review added successfully'; 
-        
-            header("Location: ". $message);
-        }
 }
 
 /*
@@ -436,7 +422,21 @@ else if(isset($road_course_add)){
 } 
 
 else if(isset($review_post)){
-   
+    $reviews = get_field('reviews', $course_id);
+    $review = array();
+    $review['name'] = $fullname;
+    $review['email_adress'] = $email_adress;
+    $review['rating'] = 0;
+    $review['feedback'] = $feedback_content;
+    if(!$reviews)
+        $reviews = array();
+
+    array_push($reviews,$review);
+
+    update_field('reviews',$reviews, $course_id);
+    $message = get_permalink($course_id) . '/?message=Your review added successfully'; 
+
+    header("Location: ". $message);
 
 }
 
