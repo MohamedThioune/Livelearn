@@ -798,7 +798,6 @@ if(!$image){
                             ?>
                             </div>
                             <div id="tab3" class="tab-content">
-                                <h2>Add review</h2>
                                 <form action="" method="POST">
                                     <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
                                     <div class="row">
