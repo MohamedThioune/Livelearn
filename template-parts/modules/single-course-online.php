@@ -137,7 +137,7 @@ $reviews = get_field('reviews', $post->ID);
                  </div>
                  <!-- ------------------------------ End Title livelearn ---------------------------------- -->
 
-                <p class="e-learningTitle"><?php echo $post->post_title;?></p>
+                <p class="e-learningTitle"><b><?php echo $post->post_title;?></b></p>
                 <div class="blockImgCour">
                     <?php 
                      
