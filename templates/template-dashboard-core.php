@@ -435,7 +435,20 @@ else if(isset($change_password)){
             $message = "/dashboard/user/settings/?message_password=Something is wrong !"; 
 
     header("Location: ". $message);
+}
 
+else if(isset($review_course)){
+    $reviews = get_field('reviews', $course_id);
+    $review = array();
+    $review['name'] = $name;
+    $review['email_adress'] = $email_adress;
+    $review['feedback'] = $feedback;
+    array_push($reviews,$review);
+
+    $message = get_permalink($course->ID) . '?message=Your review added successfully'; 
+    update_field('reviews',$reviews, $course_id);
+
+    header("Location: ". $message);
 
 }
 ?>
