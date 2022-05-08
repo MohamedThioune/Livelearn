@@ -141,7 +141,7 @@ $reviews = get_field('reviews', $post->ID);
                 <div class="blockImgCour">
                     <?php 
                      
-                    if(!empty($courses) && !empty($youtube_videos) ){
+                    if( !empty($courses) && !empty($youtube_videos) ){
                         if(!empty(get_field('preview', $post->ID)))
                             echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
                         else
