@@ -354,24 +354,6 @@ else if(isset($delete_todos)){
 /*
 * * Road path   
 */ 
-else if(isset($road_path_selected)){
-    $user_id = get_current_user_id();
-    $args = array(
-        'post_type' => 'course', 
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'include' => $road_path,  
-    );
-
-    $courses = get_posts($args);
-    $road_paths = get_field('road_path', 'user_'. $user_id);
-
-    if(!empty($road_paths))
-        $courses = array_merge($road_paths, $courses);
-
-    update_field('road_path', $courses, 'user_'. $user_id);
-    header("location: /dashboard/teacher/road-path/?message=Succesvolle cursus selectie");
-}
 
 else if(isset($road_path_created)){
 
@@ -422,6 +404,53 @@ else if(isset($road_path_edited)){
     header("Location: ". $message);
 } 
 
+else if(isset($road_course_add)){
+    $courses = array();
+    
+    foreach($road_path as $id)
+        array_push($courses, get_post($id));    
+
+    //Data to create the feedback
+    $post_data = array(
+        'post_title' => $title_road_path,
+        'post_author' => $user_id,
+        'post_type' => 'learnpath',
+        'post_status' => 'publish'
+      );
+
+    $leerpaden = get_field('road_path', $leerpad_id);
+
+    foreach($road_path as $road)
+        array_push($courses, get_post($road));
+
+    if(!empty($courses)){
+        $road_path = array_merge($leerpaden, $courses);
+        update_field('road_path', $road_path, $leerpad_id);
+    }
+
+    $message = "/dashboard/teacher/road-path/?id=". $leerpad_id . "&message=Road path updated successfully"; 
+    header("Location: ". $message);
+} 
+
+else if(isset($review_post)){
+    $reviews = get_field('reviews', $course_id);
+    $review = array();
+    $review['name'] = $fullname;
+    $review['email_adress'] = $email_adress;
+    $review['rating'] = 0;
+    $review['feedback'] = $feedback_content;
+    if(!$reviews)
+        $reviews = array();
+
+    array_push($reviews,$review);
+
+    update_field('reviews',$reviews, $course_id);
+    $message = get_permalink($course_id) . '/?message=Your review added successfully'; 
+
+    header("Location: ". $message);
+
+}
+
 else if(isset($change_password)){
     $user = wp_get_current_user();
 
@@ -436,9 +465,8 @@ else if(isset($change_password)){
             $message = "/dashboard/user/settings/?message_password=Something is wrong !"; 
 
     header("Location: ". $message);
-
-
 }
+
 ?>
 <?php wp_head(); ?>
 

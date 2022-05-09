@@ -130,6 +130,42 @@ jQuery(function($){
         $(".btnUp").hide();
     });
 
+    // for product podcast
+    $(".codeless-player-toggle").click(function() {
+        $(".audioBar").toggleClass("less");
+    });
+
+
+    //custom tabs
+    // Show the first tab and hide the rest
+    $('#tabs-nav li:first-child').addClass('active');
+    $('.tab-content').hide();
+    $('.tab-content:first').show();
+
+// Click function
+    $('#tabs-nav li').click(function(){
+        $('#tabs-nav li').removeClass('active');
+        $(this).addClass('active');
+        $('.tab-content').hide();
+
+        var activeTab = $(this).find('a').attr('href');
+        $(activeTab).fadeIn();
+        return false;
+    });
+
+    //focus
+
+    $(function(){
+        $("#inputSearchElementPath").focus(function(){
+            $('.searchElementPath img').hide();
+        });
+
+        $("#inputSearchElementPath").focusout(function(){
+            $('.searchElementPath img').show();
+        });
+    })
+
+
     // Pour first modal after login
     $(".btnBaangerichte").click(function() {
         $(".subtopicBaangerichte").show();
