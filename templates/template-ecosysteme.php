@@ -2,29 +2,47 @@
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
 <?php 
 
 $topic = (isset($_GET['topic'])) ? $_GET['topic'] : 0;
 $name_topic =  ($topic != 0) ? (String)get_the_category_by_ID($topic) : '';
 
+/*
+** Further informations category
+*/
+$title_category = get_field('title_category', 'category_'. $topic) ? get_field('title_category', 'category_'. $topic) : 'Leeg' ;
+$descriptor_category = get_field('descriptor_category', 'category_'. $topic) ? get_field('descriptor_category', 'category_'. $topic) : 'Geen inhoud' ;
+$partners_category = get_field('partners_category', 'category_'. $topic);
 
-$users = get_users();
+$banner_category = get_field('image', 'category_'. $topic) ? get_field('image', 'category_'. $topic) : get_stylesheet_directory_uri() .'/img/ecosystemHeadImg.png' ;
+
+/*
+** Leerpaden  owned *
+*/
+
+$args = array(
+    'post_type' => 'learnpath',
+    'post_status' => 'publish',
+    'posts_per_page' => -1
+);
+
+$leerpaden = get_posts($args);
 
 $road_paths = array();
 $topic_road_path = 0;
 $title_road_path = "";
 
-foreach($users as $element){
-    $road_path = get_field('road_path', 'user_' . $element->ID);
-    $topic_road_path = get_field('topic_road_path', 'user_' . $element->ID);
+foreach($leerpaden as $leerpad){
+    $road_path = get_field('road_path', $leerpad->ID);
+    $topic_road_path = get_field('topic_road_path', $leerpad->ID);
     if( $topic == $topic_road_path && empty($road_paths) ){
-        $expert_road_path = get_userdata($element->ID)->data->display_name;
+        $expert_road_path = get_userdata($leerpad->post_author)->data->display_name;
         $road_paths = $road_path;
-        $title_road_path = get_field('title_road_path', 'user_' . $element->ID);
+        $title_road_path = $leerpad->post_title;
     }
 }
-
 
 if($topic != 0){    
     $categories_topic = get_categories( array(
@@ -196,8 +214,8 @@ foreach($global_blogs as $blog)
             <div class="col-lg-6">
                 <div class="container">
                     <div class="content-head-ecosystem">
-                        <h1>Bijven leren en ontwikkelen, dat is ons streven | Join de community</h1>
-                        <p class="description-head">Het ecosysteem waar HR- en L&D-professionals op strategisch niveau samenkomen om invulling te geven aan vraagstukken omtrent workforce career management en het creëren van een high performing organisatie.</p>
+                        <h1><?= $title_category; ?>| Join de community</h1>
+                        <p class="description-head"><?= $descriptor_category; ?></p>
                         
                         <div class="groupBtnEcosysteme">
                             <div class="p-2 my-3">
@@ -220,25 +238,13 @@ foreach($global_blogs as $blog)
                         <div class="block-consultant">
                             <div class="block-initiative">
                                <div class="imgLivelearnLogo">
-                                   <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_right.png" alt="" >
-                               </div><!--
-                                <div class="auteur-initiative">
-                                    <div class="imgAuteur">
-                                        <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Image53.png" alt="">
-                                    </div>
-                                    <p>Lieselotte van der <br> Meer <br> Principal <br> consultant</p>
-                                </div>-->
+                                   <img src="<?php echo $partners_category[0]['image'] ? $partners_category[0]['image'] : get_stylesheet_directory_uri() . '/img/logo_right.png'; ?>" alt="" >
+                               </div>
                             </div>
                             <div class="block-initiative block-initiative2">
                                <div class="imgLivelearnLogo">
-                                   <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image49.png" alt="" >
-                               </div><!--
-                                <div class="auteur-initiative">
-                                    <div class="imgAuteur">
-                                        <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/Image54.png" alt="">
-                                    </div>
-                                    <p>Daniel van der Kolk <br> Oprichter</p>
-                                </div>-->
+                                   <img src="<?php echo $partners_category[1]['image'] ? $partners_category[1]['image'] : get_stylesheet_directory_uri() . '/img/Image49.png'; ?>" alt="" >
+                               </div>                            
                             </div>
                         </div>
 
@@ -247,7 +253,7 @@ foreach($global_blogs as $blog)
             </div>
             <div class="col-lg-6">
                 <div class="img-head-ecosysteme">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/ecosystemHeadImg.png" alt="">
+                    <img src="<?php echo $banner_category; ?>" alt="">
                 </div>
             </div>
 

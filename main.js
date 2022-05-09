@@ -36,13 +36,13 @@ jQuery(function($){
         document.getElementsByClassName("autocomplete-suggestions2").classList.toggle("show");
     }
     $(document).ready(function() {
-        $(".b1").click(function() {
+        $("#burger").click(function() {
             $(".theme-side-menu").show();
             $("#sectionDashboard1").show();
             $(".b1").hide();
             $(".b2").show();
         });
-        $(".b2").click(function() {
+        $("#burgerCroie").click(function() {
             $(".theme-side-menu").hide();
             $("#sectionDashboard1").hide();
             $(".b2").hide();
@@ -63,6 +63,16 @@ jQuery(function($){
         $(".boxSousNav3-2").hide();
         $("#croieProfil").hide();
         $(".croie").toggle();
+    });
+
+    $("#burger-web").click(function() {
+        $("#burgerCroie-web").show();
+        $("#burger-web").hide();
+    });
+
+    $("#burgerCroie-web").click(function() {
+        $("#burgerCroie-web").hide();
+        $("#burger-web").show();
     });
 
     $(".croie").click(function() {
@@ -266,6 +276,12 @@ jQuery(function($){
     // for menu large
     $("#burgerCroie-web").click(function() {
         $(".theme-side-menu").removeClass("extensive");
+    });
+
+    // for road path
+    $("#bntContinueRoad").click(function() {
+        $("#step2RoadPath").show("");
+        $("#step1RoadPath").hide("");
     });
 
 

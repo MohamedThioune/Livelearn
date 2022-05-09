@@ -60,10 +60,11 @@
                 'display_name' => $first_name,
                 'first_name' => $first_name,
                 'last_name' => $last_name,
-                'role' => 'klant'
+                'role' => 'subscriber'
             );
 
             $user_id = wp_insert_user(wp_slash($userdata));
+
 
             if(is_wp_error($user_id)){
                 $danger = $user_id->get_error_message();
@@ -75,12 +76,13 @@
                 echo ("<span class='alert alert-info'>" .  $danger . "</span>");   
             }else
                 {
-                    $subject = 'Welcome onboard ✨';
+                    $subject = 'Je LiveLearn inschrijving is binnen! ✨';
                     $body = "
-                    <h1>Hello " . $first_name  . "</h1><br> 
-                    Your are successfully registered , welcome onboard<br>
-                    Your LOGIN-ID is <b style='color:blue'>" . $login . "</b> and password <b>p@ssword1234.</b><br><br>
-                    <h4><a href='https://livelearn.nl/inloggen/'> Connexion </a></h4>
+                    Bedankt voor je inschrijving<br>
+                    <h1>Hello " . $first_name  . "</h1>,<br> 
+                    Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>p@ssword1234.</b><br><br>
+                    <h4>Inloggen:</h4><br>
+                    <h6><a href='https://livelearn.nl/inloggen/'> Connexion </a></h6>
                     ";
                 
                     $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  

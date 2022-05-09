@@ -65,8 +65,8 @@
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
-<div class="contentOne">
-</div>
+    <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+
 
 <div class="boxBlijven">
     <div class="container">
@@ -76,7 +76,7 @@
                 <p class="altjidText bottomTextMaak">-Maak meteen een gratis en persoonlijke leeromgeving</p>
                 <p class="altjidText bottomTextMaak">-Altijd direct antwoord op je vragen over opleiden geving</p>
                 <p class="altjidText bottomTextMaak">-Het grootste aanbod van zakelijke trainingen EN persoonlijke interesses</p>
-                <button  class="btn btnMeerInformation">Meer informatie</button>
+                <a href="/static-education-advice"  class="btn btnMeerInformation">Meer informatie</a>
             </div>
             <div class="col-md-6 col-sm-12">
                 <div class="blockForm">
@@ -86,7 +86,8 @@
                         <?php if(isset($_GET['success'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>" ?>
                         <?php if(isset($_GET['danger'])) echo "<span class='alert alert-danger'>" . $_GET['message'] . "</span><br><br>" ?>
                     </center>
-                    <form action="/static-education-individual" method="POST" class="formBoekGratis">
+                    <?php echo (do_shortcode('[user_registration_form id="59"]')); ?>
+                    <!-- <form action="/static-education-individual" method="POST" class="formBoekGratis">
                         <input type="text" name="user_login"  placeholder="Gebruikersnaam*" required>
                         <input type="text" name="first_name"  placeholder="Voornaam*" required>
                         <input type="text" name="last_name" placeholder="Achternaam*" required>
@@ -95,13 +96,13 @@
                         <input type="text" name="phone" placeholder="Telefoonnummer*" required>
                         <input type="password" name="password" placeholder="Wachtwoord" required>
                         <button type="submit" name="education_individual" class="btn btnAanvraag">Aanvraag indienen </button>
-                    </form>
+                    </form> -->
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="blockEducationIndividualPage">
+<!-- <div class="blockEducationIndividualPage">
     <div class="blockOnzeService">
         <div class="container">
             <div class="blockTextScholingsadvies">
@@ -227,7 +228,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 
 <?php get_footer(); ?>

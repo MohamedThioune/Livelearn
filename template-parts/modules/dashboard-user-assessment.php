@@ -8,9 +8,9 @@ $args = array(
     );
     
     $loop = new WP_Query( $args ); 
-    $count=0;
+    $count_question=0;
     while ( $loop->have_posts() ) : $loop->the_post(); 
-        $count++;
+        $count_question++;
         $post_id = get_the_ID();
         $question=get_field( "question", $post_id );
         //var_dump($question);
@@ -23,8 +23,10 @@ $args = array(
 
 <div class="content-assessment">
     <div class="contentAsessment">
-        <h1 class="titleAssessment">Assessments</h1>
-        <p class="descriptionAssessment">Stand out from other job seekers by completing an assessment ! Livelearn will feature top performers to employers</p>
+        <center>
+            <h1 class="titleAssessment">Assessments</h1>
+            <p class="descriptionAssessment">Stand out from other job seekers by completing an assessment ! Livelearn will feature top performers to employers</p>
+        </center>
         <div class="contentCardAssessment">
             <div class="cardAssessement" data-target="#ModalBackEnd" data-toggle="modal">
                 <div class="contentImgAssessment">
@@ -159,7 +161,7 @@ $args = array(
                                 <p class="secondElement">Medium</p>
                             </div>
                         </div>
-                        <button class="btn btnStratModal medium" id="btnStratModal1"  data-dismiss="modal">Strat</button>
+                        <button class="btn btnStratModal medium" id="btnStratModal1"  data-dismiss="modal">Start</button>
                     </div>
                 </div>
             </div>
@@ -190,7 +192,7 @@ $args = array(
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/VectorPoly.png">
                     <p class="descriptionlistElement">You may exit the quiz and resume later, but you'll forgo points for the question you’re on when you exit</p>
                 </div>
-                <button class="btn btnStratModal medium" id="btnStart2">Strat</button>
+                <button class="btn btnStratModal medium" id="btnStart2">Start</button>
             </div>
 
             <div id="step2OverviewAssessmentBackend" class="stepchooseTech">
@@ -209,7 +211,7 @@ $args = array(
 
             <div id="step3OverviewAssessmentBackend">
                 <div class="head3OverviewAssessment">
-                    <p class="assessmentNUmber">Question 1 / <?php echo $count; ?></p>
+                    <p class="assessmentNUmber" id="current-index">Question 1 / <?php echo $count_question; ?></p>
                     <p class="assessmentTime" id="backendTime"><?php echo $question[0]['timer'] ?></p>
                 </div>
                 <p class="chooseTechnoTitle"><?php echo $question[0]['wording'] ?><span> (Multiple choose posible)</span></p>
@@ -295,7 +297,7 @@ $args = array(
                                 <p class="secondElement">Medium</p>
                             </div>
                         </div>
-                        <button class="btn btnStratModal medium" id="btnStratModalfront"  data-dismiss="modal">Strat</button>
+                        <button class="btn btnStratModal medium" id="btnStratModalfront"  data-dismiss="modal">Start</button>
                     </div>
                 </div>
             </div>
@@ -326,7 +328,7 @@ $args = array(
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/VectorPoly.png">
                     <p class="descriptionlistElement">You may exit the quiz and resume later, but you'll forgo points for the question you’re on when you exit</p>
                 </div>
-                <button class="btn btnStratModal medium" id="btnStart2front">Strat</button>
+                <button class="btn btnStratModal medium" id="btnStart2front">Start</button>
             </div>
 
             <div class="frontElementstep stepchooseTech" id="step2OverviewAssessmentfront">
@@ -430,7 +432,7 @@ $args = array(
                                 <p class="secondElement">Medium</p>
                             </div>
                         </div>
-                        <button class="btn btnStratModal medium" id="btnStratModalfull"  data-dismiss="modal">Strat</button>
+                        <button class="btn btnStratModal medium" id="btnStratModalfull"  data-dismiss="modal">Start</button>
                     </div>
                 </div>
             </div>
@@ -461,7 +463,7 @@ $args = array(
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/VectorPoly.png">
                     <p class="descriptionlistElement">You may exit the quiz and resume later, but you'll forgo points for the question you’re on when you exit</p>
                 </div>
-                <button class="btn btnStratModal medium" id="btnStart2full">Strat</button>
+                <button class="btn btnStratModal medium" id="btnStart2full">Start</button>
             </div>
 
             <div class="frontElementstep stepchooseTech" id="step2OverviewAssessmentfull">
@@ -565,7 +567,7 @@ $args = array(
                                 <p class="secondElement">Medium</p>
                             </div>
                         </div>
-                        <button class="btn btnStratModal medium" id="btnStratModalAndroid"  data-dismiss="modal">Strat</button>
+                        <button class="btn btnStratModal medium" id="btnStratModalAndroid"  data-dismiss="modal">Start</button>
                     </div>
                 </div>
             </div>
@@ -596,7 +598,7 @@ $args = array(
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/VectorPoly.png">
                     <p class="descriptionlistElement">You may exit the quiz and resume later, but you'll forgo points for the question you’re on when you exit</p>
                 </div>
-                <button class="btn btnStratModal medium" id="btnStart2Android">Strat</button>
+                <button class="btn btnStratModal medium" id="btnStart2Android">Start</button>
             </div>
 
             <div class="frontElementstep stepchooseTech" id="step2OverviewAssessmentAndroid">
@@ -700,7 +702,7 @@ $args = array(
                                 <p class="secondElement">Medium</p>
                             </div>
                         </div>
-                        <button class="btn btnStratModal medium" id="btnStratModalIOS"  data-dismiss="modal">Strat</button>
+                        <button class="btn btnStratModal medium" id="btnStratModalIOS"  data-dismiss="modal">Start</button>
                     </div>
                 </div>
             </div>
@@ -731,7 +733,7 @@ $args = array(
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/VectorPoly.png">
                     <p class="descriptionlistElement">You may exit the quiz and resume later, but you'll forgo points for the question you’re on when you exit</p>
                 </div>
-                <button class="btn btnStratModal medium" id="btnStart2IOS">Strat</button>
+                <button class="btn btnStratModal medium" id="btnStart2IOS">Start</button>
             </div>
 
             <div class="frontElementstep stepchooseTech" id="step2OverviewAssessmentIOS">
@@ -754,7 +756,7 @@ $args = array(
                     <p class="assessmentTime">4 : 05</p>
                 </div>
                 <p class="chooseTechnoTitle">Select the correct sql query <span>(Multiple choose posible)</span></p>
-                <div class="listAnswer">
+                <div class="listAnswer" id="list-answer">
                     <label class="container-checkbox">
                         <span class="numberAssassment">A.</span>
                         <span class="assassment">SELECT * FROM table_name_0;</span>
@@ -791,8 +793,8 @@ $args = array(
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script>
     $(document).ready(function(){
-
-       var time=$('#backendTime').html();
+        $('#btnStart3').click(()=>{
+            var time=$('#backendTime').html();
        time = time.split(':');
        var minutes = time[0], seconds = time[1];
          var interval = setInterval(function() {
@@ -814,8 +816,26 @@ $args = array(
               }
               $('#backendTime').html(minutes + ":" + seconds);
             }, 1000);
+        });
+       
         $('#btnBackend').click(()=>{
-            alert('backend');            
+         var txt=$('#current-index').text()
+            txt=txt.split(" ")
+            txt=txt[1].split("/")
+         var current_index=txt[0]
+         $.ajax({
+            url:"/answer-assessment",
+            method:"post",
+            data:{
+                current_index:current_index
+            },
+        dataType:"text",
+        success: function(data){
+            console.log(data);
+            $('#step3OverviewAssessmentBackend').html(data)
+            //$('#test').html(data);
+        }
+        });
         });
     });
 </script>
