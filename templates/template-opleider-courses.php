@@ -195,7 +195,7 @@
 
 <!-- ------------------------------------------ start Header -------------------------------------- -->
 
-<div class="head2" style="margin-top: -10px !important;">
+<div class="head2 py-5" style="margin-top: -10px !important;">
     <div class="comp1">
         <img src="<?php echo $logo; ?>" alt="">
     </div>
@@ -502,9 +502,9 @@
 
                         </div>
                     </div>
-                    <div class="sousBlockProduct3">
+                    <div class="sousBlockProduct3 mx-3 mx-md-0">
                         <p class="sousBlockTitleProduct">EXPERTS</p>
-                        <div class="blockSousblockTitle webBlock">
+                        <div class="blockSousblockTitle">
                             <div class="swiper-container swipeContaineEvens">
                                 <div class="swiper-wrapper">
                                     <?php
@@ -541,14 +541,14 @@
                 ?>
                 <div class="sousBlockProduct4">
                     <div class="headsousBlockProduct4">
-                        <p class="sousBlockTitleProduct2">Agenda</p>
+                        <p class="sousBlockTitleProduct2 ml-1 ml-md-0">Agenda</p>
                         <div class="elementIconeRight">
                             <img class="imgIconeShowMore" src="<?php echo get_stylesheet_directory_uri();?>/img/IconShowMore.png" alt="">
                         </div>
                         <a href="/newFilesHtml/agenda.html" class="showAllLink">Show all</a>
                     </div>
 
-                    <div class="row">
+                    <div class="row mr-md-2 mr-1">
                         <?php
                             $i = 0;
                             foreach($courses as $course){

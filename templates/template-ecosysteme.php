@@ -37,11 +37,13 @@ $title_road_path = "";
 foreach($leerpaden as $leerpad){
     $road_path = get_field('road_path', $leerpad->ID);
     $topic_road_path = get_field('topic_road_path', $leerpad->ID);
-    if( $topic == $topic_road_path && empty($road_paths) ){
-        $expert_road_path = get_userdata($leerpad->post_author)->data->display_name;
-        $road_paths = $road_path;
-        $title_road_path = $leerpad->post_title;
+    if( $topic == $topic_road_path){
+        $road_path['title'] = $leerpad->post_title; 
+        $road_path['expert'] = $leerpad->post_author;
+        $road_path['ID'] = $leerpad->ID;
+        array_push($road_paths, $road_path);
     }
+    
 }
 
 if($topic != 0){    
@@ -397,13 +399,68 @@ foreach($global_blogs as $blog)
             if(!empty($road_paths)){
             ?>
             <div class="UitgelichteBlock">
-                <p class="sousBlockTitleProduct"> Roadpath "<?php if( isset($title_road_path) && isset($expert_road_path) ) echo $title_road_path . '" by ' . $expert_road_path; ?> </p>
+
+                <div class="blockCardOpleidingen ">
+
+                    <div class="swiper-container swipeContaine4">
+                        <div class="swiper-wrapper">
+                            <?php 
+                            foreach($road_paths as $value){
+                                $road_path_title = $value['title'];
+                                $road_path_expert = $value['expert'];
+                                $preview = get_field('preview', $value[0]->ID)['url'];
+                                if(!$preview){
+                                    $preview = get_field('url_image_xml', $value[0]->ID);
+                                    if(!$preview)
+                                        $preview = get_stylesheet_directory_uri() . "/img/libay.png";
+                                }
+
+                                $profile_picture = get_field('profile_img',  'user_' . $road_path_expert);
+                                if(!$profile_picture)
+                                    $profile_picture = get_stylesheet_directory_uri() ."/img/placeholder_user.png";
+                                $name = get_userdata($road_path_expert)->data->display_name;
+                            ?>
+                            <div class="swiper-slide swiper-slide5">
+                                <div class="content-road-path-card">
+                                    <div class="position-relative element-content-road-path-card">
+                                        <img class="" src="<?= $preview; ?>" alt="">
+                                        <div class="roadpathBlockNumber">
+                                            <p><?= count($value)-3; ?></p>
+                                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/folder.png" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="description-content-roadPath">
+                                        <div class="imgTitleCours justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <a href="product-road-path?id=<?= $road_path_expert ?>" class="imgCoursProd">
+                                                    <img src="<?= $profile_picture; ?>" alt="">
+                                                </a>
+                                                <a href="product-road-path?id=<?= $road_path_expert ?>" class="nameCoursProd"><?= $name; ?></a>
+                                            </div>
+                                            <a href="/detail-product-road?id=<?= $value['ID']; ?>" class="btn btnDiscover">Discover</a>
+                                        </div>
+                                        <p class="werkText"><?= $road_path_title; ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+          <!--      <p class="sousBlockTitleProduct"> Roadpath "<?php /*if( isset($title_road_path) && isset($expert_road_path) ) echo $title_road_path . '" by ' . $expert_road_path; */?> </p>
                 <div class="blockCardOpleidingen ">
 
                     <div class="swiper-container swipeContaine4">
                         <div class="swiper-wrapper">
                             <?php
-                            foreach($road_paths as $blog) {
+/*                            foreach($road_paths as $blog) {
 
                             $tag = '';
                             $image = null;
@@ -443,50 +500,50 @@ foreach($global_blogs as $blog)
                             }
 
                             $type_course = get_field('course_type', $blog->ID);
-                            ?>
-                            <a href="<?php echo get_permalink($blog->ID) ?>" class="swiper-slide swiper-slide4">
+                            */?>
+                            <a href="<?php /*echo get_permalink($blog->ID) */?>" class="swiper-slide swiper-slide4">
                                 <div class="cardKraam2">
                                     <div class="headCardKraam">
-                                        <img src="<?php echo $image; ?>" alt="">
+                                        <img src="<?php /*echo $image; */?>" alt="">
                                     </div>
                                     <button class="btn btnImgCoeurEcosysteme">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/coeur1.png" alt="">
+                                        <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/coeur1.png" alt="">
                                     </button>
                                     <div class="contentCardProd">
                                         <div class="group8">
                                             <div class="imgTitleCours">
                                                 <div class="imgCoursProd">
-                                                    <img src="<?php echo $author; ?>" alt="">
+                                                    <img src="<?php /*echo $author; */?>" alt="">
                                                 </div>
-                                                <p class="nameCoursProd"><?php echo(get_userdata($blog->post_author)->data->display_name); ?></p>
+                                                <p class="nameCoursProd"><?php /*echo(get_userdata($blog->post_author)->data->display_name); */?></p>
                                             </div>
                                             <div class="group9">
                                                 <div class="blockOpein">
-                                                    <img class="iconAm" src="<?php echo get_stylesheet_directory_uri();?>/img/graduat.png" alt="">
-                                                    <p class="lieuAm"><?= $type_course; ?></p>
+                                                    <img class="iconAm" src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/graduat.png" alt="">
+                                                    <p class="lieuAm"><?/*= $type_course; */?></p>
                                                 </div>
-                                                <?php if($tag != '') { ?>
+                                                <?php /*if($tag != '') { */?>
                                                 <div class="blockOpein">
                                                     &#x0023;&#xFE0F;&#x20E3;
-                                                    <p class="lieuAm"><?php echo $tag; ?></p>
+                                                    <p class="lieuAm"><?php /*echo $tag; */?></p>
                                                 </div>
-                                                <?php } ?>
+                                                <?php /*} */?>
                                             </div>
                                         </div>
-                                        <p class="werkText"><?php echo $blog->post_title; ?></p>
+                                        <p class="werkText"><?php /*echo $blog->post_title; */?></p>
                                         <p class="descriptionPlatform">
-                                            <?php echo $summary; ?>
+                                            <?php /*echo $summary; */?>
                                         </p>
                                     </div>
                                 </div>
                             </a>
                             <?php
-                            }
-                            ?>
+/*                            }
+                            */?>
                         </div>
                     </div>
 
-                </div>
+                </div>-->
             </div>
             <?php
             }

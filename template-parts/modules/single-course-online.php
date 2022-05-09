@@ -1,6 +1,7 @@
 <?php
 
 extract($_GET);
+
 $long_description = get_field('long_description', $post->ID);
 
 $course_type = get_field('course_type', $post->ID);
@@ -62,9 +63,12 @@ $author = array($post->post_author);
 $experts = array_merge($expert, $author);
 
 $favoured = count(get_field('favorited', $post->ID));
+
 $duration_day = get_field('duration_day', $post->ID);
 
 $attachments_xml = get_field('attachment_xml', $post->ID);
+
+$reviews = get_field('reviews', $post->ID);
 
 ?>
 
@@ -108,7 +112,10 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
     <div class="container-fluid">
         <div class="overElement">
             <div class="blockOneOver">
-
+                  <?php 
+                  if(isset($_GET["message"]))
+                    echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>";
+                  ?>
                   <!-- ------------------------------ Start Title livelearn ---------------------------------- -->
                   <div class="titleBlock">
                   <?php
@@ -130,31 +137,39 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                  </div>
                  <!-- ------------------------------ End Title livelearn ---------------------------------- -->
 
-                <p class="e-learningTitle"><?php echo $post->post_title;?></p>
+                <p class="e-learningTitle"><b><?php echo $post->post_title;?></b></p>
                 <div class="blockImgCour">
                     <?php 
                      
-                     if(!$courses){
-                        if(!empty(get_field('preview', $post->ID))){
+                    if( !empty($courses) && !empty($youtube_videos) ){
+                        if(!empty(get_field('preview', $post->ID)))
                             echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
-                        }else{
+                        else
                             echo "<img src='" . $thumbnail . "' alt='thumbnail placeholder'>";
+                    }else{
+                        if(!empty($courses)){
+                            if(isset($topic) && isset($lesson))
+                                echo " <video class='blockImgCour' poster='' controls>
+                                            <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
+                                            <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/webm; codecs='vp8, vorbis'' />
+                                            <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
+                                        </video>";
+                            else
+                                if(!empty(get_field('preview', $post->ID)))
+                                    echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
+                                else
+                                    echo "<img src='" . $thumbnail . "' alt='thumbnail placeholder'>"; 
                         }
-                    }else
-                        
-                        if(isset($topic) && isset($lesson))
-                            echo " <video class='blockImgCour' poster='' controls>
-                                        <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
-                                        <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/webm; codecs='vp8, vorbis'' />
-                                        <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
-                                    </video>";
-                        
-                        if(isset($topic))
-                            echo " <video class='blockImgCour' poster='' controls>
-                                        <source src='" . $courses[$topic]['course_topic']['course_topic_preview'] . "' type='video/mp4;charset=UTF-8' />
-                                        <source src='" . $courses[$topic]['course_topic']['course_topic_preview'] . "' type='video/webm; codecs='vp8, vorbis'' />
-                                        <source src='" . $courses[$topic]['course_topic']['course_topic_preview'] . "' type='video/ogg; codecs='theora, vorbis'' />
-                                    </video>";
+                        else{
+                            if(isset($lesson))
+                                echo '<iframe width="730" height="433" src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                            else 
+                                if(!empty(get_field('preview', $post->ID)))
+                                    echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
+                                else
+                                    echo "<img src='" . $thumbnail . "' alt='thumbnail placeholder'>"; 
+                        }
+                    }
                         
                     ?>
 
@@ -336,6 +351,89 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                         echo $text;
                     }
                 ?>
+                <div class="customTabs">
+                    <div class="tabs">
+                        <ul id="tabs-nav">
+                            <li><a href="#tab2">Reviews</a></li>
+                            <li><a href="#tab3">Add Reviews</a></li>
+                        </ul> <!-- END tabs-nav -->
+                        <div id="tabs-content">
+                            <div id="tab2" class="tab-content">
+                                <?php
+                                if(!empty($reviews)){
+                                    foreach($reviews as $review){
+                                    ?>
+                                    <div class="review-info-card">
+                                        <div class="review-user-mini-profile">
+                                            <div class="user-photo">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/user.png" alt="">
+                                            </div>
+                                            <div class="user-name">
+                                                <p><?= $review['name']; ?></p>
+                                                <div class="rating-element">
+                                                    <div class="rating-stats">
+                                                        <div id="rating-container-custom">
+                                                            <ul class="list-show">
+                                                                <li class="disabled"></li>
+                                                                <li class="disabled"></li>
+                                                                <li class="disabled"></li>
+                                                                <li class="disabled"></li>
+                                                                <li class="disabled"></li>
+                                                            </ul>
+                                                        </div>
+                                                        <!-- <p class="hours-element">18 hours ago</p> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="reviewsText"><?= $review['feedback']; ?></p>
+
+                                    </div>
+                                <?php
+                                    }
+                                }
+                                else 
+                                    echo "<h6>No reviews for this course ...</h6>";
+                                ?>
+                            </div>
+                            <div id="tab3" class="tab-content">
+                                <form action="../../dashboard/user/" method="POST">
+                                    <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
+                                    <div class="row">
+                                        <div class="form-group col-6">
+                                            <label for="name">Name</label>
+                                            <input type="text" name="fullname" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Name" required>
+                                        </div>
+                                        <div class="form- col-6">
+                                            <label for="exampleInputEmail1">Email address</label>
+                                            <input type="email" name="email_adress" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+                                            <small id="exampleInputEmail1" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                        </div>
+                                    </div>
+                                    <!--<div class="form-group">
+                                        <label for="rating-container-custom">Rating</label>
+                                        <div id="rating-container-custom">
+                                            <ul class="list">
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                            </ul>
+                                        </div>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <label for="">Feedback</label>
+                                        <textarea name="feedback_content" rows="10"></textarea>
+                                    </div>
+                                    <input type='submit' class='btn btn-sendRating' name='review_post' value='Send'>
+                                </form>
+                            </div>
+                        </div> <!-- END tabs-content -->
+                    </div> <!-- END tabs -->
+                </div>
+
+
             </div>
             
 
@@ -415,29 +513,60 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
                 <div class="blockChapitreCours">
 
                     <?php 
-                    if(!$courses)
+                    if(!empty($courses) && !empty($youtube_videos))
                         echo "<div class='sousBlockCours'>
                                 <span> No lesson as far, soon available </span>
                             </div>";
                     else
-                        foreach($courses as $key => $course){
-                    ?>
+                        if(!empty($courses)){
+                            foreach($courses as $key => $course){
+                        ?>
+                            <div class="sousBlockCours">
+                                <?php if(isset($topic)) if($topic == $key) { ?><img class="playElement" src="<?php echo get_stylesheet_directory_uri() ?>/img/play.png" alt=""> <?php } ?>
+                                <a style="color:#F79403" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo ($course['course_topic']['course_topic_title']);?></a>
+                                    <?php 
+                                        if(!empty($course['course_topic']['course_topic_lessons']))
+                                            foreach($course['course_topic']['course_topic_lessons'] as $sand => $value){
+                                                if(isset($lesson)) if($lesson == $sand) { ?>
+                                                    <div class="d-flex contentListVidoeCourse">
+                                                         <img class="playElement mr-3" src="<?php echo get_stylesheet_directory_uri() ?>/img/play.png" alt=""> <?php } ?>
+                                                          <a href="?topic=<?php echo (int)$key; ?>&lesson=<?php echo (int)$sand; ?>" class="textChapitreCours"><?php echo ($value['course_lesson']['course_lesson_title']);?></a>
+                                                    </div>
 
-                    <div class="sousBlockCours">
-                        <?php if(isset($topic)) if($topic == $key) { ?><img class="playElement" src="<?php echo get_stylesheet_directory_uri() ?>/img/play.png" alt=""> <?php } ?>
-                        <a style="color:#F79403" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo ($course['course_topic']['course_topic_title']);?></a>
 
-                            <?php 
-                                if(!empty($course['course_topic']['course_topic_lessons']))
-                                    foreach($course['course_topic']['course_topic_lessons'] as $sand => $value){
-                                        if(isset($lesson)) if($lesson == $sand) { ?><img class="playElement" src="<?php echo get_stylesheet_directory_uri() ?>/img/play.png" alt=""> <?php } ?>
-                                        <a href="?topic=<?php echo (int)$key; ?>&lesson=<?php echo (int)$sand; ?>" class="textChapitreCours"><?php echo ($value['course_lesson']['course_lesson_title']);?></a><br><br>
-                            <?php
-                                    }
-                            ?>
-                    </div>
-
-                    <?php } ?>
+                                    <?php
+                                            }
+                                    ?>
+                            </div>
+                        <?php }
+                            }
+                        else{
+                        ?>
+                            <div class="sousBlockCours">
+                                <?php 
+                                if(isset($topic)) 
+                                    if($topic == $key) { 
+                                        echo '<img class="playElement" src="'.  get_stylesheet_directory_uri() . '/img/play.png" alt="">';
+                                    } 
+                                ?>
+                                <a style="color:#F79403" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo $post->post_title; ?></a>
+                                <?php 
+                                foreach($youtube_videos as $key => $video){
+                                    $style = "";
+                                    if(isset($lesson)) 
+                                        if($lesson == $key)
+                                            $style = "color:#F79403";
+                                    echo '  
+                                        <a href="?topic=0&lesson=' . $key . '"  class="d-flex contentListVidoeCourse">
+                                            <img class="" width="35px" height="20px" src="'. $video['thumbnail_url'] . '" alt="">
+                                            <span style="' .$style . '" class="textChapitreCours">' . $video['title'] . '</span>
+                                        </a>';
+                                }
+                                ?>
+                            </div>
+                        <?php
+                        }
+                        ?>
 
                     <a href="/cart/?add-to-cart=<?php echo get_field('connected_product', $post->ID);?>" class="startTextBtn btn">Start nu voor <?php echo $course_price;?></a>
                 </div>
@@ -649,7 +778,41 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script>
+        // Rating
+        const list = document.querySelector('.list')
+        const lis = list.children;
 
+        for (var i = 0; i < lis.length; i++) {
+            lis[i].id = i;
+            lis[i].addEventListener('mouseenter', handleEnter);
+            lis[i].addEventListener('mouseleave', handleLeave);
+            lis[i].addEventListener('click', handleClick);
+        }
+
+        function handleEnter(e) {
+            e.target.classList.add('hover');
+            for (var i = 0; i <= e.target.id; i++) {
+                lis[i].classList.add('hover');
+            }
+        }
+
+        function handleLeave(e) {
+            [...lis].forEach(item => {
+                item.classList.remove('hover');
+            });
+        }
+
+        function handleClick(e){
+            [...lis].forEach((item,i) => {
+                item.classList.remove('selected');
+                if(i <= e.target.id){
+                    item.classList.add('selected');
+                }
+            });
+        }
+
+    </script>
 
 <!-- scritpt for modal -->
 <script>
