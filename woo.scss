@@ -2,7 +2,7 @@
     .cart-collaterals{
         .cart_totals{
             float:left;
-        } 
+        }
     }
 
     .actions,
@@ -18,11 +18,8 @@
 
     .theme-checkout{
         &__details{
-            background-color:#E0EFF4;
-            padding:48px;
-            border-radius:15px;
             position: relative;
-            margin-bottom:24px;
+            margin-bottom: 20px;
         }
 
         &__extra{
@@ -36,7 +33,11 @@
     }
 
     .wrapper-woocommerce{
-        padding:48px 0;
+        padding: 30px 50px;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 auto;
+        width: 100%;
     }
 
     .product-thumbnail{
@@ -62,11 +63,6 @@
     }
 
     .theme-cart-row.cart_item{
-        background-color:#E0EFF4;
-        padding:48px;
-        border-radius:15px;
-        position: relative;
-        margin-bottom:24px;
 
         .theme-cart{
             &__product-remove{
@@ -108,7 +104,7 @@
                         text-align: left;
                         padding: 6px 8px;
                         border-radius: 5px;
-                        border: 1px solid #999; 
+                        border: 1px solid #999;
                     }
                 }
 

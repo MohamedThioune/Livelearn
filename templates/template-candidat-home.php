@@ -65,6 +65,7 @@
 
 
 <?php wp_head(); ?>
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <?php get_header(); ?>
 
 

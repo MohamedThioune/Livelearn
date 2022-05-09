@@ -7,28 +7,30 @@ extract($_POST);
 
 $user = get_current_user_id();
 
-/*
-* * Get saved courses
-*/
-
-/* $saved = get_user_meta($user, 'course');
-
-if(!empty($saved)){
-    $args = array(
-        'post_type' => 'course', 
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'include' => $saved,  
+$subtopics = array(); 
+foreach($categories as $categ){
+    //Topics
+    $topicss = get_categories(
+        array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categ,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ) 
     );
 
-    $course_recorded = get_posts($args);
-    $courses = $course_recorded;
+    foreach ($topicss as  $value) {
+        $subtopic = get_categories( 
+                array(
+                'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                'parent'  => $value->cat_ID,
+                'hide_empty' => 0,
+                //  change to 1 to hide categores not having a single post
+            ) 
+        );
+        $subtopics = array_merge($subtopics, $subtopic);      
+    }
 }
-*/
 
-/*
-* * 
-*/
 
 /*
 * * Get interests courses
@@ -38,34 +40,104 @@ $topics = get_user_meta($user, 'topic');
 
 $experts = get_user_meta($user, 'expert');
 
-$course_topics = array();
-$course_experts = array();
+$args = array(
+    'post_type' => 'course', 
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+);
 
-if(!empty($topics)){
-    $args = array(
-        'post_type' => 'course', 
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'category__in' => $topics,  
-    );
+$global_courses = get_posts($args);
 
-    $course_topics = get_posts($args);
-    $courses = array_merge($courses, $course_topics);
+$opleidingen = array();
+$workshops = array();
+$masterclasses = array();
+$events = array();
+$e_learnings = array();
+$trainings = array();
+$videos = array();
+$courses_id = array();
+
+
+$args = array(
+    'post_type' => 'course', 
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'author__in' => $experts,
+);
+
+$expert_courses = get_posts($args);
+
+foreach($global_courses as $course)
+{
+    /*
+    * Categories
+    */ 
+
+    $category_id = 0;
+    $experts = get_field('experts', $course->ID);
+                
+    $tree = get_the_terms($course->ID, 'course_category');
+    $tree = $tree[2]->ID;
+    $categories_id = get_field('categories',  $course->ID);
+    $categories_xml = get_field('category_xml',  $course->ID);
+    $categories = array();
+
+    if($categories_xml)
+        foreach($categories_xml as $categorie){
+            $categorie = $categorie['value'];
+            if(!in_array($categorie, $categories))
+                array_push($categories, $categorie);
+        }
+
+    if($categories_id)
+        if(!empty($categories_id)){
+            $categories = array();  
+            foreach($categories_id as $categorie)                    
+                $categories = explode(',', $categorie['value']);
+        }
+
+    foreach($topics as $topic_value){
+        if(in_array($topic_value, $trees) || $categories)
+            if(in_array($topic_value, $trees) || in_array($topic_value, $categories) ){
+                if(!in_array($course->ID,$courses_id)){
+                    array_push($courses, $course);
+                    array_push($courses_id, $course->ID);
+                    break;
+                }
+                if(get_field('course_type', $course->ID) == "Opleidingen")
+                    array_push($opleidingen, $course);
+                else if(get_field('course_type', $course->ID) == "Workshop")
+                    array_push($workshops, $course);
+                else if(get_field('course_type', $course->ID) == "Masterclass")
+                    array_push($masterclasses, $course);
+                else if(get_field('course_type', $course->ID) == "Event")
+                    array_push($events, $course);
+                else if(get_field('course_type', $course->ID) == "E-learning")
+                    array_push($e_learnings, $course);
+                else if(get_field('course_type', $course->ID) == "Training")
+                    array_push($trainings, $course);
+                else if(get_field('course_type', $course->ID) == "Video")
+                    array_push($videos, $course);
+        }
+    }
+
+    foreach($experts as $topic_expert){
+        $experties = get_field('experts', $course->ID);    
+        if($course->post_author == $topic_expert || in_array($topic_expert, $experties) ){
+            if(!in_array($course->ID,$courses_id)){
+                array_push($courses, $course);
+                array_push($courses_id, $course->ID);
+                break;
+            }
+        }
+    }
+   
 }
 
-
-if(!empty($experts)){
-    $args = array(
-        'post_type' => 'course', 
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'author__in' => $experts,  
-    );
-
-    $course_experts = get_posts($args);
-    $courses = array_merge($courses, $course_experts);
-}
-
+$courses = array_merge($courses, $expert_courses);
+ 
+//Activitien
+$activitiens = count($courses);
 
 /*
 * *   
@@ -1274,3 +1346,313 @@ if(isset($_GET['message']))
         </div>
     </div>
 </div>
+
+<?php
+/*
+    ** Categories - all  * 
+    */
+
+    $categories = array();
+
+    $cats = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'orderby'    => 'name',
+        'exclude' => 'Uncategorized',
+        'parent'     => 0,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    foreach($cats as $category){
+        $cat_id = strval($category->cat_ID);
+        $category = intval($cat_id);
+        array_push($categories, $category);
+    }
+
+    //Categories
+    $bangerichts = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[1],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    $functies = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[0],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    $skills = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[3],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    $interesses = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[2],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    $subtopics = array(); 
+    foreach($categories as $categ){
+        //Topics
+        $topicss = get_categories(
+            array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $categ,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            ) 
+        );
+
+        foreach ($topicss as  $value) {
+            $subtopic = get_categories( 
+                 array(
+                 'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                 'parent'  => $value->cat_ID,
+                 'hide_empty' => 0,
+                  //  change to 1 to hide categores not having a single post
+                ) 
+            );
+            $subtopics = array_merge($subtopics, $subtopic);      
+        }
+    }
+
+
+
+
+    foreach($bangerichts as $key1=>$tag){
+        
+        //Topics
+        $cats_bangerichts = get_categories( array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent' => $tag->cat_ID,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ));
+        if (count($cats_bangerichts)!=0)
+        {
+            $row_bangrichts.='<div hidden=true class="cb_topics_bangricht_'.($key1+1).'" '.($key1+1).'">';
+            foreach($cats_bangerichts as $key => $value)
+            {   
+                $row_bangrichts .= '
+                <input type="checkbox" name="choice_bangrichts_'.$value->cat_ID.'" value= '.$value->cat_ID .' id=subtopics_bangricht_'.$value->cat_ID.' /><label class="labelChoose" for=subtopics_bangricht_'.$value->cat_ID.'>'. $value->cat_name .'</label>';
+            }
+            $row_bangrichts.= '</div>';
+        }
+      
+    }
+
+    foreach($functies as $key1 =>$tag)
+    {
+        
+        //Topics
+        $cats_functies = get_categories(
+            array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent' => $tag->cat_ID,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ));
+        if (count($cats_functies)!=0)
+        {
+            $row_functies.='<div hidden=true class="cb_topics_funct_'.($key1+1).'" '.($key1+1).'">';
+            foreach($cats_functies as $key => $value)
+            {   
+            $row_functies .= '
+            <input type="checkbox" name="choice_functies_'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_funct_'.($value->cat_ID).'" /><label class="labelChoose" for="cb_funct_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
+            }
+            $row_functies.= '</div>';
+        }
+    }
+
+    foreach($skills as $key1=>$tag){
+        //Topics
+        $cats_skills = get_categories( array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent' => $tag->cat_ID,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ));
+        if (count($cats_skills)!=0)
+        {
+            $row_skills.='<div hidden=true class="cb_topics_skills_'.($key1+1).'" '.($key1+1).'">';
+            foreach($cats_skills as $key => $value)
+            {   
+                    $row_skills .= '
+                    <input type="checkbox" name="choice_skills'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_skills_'.($value->cat_ID).'" /><label class="labelChoose"  for="cb_skills_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
+            }
+            $row_skills.= '</div>';
+        }
+      
+    }
+
+    foreach($interesses as $key1=>$tag){
+        //Topics
+            $cats_interesses = get_categories( array(
+                'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                'parent' => $tag->cat_ID,
+                'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            ));
+            if (count($cats_interesses)!=0)
+        {
+            $row_interesses.='<div hidden=true class="cb_topics_personal_'.($key1+1).'" '.($key1+1).'">';
+            foreach($cats_interesses as $key => $value)
+            {   
+            $row_interesses .= '
+            <input type="checkbox" name="choice_interesses_'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_interesses_'.($value->cat_ID).'" /><label class="labelChoose"  for="cb_interesses_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
+            }
+            $row_interesses.= '</div>';
+        }
+      
+    }
+
+    if (isset($_POST["subtopics_first_login"]))
+    {
+        unset($_POST["subtopics_first_login"]);
+        $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
+        foreach ($_POST as $key => $subtopics) { 
+            if (isset($_POST[$key]))
+            {
+                if (!(in_array($_POST[$key], $subtopics_already_selected)))
+                {
+                    add_user_meta(get_current_user_id(),'topic',$_POST[$key]);  
+                }
+                
+            }
+        }
+        update_field('is_first_login', true, 'user_'.get_current_user_id());
+        
+    }
+    
+    $is_first_login=(get_field('is_first_login','user_' . get_current_user_id()));
+    if (!$is_first_login && get_current_user_id() !=0 )
+        {
+        
+    ?>    
+        <!-- Modal First Connection --> 
+        <div class="contentModalFirst">
+            <div class="modal" id="myFirstModal" tabindex="-1" role="dialog" aria-labelledby="myFirstModalScrollableTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modalHeader">
+                            <h5 class="modal-title text-center" id="exampleModalLabel">Welcome to livelearn</h5>
+                            <p class="pickText">Pick your favorite topics to set up your feeds</p>
+                        </div>
+                        <div class="modal-body">
+                        <form action="" method="post">
+                            <div class="blockBaangerichte">
+                                <h1 class="titleSubTopic">Baangerichte</h1>
+                                <div class="hiddenCB">
+                                    <div>
+                                        <?php
+                                        foreach($bangerichts as $key => $value)
+                                        {
+                                            //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                            echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_bangricht'.($key+1).'" /><label class="labelChoose btnBaangerichte subtopics_bangricht_'.($key+1).' '.($key+1).'" for="cb_topics_bangricht'.($key+1).'">'. $value->cat_name .'</label>';
+                                        }
+                                        ?>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnBaangerichte" for="cb1">Choice A</label> -->
+
+                                    </div>
+                                </div>
+                                <div class="subtopicBaangerichte">
+
+                                    <div class="hiddenCB">
+                                        <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
+                                        <?php
+                                        echo $row_bangrichts;
+                                        ?>
+                                    </div>
+
+                                    <button type="button" class="btn btnNext" id="nextblockBaangerichte">Next</button>
+                                </div>
+                            </div>
+
+                            <div class="blockfunctiegericht">
+                                <h1 class="titleSubTopic">functiegericht</h1>
+                                <div class="hiddenCB">
+                                    <div>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnFunctiegericht" for="cb1">Choice A</label> -->
+                                        <?php
+                                        foreach($functies as $key => $value)
+                                        {
+                                            //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                            echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_funct'.($key+1).'" /><label class="labelChoose btnFunctiegericht subtopics_funct_'.($key+1).' '.($key+1).'"  for="cb_topics_funct'.($key+1).'">'. $value->cat_name .'</label>';
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="subtopicFunctiegericht">
+                                    <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
+                                    <div class="hiddenCB">
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
+                                        <?php
+                                            echo $row_functies;
+                                        ?>
+                                    </div>
+                                    <button type="button" class="btn btnNext" id="nextFunctiegericht">Next</button>
+                                </div>
+                            </div>
+
+                            <div class="blockSkills">
+                                <h1 class="titleSubTopic">Skills</h1>
+                                <div class="hiddenCB">
+                                    <div>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnSkills" for="cb1">Choice A</label> -->
+
+                                        <?php
+                                        foreach($skills as $key => $value)
+                                        {
+                                            //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                            echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_skills'.($key+1).'" /><label class="labelChoose btnSkills subtopics_skills_'.($key+1).' '.($key+1).'" for=cb_skills'.($key+1).'>'. $value->cat_name .'</label>';
+                                        }
+                                        ?>
+
+                                    </div>
+                                </div>
+                                <div class="subtopicSkills">
+                                    <div class="hiddenCB">
+                                        <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
+                                        <?php
+                                            echo $row_skills;
+                                        ?>
+                                    </div>
+                                    <button type="button" class="btn btnNext" id="nextSkills">Next</button>
+                                </div>
+                            </div>
+
+                            <div class="blockPersonal">
+                                <h1 class="titleSubTopic">Personal interest </h1>
+                                <div class="hiddenCB">
+                                    <div>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnPersonal" for="cb1">Choice A</label> -->
+
+                                        <?php
+                                        foreach($interesses as $key => $value)
+                                        {
+                                            //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                            echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_personal'.($key+1).'" /><label class="labelChoose btnPersonal subtopics_personal_'.($key+1).' '.($key+1).'" for="cb_topics_personal'.($key+1).'">'. $value->cat_name .'</label>';
+                                        }
+                                        ?>
+
+                                    </div>
+                                </div>
+                                <div class="subtopicPersonal">
+                                    <div class="hiddenCB">
+                                        <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
+                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
+                                        <?php
+                                            echo $row_interesses;
+                                        ?>
+                                    </div>
+                                    <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+    }  
+?>

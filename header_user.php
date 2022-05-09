@@ -38,6 +38,14 @@ $todos = get_posts($args);
     </head>
     <body class="header-user canhas">
         <nav class="navbar navbar-expand-lg navbar-dark headerdashboard">
+            <div class="blockIconeWidth">
+                <button id="burger-web" class="largeElement btn">
+                    <i class="fa fa-bars text-white" style="font-size: 25px"></i>
+                </button>
+                <button id="burgerCroie-web" class="btn ">
+                    <i class="bi bi-x-lg text-white" style="font-size: 25px"></i>
+                </button>
+            </div>
             <div class="container-fluid containerModife">
                 <div class="elementMobile groupBtnMobile">
                     <div class="nav-item" href="#">
@@ -77,6 +85,7 @@ $todos = get_posts($args);
                                                     <p class="feedbackText">Empty until now ...</p>
                                                 </div>
                                             </div>
+
                                     <?php
                                         }
                                     ?>
@@ -89,10 +98,10 @@ $todos = get_posts($args);
                             <img class="imgArrowDropDown" src="<?php echo get_stylesheet_directory_uri();?>/img/three-stars.png" alt="">
                         </a>
                         <div class="dropdown-menu dropdown-menu-dashboard" aria-labelledby="dropdownMenuButton1">
-                            <a class="dropdown-item" href="/dashboard/user">Eigen leeromgeving</a>
-                            
                             <?php
                             $company = get_field('company',  'user_' . $user->ID);
+                            if(!empty($user->roles))
+                                echo '<a class="dropdown-item" href="/dashboard/user">Eigen leeromgeving</a>';
 
                             if(!empty($company)){
                                 if ( in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') {
@@ -110,14 +119,14 @@ $todos = get_posts($args);
                 </div>
 
                 <a class="navbar-brand navBrand" href="/">
-                    <div class="logoModife logoWeb">
+                    <div class="logoModife logoWeb logoDashboard">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_white.png" alt="">
                     </div>
                     <a href="/" class="logoMobile">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn_white.png" alt="LogoMobile" >
                     </a>
                 </a>
-                <div class="elementWeb d-flex">
+                <div class="elementWeb dashboardsElement">
                     <a href="#" class="nav-link navModife4 btn dropdown-toggle " type="button" id="dropdownNavButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Dashboards <img class="imgArrowDropDown" src="<?php echo get_stylesheet_directory_uri();?>/img/down-chevron.svg" alt="">
                     </a>
@@ -139,14 +148,6 @@ $todos = get_posts($args);
                         <a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>
                         <?php }?>
                     </div>
-                    <div class="blockIconeWidth">
-                        <button id="burger-web" class=" btn burgerElement boxSousNav3-2">
-                            <i class="fa fa-bars text-white" style="font-size: 25px"></i>
-                        </button>
-                        <button id="burgerCroie-web" class="btn croie">
-                            <i class="bi bi-x-lg text-white" style="font-size: 25px"></i>
-                        </button>
-                    </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="elementHeaderUser ">
@@ -164,7 +165,7 @@ $todos = get_posts($args);
                         <?php 
                         }
                         ?>
-                        <div class="second-element-mobile">
+                        <div class="second-element-mobile" id="burgerAndbelief">
                             <button id="burger" class=" btn burgerElement boxSousNav3-2">
                                 <i class="fa fa-bars text-white" style="font-size: 25px"></i>
                             </button>
@@ -202,6 +203,7 @@ $todos = get_posts($args);
                                         <div>
                                             <div class="">
                                                 <p class="feedbackText">Empty until now ...</p>
+                                                <a href="/dashboard/user/activity" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                             </div>
                                         </div>
                                 <?php
@@ -210,8 +212,8 @@ $todos = get_posts($args);
                             </div>
                         </li>
 
-                        <li class="nav-item item4 dropdown elementWeb">
-                            <a href="/dashboard/user/profile/" class="nav-link navModife4 btn dropdown-toggle" type="button" id="dropdownNavButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <li class="nav-item item4 dropdown elementWeb" id="profilDropdown">
+                            <a href="#" class="nav-link navModife4 btn dropdown-toggle" type="button" id="dropdownNavButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="userBlockNav" src="<?php echo get_field('profile_img',  'user_' . $user->ID);?>" alt="">
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

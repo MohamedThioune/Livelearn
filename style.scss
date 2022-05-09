@@ -160,12 +160,12 @@ body {
 	}
 }
 .dropdown-menu {
-	background: #043356;
-	color: white;
+	background: white;
+	color: #043356;
 	a {
 		color: white;
 		font-size: 14px;
-		border-bottom: 1px solid #b7b7b757;
+		border-bottom: 1px solid #043356;
 		&:last-child {
 			border-bottom: 0 !important;
 		}

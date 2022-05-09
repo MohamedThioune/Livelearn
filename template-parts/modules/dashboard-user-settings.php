@@ -736,6 +736,7 @@ else if(isset($delete_awards)){
     </div> -->
 
     <div class="contentBlockSetting">
+        <h4 class="titleSetting">Social Network</h4>
         <?php $options = array(
             'post_id' => 'user_'. get_current_user_id(),
             'form' => true, 
@@ -747,5 +748,24 @@ else if(isset($delete_awards)){
         );
         acf_form( $options );
         ?>
+    </div>
+
+    <div class="contentBlockSetting">
+        <h4 class="titleSetting">Password</h4>
+        <div> <?php if(isset($_GET['message_password'])) echo "<span class='alert alert-info'>" . $_GET['message_password'] . "</span>" ; ?><div><br>
+        <form action="" method="POST">
+            <div class="group-input-settings">
+                <label for="">Enter your actual password :</label>
+                <input name="old_password" type="password" required>
+                <label for="">Define your new pasword :</label>
+                <input name="password" type="password" required>
+                <label for="">Confirm the pasword :</label>
+                <input name="password_confirmation" type="password" required>
+            </div>
+
+            <div>
+                <button type="submit" name="change_password" class="btn btn-info">SAVE</button>
+            </div>
+        </form>
     </div>
 </div>
