@@ -3,6 +3,8 @@
 <?php get_header(); ?>
 
 <?php
+$user_id = get_current_user_id();
+
 $leerpad =  ($_GET['id'] != 0) ? get_post($_GET['id']) : null;
 
 $leerpadden = get_field('road_path', $leerpad->ID);
@@ -35,6 +37,20 @@ $description = get_field('long_description', $leerpadden[$position]->ID);
 /*
 * *
 */
+
+/*
+* Likes
+*/
+$favoured = count(get_field('favorited', $leerpad->ID));
+if(!$favoured)
+    $favoured = 0;
+/*
+* *
+*/
+
+$reviews = get_field('reviews', $leerpad->ID);
+
+
 ?>
 
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
@@ -112,7 +128,7 @@ $description = get_field('long_description', $leerpadden[$position]->ID);
                      src="<?php echo get_stylesheet_directory_uri(); ?>/img/voorwie.png"> -->
 
                         <?php
-                        $author = get_user_by('id', $post->post_author);
+                        $author = get_user_by('id', $leerpad->post_author);
                         ?>
                         <div class="content-text p-4 pb-0">
                             <h4 class="text-dark">Voor wie ?</h4>
@@ -131,6 +147,11 @@ $description = get_field('long_description', $leerpadden[$position]->ID);
         <div class="container-fluid">
             <div class="overElement">
                 <div class="blockOneOver">
+                    <?php 
+                    if(isset($_GET["message"]))
+                        echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>";
+                    ?>
+
                     <div class="titleBlock">
                         <div class="roundBlack" >
                             <img src="<?= $profile_picture; ?>" alt="company logo">
@@ -150,11 +171,11 @@ $description = get_field('long_description', $leerpadden[$position]->ID);
                     <div class="d-flex elementcourseIcone sousBlock mx-md-2 mx-sm-2 text-center">
                         <div class="d-flex flex-row block1">
                             <div class="d-flex flex-column mx-md-3 mx-2">
-                                <input type="hidden" id="user_id" value="0">
-                                <input type="hidden" id="course_id" value="0">
+                                <input type="hidden" id="user_id" value="<?php echo $user_id; ?>">
+                                <input type="hidden" id="course_id" value="<?php echo $leerpad->ID; ?>">
                                 <!-- <img class="iconeCours" src="<?php echo get_stylesheet_directory_uri();?>/img/love.png" alt=""> -->
                                 <button id="btn_favorite" style="background:white; border:none"><i class="far fa-heart" style="font-size: 25px;"></i></button>
-                                <span class="textIconeLearning mt-1" id="autocomplete_favoured">5</span>
+                                <span class="textIconeLearning mt-1" id="autocomplete_favoured"><?php echo $favoured; ?></span>
                             </div>
                             <div class="d-flex flex-column mx-md-3 mx-2">
                                 <i class="fas fa-calendar-alt" style="font-size: 25px;"></i>
@@ -162,20 +183,35 @@ $description = get_field('long_description', $leerpadden[$position]->ID);
                             </div>
                             <div class="d-flex flex-column mx-md-3 mx-2">
                                 <i class="fas fa-graduation-cap" style="font-size: 25px;"></i>
-                                <span class="textIconeLearning mt-1">Training</span>
+                                <span class="textIconeLearning mt-1">Road Path</span>
                             </div>
                         </div>
                         <div class="d-flex flex-row block2">
                             <div class="d-flex flex-column mx-md-3 mx-2">
-                                <form action="../../dashboard/user/" method="POST">
-                                    <button type='submit' class='' name='interest_save' style='border:none; background:white'>
-                                        <i class='fas fa-bell' style='font-size: 25px;'></i><br>
-                                        <span class='textIconeLearning mt-1'>Bewaar</span>
-                                    </button>
+                                <form action="/dashboard/user/" method="POST">
+                               
+                                <?php
+                                if($user_id != 0)
+                                    echo "
+                                        <button type='submit' class='' name='interest_save' style='border:none; background:white'> 
+                                            <i class='fas fa-bell' style='font-size: 25px;'></i><br>
+                                            <span class='textIconeLearning mt-1'>Bewaar</span>
+                                        </button>
+                                        ";
+                                ?>
                                 </form>
+                                <?php
+                                if($user_id == 0)
+                                    echo "
+                                    <button data-toggle='modal' style='margin-top:-10px' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='' style='border:none; background:white'> 
+                                        <i class='fas fa-bell' style='font-size: 25px;'></i><br>
+                                        <span class='textIconeLearning mt-1'>Bewaar</spanz>
+                                    </button>
+                                    ";
+                                ?>
                             </div>
                             <div class="d-flex flex-column mx-md-3 mx-2">
-                                <button class="btn iconeText open-modal">
+                                <button class="btn iconeText open-modal" data-open="modal1">
                                     <i class="fa fa-share" style="font-size: 25px;"></i><br>
                                     <span class="textIconeLearning mt-1">Deel</span>
                                 </button>
@@ -193,7 +229,6 @@ $description = get_field('long_description', $leerpadden[$position]->ID);
                                                 ?>
                                                 <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
                                                 <?php
-
                                             }
                                             ?>
                                         </div>
@@ -231,7 +266,7 @@ $description = get_field('long_description', $leerpadden[$position]->ID);
                                             <div>
                                                 <p class="klikText">Klik om link te kopieren</p>
                                                 <div class="input-group input-group-copy formCopyLink">
-                                                    <input id="test1" type="text" class="linkTextCopy form-control" value="<?php echo get_permalink($post->ID) ?>" readonly>
+                                                    <input id="test1" type="text" class="linkTextCopy form-control" value="<?php echo "livelearn.nl/detail-product-road/?id=" . $leerpad->ID; ?>" readonly>
                                                     <span class="input-group-btn">
                                                 <button class="btn btn-default btnCopy">Copy</button>
                                                 </span>
@@ -277,121 +312,77 @@ $description = get_field('long_description', $leerpadden[$position]->ID);
                                 <li><a href="#tab3">Add Reviews</a></li>
                             </ul> <!-- END tabs-nav -->
                             <div id="tabs-content">
-                                <div id="tab2" class="tab-content">
-                                    <h2>Reviews</h2>
+                            <div id="tab2" class="tab-content">
+                                <?php
+                                if(!empty($reviews)){
+                                    foreach($reviews as $review){
+                                    ?>
                                     <div class="review-info-card">
                                         <div class="review-user-mini-profile">
                                             <div class="user-photo">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/user.png" alt="">
                                             </div>
                                             <div class="user-name">
-                                                <p>Daniel</p>
+                                                <p><?= $review['name']; ?></p>
                                                 <div class="rating-element">
                                                     <div class="rating-stats">
                                                         <div id="rating-container-custom">
                                                             <ul class="list-show">
-                                                                <li class="selected"></li>
-                                                                <li class="selected"></li>
-                                                                <li class="selected"></li>
                                                                 <li class="disabled"></li>
                                                                 <li class="disabled"></li>
-                                                            </ul>
-                                                        </div>
-                                                        <p class="hours-element">18 hours ago</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="reviewsText">Half the lanes don't work! But it's decent for the price. Waited over 30 minutes for our drinks!!!! But yes I recommend it. It's not great but it's OK I guess</p>
-
-                                    </div>
-                                    <div class="review-info-card">
-                                        <div class="review-user-mini-profile">
-                                            <div class="user-photo">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
-                                            </div>
-                                            <div class="user-name">
-                                                <p>Daniel</p>
-                                                <div class="rating-element">
-                                                    <div class="rating-stats">
-                                                        <div id="rating-container">
-                                                            <ul class="list-show">
-                                                                <li class="selected"></li>
-                                                                <li class="selected"></li>
-                                                                <li class="selected"></li>
+                                                                <li class="disabled"></li>
                                                                 <li class="disabled"></li>
                                                                 <li class="disabled"></li>
                                                             </ul>
                                                         </div>
-                                                        <p class="hours-element">18 hours ago</p>
+                                                        <!-- <p class="hours-element">18 hours ago</p> -->
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <p class="reviewsText">Half the lanes don't work! But it's decent for the price. Waited over 30 minutes for our drinks!!!! But yes I recommend it. It's not great but it's OK I guess</p>
+                                        <p class="reviewsText"><?= $review['feedback']; ?></p>
 
                                     </div>
-                                    <div class="review-info-card">
-                                        <div class="review-user-mini-profile">
-                                            <div class="user-photo">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
-                                            </div>
-                                            <div class="user-name">
-                                                <p>Daniel</p>
-                                                <div class="rating-element">
-                                                    <div class="rating-stats">
-                                                        <div id="rating-container">
-                                                            <ul class="list-show">
-                                                                <li class="selected"></li>
-                                                                <li class="selected"></li>
-                                                                <li class="selected"></li>
-                                                                <li class="disabled"></li>
-                                                                <li class="disabled"></li>
-                                                            </ul>
-                                                        </div>
-                                                        <p class="hours-element">18 hours ago</p>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                <?php
+                                    }
+                                }
+                                else 
+                                    echo "<h6>No reviews for this course ...</h6>";
+                                ?>
+                            </div>
+                            <div id="tab3" class="tab-content">
+                                <form action="../../dashboard/user/" method="POST">
+                                    <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
+                                    <div class="row">
+                                        <div class="form-group col-6">
+                                            <label for="name">Name</label>
+                                            <input type="text" name="fullname" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Name" required>
                                         </div>
-                                        <p class="reviewsText">Half the lanes don't work! But it's decent for the price. Waited over 30 minutes for our drinks!!!! But yes I recommend it. It's not great but it's OK I guess</p>
-
+                                        <div class="form- col-6">
+                                            <label for="exampleInputEmail1">Email address</label>
+                                            <input type="email" name="email_adress" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+                                            <small id="exampleInputEmail1" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                        </div>
                                     </div>
-                                </div>
-                                <div id="tab3" class="tab-content">
-                                    <h2>Add review</h2>
-                                    <form>
-                                        <div class="row">
-                                            <div class="form-group col-6">
-                                                <label for="exampleInputEmail1">Name</label>
-                                                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Name">
-                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                                            </div>
-                                            <div class="form- col-6">
-                                                <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                                            </div>
+                                    <!--<div class="form-group">
+                                        <label for="rating-container-custom">Rating</label>
+                                        <div id="rating-container-custom">
+                                            <ul class="list">
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                                <li></li>
+                                            </ul>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="rating-container-custom">Rating</label>
-                                            <div id="rating-container-custom">
-                                                <ul class="list">
-                                                    <li></li>
-                                                    <li></li>
-                                                    <li></li>
-                                                    <li></li>
-                                                    <li></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputPassword1">Feedback</label>
-                                            <textarea name="" id=""  rows="10"></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-sendRating">Send</button>
-                                    </form>
-                                </div>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <label for="">Feedback</label>
+                                        <textarea name="feedback_content" rows="10"></textarea>
+                                    </div>
+                                    <input type='submit' class='btn btn-sendRating' name='review_post' value='Send'>
+                                </form>
+                            </div>
                             </div> <!-- END tabs-content -->
                         </div> <!-- END tabs -->
                     </div>
@@ -525,11 +516,11 @@ $description = get_field('long_description', $leerpadden[$position]->ID);
                         }
                         ?>
                         <form action="/dashboard/user/" method="POST">
-                            <input type="hidden" name="meta_value" value="<?php echo $post->post_author ?>" id="">
+                            <input type="hidden" name="meta_value" value="<?php echo $leerpad->post_author ?>" id="">
                             <input type="hidden" name="user_id" value="<?php echo $user_id ?>" id="">
                             <input type="hidden" name="meta_key" value="expert" id="">
                             <?php
-                            if($user_id != 0 && $user_id != $post->post_author)
+                            if($user_id != 0 && $user_id != $leerpad->post_author)
                                 echo "<input type='submit' class='btnLeerom' style='border:none' name='interest_push' value='+ Leeromgeving'>";
                             ?>
                         </form>
