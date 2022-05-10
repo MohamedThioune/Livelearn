@@ -368,7 +368,7 @@ $reviews = get_field('reviews', $post->ID);
                                     <div class="review-info-card">
                                         <div class="review-user-mini-profile">
                                             <div class="user-photo">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/user.png" alt="">
+                                                <img src="<?= $image; ?>" alt="">
                                             </div>
                                             <div class="user-name">
                                                 <p><?= $user->display_name; ?></p>
