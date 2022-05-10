@@ -363,7 +363,8 @@ $reviews = get_field('reviews', $post->ID);
                                 if(!empty($reviews)){
                                     foreach($reviews as $review){
                                         $user = $review['user'];
-                                        $image = get_field('profile_img', $user->ID) ?: get_stylesheet_directory_uri() . '/img/user.png';
+                                        $image_author = get_field('profile_img',  'user_' . $user->ID);
+                                        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';                    
                                     ?>
                                     <div class="review-info-card">
                                         <div class="review-user-mini-profile">
@@ -625,7 +626,7 @@ $reviews = get_field('reviews', $post->ID);
                                         $expert = get_users(array('include'=> $expert))[0]->data;
                                         $company = get_field('company',  'user_' . $expert->ID);
                                         $title = $company[0]->post_title;
-                                        $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                        $image = get_field('profile_img', 'user_'. $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                     ?>
                                     <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
                                         <div class="my-2 d-flex flex-column mx-md-0 mx-1">
