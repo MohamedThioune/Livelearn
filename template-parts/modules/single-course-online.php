@@ -464,7 +464,6 @@ $reviews = get_field('reviews', $post->ID);
                 </div>
             </div>
             <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
-
             <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
             <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
                 style="position: absolute; ">
@@ -571,47 +570,7 @@ $reviews = get_field('reviews', $post->ID);
                     <a href="/cart/?add-to-cart=<?php echo get_field('connected_product', $post->ID);?>" class="startTextBtn btn">Start nu voor <?php echo $course_price;?></a>
                 </div>
 
-                <!-- d -->
-                <div class="CardpriceLive">
-                    <?php
-                        if(!empty($company)){
-                            $company_id = $company[0]->ID;
-                            $company_title = $company[0]->post_title;
-                            $company_logo = get_field('company_logo', $company_id);
-                    ?>
-                    <div class="imgCardPrice">
-                        <img src="<?php echo $company_logo; ?>" alt="company logo">
-                    </div>
-                    <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="liveTextCadPrice h5"><?php echo $company_title; ?></a>
-                    
-                    <?php
-                        }
-                    ?>
-                    <form action="../../dashboard/user/" method="POST">
-                        <input type="hidden" name="meta_value" value="<?php echo $post->post_author ?>" id="">
-                        <input type="hidden" name="user_id" value="<?php echo $user_id ?>" id="">
-                        <input type="hidden" name="meta_key" value="expert" id="">
-                        <?php
-                            if($user_id != 0 && $user_id != $post->post_author)
-                                echo "<input type='submit' class='btnLeerom' style='border:none' name='interest_push' value='+ Leeromgeving'>";
-                        ?>
-                    </form>
-                    <?php 
-                    if($user_id == 0 )
-                        echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> + Leeromgeving </button>";
-                    ?>
 
-                    <p class="PrisText">Locaties</p>
-                    <p class="opeleidingText">Online</p>
-
-                    <p class="PrisText">Prijs vanaf</p>
-                    <p class="opeleidingText">Opleiding: € <?php echo $price ?></p>
-                    <p class="btwText">BTW: € <?php echo $prijsvat ?></p>
-                    <p class="btwText">LIFT member korting: 28%</p>
-                    
-                    
-                    <a href="#bookdates" class="btn btnKoop">Koop deze <?php echo $course_type; ?></a>
-                </div>
 
                 <!-- ------------------------------------ Start Swiper ------------------------------------ -->
                 <div class="col-12 my-5" style="background-color: #E0EFF4">
@@ -660,7 +619,47 @@ $reviews = get_field('reviews', $post->ID);
                 <!-- -------------------------------------------- End Swiper ----------------------------------- -->
 
 
-                <!--  -->
+            <!-- d -->
+            <div class="CardpriceLive">
+                <?php
+                if(!empty($company)){
+                    $company_id = $company[0]->ID;
+                    $company_title = $company[0]->post_title;
+                    $company_logo = get_field('company_logo', $company_id);
+                    ?>
+                    <div class="imgCardPrice">
+                        <img src="<?php echo $company_logo; ?>" alt="company logo">
+                    </div>
+                    <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="liveTextCadPrice h5"><?php echo $company_title; ?></a>
+
+                    <?php
+                }
+                ?>
+                <form action="../../dashboard/user/" method="POST">
+                    <input type="hidden" name="meta_value" value="<?php echo $post->post_author ?>" id="">
+                    <input type="hidden" name="user_id" value="<?php echo $user_id ?>" id="">
+                    <input type="hidden" name="meta_key" value="expert" id="">
+                    <?php
+                    if($user_id != 0 && $user_id != $post->post_author)
+                        echo "<input type='submit' class='btnLeerom' style='border:none' name='interest_push' value='+ Leeromgeving'>";
+                    ?>
+                </form>
+                <?php
+                if($user_id == 0 )
+                    echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> + Leeromgeving </button>";
+                ?>
+
+                <p class="PrisText">Locaties</p>
+                <p class="opeleidingText">Online</p>
+
+                <p class="PrisText">Prijs vanaf</p>
+                <p class="opeleidingText">Opleiding: € <?php echo $price ?></p>
+                <p class="btwText">BTW: € <?php echo $prijsvat ?></p>
+                <p class="btwText">LIFT member korting: 28%</p>
+
+
+                <a href="#bookdates" class="btn btnKoop">Koop deze <?php echo $course_type; ?></a>
+            </div>
 
                 <!-- <div class="CardpriceLive">
                     <div class="imgCardPrice">

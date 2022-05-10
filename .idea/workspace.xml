@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="" />
+    <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog.css" beforeDir="false" afterPath="$PROJECT_DIR$/blog.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,26 +19,34 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13305">
-              <caret line="887" column="18" selection-start-line="887" selection-start-column="18" selection-end-line="887" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-online.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
-              <caret line="602" column="34" selection-start-line="602" selection-start-column="34" selection-end-line="602" selection-end-column="34" />
+            <state relative-caret-position="122">
+              <caret line="894" column="32" selection-start-line="894" selection-start-column="20" selection-end-line="894" selection-end-column="32" />
+              <folding>
+                <element signature="e#11776#49732#0#HTML" />
+                <element signature="n#style#0;n#h6#0;n#!!top" expanded="true" />
+                <element signature="e#49907#51221#0#HTML" />
+                <element signature="e#51491#53152#0#HTML" />
+                <element signature="e#53409#60156#0#HTML" />
+                <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+        <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-online.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="10" lean-forward="true" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
+            <state relative-caret-position="276">
+              <caret line="621" column="22" lean-forward="true" selection-start-line="621" selection-start-column="22" selection-end-line="621" selection-end-column="22" />
+              <folding>
+                <element signature="e#2962#24223#0#HTML" />
+                <element signature="e#24411#25701#0#HTML" />
+                <element signature="e#25971#27612#0#HTML" />
+                <element signature="e#27870#37357#0#HTML" />
+                <element signature="e#35258#37494#0#HTML" />
+                <element signature="e#38108#40028#0#HTML" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -58,8 +72,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/custom.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108210">
-              <caret line="7214" column="24" selection-start-line="7214" selection-start-column="24" selection-end-line="7214" selection-end-column="24" />
+            <state relative-caret-position="36315">
+              <caret line="2421" column="19" selection-start-line="2421" selection-start-column="19" selection-end-line="2421" selection-end-column="19" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/blog.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="180" column="1" selection-start-line="180" selection-start-column="1" selection-end-line="180" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -67,8 +90,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/template-detail-product-road.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3990">
-              <caret line="266" selection-start-line="266" selection-end-line="266" />
+            <state relative-caret-position="4515">
+              <caret line="301" selection-start-line="301" selection-end-line="301" />
             </state>
           </provider>
         </entry>
@@ -86,10 +109,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Agenda :</find>
-      <find>Lees</find>
-      <find>.customTabs #tabs-content h2</find>
-      <find>customTabs</find>
       <find>.review-info-card .review-user-mini-profile</find>
       <find>.rating-element #rating-container</find>
       <find>blockOneOver</find>
@@ -116,6 +135,10 @@
       <find>.roadpathBlockNumber img</find>
       <find>@media</find>
       <find>sousBlockCours</find>
+      <find>.img-head-ecosysteme img</find>
+      <find>.head-content-ecosysteme</find>
+      <find>CardpriceLive</find>
+      <find>blockTwoOver</find>
     </findStrings>
     <replaceStrings>
       <replace>h4</replace>
@@ -139,7 +162,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course.php" />
         <option value="$PROJECT_DIR$/templates/template-baangerichte.php" />
         <option value="$PROJECT_DIR$/templates/template-candidat-home.php" />
         <option value="$PROJECT_DIR$/templates/template-category-overview.php" />
@@ -182,14 +204,15 @@
         <option value="$PROJECT_DIR$/templates/template-product-road-path.php" />
         <option value="$PROJECT_DIR$/templates/template-ecosysteme.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-podcast.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" />
         <option value="$PROJECT_DIR$/templates/product-podcast.php" />
         <option value="$PROJECT_DIR$/main.js" />
         <option value="$PROJECT_DIR$/templates/template-detail-product-road.php" />
         <option value="$PROJECT_DIR$/templates/detail-assessment.php" />
-        <option value="$PROJECT_DIR$/custom.css" />
-        <option value="$PROJECT_DIR$/template-parts/modules/single-course-online.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/custom.css" />
+        <option value="$PROJECT_DIR$/blog.css" />
+        <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" />
+        <option value="$PROJECT_DIR$/template-parts/modules/single-course-online.php" />
       </list>
     </option>
   </component>
@@ -245,7 +268,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1651696379143" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1652177461182" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -445,16 +468,19 @@
       <workItem from="1651835118138" duration="2075000" />
       <workItem from="1651840944074" duration="1619000" />
       <workItem from="1651842732226" duration="636000" />
+      <workItem from="1652175785620" duration="1987000" />
+      <workItem from="1652182043137" duration="838000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="255701000" />
+    <option name="totallyTimeSpent" value="258526000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23712121" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24469697" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -469,7 +495,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.26916802" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.26916802" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -531,13 +557,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/template-recruitement.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="69" lean-forward="true" selection-start-line="69" selection-end-line="69" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/template-registreren.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="151">
@@ -792,10 +811,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline.php">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13305">
-          <caret line="887" column="18" selection-start-line="887" selection-start-column="18" selection-end-line="887" selection-end-column="18" />
+        <state relative-caret-position="15">
+          <caret line="1" column="10" lean-forward="true" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -815,15 +834,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/custom.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108210">
-          <caret line="7214" column="24" selection-start-line="7214" selection-start-column="24" selection-end-line="7214" selection-end-column="24" />
+        <state relative-caret-position="36315">
+          <caret line="2421" column="19" selection-start-line="2421" selection-start-column="19" selection-end-line="2421" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/template-detail-product-road.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3990">
-          <caret line="266" selection-start-line="266" selection-end-line="266" />
+        <state relative-caret-position="4515">
+          <caret line="301" selection-start-line="301" selection-end-line="301" />
         </state>
       </provider>
     </entry>
@@ -834,17 +853,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-online.php">
+    <entry file="file://$PROJECT_DIR$/blog.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="602" column="34" selection-start-line="602" selection-start-column="34" selection-end-line="602" selection-end-column="34" />
+        <state relative-caret-position="360">
+          <caret line="180" column="1" selection-start-line="180" selection-start-column="1" selection-end-line="180" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="10" lean-forward="true" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
+        <state relative-caret-position="122">
+          <caret line="894" column="32" selection-start-line="894" selection-start-column="20" selection-end-line="894" selection-end-column="32" />
+          <folding>
+            <element signature="e#11776#49732#0#HTML" />
+            <element signature="n#style#0;n#h6#0;n#!!top" expanded="true" />
+            <element signature="e#49907#51221#0#HTML" />
+            <element signature="e#51491#53152#0#HTML" />
+            <element signature="e#53409#60156#0#HTML" />
+            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-online.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="621" column="22" lean-forward="true" selection-start-line="621" selection-start-column="22" selection-end-line="621" selection-end-column="22" />
+          <folding>
+            <element signature="e#2962#24223#0#HTML" />
+            <element signature="e#24411#25701#0#HTML" />
+            <element signature="e#25971#27612#0#HTML" />
+            <element signature="e#27870#37357#0#HTML" />
+            <element signature="e#35258#37494#0#HTML" />
+            <element signature="e#38108#40028#0#HTML" />
+          </folding>
         </state>
       </provider>
     </entry>
