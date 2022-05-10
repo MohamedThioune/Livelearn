@@ -421,8 +421,6 @@ $orders = wc_get_orders($order_args);
     var id_course;
     $('.td_subtopics').click((e)=>{
         id_course = e.target.id;
-        current_td=e.target;
-        console.log(id_course);
      $.ajax({
             url:"/fetch-subtopics-course",
             method:"post",
@@ -433,7 +431,7 @@ $orders = wc_get_orders($order_args);
         dataType:"text",
         success: function(data){
             // Get the modal
-            console.log(data)
+            //console.log(data)
     var modal = document.getElementById("myModal");
     $('.display-subtopics').html(data)
     // Get the button that opens the modal
@@ -480,7 +478,7 @@ $orders = wc_get_orders($order_args);
       modal.attr('style', { display: "none" });
       //modal.style.display = "none";
       $('#'+id_course).html(data)
-      console.log(data)
+      //console.log(data)
   }
   })
 });
