@@ -230,60 +230,16 @@
                                 if($dates)
                                     $day = explode(' ', $dates[0]['date']);
                                 else{
-                                    if ($course->ID[0]['value']!=null)
-                                    {
-                                        $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                                        $date = $data[0];
-                                        $day = explode(' ', $date)[0];
-                                    }
+                                    $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
+                                    $date = $data[0];
+                                    $day = explode(' ', $date)[0];
                                 }
                             }
                         ?>
                         <tr>
                             <td class="textTh elementOnder"><a style="color:#212529;font-weight:bold" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
                             <td class="textTh"><?php echo $price; ?></td>
-                            <?php
-                            if (in_array( 'administrator', $user_in->roles ) ) {
-                            ?>
-                            <td id= <?php echo $course->ID; ?> class="textTh elementOnder td_subtopics">
-                                <?php
-                                    $course_subtopics = get_field('categories', $course->ID);
-                                    $field='';
-                                    if($course_subtopics!=null){
-                                    if (is_array($course_subtopics) || is_object($course_subtopics)){
-                                        foreach ($course_subtopics as $key =>  $course_subtopic) {
-                                               if ($course_subtopic!="" && $course_subtopic!="Array")
-                                                   $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
-                                      }
-                                         $field=substr($field,0,-1);
-                                         echo $field;
-                                    
-                                }
-                            }
-                        }
-                        else
-                            {
-                                ?>
-                                <td class="textTh elementOnder">
-                                    <?php
-                                        $course_subtopics = get_field('categories', $course->ID);
-                                        $field='';
-                                        if($course_subtopics!=null){
-                                        if (is_array($course_subtopics) || is_object($course_subtopics)){
-                                            foreach ($course_subtopics as $key =>  $course_subtopic) {
-                                                   if ($course_subtopic!="" && $course_subtopic!="Array")
-                                                       $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
-                                          }
-                                             $field=substr($field,0,-1);
-                                             echo $field;
-                                        
-                                    }
-                                }
-                            }
-
-                                ?>
-                            </p>             
-                        </td>
+                            <td class="textTh elementOnder"> <?php echo $category ?> </td>
                             <td class="textTh"><?php echo $day; ?></td>
                             <td class="textTh">Live</td>
                         </tr>
@@ -295,6 +251,7 @@
             </div>
         </div>
     </div>
+        
 
 
     <!-- The Modal -->
@@ -397,8 +354,8 @@
   })
 });
 
-</script>
-        
+</body>
+</html>
 
 
 

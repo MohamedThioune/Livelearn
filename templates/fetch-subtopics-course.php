@@ -137,15 +137,12 @@ $orders = wc_get_orders($order_args);
                         }
                                                         //Subtopics
                                                         foreach($subtopics as $value){
-                                                            //if already selected
                                                             if (in_array($value->cat_ID,$selected_subtopics))
                                                                 echo "<option selected   value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                                            // if not
-                                                                else
+                                                            else
                                                                 echo "<option   value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";   
                                                             }
                         }
-                        // if this course hasn't been linked with any subtopics
                         else
                         foreach($subtopics as $value){
                                 echo "<option    value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";

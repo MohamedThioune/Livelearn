@@ -422,7 +422,7 @@ $orders = wc_get_orders($order_args);
     $('.td_subtopics').click((e)=>{
         id_course = e.target.id;
      $.ajax({
-            url:"/fetch-subtopics-course",
+            url:"/livelearn/fetch-subtopics-course",
             method:"post",
             data:
             {
@@ -464,7 +464,7 @@ $orders = wc_get_orders($order_args);
   $('#save_subtopics').click(()=>{
       var subtopics = $('#selected_subtopics').val()
       $.ajax({
-  url:"/fetch-subtopics-course",
+  url:"/livelearn/fetch-subtopics-course",
   method:"post",
   data:
     {
@@ -482,4 +482,6 @@ $orders = wc_get_orders($order_args);
   }
   })
 });
+
+
 </script>
