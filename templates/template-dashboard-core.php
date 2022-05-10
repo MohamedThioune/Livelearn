@@ -406,6 +406,17 @@ else if(isset($road_path_edited)){
 
 else if(isset($road_course_add)){
     $courses = array();
+    
+    foreach($road_path as $id)
+        array_push($courses, get_post($id));    
+
+    //Data to create the feedback
+    $post_data = array(
+        'post_title' => $title_road_path,
+        'post_author' => $user_id,
+        'post_type' => 'learnpath',
+        'post_status' => 'publish'
+      );
 
     $leerpaden = get_field('road_path', $leerpad_id);
 

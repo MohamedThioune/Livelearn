@@ -183,8 +183,8 @@
                 $('#autocomplete_ajax').html(data);
             },
             error: (()=>{
-                alert ('bonjour')
+                console.log("error");
+            })
             })
         });
-    })
 </script>

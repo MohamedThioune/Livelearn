@@ -105,6 +105,10 @@ $title_road_path = get_field('title_road_path', 'user_'.$user_id);
             if($_GET['message'])
                 echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>";
     ?>
+<<<<<<< HEAD
+
+
+=======
 
     <!-- Modal Road map -->
     <div class="modal fade" id="modalRoadMap" tabindex="-1" role="dialog" aria-labelledby="modalRoadMapLabel" aria-hidden="true">
@@ -214,6 +218,7 @@ $title_road_path = get_field('title_road_path', 'user_'.$user_id);
         </div>
     </div>
 
+>>>>>>> 7d5295e5ff733c3a26d270657e6ec98bd4ed7f3b
     <?php
     if(empty($road_paths))
         echo '<li class="ui-state-default" id="1"><div class="blockCardCoursRoad"><h6>Geen selectie, maak er een 😉</h6></div></li>';
