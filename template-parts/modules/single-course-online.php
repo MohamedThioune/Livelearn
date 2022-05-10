@@ -174,7 +174,7 @@ $reviews = get_field('reviews', $post->ID);
                     ?>
 
                 </div>
-
+                <a href="/cart/?add-to-cart=<?php echo get_field('connected_product', $post->ID);?>" class="startTextBtn btn">Start nu voor <?php echo $course_price;?></a>
                 <!-- -------------------------------------- Start Icons row ------------------------------------->
                 <div class="d-flex elementcourseIcone justify-content-md-between justify-content-around mx-md-2 my-3 mx-sm-2 text-center">
                     <div class="d-flex flex-row block1">
@@ -567,24 +567,19 @@ $reviews = get_field('reviews', $post->ID);
                         }
                         ?>
 
-                    <a href="/cart/?add-to-cart=<?php echo get_field('connected_product', $post->ID);?>" class="startTextBtn btn">Start nu voor <?php echo $course_price;?></a>
                 </div>
-
-
-
-                <!-- ------------------------------------ Start Swiper ------------------------------------ -->
                 <div class="col-12 my-5" style="background-color: #E0EFF4">
-                    <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around 
+                    <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around
                     justify-content-center">
 
                         <div class="swiper">
                             <div class="swiper-wrapper">
-                                <?php 
-                                    foreach($experts as $expert){ 
-                                        $expert = get_users(array('include'=> $expert))[0]->data;
-                                        $company = get_field('company',  'user_' . $expert->ID);
-                                        $title = $company[0]->post_title;
-                                        $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                <?php
+                                foreach($experts as $expert){
+                                    $expert = get_users(array('include'=> $expert))[0]->data;
+                                    $company = get_field('company',  'user_' . $expert->ID);
+                                    $title = $company[0]->post_title;
+                                    $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                     ?>
                                     <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
                                         <div class="my-2 d-flex flex-column mx-md-0 mx-1">
@@ -595,31 +590,28 @@ $reviews = get_field('reviews', $post->ID);
                                             <span><?php echo $title; ?></span>
                                         </div>
                                     </a>
-                                <?php } ?> 
-                            </div> 
-                        
-                        </div>   
-    
-                            <!-- If we need pagination -->
-                            <!-- <div class="swiper-pagination"></div> -->
-
-                            <!-- If we need navigation buttons -->
-                            <div class="swiper-button-prev swiper-moved" style="font-size: 8px !important">
-                            </div>
-                            <div class="test">
-                                <div class="swiper-button-next swiper-moved"></div>
+                                <?php } ?>
                             </div>
 
-                            <!-- If we need scrollbar -->
-                            <!-- <div class="swiper-scrollbar"></div> -->
                         </div>
 
+                        <!-- If we need pagination -->
+                        <!-- <div class="swiper-pagination"></div> -->
+
+                        <!-- If we need navigation buttons -->
+                        <div class="swiper-button-prev swiper-moved" style="font-size: 8px !important">
+                        </div>
+                        <div class="test">
+                            <div class="swiper-button-next swiper-moved"></div>
+                        </div>
+
+                        <!-- If we need scrollbar -->
+                        <!-- <div class="swiper-scrollbar"></div> -->
                     </div>
-                </div>  
-                <!-- -------------------------------------------- End Swiper ----------------------------------- -->
 
+                </div>
+            </div>
 
-            <!-- d -->
             <div class="CardpriceLive">
                 <?php
                 if(!empty($company)){
