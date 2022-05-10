@@ -369,7 +369,7 @@ $reviews = get_field('reviews', $post->ID);
                                     <div class="review-info-card">
                                         <div class="review-user-mini-profile">
                                             <div class="user-photo">
-                                                <img src="<?= $image; ?>" alt="">
+                                                <img src="<?= $image_author; ?>" alt="">
                                             </div>
                                             <div class="user-name">
                                                 <p><?= $user->display_name; ?></p>
