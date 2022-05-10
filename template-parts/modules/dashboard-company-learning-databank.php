@@ -220,7 +220,7 @@
                             <td class="textTh elementOnder"><a style="color:#212529;font-weight:bold" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
                             <td class="textTh"><?php echo $price; ?></td>
                             <?php
-                            if ( in_array( 'manager', $user_in->roles ) || in_array( 'administrator', $user_in->roles ) ) {
+                            if (in_array( 'administrator', $user_in->roles ) ) {
                             ?>
                             <td id= <?php echo $course->ID; ?> class="textTh elementOnder td_subtopics">
                                 <?php
