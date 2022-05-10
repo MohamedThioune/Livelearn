@@ -103,7 +103,8 @@ $orders = wc_get_orders($order_args);
 
 
 		.select2-container {
-		min-width: 450px; }
+		min-width: 90% !important;
+     }
 	    @media (max-width: 991.98px) {
 			.select2-container {
 			min-width: 100%; } }
@@ -200,6 +201,28 @@ $orders = wc_get_orders($order_args);
 
 	.select2-container--default .select2-selection--multiple .select2-selection__clear {
 	color: #fd5f00; }
+
+
+    /* modal design */
+    .modal-content-width {
+        background-color: #023356 !important;
+        width: 50% !important;
+    }
+    @media all and (max-width: 400px) {
+        .modal-content-width {
+            background-color: #023356 !important;
+            width: 90% !important;
+        }
+    }
+
+    .close-button {
+        width: 35px;
+        height: 50px;
+        background: red;
+        margin: 12px;
+        border-radius: 10px;
+        border: red;
+    }
 </style>
          
 <!-- script-modal -->
@@ -217,10 +240,6 @@ $orders = wc_get_orders($order_args);
         <div class="headListeCourse">
             <p class="JouwOpleid">Gekochte opleidingen</p>
 <!--            <a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>-->
-
-        
-         <!-- Trigger/Open The Modal -->
-         <button id="myBtn">Open Modal</button>
         </div>
 
         <div class="contentCardListeCourse">
@@ -255,23 +274,28 @@ $orders = wc_get_orders($order_args);
        <div id="myModal" class="modal">
 
            <!-- Modal content -->
-          <div id="modal-content">
-          <div class="modal-content bg-dark">
-               <span class="close">&times;</span>
-               <div class="row d-flex text-center justify-content-center align-items-center h-100" >
-                   <div class="col-md-10" style="width: 100%">
-                       <div class="form-group display-subtopics">
-                       
-                       </div> 
-                       <div id="modal-content">
+            <!-- <div id="modal-content"> -->
+           
+            <div class="modal-content modal-content-width m-auto " style="margin-top: 100px !important">
+                <span type="button" class="px-2 close-button text-white bg-danger fa-2x" id="closeModal"
+                onclick="document.getElementById('myModal').style.display='none'" > &times;
+                    <!-- <button type="button" class="btn btn-danger close">&times;</button> -->
+                </span>
+                <div class="row d-flex text-center justify-content-center align-items-center h-50">
+                    <div class="col-md-8  p-4">
+                        <div class="form-group display-subtopics">
+                        
+                        </div> 
+                        <div id="modal-content">
 
-                       </div>
-                       <div>
-                           <button id="save_subtopics" type="button">Save</button>
-                       </div>
-                  </div>
-             </div>
-           </div>
+                        </div>
+                        <div>
+                            <button id="save_subtopics" type="button" class="btn bg-white" style="color: #003358;">
+                             <strong>Save</strong> </button>
+                        </div>
+                    </div>
+                </div>
+            <!-- </div> -->
           </div>
            
 
@@ -393,17 +417,6 @@ $orders = wc_get_orders($order_args);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 <script>
     var id_course;
     $('.td_subtopics').click((e)=>{
@@ -471,5 +484,4 @@ $orders = wc_get_orders($order_args);
   }
   })
 });
-
 </script>
