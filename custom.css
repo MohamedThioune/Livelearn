@@ -2364,7 +2364,6 @@ input:focus-visible {
 }
 
 .img-head-ecosysteme img{
-    position: absolute;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -2420,7 +2419,7 @@ input:focus-visible {
     object-fit: contain;
 }
 .head-content-ecosysteme {
-    margin-bottom: 70px;
+    margin-bottom: 0px;
 }
 .parteners-block{
     margin-bottom: 25px;
@@ -7221,6 +7220,9 @@ ul#tabs-nav li.active {
     border-radius: 8px;
     margin-right: 15px;
 }
+.img-head-ecosysteme {
+    height: 310px;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -7749,7 +7751,6 @@ ul#tabs-nav li.active {
     }
 
     .img-head-ecosysteme img{
-        position: absolute;
         width: 100%;
         height: 100%;
         object-fit: cover;

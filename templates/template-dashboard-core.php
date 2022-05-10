@@ -435,20 +435,22 @@ else if(isset($road_course_add)){
 else if(isset($review_post)){
     $reviews = get_field('reviews', $course_id);
     $review = array();
-    $review['name'] = $fullname;
-    $review['email_adress'] = $email_adress;
+    $review['user'] = get_user_by('ID',$user_id);
     $review['rating'] = 0;
     $review['feedback'] = $feedback_content;
-    if(!$reviews)
-        $reviews = array();
+    if($review['user']){
+        if(!$reviews)
+            $reviews = array();
 
-    array_push($reviews,$review);
+        array_push($reviews,$review);
 
-    update_field('reviews',$reviews, $course_id);
-    $message = get_permalink($course_id) . '/?message=Your review added successfully'; 
+        update_field('reviews',$reviews, $course_id);
+        $message = get_permalink($course_id) . '/?message=Your review added successfully'; 
+    }
+    else 
+        $message = get_permalink($course_id) . '/?message=User not find...';
 
     header("Location: ". $message);
-
 }
 
 else if(isset($change_password)){
