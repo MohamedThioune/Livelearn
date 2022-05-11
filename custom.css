@@ -7223,6 +7223,20 @@ ul#tabs-nav li.active {
 .img-head-ecosysteme {
     height: 310px;
 }
+.startTextBtn:hover{
+    color: #FFFFFF;
+}
+.imgDanForm{
+    width: 84%;
+    padding-top: 30px;
+    padding-bottom: 35px;
+}
+.formDirect row{
+    margin: 0 auto;
+}
+.formDirect{
+    margin: 50px 0;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -9148,6 +9162,11 @@ ul#tabs-nav li.active {
     .col-6 {
         flex: 0 0 100% !important;
         max-width: 100% !important;
+    }
+    .imgDanForm {
+        width: 45%;
+        padding-top: 30px;
+        padding-bottom: 15px;
     }
 
 
