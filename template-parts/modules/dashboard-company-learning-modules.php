@@ -424,7 +424,7 @@ $orders = wc_get_orders($order_args);
         current_td=e.target;
         console.log(id_course);
      $.ajax({
-            url:"/livelearn/fetch-subtopics-course",
+            url:"/fetch-subtopics-course",
             method:"post",
             data:
             {
@@ -466,24 +466,24 @@ $orders = wc_get_orders($order_args);
   $('#save_subtopics').click(()=>{
       var subtopics = $('#selected_subtopics').val()
       $.ajax({
-  url:"/livelearn/fetch-subtopics-course",
-  method:"post",
-  data:
-    {
-      add_subtopics:subtopics,
-      id_course:id_course
-    },
-  dataType:"text",
-  success: function(data){
-      
-      let modal=$('#myModal');
-      modal.attr('style', { display: "none" });
-      //modal.style.display = "none";
-      $('#'+id_course).html(data)
-      console.log(data)
-  }
-  })
-});
+        url:"/fetch-subtopics-course",
+        method:"post",
+        data:
+            {
+            add_subtopics:subtopics,
+            id_course:id_course
+            },
+        dataType:"text",
+        success: function(data){
+            
+            let modal=$('#myModal');
+            modal.attr('style', { display: "none" });
+            //modal.style.display = "none";
+            $('#'+id_course).html(data)
+            console.log(data)
+        }
+        })
+    });
 
 
 </script>
