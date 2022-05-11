@@ -528,8 +528,15 @@ $reviews = get_field('reviews', $post->ID);
                                 foreach($courses as $key => $course){
                                     ?>
                                     <div class="sousBlockCours">
-                                        <?php if(isset($topic)) if($topic == $key) { ?><img class="playElement" src="<?php echo get_stylesheet_directory_uri() ?>/img/play.png" alt=""> <?php } ?>
-                                        <a style="color:#F79403" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo ($course['course_topic']['course_topic_title']);?></a>
+                                        <?php 
+                                        if(isset($topic)) 
+                                        {
+                                            $style = "";
+                                            if($topic == $key) 
+                                                $style = "color:#F79403";
+                                        }
+                                        ?>
+                                        <a style="<?= $style; ?>" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo ($course['course_topic']['course_topic_title']);?></a>
                                         <?php
                                         if(!empty($course['course_topic']['course_topic_lessons']))
                                             foreach($course['course_topic']['course_topic_lessons'] as $sand => $value){
