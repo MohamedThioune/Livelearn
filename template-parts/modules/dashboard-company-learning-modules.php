@@ -1,9 +1,10 @@
 <?php
 
+
 $user_connected = get_current_user_id();
 $company_connected = get_field('company',  'user_' . $user_connected);
 $users_companie = array();
-
+$course = get_field('categories', $_POST['id_course']);
 $users = get_users();
 
 foreach($users as $user) {
@@ -20,21 +21,73 @@ $args = array(
 );
 
 $courses = get_posts($args);
-
 $user_in = wp_get_current_user();
-
 
 //bought courses
 $order_args = array(
     'customer_id' => get_current_user_id(),
     'post_status' => array_keys(wc_get_order_statuses()), 
     'post_status' => array('wc-processing'),
-
 );
 $orders = wc_get_orders($order_args);
 
+/*
+    ** Categories - all  * 
+    */
+
+    $categories = array();
+
+    $cats = get_categories( 
+        array(
+        'taxonomy'   => 'course_category',  //Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'orderby'    => 'name',
+        'exclude' => 'Uncategorized',
+        'parent'     => 0,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) 
+    );
+
+
+    
+    foreach($cats as $category){
+        $cat_id = strval($category->cat_ID);
+        $category = intval($cat_id);
+        array_push($categories, $category);
+    }
+
+     $subtopics = array();
+     
+    foreach($categories as $categ){
+        //Topics
+        $topicss = get_categories(
+            array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $categ,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            ) 
+        );
+
+        foreach ($topicss as  $value) {
+            $subtopic = get_categories( 
+                 array(
+                 'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                 'parent'  => $value->cat_ID,
+                 'hide_empty' => 0,
+                  //  change to 1 to hide categores not having a single post
+                ) 
+            );
+            $subtopics = array_merge($subtopics, $subtopic);  
+            //var_dump($subtopics);    
+        }
+    }
+
 
 ?>
+
+<!--Link apply -->
+
+<!-- modal-style -->
+
 <style>
     body {
         padding-top: 0px !important;
@@ -50,7 +103,8 @@ $orders = wc_get_orders($order_args);
 
 
 		.select2-container {
-		min-width: 450px; }
+		min-width: 90% !important;
+     }
 	    @media (max-width: 991.98px) {
 			.select2-container {
 			min-width: 100%; } }
@@ -147,13 +201,37 @@ $orders = wc_get_orders($order_args);
 
 	.select2-container--default .select2-selection--multiple .select2-selection__clear {
 	color: #fd5f00; }
+
+
+    /* modal design */
+    .modal-content-width {
+        background-color: #023356 !important;
+        width: 50% !important;
+    }
+    @media all and (max-width: 400px) {
+        .modal-content-width {
+            background-color: #023356 !important;
+            width: 90% !important;
+        }
+    }
+
+    .close-button {
+        width: 35px;
+        height: 50px;
+        background: red;
+        margin: 12px;
+        border-radius: 10px;
+        border: red;
+    }
 </style>
+         
+<!-- script-modal -->
+      
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 
-<!--Link apply -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/css/select2.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
 
 
@@ -192,12 +270,38 @@ $orders = wc_get_orders($order_args);
         </div>
     </div>
 
+       <!-- The Modal -->
+       <div id="myModal" class="modal">
 
+           <!-- Modal content -->
+            <!-- <div id="modal-content"> -->
+           
+            <div class="modal-content modal-content-width m-auto " style="margin-top: 100px !important">
+                <span type="button" class="px-2 close-button text-white bg-danger fa-2x" id="closeModal"
+                onclick="document.getElementById('myModal').style.display='none'" > &times;
+                    <!-- <button type="button" class="btn btn-danger close">&times;</button> -->
+                </span>
+                <div class="row d-flex text-center justify-content-center align-items-center h-50">
+                    <div class="col-md-8  p-4">
+                        <div class="form-group display-subtopics">
+                        
+                        </div> 
+                        <div id="modal-content">
 
-<!-- Button trigger modal -->
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button> -->
+                        </div>
+                        <div>
+                            <button id="save_subtopics" type="button" class="btn bg-white" style="color: #003358;">
+                             <strong>Save</strong> </button>
+                        </div>
+                    </div>
+                </div>
+            <!-- </div> -->
+          </div>
+           
+
+       </div> 
+
+    
 
 
 		
@@ -224,7 +328,8 @@ $orders = wc_get_orders($order_args);
                 </thead>
                 <tbody>
                     <?php 
-                    foreach($courses as $course){
+                    foreach($courses as $key=> $course){
+                        
                         /*
                             * Categories
                             */
@@ -274,14 +379,28 @@ $orders = wc_get_orders($order_args);
                         $course_type = get_field('course_type', $course->ID) 
 
                     ?>
-                    <tr  >
+                    <tr>
                         <td class="textTh"><a style="color:#212529;" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
                         <td class="textTh"><?php echo $course_type; ?></td>
                         <td class="textTh"><?php echo $price; ?></td>
-                        <!-- <td class="textTh" data-toggle="modal" data-target="#exampleModal"><?php echo $category; ?></td> -->
-                        <td class="textTh" data-toggle="modal" data-target="#exampleModal">
-                            <?php echo $category; ?> 
-                            <p id="result"></p>             
+                        <td id= <?php echo $course->ID; ?> class="textTh td_subtopics">
+                                <?php
+                                    $course_subtopics = get_field('categories', $course->ID);
+                                    $field='';
+                                    if($course_subtopics!=null){
+                                    if (is_array($course_subtopics) || is_object($course_subtopics)){
+                                        foreach ($course_subtopics as $key =>  $course_subtopic) {
+                                               if ($course_subtopic!="" && $course_subtopic!="Array")
+                                                   $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                      }
+                                         $field=substr($field,0,-1);
+                                         echo $field;
+                                    
+                                }
+                            }
+                                    
+                                ?>
+                            </p>             
                         </td>
                         <td class="textTh"><?php echo $day; ?></td>
                         <td class="textTh" id="live">Live</td>
@@ -296,142 +415,75 @@ $orders = wc_get_orders($order_args);
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
-<script src="js/main.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <section class="ftco-section">
-            <p id="result"></p>
-            <div class="container">
-                <div class="row d-flex justify-content-center">
-                    <div class="col-lg-4 d-flex justify-content-center align-items-center">
-                        <select class="js-select2" id="sel" multiple="multiple">
-                            <option value="substopic1" data-badge="">Option1</option>
-                            <option value="substopic2" data-badge="">Option2</option>
-                            <option value="substopic3" data-badge="">Option3</option>
-                            <option value="substopic4" data-badge="">Option4</option>
-                            <option value="substopic5" data-badge="">Option5</option>
-                            <option value="substopic6" data-badge="">Option6</option>
-                            <option value="substopic7" data-badge="">Option7</option>
-                            <option value="substopic8" data-badge="">Option8</option>
-                            <option value="substopic9" data-badge="">Option9</option>
-                            <option value="substopic10" data-badge="">Option10</option>
-                            <option value="substopic11" data-badge="">Option11</option>
-                            <option value="substopic12" data-badge="">Option12</option>
-                            <option value="substopic13" data-badge="">Option13</option>
-                        </select>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="text-center">
-                <button class="btn text-white"  style="background: #023356;"
-                onclick="listboxresult();">Save</button>
-            </div>
-
-        </section>
-                    
-      </div>
-    </div>
-  </div>
-</div>
 
 <script>
-
-     function listboxresult() {
-
-         var spanresult = document.getElementById("result");
-         spanresult.value=""
-         var x = document.getElementById("sel");
-
-         for (let index = 0; index < x.options.length; index++) {
-             if (x.options[index].selected === true) {
-                 spanresult.value += x.options[index].value + ", ";
-                 document.getElementById("result").innerHTML = spanresult.value;
-                 document.getElementById("result").style.color = "gray";
-             }
-         }
-         if (document.getElementById("result").value == "") {
-            document.getElementById("result").innerHTML = "";
-            // document.getElementById("result").style.color = "red";
-         }
-         
-     }
-
-
-     (function($) {
-
-        "use strict";
-        $(".js-select2").select2({
-            closeOnSelect : false,
-            placeholder : "Click to select an option",
-            allowHtml: true,
-            allowClear: true,
-            tags: true // создает новые опции на лету
-        });
-        $('.icons_select2').select2({
-            width: "100%",
-            templateSelection: iformat,
-            templateResult: iformat,
-            allowHtml: true,
-            placeholder: "Click to select an option",
-            dropdownParent: $( '.select-icon' ),//обавили класс
-            allowClear: true,
-            multiple: false
-        });
-
-        document.getElementById("p1").innerHTML = originalOption;
-
-        function iformat(icon, badge,) {
-            var originalOption = icon.element;
-            var originalOptionBadge = $(originalOption).data('badge');
-
-            return $('<span><i class="fa ' + $(originalOption).data('icon') + '"></i> ' + icon.text + '<span class="badge">' + originalOptionBadge + '</span></span>');
-        }
-
-    })(jQuery);
-
-</script>
-
-<script>
-
-// var table = $('#table').DataTable();
- 
-// $('#table tbody').on( 'click', 'tr', function () {
-//     alert('document.getElementById("table").rows[2].innerHTML');
-// } );
-
-    // var table = document.getElementById("table"),rIndex,cIndex;
-            
-    // table rows
-    // for(var i = 1; i < table.rows.length; i++)
-    // {
-    //     // row cells
-    //     for(var j = 0; j < table.rows[i].cells.length; j++)
-    //     {
-    //         table.rows[i].cells[j].onclick = function()
-    //         {
-    //             rIndex = this.parentElement.rowIndex;
-    //             cIndex = this.cellIndex+1;
-    //             // console.log("Row : "+rIndex+" , Cell : "+cIndex);
-    //             alert(document.getElementById("table").rows[rIndex].innerHTML);
-    //         };
-    //     }
-    // }
+    var id_course;
+    $('.td_subtopics').click((e)=>{
+        id_course = e.target.id;
+        current_td=e.target;
+        console.log(id_course);
+     $.ajax({
+            url:"/fetch-subtopics-course",
+            method:"post",
+            data:
+            {
+                id_course:id_course
+            },
+        dataType:"text",
+        success: function(data){
+            // Get the modal
+            console.log(data)
+    var modal = document.getElementById("myModal");
+    $('.display-subtopics').html(data)
+    // Get the button that opens the modal
     
+    
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    
+    // When the user clicks on the button, open the modal
+    
+        modal.style.display = "block";
+    
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+        modal.style.display = "none";
+        }
+    }
+            
+            
+        }
+    });
+});
+    
+  $('#save_subtopics').click(()=>{
+      var subtopics = $('#selected_subtopics').val()
+      $.ajax({
+        url:"/fetch-subtopics-course",
+        method:"post",
+        data:
+            {
+            add_subtopics:subtopics,
+            id_course:id_course
+            },
+        dataType:"text",
+        success: function(data){
+            
+            let modal=$('#myModal');
+            modal.attr('style', { display: "none" });
+            //modal.style.display = "none";
+            $('#'+id_course).html(data)
+            console.log(data)
+        }
+        })
+    });
+
+
 </script>
