@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-dashboard-core.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-dashboard-core.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -55,7 +52,7 @@
         <entry file="file://$PROJECT_DIR$/custom.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="197">
-              <caret line="9176" column="35" lean-forward="true" selection-start-line="9176" selection-start-column="35" selection-end-line="9176" selection-end-column="35" />
+              <caret line="9176" column="35" selection-start-line="9176" selection-start-column="35" selection-end-line="9176" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -221,8 +218,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -245,6 +240,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -457,18 +454,18 @@
       <workItem from="1652197039323" duration="1719000" />
       <workItem from="1652198865900" duration="2307000" />
       <workItem from="1652282225898" duration="1607000" />
-      <workItem from="1652285253031" duration="12000" />
+      <workItem from="1652285253031" duration="682000" />
+      <workItem from="1652293787129" duration="19000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="266923000" />
+    <option name="totallyTimeSpent" value="267612000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19772728" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20075758" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -858,7 +855,7 @@
     <entry file="file://$PROJECT_DIR$/custom.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="197">
-          <caret line="9176" column="35" lean-forward="true" selection-start-line="9176" selection-start-column="35" selection-end-line="9176" selection-end-column="35" />
+          <caret line="9176" column="35" selection-start-line="9176" selection-start-column="35" selection-end-line="9176" selection-end-column="35" />
         </state>
       </provider>
     </entry>
