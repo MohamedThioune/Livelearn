@@ -20,15 +20,28 @@
   $api_key = "AIzaSyDesrtvddE6l7tfbsPB3CTexWtqLwgNBK8";
   $maxResults = 45;
 
-  $youtube_channels_id = get_field('youtube_channels', 'user_'. 49);
+  $users = get_users();
+
+  $author_id = 0;
+
+  foreach($users as $user){
+      $name_user = strtolower($user->data->display_name);
+
+      if($name_user == "youtube nl"){
+        $author_id = intval($user->data->ID);
+        $name_user = $user->display_name;
+        break;
+      }
+  }
+
+  $youtube_channels_id = get_field('youtube_channels', 'user_'. $author_id);
+
   $youtube_videos = array();
 
   foreach($youtube_channels_id as $youtube_channel){
-    $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&channelId=" . $youtube_channel . "&maxResults=" . $maxResults . "&key=" . $api_key; 
+    $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&channelId=" . $youtube_channel . "&key=" . $api_key; 
   
     $playlists = json_decode(file_get_contents($url_playlist),true);
-
-    $author_id = 49;
     foreach($playlists['items'] as $key => $playlist){
 
         //Check the existing value with metadata

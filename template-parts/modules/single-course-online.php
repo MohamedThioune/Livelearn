@@ -373,7 +373,7 @@ $reviews = get_field('reviews', $post->ID);
                                     <div class="review-info-card">
                                         <div class="review-user-mini-profile">
                                             <div class="user-photo">
-                                                <img src="<?= $image; ?>" alt="">
+                                                <img src="<?= $image_author; ?>" alt="">
                                             </div>
                                             <div class="user-name">
                                                 <p><?= $user->display_name; ?></p>
@@ -528,14 +528,21 @@ $reviews = get_field('reviews', $post->ID);
                                 foreach($courses as $key => $course){
                                     ?>
                                     <div class="sousBlockCours">
-                                        <?php if(isset($topic)) if($topic == $key) { ?><img class="playElement" src="<?php echo get_stylesheet_directory_uri() ?>/img/play.png" alt=""> <?php } ?>
-                                        <a style="color:#F79403" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo ($course['course_topic']['course_topic_title']);?></a>
+                                        <?php 
+                                        if(isset($topic)) 
+                                        {
+                                            $style = "";
+                                            if($topic == $key) 
+                                                $style = "color:#F79403";
+                                        }
+                                        ?>
+                                        <a style="<?= $style; ?>" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo ($course['course_topic']['course_topic_title']);?></a>
                                         <?php
                                         if(!empty($course['course_topic']['course_topic_lessons']))
                                             foreach($course['course_topic']['course_topic_lessons'] as $sand => $value){
                                                 if(isset($lesson)) if($lesson == $sand) { ?>
                                                     <div class="d-flex contentListVidoeCourse">
-                                                    <img class="playElement mr-3" src="<?php echo get_stylesheet_directory_uri() ?>/img/play.png" alt=""> <?php } ?>
+                                                    <img class="playElement mr-3" style="width:22px;" src="<?php echo get_stylesheet_directory_uri() ?>/img/play.png" alt=""> <?php } ?>
                                                 <a href="?topic=<?php echo (int)$key; ?>&lesson=<?php echo (int)$sand; ?>" class="textChapitreCours"><?php echo ($value['course_lesson']['course_lesson_title']);?></a>
                                                 </div>
 

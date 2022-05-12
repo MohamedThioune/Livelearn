@@ -316,14 +316,17 @@ $reviews = get_field('reviews', $leerpad->ID);
                                 <?php
                                 if(!empty($reviews)){
                                     foreach($reviews as $review){
+                                        $user = $review['user'];
+                                        $image_author = get_field('profile_img',  'user_' . $user->ID);
+                                        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';                    
                                     ?>
                                     <div class="review-info-card">
                                         <div class="review-user-mini-profile">
                                             <div class="user-photo">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/user.png" alt="">
+                                                <img src="<?= $image_author; ?>" alt="">
                                             </div>
                                             <div class="user-name">
-                                                <p><?= $review['name']; ?></p>
+                                                <p><?= $user->display_name; ?></p>
                                                 <div class="rating-element">
                                                     <div class="rating-stats">
                                                         <div id="rating-container-custom">
@@ -351,19 +354,12 @@ $reviews = get_field('reviews', $leerpad->ID);
                                 ?>
                             </div>
                             <div id="tab3" class="tab-content">
+                                <?php 
+                                if($user_id != 0){
+                                ?>
                                 <form action="../../dashboard/user/" method="POST">
+                                    <input type="hidden" name="user_id" value="<?= $user_id; ?>">
                                     <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
-                                    <div class="row">
-                                        <div class="form-group col-6">
-                                            <label for="name">Name</label>
-                                            <input type="text" name="fullname" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Name" required>
-                                        </div>
-                                        <div class="form- col-6">
-                                            <label for="exampleInputEmail1">Email address</label>
-                                            <input type="email" name="email_adress" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
-                                            <small id="exampleInputEmail1" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                                        </div>
-                                    </div>
                                     <!--<div class="form-group">
                                         <label for="rating-container-custom">Rating</label>
                                         <div id="rating-container-custom">
@@ -382,6 +378,11 @@ $reviews = get_field('reviews', $leerpad->ID);
                                     </div>
                                     <input type='submit' class='btn btn-sendRating' name='review_post' value='Send'>
                                 </form>
+                                <?php
+                                }
+                                else
+                                    echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> You must sign-in for review </button>";
+                                ?>
                             </div>
                             </div> <!-- END tabs-content -->
                         </div> <!-- END tabs -->
