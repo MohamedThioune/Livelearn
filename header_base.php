@@ -138,26 +138,363 @@
                 </button>
                 <ul class="navbar-nav ">
                     <li class="nav-item">
-                        <a class="nav-link dropdown-toggle" type="button"    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"   role="button" id="dropdownMenuLink">Voor organisaties </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" href="/voor-organisaties">organisaties</a>
-                            <a class="dropdown-item" href="/pricing/">Pricing</a>
-                        </div>
+                        <a class="nav-link dropdown-toggle" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#voorOrganisati"  role="button" id="dropdownMenuLink">Voor organisaties </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link"  id="opleiders" href="/voor-teacher-2/">Voor opleiders </a>
-                        <!-- <div class="dropdown-menu" aria-labelledby="opleiders">
-                                <a class="dropdown-item" href="#">Aanmelden </a>
-                                <a class="dropdown-item" href="#">Ons platform </a>
-                                <a class="dropdown-item" href="#">Beheer al jouw content </a>
-                                <a class="dropdown-item" href="#">Opleidingen toevoegen</a>
-                                <a class="dropdown-item" href="#">E-learning toevoegen</a>
-                                <a class="dropdown-item" href="#"> Cases </a>
-                                <a class="dropdown-item" href="#">Contact</a>
-                            </div>-->
+                        <a class="nav-link dropdown-toggle" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#voorOpleiders"  id="opleiders" href="/voor-teacher-2/">Voor opleiders </a>
                     </li>
                 </ul>
+
+
+                <div class="" aria-labelledby="dropdownMenuLink">
+                </div>
+
+                <!-- modal dropdown Voor organisaties -->
+                <div class="modal fade dropdown-menu-custom" id="voorOrganisati" tabindex="-1" role="dialog" aria-labelledby="voorOrganisatiLabel" aria-hidden="true">
+                    <div class="souselementHeader">
+                        <div class="blockdropdownnHeader">
+                            <ul>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
+                                        </div>
+                                        <div>
+                                            <p class="titleSousElementHeader"><b>ZZP'ers</b></p>
+                                            <p class="subtitleSousElementHeader">Zonder personeel</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-80.png" alt="">
+                                        </div>
+                                        <div>
+                                            <p class="titleSousElementHeader"><b>MKB</b></p>
+                                            <p class="subtitleSousElementHeader">1-250 medewerkers</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-81.png" alt="">
+                                        </div>
+                                        <div>
+                                            <p class="titleSousElementHeader"><b>Grootbedrijf</b></p>
+                                            <p class="subtitleSousElementHeader">+250 medewerkers</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
+                                        </div>
+                                        <div>
+                                            <p class="titleSousElementHeader"><b>Pricing</b></p>
+                                            <p class="subtitleSousElementHeader">Transparant en eenvoudig</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="secondUlModal ">
+                                <?php
+                                foreach($bangerichts as $bangericht){
+                                    ?>
+                                    <li>
+                                        <a href="">
+                                            <div class="blockImg">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="subtitleSousElementHeader"><?php echo $bangericht->cat_name ?></p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <?php
+                                }
+                                ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- modal dropdown Voor Voor opleiders  -->
+                <div class="modal fade dropdown-menu-custom" id="voorOpleiders" tabindex="-1" role="dialog" aria-labelledby="voorOpleidersLabel" aria-hidden="true">
+                    <div class="souselementHeader">
+                        <div class="blockdropdownnHeader">
+                            <ul>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
+                                        </div>
+                                        <div>
+                                            <p class="titleSousElementHeader"><b>ZZP'ers</b></p>
+                                            <p class="subtitleSousElementHeader">Zonder personeel</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-80.png" alt="">
+                                        </div>
+                                        <div>
+                                            <p class="titleSousElementHeader"><b>MKB</b></p>
+                                            <p class="subtitleSousElementHeader">1-250 medewerkers</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-81.png" alt="">
+                                        </div>
+                                        <div>
+                                            <p class="titleSousElementHeader"><b>Grootbedrijf</b></p>
+                                            <p class="subtitleSousElementHeader">+250 medewerkers</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
+                                        </div>
+                                        <div>
+                                            <p class="titleSousElementHeader"><b>Pricing</b></p>
+                                            <p class="subtitleSousElementHeader">Transparant en eenvoudig</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="secondUlModal ">
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+<!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                        </div>
+                                        <div>
+                                            <p class="subtitleSousElementHeader">Top opleiders</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+<!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                        </div>
+                                        <div>
+                                            <p class="subtitleSousElementHeader">Top Experts</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+<!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                        </div>
+                                        <div>
+                                            <p class="subtitleSousElementHeader">Functionaliteiten</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+<!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                        </div>
+                                        <div>
+                                            <p class="subtitleSousElementHeader">Contact</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- modal dropdown Opleidingen -->
+                <div class="modal fade dropdown-menu-custom" id="Opleidingen" tabindex="-1" role="dialog" aria-labelledby="OpleidingenLabel" aria-hidden="true">
+                    <div class="souselementHeader">
+                        <div class="blockdropdownnHeader">
+                            <ul>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
+                                        </div>
+                                        <div>
+                                            <p class="titleSousElementHeader">Skills paspoort</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-80.png" alt="">
+                                        </div>
+                                        <div>
+                                            <p class="titleSousElementHeader"><b>Groeipaden</b></p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-81.png" alt="">
+                                        </div>
+                                        <div>
+                                            <p class="titleSousElementHeader">Communities</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
+                                        </div>
+                                        <div>
+                                            <p class="titleSousElementHeader">Persoonlijke begeleiding</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="secondUlModal ">
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+<!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                        </div>
+                                        <div>
+                                            <p class="subtitleSousElementHeader">Opleidingen</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+                                            <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                        </div>
+                                        <div>
+                                            <p class="subtitleSousElementHeader">E-Learnings</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+                                            <!-- <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                        </div>
+                                        <div>
+                                            <p class="subtitleSousElementHeader">Lezingen</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+<!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                        </div>
+                                        <div>
+                                            <p class="subtitleSousElementHeader">Trainingen</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+<!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                        </div>
+                                        <div>
+                                            <p class="subtitleSousElementHeader">Video's</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+<!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                        </div>
+                                        <div>
+                                            <p class="subtitleSousElementHeader">Evens</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+<!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                        </div>
+                                        <div>
+                                            <p class="subtitleSousElementHeader">Workshops</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+<!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                        </div>
+                                        <div>
+                                            <p class="subtitleSousElementHeader">Artikelen</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+<!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                        </div>
+                                        <div>
+                                            <p class="subtitleSousElementHeader">Webinars</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+<!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                        </div>
+                                        <div>
+                                            <p class="subtitleSousElementHeader">Masterclasses</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+<!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                        </div>
+                                        <div>
+                                            <p class="subtitleSousElementHeader">Assessments</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <div class="blockImg">
+<!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                        </div>
+                                        <div>
+                                            <p class="subtitleSousElementHeader">Podcasts</p>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- input search -->
                     <form action="/product-search" method="POST" class="form-inline ml-auto mb-0 ">
@@ -174,13 +511,8 @@
                             <a class="nav-link" id="Over" href="/static-education-individual/">Aan de slag</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link dropdown-toggle" type="button"  id="Opleidingen" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opleidingen</a>
-                            <div class="dropdown-menu" aria-labelledby="Opleidingen">
-                                <a class="dropdown-item" href="/functiegerichte">Groei binnen je functie </a>
-                                <a class="dropdown-item" href="/baangerichte">Richting een baan </a>
-                                <a class="dropdown-item" href="/skill">Specifieke skills </a>
-                                <a class="dropdown-item" href="/persoonlijke">Persoonlijke interesses </a>
-                            </div>
+                            <a class="nav-link dropdown-toggle" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#Opleidingen"  role="button"  href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opleidingen</a>
+
                         </li>
                         <li class="nav-item" >
                             <a class="nav-link" href="/inloggen/"><b>Inloggen</b></a>
