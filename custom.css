@@ -7288,7 +7288,6 @@ ul#tabs-nav li.active {
     font-size: 1rem;
     border: 1px solid rgba(0,0,0,.15);
     border-radius: 15px;
-    display: block;
     height: fit-content;
     left: 0;
     right: 0;
