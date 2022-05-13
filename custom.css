@@ -7278,10 +7278,20 @@ ul#tabs-nav li.active {
     width: 60%;
     margin-top: 8px;
 }
+.activeModalHeader {
+    background: #ffffff00;
+    width: 100%;
+    height: 100%;
+    position: fixed !important;
+    top: 60px;
+    left: 0;
+    display: none;
+}
+
 .dropdown-menu-custom {
     position: absolute !important;
     width: 95%;
-    top: 62px;
+    top: 3px;
     background: white !important;
     padding: 20px 0px;
     margin: 0 auto;
@@ -7306,37 +7316,39 @@ ul#tabs-nav li.active {
     width: 25%;
     padding: 0 15px;
 }
-#voorOpleiders{
+#voorOpleidersModal{
     width: fit-content;
     min-width: 485px;
+    top: 63px;
 }
-#voorOpleiders .blockdropdownnHeader {
+#voorOpleidersModal .blockdropdownnHeader {
     justify-content: center;
 }
-#voorOpleiders .blockdropdownnHeader ul:first-child {
+#voorOpleidersModal .blockdropdownnHeader ul:first-child {
     width: fit-content;
     border-right: 1px solid black;
     margin: 0 2% 0px 0;
     padding-right: 30px;
 }
-#voorOpleiders .blockdropdownnHeader .secondUlModal {
+#voorOpleidersModal .blockdropdownnHeader .secondUlModal {
     display: block;
     flex-wrap: unset;
     width: fit-content;
 }
-#voorOpleiders .blockdropdownnHeader .secondUlModal li {
+#voorOpleidersModal .blockdropdownnHeader .secondUlModal li {
     width: 100%;
     padding: 0 15px;
 }
-#Opleidingen {
+#OpleidingenModal {
     width: 70%;
     margin: 0 auto;
+    top: 63px;
 }
-#Opleidingen .blockdropdownnHeader .secondUlModal li {
+#OpleidingenModal .blockdropdownnHeader .secondUlModal li {
     width: 27%;
     padding: 0 15px;
 }
-#Opleidingen .blockdropdownnHeader ul:first-child {
+#OpleidingenModal .blockdropdownnHeader ul:first-child {
     width: 30%;
 }
 .select2-selection__choice:after{
@@ -7350,6 +7362,9 @@ ul#tabs-nav li.active {
 }
 .btnKoop {
     font-size: 16px;
+}
+.show .nav-linModife:hover{
+    color: #FFFFFF !important;
 }
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
