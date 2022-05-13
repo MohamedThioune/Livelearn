@@ -513,7 +513,7 @@ $reviews = get_field('reviews', $post->ID);
                 <div class="customTabs">
                     <div class="tabs">
                         <ul id="tabs-nav">
-                            <li><a href="#tab1">Evens</a></li>
+                            <li><a href="#tab1">Events</a></li>
                             <li><a href="#tab2">Reviews</a></li>
                             <li><a href="#tab3">Add Reviews</a></li>
                         </ul> <!-- END tabs-nav -->

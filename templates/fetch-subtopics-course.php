@@ -5,25 +5,26 @@
 <?php /** Template Name: Fetch subtopics course */ ?>
 
 <?php
-if (isset ($_POST['add_subtopics']))
+if ( isset($_POST['add_subtopics']) )
 {
-    // Already exists  
- $course = get_field('categories', $_POST['id_course']);
- //  New subtopics
-  $subtopics=$_POST['add_subtopics'];
-  //Adding new subtopics on course
-  //var_dump($course);
-   update_field('categories', $subtopics, $_POST['id_course']);
-  //var_dump(get_field('categories', $_POST['id_course']));
-  foreach ($subtopics as $key => $value) {
-      if ($value!='')
-      $field.=(String)get_the_category_by_ID($value).',';
-  }
-  $field=substr($field,0,-1);
-  echo $field;
+    //Already exists  
+    $course = get_field('categories', $_POST['id_course']);
+
+    //New subtopics
+    $subtopics=$_POST['add_subtopics'];
+
+    //Adding new subtopics on course
+    update_field('categories', $subtopics, $_POST['id_course']);
+
+    foreach ($subtopics as $key => $value) {
+        if ($value!='')
+        $field.=(String)get_the_category_by_ID($value).',';
+    }
+
+    $field = substr($field,0,-1);
+    echo $field;
 
 }
-
 
 $user_connected = get_current_user_id();
 $company_connected = get_field('company',  'user_' . $user_connected);
