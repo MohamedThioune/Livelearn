@@ -112,6 +112,35 @@ jQuery(function($){
         $("#upBlock3").show();
     });
 
+    $("#voorOrganisati").click(function() {
+        $("#voorOrganisatiModal").toggle();
+        $(".activeModalHeader").show();
+        $("#voorOpleidersModal").hide();
+        $("#OpleidingenModal").hide();
+    });
+
+    $("#opleiders").click(function() {
+        $("#voorOrganisatiModal").hide();
+        $(".activeModalHeader").show();
+        $("#voorOpleidersModal").toggle();
+        $("#OpleidingenModal").hide();
+    });
+
+    $("#Opleidingen").click(function() {
+        $("#voorOrganisatiModal").hide();
+        $(".activeModalHeader").show();
+        $("#voorOpleidersModal").hide();
+        $("#OpleidingenModal").toggle();
+    });
+    $(".activeModalHeader").click(function() {
+        $("#voorOrganisatiModal").hide();
+        $("#voorOpleidersModal").hide();
+        $("#OpleidingenModal").hide();
+        $(".activeModalHeader").hide();
+    });
+
+
+
 
     $("#upBlock3").click(function() {
         $(".firstContentHeadSousMobile").show();
