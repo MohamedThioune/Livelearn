@@ -105,7 +105,7 @@ $reviews = get_field('reviews', $post->ID);
         position: relative;
     }
     .liveOverBlock {
-        padding-top: 0px;
+        padding-top: 50px;
     }
 </style>
 
@@ -544,8 +544,8 @@ $reviews = get_field('reviews', $post->ID);
                                             foreach($course['course_topic']['course_topic_lessons'] as $sand => $value){
                                                 if(isset($lesson)) if($lesson == $sand) { ?>
                                                     <div class="d-flex contentListVidoeCourse">
-                                                    <img class="playElement mr-3" style="width:23px;" src="<?php echo get_stylesheet_directory_uri() ?>/img/play.png" alt=""> <?php } ?>
-                                                <a href="?topic=<?php echo (int)$key; ?>&lesson=<?php echo (int)$sand; ?>" class="textChapitreCours"><?php echo ($value['course_lesson']['course_lesson_title']);?></a>
+                                                    <img class="playElement mr-3" style="width:22px;" src="<?php echo get_stylesheet_directory_uri() ?>/img/play.png" alt=""> <?php } ?>
+                                                <a href="?topic=<?php echo (int)$key; ?>&lesson=<?php echo (int)$sand; ?>" class="textChapitreCours textChapitreCours2"><?php echo ($value['course_lesson']['course_lesson_title']);?></a>
                                                 </div>
 
 
