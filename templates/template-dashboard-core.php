@@ -474,6 +474,8 @@ else if(isset($referee_employee)){
     
     var_dump($selected_members);
 
+    var_dump($allocution);
+
     //New subtopics
     if(!empty($allocution))
         if(!empty($selected_members))
@@ -481,7 +483,6 @@ else if(isset($referee_employee)){
     else
         $allocution = $selected_members;
 
-    var_dump($allocution);
 
     //Adding new subtopics on course
     update_field('allocation', $allocution, $course_id);
