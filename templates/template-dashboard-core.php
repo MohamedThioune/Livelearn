@@ -475,6 +475,8 @@ else if(isset($referee_employee)){
     //New subtopics
     $referees = $selected_members;
 
+    var_dump($referees);
+
     if(empty($referees))
         if(empty($allocution))
             $allocution = array();
@@ -485,13 +487,14 @@ else if(isset($referee_employee)){
             $allocution = $referees; 
         else 
             $allocution = array_merge($allocution,$referees);
-
+    
+    var_dump($allocution);
     //Adding new subtopics on course
     update_field('allocation', $allocution, $id_course);
 
     $message = get_permalink($id_course) . '/?message=Allocution successfully'; 
 
-    header("Location: ". $message);
+    //header("Location: ". $message);
 
 }
 
