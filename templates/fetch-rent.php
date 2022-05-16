@@ -22,7 +22,7 @@ if (isset($id_course))
     echo "<select class='multipleSelect2' id='selected_members'  multiple='true'>";
     if(!empty($users_company))
         foreach($users_company as $user){
-            $name = get_users(array('include'=> $user))[0]->data;
+            $name = get_users(array('include'=> $user))[0]->data->display_name;
             if(in_array($user, $allocution))
                 echo "<option selected  value='" . $user . "'>" . $name . "</option>";
             else
