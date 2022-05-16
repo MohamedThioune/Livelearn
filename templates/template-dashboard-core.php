@@ -474,7 +474,6 @@ else if(isset($referee_employee)){
     
     //New subtopics
     if(!empty($allocution)){
-        var_dump($allocution);
         if(!empty($selected_members))
             $allocution = array_merge($allocution, $selected_members); 
     }else
