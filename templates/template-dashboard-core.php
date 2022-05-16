@@ -479,8 +479,10 @@ else if(isset($referee_employee)){
         if(!empty($selected_members))
             $allocution = array_merge($allocution, $selected_members); 
     }
-    else
+    else{
         $allocution = $selected_members;
+        var_dump($selected_members);
+    }
 
     var_dump($allocution);
 
