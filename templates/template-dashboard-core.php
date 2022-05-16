@@ -473,10 +473,11 @@ else if(isset($referee_employee)){
     $allocution = get_field('allocation', $course_id);
 
     //New subtopics
-
     if(!empty($allocution)){
-        $referees = $selected_members;
-        $allocution = array_merge($allocution, $referees); 
+        var_dump($selected_members);
+
+        if(!empty($selected_members))
+            $allocution = array_merge($allocution, $selected_members); 
     }
     else
         $allocution = $selected_members;
@@ -486,7 +487,7 @@ else if(isset($referee_employee)){
 
     $message = get_permalink($course_id) . '/?message=Allocution successfully'; 
 
-    header("Location: ". $message);
+    //header("Location: ". $message);
 
 }
 
