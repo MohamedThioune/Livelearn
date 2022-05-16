@@ -472,17 +472,18 @@ else if(isset($referee_employee)){
     //Already exists  
     $allocution = get_field('allocation', $course_id);
 
+    var_dump($selected_members);
     //New subtopics
-    if(!empty($allocution)){
-        var_dump($selected_members);
+    // if(!empty($allocution)){
+    //     var_dump($selected_members);
 
-        if(!empty($selected_members))
-            $allocution = array_merge($allocution, $selected_members); 
-    }
-    else
-        $allocution = $selected_members;
+    //     if(!empty($selected_members))
+    //         $allocution = array_merge($allocution, $selected_members); 
+    // }
+    // else
+    //     $allocution = $selected_members;
 
-    var_dump($allocution);
+    // var_dump($allocution);
 
     //Adding new subtopics on course
     update_field('allocation', $allocution, $course_id);
