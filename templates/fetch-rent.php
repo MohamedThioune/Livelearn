@@ -19,6 +19,7 @@ foreach($users as $user) {
 if (isset($id_course))
 {
     echo "<input type='hidden' name='course_id' value='" . $id_course . "' />";
+    echo "<input type='hidden' name='path' value='dashboard' />";
     echo "<select multiple class='multipleSelect2' name='selected_members[]' >";
     if(!empty($users_company))
         foreach($users_company as $user){
