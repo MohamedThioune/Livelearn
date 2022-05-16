@@ -481,9 +481,11 @@ else if(isset($referee_employee)){
             update_field('kennis_video', $posts, $expert);
         }
 
+    var_dump($allocution);
+
     //Adding new subtopics on course
     update_field('allocation', $allocution, $course_id);
-    
+
     if($path="dashboard")
         $message = '/dashboard/company/learning-modules/?message=Allocution successfully'; 
     else if($path="course")
