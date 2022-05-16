@@ -279,15 +279,17 @@ $orders = wc_get_orders($order_args);
             </span>
             <div class="row d-flex text-center justify-content-center align-items-center h-50">
                 <div class="col-md-8  p-4">
-                    <div class="form-group display-member">
-                    
-                    </div> 
-                    <div id="modal-content">
+                    <form method="POST">
+                        <div class="form-group display-member">
+                        
+                        </div> 
+                        <div id="modal-content">
 
-                    </div>
-                    <div>
-                        <input type='submit' class='btn btn-info' name='referee_employee' value='Apply' >
-                    </div>
+                        </div>
+                        <div>
+                            <input type='submit' class='btn btn-info' name='referee_employee' value='Apply' >
+                        </div>
+                    </form>
                 </div>
             </div>
         <!-- </div> -->
