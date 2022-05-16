@@ -19,7 +19,7 @@ foreach($users as $user) {
 if (isset($id_course))
 {
     echo "<input type='hidden' name='course_id' value='" . $id_course . "' >";
-    echo "<select class='multipleSelect2' id='selected_members'  multiple='true'>";
+    echo "<select class='multipleSelect2' name='selected_members'  multiple='true'>";
     if(!empty($users_company))
         foreach($users_company as $user){
             $name = get_users(array('include'=> $user))[0]->data->display_name;
