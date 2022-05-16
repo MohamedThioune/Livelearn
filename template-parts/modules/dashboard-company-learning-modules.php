@@ -517,7 +517,7 @@ $orders = wc_get_orders($order_args);
             method:"post",
             data:
             {
-                id_course:id_course
+                id_course:id_course,
             },
             dataType:"text",
             success: function(data){
