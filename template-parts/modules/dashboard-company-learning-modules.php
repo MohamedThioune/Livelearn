@@ -524,7 +524,6 @@ $orders = wc_get_orders($order_args);
             dataType:"text",
             success: function(data){
                 // Get the modal
-                console.log('ID : ' , id_course);
                 console.log(data);
                 var modal = document.getElementById("myModalRent");
                 $('.display-member').html(data);
