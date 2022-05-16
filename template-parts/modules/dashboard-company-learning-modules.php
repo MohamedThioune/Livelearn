@@ -264,7 +264,37 @@ $orders = wc_get_orders($order_args);
         <!-- </div> -->
         </div>
 
-    </div> 
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModalRent" class="modal">
+
+        <!-- Modal content -->
+        <!-- <div id="modal-content"> -->
+        
+        <div class="modal-content modal-content-width m-auto " style="margin-top: 100px !important">
+            <span type="button" class="px-2 close-button text-white bg-danger fa-2x" id="closeModal"
+            onclick="document.getElementById('myModal').style.display='none'" > &times;
+                <!-- <button type="button" class="btn btn-danger close">&times;</button> -->
+            </span>
+            <div class="row d-flex text-center justify-content-center align-items-center h-50">
+                <div class="col-md-8  p-4">
+                    <div class="form-group display-member">
+                    
+                    </div> 
+                    <div id="modal-content">
+
+                    </div>
+                    <div>
+                        <input type='submit' class='btn btn-info' name='referee_employee' value='Apply' >
+                    </div>
+                </div>
+            </div>
+        <!-- </div> -->
+        </div>
+
+    </div>
+     
 
     <div class="cardOverviewCours">
         <div class="headListeCourse">
@@ -398,7 +428,7 @@ $orders = wc_get_orders($order_args);
                         </td>
                         <td class="textTh"><?php echo $day; ?></td>
                         <td class="textTh" id="live">Live</td>
-                        <td class="textTh"><input type="button" id="rent" value="<?= $course->ID; ?>" class="btn btn-info">Activeer</input></td>
+                        <td class="textTh"><input type="button" id="<?= $course->id; ?>" value="Activeer" class="btn btn-info rent"></td>
                     </tr>
                     <?php
                     }
@@ -478,8 +508,8 @@ $orders = wc_get_orders($order_args);
         })
     });
 
-    $('#rent').click((e)=>{
-        id_course = e.target.value;
+    $('.rent').click((e)=>{
+        id_course = e.target.id;
         console.log(id_course);
 
         $.ajax({
@@ -493,8 +523,8 @@ $orders = wc_get_orders($order_args);
             success: function(data){
                 // Get the modal
                 console.log(data)
-                var modal = document.getElementById("myModal");
-                $('.display-subtopics').html(data);
+                var modal = document.getElementById("myModalRent");
+                $('.display-member').html(data);
 
 
                 // =-=-fvfd=

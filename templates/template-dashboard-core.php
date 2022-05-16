@@ -468,6 +468,32 @@ else if(isset($change_password)){
 
     header("Location: ". $message);
 }
+else if(isset($referee_employee)){
+    //Already exists  
+    $allocution = get_field('allocation', $id_course);
+
+    //New subtopics
+    $referees = $_POST['add_subtopics'];
+
+    if(empty($referees))
+        if(empty($allocution))
+            $allocution = array();
+        else
+            $allocution = $allocution;
+    else
+        if(empty($allocution))
+            $allocution = $referees; 
+        else 
+            $allocution = array_merge($allocution,$referees);
+
+    //Adding new subtopics on course
+    update_field('allocation', $allocution, $id_course);
+
+    $message = get_permalink($course_id) . '/?message=Allocution successfully'; 
+
+    header("Location: ". $message);
+
+}
 
 ?>
 <?php wp_head(); ?>
