@@ -1,6 +1,8 @@
 <?php /** Template Name: Fetch rent */ ?>
 <?php 
 
+extract($_POST);
+
 $user_connected = get_current_user_id();
 $company_connected = get_field('company',  'user_' . $user_connected);
 $users_company = array();
