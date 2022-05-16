@@ -480,7 +480,7 @@ else if(isset($referee_employee)){
         
     }
     else
-        $allocution = $referees;
+        $allocution = $selected_members;
 
     //Adding new subtopics on course
     update_field('allocation', $allocution, $course_id);
