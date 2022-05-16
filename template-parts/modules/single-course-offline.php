@@ -368,7 +368,7 @@ foreach($users as $user) {
                     </div>
                     <div class="d-flex flex-row block2">
                         <div class="d-flex flex-column mx-md-3 mx-2">
-                            <form action="../../dashboard/user/" method="POST">
+                            <form action="/dashboard/user/" method="POST">
                                 <input type="hidden" name="meta_value" value="<?php echo $post->ID; ?>" id="">
                                 <input type="hidden" name="user_id" value="<?php echo $user_id; ?>" id="">
                                 <input type="hidden" name="meta_key" value="course" id="">
@@ -470,21 +470,23 @@ foreach($users as $user) {
                                         ]);
                                         echo "</div>";
                                        }else{
-                                        echo "<form action='/dashboard/user/' method='POST'>";
-                                        echo "<label for='member_id'>Select a member of your team you want to affect these course :</label>";
-                                        echo "<select class='multipleSelect2' id='member_id' name='member_selected' multiple='true'>";
-                                        if(!empty($users_company))
-                                            foreach($users_company as $user){
-                                                $name = get_users(array('include'=> $user))[0]->data;
-                                                if(in_array($user, $allocution))
-                                                    echo "<option selected  value='" . $user . "'>" . $name . "</option>";
-                                                else
-                                                    echo "<option value='" . $user . "'>" . $name . "</option>";   
-                                            }
-                                        echo "</select>";
-                                        echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
-                                        echo "<input type='submit' class='btn btn-info' name='referee_employee' value='Apply' >";
-                                        echo "</form>";
+                                        echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
+                                            echo "<form action='/dashboard/user/' method='POST'>";
+                                                echo "<label for='member_id'>Select a member of your team you want to affect these course :</label>";
+                                                echo "<select class='multipleSelect2' id='member_id' name='member_selected' multiple='true'>";
+                                                if(!empty($users_company))
+                                                    foreach($users_company as $user){
+                                                        $name = get_users(array('include'=> $user))[0]->data;
+                                                        if(in_array($user, $allocution))
+                                                            echo "<option selected  value='" . $user . "'>" . $name . "</option>";
+                                                        else
+                                                            echo "<option value='" . $user . "'>" . $name . "</option>";   
+                                                    }
+                                                echo "</select>";
+                                                echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
+                                                echo "<input type='submit' class='btn btn-info' name='referee_employee' value='Apply' >";
+                                            echo "</form>";
+                                        echo "</div>";
                                        }
                                     ?>
                                 </div>
@@ -1064,7 +1066,7 @@ foreach($users as $user) {
                     <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                     <hr class="hrModifeDeel">
                     <?php
-                    if ($user_id==0)
+                    if ($user_id!=0)
                         {
                     ?>
                     <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>

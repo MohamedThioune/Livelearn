@@ -473,7 +473,7 @@ else if(isset($referee_employee)){
     $allocution = get_field('allocation', $id_course);
 
     //New subtopics
-    $referees = $_POST['add_subtopics'];
+    $referees = $selected_members;
 
     if(empty($referees))
         if(empty($allocution))
@@ -489,7 +489,7 @@ else if(isset($referee_employee)){
     //Adding new subtopics on course
     update_field('allocation', $allocution, $id_course);
 
-    $message = get_permalink($course_id) . '/?message=Allocution successfully'; 
+    $message = get_permalink($id_course) . '/?message=Allocution successfully'; 
 
     header("Location: ". $message);
 
