@@ -1,4 +1,4 @@
-<?php /** Template Name: Fetch subtopics course */ ?>
+<?php /** Template Name: Fetch rent */ ?>
 <?php 
 
 if ( isset($_POST['add_member']) ){
