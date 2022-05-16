@@ -469,18 +469,21 @@ else if(isset($change_password)){
     header("Location: ". $message);
 }
 else if(isset($referee_employee)){
+    $user_connected = get_current_user_id();
     //Already exists  
     $allocution = get_field('allocation', $course_id);
     
-    //New subtopics
-    if(!empty($allocution)){
-        if(!empty($selected_members))
-            $allocution = array_merge($allocution, $selected_members); 
-    }else
-        $allocution = $selected_members;
+    if(!empty($selected_members))
+        foreach($selected_members as $expert){
+            array_push($allocution, $expert);
+            $posts = get_field('kennis_video', $expert);
+            array_push($posts, get_post($course_id));
+            update_field('kennis_video', $posts, $expert);
+        }
 
     //Adding new subtopics on course
     update_field('allocation', $allocution, $course_id);
+    
     if($path="dashboard")
         $message = '/dashboard/company/learning-modules/?message=Allocution successfully'; 
     else if($path="course")
