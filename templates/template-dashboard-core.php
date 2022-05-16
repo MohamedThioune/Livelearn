@@ -468,14 +468,13 @@ else if(isset($change_password)){
 
     header("Location: ". $message);
 }
-else if(isset($referee_employee)){
-    $user_connected = get_current_user_id();
-    
+else if(isset($referee_employee)){    
     $allocution = array();
     $allocution = get_field('allocation', $course_id);
     
     if(!empty($selected_members))
         foreach($selected_members as $expert){
+            echo $expert;
             array_push($allocution, $expert);
             $posts = get_field('kennis_video', $expert);
             array_push($posts, get_post($course_id));
