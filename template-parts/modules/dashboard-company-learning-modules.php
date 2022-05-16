@@ -428,7 +428,7 @@ $orders = wc_get_orders($order_args);
                         </td>
                         <td class="textTh"><?php echo $day; ?></td>
                         <td class="textTh" id="live">Live</td>
-                        <td class="textTh"><input type="button" id="<?= $course->id; ?>" value="Activeer" class="btn btn-info rent"></td>
+                        <td class="textTh"><input type="button" id="<?= $course->ID; ?>" value="Activeer" class="btn btn-info rent"></td>
                     </tr>
                     <?php
                     }
