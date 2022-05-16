@@ -26,6 +26,7 @@ $todos = get_posts($args);
         <meta name="viewport" content="width=device-width">
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/custom.css" />
+        <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/rating.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css'>

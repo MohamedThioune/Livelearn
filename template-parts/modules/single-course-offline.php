@@ -771,19 +771,14 @@ $reviews = get_field('reviews', $post->ID);
                                             </div>
                                             <div class="user-name">
                                                 <p><?= $user->display_name; ?></p>
-                                                <div class="rating-element">
-                                                    <div class="rating-stats">
-                                                        <div id="rating-container-custom">
-                                                            <ul class="list-show">
-                                                                <li class="disabled"></li>
-                                                                <li class="disabled"></li>
-                                                                <li class="disabled"></li>
-                                                                <li class="disabled"></li>
-                                                                <li class="disabled"></li>
-                                                            </ul>
-                                                        </div>
-                                                        <!-- <p class="hours-element">18 hours ago</p> -->
-                                                    </div>
+                                                <div class="rating-stars">
+                                                    <input type="radio" class="ratingElementInput" name="rating" id="rs0" checked><label for="rs0"></label>
+                                                    <input type="radio" name="rating"><label for="rs1"></label>
+                                                    <input type="radio" name="rating"><label for="rs2"></label>
+                                                    <input type="radio" name="rating"><label for="rs3"></label>
+                                                    <input type="radio" name="rating"><label for="rs4"></label>
+                                                    <input type="radio" name="rating"><label for="rs5"></label>
+                                                    <span class="rating-counter"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -804,18 +799,17 @@ $reviews = get_field('reviews', $post->ID);
                                 <form action="../../dashboard/user/" method="POST">
                                     <input type="hidden" name="user_id" value="<?= $user_id; ?>">
                                     <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
-                                    <!--<div class="form-group">
-                                        <label for="rating-container-custom">Rating</label>
-                                        <div id="rating-container-custom">
-                                            <ul class="list">
-                                                <li></li>
-                                                <li></li>
-                                                <li></li>
-                                                <li></li>
-                                                <li></li>
-                                            </ul>
-                                        </div>
-                                    </div> -->
+                                    <label>Rating</label>
+                                    <div class="rating-stars">
+                                        <input type="radio" class="ratingElementInput" name="rating" id="rs0" checked><label for="rs0"></label>
+                                        <input type="radio" name="rating" id="rs1"><label for="rs1"></label>
+                                        <input type="radio" name="rating" id="rs2"><label for="rs2"></label>
+                                        <input type="radio" name="rating" id="rs3"><label for="rs3"></label>
+                                        <input type="radio" name="rating" id="rs4"><label for="rs4"></label>
+                                        <input type="radio" name="rating" id="rs5"><label for="rs5"></label>
+                                        <span class="rating-counter"></span>
+                                    </div>
+
                                     <div class="form-group">
                                         <label for="">Feedback</label>
                                         <textarea name="feedback_content" rows="10"></textarea>

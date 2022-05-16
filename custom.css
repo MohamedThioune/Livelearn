@@ -7366,6 +7366,60 @@ ul#tabs-nav li.active {
 .show .nav-linModife:hover{
     color: #FFFFFF !important;
 }
+.groupInputDate{
+    display: flex;
+    justify-content: space-between;
+}
+.groupInputDate .input-group{
+    width: 48%;
+    position: relative;
+    margin: 0;
+    padding: 8px 20px 20px !important;
+    border-top: 0;
+    border: none !important;
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 15px !important;
+    display: grid;
+}
+.groupInputDate .input-group input{
+    border: 1px solid #193f95;
+    padding: 7px 15px;
+}
+.input-group-course{
+    position: relative;
+    margin: 0;
+    padding: 8px 20px 20px !important;
+    border-top: 0;
+    border: none !important;
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 15px !important;
+    display: grid;
+}
+.input-group-course input{
+    padding: 10px 20px !important;
+    font-size: 15px !important;
+    color: #3c3c3c !important;
+    background: #F0F5F7;
+    border: none;
+}
+.input-group-course label {
+    font-weight: 500 !important;
+    color: #212529 !important;
+    margin: 0 0 10px;
+    padding: 0;
+}
+.groupInputDate .input-group label {
+    font-weight: 500 !important;
+    color: #212529 !important;
+    margin: 0 0 10px;
+    padding: 0;
+}
+
+
+
+
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
