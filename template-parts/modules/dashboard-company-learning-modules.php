@@ -279,7 +279,7 @@ $orders = wc_get_orders($order_args);
             </span>
             <div class="row d-flex text-center justify-content-center align-items-center h-50">
                 <div class="col-md-8  p-4">
-                    <form method="POST">
+                    <form action="" method="POST">
                         <div class="form-group display-member">
                         
                         </div> 
