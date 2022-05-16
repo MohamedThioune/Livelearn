@@ -475,13 +475,15 @@ else if(isset($referee_employee)){
     if(!empty($selected_members))
         if(!empty($allocution))
             foreach($selected_members as $expert){
-                array_push($allocution, $expert);
-                $posts = get_field('kennis_video', $expert);
-                if(!empty($posts))
-                    array_push($posts, get_post($course_id));
-                else 
-                    $posts = get_post($course_id);
-                update_field('kennis_video', $posts, $expert);
+                if(!in_array($expert, $allocution)){
+                    array_push($allocution, $expert);
+                    $posts = get_field('kennis_video', $expert);
+                    if(!empty($posts))
+                        array_push($posts, get_post($course_id));
+                    else 
+                        $posts = get_post($course_id);
+                    update_field('kennis_video', $posts, $expert);
+                }
             }
         else{
             $allocution = $selected_members;
@@ -495,9 +497,6 @@ else if(isset($referee_employee)){
             }
         }
 
-
-    var_dump($allocution);
-
     //Adding new subtopics on course
     update_field('allocation', $allocution, $course_id);
 
@@ -506,7 +505,7 @@ else if(isset($referee_employee)){
     else if($path="course")
         $message = get_permalink($course_id) . '/?message=Allocution successfully'; 
 
-    //header("Location: ". $message);
+    header("Location: ". $message);
 
 }
 
