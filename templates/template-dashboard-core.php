@@ -472,9 +472,9 @@ else if(isset($referee_employee)){
     //Already exists  
     $allocution = get_field('allocation', $course_id);
     
-    var_dump($selected_members);
-
     var_dump($allocution);
+
+    var_dump($selected_members);
 
     //New subtopics
     if(!empty($allocution))
