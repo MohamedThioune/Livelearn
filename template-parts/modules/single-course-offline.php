@@ -148,6 +148,21 @@ if(!$image){
 
 $reviews = get_field('reviews', $post->ID);
 
+/*
+* Companies user
+*/
+
+$users_company = array();
+$allocution = get_field('allocation', $_POST['id_course']);
+$users = get_users();
+
+foreach($users as $user) {
+    $company_user = get_field('company',  'user_' . $user->ID);
+    if(!empty($company_connected) && !empty($company_user))
+        if($company_user[0]->post_title == $company_connected[0]->post_title)
+            array_push($users_company,$user->ID);
+}
+
 ?>
 
 <style>
@@ -445,9 +460,7 @@ $reviews = get_field('reviews', $post->ID);
                                     <?php
                                        if ($user_id==0)
                                        {
-                                        ?>
-                                        <div id='Intern' class='tabcontent px-md-5 p-3'>
-                                        <?php
+                                        echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
                                         wp_login_form([
                                                 'redirect' => 'http://wp12.influid.nl/dashboard/user/',
                                                 'remember' => false,
@@ -455,11 +468,25 @@ $reviews = get_field('reviews', $post->ID);
                                                 'placeholder_email' => 'E-mailadress',
                                                 'label_password' => 'Wat is je wachtwoord?'
                                         ]);
-                                        ?>
-                                            </div>
-                                            <?php
+                                        echo "</div>";
+                                       }else{
+                                        echo "<form action='/dashboard/user/' method='POST'>";
+                                        echo "<label for='member_id'>Select a member of your team you want to affect these course :</label>";
+                                        echo "<select class='multipleSelect2' id='member_id' name='member_selected' multiple='true'>";
+                                        if(!empty($users_company))
+                                            foreach($users_company as $user){
+                                                $name = get_users(array('include'=> $user))[0]->data;
+                                                if(in_array($user, $allocution))
+                                                    echo "<option selected  value='" . $user . "'>" . $name . "</option>";
+                                                else
+                                                    echo "<option value='" . $user . "'>" . $name . "</option>";   
+                                            }
+                                        echo "</select>";
+                                        echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
+                                        echo "<input type='submit' class='btn btn-info' name='referee_employee' value='Apply' >";
+                                        echo "</form>";
                                        }
-                                            ?>
+                                    ?>
                                 </div>
                             </div>
                         </div>
