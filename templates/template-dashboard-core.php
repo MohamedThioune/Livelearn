@@ -477,7 +477,6 @@ else if(isset($referee_employee)){
     if(!empty($allocution)){
         $referees = $selected_members;
         $allocution = array_merge($allocution, $referees); 
-        
     }
     else
         $allocution = $selected_members;
