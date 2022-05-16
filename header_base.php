@@ -53,6 +53,7 @@
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/custom.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/main.css" />
+        <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/rating.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -206,7 +207,7 @@
                                     foreach($bangerichts as $bangericht){
                                         ?>
                                         <li>
-                                            <a href="">
+                                            <a href="/product-search">
                                                 <div class="blockImg">
                                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
                                                 </div>
@@ -275,7 +276,7 @@
                             </ul>
                             <ul class="secondUlModal ">
                                 <li>
-                                    <a href="">
+                                    <a href="/opleiders">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -285,7 +286,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -295,7 +296,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -305,7 +306,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -326,7 +327,7 @@
                         <div class="blockdropdownnHeader">
                             <ul>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
                                         </div>
@@ -336,17 +337,17 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-80.png" alt="">
                                         </div>
                                         <div>
-                                            <p class="titleSousElementHeader"><b>Groeipaden</b></p>
+                                            <p class="titleSousElementHeader">Groeipaden</p>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-81.png" alt="">
                                         </div>
@@ -356,7 +357,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
                                         </div>
@@ -368,7 +369,7 @@
                             </ul>
                             <ul class="secondUlModal ">
                                 <li>
-                                    <a href="">
+                                    <a href="/opleiders">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -378,7 +379,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
                                             <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -388,7 +389,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
                                             <!-- <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -398,7 +399,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -408,7 +409,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -418,7 +419,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -428,7 +429,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -438,7 +439,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/blogs">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -448,7 +449,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -458,7 +459,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -468,7 +469,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/dashboard/user/assessment/">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -478,7 +479,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>

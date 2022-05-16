@@ -12,6 +12,26 @@
                     'submit_value'  => __('Opslaan & verder'),
                     'return' => '?func=add-course&id=%post_id%&step=4'
                 )); ?>
+                <form action="">
+                    <div class="groupInputDate">
+                        <div class="input-group">
+                            <label for="">Start date</label>
+                            <input type="date">
+                        </div>
+                        <div class="input-group">
+                            <label for="">End date</label>
+                            <input type="date">
+                        </div>
+                    </div>
+                    <div class="input-group-course">
+                        <label for="">Location</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group-course">
+                        <label for="">Adress</label>
+                        <input type="text">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
