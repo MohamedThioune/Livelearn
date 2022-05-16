@@ -18,13 +18,13 @@ foreach($users as $user) {
 
 if (isset($id_course))
 {
-    echo "<input type='hidden' name='course_id' value='" . $id_course . "' >";
-    echo "<select id ='' name='selected_members'  multiple>";
+    echo "<input type='hidden' name='course_id' value='" . $id_course . "' />";
+    echo "<select  name='selected_members' multiple>";
     if(!empty($users_company))
         foreach($users_company as $user){
             $name = get_users(array('include'=> $user))[0]->data->display_name;
             if(in_array($user, $allocution))
-                echo "<option   value='" . $user . "' selected>" . $name . "</option>";
+                echo "<option value='" . $user . "' selected>" . $name . "</option>";
             else
                 echo "<option value='" . $user . "'>" . $name . "</option>";   
         }
@@ -34,15 +34,3 @@ if (isset($id_course))
 
 ?>
 
-
-<script id="rendered-js" >
-    $(document).ready(function () {
-        //Select2
-        $(".multipleSelect2").select2({
-            placeholder: "Select subtopics",
-             //placeholder
-        });
-    });
-    //# sourceURL=pen.js
-</script>    
-                     
