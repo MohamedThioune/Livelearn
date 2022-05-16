@@ -470,7 +470,8 @@ else if(isset($change_password)){
 }
 else if(isset($referee_employee)){
     $user_connected = get_current_user_id();
-    //Already exists  
+    
+    $allocution = array();
     $allocution = get_field('allocation', $course_id);
     
     if(!empty($selected_members))
