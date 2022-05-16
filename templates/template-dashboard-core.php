@@ -473,13 +473,28 @@ else if(isset($referee_employee)){
     $allocution = get_field('allocation', $course_id);
     
     if(!empty($selected_members))
-        foreach($selected_members as $expert){
-            echo $expert;
-            array_push($allocution, $expert);
-            $posts = get_field('kennis_video', $expert);
-            array_push($posts, get_post($course_id));
-            update_field('kennis_video', $posts, $expert);
+        if(!empty($allocution))
+            foreach($selected_members as $expert){
+                array_push($allocution, $expert);
+                $posts = get_field('kennis_video', $expert);
+                if(!empty($posts))
+                    array_push($posts, get_post($course_id));
+                else 
+                    $posts = get_post($course_id);
+                update_field('kennis_video', $posts, $expert);
+            }
+        else{
+            $allocution = $selected_members;
+            foreach($selected_members as $expert){
+                $posts = get_field('kennis_video', $expert);
+                if(!empty($posts))
+                    array_push($posts, get_post($course_id));
+                else 
+                    $posts = get_post($course_id);
+                update_field('kennis_video', $posts, $expert);
+            }
         }
+
 
     var_dump($allocution);
 
