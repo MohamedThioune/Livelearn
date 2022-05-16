@@ -473,7 +473,7 @@ foreach($users as $user) {
                                         echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
                                             echo "<form action='/dashboard/user/' method='POST'>";
                                                 echo "<label for='member_id'>Select a member of your team you want to affect these course :</label>";
-                                                echo "<select class='multipleSelect2' id='member_id' name='member_selected' multiple='true'>";
+                                                echo "<select class='multipleSelect2' id='member_id' name='selected_members[]' multiple='true'>";
                                                 if(!empty($users_company))
                                                     foreach($users_company as $user){
                                                         $name = get_users(array('include'=> $user))[0]->data;
@@ -484,6 +484,7 @@ foreach($users as $user) {
                                                     }
                                                 echo "</select>";
                                                 echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
+                                                echo "<input type='hidden' name='path' value='dashboard' />";
                                                 echo "<input type='submit' class='btn btn-info' name='referee_employee' value='Apply' >";
                                             echo "</form>";
                                         echo "</div>";
