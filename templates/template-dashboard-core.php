@@ -470,7 +470,6 @@ else if(isset($change_password)){
 }
 else if(isset($referee_employee)){    
     $allocution = array();
-    $allocution = get_field('allocation', $course_id);
     
     if(!empty($selected_members))
         if(!empty($allocution))
