@@ -15,8 +15,8 @@ foreach($users as $user) {
         if($company_user[0]->post_title == $company_connected[0]->post_title)
             array_push($users_company,$user->ID);
 }
-
-if (isset($id_course))
+var_dump($users_company);
+if (!isset($id_course))
 {
     echo "<input type='hidden' name='course_id' value='" . $id_course . "' >";
     echo "<select class='multipleSelect2' id='selected_members'  multiple='true'>";
