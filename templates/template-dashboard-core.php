@@ -492,7 +492,7 @@ else if(isset($referee_employee)){
     else if($path="course")
         $message = get_permalink($course_id) . '/?message=Allocution successfully'; 
 
-    //header("Location: ". $message);
+    header("Location: ". $message);
 
 }
 
