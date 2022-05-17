@@ -70,6 +70,23 @@ $attachments_xml = get_field('attachment_xml', $post->ID);
 
 $reviews = get_field('reviews', $post->ID);
 
+
+/*
+* Companies user
+*/
+$company_connected = get_field('company',  'user_' . $user_id);
+$users_company = array();
+$allocution = get_field('allocation', $course->ID);
+$users = get_users();
+
+foreach($users as $user) {
+    $company_user = get_field('company',  'user_' . $user->ID);
+    if(!empty($company_connected) && !empty($company_user))
+        if($company_user[0]->post_title == $company_connected[0]->post_title)
+            array_push($users_company,$user->ID);
+}
+
+
 ?>
 
 <style>
@@ -247,7 +264,14 @@ $reviews = get_field('reviews', $post->ID);
                                     <div class="tab">
                                         <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                                         <hr class="hrModifeDeel">
-                                        <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
+                                        <?php
+                                        if ($user_id != 0)
+                                        {
+                                        ?>
+                                            <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
+                                        <?php
+                                        }
+                                        ?>
                                     </div>
                                     <div id="Extern" class="tabcontent">
                                     <div class="contentElementPartage">
@@ -291,13 +315,39 @@ $reviews = get_field('reviews', $post->ID);
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="Intern" class="tabcontent">
-                                        <form action="" class="formShare">
-                                            <input type="text" placeholder="Gebruikersnaam">
-                                            <input type="text" placeholder="Wachtwoord">
-                                            <button class="btn btnLoginModife">Log-in</button>
-                                        </form>
-                                    </div>
+                                    <?php
+                                       if ($user_id==0)
+                                       {
+                                        echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
+                                        wp_login_form([
+                                                'redirect' => 'http://wp12.influid.nl/dashboard/user/',
+                                                'remember' => false,
+                                                'label_username' => 'Wat is je e-mailadres?',
+                                                'placeholder_email' => 'E-mailadress',
+                                                'label_password' => 'Wat is je wachtwoord?'
+                                        ]);
+                                        echo "</div>";
+                                       }else{
+                                        echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
+                                            echo "<form action='/dashboard/user/' method='POST'>";
+                                                echo "<label for='member_id'><b>Deel deze cursus met uw team :</b></label><br>";
+                                                echo "<select class='multipleSelect2' id='member_id' name='selected_members[]' multiple='true'>";
+                                                if(!empty($users_company))
+                                                    foreach($users_company as $user){
+                                                        $name = get_users(array('include'=> $user))[0]->data->display_name;
+                                                        if(in_array($user, $allocution))
+                                                            echo "<option selected  value='" . $user . "'>" . $name . "</option>";
+                                                        else
+                                                            echo "<option value='" . $user . "'>" . $name . "</option>";   
+                                                    }
+                                                echo "</select></br></br>";
+                                                echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
+                                                echo "<input type='hidden' name='path' value='course' />";
+                                                echo "<input type='submit' class='btn btn-info' name='referee_employee' value='Apply' >";
+                                            echo "</form>";
+                                        echo "</div>";
+                                       }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -733,8 +783,14 @@ $reviews = get_field('reviews', $post->ID);
                 <div class="tab">
                     <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                     <hr class="hrModifeDeel">
-                    <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
-                </div>
+                    <?php
+                    if ($user_id != 0)
+                    {
+                    ?>
+                        <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
+                    <?php
+                    }
+                    ?>                </div>
                 <div id="Extern" class="tabcontent">
                 <div class="contentElementPartage">
                     <button id="whatsapp"  class="btn contentIcone">
@@ -777,13 +833,20 @@ $reviews = get_field('reviews', $post->ID);
                         </div>
                     </div>
                 </div>
-                <div id="Intern" class="tabcontent">
-                    <form action="" class="formShare">
-                        <input type="text" placeholder="Gebruikersnaam">
-                        <input type="text" placeholder="Wachtwoord">
-                        <button class="btn btnLoginModife">Log-in</button>
-                    </form>
-                </div>
+                <?php
+                    if ($user_id==0)
+                    {
+                ?>
+                    <div id="Intern" class="tabcontent">
+                        <form action="" class="formShare">
+                            <input type="text" placeholder="Gebruikersnaam">
+                            <input type="text" placeholder="Wachtwoord">
+                            <button class="btn btnLoginModife">Log-in</button>
+                        </form>
+                    </div>
+                <?php
+                    }
+                ?>
             </div>
         </div>
     </div>
