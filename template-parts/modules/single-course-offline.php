@@ -802,12 +802,12 @@ foreach($users as $user) {
                                             <div class="user-name">
                                                 <p><?= $user->display_name; ?></p>
                                                 <div class="rating-stars">
-                                                    <input type="radio" class="ratingElementInput" name="rating" id="rs0" checked><label for="rs0"></label>
-                                                    <input type="radio" name="rating"><label for="rs1"></label>
-                                                    <input type="radio" name="rating"><label for="rs2"></label>
-                                                    <input type="radio" name="rating"><label for="rs3"></label>
-                                                    <input type="radio" name="rating"><label for="rs4"></label>
-                                                    <input type="radio" name="rating"><label for="rs5"></label>
+                                                    
+                                                    <input type="radio" class="ratingElementInput" name="rating" id="rs0" checked value="<?= $rating; ?>"><label for="rs0"></label>
+                                                    <?php
+                                                    for($i=1; $i<=4; $i++)
+                                                        echo '<input type="radio" name="rating"><label for="rs' .$i. '"></label>';
+                                                    ?>
                                                     <span class="rating-counter"><?= $rating ?></span>
                                                 </div>
                                             </div>
