@@ -7416,6 +7416,25 @@ ul#tabs-nav li.active {
     margin: 0 0 10px;
     padding: 0;
 }
+.btn-newDate{
+    background: #043356;
+    color: white;
+    padding: 7px 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+.btn-SaveDate{
+    background: #043356;
+    color: white;
+    padding: 7px 20px;
+    border-radius: 8px;
+}
+.btn-newDate:hover{
+    color: white !important;
+}
+.btn-SaveDate:hover{
+    color: white !important;
+}
 
 
 
@@ -8948,8 +8967,7 @@ ul#tabs-nav li.active {
         display: block;
     }
     .imgBlockCoursElement {
-        width: 93px;
-        height: 100%;
+        width: 110px;
     }
     .cardAlert{
         margin-top: 10px;

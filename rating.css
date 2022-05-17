@@ -11,30 +11,29 @@
 }
 
 .rating-counter {
-    font-size: 5.5vmin;
-    color: #9aacc6;
-    width: 10vmin;
-    text-align: center;
+    font-size: 28px;
+    color: #ffffff;
+    width: 50px;
     background: #47a99e;
     position: absolute;
-    top: -2px;
-    right: -12px;
-    height: 100%;
-    border-radius: 0 5vmin 5vmin 0;
-    line-height: 10vmin;
+    top: 4px;
+    right: 0px;
+    height: 53px;
+    border-radius: 100%;
+    line-height: 52px;
+    text-align: center;
 }
 
 .rating-counter:before {
     content: "0";
     transition: all 0.25s ease 0s;
-    margin-left: -6px;
 }
 
 .rating-stars input { display: none; }
 
 .rating-stars label {
-    width: 5vmin;
-    height: 5vmin;
+    width: 30px;
+    height: 30px;
     background: #000b;
     display: inline-flex;
     cursor: pointer;
