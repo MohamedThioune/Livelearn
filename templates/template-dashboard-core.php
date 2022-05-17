@@ -475,12 +475,13 @@ else if(isset($referee_employee)){
         foreach($selected_members as $expert){
             if(!in_array($expert, $allocution)){
                 array_push($allocution, $expert);
-                $posts = get_field('kennis_video', $expert);
-                if(!empty($posts))
-                    array_push($posts, get_post($course_id));
+                $posteds = get_field('kennis_video', $expert);
+                var_dump($posteds);
+                if(!empty($posteds))
+                    array_push($posteds, get_post($course_id));
                 else 
-                    $posts = get_post($course_id);
-                update_field('kennis_video', $posts, $expert);
+                    $posteds = get_post($course_id);
+                update_field('kennis_video', $posteds, $expert);
             }
         }
 
