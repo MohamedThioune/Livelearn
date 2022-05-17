@@ -163,6 +163,8 @@ foreach($users as $user) {
             array_push($users_company,$user->ID);
 }
 
+var_dump($users_company);
+
 ?>
 
 <style>
