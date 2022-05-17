@@ -2,11 +2,8 @@
 $args = array(  
         'post_type' => 'assessment',
         'post_status' => 'publish',
-        //'posts_per_page' => 8, 
-        //'orderby' => 'title', 
         'order' => 'ASC', 
     );
-    
     $loop = new WP_Query( $args ); 
     $count_question=0;
     while ( $loop->have_posts() ) : $loop->the_post(); 
@@ -17,9 +14,7 @@ $args = array(
         // print the_title(); 
         // the_excerpt(); 
     endwhile;
-
-
-    ?>
+        ?>
 
 <div class="content-assessment">
     <div class="contentAsessment">
@@ -48,7 +43,7 @@ $args = array(
                     <button class="btn btnGetStartAssessment" data-target="#ModalBackEnd" data-toggle="modal">Get Started</button>
                 </div>
             </div>
-          <div class="cardAssessement">
+          <!-- <div class="cardAssessement">
               <div class="bodyCardAssessment">
                   <div class="contentImgAssessment">
                       <img src="<?php echo get_stylesheet_directory_uri();?>/img/front1.png">
@@ -128,7 +123,7 @@ $args = array(
                     <button class="btn btnGetStartAssessment" data-target="#ModalIOS" data-toggle="modal">Get Started</button>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
 </div>
@@ -240,46 +235,39 @@ $args = array(
 
 
             <div id="step3OverviewAssessmentBackend">
-                <div class="head3OverviewAssessment">
-                    <p class="assessmentNUmber" id="current-index">Question 1 / <?php echo $count_question; ?></p>
+                <div id="child">
+    
+            <div class="head3OverviewAssessment">
+                    <p class="assessmentNUmber" id="current-index">Question 1 / <?php echo count($question); ?></p>
                     <p class="assessmentTime" id="backendTime"><?php echo $question[0]['timer'] ?></p>
                 </div>
-                <p class="chooseTechnoTitle"><?php echo $question[0]['wording'] ?><span> (Multiple choose posible)</span></p>
+                <p class="chooseTechnoTitle" id="wording"><?php echo $question[0]['wording'] ?><span> (Multiple choose posible)</span></p>
                 <div class="listAnswer">
-                    <label class="container-checkbox">
-                        <span class="numberAssassment">A.</span>
-                        <span class="assassment"><?php echo $question[0]['responses'][0] ?></span>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-
-                    <label class="container-checkbox">
-                        <span class="numberAssassment">B.</span>
-                        <span class="assassment"><?php echo $question[0]['responses'][1] ?></span>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        <span class="numberAssassment">C.</span>
-                        <span class="assassment"> <?php echo $question[0]['responses'][2] ?></span>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        <span class="numberAssassment">D.</span>
-                        <span class="assassment"><?php echo $question[0]['responses'][3] ?></span>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
+                    <form id="getAnswer">
+                      <?php
+                        $alphabet = range('A', 'Z');
+                        foreach ($question[0]['responses'] as $key => $value) { ?>
+                            <label class="container-checkbox">
+                                <span class="numberAssassment"><?= $alphabet[$key]?> </span>
+                                <span class="assassment  <?php echo 'answer_'.($key+1);?>"> <?php echo $value ?></span>
+                                <input name="<?php echo "answer_".($key+1); ?>" id=<?php echo "answer_".($key+1); ?> type="checkbox" value="<?php echo $key; ?>" >
+                                <span class="checkmark"></span>
+                            </label>
+                        <?php
+                            } 
+                        ?>
+                    </form>
                 </div>
-                <button class="btn btnStratModal" id="btnBackend">Continue</button>
             </div>
+            <button type="button" class="btn btnStratModal" id="btnBackend">Continue</button>
         </div>
+        
     </div>
+</div>
 </div>
 
                 <!--for backend-->
-<div id="frontend">
+<!-- <div id="frontend">
     <div class="modal fade modalAssessment" id="ModalFrontEnd" tabindex="-1" role="dialog" aria-labelledby="ModalFrontEndLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -411,10 +399,10 @@ $args = array(
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
                 <!--full stack -->
-<div id="fullstack">
+<!-- <div id="fullstack">
     <div class="modal fade modalAssessment" id="ModalFull" tabindex="-1" role="dialog" aria-labelledby="ModalFullLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -546,10 +534,10 @@ $args = array(
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
                 <!--Android-->
-<div id="Android">
+<!-- <div id="Android">
     <div class="modal fade modalAssessment" id="ModalAndroid" tabindex="-1" role="dialog" aria-labelledby="ModalAndroidLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -681,10 +669,10 @@ $args = array(
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
                 <!--IOS-->
-<div id="IOS">
+<!-- <div id="IOS">
     <div class="modal fade modalAssessment" id="ModalIOS" tabindex="-1" role="dialog" aria-labelledby="ModalIOSLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -771,9 +759,9 @@ $args = array(
                 <div class="form-group formModifeChoose">
 
                     <select id="foo_select" class="dropdown multipleSelect3" form="foo_form" multiple data-placeholder="Click to select an Techno">
-                        <option value="null">HTML</option>
-                        <option value="null">CSS</option>
-                        <option value="null">JS</option>
+                        <option value="HTML">HTML</option>
+                        <option value="CSS">CSS</option>
+                        <option value="JS">JS</option>
                     </select>
                     <button class="btn btnStratModal" id="btnStart3IOS">Continue</button>
                 </div>
@@ -816,43 +804,30 @@ $args = array(
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 
 </div>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script>
-    $(document).ready(function(){
-        $('#btnStart3').click(()=>{
-            var time=$('#backendTime').html();
-       time = time.split(':');
-       var minutes = time[0], seconds = time[1];
-         var interval = setInterval(function() {
-             if (seconds > 0 )
-                seconds = seconds - 1;
-              if (minutes >0) {
-                if (seconds <= 0) {
-                    minutes = minutes - 1;
-                    seconds = 59;
-                }
-              }
-              if (seconds < 10 && seconds > 0) {
-                    seconds = "0" + seconds;
-                }
-              else
-              if (minutes <= 0 && seconds <= 0) {
-                $('#backendTime').html("00 : 00");
-                clearInterval(interval);
-              }
-              $('#backendTime').html(minutes + ":" + seconds);
-            }, 1000);
-        });
-       
-        $('#btnBackend').click(()=>{
+    var current_index;
+    var responses = [];
+    var cancelled=false;
+    function paginate()
+    {
+        let response=[];
+            //$('#getAnswer').preventDefault();
+            for (let index = 1; index <=4; index++) 
+        if ($('#answer_'+index).is(":checked"))
+            response.push($('#answer_'+index).val());
+            responses.push(response);
+            //console.log(responses);
          var txt=$('#current-index').text()
             txt=txt.split(" ")
-            txt=txt[1].split("/")
-         var current_index=txt[0]
+            //console.log(txt)
+         var current_index=txt[1]
+         var question_count=txt[3]
+         if (current_index<question_count) 
          $.ajax({
             url:"/answer-assessment",
             method:"post",
@@ -860,20 +835,91 @@ $args = array(
                 current_index:current_index
             },
         dataType:"text",
-        success: function(data){
-            console.log(data);
-            $('#step3OverviewAssessmentBackend').html(data)
+        success: function(data){ 
+            data=JSON.parse(data);
+            current_index++;
+            $('#wording').html(data.wording+"<span> (Multiple choose posible)</span>");
+            $('#current-index').text("Question "+current_index+" / "+data.count);
+            //console.log(data,current_index);
+            //$('#current-index').text("Question "+current_index+" / "+data.length);
+              let length = data.responses.length;
+              for (let i = 0; i < length; i++) {
+                $('.answer_'+(i+1)).text(data.responses[i]);
+                $('#answer_'+(i+1)).val(i);
+                $('#answer_'+(i+1)).prop('checked',false); 
+              }
+              $('#backendTime').text(data.timer);
+
+              if (current_index==question_count) {
+                $('#btnBackend').text("Finish");
+              }
+              
+            cancelled=true;
+            //console.log($('#backendTime').html());
+            chrono($('#backendTime').html());
             //$('#test').html(data);
+            }
+        });
+        else if ($('#btnBackend').text()=="Finish") {
+            $.ajax({
+                url:"/answer-assessment",
+                method:"post",
+                data:{
+                    user_responses:responses
+                },
+                dataType:"text",
+                success: function(data){ 
+                    $('#step3OverviewAssessmentBackend').html("<p class='titleCategorieAssessment'>" +data+ "</p>");    
+                    }
+                });
         }
+    }
+    function chrono(time)
+    {
+         if (cancelled) {
+             cancelled=false;
+     return;
+   } 
+        time = time.split(':');
+       var minutes = time[0], seconds = time[1];
+         var interval = setInterval(function() {
+             if (seconds > 0 )
+                seconds = --seconds;
+              if (minutes >0) {
+                if (seconds <= 0) {
+                    minutes = --minutes;
+                    seconds = 59;
+                }
+              }
+              if (seconds < 10 && seconds > 0) {
+                    seconds = "0" + seconds;
+                }
+              else
+              if ((minutes <= 0 && seconds <= 0)  || cancelled==true) {
+                $('#backendTime').html("00 : 00");
+                clearInterval(interval); 
+                paginate();
+              }
+              $('#backendTime').html(minutes + ":" + seconds);
+            }, 1000);    
+    }
+
+    $(document).ready(function(){
+        $('#btnStart3').click(()=>{
+            var time=$('#backendTime').html();
+            chrono(time);
+        });
+       
+        $('#btnBackend').click(()=>{
+            paginate();
         });
         });
-    });
 </script>
 <script id="rendered-js" >
     $(document).ready(function () {
         //Select2
         $(".multipleSelect3").select2({
-            placeholder: "" //placeholder
+            placeholder: "Choose technologies" //placeholder
         });
     });
     //# sourceURL=pen.js
