@@ -475,19 +475,12 @@ else if(isset($referee_employee)){
         foreach($selected_members as $expert){
             if(!in_array($expert, $allocution)){
                 array_push($allocution, $expert);
-                $posteds = get_field('kennis_video', $expert);
-                if(!empty($posteds)){
-                    $args = array(
-                        'post_type' => 'course', 
-                        'post_status' => 'publish',
-                        'posts_per_page' => '1',
-                        'include' => [$course_id]
-                    );
-                    $course = get_posts($args);
-                    $posteds = array_merge($posteds, $course);
-                }else 
-                    $posteds = get_post($course_id);
-                update_field('kennis_video', $posteds, $expert);
+                $posts = get_field('kennis_video', 'user_' . $expert);
+                if(!empty($posts))
+                    array_push($posts, get_post($course_id));
+                else 
+                    $posts = get_post($course_id);
+                update_field('kennis_video', $posts, 'user_' . $expert);
             }
         }
 
