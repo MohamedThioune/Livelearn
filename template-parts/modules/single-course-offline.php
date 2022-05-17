@@ -792,7 +792,7 @@ foreach($users as $user) {
                                         $user = $review['user'];
                                         $image_author = get_field('profile_img',  'user_' . $user->ID);
                                         $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
-                                        $rating = $review['rating'];                   
+                                        //$rating = intval($review['rating']);                   
                                     ?>
                                     <div class="review-info-card">
                                         <div class="review-user-mini-profile">
@@ -803,11 +803,12 @@ foreach($users as $user) {
                                                 <p><?= $user->display_name; ?></p>
                                                 <div class="rating-stars">
                                                     
-                                                    <input type="radio" class="ratingElementInput" name="rating" id="rs0" checked value="<?= $rating; ?>"><label for="rs0"></label>
+                                                    <input type="radio" class="ratingElementInput" name="rating" id="rs0" disabled checked value="<?= $rating; ?>"><label for="rs0"></label>
                                                     <?php
-                                                    for($i=1; $i<=4; $i++)
-                                                        echo '<input type="radio" name="rating"><label for="rs' .$i. '"></label>';
-                                                    ?>
+                                                    // if(!$rating)
+                                                        // for($i=1; $i<=4; $i++)
+                                                            // echo '<input type="radio" name="rating"><label for="rs' .$i. '"></label>';
+                                                    ?> 
                                                     <span class="rating-counter"></span>
                                                 </div>
                                             </div>
