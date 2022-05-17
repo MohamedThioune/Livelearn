@@ -791,7 +791,8 @@ foreach($users as $user) {
                                     foreach($reviews as $review){
                                         $user = $review['user'];
                                         $image_author = get_field('profile_img',  'user_' . $user->ID);
-                                        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';                    
+                                        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+                                        $rating = $review['rating'];                   
                                     ?>
                                     <div class="review-info-card">
                                         <div class="review-user-mini-profile">
@@ -807,7 +808,7 @@ foreach($users as $user) {
                                                     <input type="radio" name="rating"><label for="rs3"></label>
                                                     <input type="radio" name="rating"><label for="rs4"></label>
                                                     <input type="radio" name="rating"><label for="rs5"></label>
-                                                    <span class="rating-counter"></span>
+                                                    <span class="rating-counter"><?= $rating ?></span>
                                                 </div>
                                             </div>
                                         </div>
