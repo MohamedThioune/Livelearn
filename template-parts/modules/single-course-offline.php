@@ -162,7 +162,7 @@ foreach($users as $user) {
         if($company_user[0]->post_title == $company_connected[0]->post_title)
             array_push($users_company,$user->ID);
 }
-
+echo "Hello";
 var_dump($users_company);
 
 ?>
