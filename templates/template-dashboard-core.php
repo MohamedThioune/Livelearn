@@ -477,9 +477,9 @@ else if(isset($referee_employee)){
                 array_push($allocution, $expert);
                 $posts = get_field('kennis_video', $expert);
                 if(!empty($posts))
-                    array_push($posts, get_post($course_id));
+                    array_push($posts, $course_id);
                 else 
-                    $posts = get_post($course_id);
+                    $posts = $course_id;
                 var_dump($posts);
                 update_field('kennis_video', $posts, $expert);
             }
