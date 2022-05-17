@@ -408,14 +408,8 @@ foreach($users as $user) {
                                         <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                                         <hr class="hrModifeDeel">
                                         <?php
-                                       if ($user_id!=0)
-                                       {
-                                        ?>
-                                        <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
-                                        <?php
-
-                                        }
-                                        ?>
+                                        if ($user_id!= 0)
+                                            echo '<button class="tablinks btn" onclick="' . openCity(event, 'Intern') . '">Intern</button>';                                        ?>
                                     </div>
                                     <div id="Extern" class="tabcontent">
                                     <div class="contentElementPartage">
@@ -474,7 +468,7 @@ foreach($users as $user) {
                                        }else{
                                         echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
                                             echo "<form action='/dashboard/user/' method='POST'>";
-                                                echo "<label for='member_id'>Select a member of your team you want to affect these course :</label>";
+                                                echo "<label for='member_id'>Share this course to a member :</label><br>";
                                                 echo "<select class='multipleSelect2' id='member_id' name='selected_members[]' multiple='true'>";
                                                 if(!empty($users_company))
                                                     foreach($users_company as $user){
@@ -1070,11 +1064,7 @@ foreach($users as $user) {
                     <hr class="hrModifeDeel">
                     <?php
                     if ($user_id!= 0)
-                        {
-                    ?>
-                    <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
-                    <?php
-                        }
+                        echo '<button class="tablinks btn" onclick="' . openCity(event, 'Intern') . '">Intern</button>';
                     ?>
                 </div>
                 <div id="Extern" class="tabcontent">
