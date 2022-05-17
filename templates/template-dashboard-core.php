@@ -476,13 +476,11 @@ else if(isset($referee_employee)){
             if(!in_array($expert, $allocution)){
                 array_push($allocution, $expert);
                 $posts = get_field('kennis_video', $expert);
-                if(!empty($posts)){
-                    array_push($posts, $course_id);
-                    var_dump($posts);
-                }
+                if(!empty($posts))
+                    array_push($posts, get_post($course_id));
                 else 
-                    $posts = $course_id;
-                update_field('kennis_video', $posts, $expert);
+                    $posts = get_post($course_id);
+                update_field('kennis_video', null, $expert);
             }
         }
 
