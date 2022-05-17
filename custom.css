@@ -7278,10 +7278,20 @@ ul#tabs-nav li.active {
     width: 60%;
     margin-top: 8px;
 }
+.activeModalHeader {
+    background: #ffffff00;
+    width: 100%;
+    height: 100%;
+    position: fixed !important;
+    top: 60px;
+    left: 0;
+    display: none;
+}
+
 .dropdown-menu-custom {
     position: absolute !important;
     width: 95%;
-    top: 62px;
+    top: 3px;
     background: white !important;
     padding: 20px 0px;
     margin: 0 auto;
@@ -7306,37 +7316,39 @@ ul#tabs-nav li.active {
     width: 25%;
     padding: 0 15px;
 }
-#voorOpleiders{
+#voorOpleidersModal{
     width: fit-content;
     min-width: 485px;
+    top: 63px;
 }
-#voorOpleiders .blockdropdownnHeader {
+#voorOpleidersModal .blockdropdownnHeader {
     justify-content: center;
 }
-#voorOpleiders .blockdropdownnHeader ul:first-child {
+#voorOpleidersModal .blockdropdownnHeader ul:first-child {
     width: fit-content;
     border-right: 1px solid black;
     margin: 0 2% 0px 0;
     padding-right: 30px;
 }
-#voorOpleiders .blockdropdownnHeader .secondUlModal {
+#voorOpleidersModal .blockdropdownnHeader .secondUlModal {
     display: block;
     flex-wrap: unset;
     width: fit-content;
 }
-#voorOpleiders .blockdropdownnHeader .secondUlModal li {
+#voorOpleidersModal .blockdropdownnHeader .secondUlModal li {
     width: 100%;
     padding: 0 15px;
 }
-#Opleidingen {
+#OpleidingenModal {
     width: 70%;
     margin: 0 auto;
+    top: 63px;
 }
-#Opleidingen .blockdropdownnHeader .secondUlModal li {
+#OpleidingenModal .blockdropdownnHeader .secondUlModal li {
     width: 27%;
     padding: 0 15px;
 }
-#Opleidingen .blockdropdownnHeader ul:first-child {
+#OpleidingenModal .blockdropdownnHeader ul:first-child {
     width: 30%;
 }
 .select2-selection__choice:after{
@@ -7351,6 +7363,82 @@ ul#tabs-nav li.active {
 .btnKoop {
     font-size: 16px;
 }
+.show .nav-linModife:hover{
+    color: #FFFFFF !important;
+}
+.groupInputDate{
+    display: flex;
+    justify-content: space-between;
+}
+.groupInputDate .input-group{
+    width: 48%;
+    position: relative;
+    margin: 0;
+    padding: 8px 20px 20px !important;
+    border-top: 0;
+    border: none !important;
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 15px !important;
+    display: grid;
+}
+.groupInputDate .input-group input{
+    border: 1px solid #193f95;
+    padding: 7px 15px;
+}
+.input-group-course{
+    position: relative;
+    margin: 0;
+    padding: 8px 20px 20px !important;
+    border-top: 0;
+    border: none !important;
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 15px !important;
+    display: grid;
+}
+.input-group-course input{
+    padding: 10px 20px !important;
+    font-size: 15px !important;
+    color: #3c3c3c !important;
+    background: #F0F5F7;
+    border: none;
+}
+.input-group-course label {
+    font-weight: 500 !important;
+    color: #212529 !important;
+    margin: 0 0 10px;
+    padding: 0;
+}
+.groupInputDate .input-group label {
+    font-weight: 500 !important;
+    color: #212529 !important;
+    margin: 0 0 10px;
+    padding: 0;
+}
+.btn-newDate{
+    background: #043356;
+    color: white;
+    padding: 7px 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+.btn-SaveDate{
+    background: #043356;
+    color: white;
+    padding: 7px 20px;
+    border-radius: 8px;
+}
+.btn-newDate:hover{
+    color: white !important;
+}
+.btn-SaveDate:hover{
+    color: white !important;
+}
+
+
+
+
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -8879,8 +8967,7 @@ ul#tabs-nav li.active {
         display: block;
     }
     .imgBlockCoursElement {
-        width: 93px;
-        height: 100%;
+        width: 110px;
     }
     .cardAlert{
         margin-top: 10px;

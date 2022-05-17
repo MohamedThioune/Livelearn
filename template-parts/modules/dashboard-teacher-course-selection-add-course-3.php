@@ -12,6 +12,68 @@
                     'submit_value'  => __('Opslaan & verder'),
                     'return' => '?func=add-course&id=%post_id%&step=4'
                 )); ?>
+                <form action="">
+                    <div class="groupInputDate">
+                        <div class="input-group">
+                            <label for="">Start date</label>
+                            <input type="date">
+                        </div>
+                        <div class="input-group">
+                            <label for="">End date</label>
+                            <input type="date">
+                        </div>
+                    </div>
+                    <div class="input-group-course">
+                        <label for="">Location</label>
+                        <input type="text">
+                    </div>
+                    <div class="input-group-course">
+                        <label for="">Adress</label>
+                        <input type="text">
+                    </div>
+                    <button type="button" class="btn btn-newDate" data-toggle="modal" data-target="#exampleModalDate">
+                       Add another Data en locaties
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalDate" tabindex="-1" role="dialog" aria-labelledby="exampleModalDateLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add other Date en locaties</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="dataEnLocation">
+                                        <div class="groupInputDate">
+                                            <div class="input-group">
+                                                <label for="">Start date</label>
+                                                <input type="date">
+                                            </div>
+                                            <div class="input-group">
+                                                <label for="">End date</label>
+                                                <input type="date">
+                                            </div>
+                                        </div>
+                                        <div class="input-group-course">
+                                            <label for="">Location</label>
+                                            <input type="text">
+                                        </div>
+                                        <div class="input-group-course">
+                                            <label for="">Adress</label>
+                                            <input type="text">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-SaveDate">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

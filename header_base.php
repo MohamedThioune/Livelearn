@@ -53,6 +53,7 @@
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/custom.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/main.css" />
+        <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/rating.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -138,11 +139,11 @@
                 </button>
                 <ul class="navbar-nav ">
                     <li class="nav-item">
-                        <a class="nav-link dropdown-toggle" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#voorOrganisati"  role="button" id="dropdownMenuLink">Voor organisaties </a>
+                        <a class="nav-link nav-linModife dropdown-toggle" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#voorOrganisati"  role="button" id="voorOrganisati">Voor organisaties </a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link dropdown-toggle" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#voorOpleiders"  id="opleiders" href="/voor-teacher-2/">Voor opleiders </a>
+                        <a class="nav-link nav-linModife dropdown-toggle" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#voorOpleiders"  id="opleiders" href="/voor-teacher-2/">Voor opleiders </a>
                     </li>
                 </ul>
 
@@ -151,80 +152,80 @@
                 </div>
 
                 <!-- modal dropdown Voor organisaties -->
-                <div class="modal fade dropdown-menu-custom" id="voorOrganisati" tabindex="-1" role="dialog" aria-labelledby="voorOrganisatiLabel" aria-hidden="true">
-                    <div class="souselementHeader">
-                        <div class="blockdropdownnHeader">
-                            <ul>
-                                <li>
-                                    <a href="">
-                                        <div class="blockImg">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="titleSousElementHeader"><b>ZZP'ers</b></p>
-                                            <p class="subtitleSousElementHeader">Zonder personeel</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <div class="blockImg">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-80.png" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="titleSousElementHeader"><b>MKB</b></p>
-                                            <p class="subtitleSousElementHeader">1-250 medewerkers</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <div class="blockImg">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-81.png" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="titleSousElementHeader"><b>Grootbedrijf</b></p>
-                                            <p class="subtitleSousElementHeader">+250 medewerkers</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <div class="blockImg">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="titleSousElementHeader"><b>Pricing</b></p>
-                                            <p class="subtitleSousElementHeader">Transparant en eenvoudig</p>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="secondUlModal ">
-                                <?php
-                                foreach($bangerichts as $bangericht){
-                                    ?>
+                <div class="activeModalHeader">
+                    <div class="modal  dropdown-menu-custom" id="voorOrganisatiModal" tabindex="-1" role="dialog" aria-labelledby="voorOrganisatiLabel" aria-hidden="true">
+                        <div class="souselementHeader">
+                            <div class="blockdropdownnHeader">
+                                <ul>
                                     <li>
                                         <a href="">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
                                             </div>
                                             <div>
-                                                <p class="subtitleSousElementHeader"><?php echo $bangericht->cat_name ?></p>
+                                                <p class="titleSousElementHeader"><b>ZZP'ers</b></p>
+                                                <p class="subtitleSousElementHeader">Zonder personeel</p>
                                             </div>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="">
+                                            <div class="blockImg">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-80.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="titleSousElementHeader"><b>MKB</b></p>
+                                                <p class="subtitleSousElementHeader">1-250 medewerkers</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <div class="blockImg">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-81.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="titleSousElementHeader"><b>Grootbedrijf</b></p>
+                                                <p class="subtitleSousElementHeader">+250 medewerkers</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="">
+                                            <div class="blockImg">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="titleSousElementHeader"><b>Pricing</b></p>
+                                                <p class="subtitleSousElementHeader">Transparant en eenvoudig</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="secondUlModal ">
                                     <?php
-                                }
-                                ?>
-                            </ul>
+                                    foreach($bangerichts as $bangericht){
+                                        ?>
+                                        <li>
+                                            <a href="/product-search">
+                                                <div class="blockImg">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="subtitleSousElementHeader"><?php echo $bangericht->cat_name ?></p>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <?php
+                                    }
+                                    ?>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
                 <!-- modal dropdown Voor Voor opleiders  -->
-                <div class="modal fade dropdown-menu-custom" id="voorOpleiders" tabindex="-1" role="dialog" aria-labelledby="voorOpleidersLabel" aria-hidden="true">
+                <div class="modal  dropdown-menu-custom" id="voorOpleidersModal" tabindex="-1" role="dialog" aria-labelledby="voorOpleidersLabel" aria-hidden="true">
                     <div class="souselementHeader">
                         <div class="blockdropdownnHeader">
                             <ul>
@@ -275,7 +276,7 @@
                             </ul>
                             <ul class="secondUlModal ">
                                 <li>
-                                    <a href="">
+                                    <a href="/opleiders">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -285,7 +286,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -295,7 +296,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -305,7 +306,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -321,12 +322,12 @@
 
 
                 <!-- modal dropdown Opleidingen -->
-                <div class="modal fade dropdown-menu-custom" id="Opleidingen" tabindex="-1" role="dialog" aria-labelledby="OpleidingenLabel" aria-hidden="true">
+                <div class="modal  dropdown-menu-custom" id="OpleidingenModal" tabindex="-1" role="dialog" aria-labelledby="OpleidingenLabel" aria-hidden="true">
                     <div class="souselementHeader">
                         <div class="blockdropdownnHeader">
                             <ul>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
                                         </div>
@@ -336,17 +337,17 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-80.png" alt="">
                                         </div>
                                         <div>
-                                            <p class="titleSousElementHeader"><b>Groeipaden</b></p>
+                                            <p class="titleSousElementHeader">Groeipaden</p>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-81.png" alt="">
                                         </div>
@@ -356,7 +357,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
                                         </div>
@@ -368,7 +369,7 @@
                             </ul>
                             <ul class="secondUlModal ">
                                 <li>
-                                    <a href="">
+                                    <a href="/opleiders">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -378,7 +379,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
                                             <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -388,7 +389,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
                                             <!-- <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -398,7 +399,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -408,7 +409,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -418,7 +419,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -428,7 +429,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -438,7 +439,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/blogs">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -448,7 +449,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -458,7 +459,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -468,7 +469,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/dashboard/user/assessment/">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -478,7 +479,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/product-search">
                                         <div class="blockImg">
 <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
                                         </div>
@@ -511,7 +512,7 @@
                             <a class="nav-link" id="Over" href="/static-education-individual/">Aan de slag</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link dropdown-toggle" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#Opleidingen"  role="button"  href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opleidingen</a>
+                            <a class="nav-link nav-linModife dropdown-toggle" id="Opleidingen" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#Opleidingen"  role="button"  href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opleidingen</a>
 
                         </li>
                         <li class="nav-item" >
@@ -729,7 +730,6 @@
             </div>
         </div>
     </div>
-
     <div id="main">
         <script>
             $("#searchIconeTablet").click(function() {
