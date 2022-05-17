@@ -481,7 +481,7 @@ foreach($users as $user) {
                                                         else
                                                             echo "<option value='" . $user . "'>" . $name . "</option>";   
                                                     }
-                                                echo "</select></br>";
+                                                echo "</select></br></br>";
                                                 echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
                                                 echo "<input type='hidden' name='path' value='course' />";
                                                 echo "<input type='submit' class='btn btn-info' name='referee_employee' value='Apply' >";
