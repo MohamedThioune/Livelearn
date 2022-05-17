@@ -476,10 +476,16 @@ else if(isset($referee_employee)){
             if(!in_array($expert, $allocution)){
                 array_push($allocution, $expert);
                 $posteds = get_field('kennis_video', $expert);
-                var_dump($posteds);
-                if(!empty($posteds))
-                    array_push($posteds, get_post($course_id));
-                else 
+                if(!empty($posteds)){
+                    $args = array(
+                        'post_type' => 'course', 
+                        'post_status' => 'publish',
+                        'posts_per_page' => '1',
+                        'include' => [$course_id]
+                    );
+                    $course = get_posts($args);
+                    $posteds = array_merge($posteds, $course);
+                }else 
                     $posteds = get_post($course_id);
                 update_field('kennis_video', $posteds, $expert);
             }
