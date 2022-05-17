@@ -808,7 +808,7 @@ foreach($users as $user) {
                                                     for($i=1; $i<=4; $i++)
                                                         echo '<input type="radio" name="rating"><label for="rs' .$i. '"></label>';
                                                     ?>
-                                                    <span class="rating-counter"><?= $rating ?></span>
+                                                    <span class="rating-counter"></span>
                                                 </div>
                                             </div>
                                         </div>
