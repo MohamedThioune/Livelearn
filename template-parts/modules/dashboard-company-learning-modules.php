@@ -424,6 +424,4 @@ $orders = wc_get_orders($order_args);
   }
   })
 });
-
-
 </script>

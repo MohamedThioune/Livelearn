@@ -468,6 +468,33 @@ else if(isset($change_password)){
 
     header("Location: ". $message);
 }
+else if(isset($referee_employee)){    
+    $allocution = array();
+    
+    if(!empty($selected_members))
+        foreach($selected_members as $expert){
+            if(!in_array($expert, $allocution)){
+                array_push($allocution, $expert);
+                $posts = get_field('kennis_video', 'user_' . $expert);
+                if(!empty($posts))
+                    array_push($posts, get_post($course_id));
+                else 
+                    $posts = get_post($course_id);
+                update_field('kennis_video', $posts, 'user_' . $expert);
+            }
+        }
+
+    //Adding new subtopics on course
+    update_field('allocation', $allocution, $course_id);
+
+    if($path == "dashboard")
+        $message = '/dashboard/company/learning-modules/?message=Allocution successfully'; 
+    else if($path == "course")
+        $message = get_permalink($course_id) . '/?message=Allocution successfully'; 
+
+    header("Location: ". $message);
+
+}
 
 ?>
 <?php wp_head(); ?>
