@@ -1066,14 +1066,7 @@ foreach($users as $user) {
                 <div class="tab">
                     <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                     <hr class="hrModifeDeel">
-                    <?php
-                    if ($user_id!=0)
-                        {
-                    ?>
                     <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
-                    <?php
-                        }
-                    ?>
                 </div>
                 <div id="Extern" class="tabcontent">
                 <div class="contentElementPartage">
