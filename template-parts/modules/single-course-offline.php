@@ -162,8 +162,6 @@ foreach($users as $user) {
         if($company_user[0]->post_title == $company_connected[0]->post_title)
             array_push($users_company,$user->ID);
 }
-echo "Hello";
-var_dump($users_company);
 
 ?>
 
@@ -477,7 +475,7 @@ var_dump($users_company);
                                                 echo "<select class='multipleSelect2' id='member_id' name='selected_members[]' multiple='true'>";
                                                 if(!empty($users_company))
                                                     foreach($users_company as $user){
-                                                        $name = get_users(array('include'=> $user))[0]->data;
+                                                        $name = get_users(array('include'=> $user))[0]->data->display_name;
                                                         if(in_array($user, $allocution))
                                                             echo "<option selected  value='" . $user . "'>" . $name . "</option>";
                                                         else
