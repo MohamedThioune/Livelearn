@@ -5,26 +5,32 @@
 <?php /** Template Name: Fetch subtopics course */ ?>
 
 <?php
-if (isset ($_POST['add_subtopics']))
+if (isset ($_POST['add_subtopics']) && !empty($_POST['add_subtopics']) && $_POST['action'] == 'add_subtopics') {
 {
-    // Already exists  
+    // getting subtopics for a specific course 
  $course = get_field('categories', $_POST['id_course']);
- //  New subtopics
+  $subtopics=array();
+  // new subtopics selected by user
   $subtopics=$_POST['add_subtopics'];
-  //Adding new subtopics on course
-  //var_dump($course);
-   update_field('categories', $subtopics, $_POST['id_course']);
-  //var_dump(get_field('categories', $_POST['id_course']));
-  foreach ($subtopics as $key => $value) {
-      if ($value!='')
-      $field.=(String)get_the_category_by_ID($value).',';
+  $field='';
+  //Adding new subtopics on this course
+    update_field('categories', $subtopics, $_POST['id_course']);
+    foreach ($subtopics as $key => $value) {
+            if ($value!='')
+            $field.=(String)get_the_category_by_ID($value).',';
+        }
+        // this string will contains all the subtopics of this course
+    $field=substr($field,0,-1);
+
   }
-  $field=substr($field,0,-1);
-  echo $field;
 
 }
-
-
+else if (empty($_POST['add_subtopics']) && $_POST['action'] == 'add_subtopics') 
+{
+  update_field('categories',[], $_POST['id_course']);
+}
+// display the subtopics of this course 
+echo $field;
 $user_connected = get_current_user_id();
 $company_connected = get_field('company',  'user_' . $user_connected);
 $users_companie = array();
@@ -122,7 +128,7 @@ $orders = wc_get_orders($order_args);
       
 
                 <?php
-                       if (isset ($_POST['id_course']) && !isset($_POST['add_subtopics']))
+                       if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') {
                        {
                 ?>
                        <select class='multipleSelect2' id="selected_subtopics"   multiple='true'>
@@ -135,7 +141,7 @@ $orders = wc_get_orders($order_args);
                                 if ($course_subtopic!="" && $course_subtopic!="Array")
                                     array_push($selected_subtopics,$course_subtopic['value']);
                         }
-                                                        //Subtopics
+                                                        // check subtopics already added on this course 
                                                         foreach($subtopics as $value){
                                                             if (in_array($value->cat_ID,$selected_subtopics))
                                                                 echo "<option selected   value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
@@ -148,6 +154,7 @@ $orders = wc_get_orders($order_args);
                                 echo "<option    value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
                         }
                     }
+                }
                         ?>
                         </select>
                     

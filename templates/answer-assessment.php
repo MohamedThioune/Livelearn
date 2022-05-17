@@ -2,56 +2,59 @@
 
 <?php
 $args = array(  
-        'post_type' => 'assessment',
+    'post_type' => 'assessment',
+    'post_status' => 'publish',
+    //'posts_per_page' => 8, 
+    //'orderby' => 'title', 
+    'order' => 'ASC', 
+);
+
+$current_index=(int)($_POST['current_index']);
+//$current_index++;
+$loop = new WP_Query( $args ); 
+$count_question=0;
+while ( $loop->have_posts() ) : $loop->the_post(); 
+    $count_question++;
+    $post_id = get_the_ID();
+    $title=get_the_title();
+    $author=get_the_author();
+    $question=get_field( "question", $post_id );
+    //var_dump($question);
+    // print the_title(); 
+    // the_excerpt(); 
+endwhile;
+$question[$current_index]['count']=count($question);
+if (!isset($_POST['user_responses']))
+        echo json_encode($question[$current_index]);
+else
+{
+    
+    $args=array(
+        'post_type' => 'response_assessment',
+        'post_author' => get_current_user_id(),
         'post_status' => 'publish',
-        //'posts_per_page' => 8, 
-        //'orderby' => 'title', 
-        'order' => 'ASC', 
+        'post_title' => $title.' '.$author,
     );
-    $current_index=(int)($_POST['current_index']);
-    //$current_index++;
-    $loop = new WP_Query( $args ); 
-    $count_question=0;
-    while ( $loop->have_posts() ) : $loop->the_post(); 
-        $count_question++;
-        $post_id = get_the_ID();
-        $question=get_field( "question", $post_id );
-        //var_dump($question);
-        // print the_title(); 
-        // the_excerpt(); 
-    endwhile;
-?>
-
-<div class="head3OverviewAssessment">
-                    <p class="assessmentNUmber" id="current-index">Question <?php echo $current_index+1; ?> / <?php echo $count_question; ?></p>
-                    <p class="assessmentTime" id="backendTime"><?php echo $question[0]['timer'] ?></p>
-                </div>
-                <p class="chooseTechnoTitle"><?php echo $question[$current_index]['wording'] ?><span> (Multiple choose posible)</span></p>
-                <div class="listAnswer">
-                    <label class="container-checkbox">
-                        <span class="numberAssassment">A.</span>
-                        <span class="assassment"><?php echo $question[$current_index]['responses'][$current_index] ?></span>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-
-                    <label class="container-checkbox">
-                        <span class="numberAssassment">B.</span>
-                        <span class="assassment"><?php echo $question[$current_index]['responses'][1] ?></span>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        <span class="numberAssassment">C.</span>
-                        <span class="assassment"> <?php echo $question[$current_index]['responses'][2] ?></span>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="container-checkbox">
-                        <span class="numberAssassment">D.</span>
-                        <span class="assassment"><?php echo $question[$current_index]['responses'][3] ?></span>
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                </div>
-                <button class="btn btnStratModal" id="btnBackend">Continue</button>
+    $id_new_response=wp_insert_post( $args);
+    $score=0;
+    $responses=array();
+    $user_responses=$_POST['user_responses'];
+   // var_dump($user_responses);
+    foreach ($question as $key => $value) {
+        
+        if ($value['correct_response']==$user_responses[$key])
+        {
+            array_push($responses, ["status"=>1,"sent_responses"=>$user_responses[$key],"response_id"=>$key]); 
+            $score++;
+        }
+        else
+        {
+            array_push($responses, ["status"=>0,"sent_responses"=>$user_responses[$key],"response_id"=>$key]); 
+        }
+        update_field('responses_user', $responses, $id_new_response);
+        update_field('assessment_id',$post_id,$id_new_response);
+        update_field('score',$score,$id_new_response);
+}       
+    echo 'Your score is '. $score . '/' . count($question);
+}
+    ?>
