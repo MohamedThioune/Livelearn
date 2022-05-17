@@ -480,6 +480,7 @@ else if(isset($referee_employee)){
                     array_push($posts, get_post($course_id));
                 else 
                     $posts = array(get_post($course_id));
+                var_dump($posts);
                 update_field('kennis_video', $posts, $expert);
             }
         }
@@ -492,7 +493,7 @@ else if(isset($referee_employee)){
     else if($path="course")
         $message = get_permalink($course_id) . '/?message=Allocution successfully'; 
 
-    header("Location: ". $message);
+    //header("Location: ". $message);
 
 }
 
