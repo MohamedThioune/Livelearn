@@ -153,7 +153,9 @@ $reviews = get_field('reviews', $post->ID);
 */
 
 $users_company = array();
-$allocution = get_field('allocation', $_POST['id_course']);
+$allocution = get_field('allocation', $course->ID);
+$company_connected =  get_field('company',  'user_' . $user_id);
+
 $users = get_users();
 
 foreach($users as $user) {
