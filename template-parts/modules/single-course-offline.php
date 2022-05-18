@@ -148,6 +148,21 @@ if(!$image){
 
 $reviews = get_field('reviews', $post->ID);
 
+/*
+* Companies user
+*/
+$company_connected = get_field('company',  'user_' . $user_id);
+$users_company = array();
+$allocution = get_field('allocation', $course->ID);
+$users = get_users();
+
+foreach($users as $user) {
+    $company_user = get_field('company',  'user_' . $user->ID);
+    if(!empty($company_connected) && !empty($company_user))
+        if($company_user[0]->post_title == $company_connected[0]->post_title)
+            array_push($users_company,$user->ID);
+}
+
 ?>
 
 <style>
@@ -353,7 +368,7 @@ $reviews = get_field('reviews', $post->ID);
                     </div>
                     <div class="d-flex flex-row block2">
                         <div class="d-flex flex-column mx-md-3 mx-2">
-                            <form action="../../dashboard/user/" method="POST">
+                            <form action="/dashboard/user/" method="POST">
                                 <input type="hidden" name="meta_value" value="<?php echo $post->ID; ?>" id="">
                                 <input type="hidden" name="user_id" value="<?php echo $user_id; ?>" id="">
                                 <input type="hidden" name="meta_key" value="course" id="">
@@ -391,12 +406,11 @@ $reviews = get_field('reviews', $post->ID);
                                         <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                                         <hr class="hrModifeDeel">
                                         <?php
-                                       if ($user_id==0)
-                                       {
+                                        if ($user_id != 0)
+                                        {
                                         ?>
-                                        <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
+                                            <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
                                         <?php
-
                                         }
                                         ?>
                                     </div>
@@ -445,9 +459,7 @@ $reviews = get_field('reviews', $post->ID);
                                     <?php
                                        if ($user_id==0)
                                        {
-                                        ?>
-                                        <div id='Intern' class='tabcontent px-md-5 p-3'>
-                                        <?php
+                                        echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
                                         wp_login_form([
                                                 'redirect' => 'http://wp12.influid.nl/dashboard/user/',
                                                 'remember' => false,
@@ -455,11 +467,28 @@ $reviews = get_field('reviews', $post->ID);
                                                 'placeholder_email' => 'E-mailadress',
                                                 'label_password' => 'Wat is je wachtwoord?'
                                         ]);
-                                        ?>
-                                            </div>
-                                            <?php
+                                        echo "</div>";
+                                       }else{
+                                        echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
+                                            echo "<form action='/dashboard/user/' method='POST'>";
+                                                echo "<label for='member_id'><b>Deel deze cursus met uw team :</b></label><br>";
+                                                echo "<select class='multipleSelect2' id='member_id' name='selected_members[]' multiple='true'>";
+                                                if(!empty($users_company))
+                                                    foreach($users_company as $user){
+                                                        $name = get_users(array('include'=> $user))[0]->data->display_name;
+                                                        if(in_array($user, $allocution))
+                                                            echo "<option selected  value='" . $user . "'>" . $name . "</option>";
+                                                        else
+                                                            echo "<option value='" . $user . "'>" . $name . "</option>";   
+                                                    }
+                                                echo "</select></br></br>";
+                                                echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
+                                                echo "<input type='hidden' name='path' value='course' />";
+                                                echo "<input type='submit' class='btn btn-info' name='referee_employee' value='Apply' >";
+                                            echo "</form>";
+                                        echo "</div>";
                                        }
-                                            ?>
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -513,7 +542,7 @@ $reviews = get_field('reviews', $post->ID);
                 <div class="customTabs">
                     <div class="tabs">
                         <ul id="tabs-nav">
-                            <li><a href="#tab1">Evens</a></li>
+                            <li><a href="#tab1">Events</a></li>
                             <li><a href="#tab2">Reviews</a></li>
                             <li><a href="#tab3">Add Reviews</a></li>
                         </ul> <!-- END tabs-nav -->
@@ -762,7 +791,8 @@ $reviews = get_field('reviews', $post->ID);
                                     foreach($reviews as $review){
                                         $user = $review['user'];
                                         $image_author = get_field('profile_img',  'user_' . $user->ID);
-                                        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';                    
+                                        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+                                        //$rating = intval($review['rating']);                   
                                     ?>
                                     <div class="review-info-card">
                                         <div class="review-user-mini-profile">
@@ -772,12 +802,13 @@ $reviews = get_field('reviews', $post->ID);
                                             <div class="user-name">
                                                 <p><?= $user->display_name; ?></p>
                                                 <div class="rating-stars">
-                                                    <input type="radio" class="ratingElementInput" name="rating" id="rs0" checked><label for="rs0"></label>
-                                                    <input type="radio" name="rating"><label for="rs1"></label>
-                                                    <input type="radio" name="rating"><label for="rs2"></label>
-                                                    <input type="radio" name="rating"><label for="rs3"></label>
-                                                    <input type="radio" name="rating"><label for="rs4"></label>
-                                                    <input type="radio" name="rating"><label for="rs5"></label>
+                                                    
+                                                    <input type="radio" class="ratingElementInput" name="rating" id="rs0" disabled checked value="<?= $rating; ?>"><label for="rs0"></label>
+                                                    <?php
+                                                    // if(!$rating)
+                                                        // for($i=1; $i<=4; $i++)
+                                                            // echo '<input type="radio" name="rating"><label for="rs' .$i. '"></label>';
+                                                    ?> 
                                                     <span class="rating-counter"></span>
                                                 </div>
                                             </div>
@@ -1031,12 +1062,12 @@ $reviews = get_field('reviews', $post->ID);
                     <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                     <hr class="hrModifeDeel">
                     <?php
-                    if ($user_id==0)
-                        {
+                    if ($user_id != 0)
+                    {
                     ?>
-                    <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
+                        <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
                     <?php
-                        }
+                    }
                     ?>
                 </div>
                 <div id="Extern" class="tabcontent">

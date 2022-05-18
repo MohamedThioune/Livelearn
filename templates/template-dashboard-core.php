@@ -436,7 +436,7 @@ else if(isset($review_post)){
     $reviews = get_field('reviews', $course_id);
     $review = array();
     $review['user'] = get_user_by('ID',$user_id);
-    $review['rating'] = 0;
+    $review['rating'] = $rating;
     $review['feedback'] = $feedback_content;
     if($review['user']){
         if(!$reviews)
@@ -449,7 +449,7 @@ else if(isset($review_post)){
     }
     else 
         $message = get_permalink($course_id) . '/?message=User not find...';
-
+    var_dump($review);
     header("Location: ". $message);
 }
 
@@ -467,6 +467,33 @@ else if(isset($change_password)){
             $message = "/dashboard/user/settings/?message_password=Something is wrong !"; 
 
     header("Location: ". $message);
+}
+else if(isset($referee_employee)){    
+    $allocution = array();
+    
+    if(!empty($selected_members))
+        foreach($selected_members as $expert){
+            if(!in_array($expert, $allocution)){
+                array_push($allocution, $expert);
+                $posts = get_field('kennis_video', 'user_' . $expert);
+                if(!empty($posts))
+                    array_push($posts, get_post($course_id));
+                else 
+                    $posts = get_post($course_id);
+                update_field('kennis_video', $posts, 'user_' . $expert);
+            }
+        }
+
+    //Adding new subtopics on course
+    update_field('allocation', $allocution, $course_id);
+
+    if($path="dashboard")
+        $message = '/dashboard/company/learning-modules/?message=Allocution successfully'; 
+    else if($path="course")
+        $message = get_permalink($course_id) . '/?message=Allocution successfully'; 
+
+    header("Location: ". $message);
+
 }
 
 ?>
