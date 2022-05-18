@@ -836,6 +836,7 @@ $args = array(
             },
         dataType:"text",
         success: function(data){ 
+            console.log(data);
             data=JSON.parse(data);
             current_index++;
             $('#wording').html(data.wording+"<span> (Multiple choose posible)</span>");
