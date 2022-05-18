@@ -88,6 +88,8 @@ foreach($bunch_orders as $order){
 /*
 * * Enrolled courses
 */
+$kennis_video = get_field('kennis_video', 'user_' . $user->ID);
+
 if(!empty($enrolled))
 {
     $args = array(
@@ -99,7 +101,11 @@ if(!empty($enrolled))
     );
 
     $enrolled_courses = get_posts($args);
+
+    if(!empty($kennis_video))
+        $enrolled_courses = array_merge($kennis_video, $enrolled_courses);
 }
+
 
 ?>
 

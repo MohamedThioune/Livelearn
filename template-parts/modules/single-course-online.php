@@ -410,7 +410,8 @@ $reviews = get_field('reviews', $post->ID);
                                 <form action="../../dashboard/user/" method="POST">
                                     <input type="hidden" name="user_id" value="<?= $user_id; ?>">
                                     <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
-                                    <!--<div class="form-group">
+                                    <!--
+                                    <div class="form-group">
                                         <label for="rating-container-custom">Rating</label>
                                         <div id="rating-container-custom">
                                             <ul class="list">
@@ -421,7 +422,8 @@ $reviews = get_field('reviews', $post->ID);
                                                 <li></li>
                                             </ul>
                                         </div>
-                                    </div> -->
+                                    </div> 
+                                    -->
                                     <div class="form-group">
                                         <label for="">Feedback</label>
                                         <textarea name="feedback_content" rows="10"></textarea>
@@ -694,7 +696,7 @@ $reviews = get_field('reviews', $post->ID);
                         <img class="imgDanForm" src="<?php echo $photo_daniel; ?>" alt="photo daniel" srcset="">
                     </div>
                     <div class="col-md-9 mt-3">
-                        <p class="h4">Direct <span class="font-weight-bolder h3">vrijblivend</span> een 15 minuten scholingsconsult</p>
+                        <p class="h4">Direct <span class="font-weight-bolder h3">vrijblijvend</span> een 15 minuten scholingsconsult</p>
                         <div class="d-flex flex-md-row flex-column ">
                             <div class="p-2 w-md-50 w-sm-50 w-100">
                                 <div class="input-group">

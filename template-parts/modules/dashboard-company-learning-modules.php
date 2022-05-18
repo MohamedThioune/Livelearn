@@ -87,142 +87,79 @@ $orders = wc_get_orders($order_args);
 <!--Link apply -->
 
 <!-- modal-style -->
-
 <style>
     body {
         padding-top: 0px !important;
     }
 
-    .ftco-section {
-		padding: 1em 0; }
+    /* modal on dashboard-learning-modules */
+    @media (max-width: 991.98px) {
+        .select2-container {
+        min-width: 100%; } }
 
+    .select2-results__option {
+    padding-right: 20px;
+    vertical-align: middle; }
+    .select2-container--default .select2-results__option[aria-selected=true] {
+        background-color: #fff; 
+    }
+    .select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: #fd5f00;
+    border-width: 2px; }
 
-		.heading-section {
-		font-size: 28px;
-		color: #000; }
-
-
-		.select2-container {
-		min-width: 90% !important;
-     }
-	    @media (max-width: 991.98px) {
-			.select2-container {
-			min-width: 100%; } }
-
-		.select2-results__option {
-		padding-right: 20px;
-		vertical-align: middle; }
-
-	    .select2-results__option:before {
-            content: "";
-            display: inline-block;
-            position: relative;
-            height: 20px;
-            width: 20px;
-            border: 2px solid rgba(0, 0, 0, 0.2);
-            border-radius: 4px;
-            background-color: transparent;
-            margin-right: 15px;
-            margin-left: 10px;
-            vertical-align: middle; }
-
-        .select2-results__option[aria-selected=true]:before {
-            font-family: 'fontAwesome';
-            content: "\f00c";
-            color: #fff;
-            background-color: #023356;
-            border: 0;
-            display: inline-block;
-            padding: 0;
-            line-height: 1.2;
-            padding-left: 2px; 
-        }
-
-        .select2-container--default .select2-results__option[aria-selected=true] {
-            background-color: #fff; 
-        }
-
-        .select2-container--default .select2-results__option--highlighted[aria-selected] {
-            background-color: #fff;
-            color: #000; 
-        }
-
-	.select2-container--default.select2-container--open.select2-container--below .select2-selection--multiple {
-	border-radius: 4px;
-	-webkit-box-shadow: 0px 3px 22px -15px rgba(0, 0, 0, 0.8);
-	-moz-box-shadow: 0px 3px 22px -15px rgba(0, 0, 0, 0.8);
-	box-shadow: 0px 3px 22px -15px rgba(0, 0, 0, 0.8); }
-
-	.select2-container--default.select2-container--focus .select2-selection--multiple {
-	border-color: #fd5f00;
-	border-width: 2px; }
-
-	.select2-container--default .select2-selection--multiple {
-	border-width: 2px;
-	border-color: transparent;
-	padding: 5px 10px;
-	line-height: 1.6;
-	-webkit-transition: 0.3s;
-	-o-transition: 0.3s;
-	transition: 0.3s;
-	margin-bottom: 10px;
-	-webkit-box-shadow: 0px 3px 22px -15px rgba(0, 0, 0, 0.63);
-	-moz-box-shadow: 0px 3px 22px -15px rgba(0, 0, 0, 0.63);
-	box-shadow: 0px 3px 22px -15px rgba(0, 0, 0, 0.63); }
-	@media (prefers-reduced-motion: reduce) {
-		.select2-container--default .select2-selection--multiple {
-		-webkit-transition: none;
-		-o-transition: none;
-		transition: none; 
-        /* margin-bottom: 36px;  */
+    .select2-container--default .select2-selection--multiple {
+    border: none !important;
+    background: #E7F8FF !important;
+    border-radius: 10px !important;
+    padding: 5px 10px;
+    line-height: 1.6;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+    margin-bottom: 10px;
+    }
+    @media (prefers-reduced-motion: reduce) {
+    .select2-container--default .select2-selection--multiple {
+    -webkit-transition: none;
+    -o-transition: none;
+    transition: none; 
     } }
 
-	.select2-container--open .select2-dropdown--below {
-	padding: 10px 0;
-	border-radius: 4px;
+    .select2-container--open .select2-dropdown--below {
+    padding: 10px 0;
+    border-radius: 4px;
     margin-top: 25px;
-	border: none;
-	-webkit-box-shadow: 0px 3px 22px -15px rgba(0, 0, 0, 0.63);
-	-moz-box-shadow: 0px 3px 22px -15px rgba(0, 0, 0, 0.63);
-	box-shadow: 0px 3px 22px -15px rgba(0, 0, 0, 0.63); }
+    border: none;
+    -webkit-box-shadow: 0px 3px 22px -15px rgba(0, 0, 0, 0.63);
+    -moz-box-shadow: 0px 3px 22px -15px rgba(0, 0, 0, 0.63);
+    box-shadow: 0px 3px 22px -15px rgba(0, 0, 0, 0.63); }
 
-	.select2-selection .select2-selection--multiple:after {
-	content: 'hhghgh'; }
+    .select2-selection .select2-selection--multiple:after {
+    content: 'hhghgh'; }
 
-	.select2-container--default .select2-selection--multiple .select2-selection__choice {
-	border: none;
-	background: rgba(0, 0, 0, 0.1);
-	font-size: 15px;
-	padding: 2px 10px;
-	color: gray; }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    border: none;
+    background: rgba(0, 0, 0, 0.1);
+    font-size: 15px;
+    padding: 2px 10px;
+    color: black; }
 
-	.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-	margin-right: 5px; }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    margin-right: 5px; }
 
-	.select2-container--default .select2-selection--multiple .select2-selection__clear {
-	color: #fd5f00; }
+    .select2-container--default .select2-selection--multiple .select2-selection__clear {
+    color: #fd5f00; }
 
-
-    /* modal design */
+     /* modal design width */
     .modal-content-width {
-        background-color: #023356 !important;
-        width: 50% !important;
+        width: 43% !important;
     }
     @media all and (max-width: 400px) {
-        .modal-content-width {
-            background-color: #023356 !important;
-            width: 90% !important;
+    .modal-content-width {
+        width: 90% !important;
         }
     }
 
-    .close-button {
-        width: 35px;
-        height: 50px;
-        background: red;
-        margin: 12px;
-        border-radius: 10px;
-        border: red;
-    }
 </style>
          
 <!-- script-modal -->
@@ -274,23 +211,26 @@ $orders = wc_get_orders($order_args);
        <div id="myModal" class="modal">
 
            <!-- Modal content -->
+       
             <!-- <div id="modal-content"> -->
            
             <div class="modal-content modal-content-width m-auto " style="margin-top: 100px !important">
-                <span type="button" class="px-2 close-button text-white bg-danger fa-2x" id="closeModal"
-                onclick="document.getElementById('myModal').style.display='none'" > &times;
-                    <!-- <button type="button" class="btn btn-danger close">&times;</button> -->
-                </span>
+                <div class="modal-header mx-4">
+                    <h5 class="modal-title" id="exampleModalLabel">Subtopics </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('myModal').style.display='none'" >
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
                 <div class="row d-flex text-center justify-content-center align-items-center h-50">
-                    <div class="col-md-8  p-4">
+                    <div class="col-md-11  p-4">
                         <div class="form-group display-subtopics">
                         
                         </div> 
                         <div id="modal-content">
 
                         </div>
-                        <div>
-                            <button id="save_subtopics" type="button" class="btn bg-white" style="color: #003358;">
+                        <div class="d-flex justify-content-end">
+                            <button id="save_subtopics" type="button" class="btn text-white" style="background: #023356;">
                              <strong>Save</strong> </button>
                         </div>
                     </div>
@@ -421,19 +361,18 @@ $orders = wc_get_orders($order_args);
     var id_course;
     $('.td_subtopics').click((e)=>{
         id_course = e.target.id;
-        current_td=e.target;
-        console.log(id_course);
      $.ajax({
             url:"/fetch-subtopics-course",
             method:"post",
             data:
             {
-                id_course:id_course
+                id_course:id_course,
+                action:'get_course_subtopics'
             },
         dataType:"text",
         success: function(data){
             // Get the modal
-            console.log(data)
+            //console.log(data)
     var modal = document.getElementById("myModal");
     $('.display-subtopics').html(data)
     // Get the button that opens the modal
@@ -466,24 +405,23 @@ $orders = wc_get_orders($order_args);
   $('#save_subtopics').click(()=>{
       var subtopics = $('#selected_subtopics').val()
       $.ajax({
-        url:"/fetch-subtopics-course",
-        method:"post",
-        data:
-            {
-            add_subtopics:subtopics,
-            id_course:id_course
-            },
-        dataType:"text",
-        success: function(data){
-            
-            let modal=$('#myModal');
-            modal.attr('style', { display: "none" });
-            //modal.style.display = "none";
-            $('#'+id_course).html(data)
-            console.log(data)
-        }
-        })
-    });
-
-
+  url:"/fetch-subtopics-course",
+  method:"post",
+  data:
+    {
+      add_subtopics:subtopics,
+      id_course:id_course,
+      action:'add_subtopics'
+    },
+  dataType:"text",
+  success: function(data){
+      
+      let modal=$('#myModal');
+      modal.attr('style', { display: "none" });
+      //modal.style.display = "none";
+      $('#'+id_course).html(data)
+      //console.log(data)
+  }
+  })
+});
 </script>

@@ -68,6 +68,7 @@
     <body class="body">
     <?php
     $sub_categories = array('Gezondheid','Leven');
+
     $args = array(
         'post_type' => 'course',
         'post_status' => 'publish',
@@ -205,11 +206,13 @@
                                 <ul class="secondUlModal ">
                                     <?php
                                     foreach($bangerichts as $bangericht){
+                                        $image_category = get_field('image', 'category_'. $bangericht->cat_ID);
+                                        $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/Image-79.png';            
                                         ?>
                                         <li>
                                             <a href="/product-search">
                                                 <div class="blockImg">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
+                                                    <img src="<?= $image_category; ?>" alt="">
                                                 </div>
                                                 <div>
                                                     <p class="subtitleSousElementHeader"><?php echo $bangericht->cat_name ?></p>

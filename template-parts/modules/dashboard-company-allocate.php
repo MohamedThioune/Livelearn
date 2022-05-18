@@ -51,15 +51,15 @@
                                     <select name="allocate[]" class="multipleSelect2" multiple="true">
                                         <?php
                                         //Get users from company
-                                        foreach($users as $used){
-                                            $companies = get_field('company',  'user_' . $used->ID);
-                                            if( !empty($company) && $user_id != $used->ID && !in_array($used->ID, $allocate_basic) ){
+                                        foreach($users as $element){
+                                            $companies = get_field('company',  'user_' . $element->ID);
+                                            if( !empty($company) && $user_id != $element->ID && !in_array($element->ID, $allocate_basic) ){
                                                 $companie = $companies[0]->post_title;
                                                 if($companie == $company_connected){
-                                                    if($used->first_name)
-                                                        echo "<option value='" . $used->ID ."'>" . $used->first_name . ' ' . $used->last_name . "</option>";
+                                                    if($element->first_name)
+                                                        echo "<option value='" . $element->ID ."'>" . $element->first_name . ' ' . $element->last_name . "</option>";
                                                     else 
-                                                        echo "<option value='" . $used->ID ."'>" . $used->user_email ."</option>";
+                                                        echo "<option value='" . $element->ID ."'>" . $element->user_email ."</option>";
                                                 } 
                                             }
                                         }
