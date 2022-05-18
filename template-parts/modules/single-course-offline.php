@@ -832,7 +832,7 @@ foreach($users as $user) {
                                     <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
                                     <label>Rating</label>
                                     <div class="rating-stars">
-                                        <input type="radio" class="ratingElementInput" name="rate" id="rs0" checked><label for="rs0"></label>
+                                        <input type="radio" class="ratingElementInput" name="rating" id="rs0" checked><label for="rs0"></label>
                                         <input type="radio" name="rating" id="rs1"><label for="rs1"></label>
                                         <input type="radio" name="rating" id="rs2"><label for="rs2"></label>
                                         <input type="radio" name="rating" id="rs3"><label for="rs3"></label>
