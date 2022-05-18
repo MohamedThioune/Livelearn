@@ -450,7 +450,7 @@ else if(isset($review_post)){
     else 
         $message = get_permalink($course_id) . '/?message=User not find...';
     var_dump($review);
-    header("Location: ". $message);
+    //header("Location: ". $message);
 }
 
 else if(isset($change_password)){
