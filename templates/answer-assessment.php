@@ -16,9 +16,9 @@ $count_question=0;
 while ( $loop->have_posts() ) : $loop->the_post(); 
     $count_question++;
     $post_id = get_the_ID();
-    $title=get_the_title();
-    $author=get_the_author();
-    $question=get_field( "question", $post_id );
+    $title = get_the_title();
+    $author = get_the_author();
+    $question = get_field( "question", $post_id );
     //var_dump($question);
     // print the_title(); 
     // the_excerpt(); 
@@ -57,4 +57,5 @@ else
 }       
     echo 'Your score is '. $score . '/' . count($question);
 }
-    ?>
+
+?>
