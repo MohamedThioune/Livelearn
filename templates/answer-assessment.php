@@ -56,7 +56,7 @@ else
         update_field('score',$score,$id_new_response);
 }    
     $score = ($score/count($question))*100;  
-    echo 'Your score is '. $score . '/' . count($question);
+    echo 'Your score is '. $score . '%' ;
 }
 
 ?>
