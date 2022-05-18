@@ -436,7 +436,7 @@ else if(isset($review_post)){
     $reviews = get_field('reviews', $course_id);
     $review = array();
     $review['user'] = get_user_by('ID',$user_id);
-    $review['rating'] = $rating;
+    $review['rate'] = $rating;
     $review['feedback'] = $feedback_content;
     if($review['user']){
         if(!$reviews)
