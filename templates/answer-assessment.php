@@ -54,7 +54,8 @@ else
         update_field('responses_user', $responses, $id_new_response);
         update_field('assessment_id',$post_id,$id_new_response);
         update_field('score',$score,$id_new_response);
-}       
+}    
+    $score = ($score/count($question))*100;  
     echo 'Your score is '. $score . '/' . count($question);
 }
 
