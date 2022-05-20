@@ -229,11 +229,13 @@ if(isset($_GET['message']))
                    /*
                     * Thumbnails
                     */ 
-                    $thumbnail = get_the_post_thumbnail_url($course->ID);
+                    $thumbnail = get_field('preview', $course->ID)['url'];
                     if(!$thumbnail){
-                        $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
+                        $thumbnail = get_field('url_image_xml', $course->ID);
                         if(!$thumbnail)
-                            $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                            $thumbnail = get_field('image', 'category_'. $category_id);
+                            if(!$thumbnail)
+                                $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
                     }
                     
                     /*
