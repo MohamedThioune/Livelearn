@@ -965,6 +965,11 @@ h3.quote::before {
 textarea.form-control {
   min-height: 130px;
 }
+.blog-item-content .tab-pane a p{
+  font-size: 15px;
+  line-height: 23px;
+}
+
 @media (max-width: 768px) {
   .navbar-toggler {
     color: #fff;

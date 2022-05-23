@@ -1,3 +1,25 @@
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.min.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var selectedDates = [];
+        datePicker = $('[id*=Txt_Date]').datepicker({
+            multidate: true,
+            format: 'dd-mm-yyyy',
+            language: 'en'
+        });
+        datePicker.on('changeDate', function (e) {
+            if (e.dates.length <= 4) {
+                selectedDates = e.dates;
+            } else {
+                datePicker.data('datepicker').setDates(selectedDates);
+                alert('You can only select 4 dates.');
+            }
+        });
+    });
+</script>
+
 <div class="row">
     <div class="col-md-5 col-lg-8">
         <div class="cardCoursGlocal">
@@ -19,13 +41,13 @@
                             <input type="date">
                         </div>
                         <div class="input-group">
-                            <label for="">dates between</label>
-                            <input type="date">
-                        </div>
-                        <div class="input-group">
                             <label for="">End date</label>
                             <input type="date">
                         </div>
+                    </div>
+                    <div class="input-group-course">
+                        <label for="">Dates between</label>
+                        <input type="text" id="Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
                     </div>
                     <div class="input-group-course">
                         <label for="">Location</label>
@@ -124,7 +146,6 @@
         </div>
     </div>
 </div>
-
 
 
 

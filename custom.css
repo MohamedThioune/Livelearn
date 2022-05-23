@@ -3362,15 +3362,29 @@ body .gform_wrapper ul li.gfield {
     font-size: 15px;
     color: #202124;
     font-weight: 500;
-    margin-bottom: 6px;
+    margin: 0 0 8px;
+}
+.btn-save-user{
+    padding: 7px 30px;
+    background: #47a99e !important;
+    color: white !important;
+    border-radius: 8px !important;
+    box-shadow: none;
+    border: none;
+}
+.input-group-user{
+    padding: 4px 20px !important;
+    margin-bottom: 17px;
+    display: grid;
 }
 .group-input-settings input {
-    border: 1px solid #F0F5F7;
     box-sizing: border-box;
-    border-radius: 8px;
-    padding: 13px 10px;
-    background: #e7f8ff !important;
-    margin-bottom: 15px;
+    border-radius: 11px;
+    padding: 15px 20px !important;
+    font-size: 15px !important;
+    color: #3c3c3c !important;
+    background: #F0F5F7 !important;
+    border: none;
 }
 .group-input-settings textarea {
     border: 1px solid #F0F5F7;
@@ -7376,7 +7390,7 @@ ul#tabs-nav li.active {
     justify-content: space-between;
 }
 .groupInputDate .input-group{
-    width: 31%;
+    width: 48%;
     position: relative;
     margin: 0;
     padding: 8px 20px 20px !important;
@@ -7511,7 +7525,6 @@ ul#tabs-nav li.active {
     width: 100%;
 }
 .workshopBlock {
-    border: 1px solid #043356;
     border-radius: 10%;
 }
 .like2{
@@ -7586,6 +7599,114 @@ ul#tabs-nav li.active {
 }
 .formSingleCoourseReview {
     display: grid;
+}
+.input-group-course .datepicker > div {
+    display: none;
+}
+.input-group-course .datepicker table {
+    margin: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.input-group-course .datepicker td,
+.input-group-course .datepicker th {
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: none;
+}
+
+.input-group-course .datepicker table tr td.day:hover,
+.input-group-course .datepicker table tr td.day.focused {
+    background: #eeeeee;
+    cursor: pointer;
+}
+.input-group-course .datepicker table tr td.old,
+.input-group-course .datepicker table tr td.new {
+    color: #999999;
+}
+.input-group-course .datepicker table tr td.disabled,
+.input-group-course .datepicker table tr td.disabled:hover {
+    background: none;
+    color: #999999;
+    cursor: default;
+}
+.input-group-course .datepicker table tr td.highlighted {
+    background: #d9edf7;
+    border-radius: 0;
+}
+
+.input-group-course .datepicker table tr td.active:hover,
+.input-group-course .datepicker table tr td.active:hover:hover,
+.input-group-course .datepicker table tr td.active.disabled:hover,
+.input-group-course .datepicker table tr td.active.disabled:hover:hover,
+.input-group-course .datepicker table tr td.active:active,
+.input-group-course .datepicker table tr td.active:hover:active,
+.input-group-course .datepicker table tr td.active.disabled:active,
+.input-group-course .datepicker table tr td.active.disabled:hover:active,
+.input-group-course .datepicker table tr td.active.active,
+.input-group-course .datepicker table tr td.active:hover.active,
+.input-group-course .datepicker table tr td.active.disabled.active,
+.input-group-course .datepicker table tr td.active.disabled:hover.active,
+.input-group-course .datepicker table tr td.active.disabled,
+.input-group-course .datepicker table tr td.active:hover.disabled,
+.input-group-course .datepicker table tr td.active.disabled.disabled,
+.input-group-course .datepicker table tr td.active.disabled:hover.disabled,
+.input-group-course .datepicker table tr td.active[disabled],
+.input-group-course .datepicker table tr td.active:hover[disabled],
+.input-group-course .datepicker table tr td.active.disabled[disabled],
+.input-group-course .datepicker table tr td.active.disabled:hover[disabled] {
+    background-color: #0044cc;
+}
+.input-group-course .datepicker table tr td.active:active,
+.input-group-course .datepicker table tr td.active:hover:active,
+.input-group-course .datepicker table tr td.active.disabled:active,
+.input-group-course .datepicker table tr td.active.disabled:hover:active,
+.input-group-course .datepicker table tr td.active.active,
+.input-group-course .datepicker table tr td.active:hover.active,
+.input-group-course .datepicker table tr td.active.disabled.active,
+.input-group-course .datepicker table tr td.active.disabled:hover.active {
+    background-color: #003399 \9;
+}
+.input-group-course .datepicker table tr td span {
+    display: block;
+    width: 23%;
+    height: 54px;
+    line-height: 54px;
+    float: left;
+    margin: 1%;
+    cursor: pointer;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.datepicker table tr td, .datepicker table tr th {
+    text-align: center;
+    width: 20px;
+    height: 30px;
+    border-radius: 4px;
+    border: none;
+    font-size: 14px;
+    padding: 0 0;
+    margin: 0 5px !important;
+}
+.datepicker{
+    min-width: 20%;
+}
+
+.datepicker-days{
+    display: block;
+    width: 100%;
+}
+.table-condensed {
+    width: 100%;
 }
 
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
