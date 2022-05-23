@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/bootstrap-datepicker.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bootstrap-datepicker.min.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog.css" beforeDir="false" afterPath="$PROJECT_DIR$/blog.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/footer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/header_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_user.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-3.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-3.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-settings.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,11 +13,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/custom.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="7698" column="1" lean-forward="true" selection-start-line="7698" selection-start-column="1" selection-end-line="7698" selection-end-column="1" />
+            <state relative-caret-position="272">
+              <caret line="5990" column="1" lean-forward="true" selection-start-line="5990" selection-start-column="1" selection-end-line="5990" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-assessment.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="233" column="18" lean-forward="true" selection-start-line="233" selection-start-column="18" selection-end-line="233" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -70,8 +71,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Blijf op de &lt;b&gt;hoogte&lt;/b&gt;</find>
-      <find>.swiper-slideM1</find>
       <find>.swiper-slideM1 {</find>
       <find>group</find>
       <find>30%</find>
@@ -100,6 +99,8 @@
       <find>Zet in je agenda</find>
       <find>.group-input-settings label</find>
       <find>@media</find>
+      <find>php</find>
+      <find>.container-checkbox .checkmark:after</find>
     </findStrings>
     <replaceStrings>
       <replace>h4</replace>
@@ -143,7 +144,6 @@
         <option value="$PROJECT_DIR$/single-course-online.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/detail-assessment.php" />
         <option value="$PROJECT_DIR$/templates/layaoutManager.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-user-assessment.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-road-path.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection.php" />
         <option value="$PROJECT_DIR$/template.css" />
@@ -179,6 +179,7 @@
         <option value="$PROJECT_DIR$/bootstrap-datepicker.min.css" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-3.php" />
         <option value="$PROJECT_DIR$/custom.css" />
+        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-user-assessment.php" />
       </list>
     </option>
   </component>
@@ -206,7 +207,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -219,16 +219,23 @@
               <item name="fluidify-child" type="462c0819:PsiDirectoryNode" />
               <item name="template-parts" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="fluidify-child" type="b2602c69:ProjectViewProjectNode" />
+              <item name="fluidify-child" type="462c0819:PsiDirectoryNode" />
+              <item name="template-parts" type="462c0819:PsiDirectoryNode" />
+              <item name="modules" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1653311465986" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1653322946751" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -495,16 +502,19 @@
       <workItem from="1653307863462" duration="1775000" />
       <workItem from="1653309741599" duration="1981000" />
       <workItem from="1653311768025" duration="772000" />
+      <workItem from="1653321157551" duration="1495000" />
+      <workItem from="1653323454259" duration="984000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="357499000" />
+    <option name="totallyTimeSpent" value="359978000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24469697" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25227273" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -581,13 +591,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/custom.xcss.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="531">
-          <caret line="4234" selection-start-line="4234" selection-end-line="4241" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-road-path.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="531">
@@ -869,13 +872,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/custom.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="7698" column="1" lean-forward="true" selection-start-line="7698" selection-start-column="1" selection-end-line="7698" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-3.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -901,6 +897,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2745">
           <caret line="183" column="13" selection-start-line="183" selection-start-column="13" selection-end-line="183" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/custom.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="5990" column="1" lean-forward="true" selection-start-line="5990" selection-start-column="1" selection-end-line="5990" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-assessment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="233" column="18" lean-forward="true" selection-start-line="233" selection-start-column="18" selection-end-line="233" selection-end-column="18" />
         </state>
       </provider>
     </entry>
