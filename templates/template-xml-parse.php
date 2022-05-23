@@ -73,6 +73,81 @@
       'duration_day' => $datum->programClassification->programDuration,
     );
 
+    $title = explode(' ', strval($datum->programDescriptions->programName));
+    $description = explode(' ', strval($datum->programDescriptions->programSummaryText));
+    $keywords = array_merge($title, $description);
+
+    /*
+    * * Tags *
+    */ 
+   
+    $bangerichts = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[1],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    $functies = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[0],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    $skills = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[3],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    $interesses = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[2],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    $categories = array(); 
+    foreach($categories as $categ){
+        //Topics
+        $topics = get_categories(
+            array(
+            'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $categ,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            ) 
+        );
+
+        foreach ($topics as $value) {
+            $tag = get_categories( 
+                 array(
+                 'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                 'parent'  => $value->cat_ID,
+                 'hide_empty' => 0,
+                ) 
+            );
+            $categories = array_merge($categories, $tag);      
+        }
+    }
+    
+    foreach($datum->programDescriptions->searchword as $searchword){
+      $searchword = strtolower(strval($searchword));
+      foreach($categories as $category){
+        $cat_slug = strval($category->slug);
+        $cat_name = explode(strval($category->cat_name));             
+        if(strpos($searchword, $cat_slug) !== false || in_array($searchword, $cat_name))
+          array_push($tags, $category->cat_ID);
+      }
+    }
+
+    if(!empty($tags)){
+      $occurrence = array_count_values(array_map('strtolower', $keywords));
+      echo "occurence :";
+      print_r($occurrence);
+      foreach($categories as $category){
+        if($occurrence[$category->cat_name] >= 2)
+          array_push($tags, $category->cat_ID);
+      }
+    }
+
     /* 
     ** Get author of the course 
     */
@@ -188,9 +263,6 @@
       /*  
       ** Course type
       */
-      $title = explode(' ', strval($datum->programDescriptions->programName));
-      $description = explode(' ', strval($datum->programDescriptions->programSummaryText));
-      $keywords = array_merge($title, $description);
       
       if(in_array('masterclass:', $keywords) || in_array('Masterclass', $keywords) || in_array('masterclass', $keywords)){
         update_field('course_type', 'masterclass', $post_id);
@@ -205,28 +277,9 @@
       }
       
       /*    
-      ** sub-topic
+      ** Tags add
       */
-      
-      $tags = array();
-
-      $cats = get_categories( array(
-          'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-          'orderby'    => 'name',
-          'exclude' => 'Uncategorized',
-          'hide_empty' => 0, // change to 1 to hide categores not having a single post
-      ) );
-
-      foreach($datum->programDescriptions->searchword as $searchword){
-        $searchword = strtolower(strval($searchword));
-        foreach($cats as $category){
-          $cat_slug = strval($category->slug);
-          $cat_name = explode(strval($category->cat_name));             
-          if(strpos($searchword, $cat_slug) !== false || in_array($searchword, $cat_name))
-            array_push($tags, $category->cat_ID);
-        }
-      }
-
+        
       update_field('category_xml', $tags, $post_id);
 
       $arg = array(
@@ -318,10 +371,7 @@
         /*  
         ** Course type
         */
-        $title = explode(' ', strval($datum->programDescriptions->programName));
-        $description = explode(' ', strval($datum->programDescriptions->programSummaryText));
-        $keywords = array_merge($title, $description);
-
+        
         if(in_array('masterclass:', $keywords) || in_array('Masterclass', $keywords) || in_array('masterclass', $keywords))
           update_field('course_type', 'masterclass', $meta_course);
         else if(in_array('(training)', $keywords) || in_array('training', $keywords))
@@ -389,28 +439,9 @@
         echo 'Data en locaties - ' . $message;
         */
 
-        /*  
-        ** Subtopic
+        /*
+        * * Tags update
         */
-        
-        $tags = array();
-
-        $cats = get_categories( array(
-            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-            'orderby'    => 'name',
-            'exclude' => 'Uncategorized',
-            'hide_empty' => 0, // change to 1 to hide categores not having a single post
-        ) );
-
-        foreach($datum->programDescriptions->searchword as $searchword){
-          $searchword = strtolower(strval($searchword));
-          foreach($cats as $category){
-            $cat_slug = strval($category->slug);
-            $cat_name = explode(strval($category->cat_name));             
-            if(strpos($searchword, $cat_slug) !== false || in_array($searchword, $cat_name))
-              array_push($tags, $category->cat_ID);
-          }
-        }
 
         update_field('category_xml', $tags, $meta_course);
 
