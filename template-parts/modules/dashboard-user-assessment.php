@@ -226,8 +226,8 @@ $args = array(
 
                     <select id="foo_select" class="dropdown multipleSelect3" form="foo_form" multiple data-placeholder="Click to select an Techno">
                         <option value="PHP">PHP</option>
-                        <option value="Laravel">Laravel</option>
-                        <option value="SQL">SQL</option>
+                        <!-- <option value="Laravel">Laravel</option>
+                        <option value="SQL">SQL</option> -->
                     </select>
                     <button class="btn btnStratModal" id="btnStart3">Continue</button>
                 </div>

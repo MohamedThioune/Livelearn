@@ -6,10 +6,10 @@
 
 <?php
     $args = array(
-                    'post_type' => 'course',
-                    'post_status' => 'publish',
-                    'posts_per_page' => -1,
-                    'order' => 'DESC',
+                'post_type' => 'course',
+                'post_status' => 'publish',
+                'posts_per_page' => -1,
+                'order' => 'DESC',
                 );
 
     $courses = get_posts($args);

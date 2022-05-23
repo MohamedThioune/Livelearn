@@ -72,7 +72,7 @@ $data = get_field('data_locaties', $post->ID);
     }
 
     if($number_course_day==0)
-        $number_course_day=1;
+        $number_course_day = 1;
 
 /*
 *  Date and Location
@@ -82,6 +82,11 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
 $data = get_field('data_locaties', $post->ID);
 $price = get_field('price', $post->ID) ?: 'Gratis';
 $prijsvat = get_field('prijsvat', $post->ID);
+$btw = get_field('btw-klasse', $post->ID); 
+echo $btw;
+if(!$prijsvat) 
+    $prijsvat = (get_field('price', $post->ID) * $btw/100) - $prijs;
+
 $agenda = get_field('agenda', $post->ID);
 $who = get_field('for_who', $post->ID);
 $results = get_field('results', $post->ID);
@@ -990,9 +995,8 @@ foreach($users as $user) {
                 <p class="opeleidingText"><?php echo $location; ?></p>
 
                 <p class="PrisText">Prijs vanaf</p>
-                <p class="opeleidingText">Opleiding: € <?php echo $price ?></p>
+                <p class="opeleidingText"><?= $course_type?>: € <?php echo $price ?></p>
                 <p class="btwText">BTW: € <?php echo $prijsvat ?></p>
-                <p class="btwText">LIFT member korting: 28%</p>
 
 
                 <button href="#bookdates" class="btn btnKoop text-white PrisText" style="background: #043356">Koop deze <?php echo $course_type; ?></button>

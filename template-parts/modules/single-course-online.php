@@ -9,6 +9,9 @@ $course_type = get_field('course_type', $post->ID);
 $price = get_field('price', $post->ID);
 $prijsvat = get_field('prijsvat', $post->ID);
 
+if(!$prijsvat) 
+    $prijsvat = (get_field('price', $post->ID) * 21/100) - $prijs;
+
 $category = "<i class='fa fa-exclamation'></i>";
 
 /*
@@ -177,7 +180,13 @@ $reviews = get_field('reviews', $post->ID);
                     ?>
 
                 </div>
-                <a href="/cart/?add-to-cart=<?php echo get_field('connected_product', $post->ID);?>" class="startTextBtn btn">Start nu voor <?php echo $course_price;?></a>
+
+                <?php 
+                    if($course_price != "Gratis")
+                        echo '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="startTextBtn btn">Start nu voor ' . $course_price . '</a>';
+                    else 
+                        echo '<a href="?topic=0&lesson=0" class="startTextBtn btn">Start nu voor ' . $course_price . '</a>';
+                ?>
 
                 <!-- -------------------------------------- Start Icons row ------------------------------------->
                 <div class="d-flex elementcourseIcone justify-content-md-between justify-content-around mx-md-2 my-3 mx-sm-2 text-center">
@@ -617,9 +626,8 @@ $reviews = get_field('reviews', $post->ID);
                             <p class="opeleidingText">Online</p>
 
                             <p class="PrisText">Prijs vanaf</p>
-                            <p class="opeleidingText">Opleiding: € <?php echo $price ?></p>
-                            <p class="btwText">BTW: € <?php echo $prijsvat ?></p>
-                            <p class="btwText">LIFT member korting: 28%</p>
+                            <p class="opeleidingText"><?php echo $course_type; ?> : € <?php echo $price ?></p>
+                            <p class="btwText">BTW: € <?php $prijsvat ?></p>
 
 
                             <a href="#bookdates" class="btn btnKoop">Koop deze <?php echo $course_type; ?></a>
