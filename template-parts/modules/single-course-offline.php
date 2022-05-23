@@ -596,7 +596,6 @@ foreach($users as $user) {
                                                                 ?>
                                                             </p>
                                                             <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
-                                                            <a href="" class="btn btnZetAjenda">Zet in je agenda <img src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-calendar-plus.png" alt=""></a>
                                                         </div>
                                                         <div class="BlocknumberEvenement">
 
@@ -706,7 +705,6 @@ foreach($users as $user) {
                                                             ?>
                                                         </p>
                                                         <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
-                                                        <a href="" class="btn btnZetAjenda">Zet in je agenda <img src="<?php echo get_stylesheet_directory_uri();?>/img/Icon-calendar-plus.png" alt=""></a>
                                                     </div>
                                                     <div class="BlocknumberEvenement">
 
