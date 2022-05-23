@@ -226,8 +226,8 @@ $args = array(
 
                     <select id="foo_select" class="dropdown multipleSelect3" form="foo_form" multiple data-placeholder="Click to select an Techno">
                         <option value="PHP">PHP</option>
-                        <option value="Laravel">Laravel</option>
-                        <option value="SQL">SQL</option>
+                        <!-- <option value="Laravel">Laravel</option>
+                        <option value="SQL">SQL</option> -->
                     </select>
                     <button class="btn btnStratModal" id="btnStart3">Continue</button>
                 </div>
@@ -836,6 +836,7 @@ $args = array(
             },
         dataType:"text",
         success: function(data){ 
+            console.log(data);
             data=JSON.parse(data);
             current_index++;
             $('#wording').html(data.wording+"<span> (Multiple choose posible)</span>");
@@ -878,6 +879,7 @@ $args = array(
     {
          if (cancelled) {
              cancelled=false;
+             clearInterval()
      return;
    } 
         time = time.split(':');

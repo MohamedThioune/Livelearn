@@ -436,7 +436,7 @@ else if(isset($review_post)){
     $reviews = get_field('reviews', $course_id);
     $review = array();
     $review['user'] = get_user_by('ID',$user_id);
-    $review['rating'] = $rating;
+    //$review['rating'] = $rating;
     $review['feedback'] = $feedback_content;
     if($review['user']){
         if(!$reviews)
@@ -449,7 +449,7 @@ else if(isset($review_post)){
     }
     else 
         $message = get_permalink($course_id) . '/?message=User not find...';
-    var_dump($review);
+    //var_dump($review['rate']);
     header("Location: ". $message);
 }
 
