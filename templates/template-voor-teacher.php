@@ -87,43 +87,43 @@
     <section class="py-4 px-3" style="background-color: #E0EFF4;">
         <div class="container my-5">
             <div class="row  d-flex justify-content-center">
-                <div class="col-md-5 text-center px-2 m-3">
+                <div class="col-md-5 text-center px-2 m-3 blockImgVoorTeacher">
                     <img class="img-fluid w-50" style=""
                     src="<?php echo get_stylesheet_directory_uri();?>/img/group-16.png" alt=""> 
                     <h3 class="CreeerText text-dark" style="font-size: 24px;">Word onderdeel van het grootste expert / opleidersnetwerk</h3>
                         Lorem ipsum dolor sit amet consectetur, adipis
                         icing elit. Quo eaque rerum recusandae distinctio?
                         <div class="row d-flex justify-content-center my-2" style="width: 100%">
-                            <div class="mx-1" style="width: 30%">
+                            <div class="mx-1 blockImgVoorTeacher" style="width: 30%">
                                 <img class="" 
                                 src="<?php echo get_stylesheet_directory_uri();?>/img/logoParteners6.jpeg" alt="">            
                             </div>
-                            <div class="mx-1" style="width: 30%">
+                            <div class="mx-1 blockImgVoorTeacher" style="width: 30%">
                                 <img class="" 
                                 src="<?php echo get_stylesheet_directory_uri();?>/img/logoParteners7.jpeg" alt="">            
                             </div>
-                            <div class="mx-1" style="width: 30%">
+                            <div class="mx-1 blockImgVoorTeacher" style="width: 30%">
                                 <img class="" 
                                 src="<?php echo get_stylesheet_directory_uri();?>/img/logoParteners8.jpeg" alt="">            
                             </div>
                         </div>
                 </div>
-                <div class="col-md-5 text-center px-2 m-3">
+                <div class="col-md-5 text-center px-2 m-3 blockImgVoorTeacher">
                     <img class="img-fluid w-50" style="max-height:40%"
                     src="<?php echo get_stylesheet_directory_uri();?>/img/Groupe2.png" alt=""> 
                     <h3 class="CreeerText text-dark" style="font-size: 24px;">Word onderdeel van het grootste expert / opleidersnetwerk</h3>
                     Lorem ipsum dolor sit amet consectetur, adipis
                     icing elit. Quo eaque rerum recusandae distinctio?
                     <div class="row d-flex justify-content-center my-2" style="width: 100%">
-                        <div class="mx-1" style="width: 30%">
+                        <div class="mx-1 blockImgVoorTeacher" style="width: 30%">
                             <img class="" 
                             src="<?php echo get_stylesheet_directory_uri();?>/img/logoParteners6.jpeg" alt="">            
                         </div>
-                        <div class="mx-1" style="width: 30%">
+                        <div class="mx-1 blockImgVoorTeacher" style="width: 30%">
                             <img class="" 
                             src="<?php echo get_stylesheet_directory_uri();?>/img/logoParteners7.jpeg" alt="">            
                         </div>
-                        <div class="mx-1" style="width: 30%">
+                        <div class="mx-1 blockImgVoorTeacher" style="width: 30%">
                             <img class="" 
                             src="<?php echo get_stylesheet_directory_uri();?>/img/logoParteners8.jpeg" alt="">            
                         </div>

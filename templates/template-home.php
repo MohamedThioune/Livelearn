@@ -337,9 +337,18 @@
             <div class="voorBlock">
                 <p class="wordDeBestText2" style="font-weight: bold">Ontdek, ontwikkel en maak carrière </p>
                 <p class="altijdText2">Er valt altijd iets nieuws te leren, maak gratis jouw skills paspoort en word expert.</p>
-                <form action="/product-search" method="POST">
+                <form action="/product-search" class="position-relative" method="POST">
                     <input id="search" type="search" class="jAuto searchInputHome form-control"
                         placeholder="Zoek opleidingen, experts of onderwerpen" name="search" autocomplete="off">
+                    <button class="btn btn-Zoek elementWeb">Zoek</button>
+                    <button class="btn btn-ZoekSerach">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png"  alt="">
+                    </button>
+                    <div class="groupeBtn-Jouw-inloggen">
+                        <a href="/registreren" class="jouwn-skills elementWeb">Jouw skills paspoort in 3 stappen</a>
+                        <a href="/registreren" class="jouwn-skills elementMobile">Skills Paspoort</a>
+                        <a href="/inloggen" class="inloggenbtn">Inloggen</a>
+                    </div>
                     <div class="dropdown-menuSearch" id="list">
                         <div class="list-autocomplete" id="autocomplete">
                         <center> <i class='hasNoResults'>No matching results рџ’Ј </i> </center>
@@ -1019,19 +1028,23 @@
     <div class="container-fluid">
         <div class="contentSix">
             <a href="/opleiders" class="cardBoxSix">
+                <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/alle-opleiders.png" alt="">
                 <p class="textAlloOP">Alle opleiders</p>
                 <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
             </a>
             <a href="/onderwer" class="cardBoxSix">
+                <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/all-onderwerpen.png" alt="">
                 <p class="textAlloOP">Alle onderwerpen</p>
                 <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
             </a>
             <a href="/product-search" class="cardBoxSix">
+                <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/all-opleidegen.png" alt="">
                 <p class="textAlloOP">Alle opleidingen</p>
                 <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
             </a>
             <a href="/static-education-advice" class="cardBoxSix">
-                <p class="textAlloOP">LIFT Leden</p>
+                <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/skills-passport.png" alt="">
+                <p class="textAlloOP">Skills paspoort</p>
                 <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
             </a>
         </div>

@@ -36,7 +36,6 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
             <form action="" method="POST" class="form-inline ml-auto mb-0">
                 <input class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" id="search_text">
             </form>
-            <a href="" class="btnActiviteit">Activiteit</a>
             <a href="../people-mensen" class="btnNewCourse">Persoon toevoegen</a>
         </div>
         <div class="contentCardListeCourse">
@@ -81,7 +80,7 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
                                     <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
                                     <td class="textTh">You</td>
                                     <td class="titleTextListe remove">
-                                        <span class="btnNewCourse">Delete</span>
+                                        <img class="removeImg" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
                                     </td>
                                 </tr>
                             <?php
@@ -107,7 +106,7 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
                                         <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
                                         <td class="textTh"></td>
                                         <td class="titleTextListe remove">
-                                            <span class="btnNewCourse">Delete</span>
+                                            <img class="removeImg" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
                                         </td>
                                     </tr>
                                 <?php

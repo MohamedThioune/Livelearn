@@ -19,6 +19,10 @@
                             <input type="date">
                         </div>
                         <div class="input-group">
+                            <label for="">dates between</label>
+                            <input type="date">
+                        </div>
+                        <div class="input-group">
                             <label for="">End date</label>
                             <input type="date">
                         </div>
@@ -49,6 +53,10 @@
                                         <div class="groupInputDate">
                                             <div class="input-group">
                                                 <label for="">Start date</label>
+                                                <input type="date">
+                                            </div>
+                                            <div class="input-group">
+                                                <label for="">dates between</label>
                                                 <input type="date">
                                             </div>
                                             <div class="input-group">

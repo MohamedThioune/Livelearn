@@ -186,7 +186,10 @@ $reviews = get_field('reviews', $post->ID);
                             <input type="hidden" id="user_id" value="<?php echo $user_id; ?>">
                             <input type="hidden" id="course_id" value="<?php echo $post->ID; ?>">
                             <!-- <img class="iconeCours" src="<?php echo get_stylesheet_directory_uri();?>/img/love.png" alt=""> -->
-                            <button id="btn_favorite" style="background:white; border:none"><i class="far fa-heart" style="font-size: 25px;"></i></button>
+                            <button id="btn_favorite" style="background:white; border:none">
+                                <img class="like1" src="<?php echo get_stylesheet_directory_uri();?>/img/like1.png" alt="">
+                                <img class="like2" src="<?php echo get_stylesheet_directory_uri();?>/img/like2.png" alt="">
+                            </button>
                             <span class="textIconeLearning mt-1" id="autocomplete_favoured"><?php echo $favoured; ?></span>
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
@@ -378,17 +381,17 @@ $reviews = get_field('reviews', $post->ID);
                                             <div class="user-name">
                                                 <p><?= $user->display_name; ?></p>
                                                 <div class="rating-element">
-                                                    <div class="rating-stats">
-                                                        <div id="rating-container-custom">
-                                                            <ul class="list-show">
-                                                                <li class="disabled"></li>
-                                                                <li class="disabled"></li>
-                                                                <li class="disabled"></li>
-                                                                <li class="disabled"></li>
-                                                                <li class="disabled"></li>
-                                                            </ul>
-                                                        </div>
-                                                        <!-- <p class="hours-element">18 hours ago</p> -->
+                                                    <div class="rating">
+                                                        <input type="radio"  name="rating" value="5" />
+                                                        <label class="star"  title="Awesome" aria-hidden="true"></label>
+                                                        <input type="radio"  name="rating" value="4" />
+                                                        <label class="star"  title="Great" aria-hidden="true"></label>
+                                                        <input type="radio"  name="rating" value="3" />
+                                                        <label class="star"  title="Very good" aria-hidden="true"></label>
+                                                        <input type="radio"  name="rating" value="2" />
+                                                        <label class="star"  title="Good" aria-hidden="true"></label>
+                                                        <input type="radio"  name="rating" value="1" />
+                                                        <label class="star"  title="Bad" aria-hidden="true"></label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -407,23 +410,21 @@ $reviews = get_field('reviews', $post->ID);
                                 <?php
                                 if($user_id != 0){
                                 ?>
-                                <form action="../../dashboard/user/" method="POST">
+                                <form class="formSingleCoourseReview " action="../../dashboard/user/" method="POST">
                                     <input type="hidden" name="user_id" value="<?= $user_id; ?>">
                                     <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
-                                    <!--
-                                    <div class="form-group">
-                                        <label for="rating-container-custom">Rating</label>
-                                        <div id="rating-container-custom">
-                                            <ul class="list">
-                                                <li></li>
-                                                <li></li>
-                                                <li></li>
-                                                <li></li>
-                                                <li></li>
-                                            </ul>
-                                        </div>
-                                    </div> 
-                                    -->
+                                    <div class="rating">
+                                        <input type="radio" id="star5" name="rating" value="5" />
+                                        <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                                        <input type="radio" id="star4" name="rating" value="4" />
+                                        <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                                        <input type="radio" id="star3" name="rating" value="3" />
+                                        <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                                        <input type="radio" id="star2" name="rating" value="2" />
+                                        <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                                        <input type="radio" id="star1" name="rating" value="1" />
+                                        <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
+                                    </div>
                                     <div class="form-group">
                                         <label for="">Feedback</label>
                                         <textarea name="feedback_content" rows="10"></textarea>
@@ -447,7 +448,7 @@ $reviews = get_field('reviews', $post->ID);
             <!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
 
             <!-- Modal Sign End -->
-            <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+            <div class="modal modalEcosyteme modalSingleCourse fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
                 style="position: absolute; ">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -473,7 +474,7 @@ $reviews = get_field('reviews', $post->ID);
             <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
 
             <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
-            <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+            <div class="modal modalEcosyteme modalSingleCourse fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
                 style="position: absolute; ">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -669,13 +670,6 @@ $reviews = get_field('reviews', $post->ID);
                 </div>
 
 
-
-
-
-
-
-
-
                 <!-- <div class="CardpriceLive">
                     <div class="imgCardPrice">
                         <img src="<?php if($image_author) echo $image_author; else echo get_stylesheet_directory_uri() . "/img/placeholder_user.png"; ?>" alt="image author">
@@ -687,35 +681,33 @@ $reviews = get_field('reviews', $post->ID);
 
         </div>
 
-        <div class="container-fluid">
-            <div class="bloxkWorldMembre formDirect ">
-                <!-- <p class="wordnuText">Word nu <b>LIFT Member</b> en ontvang persoonlijke korting</p>
-                <a href="" class="btn btnPlan">Planeen 15min afspraak in</a> -->
-                <div class="row d-flex justify-content-center">
-                    <div class="col-md-2">
-                        <img class="imgDanForm" src="<?php echo $photo_daniel; ?>" alt="photo daniel" srcset="">
-                    </div>
-                    <div class="col-md-9 mt-3">
-                        <p class="h4">Direct <span class="font-weight-bolder h3">vrijblijvend</span> een 15 minuten scholingsconsult</p>
-                        <div class="d-flex flex-md-row flex-column ">
-                            <div class="p-2 w-md-50 w-sm-50 w-100">
-                                <div class="input-group">
-                                    <input type="text" class="form-control text-center border-0"
-                                           placeholder="E-mailadres" aria-label="E-mailadress" aria-describedby="basic-addon1">
-                                </div>
+        <div class="bloxkWorldMembre formDirect ">
+            <!-- <p class="wordnuText">Word nu <b>LIFT Member</b> en ontvang persoonlijke korting</p>
+            <a href="" class="btn btnPlan">Planeen 15min afspraak in</a> -->
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-2">
+                    <img class="imgDanForm" src="<?php echo $photo_daniel; ?>" alt="photo daniel" srcset="">
+                </div>
+                <div class="col-md-9 mt-3">
+                    <p class="h4">Direct <span class="font-weight-bolder h3">vrijblijvend</span> een 15 minuten scholingsconsult</p>
+                    <div class="d-flex flex-md-row flex-column ">
+                        <div class="p-2 w-md-50 w-sm-50 w-100">
+                            <div class="input-group">
+                                <input type="text" class="form-control text-center border-0"
+                                       placeholder="E-mailadres" aria-label="E-mailadress" aria-describedby="basic-addon1">
                             </div>
-                            <div class="p-2 w-md-50 w-100">
-                                <div class="input-group">
-                                    <input type="text" class="form-control text-center border-0"
-                                           placeholder="Telefoonnummer" aria-label="Username" aria-describedby="basic-addon1">
-                                </div>
+                        </div>
+                        <div class="p-2 w-md-50 w-100">
+                            <div class="input-group">
+                                <input type="text" class="form-control text-center border-0"
+                                       placeholder="Telefoonnummer" aria-label="Username" aria-describedby="basic-addon1">
                             </div>
-                            <div class="p-2" >
-                                <button type="button" class="btn" style="background-color: #00A89D !important;
+                        </div>
+                        <div class="p-2" >
+                            <button type="button" class="btn" style="background-color: #00A89D !important;
                             width: 160px">
-                                    <span class="text-white" style="font-size: 17px">Neem contact op</span>
-                                </button>
-                            </div>
+                                <span class="text-white" style="font-size: 17px">Neem contact op</span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -794,41 +786,6 @@ $reviews = get_field('reviews', $post->ID);
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <script>
-        // Rating
-        const list = document.querySelector('.list')
-        const lis = list.children;
-
-        for (var i = 0; i < lis.length; i++) {
-            lis[i].id = i;
-            lis[i].addEventListener('mouseenter', handleEnter);
-            lis[i].addEventListener('mouseleave', handleLeave);
-            lis[i].addEventListener('click', handleClick);
-        }
-
-        function handleEnter(e) {
-            e.target.classList.add('hover');
-            for (var i = 0; i <= e.target.id; i++) {
-                lis[i].classList.add('hover');
-            }
-        }
-
-        function handleLeave(e) {
-            [...lis].forEach(item => {
-                item.classList.remove('hover');
-            });
-        }
-
-        function handleClick(e){
-            [...lis].forEach((item,i) => {
-                item.classList.remove('selected');
-                if(i <= e.target.id){
-                    item.classList.add('selected');
-                }
-            });
-        }
-
-    </script>
 
 <!-- scritpt for modal -->
 <script>
