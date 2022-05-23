@@ -5947,7 +5947,7 @@ button:focus {
 
 .checkmark {
     position: absolute;
-    top: 0;
+    top: 6px;
     left: 0;
     height: 18px;
     width: 18px;
@@ -5979,8 +5979,8 @@ button:focus {
 }
 
 .container-checkbox .checkmark:after {
-    left: 9px;
-    top: 5px;
+    left: 5px;
+    top: 1px;
     width: 5px;
     height: 10px;
     border: solid white;
