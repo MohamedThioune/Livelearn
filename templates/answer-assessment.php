@@ -16,9 +16,9 @@ $count_question=0;
 while ( $loop->have_posts() ) : $loop->the_post(); 
     $count_question++;
     $post_id = get_the_ID();
-    $title=get_the_title();
-    $author=get_the_author();
-    $question=get_field( "question", $post_id );
+    $title = get_the_title();
+    $author = get_the_author();
+    $question = get_field( "question", $post_id );
     //var_dump($question);
     // print the_title(); 
     // the_excerpt(); 
@@ -28,14 +28,13 @@ if (!isset($_POST['user_responses']))
         echo json_encode($question[$current_index]);
 else
 {
-    
     $args=array(
         'post_type' => 'response_assessment',
         'post_author' => get_current_user_id(),
         'post_status' => 'publish',
         'post_title' => $title.' '.$author,
     );
-    $id_new_response=wp_insert_post( $args);
+    $id_new_response=wp_insert_post( $arg);
     $score=0;
     $responses=array();
     $user_responses=$_POST['user_responses'];
@@ -54,7 +53,9 @@ else
         update_field('responses_user', $responses, $id_new_response);
         update_field('assessment_id',$post_id,$id_new_response);
         update_field('score',$score,$id_new_response);
-}       
-    echo 'Your score is '. $score . '/' . count($question);
+}    
+    $score = ($score/count($question))*100;  
+    echo 'Your score is '. $score . '%' ;
 }
-    ?>
+
+?>
