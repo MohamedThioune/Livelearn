@@ -879,6 +879,7 @@ $args = array(
     {
          if (cancelled) {
              cancelled=false;
+             clearInterval()
      return;
    } 
         time = time.split(':');
