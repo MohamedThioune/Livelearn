@@ -5,8 +5,8 @@
 <?php get_header(); ?>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
-<?php   
-    
+<?php
+
     $categories = array();
 
     $cats = get_categories( array(
@@ -28,7 +28,7 @@
         'parent'  => $categories[0],
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
-        
+
 ?>
 
 <div class="boxOne3-1">
@@ -47,12 +47,12 @@
                <button class="btn btnZorg"><?php echo $value->cat_name ?></button>
             </a>
         <?php } ?>
-           
+
         </div>
     </div>
 </div>
 <?php
-    foreach($values as $value) { ?> 
+    foreach($values as $value) { ?>
     <div class="blockTopBanen">
         <div class="container-fluid">
             <div class="d-flex align-center align-item-center">
@@ -60,13 +60,13 @@
                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/img//IconShowMore.png" class="IconShowMore" alt="">
                 <a href="../sub-topic?subtopic=<?php echo $value->cat_ID ?>" class="linkBlock">Bekijk alles</a>
             </div>
-            <?php 
+            <?php
                 $setups = get_categories( array(
                     'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
                     'parent'  => $value->cat_ID,
                     'hide_empty' => 0, // change to 1 to hide categores not having a single post
                 ) );
-               
+
             ?>
             <div class="swiper-container swipeContaine2">
                 <div class="swiper-wrapper">
@@ -83,13 +83,13 @@
                         </div>
                     </a>
                     <?php
-                      
-                    foreach($setups as $setup){ 
-                          
+
+                    foreach($setups as $setup){
+
                         $image_category = get_field('image', 'category_'. $setup->cat_ID);
-                        $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/innovation.jpg';                        
+                        $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/innovation.jpg';
                         ?>
-                        
+
                         <a href="../category-overview/?category=<?php echo $setup->cat_ID ?>" class="swiper-slide swiper-slide2">
                             <div class="cardTop ">
                                 <div class="contentImg">
@@ -103,21 +103,13 @@
                         ?>
                     </div>
             </div>
-           
+
         </div>
     </div>
 <?php
-    
-    } 
+
+    }
 ?>
-
-<div class="blockBlij">
-    <p class="blijfOpText">Blijf op de <b>hoogte</b></p>
-    <div class="search7">
-        <input type="search" class="inputModifSearch">
-    </div>
-</div>
-
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
 

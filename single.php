@@ -46,40 +46,111 @@ $content = get_field('article_itself',  $blog->ID);
                                 <img src="<?php echo$image; ?>" alt="" class="img-fluid rounded">
 
                                 <div class="blog-item-content bg-white blogPadding">
-                                    <div class="blog-item-meta bg-gray py-1 px-2">
-                                        <span class="text-muted text-capitalize mr-3"><i class="ti-pencil-alt mr-2"></i><?php echo $posttags[0]->name; ?></span>
-                                        <span class="text-muted text-capitalize mr-3"><i class="ti-comment mr-2"></i>0 Comments</span>
-                                        <span class="text-black text-capitalize mr-3"><i class="ti-time mr-1"></i> <?php echo get_the_date('d F'); ?></span>
-                                    </div> 
 
-                                    <h2 class="mt-3 mb-4"><?php echo the_title();?></h2>
-                                    <?php 
-                                        if(!the_content())
-                                            echo $content;
-                                    ?>
+                                    <div class="headElementBlog">
+                                        <p><?php echo $posttags[0]->name; ?> </p>
+                                        <p><i class="ti-time mr-1"></i> <?php echo get_the_date('d F'); ?></p>
+                                    </div>
+                                    <div class="tabbable-panel">
+                                        <div class="tabbable-line">
+                                            <ul class="nav nav-tabs ">
+                                                <li class="active">
+                                                    <a href="#tab_default_1" data-toggle="tab">
+                                                        Details</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#tab_default_2" data-toggle="tab">
+                                                        <i class="ti-comment mr-2"></i>0 Comments
+                                                </li>
+                                                <li>
+                                                    <a href="#tab_default_3" data-toggle="tab">
+                                                     Add Comments
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="tab_default_1">
+                                                    <h2 class="mt-3 mb-4"><?php echo the_title();?></h2>
+                                                    <?php
+                                                    if(!the_content())
+                                                        echo $content;
+                                                    ?>
 
-                                    <div class="tag-option mt-5 clearfix">
-                                        <ul class="float-left list-inline"> 
-                                            <li>Tags:</li> 
-                                            <?php
-                                                if(!empty($posttags))
-                                                    foreach($posttags as $posttag) 
-                                                        echo '<li class="list-inline-item"><a href="#" rel="tag">' . $posttag->name . '</a></li>';
-                                                else
-                                                    echo '<li class="list-inline-item"><a href="#" rel="tag">' . $tag . '</a></li>';
-                                            ?>
-                                        </ul>        
+                                                    <div class="tag-option mt-5 clearfix">
+                                                        <ul class="float-left list-inline">
+                                                            <li>Tags:</li>
+                                                            <?php
+                                                            if(!empty($posttags))
+                                                                foreach($posttags as $posttag)
+                                                                    echo '<li class="list-inline-item"><a href="#" rel="tag">' . $posttag->name . '</a></li>';
+                                                            else
+                                                                echo '<li class="list-inline-item"><a href="#" rel="tag">' . $tag . '</a></li>';
+                                                            ?>
+                                                        </ul>
 
-                                        <ul class="float-right list-inline">
-                                            <li class="list-inline-item"> Share: </li>
-                                            <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
-                                            <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-                                            <li class="list-inline-item">
-                                                <a href="#"><i class="fab fa-linkedin-in text-muted"></i></a>
-                                            </li>
-                                            <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
-                                            <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
-                                        </ul>
+                                                        <ul class="float-right list-inline">
+                                                            <li class="list-inline-item"> Share: </li>
+                                                            <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+                                                            <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                                                            <li class="list-inline-item">
+                                                                <a href="#"><i class="fab fa-linkedin-in text-muted"></i></a>
+                                                            </li>
+                                                            <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
+                                                            <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="tab_default_2">
+                                                    <div class="sousBlockComments">
+                                                        <div class="d-flex">
+                                                            <div class="auteurImgComment">
+                                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
+                                                            </div>
+                                                            <div>
+                                                                <p class="NameAutorComment">Alakham Diouf</p>
+                                                                <p class="date">20 Dec</p>
+                                                            </div>
+                                                        </div>
+                                                        <p class="comment">Loren ipsum This paragraph is dedicated to expressing my skills what I have been able to acquire during my professional experience.
+                                                            Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.</p>
+                                                        <button class="replyBtn btn">Reply</button>
+                                                        <form class="replayForm">
+                                                            <div class="form-group">
+                                                                <label for="exampleFormControlTextarea1">Comment</label>
+                                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                            </div>
+                                                            <div class="buttonSend">
+                                                                <button class="btn btnSendComment sendReplay">Send</button>
+                                                            </div>
+                                                        </form>
+                                                        <div class="otherReplay">
+                                                            <div class="d-flex">
+                                                                <div class="auteurImgComment">
+                                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
+                                                                </div>
+                                                                <div>
+                                                                    <p class="NameAutorComment">Daniel</p>
+                                                                    <p class="date">20 Dec</p>
+                                                                </div>
+                                                            </div>
+                                                            <p class="comment">Loren ipsum This paragraph is dedicated to expressing my skills what I have been able to acquire during my professional experience.
+                                                                Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.</p>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="tab-pane" id="tab_default_3">
+                                                    <form>
+                                                        <div class="form-group">
+                                                            <label for="exampleFormControlTextarea1">Comment</label>
+                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                        </div>
+                                                       <div class="buttonSend">
+                                                           <button class="btn btnSendComment">Send</button>
+                                                       </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -354,7 +354,10 @@ foreach($users as $user) {
                             <input type="hidden" id="user_id" value="<?php echo $user_id; ?>">
                             <input type="hidden" id="course_id" value="<?php echo $post->ID; ?>">
                             <!-- <img class="iconeCours" src="<?php echo get_stylesheet_directory_uri();?>/img/love.png" alt=""> -->
-                            <button id="btn_favorite" style="background:white; border:none"><i class="far fa-heart" style="font-size: 25px;"></i></button>
+                            <button id="btn_favorite" style="background:white; border:none">
+                                <img class="like1" src="<?php echo get_stylesheet_directory_uri();?>/img/like1.png" alt="">
+                                <img class="like2" src="<?php echo get_stylesheet_directory_uri();?>/img/like2.png" alt="">
+                            </button>
                             <span class="textIconeLearning mt-1" id="autocomplete_favoured"><?php echo $favoured; ?></span>
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
@@ -801,15 +804,17 @@ foreach($users as $user) {
                                             </div>
                                             <div class="user-name">
                                                 <p><?= $user->display_name; ?></p>
-                                                <div class="rating-stars">
-                                                    
-                                                    <input type="radio" class="ratingElementInput" name="rating" id="rs0" disabled checked value="<?= $rating; ?>"><label for="rs0"></label>
-                                                    <?php
-                                                    // if(!$rating)
-                                                        // for($i=1; $i<=4; $i++)
-                                                            // echo '<input type="radio" name="rating"><label for="rs' .$i. '"></label>';
-                                                    ?> 
-                                                    <span class="rating-counter"></span>
+                                                <div class="rating">
+                                                    <input type="radio"  name="rating" value="5" />
+                                                    <label class="star"  title="Awesome" aria-hidden="true"></label>
+                                                    <input type="radio"  name="rating" value="4" />
+                                                    <label class="star"  title="Great" aria-hidden="true"></label>
+                                                    <input type="radio"  name="rating" value="3" />
+                                                    <label class="star"  title="Very good" aria-hidden="true"></label>
+                                                    <input type="radio"  name="rating" value="2" />
+                                                    <label class="star"  title="Good" aria-hidden="true"></label>
+                                                    <input type="radio"  name="rating" value="1" />
+                                                    <label class="star"  title="Bad" aria-hidden="true"></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -827,17 +832,23 @@ foreach($users as $user) {
                                 <?php 
                                 if($user_id != 0){
                                 ?>
-                                <form action="../../dashboard/user/" method="POST">
+                                <form class="formSingleCoourseReview " action="../../dashboard/user/" method="POST">
                                     <input type="hidden" name="user_id" value="<?= $user_id; ?>">
                                     <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
                                     <label>Rating</label>
-                                    <div class="rating-stars">
-                                        <input type="radio" class="ratingElementInput" name="rating" id="rs0" checked><label for="rs0"></label>
-                                        <input type="radio" name="rating" id="rs1"><label for="rs1"></label>
-                                        <input type="radio" name="rating" id="rs2"><label for="rs2"></label>
-                                        <input type="radio" name="rating" id="rs3"><label for="rs3"></label>
-                                        <input type="radio" name="rating" id="rs4"><label for="rs4"></label>
-                                        <input type="radio" name="rating" id="rs5"><label for="rs5"></label>
+                                    <div class="rating-element2">
+                                        <div class="rating">
+                                            <input type="radio" id="star5" name="rating" value="5" />
+                                            <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                                            <input type="radio" id="star4" name="rating" value="4" />
+                                            <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                                            <input type="radio" id="star3" name="rating" value="3" />
+                                            <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                                            <input type="radio" id="star2" name="rating" value="2" />
+                                            <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                                            <input type="radio" id="star1" name="rating" value="1" />
+                                            <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
+                                        </div>
                                         <span class="rating-counter"></span>
                                     </div>
 
@@ -1161,41 +1172,6 @@ foreach($users as $user) {
         });
     })
 </script>
-    <script>
-        // Rating
-        const list = document.querySelector('.list')
-        const lis = list.children;
-
-        for (var i = 0; i < lis.length; i++) {
-            lis[i].id = i;
-            lis[i].addEventListener('mouseenter', handleEnter);
-            lis[i].addEventListener('mouseleave', handleLeave);
-            lis[i].addEventListener('click', handleClick);
-        }
-
-        function handleEnter(e) {
-            e.target.classList.add('hover');
-            for (var i = 0; i <= e.target.id; i++) {
-                lis[i].classList.add('hover');
-            }
-        }
-
-        function handleLeave(e) {
-            [...lis].forEach(item => {
-                item.classList.remove('hover');
-            });
-        }
-
-        function handleClick(e){
-            [...lis].forEach((item,i) => {
-                item.classList.remove('selected');
-                if(i <= e.target.id){
-                    item.classList.add('selected');
-                }
-            });
-        }
-
-    </script>
 
 
 <script>
