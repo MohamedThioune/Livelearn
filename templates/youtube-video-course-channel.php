@@ -16,7 +16,7 @@
 <body>
   <h1>Youtube data API V3 integration </h1>
   <?php
-  /** Template Name: Youtube Video V3 */ 
+  /** Template Name: Youtube Video V3 Channel*/ 
   $api_key = "AIzaSyDesrtvddE6l7tfbsPB3CTexWtqLwgNBK8";
   $maxResults = 45;
 
@@ -27,7 +27,7 @@
   foreach($users as $user){
       $name_user = strtolower($user->data->display_name);
 
-      if($name_user == "youtube nl"){
+      if($name_user == "youtube"){
         $author_id = intval($user->data->ID);
         $name_user = $user->display_name;
         break;
@@ -40,7 +40,7 @@
 
   foreach($youtube_channels_id as $youtube_channel){
     $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&channelId=" . $youtube_channel . "&key=" . $api_key; 
-  
+    
     $playlists = json_decode(file_get_contents($url_playlist),true);
     foreach($playlists['items'] as $key => $playlist){
 
@@ -51,7 +51,7 @@
 
         $meta_xmls = array();
         foreach($meta_data as $value){
-            $meta_xml = explode('-',$value)[0];
+            $meta_xml = explode('~', $value)[0];
             array_push($meta_xmls, $meta_xml);
         }
 
@@ -76,8 +76,12 @@
             );
     
             //Create the course
+            $meta_key = "course";
             $post_id = wp_insert_post($post_data);
-            $meta = $meta_value . '-' . $post_id;
+            $meta = $meta_value . '~' . $post_id;
+            
+            if(add_user_meta(1, $meta_key, $meta))
+            echo '✔️';
 
             /*
             * * Create for product course
@@ -105,8 +109,7 @@
             * * end
             */
         
-            if(add_user_meta(1, $meta_key, $meta))
-                echo '✔️';
+         
     
             //Update custom fields for the post
             update_field('price', $post['prijs'], $post_id);
@@ -145,7 +148,7 @@
         else{
             $meta_course = 0;
             foreach($meta_data as $value){
-                $metax = explode('-',$value);
+                $metax = explode('~',$value);
                 if($metax[0] == $meta_value){
                     $meta_course = $metax[1];
                     break;
