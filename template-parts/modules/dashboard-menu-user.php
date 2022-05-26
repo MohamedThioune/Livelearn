@@ -50,12 +50,12 @@ $experts = get_user_meta($user->ID, 'expert');
                 <p class="textLiDashboard">Mijn Activiteiten</p>
             </a>
         </li>
-        <!-- <li class="elementTextDashboard">
-            <a href="/assessment" class="d-flex">
+        <li class="elementTextDashboard">
+            <a href="/dashboard/user/assessment" class="d-flex">
                 <div class="iconeElement"><img class="iconAssesment1" src="<?php echo get_stylesheet_directory_uri();?>/img/assessment.png" alt=""></div>
                 <p class="textLiDashboard">Assessments</p>
             </a>
-        </li> -->
+        </li>
         <p class="textOnder">ONDERWERPEN</p>
         <li class="elementTextDashboard">
             <?php
