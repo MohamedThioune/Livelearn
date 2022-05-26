@@ -1,4 +1,7 @@
+<?php /** Template Name: Fetch company people */ ?>
+
 <?php
+
 $users = get_users();
 $user_id = get_current_user_id();
 
