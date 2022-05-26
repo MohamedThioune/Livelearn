@@ -117,7 +117,7 @@ if(isset($_POST['search_path'])){
         echo $output;
     else 
         echo "<center> <i class='hasNoResults'>No matching results</i> </center>";
-
+ 
 }else{
     if(strlen($_POST['search']) >= 2){
         foreach($users as $user){

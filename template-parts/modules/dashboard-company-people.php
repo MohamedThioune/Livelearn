@@ -12,7 +12,6 @@
 
     $user = get_users(array('include'=> 1))[0]->data;
 
-    echo $user->last_name;
 
 if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span>"; 
     if( in_array('administrator', $data_user->roles) || in_array( 'manager', $data_user->roles ) || $grant ) {
@@ -34,7 +33,7 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
             
             <p class="JouwOpleid">Werknemers (<?=$count;?>)</p>
             <form action="" method="POST" class="form-inline ml-auto mb-0">
-                <input class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" id="search_text">
+                <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" id="search_text">
             </form>
             <a href="" class="btnActiviteit">Activiteit</a>
             <a href="../people-mensen" class="btnNewCourse">Persoon toevoegen</a>
@@ -53,7 +52,7 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
                         <th scope="col">Actie</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="autocomplete_company_people">
                     <?php
                     foreach($users as $user){
                         $image_user = get_field('profile_img',  'user_' . $user->ID); 
@@ -147,4 +146,40 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
         }
     });
 
+</script>
+
+
+<script>
+
+     $('#search_txt_company').keyup(function(){
+        var txt = $(this).val();
+
+        event.stopPropagation();
+
+        $("#list").fadeIn("fast");
+
+        $(document).click( function(){
+
+            $('#list').hide();
+
+        });
+
+        if(txt){
+            $.ajax({
+
+                url:"fetch-company-people",
+                method:"post",
+                data:{
+                    search_user_company : txt,
+                },
+                dataType:"text",
+                success: function(data){
+                    console.log(data);
+                    $('#autocomplete_company_people').html(data);
+                }
+            });
+        }
+        else
+            $('#autocomplete_company_people').html("<center> <small>Typing ... </small> <center>");
+    });
 </script>

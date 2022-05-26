@@ -21,7 +21,7 @@
   $users = get_users(); 
    
   //Get the URL content
-  $file = get_stylesheet_directory_uri()."/buro-brand-20220308.1748.xml";
+  $file = get_stylesheet_directory_uri()."/beeckestijn-20220310.2055.xml";
   $xml = simplexml_load_file($file);
   $data_xml = $xml->program;
 
@@ -29,6 +29,7 @@
   echo "<h2 class='titleGroupText'>RESUME <i class='fas fa-spinner fa-pulse'></i> </h2>";
 
   $author_id = 0;
+
   //Retrieve courses
   foreach($data_xml as $datum){
     $attachment_xml = array();
@@ -75,12 +76,28 @@
 
     $title = explode(' ', strval($datum->programDescriptions->programName));
     $description = explode(' ', strval($datum->programDescriptions->programSummaryText));
-    $keywords = array_merge($title, $description);
+    $descriptionHtml = explode(' ', strval($datum->programDescriptions->programSummaryHtml));    
+    $keywords = array_merge($title, $description, $descriptionHtml);
 
     /*
     * * Tags *
     */ 
-   
+    $tags = array();
+    $categories = array(); 
+    $cats = get_categories( array(
+      'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+      'orderby'    => 'name',
+      'exclude' => 'Uncategorized',
+      'parent'     => 0,
+      'hide_empty' => 0, // change to 1 to hide categores not having a single post
+      ) );
+
+    foreach($cats as $item){
+      $cat_id = strval($item->cat_ID);
+      $item = intval($cat_id);
+      array_push($categories, $item);
+    };
+
     $bangerichts = get_categories( array(
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
         'parent'  => $categories[1],
@@ -105,7 +122,7 @@
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
 
-    $categories = array(); 
+    $categorys = array(); 
     foreach($categories as $categ){
         //Topics
         $topics = get_categories(
@@ -124,13 +141,13 @@
                  'hide_empty' => 0,
                 ) 
             );
-            $categories = array_merge($categories, $tag);      
+            $categorys = array_merge($categorys, $tag);      
         }
     }
     
     foreach($datum->programDescriptions->searchword as $searchword){
       $searchword = strtolower(strval($searchword));
-      foreach($categories as $category){
+      foreach($categorys as $category){
         $cat_slug = strval($category->slug);
         $cat_name = explode(strval($category->cat_name));             
         if(strpos($searchword, $cat_slug) !== false || in_array($searchword, $cat_name))
@@ -138,14 +155,12 @@
       }
     }
 
-    if(!empty($tags)){
+    if(empty($tags)){
       $occurrence = array_count_values(array_map('strtolower', $keywords));
-      echo "occurence :";
-      print_r($occurrence);
-      foreach($categories as $category){
-        if($occurrence[$category->cat_name] >= 2)
-          array_push($tags, $category->cat_ID);
-      }
+      arsort($occurrence);
+      foreach($categorys as $value)
+        if($occurrence[strtolower($value->cat_name)] >= 1)
+          array_push($tags, $value->cat_ID);
     }
 
     /* 
@@ -167,7 +182,6 @@
     }
     
     if(!in_array($meta_value, $meta_xmls)){  
-      continue;
       //Modify the dates 
       foreach($datum->programSchedule->programRun as $program){
         $info = array();
@@ -352,7 +366,7 @@
 
       if(empty($course)){
         delete_user_meta(1, $meta_key, $meta);
-        echo "****** Course # " . $meta_value . " not detected anymore<br><br>";
+        echo "****** Course # " . $course[0]->post_title . " not detected anymore<br><br>";
       }
       else{
         $change  = false;
@@ -383,7 +397,7 @@
         else 
           update_field('course_type', 'course', $meta_course);
 
-        echo "<span class='textLiDashboard'>Course_ID: " . $datum->programClassification->programId . " - Already in your database <br><span class='werkText'>Searching for changes ...</span><br></span>";
+        echo "<span class='textLiDashboard'>Course_ID: " . strval($datum->programDescriptions->programName) . " - Already in your database <br><span class='werkText'>Searching for changes ...</span><br></span>";
       
         if($prijs != intval($post['prijs'])){
           update_field('price', intval($post['prijs']), $meta_course);
@@ -442,16 +456,11 @@
         /*
         * * Tags update
         */
+        
 
         update_field('category_xml', $tags, $meta_course);
-
-       
-        $arg = array(
-            'ID' => $meta_course,
-            'post_author' => $author_id,
-        );
-        wp_update_post($arg); 
-      
+        
+        
         $data_locaties_xml = array();
        
         //Modify the dates 

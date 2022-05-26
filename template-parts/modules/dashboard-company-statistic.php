@@ -81,6 +81,7 @@ asort($outros);
 $outros = array_reverse($outros);
 
 foreach($outros as $key=>$outroe){
+    print_r($outroe);
     if($key <= 2)
         array_push($outroes, $outroe['entry']);
     $sells += intval($outroe['values']);
@@ -136,7 +137,7 @@ if(!empty($intros)){
                     <img id="student" src="<?php echo get_stylesheet_directory_uri();?>/img/ph_student.png" alt="">
                 </div>
                 <div class="detailCardActivity">
-                    <p class="nu mberActivity"><?php echo $sells; ?></p>
+                    <p class="numberActivity"><?php echo $sells; ?></p>
                     <p class="nameCardActivity">Total Student</p>
                 </div>
             </div>
