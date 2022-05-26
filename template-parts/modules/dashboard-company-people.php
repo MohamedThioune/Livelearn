@@ -31,9 +31,9 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
                     }
             ?>
             
-            <p class="JouwOpleid">Werknemers (<?=$count;?>)</p>
+            <p class="JouwOpleid">Werknemers (<?= $count; ?>)</p>
             <form action="" method="POST" class="form-inline ml-auto mb-0">
-                <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" id="search_text">
+                <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
             </form>
             <a href="../people-mensen" class="btnNewCourse">Persoon toevoegen</a>
         </div>
