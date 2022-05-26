@@ -55,6 +55,16 @@ $user_id = get_current_user_id();
 * Companies
 */
 $company = get_field('company',  'user_' . $post->post_author);
+$users_company = array();
+$allocution = get_field('allocation', $post->ID);
+$users = get_users();
+
+foreach($users as $user) {
+    $company_user = get_field('company',  'user_' . $user->ID);
+    if(!empty($company) && !empty($company_user))
+        if($company_user[0]->post_title == $company[0]->post_title) 
+            array_push($users_company, $user->ID);
+}
 
 $photo_daniel = get_stylesheet_directory_uri() . '/img/daniel.png';
 
@@ -168,7 +178,9 @@ $reviews = get_field('reviews', $post->ID);
                         }
                         else{
                             if(isset($lesson))
-                                echo '<iframe width="730" height="433" src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                                echo '<iframe width="730" height="433" src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay;
+                                    
+                                    ; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
                             else
                                 if(!empty(get_field('preview', $post->ID)))
                                     echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
@@ -234,29 +246,26 @@ $reviews = get_field('reviews', $post->ID);
                             ?>
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
-                            <?php
-                            if($user_id != 0){
-                            ?>
                             <button class="btn iconeText open-modal" data-open="modal1">
                                 <i class="fa fa-share" style="font-size: 25px;"></i><br>
                                 <span class="textIconeLearning mt-1">Deel</span>
-                            </button>
-                            <?php }else{ ?>
-                            <button class="btn iconeText open-modal" data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' style='border:none; background:white'>
-                                <i class="fa fa-share" style="font-size: 25px;"></i><br>
-                                <span class="textIconeLearning mt-1">Deel</span>
-                            </button>
-                            <?php } ?>
-
+                            </button>                           
                         </div>
                         <!-- début Modal deel -->
                         <div class="modal" id="modal1" data-animation="fadeIn">
-                            <div class="modal-dialog modal-dialog-deel" role="document">
+                            <div class="modal-dialog modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
                                 <div class="modal-content">
                                     <div class="tab">
                                         <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                                         <hr class="hrModifeDeel">
-                                        <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
+                                        <?php
+                                        if ($user_id != 0)
+                                        {
+                                        ?>
+                                            <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
+                                        <?php
+                                        }
+                                        ?>
                                     </div>
                                     <div id="Extern" class="tabcontent">
                                     <div class="contentElementPartage">
@@ -300,13 +309,39 @@ $reviews = get_field('reviews', $post->ID);
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="Intern" class="tabcontent">
-                                        <form action="" class="formShare">
-                                            <input type="text" placeholder="Gebruikersnaam">
-                                            <input type="text" placeholder="Wachtwoord">
-                                            <button class="btn btnLoginModife">Log-in</button>
-                                        </form>
-                                    </div>
+                                    <?php
+                                       if ($user_id==0)
+                                       {
+                                        echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
+                                        wp_login_form([
+                                                'redirect' => 'http://wp12.influid.nl/dashboard/user/',
+                                                'remember' => false,
+                                                'label_username' => 'Wat is je e-mailadres?',
+                                                'placeholder_email' => 'E-mailadress',
+                                                'label_password' => 'Wat is je wachtwoord?'
+                                        ]);
+                                        echo "</div>";
+                                       }else{
+                                        echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
+                                            echo "<form action='/dashboard/user/' method='POST'>";
+                                                echo "<label for='member_id'><b>Deel deze cursus met uw team :</b></label><br>";
+                                                echo "<select class='multipleSelect2' id='member_id' name='selected_members[]' multiple='true'>";
+                                                if(!empty($users_company))
+                                                    foreach($users_company as $user){
+                                                        $name = get_users(array('include'=> $user))[0]->data->display_name;
+                                                        if(in_array($user, $allocution))
+                                                            echo "<option selected  value='" . $user . "'>" . $name . "</option>";
+                                                        else
+                                                            echo "<option value='" . $user . "'>" . $name . "</option>";   
+                                                    }
+                                                echo "</select></br></br>";
+                                                echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
+                                                echo "<input type='hidden' name='path' value='course' />";
+                                                echo "<input type='submit' class='btn btn-info' name='referee_employee' value='Apply' >";
+                                            echo "</form>";
+                                        echo "</div>";
+                                       }
+                                    ?>
                                 </div>
                             </div>
                         </div>
@@ -947,5 +982,17 @@ $reviews = get_field('reviews', $post->ID);
     }
 
 </script>
+
+<script id="rendered-js" >
+    $(document).ready(function () {
+        //Select2
+        $(".multipleSelect2").select2({
+            placeholder: "Select subtopics",
+             //placeholder
+        });
+    });
+    //# sourceURL=pen.js
+</script>    
+
 <?php get_footer(); ?>
 <?php wp_footer(); ?>

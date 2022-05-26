@@ -51,6 +51,8 @@ foreach($bunch_orders as $order){
         }
     }
 }
+
+$inkomsten = count($orders) * $price;
 ?>
 
 <div class="contentPageManager">
@@ -94,8 +96,7 @@ foreach($bunch_orders as $order){
                         
                                 $agenda_start = $d_start[0] . ' ' . $calendar[$d_start[1]];
                                 $agenda_end = $d_end[0] . ' ' . $calendar[$d_end[1]];
-                                $location = explode('-', $date_start[2])[2];
-
+                                $location = explode('-', $date_start[2])[1];
                             }
                         ?>
                     <h2><?php echo $post->post_title ?></h2>
@@ -107,7 +108,7 @@ foreach($bunch_orders as $order){
                         </div>
                         <div class="cardAcqureren">
                             <p class="titleCardAcqureren">Inkomsten</p>
-                            <p class="numberCardAcqureren"><?php echo $price ?></p>
+                            <p class="numberCardAcqureren"><?php echo $inkomsten ?></p>
                         </div>
                         <div class="cardAcqureren">
                             <p class="titleCardAcqureren">Startdatum</p>

@@ -83,7 +83,6 @@ $data = get_field('data_locaties', $post->ID);
 $price = get_field('price', $post->ID) ?: 'Gratis';
 $prijsvat = get_field('prijsvat', $post->ID);
 $btw = get_field('btw-klasse', $post->ID); 
-echo $btw;
 if(!$prijsvat) 
     $prijsvat = (get_field('price', $post->ID) * $btw/100) - $prijs;
 
@@ -117,6 +116,38 @@ if($category == ' '){
 }
 
 $user_id = get_current_user_id();
+
+/*
+* Companies user
+*/
+$company_connected = get_field('company',  'user_' . $user_id);
+$users_company = array();
+$allocution = get_field('allocation', $post->ID);
+$users = get_users();
+$users_choose = array();
+$user_choose = $post->post_author;
+
+foreach($users as $user) {
+    $company_user = get_field('company',  'user_' . $user->ID);
+    if(!empty($company_connected) && !empty($company_user))
+        if($company_user[0]->post_title == $company_connected[0]->post_title) 
+            array_push($users_company, $user->ID);
+    if($company_user[0]->post_title == 'beeckestijn') 
+        array_push($users_choose, $user->ID);
+}
+
+if($post->post_author == 0){
+
+    $user_choose = $users_choose[array_rand($users_choose, 1)];
+
+    $arg = array(
+        'ID' => $post->ID,
+        'post_author' => $user_choose,
+    );
+    wp_update_post($arg); 
+
+}
+
 $image_author = get_field('profile_img',  'user_' . $post->post_author);
 if(!$image_author)
     $image_author = get_stylesheet_directory_uri() ."/img/placeholder_user.png";
@@ -130,7 +161,7 @@ $company = get_field('company',  'user_' . $post->post_author);
 * Experts
 */
 $expert = get_field('experts', $post->ID);
-$author = array($post->post_author);
+$author = array($user_choose);
 
 $experts = array_merge($expert, $author);
 
@@ -153,20 +184,6 @@ if(!$image){
 
 $reviews = get_field('reviews', $post->ID);
 
-/*
-* Companies user
-*/
-$company_connected = get_field('company',  'user_' . $user_id);
-$users_company = array();
-$allocution = get_field('allocation', $course->ID);
-$users = get_users();
-
-foreach($users as $user) {
-    $company_user = get_field('company',  'user_' . $user->ID);
-    if(!empty($company_connected) && !empty($company_user))
-        if($company_user[0]->post_title == $company_connected[0]->post_title)
-            array_push($users_company,$user->ID);
-}
 
 ?>
 
@@ -1142,6 +1159,19 @@ foreach($users as $user) {
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+<script id="rendered-js" >
+    $(document).ready(function () {
+        //Select2
+        $(".multipleSelect2").select2({
+            placeholder: "Select subtopics",
+             //placeholder
+        });
+    });
+    //# sourceURL=pen.js
+</script>    
+
+
 <script>
     $("#btn_favorite").click((e)=>
     {
@@ -1165,42 +1195,42 @@ foreach($users as $user) {
         });
     })
 </script>
-    <script>
-        // Rating
-        const list = document.querySelector('.list')
-        const lis = list.children;
 
-        for (var i = 0; i < lis.length; i++) {
-            lis[i].id = i;
-            lis[i].addEventListener('mouseenter', handleEnter);
-            lis[i].addEventListener('mouseleave', handleLeave);
-            lis[i].addEventListener('click', handleClick);
+<script>
+    // Rating
+    const list = document.querySelector('.list')
+    const lis = list.children;
+
+    for (var i = 0; i < lis.length; i++) {
+        lis[i].id = i;
+        lis[i].addEventListener('mouseenter', handleEnter);
+        lis[i].addEventListener('mouseleave', handleLeave);
+        lis[i].addEventListener('click', handleClick);
+    }
+
+    function handleEnter(e) {
+        e.target.classList.add('hover');
+        for (var i = 0; i <= e.target.id; i++) {
+            lis[i].classList.add('hover');
         }
+    }
 
-        function handleEnter(e) {
-            e.target.classList.add('hover');
-            for (var i = 0; i <= e.target.id; i++) {
-                lis[i].classList.add('hover');
+    function handleLeave(e) {
+        [...lis].forEach(item => {
+            item.classList.remove('hover');
+        });
+    }
+
+    function handleClick(e){
+        [...lis].forEach((item,i) => {
+            item.classList.remove('selected');
+            if(i <= e.target.id){
+                item.classList.add('selected');
             }
-        }
+        });
+    }
 
-        function handleLeave(e) {
-            [...lis].forEach(item => {
-                item.classList.remove('hover');
-            });
-        }
-
-        function handleClick(e){
-            [...lis].forEach((item,i) => {
-                item.classList.remove('selected');
-                if(i <= e.target.id){
-                    item.classList.add('selected');
-                }
-            });
-        }
-
-    </script>
-
+</script>
 
 <script>
 
@@ -1228,6 +1258,7 @@ foreach($users as $user) {
 
 
 </script>
+
 <script>
     const openEls = document.querySelectorAll("[data-open]");
     const closeEls = document.querySelectorAll("[data-close]");
@@ -1318,6 +1349,7 @@ foreach($users as $user) {
     }
 
 </script>
+
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
