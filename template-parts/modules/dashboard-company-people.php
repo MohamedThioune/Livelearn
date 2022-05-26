@@ -32,9 +32,7 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
             ?>
             
             <p class="JouwOpleid">Werknemers (<?= $count; ?>)</p>
-            <form action="" method="POST" class="form-inline ml-auto mb-0">
-                <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
-            </form>
+            <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
             <a href="../people-mensen" class="btnNewCourse">Persoon toevoegen</a>
         </div>
         <div class="contentCardListeCourse">
@@ -123,11 +121,13 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
 </div>
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 <script type="text/javascript">
     $(".remove").click(function(){
         var id = $(this).parents("tr").attr("id");
 
-        if(confirm('Are you sure you wantto remove this record ?'))
+        if(confirm('Are you sure you want to remove this record ?'))
         {
             $.ajax({
                url: '/delete-user',
@@ -153,24 +153,19 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
      $('#search_txt_company').keyup(function(){
         var txt = $(this).val();
 
-        event.stopPropagation();
+        $.ajax({
 
-        if(txt){
-            $.ajax({
+            url:"/fetch-company-people",
+            method:"post",
+            data:{
+                search_user_company : txt,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete_company_people').html(data);
+            }
+        });
 
-                url:"fetch-company-people",
-                method:"post",
-                data:{
-                    search_user_company : txt,
-                },
-                dataType:"text",
-                success: function(data){
-                    console.log(data);
-                    $('#autocomplete_company_people').html(data);
-                }
-            });
-        }
-        else
-            $('#autocomplete_company_people').html("<center> <small>Typing ... </small> <center>");
     });
 </script>
