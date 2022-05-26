@@ -34,6 +34,7 @@ $todos = get_posts($args);
         <!-- get bootstrap icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
+
         <title><?php bloginfo('name'); ?></title>
         <?php wp_head(); ?>
     </head>

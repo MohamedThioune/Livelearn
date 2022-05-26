@@ -28,14 +28,13 @@ if (!isset($_POST['user_responses']))
         echo json_encode($question[$current_index]);
 else
 {
-    
     $args=array(
         'post_type' => 'response_assessment',
         'post_author' => get_current_user_id(),
         'post_status' => 'publish',
         'post_title' => $title.' '.$author,
     );
-    $id_new_response=wp_insert_post( $args);
+    $id_new_response=wp_insert_post( $arg);
     $score=0;
     $responses=array();
     $user_responses=$_POST['user_responses'];

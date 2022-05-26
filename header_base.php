@@ -210,7 +210,7 @@
                                         $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/Image-79.png';            
                                         ?>
                                         <li>
-                                            <a href="/product-search">
+                                            <a href="sub-topic?subtopic=<?php echo $bangericht->cat_ID ?>">
                                                 <div class="blockImg">
                                                     <img src="<?= $image_category; ?>" alt="">
                                                 </div>
