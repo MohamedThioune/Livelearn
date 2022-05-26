@@ -155,14 +155,6 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
 
         event.stopPropagation();
 
-        $("#list").fadeIn("fast");
-
-        $(document).click( function(){
-
-            $('#list').hide();
-
-        });
-
         if(txt){
             $.ajax({
 
