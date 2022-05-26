@@ -140,9 +140,22 @@ jQuery(function($){
     });
 
 
+    $("#btn_favorite").click(function() {
+        $(".like1").toggle();
+        $(".like2").toggle();
+    });
 
 
-    $("#upBlock3").click(function() {
+    $(".replyBtn").click(function() {
+        $(".replayForm").show();
+    });
+    $(".sendReplay").click(function() {
+        $(".replayForm").hide();
+    });
+
+
+
+    $(".replyBtn").click(function() {
         $(".firstContentHeadSousMobile").show();
         $(".sousMenuBlock3").hide();
         $(".btnUp").hide();

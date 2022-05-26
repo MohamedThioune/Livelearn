@@ -2172,7 +2172,7 @@ input:focus-visible {
 }
 .swiper-slideM1 {
     width: 18% !important;
-    margin-right: 40px !important;
+    margin-right: 10px !important;
 }
 .blockCardOpleidingen  .swiper-container {
     overflow-x: hidden !important;
@@ -3362,15 +3362,29 @@ body .gform_wrapper ul li.gfield {
     font-size: 15px;
     color: #202124;
     font-weight: 500;
-    margin-bottom: 6px;
+    margin: 0 0 8px;
+}
+.btn-save-user{
+    padding: 7px 30px;
+    background: #47a99e !important;
+    color: white !important;
+    border-radius: 8px !important;
+    box-shadow: none;
+    border: none;
+}
+.input-group-user{
+    padding: 4px 20px !important;
+    margin-bottom: 17px;
+    display: grid;
 }
 .group-input-settings input {
-    border: 1px solid #F0F5F7;
     box-sizing: border-box;
-    border-radius: 8px;
-    padding: 13px 10px;
-    background: #e7f8ff !important;
-    margin-bottom: 15px;
+    border-radius: 11px;
+    padding: 15px 20px !important;
+    font-size: 15px !important;
+    color: #3c3c3c !important;
+    background: #F0F5F7 !important;
+    border: none;
 }
 .group-input-settings textarea {
     border: 1px solid #F0F5F7;
@@ -4328,8 +4342,8 @@ body .gform_wrapper ul li.gfield {
     display: none;
 }
 .swipeContaine2{
-    -ms-overflow-style: none; 
-overflow: -moz-scrollbars-none; 
+    -ms-overflow-style: none;
+overflow: -moz-scrollbars-none;
 }
 .elemntImgRecrutement{
     width: 500px;
@@ -5933,7 +5947,7 @@ button:focus {
 
 .checkmark {
     position: absolute;
-    top: 0;
+    top: 6px;
     left: 0;
     height: 18px;
     width: 18px;
@@ -5965,8 +5979,8 @@ button:focus {
 }
 
 .container-checkbox .checkmark:after {
-    left: 9px;
-    top: 5px;
+    left: 5px;
+    top: 1px;
     width: 5px;
     height: 10px;
     border: solid white;
@@ -7142,6 +7156,7 @@ ul#tabs-nav li.active {
     margin-bottom: 40px;
     margin-top: 15px;
     font-weight: 600;
+    width: fit-content;
 }
 .btn-sendRating:hover{
     color: white !important;
@@ -7272,11 +7287,15 @@ ul#tabs-nav li.active {
     margin-right: 15px;
     text-align: center;
     border-radius: 100%;
+    overflow: hidden;
     background: #e0eff4;
+
 }
 .blockdropdownnHeader ul li a .blockImg img{
-    width: 60%;
-    margin-top: 8px;
+    width: 100%;
+    margin-top: 0;
+    height: 100%;
+    object-fit: cover;
 }
 .activeModalHeader {
     background: #ffffff00;
@@ -7291,16 +7310,16 @@ ul#tabs-nav li.active {
 .dropdown-menu-custom {
     position: absolute !important;
     width: 95%;
-    top: 3px;
+    top: 1px;
     background: white !important;
     padding: 20px 0px;
     margin: 0 auto;
     font-size: 1rem;
-    border: 1px solid rgba(0,0,0,.15);
     border-radius: 15px;
     height: fit-content;
     left: 0;
     right: 0;
+    box-shadow: 0 4px 5px 0 rgb(0 0 0 / 10%), 0 6px 20px 0 rgb(0 0 0 / 5%);
 }
 .subtitleSousElementHeader{
     color: #043356;
@@ -7435,9 +7454,260 @@ ul#tabs-nav li.active {
 .btn-SaveDate:hover{
     color: white !important;
 }
+.btn-Zoek{
+    background: #043356;
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: bold;
+    position: absolute;
+    top: 8px;
+    right: 116px;
+    padding: 3px 25px;
+    border-radius: 10px;
+}
+.groupeBtn-Jouw-inloggen{
+    display: flex;
+    margin: 0 auto;
+    width: fit-content;
+    align-items: center;
+}
+.jouwn-skills{
+    padding: 8px 50px;
+    background: #47a99e;
+    border-radius: 10px;
+    color: white;
+    font-weight: 700;
+    margin: 0 10px;
+}
+.inloggenbtn{
+    padding: 6px 39px;
+    background: white;
+    border: 2px solid #043356;
+    font-weight: 600;
+    color: #043356;
+    border-radius: 11px;
+    margin: 0 10px;
+}
+.cardBoxSix{
+    text-align: center;
+}
+.imgCategoryCard {
+    width: 45px;
+    margin: 0 auto 4px;
+}
+.textAlloOP {
+    margin-bottom: 0;
+}
+.imgPolygone {
+    margin-top: 0 !important;
+}
+.imgCategoryCard:first-child {
+    width: 50px;
+}
+.btn-ZoekSerach{
+    display: none;
+    position: absolute;
+    top: 9px;
+    right: 3px;
+}
+.secondUlModal li a:hover{
+    font-weight: 700;
+}
+.blockBlij {
+    display: none;
+}
+.groupBtn .swiper-wrapper{
+    max-width: 1350px;
+    margin: 0 auto;
+}
 
+.blockImgVoorTeacher img{
+    width: 100%;
+}
+.workshopBlock {
+    border-radius: 10%;
+}
+.like2{
+    display: none;
+}
+#btn_favorite img{
+    width: 25px;
+}
+.comp1 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.lost_reset_password{
+    margin-bottom: -10px;
+    padding: 50px;
+    text-align: center;
+}
+.lost_reset_password .woocommerce-ResetPassword {
+    padding: 50px 0;
+    text-align: center;
+    max-width: 1285px;
+    margin: 0 auto;
+    position: relative;
+}
+.lost_reset_password p:first-child{
+    max-width: 1140px;
+    color: #043356;
+    font-size: 19px;
+    width: 50%;
+    margin: 0 auto 25px;
+    font-weight: 500;
+    line-height: 26px;
+}
+.lost_reset_password .woocommerce-ResetPassword {
+    max-width: 1140px;
+    width: 330px;
+    text-align: center;
+    margin: 30px auto 25px;
+    padding: 0;
+    float: inherit;
+}
+.lost_reset_password .woocommerce-form-row {
+    margin: 0 auto !important;
+    float: inherit !important;
+    justify-content: center;
+    width: 30% !important;
+}
+.lost_reset_password .form-row-first label{
+    line-height: 0;
+    color: #47a99e !important;
+    margin-bottom: 20px !important;
+    font-size: 16px;
+    font-weight: 500;
+}
+.lost_reset_password input {
+    color: #0a0a0a;
+    border: none;
+    padding: 12px 15px;
+    background: #dfeef3;
+    border-radius: 13px;
+    margin: 5px auto 20px !important;
+}
+.lost_reset_password .woocommerce-Button{
+    background: #043356 !important;
+    color: white !important;
+    padding: 13px 20px !important;
+    border-radius: 10px !important;
+}
+.removeImg {
+    cursor: pointer;
+}
+.formSingleCoourseReview {
+    display: grid;
+}
+.input-group-course .datepicker > div {
+    display: none;
+}
+.input-group-course .datepicker table {
+    margin: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.input-group-course .datepicker td,
+.input-group-course .datepicker th {
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: none;
+}
 
+.input-group-course .datepicker table tr td.day:hover,
+.input-group-course .datepicker table tr td.day.focused {
+    background: #eeeeee;
+    cursor: pointer;
+}
+.input-group-course .datepicker table tr td.old,
+.input-group-course .datepicker table tr td.new {
+    color: #999999;
+}
+.input-group-course .datepicker table tr td.disabled,
+.input-group-course .datepicker table tr td.disabled:hover {
+    background: none;
+    color: #999999;
+    cursor: default;
+}
+.input-group-course .datepicker table tr td.highlighted {
+    background: #d9edf7;
+    border-radius: 0;
+}
 
+.input-group-course .datepicker table tr td.active:hover,
+.input-group-course .datepicker table tr td.active:hover:hover,
+.input-group-course .datepicker table tr td.active.disabled:hover,
+.input-group-course .datepicker table tr td.active.disabled:hover:hover,
+.input-group-course .datepicker table tr td.active:active,
+.input-group-course .datepicker table tr td.active:hover:active,
+.input-group-course .datepicker table tr td.active.disabled:active,
+.input-group-course .datepicker table tr td.active.disabled:hover:active,
+.input-group-course .datepicker table tr td.active.active,
+.input-group-course .datepicker table tr td.active:hover.active,
+.input-group-course .datepicker table tr td.active.disabled.active,
+.input-group-course .datepicker table tr td.active.disabled:hover.active,
+.input-group-course .datepicker table tr td.active.disabled,
+.input-group-course .datepicker table tr td.active:hover.disabled,
+.input-group-course .datepicker table tr td.active.disabled.disabled,
+.input-group-course .datepicker table tr td.active.disabled:hover.disabled,
+.input-group-course .datepicker table tr td.active[disabled],
+.input-group-course .datepicker table tr td.active:hover[disabled],
+.input-group-course .datepicker table tr td.active.disabled[disabled],
+.input-group-course .datepicker table tr td.active.disabled:hover[disabled] {
+    background-color: #0044cc;
+}
+.input-group-course .datepicker table tr td.active:active,
+.input-group-course .datepicker table tr td.active:hover:active,
+.input-group-course .datepicker table tr td.active.disabled:active,
+.input-group-course .datepicker table tr td.active.disabled:hover:active,
+.input-group-course .datepicker table tr td.active.active,
+.input-group-course .datepicker table tr td.active:hover.active,
+.input-group-course .datepicker table tr td.active.disabled.active,
+.input-group-course .datepicker table tr td.active.disabled:hover.active {
+    background-color: #003399 \9;
+}
+.input-group-course .datepicker table tr td span {
+    display: block;
+    width: 23%;
+    height: 54px;
+    line-height: 54px;
+    float: left;
+    margin: 1%;
+    cursor: pointer;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.datepicker table tr td, .datepicker table tr th {
+    text-align: center;
+    width: 20px;
+    height: 30px;
+    border-radius: 4px;
+    border: none;
+    font-size: 14px;
+    padding: 0 0;
+    margin: 0 5px !important;
+}
+.datepicker{
+    min-width: 20%;
+}
+
+.datepicker-days{
+    display: block;
+    width: 100%;
+}
+.table-condensed {
+    width: 100%;
+}
 
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -9373,6 +9643,57 @@ ul#tabs-nav li.active {
         padding-top: 30px;
         padding-bottom: 15px;
     }
+    .btn-Zoek {
+        right: 4px;
+    }
+    .groupeBtn-Jouw-inloggen {
+        display: flex;
+    }
+    .jouwn-skills {
+        padding: 8px 35px;
+    }
+    .btn-ZoekSerach{
+        display: none;
+    }
+    .btn-ZoekSerach{
+        display: block;
+    }
+    .single-blog-item {
+        height: auto;
+        margin-bottom: 25px;
+        width: 100%;
+    }
+    .single-blog-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: 0px 0;
+    }
+    .modalSingleCourse .modal-dialog {
+        width: 95% !important;
+    }
+    .modalSingleCourse .modal-body {
+        padding: 0 !important;
+    }
+    .lost_reset_password p:first-child {
+        max-width: unset;
+        font-size: 18px;
+        width: 100%;
+        margin: 0 auto 25px;
+        line-height: 26px;
+    }
+    .lost_reset_password {
+        margin-bottom: 10px;
+        padding: 40px 20px;
+        text-align: center;
+    }
+    .lost_reset_password .woocommerce-form-row {
+        margin: 0 auto !important;
+        float: inherit !important;
+        justify-content: center;
+        width: 100% !important;
+    }
+
 
 
 

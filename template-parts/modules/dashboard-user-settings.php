@@ -755,16 +755,22 @@ else if(isset($delete_awards)){
         <div> <?php if(isset($_GET['message_password'])) echo "<span class='alert alert-info'>" . $_GET['message_password'] . "</span>" ; ?><div><br>
         <form action="" method="POST">
             <div class="group-input-settings">
-                <label for="">Enter your actual password :</label>
-                <input name="old_password" type="password" required>
-                <label for="">Define your new pasword :</label>
-                <input name="password" type="password" required>
-                <label for="">Confirm the pasword :</label>
-                <input name="password_confirmation" type="password" required>
+              <div class="input-group-user">
+                  <label for="">Enter your actual password :</label>
+                  <input name="old_password" type="password" required>
+              </div>
+              <div class="input-group-user">
+                  <label for="">Define your new pasword :</label>
+                  <input name="password" type="password" required>
+              </div>
+              <div class="input-group-user">
+                  <label for="">Confirm the pasword :</label>
+                  <input name="password_confirmation" type="password" required>
+              </div>
             </div>
 
             <div>
-                <button type="submit" name="change_password" class="btn btn-info">SAVE</button>
+                <button type="submit" name="change_password" class="btn btn-save-user">SAVE</button>
             </div>
         </form>
     </div>

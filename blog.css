@@ -816,6 +816,159 @@ h3.quote::before {
     text-align: center;
   }
 }
+.nav-tabs {
+  height: 42px;
+  position: relative;
+  display: flex;
+  justify-content: space-between !important;
+  padding: 0px;
+  border: none;
+}
+
+.tabbable-line > .nav-tabs {
+  border: none;
+  margin: 0px;
+}
+.tabbable-line > .nav-tabs > li {
+  margin-right: 2px;
+  width: 29%;
+  text-align: center;
+}
+.tabbable-line > .nav-tabs > li > a {
+  border: 0;
+  margin-right: 0;
+  color: #737373;
+}
+.tabbable-line > .nav-tabs > li > a > i {
+  color: #a6a6a6;
+}
+.tabbable-line > .nav-tabs > li.open, .tabbable-line > .nav-tabs > li:hover {
+  border-bottom: 4px solid rgb(4 51 86);
+}
+.tabbable-line > .nav-tabs > li.open > a, .tabbable-line > .nav-tabs > li:hover > a {
+  border: 0;
+  background: none !important;
+  color: #333333;
+}
+.tabbable-line > .nav-tabs > li.open > a > i, .tabbable-line > .nav-tabs > li:hover > a > i {
+  color: #a6a6a6;
+}
+.tabbable-line > .nav-tabs > li.open .dropdown-menu, .tabbable-line > .nav-tabs > li:hover .dropdown-menu {
+  margin-top: 0px;
+}
+.tabbable-line > .nav-tabs > li.active {
+  border-bottom: 4px solid #32465B;
+  position: relative;
+}
+.tabbable-line > .nav-tabs > li.active > a {
+  border: 0;
+  color: #333333;
+}
+.tabbable-line > .nav-tabs > li.active > a > i {
+  color: #404040;
+}
+.tabbable-line > .tab-content {
+  margin-top: -3px;
+  background-color: #fff;
+  border: 0;
+  border-top: 1px solid #eee;
+  padding: 15px 0;
+}
+.portlet .tabbable-line > .tab-content {
+  padding-bottom: 0;
+}
+.headElementBlog{
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+  margin-bottom: 30px;
+}
+.headElementBlog p{
+  margin-bottom: 0;
+  color: #043356;
+  font-size: 18px;
+}
+.single-blog-item {
+  height: auto !important;
+}
+.tab-pane a ul {
+  display: block !important;
+}
+.tab-content li {
+  display: block !important;
+  cursor: pointer !important;
+  font-size: unset !important;
+}
+.tab-content li:after {
+  content: unset !important;
+}
+.tab-content>.active {
+  padding-top: 15px;
+}
+.btnSendComment{
+  background: #043356;
+  color: #FFFFFF;
+  padding: 7px 30px;
+  font-weight: 500;
+  margin-top: 25px;
+}
+.btnSendComment:hover {
+  color: #ffffff !important;
+}
+.buttonSend{
+  width: fit-content;
+  margin-left: auto;
+}
+.auteurImgComment{
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+  border-radius: 100%;
+  overflow: hidden;
+}
+.auteurImgComment img{
+ width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.NameAutorComment {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 500;
+  color: #043356;
+}
+.replyBtn{
+  background: #47a99e;
+  color: white;
+  padding: 3px 14px;
+  font-size: 13px;
+}
+.replyBtn:hover {
+  color: #ffffff !important;
+}
+
+.replayForm{
+  display: none;
+  padding-left: 30px;
+  padding-top: 20px;
+}
+.form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #043356;
+  outline: 0;
+  box-shadow: unset;
+}
+.otherReplay{
+  padding: 20px;
+}
+textarea.form-control {
+  min-height: 130px;
+}
+.blog-item-content .tab-pane a p{
+  font-size: 15px;
+  line-height: 23px;
+}
 
 @media (max-width: 768px) {
   .navbar-toggler {
@@ -846,6 +999,10 @@ h3.quote::before {
     display: none;
     width: 100%;
     text-align: center;
+  }
+  .headElementBlog {
+    width: 90%;
+    margin-bottom: 30px;
   }
 }
 
