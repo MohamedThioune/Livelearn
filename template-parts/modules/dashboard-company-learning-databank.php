@@ -94,6 +94,73 @@
 
     $user_in = wp_get_current_user();
 
+
+    /*
+    * * Tags *
+    */ 
+    $tags = array();
+    $categories = array(); 
+    $cats = get_categories( array(
+      'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+      'orderby'    => 'name',
+      'exclude' => 'Uncategorized',
+      'parent'     => 0,
+      'hide_empty' => 0, // change to 1 to hide categores not having a single post
+      ) );
+
+    foreach($cats as $item){
+      $cat_id = strval($item->cat_ID);
+      $item = intval($cat_id);
+      array_push($categories, $item);
+    };
+
+    $bangerichts = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[1],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    $functies = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[0],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    $skills = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[3],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    $interesses = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[2],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    $categorys = array(); 
+    foreach($categories as $categ){
+        //Topics
+        $topics = get_categories(
+            array(
+            'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $categ,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            ) 
+        );
+
+        foreach ($topics as $value) {
+            $tag = get_categories( 
+                 array(
+                 'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                 'parent'  => $value->cat_ID,
+                 'hide_empty' => 0,
+                ) 
+            );
+            $categorys = array_merge($categorys, $tag);      
+        }
+    }
+
 ?>
     <div class="contentListeCourse">
         <div class="cardOverviewCours">
@@ -159,19 +226,44 @@
                                 }
                             }
                             else{
-                                $day = '~';
-                                $dates = get_field('dates', $course->ID);
-                                if($dates)
-                                    $day = explode(' ', $dates[0]['date']);
-                                else{
-                                    if ($course->ID[0]['value']!=null)
-                                    {
-                                        $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                                        $date = $data[0];
-                                        $day = explode(' ', $date)[0];
-                                    }
-                                }
+                                $day = "~";
+                                $data = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
+                                $date = $data[0];
+                                $day = explode(' ', $date)[0];
                             }
+
+                            $tags = get_field('categories', $course->ID);
+
+                            $keywords = array();
+
+                            $words = "";
+
+                            if(empty($tags)){
+                                $tags = array();
+                                $title = $course->post_title;
+                                if($title)
+                                    $words .= $title;
+                                $description = get_field('short_description', $course->ID);
+                                if($description)
+                                    $words .= $description;
+                                $descriptionHtml = get_field('long_description', $course->ID);
+                                if($descriptionHtml)
+                                    $words .= $descriptionHtml;
+
+                                $keywords = explode(' ', $words);
+
+                                $occurrence = array_count_values(array_map('strtolower', $keywords));
+                                arsort($occurrence);
+
+                                foreach($categorys as $value)
+                                    if($occurrence[strtolower($value->cat_name)] >= 1){
+                                        echo strtolower($value->cat_name);
+                                        array_push($tags, $value->cat_ID);
+                                    }
+                                update_field('categories', $tags, $course->ID);
+
+                            }
+                        
                         ?>
                         <tr>
                             <td class="textTh elementOnder"><a style="color:#212529;font-weight:bold" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>

@@ -50,12 +50,12 @@ $experts = get_user_meta($user->ID, 'expert');
                 <p class="textLiDashboard">Mijn Activiteiten</p>
             </a>
         </li>
-        <!-- <li class="elementTextDashboard">
-            <a href="/assessment" class="d-flex">
+        <li class="elementTextDashboard">
+            <a href="/dashboard/user/assessment" class="d-flex">
                 <div class="iconeElement"><img class="iconAssesment1" src="<?php echo get_stylesheet_directory_uri();?>/img/assessment.png" alt=""></div>
                 <p class="textLiDashboard">Assessments</p>
             </a>
-        </li> -->
+        </li>
         <p class="textOnder">ONDERWERPEN</p>
         <li class="elementTextDashboard">
             <?php
@@ -79,7 +79,7 @@ $experts = get_user_meta($user->ID, 'expert');
                     $name = (String)get_the_category_by_ID($topic);
                     $image_category = get_field('image', 'category_'. $topic);
                     $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/placeholder.png';
-                    echo "<a href='/category-overview/?category=". $topic ."' class='d-flex'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    echo "<a href='/category-overview/?category=". $topic ."' class='d-flex'>;
                             <div class='iconeElement'>
                                 <img src='". $image_category ."' alt='image category'>
                             </div>

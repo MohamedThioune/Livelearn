@@ -63,7 +63,7 @@
 <?php
 
 
-    $subtopics = array(); 
+    $subtopics = array();  
     foreach($categories as $categ){
         //Topics
         $topicss = get_categories(
@@ -191,7 +191,7 @@
             
         }
     
-    $is_first_login=(get_field('is_first_login','user_' . get_current_user_id()));
+    $is_first_login = (get_field('is_first_login','user_' . get_current_user_id()));
     if (!$is_first_login && get_current_user_id() !=0 )
         {
         
@@ -351,7 +351,7 @@
                     </div>
                     <div class="dropdown-menuSearch" id="list">
                         <div class="list-autocomplete" id="autocomplete">
-                        <center> <i class='hasNoResults'>No matching results рџ’Ј </i> </center>
+                        <center> <i class='hasNoResults'>No matching results ... </i> </center>
                         </div>
                     </div>
                 </form>
@@ -906,7 +906,7 @@
 
                                 $location = $data[0]['data'][0]['location'];
                             }else{
-                                $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
+                                $data = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
                                 $date = $data[0];
                                 $day = explode('/', explode(' ', $date)[0])[0];
                                 $month = explode('/', explode(' ', $date)[0])[1];
