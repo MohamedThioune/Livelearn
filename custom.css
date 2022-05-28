@@ -7479,6 +7479,9 @@ ul#tabs-nav li.active {
     font-weight: 700;
     margin: 0 10px;
 }
+.jouwn-skills:hover{
+    color: white !important;
+}
 .inloggenbtn{
     padding: 6px 39px;
     background: white;
@@ -7708,6 +7711,285 @@ ul#tabs-nav li.active {
 .table-condensed {
     width: 100%;
 }
+.blockStepSkillsPaspoort{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.blockStepSkillsPaspoort .setp{
+    text-align: center;
+    width: 17%;
+}
+.blockStepSkillsPaspoort .setp .circleIndicator {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 8px;
+    background: #dfeef3;
+    border: none;
+}
+.titleBlockStepSkills {
+    text-align: center;
+    color: #043356;
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+.form-Step-skills-passpoort{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 auto;
+}
+.form-Step-skills-passpoort .input-group-skills{
+    display: grid;
+    margin: 0 13px 20px;
+}
+.form-Step-skills-passpoort .input-group-skills label{
+    font-weight: 500 !important;
+    color: #212529 !important;
+    margin: 0 0 5px;
+    padding: 0;
+    font-size: 13px;
+}
+.form-Step-skills-passpoort .input-group-skills input{
+    padding: 8px 15px !important;
+    font-size: 15px !important;
+    color: #3c3c3c !important;
+    background: #F0F5F7;
+    border: 1px solid #043356;
+    border-radius: 20px;
+}
+.btn-volgende{
+    background: #47a99e;
+    color: white;
+    font-weight: 700;
+    padding: 8px 25px;
+    border-radius: 13px;
+    margin: 20px auto 0;
+}
+.btn-volgende:hover{
+    color: #FFFFFF !important;
+}
+.blockStepSkillsPaspoort .setp .colorStep {
+    background: #043356 !important;
+}
+.form-Step-skills-passpoort .hiddenCB{
+    margin: 0 auto !important;
+}
+.blockInputCheck{
+    width: 30%;
+}
+.blockInputCheck label {
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 400;
+    color: #043356;
+    border-radius: 16px;
+    padding: 7px 10px;
+    margin: 0 10px 25px;
+}
+.stepSkillpasspoort{
+    display: none;
+    margin: 0 auto;
+}
+.form-Step-skills-passpoort .hiddenCB div:first-child {
+    justify-content: center;
+}
+.step1SkillsPasspoort{
+    margin: 0 auto;
+}
+.groupBtnStepSkillsP{
+    display: flex;
+    justify-content: center;
+    margin: 20px auto 0;
+}
+
+.groupBtnStepSkillsP button{
+    margin: 0 8px;
+}
+.btnTerug {
+    background: #dfeef3;
+    color: #043356;
+    font-weight: 400;
+    padding: 8px 25px;
+    border-radius: 13px;
+    min-width: 130px;
+}
+.btnTerug:hover {
+    color: #043356 !important;
+}
+.titleBlockStepSkills span{
+    font-weight: 300;
+}
+
+.form-group-skillsP{
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.form-group-skillsP label{
+    color: #043356;
+    font-size: 16px;
+    margin: 0 20px;
+}
+
+.form-group-skillsP select{
+    border-radius: 18px;
+    padding: 5px 20px;
+    min-height: 40px;
+    border-color: #043356;
+}
+
+.step5SkillsPasspoort .blockInputCheck {
+    width: 40%;
+}
+#SkillsModal .modal-dialog {
+    width: 60% !important;
+}
+.input-group-register .form-group-skills{
+    display: grid;
+}
+.input-group-register .form-group-skills label{
+    color: #043356;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+.input-group-register .form-group-skills input{
+    width: 90%;
+    font-size: 15px;
+    font-weight: 400;
+    color: #043356;
+    border-radius: 16px;
+    padding: 7px 10px;
+    margin: 0 10px 17px;
+    text-align: inherit;
+}
+
+.blockWinDeWar{
+    background: #dfeef3;
+    height: 122px;
+    margin-bottom: 45px;
+}
+.btnLessHoe{
+    color: #043356;
+    border: 1.5px solid #043356;
+    padding: 10px 45px;
+    border-radius: 24px;
+    margin-left: 25px;
+    font-weight: 700;
+}
+.elementWinWar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.imgWInWar{
+    width: 210px;
+    height: 100%;
+}
+.imgWInWar img{
+   width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.elementWinWar h2{
+    color: #043356;
+    font-weight: 500;
+    font-size: 30px;
+    margin-bottom: 9px;
+    margin-top: 23px;
+}
+.descriptionWinWar {
+    color: #043356;
+    font-size: 17px;
+    margin-bottom: 31px;
+    padding: 0 25px;
+}
+.headOverviewOrganisatie{
+    margin: 0 auto 100px;
+    width: 380px;
+    text-align: center;
+}
+.headOverviewOrganisatie h1{
+    color: #043356;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+.headOverviewOrganisatie .description{
+    color: #043356;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 25px;
+}
+.headOverviewOrganisatie .btnbtnCreeerJe{
+    padding: 10px 15px 12px;
+    background: #47a99e;
+    color: white;
+    font-weight: 600;
+    border-radius: 25px;
+}
+.contentOverviewOrganisatie {
+    margin-bottom: 75px;
+}
+.cardOverviewOrganisatie{
+    background: #dfeef3;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0px 0px 1px 1px #e1e1e1;
+    margin-bottom: 30px;
+    height: 100%;
+    border: none;
+}
+.cardOverviewOrganisatie .imgcardOverviewOrganisatie{
+    width: 100%;
+    height: 195px;
+    background: white;
+}
+.cardOverviewOrganisatie .imgcardOverviewOrganisatie img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.cardOverviewOrganisatie .bodycardOverviewOrganisatie{
+    padding: 25px 30px 50px;
+}
+.cardOverviewOrganisatie .bodycardOverviewOrganisatie h3{
+    color: #043356;
+    font-size: 22px;
+    line-height: 25px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+.cardOverviewOrganisatie .bodycardOverviewOrganisatie .descriptionCardVoorOrganisatie {
+    color: #043356;
+    margin-bottom: 10px;
+    font-size: 15px;
+    text-align: center;
+}
+.cardOverviewOrganisatie .btncardOverviewOrganisatie{
+    position: absolute;
+    bottom: 25px;
+    left: 0;
+    right: 0;
+    background: #043356;
+    color: #FFFFFF;
+    font-weight: 600;
+    font-size: 16px;
+    padding: 6px 25px 7px;
+    width: fit-content;
+    margin: 0 auto;
+    border-radius: 13px;
+}
+
+
+
+
 
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -8210,6 +8492,7 @@ ul#tabs-nav li.active {
     }
     .boxCard3{
         margin-right: 0 !important;
+        margin-top: -50px !important;
     }
 
     .dropdown-menuSearch {
@@ -9650,7 +9933,11 @@ ul#tabs-nav li.active {
         display: flex;
     }
     .jouwn-skills {
-        padding: 8px 35px;
+        padding: 8px 26px;
+        border: none !important;
+    }
+    .inloggenbtn{
+        border: none !important;
     }
     .btn-ZoekSerach{
         display: none;
@@ -9692,6 +9979,83 @@ ul#tabs-nav li.active {
         float: inherit !important;
         justify-content: center;
         width: 100% !important;
+    }
+    #SkillsModal .modal-dialog {
+        width: 94% !important;
+    }
+    #SkillsModal .modal-body {
+        padding: 1rem 0;
+    }
+    .blockStepSkillsPaspoort {
+        flex-wrap: wrap;
+    }
+    .blockStepSkillsPaspoort .setp {
+        text-align: center;
+        width: 33%;
+    }
+    .blockInputCheck {
+        width: 49%;
+    }
+    .form-Step-skills-passpoort .hiddenCB div:first-child {
+        align-items: center;
+    }
+    .blockInputCheck label {
+        height: fit-content;
+    }
+    .step5SkillsPasspoort .blockInputCheck {
+        width: 90%;
+    }
+    .groupBtnStepSkillsP {
+        flex-wrap: wrap;
+    }
+    .btnTerug {
+        margin-bottom: 20px !important;
+        width: 100%;
+    }
+    .btn-volgende {
+        width: 100%;
+    }
+    .imgWInWar {
+        width: 210px;
+        height: 100%;
+        display: none;
+    }
+    .elementWinWar h2 {
+        font-size: 23px;
+        margin-bottom: 9px;
+        margin-top: 29px;
+    }
+    .blockWinDeWar {
+        background: #dfeef3;
+        height: auto;
+        margin-bottom: 45px;
+        padding: 5px 0 50px;
+    }
+    .elementWinWar {
+        display: block;
+        justify-content: center;
+        align-items: center;
+    }
+    .btnLessHoe {
+        padding: 10px 45px 12px;
+        font-weight: 700;
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        justify-content: center;
+    }
+    .headOverviewOrganisatie {
+        margin: 0 auto 70px;
+        width: 100%;
+        text-align: center;
+    }
+    .headOverviewOrganisatie h1 {
+        font-size: 25px;
+    }
+    .contentOverviewOrganisatie {
+        margin-bottom: 65px;
+        padding: 0 15px;
     }
 
 
