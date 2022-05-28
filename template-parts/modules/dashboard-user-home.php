@@ -1363,7 +1363,7 @@ if(isset($_GET['message']))
 </div>
 
 <?php
-/*
+    /*
     ** Categories - all  * 
     */
 
@@ -1382,7 +1382,7 @@ if(isset($_GET['message']))
         $category = intval($cat_id);
         array_push($categories, $category);
     }
-
+    
     //Categories
     $bangerichts = get_categories( array(
         'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
@@ -1431,9 +1431,6 @@ if(isset($_GET['message']))
             $subtopics = array_merge($subtopics, $subtopic);      
         }
     }
-
-
-
 
     foreach($bangerichts as $key1=>$tag){
         

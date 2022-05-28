@@ -23,14 +23,9 @@
             <div class="col-md-6 col-sm-12">
                 <div class="blockForm2">
                     <p><b>Activeer zakelijke</b> <br> Leeromgeving </p>
-                    <form action="" class="formBoekGratis">
-                        <input type="text" placeholder="Voornaam*" required>
-                        <input type="text" placeholder="Achternaam*" required>
-                        <input type="text" placeholder="Bedrijf">
-                        <input type="text" placeholder="E-mailadres*" required>
-                        <input type="text" placeholder="Telefoonnummer*" required>
-                        <button class="btn btnAanvraag">Aanvraag indienen </button>
-                    </form>
+                    <?php
+                        echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true']");
+                    ?>  
                 </div>
             </div>
         </div>

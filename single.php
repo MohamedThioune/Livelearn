@@ -5,6 +5,14 @@ global $post;
 
 $posttags = get_the_tags();
 
+$stackoverflow = get_field('stackoverflow',  'user_' . $post->post_author);
+$github = get_field('github',  'user_' . $post->post_author);
+$facebook = get_field('facebook',  'user_' . $post->post_author);
+$twitter = get_field('twitter',  'user_' . $post->post_author);
+$linkedin = get_field('linkedin',  'user_' . $post->post_author);
+$instagram = get_field('instagram',  'user_' . $post->post_author);
+$discord = get_field('discord',  'user_' . $post->post_author);
+$tik_tok = get_field('tik_tok',  'user_' . $post->post_author);
 
 //Image
 $image = get_the_post_thumbnail_url($post->ID);
@@ -265,27 +273,27 @@ $content = get_field('article_itself',  $blog->ID);
                 <div class="col-lg-4">
                     <div class="sidebar-wrap">
                         <div class="sidebar-widget card border-0 mb-3">
-                            <img src="<?php echo $author; ?>" alt="" class="img-fluid">
+                            <a href="<? "/user-overview/?id=" . $post->post_author; ?>" target="_blank" rel="noopener noreferrer"><img src="<?php echo $author; ?>" alt="" class="img-fluid"></a>
                             <div class="card-body p-4 text-center">
-                                <h5 class="mb-0 mt-4"><?php echo(get_userdata($post->post_author)->data->display_name); ?></h5>
+                                <a href="<? "/user-overview/?id=" . $post->post_author; ?>" target="_blank" rel="noopener noreferrer"><h5 class="mb-0 mt-4"><?php echo(get_userdata($post->post_author)->data->display_name); ?></h5></a>
                                 <p><?php echo $functie; ?></p>
                                 <p><?php echo $biographical; ?></p>
 
                                 <ul class="list-inline author-socials">
                                     <li class="list-inline-item mr-3">
-                                        <a href="#"><i class="fab fa-facebook-f text-muted"></i></a>
+                                        <a href="<?= $facebook; ?>"><i class="fab fa-facebook-f text-muted"></i></a>
                                     </li>
                                     <li class="list-inline-item mr-3">
-                                        <a href="#"><i class="fab fa-twitter text-muted"></i></a>
+                                        <a href="<?= $twitter; ?>"><i class="fab fa-twitter text-muted"></i></a>
                                     </li>
                                     <li class="list-inline-item mr-3">
-                                        <a href="#"><i class="fab fa-linkedin-in text-muted"></i></a>
+                                        <a href="<?= $linkedin; ?>"><i class="fab fa-linkedin-in text-muted"></i></a>
                                     </li>
                                     <li class="list-inline-item mr-3">
-                                        <a href="#"><i class="fab fa-pinterest text-muted"></i></a>
+                                        <a href="<?= $github; ?>"><i class="fab fa-github text-muted"></i></a>
                                     </li>
                                     <li class="list-inline-item mr-3">
-                                        <a href="#"><i class="fab fa-behance text-muted"></i></a>
+                                        <a href="<?= $discord; ?>"><i class="fab fa-discord text-muted"></i></a>
                                     </li>
                                 </ul>
                             </div>
@@ -301,11 +309,12 @@ $content = get_field('article_itself',  $blog->ID);
                             ?>
                             
                             <div class="media border-bottom py-3">
-                                <a href="<?php echo get_the_permalink($latest['ID']);?>"><img class="mr-4" src="img/blog/bt-3.jpg" alt=""></a>
-                                <div class="media-body">
-                                    <h6 class="my-2"><a href="#"><?php echo get_the_title($latest['ID']);?></a></h6>
-                                    <span class="text-sm text-muted"><?php echo get_the_date('d-m-Y',$latest['ID']);?></span>
-                                </div>
+                                <a href="<?php echo get_the_permalink($latest['ID']);?>"><img class="mr-4" src="<?= get_stylesheet_directory_uri(); ?>/img/blog/bt-3.jpg" alt="">
+                                    <div class="media-body">
+                                        <h6 class="my-2"><?php echo get_the_title($latest['ID']);?></h6>
+                                        <span class="text-sm text-muted"><?php echo get_the_date('d-m-Y',$latest['ID']);?></span>
+                                    </div>
+                                </a>
                             </div>
                             <?php }?>
                         </div>

@@ -301,7 +301,8 @@ $orders = wc_get_orders($order_args);
                                 $day = explode(' ', $date)[0];
                             }
                         }else{
-                            $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
+                            $day = "~";
+                            $data = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
                             $date = $data[0];
                             $day = explode(' ', $date)[0];
                         }
