@@ -14,6 +14,7 @@ jQuery(function($){
             return false;
         });
     });
+
     
     //header on scroll fix
     var height = ($('nav.navbar').css('height'));
@@ -24,6 +25,83 @@ jQuery(function($){
         $(".dropdownMenuDashboard").toggle();
 
     });
+
+    // for modal skills passport home page
+    $("#btnStep1SkillsPasspoort").click(function() {
+        $(".step1SkillsPasspoort").hide();
+        $(".step3SkillsPasspoort").hide();
+        $(".step4SkillsPasspoort").hide();
+        $(".step5SkillsPasspoort").hide();
+        $(".step2SkillsPasspoort").show();
+        $('#Vakgebied').addClass('colorStep');
+
+    });
+    $("#btnStep2SkillsPasspoort").click(function() {
+        $(".step1SkillsPasspoort").hide();
+        $(".step2SkillsPasspoort").hide();
+        $(".step5SkillsPasspoort").hide();
+        $(".step4SkillsPasspoort").hide();
+        $(".step3SkillsPasspoort").show();
+        $('#Locatie').addClass('colorStep');
+
+    });
+    $("#btnStep3SkillsPasspoort").click(function() {
+        $(".step1SkillsPasspoort").hide();
+        $(".step2SkillsPasspoort").hide();
+        $(".step3SkillsPasspoort").hide();
+        $(".step5SkillsPasspoort").hide();
+        $(".step4SkillsPasspoort").show();
+        $('#Leervorm').addClass('colorStep');
+    });
+    $("#btnStep4SkillsPasspoort").click(function() {
+        $(".step1SkillsPasspoort").hide();
+        $(".step2SkillsPasspoort").hide();
+        $(".step3SkillsPasspoort").hide();
+        $(".step4SkillsPasspoort").hide();
+        $(".step5SkillsPasspoort").show();
+        $('#Generatie').addClass('colorStep');
+    });
+    $("#btnStep5SkillsPasspoort").click(function() {
+        $(".step1SkillsPasspoort").hide();
+        $(".step2SkillsPasspoort").hide();
+        $(".step3SkillsPasspoort").hide();
+        $(".step4SkillsPasspoort").hide();
+        $(".step5SkillsPasspoort").hide();
+        $(".step6SkillsPasspoort").show();
+        $('#Finish').addClass('colorStep');
+    });
+
+
+
+
+    $("#btnTerug1SkillsPasspoort").click(function() {
+        $(".step1SkillsPasspoort").show();
+        $(".step2SkillsPasspoort").hide();
+        $('#Vakgebied').removeClass('colorStep');
+    });
+    $("#btnTerug2SkillsPasspoort").click(function() {
+        $(".step2SkillsPasspoort").show();
+        $(".step3SkillsPasspoort").hide();
+        $('#Locatie').removeClass('colorStep');
+    });
+    $("#btnTerug3SkillsPasspoort").click(function() {
+        $(".step3SkillsPasspoort").show();
+        $(".step4SkillsPasspoort").hide();
+        $('#Leervorm').removeClass('colorStep');
+    });
+    $("#btnTerug4SkillsPasspoort").click(function() {
+        $(".step4SkillsPasspoort").show();
+        $(".step5SkillsPasspoort").hide();
+        $('#Generatie').removeClass('colorStep');
+    });
+    $("#btnTerug5SkillsPasspoort").click(function() {
+        $(".step5SkillsPasspoort").show();
+        $(".step6SkillsPasspoort").hide();
+        $('#Finish').removeClass('colorStep');
+    });
+
+
+
 
     //variable for offline courses date input
     $('.block2evens').each(function(){
@@ -152,7 +230,6 @@ jQuery(function($){
     $(".sendReplay").click(function() {
         $(".replayForm").hide();
     });
-
 
 
     $(".replyBtn").click(function() {

@@ -345,8 +345,8 @@
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png"  alt="">
                     </button>
                     <div class="groupeBtn-Jouw-inloggen">
-                        <a href="/registreren" class="jouwn-skills elementWeb">Jouw skills paspoort in 3 stappen</a>
-                        <a href="/registreren" class="jouwn-skills elementMobile">Skills Paspoort</a>
+                        <button type="button" class="btn jouwn-skills elementWeb" data-toggle="modal" data-target="#SkillsModal" >Jouw skills paspoort in 3 stappen</button>
+                        <button type="button" class="jouwn-skills elementMobile" data-toggle="modal" data-target="#SkillsModal" >Skills Paspoort</button>
                         <a href="/inloggen" class="inloggenbtn">Inloggen</a>
                     </div>
                     <div class="dropdown-menuSearch" id="list">
@@ -358,6 +358,237 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Skills passport -->
+    <div class="modal fade" id="SkillsModal" tabindex="-1" role="dialog" aria-labelledby="SkillsModalTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Jouw skills paspoort in 3 stappen</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="blockStepSkillsPaspoort">
+                        <div class="setp" >
+                            <div class="circleIndicator colorStep" id="Niveau"></div>
+                            <p class="textOpleidRight">Niveau</p>
+                        </div>
+                        <div class="setp" >
+                            <div class="circleIndicator" id="Vakgebied"></div>
+                            <p class="textOpleidRight">Vakgebied (en) </p>
+                        </div>
+                        <div class="setp" >
+                            <div class="circleIndicator" id="Locatie"></div>
+                            <p class="textOpleidRight">Locatie</p>
+                        </div>
+                        <div class="setp" >
+                            <div class="circleIndicator" id="Leervorm"></div>
+                            <p class="textOpleidRight">Leervorm</p>
+                        </div>
+                        <div class="setp" >
+                            <div class="circleIndicator" id="Generatie"></div>
+                            <p class="textOpleidRight">Generatie</p>
+                        </div>
+                        <div class="setp" >
+                            <div class="circleIndicator" id="Finish"></div>
+                            <p class="textOpleidRight">Finish</p>
+                        </div>
+                    </div>
+                    <form action="" class="form-Step-skills-passpoort">
+                        <div class="step1SkillsPasspoort">
+                            <p class="titleBlockStepSkills">Wat is jouw hoogst afgeronde opleiding ?</p>
+                            <div class="hiddenCB">
+                                <div>
+                                    <div class="blockInputCheck">
+                                        <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnBaangerichte" for="cb1">MBO 1/2</label>
+                                    </div>
+                                    <div class="blockInputCheck">
+                                        <input type="checkbox" name="choice" id="cb2" /><label class="labelChoose btnBaangerichte" for="cb2">MBO 3/4</label>
+                                    </div>
+                                    <div class="blockInputCheck">
+                                        <input type="checkbox" name="choice" id="cb3" /><label class="labelChoose btnBaangerichte" for="cb3">HBO</label>
+                                    </div>
+                                    <div class="blockInputCheck">
+                                        <input type="checkbox" name="choice" id="cb4" /><label class="labelChoose btnBaangerichte" for="cb4">WO</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center w-100">
+                                <button type="button" class="btn btn-volgende" id="btnStep1SkillsPasspoort">Volgende</button>
+                            </div>
+                        </div>
+
+                        <div class="step2SkillsPasspoort stepSkillpasspoort">
+                            <p class="titleBlockStepSkills">In welk vakgebied ben je werkzaan of ben je geïteresseerd?
+                                <br><span>(Meerdere mogelijk)</span></p>
+                            <div class="hiddenCB">
+                                <div>
+                                    <?php
+                                    foreach($bangerichts as $bangericht){
+                                    $image_category = get_field('image', 'category_'. $bangericht->cat_ID);
+                                    $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/Image-79.png';
+                                    ?>
+                                    <div class="blockInputCheck">
+                                        <input type="checkbox" name="choice" id="<?php echo $bangericht->cat_ID ?>" /><label class="labelChoose btnBaangerichte" for="<?php echo $bangericht->cat_ID ?>"><?php echo $bangericht->cat_name ?></label>
+                                    </div>
+                                        <?php
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="text-center w-100 groupBtnStepSkillsP">
+                                <button type="button" class="btn btnTerug" id="btnTerug1SkillsPasspoort">Terug</button>
+                                <button type="button" class="btn btn-volgende" id="btnStep2SkillsPasspoort">Volgende stap</button>
+                            </div>
+                        </div>
+
+                        <div class="step3SkillsPasspoort stepSkillpasspoort">
+                            <p class="titleBlockStepSkills">Geef de locatie(s) aan waar jij woont of werkt</p>
+                            <div class="input-group-locaties">
+                                <div class="form-group-skillsP">
+                                    <label for="">Privé</label>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                        <option value="" disabled selected>Selecteer de stad waar je woont</option>
+                                        <option>Dakar</option>
+                                        <option>London</option>
+                                        <option>Berlin</option>
+                                        <option>Quebec</option>
+                                    </select>
+                                </div>
+                                <div class="form-group-skillsP">
+                                    <label for="">Werk</label>
+                                    <select class="form-control" id="exampleFormControlSelect1">
+                                        <option value="" disabled selected>Selecteer de stad waar je werkt</option>
+                                        <option>Dakar</option>
+                                        <option>London</option>
+                                        <option>Berlin</option>
+                                        <option>Quebec</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="text-center w-100 groupBtnStepSkillsP">
+                                <button type="button" class="btn btnTerug" id="btnTerug2SkillsPasspoort">Terug</button>
+                                <button type="button" class="btn btn-volgende" id="btnStep3SkillsPasspoort">Volgende stap</button>
+                            </div>
+                        </div>
+
+                        <div class="step4SkillsPasspoort stepSkillpasspoort">
+                            <p class="titleBlockStepSkills">Hoe leer jij het liefst</p>
+                            <div class="hiddenCB">
+                                <div>
+                                    <div class="blockInputCheck">
+                                        <input type="checkbox" name="choice" id="cb10" /><label class="labelChoose btnBaangerichte" for="cb1">Opleidingen</label>
+                                    </div>
+                                    <div class="blockInputCheck">
+                                        <input type="checkbox" name="choice" id="cb11" /><label class="labelChoose btnBaangerichte" for="cb1">E-learnings</label>
+                                    </div>
+                                    <div class="blockInputCheck">
+                                        <input type="checkbox" name="choice" id="cb12" /><label class="labelChoose btnBaangerichte" for="cb1">Lezingen</label>
+                                    </div>
+                                    <div class="blockInputCheck">
+                                        <input type="checkbox" name="choice" id="cb13" /><label class="labelChoose btnBaangerichte" for="cb1">Trainingen</label>
+                                    </div>
+                                    <div class="blockInputCheck">
+                                        <input type="checkbox" name="choice" id="cb14" /><label class="labelChoose btnBaangerichte" for="cb1">Video's</label>
+                                    </div>
+                                    <div class="blockInputCheck">
+                                        <input type="checkbox" name="choice" id="cb15" /><label class="labelChoose btnBaangerichte" for="cb1">Events</label>
+                                    </div>
+                                    <div class="blockInputCheck">
+                                        <input type="checkbox" name="choice" id="cb16" /><label class="labelChoose btnBaangerichte" for="cb1">Workshop</label>
+                                    </div>
+                                    <div class="blockInputCheck">
+                                        <input type="checkbox" name="choice" id="cb17" /><label class="labelChoose btnBaangerichte" for="cb1">Artikelen</label>
+                                    </div>
+                                    <div class="blockInputCheck">
+                                        <input type="checkbox" name="choice" id="cb18" /><label class="labelChoose btnBaangerichte" for="cb1">Webinars</label>
+                                    </div>
+                                    <div class="blockInputCheck">
+                                        <input type="checkbox" name="choice" id="cb19" /><label class="labelChoose btnBaangerichte" for="cb1">Masterclasses</label>
+                                    </div>
+                                    <div class="blockInputCheck">
+                                        <input type="checkbox" name="choice" id="cb20" /><label class="labelChoose btnBaangerichte" for="cb1">Assessments</label>
+                                    </div>
+                                    <div class="blockInputCheck">
+                                        <input type="checkbox" name="choice" id="cb21" /><label class="labelChoose btnBaangerichte" for="cb1">Podcasts</label>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="text-center w-100 groupBtnStepSkillsP">
+                                    <button type="button" class="btn btnTerug" id="btnTerug3SkillsPasspoort">Terug</button>
+                                    <button type="button" class="btn btn-volgende" id="btnStep4SkillsPasspoort">Volgende stap</button>
+                                </div>
+                            </div>
+
+                        <div class="step5SkillsPasspoort stepSkillpasspoort">
+                                <p class="titleBlockStepSkills">Wat is jouw hoogst afgeronde opleiding? </p>
+                                <div class="hiddenCB">
+                                    <div>
+                                        <div class="blockInputCheck">
+                                            <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnBaangerichte" for="cb1">Generatie BabyBoom (1940-1960)</label>
+                                        </div>
+                                        <div class="blockInputCheck">
+                                            <input type="checkbox" name="choice" id="cb2" /><label class="labelChoose btnBaangerichte" for="cb2">Generatie X (1961-1980)</label>
+                                        </div>
+                                        <div class="blockInputCheck">
+                                            <input type="checkbox" name="choice" id="cb3" /><label class="labelChoose btnBaangerichte" for="cb3">Millenials (1981-1995)</label>
+                                        </div>
+                                        <div class="blockInputCheck">
+                                            <input type="checkbox" name="choice" id="cb4" /><label class="labelChoose btnBaangerichte" for="cb4">Generatie Z (1996-nu)</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center w-100 groupBtnStepSkillsP">
+                                    <button type="button" class="btn btnTerug" id="btnTerug4SkillsPasspoort">Terug</button>
+                                    <button type="button" class="btn btn-volgende" id="btnStep5SkillsPasspoort">Volgende stap</button>
+                                </div>
+                             </div>
+
+                        <div class="step6SkillsPasspoort stepSkillpasspoort">
+                                <p class="titleBlockStepSkills">Jouw gegevens en je hebt direct toegang tot je skills paspoort </p>
+                                <div class="hiddenCB">
+                                    <div class="input-group-register">
+                                        <div class="form-group-skills">
+                                            <label for="">Voornaam</label>
+                                            <input type="text" placeholder="Voorman">
+                                        </div>
+                                        <div class="form-group-skills">
+                                            <label for="">Bedrijf</label>
+                                            <input type="text" placeholder="Bedrijf">
+                                        </div>
+                                        <div class="form-group-skills">
+                                            <label for="">Achternaam</label>
+                                            <input type="text" placeholder="Achternaam">
+                                        </div>
+                                        <div class="form-group-skills">
+                                            <label for="">Wachtwoord</label>
+                                            <input type="text" placeholder="Wachtwoord">
+                                        </div>
+                                        <div class="form-group-skills">
+                                            <label for="">Email</label>
+                                            <input type="text" placeholder="Email">
+                                        </div>
+                                        <div class="form-group-skills">
+                                            <label for="">Wachtwoord</label>
+                                            <input type="text" placeholder="Wachtwoord">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center w-100 groupBtnStepSkillsP">
+                                    <button type="button" class="btn btnTerug" id="btnTerug5SkillsPasspoort">Terug</button>
+                                    <button type="button" class="btn btn-volgende">Maak je skills paspoort</button>
+                                </div>
+                             </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container-fluid">
         <div class="boxCard3">
             <a href="functiegerichte" class="card3">
@@ -416,6 +647,19 @@
                </div>
            </div>
        </div>
+    </div>
+<div class="blockWinDeWar">
+    <div class="container-fluid">
+        <div class="elementWinWar">
+            <div class="imgWInWar">
+                <img src="<?php echo get_stylesheet_directory_uri();?>/img/win-war.png"  alt="">
+            </div>
+          <div class="text-center">
+              <h2 class="titleWinWar">Win de <b>War-on-Talent</b></h2>
+              <p class="descriptionWinWar">Gratis ontwikkeltraject t.w.v €700 p.p voor je operationele team (max. MBO2)</p>
+          </div>
+            <a href="" class="btn btnLessHoe">Lees hoe</a>
+        </div>
     </div>
 </div>
 <div class="cardVoor">
