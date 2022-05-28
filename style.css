@@ -192,14 +192,21 @@ body, html {
 }
 
 .VoorOrganisaties {
-    height: 100vh;
     background: #E0EFF4;
     color: white;
     position: relative;
     display: flex;
     align-items: center;
+    padding-top: 60px;
+    padding-bottom: 50px;
 }
 
+.VoorOrganisaties .gform_button{
+    width: 100% !important;
+    text-align: center;
+    background: #47a99e !important;
+    color: #ffffff !important;
+}
 .boxOne3 {
     height: 425px;
     background: url("./img/bg1.png") no-repeat;
@@ -4005,11 +4012,13 @@ form {
     color: #ffffff;
     padding: 25px 20px 15px;
     border-radius: 10px;
-    text-align: center;
     width: 73%;
     margin-left: auto;
-    margin-top: -10vh;
     position: relative;
+}
+
+.blockForm2 p{
+    text-align: center;
 }
 .blockForm2 .formBoekGratis input {
     box-shadow: 4px 5px #043356;
