@@ -341,9 +341,6 @@
                     <input id="search" type="search" class="jAuto searchInputHome form-control"
                         placeholder="Zoek opleidingen, experts of onderwerpen" name="search" autocomplete="off">
                     <button class="btn btn-Zoek elementWeb">Zoek</button>
-                    <button class="btn btn-ZoekSerach">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png"  alt="">
-                    </button>
                     <div class="groupeBtn-Jouw-inloggen">
                         <button type="button" class="btn jouwn-skills elementWeb" data-toggle="modal" data-target="#SkillsModal" >Jouw skills paspoort in 3 stappen</button>
                         <button type="button" class="jouwn-skills elementMobile" data-toggle="modal" data-target="#SkillsModal" >Skills Paspoort</button>
