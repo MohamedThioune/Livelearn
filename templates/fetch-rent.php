@@ -11,7 +11,7 @@ $users = get_users();
 
 foreach($users as $user) {
     $company_user = get_field('company',  'user_' . $user->ID);
-    if(!empty($company_connected) && !empty($company_user))
+    if(!empty($company_connected) && !empty($company_user) && $user_connected != $user->ID)
         if($company_user[0]->post_title == $company_connected[0]->post_title)
             array_push($users_company,$user->ID);
 }
@@ -29,7 +29,7 @@ if (isset($id_course))
             else
                 echo "<option value='" . $user . "'>" . $name . "</option>";   
         }
-    echo "</select></br></br>";
+    echo "</select></br>";
 }
 
 

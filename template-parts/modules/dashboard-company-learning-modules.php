@@ -249,34 +249,25 @@ $orders = wc_get_orders($order_args);
         
         <div class="modal-content modal-content-width m-auto " style="margin-top: 100px !important">
             <div class="modal-header mx-4">
-                <h5 class="modal-title" id="exampleModalLabel">Subtopics </h5>
+                <h5 class="modal-title" id="exampleModalLabel">Experts  </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('myModal').style.display='none'" >
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="row d-flex text-center justify-content-center align-items-center h-50">
                 <div class="col-md-11  p-4">
-                    <?php
-                    echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
-                    echo "<form action='/dashboard/user/' method='POST'>";
-                    ?>              
-                    <div class="form-group">
-                    
+                    <form action='/dashboard/user/' method='POST'>
+                    <label for='member_id'><b>Deel deze cursus met uw team :</b></label><br>
+                    <div class="form-group display-experts">
                     </div> 
-                    <div id="modal-content" class="display-experts">
-                    <?php
-                    echo "<label for='member_id'><b>Deel deze cursus met uw team :</b></label><br>";
-                    ?>              
+                    <div id="modal-content">
+                             
                     </div>
+                    <center><input type='submit' class='btn text-white' name='referee_employee' value='Save' style='background: #023356;'/></center>
                     <div class="d-flex justify-content-end">
-                    <?php
-                    echo "<input type='submit' class='btn text-white' name='referee_employee' value='Save' style='background: #023356;'>";
-                    ?>
                     </div>
-                    <?php
-                    echo "</form>";
-                    echo "</div>";
-                    ?>
+                    </form>
+
                 </div>
             </div>
         <!-- </div> -->
@@ -384,7 +375,7 @@ $orders = wc_get_orders($order_args);
                             </p>             
                         </td>
                         <td class="textTh"><?php echo $day; ?></td>
-                        <td class="textTh" id="live"> <input type="button" class="btn btn-success rent" id="<?= $course->ID; ?>"  value="Activeer" /> </td>
+                        <td class="textTh" id="live"> <input type="button" class="btnNewCourse rent" id="<?= $course->ID; ?>"  value="Activeer" /> </td>
                     </tr>
                     <?php
                     }
@@ -412,7 +403,8 @@ $orders = wc_get_orders($order_args);
                 // Get the modal
                 //console.log(data)
                 var modal = document.getElementById("myModalRent");
-                $('.display-experts').html(data)
+                $('.display-experts').html(data);
+                console.log(data);
                 // Get the button that opens the modal
 
 
