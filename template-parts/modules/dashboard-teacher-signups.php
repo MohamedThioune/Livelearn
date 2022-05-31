@@ -65,7 +65,7 @@ $inkomsten = count($orders) * $price;
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6 col-lg-8">
+        <div class="col-md-10 col-lg-8">
             <div class="cardCoursGlocal">
                 <div class="w-100">
                     <div class="titleOpleidingstype">
@@ -175,7 +175,7 @@ $inkomsten = count($orders) * $price;
                 </div>
             </div>
         </div>
-        <div class="col-md-5 col-lg-4">
+        <!-- <div class="col-md-5 col-lg-4">
             <div class="blockRight2">
                 <a href="" class="btn btnActiviteit btnBewerken">Bewerken</a>
                     <div class="w-100">
@@ -221,7 +221,7 @@ $inkomsten = count($orders) * $price;
                         <a href="" class="btn btnSubmit w-100">Toevoegen</a>
                     </div>  
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 

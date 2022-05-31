@@ -261,46 +261,39 @@ $reviews = get_field('reviews', $post->ID);
                                     <div class="tab">
                                         <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                                         <hr class="hrModifeDeel">
-                                        <?php
-                                        if ($user_id != 0)
-                                        {
-                                        ?>
-                                            <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
-                                        <?php
-                                        }
-                                        ?>
+                                        <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
                                     </div>
                                     <div id="Extern" class="tabcontent">
-                                    <div class="contentElementPartage">
-                                        <button id="whatsapp"  class="btn contentIcone">
-                                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/whatsapp.png" alt="">
-                                        </button>
-                                        <p class="titleIcone">WhatsApp</p>
-                                    </div>
-                                    <div class="contentElementPartage">
-                                        <button class="btn contentIcone">
-                                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/facebook.png" alt="">
-                                        </button>
-                                        <p class="titleIcone">Facebook</p>
-                                    </div>
-                                    <div class="contentElementPartage">
-                                        <button class="btn contentIcone">
-                                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/insta.png" alt="">
-                                        </button>
-                                        <p class="titleIcone">Instagram</p>
-                                    </div>
-                                    <div class="contentElementPartage">
-                                        <button id="linkedin" class="btn contentIcone">
-                                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/linkedin.png" alt="">
-                                        </button>
-                                        <p class="titleIcone">Linkedin</p>
-                                    </div>
-                                    <div class="contentElementPartage">
-                                        <button id="sms" class="btn contentIcone">
-                                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/sms.png" alt="">
-                                        </button>
-                                        <p class="titleIcone">Sms</p>
-                                    </div>
+                                        <div class="contentElementPartage">
+                                            <button id="whatsapp"  class="btn contentIcone">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/whatsapp.png" alt="">
+                                            </button>
+                                            <p class="titleIcone">WhatsApp</p>
+                                        </div>
+                                        <div class="contentElementPartage">
+                                            <button class="btn contentIcone">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/facebook.png" alt="">
+                                            </button>
+                                            <p class="titleIcone">Facebook</p>
+                                        </div>
+                                        <div class="contentElementPartage">
+                                            <button class="btn contentIcone">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/insta.png" alt="">
+                                            </button>
+                                            <p class="titleIcone">Instagram</p>
+                                        </div>
+                                        <div class="contentElementPartage">
+                                            <button id="linkedin" class="btn contentIcone">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/linkedin.png" alt="">
+                                            </button>
+                                            <p class="titleIcone">Linkedin</p>
+                                        </div>
+                                        <div class="contentElementPartage">
+                                            <button id="sms" class="btn contentIcone">
+                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/sms.png" alt="">
+                                            </button>
+                                            <p class="titleIcone">Sms</p>
+                                        </div>
                                         <div>
                                             <p class="klikText">Klik om link te kopieren</p>
                                             <div class="input-group input-group-copy formCopyLink">

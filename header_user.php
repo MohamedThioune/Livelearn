@@ -1,4 +1,6 @@
 <?php
+global $wp;
+
 $user = wp_get_current_user();
 
 /*
@@ -14,6 +16,8 @@ $args = array(
 );
 
 $todos = get_posts($args);
+
+$url = home_url( $wp->request );
 
 ?>
 
@@ -221,7 +225,7 @@ $todos = get_posts($args);
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="/dashboard/user/">Dashboard</a>
                                 <a class="dropdown-item" href="/dashboard/company/profile">Mijn profiel</a>
-                                <a class="dropdown-item" href="<?php echo wp_logout_url('/'); ?>">Uitloggen</a>
+                                <a class="dropdown-item" href="<?php echo wp_logout_url($url); ?>">Uitloggen</a>
                             </div>
                         </li>
                     </ul>
