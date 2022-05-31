@@ -9,7 +9,7 @@
                     <li class="elementTextDashboard">
                         <a href="/dashboard/company/" class="d-flex">
                            <div class="elementImgSidebar" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashb.png" >
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Dashboard.png" >
                             </div>
                             <span>Dashboard</span>
                         </a>
@@ -17,7 +17,7 @@
                     <li class="elementTextDashboard">
                         <a href="/dashboard/company/people-mensen/" class="d-flex">
                             <div class="elementImgSidebar" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Opleiding_toevoegen.png" >
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Mijn-mensen.png" >
                             </div>
                             <span> Mensen</span>
                         </a>
@@ -33,7 +33,7 @@
                     <li class="elementTextDashboard">
                         <a href="/dashboard/company/learning-databank/" class="d-flex">
                            <div class="elementImgSidebar" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Inschrijvingen.png" >
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Leer-databank.png" >
                             </div>
                             <span>Leer-databank</span>
                         </a>
@@ -73,7 +73,7 @@
                     <li class="elementTextDashboard">
                         <a href="/dashboard/company/people/" class="d-flex">
                            <div class="elementImgSidebar imgSide2" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/organise.png" >
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Manage-Organisatie.png" >
                             </div>
                             <span> De organisatie</span>
                         </a>
@@ -81,7 +81,7 @@
                     <li class="elementTextDashboard">
                         <a href="#" class="d-flex">
                            <div class="elementImgSidebar imgSide2" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/influence.png" >
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Instroom.png" >
                             </div>
                             <span>Instroom</span>
                         </a>
@@ -89,7 +89,7 @@
                     <li class="elementTextDashboard">
                         <a href="#" class="d-flex">
                             <div class="elementImgSidebar imgSide2" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/carte-de-debit.png" >
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Doorstroom.png" >
                             </div>
                             <span>Doorstroom</span>
                         </a>
@@ -97,7 +97,7 @@
                     <li class="elementTextDashboard">
                         <a href="#" class="d-flex">
                             <div class="elementImgSidebar imgSide2" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/cartes-de-debit.png" >
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Uitstroom.png" >
                             </div>
                             <span>Uitstroom</span>
                         </a>

@@ -16,7 +16,7 @@ foreach($users as $user) {
             array_push($users_company,$user->ID);
 }
 
-if (isset($id_course))
+if (isset($id_course)) 
 {
     echo "<input type='hidden' name='course_id' value='" . $id_course . "' />";
     echo "<input type='hidden' name='path' value='dashboard' />";
@@ -29,7 +29,7 @@ if (isset($id_course))
             else
                 echo "<option value='" . $user . "'>" . $name . "</option>";   
         }
-    echo "</select>";
+    echo "</select></br></br>";
 }
 
 

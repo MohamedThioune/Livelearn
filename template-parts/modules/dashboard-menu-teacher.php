@@ -12,7 +12,7 @@
         <li class="elementTextDashboard">
             <a href="/dashboard/teacher/" class="d-flex">
                 <div class="elementImgSidebar" >
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashb.png" >
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Dashboard.png" >
                 </div>
                 <span >Dashboard</span>
             </a>

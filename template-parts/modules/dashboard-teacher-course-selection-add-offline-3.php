@@ -6,11 +6,12 @@
                     <h2>3.Data en locaties</h2>
                 </div>
                 <?php acf_form(array(
-    'post_id'       => $_GET['id'],
-    'fields' => array('data_locaties'),
-    'submit_value'  => __('Opslaan & verder'),
-    'return' => '?func=add-offline&id=%post_id%&step=4'
-)); ?>
+                'post_id'       => $_GET['id'],
+                'fields' => array('data_locaties'),
+                'submit_value'  => __('Opslaan & verder'),
+                'return' => '?func=add-offline&id=%post_id%&step=4'
+            )); ?>
+
             </div>
         </div>
     </div>
