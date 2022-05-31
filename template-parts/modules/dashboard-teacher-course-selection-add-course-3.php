@@ -4,9 +4,11 @@
 <script type="text/javascript">
     $(function () {
         var selectedDates = [];
-        datePicker = $('[id*=Txt_Date]').datepicker({
+        datePicker = $('[class*=Txt_Date]').datepicker({
             multidate: true,
-            format: 'dd-mm-yyyy',
+            format: 'mm/dd/yyyy ',
+            todayHighlight: true,
+
             language: 'en'
         });
         datePicker.on('changeDate', function (e) {
@@ -47,7 +49,7 @@
                     </div>
                     <div class="input-group-course">
                         <label for="">Dates between</label>
-                        <input type="text" id="Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
+                        <input type="text" id="" class="datepicker Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
                     </div>
                     <div class="input-group-course">
                         <label for="">Location</label>
@@ -78,13 +80,13 @@
                                                 <input type="date">
                                             </div>
                                             <div class="input-group">
-                                                <label for="">dates between</label>
-                                                <input type="date">
-                                            </div>
-                                            <div class="input-group">
                                                 <label for="">End date</label>
                                                 <input type="date">
                                             </div>
+                                        </div>
+                                        <div class="input-group-course">
+                                            <label for="">Dates between</label>
+                                            <input type="text" id="" class="datepicker Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
                                         </div>
                                         <div class="input-group-course">
                                             <label for="">Location</label>

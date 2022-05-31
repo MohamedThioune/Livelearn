@@ -261,7 +261,6 @@
                                         array_push($tags, $value->cat_ID);
                                     }
                                 update_field('categories', $tags, $course->ID);
-
                             }
                         
                         ?>

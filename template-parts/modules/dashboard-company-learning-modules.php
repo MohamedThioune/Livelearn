@@ -207,43 +207,83 @@ $orders = wc_get_orders($order_args);
         </div>
     </div>
 
-       <!-- The Modal -->
-       <div id="myModal" class="modal">
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
 
-           <!-- Modal content -->
-       
-            <!-- <div id="modal-content"> -->
-           
-            <div class="modal-content modal-content-width m-auto " style="margin-top: 100px !important">
-                <div class="modal-header mx-4">
-                    <h5 class="modal-title" id="exampleModalLabel">Subtopics </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('myModal').style.display='none'" >
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="row d-flex text-center justify-content-center align-items-center h-50">
-                    <div class="col-md-11  p-4">
-                        <div class="form-group display-subtopics">
-                        
-                        </div> 
-                        <div id="modal-content">
+        <!-- Modal content -->
+    
+        <!-- <div id="modal-content"> -->
+        
+        <div class="modal-content modal-content-width m-auto " style="margin-top: 100px !important">
+            <div class="modal-header mx-4">
+                <h5 class="modal-title" id="exampleModalLabel">Subtopics </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('myModal').style.display='none'" >
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="row d-flex text-center justify-content-center align-items-center h-50">
+                <div class="col-md-11  p-4">
+                    <div class="form-group display-subtopics">
+                    
+                    </div> 
+                    <div id="modal-content">
 
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <button id="save_subtopics" type="button" class="btn text-white" style="background: #023356;">
-                             <strong>Save</strong> </button>
-                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button id="save_subtopics" type="button" class="btn text-white" style="background: #023356;">
+                            <strong>Save</strong> </button>
                     </div>
                 </div>
-            <!-- </div> -->
-          </div>
-           
+            </div>
+        <!-- </div> -->
+        </div>
+        
 
-       </div> 
+    </div> 
 
+    <div id="myModalRent" class="modal">
+
+        <!-- Modal content -->
     
+        <!-- <div id="modal-content"> -->
+        
+        <div class="modal-content modal-content-width m-auto " style="margin-top: 100px !important">
+            <div class="modal-header mx-4">
+                <h5 class="modal-title" id="exampleModalLabel">Subtopics </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('myModal').style.display='none'" >
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="row d-flex text-center justify-content-center align-items-center h-50">
+                <div class="col-md-11  p-4">
+                    <?php
+                    echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
+                    echo "<form action='/dashboard/user/' method='POST'>";
+                    ?>              
+                    <div class="form-group">
+                    
+                    </div> 
+                    <div id="modal-content" class="display-experts">
+                    <?php
+                    echo "<label for='member_id'><b>Deel deze cursus met uw team :</b></label><br>";
+                    ?>              
+                    </div>
+                    <div class="d-flex justify-content-end">
+                    <?php
+                    echo "<input type='submit' class='btn text-white' name='referee_employee' value='Save' style='background: #023356;'>";
+                    ?>
+                    </div>
+                    <?php
+                    echo "</form>";
+                    echo "</div>";
+                    ?>
+                </div>
+            </div>
+        <!-- </div> -->
+        </div>
+        
 
-
+    </div> 
 		
     <div class="cardOverviewCours">
         <div class="headListeCourse">
@@ -263,7 +303,7 @@ $orders = wc_get_orders($order_args);
                         <th scope="col">Prijs</th>
                         <th scope="col">Onderwerp(en)</th>
                         <th scope="col">Startdatum</th>
-                        <th scope="col">Status</th>
+                        <th scope="col">Optie</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -308,8 +348,8 @@ $orders = wc_get_orders($order_args);
                         }
 
                         /*
-                            * Price
-                            */
+                        * Price
+                        */
                         $p = get_field('price', $course->ID);
                         if($p != "0")
                             $price =  number_format($p, 2, '.', ',');
@@ -329,22 +369,22 @@ $orders = wc_get_orders($order_args);
                                     $course_subtopics = get_field('categories', $course->ID);
                                     $field='';
                                     if($course_subtopics!=null){
-                                    if (is_array($course_subtopics) || is_object($course_subtopics)){
-                                        foreach ($course_subtopics as $key =>  $course_subtopic) {
-                                               if ($course_subtopic!="" && $course_subtopic!="Array")
-                                                   $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
-                                      }
-                                         $field=substr($field,0,-1);
-                                         echo $field;
-                                    
-                                }
-                            }
+                                        if (is_array($course_subtopics) || is_object($course_subtopics)){
+                                            foreach ($course_subtopics as $key =>  $course_subtopic) {
+                                                if ($course_subtopic!="" && $course_subtopic!="Array")
+                                                    $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                            }
+                                            $field=substr($field,0,-1);
+                                            echo $field;
+                                        
+                                            }
+                                    }
                                     
                                 ?>
                             </p>             
                         </td>
                         <td class="textTh"><?php echo $day; ?></td>
-                        <td class="textTh" id="live">Live</td>
+                        <td class="textTh" id="live"> <input type="button" class="btn btn-success rent" id="<?= $course->ID; ?>"  value="Activeer" /> </td>
                     </tr>
                     <?php
                     }
@@ -356,73 +396,115 @@ $orders = wc_get_orders($order_args);
     </div>
 </div>
 
+<script>
+    var id_course;
+    $('.rent').click((e)=>{
+        id_course = e.target.id;
+        $.ajax({
+            url:"/fetch-rent",
+            method:"post",
+            data:
+            {
+                id_course:id_course
+            },
+            dataType:"text",
+            success: function(data){
+                // Get the modal
+                //console.log(data)
+                var modal = document.getElementById("myModalRent");
+                $('.display-experts').html(data)
+                // Get the button that opens the modal
+
+
+                // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on the button, open the modal
+
+                    modal.style.display = "block";
+
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                    modal.style.display = "none";
+                    }
+                }
+                        
+            }
+            });
+        });
+</script>
 
 
 <script>
     var id_course;
     $('.td_subtopics').click((e)=>{
         id_course = e.target.id;
-     $.ajax({
-            url:"/fetch-subtopics-course",
-            method:"post",
-            data:
+        $.ajax({
+                url:"/fetch-subtopics-course",
+                method:"post",
+                data:
+                {
+                    id_course:id_course,
+                    action:'get_course_subtopics'
+                },
+            dataType:"text",
+            success: function(data){
+                // Get the modal
+                //console.log(data)
+                var modal = document.getElementById("myModal");
+                $('.display-subtopics').html(data)
+                // Get the button that opens the modal
+
+
+                // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks on the button, open the modal
+
+                    modal.style.display = "block";
+
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                    modal.style.display = "none";
+                    }
+                }
+                        
+            }
+            });
+        });
+    
+    $('#save_subtopics').click(()=>{
+      var subtopics = $('#selected_subtopics').val()
+      $.ajax({
+        url:"/fetch-subtopics-course",
+        method:"post",
+        data:
             {
-                id_course:id_course,
-                action:'get_course_subtopics'
+            add_subtopics:subtopics,
+            id_course:id_course,
+            action:'add_subtopics'
             },
         dataType:"text",
         success: function(data){
-            // Get the modal
+            
+            let modal=$('#myModal');
+            modal.attr('style', { display: "none" });
+            //modal.style.display = "none";
+            $('#'+id_course).html(data)
             //console.log(data)
-    var modal = document.getElementById("myModal");
-    $('.display-subtopics').html(data)
-    // Get the button that opens the modal
-    
-    
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-    
-    // When the user clicks on the button, open the modal
-    
-        modal.style.display = "block";
-    
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-    
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-        modal.style.display = "none";
         }
-    }
-            
-            
-        }
+        })
     });
-});
-    
-  $('#save_subtopics').click(()=>{
-      var subtopics = $('#selected_subtopics').val()
-      $.ajax({
-  url:"/fetch-subtopics-course",
-  method:"post",
-  data:
-    {
-      add_subtopics:subtopics,
-      id_course:id_course,
-      action:'add_subtopics'
-    },
-  dataType:"text",
-  success: function(data){
-      
-      let modal=$('#myModal');
-      modal.attr('style', { display: "none" });
-      //modal.style.display = "none";
-      $('#'+id_course).html(data)
-      //console.log(data)
-  }
-  })
-});
 </script>
