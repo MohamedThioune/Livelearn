@@ -263,7 +263,7 @@ $orders = wc_get_orders($order_args);
                     <div id="modal-content">
                              
                     </div>
-                    <center><input type='submit' class='btn text-white' name='referee_employee' value='Save' style='background: #023356;'/></center>
+                    <center><input type='submit' class='btn text-white' name='referee_employee' value='Save' style='background: #023356; border: none;'/></center>
                     <div class="d-flex justify-content-end">
                     </div>
                     </form>
