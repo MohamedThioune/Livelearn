@@ -6652,10 +6652,13 @@ tbody{
     border-left: 13px solid #043356;
     transition: all .3s;
 }
+.contentPoadCast .col-lg-4{
+    margin-bottom: 28px;
+}
 .cardPoadCast {
     background: white;
-    margin-bottom: 28px;
     position: relative;
+    height: 100%;
 }
 .cardPoadCast:hover .btnRemovePodcast{
     opacity: 1;
@@ -6670,10 +6673,11 @@ tbody{
 .post-content-podCast ul{
     display: flex;
     padding-left: 20px;
+    flex-wrap: wrap;
 }
 .post-content-podCast li {
     list-style: disc;
-    margin-right: 40px;
+    margin-right: 23px;
 }
 .post-content-podCast .description {
     font-size: 15px;
@@ -6681,6 +6685,10 @@ tbody{
 }
 .post-content-podCast li ::marker {
     color: #043356;
+}
+.post-content-podCast li a {
+    color: #043356;
+    font-weight: bold;
 }
 .btnRemovePodcast{
     position: absolute;
@@ -7986,9 +7994,19 @@ ul#tabs-nav li.active {
     margin: 0 auto;
     border-radius: 13px;
 }
-
-
-
+.datepicker {
+    word-spacing: 8px;
+}
+.datepicker::placeholder {
+    word-spacing: 0px !important;
+}
+.lessonBlock {
+    padding-left: 65px;
+}
+.ml-auto{
+    margin-left: auto!important;
+    width: fit-content;
+}
 
 
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
@@ -9992,10 +10010,12 @@ ul#tabs-nav li.active {
     .blockStepSkillsPaspoort .setp {
         text-align: center;
         width: 33%;
+        margin-bottom: 15px;
     }
     .blockInputCheck {
         width: 49%;
     }
+
     .form-Step-skills-passpoort .hiddenCB div:first-child {
         align-items: center;
     }
@@ -10057,9 +10077,38 @@ ul#tabs-nav li.active {
         margin-bottom: 65px;
         padding: 0 15px;
     }
-
-
-
+    .textOpleidRight {
+        font-size: 14px;
+    }
+    .cardOverviewOrganisatie {
+        height: auto;
+    }
+    .cardOverviewOrganisatie .btncardOverviewOrganisatie {
+        position: relative;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 20px auto -30px;
+        display: flex;
+    }
+    #step3OverviewAssessmentBackend {
+        padding: 0px 15px;
+    }
+    .stepchooseTech {
+        padding-top: 50px;
+    }
+    .headSecondBlockAssessment .titleCategorieAssessment {
+        font-size: 18px;
+    }
+    .customTabs ul#tabs-nav li {
+        padding: 0px 8px;
+    }
+    .customTabs ul#tabs-nav li:hover, ul#tabs-nav li.active a {
+        font-size: 14px;
+    }
+    .blockElementCardDetailLive {
+        margin-bottom: 50px;
+    }
 
 
 }

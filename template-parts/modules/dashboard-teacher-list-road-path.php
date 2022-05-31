@@ -318,6 +318,10 @@ $interesses = get_categories( array(
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/oeil.png" alt="">
                         <span>see</span>
                     </a>
+                    <a href="/" class="seeRoadPath">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/overviewD.png" alt="">
+                        <span>Overview</span>
+                    </a>
                 </div>
             </div>
         </section>
