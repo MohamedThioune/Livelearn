@@ -51,7 +51,7 @@ $content = get_field('article_itself',  $blog->ID);
                     <div class="row">
                         <div class="col-lg-12 mb-5">
                             <div class="single-blog-item">
-                                <img src="<?php echo$image; ?>" alt="" class="img-fluid rounded">
+                                <img src="<?= $image; ?>" alt="" class="img-fluid rounded">
 
                                 <div class="blog-item-content bg-white blogPadding">
 
@@ -273,28 +273,50 @@ $content = get_field('article_itself',  $blog->ID);
                 <div class="col-lg-4">
                     <div class="sidebar-wrap">
                         <div class="sidebar-widget card border-0 mb-3">
-                            <a href="<? "/user-overview/?id=" . $post->post_author; ?>" target="_blank" rel="noopener noreferrer"><img src="<?php echo $author; ?>" alt="" class="img-fluid"></a>
+                            <center><a href="<?php echo "/user-overview/?id=" . $post->post_author; ?>" target="_blank" ><img src="<?php echo $author; ?>" alt="" class="img-fluid"></a></center>
                             <div class="card-body p-4 text-center">
-                                <a href="<? "/user-overview/?id=" . $post->post_author; ?>" target="_blank" rel="noopener noreferrer"><h5 class="mb-0 mt-4"><?php echo(get_userdata($post->post_author)->data->display_name); ?></h5></a>
+                                <a href="<?php echo "/user-overview/?id=" . $post->post_author; ?>" target="_blank" rel="noopener noreferrer"><h5 class="mb-0 mt-4"><?php echo(get_userdata($post->post_author)->data->display_name); ?></h5></a>
                                 <p><?php echo $functie; ?></p>
                                 <p><?php echo $biographical; ?></p>
 
                                 <ul class="list-inline author-socials">
+                                    <?php 
+                                    if($facebook){
+                                    ?>
                                     <li class="list-inline-item mr-3">
                                         <a href="<?= $facebook; ?>"><i class="fab fa-facebook-f text-muted"></i></a>
                                     </li>
+                                    <?php
+                                    }
+                                    if($twitter){
+                                    ?>
                                     <li class="list-inline-item mr-3">
                                         <a href="<?= $twitter; ?>"><i class="fab fa-twitter text-muted"></i></a>
                                     </li>
+                                    <?php
+                                    }
+                                    if($linkedin){
+                                    ?>
                                     <li class="list-inline-item mr-3">
                                         <a href="<?= $linkedin; ?>"><i class="fab fa-linkedin-in text-muted"></i></a>
                                     </li>
+                                    <?php
+                                    }
+                                    if($github){
+                                    ?>
                                     <li class="list-inline-item mr-3">
                                         <a href="<?= $github; ?>"><i class="fab fa-github text-muted"></i></a>
                                     </li>
+                                    <?php
+                                    }
+                                    if($discord){
+                                    ?>
                                     <li class="list-inline-item mr-3">
                                         <a href="<?= $discord; ?>"><i class="fab fa-discord text-muted"></i></a>
                                     </li>
+                                    <?php
+                                    }
+                                    ?>
                                 </ul>
                             </div>
                         </div>
