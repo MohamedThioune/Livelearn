@@ -148,7 +148,6 @@ if(isset($_GET['message']))
         echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>";
         
 ?>
-
 <div class="block-treaning">
     <p class="trendingTitle"> Opleidingen</p>
     <div class="swiper-container swipeContaine4">
