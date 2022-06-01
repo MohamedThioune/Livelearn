@@ -432,7 +432,6 @@ $orders = wc_get_orders($order_args);
         });
 </script>
 
-
 <script>
     var id_course;
     $('.td_subtopics').click((e)=>{
