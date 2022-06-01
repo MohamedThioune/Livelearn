@@ -266,12 +266,12 @@
                         
                         ?>
                         <tr>
-                            <td class="textTh elementOnder"><a style="color:#212529;font-weight:bold" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
+                            <td class="textTh "><a style="color:#212529;font-weight:bold" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
                             <td class="textTh"><?php echo $price; ?></td>
                             <?php
                             if (in_array('administrator', $user_in->roles ) ) {
                             ?>
-                            <td id= <?php echo $course->ID; ?> class="textTh elementOnder td_subtopics">
+                            <td id= <?php echo $course->ID; ?> class="textTh td_subtopics">
                                 <?php
                                     $course_subtopics = get_field('categories', $course->ID);
                                     $field='';
@@ -290,7 +290,7 @@
                         else
                             {
                                 ?>
-                                <td class="textTh elementOnder">
+                                <td class="textTh ">
                                     <?php
                                         $course_subtopics = get_field('categories', $course->ID);
                                         $field='';
