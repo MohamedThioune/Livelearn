@@ -123,8 +123,8 @@ $inkomsten = count($orders) * $price;
                         <div class="headListeCourse">
                             <p class="JouwOpleid">Inschrijvingen</p>
                             <div class="d-flex">
-                                <a href="" class="btnZoek">Zoek personen</a>
-                                <a href="" class="btnActiviteit">Actie</a>
+                                <input type="search" id="<?= $course_id; ?>" class="btnZoek search_signups" placeholder="Zoek personen" />
+                                <!-- <a href="" class="btnActiviteit">Actie</a> -->
                             </div>
                         </div>
                         <div class="contentCardListeCourse">
@@ -143,11 +143,10 @@ $inkomsten = count($orders) * $price;
                                     <th scope="col">Betaaid</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="autocomplete_signups">
                                     <?php
                                     $subscriber_bool = false;
                                     foreach($orders as $order){
-                                   
                                     ?>
                                         <tr>
                                             <td class="textTh pl-3 thModife">
@@ -224,6 +223,30 @@ $inkomsten = count($orders) * $price;
         </div> -->
     </div>
 </div>
+
+
+<script>
+    var id_course;
+    $('.search_signups').keyup((e)=>{
+        id_course = e.target.id;
+        var txt = $(this).val();
+
+        $.ajax({
+            url:"/fetch-signups",
+            method:"post",
+            data:
+            {
+                id_course:id_course,
+                search_signup:txt
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete_signups').html(data);
+            }
+            });
+        });
+</script>
 
 
 
