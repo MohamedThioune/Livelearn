@@ -123,7 +123,7 @@ $inkomsten = count($orders) * $price;
                         <div class="headListeCourse">
                             <p class="JouwOpleid">Inschrijvingen</p>
                             <div class="d-flex">
-                                <input type="search" id="<?= $course_id; ?>" class="btnZoek search_signups" placeholder="Zoek personen" />
+                                <input type="search" id="<?= $_GET['parse']; ?>" class="btnZoek search-signups" placeholder="Zoek personen" />
                                 <!-- <a href="" class="btnActiviteit">Actie</a> -->
                             </div>
                         </div>
@@ -224,11 +224,12 @@ $inkomsten = count($orders) * $price;
     </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script>
     var id_course;
-    $('.search_signups').keyup((e)=>{
-        id_course = e.target.id;
+    $('.search-signups').keyup(function(){
+        id_course = $(this).attr('id')
         var txt = $(this).val();
 
         $.ajax({
@@ -244,8 +245,8 @@ $inkomsten = count($orders) * $price;
                 console.log(data);
                 $('#autocomplete_signups').html(data);
             }
-            });
         });
+    });
 </script>
 
 
