@@ -48,7 +48,11 @@ body, html {
 .imgArrowDropDown{
     width: 15px;
 }
-
+.big-title {
+    font-size: 2.5rem;
+    /* background-color: #000000; */
+    color: #023356
+ }
 .headerdashboard {
     background: #023356;
     color: #ffffff !important;
