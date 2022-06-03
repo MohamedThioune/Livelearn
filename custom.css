@@ -247,6 +247,24 @@ ul.sub-menu li a {
     line-height: 18px;
 }
 
+/* .two_section-img {
+    width: 50% !important;
+} */
+/* .img-cover {
+    width: 25% !important;
+} */
+
+.btn-outline-realblue {
+    border: 2px solid #023356;
+    color: #023356;
+}
+.btn-outline-realblue:hover {
+    background-color: #043356;
+    color: white;  
+}
+
+
+
 .workeforceText {
     color: #023356;
     line-height: 18px;

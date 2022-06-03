@@ -204,6 +204,17 @@ $reviews = get_field('reviews', $post->ID);
         top: -5px;
         position: relative;
     }
+    #loginform input {
+        background: #E0EFF4 !important;
+    }
+    .select2-container--default .select2-selection--multiple {
+        width: 450px !important;
+    }
+    @media all and (max-width: 767px) {
+        .select2-container--default .select2-selection--multiple {
+            width: 250px !important;
+        }
+    }
 </style>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
@@ -465,7 +476,7 @@ $reviews = get_field('reviews', $post->ID);
                                         </div>
                                         <div>
                                             <p class="klikText">Klik om link te kopieren</p>
-                                            <div class="input-group input-group-copy formCopyLink">
+                                            <div class="input-group input-group-copy formCopyLink w-75">
                                                 <input id="test1" type="text" class="linkTextCopy form-control" value="<?php echo get_permalink($post->ID) ?>" readonly>
                                                 <span class="input-group-btn">
                                                 <button class="btn btn-default btnCopy">Copy</button>
