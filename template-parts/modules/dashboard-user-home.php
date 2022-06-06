@@ -66,6 +66,8 @@ $args = array(
 );
 
 $expert_courses = get_posts($args);
+$count = array('opleidingen' => 0, 'workshop' => 0, 'masterclass' => 0, 'event' => 0, 'e_learning' => 0, 'training' => 0, 'video' => 0);
+$loop_break = array();
 
 foreach($global_courses as $course)
 {
@@ -104,21 +106,35 @@ foreach($global_courses as $course)
                     array_push($courses_id, $course->ID);
                     break;
                 }
-                if(get_field('course_type', $course->ID) == "Opleidingen")
+                if(get_field('course_type', $course->ID) == "Opleidingen"){
                     array_push($opleidingen, $course);
-                else if(get_field('course_type', $course->ID) == "Workshop")
+                    $count['opleidingen'] = $count['opleidingen'] + 1;
+                }else if(get_field('course_type', $course->ID) == "Workshop"){
                     array_push($workshops, $course);
-                else if(get_field('course_type', $course->ID) == "Masterclass")
+                    $count['workshop'] = $count['workshop'] + 1;
+                }else if(get_field('course_type', $course->ID) == "Masterclass"){
                     array_push($masterclasses, $course);
-                else if(get_field('course_type', $course->ID) == "Event")
+                    $count['masterclass'] = $count['masterclass'] + 1;
+                }else if(get_field('course_type', $course->ID) == "Event"){
                     array_push($events, $course);
-                else if(get_field('course_type', $course->ID) == "E-learning")
+                    $count['event'] = $count['event'] + 1;
+                }else if(get_field('course_type', $course->ID) == "E-learning"){
                     array_push($e_learnings, $course);
-                else if(get_field('course_type', $course->ID) == "Training")
+                    $count['e_learning'] = $count['e_learning'] + 1;
+                }else if(get_field('course_type', $course->ID) == "Training"){
                     array_push($trainings, $course);
-                else if(get_field('course_type', $course->ID) == "Video")
+                    $count['training'] = $count['training'] + 1;
+                }else if(get_field('course_type', $course->ID) == "Video"){
                     array_push($videos, $course);
+                    $count['video'] = $count['video'] + 1;
+                }
         }
+
+        foreach($count as $type => $value){
+            if($value >= 6 && !in_array($type,$loop_break))
+                array_push($loop_break,$type);
+        }
+
     }
 
     foreach($experts as $topic_expert){
@@ -131,6 +147,9 @@ foreach($global_courses as $course)
             }
         }
     }
+
+    if(count($loop_break) >= 3)
+        break;
    
 }
 
