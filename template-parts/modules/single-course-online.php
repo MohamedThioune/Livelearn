@@ -1,4 +1,7 @@
 <?php
+global $wp;
+
+$url = home_url( $wp->request );
 
 extract($_GET);
 
@@ -310,7 +313,7 @@ $reviews = get_field('reviews', $post->ID);
                                        {
                                         echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
                                         wp_login_form([
-                                                'redirect' => 'http://wp12.influid.nl/dashboard/user/',
+                                                'redirect' => $url,
                                                 'remember' => false,
                                                 'label_username' => 'Wat is je e-mailadres?',
                                                 'placeholder_email' => 'E-mailadress',
@@ -477,9 +480,94 @@ $reviews = get_field('reviews', $post->ID);
                         </div> <!-- END tabs-content -->
                     </div> <!-- END tabs -->
                 </div>
-
-
             </div>
+
+            <!-- -----------------------------------Start Modal Direct contact & Voor wie ----------------------------------------------- -->
+            <div class="modal fade" id="direct-contact" tabindex="-1" aria-labelledby="direct-contactModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-course">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="direct-contactModalLongTitle">Direct contact</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="d-flex justify-content-center">
+
+                                <div>
+                                    <a href="#" class="mx-3 d-flex flex-column ">
+                                        <i style="font-size: 50px; height: 49px; margin-top: -4px;"
+                                            class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>
+                                    </a>
+                                    <div class="mt-3 text-center">
+                                        <span class="bd-highlight fw-bold text-success mt-2">whatsapp</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <a href="#" class="mx-3 d-flex flex-column ">
+                                        <i style="font-size: 25px"
+                                        class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
+                                        <!-- <span class="bd-highlight fw-bold text-primary mt-2">email</span> -->
+                                    </a>
+                                    <div class="mt-3 text-center">
+                                        <span class="bd-highlight fw-bold text-danger mt-5">email</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <a href="#" class="mx-3 d-flex flex-column ">
+                                        <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>
+                                    </a>
+                                    <div class="mt-3 text-center">
+                                        <span class="bd-highlight fw-bold text-secondary mt-5">message</span>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <a href="#" class="mx-3 d-flex flex-column ">
+                                        <i class="bd-highlight bi bi-telephone-x border border-3 border-primary rounded-circle text-primary shadow"
+                                        style="font-size: 20px; padding: 6px 11px;"></i>
+                                        <!-- <span class="bd-highlight fw-bold text-primary mt-2">call</span> -->
+                                    </a>
+                                    <div class="mt-3 text-center">
+                                        <span class="bd-highlight fw-bold text-primary mt-5">call</span>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!-- <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="voor-wie" tabindex="-1" aria-labelledby="voor-wieModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-course">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="voor-wieModalLongTitle"></h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="">
+                                <!-- <img alt="course design_undrawn"
+                                src="<?php echo get_stylesheet_directory_uri(); ?>/img/voorwie.png"> -->
+
+                                <?php
+                                    $author = get_user_by('id', $post->post_author);
+                                ?>
+                                <div class="content-text p-4 pb-0">
+                                    <h4 class="text-dark">Voor wie ?</h4>
+                                    <p class="m-0"><strong>This course is followed up by <?php if(isset($author->first_name) && isset($author->last_name)) echo $author->first_name . '' . $author->last_name; else echo $author->display_name; ?> </strong></p>
+                                    <p><em>This line rendered as italicized text.</em></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- -------------------------------------------------- End Modal Direct contact & Voor wie -------------------------------------- -->
 
 
             <!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
@@ -545,11 +633,11 @@ $reviews = get_field('reviews', $post->ID);
             <div class="blockTwoOver">
                 <div>
                     <div class="btnGrou10">
-                        <a href="" class="btnContact">
+                        <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#direct-contact">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
                             Direct contact
                         </a>
-                        <a href="" class="btnContact">
+                        <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#voor-wie">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/question.png" alt="">
                             Voor wie
                         </a>
@@ -933,16 +1021,6 @@ $reviews = get_field('reviews', $post->ID);
 
 </script>
 
-<script id="rendered-js" >
-    $(document).ready(function () {
-        //Select2
-        $(".multipleSelect2").select2({
-            placeholder: "Select subtopics",
-             //placeholder
-        });
-    });
-    //# sourceURL=pen.js
-</script>    
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
