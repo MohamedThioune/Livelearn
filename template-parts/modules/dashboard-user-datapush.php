@@ -1,8 +1,9 @@
 <?php
-
 global $wpdb;
+
 $table = $wpdb->prefix . 'databank';
-$format = array('%s', '%s', '%d', '%s', '%d', '%s', '%s', '%s', '%s');
+
+$format = array('%s', '%s', '%d', '%d', '%s', '%s', '%s', '%s', '%s');
 
 ?>
 <!-- modal-style -->
@@ -281,12 +282,8 @@ $format = array('%s', '%s', '%d', '%s', '%d', '%s', '%s', '%s', '%s');
                         }
 
                         $status = "intern";
-
-                        echo "<br>";
                         $data = array('titel' => $course->post_title,  'type' => $type_course, 'prijs' => $price, 'prijs_vat' => $prijsvat, 'image_xml' => $image_xml , 'onderwerpen' => $fields, 'date_multiple' => null, 'course_id' => $course->ID, 'status' => $status);
-                        print_r($data);
 
-                        $format = array('%s', '%s', '%d', '%d', '%s', '%s', '%s', '%s', '%s');
                         $wpdb->insert($table,$data,$format);
                     
                     ?>
