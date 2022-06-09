@@ -1,7 +1,15 @@
 <?php
+ //$sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE some_column = %s", $value );
+
  global $wpdb;
- $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}some_table WHERE some_column = %s", $value );
- return $wpdb->get_results( $sql );
+
+ $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank");
+
+ $courses = $wpdb->get_results( $sql );
+
+ $user = wp_get_current_user();
+
+
 ?>
 <!-- modal-style -->
 
@@ -86,84 +94,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
 <?php
-   $args = array(
-    'post_type' => 'course', 
-    'post_status' => 'publish',
-    'posts_per_page' => -1,
-    'order' => 'DESC',  
-    );
-
-    $courses = get_posts($args);
-
-    $user_in = wp_get_current_user();
-
-    /*
-    * * Tags *
-    */ 
-    $tags = array();
-    $categories = array(); 
-    $cats = get_categories( array(
-      'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-      'orderby'    => 'name',
-      'exclude' => 'Uncategorized',
-      'parent'     => 0,
-      'hide_empty' => 0, // change to 1 to hide categores not having a single post
-      ) );
-
-    foreach($cats as $item){
-      $cat_id = strval($item->cat_ID);
-      $item = intval($cat_id);
-      array_push($categories, $item);
-    };
-
-    $bangerichts = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'parent'  => $categories[1],
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
-
-    $functies = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'parent'  => $categories[0],
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
-
-    $skills = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'parent'  => $categories[3],
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
-
-    $interesses = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'parent'  => $categories[2],
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
-
-    $categorys = array(); 
-    foreach($categories as $categ){
-        //Topics
-        $topics = get_categories(
-            array(
-            'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-            'parent'  => $categ,
-            'hide_empty' => 0, // change to 1 to hide categores not having a single post
-            ) 
-        );
-
-        foreach ($topics as $value) {
-            $tag = get_categories( 
-                 array(
-                 'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-                 'parent'  => $value->cat_ID,
-                 'hide_empty' => 0,
-                ) 
-            );
-            $categorys = array_merge($categorys, $tag);      
-        }
-    }
 
 ?>
+
 <!-- Content -->
 <div class="contentListeCourse">
     <div class="cardOverviewCours">
@@ -175,141 +108,31 @@
             <table class="table table-responsive">
                 <thead>
                 <tr>
+                    <th scope="col"></th>
                     <th scope="col">Titel</th>
-                <!-- <th scope="col">Leervorm</th> -->                    
+                    <th scope="col">Type</th>
                     <th scope="col">Prijs</th>
+                    <th scope="col">Prijs VAT</th>
                     <th scope="col">Onderwerp(en)</th>
-                    <th scope="col">Startdatum</th>
+                    <!-- <th scope="col">Startdatum</th> -->
                     <th scope="col">Status</th>
+                    <th scope="col">Optie</th>
                 </tr>
                 </thead>
                 <tbody>
                     <?php 
                     foreach($courses as $course){
 
-                        $category = ' ';
-
-                        $tree = get_the_terms($course->ID, 'course_category'); 
-
-                        if($tree)
-                            if(isset($tree[2]))
-                                $category = $tree[2]->name;
-                            
-                        $category_id = 0;
-                        
-                        if($category == ' '){
-                            $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                            if($category_id != 0)
-                                $category = (String)get_the_category_by_ID($category_id);
-                        }
-                        /*
-                        * Price 
-                        */
-                        $p = get_field('price', $course->ID);
-                        if($p != "0")
-                            $price = number_format($p, 2, '.', ',');
-                        else 
-                            $price = 'Gratis';
-
-                        /*
-                        *  Date and Location
-                        */ 
-                        $location = ' ';
-
-                        $data = get_field('data_locaties', $course->ID);
-                        if(!empty($data)){
-                            $date = $data[0]['data'];
-                            if(!empty($date)){
-                                $date = $date[0]['start_date'];
-                                $day = explode(' ', $date)[0];
-                            }
-                        }
-                        else{
-                            $day = "~";
-                            $data = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
-                            $date = $data[0];
-                            $day = explode(' ', $date)[0];
-                        }
-
-                        $tags = get_field('categories', $course->ID);
-
-                        $keywords = array();
-
-                        $words = "";
-
-                        if(empty($tags)){
-                            $tags = array();
-                            $title = $course->post_title;
-                            if($title)
-                                $words .= $title;
-                            $description = get_field('short_description', $course->ID);
-                            if($description)
-                                $words .= $description;
-                            $descriptionHtml = get_field('long_description', $course->ID);
-                            if($descriptionHtml)
-                                $words .= $descriptionHtml;
-
-                            $keywords = explode(' ', $words);
-
-                            $occurrence = array_count_values(array_map('strtolower', $keywords));
-                            arsort($occurrence);
-
-                            foreach($categorys as $value)
-                                if($occurrence[strtolower($value->cat_name)] >= 1){
-                                    echo strtolower($value->cat_name);
-                                    array_push($tags, $value->cat_ID);
-                                }
-                            update_field('categories', $tags, $course->ID);
-                        }
-                    
                     ?>
                     <tr>
-                        <td class="textTh "><a style="color:#212529;font-weight:bold" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
-                        <td class="textTh"><?php echo $price; ?></td>
-                        <?php
-                        if (in_array('administrator', $user_in->roles ) ) {
-                        ?>
-                        <td id= <?php echo $course->ID; ?> class="textTh td_subtopics">
-                            <?php
-                                $course_subtopics = get_field('categories', $course->ID);
-                                $field='';
-                                if($course_subtopics!=null){
-                                if (is_array($course_subtopics) || is_object($course_subtopics)){
-                                    foreach ($course_subtopics as $key =>  $course_subtopic) {
-                                            if ($course_subtopic!="" && $course_subtopic!="Array")
-                                                $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
-                                    }
-                                        $field=substr($field,0,-1);
-                                        echo $field;
-                                
-                            }
-                        }
-                    }
-                    else
-                        {
-                            ?>
-                            <td class="textTh ">
-                                <?php
-                                    $course_subtopics = get_field('categories', $course->ID);
-                                    $field='';
-                                    if($course_subtopics!=null){
-                                    if (is_array($course_subtopics) || is_object($course_subtopics)){
-                                        foreach ($course_subtopics as $key =>  $course_subtopic) {
-                                                if ($course_subtopic!="" && $course_subtopic!="Array")
-                                                    $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
-                                        }
-                                            $field=substr($field,0,-1);
-                                            echo $field;
-                                    
-                                }
-                            }
-                        }
-
-                            ?>
-                        </p>             
-                    </td>
-                        <td class="textTh"><?php echo $day; ?></td>
-                        <td class="textTh">Live</td>
+                        <td class="textTh"> <img src="<?= $course->image_xml; ?>" alt="image course" width="50" height="50"> </td>
+                        <td class="textTh "><a style="color:#212529;font-weight:bold" href="<?= get_permalink($course->course_id) ?>"><?php echo $course->titel; ?></a></td>
+                        <td class="textTh"><?= $course->type; ?></td>
+                        <td class="textTh"><?= $course->prijs; ?></td>
+                        <td class="textTh"><?= $course->prijs_vat; ?></td>
+                        <td class="textTh"><?= $course->onderwerpen; ?></td>
+                        <td class="textTh"><?= $course->status; ?></td>
+                        <td class="textTh"> <button> ✔️ </button>&nbsp;&nbsp;<button> ❌ </button> </td>
                     </tr>
                     <?php
                     }
