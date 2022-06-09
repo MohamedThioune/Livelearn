@@ -263,9 +263,14 @@ if(isset($_GET['message']))
         ?>
                 <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
                     <div class="cardKraam">
-                        <button class="btn btnCloche">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/cloche.png" alt="">
-                        </button>
+                        <div class="blockLoveCourse">
+                            <button id="btn_dislike" class="btn like1">
+                                <img  src="<?php echo get_stylesheet_directory_uri();?>/img/heart-dislike.png" alt="">
+                            </button>
+                            <button id="btn_like" class="btn like2">
+                                <img  src="<?php echo get_stylesheet_directory_uri();?>/img/heart-like.png" alt="">
+                            </button>
+                        </div>
                         <div class="headCardKraam">
                             <div class="blockImgCardCour">
                                 <img src="<?php echo $thumbnail; ?>" alt="">
@@ -447,9 +452,14 @@ if(isset($_GET['message']))
 
                         <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
                             <div class="cardKraam">
-                                <button class="btn btnCloche">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/cloche.png" alt="">
-                                </button>
+                                <div class="blockLoveCourse">
+                                    <button id="btn_favorite" style="background:white; border:none">
+                                        <img class="like1" src="<?php echo get_stylesheet_directory_uri();?>/img/heart-dislike.png" alt="">
+                                    </button>
+                                    <button id="btn_favorite" style="background:white; border:none">
+                                        <img class="like2" src="<?php echo get_stylesheet_directory_uri();?>/img/heart-like.png" alt="">
+                                    </button>
+                                </div>
                                 <div class="headCardKraam">
                                     <div class="blockImgCardCour">
                                         <img src="<?php echo $thumbnail; ?>" alt="">
