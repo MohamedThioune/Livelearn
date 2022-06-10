@@ -10130,7 +10130,9 @@ ul#tabs-nav li.active {
 
 
 }
-
+.radius-custom  {
+    border-radius: 10px !important;
+}
 @media all and (max-width: 640px) {
     #field_5_3 {
         padding-top: 100px;
