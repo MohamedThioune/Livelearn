@@ -2,647 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitlab-ci.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/fluidify-child.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages.desktop" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-grid.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-grid.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-grid.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-grid.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-grid.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-grid.rtl.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-grid.rtl.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-grid.rtl.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-reboot.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-reboot.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-reboot.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-reboot.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-reboot.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-reboot.rtl.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-reboot.rtl.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-reboot.rtl.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-utilities.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-utilities.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-utilities.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-utilities.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-utilities.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-utilities.rtl.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-utilities.rtl.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap-utilities.rtl.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap.rtl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap.rtl.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap.rtl.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/css/bootstrap.rtl.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/js/bootstrap.bundle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/js/bootstrap.bundle.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/js/bootstrap.bundle.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/js/bootstrap.bundle.min.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/js/bootstrap.esm.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/js/bootstrap.esm.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/js/bootstrap.esm.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/js/bootstrap.esm.min.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/js/bootstrap.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/js/bootstrap.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/js/bootstrap.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/bootstrap/js/bootstrap.min.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/img/image.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/CONTRIBUTING.markdown" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/ISSUE_TEMPLATE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/README.markdown" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/bower.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/component.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/CONTRIBUTING.markdown" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/ISSUE_TEMPLATE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/Makefile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/README.markdown" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/bower.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/component.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/slick.jquery.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/slick/ajax-loader.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/slick/config.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/slick/fonts/slick.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/slick/fonts/slick.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/slick/fonts/slick.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/slick/fonts/slick.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/slick/slick-theme.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/slick/slick-theme.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/slick/slick-theme.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/slick/slick.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/slick/slick.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/slick/slick.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/slick/slick.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/slick/slick.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick.jquery.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick/ajax-loader.gif" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick/config.rb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick/fonts/slick.eot" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick/fonts/slick.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick/fonts/slick.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick/fonts/slick.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick/slick-theme.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick/slick-theme.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick/slick-theme.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick/slick.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick/slick.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick/slick.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick/slick.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/js/libs/slick/slick.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog.xcss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bootstrap-datepicker.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bootstrap-datepicker.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/custom.xcss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/custom.xcss.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/font-awsome.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/footer.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/footer.xphp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/header.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/header_base.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/header_teacher.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/header_user.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/horizon-20220310.2227.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/+.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Berichten.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Black-Coffee.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/BlackVideoChat.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Composant1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Customer-Survey-color-800px.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Dashboard.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Developers_Senegal001.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Discord-Logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Doorstroom.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Ellipse.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Ellipse17.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Ellipse5.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Ellipse6.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Financien.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Grootbedrijf.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Group216.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/GroupSetting .png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/GroupSetting.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Group_214.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Group_215.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Group_216.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Group_262.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Group_270.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe 160 (1).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe-1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe-121.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe-122.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe-158.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe-218.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe-222.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe-223.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe-224.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe-23.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe-233.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe-235.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe-236.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe-237.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe-238.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe11.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe12.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe13.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe7.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe8.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Groupe86.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/GroupeM.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/GroupeN.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/GroupeY.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/IMG_1306-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Icon feather-chevrons-down (1).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Icon feather-chevrons-down-1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Icon feather-chevrons-down.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Icon material-euro-symbol (1) (1).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Icon-feather-chevrons-down.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/IconShowMore.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image -1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image-38.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image-39.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image-40.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image-41.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image-42.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image-44.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image-45.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image-79.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image-80.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image-81.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image-85.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image26.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image27.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image28.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image29.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image30.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image31.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image32.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image33.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image37.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image49.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image50.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image51.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image52.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image53.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image54.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/ImageCart.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image_35.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image_69.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/ImgSkill0.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/ImgSkill1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/ImgSkill2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/ImgSkill3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Inschrijvingen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Instellingen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Instroom.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Inzicht_statistieken.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Leer-databank.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/LiveLearn_leerdatabank.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Manage-Organisatie.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Maurice_Veraa_.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Midden.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Mijn-mensen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Mijn_mensen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Mohamed Artikel Pilot Super held omdat software ontwikkelaar geen job titel is.desktop" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Opleiding_toevoegen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Overzicht_opleidingen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Polygone.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Polygone2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/PolygoneBlanc.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/ProfilMobile.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Public-real-estate.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Rectangle 8.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/SLIDE-home.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Statistieken.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Subtract.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/TikTok-Logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Trello-img.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Uitstroom.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Vector 25.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Vector.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/VectorPoly.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/X.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/XMobile.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/ZZPersStratup.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/acustomer.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/addUser.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/adduser.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/ajouterSujet.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/alert.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/all-onderwerpen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/all-opleidegen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/alle-opleiders.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/android.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/android1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/angularjs.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/ant-design_down-circle-filled.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/ant-design_up-circle-filled.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/apple1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/arrow-right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/assessment.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/backend.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/backend1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/bg1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/bi_arrow-left.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/bookmark_hover.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/box1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/burgerMobile.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/buul.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/calandar.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/calend.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/calendar1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/cancel.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/card2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/carte-de-debit.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/cartes-de-debit.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/character161.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/chat 1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/chevrons-downBleu.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/chrono.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/cil_money.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/coeur1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/company.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/conversation.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/courImg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/cute-boy.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/cute-tribal-girl.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/dan.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/daniel.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/dashRemove.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/dashb.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/dashicons_edit.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/dashicons_welcome-learn-more.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/delete.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/developpement.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/down-arrow.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/down-arrow.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/down-chevron.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/ecosystem.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/ecosystemHeadImg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/ethereum.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/etoile-search.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/euro.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/euro1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/facebook.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/feedback.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/femme1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/fic_book.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/fic_search.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/fic_student.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/figure.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/filter.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/finance.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/finance.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/fleG1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/fleG2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/folder.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/front-end-stack.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/front1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/full.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/fullstack1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/gaduation.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/glif.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/grad-search.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/graduat.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/graduation-cap.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/graduationMobile.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/group-16.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/group-svgrepo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/groupHomme.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/hNoir.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/headWeb8.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/health.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/hmTableau.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/homeMiroir.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/hommeVert.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/hours.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/house.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/hr.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/ibou.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/iconsMap.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/image-43.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/imagename.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/imgMedecin.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/imgTableSkills.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/influence.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/innovation.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/insta.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/interview-svgrep1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/intro.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/ionic-ios-arrow-circle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/ios.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/jam_facebook-circle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/jam_linkedin-circle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/jam_twitter-circle.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/javascript.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/kraam.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/learning.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/left-arrow.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/level.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/lhorloge.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/libay.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/like1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/like2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/linkedin.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/lock.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/logoLInsta.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/logoLLinkedin.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/logoLfacebook.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/logoLtwitter.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/logoMobil.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/logoParteners1.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/logoParteners2.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/logoParteners3.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/logoParteners4.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/logoParteners5.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/logoParteners6.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/logoParteners7.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/logoParteners8.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/logo_livelearn.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/logo_livelearn_white.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/logo_right.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/logo_white.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/love.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/magento.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/main.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/map-search.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/map-signs.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/map.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/maternite.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/mbo3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/mdi_timer-sand.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/minutemailer.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/miro1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/moneyElement.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/mortarboard1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/net.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/node.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/notification 1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/notification.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/oeil.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/op-seach.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/organise.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/overviewD.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/pen.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/personal-development.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/personal-development2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/ph_student.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/phone.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/phoneHomme.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/php.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/placeholder.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/placeholder_course.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/placeholder_opleidin.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/placeholder_opleidingen.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/placeholder_user.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/play.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/plus.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/profile-svgrepo2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/python.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/question.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/react.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/roadIcone.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/searchM.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/searchMobil.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/share.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/skills-passport.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/sms.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/sort.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/speak.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/sponsortOne.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/sponsortTwo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/sport.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/ss.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/sta.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/tab1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/three-stars.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/translation1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/trash1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/trashC.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/troisPoint.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/twitter.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/up-arrow.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/up-chevron.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/user.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/userLive.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/vaadin_line-bar-chart.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/viewC.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/vitreHomme.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/waiting1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/wall-clock1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/whatsapp.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/win-war.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/inl.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kenneth-smit-20220310.2227.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-user.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.js~HEAD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pied d'athlète sur les .txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/possible-20220310.2227.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rating.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/search-bar.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/single-course.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/single.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/single.xphp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sounds/firstSounds.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/style-dashboard.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/style-dashboard.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/style-dashboard.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/style-main.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/style-main.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/style-main.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/style.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/style.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/style.xscss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/taxonomy-category.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-allocate.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-assign.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-grant.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-home.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-home.xphp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-databank.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-modules.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-paths.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-my-manager.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-people-mensen.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-people.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-people.xphp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-company.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-home-1.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-home.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-statistic.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-statistic.xphp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-manager-detail-profile.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-manager-profile.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-menu-company.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-menu-teacher.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-people.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-overview.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-article-2.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-article-3.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-article-4.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-assessment-2.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-assessment-3.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-white-2.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-white-3.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-white-4.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-workshop-2.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-workshop-3.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-workshop-4.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-article.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-assessment.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-2.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-3.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-4.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-5.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-6.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-offline-2.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-offline-3.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-offline-4.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-offline.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-training.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-training.xphp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-2.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-3.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-4.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-white.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-workshop.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-courses.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-detail-profile-teacher.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-detail-profile.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-home.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-podcast.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-road-path.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-profile-teacher.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-road-path.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-signups.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-activity.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-assessment.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-detail-notification-1.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-detail-notification.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-detail-profile.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-notification-1.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-notification.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-profile-edit.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-profile-home.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-profile.xphp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-settings.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/search-bar.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/texte déposé.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/template.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/answer-assessment.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/archive.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/dashboard-user-profile2.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/detail-assessment.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fetch-company-people.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fetch-expert.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fetch-rent.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fetch-subtopics-course.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fetch.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/headerDashboard.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/layaoutManager.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/layaoutTeacher.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/like.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/postal.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/product-podcast.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-Onderwer.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-add-course-form.xphp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-add-course-selection.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-baangerichte.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-baangerichte.xphp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-candidat-home.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-category-overview.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-category-overview.xphp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-dashboard-core.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-dashboard-individual.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-dashboard-people.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-dashboard-teacher-signups.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-dashboard.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-detail-product-road.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-ecosysteme.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-firstModal.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-functiegerichte.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-functiegerichte.xphp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-home-dashboard-manager.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-home-dashboard-teacher.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-home.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-inloggen.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-lift-lid.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-manager-leer-databank.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-manager-onze-leer-modules.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-manager-people-overview-mensen.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-manager-people-overview.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-opleider-courses.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-opleiders.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-overviewOrganisaties.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-persoonlijke.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-persoonlijke.xphp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-pricing.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-product-road-path.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-product-search.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-recruitement.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-registreren.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-registreren.xphp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-single.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-skill.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-skill.xphp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-static-education-advice.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-static-education-individual.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-sub-topic.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-topic.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-user-overview.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-voor-organisaties.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-voor-teacher-detail.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-voor-teacher.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-xml-parse.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/topic-ajax.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/topic-ajax.xphp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/topic.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/trash-course.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/trash-user.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/video-course.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/youtube-video-course-channel.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/youtube-video-course-playlist.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tvvl-20220310.1412.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/winc-academy-20220308.1758.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/woo.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/woocommerce/cart/cart-empty.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/woocommerce/cart/cart.3php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/woocommerce/cart/cart.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/woocommerce/checkout/form-checkout.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/woocommerce/myaccount/my-account.php" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-3.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-3.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-home.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -652,29 +18,47 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/template-skillsPassport.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3600">
+              <caret line="240" column="30" selection-start-line="240" selection-start-column="30" selection-end-line="240" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="251" column="40" selection-start-line="251" selection-start-column="40" selection-end-line="251" selection-end-column="48" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="312">
+              <caret line="230" column="7" lean-forward="true" selection-start-line="230" selection-start-column="7" selection-end-line="230" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" column="10" lean-forward="true" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/custom.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="6645" column="15" lean-forward="true" selection-start-line="6645" selection-start-column="15" selection-end-line="6645" selection-end-column="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-road-path.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="317" column="14" selection-start-line="317" selection-start-column="14" selection-end-line="317" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-podcast.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="105" column="14" lean-forward="true" selection-start-line="105" selection-start-column="14" selection-end-line="105" selection-end-column="14" />
+            <state relative-caret-position="128430">
+              <caret line="8562" column="16" selection-start-line="8562" selection-start-column="16" selection-end-line="8562" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -682,8 +66,26 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/template-home.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5130">
-              <caret line="342" column="73" selection-start-line="342" selection-start-column="73" selection-end-line="342" selection-end-column="73" />
+            <state relative-caret-position="6420">
+              <caret line="594" column="14" selection-start-line="594" selection-start-column="14" selection-end-line="594" selection-end-column="14" />
+              <folding>
+                <element signature="e#181#186#0#PHP" />
+                <element signature="e#2471#3452#0#PHP" />
+                <element signature="e#3461#4489#0#PHP" />
+                <element signature="e#4495#5490#0#PHP" />
+                <element signature="e#5496#6474#0#PHP" />
+                <element signature="e#6480#7509#0#PHP" />
+                <element signature="e#7521#8193#0#PHP" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/template-Ontwikkeladvies.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -692,36 +94,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>.group-input-settings label</find>
-      <find>php</find>
-      <find>Jouw skills paspoort in 3 stappen</find>
-      <find>.container-checkbox .checkmark:after</find>
-      <find>.form-Step-skills-passpoort .input-group-skills label</find>
-      <find>.blockInputCheck label</find>
-      <find>addClass</find>
-      <find>Generatie</find>
-      <find>BabyBoom</find>
-      <find>.jouwn-skills</find>
-      <find>.boxCard3</find>
-      <find>Daarom maken meer dan 250 organisaties, experts en opleiders gebruik van LiveLearn</find>
-      <find>col-lg-4</find>
-      <find>bodyCardVoorOrganisatie</find>
-      <find>imgcardOverviewOrganisatie</find>
-      <find>imgOverviewOrganisatie</find>
-      <find>&lt;img src=&quot;&quot; alt=&quot;&quot;&gt;</find>
-      <find>img</find>
-      <find>.cardOverviewOrganisatie .imgcardOverviewOrganisatie img</find>
-      <find>Organisatie</find>
-      <find>Mijn mensen</find>
-      <find>.VoorOrganisaties</find>
-      <find>VoorOrganisaties</find>
-      <find>Er valt altijd iets nieuws te leren, maak gratis jouw skills paspoort en word expert.</find>
-      <find>.blockStepSkillsPaspoort .setp</find>
-      <find>Dates between</find>
+      <find>Onze gebruikers</find>
+      <find>cardBlockValOpEnVerbind</find>
+      <find>CardQuestion</find>
+      <find>subTitleCardQuestion</find>
+      <find>.btnCardVolgende</find>
+      <find>blockWinDeWar</find>
+      <find>.cardBlockValOpEnVerbind</find>
+      <find>blockForm</find>
+      <find>rating</find>
+      <find>.cardTestimonialZeggen .blockImg</find>
+      <find>.cardTestimonialZeggen</find>
+      <find>.CardVolgende</find>
+      <find>.head-ontwikkeladvies</find>
+      <find>.btnLessHoe</find>
+      <find>ontwikkeladvies</find>
+      <find>head-ontwikkeladvies</find>
+      <find>contentSponsortBlock</find>
+      <find>.blockCardFunctie .Card</find>
+      <find>.blockCardFunctie .headCard img</find>
+      <find>.blockCardFunctie .Card .groupBtn a</find>
+      <find>.blockSpelregels .twoBlockCardWatKrijg .card .title</find>
+      <find>d-flex align-items-center</find>
+      <find>.blockSpelregels .twoBlockCardWatKrijg .card</find>
+      <find>.elementwaarom</find>
+      <find>.blockChapitreCours .sousBlockCours</find>
+      <find>btn_favorite</find>
+      <find>@medi</find>
       <find>@media</find>
-      <find>.post-content-podCast li</find>
-      <find>.cardPoadCast</find>
-      <find>What is the ecosystem?</find>
+      <find>like1</find>
+      <find>btn btnCloche</find>
     </findStrings>
     <replaceStrings>
       <replace>h4</replace>
@@ -741,6 +143,10 @@
       <replace>bodyCardOverviewOrganisatie</replace>
       <replace>imgcardOverviewOrganisatie</replace>
       <replace>&lt;img src=&quot;&lt;?php echo get_stylesheet_directory_uri();?&gt;/img/conversation.png&quot; alt=&quot;&quot;&gt;</replace>
+      <replace>CardQuestion</replace>
+      <replace>subTitleCardVolgende</replace>
+      <replace>skillsPassport</replace>
+      <replace>blockDescription</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -754,15 +160,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/templates/template-video-course.php" />
-        <option value="$PROJECT_DIR$/templates/template-voor-teacher-detail.php" />
-        <option value="$PROJECT_DIR$/templates/topic.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php" />
-        <option value="$PROJECT_DIR$/single-course-online.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/detail-assessment.php" />
-        <option value="$PROJECT_DIR$/templates/layaoutManager.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-road-path.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection.php" />
         <option value="$PROJECT_DIR$/template.css" />
         <option value="$PROJECT_DIR$/templates/template-etail-product-road.php" />
         <option value="$PROJECT_DIR$/templates/template-product-road-path.php" />
@@ -770,7 +167,6 @@
         <option value="$PROJECT_DIR$/templates/product-podcast.php" />
         <option value="$PROJECT_DIR$/templates/template-detail-product-road.php" />
         <option value="$PROJECT_DIR$/templates/detail-assessment.php" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/header_teacher.php" />
         <option value="$PROJECT_DIR$/style.scss" />
         <option value="$PROJECT_DIR$/templates/template-functiegerichte.php" />
@@ -789,7 +185,6 @@
         <option value="$PROJECT_DIR$/header_user.php" />
         <option value="$PROJECT_DIR$/bootstrap-datepicker.min.css" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-user-assessment.php" />
-        <option value="$PROJECT_DIR$/main.js" />
         <option value="$PROJECT_DIR$/footer.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-article-2.php" />
         <option value="$PROJECT_DIR$/templates/template-overviewOrganisaties.php" />
@@ -799,12 +194,23 @@
         <option value="$PROJECT_DIR$/style.css" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-2.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-3.php" />
-        <option value="$PROJECT_DIR$/templates/template-home.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-offline-3.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-3.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-road-path.php" />
-        <option value="$PROJECT_DIR$/custom.css" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-podcast.php" />
+        <option value="$PROJECT_DIR$/templates/product-workshop.php" />
+        <option value="$PROJECT_DIR$/templates/product-training.php" />
+        <option value="$PROJECT_DIR$/templates/product-masterClass.php" />
+        <option value="$PROJECT_DIR$/templates/template-home.php" />
+        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-3.php" />
+        <option value="$PROJECT_DIR$/templates/product-event.php" />
+        <option value="$PROJECT_DIR$/templates/product-lezing.php" />
+        <option value="$PROJECT_DIR$/templates/template-Ontwikkeladvies.php" />
+        <option value="$PROJECT_DIR$/templates/template-lift-lid.php" />
+        <option value="$PROJECT_DIR$/templates/template-skillsPassport.php" />
+        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php" />
+        <option value="$PROJECT_DIR$/custom.css" />
+        <option value="$PROJECT_DIR$/main.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -831,6 +237,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -838,38 +245,26 @@
               <item name="fluidify-child" type="b2602c69:ProjectViewProjectNode" />
               <item name="fluidify-child" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="fluidify-child" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fluidify-child" type="462c0819:PsiDirectoryNode" />
-              <item name="template-parts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fluidify-child" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fluidify-child" type="462c0819:PsiDirectoryNode" />
-              <item name="template-parts" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1653998024820" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1654716590294" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/templates" />
       <recent name="$PROJECT_DIR$/template-parts/modules" />
-      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -1161,16 +556,57 @@
       <workItem from="1653933324115" duration="1827000" />
       <workItem from="1653994846872" duration="1455000" />
       <workItem from="1653996657018" duration="1721000" />
+      <workItem from="1653998432258" duration="927000" />
+      <workItem from="1654011992141" duration="1468000" />
+      <workItem from="1654013850174" duration="1696000" />
+      <workItem from="1654015746654" duration="1562000" />
+      <workItem from="1654019672477" duration="1366000" />
+      <workItem from="1654073303610" duration="1294000" />
+      <workItem from="1654075665291" duration="1539000" />
+      <workItem from="1654097209427" duration="1671000" />
+      <workItem from="1654098924950" duration="981000" />
+      <workItem from="1654101158909" duration="685000" />
+      <workItem from="1654182182771" duration="1898000" />
+      <workItem from="1654184265339" duration="1669000" />
+      <workItem from="1654186027457" duration="2159000" />
+      <workItem from="1654248547398" duration="1719000" />
+      <workItem from="1654250496982" duration="2283000" />
+      <workItem from="1654259732738" duration="1733000" />
+      <workItem from="1654261651961" duration="1866000" />
+      <workItem from="1654279022054" duration="1677000" />
+      <workItem from="1654280979141" duration="1636000" />
+      <workItem from="1654282774024" duration="1713000" />
+      <workItem from="1654530333876" duration="1671000" />
+      <workItem from="1654532121240" duration="1812000" />
+      <workItem from="1654533977135" duration="286000" />
+      <workItem from="1654592121896" duration="1524000" />
+      <workItem from="1654602416919" duration="2531000" />
+      <workItem from="1654605337332" duration="1211000" />
+      <workItem from="1654615547460" duration="1720000" />
+      <workItem from="1654617561497" duration="2136000" />
+      <workItem from="1654620032893" duration="1690000" />
+      <workItem from="1654686591401" duration="1853000" />
+      <workItem from="1654688756612" duration="1670000" />
+      <workItem from="1654690651758" duration="1593000" />
+      <workItem from="1654692409801" duration="2172000" />
+      <workItem from="1654703053828" duration="1770000" />
+      <workItem from="1654704856449" duration="1909000" />
+      <workItem from="1654707438489" duration="898000" />
+      <workItem from="1654709976575" duration="1784000" />
+      <workItem from="1654711791584" duration="1671000" />
+      <workItem from="1654713753473" duration="1689000" />
+      <workItem from="1654715524406" duration="1049000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="411392000" />
+    <option name="totallyTimeSpent" value="475573000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27272728" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18484849" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -1185,7 +621,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.730832" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.2675367" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -1200,7 +636,7 @@
       <window_info anchor="right" x="0" y="0" width="291" height="543" id="Documentation" order="9" side_tool="true" weight="0.32954547" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26818183" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26742426" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -1215,7 +651,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.26916802" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.2682927" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -1248,53 +684,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-home.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/header_teacher.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="11" lean-forward="true" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-white-3.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-article-3.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-5.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2040">
-          <caret line="138" column="44" selection-start-line="138" selection-start-column="44" selection-end-line="138" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-functiegerichte.xphp">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/platform-impl.jar!/resources/html5-schema/html5/common.rnc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="127" column="18" selection-start-line="127" selection-start-column="18" selection-end-line="127" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/single.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="930">
-          <caret line="62" column="22" selection-start-line="62" selection-start-column="22" selection-end-line="62" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/functions.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="78" selection-start-line="6" selection-start-column="78" selection-end-line="6" selection-end-column="97" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/template-opleiders.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -1327,9 +716,6 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/trash-user.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-lift-lid.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-company-people-mensen.php">
@@ -1365,24 +751,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-online.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="391" column="47" selection-start-line="391" selection-start-column="47" selection-end-line="391" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-settings.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="277">
           <caret line="776" column="6" lean-forward="true" selection-start-line="776" selection-start-column="6" selection-end-line="776" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="707" column="52" lean-forward="true" selection-start-line="707" selection-start-column="52" selection-end-line="707" selection-end-column="52" />
         </state>
       </provider>
     </entry>
@@ -1428,20 +800,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1020">
-          <caret line="68" column="42" selection-start-line="68" selection-start-column="42" selection-end-line="68" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-article-2.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="44" column="10" lean-forward="true" selection-start-line="44" selection-start-column="10" selection-end-line="44" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/footer.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2715">
@@ -1463,13 +821,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="10" lean-forward="true" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1487,24 +838,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-voor-organisaties.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="20" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-menu-company.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1410">
           <caret line="94" column="28" selection-start-line="94" selection-start-column="28" selection-end-line="94" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="217" column="1" selection-start-line="217" selection-start-column="1" selection-end-line="217" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -1515,24 +852,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-2.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-offline-3.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-3.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="795">
-          <caret line="53" selection-start-line="53" selection-end-line="53" />
         </state>
       </provider>
     </entry>
@@ -1543,31 +866,171 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-home.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5130">
-          <caret line="342" column="73" selection-start-line="342" selection-start-column="73" selection-end-line="342" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-road-path.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
+        <state relative-caret-position="4755">
           <caret line="317" column="14" selection-start-line="317" selection-start-column="14" selection-end-line="317" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-podcast.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="105" column="14" lean-forward="true" selection-start-line="105" selection-start-column="14" selection-end-line="105" selection-end-column="14" />
+        <state relative-caret-position="1575">
+          <caret line="105" column="14" selection-start-line="105" selection-start-column="14" selection-end-line="105" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-article-2.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="44" column="10" lean-forward="true" selection-start-line="44" selection-start-column="10" selection-end-line="44" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-product-search.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3555" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="606" column="45" selection-start-line="606" selection-start-column="45" selection-end-line="688" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-3.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1095">
+          <caret line="73" column="10" selection-start-line="73" selection-start-column="10" selection-end-line="73" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/product-event.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1665">
+          <caret line="111" selection-start-line="111" selection-end-line="111" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-2.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="51" selection-start-line="11" selection-start-column="51" selection-end-line="11" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/product-masterClass.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="75" column="29" lean-forward="true" selection-start-line="75" selection-start-column="29" selection-end-line="76" selection-end-column="93" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/product-workshop.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="119" column="19" selection-start-line="119" selection-start-column="19" selection-end-line="283" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="53040">
+          <caret line="3536" column="10" selection-start-line="3536" selection-start-column="1" selection-end-line="3536" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/product-training.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1590">
+          <caret line="106" column="60" selection-start-line="106" selection-start-column="60" selection-end-line="106" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/product-lezing.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1500">
+          <caret line="100" column="27" selection-start-line="100" selection-start-column="27" selection-end-line="100" selection-end-column="121" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-voor-organisaties.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1380">
+          <caret line="92" column="13" selection-start-line="92" selection-start-column="13" selection-end-line="132" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-lift-lid.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="95" column="18" lean-forward="true" selection-start-line="95" selection-start-column="18" selection-end-line="95" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-online.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3135">
+          <caret line="209" column="27" selection-start-line="209" selection-start-column="27" selection-end-line="212" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-skillsPassport.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3600">
+          <caret line="240" column="30" selection-start-line="240" selection-start-column="30" selection-end-line="240" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/custom.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="6645" column="15" lean-forward="true" selection-start-line="6645" selection-start-column="15" selection-end-line="6645" selection-end-column="15" />
+        <state relative-caret-position="128430">
+          <caret line="8562" column="16" selection-start-line="8562" selection-start-column="16" selection-end-line="8562" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-home.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6420">
+          <caret line="594" column="14" selection-start-line="594" selection-start-column="14" selection-end-line="594" selection-end-column="14" />
+          <folding>
+            <element signature="e#181#186#0#PHP" />
+            <element signature="e#2471#3452#0#PHP" />
+            <element signature="e#3461#4489#0#PHP" />
+            <element signature="e#4495#5490#0#PHP" />
+            <element signature="e#5496#6474#0#PHP" />
+            <element signature="e#6480#7509#0#PHP" />
+            <element signature="e#7521#8193#0#PHP" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/template-Ontwikkeladvies.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="251" column="40" selection-start-line="251" selection-start-column="40" selection-end-line="251" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="230" column="7" lean-forward="true" selection-start-line="230" selection-start-column="7" selection-end-line="230" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="10" lean-forward="true" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
         </state>
       </provider>
     </entry>

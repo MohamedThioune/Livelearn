@@ -2,6 +2,11 @@
 
 <?php
 global $post;
+
+global $wp;
+
+$url = home_url( $wp->request );
+
 $product = wc_get_product( get_field('connected_product', $post->ID) );
 $long_description = get_field('long_description', $post->ID);
 $data = get_field('data_locaties', $post->ID);
@@ -51,27 +56,27 @@ $data = get_field('data_locaties', $post->ID);
 
     if (isset($xml_parse))
     {
-        $start=explode('/',$date_start[0]);
-        $end=explode('/',$date_end[0]);
+        $start = explode('/',$date_start[0]);
+        $end = explode('/',$date_end[0]);
         //var_dump($date_start[0],$date_end[0]);
         $month_start = date('F', mktime(0, 0, 0, $start[1], 10));
         $month_end = date('F', mktime(0, 0, 0, $end[1], 10));
-        $number_course_day=((strtotime($end[0].' '.$month_end.' '.$end[2]) - strtotime($start[0].' '.$month_start.' '.$start[2]))/86400);
+        $number_course_day = ((strtotime($end[0].' '.$month_end.' '.$end[2]) - strtotime($start[0].' '.$month_start.' '.$start[2]))/86400);
 
     }
     else
     {
-        $start=explode('/',$date_start);
-        $end=explode('/',$date_end);
-        $year_start=explode(' ',$start[2]);
-        $year_end=explode(' ',$end[2]);
+        $start = explode('/',$date_start);
+        $end = explode('/',$date_end);
+        $year_start = explode(' ',$start[2]);
+        $year_end = explode(' ',$end[2]);
         //var_dump($date_start,$date_end);
         $month_start = date('F', mktime(0, 0, 0, $start[1], 10));
         $month_end = date('F', mktime(0, 0, 0, $end[1], 10));
-        $number_course_day= ((strtotime($end[0].' '.$month_end.' '.$year_end[0]) - strtotime($start[0].' '.$month_start.' '.$year_start[0]))/86400);
+        $number_course_day = ((strtotime($end[0].' '.$month_end.' '.$year_end[0]) - strtotime($start[0].' '.$month_start.' '.$year_start[0]))/86400);
     }
 
-    if($number_course_day==0)
+    if($number_course_day == 0)
         $number_course_day = 1;
 
 /*
@@ -219,61 +224,61 @@ $reviews = get_field('reviews', $post->ID);
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
 <!-- ---------------------------------------- Start modals ---------------------------------------------- -->
-    <div class="modal fade" id="direct-contact" tabindex="-1" aria-labelledby="direct-contactModalLabel" aria-hidden="true">
+<div class="modal fade" id="direct-contact" tabindex="-1" aria-labelledby="direct-contactModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-course">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="direct-contactModalLongTitle">Direct contact</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
             </div>
-        <div class="modal-body">
-            <div class="d-flex justify-content-center">
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
 
-                <div>
-                    <a href="#" class="mx-3 d-flex flex-column ">
-                        <i style="font-size: 50px; height: 49px; margin-top: -4px;"
-                            class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>
-                    </a>
-                    <div class="mt-3 text-center">
-                        <span class="bd-highlight fw-bold text-success mt-2">whatsapp</span>
+                    <div>
+                        <a href="#" class="mx-3 d-flex flex-column ">
+                            <i style="font-size: 50px; height: 49px; margin-top: -4px;"
+                                class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>
+                        </a>
+                        <div class="mt-3 text-center">
+                            <span class="bd-highlight fw-bold text-success mt-2">whatsapp</span>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <a href="#" class="mx-3 d-flex flex-column ">
-                        <i style="font-size: 25px"
-                        class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
-                        <!-- <span class="bd-highlight fw-bold text-primary mt-2">email</span> -->
-                    </a>
-                    <div class="mt-3 text-center">
-                         <span class="bd-highlight fw-bold text-danger mt-5">email</span>
+                    <div>
+                        <a href="#" class="mx-3 d-flex flex-column ">
+                            <i style="font-size: 25px"
+                            class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
+                            <!-- <span class="bd-highlight fw-bold text-primary mt-2">email</span> -->
+                        </a>
+                        <div class="mt-3 text-center">
+                            <span class="bd-highlight fw-bold text-danger mt-5">email</span>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <a href="#" class="mx-3 d-flex flex-column ">
-                        <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>
-                    </a>
-                    <div class="mt-3 text-center">
-                         <span class="bd-highlight fw-bold text-secondary mt-5">message</span>
+                    <div>
+                        <a href="#" class="mx-3 d-flex flex-column ">
+                            <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>
+                        </a>
+                        <div class="mt-3 text-center">
+                            <span class="bd-highlight fw-bold text-secondary mt-5">message</span>
+                        </div>
                     </div>
-                </div>
 
-                <div>
-                    <a href="#" class="mx-3 d-flex flex-column ">
-                        <i class="bd-highlight bi bi-telephone-x border border-3 border-primary rounded-circle text-primary shadow"
-                        style="font-size: 20px; padding: 6px 11px;"></i>
-                        <!-- <span class="bd-highlight fw-bold text-primary mt-2">call</span> -->
-                    </a>
-                    <div class="mt-3 text-center">
-                         <span class="bd-highlight fw-bold text-primary mt-5">call</span>
+                    <div>
+                        <a href="#" class="mx-3 d-flex flex-column ">
+                            <i class="bd-highlight bi bi-telephone-x border border-3 border-primary rounded-circle text-primary shadow"
+                            style="font-size: 20px; padding: 6px 11px;"></i>
+                            <!-- <span class="bd-highlight fw-bold text-primary mt-2">call</span> -->
+                        </a>
+                        <div class="mt-3 text-center">
+                            <span class="bd-highlight fw-bold text-primary mt-5">call</span>
+                        </div>
                     </div>
+
                 </div>
 
             </div>
-
-        </div>
-        <!-- <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div> -->
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div> -->
         </div>
     </div>
 </div>
@@ -490,7 +495,7 @@ $reviews = get_field('reviews', $post->ID);
                                        {
                                         echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
                                         wp_login_form([
-                                                'redirect' => 'http://wp12.influid.nl/dashboard/user/',
+                                                'redirect' => $url,
                                                 'remember' => false,
                                                 'label_username' => 'Wat is je e-mailadres?',
                                                 'placeholder_email' => 'E-mailadress',
