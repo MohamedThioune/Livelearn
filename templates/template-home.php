@@ -396,21 +396,11 @@
                     <form action="" class="form-Step-skills-passpoort">
                         <div class="step1SkillsPasspoort">
                             <p class="titleBlockStepSkills">Wat is jouw hoogst afgeronde opleiding ?</p>
-                            <div class="hiddenCB">
-                                <div>
-                                    <div class="blockInputCheck">
-                                        <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnBaangerichte" for="cb1">MBO 1/2</label>
-                                    </div>
-                                    <div class="blockInputCheck">
-                                        <input type="checkbox" name="choice" id="cb2" /><label class="labelChoose btnBaangerichte" for="cb2">MBO 3/4</label>
-                                    </div>
-                                    <div class="blockInputCheck">
-                                        <input type="checkbox" name="choice" id="cb3" /><label class="labelChoose btnBaangerichte" for="cb3">HBO</label>
-                                    </div>
-                                    <div class="blockInputCheck">
-                                        <input type="checkbox" name="choice" id="cb4" /><label class="labelChoose btnBaangerichte" for="cb4">WO</label>
-                                    </div>
-                                </div>
+                            <div class="blockInputRadio">
+                                <input type="radio" name="choiceOpleiding" value="MBO 1/2" id="one"><label for="one">MBO 1/2</label>
+                                <input type="radio" name="choiceOpleiding" value="MBO 3/4" id="two"><label for="two">MBO 3/4</label>
+                                <input type="radio" name="choiceOpleiding" value="HBO" id="three"><label for="three">HBO</label>
+                                <input type="radio" name="choiceOpleiding" value="WO" id="four"><label for="four">WO</label>
                             </div>
                             <div class="text-center w-100">
                                 <button type="button" class="btn btn-volgende" id="btnStep1SkillsPasspoort">Volgende</button>
@@ -476,40 +466,40 @@
                             <div class="hiddenCB">
                                 <div>
                                     <div class="blockInputCheck">
-                                        <input type="checkbox" name="choice" id="cb10" /><label class="labelChoose btnBaangerichte" for="cb1">Opleidingen</label>
+                                        <input type="checkbox" name="choice" id="cb10" /><label class="labelChoose btnBaangerichte" for="cb10">Opleidingen</label>
                                     </div>
                                     <div class="blockInputCheck">
-                                        <input type="checkbox" name="choice" id="cb11" /><label class="labelChoose btnBaangerichte" for="cb1">E-learnings</label>
+                                        <input type="checkbox" name="choice" id="cb11" /><label class="labelChoose btnBaangerichte" for="cb11">E-learnings</label>
                                     </div>
                                     <div class="blockInputCheck">
-                                        <input type="checkbox" name="choice" id="cb12" /><label class="labelChoose btnBaangerichte" for="cb1">Lezingen</label>
+                                        <input type="checkbox" name="choice" id="cb12" /><label class="labelChoose btnBaangerichte" for="cb12">Lezingen</label>
                                     </div>
                                     <div class="blockInputCheck">
-                                        <input type="checkbox" name="choice" id="cb13" /><label class="labelChoose btnBaangerichte" for="cb1">Trainingen</label>
+                                        <input type="checkbox" name="choice" id="cb13" /><label class="labelChoose btnBaangerichte" for="cb13">Trainingen</label>
                                     </div>
                                     <div class="blockInputCheck">
-                                        <input type="checkbox" name="choice" id="cb14" /><label class="labelChoose btnBaangerichte" for="cb1">Video's</label>
+                                        <input type="checkbox" name="choice" id="cb14" /><label class="labelChoose btnBaangerichte" for="cb14">Video's</label>
                                     </div>
                                     <div class="blockInputCheck">
-                                        <input type="checkbox" name="choice" id="cb15" /><label class="labelChoose btnBaangerichte" for="cb1">Events</label>
+                                        <input type="checkbox" name="choice" id="cb15" /><label class="labelChoose btnBaangerichte" for="cb15">Events</label>
                                     </div>
                                     <div class="blockInputCheck">
-                                        <input type="checkbox" name="choice" id="cb16" /><label class="labelChoose btnBaangerichte" for="cb1">Workshop</label>
+                                        <input type="checkbox" name="choice" id="cb16" /><label class="labelChoose btnBaangerichte" for="cb16">Workshop</label>
                                     </div>
                                     <div class="blockInputCheck">
-                                        <input type="checkbox" name="choice" id="cb17" /><label class="labelChoose btnBaangerichte" for="cb1">Artikelen</label>
+                                        <input type="checkbox" name="choice" id="cb17" /><label class="labelChoose btnBaangerichte" for="cb17">Artikelen</label>
                                     </div>
                                     <div class="blockInputCheck">
-                                        <input type="checkbox" name="choice" id="cb18" /><label class="labelChoose btnBaangerichte" for="cb1">Webinars</label>
+                                        <input type="checkbox" name="choice" id="cb18" /><label class="labelChoose btnBaangerichte" for="cb18">Webinars</label>
                                     </div>
                                     <div class="blockInputCheck">
-                                        <input type="checkbox" name="choice" id="cb19" /><label class="labelChoose btnBaangerichte" for="cb1">Masterclasses</label>
+                                        <input type="checkbox" name="choice" id="cb19" /><label class="labelChoose btnBaangerichte" for="cb19">Masterclasses</label>
                                     </div>
                                     <div class="blockInputCheck">
-                                        <input type="checkbox" name="choice" id="cb20" /><label class="labelChoose btnBaangerichte" for="cb1">Assessments</label>
+                                        <input type="checkbox" name="choice" id="cb20" /><label class="labelChoose btnBaangerichte" for="cb20">Assessments</label>
                                     </div>
                                     <div class="blockInputCheck">
-                                        <input type="checkbox" name="choice" id="cb21" /><label class="labelChoose btnBaangerichte" for="cb1">Podcasts</label>
+                                        <input type="checkbox" name="choice" id="cb21" /><label class="labelChoose btnBaangerichte" for="cb21">Podcasts</label>
                                     </div>
                                     </div>
                                 </div>
@@ -521,21 +511,11 @@
 
                         <div class="step5SkillsPasspoort stepSkillpasspoort">
                                 <p class="titleBlockStepSkills">Wat is jouw hoogst afgeronde opleiding? </p>
-                                <div class="hiddenCB">
-                                    <div>
-                                        <div class="blockInputCheck">
-                                            <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnBaangerichte" for="cb1">Generatie BabyBoom (1940-1960)</label>
-                                        </div>
-                                        <div class="blockInputCheck">
-                                            <input type="checkbox" name="choice" id="cb2" /><label class="labelChoose btnBaangerichte" for="cb2">Generatie X (1961-1980)</label>
-                                        </div>
-                                        <div class="blockInputCheck">
-                                            <input type="checkbox" name="choice" id="cb3" /><label class="labelChoose btnBaangerichte" for="cb3">Millenials (1981-1995)</label>
-                                        </div>
-                                        <div class="blockInputCheck">
-                                            <input type="checkbox" name="choice" id="cb4" /><label class="labelChoose btnBaangerichte" for="cb4">Generatie Z (1996-nu)</label>
-                                        </div>
-                                    </div>
+                                <div class="blockInputRadio" id="groupBtnChoice2">
+                                    <input type="radio" name="choiceOpleiding" value="Generatie BabyBoom (1940-1960)" id="BabyBoom"><label for="BabyBoom">Generatie BabyBoom (1940-1960)</label>
+                                    <input type="radio" name="choiceOpleiding" value="Generatie X (1961-1980)" id="GeneratieX"><label for="GeneratieX">Generatie X (1961-1980)</label>
+                                    <input type="radio" name="choiceOpleiding" value="Millenials (1981-1995)" id="Millenials"><label for="Millenials">Millenials (1981-1995)</label>
+                                    <input type="radio" name="choiceOpleiding" value="Generatie Z (1996-nu)" id="GeneratieZ"><label for="GeneratieZ">Generatie Z (1996-nu)</label>
                                 </div>
                                 <div class="text-center w-100 groupBtnStepSkillsP">
                                     <button type="button" class="btn btnTerug" id="btnTerug4SkillsPasspoort">Terug</button>

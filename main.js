@@ -223,6 +223,13 @@ jQuery(function($){
         $(".like2").toggle();
     });
 
+    $("#btn_dislike").click(function() {
+        $(".btn_dislike").toggle();
+    });
+    $("#btn_like").click(function() {
+        $(".btn_like").toggle();
+    });
+
 
     $(".replyBtn").click(function() {
         $(".replayForm").show();

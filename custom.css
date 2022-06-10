@@ -7086,6 +7086,7 @@ ul#tabs-nav li.active {
 }
 .customTabs #tabs-content {
     padding-top: 30px;
+    margin-bottom: 30px;
 }
 .customTabs #tabs-content h2{
     font-size: 20px;
@@ -7235,6 +7236,8 @@ ul#tabs-nav li.active {
 .description-assessment-test{
     color: #333;
     font-size: 15px;
+    line-height: 28px;
+    margin-bottom: 45px;
 }
 .ulAssessment{
     margin-bottom: 25px;
@@ -7243,6 +7246,8 @@ ul#tabs-nav li.active {
 .blockChapitreCours .sousBlockCours {
     display: flex;
     flex-wrap: wrap;
+    height: 515px;
+    overflow-y: scroll;
 }
 .blockChapitreCours .textChapitreCours:first-child {
     margin-bottom: 16px !important;
@@ -7908,6 +7913,10 @@ ul#tabs-nav li.active {
     margin-left: 25px;
     font-weight: 700;
 }
+.btnLessHoe:hover{
+    background: #043356;
+    color: #FFFFFF;
+}
 .elementWinWar{
     display: flex;
     justify-content: center;
@@ -8018,19 +8027,666 @@ ul#tabs-nav li.active {
 .datepicker::placeholder {
     word-spacing: 0px !important;
 }
-.lessonBlock {
-    padding-left: 65px;
-}
 .ml-auto{
     margin-left: auto!important;
     width: fit-content;
 }
+.rating {
+    width: fit-content;
+}
+.blockSkillsTabs{
+    display: flex;
+    flex-wrap: wrap;
+}
+.blockSkillsTabs .skillsElement{
+    min-width: 18%;
+    text-align: center;
+    padding: 4px 5px 5px;
+    background: #02aa9f78;
+    border-radius: 20px;
+    color: #002743;
+    margin: 0 8px 10px;
+    font-size: 14px;
+}
+.blockSkillsTabs .btnAddEdu {
+    font-size: 14px;
+    margin: 0 9px 20px;
+    text-align: center;
+}
+
+.blockInputRadio input[type='radio']{
+    display:none;
+}
+.blockInputRadio {
+    display: flex;
+    flex-wrap: wrap;
+}
+.blockInputRadio label {
+    display: inline-block;
+    border: 1px solid;
+    cursor: pointer;
+    width: 44%;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 400;
+    color: #043356;
+    border-radius: 16px;
+    padding: 7px 10px;
+    margin: 0 10px 25px;
+}
+.blockInputRadio label:hover {
+    background: #043356;
+    color: white;
+}
+.blockInputRadio input[type='radio']:checked + label {
+    background: #043356;
+    color: white;
+}
+#groupBtnChoice2{
+    width: 90%;
+    margin: 0 auto;
+    justify-content: space-around;
+}
+.head-ontwikkeladvies {
+    background: #043356;
+    color: white;
+    padding: 100px 0;
+}
+.head-skillsPassport {
+    background: #043356;
+    color: white;
+    padding: 65px 0 90px;
+}
+.head-ontwikkeladvies .row{
+    align-items: center;
+}
+.head-skillsPassport .row{
+    align-items: center;
+}
+.head-skillsPassport .blockImg{
+    height: 380px;
+    text-align: center;
+    position: relative;
+}
+.head-skillsPassport .blockImg img{
+    height: 100%;
+    object-fit: cover;
+    margin: 0 auto;
+}
+.head-skillsPassport h1{
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+.head-skillsPassport .description{
+    font-size: 17px;
+    margin-bottom: 40px;
+}
+.head-skillsPassport .blockImg p{
+    position: absolute;
+    left: 55px;
+    background: white;
+    color: #043356;
+    font-weight: 700;
+    padding: 10px 15px;
+    top: 18px;
+}
+.blockImgontwikkeladvies{
+    width: 85%;
+    margin-left: auto;
+}
+.blockImgontwikkeladvies img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.head-ontwikkeladvies h1{
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+.head-ontwikkeladvies p{
+    font-size: 18px;
+    margin-bottom: 35px;
+}
+.btnBekijk2 {
+    color: white;
+    padding: 11px 20px;
+    font-size: 15px;
+    background: #47a99e;
+    border-radius: 10px;
+    font-weight: 500;
+}
+.bodyOntwikkeladvies{
+    padding-top: 60px;
+}
+.elkeVolgendeTitle {
+    color: #043356;
+    font-size: 28px;
+    width: 360px;
+    text-align: center;
+    margin: 0 auto 15px;
+}
+.elkeVolgendeDescription {
+    color: #043356;
+    font-size: 15px;
+    width: 495px;
+    text-align: center;
+    margin: 0 auto 40px;
+}
+.subTitleCardVolgende {
+    color: #043356;
+}
+.CardVolgende{
+    background: white;
+    box-shadow: 0px 0px 1px 1px #d2d2d2;
+    text-align: center;
+    position: relative;
+    padding: 35px 25px 32px;
+    width: 100%;
+    border-radius: 20px;
+    height: 100%;
+}
+.blockCardFunctie .Card{
+    background: white;
+    box-shadow: 0px 0px 1px 1px #d2d2d2;
+    text-align: center;
+    position: relative;
+    padding: 35px 25px 27px;
+    width: 100%;
+    border-radius: 20px;
+    height: 100%;
+}
+.headCardVolgende{
+    height: 170px;
+    margin-bottom: 25px;
+}
+.headCardVolgende img{
+    height: 100%;
+    object-fit: cover;
+}
+
+.blockCardFunctie .headCard{
+    padding-top: 15px;
+    height: 170px;
+    margin-bottom: 25px;
+    width: unset;
+}
+.blockCardFunctie .headCard img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+.titleCardVolgende{
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #043356;
+}
+.btnCardVolgende{
+    position: absolute;
+    bottom: 20px;
+    width: 55%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    border: 1px solid #043356;
+    border-radius: 10px;
+    padding: 8px 10px;
+    color: #043356;
+    font-weight: 500;
+}
+.btnCardVolgende:hover{
+    background: #043356;
+    color: #FFFFFF;
+}
+.bodyOntwikkeladvies .cardBlockValOpEnVerbind {
+    margin-bottom: 85px;
+}
+.descriptionWinWar2 {
+    color: #043356;
+    font-size: 18px;
+    width: 598px;
+    margin-bottom: 0;
+    margin-top: 12px;
+}
+.titleAltijd {
+    font-size: 28px;
+    padding-right: 135px;
+    color: #043356;
+    font-weight: 600;
+    margin-bottom: 23px;
+}
+.descriptionAltijd{
+    color: #043356;
+    font-size: 17px;
+    padding-right: 90px;
+    margin-bottom: 30px;
+}
+.btnMaakNu {
+    color: #043356;
+    font-weight: bold;
+    font-size: 15px;
+    padding: 10px 30px;
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 13px;
+    border: 1px solid #043356;
+}
+.btnMaakNu:hover {
+    background: #043356;
+    color: white;
+}
+.imgBook {
+    height: 360px;
+    float: right;
+    margin-right: 100px;
+}
+.imgBook img {
+    height: 100%;
+    object-fit: cover;
+}
+.rowModifeBook {
+    align-items: center;
+    margin-top: 80px;
+    margin-bottom: 70px;
+}
+.formTestimonial{
+    background: #E0EFF4;
+    width: 92%;
+    text-align: center;
+    margin: 0 52px 0px auto;
+    border-radius: 15px;
+    padding: 25px;
+}
+.formTestimonial .title{
+    color: #043356;
+    font-weight: 800;
+    font-size: 18px;
+    margin-bottom: 3px;
+}
+.formTestimonial .description {
+    color: #043356;
+    margin-bottom: 25px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.formTestimonial .input-group input,select{
+    width: 100%;
+    color: #023356 !important;
+    font-size: 14px;
+    padding: 9px 20px !important;
+    background: #FFFFFF !important;
+    border-radius: 8px;
+    border: none;
+    margin-bottom: 15px;
+    box-shadow: 0px 0px 2px 0px #9d9d9d;
+}
+.formTestimonial .input-group input::placeholder{
+    color: #023356 !important;
+}
+.watAnderenTitle{
+    text-align: center;
+    font-size: 26px;
+    font-weight: 500;
+    margin-bottom: 30px;
+    margin-top: 56px;
+}
+.cardTestimonialZeggen {
+    display: flex;
+    box-shadow: 0px 0px 2px 2px #dbdbdb;
+    padding: 20px 15px 15px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+.cardTestimonialZeggen .blockImg{
+    height: 95px;
+    margin-right: 10px;
+    margin-top: -12px;
+}
+.cardTestimonialZeggen .blockImg img {
+    height: 100%;
+    object-fit: cover;
+}
+.textDescription{
+    color: #043356;
+    font-size: 15px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    line-height: 19px;
+}
+.cardTestimonialZeggen .rating > label:before {
+    font-size: 20px;
+}
+.cardTestimonialZeggen .rating > label {
+    margin-bottom: 0;
+}
+
+.blockFooterOntwikkeladvies{
+    background: #043356;
+    padding: 75px 0;
+    color: white;
+}
+.blockFooterOntwikkeladvies .blockImgFooterOntwikkeladvies{
+    height: 340px;
+    margin: 0 auto;
+    text-align: center;
+}
+.blockFooterOntwikkeladvies .blockImgFooterOntwikkeladvies img{
+    height: 100%;
+    object-fit: cover;
+}
+.blockFooterOntwikkeladvies h2{
+    font-size: 35px;
+    margin-bottom: 26px;
+}
+.blockFooterOntwikkeladvies .descriptionContact{
+    font-size: 18px;
+    margin-bottom: 28px;
+}
+.blockFooterOntwikkeladvies .btnemail{
+    background: #e0eff4;
+    color: #043356;
+    font-weight: 600;
+    padding: 10px 45px;
+    border-radius: 23px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+.blockFooterOntwikkeladvies .btnBellen {
+    background: #47a99e;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 10px 45px;
+    border-radius: 23px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+.content-ontwikkeladvies footer{
+    display: none !important;
+}
+.blockFormTestimonial {
+    margin-bottom: 90px;
+}
+.groupBtn{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    justify-content: center;
+}
+.blockCardFunctie .Card .groupBtn a{
+    background: #E0EFF4;
+    color: #043356;
+    font-size: 15px;
+    padding: 6px 20px;
+    margin: 0 5px 15px;
+    border-radius: 15px;
+    min-width: 130px;
+}
+
+.btnRediection span img {
+    background: #043356;
+    border-radius: 100%;
+    width: 16px;
+}
+.blockCardFunctie .Card .titleCard {
+    color: #023356;
+    font-weight: bold;
+    font-size: 22px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 230px;
+    margin-bottom: 25px;
+    line-height: 33px;
+}
+
+.blockSpelregels .textSpelregels{
+    color: #043356;
+    font-weight: 800;
+    font-size: 28px;
+    text-align: center;
+}
+.blockSpelregels .textJe{
+    color: #043356;
+    text-align: center;
+    width: 563px;
+    margin: 0 auto 45px;
+    font-size: 16px;
+}
+.blockSpelregels .twoBlockCardWatKrijg{
+    display: flex;
+    justify-content: center;
+}
+.blockSpelregels .twoBlockCardWatKrijg .card{
+    background: white;
+    box-shadow: 0px 0px 1px 1px #d2d2d2;
+    text-align: center;
+    padding: 30px 30px 80px;
+    width: 35%;
+    border-radius: 20px;
+    height: 100%;
+    position: relative;
+    margin: 0 25px 30px;
+}
+.blockSpelregels .twoBlockCardWatKrijg .card .title{
+    color: #023356;
+    font-size: 24px;
+    line-height: 33px;
+    text-align: center;
+    width: 164px;
+    margin: 0 auto 25px;
+}
+.blockSpelregels .twoBlockCardWatKrijg .iconBlockCard{
+    background: #043356;
+    width: 30px;
+    height: 30px;
+    margin-right: 15px;
+    text-align: center;
+    border-radius: 100%;
+}
+.blockSpelregels .twoBlockCardWatKrijg .iconBlockCard img{
+    width: 50%;
+    height: 50%;
+    object-fit: cover;
+    margin-top: 7px;
+}
+.blockSpelregels .twoBlockCardWatKrijg .descriptionCard{
+    color: #043356;
+    margin-bottom: 0;
+    font-size: 16px;
+}
+.blockSpelregels .twoBlockCardWatKrijg .btnCardWatKeijg{
+    background: #043356;
+    color: #FFFFFF;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding: 15px;
+    text-align: center;
+    font-weight: 700;
+    left: 0;
+    right: 0;
+}
+.blockDescription {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+.blockCardFunctie, .blockSpelregels {
+    margin-bottom: 60px;
+}
+.blockSpelregels .twoBlockCardWatKrijg .card:last-child .iconBlockCard {
+    background: #47a99e;
+}
+
+.blockSpelregels .twoBlockCardWatKrijg .card:last-child .btnCardWatKeijg {
+    background: #47a99e;
+}
+.blockWaaromLivelearn h2{
+    color: #043356;
+    font-weight: 800;
+    font-size: 28px;
+    text-align: center;
+}
+.blockWaaromLivelearn .head p{
+    color: #043356;
+    text-align: center;
+    width: 563px;
+    margin: 0 auto 45px;
+    font-size: 16px;
+}
+
+.elementwaarom {
+    text-align: center;
+    margin-bottom: 30px;
+}
+.elementwaarom img:first-child{
+    margin: 0 auto 20px;
+    height: 100px;
+}
+.elementwaarom p{
+    color: #0a0a0a;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+}
+.elementwaarom .imgNumb{
+    display: flex;
+    position: relative;
+}
+.elementwaarom .imgNumb img{
+    width: 80px;
+    height: auto;
+}
+.elementwaarom .imgNumb p{
+    color: #47a99e;
+    position: absolute;
+    right: 46px;
+    top: 0;
+    font-size: 13px;
+}
+.blockLoveCourse {
+    position: absolute;
+    right: 9px;
+    z-index: 99;
+    top: 12px;
+}
+.blockLoveCourse button{
+    background: none !important;
+    border: none !important;
+}
+.blockLoveCourse .btn_like{
+    display: none;
+}
+.blockLoveCourse button img {
+    width: 25px;
+}
+
 
 
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
+    .head-ontwikkeladvies h1 {
+        font-size: 25px;
+        margin-bottom: 20px;
+    }
+    .head-ontwikkeladvies {
+        padding: 60px 0;
+    }
+    .blockImgontwikkeladvies {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 33px;
+    }
+    .elkeVolgendeTitle {
+        font-size: 24px;
+        width: 100%px;
+        line-height: 27px;
+    }
+    .elkeVolgendeDescription {
+        font-size: 14px;
+        width: 100%;
+    }
+    .CardVolgende {
+        height: auto;
+        margin: 0 auto 20px;
+        width: 90%;
+    }
+    .descriptionWinWar2 {
+        width: 100%;
+        margin-bottom: 30px;
+        margin-top: 12px;
+        padding: 15px 15px 0;
+    }
+    .imgBook {
+        height: unset;
+        float: unset;
+        margin-right: auto;
+        margin-left: auto;
+        width: 67%;
+        margin-bottom: 18px;
+    }
+    .rowModifeBook {
+        align-items: center;
+        margin-top: 30px;
+        margin-bottom: 70px;
+    }
+    .titleAltijd {
+        font-size: 24px;
+        padding-right: 0;
+        color: #043356;
+        font-weight: 600;
+        margin-bottom: 23px;
+        line-height: 32px;
+    }
+    .descriptionAltijd {
+        color: #043356;
+        font-size: 16px;
+        padding-right: 0px;
+        margin-bottom: 30px;
+    }
+    .formTestimonial {
+        background: #E0EFF4;
+        width: 100%;
+        text-align: center;
+        margin: 0 52px 0px auto;
+        border-radius: 15px;
+        padding: 25px;
+    }
+    .watAnderenTitle {
+        text-align: center;
+        font-size: 23px;
+        font-weight: 500;
+        margin-bottom: 30px;
+        margin-top: 40px;
+    }
+    .blockFormTestimonial {
+        margin-bottom: 50px;
+    }
+    .blockFooterOntwikkeladvies .blockImgFooterOntwikkeladvies {
+        height: 290px;
+        margin: 0 auto 50px;
+        text-align: center;
+    }
+    .blockFooterOntwikkeladvies h2 {
+        font-size: 26px;
+        margin-bottom: 26px;
+    }
+    .imgBook img {
+        height: 100%;
+        object-fit: cover;
+        width: 100%;
+    }
 
-
+    .headCardVolgende img {
+        object-fit: contain;
+        width: 100%;
+        height: unset;
+    }
+    .headCardVolgende {
+        height: auto;
+        margin-bottom: 25px;
+    }
     .widget-about img {
         margin-top: unset;
     }
@@ -10127,6 +10783,77 @@ ul#tabs-nav li.active {
     .blockElementCardDetailLive {
         margin-bottom: 50px;
     }
+    .blockInputRadio label {
+        width: 43%;
+    }
+    #groupBtnChoice2 {
+        width: 100%;
+        margin: 0 auto;
+        justify-content: space-around;
+    }
+    #groupBtnChoice2 .blockInputRadio label {
+        width: 90%;
+    }
+    .head-skillsPassport h1 {
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+    .head-skillsPassport .blockImg {
+        height: 296px;
+        padding-top: 50px;
+    }
+    .head-skillsPassport {
+        background: #043356;
+        color: white;
+        padding: 41px 0 50px;
+    }
+    .blockCardFunctie .Card .groupBtn a {
+        font-size: 14px;
+        padding: 6px 10px;
+        margin: 0 5px 10px;
+        border-radius: 15px;
+        min-width: 127px;
+    }
+    .blockCardFunctie .Card {
+        height: auto;
+        margin-bottom: 35px;
+    }
+    .blockCardFunctie, .blockSpelregels {
+        margin-bottom: 30px;
+    }
+    .blockSpelregels .textJe {
+        width: 96%;
+        margin: 0 auto 35px;
+    }
+    .blockSpelregels .twoBlockCardWatKrijg {
+        flex-wrap: wrap;
+    }
+    .blockSpelregels .twoBlockCardWatKrijg .card {
+        padding: 30px 10px 70px;
+        width: 100%;
+        border-radius: 20px;
+        height: auto;
+        margin: 0 0px 30px;
+    }
+    .blockSpelregels .twoBlockCardWatKrijg .iconBlockCard {
+        width: 25px;
+        height: 25px;
+        border-radius: 100%;
+    }
+    .blockWaaromLivelearn .head p {
+        width: 95%;
+        font-size: 16px;
+    }
+    .blockWaaromLivelearn .col-sm-6 {
+        position: relative;
+        width: 49% !important;
+    }
+    .elementwaarom .imgNumb p {
+        right: 0px;
+        top: 0;
+        font-size: 13px;
+    }
+
 
 
 }
@@ -10144,6 +10871,98 @@ ul#tabs-nav li.active {
     }
     #burger-web{
         display: none !important;
+    }
+    .head-ontwikkeladvies h1 {
+        font-size: 25px;
+        margin-bottom: 20px;
+    }
+    .head-ontwikkeladvies {
+        padding: 60px 0;
+    }
+    .blockImgontwikkeladvies {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 33px;
+    }
+    .elkeVolgendeTitle {
+        font-size: 24px;
+        width: 100%px;
+        line-height: 27px;
+    }
+    .elkeVolgendeDescription {
+        font-size: 14px;
+        width: 100%;
+    }
+    .CardVolgende {
+        height: auto;
+        margin: 0 auto 20px;
+        width: 90%;
+    }
+    .descriptionWinWar2 {
+        width: 100%;
+        margin-bottom: 30px;
+        margin-top: 12px;
+        padding: 15px 15px 0;
+    }
+    .imgBook {
+        height: unset;
+        float: unset;
+        margin-right: auto;
+        margin-left: auto;
+        width: 67%;
+        margin-bottom: 18px;
+    }
+    .rowModifeBook {
+        align-items: center;
+        margin-top: 30px;
+        margin-bottom: 70px;
+    }
+    .titleAltijd {
+        font-size: 24px;
+        padding-right: 0;
+        color: #043356;
+        font-weight: 600;
+        margin-bottom: 23px;
+        line-height: 32px;
+    }
+    .descriptionAltijd {
+        color: #043356;
+        font-size: 16px;
+        padding-right: 0px;
+        margin-bottom: 30px;
+    }
+    .formTestimonial {
+        background: #E0EFF4;
+        width: 100%;
+        text-align: center;
+        margin: 0 52px 0px auto;
+        border-radius: 15px;
+        padding: 25px;
+    }
+    .watAnderenTitle {
+        text-align: center;
+        font-size: 23px;
+        font-weight: 500;
+        margin-bottom: 30px;
+        margin-top: 40px;
+    }
+    .blockFormTestimonial {
+        margin-bottom: 50px;
+    }
+    .blockFooterOntwikkeladvies .blockImgFooterOntwikkeladvies {
+        height: 290px;
+        margin: 0 auto 50px;
+        text-align: center;
+    }
+    .blockFooterOntwikkeladvies h2 {
+        font-size: 26px;
+        margin-bottom: 26px;
+    }
+    .imgBook img {
+        height: 100%;
+        object-fit: cover;
+        width: 100%;
     }
 }
 
@@ -10495,6 +11314,98 @@ ul#tabs-nav li.active {
     .containerModife {
         padding: 0px 20px 0px 30px !important;
     }
+    .head-ontwikkeladvies h1 {
+        font-size: 25px;
+        margin-bottom: 20px;
+    }
+    .head-ontwikkeladvies {
+        padding: 60px 0;
+    }
+    .blockImgontwikkeladvies {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 33px;
+    }
+    .elkeVolgendeTitle {
+        font-size: 24px;
+        width: 100%px;
+        line-height: 27px;
+    }
+    .elkeVolgendeDescription {
+        font-size: 14px;
+        width: 100%;
+    }
+    .CardVolgende {
+        height: auto;
+        margin: 0 auto 20px;
+        width: 90%;
+    }
+    .descriptionWinWar2 {
+        width: 100%;
+        margin-bottom: 30px;
+        margin-top: 12px;
+        padding: 15px 15px 0;
+    }
+    .imgBook {
+        height: unset;
+        float: unset;
+        margin-right: auto;
+        margin-left: auto;
+        width: 67%;
+        margin-bottom: 18px;
+    }
+    .rowModifeBook {
+        align-items: center;
+        margin-top: 30px;
+        margin-bottom: 70px;
+    }
+    .titleAltijd {
+        font-size: 24px;
+        padding-right: 0;
+        color: #043356;
+        font-weight: 600;
+        margin-bottom: 23px;
+        line-height: 32px;
+    }
+    .descriptionAltijd {
+        color: #043356;
+        font-size: 16px;
+        padding-right: 0px;
+        margin-bottom: 30px;
+    }
+    .formTestimonial {
+        background: #E0EFF4;
+        width: 100%;
+        text-align: center;
+        margin: 0 52px 0px auto;
+        border-radius: 15px;
+        padding: 25px;
+    }
+    .watAnderenTitle {
+        text-align: center;
+        font-size: 23px;
+        font-weight: 500;
+        margin-bottom: 30px;
+        margin-top: 40px;
+    }
+    .blockFormTestimonial {
+        margin-bottom: 50px;
+    }
+    .blockFooterOntwikkeladvies .blockImgFooterOntwikkeladvies {
+        height: 290px;
+        margin: 0 auto 50px;
+        text-align: center;
+    }
+    .blockFooterOntwikkeladvies h2 {
+        font-size: 26px;
+        margin-bottom: 26px;
+    }
+    .imgBook img {
+        height: 100%;
+        object-fit: cover;
+        width: 100%;
+    }
 
 
 }
@@ -10518,6 +11429,7 @@ ul#tabs-nav li.active {
         min-width: 333px;
         padding-left: 25px;
     }
+
 }
 @media screen and (max-width: 1330px) and (min-width: 1080px){
     #searchIconeTablet{
