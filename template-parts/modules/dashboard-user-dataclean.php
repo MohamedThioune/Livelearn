@@ -9,7 +9,6 @@
 
  $user = wp_get_current_user();
 
-
 ?>
 <!-- modal-style -->
 
@@ -90,12 +89,8 @@
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-
-<?php
-
-?>
 
 <!-- Content -->
 <div class="contentListeCourse">
@@ -112,27 +107,33 @@
                     <th scope="col">Titel</th>
                     <th scope="col">Type</th>
                     <th scope="col">Prijs</th>
-                    <th scope="col">Prijs VAT</th>
                     <th scope="col">Onderwerp(en)</th>
                     <!-- <th scope="col">Startdatum</th> -->
                     <th scope="col">Status</th>
+                    <th scope="col">Author</th>
                     <th scope="col">Optie</th>
                 </tr>
                 </thead>
                 <tbody>
                     <?php 
-                    foreach($courses as $course){
+                    foreach($courses as $key => $course){
+                        if($course->state)
+                            continue;
+                        $image_author = get_field('profile_img',  'user_' . $course->author_id);
+                        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
 
+                        $state = $course->course_id ? 'already' : 'not_in';
+                        $id = $course->course_id ?: $key;
                     ?>
-                    <tr>
+                    <tr id="<?= $id ?>" class="<?= $state ?>">
                         <td class="textTh"> <img src="<?= $course->image_xml; ?>" alt="image course" width="50" height="50"> </td>
                         <td class="textTh "><a style="color:#212529;font-weight:bold" href="<?= get_permalink($course->course_id) ?>"><?php echo $course->titel; ?></a></td>
                         <td class="textTh"><?= $course->type; ?></td>
                         <td class="textTh"><?= $course->prijs; ?></td>
-                        <td class="textTh"><?= $course->prijs_vat; ?></td>
                         <td class="textTh"><?= $course->onderwerpen; ?></td>
                         <td class="textTh"><?= $course->status; ?></td>
-                        <td class="textTh"> <button> ✔️ </button>&nbsp;&nbsp;<button> ❌ </button> </td>
+                        <td class="textTh"> <img src="<?= $image_author; ?>" alt="image course" width="25" height="25"> </td>
+                        <td class="textTh"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp;<input type="button" class="edit btn-default" id="<?= $key; ?>" style="background:white" value="⚙️" /> </td>
                     </tr>
                     <?php
                     }
@@ -143,110 +144,80 @@
     </div>
 </div>
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
-
-           <!-- Modal content -->
-       
-            <!-- <div id="modal-content"> -->
-           
-            <div class="modal-content modal-content-width m-auto " style="margin-top: 100px !important">
-                <div class="modal-header mx-4">
-                    <h5 class="modal-title" id="exampleModalLabel">Subtopics </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('myModal').style.display='none'" >
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="row d-flex text-center justify-content-center align-items-center h-50">
-                    <div class="col-md-11  p-4">
-                        <div class="form-group display-subtopics">
-                        
-                        </div> 
-                        <div id="modal-content">
-
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <button id="save_subtopics" type="button" class="btn text-white" style="background: #023356;">
-                             <strong>Save</strong> </button>
-                        </div>
-                    </div>
-                </div>
-            <!-- </div> -->
-          </div>
-           
-
-       </div> 
-
-</div> 
-
-<!-- script-modal -->
 <script>
-    var id_course;
-    $('.td_subtopics').click((e)=>{
-        id_course = e.target.id;
-     $.ajax({
-            url:"/fetch-subtopics-course",
-            method:"post",
-            data:
-            {
-                id_course:id_course,
-                action:'get_course_subtopics'
-            },
-        dataType:"text",
-        success: function(data){
-            // Get the modal
-            //console.log(data)
-    var modal = document.getElementById("myModal");
-    $('.display-subtopics').html(data)
-    // Get the button that opens the modal
-    
-    
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-    
-    // When the user clicks on the button, open the modal
-    
-        modal.style.display = "block";
-    
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-    
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-        modal.style.display = "none";
+    $('.optie').click((e)=>{
+        var tr_element = e.target.parentElement.closest("tr");
+        var ids = tr_element.id;
+        var classs = tr_element.className;
+
+        var optie = e.target.id;
+
+        if(confirm('Are you sure you want to apply this record ?'))
+        {
+            $.ajax({
+               url: '/optie-bank',
+               type: 'POST',
+               data: {
+                   id: ids,
+                   optie: optie,
+                   class: classs,
+                },
+               error: function() {
+                  alert('Something is wrong');
+               },
+               success: function(data) {
+                    $("#"+ids).remove();
+                    console.log(data);
+                    alert("Record applied successfully");  
+               }
+            });
         }
-    }
-            
-            
-        }
+        
     });
-});
+
+    $('.edit').click((e)=>{
+        var key = e.target.id;
+
+        $.ajax({
+                url:"/fetch-data-clean",
+                method:"post",
+                data:
+                {
+                    key:key,
+                },
+                dataType:"text",
+                success: function(data){
+                    // Get the modal
+                    console.log(data)
+                    var modal = document.getElementById("myModal");
+                    $('.display-elements').html(data)
+                    // Get the button that opens the modal
+
+
+                    // Get the <span> element that closes the modal
+                    var span = document.getElementsByClassName("close")[0];
+
+                    // When the user clicks on the button, open the modal
+
+                        modal.style.display = "block";
+
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function() {
+                        modal.style.display = "none";
+                    }
+
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function(event) {
+                        if (event.target == modal) {
+                        modal.style.display = "none";
+                        }
+                    }
+                            
+                }
+        });
+    });
     
-  $('#save_subtopics').click(()=>{
-      var subtopics = $('#selected_subtopics').val()
-      $.ajax({
-  url:"/fetch-subtopics-course",
-  method:"post",
-  data:
-    {
-      add_subtopics:subtopics,
-      id_course:id_course,
-      action:'add_subtopics'
-    },
-  dataType:"text",
-  success: function(data){
-      
-      let modal=$('#myModal');
-      modal.attr('style', { display: "none" });
-      //modal.style.display = "none";
-      $('#'+id_course).html(data)
-      //console.log(data)
-  }
-  })
-});
+
 </script>  
 
-    
+

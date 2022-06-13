@@ -3,7 +3,7 @@ global $wpdb;
 
 $table = $wpdb->prefix . 'databank';
 
-$format = array('%s', '%s', '%d', '%d', '%s', '%s', '%s', '%s', '%s');
+$format = array('%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%s', '%d', '%d', '%s');
 
 ?>
 <!-- modal-style -->
@@ -200,11 +200,7 @@ $format = array('%s', '%s', '%d', '%d', '%s', '%s', '%s', '%s', '%s');
                             if($category_id != 0)
                                 $category = (String)get_the_category_by_ID($category_id);
                         }
-                        /*
-                        * Price 
-                        */
-                        $price = get_field('price', $course->ID);
-
+                        
                         /*
                         *  Date and Location
                         */ 
@@ -270,6 +266,16 @@ $format = array('%s', '%s', '%d', '%d', '%s', '%s', '%s', '%s', '%s');
                         /*
                         * Elements 
                         */
+                        $short_description = get_field('short_description', $course->ID);
+
+                        $long_description = get_field('long_description', $course->ID);
+
+                        $duration = get_field('duration_day', $course->ID);
+
+                        $level = get_field('degree', $course->ID);
+
+                        $price = get_field('price', $course->ID);
+
                         $prijsvat = get_field('prijsvat', $course->ID);
 
                         $type_course = get_field('course_type', $course->ID);
@@ -282,7 +288,10 @@ $format = array('%s', '%s', '%d', '%d', '%s', '%s', '%s', '%s', '%s');
                         }
 
                         $status = "intern";
-                        $data = array('titel' => $course->post_title,  'type' => $type_course, 'prijs' => $price, 'prijs_vat' => $prijsvat, 'image_xml' => $image_xml , 'onderwerpen' => $fields, 'date_multiple' => null, 'course_id' => $course->ID, 'status' => $status);
+
+                        $format = array('%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%s', '%d', '%d', '%s');
+
+                        $data = array('titel' => $course->post_title,  'type' => $type_course, 'short_description' => $short_description, 'long_description' => $long_description, 'duration' => $duration, 'prijs' => $price, 'prijs_vat' => $prijsvat, 'image_xml' => $image_xml , 'onderwerpen' => $fields, 'date_multiple' => null, 'course_id' => $course->ID, 'author_id' => $course->post_author, 'status' => $status);
 
                         $wpdb->insert($table,$data,$format);
                     

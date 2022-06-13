@@ -7,7 +7,7 @@
 <?php
 if (isset ($_POST['add_subtopics']) && !empty($_POST['add_subtopics']) && $_POST['action'] == 'add_subtopics') {
 {
-    // getting subtopics for a specific course 
+    // getting subtopics for a specific course  
  $course = get_field('categories', $_POST['id_course']);
   $subtopics=array();
   // new subtopics selected by user

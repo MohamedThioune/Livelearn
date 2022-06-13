@@ -165,10 +165,10 @@ $orders = wc_get_orders($order_args);
 <!-- script-modal -->
       
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
 
 
@@ -176,7 +176,7 @@ $orders = wc_get_orders($order_args);
     <div class="cardOverviewCours">
         <div class="headListeCourse">
             <p class="JouwOpleid">Gekochte opleidingen</p>
-<!--            <a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>-->
+            <!-- <a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>-->
         </div>
 
         <div class="contentCardListeCourse">
