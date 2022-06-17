@@ -7368,7 +7368,7 @@ ul#tabs-nav li.active {
 }
 #voorOpleidersModal{
     width: fit-content;
-    min-width: 485px;
+    min-width: 585px;
     top: 63px;
 }
 #voorOpleidersModal .blockdropdownnHeader {

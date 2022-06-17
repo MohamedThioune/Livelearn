@@ -32,7 +32,7 @@
                     <div class="bodyCardOverviewOrganisatie">
                         <h3 class="titleCardVoorOrganisatie">Midden en Klein bedrijf</h3>
                         <p class="descriptionCardVoorOrganisatie">Wel personeel, maar nog geen speciale afdeling voor talent management en leren & ontwikkelen. Tot een organisatie van 250 man nemen wij alle taken over, van borging van skills tot het aanbieden van een gestroomlijnde onboarding.</p>
-                        <a href="" class="btn btnCardOverviewOrganisatie">Meer voor MKB</a>
+                        <a href="/overview-organisations-2" class="btn btnCardOverviewOrganisatie">Meer voor MKB</a>
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                     <div class="bodyCardOverviewOrganisatie">
                         <h3 class="titleCardVoorOrganisatie">Grootbedrijf</h3>
                         <p class="descriptionCardVoorOrganisatie">Een corporate organisatie, wellicht met meerdere locaties over de wereld. Borg je kennis in één dashboard, houd bij waar de ontwikkelkansen liggen met HR-analytics en geef managers de handvatten om hun teams optimaal te laten presteren</p>
-                        <a href="" class="btn btnCardOverviewOrganisatie">Meer voor Corporates</a>
+                        <a href="/overview-organisations-2" class="btn btnCardOverviewOrganisatie">Meer voor Corporates</a>
                     </div>
                 </div>
             </div>

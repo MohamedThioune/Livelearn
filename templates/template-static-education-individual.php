@@ -71,15 +71,15 @@
 <div class="boxBlijven">
     <div class="container">
         <div class="row">
-            <div class="col-md-6 col-sm-12">
-                <h1 class="BlijvenText">Blijf je leven lang ontwikkelen</h1>
-                <p class="altjidText bottomTextMaak">-Maak meteen een gratis en persoonlijke leeromgeving</p>
-                <p class="altjidText bottomTextMaak">-Altijd direct antwoord op je vragen over opleiden geving</p>
-                <p class="altjidText bottomTextMaak">-Het grootste aanbod van zakelijke trainingen EN persoonlijke interesses</p>
+            <div class="col-md-8 col-sm-12 text-md-left text-center">
+                <h1 class="BlijvenText">Blijf je leven lang ontwikkelen met LiveLearn</h1>
+                <p class="altjidText bottomTextMaak">- Maak eenvoudig jouw gratis gepersonaliseerde leeromgeving</p>
+                <p class="altjidText bottomTextMaak">- Altijd direct antwoord op je vragen over je ontwikkeling</p>
+                <p class="altjidText bottomTextMaak">- Het grootste aanbod van zakelijke artikelen, podcasts, videos en trainingen.</p>
                 <a href="/static-education-advice"  class="btn btnMeerInformation">Meer informatie</a>
             </div>
-            <div class="col-md-6 col-sm-12">
-                <div class="blockForm">
+            <div class="col-md-4 col-sm-12">
+                <div class="blockForm" style="width:100%">
                     <p class="gratisText gratisText2">Gratis</p>
                     <p><b>Meld je aan</b></p>
                     <center>
