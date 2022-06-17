@@ -156,6 +156,17 @@ $url = home_url( $wp->request );
                     </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- input search -->
+                    <form action="/product-search" method="POST" class="form-inline ml-auto mb-0 ">
+                        <input id="header-search" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, exports en onderwerpen" aria-label="Search">
+                        <div class="dropdown-menuSearch headerDrop" id="header-list">
+                            <div class="list-autocomplete" id="header">
+                                <center> <i class='hasNoResults'>No matching results</i> </center>
+                            </div>
+                        </div>
+                    </form>
+                    
+
                     <ul class="elementHeaderUser ">
                         <?php
 
