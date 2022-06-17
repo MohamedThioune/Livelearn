@@ -2,7 +2,7 @@
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
-    <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
 
 <body>
