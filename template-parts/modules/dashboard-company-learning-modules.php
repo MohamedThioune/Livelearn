@@ -1,5 +1,8 @@
 <?php
 
+$page = dirname(__FILE__) . '/../../templates/check_visibility.php';
+ 
+require($page); 
 
 $user_connected = get_current_user_id();
 $company_connected = get_field('company',  'user_' . $user_connected);
@@ -299,11 +302,13 @@ $orders = wc_get_orders($order_args);
                 </thead>
                 <tbody>
                     <?php 
-                    foreach($courses as $key=> $course){
+                    foreach($courses as $key => $course){
+                        if(!visibility($course, $visibility_company))
+                            continue;                
                         
                         /*
-                            * Categories
-                            */
+                        * Categories
+                        */
                         $day = "<p><i class='fas fa-calendar-week'></i></p>";
                         $month = ' ';
 

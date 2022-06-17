@@ -35,7 +35,9 @@
  
         foreach($global_courses as $course)
         {  
-             
+            if(!visibility($course, $visibility_company))
+                continue;
+
             $experts = get_field('experts', $course->ID);    
             if($course->post_author == $user->ID || in_array($user->ID, $experts) ){
                 array_push($courses, $course);

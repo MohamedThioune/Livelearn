@@ -13,7 +13,7 @@
                         'post_id'       => $_GET['id'],
                         'post_title'   => true,
                         'post_excerpt'   => true,
-                        'fields' => array('preview','price','short_description'),
+                        'fields' => array('preview','price','short_description','visibility'),
                         'submit_value'  => __('Opslaan & verder'),
                         'return' => '?func=add-add-article&id='.$_GET['id'].'&step=2'
                     ));
@@ -28,7 +28,7 @@
                         ),
                         'post_title'   => true,
                         'post_excerpt'   => true,
-                        'fields' => array('preview','price','short_description'),
+                        'fields' => array('preview','price','short_description', 'visibility'),
                         'submit_value'  => __('Opslaan & verder'),
                         'return' => '?func=add-add-article&id=%post_id%&step=2'
                     )); 

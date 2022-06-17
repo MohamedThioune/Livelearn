@@ -1,4 +1,9 @@
 <?php 
+
+$page = dirname(__FILE__) . '/../../templates/check_visibility.php';
+ 
+require($page); 
+
 $user_id = get_current_user_id();
 
 /*
@@ -32,6 +37,9 @@ $global_courses = get_posts($args);
 
 foreach($global_courses as $course)
 {  
+    if(!visibility($course, $visibility_company))
+        continue;                
+
     $experts = get_field('experts', $course->ID);    
     if($course->post_author == $user_id || in_array($user_id, $experts) ){
         array_push($courses, $course);

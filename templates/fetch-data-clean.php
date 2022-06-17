@@ -8,39 +8,216 @@ $table = $wpdb->prefix . 'databank';
 
 extract($_POST);
 
-if ( isset ($key) ) {
+/*
+* * Tags *
+*/ 
 
-$id = $key + 1;
+$tags = array();
+$categories = array(); 
+
+$cats = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'orderby'    => 'name',
+    'exclude' => 'Uncategorized',
+    'parent'     => 0,
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+foreach($cats as $item){
+    $cat_id = strval($item->cat_ID);
+    $item = intval($cat_id);
+    array_push($categories, $item);
+};
+
+$bangerichts = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[1],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$functies = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[0],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$skills = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[3],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$interesses = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[2],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$categorys = array(); 
+foreach($categories as $categ){
+    //Topics
+    $topics = get_categories(
+        array(
+        'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categ,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ) 
+    );
+
+    foreach ($topics as $value) {
+        $tag = get_categories( 
+                array(
+                'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                'parent'  => $value->cat_ID,
+                'hide_empty' => 0,
+            ) 
+        );
+        $categorys = array_merge($categorys, $tag);      
+    }
+}
+
+
+if ( isset ($id) ) {
+
 $input = 'id';
 $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
 
-$course = $wpdb->get_results( $sql );
+$course = $wpdb->get_results( $sql )[0];
 
 //array typos
 $typos = ['Opleidingen' => 'course', 'Training' => 'training', 'Workshop' => 'workshop', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'Video' => 'video', 'Atrtikel' => 'article', 'Assessment' => 'assessment', 'Lezing' => 'reading', 'Cursus' => 'cursus' ,'Event' => 'event', 'Webinar' => 'webinar' ];
-$type = ['Opleidingen', 'Training', 'Workshop', 'Masterclass', 'E-learning', 'Video', 'Atrtikel', 'Assessment', 'Lezing', 'Cursus', 'Event', 'Webinar' ];
+
+//array levels
+$levels = ['NVT' => 'n.v.t', 'MBO1' => 'mbo1', 'MBO2' => 'mbo2', 'MBO3' => 'mbo3', 'MBO4' => 'mbo4', 'HBO' => 'hbo', 'Universiteit' => 'university', 'Certificate' => 'certificate'];
+
+//array language 
+$languages = ['English', 'Dutch', 'German', 'French'];
+
+$onderwerpen = explode(',', $course->onderwerpen);
+
+$users = get_users();
+
+$short_description = $course->short_description ? $course->short_description : 'Please fill in the resume';
+$long_description =  $course->long_description  ? $course->long_description : 'Please fill in the content';
 
 /*
 * * Display forms w/ correct elements
 */
 
-//Starting forms
-echo '<form action="" method="">';
+    echo '<input type="hidden" name="id" value="' . $course->id . '">';
 
     //titel 
-    echo '<input type="text" name="titel" id="" class="form-control" value="' . $course->titel . '">';
+    echo '<div class="form-group"> 
+          <input type="text" name="titel" id="" class="form-control" value="' . $course->titel . '" placeholder="Titel ...">
+          </div>'; 
+    
+    //type 
+    echo '<div class="form-group"> 
+          <select class="multipleSelect2" name="type" id="selected_subtopics">';
+            foreach($typos as $key=>$typo){
+                if($course->type == $key)
+                    echo '<option selected value="'. $typo . '">' . $key . '</option>';
+                else
+                    echo '<option value="'. $typo . '">' . $key . '</option>';
+            }
+    echo '</select>
+          </div>';
+
+    //prijs 
+    echo '<div class="form-group"> 
+          <input type="number" name="prijs" id="" class="form-control" value="' . $course->prijs . '" placeholder="Prijs ...">
+          </div>';
 
     //type 
-    echo '<select class="multipleSelect2" id="selected_subtopics" multiple="true">';
-    foreach($typos as $key=>$typo){
-        if(in_array($course->type,$type))
-            echo '<option selected value="'. $typo . '">' . $key . '</option>';
-        else
-            echo '<option value="'. $typo . '">' . $key . '</option>';
-    }
-    echo '</select>';
+    echo '<div class="form-group"> 
+          <select class="multipleSelect2" name="tags[]" id="selected_subtopics" multiple="true">';
+            foreach($categorys as $typo){
+                if(stristr($course->onderwerpen, $typo->cat_name) !== false)
+                    echo '<option selected value="'. $typo->cat_name . '">' . $typo->cat_name . '</option>';
+                else
+                    echo '<option value="'. $typo->cat_name . '">' . $typo->cat_name . '</option>';
+            }
+    echo '</select>
+          </div>';
 
-//Closing forms
-echo '</form>';
+    /*
+    * * Description 
+    */
+    echo '<div class="form-group"> 
+          <textarea name="short_description" class="form-control" rows="3" cols="30">' . $short_description . '</textarea><br>
+          <textarea name="long_description" class="form-control" rows="3" cols="30">' . $long_description . '</textarea>
+          </div>';
+
+    /*
+    * * Target 
+    echo '<div class="form-group"> 
+          <textarea name="for_who" class="form-control" rows="5" cols="30">' . $course->for_who . '</textarea>
+          <textarea name="agenda" class="form-control" rows="5" cols="30">' . $course->agenda . '</textarea>
+          <textarea name="results" class="form-control" rows="5" cols="30">' . $course->results . '</textarea>
+          </div>';
+    */
+
+    //Date Multiple
+    /** Intruction code here ... */
+
+    /*
+    * * Levels 
+    echo '<div class="form-group"> 
+          <select class="multipleSelect2" id="selected_subtopics">';
+            foreach($levels as $key=>$level){
+                if($course->level == $key)
+                    echo '<option selected value="'. $level . '">' . $key . '</option>';
+                else
+                    echo '<option value="'. $level . '">' . $key . '</option>';
+            }
+    echo '</select>
+          </div>';
+    */
+
+
+    /*
+    * * Languages 
+    echo '<div class="form-group"> 
+          <select class="multipleSelect2" id="selected_subtopics">';
+            foreach($languages as $language){
+                if($course->language == $language)
+                    echo '<option selected value="'. $language . '">' . $language . '</option>';
+                else
+                    echo '<option value="'. $language . '">' . $language . '</option>';
+            }
+    echo '</select>
+          </div>';
+    */
+
+    
+    //Expert
+    echo '<div class="form-group"> 
+          <select class="multipleSelect2" name="author_id" id="selected_subtopics">';
+            foreach($users as $user){
+                if($user->ID == $course->author_id)
+                    echo '<option selected value="'. $user->ID . '">' . $user->display_name . '</option>';
+                else
+                    echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
+            }
+    echo '</select>
+          </div>';
 
 }
+
+/*
+* *Closing forms
+*/
+
+?>
+
+
+<script id="rendered-js" >
+$(document).ready(function () {
+    //Select2
+    $(".multipleSelect2").select2({
+        placeholder: "Maak uw keuze.",
+         //placeholder
+    });
+});
+//# sourceURL=pen.js
+</script>    

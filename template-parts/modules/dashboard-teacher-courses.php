@@ -1,4 +1,7 @@
 <?php
+$page = dirname(__FILE__) . '/../../templates/check_visibility.php';
+ 
+require($page); 
 
 $id = get_current_user_id();
 
@@ -36,22 +39,25 @@ if($id != 0){
                 <tbody>
                     <?php 
                     foreach($courses as $course){
-                         /*
-                            * Categories
-                            */
-                            $category = ' ';
-                            $location = ' ';
-                            $day = "<p><i class='fas fa-calendar-week'></i></p>";
-                            $month = ' ';
-
-                            $tree = get_the_terms($course->ID, 'course_category'); 
-
-                            if($tree)
-                                if(isset($tree[2]))
-                                    $category = $tree[2]->name;
+                        if(!visibility($course, $visibility_company))
+                            continue;
+                
                         /*
-                            * Price 
-                            */
+                        * Categories
+                        */
+                        $category = ' ';
+                        $location = ' ';
+                        $day = "<p><i class='fas fa-calendar-week'></i></p>";
+                        $month = ' ';
+
+                        $tree = get_the_terms($course->ID, 'course_category'); 
+
+                        if($tree)
+                            if(isset($tree[2]))
+                                $category = $tree[2]->name;
+                        /*
+                        * Price 
+                        */
                         $p = get_field('price', $course->ID);
                         if($p != "0")
                             $price = number_format($p, 2, '.', ',');
@@ -59,9 +65,8 @@ if($id != 0){
                             $price = 'Gratis';
 
                         /*
-                            *  Date and Location
-                            */ 
-
+                        *  Date and Location
+                        */ 
                         $data = get_field('data_locaties', $course->ID);
                         if($data){
                             $date = $data[0]['data'][0]['start_date'];

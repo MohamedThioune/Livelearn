@@ -1,5 +1,6 @@
+<?php /** Template Name: Databank */ ?>
+
 <?php
- //$sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE some_column = %s", $value );
 
  global $wpdb;
 
@@ -87,12 +88,19 @@
 
 </style>
 
+<?php wp_head(); ?>
+<?php get_header(); ?>
+
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
 <!-- Content -->
+<body>
+
 <div class="contentListeCourse">
     <div class="cardOverviewCours">
         <div class="headListeCourse">
@@ -116,14 +124,15 @@
                 </thead>
                 <tbody>
                     <?php 
-                    foreach($courses as $key => $course){
+                    foreach($courses as $course){
                         if($course->state)
                             continue;
                         $image_author = get_field('profile_img',  'user_' . $course->author_id);
                         $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
 
                         $state = $course->course_id ? 'already' : 'not_in';
-                        $id = $course->course_id ?: $key;
+                        $id = $course->course_id ?: $course->id;
+                        $key = $course->id;
                     ?>
                     <tr id="<?= $id ?>" class="<?= $state ?>">
                         <td class="textTh"> <img src="<?= $course->image_xml; ?>" alt="image course" width="50" height="50"> </td>
@@ -143,6 +152,42 @@
         </div>
     </div>
 </div>
+
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <!-- <div id="modal-content"> -->
+    <div class="modal-content modal-content-width m-auto " style="margin-top: 100px !important">
+        <div class="modal-header mx-4">
+            <h5 class="modal-title" id="exampleModalLabel">Content</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('myModal').style.display='none'" >
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="row d-flex text-center justify-content-center align-items-center h-50">
+            <div class="col-md-11  p-4">
+                <form action='/dashboard/user/' method='POST'>
+                <div class="form-group display-fields-clean">
+                </div> 
+                <div id="modal-content">
+                        
+                </div>
+                <center><input type='submit' class='btn text-white' name='databank' value='Update' style='background: #023356; border: none;'/></center>
+                <div class="d-flex justify-content-end">
+                </div>
+                </form>
+
+            </div>
+        </div>
+    <!-- </div> -->
+    </div>
+
+</div> 
+
+</body>
+
+<?php get_footer(); ?>
+<?php wp_footer(); ?>
 
 <script>
     $('.optie').click((e)=>{
@@ -183,14 +228,14 @@
                 method:"post",
                 data:
                 {
-                    key:key,
+                    id:key,
                 },
                 dataType:"text",
                 success: function(data){
                     // Get the modal
                     console.log(data)
                     var modal = document.getElementById("myModal");
-                    $('.display-elements').html(data)
+                    $('.display-fields-clean').html(data)
                     // Get the button that opens the modal
 
 
@@ -219,5 +264,6 @@
     
 
 </script>  
+
 
 
