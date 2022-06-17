@@ -7,6 +7,13 @@ global $wp;
 
 $url = home_url( $wp->request );
 
+$page = dirname(__FILE__) . '/../../templates/check_visibility.php';
+ 
+require($page); 
+
+if(!visibility($post, $visibility_company))
+    header('location: /');
+
 $product = wc_get_product( get_field('connected_product', $post->ID) );
 $long_description = get_field('long_description', $post->ID);
 $data = get_field('data_locaties', $post->ID);
@@ -58,7 +65,6 @@ $data = get_field('data_locaties', $post->ID);
     {
         $start = explode('/',$date_start[0]);
         $end = explode('/',$date_end[0]);
-        //var_dump($date_start[0],$date_end[0]);
         $month_start = date('F', mktime(0, 0, 0, $start[1], 10));
         $month_end = date('F', mktime(0, 0, 0, $end[1], 10));
         $number_course_day = ((strtotime($end[0].' '.$month_end.' '.$end[2]) - strtotime($start[0].' '.$month_start.' '.$start[2]))/86400);

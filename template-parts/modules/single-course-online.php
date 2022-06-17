@@ -5,6 +5,13 @@ $url = home_url( $wp->request );
 
 extract($_GET);
 
+$page = dirname(__FILE__) . '/../../templates/check_visibility.php';
+ 
+require($page); 
+
+if(!visibility($post, $visibility_company))
+    header('location: /');
+
 $long_description = get_field('long_description', $post->ID);
 
 $course_type = get_field('course_type', $post->ID);

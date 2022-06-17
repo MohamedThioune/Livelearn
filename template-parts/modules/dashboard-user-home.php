@@ -1,5 +1,7 @@
 <?php
-
+$page = dirname(__FILE__) . '/../../templates/check_visibility.php';
+ 
+require($page); 
 
 $courses = array();
 
@@ -71,6 +73,9 @@ $loop_break = array();
 
 foreach($global_courses as $course)
 {
+    if(!visibility($course, $visibility_company))
+        continue;                
+
     /*
     * Categories
     */ 

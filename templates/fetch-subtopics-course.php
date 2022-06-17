@@ -124,42 +124,37 @@ $orders = wc_get_orders($order_args);
 <!-- modal-style -->
          
 <!-- script-modal -->
+<?php
+if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') {
+{
+?>
+<select class='multipleSelect2' id="selected_subtopics"   multiple='true'>
+    <?php
+    
+    $course_subtopics = get_field('categories',$_POST['id_course']);
+    $selected_subtopics=array();
+    if (is_array($course_subtopics) || is_object($course_subtopics)){
+        foreach ($course_subtopics as $key =>  $course_subtopic) {
+            if ($course_subtopic!="" && $course_subtopic!="Array")
+                array_push($selected_subtopics,$course_subtopic['value']);
+        }
+        // check subtopics already added on this course 
+        foreach($subtopics as $value){
+            if (in_array($value->cat_ID,$selected_subtopics))
+                echo "<option selected   value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+            else
+                echo "<option   value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";   
+        }
+    }
+    else
+        foreach($subtopics as $value)
+            echo "<option    value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+    }
+}
+?>
+</select>                     
+<!----> 
 
-      
-
-                <?php
-                       if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') {
-                       {
-                ?>
-                       <select class='multipleSelect2' id="selected_subtopics"   multiple='true'>
-                       <?php
-                       
-                        $course_subtopics = get_field('categories',$_POST['id_course']);
-                        $selected_subtopics=array();
-                        if (is_array($course_subtopics) || is_object($course_subtopics)){
-                            foreach ($course_subtopics as $key =>  $course_subtopic) {
-                                if ($course_subtopic!="" && $course_subtopic!="Array")
-                                    array_push($selected_subtopics,$course_subtopic['value']);
-                        }
-                                                        // check subtopics already added on this course 
-                                                        foreach($subtopics as $value){
-                                                            if (in_array($value->cat_ID,$selected_subtopics))
-                                                                echo "<option selected   value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                                            else
-                                                                echo "<option   value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";   
-                                                            }
-                        }
-                        else
-                        foreach($subtopics as $value){
-                                echo "<option    value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                        }
-                    }
-                }
-                        ?>
-                        </select>
-                    
-                        
-<!---->
 <script id="rendered-js" >
     $(document).ready(function () {
         //Select2

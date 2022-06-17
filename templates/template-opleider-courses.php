@@ -96,6 +96,9 @@
         if(!empty($courses)){
             foreach($courses as $course)
             {
+                if(!visibility($course, $visibility_company))
+                    continue;
+
                 if(get_field('course_type', $course->ID) == "Opleidingen")
                     array_push($opleidingen, $course);
                 else if(get_field('course_type', $course->ID) == "Workshop")

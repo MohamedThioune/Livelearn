@@ -18,9 +18,9 @@
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/ZZPersStratup.png" alt="">
                     </div>
                     <div class="bodyCardOverviewOrganisatie">
-                        <h3 class="titleCardVoorOrganisatie">ZZP’ers en Startups</h3>
-                        <p class="descriptionCardVoorOrganisatie">Een goede organisatie start bij jezelf. Daarom zorgen wij dat ZZP’ers en startende organisaties eenvoudig een eigen ontwikkelomgeving kunnen creëren.  Alle ontwikkelingen in jouw markt direct op één plaats.</p>
-                        <a href="" class="btn btnCardOverviewOrganisatie">Meer voor ZZP’ers</a>
+                        <h3 class="titleCardVoorOrganisatie">ZZP'ers en Startups</h3>
+                        <p class="descriptionCardVoorOrganisatie">Een goede organisatie start bij jezelf. Daarom zorgen wij dat ZZP'ers en startende organisaties eenvoudig een eigen ontwikkelomgeving kunnen creëren.  Alle ontwikkelingen in jouw markt direct op één plaats.</p>
+                        <a href="" class="btn btnCardOverviewOrganisatie">Meer voor ZZP'ers</a>
                     </div>
                 </div>
             </div>

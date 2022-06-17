@@ -4,7 +4,7 @@
 
 global $wpdb;
 
-$table = $wpdb->prefix . 'databank';
+$table = $wpdb->prefix . 'databank'; 
 
 extract($_POST);
 
@@ -42,7 +42,5 @@ if($updated === false)
     return false; 
 else 
     return true;
-
-
 
 ?>
