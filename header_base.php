@@ -159,7 +159,7 @@
                             <div class="blockdropdownnHeader">
                                 <ul>
                                     <li>
-                                        <a href="">
+                                        <a href="overview-organisations-1">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
                                             </div>
@@ -170,7 +170,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="">
+                                        <a href="overview-organisations-2">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-80.png" alt="">
                                             </div>
@@ -192,7 +192,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="">
+                                        <a href="pricing">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
                                             </div>
@@ -266,7 +266,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/  pricing">
+                                    <a href="/pricing">
                                         <div class="blockImg">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
                                         </div>
