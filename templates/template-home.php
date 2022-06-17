@@ -635,7 +635,7 @@
               <h2 class="titleWinWar">Win de <b>War-on-Talent</b></h2>
               <p class="descriptionWinWar">Gratis ontwikkeltraject t.w.v €700 p.p voor je operationele team (max. MBO2)</p>
           </div>
-            <a href="" class="btn btnLessHoe">Lees hoe</a>
+            <a href="/ontwikkeladvies" class="btn btnLessHoe">Lees hoe</a>
         </div>
     </div>
 </div>
@@ -660,7 +660,7 @@
                 </a>
             </div>
             <div class="col-lg-4  col-md-6">
-                <a href="/voor-teacher-2">
+                <a href="/voor-teachers">
                     <div class="cardModife3">
                         <div class="boxImgCard3">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/hmTableau.png" alt="">
