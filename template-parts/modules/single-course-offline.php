@@ -958,130 +958,130 @@ $reviews = get_field('reviews', $post->ID);
             <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
 
         <!-- ----------------------------------- Right side: small dashboard ------------------------------------- -->
-        <div class="blockTwoOver">
-            <div class="btnGrou10">
-                <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#direct-contact">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
-                    Direct contact
-                </a>
-                <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#incompany">
-                    <i class="fas fa-house-damage px-2" style="font-size: 20px"></i>
-                    Incompany
-                </a>
-                <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#offerte">
-                    <i class="fab fa-buffer px-2" style="font-size: 20px"></i>
-                    Brochure
-                </a>
-                <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#voor-wie">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/question.png" alt="">
-                    Voor wie
-                </a>
-            </div>
+            <div class="blockTwoOver">
+                <div class="btnGrou10">
+                    <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#direct-contact">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
+                        Direct contact
+                    </a>
+                    <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#incompany">
+                        <i class="fas fa-house-damage px-2" style="font-size: 20px"></i>
+                        Incompany
+                    </a>
+                    <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#offerte">
+                        <i class="fab fa-buffer px-2" style="font-size: 20px"></i>
+                        Brochure
+                    </a>
+                    <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#voor-wie">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/question.png" alt="">
+                        Voor wie
+                    </a>
+                </div>
 
-            <div class="CardpriceLive">
-                <?php
-                    if(!empty($company))
-                    {
-                        $company_id = $company[0]->ID;
-                        $company_title = $company[0]->post_title;
-                        $company_logo = get_field('company_logo', $company_id);
-                ?>
-                    <div href="/opleider-courses?companie=<?php echo $company_id ; ?>"  class="imgCardPrice">
-                    <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" ><img src="<?php echo $company_logo; ?>" alt="company logo"></a>
-                    </div>
-                    <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="liveTextCadPrice h5"><?php echo $company_title; ?></a>
-
-                <?php
-                    }
-                ?>
-                <form action="/dashboard/user/" method="POST">
-                    <input type="hidden" name="meta_value" value="<?php echo $post->post_author ?>" id="">
-                    <input type="hidden" name="user_id" value="<?php echo $user_id ?>" id="">
-                    <input type="hidden" name="meta_key" value="expert" id="">
+                <div class="CardpriceLive">
                     <?php
-                    if($user_id != 0 && $user_id != $post->post_author)
-                        echo "<input type='submit' class='btnLeerom' style='border:none' name='interest_push' value='+ Leeromgeving'>";
+                        if(!empty($company))
+                        {
+                            $company_id = $company[0]->ID;
+                            $company_title = $company[0]->post_title;
+                            $company_logo = get_field('company_logo', $company_id);
                     ?>
-                </form>
-                <?php
-                if($user_id == 0 )
-                    echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> + Leeromgeving </button>";
-                ?>
+                        <div href="/opleider-courses?companie=<?php echo $company_id ; ?>"  class="imgCardPrice">
+                        <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" ><img src="<?php echo $company_logo; ?>" alt="company logo"></a>
+                        </div>
+                        <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="liveTextCadPrice h5"><?php echo $company_title; ?></a>
+
+                    <?php
+                        }
+                    ?>
+                    <form action="/dashboard/user/" method="POST">
+                        <input type="hidden" name="meta_value" value="<?php echo $post->post_author ?>" id="">
+                        <input type="hidden" name="user_id" value="<?php echo $user_id ?>" id="">
+                        <input type="hidden" name="meta_key" value="expert" id="">
+                        <?php
+                        if($user_id != 0 && $user_id != $post->post_author)
+                            echo "<input type='submit' class='btnLeerom' style='border:none' name='interest_push' value='+ Leeromgeving'>";
+                        ?>
+                    </form>
+                    <?php
+                    if($user_id == 0 )
+                        echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> + Leeromgeving </button>";
+                    ?>
 
 
-                <!-- <div class="p-1">
-                     <button class="btn px-3 py-2 btnPhilo m-0" style="background-color: #00A89D !important;">
-                     <i class="fas fa-plus text-white p-0" style="font-size: 15px;"></i>
-                          <span class="text-white" style="font-size: 17px">Direct contact</span>
-                    </button>
-                </div> -->
+                    <!-- <div class="p-1">
+                         <button class="btn px-3 py-2 btnPhilo m-0" style="background-color: #00A89D !important;">
+                         <i class="fas fa-plus text-white p-0" style="font-size: 15px;"></i>
+                              <span class="text-white" style="font-size: 17px">Direct contact</span>
+                        </button>
+                    </div> -->
 
-                <?php
-                    $data = get_field('data_locaties', $course->ID);
-                    if($data)
-                        $location = $data[0]['data'][0]['location'];
-                    else{
-                        $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                        $location = $data[2];
-                    }
-                ?>
+                    <?php
+                        $data = get_field('data_locaties', $course->ID);
+                        if($data)
+                            $location = $data[0]['data'][0]['location'];
+                        else{
+                            $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
+                            $location = $data[2];
+                        }
+                    ?>
 
-                <p class="PrisText">Locaties</p>
-                <p class="opeleidingText"><?php echo $location; ?></p>
+                    <p class="PrisText">Locaties</p>
+                    <p class="opeleidingText"><?php echo $location; ?></p>
 
-                <p class="PrisText">Prijs vanaf</p>
-                <p class="opeleidingText"><?= $course_type?>: € <?php echo $price ?></p>
-                <p class="btwText">BTW: € <?php echo $prijsvat ?></p>
+                    <p class="PrisText">Prijs vanaf</p>
+                    <p class="opeleidingText"><?= $course_type?>: € <?php echo $price ?></p>
+                    <p class="btwText">BTW: € <?php echo $prijsvat ?></p>
 
 
-                <button href="#bookdates" class="btn btnKoop text-white PrisText" style="background: #043356">Koop deze <?php echo $course_type; ?></button>
-            </div>
+                    <button href="#bookdates" class="btn btnKoop text-white PrisText" style="background: #043356">Koop deze <?php echo $course_type; ?></button>
+                </div>
 
-            <div class="col-12 my-5" style="background-color: #E0EFF4">
-                <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around
-                justify-content-center">
+                <div class="col-12 my-5" style="background-color: #E0EFF4">
+                    <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around
+                    justify-content-center">
 
-                    <!-- --------------------------------------- Swiper ------------------------------------ -->
-                    <!-- Slider main container -->
-                    <div class="swiper">
-                        <div class="swiper-wrapper">
-                            <?php
-                                foreach($experts as $expert){
-                                    $expert = get_users(array('include'=> $expert))[0]->data;
-                                    $company = get_field('company',  'user_' . $expert->ID);
-                                    $title = $company[0]->post_title;
-                                    $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                ?>
-                                <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
-                                    <div class="my-2 d-flex flex-column mx-md-0 mx-1">
-                                        <div class="imgCardPrice" style="height: 50px; width:50px">
-                                            <img src="<?php echo $image; ?>" alt="teacher photo">
+                        <!-- --------------------------------------- Swiper ------------------------------------ -->
+                        <!-- Slider main container -->
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                <?php
+                                    foreach($experts as $expert){
+                                        $expert = get_users(array('include'=> $expert))[0]->data;
+                                        $company = get_field('company',  'user_' . $expert->ID);
+                                        $title = $company[0]->post_title;
+                                        $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                    ?>
+                                    <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
+                                        <div class="my-2 d-flex flex-column mx-md-0 mx-1">
+                                            <div class="imgCardPrice" style="height: 50px; width:50px">
+                                                <img src="<?php echo $image; ?>" alt="teacher photo">
+                                            </div>
+                                            <span class="textIconeLearning"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span>
+                                            <span><?php echo $title; ?></span>
                                         </div>
-                                        <span class="textIconeLearning"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span>
-                                        <span><?php echo $title; ?></span>
-                                    </div>
-                                </a>
-                             <?php } ?>
+                                    </a>
+                                 <?php } ?>
+
+                                </div>
 
                             </div>
 
+                            <!-- If we need pagination -->
+                            <!-- <div class="swiper-pagination"></div> -->
+
+                            <!-- If we need navigation buttons -->
+                            <div class="swiper-button-prev swiper-moved" style="font-size: 8px !important">
+                            </div>
+                            <div class="test">
+                                <div class="swiper-button-next swiper-moved"></div>
+                            </div>
+
+                            <!-- If we need scrollbar -->
+                            <!-- <div class="swiper-scrollbar"></div> -->
                         </div>
 
-                        <!-- If we need pagination -->
-                        <!-- <div class="swiper-pagination"></div> -->
-
-                        <!-- If we need navigation buttons -->
-                        <div class="swiper-button-prev swiper-moved" style="font-size: 8px !important">
-                        </div>
-                        <div class="test">
-                            <div class="swiper-button-next swiper-moved"></div>
-                        </div>
-
-                        <!-- If we need scrollbar -->
-                        <!-- <div class="swiper-scrollbar"></div> -->
                     </div>
-
-                </div>
             </div>
 
         </div>
