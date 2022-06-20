@@ -56,7 +56,7 @@ $experts = get_user_meta($user->ID, 'expert');
                 <p class="textLiDashboard">Assessments</p>
             </a>
         </li>
-        <p class="textOnder">ONDERWERPEN <span> <a href="/opleiders"> Voeg toe </a></span></p>
+        <p class="textOnder">ONDERWERPEN <span> <a href="/onderwer"> Voeg toe </a></span></p>
         <li class="elementTextDashboard">
             <?php
            
@@ -89,7 +89,7 @@ $experts = get_user_meta($user->ID, 'expert');
             ?>
 
         </li>
-        <p class="textOnder">EXPERTS / OPLEIDERS <a href="/onderwer"> Voeg toe </a></span</p>
+        <p class="textOnder">EXPERTS / OPLEIDERS <span> <a href="/opleiders"> Voeg toe </a></span></p>
 
         <li class="elementTextDashboard">    
             <?php
