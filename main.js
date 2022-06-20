@@ -223,12 +223,16 @@ jQuery(function($){
         $(".like2").toggle();
     });
 
-    $("#btn_dislike").click(function() {
+    $(".btn_dislike").click(function() {
         $(".btn_dislike").toggle();
-    });
-    $("#btn_like").click(function() {
         $(".btn_like").toggle();
     });
+    $("#btn_like").click(function() {
+        $("#btn_like").toggle();
+        $("#btn_dislike").toggle();
+    });
+
+    $(".btn_like").hide(); //this hides the list initially
 
 
     $(".replyBtn").click(function() {

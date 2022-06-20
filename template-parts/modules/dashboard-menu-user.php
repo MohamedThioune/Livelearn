@@ -56,7 +56,7 @@ $experts = get_user_meta($user->ID, 'expert');
                 <p class="textLiDashboard">Assessments</p>
             </a>
         </li>
-        <p class="textOnder">ONDERWERPEN</p>
+        <p class="textOnder">ONDERWERPEN <span>Voeg toe</span></p>
         <li class="elementTextDashboard">
             <?php
            
@@ -64,7 +64,7 @@ $experts = get_user_meta($user->ID, 'expert');
                 foreach($topics_external as $topic){
                     $name = (String)get_the_category_by_ID($topic);
                     $image_category = get_field('image', 'category_'. $topic);
-                    $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/placeholder.png';
+                    $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/iconOnderverpen.png';
                     echo "
                     <a href='/category-overview/?category=". $topic ."' class='d-flex'>
                         <div class='iconeElement'>
@@ -78,7 +78,7 @@ $experts = get_user_meta($user->ID, 'expert');
                 foreach($topics_internal as $topic){
                     $name = (String)get_the_category_by_ID($topic);
                     $image_category = get_field('image', 'category_'. $topic);
-                    $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/placeholder.png';
+                    $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/iconOnderverpen.png';
                     echo "<a href='/category-overview/?category=". $topic ."' class='d-flex'>;
                             <div class='iconeElement'>
                                 <img src='". $image_category ."' alt='image category'>
@@ -101,12 +101,17 @@ $experts = get_user_meta($user->ID, 'expert');
                     "; */
                 }
             ?>
-            <a href="/onderwer"class="btn btnOnderwerp" id="ajoutSujet"><div><i class="fa fa-plus faPLusModife"></i></div> <span>Onderwerp toevoegen</span>
-                <img class="iconAssesment" src="<?php echo get_stylesheet_directory_uri();?>/img/ajouterSujet.png" alt="">
-            </a>
+
+            <li class="elementTextDashboard">
+                <a href="/dashboard/user/activity" class="d-flex">
+                    <div class="iconeElement personnlijkeElement"><img src="<?php echo get_stylesheet_directory_uri();?>/img/iconOnderverpen.png"></div>
+                    <p class="textLiDashboard">Persoonlijke ontwikkeling</p>
+                </a>
+            </li>
 
         </li>
-        <p class="textOnder">EXPERTS / OPLEIDERS</p>
+        <p class="textOnder">EXPERTS / OPLEIDERS <span>Voeg toe</span></p>
+
         <li class="elementTextDashboard">    
             <?php
             
@@ -114,7 +119,7 @@ $experts = get_user_meta($user->ID, 'expert');
                 foreach($experts as $expert){
                     $name = get_userdata($expert)->data->display_name;
                     $image_author = get_field('profile_img',  'user_' . $expert);
-                    $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                    $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/iconeExpert.png';
                     echo "
                     <a href='/user-overview/?id=". $expert ."' class='d-flex'>
                         <div class='iconeElement'>
@@ -133,8 +138,11 @@ $experts = get_user_meta($user->ID, 'expert');
                     </div> */
                 }
             ?>
-            <a href="/opleiders" class="btn btnOnderwerp"><div><i class="fa fa-plus faPLusModife"></i></div> <span>Expert toevoegen</span>
-                <img id="acustomer" class="iconAssesment" src="<?php echo get_stylesheet_directory_uri();?>/img/acustomer.png" alt="">
+        </li>
+        <li class="elementTextDashboard">
+            <a href="/dashboard/user/activity" class="d-flex">
+                <div class="iconeElement personnlijkeElement"><img src="<?php echo get_stylesheet_directory_uri();?>/img/iconeExpert.png"></div>
+                <p class="textLiDashboard">Persoonlijke ontwikkeling</p>
             </a>
         </li>
     </ul>
