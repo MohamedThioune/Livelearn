@@ -218,7 +218,7 @@
 <?php 
     if(empty($users_companie)) 
     { 
-        echo "<br><center><h3 class='liverTilteHead2'>No courses yet 💣 </h3></center>";
+        echo "<br><center><h3 class='liverTilteHead2'>No courses yet  </h3></center>";
     }
     else
     {

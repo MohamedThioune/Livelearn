@@ -111,35 +111,7 @@ foreach($global_courses as $course)
                     array_push($courses_id, $course->ID);
                     break;
                 }
-                if(get_field('course_type', $course->ID) == "Opleidingen"){
-                    array_push($opleidingen, $course);
-                    $count['opleidingen'] = $count['opleidingen'] + 1;
-                }else if(get_field('course_type', $course->ID) == "Workshop"){
-                    array_push($workshops, $course);
-                    $count['workshop'] = $count['workshop'] + 1;
-                }else if(get_field('course_type', $course->ID) == "Masterclass"){
-                    array_push($masterclasses, $course);
-                    $count['masterclass'] = $count['masterclass'] + 1;
-                }else if(get_field('course_type', $course->ID) == "Event"){
-                    array_push($events, $course);
-                    $count['event'] = $count['event'] + 1;
-                }else if(get_field('course_type', $course->ID) == "E-learning"){
-                    array_push($e_learnings, $course);
-                    $count['e_learning'] = $count['e_learning'] + 1;
-                }else if(get_field('course_type', $course->ID) == "Training"){
-                    array_push($trainings, $course);
-                    $count['training'] = $count['training'] + 1;
-                }else if(get_field('course_type', $course->ID) == "Video"){
-                    array_push($videos, $course);
-                    $count['video'] = $count['video'] + 1;
-                }
         }
-
-        foreach($count as $type => $value){
-            if($value >= 6 && !in_array($type,$loop_break))
-                array_push($loop_break,$type);
-        }
-
     }
 
     foreach($experts as $topic_expert){
@@ -152,9 +124,6 @@ foreach($global_courses as $course)
             }
         }
     }
-
-    if(count($loop_break) >= 3)
-        break;
    
 }
 
@@ -179,8 +148,12 @@ if(isset($_GET['message']))
         <?php
         $find = false;
         foreach($courses as $course){
+
             if(!get_field('visibility', $course->ID)) {
                 if(get_field('course_type', $course->ID) == "Opleidingen"){
+
+                    $count['opleidingen'] = $count['opleidingen'] + 1;
+
                     $find = true;
 
                     $month = '';
@@ -349,12 +322,11 @@ if(isset($_GET['message']))
 
                     </div>
 
-
-
-                <?php
+            <?php
+                    if($count['opleidingen'] == 20)
+                        break;
             }
             }
-            $i++;
         }
         if(!$find)
             echo "<span class='opeleidingText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Geen overeenkomst met uw voorkeuren <i class='fas fa-smile-wink'></i></span>";
@@ -375,6 +347,8 @@ if(isset($_GET['message']))
             foreach($courses as $course){
                 if(!get_field('visibility', $course->ID)) {
                     if(get_field('course_type', $course->ID) == "E-learning"){
+                        $count['e_learning'] = $count['e_learning'] + 1;
+
                         $find = true;
 
                         $month = '';
@@ -532,8 +506,10 @@ if(isset($_GET['message']))
                                 </div>
                             </div>
                         </a>
-                        <?php
-                       
+                    <?php
+
+                        if($count['e_learning'] == 20)
+                            break;
                     }
                 }
             }
@@ -555,6 +531,8 @@ if(isset($_GET['message']))
             foreach($courses as $course){
                 if(!get_field('visibility', $course->ID)) {
                     if(get_field('course_type', $course->ID) == "Workshop"){
+                        $count['workshop'] = $count['workshop'] + 1;
+
                         $find = true;
                         $month = '';
                         $location = 'Virtual';
@@ -713,7 +691,9 @@ if(isset($_GET['message']))
                                 </div>
                             </div>
                         </a>
-                        <?php
+                    <?php
+                        if($count['workshop'] == 20)
+                            break;
                     }
                 }
             }
@@ -735,6 +715,8 @@ if(isset($_GET['message']))
         foreach($courses as $course){
             if(!get_field('visibility', $course->ID)) {
                 if(get_field('course_type', $course->ID) == "Masterclass"){
+                    $count['masterclass'] = $count['masterclass'] + 1;
+
                     $find = true;
                     $day = '~';
                     $month = '';
@@ -892,10 +874,11 @@ if(isset($_GET['message']))
                         </div>
                     </div>
                 </a>
-                <?php
+            <?php
+                if($count['masterclass'] == 20)
+                    break;
+                }
             }
-            }
-            $i++;
         }
         if(!$find)
             echo "<span class='opeleidingText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Geen overeenkomst met uw voorkeuren <i class='fas fa-smile-wink'></i></span>";
@@ -920,6 +903,8 @@ if(isset($_GET['message']))
             foreach($courses as $course){
             if(!get_field('visibility', $course->ID)) {
             if(get_field('course_type', $course->ID) == "Event"){
+                $count['event'] = $count['event'] + 1;
+
                 $find = true;
                 /*
                 * Categories
@@ -1023,11 +1008,11 @@ if(isset($_GET['message']))
                     </div>
                 </div>
             </a>
-                <?php
-
+            <?php
+                if($count['event'] == 20)
+                    break;
             }
             }
-                $i++;
             }
             if(!$find)
                 echo "<span class='opeleidingText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Geen overeenkomst met uw voorkeuren <i class='fas fa-smile-wink'></i></span>";
@@ -1046,6 +1031,8 @@ if(isset($_GET['message']))
         foreach($courses as $course){
             if(!get_field('visibility', $course->ID)) {
                 if(get_field('course_type', $course->ID) == "Video"){
+                    $count['video'] = $count['video'] + 1;
+
                     $find = true;
                     $month = '';
                     $location = 'Virtual';
@@ -1128,7 +1115,7 @@ if(isset($_GET['message']))
                     * Companies
                     */ 
                     $company = get_field('company',  'user_' . $course->post_author);
-        ?>
+            ?>
                 <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
                     <div class="cardKraam">
                         <button class="btn btnCloche">
@@ -1202,7 +1189,9 @@ if(isset($_GET['message']))
                         </div>
                     </div>
                 </a>
-                <?php
+            <?php
+                if($count['video'] == 20)
+                    break;
             }
             }
         }
@@ -1224,6 +1213,7 @@ if(isset($_GET['message']))
         foreach($courses as $course){
             if(!get_field('visibility', $course->ID)) {
                 if(get_field('course_type', $course->ID) == "Cursus"){
+                    $count['cursus'] = $count['cursus'] + 1;
 
                     $find = true;
                     $day = '~';
@@ -1382,8 +1372,10 @@ if(isset($_GET['message']))
                         </div>
                     </div>
                 </a>
-                <?php
-            }
+            <?php
+                if($count['cursus'] == 20)
+                    break;
+                }
             }
         }
         if(!$find)
