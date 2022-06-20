@@ -5,7 +5,6 @@
 <?php 
 
 $page = dirname(__FILE__) . '/check_visibility.php';
-
 require($page); 
 
 ?>

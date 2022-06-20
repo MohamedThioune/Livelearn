@@ -1,7 +1,10 @@
 <?php /** Template Name: user overview */ ?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
-<?php      
+<?php    
+    $page = dirname(__FILE__) . '/check_visibility.php';
+    require($page); 
+
     $user = ($_GET['id']) ? get_userdata($_GET['id'])->data : ' ';
     $user_id = get_current_user_id();
 
@@ -853,88 +856,91 @@
                         if (is_array($courses) || is_object($courses))
                         foreach($courses as $course){
                                     
-                                /*
-                                * Categories
-                                */
-                                $category = ' '; 
+                            /*
+                            * Categories
+                            */
+                            $category = ' '; 
 
-                                $tree = get_the_terms($course->ID, 'course_category'); 
+                            $tree = get_the_terms($course->ID, 'course_category'); 
 
-                                if($tree)
-                                    if(isset($tree[2]))
-                                        $category = $tree[2]->name;
+                            if($tree)
+                                if(isset($tree[2]))
+                                    $category = $tree[2]->name;
 
-                                $category_id = 0;
-                            
-                                if($category == ' '){
-                                $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]); 
-                                $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                                if($category_str != 0)
-                                    $category = (String)get_the_category_by_ID($category_str);
-                                else if($category_id != 0)
-                                    $category = (String)get_the_category_by_ID($category_id);                                    
+                            $category_id = 0;
+                        
+                            if($category == ' '){
+                            $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]); 
+                            $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
+                            if($category_str != 0)
+                                $category = (String)get_the_category_by_ID($category_str);
+                            else if($category_id != 0)
+                                $category = (String)get_the_category_by_ID($category_id);                                    
                             }
 
 
-                                /*
-                                * Date
-                                */ 
-                                $day = '~';
-                                $month = '';
-                                $location = '~';
+                            /*
+                            * Date
+                            */ 
+                            $day = '~';
+                            $month = '';
+                            $location = '~';
 
-                                $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
+                            $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
 
-                                $dates = get_field('dates', $course->ID);
-                                if($dates){
-                                    
-                                    $day = explode('-', explode(' ', $dates[0]['date'])[0])[2];
-                                    $month = explode('-', explode(' ', $dates[0]['date'])[0])[1];
-        
-                                    $month = $calendar[$month]; 
+                            $dates = get_field('dates', $course->ID);
+                            if($dates){
                                 
-                                }else{
-                                    $data = get_field('data_locaties', $course->ID);
-                                    if($data){
-                                        $date = $data[0]['data'][0]['start_date'];
-
-                                        $day = explode('/', explode(' ', $date)[0])[0];
-                                        $month = explode('/', explode(' ', $date)[0])[1];
-                                        $month = $calendar[$month];
-                                        
-                                        $location = $data[0]['data'][0]['location'];
-                                    }
-                                    else{
-                                        $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                                        $date = $data[0];
-                                        $day = explode('/', explode(' ', $date)[0])[0];
-                                        $month = explode('/', explode(' ', $date)[0])[1];
-                                        $month = $calendar[$month];
-                                        $location = $data[2];
-                                    }
-                                }
+                                $day = explode('-', explode(' ', $dates[0]['date'])[0])[2];
+                                $month = explode('-', explode(' ', $dates[0]['date'])[0])[1];
+    
+                                $month = $calendar[$month]; 
                             
-                                /*
-                                * Price 
-                                */
-                                $p = get_field('price', $course->ID);
-                                if($p != "0")
-                                    $price =  number_format($p, 2, '.', ',') . ",-";
-                                else 
-                                    $price = 'Gratis';
+                            }else{
+                                $data = get_field('data_locaties', $course->ID);
+                                if($data){
+                                    $date = $data[0]['data'][0]['start_date'];
+
+                                    $day = explode('/', explode(' ', $date)[0])[0];
+                                    $month = explode('/', explode(' ', $date)[0])[1];
+                                    $month = $calendar[$month];
+                                    
+                                    $location = $data[0]['data'][0]['location'];
+                                }
+                                else{
+                                    $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
+                                    $date = $data[0];
+                                    $day = explode('/', explode(' ', $date)[0])[0];
+                                    $month = explode('/', explode(' ', $date)[0])[1];
+                                    $month = $calendar[$month];
+                                    $location = $data[2];
+                                }
+                            }
+                        
+                            /*
+                            * Price 
+                            */
+                            $p = get_field('price', $course->ID);
+                            if($p != "0")
+                                $price =  number_format($p, 2, '.', ',') . ",-";
+                            else 
+                                $price = 'Gratis';
 
                             /*
-                                * Thumbnails
-                                */ 
-                                $thumbnail = get_the_post_thumbnail_url($course->ID);
-                                if(!$thumbnail){
-                                    $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
-                                    if(!$thumbnail)
-                                        $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
-                                }
-                                //Image author of this post 
-                                $image_author = get_field('profile_img',  'user_' . $course->post_author);
-                                $image_author = $image_author ? $image_author : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                            * Thumbnails
+                            */ 
+                            $thumbnail = get_the_post_thumbnail_url($course->ID);
+                            if(!$thumbnail){
+                                $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
+                                if(!$thumbnail)
+                                    $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                            }
+                            //Image author of this post 
+                            $image_author = get_field('profile_img',  'user_' . $course->post_author);
+                            $image_author = $image_author ? $image_author : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                            
+                            if($month == '~' ||  $day == '~')
+                                continue;
                     ?>
                         <a href="<?php echo get_permalink($course->ID) ?>" class="col-md-12">
                             <div class="blockCardFront">
