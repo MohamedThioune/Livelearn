@@ -90,7 +90,7 @@ $experts = get_user_meta($user->ID, 'expert');
     </div>
     <div class="theme-learning">
         <?php 
-            if(!isset($superior)){
+            if(isset($superior)){
                 include_once('dashboard-company-profile-home.php');
             }else{
                 include_once('dashboard-user-profile-home.php');

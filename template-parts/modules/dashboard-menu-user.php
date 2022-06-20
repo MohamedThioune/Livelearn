@@ -56,7 +56,7 @@ $experts = get_user_meta($user->ID, 'expert');
                 <p class="textLiDashboard">Assessments</p>
             </a>
         </li>
-        <p class="textOnder">ONDERWERPEN <span>Voeg toe</span></p>
+        <p class="textOnder">ONDERWERPEN <span> <a href="/opleiders"> Voeg toe </a></span></p>
         <li class="elementTextDashboard">
             <?php
            
@@ -85,32 +85,11 @@ $experts = get_user_meta($user->ID, 'expert');
                             </div>
                             <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
                           </a><br>";
-                    /* echo "
-                    <a href='/category-overview/?category=". $topic ."' class='d-flex'>
-                        <div class='iconeElement'>
-                            <form action='/dashboard/user/' method='POST'>
-                                <input type='hidden' name='meta_value' value='". $topic . "' id=''>
-                                <input type='hidden' name='user_id' value='". $user->ID . "' id=''>
-                                <input type='hidden' name='meta_key' value='topic_affiliate' id=''>
-                                <button type='submit' class='btn toevoegenText' name='delete'><i class='fa fa-trash'></i></button>
-                            </form> 
-                        </div>
-                        <br><br>
-                        <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
-                    </a>
-                    "; */
                 }
             ?>
 
-            <li class="elementTextDashboard">
-                <a href="/dashboard/user/activity" class="d-flex">
-                    <div class="iconeElement personnlijkeElement"><img src="<?php echo get_stylesheet_directory_uri();?>/img/iconOnderverpen.png"></div>
-                    <p class="textLiDashboard">Persoonlijke ontwikkeling</p>
-                </a>
-            </li>
-
         </li>
-        <p class="textOnder">EXPERTS / OPLEIDERS <span>Voeg toe</span></p>
+        <p class="textOnder">EXPERTS / OPLEIDERS <a href="/onderwer"> Voeg toe </a></span</p>
 
         <li class="elementTextDashboard">    
             <?php
@@ -127,23 +106,9 @@ $experts = get_user_meta($user->ID, 'expert');
                         </div>
                         <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
                     </a><br>";
-                     /*  
-                     <div class='iconeElement'>
-                        <form action='../../dashboard/user/' method='POST'>
-                            <input type='hidden' name='meta_value' value='". $expert . "' id=''>
-                            <input type='hidden' name='user_id' value='". $user->ID . "' id=''>
-                            <input type='hidden' name='meta_key' value='expert' id=''>
-                            <button type='submit' class='btn toevoegenText' name='delete'><i class='fa fa-trash'></i></button>
-                        </form> 
-                    </div> */
+                    
                 }
             ?>
-        </li>
-        <li class="elementTextDashboard">
-            <a href="/dashboard/user/activity" class="d-flex">
-                <div class="iconeElement personnlijkeElement"><img src="<?php echo get_stylesheet_directory_uri();?>/img/iconeExpert.png"></div>
-                <p class="textLiDashboard">Persoonlijke ontwikkeling</p>
-            </a>
         </li>
     </ul>
 </section>
