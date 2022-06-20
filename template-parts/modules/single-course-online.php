@@ -548,32 +548,6 @@ $reviews = get_field('reviews', $post->ID);
                     </div>
                 </div>
             </div>
-
-            <div class="modal fade" id="voor-wie" tabindex="-1" aria-labelledby="voor-wieModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-course">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="voor-wieModalLongTitle"></h5>
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="">
-                                <!-- <img alt="course design_undrawn"
-                                src="<?php echo get_stylesheet_directory_uri(); ?>/img/voorwie.png"> -->
-
-                                <?php
-                                    $author = get_user_by('id', $post->post_author);
-                                ?>
-                                <div class="content-text p-4 pb-0">
-                                    <h4 class="text-dark">Voor wie ?</h4>
-                                    <p class="m-0"><strong>This course is followed up by <?php if(isset($author->first_name) && isset($author->last_name)) echo $author->first_name . '' . $author->last_name; else echo $author->display_name; ?> </strong></p>
-                                    <p><em>This line rendered as italicized text.</em></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- -------------------------------------------------- End Modal Direct contact & Voor wie -------------------------------------- -->
 
             <div class="modal fade" id="voor-wie" tabindex="-1" aria-labelledby="voor-wieModalLabel" aria-hidden="true">
@@ -665,18 +639,17 @@ $reviews = get_field('reviews', $post->ID);
 
             <!-- ---------------------------------- Start Right Side Dashboard -------------------------------- -->
             <div class="blockTwoOver">
-                <div>
-                    <div class="btnGrou10">
-                        <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#direct-contact">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
-                            Direct contact
-                        </a>
-                        <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#voor-wie">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/question.png" alt="">
-                            Voor wie
-                        </a>
-                    </div>
-                    <p class="afspeeText">Afspeellijst</p>
+                <div class="btnGrou10">
+                    <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#direct-contact">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
+                        Direct contact
+                    </a>
+                    <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#voor-wie">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/question.png" alt="">
+                        Voor wie
+                    </a>
+                </div>
+                <p class="afspeeText">Afspeellijst</p>
 
                 <div class="d-block">
                     <div class="blockChapitreCours">
