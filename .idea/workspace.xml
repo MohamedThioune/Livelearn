@@ -3,14 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/header_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_user.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-settings.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,26 +18,37 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/custom.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129480">
-              <caret line="8632" column="27" selection-start-line="8632" selection-start-column="27" selection-end-line="8632" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2235">
-              <caret line="149" selection-start-line="149" selection-end-line="149" />
+            <state relative-caret-position="367">
+              <caret line="8619" selection-start-line="8619" selection-end-line="8619" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/header_user.php">
+        <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-company-profile.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="233" column="56" selection-start-line="233" selection-start-column="44" selection-end-line="233" selection-end-column="56" />
+            <state relative-caret-position="127">
+              <caret line="88" column="10" lean-forward="true" selection-start-line="88" selection-start-column="10" selection-end-line="88" selection-end-column="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-settings.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2760">
+              <caret line="184" column="25" selection-start-line="184" selection-start-column="25" selection-end-line="184" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-profile-home.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -50,8 +56,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3600">
-              <caret line="240" column="39" selection-start-line="240" selection-start-column="39" selection-end-line="240" selection-end-column="39" />
+            <state relative-caret-position="3390">
+              <caret line="226" column="35" selection-start-line="226" selection-start-column="35" selection-end-line="226" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -60,7 +66,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>.blockCardFunctie .headCard img</find>
       <find>.blockCardFunctie .Card .groupBtn a</find>
       <find>.blockSpelregels .twoBlockCardWatKrijg .card .title</find>
       <find>d-flex align-items-center</find>
@@ -90,6 +95,7 @@
       <find>.textOnder</find>
       <find>@media</find>
       <find>userBlockNav</find>
+      <find>nameCandidat</find>
     </findStrings>
     <replaceStrings>
       <replace>h4</replace>
@@ -128,7 +134,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/templates/template-etail-product-road.php" />
         <option value="$PROJECT_DIR$/templates/template-product-road-path.php" />
         <option value="$PROJECT_DIR$/templates/template-ecosysteme.php" />
         <option value="$PROJECT_DIR$/templates/product-podcast.php" />
@@ -175,10 +180,11 @@
         <option value="$PROJECT_DIR$/template-parts/modules/single-course-online.php" />
         <option value="$PROJECT_DIR$/header_user.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-user-settings.php" />
-        <option value="$PROJECT_DIR$/main.js" />
-        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php" />
         <option value="$PROJECT_DIR$/custom.css" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php" />
+        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php" />
+        <option value="$PROJECT_DIR$/main.js" />
+        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile.php" />
       </list>
     </option>
   </component>
@@ -206,6 +212,7 @@
     </navigator>
     <panes>
       <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -228,13 +235,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1654716690095" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1655464757939" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -594,16 +600,18 @@
       <workItem from="1654884583494" duration="1704000" />
       <workItem from="1654886353916" duration="779000" />
       <workItem from="1655456679954" duration="597000" />
+      <workItem from="1655467013662" duration="1376000" />
+      <workItem from="1655468793759" duration="771000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="502662000" />
+    <option name="totallyTimeSpent" value="506271000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24848485" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25984848" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -618,7 +626,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.2675367" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.2675367" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -681,27 +689,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/blog.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="970" column="1" selection-start-line="970" selection-start-column="1" selection-end-line="970" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bootstrap-datepicker.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="5" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bootstrap-datepicker.min.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="20862" selection-start-line="6" selection-start-column="20862" selection-end-line="6" selection-end-column="20862" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/template-firstModal.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -858,13 +845,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="10" selection-start-line="1" selection-start-column="10" selection-end-line="1" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore" />
     <entry file="file://$PROJECT_DIR$/style.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19515">
@@ -924,18 +905,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-company.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-967" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-home.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="158">
-          <caret line="715" column="10" lean-forward="true" selection-start-line="715" selection-start-column="10" selection-end-line="715" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/footer.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="443">
@@ -948,11 +917,6 @@
         <state relative-caret-position="23">
           <caret line="324" column="25" selection-start-line="324" selection-start-column="25" selection-end-line="324" selection-end-column="25" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-profile-home.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3907" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-detail-profile.php">
@@ -972,38 +936,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-settings.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="184" column="25" selection-start-line="184" selection-start-column="25" selection-end-line="184" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3232">
-          <caret line="822" column="11" selection-start-line="822" selection-start-column="11" selection-end-line="822" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/custom.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129480">
-          <caret line="8632" column="27" selection-start-line="8632" selection-start-column="27" selection-end-line="8632" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2235">
+        <state relative-caret-position="2115">
           <caret line="149" selection-start-line="149" selection-end-line="149" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3600">
-          <caret line="240" column="39" selection-start-line="240" selection-start-column="39" selection-end-line="240" selection-end-column="39" />
         </state>
       </provider>
     </entry>
@@ -1011,6 +947,109 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="212">
           <caret line="233" column="56" selection-start-line="233" selection-start-column="44" selection-end-line="233" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-manager-detail-profile.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-30" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-home-1.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2235" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-home.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1050">
+          <caret line="72" column="17" selection-start-line="72" selection-start-column="17" selection-end-line="72" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-company.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-967" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-settings.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2760">
+          <caret line="184" column="25" selection-start-line="184" selection-start-column="25" selection-end-line="184" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3390">
+          <caret line="226" column="35" selection-start-line="226" selection-start-column="35" selection-end-line="226" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-profile-home.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="n#style#0;n#a#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3446">
+          <caret line="345" selection-start-line="345" selection-end-line="345" />
+          <folding>
+            <element signature="e#29#35#0" expanded="true" />
+            <element signature="e#35#41#0" expanded="true" />
+            <element signature="e#41#47#0" expanded="true" />
+            <element signature="e#47#53#0" expanded="true" />
+            <element signature="e#53#59#0" expanded="true" />
+            <element signature="e#29#35#0" expanded="true" />
+            <element signature="e#35#41#0" expanded="true" />
+            <element signature="e#41#47#0" expanded="true" />
+            <element signature="e#47#53#0" expanded="true" />
+            <element signature="e#53#59#0" expanded="true" />
+            <element signature="e#29#35#0" expanded="true" />
+            <element signature="e#35#41#0" expanded="true" />
+            <element signature="e#41#47#0" expanded="true" />
+            <element signature="e#47#53#0" expanded="true" />
+            <element signature="e#53#59#0" expanded="true" />
+            <element signature="e#29#35#0" expanded="true" />
+            <element signature="e#35#41#0" expanded="true" />
+            <element signature="e#41#47#0" expanded="true" />
+            <element signature="e#47#53#0" expanded="true" />
+            <element signature="e#53#59#0" expanded="true" />
+            <element signature="e#29#35#0" expanded="true" />
+            <element signature="e#35#41#0" expanded="true" />
+            <element signature="e#41#47#0" expanded="true" />
+            <element signature="e#47#53#0" expanded="true" />
+            <element signature="e#53#59#0" expanded="true" />
+            <element signature="e#29#35#0" expanded="true" />
+            <element signature="e#35#41#0" expanded="true" />
+            <element signature="e#41#47#0" expanded="true" />
+            <element signature="e#47#53#0" expanded="true" />
+            <element signature="e#53#59#0" expanded="true" />
+            <element signature="e#29#35#0" expanded="true" />
+            <element signature="e#35#41#0" expanded="true" />
+            <element signature="e#41#47#0" expanded="true" />
+            <element signature="e#47#53#0" expanded="true" />
+            <element signature="e#53#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/custom.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="367">
+          <caret line="8619" selection-start-line="8619" selection-end-line="8619" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-company-profile.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="127">
+          <caret line="88" column="10" lean-forward="true" selection-start-line="88" selection-start-column="10" selection-end-line="88" selection-end-column="10" />
         </state>
       </provider>
     </entry>
