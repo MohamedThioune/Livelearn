@@ -9,6 +9,8 @@ $page = dirname(__FILE__) . '/../../templates/check_visibility.php';
  
 require($page); 
 
+view();
+
 if(!visibility($post, $visibility_company))
     header('location: /');
 

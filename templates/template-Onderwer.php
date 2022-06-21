@@ -56,11 +56,17 @@
         <div class="groupBtn groupBtn2">
             <div class="swiper-container swipeContaine2">
                 <div class="swiper-wrapper">
-                    <?php foreach($cats as $cat) { ?>
+                    <?php 
+                    foreach($cats as $cat) { 
+                        if($cat->name == "Uncategorized")
+                            continue;
+                        ?>
                     <div class="swiper-slide swiper-slideM1">
                         <button class="btn btnZorg"><?php echo $cat->name; ?></button>
                     </div>
-                    <?php } ?>
+                    <?php 
+                    } 
+                    ?>
                 </div>
             </div>
         </div>

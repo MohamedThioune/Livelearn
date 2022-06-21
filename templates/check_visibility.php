@@ -19,3 +19,43 @@
 
         return $bool;
     }
+
+
+    function view($course){
+        $id = ($user_visibility) ? $user_visibility->ID : 0;
+
+        $args = array(
+            'post_type' => 'view', 
+            'post_status' => 'pending',
+            'post_author' => $id,
+            );
+
+        $views_stat_user = get_posts($args);
+
+        if(!empty($views_stat_user))
+            $statID = $views_stat_user[0]->ID;
+        else{
+            $data = array(
+                'post_type' => 'view',
+                'post_author' => $id,
+                'post_status' => 'pending',
+                'post_title' => $user_visibility->display_name . ' - View',
+                );
+            
+            $statID = wp_insert_post($data);
+        }
+
+
+        $views = get_field('view', $statID);
+        $view = array();
+        $view['view_course'] = $course;
+        $view['view_date'] = now();
+
+        if(!empty($views))
+            array_push($views, $view);
+        else 
+            $views = $view; 
+
+        update_field('view', $views, $statID);
+
+    }
