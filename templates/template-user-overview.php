@@ -859,7 +859,7 @@
                             /*
                             * Categories
                             */
-                            $category = ' '; 
+                            $category = '- '; 
 
                             $tree = get_the_terms($course->ID, 'course_category'); 
 
@@ -870,20 +870,17 @@
                             $category_id = 0;
                         
                             if($category == ' '){
-                            $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]); 
-                            $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                            if($category_str != 0)
-                                $category = (String)get_the_category_by_ID($category_str);
-                            else if($category_id != 0)
-                                $category = (String)get_the_category_by_ID($category_id);                                    
+                                $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]); 
+                                $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
+                                if($category_str != 0)
+                                    $category = (String)get_the_category_by_ID($category_str);
+                                else if($category_id != 0)
+                                    $category = (String)get_the_category_by_ID($category_id);                                    
                             }
-
 
                             /*
                             * Date
                             */ 
-                            $day = '~';
-                            $month = '';
                             $location = '~';
 
                             $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
@@ -939,7 +936,7 @@
                             $image_author = get_field('profile_img',  'user_' . $course->post_author);
                             $image_author = $image_author ? $image_author : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                             
-                            if($month == '~' ||  $day == '~')
+                            if(!$month)
                                 continue;
                     ?>
                         <a href="<?php echo get_permalink($course->ID) ?>" class="col-md-12">

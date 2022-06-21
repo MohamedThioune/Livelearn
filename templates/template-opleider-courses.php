@@ -562,8 +562,6 @@
                                 /*
                                 * Categories and Date
                                 */ 
-                                $day = "~";
-                                $month = "~"; 
 
                                 $tree = get_the_category($course->ID);
                                 if($tree){
@@ -628,10 +626,11 @@
                                 //Image author of this post 
                                 $image_author = get_field('profile_img',  'user_' . $course->post_author);
                                 $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-
-                                if($month == '~' ||  $day == '~')
+                                
+                                if(!$month)
                                     continue;
-                        ?>
+
+                            ?>
                                 <a href="<?php echo get_permalink($course->ID) ?>" class="col-md-12">
                                     <div class="blockCardFront">
                                         <div class="workshopBlock">
@@ -702,7 +701,7 @@
                                             if(isset($tree[1]))
                                                 $category = $tree[1]->cat_name;
                                     }else 
-                                        $category = ' ~ ';
+                                        $category = ' - ';
 
                                     $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
 
