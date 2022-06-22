@@ -1,4 +1,4 @@
-<?php /** Template Name: skills passport */ ?>
+<?php /** Template Name: skills      */ ?>
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
