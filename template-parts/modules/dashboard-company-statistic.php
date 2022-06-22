@@ -81,7 +81,6 @@ asort($outros);
 $outros = array_reverse($outros);
 
 foreach($outros as $key=>$outroe){
-    print_r($outroe);
     if($key <= 2)
         array_push($outroes, $outroe['entry']);
     $sells += intval($outroe['values']);

@@ -9,6 +9,8 @@ $page = dirname(__FILE__) . '/../../templates/check_visibility.php';
  
 require($page); 
 
+view($post, $user_visibility);
+
 if(!visibility($post, $visibility_company))
     header('location: /');
 
@@ -419,6 +421,7 @@ $reviews = get_field('reviews', $post->ID);
                                         $user = $review['user'];
                                         $image_author = get_field('profile_img',  'user_' . $user->ID);
                                         $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+                                        $rating = $review['rating'];  
                                     ?>
                                     <div class="review-info-card">
                                         <div class="review-user-mini-profile">
@@ -429,16 +432,16 @@ $reviews = get_field('reviews', $post->ID);
                                                 <p><?= $user->display_name; ?></p>
                                                 <div class="rating-element">
                                                     <div class="rating">
-                                                        <input type="radio"  name="rating" value="5" />
-                                                        <label class="star"  title="Awesome" aria-hidden="true"></label>
-                                                        <input type="radio"  name="rating" value="4" />
-                                                        <label class="star"  title="Great" aria-hidden="true"></label>
-                                                        <input type="radio"  name="rating" value="3" />
-                                                        <label class="star"  title="Very good" aria-hidden="true"></label>
-                                                        <input type="radio"  name="rating" value="2" />
-                                                        <label class="star"  title="Good" aria-hidden="true"></label>
-                                                        <input type="radio"  name="rating" value="1" />
-                                                        <label class="star"  title="Bad" aria-hidden="true"></label>
+                                                    <?php
+                                                        for($i = $rating; $i >= 1; $i--){
+                                                            if($i == $rating)
+                                                                echo '<input type="radio" name="rating" value="' . $i . ' " checked disabled/>
+                                                                <label class="star" title="" aria-hidden="true"></label>';
+                                                            else 
+                                                                echo '<input type="radio" name="rating" value="' . $i . ' " disabled/>
+                                                                    <label class="star" title="" aria-hidden="true"></label>';
+                                                        }
+                                                    ?>
                                                     </div>
                                                 </div>
                                             </div>
@@ -548,6 +551,7 @@ $reviews = get_field('reviews', $post->ID);
                     </div>
                 </div>
             </div>
+            <!-- -------------------------------------------------- End Modal Direct contact & Voor wie -------------------------------------- -->
 
             <div class="modal fade" id="voor-wie" tabindex="-1" aria-labelledby="voor-wieModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-course">
@@ -638,22 +642,22 @@ $reviews = get_field('reviews', $post->ID);
 
             <!-- ---------------------------------- Start Right Side Dashboard -------------------------------- -->
             <div class="blockTwoOver">
-                <div>
-                    <div class="btnGrou10">
-                        <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#direct-contact">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
-                            Direct contact
-                        </a>
-                        <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#voor-wie">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/question.png" alt="">
-                            Voor wie
-                        </a>
-                    </div>
-                    <p class="afspeeText">Afspeellijst</p>
+                <div class="btnGrou10">
+                    <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#direct-contact">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
+                        Direct contact
+                    </a>
+                    <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#voor-wie">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/question.png" alt="">
+                        Voor wie
+                    </a>
+                </div>
+                <p class="afspeeText">Afspeellijst</p>
 
-                    <div class="">
-                        <div class="blockChapitreCours">
+                <div class="d-block">
+                    <div class="blockChapitreCours">
 
+                        <div>
                             <?php
                             if(!empty($courses) && !empty($youtube_videos))
                                 echo "<div class='sousBlockCours'>
@@ -663,11 +667,11 @@ $reviews = get_field('reviews', $post->ID);
                                 foreach($courses as $key => $course){
                                     ?>
                                     <div class="sousBlockCours">
-                                        <?php 
-                                        if(isset($topic)) 
+                                        <?php
+                                        if(isset($topic))
                                         {
                                             $style = "";
-                                            if($topic == $key) 
+                                            if($topic == $key)
                                                 $style = "color:#F79403";
                                         }
                                         ?>
@@ -715,89 +719,92 @@ $reviews = get_field('reviews', $post->ID);
                                 <?php
                             }
                             ?>
-                        </div>
-
-                        <div class="CardpriceLive">
-                            <?php
-                            if(!empty($company)){
-                                $company_id = $company[0]->ID;
-                                $company_title = $company[0]->post_title;
-                                $company_logo = get_field('company_logo', $company_id);
-                                ?>
-                                <div class="imgCardPrice">
-                                    <img src="<?php echo $company_logo; ?>" alt="company logo">
-                                </div>
-                                <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="liveTextCadPrice h5"><?php echo $company_title; ?></a>
-
+                            <div class="CardpriceLive">
                                 <?php
-                            }
-                            ?>
-                            <form action="../../dashboard/user/" method="POST">
-                                <input type="hidden" name="meta_value" value="<?php echo $post->post_author ?>" id="">
-                                <input type="hidden" name="user_id" value="<?php echo $user_id ?>" id="">
-                                <input type="hidden" name="meta_key" value="expert" id="">
-                                <?php
-                                if($user_id != 0 && $user_id != $post->post_author)
-                                    echo "<input type='submit' class='btnLeerom' style='border:none' name='interest_push' value='+ Leeromgeving'>";
+                                if(!empty($company)){
+                                    $company_id = $company[0]->ID;
+                                    $company_title = $company[0]->post_title;
+                                    $company_logo = get_field('company_logo', $company_id);
+                                    ?>
+                                    <div class="imgCardPrice">
+                                        <img src="<?php echo $company_logo; ?>" alt="company logo">
+                                    </div>
+                                    <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="liveTextCadPrice h5"><?php echo $company_title; ?></a>
+
+                                    <?php
+                                }
                                 ?>
-                            </form>
-                            <?php
-                            if($user_id == 0 )
-                                echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> + Leeromgeving </button>";
-                            ?>
+                                <form action="../../dashboard/user/" method="POST">
+                                    <input type="hidden" name="meta_value" value="<?php echo $post->post_author ?>" id="">
+                                    <input type="hidden" name="user_id" value="<?php echo $user_id ?>" id="">
+                                    <input type="hidden" name="meta_key" value="expert" id="">
+                                    <?php
+                                    if($user_id != 0 && $user_id != $post->post_author)
+                                        echo "<input type='submit' class='btnLeerom' style='border:none' name='interest_push' value='+ Leeromgeving'>";
+                                    ?>
+                                </form>
+                                <?php
+                                if($user_id == 0 )
+                                    echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> + Leeromgeving </button>";
+                                ?>
 
-                            <p class="PrisText">Locaties</p>
-                            <p class="opeleidingText">Online</p>
+                                <p class="PrisText">Locaties</p>
+                                <p class="opeleidingText">Online</p>
 
-                            <p class="PrisText">Prijs vanaf</p>
-                            <p class="opeleidingText"><?php echo $course_type; ?> : € <?php echo $price ?></p>
-                            <p class="btwText">BTW: € <?php $prijsvat ?></p>
+                                <p class="PrisText">Prijs vanaf</p>
+                                <p class="opeleidingText"><?php echo $course_type; ?> : € <?php echo $price ?></p>
+                                <p class="btwText">BTW: € <?php $prijsvat ?></p>
 
 
-                            <a href="#bookdates" class="btn btnKoop">Koop deze <?php echo $course_type; ?></a>
-                        </div>
-                        <div class="col-12 my-5" style="background-color: #E0EFF4">
-                            <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around justify-content-center">
+                                <a href="#bookdates" class="btn btnKoop">Koop deze <?php echo $course_type; ?></a>
+                            </div>
+                            <div class="col-12 my-5" style="background-color: #E0EFF4">
+                                <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around justify-content-center">
 
-                                <div class="swiper">
-                                    <div class="swiper-wrapper">
-                                        <?php
-                                        foreach($experts as $expert){
-                                            $expert = get_users(array('include'=> $expert))[0]->data;
-                                            $company = get_field('company',  'user_' . $expert->ID);
-                                            $title = $company[0]->post_title;
-                                            $image = get_field('profile_img', 'user_'. $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                            ?>
-                                            <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
-                                                <div class="my-2 d-flex flex-column mx-md-0 mx-1">
-                                                    <div class="imgCardPrice" style="height: 50px; width:50px">
-                                                        <img src="<?php echo $image; ?>" alt="teacher photo">
+                                    <div class="swiper">
+                                        <div class="swiper-wrapper">
+                                            <?php
+                                            foreach($experts as $expert){
+                                                $expert = get_users(array('include'=> $expert))[0]->data;
+                                                $company = get_field('company',  'user_' . $expert->ID);
+                                                $title = $company[0]->post_title;
+                                                $image = get_field('profile_img', 'user_'. $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                                ?>
+                                                <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
+                                                    <div class="my-2 d-flex flex-column mx-md-0 mx-1">
+                                                        <div class="imgCardPrice" style="height: 50px; width:50px">
+                                                            <img src="<?php echo $image; ?>" alt="teacher photo">
+                                                        </div>
+                                                        <span class="textIconeLearning"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span>
+                                                        <span><?php echo $title; ?></span>
                                                     </div>
-                                                    <span class="textIconeLearning"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span>
-                                                    <span><?php echo $title; ?></span>
-                                                </div>
-                                            </a>
-                                        <?php } ?>
+                                                </a>
+                                            <?php } ?>
+                                        </div>
+
                                     </div>
 
+                                    <!-- If we need pagination -->
+                                    <!-- <div class="swiper-pagination"></div> -->
+
+                                    <!-- If we need navigation buttons -->
+                                    <div class="swiper-button-prev swiper-moved" style="font-size: 8px !important">
+                                    </div>
+                                    <div class="test">
+                                        <div class="swiper-button-next swiper-moved"></div>
+                                    </div>
+
+                                    <!-- If we need scrollbar -->
+                                    <!-- <div class="swiper-scrollbar"></div> -->
                                 </div>
 
-                                <!-- If we need pagination -->
-                                <!-- <div class="swiper-pagination"></div> -->
-
-                                <!-- If we need navigation buttons -->
-                                <div class="swiper-button-prev swiper-moved" style="font-size: 8px !important">
-                                </div>
-                                <div class="test">
-                                    <div class="swiper-button-next swiper-moved"></div>
-                                </div>
-
-                                <!-- If we need scrollbar -->
-                                <!-- <div class="swiper-scrollbar"></div> -->
                             </div>
-
                         </div>
+
+
+
                     </div>
+
                 </div>
 
 
@@ -811,6 +818,7 @@ $reviews = get_field('reviews', $post->ID);
             <!-- ---------------------------------- End Right Side Dashboard -------------------------------- -->
 
         </div>
+
 
         <div class="bloxkWorldMembre formDirect ">
             <!-- <p class="wordnuText">Word nu <b>LIFT Member</b> en ontvang persoonlijke korting</p>
@@ -844,7 +852,6 @@ $reviews = get_field('reviews', $post->ID);
                 </div>
             </div>
         </div>
-
 
     </div>
 

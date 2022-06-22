@@ -19,6 +19,7 @@ $todos = get_posts($args);
 
 $url = home_url( $wp->request );
 
+$link = ($user) ? '/dashboard/user' : '/'; 
 ?>
 
 <!DOCTYPE html>
@@ -124,11 +125,11 @@ $url = home_url( $wp->request );
                     </div>
                 </div>
 
-                <a class="navbar-brand navBrand" href="/">
+                <a href="<?= $link; ?>" class="navbar-brand navBrand" >
                     <div class="logoModife logoWeb logoDashboard">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_white.png" alt="">
                     </div>
-                    <a href="/" class="logoMobile">
+                    <a href="<?= $link; ?>" class="logoMobile">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn_white.png" alt="LogoMobile" >
                     </a>
                 </a>
@@ -156,6 +157,17 @@ $url = home_url( $wp->request );
                     </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- input search -->
+                    <form action="/product-search" method="POST" class="form-inline ml-auto mb-0 ">
+                        <input id="header-search" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, exports en onderwerpen" aria-label="Search">
+                        <div class="dropdown-menuSearch headerDrop" id="header-list">
+                            <div class="list-autocomplete" id="header">
+                                <center> <i class='hasNoResults'>No matching results</i> </center>
+                            </div>
+                        </div>
+                    </form>
+                    
+
                     <ul class="elementHeaderUser ">
                         <?php
 

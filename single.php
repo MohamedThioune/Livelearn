@@ -40,9 +40,71 @@ if($tag = ''){
 
 $content = get_field('article_itself',  $blog->ID);
 
+$user_id = get_current_user_id();
+
+$reviews = get_field('reviews', $post->ID);
+
+$number_comments = !empty($reviews) ? count($reviews) : '0';
+
 ?>
 
 <div class="main-wrapper ">
+    <!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
+    <div class="modal modalEcosyteme modalSingleCourse fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="position: absolute; ">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Sign In</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body  px-md-5 p-3">
+                    <?php
+                    echo (do_shortcode('[user_registration_form id="59"]'));
+                    ?>
+
+                    <div class="text-center">
+                        <p>Already a member? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                                data-toggle="modal" data-target="#exampleModalCenter">Sign up</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
+
+    <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
+    <div class="modal modalEcosyteme modalSingleCourse fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="position: absolute; ">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Sign Up</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body  px-md-5 p-3">
+                    <?php
+                    wp_login_form([
+                        'redirect' => 'http://wp12.influid.nl/dashboard/user/',
+                        'remember' => false,
+                        'label_username' => 'Wat is je e-mailadres?',
+                        'placeholder_email' => 'E-mailadress',
+                        'label_password' => 'Wat is je wachtwoord?'
+                    ]);
+                    ?>
+                    <div class="text-center">
+                        <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                            data-toggle="modal" data-target="#SignInWithEmail">Sign in</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
 
     <section class="section blog-wrap bg-gray">
         <div class="container">
@@ -68,7 +130,7 @@ $content = get_field('article_itself',  $blog->ID);
                                                 </li>
                                                 <li>
                                                     <a href="#tab_default_2" data-toggle="tab">
-                                                        <i class="ti-comment mr-2"></i>0 Comments
+                                                        <i class="ti-comment mr-2"></i><?= $number_comments; ?> Comments
                                                 </li>
                                                 <li>
                                                     <a href="#tab_default_3" data-toggle="tab">
@@ -108,19 +170,26 @@ $content = get_field('article_itself',  $blog->ID);
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane" id="tab_default_2">
+                                                <?php
+                                                if(!empty($reviews)){
+                                                    foreach($reviews as $review){
+                                                        $user = $review['user'];
+                                                        $image_author = get_field('profile_img',  'user_' . $user->ID);
+                                                        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+                                                        $rating = $review['rating']; 
+                                                ?> 
                                                     <div class="sousBlockComments">
                                                         <div class="d-flex">
                                                             <div class="auteurImgComment">
-                                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
+                                                                <img src="<?= $image_author; ?>" alt="">
                                                             </div>
                                                             <div>
-                                                                <p class="NameAutorComment">Alakham Diouf</p>
-                                                                <p class="date">20 Dec</p>
+                                                                <p class="NameAutorComment"><?= $user->display_name; ?></p>
+                                                                <p class="date"></p>
                                                             </div>
                                                         </div>
-                                                        <p class="comment">Loren ipsum This paragraph is dedicated to expressing my skills what I have been able to acquire during my professional experience.
-                                                            Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.</p>
-                                                        <button class="replyBtn btn">Reply</button>
+                                                        <p class="comment"><?= $review['feedback']; ?></p>
+                                                        <!-- <button class="replyBtn btn">Reply</button>
                                                         <form class="replayForm">
                                                             <div class="form-group">
                                                                 <label for="exampleFormControlTextarea1">Comment</label>
@@ -142,20 +211,36 @@ $content = get_field('article_itself',  $blog->ID);
                                                             </div>
                                                             <p class="comment">Loren ipsum This paragraph is dedicated to expressing my skills what I have been able to acquire during my professional experience.
                                                                 Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.</p>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
-
+                                                        <?php
+                                                        }
+                                                    }
+                                                    else 
+                                                        echo "<h6>No reviews for this course ...</h6>";
+                                                    ?>
                                                 </div>
                                                 <div class="tab-pane" id="tab_default_3">
-                                                    <form>
+                                                    <?php
+                                                    if($user_id != 0){
+                                                    ?>
+                                                    <form action="/dashboard/user/" method="POST">
+                                                        <input type="hidden" name="user_id" value="<?= $user_id; ?>">
+                                                        <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
+                                                        
                                                         <div class="form-group">
                                                             <label for="exampleFormControlTextarea1">Comment</label>
-                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                                            <textarea class="form-control" id="exampleFormControlTextarea1" name="feedback_content" rows="3"></textarea>
                                                         </div>
                                                        <div class="buttonSend">
-                                                           <button class="btn btnSendComment">Send</button>
+                                                           <button type="submit" name="review_post" class="btn btnSendComment">Send</button>
                                                        </div>
                                                     </form>
+                                                    <?php
+                                                    }
+                                                    else
+                                                        echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> You must sign-in for review </button>";
+                                                    ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -201,73 +286,6 @@ $content = get_field('article_itself',  $blog->ID);
                                 </a>
                             </div>
                         </div>
-
-                        <!--
-<div class="col-lg-12 mb-5">
-<div class="comment-area card border-0 p-5">
-<h4 class="mb-4">2 Comments</h4>
-<ul class="comment-tree list-unstyled">
-<li class="mb-5">
-<div class="comment-area-box">
-<img alt="" src="img/blog/test1.jpg" class="img-fluid float-left mr-3 mt-2">
-
-<h5 class="mb-1">Philip W</h5>
-<span>United Kingdom</span>
-
-<div class="comment-meta mt-4 mt-lg-0 mt-md-0 float-lg-right float-md-right">
-<a href="#"><i class="icofont-reply mr-2 text-muted"></i>Reply |</a>
-<span class="date-comm">Posted October 7, 2018 </span>
-</div>
-
-<div class="comment-content mt-3">
-<p>Some consultants are employed indirectly by the client via a consultancy staffing company, a company that provides consultants on an agency basis. </p>
-</div>
-</div>
-</li>
-
-<li>
-<div class="comment-area-box">
-<img alt="" src="img/blog/test2.jpg" class="mt-2 img-fluid float-left mr-3">
-
-<h5 class="mb-1">Philip W</h5>
-<span>United Kingdom</span>
-
-<div class="comment-meta mt-4 mt-lg-0 mt-md-0 float-lg-right float-md-right">
-<a href="#"><i class="icofont-reply mr-2 text-muted"></i>Reply |</a>
-<span class="date-comm">Posted October 7, 2018</span>
-</div>
-
-<div class="comment-content mt-3">
-<p>Some consultants are employed indirectly by the client via a consultancy staffing company, a company that provides consultants on an agency basis. </p>
-</div>
-</div>
-</li>
-</ul>
-</div>
-</div>
-
-<div class="col-lg-12">
-<form class="contact-form bg-white rounded p-5" id="comment-form">
-<h4 class="mb-4">Write a comment</h4>
-<div class="row">
-<div class="col-md-6">
-<div class="form-group">
-<input class="form-control" type="text" name="name" id="name" placeholder="Name:">
-</div>
-</div>
-<div class="col-md-6">
-<div class="form-group">
-<input class="form-control" type="text" name="mail" id="mail" placeholder="Email:">
-</div>
-</div>
-</div>
-
-<textarea class="form-control mb-3" name="comment" id="comment" cols="30" rows="5" placeholder="Comment"></textarea>
-
-<input class="btn btn-main btn-round-full" type="submit" name="submit-contact" id="submit_contact" value="Submit Message">
-</form>
-</div>
--->
                     </div>
                 </div>
                 <div class="col-lg-4">

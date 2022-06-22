@@ -53,7 +53,10 @@
 <?php wp_head(); ?>
 <?php get_header(); ?>
 <?php 
-    
+
+    $page = dirname(__FILE__) . '/check_visibility.php';
+    require($page); 
+
     $user_id = get_current_user_id();
 
     if($_GET["companie"]){
@@ -218,7 +221,7 @@
 <?php 
     if(empty($users_companie)) 
     { 
-        echo "<br><center><h3 class='liverTilteHead2'>No courses yet 💣 </h3></center>";
+        echo "<br><center><h3 class='liverTilteHead2'>No courses yet  </h3></center>";
     }
     else
     {
@@ -555,112 +558,114 @@
                         <?php
                             $i = 0;
                             foreach($courses as $course){
-                                    $location = '~';
-                                    /*
-                                    * Categories and Date
-                                    */ 
-                                    $day = "~";
-                                    $month = "~"; 
+                                $location = '~';
+                                /*
+                                * Categories and Date
+                                */ 
 
-                                    $tree = get_the_category($course->ID);
-                                    if($tree){
-                                        if(isset($tree[2]))
-                                            $category = $tree[2]->cat_name;
-                                        else 
-                                            if(isset($tree[1]))
-                                                $category = $tree[1]->cat_name;
-                                    }else 
-                                        $category = ' ~ ';
-
-                                    $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];    
-
-                                    $dates = get_field('dates', $course->ID);
-                                    if($dates){
-                                        
-                                        $day = explode('-', explode(' ', $dates[0]['date'])[0])[2];
-                                        $month = explode('-', explode(' ', $dates[0]['date'])[0])[1];
-            
-                                        $month = $calendar[$month]; 
-                                    
-                                    }else{
-                                        $data = get_field('data_locaties', $course->ID);
-                                        if($data){
-                                            $date = $data[0]['data'][0]['start_date'];
-
-                                            $day = explode('/', explode(' ', $date)[0])[0];
-                                            $month = explode('/', explode(' ', $date)[0])[1];
-                                            $month = $calendar[$month];
-                                            
-                                            $location = $data[0]['data'][0]['location'];
-                                        }
-                                        else{
-                                            $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                                            $date = $data[0];
-                                            $day = explode('/', explode(' ', $date)[0])[0];
-                                            $month = explode('/', explode(' ', $date)[0])[1];
-                                            $month = $calendar[$month];
-                                            $location = $data[2];
-                                        }
-                                    }
-                                
-                                    /*
-                                    * Price 
-                                    */
-                                    $p = get_field('price', $course->ID);
-                                    if($p != "0")
-                                        $price =  number_format($p, 2, '.', ',') . ",-";
+                                $tree = get_the_category($course->ID);
+                                if($tree){
+                                    if(isset($tree[2]))
+                                        $category = $tree[2]->cat_name;
                                     else 
-                                        $price = 'Gratis';
+                                        if(isset($tree[1]))
+                                            $category = $tree[1]->cat_name;
+                                }else 
+                                    $category = ' ~ ';
 
-                                    /*
-                                    * Thumbnails
-                                    */ 
-                                    $thumbnail = get_the_post_thumbnail_url($course->ID);
-                                    if(!$thumbnail){
-                                        $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
-                                        if(!$thumbnail)
-                                            $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];    
+
+                                $dates = get_field('dates', $course->ID);
+                                if($dates){
+                                    
+                                    $day = explode('-', explode(' ', $dates[0]['date'])[0])[2];
+                                    $month = explode('-', explode(' ', $dates[0]['date'])[0])[1];
+        
+                                    $month = $calendar[$month]; 
+                                
+                                }else{
+                                    $data = get_field('data_locaties', $course->ID);
+                                    if($data){
+                                        $date = $data[0]['data'][0]['start_date'];
+
+                                        $day = explode('/', explode(' ', $date)[0])[0];
+                                        $month = explode('/', explode(' ', $date)[0])[1];
+                                        $month = $calendar[$month];
+                                        
+                                        $location = $data[0]['data'][0]['location'];
                                     }
+                                    else{
+                                        $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
+                                        $date = $data[0];
+                                        $day = explode('/', explode(' ', $date)[0])[0];
+                                        $month = explode('/', explode(' ', $date)[0])[1];
+                                        $month = $calendar[$month];
+                                        $location = $data[2];
+                                    }
+                                }
+                            
+                                /*
+                                * Price 
+                                */
+                                $p = get_field('price', $course->ID);
+                                if($p != "0")
+                                    $price =  number_format($p, 2, '.', ',') . ",-";
+                                else 
+                                    $price = 'Gratis';
 
-                                    //Image author of this post 
-                                    $image_author = get_field('profile_img',  'user_' . $course->post_author);
-                                    $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                        ?>
-                        <a href="<?php echo get_permalink($course->ID) ?>" class="col-md-12">
-                            <div class="blockCardFront">
-                                <div class="workshopBlock">
-                                    <p class="workshopText"> <?php echo get_field('course_type', $course->ID) ?> </p>
-                                    <div class="blockDateFront">
-                                        <p class="moiText"><?php echo $month ?></p>
-                                        <p class="dateText"><?php echo $day ?></p>
-                                    </div>
-                                </div>
-                                <div class="deToekomstBlock">
-                                    <p class="deToekomstText"> <?php echo $course->post_title ?> </p>
-                                    <p class="platformText"> <?php echo get_field('short_description', $course->ID) ?></p>
-                                    <div class="detaiElementAgenda detaiElementAgendaModife">
-                                        <div class="janBlock">
-                                            <div class="colorFront"> 
-                                                <img width="17" src="<?php echo $image_author ?> " alt="" >
+                                /*
+                                * Thumbnails
+                                */ 
+                                $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                if(!$thumbnail){
+                                    $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
+                                    if(!$thumbnail)
+                                        $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                                }
+
+                                //Image author of this post 
+                                $image_author = get_field('profile_img',  'user_' . $course->post_author);
+                                $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                
+                                if(!$month)
+                                    continue;
+
+                            ?>
+                                <a href="<?php echo get_permalink($course->ID) ?>" class="col-md-12">
+                                    <div class="blockCardFront">
+                                        <div class="workshopBlock">
+                                            <p class="workshopText"> <?php echo get_field('course_type', $course->ID) ?> </p>
+                                            <div class="blockDateFront">
+                                                <p class="moiText"><?php echo $month ?></p>
+                                                <p class="dateText"><?php echo $day ?></p>
                                             </div>
-                                            <p class="textJan"> <?php echo(get_userdata($course->post_author)->data->display_name) ?> </p>
                                         </div>
-                                        <div class="euroBlock">
-                                            <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/euro.png" alt="">
-                                            <p class="textJan"> <?php echo $price ?> </p>
-                                        </div>
-                                        <div class="zwoleBlock">
-                                            <img class="ss" src="<?php echo get_stylesheet_directory_uri();?>/img/ss.png" alt="">
-                                            <p class="textJan"><?php echo $location; ?></p>
-                                        </div>
-                                        <div class="facilityBlock">
-                                            <img class="faciltyImg" src="<?php echo get_stylesheet_directory_uri();?>/img/map-search.png" alt="">
-                                            <p class="textJan facilityText"> <?php echo $category ?> </p>
+                                        <div class="deToekomstBlock">
+                                            <p class="deToekomstText"> <?php echo $course->post_title ?> </p>
+                                            <p class="platformText"> <?php echo get_field('short_description', $course->ID) ?></p>
+                                            <div class="detaiElementAgenda detaiElementAgendaModife">
+                                                <div class="janBlock">
+                                                    <div class="colorFront"> 
+                                                        <img width="17" src="<?php echo $image_author ?> " alt="" >
+                                                    </div>
+                                                    <p class="textJan"> <?php echo(get_userdata($course->post_author)->data->display_name) ?> </p>
+                                                </div>
+                                                <div class="euroBlock">
+                                                    <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/euro.png" alt="">
+                                                    <p class="textJan"> <?php echo $price ?> </p>
+                                                </div>
+                                                <div class="zwoleBlock">
+                                                    <img class="ss" src="<?php echo get_stylesheet_directory_uri();?>/img/ss.png" alt="">
+                                                    <p class="textJan"><?php echo $location; ?></p>
+                                                </div>
+                                                <div class="facilityBlock">
+                                                    <img class="faciltyImg" src="<?php echo get_stylesheet_directory_uri();?>/img/map-search.png" alt="">
+                                                    <p class="textJan facilityText"> <?php echo $category ?> </p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </a>
+                                </a>
                         <?php
                             $i++; 
 
@@ -696,7 +701,7 @@
                                             if(isset($tree[1]))
                                                 $category = $tree[1]->cat_name;
                                     }else 
-                                        $category = ' ~ ';
+                                        $category = ' - ';
 
                                     $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
 

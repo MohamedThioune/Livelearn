@@ -479,12 +479,24 @@ ul.sub-menu li a {
     color: #0a0a0a !important;
 }
 .textOnder {
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 700;
     color: #023356;
-    margin-top: 14px;
+    margin-top: 20px;
     margin-bottom: 15px;
 }
+.textOnder span{
+    color: #707070;
+    font-weight: normal;
+    font-size: 12px;
+    background: #dfeef3;
+    padding: 8px 15px;
+    border-radius: 18px;
+    margin-left: 8px;
+    position: relative;
+    top: -2px;
+}
+
 
 .faPLusModife {
     margin-right: 15px;
@@ -503,7 +515,7 @@ ul.sub-menu li a {
     margin-top: 10px;
     margin-bottom: 28px;
     display: flex!important;
-    padding: 5px 20px!important;
+    padding: 5px 10px!important;
 }
 
 .faPLusModife {
@@ -1339,7 +1351,9 @@ ul.sub-menu li a {
 .sidBarDashboardIndividual {
     width: 100%;
     position: sticky;
-    padding: 21px 30px;
+    padding: 21px 5px 15px 20px;
+    overflow-y: scroll;
+    max-height: 90vh;
 }
 
 .sidBarDashboardManager{
@@ -3304,7 +3318,7 @@ body .gform_wrapper ul li.gfield {
     color: #043356;
     font-size: 30px;
     text-align: center;
-    margin-bottom: 5px;
+    margin-bottom: 30px;
 }
 .textReady{
     text-align: center;
@@ -7244,9 +7258,8 @@ ul#tabs-nav li.active {
     display: block !important;
 }
 .blockChapitreCours .sousBlockCours {
-    display: flex;
-    flex-wrap: wrap;
-    height: 515px;
+    display: block;
+    max-height: 515px;
     overflow-y: scroll;
 }
 .blockChapitreCours .textChapitreCours:first-child {
@@ -8574,13 +8587,57 @@ ul#tabs-nav li.active {
     background: none !important;
     border: none !important;
 }
-.blockLoveCourse .btn_like{
-    display: none;
-}
+.btn_like{display: none;}
+.hiddenanswer{display: block;}
 .blockLoveCourse button img {
     width: 25px;
 }
+.content-button-tabs{
+    display: flex;
+    justify-content: space-between;
+    background: white;
+    box-shadow: 3px 1px 65px 13px rgb(196 196 196 / 10%);
+    border-radius: 0px;
+}
+.content-button-tabs button{
+    width: 24.5%;
+    text-align: center;
+}
+.b-tab {
+    padding: 30px 15px;
+    display: none;
+}
 
+.b-tab.active {
+    display: block;
+}
+
+.b-nav-tab {
+    display: inline-block;
+    padding: 12px;
+    border-radius: 0;
+}
+
+.b-nav-tab.active {
+    color: #ffffff;
+    background: #043356;
+    font-weight: bold;
+}
+#Portfolio{
+    padding: 30px 40px;
+}
+#Password {
+    padding: 5px 15px;
+}
+.personnlijkeElement {
+    width: 26px !important;
+    margin-right: 4px;
+}
+.personnlijkeElement img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
 
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
@@ -10852,6 +10909,12 @@ ul#tabs-nav li.active {
         right: 0px;
         top: 0;
         font-size: 13px;
+    }
+    .content-button-tabs button {
+        width: 24.5%;
+        text-align: center;
+        font-size: 14px;
+        padding: 5px 5px;
     }
 
 
