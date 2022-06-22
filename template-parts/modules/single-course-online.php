@@ -9,7 +9,7 @@ $page = dirname(__FILE__) . '/../../templates/check_visibility.php';
  
 require($page); 
 
-view();
+view($post, $user_visibility);
 
 if(!visibility($post, $visibility_company))
     header('location: /');

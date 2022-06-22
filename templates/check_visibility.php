@@ -21,41 +21,45 @@
     }
 
 
-    function view($course){
-        $id = ($user_visibility) ? $user_visibility->ID : 0;
+    function view($course, $user_visibility){
+        $id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;
+        if(!$id)
+            return false;
 
         $args = array(
             'post_type' => 'view', 
-            'post_status' => 'pending',
+            'post_status' => 'publish',
             'post_author' => $id,
             );
 
         $views_stat_user = get_posts($args);
 
-        if(!empty($views_stat_user))
-            $statID = $views_stat_user[0]->ID;
-        else{
+        if(!empty($views_stat_user)){
+            $stat_id = $views_stat_user[0]->ID;
+        }else{
             $data = array(
                 'post_type' => 'view',
                 'post_author' => $id,
-                'post_status' => 'pending',
+                'post_status' => 'publish',
                 'post_title' => $user_visibility->display_name . ' - View',
                 );
             
-            $statID = wp_insert_post($data);
+            $stat_id = wp_insert_post($data);
         }
 
+        $view = get_field('views', $stat_id);
+        
+        $one_view = array();
+        $one_view['course'] = $course;
+        $one_view['date'] = date('d/m/Y H:i:s');
 
-        $views = get_field('view', $statID);
-        $view = array();
-        $view['view_course'] = $course;
-        $view['view_date'] = now();
-
-        if(!empty($views))
-            array_push($views, $view);
+        if(!empty($view))
+            array_push($view, $one_view);
         else 
-            $views = $view; 
+            $view = array($one_view); 
 
-        update_field('view', $views, $statID);
+        var_dump($view);
+        
+        update_field('views', $view, $stat_id);
 
     }
