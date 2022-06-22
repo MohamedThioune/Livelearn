@@ -832,7 +832,7 @@ $reviews = get_field('reviews', $post->ID);
                                         $user = $review['user'];
                                         $image_author = get_field('profile_img',  'user_' . $user->ID);
                                         $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
-                                        //$rating = intval($review['rating']);                   
+                                        $rating = $review['rating'];                   
                                     ?>
                                     <div class="review-info-card">
                                         <div class="review-user-mini-profile">
@@ -842,16 +842,16 @@ $reviews = get_field('reviews', $post->ID);
                                             <div class="user-name">
                                                 <p><?= $user->display_name; ?></p>
                                                 <div class="rating">
-                                                    <input type="radio"  name="rating" value="5" />
-                                                    <label class="star"  title="Awesome" aria-hidden="true"></label>
-                                                    <input type="radio"  name="rating" value="4" />
-                                                    <label class="star"  title="Great" aria-hidden="true"></label>
-                                                    <input type="radio"  name="rating" value="3" />
-                                                    <label class="star"  title="Very good" aria-hidden="true"></label>
-                                                    <input type="radio"  name="rating" value="2" />
-                                                    <label class="star"  title="Good" aria-hidden="true"></label>
-                                                    <input type="radio"  name="rating" value="1" />
-                                                    <label class="star"  title="Bad" aria-hidden="true"></label>
+                                                <?php
+                                                    for($i = $rating; $i >= 1; $i--){
+                                                        if($i == $rating)
+                                                            echo '<input type="radio" name="rating" value="' . $i . ' " checked disabled/>
+                                                            <label class="star" title="" aria-hidden="true"></label>';
+                                                        else 
+                                                            echo '<input type="radio" name="rating" value="' . $i . ' " disabled/>
+                                                                <label class="star" title="" aria-hidden="true"></label>';
+                                                    }
+                                               ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -874,7 +874,7 @@ $reviews = get_field('reviews', $post->ID);
                                     <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
                                     <label>Rating</label>
                                     <div class="rating-element2">
-                                        <div class="rating">
+                                        <div class="rating"> 
                                             <input type="radio" id="star5" name="rating" value="5" />
                                             <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
                                             <input type="radio" id="star4" name="rating" value="4" />
