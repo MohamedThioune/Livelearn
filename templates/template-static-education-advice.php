@@ -88,7 +88,7 @@
                 </h1>
 
                 <?php if (get_current_user_id()==0) { ?> 
-                    <button class="btn rounded-pill my-3"  data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal"
+                    <button class="btn rounded-pill my-3" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal"
                         style="padding: 7px 20px !important; background: #19B2A8;">
                         <strong class=" p-3 text-white">Creëer je gratis leeromgeving</strong>
                     </button>

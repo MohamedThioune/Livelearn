@@ -114,11 +114,11 @@
                             <div class="contentCardProd">
                                 <div class="group8">
                                     <div class="imgTitleCours">
-                                                                            <div class="imgCoursProd">
+                                        <div class="imgCoursProd">
                                             <img src="http://localhost/livelearn/wp-content/uploads/2021/11/logoWorkPlaceAcademy_01-1.png" width="25" alt="">
                                         </div>
                                         <p class="nameCoursProd">WorkPlace Academy</p>
-                                                                        </div>
+                                        </div>
                                     <div class="group9">
                                         <div class="blockOpein">
                                             <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt="">
@@ -132,7 +132,8 @@
                                 </div>
                                 <p class="werkText">The webbuilder course</p>
                                 <p class="descriptionPlatform">
-                                    Mooie tekst voor als korte beschrijving                            </p>
+                                    Mooie tekst voor als korte beschrijving
+                                </p>
                             </div>
                         </div>
                     </a>
