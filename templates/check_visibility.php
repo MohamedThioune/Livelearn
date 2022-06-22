@@ -57,8 +57,6 @@
             array_push($view, $one_view);
         else 
             $view = array($one_view); 
-
-        var_dump($view);
         
         update_field('views', $view, $stat_id);
 
