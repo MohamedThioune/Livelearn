@@ -107,7 +107,7 @@
                     <p class="e-learningTitle">Workshop Course Test</p>
                     <!-- Image -->
                     <div class="img-fluid-course">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/seminar-bankers.jpg" alt="">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/lezing.jpg" alt="">
                     </div>
 
                     <!--------------------------------------- start Text description -------------------------------------- -->
