@@ -2,6 +2,40 @@
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
+<?php  
+/* Get  seconds by given string time  */
+function timeToSeconds(string $time): int
+{
+    $time_array = explode(':', $time);
+    if (count($time_array) === 2 && $time_array[0]!='00') {
+        return  $time_array[0] * 60 + $time_array[1];
+    }
+    return $time_array[1];
+}
+
+/* Get the assessment's ID by the url */
+    $assessment_id=$_GET['assessment_id'];
+    $assessment=get_post ($assessment_id);
+    $assessment_array=array(
+        'id'=>$assessment_id,
+        'title'=>$assessment->post_title,
+        'description_assessment'=>get_field('description_assessment',$assessment_id),
+        'how_it_works' => get_field('how_it_works', $assessment_id),
+        'difficulty_assessment' => get_field('difficulty_assessment', $assessment_id),
+        'image_assessment' => get_field('image_assessement', $assessment_id)['url'],
+        'language_assessment' => get_field('language_assessment', $assessment_id),
+    );
+    $timer=0;
+    foreach (get_field('question',$assessment_id) as $question)
+    {
+        $question_time=$question['timer'];
+        $timer+= timeToSeconds($question_time);
+    }
+    /* Get minutes by given string seconds  */
+    $timer=ceil($timer/60);
+
+?>
+
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
     <!-- ---------------------------------------- Start modals ---------------------------------------------- -->
@@ -104,22 +138,23 @@
                     </div>
 
 
-                    <p class="e-learningTitle">Use our Backend Test to increase your chances of being hired</p>
+                    <p class="e-learningTitle"> <?= $assessment_array['title'] ?> </p>
                     <!-- Image -->
                     <div class="img-fluid-course">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/backend.jpg" alt="">
+                        <img src=<?= $assessment_array['image_assessment'] ?> alt="">
                     </div>
 
                     <!--------------------------------------- start Text description -------------------------------------- -->
                     <p class="title-assessment-test">Why do employers use skills assessment tests?</p>
-                    <p class="description-assessment-test">It has already been mentioned that employers use these tests to be able to further shortlist candidates for a role based on their talent and skill set.
+                    <!-- <p class="description-assessment-test">It has already been mentioned that employers use these tests to be able to further shortlist candidates for a role based on their talent and skill set.
 
                         There are a few other reasons why companies may use these tests, though:</p>
                     <ul class="ulAssessment">
                         <li>To help develop the current employee’s skill sets that will benefit the business in the long term</li>
                         <li>To see if there is a need for any more training within the company, for example, testing current employees’ skills to gain information on any areas where there seems to be an overall struggle. The company can then invest in further training and development</li>
                         <li>To recruit for an in-house promotion. Current employees may need to do an assessment as part of an application to progress their career within the company</li>
-                    </ul>
+                    </ul> -->
+                    <?= $assessment_array['description_assessment'] ?>
 
                     <div class="customTabs">
                         <div class="tabs">
@@ -132,7 +167,8 @@
                                 <div id="tab1" class="tab-content">
                                     <div>
                                         <ul class="ulAssessment">
-                                            <li>
+                                        <?= $assessment_array['how_it_works'].'<br>'; ?>
+                                            <!-- <li>
                                                 Each question is timed
                                             </li>
                                             <li>
@@ -147,12 +183,25 @@
                                             <li>
                                                 Each question is timed
                                             </li>
-                                            <li>
-                                                Each question is timed
-                                            </li>
+                                           
                                         </ul>
-                                        <a href="/assessment" class="btn btnGetStartAssessment">Start</a>
-                                    </div>
+                                         -->
+
+                                    <?php 
+                                      if (get_current_user_id()!=0) 
+                                      {
+                                    ?>
+                                            <a href="/dashboard/user/assessment"  class="btn btnGetStartAssessment">Start</a>
+                                    <?php
+                                      }
+                                        else
+                                        {
+                                    ?>
+                                        <a href="#" data-toggle="modal" data-target="#exampleModalCenter"  class="btn btnGetStartAssessment">Start</a>
+                                    <?php
+                                      }
+                                    ?>
+                                        </div>
                                 </div>
                                 <div id="tab2" class="tab-content">
                                     <h2>Reviews</h2>
@@ -413,21 +462,21 @@
                             <div class="tg-card">
                                 <img class="card-icon" src="<?php echo get_stylesheet_directory_uri();?>/img/level.png" alt="">
                                 <p class="tg-title">Difficulty</p>
-                                <p class="tg-element">Medium</p>
+                                <p class="tg-element"><?= $assessment_array['difficulty_assessment'] ?></p>
                             </div>
                         </div>
                         <div class="CarddetailLive">
                             <div class="tg-card">
                                 <img class="card-icon" src="<?php echo get_stylesheet_directory_uri();?>/img/lhorloge.png" alt="">
                                 <p class="tg-title">Times</p>
-                                <p class="tg-element">25 minutes</p>
+                                <p class="tg-element"> <?= $timer; ?> minutes</p>
                             </div>
                         </div>
                         <div class="CarddetailLive">
                             <div class="tg-card">
                                 <img class="card-icon" src="<?php echo get_stylesheet_directory_uri();?>/img/speak.png" alt="">
                                 <p class="tg-title">Languages</p>
-                                <p class="tg-element">English</p>
+                                <p class="tg-element"><?= $assessment_array['language_assessment'] ?></p>
                             </div>
                         </div>
                     </div>
