@@ -213,7 +213,7 @@
                 $('#reload-data').show()
                 $('#loader').attr('hidden',true)
                 console.log(data);
-                //location.reload();
+                location.reload();
             }
         });
         //location.reload();
