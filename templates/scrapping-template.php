@@ -14,7 +14,6 @@ $table = $wpdb->prefix . 'databank';
 
 if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
  {
-    
     $html_code=file_get_contents('https://www.smartwp.nl/nieuws/');
     $dom= new DomDocument();
     libxml_use_internal_errors(true);
@@ -56,35 +55,22 @@ if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
                     }
                     array_push($datas,$array_data);    
             }
-            // var_dump($datas);
             }
         }
-
-    // $servername = "localhost";
-    // $username = "root";
-    // $password = "";
-    // $dbname = "livelearn_db";
-    // $dbTable = "wpe7_databank";
-    // $database= new Database($servername,$dbname,$username,$password);
     foreach ($datas as $key => $article) 
     {
-        // if (!$database->isAlreadyExist($dbTable,$article['title'],$article['short_description'],$article['type']))
-        // {
-        //   $columns='`titel`, `type`, `video(s)`, `short_description`, `long_description`, `for_who`, `agenda`, `results`, `duration`, `prijs`, `prijs_vat`, `image_xml`, `onderwerpen`, `date_multiple`, `location`, `level`, `language`, `course_id`, `author_id`, `status`, `state`, `optie`' ;
-        //   $values="'$article[title]','$article[type]',NULL, '$article[short_description]', '$article[content]', NULL, '$article[date]', NULL, NULL, 0, NULL,'$article[image]', '', NULL, NULL, '', '', 2070, 0, 'intern', 0, NULL";
-        //   $database->insert($dbTable,$columns,$values);
-        // }
-
-        $status = 'extern';
-         $test= nl2br($article['content']);
-        // echo $test;
+      $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE  titel='$article[title]' AND  type= 'Artikel' AND short_description='$article[short_description]' AND image_xml='$article[image]'  AND date_multiple='$article[date]' AND long_description='$article[content]' LIMIT 1");
+      $result = $wpdb->get_results($sql);
+      if (empty($result))
+      {
+            $status = 'extern';
             //Data to create the course
             $data = array(
               'titel' => $article['title'],
               'type' => 'Artikel',
               'videos' => NULL, 
-              'short_description' => nl2br($article['short_description']),
-              'long_description' => $test,
+              'short_description' => $article['short_description'],
+              'long_description' => $article['content'],
               'duration' => NULL, 
               'prijs' => 0, 
               'prijs_vat' => 0,
@@ -95,47 +81,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
               'author_id' => 0,
               'status' => $status
             );
-            $new_data=array(
-              "long_description" => $test,
-            );
-            //var_dump($data);
-            $id = $wpdb->insert($table,$data);
-            $where = [ 'id' => $id ];
-            $updated = $wpdb->update( $table, $new_data, $where );
+            $id_post = $wpdb->insert($table,$data);
             echo $wpdb->last_error;
         
     }
-    //$database->off();
-        
-//     try 
-//     {
-//       $mysqli = new mysqli("$servername","$username","$password","$dbname");
-//       foreach ($datas as $key => $article) 
-//       { 
-//        $sql= "SELECT * FROM `wpe7_databank` WHERE `wpe7_databank`.`titel`= '$article[title]' AND `wpe7_databank`.`short_description`= '$article[short_description]' AND `wpe7_databank`.`type`='Artikel'";
-//        $result = $mysqli -> query($sql);
-//        if ($result && $result->num_rows==0) {
-//           {
-//             $result -> free_result();
-//             $sql= "INSERT INTO `wpe7_databank` ( `titel`, `type`, `video(s)`, `short_description`, `long_description`, `for_who`, `agenda`, `results`, `duration`, `prijs`, `prijs_vat`, `image_xml`, `onderwerpen`, `date_multiple`, `location`, `level`, `language`, `course_id`, `author_id`, `status`, `state`, `optie`) VALUES ( '$article[title]', 'Artikel', NULL, '$article[short_description]', '$article[content]', NULL, '$article[date]', NULL, NULL, 0, NULL,'$article[image]', '', NULL, NULL, '', '', 2070, 0, 'intern', 0, NULL)";
-//             $result=$mysqli -> query($sql);
-//             $result-> free_result();
-//           }
-//         // Free result set
-        
-//       }
-       
-
-//  }
-// }
-//     catch(Exception $e)
-//     {
-//         echo "Error: " . $e->getMessage();
-//     }
 
 }
 
-
+ }
 ?>
     
         
