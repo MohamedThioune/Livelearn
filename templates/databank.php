@@ -109,7 +109,7 @@
                 <span id="reload-data" class="bi bi-arrow-clockwise">
                     Artikel <img width='30' src="<?= get_stylesheet_directory_uri(); ?>/img/Overzicht_opleidingen.png" alt="artikel image">
                 </span>  
-                
+
                 <div hidden="true" id="loader" style="display:inline-block;" class="spinner-border spinner-border-sm text-primary" role="status">
                 </div>
             </p>
@@ -214,7 +214,7 @@
                 $('#reload-data').show()
                 $('#loader').attr('hidden',true)
                 console.log(data);
-                //location.reload();
+                location.reload();
             }
         });
         //location.reload();
