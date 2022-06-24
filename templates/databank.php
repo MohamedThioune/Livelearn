@@ -105,15 +105,15 @@
     <div class="cardOverviewCours">
         <div class="headListeCourse">
             <p class="JouwOpleid">Alle opleidingen 
-                 <i  id="reload-data" class="bi bi-arrow-clockwise">
-                </i>  
+                <a href="/youtube-v3-playlist" class="JouwOpleid">  <img width='30' src="<?= get_stylesheet_directory_uri(); ?>/img/YouTube.jpg" alt="youtube image"></a>
+                <span id="reload-data" class="bi bi-arrow-clockwise">
+                    Artikel <img width='30' src="<?= get_stylesheet_directory_uri(); ?>/img/Overzicht_opleidingen.png" alt="artikel image">
+                </span>  
+
                 <div hidden="true" id="loader" style="display:inline-block;" class="spinner-border spinner-border-sm text-primary" role="status">
                 </div>
             </p>
             
-            <p class="JouwOpleid">Alle opleidingen</p>
-            <a href="#" class="JouwOpleid"> YouTube <img width='30' src="<?= get_stylesheet_directory_uri(); ?>/img/YouTube.jpg" alt="youtube image"></a>
-            <a href="/youtube-v3-playlist" class="JouwOpleid"> Artikel <img width='30' src="<?= get_stylesheet_directory_uri(); ?>/img/Overzicht_opleidingen.png" alt="youtube image"></a>
             <input type="search" class="searchInputAlle" placeholder="Zoek opleidingen, experts of ondervwerpen">
         </div>
         <div class="contentCardListeCourse">

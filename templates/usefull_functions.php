@@ -63,6 +63,7 @@ class Database
             $sql = "INSERT INTO $tableName ($columns) VALUES ($values)";
             $result = $this->connexion->query($sql);
             return $result;
+
         }
         catch(Exception $e)
         {
