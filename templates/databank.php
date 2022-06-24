@@ -4,7 +4,7 @@
 
  global $wpdb;
 
- $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank");
+ $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank ORDER BY id DESC");
 
  $courses = $wpdb->get_results( $sql );
 
@@ -111,6 +111,9 @@
                 </div>
             </p>
             
+            <p class="JouwOpleid">Alle opleidingen</p>
+            <a href="#" class="JouwOpleid"> YouTube <img width='30' src="<?= get_stylesheet_directory_uri(); ?>/img/YouTube.jpg" alt="youtube image"></a>
+            <a href="/youtube-v3-playlist" class="JouwOpleid"> Artikel <img width='30' src="<?= get_stylesheet_directory_uri(); ?>/img/Overzicht_opleidingen.png" alt="youtube image"></a>
             <input type="search" class="searchInputAlle" placeholder="Zoek opleidingen, experts of ondervwerpen">
         </div>
         <div class="contentCardListeCourse">
@@ -160,7 +163,6 @@
 </div>
 
 <div id="myModal" class="modal">
-
     <!-- Modal content -->
     <!-- <div id="modal-content"> -->
     <div class="modal-content modal-content-width m-auto " style="margin-top: 100px !important">
@@ -187,7 +189,6 @@
         </div>
     <!-- </div> -->
     </div>
-
 </div> 
 
 </body>
