@@ -103,7 +103,7 @@ $format = array('%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%s', '%d'
               'status' => $status
             );
 
-            $wpdb->insert($table,$data,$format);
+            $post_id = $wpdb->insert($table,$data,$format);
 
             echo $wpdb->last_error;
 
