@@ -104,7 +104,13 @@
 <div class="contentListeCourse">
     <div class="cardOverviewCours">
         <div class="headListeCourse">
-            <p class="JouwOpleid">Alle opleidingen</p>
+            <p class="JouwOpleid">Alle opleidingen 
+                 <i  id="reload-data" class="bi bi-arrow-clockwise">
+                </i>  
+                <div hidden="true" id="loader" style="display:inline-block;" class="spinner-border spinner-border-sm text-primary" role="status">
+                </div>
+            </p>
+            
             <input type="search" class="searchInputAlle" placeholder="Zoek opleidingen, experts of ondervwerpen">
         </div>
         <div class="contentCardListeCourse">
@@ -190,6 +196,29 @@
 <?php wp_footer(); ?>
 
 <script>
+
+    $('#reload-data').click(function(){
+        $.ajax({
+            url: '/scrapping',
+            type: 'POST',
+            data: {
+                'action': 'reload_data'
+            },
+            beforeSend:function(){
+                $('#reload-data').hide()
+                $('#loader').attr('hidden',false)
+            },
+            complete: function(){},
+            success: function(data){
+                $('#reload-data').show()
+                $('#loader').attr('hidden',true)
+                console.log(data);
+                //location.reload();
+            }
+        });
+        //location.reload();
+    });
+
     $('.optie').click((e)=>{
         var tr_element = e.target.parentElement.closest("tr");
         var ids = tr_element.id;
