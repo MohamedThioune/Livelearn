@@ -5,6 +5,13 @@
 include_once 'simple_html_dom.php';
 include_once 'usefull_functions.php';
 
+global $wpdb;
+
+$table = $wpdb->prefix . 'databank';
+
+$format = array('%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%s', '%d', '%d', '%s');
+
+
 if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
  {
     
@@ -53,23 +60,47 @@ if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
             }
         }
 
-    $servername = "localhost";
-    $username = "livelearn_infdev";
-    $password = "INFDEV!LIV";
-    $dbname = "livelearn_wpx";
-    $dbTable = "wpe7_databank";
-    $database= new Database($servername,$dbname,$username,$password);
+    // $servername = "localhost";
+    // $username = "root";
+    // $password = "";
+    // $dbname = "livelearn_db";
+    // $dbTable = "wpe7_databank";
+    // $database= new Database($servername,$dbname,$username,$password);
     foreach ($datas as $key => $article) 
     {
-        if (!$database->isAlreadyExist($dbTable,$article['title'],$article['short_description'],$article['type']))
-        {
-          $columns='`titel`, `type`, `video(s)`, `short_description`, `long_description`, `for_who`, `agenda`, `results`, `duration`, `prijs`, `prijs_vat`, `image_xml`, `onderwerpen`, `date_multiple`, `location`, `level`, `language`, `course_id`, `author_id`, `status`, `state`, `optie`' ;
-          $values="'$article[title]','$article[type]',NULL, '$article[short_description]', '$article[content]', NULL, '$article[date]', NULL, NULL, 0, NULL,'$article[image]', '', NULL, NULL, '', '', 2070, 0, 'intern', 0, NULL";
-          $database->insert($dbTable,$columns,$values);
-        }
+        // if (!$database->isAlreadyExist($dbTable,$article['title'],$article['short_description'],$article['type']))
+        // {
+        //   $columns='`titel`, `type`, `video(s)`, `short_description`, `long_description`, `for_who`, `agenda`, `results`, `duration`, `prijs`, `prijs_vat`, `image_xml`, `onderwerpen`, `date_multiple`, `location`, `level`, `language`, `course_id`, `author_id`, `status`, `state`, `optie`' ;
+        //   $values="'$article[title]','$article[type]',NULL, '$article[short_description]', '$article[content]', NULL, '$article[date]', NULL, NULL, 0, NULL,'$article[image]', '', NULL, NULL, '', '', 2070, 0, 'intern', 0, NULL";
+        //   $database->insert($dbTable,$columns,$values);
+        // }
+
+        $status = 'extern';
+
+            //Data to create the course
+            $data = array(
+              'titel' => $article['title'],
+              'type' => 'Artikel',
+              'video(s)' => NULL, 
+              'short_description' => $article['short_description'],
+              'long_description' => $article['content'],
+              'duration' => NULL, 
+              'prijs' => 0, 
+              'prijs_vat' => 0,
+              'image_xml' => $article['image'], 
+              'onderwerpen' => '', 
+              'date_multiple' => $article['date'], 
+              'course_id' => null,
+              'author_id' => 0,
+              'status' => $status
+            );
+
+            $post_id = $wpdb->insert($table,$data,$format);
+
+            echo $wpdb->last_error;
         
     }
-    $database->off();
+    //$database->off();
         
 //     try 
 //     {
