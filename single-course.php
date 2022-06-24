@@ -189,7 +189,7 @@ $image = get_field('preview', $post->ID)['url'];
 if(!$image){
     $image = get_field('url_image_xml', $post->ID);
     if(!$image)
-        $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.png';
+        $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
 }
 
 
