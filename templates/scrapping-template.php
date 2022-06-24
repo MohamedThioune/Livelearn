@@ -9,7 +9,7 @@ global $wpdb;
 
 $table = $wpdb->prefix . 'databank';
 
-$format = array('%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%s', '%d', '%d', '%s');
+//$format = array('%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%s', '%d', '%d', '%s');
 
 
 if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
@@ -51,8 +51,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
                         $query_content= '//div[@class="text"]';
                         $result_content=$dom_path_content->query($query_content);
                         if (!is_null($result_content)) {
-                            $array_data['content']=$result_content->item(0)->nodeValue;
-                              }
+                              $array_data['content']=$result_content->item(0)->nodeValue;
+                            }
                     }
                     array_push($datas,$array_data);    
             }
@@ -76,14 +76,15 @@ if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
         // }
 
         $status = 'extern';
-
+         $test= nl2br($article['content']);
+        // echo $test;
             //Data to create the course
             $data = array(
               'titel' => $article['title'],
               'type' => 'Artikel',
-              'video(s)' => NULL, 
-              'short_description' => $article['short_description'],
-              'long_description' => $article['content'],
+              'videos' => NULL, 
+              'short_description' => nl2br($article['short_description']),
+              'long_description' => $test,
               'duration' => NULL, 
               'prijs' => 0, 
               'prijs_vat' => 0,
@@ -94,9 +95,13 @@ if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
               'author_id' => 0,
               'status' => $status
             );
-
-            $post_id = $wpdb->insert($table,$data,$format);
-
+            $new_data=array(
+              "long_description" => $test,
+            );
+            //var_dump($data);
+            $id = $wpdb->insert($table,$data);
+            $where = [ 'id' => $id ];
+            $updated = $wpdb->update( $table, $new_data, $where );
             echo $wpdb->last_error;
         
     }
