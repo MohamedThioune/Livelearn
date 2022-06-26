@@ -9,9 +9,6 @@ global $wpdb;
 
 $table = $wpdb->prefix . 'databank';
 
-$format = array('%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%s', '%d', '%d', '%s');
-
-
 if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
  {
     
@@ -81,7 +78,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
             $data = array(
               'titel' => $article['title'],
               'type' => 'Artikel',
-              'video(s)' => NULL, 
+              'videos' => NULL, 
               'short_description' => $article['short_description'],
               'long_description' => $article['content'],
               'duration' => NULL, 
@@ -95,7 +92,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
               'status' => $status
             );
 
-            $post_id = $wpdb->insert($table,$data,$format);
+            $post_id = $wpdb->insert($table,$data);
 
             echo $wpdb->last_error;
         
@@ -117,7 +114,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
 //             $result-> free_result();
 //           }
 //         // Free result set
-        
+      
 //       }
        
 
