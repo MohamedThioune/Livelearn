@@ -105,8 +105,8 @@
     <div class="cardOverviewCours">
         <div class="headListeCourse">
             <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>LOAD FROM</strong> : &nbsp; 
-                <a href="/youtube-v3-playlist" style="text-decoration:none; color: #DD2B26; border: solid #DD2B26; padding: 8px 3px" class="JouwOpleid">YouTube <img width='30' src="<?= get_stylesheet_directory_uri(); ?>/img/YouTube.jpg" alt="youtube image"></a>
-                 &nbsp;<span id="reload-data" style="border: solid #023356; padding: 8px 3px" class="bi bi-arrow-clockwise">Artikel</span>  
+                <a href="/youtube-v3-playlist" style="text-decoration:none; color: #DD2B26; border: solid #DD2B26; padding: 8px 3px; border-radius: 5px;" class="JouwOpleid">YouTube <img width='30' src="<?= get_stylesheet_directory_uri(); ?>/img/YouTube.jpg" alt="youtube image"></a>
+                 &nbsp;&nbsp;<span id="reload-data" style="border: solid #023356; padding: 8px 3px; border-radius: 5px;" class="bi bi-arrow-clockwise">Artikel</span>  
                 <div hidden="true" id="loader" style="display:inline-block;" class="spinner-border spinner-border-sm text-primary" role="status">
                 </div>
             </p>

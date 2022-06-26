@@ -11,11 +11,9 @@ extract($_POST);
 $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
 $course = $wpdb->get_results( $sql )[0];
 
-$data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
 $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 
-if($optie == "accept")
-{
+if($optie == "accept"){
     if($class == 'missing')
     {
         //Insert Artikel
@@ -45,7 +43,7 @@ if($optie == "accept")
         if (strval($course->type) == "Video"){
             $args = array(
                 'post_type' => 'course',
-                'post_author' => 0,
+                'post_author' => get_current_user_id(),
                 'post_status' => 'publish',
                 'post_title' => $course->titel
             );
@@ -74,24 +72,21 @@ if($optie == "accept")
             update_field('long_description', $course->long_description, $id_post);
             update_field('url_image_xml', $course->image_xml, $id_post);
         }
+        
         $data = [ 'course_id' => $id_post]; // NULL value.
-        $where = [ 'id' => $id ]; // NULL value in WHERE clause.
-
         $wpdb->update( $table, $data, $where );
-        echo $wpdb->last_error;
     }
 }     
 else if($optie == "decline"){
     if ($class == 'missing')
         null;
     else if ($class == 'present' )
-        echo "trash";
         wp_trash_post($course->course_id);
 }
+$data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
 
-$wpdb->update( $table, $data, $where );
+$updated = $wpdb->update( $table, $data, $where );
 echo $wpdb->last_error;
-
 
 if($updated === false)
     return false; 
