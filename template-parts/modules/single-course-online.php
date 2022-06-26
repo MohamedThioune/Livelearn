@@ -1,3 +1,8 @@
+<?php
+
+extract($_GET);
+
+?>
 <style>
     .swiper {
         width: 600px;
@@ -98,7 +103,7 @@
                                 if(!empty(get_field('preview', $post->ID)))
                                     echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
                                 else
-                                    echo "<img src='" . $thumbnail . "' alt='thumbnail placeholder'>";
+                                    echo "<img src='" . $image . "' alt='thumbnail placeholder'>";
                         }
                     }
 

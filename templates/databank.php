@@ -104,12 +104,9 @@
 <div class="contentListeCourse">
     <div class="cardOverviewCours">
         <div class="headListeCourse">
-            <p class="JouwOpleid">Alle opleidingen 
-                <a href="/youtube-v3-playlist" class="JouwOpleid">  <img width='30' src="<?= get_stylesheet_directory_uri(); ?>/img/YouTube.jpg" alt="youtube image"></a>
-                <span id="reload-data" class="bi bi-arrow-clockwise">
-                    Artikel <img width='30' src="<?= get_stylesheet_directory_uri(); ?>/img/Overzicht_opleidingen.png" alt="artikel image">
-                </span>  
-
+            <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>LOAD FROM</strong> : &nbsp; 
+                <a href="/youtube-v3-playlist" style="text-decoration:none; color: #DD2B26; border: solid #DD2B26; padding: 8px 3px" class="JouwOpleid">YouTube <img width='30' src="<?= get_stylesheet_directory_uri(); ?>/img/YouTube.jpg" alt="youtube image"></a>
+                 &nbsp;<span id="reload-data" style="border: solid #023356; padding: 8px 3px" class="bi bi-arrow-clockwise">Artikel</span>  
                 <div hidden="true" id="loader" style="display:inline-block;" class="spinner-border spinner-border-sm text-primary" role="status">
                 </div>
             </p>
@@ -139,11 +136,10 @@
                         $image_author = get_field('profile_img',  'user_' . $course->author_id);
                         $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
 
-                        $state = $course->course_id ? 'already' : 'not_in';
-                        $id = $course->course_id ?: $course->id;
+                        $state = $course->course_id ? 'present' : 'missing';
                         $key = $course->id;
                     ?>
-                    <tr id="<?= $id ?>" class="<?= $state ?>">
+                    <tr id="<?= $key ?>" class="<?= $state ?>">
                         <td class="textTh"> <img src="<?= $course->image_xml; ?>" alt="image course" width="50" height="50"> </td>
                         <td class="textTh "><a style="color:#212529;font-weight:bold" href="<?= get_permalink($course->course_id) ?>"><?php echo $course->titel; ?></a></td>
                         <td class="textTh"><?= $course->type; ?></td>
@@ -214,7 +210,7 @@
                 $('#reload-data').show()
                 $('#loader').attr('hidden',true)
                 console.log(data);
-                location.reload();
+                //location.reload();
             }
         });
         //location.reload();
