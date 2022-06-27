@@ -1,6 +1,8 @@
 <?php
 get_header();
 
+global $post;
+
 $url = home_url( $wp->request );
 
 $page = dirname(__FILE__) . '/templates/check_visibility.php';

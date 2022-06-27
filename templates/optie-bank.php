@@ -21,15 +21,16 @@ if($optie == "accept"){
         {
             $args = array(
                 'post_type'   => 'post',
-                'post_author' => 0,
+                'post_author' => get_current_user_id(),
                 'post_status' => 'publish',
                 'post_title'  => $course->titel
             );
             
             $id_post = wp_insert_post($args);
-            update_field('short_description', $course->short_description, $id_post);
-            update_field('long_description', $course->long_description, $id_post);
-            update_field('image_xml', $course->image_xml, $id_post);
+            update_field('course_type', 'article', $id_post);
+            update_field('short_description', nl12br($course->short_description), $id_post);
+            update_field('article_itself', nl12br($course->long_description), $id_post);
+            update_field('url_image_xml', $course->image_xml, $id_post);
             update_field('date_multiple', $course->date_multiple, $id_post);
             update_field('onderwerpen', $course->onderwerpen, $id_post);
             update_field('course_id', $course->course_id, $id_post);
@@ -40,10 +41,11 @@ if($optie == "accept"){
         }
 
         //Insert YouTube
-        if (strval($course->type) == "Video"){
+        if (strval($course->type) == "Video" || strval($course->type) == "video" ){
+            echo "hello";
             $args = array(
                 'post_type' => 'course',
-                'post_author' => get_current_user_id(),
+                'post_author' => $course->author_id,
                 'post_status' => 'publish',
                 'post_title' => $course->titel
             );
@@ -72,7 +74,7 @@ if($optie == "accept"){
             update_field('long_description', $course->long_description, $id_post);
             update_field('url_image_xml', $course->image_xml, $id_post);
         }
-        
+
         $data = [ 'course_id' => $id_post]; // NULL value.
         $wpdb->update( $table, $data, $where );
     }
