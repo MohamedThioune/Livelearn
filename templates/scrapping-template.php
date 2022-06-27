@@ -11,7 +11,6 @@ $table = $wpdb->prefix . 'databank';
 if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
 {
   $html_code = file_get_contents('https://www.smartwp.nl/nieuws/');
-  print_r($html_code);
   $dom = new DomDocument();
   libxml_use_internal_errors(true);
   $datas = array();
@@ -66,8 +65,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
         'titel' => $article['title'],
         'type' => 'Artikel',
         'videos' => NULL, 
-        'short_description' => $article['short_description'],
-        'long_description' => $article['content'],
+        'short_description' => nl12br($article['short_description']),
+        'long_description' => nl12br($article['content']),
         'duration' => NULL, 
         'prijs' => 0, 
         'prijs_vat' => 0,

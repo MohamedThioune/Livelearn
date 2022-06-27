@@ -45,8 +45,6 @@ $table = $wpdb->prefix . 'databank';
 
   $playlists_id = get_field('youtube_playlists', 'user_'. $author_id);
 
-  $youtube_videos = '';
-
   if(!empty($playlists_id))
     foreach($playlists_id as $playlist_id){
       $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&id=" . $playlist_id . "&key=" . $api_key; 
@@ -71,6 +69,7 @@ $table = $wpdb->prefix . 'databank';
           $url_playlist = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" . $playlist['id'] . "&maxResults=" . $maxResults . "&key=" . $api_key;        
 
           $detail_playlist = json_decode(file_get_contents($url_playlist, true));
+          $youtube_videos = '';
           foreach($detail_playlist->items as $key => $video){
               $youtube_video = '';
               $youtube_video .=  $video->snippet->resourceId->videoId;
