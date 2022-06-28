@@ -19,6 +19,7 @@ $todos = get_posts($args);
 
 $url = home_url( $wp->request );
 
+$link = ($user) ? '/dashboard/user' : '/'; 
 ?>
 
 <!DOCTYPE html>
@@ -124,11 +125,11 @@ $url = home_url( $wp->request );
                     </div>
                 </div>
 
-                <a class="navbar-brand navBrand" href="/">
+                <a href="<?= $link; ?>" class="navbar-brand navBrand" >
                     <div class="logoModife logoWeb logoDashboard">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_white.png" alt="">
                     </div>
-                    <a href="/" class="logoMobile">
+                    <a href="<?= $link; ?>" class="logoMobile">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn_white.png" alt="LogoMobile" >
                     </a>
                 </a>

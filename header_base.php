@@ -159,7 +159,7 @@
                             <div class="blockdropdownnHeader">
                                 <ul>
                                     <li>
-                                        <a href="">
+                                        <a href="overview-organisations-1">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
                                             </div>
@@ -170,7 +170,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="">
+                                        <a href="overview-organisations-2">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-80.png" alt="">
                                             </div>
@@ -192,7 +192,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="">
+                                        <a href="pricing">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
                                             </div>
@@ -233,46 +233,46 @@
                         <div class="blockdropdownnHeader">
                             <ul>
                                 <li>
-                                    <a href="">
+                                    <a href="/overview-organisations-1">
                                         <div class="blockImg">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Verkopen.png" alt="">
                                         </div>
                                         <div>
-                                            <p class="titleSousElementHeader"><b>ZZP'ers</b></p>
-                                            <p class="subtitleSousElementHeader">Zonder personeel</p>
+                                            <p class="titleSousElementHeader"><b>Verkopen</b></p>
+                                            <p class="subtitleSousElementHeader">nieuwe kennisproducten</p>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/overview-organisations-2">
+                                        <div class="blockImg">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Creeër.png" alt="">
+                                        </div>  
+                                        <div>
+                                            <p class="titleSousElementHeader"><b>Creeër</b></p>
+                                            <p class="subtitleSousElementHeader">nieuwe kennisproducten</p>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="">
                                         <div class="blockImg">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-80.png" alt="">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Uitleggen.png" alt="">
                                         </div>
                                         <div>
-                                            <p class="titleSousElementHeader"><b>MKB</b></p>
-                                            <p class="subtitleSousElementHeader">1-250 medewerkers</p>
+                                            <p class="titleSousElementHeader"><b>Uitleggen</b></p>
+                                            <p class="subtitleSousElementHeader">Van producten of diensten</p>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
-                                        <div class="blockImg">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-81.png" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="titleSousElementHeader"><b>Grootbedrijf</b></p>
-                                            <p class="subtitleSousElementHeader">+250 medewerkers</p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
+                                    <a href="/pricing">
                                         <div class="blockImg">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
                                         </div>
                                         <div>
                                             <p class="titleSousElementHeader"><b>Pricing</b></p>
-                                            <p class="subtitleSousElementHeader">Transparant en eenvoudig</p>
+                                            <p class="subtitleSousElementHeader">No cure no pay</p>
                                         </div>
                                     </a>
                                 </li>
@@ -281,20 +281,20 @@
                                 <li>
                                     <a href="/opleiders">
                                         <div class="blockImg">
-<!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                           <img src="<?php echo get_stylesheet_directory_uri();?>/img/Opleiders.png" alt="">
                                         </div>
                                         <div>
-                                            <p class="subtitleSousElementHeader">Top opleiders</p>
+                                            <p class="subtitleSousElementHeader">Opleiders</p>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="/product-search">
                                         <div class="blockImg">
-<!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                           <img src="<?php echo get_stylesheet_directory_uri();?>/img/Experts.png" alt="">
                                         </div>
                                         <div>
-                                            <p class="subtitleSousElementHeader">Top Experts</p>
+                                            <p class="subtitleSousElementHeader">Experts</p>
                                         </div>
                                     </a>
                                 </li>
@@ -311,7 +311,7 @@
                                 <li>
                                     <a href="/product-search">
                                         <div class="blockImg">
-<!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Contact.png" alt="">
                                         </div>
                                         <div>
                                             <p class="subtitleSousElementHeader">Contact</p>

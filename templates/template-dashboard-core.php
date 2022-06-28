@@ -1,6 +1,10 @@
 <?php /** Template Name: dashboard core */ ?>
 <?php
 
+global $wpdb;
+
+$table = $wpdb->prefix . 'databank'; 
+
 if(is_user_logged_in()){
     acf_form_head();
 } 
@@ -432,13 +436,13 @@ else if(isset($road_course_add)){
     header("Location: ". $message);
 } 
 
-else if(isset($review_post)){
+else if(isset($review_post)){        
     $reviews = get_field('reviews', $course_id);
     $review = array();
     $review['user'] = get_user_by('ID',$user_id);
-    //$review['rating'] = $rating;
+    $review['rating'] = $rating;
     $review['feedback'] = $feedback_content;
-    if($review['user']){
+    if($review['user']){ 
         if(!$reviews)
             $reviews = array();
 
@@ -448,8 +452,8 @@ else if(isset($review_post)){
         $message = get_permalink($course_id) . '/?message=Your review added successfully'; 
     }
     else 
-        $message = get_permalink($course_id) . '/?message=User not find...';
-    //var_dump($review['rate']);
+        $message = get_permalink($course_id) . '/?message=User not find...';        
+
     header("Location: ". $message);
 }
 
@@ -494,6 +498,29 @@ else if(isset($referee_employee)){
 
     header("Location: ". $message);
 
+}
+
+else if(isset($databank)){
+    $onderwerpen = "";
+    $message = "";
+    if(!empty($tags))
+        foreach($tags as $tag)
+            $onderwerpen .= $tag .',';
+        
+    $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'long_description' => $long_description, 'prijs' => $prijs, 'onderwerpen' => $onderwerpen, 'author_id' => $author_id ]; // NULL value.
+    $where = [ 'id' => $id ]; // NULL value in WHERE clause.
+
+    $updated = $wpdb->update( $table, $data, $where );
+
+    if($updated === false){
+        $message = "/databank/?message=Something went wrong !"; 
+        return false; 
+    }else{ 
+        $message = "/databank/?message=Updated successfully !"; 
+        return true;
+    }
+    
+    header("Location: ". $message);
 }
 
 ?>
