@@ -11131,6 +11131,18 @@ ul#tabs-nav li.active {
         font-size: 20px;
         padding: 8px 10px;
     }
+    .contentListeCourseDataBank .headListeCourse {
+        align-items: center;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .inpustSearchDataBank {
+        width: 98%;
+        position: relative;
+    }
+    .textThBorder a .emoji{
+        margin-right: 8px !important;
+    }
 }
 
 
