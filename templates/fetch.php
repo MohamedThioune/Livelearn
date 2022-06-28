@@ -1,6 +1,10 @@
 <?php /** Template Name: Fetch ajax */ ?>
 
 <?php
+$page = dirname(__FILE__) . '/check_visibility.php';
+
+require($page); 
+
 extract($_POST);
 /**
  * Bunch of users 
@@ -28,6 +32,9 @@ $global_courses = get_posts($args);
 
 foreach($global_courses as $course)
 {  
+    if(!visibility($course, $visibility_company))
+        continue;
+
     $experts = get_field('experts', $course->ID);    
     if($course->post_author == $user_id || in_array($user_id, $experts) ){
         array_push($courses, $course);

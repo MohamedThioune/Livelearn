@@ -7385,7 +7385,7 @@ ul#tabs-nav li.active {
 }
 #voorOpleidersModal{
     width: fit-content;
-    min-width: 485px;
+    min-width: 585px;
     top: 63px;
 }
 #voorOpleidersModal .blockdropdownnHeader {
@@ -8200,7 +8200,7 @@ ul#tabs-nav li.active {
     padding: 35px 25px 32px;
     width: 100%;
     border-radius: 20px;
-    height: 100%;
+    height: 102%;
 }
 .blockCardFunctie .Card{
     background: white;
@@ -10924,7 +10924,9 @@ ul#tabs-nav li.active {
 
 
 }
-
+.radius-custom  {
+    border-radius: 10px !important;
+}
 @media all and (max-width: 640px) {
     #field_5_3 {
         padding-top: 100px;

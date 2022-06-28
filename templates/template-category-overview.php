@@ -1,4 +1,9 @@
 <?php /** Template Name: category overview */ ?>
+<?php 
+$page = dirname(__FILE__) . '/check_visibility.php';
+
+require($page); 
+?>
 <style>
      .checkmarkUpdated{
         background-color: white !important;
@@ -82,6 +87,9 @@
 
         foreach($global_courses as $course)
         {
+            if(!visibility($course, $visibility_company))
+                continue;
+    
             /*
             * Categories
             */ 
@@ -483,7 +491,10 @@
                         <div class="swiper-container swipeContaine4">
                             <div class="swiper-wrapper">
                             <?php
-                                foreach($opleidingen as $course){
+                            foreach($opleidingen as $course){
+                                if(!visibility($course, $visibility_company))
+                                    continue;
+                
                                 $day = ' ';
                                 $month = '';
                                 if($category == ' '){
@@ -493,7 +504,7 @@
                                     $category = (String)get_the_category_by_ID($category_str);
                                 else if($category_id != 0)
                                     $category = (String)get_the_category_by_ID($category_id);                                    
-                            }
+                                }
 
                                 $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
 
@@ -628,7 +639,10 @@
                     <div class="swiper-container swipeContaine4">
                         <div class="swiper-wrapper">
                             <?php
-                                foreach($workshops as $course){
+                            foreach($workshops as $course){
+                                if(!visibility($course, $visibility_company))
+                                    continue;
+                
                                 $day = '~';
                                 $month = '';
                                 /*
@@ -776,7 +790,10 @@
                     <div class="swiper-container swipeContaine4">
                         <div class="swiper-wrapper">
                             <?php
-                                foreach($masterclasses as $course){
+                            foreach($masterclasses as $course){
+                                if(!visibility($course, $visibility_company))
+                                    continue;
+                
                                 $day = ' ';
                                 $month = '';
                                 $hour = ' ';
@@ -929,7 +946,10 @@
                         <div class="swiper-wrapper">
 
                             <?php
-                                foreach($events as $course){
+                            foreach($events as $course){
+                                if(!visibility($course, $visibility_company))
+                                    continue;
+
                                 $day = ' ';
                                 $month = '';
                                 $hour = ' ';
@@ -1056,7 +1076,10 @@
                     <div class="swiper-container swipeContaine4">
                         <div class="swiper-wrapper">
                             <?php
-                                foreach($e_learnings as $course){
+                            foreach($e_learnings as $course){
+                                if(!visibility($course, $visibility_company))
+                                    continue;
+                    
                                 $day = '~';
                                 $month = '';
                                 if($category == ' '){
@@ -1200,7 +1223,9 @@
                     <div class="swiper-container swipeContaine4">
                         <div class="swiper-wrapper">
                             <?php
-                                foreach($trainings as $course){
+                            foreach($trainings as $course){
+                                if(!visibility($course, $visibility_company))
+                                    continue;
                                     
                                 /*
                                 * Categories
@@ -1359,7 +1384,10 @@
                     <div class="swiper-container swipeContaine4">
                         <div class="swiper-wrapper">
                             <?php
-                                foreach($videos as $course){
+                            foreach($videos as $course){
+                                if(!visibility($course, $visibility_company))
+                                    continue;
+                
                                     
                                 /*
                                 * Categories

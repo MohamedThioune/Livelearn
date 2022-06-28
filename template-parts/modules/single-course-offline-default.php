@@ -1,32 +1,4 @@
-<style>
-    a{
-        text-decoration: none !important;
-        color: black !important;
-    }
-    body{
-        padding-top: 0 !important;
-    }
-    .bi-x-lg::before {
-        top: -5px;
-        position: relative;
-    }
-    .bi-search {
-        font-size: 22px;
-        top: -5px;
-        position: relative;
-    }
-    #loginform input {
-        background: #E0EFF4 !important;
-    }
-    .select2-container--default .select2-selection--multiple {
-        width: 450px !important;
-    }
-    @media all and (max-width: 767px) {
-        .select2-container--default .select2-selection--multiple {
-            width: 250px !important;
-        }
-    }
-</style>
+
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
 <!-- ---------------------------------------- Start modals ---------------------------------------------- -->
@@ -52,7 +24,7 @@
                     <div>
                         <a href="#" class="mx-3 d-flex flex-column ">
                             <i style="font-size: 25px"
-                            class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
+                                class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
                             <!-- <span class="bd-highlight fw-bold text-primary mt-2">email</span> -->
                         </a>
                         <div class="mt-3 text-center">
@@ -71,7 +43,7 @@
                     <div>
                         <a href="#" class="mx-3 d-flex flex-column ">
                             <i class="bd-highlight bi bi-telephone-x border border-3 border-primary rounded-circle text-primary shadow"
-                            style="font-size: 20px; padding: 6px 11px;"></i>
+                                style="font-size: 20px; padding: 6px 11px;"></i>
                             <!-- <span class="bd-highlight fw-bold text-primary mt-2">call</span> -->
                         </a>
                         <div class="mt-3 text-center">
@@ -89,40 +61,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="incompany" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-course">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Incompany</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-            </div>
-            <div class="modal-body">
-
-                <?php
-                    echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true'] ");
-                ?>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="offerte" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-course">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Brochure</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-            </div>
-            <div class="modal-body">
-               <?php
-                    echo do_shortcode("[gravityform id='6' title='false' description='false' ajax='true'] ");
-                ?>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="modal fade" id="voor-wie" tabindex="-1" aria-labelledby="voor-wieModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-course">
         <div class="modal-content">
@@ -133,10 +71,10 @@
             <div class="modal-body">
                 <div class="">
                     <!-- <img alt="course design_undrawn"
-                     src="<?php echo get_stylesheet_directory_uri(); ?>/img/voorwie.png"> -->
+                    src="<?php echo get_stylesheet_directory_uri(); ?>/img/voorwie.png"> -->
 
                     <?php
-                        $author = get_user_by('id', $post->post_author);
+                    $author = get_user_by('id', $post->post_author);
                     ?>
                     <div class="content-text p-4 pb-0">
                         <h4 class="text-dark">Voor wie ?</h4>
@@ -150,8 +88,7 @@
 </div>
 <!-- ------------------------------------------ End modals ---------------------------------------------- -->
 
-
-<div class="liveOverBlock">
+<div class="">
     <div class="container-fluid">
         <div class="overElement">
             <div class="blockOneOver">
@@ -160,7 +97,6 @@
                     echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>";
                 ?>
 
-                <!-- ------------------------------ Start Title livelearn ---------------------------------- -->
                 <div class="titleBlock">
                     <?php
                         if(!empty($company)){
@@ -168,227 +104,40 @@
                             $company_title = $company[0]->post_title;
                             $company_logo = get_field('company_logo', $company_id);
                     ?>
-                    <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="roundBlack" >
-                        <img width="28" src="<?php echo $company_logo ?>" alt="company logo">
+
+                    <a href="/opleider-courses?companie=<?= $company_id; ?>" class="roundBlack" >
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/logoMobil.png" alt="company logo">
                     </a>
-                    <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="livelearnText2 text-uppercase"><?php echo $company_title; ?></a>
+                    <a href="/opleider-courses?companie=<?= $company_id; ?>" class="livelearnText2 text-uppercase"><?= $company_title; ?></a>
                     <?php
                         }
                     ?>
                     <a href="category-overview?category=<?php echo $id_category ?>" class="bd-highlight ">
-                            <button class="btn py-0 btnPhilo"> <span class="text-white"><?php echo $category; ?></span></button>
+                        <button class="btn py-0 btnPhilo"> <span class="text-white"><?php echo $category; ?></span></button>
                     </a>
                 </div>
-                <!-- ------------------------------ End Title livelearn ---------------------------------- -->
 
 
-                <p class="e-learningTitle"><?php echo $post->post_title;?></p>
+                <p class="e-learningTitle"><?= $post->post_title;?></p>
                 <!-- Image -->
                 <div class="img-fluid-course">
-                    <img src="<?=$image?>" alt="">
+                    <img src="<?= $image; ?>" alt="">
                 </div>
-
-
-                <p class="beschiBlockText">Beschikbaarheid en prijs</p>
-
-                <!-- -------------------------------------- Start Icons row ------------------------------------->
-                <div class="d-flex elementcourseIcone sousBlock mx-md-2 mx-sm-2 text-center">
-                    <div class="d-flex flex-row block1">
-                        <div class="d-flex flex-column mx-md-3 mx-2">
-                            <input type="hidden" id="user_id" value="<?php echo $user_id; ?>">
-                            <input type="hidden" id="course_id" value="<?php echo $post->ID; ?>">
-                            <!-- <img class="iconeCours" src="<?php echo get_stylesheet_directory_uri();?>/img/love.png" alt=""> -->
-                            <button id="btn_favorite" style="background:white; border:none">
-                                <img class="like1" src="<?php echo get_stylesheet_directory_uri();?>/img/like1.png" alt="">
-                                <img class="like2" src="<?php echo get_stylesheet_directory_uri();?>/img/like2.png" alt="">
-                            </button>
-                            <span class="textIconeLearning mt-1" id="autocomplete_favoured"><?php echo $favoured; ?></span>
-                        </div>
-                        <div class="d-flex flex-column mx-md-3 mx-2">
-                            <i class="fas fa-calendar-alt" style="font-size: 25px;"></i>
-                            <span class="textIconeLearning mt-1"><?= $number_course_day." dagdeel" ?></span>
-                        </div>
-                        <div class="d-flex flex-column mx-md-3 mx-2">
-                            <i class="fas fa-graduation-cap" style="font-size: 25px;"></i>
-                            <span class="textIconeLearning mt-1"><?php if($course_type) echo $course_type; else echo "Undefined"; ?></span>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-row block2">
-                        <div class="d-flex flex-column mx-md-3 mx-2">
-                            <form action="/dashboard/user/" method="POST">
-                                <input type="hidden" name="meta_value" value="<?php echo $post->ID; ?>" id="">
-                                <input type="hidden" name="user_id" value="<?php echo $user_id; ?>" id="">
-                                <input type="hidden" name="meta_key" value="course" id="">
-                                <?php
-                                if($user_id != $post->post_author && $user_id != 0)
-                                    echo "
-                                        <button type='submit' class='' name='interest_save' style='border:none; background:white'> 
-                                            <i class='fas fa-bell' style='font-size: 25px;'></i><br>
-                                            <span class='textIconeLearning mt-1'>Bewaar</span>
-                                        </button>
-                                        ";
-                                ?>
-                            </form>
-                            <?php
-                            if($user_id == 0)
-                                echo "
-                                <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='' style='border:none; background:white'> 
-                                    <i class='fas fa-bell' style='font-size: 25px;'></i><br>
-                                    <span class='textIconeLearning mt-1'>Bewaar</spanz>
-                                </button>
-                                ";
-                            ?>
-                        </div>
-                        <div class="d-flex flex-column mx-md-3 mx-2">
-                            <button class="btn iconeText open-modal" data-open="modal1">
-                                <i class="fa fa-share" style="font-size: 25px;"></i><br>
-                                <span class="textIconeLearning mt-1">Deel</span>
-                            </button>
-                        </div>
-                        <!-- début Modal deel -->
-                        <div class="modal" id="modal1" data-animation="fadeIn">
-                            <div class="modal-dialog modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
-                                <div class="modal-content">
-                                    <div class="tab">
-                                        <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
-                                        <hr class="hrModifeDeel">
-                                        <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
-                                    </div>
-                                    <div id="Extern" class="tabcontent">
-                                        <div class="contentElementPartage">
-                                            <button id="whatsapp"  class="btn contentIcone">
-                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/whatsapp.png" alt="">
-                                            </button>
-                                            <p class="titleIcone">WhatsApp</p>
-                                        </div>
-                                        <div class="contentElementPartage">
-                                            <button class="btn contentIcone">
-                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/facebook.png" alt="">
-                                            </button>
-                                            <p class="titleIcone">Facebook</p>
-                                        </div>
-                                        <div class="contentElementPartage">
-                                            <button class="btn contentIcone">
-                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/insta.png" alt="">
-                                            </button>
-                                            <p class="titleIcone">Instagram</p>
-                                        </div>
-                                        <div class="contentElementPartage">
-                                            <button id="linkedin" class="btn contentIcone">
-                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/linkedin.png" alt="">
-                                            </button>
-                                            <p class="titleIcone">Linkedin</p>
-                                        </div>
-                                        <div class="contentElementPartage">
-                                            <button id="sms" class="btn contentIcone">
-                                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/sms.png" alt="">
-                                            </button>
-                                            <p class="titleIcone">Sms</p>
-                                        </div>
-                                        <div>
-                                            <p class="klikText">Klik om link te kopieren</p>
-                                            <div class="input-group input-group-copy formCopyLink w-75">
-                                                <input id="test1" type="text" class="linkTextCopy form-control" value="<?php echo get_permalink($post->ID) ?>" readonly>
-                                                <span class="input-group-btn">
-                                                <button class="btn btn-default btnCopy">Copy</button>
-                                                </span>
-                                                <span class="linkCopied">link copied</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <?php
-                                       if ($user_id==0)
-                                       {
-                                        echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
-                                        wp_login_form([
-                                                'redirect' => $url,
-                                                'remember' => false,
-                                                'label_username' => 'Wat is je e-mailadres?',
-                                                'placeholder_email' => 'E-mailadress',
-                                                'label_password' => 'Wat is je wachtwoord?'
-                                        ]);
-                                        echo "</div>";
-                                       }else{
-                                        echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
-                                            echo "<form action='/dashboard/user/' method='POST'>";
-                                                echo "<label for='member_id'><b>Deel deze cursus met uw team :</b></label><br>";
-                                                echo "<select class='multipleSelect2' id='member_id' name='selected_members[]' multiple='true'>";
-                                                if(!empty($users_company))
-                                                    foreach($users_company as $user){
-                                                        $name = get_users(array('include'=> $user))[0]->data->display_name;
-                                                        if(in_array($user, $allocution))
-                                                            echo "<option selected  value='" . $user . "'>" . $name . "</option>";
-                                                        else
-                                                            echo "<option value='" . $user . "'>" . $name . "</option>";   
-                                                    }
-                                                echo "</select></br></br>";
-                                                echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
-                                                echo "<input type='hidden' name='path' value='course' />";
-                                                echo "<input type='submit' class='btn btn-info' name='referee_employee' value='Apply' >";
-                                            echo "</form>";
-                                        echo "</div>";
-                                       }
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- fin Modal deel -->
-                    </div>
-                </div>
-                <!-- -------------------------------------- End Icons row ------------------------------------->
-
 
                 <!--------------------------------------- start Text description -------------------------------------- -->
-                <div class="blockTextGlovale mt-3">
-                    <div class="text-limit">
-                        <?php echo $long_description; ?>
-
-                        <div class="moreText">
-                           <?php
-                                if($agenda){
-                                    ?>
-                                    <h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Agenda :</b></h6>
-                                    <span> <?php echo $agenda; ?> </span>
-                                    <?php
-                                }
-
-                                if($who){
-                                    ?>
-                                    <h6 class="textDirect mt-3" style="text-align: left"><b>For who :</b></h6>
-                                    </span> <?php echo $who; ?> </span>
-                                    <?php
-                                }
-
-                                if($results){
-                                    ?>
-                                    <h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Results :</b></h6>
-                                    <span > <?php echo $results; ?> </span>
-                                    <?php
-                                }
-                            ?>
-                        </div>
-                       <br>
-
-                   </div>
-                    <?php 
-                        if($long_description || $agenda || $who || $results ) 
-                            echo '<button type="button" class="btn btn-lg lees_alles my-4 w-md-25 px-4 border border-1 border-dark read-more-btn">Lees alles</button>';
-                        else 
-                            echo '<h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Leeg tot nu toe ...</b></h6>';
-                    ?>
-                </div>
-                <!--------------------------------------- end Text description -------------------------------------- -->
+                <p class="description-assessment-test"> <?= $long_description; ?></p>
 
                 <div class="customTabs">
                     <div class="tabs">
                         <ul id="tabs-nav">
                             <li><a href="#tab1">Events</a></li>
-                            <li><a href="#tab2">Reviews</a></li>
-                            <li><a href="#tab3">Add Reviews</a></li>
+                            <li><a href="#tab2">Skills</a></li>
+                            <li><a href="#tab3">Reviews</a></li>
+                            <li><a href="#tab4">Add Reviews</a></li>
                         </ul> <!-- END tabs-nav -->
                         <div id="tabs-content">
                             <div id="tab1" class="tab-content">
-                                <?php
+                            <?php
                                 $data = get_field('data_locaties', $post->ID);
                                 if(!$data){
                                     $data = get_field('data_locaties_xml', $post->ID);
@@ -503,7 +252,6 @@
                                                 </div>
 
                                                 <!-------------------------------------------- End cards on bottom --------------------------- -->
-
 
                                                 <?php
                                             }
@@ -620,9 +368,37 @@
                                         }
                                     }
                                 }
-                                ?>
+                            ?>
                             </div>
+
                             <div id="tab2" class="tab-content">
+                                <h2>Skills</h2>
+                                <?php
+                                    $category_default = get_field('categories', $post->ID)[0];
+                                    $category_xml = get_field('category_xml', $post->ID);
+                                
+                                ?>
+                                <div class="blockSkillsTabs">
+                                    <?php
+                                        $read_category = array();
+                                        if(!empty($category_id))
+                                            foreach($category_default as $item)
+                                                if(!in_array($item,$read_category)){
+                                                    array_push($read_category,$item);
+                                                    echo '<p class="skillsElement">'. (String)get_the_category_by_ID($item) . '</p>';
+                                                }
+
+                                        else if(!empty($category_xml))
+                                            foreach($category_xml as $item)
+                                                if(!in_array($item,$read_category)){
+                                                    array_push($read_category,$item);
+                                                    echo '<p class="skillsElement">'. (String)get_the_category_by_ID($item) . '</p>';
+                                                }
+                                    ?>
+                                </div>
+                            </div>
+
+                            <div id="tab3" class="tab-content">
                                 <?php
                                 if(!empty($reviews)){
                                     foreach($reviews as $review){
@@ -662,7 +438,7 @@
                                     echo "<h6>No reviews for this course ...</h6>";
                                 ?>
                             </div>
-                            <div id="tab3" class="tab-content">
+                            <div id="tab4" class="tab-content">
                                 <?php 
                                 if($user_id != 0){
                                 ?>
@@ -701,13 +477,14 @@
                         </div> <!-- END tabs-content -->
                     </div> <!-- END tabs -->
                 </div>
+                <!--------------------------------------- end Text description -------------------------------------- -->
             </div>
 
             <!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
 
             <!-- Modal Sign End -->
             <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-                style="position: absolute; ">
+                    style="position: absolute; ">
                 <div class="modal-dialog modal-dialog-course" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -718,7 +495,7 @@
                         </div>
                         <div class="modal-body  px-md-5 p-3">
                             <?php
-                                echo (do_shortcode('[user_registration_form id="59"]'));
+                            echo (do_shortcode('[user_registration_form id="59"]'));
                             ?>
 
                             <div class="text-center">
@@ -733,7 +510,7 @@
 
             <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
             <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-                style="position: absolute; ">
+                    style="position: absolute; ">
                 <div class="modal-dialog modal-dialog-course" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -754,7 +531,7 @@
                             ?>
                             <div class="text-center">
                                 <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                    data-toggle="modal" data-target="#SignInWithEmail">Sign in</a></p>
+                                                        data-toggle="modal" data-target="#SignInWithEmail">Sign in</a></p>
                             </div>
                         </div>
                     </div>
@@ -762,20 +539,12 @@
             </div>
             <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
 
-        <!-- ----------------------------------- Right side: small dashboard ------------------------------------- -->
+            <!-- ----------------------------------- Right side: small dashboard ------------------------------------- -->
             <div class="blockTwoOver">
                 <div class="btnGrou10">
                     <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#direct-contact">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
                         Direct contact
-                    </a>
-                    <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#incompany">
-                        <i class="fas fa-house-damage px-2" style="font-size: 20px"></i>
-                        Incompany
-                    </a>
-                    <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#offerte">
-                        <i class="fab fa-buffer px-2" style="font-size: 20px"></i>
-                        Brochure
                     </a>
                     <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#voor-wie">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/question.png" alt="">
@@ -785,19 +554,19 @@
 
                 <div class="CardpriceLive">
                     <?php
-                        if(!empty($company))
-                        {
-                            $company_id = $company[0]->ID;
-                            $company_title = $company[0]->post_title;
-                            $company_logo = get_field('company_logo', $company_id);
-                    ?>
+                    if(!empty($company))
+                    {
+                        $company_id = $company[0]->ID;
+                        $company_title = $company[0]->post_title;
+                        $company_logo = get_field('company_logo', $company_id);
+                        ?>
                         <div href="/opleider-courses?companie=<?php echo $company_id ; ?>"  class="imgCardPrice">
-                        <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" ><img src="<?php echo $company_logo; ?>" alt="company logo"></a>
+                            <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" ><img src="<?php echo $company_logo; ?>" alt="company logo"></a>
                         </div>
                         <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="liveTextCadPrice h5"><?php echo $company_title; ?></a>
 
-                    <?php
-                        }
+                        <?php
+                    }
                     ?>
                     <form action="/dashboard/user/" method="POST">
                         <input type="hidden" name="meta_value" value="<?php echo $post->post_author ?>" id="">
@@ -814,144 +583,94 @@
                     ?>
 
                     <?php
-                        $data = get_field('data_locaties', $post->ID);
-                        if($data)
-                            $location = $data[0]['data'][0]['location'];
-                        else{
-                            $data = explode('-', get_field('field_619f82d58ab9d', $post->ID)[0]['value']);
-                            $location = $data[2];
-                        }
+                    $data = get_field('data_locaties', $post->ID);
+                    if($data)
+                        $location = $data[0]['data'][0]['location'];
+                    else{
+                        $data = explode('-', get_field('field_619f82d58ab9d', $post->ID)[0]['value']);
+                        $location = $data[2];
+                    }
                     ?>
 
                     <p class="PrisText">Locaties</p>
                     <p class="opeleidingText"><?php echo $location; ?></p>
 
                     <p class="PrisText">Prijs vanaf</p>
-                    <p class="opeleidingText"><?= $course_type?>: € <?php echo $price ?></p>
+                    <p class="opeleidingText">Opleiding: € <?php echo $price ?></p>
                     <p class="btwText">BTW: € <?php echo $prijsvat ?></p>
+                    <p class="btwText">LIFT member korting: 28%</p>
 
 
                     <button href="#bookdates" class="btn btnKoop text-white PrisText" style="background: #043356">Koop deze <?php echo $course_type; ?></button>
                 </div>
 
-                <div class="col-12 my-5" style="background-color: #E0EFF4">
-                    <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around
-                    justify-content-center">
-
-                        <!-- --------------------------------------- Swiper ------------------------------------ -->
-                        <!-- Slider main container -->
-                        <div class="swiper">
-                            <div class="swiper-wrapper">
-                                <?php
-                                    foreach($experts as $expert){
-                                        $expert = get_users(array('include'=> $expert))[0]->data;
-                                        $company = get_field('company',  'user_' . $expert->ID);
-                                        $title = $company[0]->post_title;
-                                        $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                    ?>
-                                    <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
-                                        <div class="my-2 d-flex flex-column mx-md-0 mx-1">
-                                            <div class="imgCardPrice" style="height: 50px; width:50px">
-                                                <img src="<?php echo $image; ?>" alt="teacher photo">
-                                            </div>
-                                            <span class="textIconeLearning"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span>
-                                            <span><?php echo $title; ?></span>
-                                        </div>
-                                    </a>
-                                 <?php } ?>
-
-                                </div>
-
-                            </div>
-
-                            <!-- If we need pagination -->
-                            <!-- <div class="swiper-pagination"></div> -->
-
-                            <!-- If we need navigation buttons -->
-                            <div class="swiper-button-prev swiper-moved" style="font-size: 8px !important">
-                            </div>
-                            <div class="test">
-                                <div class="swiper-button-next swiper-moved"></div>
-                            </div>
-
-                            <!-- If we need scrollbar -->
-                            <!-- <div class="swiper-scrollbar"></div> -->
-                        </div>
-
-                    </div>
             </div>
 
         </div>
 
 
-
-
-
-    </div>
-
-
-        <!-- début Modal deel -->
-        <div class="modal" id="modal1" data-animation="fadeIn">
+    <!-- début Modal deel -->
+    <div class="modal" id="modal1" data-animation="fadeIn">
         <div class="modal-dialog modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
             <div class="modal-content">
                 <div class="tab">
                     <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                     <hr class="hrModifeDeel">
                     <?php
-                    if ($user_id != 0)
+                    if ($user_id==0)
                     {
-                    ?>
+                        ?>
                         <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
-                    <?php
+                        <?php
                     }
                     ?>
                 </div>
                 <div id="Extern" class="tabcontent">
-                <div class="contentElementPartage">
-                    <button id="whatsapp"  class="btn contentIcone">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/whatsapp.png" alt="">
-                    </button>
-                    <p class="titleIcone">WhatsAppp</p>
-                </div>
-                <div class="contentElementPartage">
-                    <button class="btn contentIcone">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/facebook.png" alt="">
-                    </button>
-                    <p class="titleIcone">Facebook</p>
-                </div>
-                <div class="contentElementPartage">
-                    <button class="btn contentIcone">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/insta.png" alt="">
-                    </button>
-                    <p class="titleIcone">Instagram</p>
-                </div>
-                <div class="contentElementPartage">
-                    <button id="linkedin" class="btn contentIcone">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/linkedin.png" alt="">
-                    </button>
-                    <p class="titleIcone">Linkedin</p>
-                </div>
-                <div class="contentElementPartage">
-                    <button id="sms" class="btn contentIcone">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/sms.png" alt="">
-                    </button>
-                    <p class="titleIcone">Sms</p>
-                </div>
+                    <div class="contentElementPartage">
+                        <button id="whatsapp"  class="btn contentIcone">
+                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/whatsapp.png" alt="">
+                        </button>
+                        <p class="titleIcone">WhatsAppp</p>
+                    </div>
+                    <div class="contentElementPartage">
+                        <button class="btn contentIcone">
+                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/facebook.png" alt="">
+                        </button>
+                        <p class="titleIcone">Facebook</p>
+                    </div>
+                    <div class="contentElementPartage">
+                        <button class="btn contentIcone">
+                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/insta.png" alt="">
+                        </button>
+                        <p class="titleIcone">Instagram</p>
+                    </div>
+                    <div class="contentElementPartage">
+                        <button id="linkedin" class="btn contentIcone">
+                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/linkedin.png" alt="">
+                        </button>
+                        <p class="titleIcone">Linkedin</p>
+                    </div>
+                    <div class="contentElementPartage">
+                        <button id="sms" class="btn contentIcone">
+                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/sms.png" alt="">
+                        </button>
+                        <p class="titleIcone">Sms</p>
+                    </div>
                     <div>
                         <p class="klikText">Klik om link te kopieren</p>
                         <div class="input-group input-group-copy formCopyLink">
                             <input id="test1" type="text" class="linkTextCopy form-control" value="https://g.co/kgs/K1k9oA" readonly>
                             <span class="input-group-btn">
-                            <button class="btn btn-default btnCopy">Copy</button>
-                            </span>
+                        <button class="btn btn-default btnCopy">Copy</button>
+                        </span>
                             <span class="linkCopied">link copied</span>
                         </div>
                     </div>
                 </div>
                 <?php
-                    if ($user_id==0)
-                    {
-                ?>
+                if ($user_id==0)
+                {
+                    ?>
                     <div id="Intern" class="tabcontent">
                         <form action="" class="formShare">
                             <input type="text" placeholder="Gebruikersnaam">
@@ -959,8 +678,8 @@
                             <button class="btn btnLoginModife">Log-in</button>
                         </form>
                     </div>
-                <?php
-                    }
+                    <?php
+                }
                 ?>
             </div>
         </div>
@@ -970,23 +689,9 @@
 
 </div>
 
-
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-<script id="rendered-js" >
-    $(document).ready(function () {
-        //Select2
-        $(".multipleSelect2").select2({
-            placeholder: "Select subtopics",
-             //placeholder
-        });
-    });
-    //# sourceURL=pen.js
-</script>    
-
-
 <script>
     $("#btn_favorite").click((e)=>
     {
@@ -1010,6 +715,40 @@
         });
     })
 </script>
+
+<script>
+    // Rating
+    const list = document.querySelector('.list')
+    const lis = list.children;
+
+    for (var i = 0; i < lis.length; i++) {
+        lis[i].id = i;
+        lis[i].addEventListener('mouseenter', handleEnter);
+        lis[i].addEventListener('mouseleave', handleLeave);
+        lis[i].addEventListener('click', handleClick);
+    }
+
+    function handleEnter(e) {
+        e.target.classList.add('hover');
+        for (var i = 0; i <= e.target.id; i++) {
+            lis[i].classList.add('hover');
+        }
+    }
+
+    function handleLeave(e) {
+        [...lis].forEach(item => {
+            item.classList.remove('hover');
+        });
+    }
+
+    function handleClick(e){
+        [...lis].forEach((item,i) => {
+            item.classList.remove('selected');
+            if(i <= e.target.id){
+                item.classList.add('selected');
+            }
+        });
+    }
 
 </script>
 
@@ -1094,7 +833,7 @@
     const text = document.querySelector('.text-limit');
 
     readMoreBtn.addEventListener('click', (e) => {
-    //    alert('test');
+        //    alert('test');
         text.classList.toggle('show-more'); // add show more class
         if(readMoreBtn.innerText === 'Lees alles') {
             readMoreBtn.innerText = "Lees minder";
@@ -1130,7 +869,3 @@
     }
 
 </script>
-
-
-<?php get_footer(); ?>
-<?php wp_footer(); ?>

@@ -39,7 +39,7 @@
                         </a>
                     </li>
                     <li class="elementTextDashboard">
-                        <a href="#" class="d-flex">
+                        <a href="/dashboard/company/leerbudgetten/" class="d-flex">
                             <div class="elementImgSidebar" >
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Financien.png" >
                             </div>

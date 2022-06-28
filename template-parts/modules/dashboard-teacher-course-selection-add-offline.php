@@ -13,7 +13,7 @@
                         'post_id'       => $_GET['id'],
                         'post_title'   => true,
                         'post_excerpt'   => true,
-                        'fields' => array('field_610f19a34af16','field_610f0d9b21fb8', 'short_description'),
+                        'fields' => array('field_610f19a34af16','field_610f0d9b21fb8', 'short_description', 'visibility'),
                         'submit_value'  => __('Opslaan & verder'),
                         'return' => '?func=add-offline&id='.$_GET['id'].'&step=2'
                     ));
@@ -27,7 +27,7 @@
                         ),
                         'post_title'   => true,
                         'post_excerpt'   => true,
-                        'fields' => array('field_610f19a34af16','field_610f0d9b21fb8', 'short_description'),
+                        'fields' => array('field_610f19a34af16','field_610f0d9b21fb8', 'short_description', 'visibility'),
                         'submit_value'  => __('Opslaan & verder'),
                         'return' => '?func=add-offline&id=%post_id%&step=2&type='.$_GET['type']
                     )); 
