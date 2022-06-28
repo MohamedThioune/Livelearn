@@ -11114,6 +11114,23 @@ ul#tabs-nav li.active {
         object-fit: cover;
         width: 100%;
     }
+    .groupInputDate {
+        flex-wrap: wrap;
+    }
+    .groupInputDate .input-group {
+        width: 100%;
+    }
+    .contentDetailCourseDataBank {
+        padding: 20px 15px 40px;
+    }
+    .formHeaderUser {
+        display: none;
+    }
+    .contentDetailCourseDataBank h2 {
+        margin-bottom: 28px;
+        font-size: 20px;
+        padding: 8px 10px;
+    }
 }
 
 
