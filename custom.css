@@ -601,6 +601,10 @@ ul.sub-menu li a {
 
 .contentCardProd {
     padding: 20px 15px;
+    max-height: 290px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 20px;
 }
 
 .group8 {
