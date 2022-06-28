@@ -106,7 +106,7 @@
                     ?>
 
                     <a href="/opleider-courses?companie=<?= $company_id; ?>" class="roundBlack" >
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/logoMobil.png" alt="company logo">
+                        <img src="<?= $company_logo; ?>" alt="company logo">
                     </a>
                     <a href="/opleider-courses?companie=<?= $company_id; ?>" class="livelearnText2 text-uppercase"><?= $company_title; ?></a>
                     <?php
