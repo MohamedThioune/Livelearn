@@ -41,7 +41,7 @@
                     <li class="elementTextDashboard">
                         <a href="#" class="d-flex">
                             <div class="elementImgSidebar" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Berichten.png" >
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Financien.png" >
                             </div>
                             <span>Leerbudgetten</span>
                         </a>
@@ -49,7 +49,7 @@
                     <li class="elementTextDashboard">
                         <a href="#" class="d-flex">
                            <div class="elementImgSidebar" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Financien.png" >
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Berichten.png" >
                             </div>
                             <span>Berichten</span>
                         </a>
@@ -81,7 +81,7 @@
                     <li class="elementTextDashboard">
                         <a href="#" class="d-flex">
                            <div class="elementImgSidebar imgSide2" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Instroom.png" >
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Doorstroom.png" >
                             </div>
                             <span>Instroom</span>
                         </a>
@@ -89,7 +89,7 @@
                     <li class="elementTextDashboard">
                         <a href="#" class="d-flex">
                             <div class="elementImgSidebar imgSide2" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Doorstroom.png" >
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Instroom.png" >
                             </div>
                             <span>Doorstroom</span>
                         </a>
