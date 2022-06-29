@@ -506,21 +506,31 @@ else if(isset($databank)){
     if(!empty($tags))
         foreach($tags as $tag)
             $onderwerpen .= $tag .',';
-        
-    $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'long_description' => $long_description, 'prijs' => $prijs, 'onderwerpen' => $onderwerpen, 'author_id' => $author_id ]; // NULL value.
+    
+    if(isset($complete)) 
+        $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'long_description' => $long_description, 'for_who' => $for_who, 'agenda' => $agenda, 'results' => $results, 'prijs' => $prijs, 'prijs_vat' => $prijs_vat, 'onderwerpen' => $onderwerpen, 'level' => $level, 'language' => $language, 'author_id' => $author_id, 'company_id' => $company_id ]; // NULL value.
+    else 
+        $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'prijs' => $prijs, 'onderwerpen' => $onderwerpen, 'author_id' => $author_id, 'company_id' => $company_id ]; // NULL value.
     $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 
     $updated = $wpdb->update( $table, $data, $where );
 
     if($updated === false){
-        $message = "/databank/?message=Something went wrong !"; 
+        if(isset($complete))
+            $message = "/edit-databank?id=" . $id . "&message=Something went wrong !"; 
+        else 
+            $message = "/databank/?message=Something went wrong !"; 
+        header("Location: ". $message);
         return false; 
     }else{ 
-        $message = "/databank/?message=Updated successfully !"; 
+        if(isset($complete))
+            $message = "/edit-databank?id=" . $id . "&message=Updated successfully !"; 
+        else 
+            $message = "/databank/?message=Updated successfully !"; 
+        header("Location: ". $message);
         return true;
     }
     
-    header("Location: ". $message);
 }
 
 ?>
@@ -568,7 +578,6 @@ foreach($cats as $category){
     $category = intval($cat_id);
     array_push($categories, $category);
 }
-
 
 ?>
 
