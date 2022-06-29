@@ -13,11 +13,11 @@ require($page);
 
 <?php
     $args = array(
-                'post_type' => 'course',
-                'post_status' => 'publish',
-                'posts_per_page' => -1,
-                'order' => 'DESC',
-                );
+        'post_type' => array('course', 'post'), 
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+        );
 
     $courses = get_posts($args);
 
@@ -180,27 +180,25 @@ require($page);
       
     }
       
-    if (isset($_POST["subtopics_first_login"]))
-        {
-            unset($_POST["subtopics_first_login"]);
-            $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
-            foreach ($_POST as $key => $subtopics) { 
-                if (isset($_POST[$key]))
+    if (isset($_POST["subtopics_first_login"])){
+        unset($_POST["subtopics_first_login"]);
+        $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
+        foreach ($_POST as $key => $subtopics) { 
+            if (isset($_POST[$key]))
+            {
+                if (!(in_array($_POST[$key], $subtopics_already_selected)))
                 {
-                    if (!(in_array($_POST[$key], $subtopics_already_selected)))
-                    {
-                        add_user_meta(get_current_user_id(),'topic',$_POST[$key]);  
-                    }
-                    
+                    add_user_meta(get_current_user_id(),'topic',$_POST[$key]);  
                 }
+                
             }
-            update_field('is_first_login', true, 'user_'.get_current_user_id());
-            
         }
+        update_field('is_first_login', true, 'user_'.get_current_user_id());
+    }
     
     $is_first_login = (get_field('is_first_login','user_' . get_current_user_id()));
     if (!$is_first_login && get_current_user_id() !=0 )
-        {
+    {
         
     ?>    
     <!-- Modal First Connection --> 
@@ -911,13 +909,17 @@ require($page);
                         /*
                         * Thumbnails
                         */
-                        $thumbnail = get_field('preview', $course->ID)['url'];
-                        if(!$thumbnail){
-                            $thumbnail = get_field('url_image_xml', $course->ID);
-                            if(!$thumbnail)
-                                $thumbnail = get_stylesheet_directory_uri() . '/img/placeholder.png';
-                        }
+                        //Image
+                        $thumbnail = get_the_post_thumbnail_url($course->ID);
+                        if(!$thumbnail)
+                            $thumbnail = get_field('preview', $course->ID)['url'];
 
+                        if(!$thumbnail)
+                            $thumbnail = get_field('url_image_xml', $course->ID);
+
+                        if(!$thumbnail)
+                            $thumbnail = get_stylesheet_directory_uri() . '/img/placeholder.png';
+                        
                         /*
                             * Companies
                         */
