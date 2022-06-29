@@ -233,7 +233,7 @@
                         <div class="blockdropdownnHeader">
                             <ul>
                                 <li>
-                                    <a href="/overview-organisations-1">
+                                    <a href="/verkopen">
                                         <div class="blockImg">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Verkopen.png" alt="">
                                         </div>
@@ -244,7 +244,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/overview-organisations-2">
+                                    <a href="/creeen">
                                         <div class="blockImg">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Creeër.png" alt="">
                                         </div>  
@@ -255,7 +255,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="/uitleggen">
                                         <div class="blockImg">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Uitleggen.png" alt="">
                                         </div>

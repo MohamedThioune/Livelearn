@@ -1,4 +1,4 @@
-<?php /** Template Name: overview-organisaties */ ?>
+<?php /** Template Name: overview-organisaties-5 */ ?>
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
@@ -78,7 +78,7 @@
 
     <div class="contentOverviewOrganisatie pt-5">
        <div class="headOverviewOrganisatie">
-           <h1>Een Lerende organisatie voor klein én groot</h1>
+           <h1>Deel jouw kennis in een paar klikken</h1>
            <p class="description">Wij hanteren geen opstartkosten, dus iedereen kan meteen van start </p>
            <a href="" class="btn btnbtnCreeerJe" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">Creeer je omgeving gratis</a>
        </div>
@@ -86,36 +86,51 @@
             <div class="col-md-4">
                 <div class="card cardOverviewOrganisatie">
                     <div class="imgcardOverviewOrganisatie">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/ZZPersStratup.png" alt="">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-109.png" alt="">
                     </div>
                     <div class="bodyCardOverviewOrganisatie">
-                        <h3 class="titleCardVoorOrganisatie">ZZP'ers en Startups</h3>
-                        <p class="descriptionCardVoorOrganisatie">Een goede organisatie start bij jezelf. Daarom zorgen wij dat ZZP'ers en startende organisaties eenvoudig een eigen ontwikkelomgeving kunnen creëren.  Alle ontwikkelingen in jouw markt direct op één plaats.</p>
-                        <a href="/overview-organisations-1" class="btn btnCardOverviewOrganisatie mx-4 d-flex justify-content-center">Meer voor ZZP'ers</a>
+                        <h3 class="titleCardVoorOrganisatie">Verkopen</h3>
+                        <p class="descriptionCardVoorOrganisatie">
+                            Jouw kennisproducten ook direct verkopen via Livelearn? Dat kan eenvoudig, Of dit nu een
+                            opleiding, workshop, podcast of artikel is, wij bieden het format en de tools om dit aan te
+                            bieden. Je betaalt alleen wanneer er ook daadwerkelijk iets gekocht is en je krigt
+                            inzichten in financiën.
+                        </p>
+                        <a href="/verkopen" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">Meer over &nbsp;<strong>verkopen</strong></a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card cardOverviewOrganisatie">
                     <div class="imgcardOverviewOrganisatie">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Midden.png" alt="">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/photo_5897718936634506184_y.jpeg" alt="">
                     </div>
                     <div class="bodyCardOverviewOrganisatie">
-                        <h3 class="titleCardVoorOrganisatie">Midden en Klein bedrijf</h3>
-                        <p class="descriptionCardVoorOrganisatie">Wel personeel, maar nog geen speciale afdeling voor talent management en leren & ontwikkelen. Tot een organisatie van 250 man nemen wij alle taken over, van borging van skills tot het aanbieden van een gestroomlijnde onboarding.</p>
-                        <a href="/overview-organisations-2" class="btn btnCardOverviewOrganisatie mx-4 d-flex justify-content-center">Meer voor MKB</a>
+                        <h3 class="titleCardVoorOrganisatie">Creêren</h3>
+                        <p class="descriptionCardVoorOrganisatie">
+                            Kennisproducten maken vanuit onze auteurstool? Vanuit het teacher dashboard
+                            creëer je in een paar klikken jouw kennisproduct en deelt deze gemakkelik met de
+                            rest van de wereld. Dit kan zowel betaalde, als gratis content zijn.
+                        </p>
+                        <a href="/creeen" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">
+                            Meer over &nbsp;<strong class="">creêren</strong>
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card cardOverviewOrganisatie">
                     <div class="imgcardOverviewOrganisatie">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Grootbedrijf.png" alt="">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/photo_5897718936634506185_y.jpeg" alt="">
                     </div>
                     <div class="bodyCardOverviewOrganisatie">
-                        <h3 class="titleCardVoorOrganisatie">Grootbedrijf</h3>
-                        <p class="descriptionCardVoorOrganisatie">Een corporate organisatie, wellicht met meerdere locaties over de wereld. Borg je kennis in één dashboard, houd bij waar de ontwikkelkansen liggen met HR-analytics en geef managers de handvatten om hun teams optimaal te laten presteren</p>
-                        <a href="/overview-organisations-2" class="btn btnCardOverviewOrganisatie mx-4 d-flex justify-content-center">Meer voor Corporates</a>
+                        <h3 class="titleCardVoorOrganisatie">Uitleggen</h3>
+                        <p class="descriptionCardVoorOrganisatie">
+                            Bied ji producten of services waarbij uitleg van toegevoegde waarde is? Dan werken wij graag
+                            met je samen om te zorgen dat jouw {potentiële) klanten altid op de hoogte zijn van
+                            jouw ontwikkelingen.Wij bieden workshops, productvideo's of audio begeleiding.    
+                        </p>
+                        <a href="/uitleggen" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">Meer over&nbsp;<strong>uitleggen</strong> </a>
                     </div>
                 </div>
             </div>

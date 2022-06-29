@@ -149,7 +149,7 @@ foreach($global_blogs as $blog)
     <!-- Modal Sign End -->
     <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
          style="position: absolute; ">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog" role="document"  style="width: 96% !important;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2>Sign Up</h2>
@@ -177,7 +177,7 @@ foreach($global_blogs as $blog)
 
     <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
          style="position: absolute; ">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog" role="document" style="width: 96% !important;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2>Sign In</h2>
@@ -227,12 +227,12 @@ foreach($global_blogs as $blog)
                                     Join community
                                 </a>
                             </div>
-                            <div class="p-2 my-3">
+                            <!-- <div class="p-2 my-3">
                                 <a href="" class="btnContact rounded-pill rounded border-dark border-3 border ">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
                                     HR Discord
                                 </a>
-                            </div>
+                            </div> -->
                         </div>
                         
                         <p class="title-een">Een initiatief van:</p>
