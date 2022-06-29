@@ -7,7 +7,7 @@
 </div>
 
 <div class="content-lift">
-    <div class="container">
+    <div class="container my-5">
         <div class="head-content-lift">
             <h1 class="title-text-lift">Word LiveLearn LIFT lid</h1>
             <h2 class="description-text-lift">De aller beste beloning voor jezelf OF werknemers om te blijven ontwikkelen of dit nu zakelijk of privé is..</h2>
@@ -17,14 +17,14 @@
         </div>
         <div class="blockSponsortLift">
             <p class="daaromText">Daarom maken meer dan 250 organisaties, experts en opleiders gebruik van LiveLearn</p>
-            <div class="sponsortBlock">
-                <img src="img/sponsortOne.png" class="sponsortImg" alt="">
-                <img src="img/sponsortTwo.png" class="sponsortImg" alt="">
-            </div>
-        </div>
+            <!-- <div class="sponsortBlock">
+                <img src="<?php echo get_stylesheet_directory_uri();?>/img/sponsortOne.png" class="sponsortImg" alt="">
+                <img src="<?php echo get_stylesheet_directory_uri();?>/img/sponsortTwo.png" class="sponsortImg" alt="">
+            </div> -->
+        </div>  
         <div class="blockCardLift">
-            <div class="row paddingElement7">
-                <div class="col-lg-4  col-md-6">
+            <div class="row">
+                <div class="col-lg-4  col-5">
                     <div class="card-lift">
                         <div class="head-card-lift">
                             <img src="img/Groupe-23.png" alt="">
@@ -47,7 +47,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-lg-4  col-md-6">
+                <div class="col-lg-4  col-5">
                     <div class="card-lift">
                         <div class="head-card-lift">
                             <img src="img/Groupe-122.png" alt="">
@@ -70,7 +70,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-lg-4  col-md-6">
+                <div class="col-lg-4  col-6">
                     <div class="card-lift">
                         <div class="head-card-lift">
                             <img src="img/Groupe-121.png" alt="">

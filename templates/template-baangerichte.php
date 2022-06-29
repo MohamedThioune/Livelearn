@@ -54,13 +54,12 @@
             </div>
         <?php } ?>       
     </div>
-
 </div>
 
 
 <?php foreach($values as $value) { ?> 
-    <div class="container-fluid">
-        <div class="d-flex align-center align-item-center">
+    <div class="container-fluid mb-4">
+        <div class="d-flex align-center align-item-center mx-3">
             <p class="titleTopBanen"><?php echo $value->cat_name ?></p>
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/img//IconShowMore.png" class="IconShowMore" alt="">
             <a href="../sub-topic?subtopic=<?php echo $value->cat_ID ?>" class="linkBlock">Bekijk alles</a>
@@ -74,7 +73,7 @@
             
         ?>
 
-        <div class="swiper-container swipeContaine2">
+        <div class="swiper-container swipeContaine2 mx-3">
             <div class="swiper-wrapper">
                 <?php
                     $image_principal = get_field('image', 'category_'. $value->cat_ID);
@@ -117,7 +116,7 @@
         
     </div>
 <?php } ?>
-
+                    
 
 
 <?php get_footer(); ?>
@@ -132,7 +131,7 @@
     
     // partners slides
     $('.logo_slide').slick({
-        centerMode: true,
+        centerMode: false,
         centerPadding: '130px',
         dots: false,
         slidesToShow: 5,
@@ -159,7 +158,7 @@
             }
         ]
     });
-
+    
 
     // cards swiper
     $('.small_cards').slick({
@@ -204,14 +203,15 @@
 
 
 
-    var swiper = new Swiper('.swiper-container', {
-        slidesPerView: 'auto',
-        spaceBetween: 30,
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-    });
+    // var swiper = new Swiper('.swiper-container', {
+        // slidesPerView: 'auto',
+    //     spaceBetween: 30,
+    //     loopFillGroupWithBlank: false,
+    //     pagination: {
+    //         el: '.swiper-pagination',
+    //         clickable: true,
+    //     },
+    // });
 </script>
 <script>
     // var swiper = new Swiper('.swipeContaine2', {
