@@ -1,5 +1,5 @@
 
-<div class="contentPassport">
+<div class="contentPassport profilUserP">
     <div class="headPassport">
         <div class="blockImageCandidat">
             <img src="<?php echo $image; ?>" alt="">

@@ -1356,8 +1356,14 @@ ul.sub-menu li a {
     width: 100%;
     position: sticky;
     padding: 21px 5px 15px 20px;
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 90vh;
+}
+.profilUserP .otherSkills {
+    background: rgba(230, 235, 242, 0.5);
+    border-radius: 8px;
+    padding: 25px 20px;
+    margin-bottom: 30px;
 }
 
 .sidBarDashboardManager{
@@ -1365,7 +1371,7 @@ ul.sub-menu li a {
     background: #ffffff;
     position: static;
     height: 100vh;
-    padding: 90 30px 0px;
+    padding: 90px 30px 0px;
 }
 .elementImgSidebar {
     width: 21px;
@@ -3017,18 +3023,21 @@ body .gform_wrapper ul li.gfield {
     padding: 8px 25px !important;
 }
 .contentPassport{
-    margin: -25px;
+    margin: -30px 0;
+    background: white;
 }
 .headPassport{
     background: #f5f7fc;
     padding: 15px;
 }
 .blockImageCandidat{
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
     margin: 20px auto 15px;
     border-radius: 100%;
     position: relative;
+    overflow: hidden;
+    box-shadow: 0px 0px 3px 3px #e1d5d5;
 }
 .blockImageCandidat img{
     width: 100%;
@@ -3098,7 +3107,7 @@ body .gform_wrapper ul li.gfield {
 }
 .contentMapMember{
     display: flex;
-    margin-left: -45px;
+    margin-left: 140px;
 }
 .btndoawnloadCv{
     background: #043356;
@@ -3106,10 +3115,13 @@ body .gform_wrapper ul li.gfield {
     width: fit-content;
     padding: 8px 30px 8px;
     font-size: 15px;
-    border-radius: 15px;
+    border-radius: 8px;
     height: fit-content;
     margin-right: 52px;
     margin-top: -13px;
+}
+.btndoawnloadCv i{
+    color: white;
 }
 .contentElementHeadCandidat{
     display: flex;
@@ -3119,6 +3131,13 @@ body .gform_wrapper ul li.gfield {
 .detailContentCandidat{
     background: white;
     padding-left: 15px;
+    display: flex;
+}
+.profilUserP .detailContentCandidat{
+    background: white;
+    padding-left: 25px;
+    display: flex;
+    margin-bottom: 50px;
 }
 .detailContentCandidat .fistBlock{
     background: white;
@@ -3191,6 +3210,9 @@ body .gform_wrapper ul li.gfield {
     clip: rect(0 30px 60px 0);
     border: 1px solid #306e48;
 
+}
+.sousBlockTitleProduct {
+    font-size: 26px !important;
 }
 .skillBar .progress-bar .rotate {
     clip: rect(0 30px 60px 0);
