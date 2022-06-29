@@ -8,6 +8,80 @@ $table = $wpdb->prefix . 'databank';
 
 extract($_POST);
 
+/*
+* * Tags *
+*/ 
+
+$tags = array();
+$categories = array(); 
+
+$cats = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'orderby'    => 'name',
+    'exclude' => 'Uncategorized',
+    'parent'     => 0,
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) 
+);
+
+foreach($cats as $item){
+    $cat_id = strval($item->cat_ID);
+    $item = intval($cat_id);
+    array_push($categories, $item);
+};
+
+$bangerichts = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[1],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$functies = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[0],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$skills = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[3],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$interesses = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[2],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$categorys = array(); 
+foreach($categories as $categ){
+
+    //Topics
+    $topics = get_categories(
+        array(
+        'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categ,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ) 
+    );
+
+    foreach ($topics as $value) {
+        $tag = get_categories( 
+                array(
+                'taxonomy' => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                'parent'  => $value->cat_ID,
+                'hide_empty' => 0,
+            ) 
+        );
+        $categorys = array_merge($categorys, $tag);      
+    }
+}
+
+/*
+* * End tags *
+*/ 
+
 $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
 $course = $wpdb->get_results( $sql )[0];
 
@@ -27,22 +101,14 @@ if($optie == "accept"){
             );
             
             $id_post = wp_insert_post($args);
+           
             update_field('course_type', 'article', $id_post);
-            update_field('short_description', nl12br($course->short_description), $id_post);
-            update_field('article_itself', nl12br($course->long_description), $id_post);
-            update_field('url_image_xml', $course->image_xml, $id_post);
-            update_field('date_multiple', $course->date_multiple, $id_post);
-            update_field('onderwerpen', $course->onderwerpen, $id_post);
-            update_field('course_id', $course->course_id, $id_post);
-            update_field('author_id', $course->author_id, $id_post);
-            update_field('status', $course->status, $id_post);
-            update_field('optie', $course->optie, $id_post);
-            update_field('type', $course->type, $id_post);
+            update_field('article_itself', nl2br($course->long_description), $id_post);
         }
 
         //Insert YouTube
-        if (strval($course->type) == "Video" || strval($course->type) == "video" ){
-            echo "hello";
+        if (strval($course->type) == "Video"){
+
             $args = array(
                 'post_type' => 'course',
                 'post_author' => $course->author_id,
@@ -70,13 +136,35 @@ if($optie == "accept"){
 
             update_field('course_type', 'video', $id_post);
             update_field('youtube_videos', $youtube_videos, $id_post);
-            update_field('short_description', $course->short_description, $id_post);
-            update_field('long_description', $course->long_description, $id_post);
-            update_field('url_image_xml', $course->image_xml, $id_post);
         }
 
+        /*
+        ** UPDATE COMMON FIELDS
+        */
+        $onderwerpen = array();
+
+        update_field('short_description', nl2br($course->short_description), $id_post);
+        update_field('long_description', nl2br($course->long_description), $id_post);
+        update_field('url_image_xml', $course->image_xml, $id_post);
+
+        foreach($categorys as $type)
+            if(stristr($course->onderwerpen, $type->cat_name) !== false)
+                array_push($onderwerpen, $type->cat_ID);
+        
+        update_field('categories', $onderwerpen, $id_post);
+
+        if( $course->company_id != 0 && $course->author_id != 0 ){
+            $company = get_post($course->company_id);
+            update_field('company', $company, 'user_' . $course->author_id);
+        }
+        /*
+        ** END
+        */
+        
         $data = [ 'course_id' => $id_post]; // NULL value.
         $wpdb->update( $table, $data, $where );
+
+
     }
 }     
 else if($optie == "decline"){
