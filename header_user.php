@@ -169,6 +169,15 @@ $link = ($user) ? '/dashboard/user' : '/';
                     
 
                     <ul class="elementHeaderUser ">
+                        <li class="nav-item dropdown addButtonLink">
+                            <a href="#" class="nav-link navModife4 btn dropdown-toggle" type="button" id="dropdownNavButtonAdd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/addition.png" alt="addition" >
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonAdd">
+                                <a class="dropdown-item" href="/onderwer/">Onderwerpen</a>
+                                <a class="dropdown-item" href="/opleiders/">Experts</a>
+                            </div>
+                        </li>
                         <?php
 
                         if(!empty($company)){
