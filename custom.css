@@ -1356,8 +1356,14 @@ ul.sub-menu li a {
     width: 100%;
     position: sticky;
     padding: 21px 5px 15px 20px;
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 90vh;
+}
+.profilUserP .otherSkills {
+    background: rgba(230, 235, 242, 0.5);
+    border-radius: 8px;
+    padding: 25px 20px;
+    margin-bottom: 30px;
 }
 
 .sidBarDashboardManager{
@@ -1365,7 +1371,7 @@ ul.sub-menu li a {
     background: #ffffff;
     position: static;
     height: 100vh;
-    padding: 90 30px 0px;
+    padding: 90px 30px 0px;
 }
 .elementImgSidebar {
     width: 21px;
@@ -3017,18 +3023,21 @@ body .gform_wrapper ul li.gfield {
     padding: 8px 25px !important;
 }
 .contentPassport{
-    margin: -25px;
+    margin: -30px 0;
+    background: white;
 }
 .headPassport{
     background: #f5f7fc;
     padding: 15px;
 }
 .blockImageCandidat{
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
     margin: 20px auto 15px;
     border-radius: 100%;
     position: relative;
+    overflow: hidden;
+    box-shadow: 0px 0px 3px 3px #e1d5d5;
 }
 .blockImageCandidat img{
     width: 100%;
@@ -3098,7 +3107,7 @@ body .gform_wrapper ul li.gfield {
 }
 .contentMapMember{
     display: flex;
-    margin-left: -45px;
+    margin-left: 140px;
 }
 .btndoawnloadCv{
     background: #043356;
@@ -3106,10 +3115,13 @@ body .gform_wrapper ul li.gfield {
     width: fit-content;
     padding: 8px 30px 8px;
     font-size: 15px;
-    border-radius: 15px;
+    border-radius: 8px;
     height: fit-content;
     margin-right: 52px;
     margin-top: -13px;
+}
+.btndoawnloadCv i{
+    color: white;
 }
 .contentElementHeadCandidat{
     display: flex;
@@ -3118,8 +3130,14 @@ body .gform_wrapper ul li.gfield {
 }
 .detailContentCandidat{
     background: white;
-    display: flex;
     padding-left: 15px;
+    display: flex;
+}
+.profilUserP .detailContentCandidat{
+    background: white;
+    padding-left: 25px;
+    display: flex;
+    margin-bottom: 50px;
 }
 .detailContentCandidat .fistBlock{
     background: white;
@@ -3193,6 +3211,9 @@ body .gform_wrapper ul li.gfield {
     border: 1px solid #306e48;
 
 }
+.sousBlockTitleProduct {
+    font-size: 26px !important;
+}
 .skillBar .progress-bar .rotate {
     clip: rect(0 30px 60px 0);
     border: 1px solid #F5EC53;
@@ -3264,9 +3285,6 @@ body .gform_wrapper ul li.gfield {
     margin-bottom: 23px;
 }
 .otherSkills{
-    background: rgba(230, 235, 242, 0.5);
-    border-radius: 8px;
-    padding: 25px 20px;
     margin-bottom: 30px;
 }
 .socialBlock{
@@ -4144,18 +4162,14 @@ body .gform_wrapper ul li.gfield {
     margin: 0 -25px;
 }
 #profilVIewDetail {
-    margin: 0 -21px;
-    padding: 0 20px 30px;
-    padding-top: 90px;
+    padding: 30px 20px 30px;
     position: relative;
 }
 .nav-tabs-wrapper {
-    position: absolute;
-    top: 20px;
     background: white;
-    width: 93%;
-    padding: 10px 10px;
-    border: 1.5px solid #9D9D9D;
+    width: 100%;
+    padding: 0px 10px;
+    margin-bottom: 20px;
 }
 .tab-content {
     padding: 0;
@@ -4174,31 +4188,20 @@ body .gform_wrapper ul li.gfield {
 }
 .nav-tabs .nav-item {
     margin-left: 0;
+    display: block !important;
 }
 .nav-tabs .nav-item a {
     display: block;
     padding: 8px;
     color: black !important;
 }
-.nav-tabs .nav-item.overflow-tab {
-    display: none;
-    position: absolute;
-    right: 0;
-    width: 150px;
-    z-index: 1;
-}
-.nav-tabs .nav-item.overflow-tab a {
-    border: 1px solid lightgray;
-    border-radius: 0;
-    padding: 8px;
-    color: black !important;
-}
+
 .nav-tabs .nav-item.overflow-tab-action {
     position: absolute;
     right: 0;
 }
 .contentProilView {
-    margin-top: -25px;
+    margin-top: 0px;
 }
 .overviewFirstBlock{
     display: flex;
@@ -4291,6 +4294,9 @@ body .gform_wrapper ul li.gfield {
     font-weight: 600;
     margin-bottom: 20px;
 }
+.btnAddToDo:hover{
+    color: #FFFFFF !important;
+}
 .activiteRecent{
     display: flex;
 }
@@ -4300,9 +4306,10 @@ body .gform_wrapper ul li.gfield {
     height: 32px;
 }
 .contentRecentActivite{
-    border: 1px solid #7F7F7F;
+    border: 1px solid #bdbdbd;
     box-sizing: border-box;
     padding: 13px;
+    width: 71%;
 }
 .titleActivite{
     color: #4A4A4A;
@@ -8669,6 +8676,7 @@ ul#tabs-nav li.active {
     font-weight: 500;
     font-size: 16px;
 }
+<<<<<<< HEAD
 
 .contentListeCourseDataBank .searchInputAlle {
     min-width: 30%;
@@ -8726,7 +8734,129 @@ ul#tabs-nav li.active {
     border-radius: 0;
 }
 
+=======
+>>>>>>> origin/frontSeydou
 
+.contentListeCourseDataBank .searchInputAlle {
+    min-width: 30%;
+    border: 1px solid #9e9e9e;
+    background: white;
+    padding: 8px 15px 6px;
+    box-shadow: 0px 0px 1px 1px #bfb4b4;
+    border-radius: 15px;
+    width: 100%;
+}
+.inpustSearchDataBank{
+    width: 30%;
+    position: relative;
+}
+.btnSearchCourseDatabank {
+    position: absolute;
+    right: 0px;
+    top: 3px;
+}
+.contentListeCourseDataBank .courseDataBank{
+    width: 30%;
+}
+.contentListeCourseDataBank .courseOnderwerpen{
+    width: 25%;
+}
+.textThBorder input{
+    background: #FFFFFF !important;
+    border: 0 !important;
+}
+.tdCenter{
+    text-align: center;
+}
+.contentDetailCourseDataBank {
+    background: #dfeef3;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    margin-bottom: 0;
+}
+.contentDetailCourseDataBank h2{
+    text-align: center;
+    margin-bottom: 45px;
+    font-size: 24px;
+    color: #043356;
+    background: white;
+    padding: 18px 10px;
+    border-radius: 10px;
+}
+.contentDetailCourseDataBank .groupInputDate .input-group input {
+    border: 1px solid #043356;
+}
+.contentDetailCourseDataBank .groupInputDate .input-group select {
+    border: 1px solid #043356;
+    padding: 7px 15px !important;
+    margin-bottom: 0;
+    border-radius: 0;
+}
+.addButtonLink {
+    width: 88px;
+    position: relative;
+    left: 15px;
+}
+.addButtonLink img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.boxOne3-1 {
+    margin-bottom: 40px;
+}
+.blockTopBanen {
+    margin-top: 30px;
+}
+.formHeaderUser input{
+    margin-left: 35px;
+}
+.addBlockComment {
+    background: white;
+    padding: 15px;
+    height: 100%;
+}
+.detailContentCandidat .nav-link.active {
+    color: #043356 !important;
+    background-color: #fff;
+    border-color: #043356;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-bottom: 3px solid;
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+}
+
+.detailContentCandidat .nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+    border-color: #ffffff;
+}
+.nav-tabs .nav-item a {
+    display: block;
+    padding: 8px;
+    color: black !important;
+    font-weight: 400;
+}
+.tab-content .select2-container {
+    width: 100% !important;
+}
+.btnVoegTab {
+    width: fit-content;
+    font-weight: 500;
+    margin-top: 30px;
+    font-size: 14px;
+    padding: 9px 30px 8px;
+    background: #043356;
+    color: #FFFFFF;
+    border-radius: 5px;
+}
+.btnVoegTab:hover{
+    color: #FFFFFF;
+}
+.formModifeChoose .select2-container {
+    width: 100% !important;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -8746,6 +8876,9 @@ ul#tabs-nav li.active {
         font-size: 24px;
         width: 100%px;
         line-height: 27px;
+    }
+    .addButtonLink {
+       display: none;
     }
     .elkeVolgendeDescription {
         font-size: 14px;
@@ -10059,8 +10192,6 @@ ul#tabs-nav li.active {
         margin-top: -20px;
     }
     .otherSkills {
-        display: flex;
-        flex-wrap: wrap;
         padding: 25px 25px;
     }
     .elementOtherSkills {
@@ -10267,19 +10398,35 @@ ul#tabs-nav li.active {
         margin-top: 0;
         padding: 20px 0;
     }
-    .nav-tabs-wrapper{
+   .detailContentCandidat .nav-tabs-wrapper{
         position: relative;
         top: 0px;
         width: 100%;
         margin-top: 10px;
-        margin-bottom: 35px;
+        margin-bottom: 0px;
     }
-    .nav-tabs {
+   .detailContentCandidat .nav-tabs .nav-item {
+       min-width: 28%;
+       margin-bottom: 20px;
+       padding: 0 6px;
+       position: relative;
+       z-index: 999;
+       top: 0 !important;
+    }
+   .detailContentCandidat .nav-tabs {
         height: fit-content;
-        justify-content: flex-start;
+        justify-content: flex-start !important;
     }
+
     .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
         border: 1px solid #dee2e6;
+    }
+
+    .detailContentCandidat .nav-tabs .nav-link.active {
+        border: 2px solid #043356;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
     }
     .overviewFirstBlock {
         display: flex;
