@@ -22,15 +22,15 @@
 
 
     function view($course, $user_visibility){
-        $id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;
-        if(!$id)
+        $user_id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;
+        if(!$user_id)
             return false;
 
         $args = array(
             'post_type' => 'view', 
             'post_status' => 'publish',
-            'post_author' => $id,
-            );
+            'author' => $user_id,
+        );
 
         $views_stat_user = get_posts($args);
 
@@ -39,7 +39,7 @@
         }else{
             $data = array(
                 'post_type' => 'view',
-                'post_author' => $id,
+                'post_author' => $user_id,
                 'post_status' => 'publish',
                 'post_title' => $user_visibility->display_name . ' - View',
                 );

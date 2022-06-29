@@ -520,7 +520,7 @@ else if(isset($databank)){
         return true;
     }
     
-
+    header("Location: ". $message);
 }
 
 ?>

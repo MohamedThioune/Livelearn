@@ -287,9 +287,7 @@ $format = array('%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%s', '%d'
                                 $image_xml = "https://cdn.pixabay.com/photo/2021/09/18/12/40/pier-6635035_960_720.jpg";
                         }
 
-                        $status = "intern";
-
-                        $format = array('%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%s', '%d', '%d', '%s');
+                        $status = "extern";
 
                         $data = array('titel' => $course->post_title,  'type' => $type_course, 'short_description' => $short_description, 'long_description' => $long_description, 'duration' => $duration, 'prijs' => $price, 'prijs_vat' => $prijsvat, 'image_xml' => $image_xml , 'onderwerpen' => $fields, 'date_multiple' => null, 'course_id' => $course->ID, 'author_id' => $course->post_author, 'status' => $status);
 

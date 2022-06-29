@@ -1,102 +1,8 @@
 <?php
-global $wp;
-
-$url = home_url( $wp->request );
 
 extract($_GET);
 
-$page = dirname(__FILE__) . '/../../templates/check_visibility.php';
- 
-require($page); 
-
-view($post, $user_visibility);
-
-if(!visibility($post, $visibility_company))
-    header('location: /');
-
-$long_description = get_field('long_description', $post->ID);
-
-$course_type = get_field('course_type', $post->ID);
-
-$price = get_field('price', $post->ID);
-$prijsvat = get_field('prijsvat', $post->ID);
-
-if(!$prijsvat) 
-    $prijsvat = (get_field('price', $post->ID) * 21/100) - $prijs;
-
-$category = "<i class='fa fa-exclamation'></i>";
-
-/*
-* Thumbnails
-*/
-$thumbnail = get_field('preview', $post->ID)['url'];
-if(!$thumbnail){
-    $thumbnail = get_field('url_image_xml', $post->ID);
-    if(!$thumbnail)
-        $thumbnail = "https://cdn.pixabay.com/photo/2021/09/18/12/40/pier-6635035_960_720.jpg";
-}
-$category = " ";
-
-$tree = get_the_terms($post->ID, 'course_category');
-
-if($tree)
-    if(isset($tree[2]))
-        $category = $tree[2]->name;
-
-$category_id = 0;
-
-if($category == ' '){
-    $category_id = intval(explode(',', get_field('categories',  $post->ID)[0]['value'])[0]);
-    $category_xml = intval(get_field('category_xml',  $post->ID)[0]['value']);
-    if($category_xml)
-        if($category_xml != 0){
-            $id_category = $category_xml;
-            $category = (String)get_the_category_by_ID($category_xml);
-        }
-    if($category_id)
-        if($category_id != 0){
-            $id_category = $category_id;
-            $category = (String)get_the_category_by_ID($category_id);
-        }
-}
-
-$user_id = get_current_user_id();
-
-
-/*
-* Companies
-*/
-$company = get_field('company',  'user_' . $post->post_author);
-$users_company = array();
-$allocution = get_field('allocation', $post->ID);
-$users = get_users();
-
-foreach($users as $user) {
-    $company_user = get_field('company',  'user_' . $user->ID);
-    if(!empty($company) && !empty($company_user))
-        if($company_user[0]->post_title == $company[0]->post_title) 
-            array_push($users_company, $user->ID);
-}
-
-$photo_daniel = get_stylesheet_directory_uri() . '/img/daniel.png';
-
-/*
-* Experts
-*/
-$expert = get_field('experts', $post->ID);
-$author = array($post->post_author);
-$experts = array_merge($expert, $author);
-
-$favoured = count(get_field('favorited', $post->ID));
-
-$duration_day = get_field('duration_day', $post->ID);
-
-$attachments_xml = get_field('attachment_xml', $post->ID);
-
-$reviews = get_field('reviews', $post->ID);
-
 ?>
-
 <style>
     .swiper {
         width: 600px;
@@ -173,7 +79,7 @@ $reviews = get_field('reviews', $post->ID);
                         if(!empty(get_field('preview', $post->ID)))
                             echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
                         else
-                            echo "<img src='" . $thumbnail . "' alt='thumbnail placeholder'>";
+                            echo "<img src='" . $image . "' alt='thumbnail placeholder'>";
                     }else{
                         if(!empty($courses)){
                             if(isset($topic) && isset($lesson))
@@ -186,7 +92,7 @@ $reviews = get_field('reviews', $post->ID);
                                 if(!empty(get_field('preview', $post->ID)))
                                     echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
                                 else
-                                    echo "<img src='" . $thumbnail . "' alt='thumbnail placeholder'>";
+                                    echo "<img src='" . $image . "' alt='thumbnail placeholder'>";
                         }
                         else{
                             if(isset($lesson))
@@ -197,7 +103,7 @@ $reviews = get_field('reviews', $post->ID);
                                 if(!empty(get_field('preview', $post->ID)))
                                     echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
                                 else
-                                    echo "<img src='" . $thumbnail . "' alt='thumbnail placeholder'>";
+                                    echo "<img src='" . $image . "' alt='thumbnail placeholder'>";
                         }
                     }
 
@@ -392,7 +298,7 @@ $reviews = get_field('reviews', $post->ID);
                    </div>
 
                     <button type="button" class="btn btn-lg lees_alles mb-5 mt-3 w-md-25 px-4 border border-3 border-dark
-                     read-more-btn " >Lees alles</button>
+                     read-more-btn ">Lees alles</button>
 
                 </div>
                 <!----------------------------------- End Text description ----------------------------------- -->
@@ -1033,6 +939,30 @@ $reviews = get_field('reviews', $post->ID);
         });
     }
 
+</script>
+
+<script>
+    $("#btn_favorite").click((e)=>
+    {
+        $(e.preventDefault());
+        var user_id =$("#user_id").val();
+        var id =$("#course_id").val();
+
+        $.ajax({
+
+            url:"/like",
+            method:"post",
+            data:{
+                id:id,
+                user_id:user_id,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete_favoured').html(data);
+            }
+        });
+    })
 </script>
 
 
