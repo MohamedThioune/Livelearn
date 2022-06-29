@@ -8,6 +8,72 @@
 
 <body>
 
+
+<div>
+    <!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
+
+    <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="position: absolute; ">
+        <div class="modal-dialog" role="document"  style="width: 96% !important;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Sign Up</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body  px-md-5 p-3">
+                    <?php
+                    echo (do_shortcode('[user_registration_form id="59"]'));
+                    ?>
+
+                    <div class="text-center">
+                        <p>Already a member? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                                data-toggle="modal" data-target="#exampleModalCenter">Sign up</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
+
+        <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
+
+        <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+            style="position: absolute; ">
+            <div class="modal-dialog" role="document" style="width: 96% !important;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Sign In</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body  px-md-5 p-3">
+                        <?php
+                        wp_login_form([
+                            'redirect' => 'http://wp12.influid.nl/dashboard/user/',
+                            'remember' => false,
+                            'label_username' => 'Wat is je e-mailadres?',
+                            'placeholder_email' => 'E-mailadress',
+                            'label_password' => 'Wat is je wachtwoord?'
+                        ]);
+                        ?>
+
+                        <div class="text-center">
+                            <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                                data-toggle="modal" data-target="#SignInWithEmail">Sign in</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
+    </div>
+
     <section class="py-4 px-3">
         <div class="container-fluid my-md-5">
              <div class="row">
@@ -19,14 +85,14 @@
                         ontwikkelomgeving ontvangt.
                     </p>
                     <div>
-                        <button type="submit" class="btn rounded-pill p-2 px-4 my-2"
-                            style="background: #00A89D">
+                        <button type="submit" class="btn rounded-pill p-2 px-4 my-2" style="background: #00A89D"
+                            data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">
                             <strong class="h5 text-white">Je eigen leeromgeving </strong>
                         </button>
 
-                        <button type="submit" class="btn btn-outline-realblue rounded-pill p-2 px-2 px-md-4 my-2 ml-md-3">
+                        <a type="submit" class="btn btn-outline-realblue rounded-pill p-2 px-2 px-md-4 my-2 ml-md-3" href="#contact_section">
                             <strong class="h5">Contact met een adviseur</strong>
-                        </button>
+                        </a>
 
                     </div>
                  </div>
@@ -85,10 +151,10 @@
                     <p class="wordDeBestText2 mx-md-0 py-0 mt-0 text-white text-center"> Win de <strong>War on Talent</strong> </p>  
                  </div>
                  <div class="col-md-3 d-flex align-items-center justify-content-center">
-                    <button type="submit" class="btn rounded-pill p-2 px-4 my-2 ml-md-3"
+                    <a type="submit" class="btn rounded-pill p-2 px-4 my-2 ml-md-3" href="/ontwikkeladvies"
                         style="border: 2px solid #FFF;">
                         <strong class="h5 text-white">Lees hoe</strong>
-                    </button>
+                    </a>
                  </div>
              </div>
          </div>
@@ -245,7 +311,8 @@
                         Je selecteert eenvoudig de experts, opleiders en onderwerpen die jij interessant vindt en wij doen de rest. 
                     </p>
                      <div>
-                        <button type="submit" class="btn btn-outline-realblue rounded-pill p-2 px-5">
+                        <button type="submit" class="btn btn-outline-realblue rounded-pill p-2 px-5"
+                        data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">
                             <strong class="h5">Maak nu</strong>
                         </button>
 
@@ -277,7 +344,11 @@
         </div>
     </section>
 
-    <section class="py-5" style="background: #043356">
+    <!-- <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+  <h4 id="list-item-1">Item 1</h4>
+
+</div> -->
+    <section class="py-5" style="background: #043356" id="contact_section">
         <div class="container-fluid py-5">
             <div class="row d-flex justify-content-center align-items-center">
             

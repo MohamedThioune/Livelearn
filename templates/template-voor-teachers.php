@@ -80,10 +80,10 @@
                             Word onderdeel van het grootste expert / opleidersnetwerk
                         </h1>
                         <h5 class="text-white">Deel jouw kennis met rest van Nederland</h5> 
-                        <button class="btn rounded-pill my-3" 
+                        <a class="btn rounded-pill my-3" href="/overview-organisations-5"
                             style="padding: 7px 20px !important; background: #E0EFF4;">
                             <strong class=" p-3">Meer informatie? </strong>
-                        </button>
+                        </a>
                     </div>
                     <div class="mt-5">
                         <img class="w-50"
