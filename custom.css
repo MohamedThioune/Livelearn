@@ -3118,7 +3118,6 @@ body .gform_wrapper ul li.gfield {
 }
 .detailContentCandidat{
     background: white;
-    display: flex;
     padding-left: 15px;
 }
 .detailContentCandidat .fistBlock{
@@ -3264,9 +3263,6 @@ body .gform_wrapper ul li.gfield {
     margin-bottom: 23px;
 }
 .otherSkills{
-    background: rgba(230, 235, 242, 0.5);
-    border-radius: 8px;
-    padding: 25px 20px;
     margin-bottom: 30px;
 }
 .socialBlock{
@@ -4144,18 +4140,14 @@ body .gform_wrapper ul li.gfield {
     margin: 0 -25px;
 }
 #profilVIewDetail {
-    margin: 0 -21px;
-    padding: 0 20px 30px;
-    padding-top: 90px;
+    padding: 30px 20px 30px;
     position: relative;
 }
 .nav-tabs-wrapper {
-    position: absolute;
-    top: 20px;
     background: white;
-    width: 93%;
-    padding: 10px 10px;
-    border: 1.5px solid #9D9D9D;
+    width: 100%;
+    padding: 0px 10px;
+    margin-bottom: 20px;
 }
 .tab-content {
     padding: 0;
@@ -4174,31 +4166,20 @@ body .gform_wrapper ul li.gfield {
 }
 .nav-tabs .nav-item {
     margin-left: 0;
+    display: block !important;
 }
 .nav-tabs .nav-item a {
     display: block;
     padding: 8px;
     color: black !important;
 }
-.nav-tabs .nav-item.overflow-tab {
-    display: none;
-    position: absolute;
-    right: 0;
-    width: 150px;
-    z-index: 1;
-}
-.nav-tabs .nav-item.overflow-tab a {
-    border: 1px solid lightgray;
-    border-radius: 0;
-    padding: 8px;
-    color: black !important;
-}
+
 .nav-tabs .nav-item.overflow-tab-action {
     position: absolute;
     right: 0;
 }
 .contentProilView {
-    margin-top: -25px;
+    margin-top: 0px;
 }
 .overviewFirstBlock{
     display: flex;
@@ -4291,6 +4272,9 @@ body .gform_wrapper ul li.gfield {
     font-weight: 600;
     margin-bottom: 20px;
 }
+.btnAddToDo:hover{
+    color: #FFFFFF !important;
+}
 .activiteRecent{
     display: flex;
 }
@@ -4300,9 +4284,10 @@ body .gform_wrapper ul li.gfield {
     height: 32px;
 }
 .contentRecentActivite{
-    border: 1px solid #7F7F7F;
+    border: 1px solid #bdbdbd;
     box-sizing: border-box;
     padding: 13px;
+    width: 71%;
 }
 .titleActivite{
     color: #4A4A4A;
@@ -8725,8 +8710,71 @@ ul#tabs-nav li.active {
     margin-bottom: 0;
     border-radius: 0;
 }
+.addButtonLink {
+    width: 88px;
+    position: relative;
+    left: 15px;
+}
+.addButtonLink img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.boxOne3-1 {
+    margin-bottom: 40px;
+}
+.blockTopBanen {
+    margin-top: 30px;
+}
+.formHeaderUser input{
+    margin-left: 35px;
+}
+.addBlockComment {
+    background: white;
+    padding: 15px;
+    height: 100%;
+}
+.detailContentCandidat .nav-link.active {
+    color: #043356 !important;
+    background-color: #fff;
+    border-color: #043356;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-bottom: 3px solid;
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+}
 
-
+.detailContentCandidat .nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+    border-color: #ffffff;
+}
+.nav-tabs .nav-item a {
+    display: block;
+    padding: 8px;
+    color: black !important;
+    font-weight: 400;
+}
+.tab-content .select2-container {
+    width: 100% !important;
+}
+.btnVoegTab {
+    width: fit-content;
+    font-weight: 500;
+    margin-top: 30px;
+    font-size: 14px;
+    padding: 9px 30px 8px;
+    background: #043356;
+    color: #FFFFFF;
+    border-radius: 5px;
+}
+.btnVoegTab:hover{
+    color: #FFFFFF;
+}
+.formModifeChoose .select2-container {
+    width: 100% !important;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -8746,6 +8794,9 @@ ul#tabs-nav li.active {
         font-size: 24px;
         width: 100%px;
         line-height: 27px;
+    }
+    .addButtonLink {
+       display: none;
     }
     .elkeVolgendeDescription {
         font-size: 14px;
@@ -10059,8 +10110,6 @@ ul#tabs-nav li.active {
         margin-top: -20px;
     }
     .otherSkills {
-        display: flex;
-        flex-wrap: wrap;
         padding: 25px 25px;
     }
     .elementOtherSkills {
@@ -10267,19 +10316,35 @@ ul#tabs-nav li.active {
         margin-top: 0;
         padding: 20px 0;
     }
-    .nav-tabs-wrapper{
+   .detailContentCandidat .nav-tabs-wrapper{
         position: relative;
         top: 0px;
         width: 100%;
         margin-top: 10px;
-        margin-bottom: 35px;
+        margin-bottom: 0px;
     }
-    .nav-tabs {
+   .detailContentCandidat .nav-tabs .nav-item {
+       min-width: 28%;
+       margin-bottom: 20px;
+       padding: 0 6px;
+       position: relative;
+       z-index: 999;
+       top: 0 !important;
+    }
+   .detailContentCandidat .nav-tabs {
         height: fit-content;
-        justify-content: flex-start;
+        justify-content: flex-start !important;
     }
+
     .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
         border: 1px solid #dee2e6;
+    }
+
+    .detailContentCandidat .nav-tabs .nav-link.active {
+        border: 2px solid #043356;
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
     }
     .overviewFirstBlock {
         display: flex;
