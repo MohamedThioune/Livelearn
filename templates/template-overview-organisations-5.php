@@ -10,16 +10,16 @@
     <div class="modal modalEcosyteme fade " id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
          style="position: absolute; ">
         <div class="modal-dialog" role="document">
-            <div class="modal-content" style="background: #043356">
+            <div class="modal-content"  >
                 <div class="modal-header border-0">
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <button style="color: #043356" type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" style="font-size: 20px !important">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body  px-md-5 p-3">
 
-                    <div class="text-center"><h4 class="text-white">Activeer zakelijke </h4></div>
-                    <div class="text-center"><h6 class="text-white">Leeromgeving </h6></div> <br>
+                    <div class="text-center" style="color: #043356"><h4>Activeer zakelijke </h4></div>
+                    <div class="text-center" style="color: #043356"><h6>Leeromgeving </h6></div> <br>
 
                     <form>  
                         <div class="row mb-4">
@@ -106,14 +106,14 @@
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/photo_5897718936634506184_y.jpeg" alt="">
                     </div>
                     <div class="bodyCardOverviewOrganisatie">
-                        <h3 class="titleCardVoorOrganisatie">Creêren</h3>
+                        <h3 class="titleCardVoorOrganisatie">Creëren</h3>
                         <p class="descriptionCardVoorOrganisatie">
                             Kennisproducten maken vanuit onze auteurstool? Vanuit het teacher dashboard
                             creëer je in een paar klikken jouw kennisproduct en deelt deze gemakkelik met de
                             rest van de wereld. Dit kan zowel betaalde, als gratis content zijn.
                         </p>
                         <a href="/creeen" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">
-                            Meer over &nbsp;<strong class="">creêren</strong>
+                            Meer over &nbsp;<strong class="">creëren</strong>
                         </a>
                     </div>
                 </div>
