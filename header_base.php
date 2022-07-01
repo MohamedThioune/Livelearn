@@ -159,7 +159,7 @@
                             <div class="blockdropdownnHeader">
                                 <ul>
                                     <li>
-                                        <a href="overview-organisations-1">
+                                        <a href="zzpers">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
                                             </div>
@@ -170,7 +170,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="overview-organisations-2">
+                                        <a href="mkb">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-80.png" alt="">
                                             </div>
@@ -181,7 +181,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="">
+                                        <a href="/grootbedrijf">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-81.png" alt="">
                                             </div>
@@ -239,17 +239,17 @@
                                         </div>
                                         <div>
                                             <p class="titleSousElementHeader"><b>Verkopen</b></p>
-                                            <p class="subtitleSousElementHeader">nieuwe kennisproducten</p>
+                                            <p class="subtitleSousElementHeader">je kennisproducten</p>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/creeen">
+                                    <a href="/creeren">
                                         <div class="blockImg">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Creeër.png" alt="">
                                         </div>  
                                         <div>
-                                            <p class="titleSousElementHeader"><b>Creeër</b></p>
+                                            <p class="titleSousElementHeader"><b>Creëer</b></p>
                                             <p class="subtitleSousElementHeader">nieuwe kennisproducten</p>
                                         </div>
                                     </a>
@@ -309,7 +309,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/product-search">
+                                    <a href="/contact">
                                         <div class="blockImg">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Contact.png" alt="">
                                         </div>
