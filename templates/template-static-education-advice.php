@@ -14,7 +14,7 @@
     <!-- Modal Sign End -->
     <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
          style="position: absolute; ">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog" role="document" style="width: 96% !important;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2>Sign Up</h2>
@@ -42,7 +42,7 @@
 
     <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
          style="position: absolute; ">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog" role="document" style="width: 96% !important;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h2>Sign In</h2>
@@ -83,9 +83,9 @@
                  src="<?php echo get_stylesheet_directory_uri();?>/img/Image_69.png" alt="">
              </div>
              <div class="text-center px-md-5">
-                <h1 class="CreeerText" style="">
-                    Wij zijn er voor jou!
-                </h1>
+                <div class="">
+                    <p class="wordDeBestText2 mt-0 text-white"> <strong class="">Wij zijn er voor jou!</strong> </p>                   
+                </div>
 
                 <?php if (get_current_user_id()==0) { ?> 
                     <button class="btn rounded-pill my-3" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal"
@@ -112,17 +112,17 @@
                 <div class="col-md-3 text-center px-2 m-3">
                     <img class="img-fluid w-75" style="max-height: 140px;"
                     src="<?php echo get_stylesheet_directory_uri();?>/img/Group_216.png" alt=""> 
-                    <h3 class="CreeerText text-dark mt-3" style="font-size: 24px;">Doorloop een glansrijke carrière</h3>
+                    <h3 class="CreeerText mt-3" style="font-size:24px; color:#023356">Doorloop een glansrijke carrière</h3>
                 </div>
                 <div class="col-md-3 text-center px-2 m-3">
                     <img class="img-fluid w-75" style="max-height: 140px;"
                     src="<?php echo get_stylesheet_directory_uri();?>/img/Group_215.png" alt=""> 
-                    <h3 class="CreeerText text-dark mt-3" style="font-size: 24px;">Business skills en persoonlijke interresss</h3>
+                    <h3 class="CreeerText mt-3" style="font-size:24px; color:#023356">Business skills en persoonlijke interresss</h3>
                 </div>
                 <div class="col-md-3 text-center px-2 m-3">
                     <img class="img-fluid w-75" style="max-height: 140px;"
                     src="<?php echo get_stylesheet_directory_uri();?>/img/Group_214.png" alt=""> 
-                    <h3 class="CreeerText text-dark mt-3" style="font-size: 24px;">Altijd toegang tot carrière-advies en begeleiding</h3>
+                    <h3 class="CreeerText mt-3" style="font-size:24px; color:#023356">Altijd toegang tot carrière-advies en begeleiding</h3>
                 </div>
             </div>
         </div>
@@ -131,9 +131,14 @@
     <section class="py-4 px-3" style="background-color: #F5FAFD;">
         <div class="container my-5">
              <div class="row">
-                 <div class="col-md-7 p-2 order-md-1 order-2">
-                    <h1 class="CreeerText text-dark">Een eigen ontwikkelomgeving, zodat je altijd weet wat er speelt</h1>
-                    Je past eenvoudig je gehele omgeving aan naar je wensen. Van persoonlijke interesses tot aan een zakelijk carrièrepad. Wij noemen het je ‘skills paspoort’.  Deel deze met je (toekomstige) werkgever en je laat meteen zien wat je in je mars hebt.
+                 <div class="col-md-7 p-2 order-md-1 order-2 text-md-left text-center">
+                    <!-- <h1 class="CreeerText text-dark"></h1> -->
+                    <h2 style="color: #023356"><strong>Een eigen ontwikkelomgeving, zodat je altijd weet wat er speelt</strong></h2>                    
+                    <p class="krijgText">
+                        Je past eenvoudig je gehele omgeving aan naar je wensen. Van persoonlijke interesses tot aan 
+                        een zakelijk carrièrepad. Wij noemen het je ‘skills paspoort’.  
+                        Deel deze met je (toekomstige) werkgever en je laat meteen zien wat je in je mars hebt.
+                    </p>
                  </div>
                  <div class="col-md-5 text-center p-2 order-md-2 order-1">
                     <img class="img-fluid w-75" style=""
@@ -145,35 +150,32 @@
 
     <section class="py-4 px-3" style="background-color: #E0EFF4;">
         <div class="container my-5">
-             <div class="row">
-                <div class="col-md-6">
-                    <h1 class="CreeerText text-dark">
-                    Vind de onderwerpen waar jij interesse in hebt.
-                    </h1>
-                    Of ontdek verborgen talenten.
+            <div class="row">
+                <div class="col-md-6 text-md-left text-center">
+                    <!-- <h1 class="CreeerText text-dark">Vind de onderwerpen waar jij interesse in hebt. </h1> -->
+                    <h2 style="color: #023356"><strong>Vind de onderwerpen waar jij interesse in hebt.</strong></h2>
+                    <p class="krijgText">Of ontdek verborgen talenten.</p>
                 </div>
-                <!--  <div class="col-md-6"><h3 class="text-dark">Vind de onderwerpen waar jij interesse in hebt. </h3></div> -->             </div>
+            </div>
         </div>
     </section>
 
     <section class="py-4 px-3   " style="background-color: #F5FAFD;">
         <div class="container my-5">
              <div class="row">
-                 <div class="col-md-6 p-3">
-                    <h1 class="CreeerText text-dark">
-                    Zorg dat je meegaat met de tijd door je te blijven ontwikkelen</h1>
+                 <div class="col-md-6 p-3 text-md-left text-center">
+                    <h2 style="color: #023356"><strong>Zorg dat je meegaat met de tijd door je te blijven ontwikkelen</strong></h2>                    
                  </div>
                  <div class="col-md-6 p-3 d-flex justify-content-center align-self-center">
                     <?php if (get_current_user_id()==0) { ?> 
-                        <button type="submit" class="btn btn-outline-dark rounded-pill p-2 px-4"
-                        style="border: 2px solid #023356;"   data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">
-                            <strong class="h3">Ontwikkel mij</strong>
+                        <button type="submit" class="btn btn-outline-realblue rounded-pill p-2 px-4"
+                         data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">
+                            <strong class="h4">Ontwikkel mij</strong>
                         </button>
 
                     <?php } else { ?>  
-                        <button type="submit" class="btn btn-outline-dark rounded-pill p-2 px-4"
-                        style="border: 2px solid #023356;" >
-                            <strong class="h3">Ontwikkel mij</strong>
+                        <button type="submit" class="btn btn-outline-realblue rounded-pill p-2 px-4">
+                            <strong class="h4">Ontwikkel mij</strong>
                         </button>  
                     <?php }  ?>     
                  </div>
