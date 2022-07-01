@@ -311,19 +311,18 @@
             </div>
             
             <div class="row d-flex justify-content-center">
-                <div class="col-md-3 text-center">
-                    <button type="submit" class="btn rounded-pill p-2 px-4 m-1"
+                <div class="col-md-3 col-10 text-center">
+                    <button type="submit" class="btn rounded-pill p-2 px-4 m-1 w-100"
                         style="background: #00A89D">
                         <strong class="h5 text-white">Je eigen leeromgeving</strong>
                     </button>
                 </div>
                 
-                <div class="col-md-3 text-center">
-                    <button type="submit" class="btn rounded-pill p-2 px-5 m-1 btn btn-outline-realblue">
+                <div class="col-md-3 col-10 text-center">
+                    <button type="submit" class="btn rounded-pill p-2 px-5 m-1 btn btn-outline-realblue w-100">
                         <strong class="h5">Vraag een demo aan</strong>
                     </button>
                 </div>
-                
             </div>
         </div>
     </section>
@@ -401,7 +400,7 @@
                             management en de toepasbaarheid hiervan binnen je organisatie.
                         </p>
                     </div>    
-                    <a href="mailto:info@workplaceacademy.nl" class="btn btn-default rounded-pill px-5 my-2 ml-md-0 ml-2" style="background: #E3EFF4">
+                    <a href="mailto:contact@livelearn.nl" class="btn btn-default rounded-pill px-5 my-2 ml-md-0 ml-2" style="background: #E3EFF4">
                         <strong class="text-dark">Email </strong>
                     </a>
                     <a href="tel: +31621610903" class="btn btn-default rounded-pill px-5 my-2 ml-md-3" style="background: #00A89D">
