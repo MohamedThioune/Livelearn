@@ -11097,6 +11097,7 @@ ul#tabs-nav li.active {
 .radius-custom  {
     border-radius: 10px !important;
 }
+
 @media all and (max-width: 640px) {
     #field_5_3 {
         padding-top: 100px;
@@ -11210,9 +11211,6 @@ ul#tabs-nav li.active {
     .contentDetailCourseDataBank {
         padding: 20px 15px 40px;
     }
-    .formHeaderUser {
-        display: none;
-    }
     .contentDetailCourseDataBank h2 {
         margin-bottom: 28px;
         font-size: 20px;
@@ -11238,6 +11236,9 @@ ul#tabs-nav li.active {
         display: block !important;
         width: -webkit-fill-available;
         padding-top: 11px !important;
+    }
+    .formHeaderUser {
+        display: none;
     }
 
     .swiper-slide4 {
