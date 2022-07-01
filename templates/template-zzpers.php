@@ -1,4 +1,4 @@
-<?php /** Template Name: Overview organisations-1 template */ ?>
+<?php /** Template Name: Zzpers template */ ?>
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
@@ -7,6 +7,8 @@
 
 
 <body>
+
+    <!-- old name => overview-organisations-1 -->
 
     <div>
         <!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
@@ -626,9 +628,9 @@
                         <div class="p-2 text-md-left text-center">
                             <h4 style="color: #023356"><strong>Je gepersonaliseerde ontwikkelomgeving</strong></h4>
                             <p class="krijgText ">
-                                LiveLearn helpt je met het optimaal gebruik maken van het platform en welke
-                                kennisproducten het best bij jouw organisatie passen. Mocht zelf al materiaal hebben, dan voeg je dit
-                                eenvoudig toe aan het platform via het teacher dashboard.                           
+                                Voor iedereen die gebruik maakt van LiveLearn bieden wij een geheel eigen leeromgeving.
+                                Jij bepaalt wat je interessant vindt en ontvangt vervolgens alle content direct in je
+                                eigen app.                           
                             </p>
                         </div>
                     </div>
@@ -642,9 +644,9 @@
                         <div class=" p-2 text-md-left text-center">
                             <h4 style="color: #023356"><strong>Manager dashboard</strong></h4>
                             <p class="krijgText ">
-                                LiveLearn helpt je met het optimaal gebruik maken van het platform en welke
-                                kennisproducten het best bij jouw organisatie passen. Mocht zelf al materiaal hebben, dan voeg je dit
-                                eenvoudig toe aan het platform via het teacher dashboard.                            
+                                Manage je mensen? Dan is het handig om een overzicht te hebben van interesses en ontwikkelingen. 
+                                Zo weet je welke kennis je in huis hebt en kan je eenvoudig bijsturen wanneer bepaalde vaardigheden 
+                                verder ontwikkelt moeten worden.                           
                             </p>
                         </div>
                     </div>
@@ -658,9 +660,9 @@
                         <div class=" p-2 text-md-left text-center">
                             <h4 style="color: #023356"><strong>Teacher dashboard</strong></h4>
                             <p class="krijgText ">
-                                LiveLearn helpt je met het optimaal gebruik maken van het platform en welke
-                                kennisproducten het best bij jouw organisatie passen. Mocht zelf al materiaal hebben, dan voeg je dit
-                                eenvoudig toe aan het platform via het teacher dashboard.                            
+                                Zelf ben je natuurlijk ook een expert in je eigen vakgebied. Door dit te delen met de wereld bouw 
+                                je een bepaalde geloofwaardigheid op. Bij LiveLearn voeg je eenvoudig jouw kennisproducten toe zodat 
+                                je klanten, fans of community deze ook kunnen zien.                          
                             </p>
                         </div>
                     </div>
@@ -674,9 +676,10 @@
                         <div class=" p-2 text-md-left text-center">
                             <h4 style="color: #023356"><strong>Beheer Financiën</strong></h4>
                             <p class="krijgText ">
-                                LiveLearn helpt je met het optimaal gebruik maken van het platform en welke
-                                kennisproducten het best bij jouw organisatie passen. Mocht zelf al materiaal hebben, dan voeg je dit
-                                eenvoudig toe aan het platform via het teacher dashboard.                            
+                                Leren en ontwikkelen wordt vaak als een kostenpost gezien. Dit is één van de grootste fouten 
+                                van het hebben van personeel. Het is namelijk vele malen goedkoper om talent goed op te leiden dan
+                                personeel te hebben wat eigenlijk niet in staat is om het werk uit te voeren. Bij LiveLearn beheer 
+                                je eenvoudig al je financiën mbt scholing.                           
                             </p>
                         </div>
                     </div>
@@ -690,9 +693,9 @@
                         <div class=" p-2 text-md-left text-center">
                             <h4 style="color: #023356"><strong>Meer dan 10.000 kennisproducten</strong></h4>
                             <p class="krijgText ">
-                                LiveLearn helpt je met het optimaal gebruik maken van het platform en welke
-                                kennisproducten het best bij jouw organisatie passen. Mocht zelf al materiaal hebben, dan voeg je dit
-                                eenvoudig toe aan het platform via het teacher dashboard.                            
+                                Zelf moeilijk doen met een goed curriculum aan te bieden aan je medewerkers? Niet meer 
+                                nodig. Wij zorgen dat alle beschikbare content direct te vinden is in het platform.
+                                Hier voeg je ook eenvoudig je eigen content aan toe; dit kan zowel privé als publiek.                            
                             </p>
                         </div>
                     </div>
@@ -706,9 +709,9 @@
                         <div class="p-2 text-md-left text-center">
                             <h4 style="color: #023356"><strong>Maak eenvoudig ontwikkelplannen of geef feedback</strong></h4>
                             <p class="krijgText ">
-                                LiveLearn helpt je met het optimaal gebruik maken van het platform en welke
-                                kennisproducten het best bij jouw organisatie passen. Mocht zelf al materiaal hebben, dan voeg je dit
-                                eenvoudig toe aan het platform via het teacher dashboard.                            
+                                Elke organisatie heeft zijn eigen beoordeling cycli. Bij LiveLearn digitaliseer je deze 
+                                eenvoudig, zodat je alles op één plek hebt. Daarnaast koppel je deze plannen direct met 
+                                het beschikbare aanbod van opleidingen.                            
                             </p>
                         </div>
                     </div>
@@ -722,9 +725,9 @@
                         <div class="p-2 text-md-left text-center">
                             <h4 style="color: #023356"><strong>Statistieken en data over trends en gebruik</strong></h4>
                             <p class="krijgText ">
-                                LiveLearn helpt je met het optimaal gebruik maken van het platform en welke
-                                kennisproducten het best bij jouw organisatie passen. Mocht zelf al materiaal hebben, dan voeg je dit
-                                eenvoudig toe aan het platform via het teacher dashboard.                            
+                                Hoe snel groeit je organisatie? Hou precies bij hoe je bedrijf groeit in kennis in vaardigheden. 
+                                Zo kan je eenvoudig bijsturen wanneer 
+                                onderwerpen ondervertegenwoordigd zijn of juist te veel interesse voor is.                            
                             </p>
                         </div>
                     </div>
@@ -733,7 +736,7 @@
             <div class="d-flex justify-content-center">
                 <button type="submit" class="btn rounded-pill p-2 px-5" style="background: #00A89D"
                 data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">
-                    <strong class="h5 text-white">Ontwikkel mij</strong>
+                    <strong class="h5 text-white">Je eigen leeromgeving</strong>
                 </button>
             </div>
         </div>
@@ -747,9 +750,11 @@
                     src="<?php echo get_stylesheet_directory_uri();?>/img/ImgSkill2.png" alt=""> 
                  </div>
                  <div class="col-md-7 p-2 text-md-left text-center">
-                    <h1 class="display-5 big-title" style="color: #023356"><strong>Voeg je favoriete kanalen samen in één omgeving</strong> </h1>                   
+                    <h1 class="display-5 big-title" style="color: #023356">
+                    <strong>Voeg je favoriete kanalen samen in één omgeving</strong> </h1>                   
                     <p class="krijgText"> 
-                        Je selecteert eenvoudig de experts, opleiders en onderwerpen die jij interessant vindt en wij doen de rest.  
+                        Je selecteert eenvoudig de experts, opleiders en onderwerpen die jij interessant vindt
+                        en wij doen de rest.  
                     </p>
                     <div>
                         <button type="submit" class="btn btn-outline-realblue rounded-pill p-2 px-5"
@@ -772,15 +777,15 @@
 
                 <div class="col-md-6 px-md-0 text-md-left text-center">
                     <h2 class="hero-title text-white">
-                        De toekomstbestendige werkomgeving vereist een integrale en hybride aanpak</h2>
+                        Direct contact met één van onze adviseurs?
+                    </h2>
                     <div class="my-3 text-white">
                         <p>
-                            Wij noemen dit workplace management. Leer van de experts op het gebied van
-                             facility management, human resource management, duurzaamheid, IT, mobiliteit, vas
-                             tgoed, bouw en gezondheid.
+                            We helpen je graag met jouw specifieke vragen omtrent talent management en de toepasbaarheid 
+                            hiervan binnen je organisatie.
                         </p>
                     </div>    
-                    <a href="mailto:info@workplaceacademy.nl" class="btn btn-default rounded-pill px-5 my-2 ml-md-0 ml-2" style="background: #E3EFF4">
+                    <a href="mailto:contact@livelearn.nl" class="btn btn-default rounded-pill px-5 my-2 ml-md-0 ml-2" style="background: #E3EFF4">
                         <strong class="text-dark">Email </strong>
                     </a>
                     <a href="tel: +31621610903" class="btn btn-default rounded-pill px-5 my-2 ml-md-3" style="background: #00A89D">

@@ -33,7 +33,8 @@
         </div>
     </div>
 </div>
-<div class="blockEducationIndividualPage">
+
+<!-- <div class="blockEducationIndividualPage">
     <div class="blockLiftLid">
         <div class="container">
             <div class="row">
@@ -219,7 +220,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
