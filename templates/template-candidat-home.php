@@ -70,6 +70,7 @@
 
 
 <body class="bodyContentCandidat">
+
 <div class="contentOne">
     <div class="headCandidat">
         <div class="container">
@@ -93,7 +94,8 @@
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/VectorPoly.png" alt="">
                         <p>Work remotely from your home or an office of your choice</p>
                     </div>
-                    <a href="" class="btn bntStarted">Get started</a>
+                    <a href="#section-form" class="btn btnStart">Get started</a>
+                    <!-- <a class="list-group-item list-group-item-action" >Item 4</a> -->
                 </div>
                 <div class="secondBlockHeadContent">
                     <div class="elemntImgCandidat">
@@ -263,6 +265,8 @@
             </div>
         </div>
     </div>
+
+
     <div class="container">
         <div class="blockFormDeveloper">
             <p class="titleForm">We are looking for a wide spectrum of developers</p>
@@ -344,7 +348,10 @@
                 <?php if(isset($_GET['success'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>" ?>
                 <?php if(isset($_GET['danger'])) echo "<span class='alert alert-danger'>" . $_GET['message'] . "</span><br><br>" ?>
             </center>
-            <form  action="/candidat" method="POST" class="row">
+
+            <!--  section getting after scrolling -->
+            <h4 id="section-form" class="text-white">Item 4</h4>
+            <form  action="/candidat" method="POST" class="row" >
             
                 <div class="col-md-6"> 
                     <div class="form-group">
@@ -378,7 +385,11 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input type="password" name="password" id="text" placeholder="Password" class="block-input-form" required>
+                        <input type="password" name="password" id="hide_show"  placeholder="Password" class="block-input-form" required>
+                        <!-- An element to toggle between password visibility -->
+                        <div class="row">
+                            <input type="checkbox" onclick="myFunction()" class="ml-3 mr-2 mt-1">Show Password
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -406,6 +417,16 @@
 
         })(jQuery);
     });
+
+    function myFunction() {
+        
+        var x = document.getElementById("hide_show");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

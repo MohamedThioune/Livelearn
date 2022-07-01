@@ -76,7 +76,6 @@ foreach($categories as $categ){
     }
 }
 
-
 /*
 * * Get interests courses
 */
@@ -86,7 +85,7 @@ $topics = get_user_meta($user, 'topic');
 $experts = get_user_meta($user, 'expert');
 
 $args = array(
-    'post_type' => 'course', 
+    'post_type' => array('course', 'post'), 
     'post_status' => 'publish',
     'posts_per_page' => -1,
 );

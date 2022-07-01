@@ -92,7 +92,7 @@
     <!-- ------------------------------------------ End modals ---------------------------------------------- -->
 
 
-    <div class="">
+    <div class="liveOverBlock">
         <div class="container-fluid">
             <div class="overElement">
                 <div class="blockOneOver">
@@ -407,6 +407,51 @@
 
 
                         <button href="#bookdates" class="btn btnKoop text-white PrisText" style="background: #043356">Koop deze <?php echo $course_type; ?></button>
+                    </div>
+                    <div class="col-12 my-5" style="background-color: #E0EFF4">
+                        <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around
+                    justify-content-center">
+
+                            <!-- --------------------------------------- Swiper ------------------------------------ -->
+                            <!-- Slider main container -->
+                            <div class="swiper">
+                                <div class="swiper-wrapper">
+                                    <?php
+                                    foreach($experts as $expert){
+                                        $expert = get_users(array('include'=> $expert))[0]->data;
+                                        $company = get_field('company',  'user_' . $expert->ID);
+                                        $title = $company[0]->post_title;
+                                        $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                        ?>
+                                        <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
+                                            <div class="my-2 d-flex flex-column mx-md-0 mx-1">
+                                                <div class="imgCardPrice" style="height: 50px; width:50px">
+                                                    <img src="<?php echo $image; ?>" alt="teacher photo">
+                                                </div>
+                                                <span class="textIconeLearning"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span>
+                                                <span><?php echo $title; ?></span>
+                                            </div>
+                                        </a>
+                                    <?php } ?>
+
+                                </div>
+
+                            </div>
+
+                            <!-- If we need pagination -->
+                            <!-- <div class="swiper-pagination"></div> -->
+
+                            <!-- If we need navigation buttons -->
+                            <div class="swiper-button-prev swiper-moved" style="font-size: 8px !important">
+                            </div>
+                            <div class="test">
+                                <div class="swiper-button-next swiper-moved"></div>
+                            </div>
+
+                            <!-- If we need scrollbar -->
+                            <!-- <div class="swiper-scrollbar"></div> -->
+                        </div>
+
                     </div>
 
                 </div>

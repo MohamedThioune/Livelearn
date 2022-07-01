@@ -19,7 +19,12 @@ $image = get_the_post_thumbnail_url($post->ID);
 if(!$image)
     $image = get_field('preview', $post->ID)['url'];
 else if(!$image)
+    $image = get_field('url_image_xml', $post->ID);
+else if(!$image)
     $image = get_stylesheet_directory_uri() . '/img/libay.png';
+
+if(!$image)
+    $image = get_field('url_image_xml', $post->ID);
 
 $author = get_field('profile_img',  'user_' . $post->post_author);
 if(!$author)
@@ -30,15 +35,15 @@ $biographical = get_field('biographical_info',  'user_' . $post->post_author);
 $functie = get_field('role',  'user_' . $post->post_author);
 
 if($tag = ''){
-    $tagS = intval(explode(',', get_field('categories',  $blog->ID)[0]['value'])[0]);
-    $tagI = intval(get_field('category_xml',  $blog->ID)[0]['value']);
+    $tagS = intval(explode(',', get_field('categories',  $post->ID)[0]['value'])[0]);
+    $tagI = intval(get_field('category_xml',  $post->ID)[0]['value']);
     if($tagS != 0)
         $tag = (String)get_the_category_by_ID($tagS);
     else if($tagI != 0)
         $tag = (String)get_the_category_by_ID($tagI);                                    
 }
 
-$content = get_field('article_itself',  $blog->ID);
+$content = get_field('article_itself',  $post->ID);
 
 $user_id = get_current_user_id();
 

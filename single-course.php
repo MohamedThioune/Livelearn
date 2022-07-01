@@ -1,6 +1,8 @@
 <?php
 get_header();
 
+global $post;
+
 $url = home_url( $wp->request );
 
 $page = dirname(__FILE__) . '/templates/check_visibility.php';
@@ -11,6 +13,9 @@ view($post,$user_visibility);
 
 if(!visibility($post, $visibility_company))
     header('location: /');
+
+$courses = get_field('data_virtual', $post->ID);
+$youtube_videos = get_field('youtube_videos', $post->ID);
 
 $course_type = get_field('course_type', $post->ID);
 $product = wc_get_product( get_field('connected_product', $post->ID) );
@@ -85,6 +90,7 @@ else
 if($number_course_day == 0)
     $number_course_day = 1;
 
+
 /*
 *  Date and Location
 */
@@ -147,7 +153,6 @@ foreach($users as $user) {
 }
 
 if($post->post_author == 0){
-
     $user_choose = $users_choose[array_rand($users_choose, 1)];
 
     $arg = array(
@@ -155,7 +160,6 @@ if($post->post_author == 0){
         'post_author' => $user_choose,
     );
     wp_update_post($arg); 
-
 }
 
 $image_author = get_field('profile_img',  'user_' . $post->post_author);
@@ -214,9 +218,9 @@ $online = ['E-learning', 'Video', 'Webinar'];
 if(in_array($course_type, $offline))
     include_once('template-parts/modules/single-course-offline-default.php');
 else if(in_array($course_type, $other_offline))
-    include_once('template-parts/modules/single-course-online.php');
-else if(in_array($course_type, $online))
     include_once('template-parts/modules/single-course-offline.php');
+else if(in_array($course_type, $online))
+    include_once('template-parts/modules/single-course-online.php');
 
 
 ?> 

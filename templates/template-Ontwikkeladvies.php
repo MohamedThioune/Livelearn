@@ -2,7 +2,75 @@
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
-    <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+
+
+
+<div>
+    <!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
+
+    <!-- Modal Sign End -->
+    <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         style="position: absolute; ">
+        <div class="modal-dialog" role="document"  style="width: 96% !important;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Sign Up</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body  px-md-5 p-3">
+                    <?php
+                    echo (do_shortcode('[user_registration_form id="59"]'));
+                    ?>
+
+                    <div class="text-center">
+                        <p>Already a member? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                                data-toggle="modal" data-target="#exampleModalCenter">Sign up</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
+
+    <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
+
+    <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         style="position: absolute; ">
+        <div class="modal-dialog" role="document" style="width: 96% !important;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Sign In</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body  px-md-5 p-3">
+                    <?php
+                    wp_login_form([
+                        'redirect' => 'http://wp12.influid.nl/dashboard/user/',
+                        'remember' => false,
+                        'label_username' => 'Wat is je e-mailadres?',
+                        'placeholder_email' => 'E-mailadress',
+                        'label_password' => 'Wat is je wachtwoord?'
+                    ]);
+                    ?>
+
+                    <div class="text-center">
+                        <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                              data-toggle="modal" data-target="#SignInWithEmail">Sign in</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
+</div>
 
 <div class="content-ontwikkeladvies">
     <div class="head-ontwikkeladvies">
@@ -11,7 +79,7 @@
                 <div class="col-md-6">
                     <h1>Blijven ontwikkelen, je hoeft het niet alleen te doen!</h1>
                     <p>Altijd en overal de handvatten om nieuwe dingen te leren op de manier die het best bij jou past.</p>
-                    <a href="" class="btn btnBekijk2">Bekijk alle opties</a>
+                    <a href="#card_section" class="btn btnBekijk2">Bekijk alle opties</a>
                 </div>
                 <div class="col-md-6">
                     <div class="blockImgontwikkeladvies">
@@ -21,7 +89,7 @@
             </div>
         </div>
     </div>
-    <div class="bodyOntwikkeladvies">
+    <div class="bodyOntwikkeladvies"  id="card_section">
        <div class="container">
            <h2 class="elkeVolgendeTitle">Scholingsadvies voor elke volgende stap in je carrière</h2>
            <p class="elkeVolgendeDescription ">Voor jou dus ja, wij helpen je met je professionele en persoonlijke groei. Of je nu opzoek bent naar een (nieuwe) baan of wil groeien als persoon. Wij helpen je met het inrichten van jouw persoonlijke groeipad.</p>
@@ -34,7 +102,7 @@
                            </div>
                            <p class="titleCardVolgende">Gratis scholingsconsult</p>
                            <p class="subTitleCardVolgende">Een 15 minuten gesprek om kort te analyseren wat jouw situatie is en welke begeleiding het best bij jou past om verder te groeien. Je zit nergens aan vast!</p>
-                           <a href="" class="btn btnCardVolgende">Plan een consult</a>
+                           <a href="#form_section" class="btn btnCardVolgende">Plan een consult</a>
                        </div>
                    </div>
                    <div class="col-md-4 col-sm-12">
@@ -44,7 +112,7 @@
                            </div>
                            <p class="titleCardVolgende">Persoonlijk ontwikkelplan</p>
                            <p class="subTitleCardVolgende">In een sessie van 60 minuten maken wij een plan voor jou om te blijven ontwikkelen en te groeien binnen je baan of richting een nieuwe uitdaging.</p>
-                           <a href="" class="btn btnCardVolgende">Plan een POP</a>
+                           <a href="#form_section" class="btn btnCardVolgende">Plan een POP</a>
                        </div>
                    </div>
                    <div class="col-md-4 col-sm-12">
@@ -54,7 +122,7 @@
                            </div>
                            <p class="titleCardVolgende">360* scholingsadvies</p>
                            <p class="subTitleCardVolgende">Een compleet op maat gemaakt programma om jou verder te helpen in je carrière. Welke opleidingen passen bij jou en waar krijg je energie van, gecombineerd met de vraag uit de markt.</p>
-                           <a href="" class="btn btnCardVolgende">Plan een 360* advies</a>
+                           <a href="#form_section" class="btn btnCardVolgende">Plan een 360* advies</a>
                        </div>
                    </div>
                </div>
@@ -74,7 +142,8 @@
             </div>
         </div>
     </div>
-    <div class="container">
+
+    <div class="container" >
         <div class="row rowModifeBook">
             <div class="col-md-6">
                 <div class="imgBook">
@@ -84,10 +153,10 @@
             <div class="col-md-6">
                 <h2 class="titleAltijd">Altijd inclusief je eigen persoonlijke skills paspoort en ontwikkelomgeving.</h2>
                 <p class="descriptionAltijd">Je selecteert eenvoudig je interesses en je krijgt alle relevante artikelen, trainen en andere kennisproducten in je eigen omgeving</p>
-                <a href="" class="btn btnMaakNu">Maak nu</a>
+                <a href="" class="btn btnMaakNu" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">Maak nu</a>
             </div>
         </div>
-        <div class="blockFormTestimonial">
+        <div class="blockFormTestimonial" id="form_section">
             <div class="row">
                 <div class="col-md-6 ">
                     <form class="formTestimonial">

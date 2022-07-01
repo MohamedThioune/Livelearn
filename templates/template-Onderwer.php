@@ -50,29 +50,36 @@
 
     ?>
 
-    <div class="contentOne"> 
-    </div>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
+    
     <div class="contentBaan">
-        <div class="groupBtn groupBtn2">
-            <div class="swiper-container swipeContaine2">
-                <div class="swiper-wrapper">
-                    <?php 
+
+        <!-- slider -->
+        <div class="my-5" style="height: 60px !important;">
+            <div class="row logo_slide">       
+                <?php 
                     foreach($cats as $cat) { 
                         if($cat->name == "Uncategorized")
                             continue;
-                        ?>
-                    <div class="swiper-slide swiper-slideM1">
-                        <button class="btn btnZorg"><?php echo $cat->name; ?></button>
+                ?>
+                    <div class="text-center ">
+                        <a href="../sub-topic?subtopic=<?php echo $value->cat_ID ?>">
+                            <button class="btn rounded rounded-pill text-secondary h6 mx-4" 
+                            style="background: #E0EFF4 !important; min-width: 250px;">
+                                <strong><?php echo $cat->name; ?></strong> 
+                            </button>
+                        </a>
                     </div>
-                    <?php 
-                    } 
-                    ?>
-                </div>
+                <?php } ?>       
             </div>
-        </div>
+        </div>  
+
+
         <div class="blockTopBanen">
             <div class="container-fluid">
-                <div class="box1Ban">
+
+                <div class="box1Ban mt-3">
                     <p class="titleTopBanen2">Baangerichte onderwerpen</p>
                     <div class="contentCardTop2">
                         <?php
@@ -80,7 +87,7 @@
                                 $image_category = get_field('image', 'category_'. $value->cat_ID);
                                 $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/maternite.jpg';
                                 ?>
-                            <a href="sub-topic?subtopic=<?php echo $value->cat_ID ?>" class="cardTopBaan">
+                            <a href="sub-topic?subtopic=<?php echo $value->cat_ID ?>" class="cardTopBaan" >
                                 <img src="<?php echo $image_category; ?>" class="imgZorgCard" alt="">
                                 <p class="zorgTextCard"><?php echo $value->cat_name ?></p>
                             </a>
@@ -89,7 +96,7 @@
                         ?>
                     </div>
                 </div>
-                <div class="box1Ban">
+                <div class="box1Ban mt-3">
                     <p class="titleTopBanen2">Functiegerichte onderpen</p>
                     <div class="contentCardTop2">
                         <?php
@@ -107,7 +114,7 @@
                         
                     </div>
                 </div>
-                <div class="box1Ban">
+                <div class="box1Ban mt-3">
                     <p class="titleTopBanen2">Skillgerichte onderwerpen</p>
                     <div class="contentCardTop2">
                         <?php
@@ -115,7 +122,7 @@
                                 $image_category = get_field('image', 'category_'. $value->cat_ID);
                                 $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/maternite.jpg';
                                 ?>
-                            <a href="sub-topic?subtopic=<?php echo $value->cat_ID ?>" class="cardTopBaan">
+                            <a href="sub-topic?subtopic=<?php echo $value->cat_ID ?>" class="cardTopBaan" >
                                 <img src="<?php echo $image_category; ?>" class="imgZorgCard" alt="">
                                 <p class="zorgTextCard"><?php echo $value->cat_name ?></p>
                             </a>
@@ -126,7 +133,7 @@
                     </div>
                 </div>
 
-                <div class="box1Ban">
+                <div class="box1Ban mt-3">
                     <p class="titleTopBanen2">Interesse onderwerpen</p>
                     <div class="contentCardTop2">
                         <?php
@@ -155,8 +162,45 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
+    <!-- slick Carousel CDN -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
+
+
     <script src="js/style.js"></script>
     <script>
+
+
+        // partners slides
+        $('.logo_slide').slick({
+            centerMode: false,
+            centerPadding: '130px',
+            dots: false,
+            slidesToShow: 5,
+            autoplay: true,
+            speed: 400,
+            autoplaySpeed: 1500,
+            arrows: false,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 3,
+                        centerMode: true,
+                        centerPadding: '100px'
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                        centerMode: true,
+                        centerPadding: '60px'
+                    }
+                }
+            ]
+        });
+    
+
         var swiper = new Swiper('.swiper-container', {
             slidesPerView: 'auto',
             spaceBetween: 30,
