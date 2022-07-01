@@ -44,7 +44,7 @@ $companies = get_posts($args);
                                     <p class="verkop"><?php echo $name ?></p>
                                     <p class="descriptionBraanCard"></p>
                                 </a>
-                            <?php ￼
+                            <?php
                             } 
                         ?>
                         </div>
