@@ -1,6 +1,5 @@
 <?php /** Template Name: scrapping */ ?>
 
-
 <?php
 include_once 'simple_html_dom.php';
 include_once 'usefull_functions.php';
@@ -37,10 +36,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
                     $array_data['theme']=$node->getElementsByTagName('a')->item(3)->nodeValue;
                 else
                     $array_data['theme']=$node->getElementsByTagName('a')->item(4)->nodeValue;
-                  $title=$node->getElementsByTagName('h2')->item(0)->nodeValue;
-                  $link='https://www.smartwp.nl'.$node->getElementsByTagName('a')->item(0)->getAttribute('href');
-                  $html_code_content=file_get_contents($link);
-                  $dom_content= new DomDocument();
+                    $title=$node->getElementsByTagName('h2')->item(0)->nodeValue;
+                    $link='https://www.smartwp.nl'.$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+                    $html_code_content=file_get_contents($link);
+                    $dom_content= new DomDocument();
                   libxml_use_internal_errors(true);
                     if (!empty($html_code_content))
                     {
@@ -57,9 +56,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
             }
             }
         }
+        var_dump($datas);
     foreach ($datas as $key => $article) 
     {
-      $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE  titel='$article[title]' AND  type= 'Artikel' AND short_description='$article[short_description]' AND image_xml='$article[image]'  AND date_multiple='$article[date]' AND long_description='$article[content]' LIMIT 1");
+      $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE  titel='$article[title]' AND  type= 'Artikel' AND short_description='$article[short_description]' AND image_xml='$article[image]'  AND date_multiple='$article[date]' AND long_description='$article[content]' LIMIT 1");
       $result = $wpdb->get_results($sql);
       if (empty($result))
       {
