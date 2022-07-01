@@ -115,7 +115,7 @@
                     <div class="bodyCardOverviewOrganisatie">
                         <h3 class="titleCardVoorOrganisatie">Grootbedrijf</h3>
                         <p class="descriptionCardVoorOrganisatie">Een corporate organisatie, wellicht met meerdere locaties over de wereld. Borg je kennis in één dashboard, houd bij waar de ontwikkelkansen liggen met HR-analytics en geef managers de handvatten om hun teams optimaal te laten presteren</p>
-                        <a href="/mkb" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">Meer voor Corporates</a>
+                        <a href="/grootbedrijf" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">Meer voor Corporates</a>
                     </div>
                 </div>
             </div>

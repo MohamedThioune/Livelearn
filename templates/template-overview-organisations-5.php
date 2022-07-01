@@ -112,7 +112,7 @@
                             creëer je in een paar klikken jouw kennisproduct en deelt deze gemakkelik met de
                             rest van de wereld. Dit kan zowel betaalde, als gratis content zijn.
                         </p>
-                        <a href="/creeen" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">
+                        <a href="/creeren" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">
                             Meer over &nbsp;<strong class="">creëren</strong>
                         </a>
                     </div>

@@ -244,7 +244,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/creeen">
+                                    <a href="/creeren">
                                         <div class="blockImg">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Creeër.png" alt="">
                                         </div>  
@@ -309,7 +309,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/product-search">
+                                    <a href="/contact">
                                         <div class="blockImg">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Contact.png" alt="">
                                         </div>
