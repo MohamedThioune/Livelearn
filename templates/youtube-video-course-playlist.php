@@ -5,8 +5,6 @@ global $wpdb;
 
 $table = $wpdb->prefix . 'databank';
 
-$format = array('%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%s', '%d', '%d', '%s');
-
 ?>
 
 <!DOCTYPE html>
@@ -44,9 +42,10 @@ $format = array('%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%s', '%d'
         break;
       }
   }
-  $playlists_id = get_field('youtube_playlists', 'user_'. $author_id);
 
-  $youtube_videos = '';
+  $playlists_id = get_field('youtube_playlists', 'user_'. $author_id);
+  if(!$playlists_id)
+    echo '<h3>No news playlists found</h3>';
 
   if(!empty($playlists_id))
     foreach($playlists_id as $playlist_id){
@@ -54,7 +53,6 @@ $format = array('%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%s', '%d'
     
       $playlists = json_decode(file_get_contents($url_playlist),true);
       foreach($playlists['items'] as $key => $playlist){
-        
         //Check the existing value with metadata
         $meta_key = "course";
         $meta_value = strval($playlist['id']);
@@ -62,96 +60,92 @@ $format = array('%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%s', '%d'
 
         $meta_xmls = array();
         foreach($meta_data as $value){
-            $meta_xml = explode('~', $value)[0];
-            array_push($meta_xmls, $meta_xml);
+          $meta_xml = explode('~', $value)[0];
+          array_push($meta_xmls, $meta_xml);
         }
 
         //Get the url media image to display on front
         $image = ( isset($playlist['snippet']['thumbnails']['maxres']) ) ? $playlist['snippet']['thumbnails']['maxres']['url'] : $playlist['snippet']['thumbnails']['standard']['url'];
 
         if(!in_array($meta_value, $meta_xmls)){  
-                  
-            $url_playlist = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" . $playlist['id'] . "&maxResults=" . $maxResults . "&key=" . $api_key;        
+          $url_playlist = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" . $playlist['id'] . "&maxResults=" . $maxResults . "&key=" . $api_key;        
 
-            $detail_playlist = json_decode(file_get_contents($url_playlist, true));
-            foreach($detail_playlist->items as $key => $video){
-                $youtube_video = '';
-                $youtube_video .=  $video->snippet->resourceId->videoId;
-                $youtube_video .= '~' . $video->snippet->title;
-                $youtube_video .= '~' . $video->snippet->thumbnails->high->url; 
-                
-                $youtube_videos .= ';' . $youtube_video;
-            }
+          $detail_playlist = json_decode(file_get_contents($url_playlist, true));
+          $youtube_videos = '';
+          foreach($detail_playlist->items as $key => $video){
+              $youtube_video = '';
+              $youtube_video .=  $video->snippet->resourceId->videoId;
+              $youtube_video .= '~' . $video->snippet->title;
+              $youtube_video .= '~' . $video->snippet->thumbnails->high->url; 
+              
+              $youtube_videos .= ';' . $youtube_video;
+          }
 
-            $status = 'extern';
+          $status = 'extern';
 
-            //Data to create the course
-            $data = array(
-              'titel' => $playlist['snippet']['title'],
-              'type' => 'Video',
-              'videos' => $youtube_videos, 
-              'short_description' => $playlist['snippet']['description'],
-              'long_description' => $playlist['snippet']['description'],
-              'duration' => null, 
-              'prijs' => 0, 
-              'prijs_vat' => 0,
-              'image_xml' => $image, 
-              'onderwerpen' => null, 
-              'date_multiple' => null, 
-              'course_id' => null,
-              'author_id' => 0,
-              'status' => $status
-            );
+          //Data to create the course
+          $data = array(
+            'titel' => $playlist['snippet']['title'],
+            'type' => 'Video',
+            'videos' => $youtube_videos, 
+            'short_description' => $playlist['snippet']['description'],
+            'long_description' => $playlist['snippet']['description'],
+            'duration' => null, 
+            'prijs' => 0, 
+            'prijs_vat' => 0,
+            'image_xml' => $image, 
+            'onderwerpen' => null, 
+            'date_multiple' => null, 
+            'course_id' => null,
+            'author_id' => 0,
+            'status' => $status
+          );
 
-            $post_id = $wpdb->insert($table,$data,$format);
+          $post_id = $wpdb->insert($table,$data);
 
-            echo $wpdb->last_error;
+          echo $wpdb->last_error;
 
-            $meta = $meta_value . '~' . $post_id;          
+          $meta = $meta_value . '~' . $post_id;          
 
-            if(add_user_meta(1, $meta_key, $meta))
-              echo '✔️';
+          if(add_user_meta(1, $meta_key, $meta))
+            echo '✔️';
 
-            echo "<span class='textOpleidRight'> Course_ID: " . $playlist['id'] . " - Insertion done successfully <br><br></span>";
-            break;
+          echo "<span class='textOpleidRight'> Course_ID: " . $playlist['id'] . " - Insertion done successfully <br><br></span>";
+          break;
         }
         else{
-            $meta_course = 0;
-            foreach($meta_data as $value){
-                $metax = explode('~',$value);
-                if($metax[0] == $meta_value){
-                    $meta_course = $metax[1];
-                    break;
-                } 
-            }
-        
-            $args = array(
-            'post_type' => 'course', 
-            'post_status' => 'publish',
-            'include' => $meta_course,  
-            );
-        
-            $course = get_posts($args);
-            $meta = $meta_value . '-' . $meta_course;
-        
-            if(empty($course)){
-                delete_user_meta(1, $meta_key, $meta);
-                echo "****** Course # " . $meta_value . " not detected anymore<br><br>";
-            }
-            else
-                echo "<span class='textOpleidRight'> Course_ID: " . $detail_data['id'] . " - Already here <br><br></span>";
-        
+          $meta_course = 0;
+          foreach($meta_data as $value){
+              $metax = explode('~',$value);
+              if($metax[0] == $meta_value){
+                  $meta_course = $metax[1];
+                  break;
+              } 
+          }
+      
+          $args = array(
+          'post_type' => 'course', 
+          'post_status' => 'publish',
+          'include' => $meta_course,  
+          );
+      
+          $course = get_posts($args);
+          $meta = $meta_value . '~' . $meta_course;
+      
+          if(empty($course)){
+              delete_user_meta(1, $meta_key, $meta);
+              echo "****** Course # " . $meta_value . " not detected anymore<br><br>";
+          }
+          else
+              echo "<span class='textOpleidRight'> Course_ID: " . $detail_data['id'] . " - Already here <br><br></span>";
         }
-
-        // if($key==50)
-        //     break; 
       }
     }
   else
-    echo '<h3>No news playlists</h3>';
+    echo '<h3>No news playlists found</h3>';
 
-  // Empty youtube channels after parse
-  // update_field('youtube_playlists', null , 'user_'. $author_id)
+  //Empty youtube channels after parse
+  update_field('youtube_playlists', null , 'user_'. $author_id)
 ?>
 
 </body>

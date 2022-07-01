@@ -85,7 +85,7 @@ $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $i
 $course = $wpdb->get_results( $sql )[0];
 
 //array typos
-$typos = ['Opleidingen' => 'course', 'Training' => 'training', 'Workshop' => 'workshop', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'Video' => 'video', 'Atrtikel' => 'article', 'Assessment' => 'assessment', 'Lezing' => 'reading', 'Cursus' => 'cursus' ,'Event' => 'event', 'Webinar' => 'webinar' ];
+$typos = ['Opleidingen' => 'course', 'Training' => 'training', 'Workshop' => 'workshop', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'Video' => 'video', 'Artikel' => 'article', 'Assessment' => 'assessment', 'Lezing' => 'reading', 'Cursus' => 'cursus' ,'Event' => 'event', 'Webinar' => 'webinar' ];
 
 //array levels
 $levels = ['NVT' => 'n.v.t', 'MBO1' => 'mbo1', 'MBO2' => 'mbo2', 'MBO3' => 'mbo3', 'MBO4' => 'mbo4', 'HBO' => 'hbo', 'Universiteit' => 'university', 'Certificate' => 'certificate'];
@@ -97,8 +97,18 @@ $onderwerpen = explode(',', $course->onderwerpen);
 
 $users = get_users();
 
+
 $short_description = $course->short_description ? $course->short_description : 'Please fill in the resume';
-$long_description =  $course->long_description  ? $course->long_description : 'Please fill in the content';
+
+$company = get_field('company',  'user_' . $course->author_id)[0];
+
+$args = array(
+    'post_type' => 'company', 
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'order' => 'DESC',
+);
+$companies = get_posts($args);
 
 /*
 * * Display forms w/ correct elements
@@ -116,9 +126,9 @@ $long_description =  $course->long_description  ? $course->long_description : 'P
           <select class="multipleSelect2" name="type" id="selected_subtopics">';
             foreach($typos as $key=>$typo){
                 if($course->type == $key)
-                    echo '<option selected value="'. $typo . '">' . $key . '</option>';
+                    echo '<option selected value="'. $key . '">' . $key . '</option>';
                 else
-                    echo '<option value="'. $typo . '">' . $key . '</option>';
+                    echo '<option value="'. $key . '">' . $key . '</option>';
             }
     echo '</select>
           </div>';
@@ -145,7 +155,6 @@ $long_description =  $course->long_description  ? $course->long_description : 'P
     */
     echo '<div class="form-group"> 
           <textarea name="short_description" class="form-control" rows="3" cols="30">' . $short_description . '</textarea><br>
-          <textarea name="long_description" class="form-control" rows="3" cols="30">' . $long_description . '</textarea>
           </div>';
 
     /*
@@ -192,15 +201,36 @@ $long_description =  $course->long_description  ? $course->long_description : 'P
     
     //Expert
     echo '<div class="form-group"> 
-          <select class="multipleSelect2" name="author_id" id="selected_subtopics">';
-            foreach($users as $user){
-                if($user->ID == $course->author_id)
-                    echo '<option selected value="'. $user->ID . '">' . $user->display_name . '</option>';
-                else
+          <select class="multipleSelect2" name="author_id" id="selected_subtopics" multiple="true">';
+            if($course->author_id != 0)
+                foreach($users as $user)
+                    if($user->ID == $course->author_id)
+                        echo '<option selected value="'. $user->ID . '">' . $user->display_name . '</option>';
+                    else
+                        echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
+            else{
+                echo '<option value=""></option>';
+                foreach($users as $user)
                     echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
             }
+           
     echo '</select>
           </div>';
+
+    //Company
+    echo '<div class="form-group"> 
+        <select class="multipleSelect2" name="company_id" id="selected_subtopics">';
+          if(!empty($company))
+            echo '<option selected value="'. $company->ID . '">' . $company->post_title . '</option>';
+          else{
+            echo '<option value=""></option>';
+            foreach($companies as $companie)
+                echo '<option value="'. $companie->ID . '">' . $companie->post_title . '</option>';
+          }
+            
+  echo  '</select>
+        </div>';
+
 
 }
 

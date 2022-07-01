@@ -158,7 +158,7 @@ $link = ($user) ? '/dashboard/user' : '/';
                 </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- input search -->
-                    <form action="/product-search" method="POST" class="form-inline ml-auto mb-0 ">
+                    <form action="/product-search" method="POST" class="form-inline ml-auto mb-0 formHeaderUser">
                         <input id="header-search" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, exports en onderwerpen" aria-label="Search">
                         <div class="dropdown-menuSearch headerDrop" id="header-list">
                             <div class="list-autocomplete" id="header">
@@ -169,20 +169,37 @@ $link = ($user) ? '/dashboard/user' : '/';
                     
 
                     <ul class="elementHeaderUser ">
+                        <li class="nav-item dropdown addButtonLink">
+                            <a href="#" class="nav-link navModife4 btn dropdown-toggle" type="button" id="dropdownNavButtonAdd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/addition.png" alt="addition" >
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonAdd">
+                                <a class="dropdown-item" href="/onderwer/">Onderwerpen</a>
+                                <a class="dropdown-item" href="/opleiders/">Experts</a>
+                            </div>
+                        </li>
                         <?php
+                        $company_id = 0;
+                        if(!empty($company))
+                            $company_id = $company[0]->ID;
 
-                        if(!empty($company)){
-                                $company_id = $company[0]->ID;
-                                $company_logo = get_field('company_logo', $company_id);
+                        $company_logo = (get_field('company_logo', $company_id)) ? get_field('company_logo', $company_id) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+
                         ?>
                         <li class="nav-link companyButton">
-                            <a href=" <?php if (in_array( 'manager', $user->roles ) || in_array('administrator', $user->roles) ) echo "/dashboard/company";; ?>">
-                                <img class="userBlockNav" src="<?php echo $company_logo;?>" alt="">
-                            </a>
-                        </li>
                         <?php 
-                        }
+                            if($company_id)
+                                if(in_array( 'manager', $user->roles ) || in_array('administrator', $user->roles) )
+                                    $ref_company = "/dashboard/company";
                         ?>
+                            <a href="<?= $ref_company; ?>">
+                                <div class="userBlockNav">
+                                    <img src="<?php echo $company_logo;?>" alt="">
+                                </div>
+                            </a>
+
+                        </li>
+                       
                         <div class="second-element-mobile" id="burgerAndbelief">
                             <button id="burger" class=" btn burgerElement boxSousNav3-2">
                                 <i class="fa fa-bars text-white" style="font-size: 25px"></i>
@@ -229,10 +246,13 @@ $link = ($user) ? '/dashboard/user' : '/';
                                 ?>
                             </div>
                         </li>
+                        <?php
+                        $user_image_account = (get_field('profile_img',  'user_' . $user->ID)) ? get_field('profile_img',  'user_' . $user->ID) :  get_stylesheet_directory_uri() . '/img/placeholder_user.png';  
+                        ?>
 
                         <li class="nav-item item4 dropdown elementWeb" id="profilDropdown">
                             <a href="#" class="nav-link navModife4 btn dropdown-toggle" type="button" id="dropdownNavButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img class="userBlockNav" src="<?php echo get_field('profile_img',  'user_' . $user->ID);?>" alt="">
+                                <img class="userBlockNav" src="<?= $user_image_account; ?>" alt="">
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="/dashboard/user/">Dashboard</a>
