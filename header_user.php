@@ -185,8 +185,10 @@ $link = ($user) ? '/dashboard/user' : '/';
                                 $company_logo = get_field('company_logo', $company_id);
                         ?>
                         <li class="nav-link companyButton">
-                            <a href=" <?php if (in_array( 'manager', $user->roles ) || in_array('administrator', $user->roles) ) echo "/dashboard/company";; ?>">
-                                <img class="userBlockNav" src="<?php echo $company_logo;?>" alt="">
+                            <a  href=" <?php if (in_array( 'manager', $user->roles ) || in_array('administrator', $user->roles) ) echo "/dashboard/company";; ?>">
+                                <div class="userBlockNav">
+                                    <img  src="<?php echo $company_logo;?>" alt="">
+                                </div>
                             </a>
                         </li>
                         <?php 
