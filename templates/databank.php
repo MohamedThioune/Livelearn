@@ -12,11 +12,15 @@
 
 ?>
 
-
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 
 <!-- Content -->
 <body>
@@ -50,6 +54,7 @@
                            <th scope="col">Onderwerp(en)</th>
                            <th scope="col">Status</th>
                            <th scope="col">Author</th>
+                           <th scope="col">Company</th>
                            <th scope="col" class="tdCenter">Optie</th>
                        </tr>
                        </thead>
@@ -58,23 +63,30 @@
                        foreach($courses as $course){
                            if($course->state)
                                continue;
+
+                           //Author Image
                            $image_author = get_field('profile_img',  'user_' . $course->author_id);
                            $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
 
+                           //Company
+                           $company = get_field('company',  'user_' . $course->author_id);
+                           $company_logo = (!empty($company)) ? get_field('company_logo', $company[0]->ID) : get_stylesheet_directory_uri() . '/img/placeholder.png'; 
+                           
                            $state = $course->course_id ? 'present' : 'missing';
                            $key = $course->id;
                            ?>
                            <tr id="<?= $key ?>" class="<?= $state ?>">
                                <td class="textTh"> <img src="<?= $course->image_xml; ?>" alt="image course" width="50" height="50"></td>
-                               <td class="textTh courseDataBank"><a style="color:#212529;font-weight:bold" href="<?= get_permalink($course->course_id) ?>"><?php echo $course->titel; ?></a></td>
+                               <td class="textTh courseDataBank" style="color:#212529;font-weight:bold"><?php echo $course->titel; ?></td>
                                <td class="textTh tdCenter"><?= $course->type; ?></td>
                                <td class="textTh tdCenter"><?= $course->prijs; ?></td>
                                <td class="textTh courseOnderwerpen"><?= $course->onderwerpen; ?></td>
                                <td class="textTh tdCenter"><?= $course->status; ?></td>
-                               <td class="textTh tdCenter"> <img src="<?= $image_author; ?>" alt="image course" width="25" height="25"> </td>
-                               <td class="textTh tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a class="btn-default" target="_blank"  style="background:white" href="id=<?= $key ?>">⚙️</a> </td>
+                               <td class="textTh tdCenter"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo 'No author'; ?></td>
+                               <td class="textTh tdCenter"> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo 'No company'; ?> </td>
+                               <td class="tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a href="/edit-databank?id=<?= $key ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> </td>
                            </tr>
-                           <?php
+                       <?php
                        }
                        ?>
                        </tbody>
@@ -84,7 +96,7 @@
        </div>
    </div>
 
-<!--    <div id="myModal" class="modal">
+   <div id="myModal" class="modal">
         <div class="modal-content modal-content-width m-auto " style="margin-top: 100px !important">
             <div class="modal-header mx-4">
                 <h5 class="modal-title" id="exampleModalLabel">Content</h5>
@@ -108,7 +120,7 @@
                 </div>
             </div>
         </div>
-    </div> -->
+   </div> 
 
 </body>
 

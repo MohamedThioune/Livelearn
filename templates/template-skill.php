@@ -4,6 +4,8 @@
 <?php wp_head(); ?>
 <?php get_header(); ?>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
 
 <?php   
     
@@ -40,16 +42,20 @@
         </div>
     </div>
 </div>
-<div class="groupBtn">
-    <div class="swiper-container swipeContaine2">
-        <div class="swiper-wrapper">
+
+
+<div class="my-5" style="height: 38px !important;">
+    <div class="row logo_slide">       
         <?php foreach($values as $value){ ?>
-            <a href="../sub-topic?subtopic=<?php echo $value->cat_ID ?>" class="swiper-slide swiper-slideM1">
-               <button class="btn btnZorg"><?php echo $value->cat_name ?></button>
-            </a>
-        <?php } ?>
-           
-        </div>
+            <div class="text-center ">
+                <a href="../sub-topic?subtopic=<?php echo $value->cat_ID ?>">
+                    <button class="btn rounded rounded-pill text-secondary h6 mx-4" 
+                    style="background: #E0EFF4 !important; min-width: 250px;">
+                        <strong><?php echo $value->cat_name ?></strong> 
+                    </button>
+                </a>
+            </div>
+        <?php } ?>       
     </div>
 </div>
 <?php
@@ -116,7 +122,44 @@
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
 
+
+<!-- jQuery CDN -->
+<script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- slick Carousel CDN -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
+
 <script>
+
+    // partners slides
+    $('.logo_slide').slick({
+        centerMode: false,
+        centerPadding: '130px',
+        dots: false,
+        slidesToShow: 5,
+        autoplay: true,
+        speed: 400,
+        autoplaySpeed: 1500,
+        arrows: false,
+        responsive: [
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 3,
+                    centerMode: true,
+                    centerPadding: '100px'
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    centerMode: true,
+                    centerPadding: '60px'
+                }
+            }
+        ]
+    });
+    
     var swiper = new Swiper('.swiper-container', {
         slidesPerView: 'auto',
         spaceBetween: 30,

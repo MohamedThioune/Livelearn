@@ -719,7 +719,7 @@ require($page);
                     </a>
                 </div>
                 <div class="swiper-slide swiper-slide3">
-                    <a href="/voor-teacher-2">
+                    <a href="/voor-teachers">
                         <div class="cardModife3">
                             <div class="boxImgCard3">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/hmTableau.png" alt="">

@@ -30,8 +30,7 @@
             'post_type' => 'view', 
             'post_status' => 'publish',
             'author' => $user_id,
-            'posts_per_page' => -1,
-            );
+        );
 
         $views_stat_user = get_posts($args);
 

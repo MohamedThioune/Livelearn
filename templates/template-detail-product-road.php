@@ -193,7 +193,7 @@ $reviews = get_field('reviews', $leerpad->ID);
                                 <?php
                                 if($user_id != 0)
                                     echo "
-                                        <button type='submit' class='' name='interest_save' style='border:none; background:white'> 
+                                        <button type='submit' class='border-0 bg-white' name='interest_save' style='border:none; background:white'> 
                                             <i class='fas fa-bell' style='font-size: 25px;'></i><br>
                                             <span class='textIconeLearning mt-1'>Bewaar</span>
                                         </button>
@@ -203,7 +203,8 @@ $reviews = get_field('reviews', $leerpad->ID);
                                 <?php
                                 if($user_id == 0)
                                     echo "
-                                    <button data-toggle='modal' style='margin-top:-10px' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='' style='border:none; background:white'> 
+                                    <button data-toggle='modal' style='margin-top:-10px' data-target='#SignInWithEmail'  
+                                    aria-label='Close' data-dismiss='modal' type='submit' class='border-0 bg-white' style='border:none; background:white'> 
                                         <i class='fas fa-bell' style='font-size: 25px;'></i><br>
                                         <span class='textIconeLearning mt-1'>Bewaar</spanz>
                                     </button>
