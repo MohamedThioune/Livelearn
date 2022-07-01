@@ -2,66 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitlab-ci.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/Image-109.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/Image-113.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/Image-115.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/Image-117.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/Skills-paspoor.001.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/business-and-trade.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/photo_5897718936634506180_y.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/photo_5897718936634506182_y.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/photo_5897718936634506183_y.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/photo_5897718936634506184_y.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/photo_5897718936634506185_y.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/edit-databank.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/template-contact.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/template-creëren.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/template-mkb.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/template-overview-organisations-5.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/template-uitleggen.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/template-verkopen.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/header_base.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/header_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_user.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Image 97.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/Image-97.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/placeholder_user.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/placeholder_user.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/single-course.php" beforeDir="false" afterPath="$PROJECT_DIR$/single-course.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline-Event.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline-Event.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline-Lezing.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline-Lezing.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline-Masterclass.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline-Masterclass.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline-Training.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline-Training.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline-Workshop.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline-Workshop.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline-default.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline-default.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/check_visibility.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/check_visibility.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/databank.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/databank.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fetch-data-clean.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fetch-data-clean.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/optie-bank.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/optie-bank.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-Onderwer.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-Onderwer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-Ontwikkeladvies.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-Ontwikkeladvies.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-baangerichte.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-baangerichte.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-candidat-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-candidat-home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-category-overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-category-overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-dashboard-core.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-dashboard-core.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-detail-product-road.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-detail-product-road.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-ecosysteme.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-ecosysteme.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-functiegerichte.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-functiegerichte.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-lift-lid.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-lift-lid.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-opleiders.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-opleiders.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-overview-organisations-1.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-zzpers.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-overview-organisations-2.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-grootbedrijf.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-overviewOrganisaties.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-overviewOrganisaties.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-persoonlijke.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-persoonlijke.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-pricing.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-pricing.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-skill.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-skill.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-voor-organisaties.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-organisaties.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-voor-teachers.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-teachers.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/youtube-video-course-playlist.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/youtube-video-course-playlist.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -71,54 +13,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/custom.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="8810" lean-forward="true" selection-start-line="8810" selection-end-line="8810" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="153" column="25" selection-start-line="153" selection-start-column="12" selection-end-line="153" selection-end-column="25" />
-              <folding>
-                <element signature="n#style#0;n#h6#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-                <element signature="n#div#2;n#div#3;n#div#0;n#div#0;n#div#4;n#!!top" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline-default.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="87" column="6" lean-forward="true" selection-start-line="87" selection-start-column="6" selection-end-line="87" selection-end-column="6" />
-              <folding>
-                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline-Event.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="97">
-              <caret line="283" column="18" selection-start-line="283" selection-start-column="18" selection-end-line="283" selection-end-column="18" />
-              <folding>
-                <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="107">
+              <caret line="8926" column="5" lean-forward="true" selection-start-line="8926" selection-start-column="5" selection-end-line="8926" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -127,46 +26,7 @@
         <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline-Lezing.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="247">
-              <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
-              <folding>
-                <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline-Masterclass.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="90" column="10" lean-forward="true" selection-start-line="90" selection-start-column="10" selection-end-line="90" selection-end-column="10" />
-              <folding>
-                <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline-Training.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="92" lean-forward="true" selection-start-line="92" selection-end-line="92" />
-              <folding>
-                <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline-Workshop.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
+              <caret line="93" selection-start-line="93" selection-end-line="93" />
               <folding>
                 <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
@@ -178,8 +38,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/header_user.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="107">
-              <caret line="253" column="13" lean-forward="true" selection-start-line="253" selection-start-column="13" selection-end-line="253" selection-end-column="13" />
+            <state relative-caret-position="3795">
+              <caret line="253" column="13" selection-start-line="253" selection-start-column="13" selection-end-line="253" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -300,13 +160,13 @@
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-home.php" />
         <option value="$PROJECT_DIR$/header_user.php" />
-        <option value="$PROJECT_DIR$/custom.css" />
         <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline-default.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline-Event.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline-Lezing.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline-Masterclass.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline-Training.php" />
         <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline-Workshop.php" />
+        <option value="$PROJECT_DIR$/custom.css" />
       </list>
     </option>
   </component>
@@ -360,8 +220,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -755,18 +615,19 @@
       <workItem from="1656669090788" duration="1141000" />
       <workItem from="1656670905645" duration="1805000" />
       <workItem from="1656675361256" duration="1912000" />
-      <workItem from="1656677763570" duration="1325000" />
+      <workItem from="1656677763570" duration="2100000" />
+      <workItem from="1656682339829" duration="142000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="548851000" />
+    <option name="totallyTimeSpent" value="549768000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1366" height="743" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27121213" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23257576" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -781,7 +642,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.2675367" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.2675367" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -1088,59 +949,55 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
           <caret line="626" column="14" selection-start-line="626" selection-start-column="14" selection-end-line="626" selection-end-column="14" />
-          <folding>
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-            <element signature="n#div#2;n#div#0;n#div#0;n#div#1;n#div#5;n#div#0;n#div#0;n#div#0;n#!!top" />
-            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/header_user.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="253" column="13" lean-forward="true" selection-start-line="253" selection-start-column="13" selection-end-line="253" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/custom.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="8810" lean-forward="true" selection-start-line="8810" selection-end-line="8810" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
+        <state relative-caret-position="2295">
           <caret line="153" column="25" selection-start-line="153" selection-start-column="12" selection-end-line="153" selection-end-column="25" />
-          <folding>
-            <element signature="n#style#0;n#h6#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-            <element signature="n#div#2;n#div#3;n#div#0;n#div#0;n#div#4;n#!!top" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline-default.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="87" column="6" lean-forward="true" selection-start-line="87" selection-start-column="6" selection-end-line="87" selection-end-column="6" />
-          <folding>
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="1305">
+          <caret line="87" column="6" selection-start-line="87" selection-start-column="6" selection-end-line="87" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline-Event.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
+        <state relative-caret-position="4245">
           <caret line="283" column="18" selection-start-line="283" selection-start-column="18" selection-end-line="283" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline-Masterclass.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1350">
+          <caret line="90" column="10" selection-start-line="90" selection-start-column="10" selection-end-line="90" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline-Training.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1380">
+          <caret line="92" selection-start-line="92" selection-end-line="92" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/header_user.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3795">
+          <caret line="253" column="13" selection-start-line="253" selection-start-column="13" selection-end-line="253" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline-Workshop.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="97">
+          <caret line="74" column="13" selection-start-line="74" selection-start-column="13" selection-end-line="74" selection-end-column="13" />
           <folding>
             <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
@@ -1151,7 +1008,7 @@
     <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline-Lezing.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="247">
-          <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
+          <caret line="93" selection-start-line="93" selection-end-line="93" />
           <folding>
             <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
@@ -1159,36 +1016,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline-Masterclass.php">
+    <entry file="file://$PROJECT_DIR$/custom.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="90" column="10" lean-forward="true" selection-start-line="90" selection-start-column="10" selection-end-line="90" selection-end-column="10" />
-          <folding>
-            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline-Training.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="92" lean-forward="true" selection-start-line="92" selection-end-line="92" />
-          <folding>
-            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/single-course-offline-Workshop.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="93" lean-forward="true" selection-start-line="93" selection-end-line="93" />
-          <folding>
-            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#button#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="107">
+          <caret line="8926" column="5" lean-forward="true" selection-start-line="8926" selection-start-column="5" selection-end-line="8926" selection-end-column="5" />
         </state>
       </provider>
     </entry>
