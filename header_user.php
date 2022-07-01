@@ -191,6 +191,16 @@ $link = ($user) ? '/dashboard/user' : '/';
                         </li>
                         <?php 
                         }
+                        else{
+                            $placeholder_company = get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+                        ?>
+                        <li class="nav-link companyButton">
+                            <a href="">
+                                <img class="userBlockNav" src="<?php echo $placeholder_company; ?>" alt="">
+                            </a>
+                        </li>
+                        <?php
+                        }
                         ?>
                         <div class="second-element-mobile" id="burgerAndbelief">
                             <button id="burger" class=" btn burgerElement boxSousNav3-2">
