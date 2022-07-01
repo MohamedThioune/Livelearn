@@ -1,3 +1,8 @@
+<?php
+
+extract($_GET);
+
+?>
 <style>
     .swiper {
         width: 600px;
@@ -74,7 +79,7 @@
                         if(!empty(get_field('preview', $post->ID)))
                             echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
                         else
-                            echo "<img src='" . $thumbnail . "' alt='thumbnail placeholder'>";
+                            echo "<img src='" . $image . "' alt='thumbnail placeholder'>";
                     }else{
                         if(!empty($courses)){
                             if(isset($topic) && isset($lesson))
@@ -87,7 +92,7 @@
                                 if(!empty(get_field('preview', $post->ID)))
                                     echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
                                 else
-                                    echo "<img src='" . $thumbnail . "' alt='thumbnail placeholder'>";
+                                    echo "<img src='" . $image . "' alt='thumbnail placeholder'>";
                         }
                         else{
                             if(isset($lesson))
@@ -98,7 +103,7 @@
                                 if(!empty(get_field('preview', $post->ID)))
                                     echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
                                 else
-                                    echo "<img src='" . $thumbnail . "' alt='thumbnail placeholder'>";
+                                    echo "<img src='" . $image . "' alt='thumbnail placeholder'>";
                         }
                     }
 
@@ -934,6 +939,30 @@
         });
     }
 
+</script>
+
+<script>
+    $("#btn_favorite").click((e)=>
+    {
+        $(e.preventDefault());
+        var user_id =$("#user_id").val();
+        var id =$("#course_id").val();
+
+        $.ajax({
+
+            url:"/like",
+            method:"post",
+            data:{
+                id:id,
+                user_id:user_id,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete_favoured').html(data);
+            }
+        });
+    })
 </script>
 
 

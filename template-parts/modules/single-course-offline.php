@@ -163,15 +163,15 @@
                 <!-- ------------------------------ Start Title livelearn ---------------------------------- -->
                 <div class="titleBlock">
                     <?php
-                        if(!empty($company)){
-                            $company_id = $company[0]->ID;
-                            $company_title = $company[0]->post_title;
-                            $company_logo = get_field('company_logo', $company_id);
+                    if(!empty($company)){
+                        $company_id = $company[0]->ID;
+                        $company_title = $company[0]->post_title;
+                        $company_logo = get_field('company_logo', $company_id);
                     ?>
-                    <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="roundBlack" >
-                        <img width="28" src="<?php echo $company_logo ?>" alt="company logo">
-                    </a>
-                    <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="livelearnText2 text-uppercase"><?php echo $company_title; ?></a>
+                        <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="roundBlack" >
+                            <img width="28" src="<?php echo $company_logo ?>" alt="company logo">
+                        </a>
+                        <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="livelearnText2 text-uppercase"><?php echo $company_title; ?></a>
                     <?php
                         }
                     ?>
