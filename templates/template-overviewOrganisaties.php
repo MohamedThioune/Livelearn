@@ -9,17 +9,17 @@
     <!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
     <div class="modal modalEcosyteme fade " id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
          style="position: absolute; ">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content" style="background: #043356">
+        <div class="modal-dialog" role="document" style="width: 96% !important;">
+            <div class="modal-content">
                 <div class="modal-header border-0">
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true" style="font-size: 20px !important">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body  px-md-5 p-3">
 
-                    <div class="text-center"><h4 class="text-white">Activeer zakelijke </h4></div>
-                    <div class="text-center"><h6 class="text-white">Leeromgeving </h6></div> <br>
+                    <div class="text-center"><h4 style="color:#043356">Activeer zakelijke </h4></div>
+                    <div class="text-center"><h6 style="color:#043356">Leeromgeving </h6></div> <br>
 
                     <form>  
                         <div class="row mb-4">
