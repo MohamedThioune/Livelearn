@@ -4251,6 +4251,7 @@ form {
     margin-bottom: 7px;
     text-transform: none !important;
 }
+
 @media all and (min-width: 300px) and (max-width: 767px) {
     .webReult {
         display: none;
@@ -4449,7 +4450,7 @@ form {
         width: 118px;
     }
     .cardTopBaan {
-        width: 46%;
+        width: 44%;
         margin-right: 10px;
         height: 193px;
     }

@@ -4371,6 +4371,11 @@ body .gform_wrapper ul li.gfield {
     margin: 0px 0 15px !important;
 }
 
+.userBlockNav {
+    border: 1px solid #ffffff !important;
+    background: white;
+}
+
 @media not all and (min-resolution:.001dpcm)
 { @supports (-webkit-appearance:none) and (stroke-color:transparent) {
 
@@ -8797,8 +8802,13 @@ ul#tabs-nav li.active {
 .formModifeChoose .select2-container {
     width: 100% !important;
 }
+.dropdown .userBlockNav{
+    border: none !important;
+}
+
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
+
     .head-ontwikkeladvies h1 {
         font-size: 25px;
         margin-bottom: 20px;
@@ -11089,6 +11099,9 @@ ul#tabs-nav li.active {
         text-align: center;
         font-size: 14px;
         padding: 5px 5px;
+    }
+    .formHeaderUser {
+        display: none;
     }
 
 

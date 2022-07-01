@@ -44,6 +44,8 @@ $table = $wpdb->prefix . 'databank';
   }
 
   $playlists_id = get_field('youtube_playlists', 'user_'. $author_id);
+  if(!$playlists_id)
+    echo '<h3>No news playlists found</h3>';
 
   if(!empty($playlists_id))
     foreach($playlists_id as $playlist_id){
@@ -140,7 +142,7 @@ $table = $wpdb->prefix . 'databank';
       }
     }
   else
-    echo '<h3>No news playlists</h3>';
+    echo '<h3>No news playlists found</h3>';
 
   //Empty youtube channels after parse
   update_field('youtube_playlists', null , 'user_'. $author_id)

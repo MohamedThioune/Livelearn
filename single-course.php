@@ -153,7 +153,6 @@ foreach($users as $user) {
 }
 
 if($post->post_author == 0){
-
     $user_choose = $users_choose[array_rand($users_choose, 1)];
 
     $arg = array(
@@ -161,7 +160,6 @@ if($post->post_author == 0){
         'post_author' => $user_choose,
     );
     wp_update_post($arg); 
-
 }
 
 $image_author = get_field('profile_img',  'user_' . $post->post_author);
