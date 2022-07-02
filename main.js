@@ -341,16 +341,15 @@ jQuery(function($){
         $(".blockSkills").hide();
     });
 
+    
+
     // Pour assessments  backend
     $("#btnStratModal1").click(function() {
         $("#secondBlockAssessmentsBackend").show();
         $(".contentAsessment").hide();
 
     });
-    $("#back1").click(function() {
-        $("#secondBlockAssessmentsBackend").hide();
-        $(".contentAsessment").show();
-    });
+   
     $("#btnStart2").click(function() {
         $("#step1OverviewAssessmentBackend").hide();
         $("#step2OverviewAssessmentBackend").show();
@@ -358,80 +357,6 @@ jQuery(function($){
     $("#btnStart3").click(function() {
         $("#step2OverviewAssessmentBackend").hide();
         $("#step3OverviewAssessmentBackend").show();
-    });
-
-    // Pour assessments frontend
-    $("#btnStratModalfront").click(function() {
-        $("#secondBlockAssessmentsfront").show();
-        $(".contentAsessment").hide();
-
-    });
-    $("#back1front").click(function() {
-        $("#secondBlockAssessmentsfront").hide();
-        $(".contentAsessment").show();
-    });
-    $("#btnStart2front").click(function() {
-        $("#step1OverviewAssessmentfront").hide();
-        $("#step2OverviewAssessmentfront").show();
-    });
-    $("#btnStart3front").click(function() {
-        $("#step2OverviewAssessmentfront").hide();
-        $("#step3OverviewAssessmentfront").show();
-    });
-
-    // Pour assessments full
-    $("#btnStratModalfull").click(function() {
-        $("#secondBlockAssessmentsfull").show();
-        $(".contentAsessment").hide();
-
-    });
-    $("#back1full").click(function() {
-        $("#secondBlockAssessmentsfull").hide();
-        $(".contentAsessment").show();
-    });
-    $("#btnStart2full").click(function() {
-        $("#step1OverviewAssessmentfull").hide();
-        $("#step2OverviewAssessmentfull").show();
-    });
-    $("#btnStart3full").click(function() {
-        $("#step2OverviewAssessmentfull").hide();
-        $("#step3OverviewAssessmentfull").show();
-    });
-
-    // Pour assessments Android
-    $("#btnStratModalAndroid").click(function() {
-        $("#secondBlockAssessmentsAndroid").show();
-        $(".contentAsessment").hide();
-    });
-    $("#back1Android").click(function() {
-        $("#secondBlockAssessmentsAndroid").hide();
-        $(".contentAsessment").show();
-    });
-    $("#btnStart2Android").click(function() {
-        $("#step1OverviewAssessmentAndroid").hide();
-        $("#step2OverviewAssessmentAndroid").show();
-    });
-    $("#btnStart3Android").click(function() {
-        $("#step2OverviewAssessmentAndroid").hide();
-        $("#step3OverviewAssessmentAndroid").show();
-    });
-
-    // Pour assessments IOS
-    $("#btnStratModalIOS").click(function() {
-        $("#secondBlockAssessmentsIOS").show();
-        $(".contentAsessment").hide();
-    });
-    $("#back1IOS").click(function() {
-        $("#secondBlockAssessmentsIOS").hide();
-        $(".contentAsessment").show();
-    });
-    $("#btnStart2IOS").click(function() {
-        $("#step1OverviewAssessmentIOS").hide();
-        $("#step2OverviewAssessmentIOS").show();
-    });
-    $("#btnStart3IOS").click(function() {
-        $("#step2OverviewAssessmentIOS").hide();
-        $("#step3OverviewAssessmentIOS").show();
     });
 
 
