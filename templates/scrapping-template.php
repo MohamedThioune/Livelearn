@@ -52,13 +52,14 @@ if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
             }
             }
         }
-        var_dump($datas);
+        //var_dump($datas);
     foreach ($datas as $key => $article) 
     {
-      $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE  titel='$article[title]' AND  type= 'Artikel' AND short_description='$article[short_description]' AND image_xml='$article[image]'  AND date_multiple='$article[date]' AND long_description='$article[content]' LIMIT 1");
+      $sql = $wpdb->prepare("SELECT titel FROM {$wpdb->prefix}databank WHERE  titel='$article[title]' AND  type= 'Artikel' AND short_description='$article[short_description]' AND image_xml='$article[image]'  AND date_multiple='$article[date]'");
       $result = $wpdb->get_results($sql);
       if (empty($result))
       {
+        
             $status = 'extern';
             //Data to create the course
             $data = array(
