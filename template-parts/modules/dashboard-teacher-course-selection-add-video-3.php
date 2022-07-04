@@ -14,60 +14,61 @@
                 )); 
                 ?>
 
-                <form action="">
-                    <div class="lessonBlock">
-                        <div class="input-group-course">
-                            <label for="">Lesson title</label>
-                            <input type="text">
+                <!-- 
+                    <form action="">
+                        <div class="lessonBlock">
+                            <div class="input-group-course">
+                                <label for="">Lesson title</label>
+                                <input type="text">
+                            </div>
+                            <div class="input-group-course">
+                                <label for="">Lesson description</label>
+                                <input type="text">
+                            </div>
+                            <div class="input-group-course">
+                                <label for="">Lesson data</label>
+                                <input type="file">
+                            </div>
                         </div>
-                        <div class="input-group-course">
-                            <label for="">Lesson description</label>
-                            <input type="text">
-                        </div>
-                        <div class="input-group-course">
-                            <label for="">Lesson data</label>
-                            <input type="file">
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-newDate " data-toggle="modal" data-target="#exampleModalDataLesson">
-                        Add another Data en Lesson
-                    </button>
+                        <button type="button" class="btn btn-newDate " data-toggle="modal" data-target="#exampleModalDataLesson">
+                            Add another Data en Lesson
+                        </button>
 
 
-                    <!-- Modal  Add another Data en Lesson -->
-                    <div class="modal fade" id="exampleModalDataLesson" tabindex="-1" role="dialog" aria-labelledby="exampleModalDataLesson" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Add another Data en Lesson</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="input-group-course">
-                                        <label for="">Lesson title</label>
-                                        <input type="text">
+                        <!-- Modal  Add another Data en Lesson -->
+                        <!--                     
+                        <div class="modal fade" id="exampleModalDataLesson" tabindex="-1" role="dialog" aria-labelledby="exampleModalDataLesson" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Add another Data en Lesson</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
-                                    <div class="input-group-course">
-                                        <label for="">Lesson description</label>
-                                        <input type="text">
+                                    <div class="modal-body">
+                                        <div class="input-group-course">
+                                            <label for="">Lesson title</label>
+                                            <input type="text">
+                                        </div>
+                                        <div class="input-group-course">
+                                            <label for="">Lesson description</label>
+                                            <input type="text">
+                                        </div>
+                                        <div class="input-group-course">
+                                            <label for="">Lesson data</label>
+                                            <input type="file">
+                                        </div>
                                     </div>
-                                    <div class="input-group-course">
-                                        <label for="">Lesson data</label>
-                                        <input type="file">
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-SaveDate">Save</button>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-SaveDate">Save</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                </form>
-
+                    </form> 
+                --> 
 
             </div>
         </div>

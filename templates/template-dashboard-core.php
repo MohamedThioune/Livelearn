@@ -554,10 +554,12 @@ else if(isset($date_add)){
         }
 
         $row_end_date = date("d/m/Y H:i:s", strtotime($end_date[$i]));
-        $row .= $row_end_date .'-'. $row_end_date .'-'. $location[$i] .'-'. $adress[$i] .';';
-
+        $row .= $row_end_date .'-'. $row_end_date .'-'. $location[$i] .'-'. $adress[$i];
+      
         array_push($data_locaties, $row);
     }
+    update_field('data_locaties_xml',$data_locaties, $id);
+
     $path = '/dashboard/teacher/course-selection/?func=add-course&id=' .$id. '&step=4';
 
     header('Location: ' .$path);
