@@ -533,6 +533,36 @@ else if(isset($databank)){
     
 }
 
+else if(isset($date_add)){
+
+    $number_items = count($start_date);
+    $data_locaties = array();
+    $row = "";
+
+    for($i = 0; $i < $number_items; $i++){
+        if(!$start_date[$i])
+            continue;
+
+        $row = "";
+        $row_start_date = date("d/m/Y H:i:s", strtotime($start_date[$i]));
+        $row .= $row_start_date .'-'. $row_start_date .'-'. $location[$i] .'-'. $adress[$i] .';';
+
+        $middles = explode(',', $between_date[$i]);
+        foreach($middles as $middle){
+            $row_middle = date("d/m/Y H:i:s", strtotime($middle));
+            $row .= $row_middle .'-'. $row_middle .'-'. $location[$i] .'-'. $adress[$i] .';';
+        }
+
+        $row_end_date = date("d/m/Y H:i:s", strtotime($end_date[$i]));
+        $row .= $row_end_date .'-'. $row_end_date .'-'. $location[$i] .'-'. $adress[$i] .';';
+
+        array_push($data_locaties, $row);
+    }
+    $path = '/dashboard/teacher/course-selection/?func=add-course&id=' .$id. '&step=4';
+
+    header('Location: ' .$path);
+}
+
 ?>
 <?php wp_head(); ?>
 
