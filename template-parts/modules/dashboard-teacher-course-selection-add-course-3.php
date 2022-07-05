@@ -39,23 +39,33 @@
                     <input type="hidden" name="id" value="<?= $_GET['id']; ?>">
                     <?php
                     foreach($data_en as $key => $datum){
-                        if($key == 0 || $key == count($data_en)){
-                            $datum = $datum['value'];
-                            $data = explode(';', $datum);
+                        $data_between = "";
+                        $datum = $datum['value'];
+                        $data = explode(';', $datum);
 
-                            $data_first = $data[0];
-                            $data_first = explode(' ', explode('-', $data_first)[0])[0];
+                        $data_first = $data[0];
+                        $data_first = explode(' ', explode('-', $data_first)[0])[0];
 
-                            $data_last = $data[count($data)-1];
-                            $data_last = explode(' ', explode('-', $data_last)[0])[0];
+                        $max = intval(count($data)-1);
+                        $data_last = $data[$max];
+                        $data_last = explode(' ', explode('-', $data_last)[0])[0];
 
-                            //Conversion str to date
-                            $data_first = date('Y-m-d',strtotime($data_first));
-                            $data_last = date('Y-m-d',strtotime($data_last));
+                        $data_first = str_replace('/', '.', $data_first);
+                        $data_last = str_replace('/', '.', $data_last);
+
+                        //Conversion str to date
+                        $data_first = date('Y-m-d',strtotime($data_first));
+                        $data_last = date('Y-m-d',strtotime($data_last));
+
+                        if($max > 3){
+                            $slice_array = array_slice( $data, 1, $max-1 );
+                            foreach($slice_array as $key => $slice){
+                                $slice = explode(' ', explode('-', $slice)[0])[0];
+                                $data_between .= $slice;
+                                if(isset($slice_array[$key + 1])) 
+                                    $data_between .= ','; 
+                            }
                         }
-                        else 
-                            null;
-
                     ?>
                     <div class="groupInputDate">
                         <div class="input-group form-group">
@@ -65,7 +75,7 @@
                     </div>
                     <div class="input-group-course">
                         <label for="">Dates between</label>
-                        <input type="text" name="between_date[]"  id="" class="datepicker Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
+                        <input type="text" name="between_date[]"  id="" value="<?= $data_between ?>" class="datepicker Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
                     </div>
                     <div class="groupInputDate">
                         <div class="input-group">
@@ -90,6 +100,7 @@
                     </button>
                     <br><br>
                     <button type="submit" name="date_add" class="btn btn-info">Opslaan & verder</button>
+                    
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModalDate" tabindex="-1" role="dialog" aria-labelledby="exampleModalDateLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
