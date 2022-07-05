@@ -61,6 +61,13 @@
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css'>
         <!-- get bootstrap icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+        
+        <!-- meta property -->
+        <meta property="og:title" content="Livelearn">
+        <meta property="og:type"  content="article" />
+        <meta property="og:description" content="Ontdek, ontwikkel en maak carrière">
+        <meta property="og:image" content="<?php echo get_stylesheet_directory_uri() . '/img/logo_livelearn.png' ?>">
+        <!-- meta property="og:url" content="http://euro-travel-example.com/index.htm"> -->
 
         <title><?php bloginfo('name'); ?></title>
         <?php wp_head(); ?>
