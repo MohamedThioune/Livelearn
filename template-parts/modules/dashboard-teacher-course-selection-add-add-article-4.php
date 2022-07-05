@@ -3,8 +3,12 @@
 
     $members = array();
 
+    $post = get_post($_GET['id']);
+    $author = array($post->post_author);
+    $expert = get_field('experts', $post->ID);    
+
     foreach($users as $user)
-        if(in_array( 'author', $user->roles ) )
+        if(in_array('author', $user->roles) || in_array('teacher', $user->roles))
             array_push($members, $user);   
 ?>
     <div class="row">
@@ -24,6 +28,10 @@
                                     <select name="experts[]" id="autocomplete" class="multipleSelect2" multiple="true">
                                         <?php 
                                             foreach($members as $member) {
+                                                if(in_array($member->ID,$experts)){
+                                                    echo "<option selected value='" . $member->ID ."'>" . $member->display_name . "</option>";
+                                                    continue;
+                                                } 
                                                 echo "<option value='" . $member->ID ."'>" . $member->display_name . "</option>";
                                             }
                                         ?>
