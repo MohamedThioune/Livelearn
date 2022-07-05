@@ -46,8 +46,19 @@
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
 
-?>
+    $choosen_categories = array();
+    $choosen_categorie = get_field('categories', $_GET['id']);
+    if(!$choosen_categorie)
+        $choosen_categorie = get_field('category_xml', $_GET['id']);
 
+    foreach($choosen_categorie as $choosen){
+        if(empty($choosen_categories))
+            $choosen_categories = explode(',', $choosen['value']);
+        else
+            array_merge($choosen_categories, explode(',', $choosen['value']));
+    }
+    
+?>
 
     <div class="row">
         <div class="col-md-5 col-lg-8">
@@ -70,7 +81,19 @@
                                 <select id="form-control-bangers"  form="foo_form" class="multipleSelect2 dropdown" multiple="true">
                                     <?php
                                     //Baangerichts
+                                    $displayed = array();
                                     foreach($bangerichts as $value){
+                                        $state = false;
+                                        $childrens = get_term_children($value->cat_ID, 'course_category');
+                                        foreach($choosen_categories as $element)
+                                            if(in_array($element, $childrens) && !in_array($value->cat_ID, $displayed)){
+                                                echo "<option selected value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                                array_push($displayed, $value->cat_ID);
+                                                $state = true;
+                                            }
+
+                                            if($state)
+                                                continue;
                                         echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
                                     }
                                     ?>
@@ -85,8 +108,18 @@
                                     <?php
                                     //Functies
                                     foreach($functies as $value){
-                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                    }
+                                        $state = false;
+                                        $childrens = get_term_children($value->cat_ID, 'course_category');
+                                        foreach($choosen_categories as $element)
+                                            if(in_array($element, $childrens) && !in_array($element, $displayed)){
+                                                echo "<option selected value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                                array_push($displayed, $element);
+                                                $state = true;
+                                            }
+
+                                            if($state)
+                                                continue;
+                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";                                    }
                                     ?>
                                 </select>
 
@@ -99,8 +132,19 @@
                                     <?php
                                     //Skills
                                     foreach($skills as $value){
-                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                    }
+                                        $displayed = array(); 
+                                        $state = false;
+                                        $childrens = get_term_children($value->cat_ID, 'course_category');
+                                        foreach($choosen_categories as $element)
+                                            if(in_array($element, $childrens) && !in_array($element, $displayed)){
+                                                echo "<option selected value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                                array_push($displayed, $element);
+                                                $state = true;
+                                            }
+
+                                            if($state)
+                                                continue;
+                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";                                    }
                                     ?>
                                 </select>
 
@@ -113,8 +157,18 @@
                                     <?php
                                     //Persoonlikje interesses
                                     foreach($interesses as $value){
-                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                    }
+                                        $state = false;
+                                        $childrens = get_term_children($value->cat_ID, 'course_category');
+                                        foreach($choosen_categories as $element)
+                                            if(in_array($element, $childrens) && !in_array($element, $displayed)){
+                                                echo "<option selected value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                                array_push($displayed, $element);
+                                                $state = true;
+                                            }
+
+                                            if($state)
+                                                continue;
+                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";                                    }
                                     ?>
                                 </select>
 
@@ -144,7 +198,7 @@
                             <div class="circleIndicator passEtape"></div>
                             <p class="textOpleidRight">Opleidingstype</p>
                         </a>
-                        <a href="/dashboard/teacher/course-selection/?func=add-course" class="contentBlockCourse">
+                        <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&step=1" class="contentBlockCourse">
                             <div class="circleIndicator  passEtape"></div>
                             <p class="textOpleidRight">Basis informatie</p>
                         </a>

@@ -7,50 +7,51 @@ $courses = array();
 
 extract($_POST);
 
+$random_id = array(); 
+
 $user = get_current_user_id();
 
-$user_post_view=get_posts(
+$user_post_view = get_posts(
     array(
         'post_type' => 'view',
         'post_status' => 'publish',
         'post_author' => $user,
     )
 )[0];
-$is_view=false;
-if (count($user_post_view)!=0)
-{
-        $is_view=true;
-        $args = array(
-            'post_type' => 'course',
-            'post_status' => 'publish',
-            'posts_per_page' => -1,
-            'order' => 'DESC',
-            );
 
-        $all_courses = get_posts($args);
-        $all_user_views=( get_field('views', $user_post_view->ID));
-        $max_points=6;
-        $course_types=['Opleidingen','Workshop','Masterclass','Event','E-learning','Training','Video'];
-        $recommended_courses=array();
-        foreach ($all_user_views as $key => $view) {
-            foreach ($all_courses as $key => $course) {
-                $points=0;
-               // var_dump(get_field('course_type', $course->ID));
+$is_view=false;
+
+if (count($user_post_view)!= 0)
+{
+    $is_view=true;
+    $args = array(
+        'post_type' => 'course',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+        );
+
+    $all_courses = get_posts($args);
+    $all_user_views = (get_field('views', $user_post_view->ID));
+    $max_points = 6;
+    $course_types = ['Opleidingen', 'Workshop', 'Masterclass','Event','E-learning','Training','Video'];
+    $recommended_courses = array();
+
+    foreach($all_user_views as $key => $view) {
+        foreach ($all_courses as $key => $course) {
+            $points=0;
             if ($view['course'] -> post_author == $course -> post_author) 
                 $points+=4;
             if ($view['course'] -> price >= $course -> price)
                 $points+=2;
                 $percent = abs(($points/$max_points) * 100);
-            if ($percent >= 30) 
+            if ($percent >= 70){
+                array_push($random_id, $course->ID);
                 array_push($recommended_courses, $course);
             }
-            //var_dump($recommended_course);
         }
+    }
 }
-
-
-
-
 
 $subtopics = array(); 
 foreach($categories as $categ){
@@ -168,14 +169,16 @@ foreach($global_courses as $course)
     }
    
 }
-if (count($recommended_courses)==0)
-{
-    $courses = array_merge($courses, $expert_courses);
-    $recommended_courses = $courses;
-} 
+// if (count($recommended_courses)==0)
+// {
+//     $courses = array_merge($courses, $expert_courses);
+//     $recommended_courses = $courses;
+//     $random_id = $courses_id;
+// } 
+
 //Activitien
 $activitiens = count($courses);
-
+shuffle($recommended_courses);
 /*
 * *   
 */
