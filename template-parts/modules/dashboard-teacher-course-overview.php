@@ -11,10 +11,10 @@ if($id){
 
     $courses = get_posts($args);
 }
-$artikel_single = "artikel";
-$white_type_array =  ['reading', 'event'];
-$course_type_array = ['course', 'workshop', 'training', 'masterclass', 'cursus'];
-$video_single = "video";
+$artikel_single = "Artikel";
+$white_type_array =  ['Lezing', 'Event'];
+$course_type_array = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'Cursus'];
+$video_single = "Video";
 
 
 ?>
