@@ -46,6 +46,18 @@
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
 
+    $choosen_categories = array();
+    $choosen_categorie = get_field('categories', $_GET['id']);
+    if(!$choosen_categorie)
+        $choosen_categorie = get_field('category_xml', $_GET['id']);
+
+    foreach($choosen_categorie as $choosen){
+        if(empty($choosen_categories))
+            $choosen_categories = explode(',', $choosen['value']);
+        else
+            array_merge($choosen_categories, explode(',', $choosen['value']));
+    }
+
 ?>
 
 
@@ -53,19 +65,38 @@
         <div class="col-md-5 col-lg-8">
             <div class="cardCoursGlocal">
                 <div id="basis" class="w-100">
-                
+                    <?php 
+                    if(!isset($step2)){     
+                    ?>
                     <div class="titleOpleidingstype">
                         <h2>TAGS</h2>
                     </div>
+                    <?php
+                    }
+                    ?>
+
                     <form id="step1">
                         <div class="acf-field">
-                            <label for="locate">Baangerichte :</label><br>
+                            <input type="hidden" id="course_id" value="<?= $_GET['id'] ?>">
+                            <label for="locate">Specifieke baan :</label><br>
                             <div class="form-group formModifeChoose">
 
                                 <select id="form-control-bangers"  form="foo_form" class="multipleSelect2 dropdown" multiple="true">
                                     <?php
                                     //Baangerichts
+                                    $displayed = array();
                                     foreach($bangerichts as $value){
+                                        $state = false;
+                                        $childrens = get_term_children($value->cat_ID, 'course_category');
+                                        foreach($choosen_categories as $element)
+                                            if(in_array($element, $childrens) && !in_array($value->cat_ID, $displayed)){
+                                                echo "<option selected value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                                array_push($displayed, $value->cat_ID);
+                                                $state = true;
+                                            }
+
+                                            if($state)
+                                                continue;
                                         echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
                                     }
                                     ?>
@@ -73,43 +104,74 @@
 
                             </div>
 
-                            <label for="locate">Functiegerichte :</label><br>
+                            <label for="locate">Functies :</label><br>
                             <div class="form-group formModifeChoose">
 
                                 <select id="form-control-functs" class="multipleSelect2" multiple="true">
                                     <?php
                                     //Functies
                                     foreach($functies as $value){
-                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                    }
+                                        $state = false;
+                                        $childrens = get_term_children($value->cat_ID, 'course_category');
+                                        foreach($choosen_categories as $element)
+                                            if(in_array($element, $childrens) && !in_array($element, $displayed)){
+                                                echo "<option selected value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                                array_push($displayed, $element);
+                                                $state = true;
+                                            }
+
+                                            if($state)
+                                                continue;
+                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";                                    }
                                     ?>
                                 </select>
 
                             </div>
 
-                            <label for="locate">Skill :</label><br>
+                            <label for="locate">Skills :</label><br>
                             <div class="form-group formModifeChoose">
 
                                 <select id="form-control-skills" class="multipleSelect2" multiple="true">
                                     <?php
                                     //Skills
                                     foreach($skills as $value){
-                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                    }
+                                        $displayed = array(); 
+                                        $state = false;
+                                        $childrens = get_term_children($value->cat_ID, 'course_category');
+                                        foreach($choosen_categories as $element)
+                                            if(in_array($element, $childrens) && !in_array($element, $displayed)){
+                                                echo "<option selected value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                                array_push($displayed, $element);
+                                                $state = true;
+                                            }
+
+                                            if($state)
+                                                continue;
+                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";                                    }
                                     ?>
                                 </select>
 
                             </div>
 
-                            <label for="locate">Persoonlijke :</label><br>
+                            <label for="locate">Persoonlikje interesses :</label><br>
                             <div class="form-group formModifeChoose">
 
                                 <select id="form-control-interess" class="multipleSelect2" multiple="true">
                                     <?php
                                     //Persoonlikje interesses
                                     foreach($interesses as $value){
-                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                    }
+                                        $state = false;
+                                        $childrens = get_term_children($value->cat_ID, 'course_category');
+                                        foreach($choosen_categories as $element)
+                                            if(in_array($element, $childrens) && !in_array($element, $displayed)){
+                                                echo "<option selected value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                                array_push($displayed, $element);
+                                                $state = true;
+                                            }
+
+                                            if($state)
+                                                continue;
+                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";                                    }
                                     ?>
                                 </select>
 
@@ -121,7 +183,6 @@
 
                     <form action=<?="?func=add-add-article&id=".$_GET['id']."&step=4"?> method='post'>
                         <div class='acf-field' id="autocomplete_ajax">
-
                         </div>
                     </form>
                    
