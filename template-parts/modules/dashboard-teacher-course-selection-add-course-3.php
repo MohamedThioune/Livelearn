@@ -6,7 +6,7 @@
         var selectedDates = [];
         datePicker = $('[class*=Txt_Date]').datepicker({
             multidate: true,
-            format: 'mm/dd/yyyy ',
+            format: 'dd/mm/yyyy ',
             todayHighlight: true,
 
             language: 'en'
@@ -25,7 +25,7 @@
 
 <?php
     $data_en = get_field('data_locaties_xml', $_GET['id']);
-    print_r($dat_en[0]);
+    print_r($data_en[0]['value']);
 ?>
 <div class="row">
     <div class="col-md-5 col-lg-8">
@@ -37,10 +37,30 @@
                 
                 <form action="" method="POST">
                     <input type="hidden" name="id" value="<?= $_GET['id']; ?>">
+                    <?php
+                    foreach($data_en as $key => $datum){
+                        if($key == 0 || $key == count($data_en)){
+                            $datum = $datum['value'];
+                            $data = explode(';', $datum);
+
+                            $data_first = $data[0];
+                            $data_first = explode(' ', explode('-', $data_first)[0])[0];
+
+                            $data_last = $data[count($data)-1];
+                            $data_last = explode(' ', explode('-', $data_last)[0])[0];
+
+                            //Conversion str to date
+                            $data_first = date('Y-m-d',strtotime($data_first));
+                            $data_last = date('Y-m-d',strtotime($data_last));
+                        }
+                        else 
+                            null;
+
+                    ?>
                     <div class="groupInputDate">
                         <div class="input-group form-group">
                             <label for="">Start date</label>
-                            <input type="date" name="start_date[]" required>
+                            <input type="date" name="start_date[]" value="<?= $data_first ?>" required>
                         </div>
                     </div>
                     <div class="input-group-course">
@@ -50,7 +70,7 @@
                     <div class="groupInputDate">
                         <div class="input-group">
                             <label for="">End date</label>
-                            <input type="date" name="end_date[]" required>
+                            <input type="date" name="end_date[]" value="<?= $data_last ?>"  required>
                         </div>
                     </div>
                     <div class="input-group-course">
@@ -61,6 +81,10 @@
                         <label for="">Adress</label>
                         <input type="text" name="adress[]">
                     </div>
+                    <?php
+                    }
+                    ?>
+
                     <button type="button" class="btn btn-newDate" data-toggle="modal" data-target="#exampleModalDate">
                        Complete with another section
                     </button>
@@ -123,31 +147,31 @@
                     <div class="circleIndicator passEtape"></div>
                     <p class="textOpleidRight">Opleidingstype</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&step=1" class="contentBlockCourse">
-                    <div class="circleIndicator  passEtape"></div>
+                <a href="/dashboard/teacher/course-selection/?func=add-course<?php if(isset($_GET['edit'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&step=1&edit'; ?>" class="contentBlockCourse">
+                    <div class="circleIndicator passEtape"></div>
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>
                 <?php if(isset($_GET['id'])){ ?>
-                    <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=2" class="contentBlockCourse">
-                        <div class="circleIndicator passEtape"></div>
-                        <p class="textOpleidRight">Uitgebreide beschrijving</p>
-                    </a>
-                    <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=3" class="contentBlockCourse">
-                        <div class="circleIndicator passEtape2"></div>
-                        <p class="textOpleidRight ">Data en locaties</p>
-                    </a>
-                    <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=4" class="contentBlockCourse">
-                        <div class="circleIndicator"></div>
-                        <p class="textOpleidRight">Details en onderwepren</p>
-                    </a>
-                    <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=5" class="contentBlockCourse">
-                        <div class="circleIndicator"></div>
-                        <p class="textOpleidRight">Tags</p>
-                    </a>
-                    <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=6" class="contentBlockCourse">
-                        <div class="circleIndicator"></div>
-                        <p class="textOpleidRight">Experts</p>
-                    </a>
+                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=2&edit" class="contentBlockCourse">
+                    <div class="circleIndicator passEtape"></div>
+                    <p class="textOpleidRight">Uitgebreide beschrijving</p>
+                </a>
+                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=3&edit" class="contentBlockCourse">
+                    <div class="circleIndicator passEtape2"></div>
+                    <p class="textOpleidRight ">Data en locaties</p>
+                </a>
+                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=4&edit" class="contentBlockCourse">
+                    <div class="circleIndicator"></div>
+                    <p class="textOpleidRight">Details en onderwepren</p>
+                </a>
+                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=5&edit" class="contentBlockCourse">
+                    <div class="circleIndicator"></div>
+                    <p class="textOpleidRight">Tags</p>
+                </a>
+                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=6&edit" class="contentBlockCourse">
+                    <div class="circleIndicator"></div>
+                    <p class="textOpleidRight">Experts</p>
+                </a>
                 <?php } ?>
             </div>
         </div>
