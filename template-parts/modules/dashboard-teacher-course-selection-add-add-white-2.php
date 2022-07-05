@@ -39,22 +39,22 @@
         <div class="blockCourseToevoegen">
             <p class="courseToevoegenText">Course toevoegen</p>
             <div class="contentBlockRight">
-            <a href="/dashboard/teacher/course-selection/?func=add-white&id=<?php echo $_GET['id'];?>" class="contentBlockCourse">
-                            <div class="circleIndicator  passEtape"></div>
-                            <p class="textOpleidRight">Basis informatie</p>
-                        </a>
-                        <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=2" class="contentBlockCourse">
-                            <div class="circleIndicator passEtape2"></div>
-                            <p class="textOpleidRight">Online or location</p>
-                        </a>
-                        <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=3" class="contentBlockCourse">
-                            <div class="circleIndicator passEtape2"></div>
-                            <p class="textOpleidRight ">Tags</p>
-                        </a>
-                        <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=4" class="contentBlockCourse">
-                            <div class="circleIndicator passEtape2"></div>
-                            <p class="textOpleidRight">Expert</p>
-                        </a>
+                <a href="/dashboard/teacher/course-selection/?func=add-white&id=<?php if(isset($_GET['edit'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
+                    <div class="circleIndicator  passEtape"></div>
+                    <p class="textOpleidRight">Basis informatie</p>
+                </a>
+                <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=2&edit" class="contentBlockCourse">
+                    <div class="circleIndicator passEtape2"></div>
+                    <p class="textOpleidRight">Online or location</p>
+                </a>
+                <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=3&edit" class="contentBlockCourse">
+                    <div class="circleIndicator"></div>
+                    <p class="textOpleidRight ">Tags</p>
+                </a>
+                <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=4&edit" class="contentBlockCourse">
+                    <div class="circleIndicator"></div>
+                    <p class="textOpleidRight">Expert</p>
+                </a>
             </div>
         </div>
     </div>

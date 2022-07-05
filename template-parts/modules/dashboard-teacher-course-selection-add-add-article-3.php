@@ -195,22 +195,24 @@
                 <div class="blockCourseToevoegen">
                     <p class="courseToevoegenText">Course toevoegen</p>
                     <div class="contentBlockRight">
-                        <a href="/dashboard/teacher/course-selection/?func=add-article&id=<?php echo $_GET['id'];?>&step=1" class="contentBlockCourse">
-                            <div class="circleIndicator  passEtape"></div>
+                        <a href="/dashboard/teacher/course-selection/?func=add-article<?php if(isset($_GET['edit'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
+                            <div class="circleIndicator passEtape"></div>
                             <p class="textOpleidRight">Basis informatie</p>
                         </a>
-                        <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=2" class="contentBlockCourse">
+                        <?php if(isset($_GET['id'])){ ?>
+                        <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=2&edit" class="contentBlockCourse">
                             <div class="circleIndicator passEtape"></div>
                             <p class="textOpleidRight">Article Itself</p>
                         </a>
-                        <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=3" class="contentBlockCourse">
+                        <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=3&edit" class="contentBlockCourse">
                             <div class="circleIndicator passEtape2"></div>
                             <p class="textOpleidRight">Tags</p>
                         </a>
-                        <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=4" class="contentBlockCourse">
-                            <div class="circleIndicator passEtape2"></div>
+                        <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=4&edit" class="contentBlockCourse">
+                            <div class="circleIndicator "></div>
                             <p class="textOpleidRight">Experts</p>
                         </a>
+                        <?php } ?>
                     </div>
                 </div>
 
