@@ -200,7 +200,7 @@
                             <div class="circleIndicator passEtape"></div>
                             <p class="textOpleidRight">Opleidingstype</p>
                         </a>
-                        <a href="/dashboard/teacher/course-selection/?func=add-course<?php if(isset($_GET['edit'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&step=1&edit'; ?>" class="contentBlockCourse">
+                        <a href="/dashboard/teacher/course-selection/?func=add-course<?php if(isset($_GET['edit'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
                             <div class="circleIndicator passEtape"></div>
                             <p class="textOpleidRight">Basis informatie</p>
                         </a>
@@ -228,7 +228,6 @@
                         <?php } ?>
                     </div>
                 </div>
-
             </div>
         <?php 
             }     

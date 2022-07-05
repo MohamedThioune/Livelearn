@@ -100,7 +100,7 @@
                     </button>
                     <br><br>
                     <button type="submit" name="date_add" class="btn btn-info">Opslaan & verder</button>
-                    
+
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModalDate" tabindex="-1" role="dialog" aria-labelledby="exampleModalDateLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -158,7 +158,7 @@
                     <div class="circleIndicator passEtape"></div>
                     <p class="textOpleidRight">Opleidingstype</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-course<?php if(isset($_GET['edit'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&step=1&edit'; ?>" class="contentBlockCourse">
+                <a href="/dashboard/teacher/course-selection/?func=add-course<?php if(isset($_GET['edit'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
                     <div class="circleIndicator passEtape"></div>
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>
