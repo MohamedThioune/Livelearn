@@ -45,30 +45,30 @@
                     <p class="textOpleidRight">Opleidingstype</p>
                 </a>
                 <a href="/dashboard/teacher/course-selection/?func=add-course" class="contentBlockCourse">
-                    <div class="circleIndicator  passEtape2"></div>
+                    <div class="circleIndicator passEtape2"></div>
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>
                 <?php if(isset($_GET['id'])){ ?>
-                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&step=2" class="contentBlockCourse">
-                    <div class="circleIndicator"></div>
-                    <p class="textOpleidRight">Uitgebreide beschrijving</p>
-                </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&step=3" class="contentBlockCourse">
-                    <div class="circleIndicator"></div>
-                    <p class="textOpleidRight ">Data en locaties</p>
-                </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&step=4" class="contentBlockCourse">
-                    <div class="circleIndicator"></div>
-                    <p class="textOpleidRight">Details en onderwepren</p>
-                </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&step=5" class="contentBlockCourse">
-                    <div class="circleIndicator"></div>
-                    <p class="textOpleidRight">Tags</p>
-                </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&step=6" class="contentBlockCourse">
-                    <div class="circleIndicator"></div>
-                    <p class="textOpleidRight">Experts</p>
-                </a>
+                    <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=2" class="contentBlockCourse">
+                        <div class="circleIndicator"></div>
+                        <p class="textOpleidRight">Uitgebreide beschrijving</p>
+                    </a>
+                    <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=3" class="contentBlockCourse">
+                        <div class="circleIndicator"></div>
+                        <p class="textOpleidRight ">Data en locaties</p>
+                    </a>
+                    <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=4" class="contentBlockCourse">
+                        <div class="circleIndicator"></div>
+                        <p class="textOpleidRight">Details en onderwepren</p>
+                    </a>
+                    <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=5" class="contentBlockCourse">
+                        <div class="circleIndicator"></div>
+                        <p class="textOpleidRight">Tags</p>
+                    </a>
+                    <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=6" class="contentBlockCourse">
+                        <div class="circleIndicator"></div>
+                        <p class="textOpleidRight">Experts</p>
+                    </a>
                 <?php } ?>
             </div>
         </div>
