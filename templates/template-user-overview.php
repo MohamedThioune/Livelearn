@@ -1,7 +1,11 @@
 <?php /** Template Name: user overview */ ?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
-<?php    
+<?php 
+    global $wp;
+
+    $url = home_url( $wp->request ); 
+
     $page = dirname(__FILE__) . '/check_visibility.php';
     require($page); 
 
@@ -239,7 +243,7 @@
                 <div class="modal-body  px-md-5 p-3">
                     <?php
                     wp_login_form([
-                        'redirect' => 'http://wp12.influid.nl/dashboard/user/',
+                        'redirect' => $url,
                         'remember' => false,
                         'label_username' => 'Wat is je e-mailadres?',
                         'placeholder_email' => 'E-mailadress',
