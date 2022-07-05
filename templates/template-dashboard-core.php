@@ -511,6 +511,7 @@ else if(isset($databank)){
         $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'long_description' => $long_description, 'for_who' => $for_who, 'agenda' => $agenda, 'results' => $results, 'prijs' => $prijs, 'prijs_vat' => $prijs_vat, 'onderwerpen' => $onderwerpen, 'level' => $level, 'language' => $language, 'author_id' => $author_id, 'company_id' => $company_id ]; // NULL value.
     else 
         $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'prijs' => $prijs, 'onderwerpen' => $onderwerpen, 'author_id' => $author_id, 'company_id' => $company_id ]; // NULL value.
+    
     $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 
     $updated = $wpdb->update( $table, $data, $where );
@@ -518,8 +519,8 @@ else if(isset($databank)){
     if($updated === false){
         if(isset($complete))
             $message = "/edit-databank?id=" . $id . "&message=Something went wrong !"; 
-        else 
-            $message = "/databank/?message=Something went wrong !"; 
+        else
+            $message = "/databank/?message=" . $wpdb->last_error;
         header("Location: ". $message);
         return false; 
     }else{ 

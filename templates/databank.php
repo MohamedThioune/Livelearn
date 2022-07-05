@@ -2,11 +2,11 @@
 
 <?php
 
- global $wpdb;
+global $wpdb;
 
- $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank ORDER BY id DESC");
- $courses = $wpdb->get_results( $sql );
- $user = wp_get_current_user();
+$sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank ORDER BY id DESC");
+$courses = $wpdb->get_results( $sql );
+$user = wp_get_current_user();
 
 ?>
 
