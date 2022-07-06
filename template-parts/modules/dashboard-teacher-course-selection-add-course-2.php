@@ -7,16 +7,16 @@
                     <h2>2.Uitgebreide beschrijving</h2>
                 </div>
                 <?php
-                 
-                acf_form(array(
-                    'post_id'       => $_GET['id'],
-                    'field_groups' => array('group_6155d485977f6'),
-                    'submit_value'  => __('Opslaan & verder'),
-                    'return' => '?func=add-course&id=%post_id%&step=3'
-                )); 
+                    $offline = ['course','training','masterclass','cursus'];
+                    if(in_array($_GET['type'], $offline))
+                        update_field('course_type', $_GET['type'], $_GET['id']);
 
-                update_field('course_type', 'Opleidingen', $_GET['id']);
-
+                    acf_form(array(
+                        'post_id'       => $_GET['id'],
+                        'field_groups' => array('group_6155d485977f6'),
+                        'submit_value'  => __('Opslaan & verder'),
+                        'return' => '?func=add-course&id=%post_id%&step=3'
+                    )); 
                 ?>
             </div>
         </div>
@@ -29,28 +29,28 @@
                     <div class="circleIndicator passEtape"></div>
                     <p class="textOpleidRight">Opleidingstype</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-course" class="contentBlockCourse">
-                    <div class="circleIndicator  passEtape"></div>
+                <a href="/dashboard/teacher/course-selection/?func=add-course<?php echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
+                    <div class="circleIndicator passEtape"></div>
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>
                 <?php if(isset($_GET['id'])){ ?>
-                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&step=2" class="contentBlockCourse">
+                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=2&edit" class="contentBlockCourse">
                     <div class="circleIndicator passEtape2"></div>
                     <p class="textOpleidRight">Uitgebreide beschrijving</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&step=3" class="contentBlockCourse">
+                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=3&edit" class="contentBlockCourse">
                     <div class="circleIndicator"></div>
                     <p class="textOpleidRight ">Data en locaties</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&step=4" class="contentBlockCourse">
+                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=4&edit" class="contentBlockCourse">
                     <div class="circleIndicator"></div>
                     <p class="textOpleidRight">Details en onderwepren</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&step=5" class="contentBlockCourse">
+                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=5&edit" class="contentBlockCourse">
                     <div class="circleIndicator"></div>
                     <p class="textOpleidRight">Tags</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&step=6" class="contentBlockCourse">
+                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=6&edit" class="contentBlockCourse">
                     <div class="circleIndicator"></div>
                     <p class="textOpleidRight">Experts</p>
                 </a>

@@ -79,40 +79,40 @@ foreach($categories as $categ){
 
 if ( isset ($id) ) {
 
-$input = 'id';
-$sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
+    $input = 'id';
+    $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
 
-$course = $wpdb->get_results( $sql )[0];
+    $course = $wpdb->get_results( $sql )[0];
 
-//array typos
-$typos = ['Opleidingen' => 'course', 'Training' => 'training', 'Workshop' => 'workshop', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'Video' => 'video', 'Artikel' => 'article', 'Assessment' => 'assessment', 'Lezing' => 'reading', 'Cursus' => 'cursus' ,'Event' => 'event', 'Webinar' => 'webinar' ];
+    //array typos
+    $typos = ['Opleidingen' => 'course', 'Training' => 'training', 'Workshop' => 'workshop', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'Video' => 'video', 'Artikel' => 'article', 'Assessment' => 'assessment', 'Lezing' => 'reading', 'Cursus' => 'cursus' ,'Event' => 'event', 'Webinar' => 'webinar' ];
 
-//array levels
-$levels = ['NVT' => 'n.v.t', 'MBO1' => 'mbo1', 'MBO2' => 'mbo2', 'MBO3' => 'mbo3', 'MBO4' => 'mbo4', 'HBO' => 'hbo', 'Universiteit' => 'university', 'Certificate' => 'certificate'];
+    //array levels
+    $levels = ['NVT' => 'n.v.t', 'MBO1' => 'mbo1', 'MBO2' => 'mbo2', 'MBO3' => 'mbo3', 'MBO4' => 'mbo4', 'HBO' => 'hbo', 'Universiteit' => 'university', 'Certificate' => 'certificate'];
 
-//array language 
-$languages = ['English', 'Dutch', 'German', 'French'];
+    //array language 
+    $languages = ['English', 'Dutch', 'German', 'French'];
 
-$onderwerpen = explode(',', $course->onderwerpen);
+    $onderwerpen = explode(',', $course->onderwerpen);
 
-$users = get_users();
+    $users = get_users();
 
 
-$short_description = $course->short_description ? $course->short_description : 'Please fill in the resume';
+    $short_description = $course->short_description ? $course->short_description : 'Please fill in the resume';
 
-$company = get_field('company',  'user_' . $course->author_id)[0];
+    $company = get_field('company',  'user_' . $course->author_id)[0];
 
-$args = array(
-    'post_type' => 'company', 
-    'post_status' => 'publish',
-    'posts_per_page' => -1,
-    'order' => 'DESC',
-);
-$companies = get_posts($args);
+    $args = array(
+        'post_type' => 'company', 
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+    );
+    $companies = get_posts($args);
 
-/*
-* * Display forms w/ correct elements
-*/
+    /*
+    * * Display forms w/ correct elements
+    */
 
     echo '<input type="hidden" name="id" value="' . $course->id . '">';
 
@@ -156,52 +156,10 @@ $companies = get_posts($args);
     echo '<div class="form-group"> 
           <textarea name="short_description" class="form-control" rows="3" cols="30">' . $short_description . '</textarea><br>
           </div>';
-
-    /*
-    * * Target 
-    echo '<div class="form-group"> 
-          <textarea name="for_who" class="form-control" rows="5" cols="30">' . $course->for_who . '</textarea>
-          <textarea name="agenda" class="form-control" rows="5" cols="30">' . $course->agenda . '</textarea>
-          <textarea name="results" class="form-control" rows="5" cols="30">' . $course->results . '</textarea>
-          </div>';
-    */
-
-    //Date Multiple
-    /** Intruction code here ... */
-
-    /*
-    * * Levels 
-    echo '<div class="form-group"> 
-          <select class="multipleSelect2" id="selected_subtopics">';
-            foreach($levels as $key=>$level){
-                if($course->level == $key)
-                    echo '<option selected value="'. $level . '">' . $key . '</option>';
-                else
-                    echo '<option value="'. $level . '">' . $key . '</option>';
-            }
-    echo '</select>
-          </div>';
-    */
-
-
-    /*
-    * * Languages 
-    echo '<div class="form-group"> 
-          <select class="multipleSelect2" id="selected_subtopics">';
-            foreach($languages as $language){
-                if($course->language == $language)
-                    echo '<option selected value="'. $language . '">' . $language . '</option>';
-                else
-                    echo '<option value="'. $language . '">' . $language . '</option>';
-            }
-    echo '</select>
-          </div>';
-    */
-
     
     //Expert
     echo '<div class="form-group"> 
-          <select class="multipleSelect2" name="author_id" id="selected_subtopics" multiple="true">';
+          <select class="multipleSelect2" name="author_id" id="selected_subtopics">';
             if($course->author_id != 0)
                 foreach($users as $user)
                     if($user->ID == $course->author_id)
@@ -213,22 +171,20 @@ $companies = get_posts($args);
                 foreach($users as $user)
                     echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
             }
-           
     echo '</select>
           </div>';
 
     //Company
     echo '<div class="form-group"> 
-        <select class="multipleSelect2" name="company_id" id="selected_subtopics">';
-          if(!empty($company))
-            echo '<option selected value="'. $company->ID . '">' . $company->post_title . '</option>';
-          else{
-            echo '<option value=""></option>';
-            foreach($companies as $companie)
-                echo '<option value="'. $companie->ID . '">' . $companie->post_title . '</option>';
-          }
-            
-  echo  '</select>
+            <select class="multipleSelect2" name="company_id" id="selected_subtopics">';
+            if(!empty($company))
+                echo '<option selected value="'. $company->ID . '">' . $company->post_title . '</option>';
+            else{
+                echo '<option value=""></option>';
+                foreach($companies as $companie)
+                    echo '<option value="'. $companie->ID . '">' . $companie->post_title . '</option>';
+            }
+    echo  '</select>
         </div>';
 
 

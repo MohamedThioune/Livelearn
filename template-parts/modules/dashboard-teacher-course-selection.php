@@ -5,22 +5,22 @@
                 <h2>1. Kies opleidingstype</h2>
             </div>
             <div class="cardCoursGlocal">
-                <a href="?func=add-course" class="cardCours cardCoursInitial" >
+                <a href="?func=add-course&type=course" class="cardCours cardCoursInitial" >
                     <p class="contentText">
                         <b>Opleiding</b>
                     </p>
                 </a>
-                <a href="?func=add-offline&type=training" class="cardCours cardCoursInitial" >
+                <a href="?func=add-course&type=training" class="cardCours cardCoursInitial" >
                     <p class="contentText">
                         <b>Training</b><br />
                     </p>
                 </a>
-                <a href="?func=add-workshop" class="cardCours cardCoursInitial" >
+                <a href="?func=add-course&type=workshop" class="cardCours cardCoursInitial" >
                     <p class="contentText">
                         <b>Workshop</b>
                     </p>
                 </a>
-                <a href="?func=add-offline&type=masterclass" class="cardCours cardCoursInitial" >
+                <a href="?func=add-course&type=masterclass" class="cardCours cardCoursInitial" >
                     <p class="contentText">
                         <b>Masterclass</b>
                     </p>

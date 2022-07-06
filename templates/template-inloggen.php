@@ -38,7 +38,7 @@
                             <div class="form-block">
                                 <?php
                                 wp_login_form([
-                                    'redirect' => 'http://wp12.influid.nl/dashboard/user/',
+                                    'redirect' => '/dashboard/user/',
                                     'remember' => false,
                                     'label_username' => 'Wat is je e-mailadres?',
                                     'placeholder_email' => 'E-mailadress',

@@ -5,7 +5,20 @@
   $banger = "";
   $functie = "";
   $skill = "";
-  $interes = "";
+  $interes = ""; 
+
+  $choosen_categories = array();
+  $choosen_categorie = get_field('categories', $course_id);
+  if(!$choosen_categorie)
+      $choosen_categorie = get_field('category_xml', $course_id);
+
+  foreach($choosen_categorie as $choosen){
+      if(empty($choosen_categories))
+          $choosen_categories = explode(',', $choosen['value']);
+      else
+          array_merge($choosen_categories, explode(',', $choosen['value']));
+  }
+
   
   foreach($bangers as $key=>$tag){
     if($key==0)
@@ -25,9 +38,14 @@
                        <div class='form-group formModifeChoose'>
                         <select name='hashtag_banger[]' id='form-control' class='multipleSelect2' multiple='true'>";
 
-    foreach($cats as $value)
+    foreach($cats as $value){
+      if(in_array($value->cat_ID, $choosen_categories )){
+        $row_third .= "<option selected value='" . $value->cat_ID ."'>" . $value->cat_name . "</option>";
+        continue;
+      }
       $row_third .= "<option value='" . $value->cat_ID ."'>" . $value->cat_name . "</option>";
-
+    }
+                    
     $row_secondary .= $row_third . "</select>
                     </div>";
     $banger .= $row_secondary;
@@ -51,8 +69,13 @@
                        <div class='form-group formModifeChoose'>
                         <select name='hashtag_funct[]' id='form-control' class='multipleSelect2' multiple='true'>";
 
-    foreach($cats as $value)
+    foreach($cats as $value){
+      if(in_array($value->cat_ID, $choosen_categories )){
+        $row_third .= "<option selected value='" . $value->cat_ID ."'>" . $value->cat_name . "</option>";
+        continue;
+      }
       $row_third .= "<option value='" . $value->cat_ID ."'>" . $value->cat_name . "</option>";
+    }
 
     $row_secondary .= $row_third . "</select>
                     </div>";
@@ -77,9 +100,13 @@
                        <div class='form-group formModifeChoose'>
                         <select name='hashtag_skill[]' id='form-control' class='multipleSelect2' multiple='true'>";
 
-    foreach($cats as $value)
+    foreach($cats as $value){
+      if(in_array($value->cat_ID, $choosen_categories )){
+        $row_third .= "<option selected value='" . $value->cat_ID ."'>" . $value->cat_name . "</option>";
+        continue;
+      }
       $row_third .= "<option value='" . $value->cat_ID ."'>" . $value->cat_name . "</option>";
-
+    }
     $row_secondary .= $row_third . "</select>
                     </div>";
     $skill .= $row_secondary;
@@ -103,9 +130,14 @@
                        <div class='form-group formModifeChoose'>
                         <select name='hashtag_interes[]' id='form-control' class='multipleSelect2' multiple='true'>";
 
-    foreach($cats as $value)
+    foreach($cats as $value){
+      if(in_array($value->cat_ID, $choosen_categories )){
+        $row_third .= "<option selected value='" . $value->cat_ID ."'>" . $value->cat_name . "</option>";
+        continue;
+      }
       $row_third .= "<option value='" . $value->cat_ID ."'>" . $value->cat_name . "</option>";
-
+    }
+                    
     $row_secondary .= $row_third . "</select>
                     </div>";
     $interes .= $row_secondary;
