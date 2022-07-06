@@ -237,18 +237,18 @@ extract($_GET);
                                         echo "</div>";
                                        }else{
                                         echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
-                                            echo "<form action='/dashboard/user/' method='POST'>";
-                                                echo "<label for='member_id'><b>Deel deze cursus met uw team :</b></label><br>";
+                                            echo "<form action='/dashboard/user/' class='formConetentIntern' method='POST'>";
+                                                echo "<label for='member_id'><b>Deel deze cursus met uw team :</b></label>";
                                                 echo "<select class='multipleSelect2' id='member_id' name='selected_members[]' multiple='true'>";
                                                 if(!empty($users_company))
                                                     foreach($users_company as $user){
                                                         $name = get_users(array('include'=> $user))[0]->data->display_name;
                                                         if(in_array($user, $allocution))
-                                                            echo "<option selected  value='" . $user . "'>" . $name . "</option>";
+                                                            echo "<option class='redE' selected  value='" . $user . "'>" . $name . "</option>";
                                                         else
-                                                            echo "<option value='" . $user . "'>" . $name . "</option>";   
+                                                            echo "<option class='redE' value='" . $user . "'>" . $name . "</option>";
                                                     }
-                                                echo "</select></br></br>";
+                                                echo "</select>";
                                                 echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
                                                 echo "<input type='hidden' name='path' value='course' />";
                                                 echo "<input type='submit' class='btn btn-info' name='referee_employee' value='Apply' >";

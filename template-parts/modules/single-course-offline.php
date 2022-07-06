@@ -18,14 +18,7 @@
     #loginform input {
         background: #E0EFF4 !important;
     }
-    .select2-container--default .select2-selection--multiple {
-        width: 450px !important;
-    }
-    @media all and (max-width: 767px) {
-        .select2-container--default .select2-selection--multiple {
-            width: 250px !important;
-        }
-    }
+
 </style>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
@@ -310,8 +303,8 @@
                                         echo "</div>";
                                        }else{
                                         echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
-                                            echo "<form action='/dashboard/user/' method='POST'>";
-                                                echo "<label for='member_id'><b>Deel deze cursus met uw team :</b></label><br>";
+                                            echo "<form action='/dashboard/user/' class='formConetentIntern' method='POST'>";
+                                                echo "<label for='member_id'><b>Deel deze cursus met uw team :</b></label>";
                                                 echo "<select class='multipleSelect2' id='member_id' name='selected_members[]' multiple='true'>";
                                                 if(!empty($users_company))
                                                     foreach($users_company as $user){

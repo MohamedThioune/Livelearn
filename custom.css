@@ -7500,7 +7500,7 @@ ul#tabs-nav li.active {
     color: white;
     padding: 7px 20px;
     border-radius: 8px;
-    margin-top: 20px;
+    margin-right: 30px;
 }
 .btn-SaveDate{
     background: #043356;
@@ -8806,6 +8806,54 @@ ul#tabs-nav li.active {
     border: none !important;
 }
 
+.groupInputDate .colM{
+    width: 100%;
+}
+.groupBtnData{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.elementclone{
+    margin-bottom: 50px;
+    position: relative;
+}
+.elementclone:after {
+    position: absolute;
+    content: '';
+    border-bottom: 1px solid #d2d7da;
+    width: 70%;
+    transform: translateX(-50%);
+    bottom: -20px;
+    left: 50%;
+}
+.elementclone:last-child:after {
+    border-bottom: 0px solid #d2d7da;
+    width: 0%;
+}
+.btnRemoveElementClone{
+    background: red;
+    color: #FFFFFF;
+    margin-right: 30px;
+    border-radius: 5px;
+    display: none;
+}
+.btnRemoveElementClone:hover{
+    color: #FFFFFF !important;
+}
+.formConetentIntern label {
+    width: 100%;
+}
+.formConetentIntern .select2-container {
+    width: 49% !important;
+    margin: 0 25px;
+}
+.select2-container--open {
+    z-index: 9999;
+}
+.formConetentIntern .select2-container:last-child {
+    margin: 0;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
