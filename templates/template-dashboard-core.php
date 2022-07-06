@@ -546,10 +546,11 @@ else if(isset($date_add)){
 
         $row = "";
         $row_start_date = date("d/m/Y H:i:s", strtotime($start_date[$i]));
-        $row .= $row_start_date .'-'. $row_start_date .'-'. $location[$i] .'-'. $adress[$i] .';';
+        $row .= $row_start_date .'-'. $row_start_date .'-'. $location[$i] .'-'. $adress[$i] .';'; 
 
         $middles = explode(',', $between_date[$i]);
         foreach($middles as $middle){
+            $middle = str_replace('/', '.', $middle);
             $row_middle = date("d/m/Y H:i:s", strtotime($middle));
             $row .= $row_middle .'-'. $row_middle .'-'. $location[$i] .'-'. $adress[$i] .';';
         }
@@ -559,6 +560,7 @@ else if(isset($date_add)){
       
         array_push($data_locaties, $row);
     }
+
     update_field('data_locaties_xml',$data_locaties, $id);
 
     $path = '/dashboard/teacher/course-selection/?func=add-course&id=' .$id. '&step=4';

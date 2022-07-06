@@ -39,7 +39,7 @@
         <div class="blockCourseToevoegen">
             <p class="courseToevoegenText">Course toevoegen</p>
             <div class="contentBlockRight">
-                <a href="/dashboard/teacher/course-selection/?func=add-white&id=<?php if(isset($_GET['edit'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
+                <a href="/dashboard/teacher/course-selection/?func=add-white&id=<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
                     <div class="circleIndicator  passEtape"></div>
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>
