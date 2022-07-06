@@ -25,7 +25,6 @@
 
 <?php
     $data_en = get_field('data_locaties_xml', $_GET['id']);
-    print_r($data_en[0]['value']);
 ?>
 <div class="row">
     <div class="col-md-5 col-lg-8">
@@ -38,59 +37,93 @@
                 <form action="" method="POST">
                     <input type="hidden" name="id" value="<?= $_GET['id']; ?>">
                     <?php
-                    foreach($data_en as $key => $datum){
-                        $data_between = "";
-                        $datum = $datum['value'];
-                        $data = explode(';', $datum);
+                    if(!empty($data_en)){
+                        foreach($data_en as $key => $datum){
+                            $data_between = "";
+                            $datum = $datum['value'];
+                            $data = explode(';', $datum);
 
-                        $data_first = $data[0];
-                        $data_first = explode(' ', explode('-', $data_first)[0])[0];
+                            $data_first = $data[0];
+                            $data_first = explode(' ', explode('-', $data_first)[0])[0];
+                            
+                            $location = explode('-', $data_first)[2];
+                            $adress = explode('-', $data_first)[3];
 
-                        $max = intval(count($data)-1);
-                        $data_last = $data[$max];
-                        $data_last = explode(' ', explode('-', $data_last)[0])[0];
+                            $max = intval(count($data)-1);
+                            $data_last = $data[$max];
+                            $data_last = explode(' ', explode('-', $data_last)[0])[0];
 
-                        $data_first = str_replace('/', '.', $data_first);
-                        $data_last = str_replace('/', '.', $data_last);
+                            $data_first = str_replace('/', '.', $data_first);
+                            $data_last = str_replace('/', '.', $data_last);
 
-                        //Conversion str to date
-                        $data_first = date('Y-m-d',strtotime($data_first));
-                        $data_last = date('Y-m-d',strtotime($data_last));
+                            //Conversion str to date
+                            $data_first = date('Y-m-d',strtotime($data_first));
+                            $data_last = date('Y-m-d',strtotime($data_last));
 
-                        if($max > 3){
-                            $slice_array = array_slice( $data, 1, $max-1 );
-                            foreach($slice_array as $key => $slice){
-                                $slice = explode(' ', explode('-', $slice)[0])[0];
-                                $data_between .= $slice;
-                                if(isset($slice_array[$key + 1])) 
-                                    $data_between .= ','; 
+
+                            if($max > 3){
+                                $slice_array = array_slice( $data, 1, $max-1 );
+                                foreach($slice_array as $key => $slice){
+                                    $slice = explode(' ', explode('-', $slice)[0])[0];
+                                    $data_between .= $slice;
+                                    if(isset($slice_array[$key + 1])) 
+                                        $data_between .= ','; 
+                                }
                             }
+                        ?>
+                        <div class="groupInputDate">
+                            <div class="input-group form-group">
+                                <label for="">Start date</label>
+                                <input type="date" name="start_date[]" value="<?= $data_first ?>" required>
+                            </div>
+                        </div>
+                        <div class="input-group-course">
+                            <label for="">Dates between</label>
+                            <input type="text" name="between_date[]"  id="" value="<?= $data_between ?>" class="datepicker Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
+                        </div>
+                        <div class="groupInputDate">
+                            <div class="input-group">
+                                <label for="">End date</label>
+                                <input type="date" name="end_date[]" value="<?= $data_last ?>"  required>
+                            </div>
+                        </div>
+                        <div class="input-group-course">
+                            <label for="">Location</label>
+                            <input type="text" name="location[]" value="<?= $location ?>">
+                        </div>
+                        <div class="input-group-course">
+                            <label for="">Adress</label>
+                            <input type="text" name="adress[]" value="<?= $adress ?>">
+                        </div>
+                        <?php
                         }
+                    }
+                    else{
                     ?>
-                    <div class="groupInputDate">
-                        <div class="input-group form-group">
-                            <label for="">Start date</label>
-                            <input type="date" name="start_date[]" value="<?= $data_first ?>" required>
+                        <div class="groupInputDate">
+                            <div class="input-group form-group">
+                                <label for="">Start date</label>
+                                <input type="date" name="start_date[]" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="input-group-course">
-                        <label for="">Dates between</label>
-                        <input type="text" name="between_date[]"  id="" value="<?= $data_between ?>" class="datepicker Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
-                    </div>
-                    <div class="groupInputDate">
-                        <div class="input-group">
-                            <label for="">End date</label>
-                            <input type="date" name="end_date[]" value="<?= $data_last ?>"  required>
+                        <div class="input-group-course">
+                            <label for="">Dates between</label>
+                            <input type="text" name="between_date[]" id="" class="datepicker Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
                         </div>
-                    </div>
-                    <div class="input-group-course">
-                        <label for="">Location</label>
-                        <input type="text" name="location[]">
-                    </div>
-                    <div class="input-group-course">
-                        <label for="">Adress</label>
-                        <input type="text" name="adress[]">
-                    </div>
+                        <div class="groupInputDate">
+                            <div class="input-group">
+                                <label for="">End date</label>
+                                <input type="date" name="end_date[]" required>
+                            </div>
+                        </div>
+                        <div class="input-group-course">
+                            <label for="">Location</label>
+                            <input type="text" name="location[]">
+                        </div>
+                        <div class="input-group-course">
+                            <label for="">Adress</label>
+                            <input type="text" name="adress[]">
+                        </div>
                     <?php
                     }
                     ?>
