@@ -1,6 +1,12 @@
 <?php /** Template Name: category overview */ ?>
 <?php 
+global $wp;
+
+$url = home_url( $wp->request );
+
 $page = dirname(__FILE__) . '/check_visibility.php';
+
+$url = home_url( $wp->request );
 
 require($page); 
 ?>
@@ -332,7 +338,7 @@ require($page);
 
                     <?php
                     wp_login_form([
-                        'redirect' => 'http://wp12.influid.nl/dashboard/user/',
+                        'redirect' => $url,
                         'remember' => false,
                         'label_username' => 'Wat is je e-mailadres?',
                         'placeholder_email' => 'E-mailadress',

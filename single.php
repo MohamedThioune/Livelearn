@@ -5,6 +5,11 @@ global $post;
 
 $posttags = get_the_tags();
 
+if(!$posttags){
+    $category_default = get_field('categories', $post->ID);
+    $category_xml = get_field('category_xml', $post->ID);
+}
+
 $stackoverflow = get_field('stackoverflow',  'user_' . $post->post_author);
 $github = get_field('github',  'user_' . $post->post_author);
 $facebook = get_field('facebook',  'user_' . $post->post_author);
@@ -123,7 +128,9 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                                 <div class="blog-item-content bg-white blogPadding">
 
                                     <div class="headElementBlog">
-                                        <p><?php echo $posttags[0]->name; ?> </p>
+                                        <p>
+                                            <?php if($posttags) echo $posttags[0]->name; else if($category_default) echo  (String)get_the_category_by_ID($category_default[0]['value']); else if($category_xml) echo  (String)get_the_category_by_ID($category_xml[0]['value']); ?> </p>
+
                                         <p><i class="ti-time mr-1"></i> <?php echo get_the_date('d F'); ?></p>
                                     </div>
                                     <div class="tabbable-panel">
@@ -152,13 +159,27 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
 
                                                     <div class="tag-option mt-5 clearfix">
                                                         <ul class="float-left list-inline">
-                                                            <li>Tags:</li>
+                                                            <li>Tags:&nbsp;</li>
                                                             <?php
                                                             if(!empty($posttags))
                                                                 foreach($posttags as $posttag)
                                                                     echo '<li class="list-inline-item"><a href="#" rel="tag">' . $posttag->name . '</a></li>';
-                                                            else
-                                                                echo '<li class="list-inline-item"><a href="#" rel="tag">' . $tag . '</a></li>';
+                                                            else{
+                                                                $read_category = array();
+                                                                if(!empty($category_default))
+                                                                    foreach($category_default as $item)
+                                                                        if(!in_array($item['value'],$read_category)){
+                                                                            array_push($read_category,$item['value']);
+                                                                            echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
+                                                                        }
+                        
+                                                                else if(!empty($category_xml))
+                                                                    foreach($category_xml as $item)
+                                                                        if(!in_array($item['value'],$read_category)){
+                                                                            array_push($read_category,$item['value']);
+                                                                            echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
+                                                                        }
+                                                            }
                                                             ?>
                                                         </ul>
 
@@ -368,10 +389,24 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                             <h5 class="mb-4">Tags</h5>
 
                             <?php
-                            if ($posttags) {
-                                foreach($posttags as $tag) {
+                            if ($posttags)
+                                foreach($posttags as $tag)
                                     echo '<a href=#">'.$tag->name . '</a>'; 
-                                }
+                            else{
+                                $read_category = array();
+                                if(!empty($category_default))
+                                    foreach($category_default as $item)
+                                        if(!in_array($item,$read_category)){
+                                            array_push($read_category,$item);
+                                            echo '  <a href=#">'. (String)get_the_category_by_ID($item['value']) .  '</a>  ';
+                                        }
+
+                                else if(!empty($category_xml))
+                                    foreach($category_xml as $item)
+                                        if(!in_array($item,$read_category)){
+                                            array_push($read_category,$item);
+                                            echo '  <a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a>  ';
+                                        }
                             }
                             ?>
                         </div>

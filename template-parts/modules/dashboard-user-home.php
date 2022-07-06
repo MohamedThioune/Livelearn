@@ -1,13 +1,57 @@
 <?php
 $page = dirname(__FILE__) . '/../../templates/check_visibility.php';
- 
+
 require($page); 
 
 $courses = array();
 
 extract($_POST);
 
+$random_id = array(); 
+
 $user = get_current_user_id();
+
+$user_post_view = get_posts(
+    array(
+        'post_type' => 'view',
+        'post_status' => 'publish',
+        'post_author' => $user,
+    )
+)[0];
+
+$is_view=false;
+
+if (count($user_post_view)!= 0)
+{
+    $is_view=true;
+    $args = array(
+        'post_type' => 'course',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+        );
+
+    $all_courses = get_posts($args);
+    $all_user_views = (get_field('views', $user_post_view->ID));
+    $max_points = 6;
+    $course_types = ['Opleidingen', 'Workshop', 'Masterclass','Event','E-learning','Training','Video'];
+    $recommended_courses = array();
+
+    foreach($all_user_views as $key => $view) {
+        foreach ($all_courses as $key => $course) {
+            $points=0;
+            if ($view['course'] -> post_author == $course -> post_author) 
+                $points+=4;
+            if ($view['course'] -> price >= $course -> price)
+                $points+=2;
+                $percent = abs(($points/$max_points) * 100);
+            if ($percent >= 70){
+                array_push($random_id, $course->ID);
+                array_push($recommended_courses, $course);
+            }
+        }
+    }
+}
 
 $subtopics = array(); 
 foreach($categories as $categ){
@@ -125,12 +169,16 @@ foreach($global_courses as $course)
     }
    
 }
+// if (count($recommended_courses)==0)
+// {
+//     $courses = array_merge($courses, $expert_courses);
+//     $recommended_courses = $courses;
+//     $random_id = $courses_id;
+// } 
 
-$courses = array_merge($courses, $expert_courses);
- 
 //Activitien
 $activitiens = count($courses);
-
+shuffle($recommended_courses);
 /*
 * *   
 */
@@ -146,7 +194,7 @@ if(isset($_GET['message']))
         <div class="swiper-wrapper">
         <?php
         $find = false;
-        foreach($courses as $course){
+        foreach($recommended_courses as $course){
 
             if(!get_field('visibility', $course->ID)) {
                 if(get_field('course_type', $course->ID) == "Opleidingen"){
@@ -343,7 +391,7 @@ if(isset($_GET['message']))
             <?php
             $i = 0;
             $find = false;
-            foreach($courses as $course){
+            foreach($recommended_courses as $course){
                 if(!get_field('visibility', $course->ID)) {
                     if(get_field('course_type', $course->ID) == "E-learning"){
                         $count['e_learning'] = $count['e_learning'] + 1;
@@ -527,7 +575,7 @@ if(isset($_GET['message']))
             <?php
             $i = 0;
             $find = false;
-            foreach($courses as $course){
+            foreach($recommended_courses as $course){
                 if(!get_field('visibility', $course->ID)) {
                     if(get_field('course_type', $course->ID) == "Workshop"){
                         $count['workshop'] = $count['workshop'] + 1;
@@ -711,7 +759,7 @@ if(isset($_GET['message']))
         <div class="swiper-wrapper">
         <?php
         $find = false;
-        foreach($courses as $course){
+        foreach($recommended_courses as $course){
             if(!get_field('visibility', $course->ID)) {
                 if(get_field('course_type', $course->ID) == "Masterclass"){
                     $count['masterclass'] = $count['masterclass'] + 1;
@@ -899,7 +947,7 @@ if(isset($_GET['message']))
 
             $i = 0;
             $find = false;
-            foreach($courses as $course){
+            foreach($recommended_courses as $course){
             if(!get_field('visibility', $course->ID)) {
             if(get_field('course_type', $course->ID) == "Event"){
                 $count['event'] = $count['event'] + 1;
@@ -1027,7 +1075,7 @@ if(isset($_GET['message']))
         <?php
         $i = 0;
         $find = false;  
-        foreach($courses as $course){
+        foreach($recommended_courses as $course){
             if(!get_field('visibility', $course->ID)) {
                 if(get_field('course_type', $course->ID) == "Video"){
                     $count['video'] = $count['video'] + 1;
@@ -1209,7 +1257,7 @@ if(isset($_GET['message']))
         <?php
         $i = 0;
         $find = false;
-        foreach($courses as $course){
+        foreach($recommended_courses as $course){
             if(!get_field('visibility', $course->ID)) {
                 if(get_field('course_type', $course->ID) == "Cursus"){
                     $count['cursus'] = $count['cursus'] + 1;

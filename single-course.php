@@ -2,6 +2,7 @@
 get_header();
 
 global $post;
+global $wp;
 
 $url = home_url( $wp->request );
 
