@@ -101,7 +101,7 @@
                  </div>
                  <div class="col-md-4 p-md-2 p-3 text-center p-2 order-md-2 order-1">
                     <img class="img-fluid w-75" style=""
-                    src="<?php echo get_stylesheet_directory_uri();?>/img/Image88.png" alt="">                          
+                    src="<?php echo get_stylesheet_directory_uri();?>/img/Image-89.png" alt="">                          
                  </div>
              </div>
 

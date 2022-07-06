@@ -182,16 +182,35 @@ require($page);
     <!-- Modal Sign End -->
     <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
          style="position: absolute; ">
-        <div class="modal-dialog" role="document" style="width: 96% !important;">
+        <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
 
             <div class="modal-content">
-                <div class="modal-header">
+                <!-- <div class="modal-header">
                     <h2>Registreren</h2>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
+                </div> -->
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <div class="modal-body  px-md-5 p-3">
+
+                <div class="modal-body  px-md-4 px-0">
+                    <div class="mb-4">
+                        <div class="text-center">
+                            <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                        </div>  
+                        <h3 class="text-center my-2">Sign In</h3>
+                        <div class="text-center">
+                            <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                            data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign up</a></p>
+                        </div>
+                    </div>  
+
+
                     <?php
                         echo (do_shortcode('[user_registration_form id="59"]'));
                     ?>
@@ -200,6 +219,31 @@ require($page);
                         <p>Al een account? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
                                                 data-toggle="modal" data-target="#exampleModalCenter">Log-in</a></p>
                     </div>
+
+
+                    <!-- <div class="col-md-12 mt-5">
+                        <button class="btn btn-block d-flex justify-content-sm-between border border-2 p-2 justify-content-center btn-icon my-3">
+                            <i class="fab fa-facebook-f text-primary ml-2" style="font-size: 19px;"></i>
+                            <span class="d-sm-block d-none">Connect with Facebook</span> <span></span>
+                        </button>
+
+                        <button class="btn btn-block d-flex justify-content-sm-between border border-2 p-2 justify-content-center p-2 btn-icon my-2">
+                            <i class="fab fa-google text-danger ml-2" style="font-size: 19px;"></i>
+                            <span class="d-sm-block d-none">Connect with Google</span> <span></span>
+                        </button>
+
+                        <button class="btn btn-block d-flex justify-content-sm-between border border-2 p-2 justify-content-center p-2 btn-icon my-3">
+                            <i class="fab fa-apple text-dark ml-2" style="font-size: 22px;"></i>
+                            <span class="d-sm-block d-none">Connect with Apple</span> <span></span>
+                        </button>
+
+                        <div class="text-center py-3">
+                            <a href="" class="font-weight-normal">Any problem of connection ?</a>
+                        </div>
+                    </div> -->
+
+                    <!-- <div id="nsl-custom-login-form-1"><div class="nsl-container nsl-container-block nsl-container-embedded-login-layout-below" data-align="left" style="display: block;"><div class="nsl-container-buttons"><a href="http://localhost/livelearn/login/?loginSocial=google&amp;redirect=http%3A%2F%2Flocalhost%2Flivelearn%2Fcategory-overview%2F" rel="nofollow" aria-label="Continue with <b>Google</b>" data-plugin="nsl" data-action="connect" data-provider="google" data-popupwidth="600" data-popupheight="600"><div class="nsl-button nsl-button-default nsl-button-google customSocialMedia" data-skin="light" style="background-color:#fff;"><div class="nsl-button-svg-container"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#4285F4" d="M20.64 12.2045c0-.6381-.0573-1.2518-.1636-1.8409H12v3.4814h4.8436c-.2086 1.125-.8427 2.0782-1.7959 2.7164v2.2581h2.9087c1.7018-1.5668 2.6836-3.874 2.6836-6.615z"></path><path fill="#34A853" d="M12 21c2.43 0 4.4673-.806 5.9564-2.1805l-2.9087-2.2581c-.8059.54-1.8368.859-3.0477.859-2.344 0-4.3282-1.5831-5.036-3.7104H3.9574v2.3318C5.4382 18.9832 8.4818 21 12 21z"></path><path fill="#FBBC05" d="M6.964 13.71c-.18-.54-.2822-1.1168-.2822-1.71s.1023-1.17.2823-1.71V7.9582H3.9573A8.9965 8.9965 0 0 0 3 12c0 1.4523.3477 2.8268.9573 4.0418L6.964 13.71z"></path><path fill="#EA4335" d="M12 6.5795c1.3214 0 2.5077.4541 3.4405 1.346l2.5813-2.5814C16.4632 3.8918 14.426 3 12 3 8.4818 3 5.4382 5.0168 3.9573 7.9582L6.964 10.29C7.6718 8.1627 9.6559 6.5795 12 6.5795z"></path></svg></div><div class="nsl-button-label-container">Continue with <b>Google</b></div></div></a><a href="http://localhost/livelearn/login/?loginSocial=twitter&amp;redirect=http%3A%2F%2Flocalhost%2Flivelearn%2Fcategory-overview%2F" rel="nofollow" aria-label="Continue with <b>Twitter</b>" data-plugin="nsl" data-action="connect" data-provider="twitter" data-popupwidth="600" data-popupheight="600"><div class="nsl-button nsl-button-default nsl-button-twitter customSocialMedia" style="background-color:#4ab3f4;"><div class="nsl-button-svg-container"><svg xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M16.327 3.007A5.07 5.07 0 0 1 20.22 4.53a8.207 8.207 0 0 0 2.52-.84l.612-.324a4.78 4.78 0 0 1-1.597 2.268 2.356 2.356 0 0 1-.54.384v.012A9.545 9.545 0 0 0 24 5.287v.012a7.766 7.766 0 0 1-1.67 1.884l-.768.612a13.896 13.896 0 0 1-9.874 13.848c-2.269.635-4.655.73-6.967.276a16.56 16.56 0 0 1-2.895-.936 10.25 10.25 0 0 1-1.394-.708L0 20.023a8.44 8.44 0 0 0 1.573.06c.48-.084.96-.06 1.405-.156a10.127 10.127 0 0 0 2.956-1.056 5.41 5.41 0 0 0 1.333-.852 4.44 4.44 0 0 1-1.465-.264 4.9 4.9 0 0 1-3.12-3.108c.73.134 1.482.1 2.198-.096a3.457 3.457 0 0 1-1.609-.636A4.651 4.651 0 0 1 .953 9.763c.168.072.336.156.504.24.334.127.68.22 1.033.276.216.074.447.095.673.06H3.14c-.248-.288-.653-.468-.901-.78a4.91 4.91 0 0 1-1.105-4.404 5.62 5.62 0 0 1 .528-1.26c.008 0 .017.012.024.012.13.182.28.351.445.504a8.88 8.88 0 0 0 1.465 1.38 14.43 14.43 0 0 0 6.018 2.868 9.065 9.065 0 0 0 2.21.288 4.448 4.448 0 0 1 .025-2.28 4.771 4.771 0 0 1 2.786-3.252 5.9 5.9 0 0 1 1.093-.336l.6-.072z"></path></svg></div><div class="nsl-button-label-container">Continue with <b>Twitter</b></div></div></a></div></div></div> -->
+
                 </div>
             </div>
 
@@ -264,15 +308,28 @@ require($page);
 
     <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
          style="position: absolute; ">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+
             <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Inloggen</h2>
+                <div class="modal-header border-bottom-0">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body  px-md-5 p-3">
+
+                <div class="modal-body  px-md-5 px-4">
+                    <div class="mb-4">
+                        <div class="text-center">
+                            <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                        </div>
+                        <h3 class="text-center my-2">Sign Up</h3>
+                        <div class="text-center">
+                            <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                            data-toggle="modal" data-target="#SignInWithEmail">&nbsp; Sign in</a></p>
+                        </div>
+                    </div>
+
                     <?php
                     wp_login_form([
                         'redirect' => 'http://wp12.influid.nl/dashboard/user/',
@@ -296,6 +353,7 @@ require($page);
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
 
                 <div class="modal-body">
                     <form id="form" class="form">
