@@ -100,8 +100,16 @@ jQuery(function($){
         $('#Finish').removeClass('colorStep');
     });
 
+// clone section dashboard course step 3
+    $('.wrapperClone').on('click', '.remove', function() {
+        $('.remove').closest('.wrapperClone').find('.elementClone').not(':first').last().remove();
+    });
+    $('.wrapperClone').on('click', '.clone', function() {
+        $('.clone').closest('.wrapperClone').find('.elementClone').first().clone().appendTo('.results');
+        $('.btnRemoveElementClone').show();
+    });
 
-
+// clone section dashboard course step 3
 
     //variable for offline courses date input
     $('.block2evens').each(function(){
