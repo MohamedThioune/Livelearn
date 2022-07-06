@@ -38,17 +38,19 @@
                     <input type="hidden" name="id" value="<?= $_GET['id']; ?>">
                     <?php
                     if(!empty($data_en)){
+                        
                         foreach($data_en as $key => $datum){
+                            $slice_array = array();
                             $data_between = "";
                             $datum = $datum['value'];
                             $data = explode(';', $datum);
 
                             $data_first = $data[0];
-                            $data_first = explode(' ', explode('-', $data_first)[0])[0];
-                            
                             $location = explode('-', $data_first)[2];
                             $adress = explode('-', $data_first)[3];
 
+                            $data_first = explode(' ', explode('-', $data_first)[0])[0];
+                            
                             $max = intval(count($data)-1);
                             $data_last = $data[$max];
                             $data_last = explode(' ', explode('-', $data_last)[0])[0];
@@ -60,8 +62,7 @@
                             $data_first = date('Y-m-d',strtotime($data_first));
                             $data_last = date('Y-m-d',strtotime($data_last));
 
-
-                            if($max > 3){
+                            if($max >= 3){
                                 $slice_array = array_slice( $data, 1, $max-1 );
                                 foreach($slice_array as $key => $slice){
                                     $slice = explode(' ', explode('-', $slice)[0])[0];
@@ -191,7 +192,7 @@
                     <div class="circleIndicator passEtape"></div>
                     <p class="textOpleidRight">Opleidingstype</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-course<?php if(isset($_GET['edit'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
+                <a href="/dashboard/teacher/course-selection/?func=add-course<?php echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
                     <div class="circleIndicator passEtape"></div>
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>

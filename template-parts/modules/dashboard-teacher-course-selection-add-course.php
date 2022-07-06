@@ -29,7 +29,7 @@
                         'post_excerpt'   => true,
                         'fields' => array('field_610f19a34af16','field_610f0d9b21fb8', 'short_description', 'visibility'),
                         'submit_value'  => __('Opslaan & verder'),
-                        'return' => '?func=add-course&id=%post_id%&step=2'
+                        'return' => '?func=add-course&id=%post_id%&step=2&type='.$_GET['type']
                     )); 
                 }?>
             </div>
@@ -44,7 +44,7 @@
                     <div class="circleIndicator passEtape"></div>
                     <p class="textOpleidRight">Opleidingstype</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-course<?php if(isset($_GET['edit'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
+                <a href="/dashboard/teacher/course-selection/?func=add-course<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
                     <div class="circleIndicator passEtape2"></div>
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>

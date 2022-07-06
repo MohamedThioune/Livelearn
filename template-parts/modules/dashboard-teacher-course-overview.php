@@ -32,6 +32,7 @@ $video_single = "Video";
                         <th scope="col">Actie</th>
                         <th scope="col">Verkoop</th>
                         <th scope="col">Titel</th>
+                        <th scope="col">Type</th>
                         <th scope="col">Prijs</th>
                         <th scope="col">Onderwerp(en)</th>
                         <th scope="col">Startdatum</th>
@@ -121,8 +122,9 @@ $video_single = "Video";
                         <td class="textTh">
                             <a href="<?= $path_edit ?>"><i class="fas fa-edit"></i></a>
                         </td>
-                        <td class="textTh"><?php if(!empty(get_field('connected_product',$course->ID))){echo 'ja';}else{echo 'nee';}?></td>
+                        <td class="textTh"><?php if(!empty(get_field('visibility',$course->ID))){echo 'nee';}else{echo 'ja';}?></td>
                         <td class="textTh "><a style="color:#212529;font-weight:bold" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
+                        <td class="textTh"><?php echo $course_type; ?></td>
                         <td class="textTh"><?php echo $price; ?></td>
                         <td class="textTh "><?php echo $category ?></td>
                         <td class="textTh"><?php echo $day; ?></td>

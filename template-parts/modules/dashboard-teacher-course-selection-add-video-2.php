@@ -29,7 +29,7 @@
                     <div class="circleIndicator passEtape"></div>
                     <p class="textOpleidRight">Opleidingstype</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-video<?php if(isset($_GET['edit'])) echo '&id=' .$_GET['id'] . '&edit'; ?>" class="contentBlockCourse">
+                <a href="/dashboard/teacher/course-selection/?func=add-video<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&edit'; ?>" class="contentBlockCourse">
                     <div class="circleIndicator  passEtape"></div>
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>
