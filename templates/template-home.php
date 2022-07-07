@@ -91,7 +91,7 @@ require($page);
                       <h1>Hello " . $first_name  . "</h1>,<br> 
                       Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br><br>
                       <h4>Inloggen:</h4><br>
-                      <h6><a href='https:livelearn.nl/inloggen/'> Connexion </a></h6>
+                      <h6><a href='https:livelearn.nl/inloggen/'> Log in </a></h6>
                       ";
                 
                       $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
@@ -104,7 +104,7 @@ require($page);
                       update_field('course_type_user', $choiceCourseType, 'user_'.$user_id);
                       update_field('generatie', $choiceGeneratie, 'user_'.$user_id);
                       update_field('country', $prive, 'user_'.$user_id);
-                      update_field('categories', $bangerichtsChoice, 'user_'.$user_id);
+                      update_field('topic', $bangerichtsChoice, 'user_'.$user_id);
                       header('Location: /inloggen/?message=Je bent succesvol geregistreerd. Je ontvangt een e-mail met je login-gegevens.');
                   ?>
                   
