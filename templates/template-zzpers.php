@@ -11,7 +11,6 @@
     <!-- old name => overview-organisations-1 -->
 
     <div>
-     
         <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
         <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
             style="position: absolute;height: 150% !important; overflow-y:hidden !important;">
@@ -100,7 +99,6 @@
             </div>
         </div>
         <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
-
     </div>
 
     <section class="py-4 px-3">
