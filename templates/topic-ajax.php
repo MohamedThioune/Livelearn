@@ -8,9 +8,9 @@
   $interes = ""; 
 
   $choosen_categories = array();
-  $choosen_categorie = get_field('categories', $_GET['id']);
+  $choosen_categorie = get_field('categories', $course_id);
   if(!$choosen_categorie)
-      $choosen_categorie = get_field('category_xml', $_GET['id']);
+      $choosen_categorie = get_field('category_xml', $course_id);
 
   foreach($choosen_categorie as $choosen){
       if(empty($choosen_categories))
@@ -18,6 +18,7 @@
       else
           array_merge($choosen_categories, explode(',', $choosen['value']));
   }
+
   
   foreach($bangers as $key=>$tag){
     if($key==0)

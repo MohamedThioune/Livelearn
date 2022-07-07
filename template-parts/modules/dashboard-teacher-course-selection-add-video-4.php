@@ -5,12 +5,14 @@
                 <div class="titleOpleidingstype">
                     <h2>4.Details en onderwerpen </h2>
                 </div>
-                <?php acf_form(array(
-    'post_id'       => $_GET['id'],
-    'field_groups' => array('group_6155e73fb1744'),
-    'submit_value'  => __('Opslaan & naar overzicht'),
-    'return' => '/dashboard/teacher/course-overview/'
-)); ?>
+                <?php 
+                    acf_form(array(
+                        'post_id'       => $_GET['id'],
+                        'field_groups' => array('group_6155e73fb1744'),
+                        'submit_value'  => __('Opslaan & naar overzicht'),
+                        'return' => '/dashboard/teacher/course-overview/'
+                    )); 
+                ?>
             </div>
         </div>
     </div>
@@ -22,7 +24,7 @@
                     <div class="circleIndicator passEtape"></div>
                     <p class="textOpleidRight">Opleidingstype</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-video" class="contentBlockCourse">
+                <a href="/dashboard/teacher/course-selection/?func=add-video<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&edit'; ?>" class="contentBlockCourse">
                     <div class="circleIndicator  passEtape"></div>
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>
