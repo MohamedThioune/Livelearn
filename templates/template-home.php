@@ -488,11 +488,19 @@ $degrees=[
                     <input id="search" type="search" class="jAuto searchInputHome form-control"
                         placeholder="Zoek opleidingen, experts of onderwerpen" name="search" autocomplete="off">
                     <button class="btn btn-Zoek elementWeb">Zoek</button>
-                    <div class="groupeBtn-Jouw-inloggen">
-                        <button type="button" class="btn jouwn-skills elementWeb" data-toggle="modal" data-target="#SkillsModal" >Jouw skills paspoort in 3 stappen</button>
-                        <button type="button" class="jouwn-skills elementMobile" data-toggle="modal" data-target="#SkillsModal" >Skills Paspoort</button>
-                        <a href="/inloggen" class="inloggenbtn">Inloggen</a>
-                    </div>
+                    <?php 
+                        if(get_current_user_id()==0){ 
+                    ?>
+
+                        <div class="groupeBtn-Jouw-inloggen">
+                            <button type="button" class="btn jouwn-skills elementWeb" data-toggle="modal" data-target="#SkillsModal" >Jouw skills paspoort in 3 stappen</button>
+                            <button type="button" class="jouwn-skills elementMobile" data-toggle="modal" data-target="#SkillsModal" >Skills Paspoort</button>
+                            <a href="/inloggen" class="inloggenbtn">Inloggen</a>
+                        </div>
+
+                    <?php 
+                        }
+                    ?>
                     <div class="dropdown-menuSearch" id="list">
                         <div class="list-autocomplete" id="autocomplete">
                         <center> <i class='hasNoResults'>No matching results ... </i> </center>
