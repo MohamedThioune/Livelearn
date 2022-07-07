@@ -3760,7 +3760,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     overflow: scroll;
 }
 .modal {
-    overflow-y:auto;
+    overflow-y:hidden !important;
 }
 .alJoum .gf_browser_chrome{
     width: 100%;
@@ -8839,7 +8839,7 @@ ul#tabs-nav li.active {
     }
     .elkeVolgendeTitle {
         font-size: 24px;
-        width: 100%px;
+        width: 100%;
         line-height: 27px;
     }
     .addButtonLink {
@@ -11130,6 +11130,9 @@ ul#tabs-nav li.active {
     #field_5_3 {
         padding-top: 100px;
     }
+    .customSocialMedia .nsl-button-svg-container {
+        width: 85px !important;
+    }
 }
 @media all and (max-width: 400px) {
     .textIconeLearning {
@@ -11153,7 +11156,7 @@ ul#tabs-nav li.active {
     }
     .elkeVolgendeTitle {
         font-size: 24px;
-        width: 100%px;
+        width: 100%;
         line-height: 27px;
     }
     .elkeVolgendeDescription {
@@ -11624,7 +11627,7 @@ ul#tabs-nav li.active {
     }
     .elkeVolgendeTitle {
         font-size: 24px;
-        width: 100%px;
+        width: 100%;
         line-height: 27px;
     }
     .elkeVolgendeDescription {

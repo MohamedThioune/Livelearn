@@ -487,49 +487,79 @@ extract($_GET);
             <!-- -------------------------------------------------- End Modal Direct contact & Voor wie -------------------------------------- -->
 
 
-            <!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
 
-            <!-- Modal Sign End -->
-            <div class="modal modalEcosyteme modalSingleCourse fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-                style="position: absolute; ">
-                <div class="modal-dialog" role="document">
+
+            <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
+            <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+                style="position: absolute;height: 150% !important; overflow-y:hidden !important;">
+                <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+                    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h2>Sign In</h2>
+
+                        <div class="modal-header border-bottom-0">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body  px-md-5 p-3">
+
+                        <div class="modal-body  px-md-4 px-0">
+                            <div class="mb-4">
+                                <div class="text-center">
+                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                                </div>  
+                                <h3 class="text-center my-2">Sign Up</h3>
+                                <div class="text-center">
+                                    <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                    data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign in</a></p>
+                                </div>
+                            </div>  
+
+
                             <?php
-                            echo (do_shortcode('[user_registration_form id="59"]'));
+                                echo (do_shortcode('[user_registration_form id="59"]'));
                             ?>
 
                             <div class="text-center">
-                                <p>Already a member? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                        data-toggle="modal" data-target="#exampleModalCenter">Sign up</a></p>
+                                <p>Al een account? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                                        data-toggle="modal" data-target="#exampleModalCenter">Log-in</a></p>
                             </div>
+
                         </div>
                     </div>
+                
                 </div>
             </div>
             <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
 
             <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
-            <div class="modal modalEcosyteme modalSingleCourse fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-                style="position: absolute; ">
-                <div class="modal-dialog" role="document">
+            <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+                style="position: absolute;overflow-y:hidden !important;height: 110%; ">
+                <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+                box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h2>Sign Up</h2>
+                        <div class="modal-header border-bottom-0">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body  px-md-5 p-3">
+
+                        <div class="modal-body  px-md-5 px-4">
+                            <div class="mb-4">
+                                <div class="text-center">
+                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                                </div>
+                                <h3 class="text-center my-2">Sign In</h3>
+                                <div class="text-center">
+                                    <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                    data-toggle="modal" data-target="#SignInWithEmail">&nbsp; Sign Up</a></p>
+                                </div>
+                            </div>
+
                             <?php
                             wp_login_form([
-                                'redirect' => 'http://wp12.influid.nl/dashboard/user/',
+                                'redirect' => $url,
                                 'remember' => false,
                                 'label_username' => 'Wat is je e-mailadres?',
                                 'placeholder_email' => 'E-mailadress',
@@ -537,14 +567,19 @@ extract($_GET);
                             ]);
                             ?>
                             <div class="text-center">
-                                <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                    data-toggle="modal" data-target="#SignInWithEmail">Sign in</a></p>
+                                <p>Nog geen account?  <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                                    data-toggle="modal" data-target="#SignInWithEmail">Meld je aan</a></p>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
             </div>
             <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
+
+
+
 
             <!-- ---------------------------------- Start Right Side Dashboard -------------------------------- -->
             <div class="blockTwoOver">
