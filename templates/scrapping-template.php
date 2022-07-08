@@ -55,10 +55,10 @@ if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
         //var_dump($datas);
     foreach ($datas as $key => $article) 
     {
-      $sql = $wpdb->prepare("SELECT titel FROM {$wpdb->prefix}databank WHERE image_xml='$article[image]' OR titel='$article[title]' AND type= 'Artikel'");
+      $sql = $wpdb->prepare("SELECT titel FROM {$wpdb->prefix}databank WHERE image_xml='$article[image]' AND type= 'Artikel'");
       $result = $wpdb->get_results($sql);
       
-      if (empty($result))
+      if(empty($result))
       {
         $status = 'extern';
         //Data to create the course
