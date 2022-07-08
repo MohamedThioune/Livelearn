@@ -8815,13 +8815,14 @@ ul#tabs-nav li.active {
     align-items: center;
 }
 .elementclone{
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     position: relative;
+    margin-top: 40px;
 }
 .elementclone:after {
     position: absolute;
     content: '';
-    border-bottom: 1px solid #d2d7da;
+    border-top: 1px solid #d2d7da;
     width: 70%;
     transform: translateX(-50%);
     bottom: -20px;
@@ -8836,7 +8837,6 @@ ul#tabs-nav li.active {
     color: #FFFFFF;
     margin-right: 30px;
     border-radius: 5px;
-    display: none;
 }
 .btnRemoveElementClone:hover{
     color: #FFFFFF !important;
@@ -8854,6 +8854,92 @@ ul#tabs-nav li.active {
 .formConetentIntern .select2-container:last-child {
     margin: 0;
 }
+.blockForClone{
+    display: none;
+}
+.results{
+    margin-top: 50px;
+}
+.results .remove {
+    margin: 10px 0 40px;
+}
+
+.block2evensTabs section {
+    box-sizing: border-box;
+    border: 1px solid #d7d7d7;
+    border-radius: 3px;
+    background: #FFFFFF;
+    padding: 20px 15px 10px;
+    margin-bottom: 15px;
+}
+
+.block2evensTabs details{
+    width: 100%;
+}
+
+.block2evensTabs details[open] summary ~ * {
+    animation: open 0.3s ease-in-out;
+}
+
+.block2evensTabs @keyframes open {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.block2evensTabs details summary::-webkit-details-marker {
+    display: none;
+}
+
+.block2evensTabs details summary {
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    list-style: none;
+}
+
+.block2evensTabs details summary:after {
+    content: "+";
+    position: absolute;
+    font-size: 1.75rem;
+    line-height: 0;
+    margin-top: 0.75rem;
+    right: 0;
+    font-weight: 200;
+    transform-origin: center;
+    transition: 200ms linear;
+    top: -4px;
+    color: #043356;
+}
+.prixEvens {
+    font-size: 15px !important;
+    font-weight: 400;
+}
+.block2evensTabs details[open] summary:after {
+    transform: rotate(45deg);
+    font-size: 2rem;
+    color: red !important;
+}
+.block2evensTabs details summary {
+    outline: 0;
+}
+.block2evensTabs details .detailSummary {
+    display: flex;
+    justify-content: space-between;
+}
+.block2evensTabs details summary .headTabsAccordion {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+}
+
+
+
+
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -11150,6 +11236,16 @@ ul#tabs-nav li.active {
     }
     .formHeaderUser {
         display: none;
+    }
+    .btn-newDate {
+        margin-bottom: 25px;
+    }
+    .groupBtnData button {
+        width: 100%;
+        margin-right: 0px;
+    }
+    .groupBtnData{
+        width: 100%;
     }
 
 
