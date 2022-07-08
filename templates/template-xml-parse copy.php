@@ -162,7 +162,6 @@
         if($occurrence[strtolower($value->cat_name)] >= 1)
           array_push($tags, $value->cat_ID);
     }
-
     /* 
     ** Get author of the course 
     */

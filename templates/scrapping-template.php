@@ -78,7 +78,9 @@ if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
               'author_id' => 0,
               'status' => $status
             );
-            $id_post = $wpdb->insert($table,$data);
+            $wpdb->insert($table,$data);
+            $id_post = $wpdb->insert_id;
+
             echo $wpdb->last_error;
         
     }
