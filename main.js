@@ -684,4 +684,15 @@ jQuery(function($){
         document.getElementById("autocomplete").classList.toggle("show");
     }
 
+
+
+   
+    $('#test').click(function() {
+        //   if (!$(this.target).is('#popUpForm')) {
+        //     $(".modalDialog").hide();
+        //   }
+
+        alert("testing close");
+    });
+
 });

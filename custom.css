@@ -1358,6 +1358,7 @@ ul.sub-menu li a {
     padding: 21px 5px 15px 20px;
     overflow-y: auto;
     max-height: 90vh;
+    overflow-x: hidden !important;
 }
 .profilUserP .otherSkills {
     background: rgba(230, 235, 242, 0.5);
@@ -2891,7 +2892,7 @@ body .gform_wrapper ul li.gfield {
     overflow: hidden;
 }
 .gform_wrapper .top_label .gfield_label, .gform_wrapper legend.gfield_label {
-    font-size: .813em !important;
+    font-size: 1em !important;
     letter-spacing: .5pt;
     white-space: nowrap;
     font-weight: normal !important;
@@ -2900,6 +2901,8 @@ body .gform_wrapper ul li.gfield {
 }
 .gform_wrapper .top_label input.medium, .gform_wrapper .top_label select.medium {
     width: 100% !important;
+    border: 1px solid gray !important;
+    border-radius: 5px !important;
 }
 .myCarouselTestimonial .owl-wrapper-outer .owl-wrapper .owl-item li .card {
     margin-left: 0.25em;

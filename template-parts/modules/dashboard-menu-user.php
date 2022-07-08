@@ -27,7 +27,8 @@ $experts = get_user_meta($user->ID, 'expert');
 * * End  
 */
 ?>
-<section id="sectionDashboard1" class="sidBarDashboard sidBarDashboardIndividual" name="section1">
+<section id="sectionDashboard1" class="sidBarDashboard sidBarDashboardIndividual" name="section1"
+style="overflow-x: hidden !important;">
     <button class="btn btnSidbarMobCroix">
         <img src="<?php echo get_stylesheet_directory_uri();?>/img/cancel.png" alt="">
     </button>

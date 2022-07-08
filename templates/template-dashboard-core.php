@@ -624,7 +624,7 @@ if($dashboard == 'company' && $dashboard_page == 'profile'){
 else{
 ?>
 
-<div class="theme-content">
+<div class="theme-content" >
     <div class="theme-side-menu">
         <?php include_once(get_stylesheet_directory().'/template-parts/modules/dashboard-menu-'.$dashboard.'.php');?>
     </div>
