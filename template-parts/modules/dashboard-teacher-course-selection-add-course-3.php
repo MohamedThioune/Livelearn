@@ -35,7 +35,7 @@
                     <h2>3.Data en locaties</h2>
                 </div>
                 
-                <form action="" method="POST">
+                <form action="" method="POST" class="wrapperClone" id="attributes">
                     <input type="hidden" name="id" value="<?= $_GET['id']; ?>">
                     <?php
                     if(!empty($data_en)){
@@ -101,85 +101,74 @@
                     }
                     else{
                     ?>
-                        <div class="groupInputDate">
-                            <div class="input-group form-group">
-                                <label for="">Start date</label>
-                                <input type="date" name="start_date[]" required>
+                        <div class="">
+                            <div class="groupInputDate">
+                                <div class="input-group form-group colM">
+                                    <label for="">Start date</label>
+                                    <input type="date" name="start_date[]" required>
+                                </div>
+                            </div>
+                            <div class="input-group-course">
+                                <label for="">Dates between</label>
+                                <input type="text" name="between_date[]" id="" class="datepicker Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
+                            </div>
+                            <div class="groupInputDate ">
+                                <div class="input-group colM">
+                                    <label for="">End date</label>
+                                    <input type="date" name="end_date[]" required>
+                                </div>
+                            </div>
+                            <div class="input-group-course">
+                                <label for="">Location</label>
+                                <input type="text" name="location[]">
+                            </div>
+                            <div class="input-group-course">
+                                <label for="">Adress</label>
+                                <input type="text" name="adress[]">
                             </div>
                         </div>
-                        <div class="input-group-course">
-                            <label for="">Dates between</label>
-                            <input type="text" name="between_date[]" id="" class="datepicker Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
-                        </div>
-                        <div class="groupInputDate">
-                            <div class="input-group">
-                                <label for="">End date</label>
-                                <input type="date" name="end_date[]" required>
+
+                            <div class="results"></div>
+                            <div class="buttons groupBtnData">
+
+                                <button type="button" class="add btn-newDate"> Complete with another section</button>
+                                <button type="submit" name="date_add" class="btn btn-info">Opslaan & verder</button>
                             </div>
-                        </div>
-                        <div class="input-group-course">
-                            <label for="">Location</label>
-                            <input type="text" name="location[]">
-                        </div>
-                        <div class="input-group-course">
-                            <label for="">Adress</label>
-                            <input type="text" name="adress[]">
-                        </div>
+
                     <?php
                     }
                     ?>
-
-                    <button type="button" class="btn btn-newDate" data-toggle="modal" data-target="#exampleModalDate">
-                       Complete with another section
-                    </button>
-                    <br><br>
-                    <button type="submit" name="date_add" class="btn btn-info">Opslaan & verder</button>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModalDate" tabindex="-1" role="dialog" aria-labelledby="exampleModalDateLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Add other Date en locaties</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="dataEnLocation">
-                                        <div class="groupInputDate">
-                                            <div class="input-group form-group">
-                                                <label for="">Start date</label>
-                                                <input type="date" name="start_date[]">
-                                            </div>
-                                        </div>
-                                        <div class="input-group-course">
-                                            <label for="">Dates between</label>
-                                            <input type="text" name="between_date[]"  id="" class="datepicker Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
-                                        </div>
-                                        <div class="groupInputDate">
-                                            <div class="input-group">
-                                                <label for="">End date</label>
-                                                <input type="date" name="end_date[]">
-                                            </div>
-                                        </div>
-                                        <div class="input-group-course">
-                                            <label for="">Location</label>
-                                            <input type="text" name="location[]">
-                                        </div>
-                                        <div class="input-group-course">
-                                            <label for="">Adress</label>
-                                            <input type="text" name="adress[]">
-                                        </div>
+                    <!-- element for clone -->
+                    <div class="blockForClone">
+                            <div class="attr">
+                                <div class="groupInputDate">
+                                    <div class="input-group form-group colM">
+                                        <label for="">Start date</label>
+                                        <input type="date" name="start_date[]">
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" name="date_add" class="btn btn-info">Opslaan & verder</button>
+                                <div class="input-group-course">
+                                    <label for="">Dates between</label>
+                                    <input type="text" name="between_date[]"  id="" class="datepicker Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
                                 </div>
+                                <div class="groupInputDate">
+                                    <div class="input-group colM">
+                                        <label for="">End date</label>
+                                        <input type="date" name="end_date[]">
+                                    </div>
+                                </div>
+                                <div class="input-group-course">
+                                    <label for="">Location</label>
+                                    <input type="text" name="location[]">
+                                </div>
+                                <div class="input-group-course">
+                                    <label for="">Adress</label>
+                                    <input type="text" name="adress[]">
+                                </div>
+                                <button class="btn btn-danger remove" type="button">Remove</button>
                             </div>
-                        </div>
                     </div>
+
                 </form>
             </div>
         </div>
