@@ -5,16 +5,16 @@
                 <div class="titleOpleidingstype">
                     <h2>3.Skills</h2>
                 </div>
-        <?php 
-            update_field('course_type', 'assessment', $_GET['id']);
-            acf_form(
-            array(
-                'post_id'=> $_GET['id'],
-                'fields' => array('skills_assessment'),
-                'submit_value'  => __('Opslaan & verder'),
-                'return' => '/dashboard/teacher/course-overview/'
-            )); 
-        ?>
+                <?php 
+                    update_field('course_type', 'assessment', $_GET['id']);
+                    acf_form(
+                    array(
+                        'post_id'=> $_GET['id'],
+                        'fields' => array('skills_assessment'),
+                        'submit_value'  => __('Opslaan & verder'),
+                        'return' => '/dashboard/teacher/course-overview/'
+                    )); 
+                ?>
             </div>
         </div>
     </div>
