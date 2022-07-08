@@ -155,7 +155,6 @@ if(isset($_GET['course_id']) && isset($_GET['payment_id']) && isset($_GET['daten
 
                     <div class="headListeCourse">
                         <p class="JouwOpleid">Bestellingen</p>
-                        <button type="button" id="test">test</button>
                     </div>
                     <div class="contentCardListeCourse">
                         <?php 
