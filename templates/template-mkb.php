@@ -9,75 +9,103 @@
 <body>
 
 
-<div>
-    <!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
+    <div>
+    
+         <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
+         <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+            style="position: absolute;height: 150% !important; overflow-y:hidden !important;">
+            <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+                box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
 
-    <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-        style="position: absolute; ">
-        <div class="modal-dialog" role="document"  style="width: 96% !important;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Sign Up</h2>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body  px-md-5 p-3">
-                    <?php
-                    echo (do_shortcode('[user_registration_form id="59"]'));
-                    ?>
-
-                    <div class="text-center">
-                        <p>Already a member? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                data-toggle="modal" data-target="#exampleModalCenter">Sign up</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
-
-        <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
-
-        <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-            style="position: absolute; ">
-            <div class="modal-dialog" role="document" style="width: 96% !important;">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h2>Sign In</h2>
+
+                    <div class="modal-header border-bottom-0">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body  px-md-5 p-3">
+
+                    <div class="modal-body  px-md-4 px-0">
+                        <div class="mb-4">
+                            <div class="text-center">
+                                <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                            </div>  
+                            <h3 class="text-center my-2">Sign Up</h3>
+                            <div class="text-center">
+                                <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign in</a></p>
+                            </div>
+                        </div>  
+
+
+                        <?php
+                            echo (do_shortcode('[user_registration_form id="59"]'));
+                        ?>
+
+                        <div class="text-center">
+                            <p>Al een account? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                                    data-toggle="modal" data-target="#exampleModalCenter">Log-in</a></p>
+                        </div>
+
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+        <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
+
+        <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
+        <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+            style="position: absolute;overflow-y:hidden !important;height: 110%; ">
+            <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+
+                <div class="modal-content">
+                    <div class="modal-header border-bottom-0">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body  px-md-5 px-4">
+                        <div class="mb-4">
+                            <div class="text-center">
+                                <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                            </div>
+                            <h3 class="text-center my-2">Sign In</h3>
+                            <div class="text-center">
+                                <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                data-toggle="modal" data-target="#SignInWithEmail">&nbsp; Sign Up</a></p>
+                            </div>
+                        </div>
+
                         <?php
                         wp_login_form([
-                            'redirect' => 'http://wp12.influid.nl/dashboard/user/',
+                            'redirect' => $url,
                             'remember' => false,
                             'label_username' => 'Wat is je e-mailadres?',
                             'placeholder_email' => 'E-mailadress',
                             'label_password' => 'Wat is je wachtwoord?'
                         ]);
                         ?>
-
                         <div class="text-center">
-                            <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                data-toggle="modal" data-target="#SignInWithEmail">Sign in</a></p>
+                            <p>Nog geen account?  <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                                data-toggle="modal" data-target="#SignInWithEmail">Meld je aan</a></p>
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
-
-
         <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
+
     </div>
 
     <section class="py-4 px-3">
         <div class="container-fluid my-md-5">
-             <div class="row">
-                 <div class="col-md-8 p-2 order-md-1 order-2 text-md-left text-center">
+             <div class="row d-flex justify-content-center">
+                 <div class="col-md-8 col-11 p-2 order-md-1 order-2 text-md-left text-center">
                     <p class="wordDeBestText2 mx-md-0 py-0 mt-0" style="color: #023356; max-width: 100%">
                         <strong>Midden en Klein Bedrijf</strong> 
                     </p>                   
@@ -145,8 +173,8 @@
 
     <section class="mb-5" style="background: #023356">
          <div class="container-fluid">
-             <div class="row py-md-0 py-4">
-                 <div class="col-md-3 text-center">
+             <div class="row py-md-0 py-4 d-flex justify-content-center">
+                 <div class="col-md-3 col-8 text-center mb-md-0 mb-3">
                     <img class="img-fluid w-75" style=""
                     src="<?php echo get_stylesheet_directory_uri();?>/img/Image98.png" alt="">  
                  </div>
@@ -165,8 +193,8 @@
 
     <section>
         <div class="container-fluid my-5">
-            <div class="row">
-                <div class="col-md-12 p-2 order-md-1 order-2 text-md-left text-center px-4 px-md-3">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-12 col-11 p-2 order-md-1 order-2 text-md-left text-center px-4 px-md-3">
                     <p class="wordDeBestText2 mx-md-0 py-0 mt-0" style="color: #023356; max-width: 100%"> 
                         <strong>Plug-and-play ontwikkel platform</strong> 
                     </p>                   
@@ -178,7 +206,7 @@
                 </div>
             </div>
 
-            <div class="list-group-flush">
+            <div class="list-group-flush mx-md-0 mx-2">
                 <div class="list-group-item border-0 px-md-0 px-1 py-md-0">
                     <div class="d-flex flex-md-row flex-column">
                         <div class="mb-md-4 p-2 align-items-center d-flex justify-content-center">
@@ -331,12 +359,12 @@
 
     <section class="py-md-4 px-3" >
         <div class="container-fluid my-5">
-             <div class="row">
-                 <div class="col-md-5 p-2 text-md-left text-center">
+             <div class="row d-flex justify-content-center">
+                 <div class="col-md-5 col-8 p-2 text-center">
                     <img class="img-fluid w-50" style=""
                     src="<?php echo get_stylesheet_directory_uri();?>/img/Skills-paspoor.001.png" alt=""> 
                  </div>
-                 <div class="col-md-7 p-2 text-md-left text-center d-flex align-items-center">
+                 <div class="col-md-7 col-11 p-2 text-md-left text-center d-flex align-items-center">
                      <div>
                         <p class="wordDeBestText2 mx-md-0 py-0 mt-0" style="color: #023356; max-width: 100%"> 
                             <strong>Een skills paspoort voor elke medewerker</strong> </p>                   
@@ -360,8 +388,8 @@
 
     <section class="py-md-4 px-3" >
         <div class="container-fluid my-5">
-             <div class="row">
-                 <div class="col-md-7 p-2 text-md-left text-center order-md-1 order-2">
+             <div class="row d-flex justify-content-center">
+                 <div class="col-md-7 col-11 p-2 text-md-left text-center order-md-1 order-2">
                     <p class="wordDeBestText2 mx-md-0 py-0 mt-0" style="color: #023356; max-width: 100%"> 
                     <strong>Wat is een Learning Experience platform?</strong> </p>                   
                     <p class="krijgText"> 
@@ -375,7 +403,7 @@
                         </button>
                      </div>
                  </div>
-                 <div class="col-md-5 p-2 text-md-right text-center order-md-2 order-1">
+                 <div class="col-md-5 col-11 p-2 text-md-right text-center order-md-2 order-1">
                     <img class="img-fluid w-75" style=""
                     src="<?php echo get_stylesheet_directory_uri();?>/img/ImgSkill2.png" alt=""> 
                  </div>
@@ -391,11 +419,11 @@
         <div class="container-fluid py-5">
             <div class="row d-flex justify-content-center align-items-center">
             
-                <div class="col-md-6 px-md-0 text-md-left text-center">
+                <div class="col-md-6 col-9 mb-md-0 mb-5 px-md-0 text-md-left text-center">
                     <img class="im-fluid w-75"  src="<?php echo get_stylesheet_directory_uri();?>/img/Contact_team2.png" alt="team">     
                 </div>
 
-                <div class="col-md-6 px-md-0 text-md-left text-center">
+                <div class="col-md-6 col-11 px-md-0 text-md-left text-center">
                     <h2 class="hero-title text-white">Direct contact met één van onze adviseurs? <br> </h2>
                     <div class="my-3 text-white">
                         <p class="krijgText text-white">

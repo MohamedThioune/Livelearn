@@ -136,68 +136,6 @@
 <div class="contentOne">
 </div>
 
-<!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
-
-    <!-- Modal Sign End -->
-    <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-         style="position: absolute; ">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Registreren</h2>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body  px-md-5 p-3">
-                    <?php
-                    echo (do_shortcode('[user_registration_form id="59"]'));
-                    ?>
-
-                    <div class="text-center">
-                        <p>Al een account? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                data-toggle="modal" data-target="#exampleModalCenter">Log-in</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
-
-    <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
-
-    <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-         style="position: absolute; ">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Inloggen</h2>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body  px-md-5 p-3">
-                    <?php
-                    wp_login_form([
-                        'redirect' => 'http://wp12.influid.nl/dashboard/user/',
-                        'remember' => false,
-                        'label_username' => 'Wat is je e-mailadres?',
-                        'placeholder_email' => 'E-mailadress',
-                        'label_password' => 'Wat is je wachtwoord?'
-                    ]);
-                    ?>
-                    <div class="text-center">
-                        <p>Nog geen account?  <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                              data-toggle="modal" data-target="#SignInWithEmail">Meld je aan</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
-
 
 <!-- ------------------------------------------ start Header -------------------------------------- -->
 
