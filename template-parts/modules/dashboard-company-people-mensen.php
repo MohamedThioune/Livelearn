@@ -48,12 +48,13 @@
                 $last_name = "ANONYM";
 
             
-            $random = RandomString();
+             
 
-            $login = $random;
+            $login = RandomString();
+            $password = RandomString();
 
             $userdata = array(
-                'user_pass' => 'p@ssword1234.',
+                'user_pass' => $password,
                 'user_login' => $login,
                 'user_email' => $email,
                 'user_url' => 'https://livelearn.nl/inloggen/',
@@ -75,11 +76,12 @@
                 echo ("<span class='alert alert-info'>" .  $danger . "</span>");   
             }else
                 {
+                    update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
                     $subject = 'Je LiveLearn inschrijving is binnen! ✨';
                     $body = "
                     Bedankt voor je inschrijving<br>
                     <h1>Hello " . $first_name  . "</h1>,<br> 
-                    Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>p@ssword1234.</b><br><br>
+                    Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br><br>
                     <h4>Inloggen:</h4><br>
                     <h6><a href='https://livelearn.nl/inloggen/'> Connexion </a></h6>
                     ";

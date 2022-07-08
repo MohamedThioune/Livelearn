@@ -119,15 +119,17 @@ $user = wp_get_current_user();
             </div>
         </div>
    </div> 
-
-</body>
-
+   
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
 
+
 <script>
+            
+            
 
     $('#reload-data').click(function(){
+        
         $.ajax({
             url: '/scrapping',
             type: 'POST',
