@@ -55,32 +55,33 @@ if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
         //var_dump($datas);
     foreach ($datas as $key => $article) 
     {
-      $sql = $wpdb->prepare("SELECT titel FROM {$wpdb->prefix}databank WHERE  titel='$article[title]' AND  type= 'Artikel' AND short_description='$article[short_description]' AND image_xml='$article[image]'  AND date_multiple='$article[date]'");
+      $sql = $wpdb->prepare("SELECT titel FROM {$wpdb->prefix}databank WHERE image_xml='$article[image]' AND type= 'Artikel'");
       $result = $wpdb->get_results($sql);
-      if (empty($result))
+      
+      if(empty($result))
       {
-        
-            $status = 'extern';
-            //Data to create the course
-            $data = array(
-              'titel' => $article['title'],
-              'type' => 'Artikel',
-              'videos' => NULL, 
-              'short_description' => $article['short_description'],
-              'long_description' => $article['content'],
-              'duration' => NULL, 
-              'prijs' => 0, 
-              'prijs_vat' => 0,
-              'image_xml' => $article['image'], 
-              'onderwerpen' => '', 
-              'date_multiple' => $article['date'], 
-              'course_id' => null,
-              'author_id' => 0,
-              'status' => $status
-            );
-            $id_post = $wpdb->insert($table,$data);
-            echo $wpdb->last_error;
-        
+        $status = 'extern';
+        //Data to create the course
+        $data = array(
+          'titel' => $article['title'],
+          'type' => 'Artikel',
+          'videos' => NULL, 
+          'short_description' => $article['short_description'],
+          'long_description' => $article['content'],
+          'duration' => NULL, 
+          'prijs' => 0, 
+          'prijs_vat' => 0,
+          'image_xml' => $article['image'], 
+          'onderwerpen' => '', 
+          'date_multiple' => $article['date'], 
+          'course_id' => null,
+          'author_id' => 0,
+          'status' => $status
+        );
+        $wpdb->insert($table,$data);
+        $id_post = $wpdb->insert_id;
+
+        echo $wpdb->last_error;
     }
   }
 }

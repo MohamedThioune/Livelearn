@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+
+<?php
+   global $wp;
+   $url = home_url( $wp->request );
+?>
 <style>
     #croieSearch {
         display: none;

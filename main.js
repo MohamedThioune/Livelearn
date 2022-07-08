@@ -100,8 +100,58 @@ jQuery(function($){
         $('#Finish').removeClass('colorStep');
     });
 
+// clone section dashboard course step 3
+   /* $('.wrapperClone').on('click', '.remove', function() {
+        $('.remove').closest('.wrapperClone').find('.elementClone').not(':first').last().remove();
+
+    });
+    $('.wrapperClone').on('click', '.clone', function() {
+        $('.clone').closest('.wrapperClone').find('.elementClone').first().clone().appendTo('.results');
+    });*/
 
 
+
+    /* Variables */
+    var row = $(".attr");
+
+    function addRow() {
+        row.clone(true, true).appendTo(".results");
+    }
+
+    function removeRow(button) {
+        button.closest("div.attr").remove();
+    }
+
+    $('#attributes .attr:first-child').find('.remove').hide();
+
+    /* Doc ready */
+    $(".add").on('click', function () {
+        addRow();
+        if($("#attributes .attr").length > 1) {
+            //alert("Can't remove row.");
+            $(".remove").show();
+        }
+    });
+    $(".remove").on('click', function () {
+        if($("#attributes .attr").size() == 1) {
+            //alert("Can't remove row.");
+            $(".remove").hide();
+        } else {
+            removeRow($(this));
+
+            if($("#attributes .attr").size() == 1) {
+                $(".remove").hide();
+            }
+
+        }
+    });
+
+
+
+
+
+
+// clone section dashboard course step 3
 
     //variable for offline courses date input
     $('.block2evens').each(function(){
