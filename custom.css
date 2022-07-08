@@ -2151,9 +2151,7 @@ input:focus-visible {
     font-family: "Ubuntu" !important;
     font-size: 18px;
 }
-.login-username label{
-    display: none;
-}
+
 #loginform input{
     color: #023356;
     font-size: 14px;
@@ -2168,8 +2166,9 @@ input:focus-visible {
     background: #023356 !important;
     color: white !important;
 }
-.login-password label{
-    display: none;
+.login-password label, .login-username label{
+    /* display: none; */
+    font-weight: bold;
 }
 .insta{
     border-radius: 100% !important;
@@ -2990,6 +2989,22 @@ body .gform_wrapper ul li.gfield {
     line-height: 35px;
     margin-bottom: 35px;
 }
+
+/* custom connect with icon signup */
+.nsl-button.nsl-button-default.nsl-button-google.customSocialMedia, .nsl-button.nsl-button-default.nsl-button-twitter.customSocialMedia  {
+    /* background: antiquewhite !important; */
+    border: solid 1px black;
+    border-radius: 8px;
+    padding-right: 45px !important;
+}
+.nsl-button.nsl-button-default.nsl-button-twitter.customSocialMedia {
+    border: none !important;
+}
+div.nsl-container .nsl-button-default div.nsl-button-label-container {
+    margin-top: 2px !important;
+    color: #000 !important;
+}
+
 .boxCardForm {
     width: 90%;
     padding: 20px 30px 30px !important;
@@ -3745,7 +3760,7 @@ body .gform_wrapper ul li.gfield {
     overflow: scroll;
 }
 .modal {
-    overflow-y:auto;
+    overflow-y:hidden !important;
 }
 .alJoum .gf_browser_chrome{
     width: 100%;
@@ -5166,7 +5181,7 @@ nav .show{
 }
 .modalEcosyteme input{
     background: transparent !important;
-    border: 1px solid !important;
+    border: 1px solid grey !important;
     margin-bottom: 20px !important;
 }
 .modalEcosyteme input::placeholder{
@@ -8824,7 +8839,7 @@ ul#tabs-nav li.active {
     }
     .elkeVolgendeTitle {
         font-size: 24px;
-        width: 100%px;
+        width: 100%;
         line-height: 27px;
     }
     .addButtonLink {
@@ -11115,6 +11130,9 @@ ul#tabs-nav li.active {
     #field_5_3 {
         padding-top: 100px;
     }
+    .customSocialMedia .nsl-button-svg-container {
+        width: 85px !important;
+    }
 }
 @media all and (max-width: 400px) {
     .textIconeLearning {
@@ -11138,7 +11156,7 @@ ul#tabs-nav li.active {
     }
     .elkeVolgendeTitle {
         font-size: 24px;
-        width: 100%px;
+        width: 100%;
         line-height: 27px;
     }
     .elkeVolgendeDescription {
@@ -11609,7 +11627,7 @@ ul#tabs-nav li.active {
     }
     .elkeVolgendeTitle {
         font-size: 24px;
-        width: 100%px;
+        width: 100%;
         line-height: 27px;
     }
     .elkeVolgendeDescription {
