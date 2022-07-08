@@ -137,6 +137,7 @@
                         </ul> <!-- END tabs-nav -->
                         <div id="tabs-content">
                             <div id="tab1" class="tab-content">
+
                             <?php
                                 $data = get_field('data_locaties', $post->ID);
                                 if(!$data){
@@ -166,89 +167,104 @@
                                                 ?>
                                                 <a id="bookdates" name="bookdates"></a>
 
+
                                                 <!-------------------------------------------- Start cards on bottom --------------------------- -->
-                                                <div class="block2evens">
-                                                    <div class="CardBlockEvenement">
+                                                <div class="block2evens block2evensTabs">
+                                                    <section>
+                                                        <details>
+                                                            <summary class="dateText1">
 
-                                                        <div class="dateBlock">
-                                                            <p class="dateText1"><?php
-                                                                echo $agenda_start;
-                                                                if($date_start != '' && $date_end != '')
-                                                                {
-                                                                    echo ' - ';
-                                                                    echo $agenda_end;
-                                                                }
-                                                                ?>
-                                                            </p>
-                                                            <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
-                                                        </div>
-                                                        <div class="BlocknumberEvenement">
+                                                               <div class="headTabsAccordion">
+                                                                   <div>
+                                                                       <?php
+                                                                       echo $agenda_start;
+                                                                       if($date_start != '' && $date_end != '')
+                                                                       {
+                                                                           echo ' - ';
+                                                                           echo $agenda_end;
+                                                                       }
+                                                                       ?>
+                                                                   </div>
+                                                                   <p class="prixEvens">€ <?php echo $price; ?></p>
+                                                               </div>
 
-                                                            <?php
+                                                            </summary>
+                                                            <div class="detailSummary">
 
-                                                            for($i = 0; $i < count($datum['data']); $i++) {
-                                                                $date_start = $datum['data'][$i]['start_date'];
-                                                                $location = $datum['data'][$i]['location'];
-                                                                if($date_start != null) {
-                                                                    $day = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
-                                                                    $hour = explode(' ', $date_start)[1];
+                                                                <div class="dateBlock">
+                                                                     <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
+                                                                </div>
+                                                                <div class="BlocknumberEvenement">
 
+                                                                    <?php
+
+                                                                    for($i = 0; $i < count($datum['data']); $i++) {
+                                                                        $date_start = $datum['data'][$i]['start_date'];
+                                                                        $location = $datum['data'][$i]['location'];
+                                                                        if($date_start != null) {
+                                                                            $day = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
+                                                                            $hour = explode(' ', $date_start)[1];
+
+                                                                            ?>
+                                                                            <?php if($i === 0){?>
+                                                                                <input type="hidden" data-attr="dateNameStart" value="<?php echo $day . ', ' . $hour . ', ' . $location  ?>">
+                                                                            <?php }?>
+                                                                            <div class="d-flex">
+                                                                                <p class="numberEvens"><?php echo $i+1 ?></p>
+                                                                                <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
+                                                                            </div>
+                                                                            <?php
+                                                                        }
+                                                                    }
                                                                     ?>
-                                                                    <?php if($i === 0){?>
-                                                                        <input type="hidden" data-attr="dateNameStart" value="<?php echo $day . ', ' . $hour . ', ' . $location  ?>">
-                                                                    <?php }?>
-                                                                    <div class="d-flex">
-                                                                        <p class="numberEvens"><?php echo $i+1 ?></p>
-                                                                        <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
+                                                                </div>
+
+                                                                <div class="blockPriceEvens">
+
+                                                                    <p class="exText">Ex BTW</p>
+                                                                    <div class="product-attr">
+
+
                                                                     </div>
-                                                                    <?php
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </div>
+                                                                    <div class="contentBtnCardProduct">
+                                                                        <!-- <a href="" class="btn btnReserveer">Reserveer<br><br></a> -->
+                                                                        <!-- <a href="" class="btn btnSchrijf">Schrijf mij in!</a> -->
+                                                                        <?php do_action( 'woocommerce_before_add_to_cart_form' ); ?>
+                                                                        <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
+                                                                            <?php do_action( 'woocommerce_before_add_to_cart_button' ); ?>
+                                                                            <?php
+                                                                            do_action( 'woocommerce_before_add_to_cart_quantity' );
 
-                                                        <div class="blockPriceEvens">
-                                                            <p class="prixEvens">€ <?php echo $price; ?></p>
-                                                            <p class="exText">Ex BTW</p>
-                                                            <div class="product-attr">
+                                                                            woocommerce_quantity_input(
+                                                                                array(
+                                                                                    'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
+                                                                                    'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
+                                                                                    'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
+                                                                                )
+                                                                            );
+
+                                                                            do_action( 'woocommerce_after_add_to_cart_quantity' );
+
+                                                                            if($user_id != 0 && $user_id != $post->post_author){
+                                                                                ?>
+                                                                                <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="single_add_to_cart_button button alt">Reserveren</button>
+
+                                                                            <?php }
+                                                                            do_action( 'woocommerce_after_add_to_cart_button' ); ?>
+                                                                        </form>
+
+                                                                        <?php
+                                                                        if($user_id == 0)
+                                                                            echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
+                                                                        do_action( 'woocommerce_after_add_to_cart_form' ); ?>
+                                                                    </div>
+                                                                </div>
 
 
                                                             </div>
-                                                            <div class="contentBtnCardProduct">
-                                                                <!-- <a href="" class="btn btnReserveer">Reserveer<br><br></a> -->
-                                                                <!-- <a href="" class="btn btnSchrijf">Schrijf mij in!</a> -->
-                                                                <?php do_action( 'woocommerce_before_add_to_cart_form' ); ?>
-                                                                <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
-                                                                    <?php do_action( 'woocommerce_before_add_to_cart_button' ); ?>
-                                                                    <?php
-                                                                    do_action( 'woocommerce_before_add_to_cart_quantity' );
+                                                        </details>
 
-                                                                    woocommerce_quantity_input(
-                                                                        array(
-                                                                            'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
-                                                                            'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
-                                                                            'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
-                                                                        )
-                                                                    );
-
-                                                                    do_action( 'woocommerce_after_add_to_cart_quantity' );
-
-                                                                    if($user_id != 0 && $user_id != $post->post_author){
-                                                                        ?>
-                                                                        <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="single_add_to_cart_button button alt">Reserveren</button>
-
-                                                                    <?php }
-                                                                    do_action( 'woocommerce_after_add_to_cart_button' ); ?>
-                                                                </form>
-
-                                                                <?php
-                                                                if($user_id == 0)
-                                                                    echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
-                                                                do_action( 'woocommerce_after_add_to_cart_form' ); ?>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
+                                                    </section>
                                                 </div>
 
                                                 <!-------------------------------------------- End cards on bottom --------------------------- -->
@@ -275,91 +291,106 @@
                                             $agenda_end = $d_end[0] . ' ' . $calendar[$d_end[1]];
                                             ?>
                                             <a id="bookdates" name="bookdates"></a>
-                                            <div class="block2evens">
-                                                <div class="CardBlockEvenement">
+                                            <div class="block2evens block2evensTabs">
 
-                                                    <div class="dateBlock">
-                                                        <p class="dateText1"><?php
-                                                            echo $agenda_start;
-                                                            if($date_start != $date_end)
-                                                            {
-                                                                echo ' - ';
-                                                                echo $agenda_end;
-                                                            }
-                                                            ?>
-                                                        </p>
-                                                        <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
-                                                    </div>
-                                                    <div class="BlocknumberEvenement">
+                                                <section>
+                                                    <details>
+                                                        <summary class="dateText1">
 
-                                                        <?php
-                                                        if(!empty($infos))
-                                                            $x = 0;
-                                                        foreach($infos as $key=>$info) {
-                                                            $date = explode(' ', $info);
-                                                            $d = explode('/',$date[0]);
-                                                            $day = $d[0] . ' ' . $calendar[$d[1]];
-                                                            $hour = explode(':', explode('-', $date[1])[0])[0] .':'. explode(':', explode('-', $date[1])[0])[1];
-                                                            $location = explode('-',$date[2])[1];
-                                                            ?>
-                                                            <?php if($x === 0){?>
-                                                                <input type="hidden" data-attr="dateNameStart" value="<?php echo $day . ', ' . $hour . ', ' . $location  ?>">
-                                                            <?php }?>
-                                                            <div class="d-flex">
-                                                                <p class="numberEvens"><?php echo $x+1 ?></p>
-                                                                <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
-                                                            </div>
-                                                            <?php
-                                                            $x+=1;
-                                                        }
-                                                        ?>
-                                                    </div>
-
-                                                    <div class="blockPriceEvens">
-                                                        <p class="prixEvens">€ <?php echo $price; ?></p>
-                                                        <p class="exText">Ex BTW</p>
-                                                        <div class="product-attr">
-
-
-                                                        </div>
-                                                        <div class="contentBtnCardProduct">
-                                                            <!-- <a href="" class="btn btnReserveer">Reserveer<br><br></a> -->
-                                                            <!-- <a href="" class="btn btnSchrijf">Schrijf mij in!</a> -->
-                                                            <?php do_action( 'woocommerce_before_add_to_cart_form' ); ?>
-
-                                                            <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
-                                                                <?php do_action( 'woocommerce_before_add_to_cart_button' ); ?>
-                                                                <?php
-                                                                do_action( 'woocommerce_before_add_to_cart_quantity' );
-
-                                                                woocommerce_quantity_input(
-                                                                    array(
-                                                                        'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
-                                                                        'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
-                                                                        'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
-                                                                    )
-                                                                );
-
-                                                                do_action( 'woocommerce_after_add_to_cart_quantity' );
-                                                                if($user_id != 0 && $user_id != $post->post_author){
+                                                            <div class="headTabsAccordion">
+                                                                <div>
+                                                                    <?php
+                                                                    echo $agenda_start;
+                                                                    if($date_start != $date_end)
+                                                                    {
+                                                                        echo ' - ';
+                                                                        echo $agenda_end;
+                                                                    }
                                                                     ?>
-                                                                    <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="single_add_to_cart_button button alt">Reserveren</button>
+                                                                </div>
+                                                                <p class="prixEvens">€ <?php echo $price; ?></p>
+                                                            </div>
 
-                                                                <?php }
+                                                        </summary>
+                                                        <div class="detailSummary">
 
-                                                                do_action( 'woocommerce_after_add_to_cart_button' ); ?>
-                                                            </form>
+                                                            <div class="dateBlock">
+                                                                <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
+                                                            </div>
+                                                            <div class="BlocknumberEvenement">
+
+                                                                <?php
+                                                                if(!empty($infos))
+                                                                    $x = 0;
+                                                                foreach($infos as $key=>$info) {
+                                                                    $date = explode(' ', $info);
+                                                                    $d = explode('/',$date[0]);
+                                                                    $day = $d[0] . ' ' . $calendar[$d[1]];
+                                                                    $hour = explode(':', explode('-', $date[1])[0])[0] .':'. explode(':', explode('-', $date[1])[0])[1];
+                                                                    $location = explode('-',$date[2])[1];
+                                                                    ?>
+                                                                    <?php if($x === 0){?>
+                                                                        <input type="hidden" data-attr="dateNameStart" value="<?php echo $day . ', ' . $hour . ', ' . $location  ?>">
+                                                                    <?php }?>
+                                                                    <div class="d-flex">
+                                                                        <p class="numberEvens"><?php echo $x+1 ?></p>
+                                                                        <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
+                                                                    </div>
+                                                                    <?php
+                                                                    $x+=1;
+                                                                }
+                                                                ?>
+                                                            </div>
+
+                                                            <div class="blockPriceEvens">
+
+                                                                <p class="exText">Ex BTW</p>
+                                                                <div class="product-attr">
 
 
-                                                            <?php
-                                                            if($user_id == 0)
-                                                                echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
+                                                                </div>
+                                                                <div class="contentBtnCardProduct">
+                                                                    <!-- <a href="" class="btn btnReserveer">Reserveer<br><br></a> -->
+                                                                    <!-- <a href="" class="btn btnSchrijf">Schrijf mij in!</a> -->
+                                                                    <?php do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 
-                                                            do_action( 'woocommerce_after_add_to_cart_form' ); ?>
+                                                                    <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
+                                                                        <?php do_action( 'woocommerce_before_add_to_cart_button' ); ?>
+                                                                        <?php
+                                                                        do_action( 'woocommerce_before_add_to_cart_quantity' );
+
+                                                                        woocommerce_quantity_input(
+                                                                            array(
+                                                                                'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
+                                                                                'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
+                                                                                'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
+                                                                            )
+                                                                        );
+
+                                                                        do_action( 'woocommerce_after_add_to_cart_quantity' );
+                                                                        if($user_id != 0 && $user_id != $post->post_author){
+                                                                            ?>
+                                                                            <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="single_add_to_cart_button button alt">Reserveren</button>
+
+                                                                        <?php }
+
+                                                                        do_action( 'woocommerce_after_add_to_cart_button' ); ?>
+                                                                    </form>
+
+
+                                                                    <?php
+                                                                    if($user_id == 0)
+                                                                        echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
+
+                                                                    do_action( 'woocommerce_after_add_to_cart_form' ); ?>
+                                                                </div>
+                                                            </div>
+
                                                         </div>
-                                                    </div>
+                                                    </details>
 
-                                                </div>
+                                                </section>
+
                                             </div>
                                             <?php
                                             $it++;
@@ -772,8 +803,10 @@
 
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js'></script>
+
+
+    <script>
     $("#btn_favorite").click((e)=>
     {
         $(e.preventDefault());
