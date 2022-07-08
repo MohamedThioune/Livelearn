@@ -374,25 +374,26 @@
                             <div id="tab2" class="tab-content">
                                 <h2>Skills</h2>
                                 <?php
-                                    $category_default = get_field('categories', $post->ID)[0];
+                                    $category_default = get_field('categories', $post->ID);
                                     $category_xml = get_field('category_xml', $post->ID);
                                 
                                 ?>
                                 <div class="blockSkillsTabs">
                                     <?php
                                         $read_category = array();
-                                        if(!empty($category_id))
-                                            foreach($category_default as $item)
-                                                if(!in_array($item,$read_category)){
-                                                    array_push($read_category,$item);
-                                                    echo '<p class="skillsElement">'. (String)get_the_category_by_ID($item) . '</p>';
+                                        if(!empty($category_default))
+                                            foreach($category_default as $item){
+                                                if(!in_array($item['value'],$read_category)){
+                                                    array_push($read_category,$item['value']);
+                                                    echo '<p class="skillsElement">'. (String)get_the_category_by_ID($item['value']) . '</p>';
                                                 }
+                                            }
 
                                         else if(!empty($category_xml))
                                             foreach($category_xml as $item)
-                                                if(!in_array($item,$read_category)){
-                                                    array_push($read_category,$item);
-                                                    echo '<p class="skillsElement">'. (String)get_the_category_by_ID($item) . '</p>';
+                                                if(!in_array($item['value'],$read_category)){
+                                                    array_push($read_category,$item['value']);
+                                                    echo '<p class="skillsElement">'. (String)get_the_category_by_ID($item['value']) . '</p>';
                                                 }
                                     ?>
                                 </div>

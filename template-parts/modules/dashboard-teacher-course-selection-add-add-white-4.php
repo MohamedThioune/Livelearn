@@ -3,8 +3,12 @@
 
     $members = array();
 
+    $post = get_post($_GET['id']);
+    $author = array($post->post_author);
+    $expert = get_field('experts', $post->ID);    
+
     foreach($users as $user)
-        if(in_array( 'author', $user->roles ) )
+        if(in_array('author', $user->roles) || in_array('teacher', $user->roles))
             array_push($members, $user);  
 ?>
     <div class="row">
@@ -26,6 +30,10 @@
                                     <select name="experts[]" id="autocomplete" class="multipleSelect2" multiple="true">
                                         <?php 
                                             foreach($members as $member) {
+                                                if(in_array($member->ID,$experts)){
+                                                    echo "<option selected value='" . $member->ID ."'>" . $member->display_name . "</option>";
+                                                    continue;
+                                                }
                                                 echo "<option value='" . $member->ID ."'>" . $member->display_name . "</option>";
                                             }
                                         ?>
@@ -45,22 +53,22 @@
             <div class="blockCourseToevoegen">
                 <p class="courseToevoegenText">Course toevoegen</p>
                 <div class="contentBlockRight">
-                <a href="/dashboard/teacher/course-selection/?func=add-white&id=<?php echo $_GET['id'];?>" class="contentBlockCourse">
-                            <div class="circleIndicator  passEtape"></div>
-                            <p class="textOpleidRight">Basis informatie</p>
-                        </a>
-                        <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=2" class="contentBlockCourse">
-                            <div class="circleIndicator passEtape"></div>
-                            <p class="textOpleidRight">Online or location</p>
-                        </a>
-                        <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=3" class="contentBlockCourse">
-                            <div class="circleIndicator passEtape"></div>
-                            <p class="textOpleidRight ">Tags</p>
-                        </a>
-                        <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=4" class="contentBlockCourse">
-                            <div class="circleIndicator passEtape2"></div>
-                            <p class="textOpleidRight">Expert</p>
-                        </a>
+                    <a href="/dashboard/teacher/course-selection/?func=add-white&id=<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
+                        <div class="circleIndicator  passEtape"></div>
+                        <p class="textOpleidRight">Basis informatie</p>
+                    </a>
+                    <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=2&edit" class="contentBlockCourse">
+                        <div class="circleIndicator passEtape"></div>
+                        <p class="textOpleidRight">Online or location</p>
+                    </a>
+                    <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=3&edit" class="contentBlockCourse">
+                        <div class="circleIndicator passEtape"></div>
+                        <p class="textOpleidRight ">Tags</p>
+                    </a>
+                    <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=4&edit" class="contentBlockCourse">
+                        <div class="circleIndicator passEtape2"></div>
+                        <p class="textOpleidRight">Expert</p>
+                    </a>
                 </div>
             </div>
         </div>

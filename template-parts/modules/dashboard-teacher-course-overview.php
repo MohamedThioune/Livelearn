@@ -2,8 +2,7 @@
 
 $id = get_current_user_id();
 
-if($id != 0){
-
+if($id){
     $args = array(
         'post_type' => 'course', 
         'posts_per_page' => -1,
@@ -11,8 +10,12 @@ if($id != 0){
     );
 
     $courses = get_posts($args);
-    
 }
+$artikel_single = "Artikel";
+$white_type_array =  ['Lezing', 'Event'];
+$course_type_array = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'Cursus'];
+$video_single = "Video";
+
 
 ?>
 <div class="contentListeCourse">
@@ -29,7 +32,7 @@ if($id != 0){
                         <th scope="col">Actie</th>
                         <th scope="col">Verkoop</th>
                         <th scope="col">Titel</th>
-                        <!-- th scope="col">Leervorm</th> -->                    
+                        <th scope="col">Type</th>
                         <th scope="col">Prijs</th>
                         <th scope="col">Onderwerp(en)</th>
                         <th scope="col">Startdatum</th>
@@ -99,13 +102,29 @@ if($id != 0){
                                 $day = explode(' ', $date)[0];
                             }
                         }
+
+                        //Course Type
+                        $course_type = get_field('course_type', $course->ID);
                     ?>
                     <tr id="<?php echo $course->ID;?>" >
+                        <?php
+                        $path_edit  = "";
+                        if($course_type == $artikel_single)
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-add-article&id=" . $course->ID ."&edit";
+                        else if($course_type == $video_single)
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-video&id=" . $course->ID ."&edit";
+                        else if(in_array($course_type,$white_type_array))
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-add-white&id=" . $course->ID ."&edit";
+                        else if(in_array($course_type,$course_type_array))
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-course&id=" . $course->ID ."&edit";
+
+                        ?>
                         <td class="textTh">
-                            <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $course->ID;?>&edit"><i class="fas fa-edit"></i></a>
+                            <a href="<?= $path_edit ?>"><i class="fas fa-edit"></i></a>
                         </td>
-                        <td class="textTh"><?php if(!empty(get_field('connected_product',$course->ID))){echo 'ja';}else{echo 'nee';}?></td>
+                        <td class="textTh"><?php if(!empty(get_field('visibility',$course->ID))){echo 'nee';}else{echo 'ja';}?></td>
                         <td class="textTh "><a style="color:#212529;font-weight:bold" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
+                        <td class="textTh"><?php echo $course_type; ?></td>
                         <td class="textTh"><?php echo $price; ?></td>
                         <td class="textTh "><?php echo $category ?></td>
                         <td class="textTh"><?php echo $day; ?></td>

@@ -16,11 +16,7 @@
 
   <?php
   /** Template Name: xml parse */ 
-
-  global $wpdb;
-
-  $table = $wpdb->prefix . 'databank';
-  
+ 
   //Get all users
   $users = get_users(); 
    
@@ -215,7 +211,47 @@
         update_field('data_locaties_xml', $data_locaties_xml, $meta_course);
       }
 
-     $status = 'extern';
+      //Data to create the course
+      $post_data = array(
+        'post_title' => $datum->programDescriptions->programName,
+        'post_author' => $author_id,
+        'post_type' => 'course',
+        'post_status' => 'publish'
+      );
+
+      //Create the course
+      $post_id = wp_insert_post($post_data);
+      $meta = $meta_value . '-' . $post_id;
+
+      /*
+      * * Create for product course
+      */
+      $data = array(
+        'post_author' => get_current_user_id(),
+        'post_content' => ' ',
+        'post_status' => 'publish',
+        'post_title' => $datum->programDescriptions->programName,
+        'post_parent' => '',
+        'post_type' => 'product'
+      );
+
+      $product_id = wp_insert_post($data);
+
+      //update course data as well
+      update_post_meta( $post_id, 'connected_product', $product_id);
+      wp_set_object_terms( $product_id, 'simple', 'product_type');
+      update_post_meta( $product_id, '_visibility', 'visible' );
+      update_post_meta( $product_id, '_virtual', 'yes');
+      update_post_meta( $product_id, '_regular_price', intval($post['prijs']));
+      update_post_meta( $product_id, '_price', intval($post['prijs']));
+      update_post_meta( $product_id, '_manage_stock', "no" );
+
+      /*
+      * * end
+      */
+    
+      if(add_user_meta(1, $meta_key, $meta))
+        echo '✔️';
 
       //Get the url media image to display on front
       foreach($datum->programDescriptions->media as $media)
@@ -223,23 +259,36 @@
           $image = $media->url;
           break;
         }
+      
+      //Update custom fields for the post
+      update_field('agenda', strval($post['agenda']), $post_id);
+      update_field('price', intval($post['prijs']), $post_id);
+      update_field('prijsvat', intval($post['prijsvat']), $post_id);
+      update_field('url_image_xml', strval($post['url_image']), $post_id);
+      update_field('short_description', strval($post['short_description']), $post_id);
+      update_field('long_description', strval($post['long_description']), $post_id);
+      update_field('degree', strval($post['degree']), $post_id);
+      update_field('duration_day', intval($post['duration_day']), $post_id);
+
+      update_field('attachment_xml', $attachment_xml, $post_id);
+
+      update_field('data_locaties_xml', $data_locaties_xml , $post_id);
 
       /*  
       ** Course type
       */
-
-      $course_type = "";
       
-      if(in_array('masterclass:', $keywords) || in_array('Masterclass', $keywords) || in_array('masterclass', $keywords))
-        $course_type = "masterclass";
-      else if(in_array('(training)', $keywords) || in_array('training', $keywords))
-        $course_type = "training";
-      else if(in_array('live', $keywords) && in_array('seminar', $keywords))
-        $course_type = "webinar";
-      else if(in_array('Live', $keywords) || in_array('Online', $keywords) || in_array('E-learning', $keywords) )
-        $course_type = "elearning";
-      else
-        $course_type = "course"; 
+      if(in_array('masterclass:', $keywords) || in_array('Masterclass', $keywords) || in_array('masterclass', $keywords)){
+        update_field('course_type', 'masterclass', $post_id);
+      }else if(in_array('(training)', $keywords) || in_array('training', $keywords)){
+        update_field('course_type', 'training', $post_id);
+      }else if(in_array('live', $keywords) && in_array('seminar', $keywords)){
+        update_field('course_type', 'webinar', $post_id);
+      }else if(in_array('Live', $keywords) || in_array('Online', $keywords) || in_array('E-learning', $keywords) ){
+        update_field('course_type', 'elearning', $post_id);
+      }else{ 
+        update_field('course_type', 'course', $post_id);
+      }
       
       /*    
       ** Tags add
@@ -253,7 +302,7 @@
       );
       wp_update_post($arg); 
     
-      $data_locaties_xml = "";
+      $data_locaties_xml = array();
     
       //Modify the dates 
       foreach($datum->programSchedule->programRun as $program){
@@ -291,46 +340,10 @@
       ** 
       */
 
-
-      /*
-      * * Data to create the course
-      */
-      $post = array(
-        'titel' => $datum->programDescriptions->programName,
-        'type' => $course_type,
-        'videos' => null,
-        'short_description' => $datum->programDescriptions->programSummaryText,
-        'long_description' => $descriptionHtml,
-        'duration' => $datum->programClassification->programDuration,
-        'agenda' => $datum->programDescriptions->programDescriptionText,
-        'image_xml' => $image,
-        'attachment_xml' => $image,
-        'prijs' => $datum->programSchedule->genericProgramRun->cost->amount,
-        'prijsvat' => $datum->programSchedule->genericProgramRun->cost->amountVAT,
-        'degree' => $datum->programClassification->degree,
-        'teacher_id' => $datum->programCurriculum->teacher->id,
-        'org' => $datum->programClassification->orgUnitId,
-        'onderwerpen' => null, 
-        'date_multiple' => null, 
-        'course_id' => null,
-        'author_id' => 0,
-        'status' => $status
-      );
-
-      $post_id = $wpdb->insert($table,$data);
-
-      echo $wpdb->last_error;
-
-      $meta = $meta_value . '~' . $post_id;          
-
-      if(add_user_meta(1, $meta_key, $meta))
-        echo '✔️';
-
       //for who - results - niveau
       echo "<span class='textOpleidRight'> Course_ID: " . $datum->programClassification->programId . " - Insertion done successfully <br><br></span>";
     }
     else{
-
       $meta_course = 0;
       foreach($meta_data as $value){
           $metax = explode('-',$value);

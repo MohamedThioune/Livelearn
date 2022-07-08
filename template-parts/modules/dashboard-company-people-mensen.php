@@ -64,8 +64,7 @@
             );
 
             $user_id = wp_insert_user(wp_slash($userdata));
-
-
+ 
             if(is_wp_error($user_id)){
                 $danger = $user_id->get_error_message();
                 ?>
