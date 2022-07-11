@@ -1,5 +1,6 @@
 <?php
 $page = dirname(__FILE__) . '/../../templates/check_visibility.php';
+
 require($page); 
 
 $courses = array();
