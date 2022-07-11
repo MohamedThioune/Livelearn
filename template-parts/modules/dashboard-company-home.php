@@ -5,6 +5,7 @@
  
 
 ?>
+
 <div class="contentPageManager">
     <form action="my-team/" method="post">
     <div class="row">
@@ -18,6 +19,7 @@
                         <img src="<?php echo get_stylesheet_directory_uri() ?>/img/Mijn_mensen.png" alt="">
                     </div>
                 </a>
+
                 <a href="/dashboard/company/learning-modules/" class="cardCoursManager">
                     <p class="contentText">Jouw<br>
                         <b>Leermodules</b>

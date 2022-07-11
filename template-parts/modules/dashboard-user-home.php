@@ -18,8 +18,7 @@ $user_post_view = get_posts(
     )
 )[0];   
 
-$is_view=false;
-var_dump($user_post_view);
+$is_view = false;
 
 if (count($user_post_view)!= 0)
 {
@@ -43,11 +42,13 @@ if (count($user_post_view)!= 0)
                 $points+=4;
             if ($view['course'] -> price >= $course -> price)
                 $points+=2;
+            
             $percent = abs(($points/$max_points) * 100);
-            if ($percent >= 70){
-                array_push($random_id, $course->ID);
-                array_push($recommended_courses, $course);
-            }
+            if ($percent >= 70)
+                if(!in_array($course->ID, $random_id)){
+                    array_push($random_id, $course->ID);
+                    array_push($recommended_courses, $course);
+                }
         }
     }
 }
@@ -117,8 +118,6 @@ foreach ($recommended_courses as $key => $course) {
     if(get_field('course_type', $course->ID))
       $count[get_field('course_type', $course->ID)]++; 
 }
-
-//var_dump($count);
 
 
 foreach($global_courses as $course)
