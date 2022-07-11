@@ -504,7 +504,7 @@ $degrees=[
                     ?>
 
                         <div class="groupeBtn-Jouw-inloggen">
-                            <button type="button" class="btn jouwn-skills elementWeb" data-toggle="modal" data-target="#SkillsModal" >Jouw skills paspoort in 3 stappen</button>
+                            <button type="button" class="btn jouwn-skills elementWeb" data-toggle="modal" data-target="#SkillsModal" >Jouw skills paspoort in 6 stappen</button>
                             <button type="button" class="jouwn-skills elementMobile" data-toggle="modal" data-target="#SkillsModal" >Skills Paspoort</button>
                             <a href="/inloggen" class="inloggenbtn">Inloggen</a>
                         </div>
@@ -527,7 +527,7 @@ $degrees=[
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Jouw skills paspoort in 3 stappen</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Jouw skills paspoort in 6 stappen</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -562,7 +562,7 @@ $degrees=[
                         </div>
                     
                             <div class="step1SkillsPasspoort">
-                                <p class="titleBlockStepSkills">Wat is jouw hoogst afgeronde opleiding ?</p>
+                                <p class="titleBlockStepSkills">Wat is jouw hoogst afgeronde opleiding ? 🧑🧑🧑🧑</p>
                                 <div class="blockInputRadio">
                                     <?= $input_degrees; ?>
                                 </div>
@@ -641,7 +641,7 @@ $degrees=[
                                 </div>
 
                             <div class="step5SkillsPasspoort stepSkillpasspoort">
-                                    <p class="titleBlockStepSkills">Wat is jouw hoogst afgeronde opleiding? </p>
+                                    <p class="titleBlockStepSkills">Tot welke generatie behoor je ?</p>
                                     <div class="blockInputRadio" id="groupBtnChoice2">
                                         <?=  $input_generaties; ?>
                                     </div>
@@ -652,7 +652,7 @@ $degrees=[
                                 </div>
 
                             <div class="step6SkillsPasspoort stepSkillpasspoort">
-                                    <p class="titleBlockStepSkills">Jouw gegevens en je hebt direct toegang tot je skills paspoort </p>
+                                    <p class="titleBlockStepSkills">Vul je gegevens in en je hebt direct toegang tot je skills paspoort </p>
                                     <div class="hiddenCB">
                                         <div class="input-group-register">
                                             <div class="form-group-skills">
