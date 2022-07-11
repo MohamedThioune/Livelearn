@@ -1,6 +1,7 @@
 <?php
 $page = dirname(__FILE__) . '/../../templates/check_visibility.php';
 
+echo "Start";
 require($page); 
 
 $courses = array();
@@ -19,8 +20,10 @@ $user_post_view = get_posts(
     )
 )[0];   
 
-$is_view=false;
+$is_view = false;
+echo "hello";
 var_dump($user_post_view);
+echo "hello - after dump";
 
 if (count($user_post_view)!= 0)
 {
