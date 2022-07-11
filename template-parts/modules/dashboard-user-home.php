@@ -176,15 +176,17 @@ foreach($global_courses as $course)
     }
    
 }
-// if (count($recommended_courses)==0)
-// {
-//     $courses = array_merge($courses, $expert_courses);
-//     $recommended_courses = $courses;
-//     $random_id = $courses_id;
-// } 
+
+$bool = false;
+
+if (count($recommended_courses) == 0){
+    $courses = array_merge($courses, $expert_courses);
+    $recommended_courses = $courses;
+    $bool = true;
+} 
+
 
 //Activitien
-$activitiens = count($courses);
 shuffle($recommended_courses);
 /*
 * *   
@@ -195,7 +197,7 @@ if(isset($_GET['message']))
         echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>";
         
 ?>
-<?php if(!empty($count['Opleidingen'])){ ?>
+<?php if(!empty($count['Opleidingen']) || $bool){ ?>
 
     <div class="block-treaning">
         <p class="trendingTitle"> Opleidingen</p>
@@ -295,93 +297,93 @@ if(isset($_GET['message']))
                         */ 
                         $company = get_field('company',  'user_' . $course->post_author);
             ?>
-                        <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
-                            <div class="blockLoveCourse">
-                                <button class="btn btn_dislike">
-                                    <img  src="<?php echo get_stylesheet_directory_uri();?>/img/heart-dislike.png" alt="">
-                                </button>
-                                <button class="btn btn_like">
-                                    <img  src="<?php echo get_stylesheet_directory_uri();?>/img/heart-like.png" alt="">
-                                </button>
-                            </div>
+                <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
+                    <div class="blockLoveCourse">
+                        <button class="btn btn_dislike">
+                            <img  src="<?php echo get_stylesheet_directory_uri();?>/img/heart-dislike.png" alt="">
+                        </button>
+                        <button class="btn btn_like">
+                            <img  src="<?php echo get_stylesheet_directory_uri();?>/img/heart-like.png" alt="">
+                        </button>
+                    </div>
 
-                            <a href="<?php echo get_permalink($course->ID) ?>" class="" >
-                                <div class="cardKraam">
-                                    <div class="headCardKraam">
-                                        <div class="blockImgCardCour">
-                                            <img src="<?php echo $thumbnail; ?>" alt="">
+                    <a href="<?php echo get_permalink($course->ID) ?>" class="" >
+                        <div class="cardKraam">
+                            <div class="headCardKraam">
+                                <div class="blockImgCardCour">
+                                    <img src="<?php echo $thumbnail; ?>" alt="">
+                                </div>
+                                <div class="blockgroup7">
+                                    <div class="iconeTextKraa">
+                                        <div class="sousiconeTextKraa">
+                                            <?php if($category != " ") { ?>
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/kraam.png" class="icon7" alt="">
+                                                <p class="kraaText"><?php echo $category ?></p>
+                                            <?php } ?>
                                         </div>
-                                        <div class="blockgroup7">
-                                            <div class="iconeTextKraa">
-                                                <div class="sousiconeTextKraa">
-                                                    <?php if($category != " ") { ?>
-                                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/kraam.png" class="icon7" alt="">
-                                                        <p class="kraaText"><?php echo $category ?></p>
-                                                    <?php } ?>
-                                                </div>
-                                                <div class="sousiconeTextKraa">
-                                                    <?php if(get_field('degree', $course->ID)) { ?>
-                                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" class="icon7" alt="">
-                                                        <p class="kraaText"> <?php echo get_field('degree', $course->ID);?></p>
-                                                    <?php } ?>
-                                                </div>
-                                            </div>
-                                            <div class="iconeTextKraa">
-                                                <div class="sousiconeTextKraa">
-                                                    <?php if($day) { ?>
-                                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/calend.png" class="icon7" alt="">
-                                                        <p class="kraaText"> <?php echo $day . " " . $month ?></p>
-                                                    <?php } ?>
-                                                </div>
-                                                <div class="sousiconeTextKraa">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/euro1.png" class="icon7" alt="">
-                                                    <p class="kraaText"><?php echo $price ?></p>
-                                                </div>
-                                            </div>
+                                        <div class="sousiconeTextKraa">
+                                            <?php if(get_field('degree', $course->ID)) { ?>
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" class="icon7" alt="">
+                                                <p class="kraaText"> <?php echo get_field('degree', $course->ID);?></p>
+                                            <?php } ?>
                                         </div>
                                     </div>
-                                    <div class="contentCardProd">
-                                        <div class="group8">
-                                            <div class="imgTitleCours">
-                                                <?php
-                                                if(!empty($company)){
-                                                    $company_title = $company[0]->post_title;
-                                                    $company_id = $company[0]->ID;
-                                                    $company_logo = get_field('company_logo', $company_id);
-                                                    ?>
-                                                    <div class="colorFront">
-                                                        <img src="<?php echo $company_logo; ?>" width="15" alt="">
-                                                    </div>
-                                                    <p class="textJan"><?php echo $company_title; ?></p>
-                                                    <?php
-                                                }
-                                                ?>
-                                            </div>
-                                            <div class="group9">
-                                                <div class="blockOpein">
-                                                    <img class="iconAm" src="<?php echo get_stylesheet_directory_uri();?>/img/graduat.png" alt="">
-                                                    <p class="lieuAm">Opleidingen</p>
-                                                </div>
-                                                <div class="blockOpein">
-                                                    <img class="iconAm1" src="<?php echo get_stylesheet_directory_uri();?>/img/map.png" alt="">
-                                                    <p class="lieuAm"><?php echo $location; ?></p>
-                                                </div>
-                                            </div>
+                                    <div class="iconeTextKraa">
+                                        <div class="sousiconeTextKraa">
+                                            <?php if($day) { ?>
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/calend.png" class="icon7" alt="">
+                                                <p class="kraaText"> <?php echo $day . " " . $month ?></p>
+                                            <?php } ?>
                                         </div>
-                                        <p class="werkText"> <?php echo $course->post_title;?></p>
-                                        <p class="descriptionPlatform">
-                                            <?php echo get_field('short_description', $course->ID) ?>
-                                        </p>
+                                        <div class="sousiconeTextKraa">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/euro1.png" class="icon7" alt="">
+                                            <p class="kraaText"><?php echo $price ?></p>
+                                        </div>
                                     </div>
                                 </div>
-                            </a>
-
+                            </div>
+                            <div class="contentCardProd">
+                                <div class="group8">
+                                    <div class="imgTitleCours">
+                                        <?php
+                                        if(!empty($company)){
+                                            $company_title = $company[0]->post_title;
+                                            $company_id = $company[0]->ID;
+                                            $company_logo = get_field('company_logo', $company_id);
+                                            ?>
+                                            <div class="colorFront">
+                                                <img src="<?php echo $company_logo; ?>" width="15" alt="">
+                                            </div>
+                                            <p class="textJan"><?php echo $company_title; ?></p>
+                                            <?php
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="group9">
+                                        <div class="blockOpein">
+                                            <img class="iconAm" src="<?php echo get_stylesheet_directory_uri();?>/img/graduat.png" alt="">
+                                            <p class="lieuAm">Opleidingen</p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <img class="iconAm1" src="<?php echo get_stylesheet_directory_uri();?>/img/map.png" alt="">
+                                            <p class="lieuAm"><?php echo $location; ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="werkText"> <?php echo $course->post_title;?></p>
+                                <p class="descriptionPlatform">
+                                    <?php echo get_field('short_description', $course->ID) ?>
+                                </p>
+                            </div>
                         </div>
+                    </a>
+
+                </div>
 
                 <?php
-                        if($count['opleidingen'] == 20)
-                            break;
-                }
+                    if($count['opleidingen'] == 20)
+                        break;
+                    }
                 }
             }
             if(!$find)
@@ -395,7 +397,7 @@ if(isset($_GET['message']))
 
 <?php } ?>
 
-<?php if(!empty($count['E-learning'])){ ?>
+<?php if(!empty($count['E-learning']) || $bool){ ?>
 
     <div class="block-treaning">
         <p class="trendingTitle">Trending E-learnings</p>
@@ -583,7 +585,7 @@ if(isset($_GET['message']))
 
 <?php } ?>
 
-<?php if(!empty($count['Workshop'])){ ?>
+<?php if(!empty($count['Workshop']) || $bool){ ?>
 
     <div class="block-treaning">
         <p class="trendingTitle">Workshops</p>
@@ -772,7 +774,7 @@ if(isset($_GET['message']))
 
 <?php } ?>
 
-<?php if(!empty($count['Masterclass'])){ ?>
+<?php if(!empty($count['Masterclass']) || $bool){ ?>
 
     <div class="block-treaning">
         <p class="trendingTitle"> Masterclasses</p>
@@ -959,7 +961,7 @@ if(isset($_GET['message']))
 
 <?php } ?>
 
-<?php if(!empty($count['Event'])){ ?>
+<?php if(!empty($count['Event']) || $bool){ ?>
 
     <div class="online-eveans">
         <p class="trendingTitle">Online Events</p>
@@ -1095,7 +1097,7 @@ if(isset($_GET['message']))
 
 <?php } ?>
 
-<?php if(!empty($count['Video'])){ ?>
+<?php if(!empty($count['Video']) || $bool){ ?>
 
     <div class="block-treaning">
         <p class="trendingTitle"> Videos</p>
@@ -1281,7 +1283,7 @@ if(isset($_GET['message']))
 
 <?php } ?>
 
-<?php if(!empty($count['Cursus'])){ ?>
+<?php if(!empty($count['Cursus']) || $bool){ ?>
 
     <div class="block-treaning">
         <p class="trendingTitle"> Cursus</p>

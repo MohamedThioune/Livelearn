@@ -131,14 +131,13 @@ require($page);
 */
 
 $degrees=[
-'n.v.t'=> 'NVT',
-'mbo1' => 'MBO1',
-'mbo2' => 'MBO2',
-'mbo3' => 'MBO3',
-'mbo4' => 'MBO4',
-'hbo' => 'HBO',
-'university' => 'Universiteit',
-'certificate' => 'Certificate'
+    'n.v.t'=> 'NVT',
+    'mbo1' => 'MBO1',
+    'mbo2' => 'MBO2',
+    'mbo3' => 'MBO3',
+    'mbo4' => 'MBO4',
+    'hbo' => 'HBO',
+    'university' => 'Universiteit',
 ];
   foreach ($degrees as $key => $value) {
     $input_degrees.= '<input type="radio" name="choiceDegrees" value='.$key.' id="level'.$key.'"><label for="level'.$key.'">'.$value.'</label>';
@@ -572,7 +571,7 @@ $degrees=[
                             </div>
 
                             <div class="step2SkillsPasspoort stepSkillpasspoort">
-                                <p class="titleBlockStepSkills">In welk vakgebied ben je werkzaan of ben je geïteresseerd?
+                                <p class="titleBlockStepSkills">In welk vakgebied ben je werkzaam of ben je geïnteresseerd ?
                                     <br><span>(Meerdere mogelijk)</span></p>
                                 <div class="hiddenCB">
                                     <div>
@@ -626,7 +625,7 @@ $degrees=[
                             </div>
 
                             <div class="step4SkillsPasspoort stepSkillpasspoort">
-                                <p class="titleBlockStepSkills">Hoe leer jij het liefst</p>
+                                <p class="titleBlockStepSkills">Hoe leer jij het liefst ?</p>
                                 <div class="hiddenCB">
                                     <div>
                                         <?= $input_course_type; ?>
