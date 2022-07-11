@@ -183,21 +183,33 @@ require($page);
 <div class="contentOne">
 </div>
 
-<!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
-
-    <!-- Modal Sign End -->
-    <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-         style="position: absolute; ">
-        <div class="modal-dialog" role="document" style="width: 96% !important;">
+     <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
+     <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="position: absolute;height: 106% !important; overflow-y:hidden !important;">
+        <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
 
             <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Registreren</h2>
+
+                <div class="modal-header border-bottom-0">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body  px-md-5 p-3">
+
+                <div class="modal-body  px-md-4 px-0">
+                    <div class="mb-4">
+                        <div class="text-center">
+                            <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                        </div>  
+                        <h3 class="text-center my-2">Sign Up</h3>
+                        <div class="text-center">
+                            <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                            data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign in</a></p>
+                        </div>
+                    </div>  
+
+
                     <?php
                         echo (do_shortcode('[user_registration_form id="59"]'));
                     ?>
@@ -206,79 +218,39 @@ require($page);
                         <p>Al een account? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
                                                 data-toggle="modal" data-target="#exampleModalCenter">Log-in</a></p>
                     </div>
+
                 </div>
             </div>
+        
+        </div>
+    </div>
+    <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
 
+    <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
+    <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="position: absolute;overflow-y:hidden !important;height: 95%; ">
+        <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
 
-            <!-- new modal form meetup -->
-            <!-- <div class="modal-content px-5">
+            <div class="modal-content">
                 <div class="modal-header border-bottom-0">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
 
-                <div class="modal-body">
-                    <form>
+                <div class="modal-body  px-md-5 px-4">
+                    <div class="mb-4">
+                        <div class="text-center">
+                            <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                        </div>
+                        <h3 class="text-center my-2">Sign In</h3>
+                        <div class="text-center">
+                            <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                            data-toggle="modal" data-target="#SignInWithEmail">&nbsp; Sign Up</a></p>
+                        </div>
+                    </div>
 
-                        <div class="mb-4">
-                            <div class="text-center">
-                                <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
-                            </div>  
-                            <h3 class="text-center my-2">Sign In</h3>
-                            <div class="text-center">
-                                <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                data-toggle="modal" data-target="#exampleModalCenter">Sign up</a></p>
-                            </div>
-                        </div>  
-                    
-                    
-                      
-                        <button class="btn btn-block d-flex justify-content-sm-between border border-2 p-2 justify-content-center p-2 btn-icon my-3">
-                            <i class="fab fa-facebook-f text-primary ml-2" style="font-size: 19px;"></i>
-                            <span class="d-sm-block d-none">Connect with Facebook</span> <span></span>
-                        </button>
-
-                        <button class="btn btn-block d-flex justify-content-sm-between border border-2 p-2 justify-content-center p-2 btn-icon my-2">
-                            <i class="fab fa-google text-danger ml-2" style="font-size: 19px;"></i>
-                            <span class="d-sm-block d-none">Connect with Google</span> <span></span>
-                        </button>
-
-                        <button class="btn btn-block d-flex justify-content-sm-between border border-2 p-2 justify-content-center p-2 btn-icon my-3">
-                            <i class="fab fa-apple text-dark ml-2" style="font-size: 22px;"></i>
-                            <span  class="d-sm-block d-none">Connect with Apple</span> <span></span>
-                        </button>
-
-                        <button class="btn btn-block d-flex justify-content-sm-between border border-2 p-2 justify-content-center p-2 btn-icon my-3"
-                        data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">
-                            <i class="far fa-envelope text-dark ml-2" style="font-size: 22px;"></i>
-                            <span class="d-sm-block d-none">Sign in with email address</span> <span></span>
-                        </button>
-
-                    </form>
-                </div>
-            
-            </div> -->
-           
-
-        </div>
-    </div>
-
-    <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
-
-    <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
-
-    <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-         style="position: absolute; ">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Inloggen</h2>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body  px-md-5 p-3">
                     <?php
                     wp_login_form([
                         'redirect' => $url,
@@ -290,103 +262,16 @@ require($page);
                     ?>
                     <div class="text-center">
                         <p>Nog geen account?  <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                              data-toggle="modal" data-target="#SignInWithEmail">Meld je aan</a></p>
+                                            data-toggle="modal" data-target="#SignInWithEmail">Meld je aan</a></p>
                     </div>
                 </div>
             </div>
 
-            <!-- modals from meetup -->
-            <!-- <div class="modal-content px-5">
-                <div class="modal-header border-bottom-0">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-                    <form id="form" class="form">
-
-                        <div class="mb-4">
-                            <div class="text-center">
-                                <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
-                            </div>
-                            <h3 class="text-center my-2">Sign Up</h3>
-                            <div class="text-center">
-                                <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                data-toggle="modal" data-target="#SignInWithEmail">Sign in</a></p>
-                            </div>
-                        </div>
-                       
-                        <div class="mb-4 form-outline">
-                            <label class="form-label" for="email">Adresse e-mail</label>
-                            <input type="email" class="form-control" placeholder="a@florin-pop.com" id="email" />
-                        </div>
-                        
-                        
-                        <div class="form-outline mb-4">
-                            <div class="row mb-2 d-flex justify-content-between">
-                                <div class="col-md-5">
-                                    <label class="form-check-label" for="password"> Password </label>
-                                </div>                               
-                                <div class="col d-flex justify-content-end">
-                                    <a href="" class="px-0">Mot de passe oublié?</a>
-                                </div>
-                            </div>
-                        
-                            <div class="input-group" id="show_hide_password">
-                                <input type="password" id="password" class="form-control" aria-label="Amount (to the nearest dollar)">
-                                <div class="input-group-append">
-                                    <span class="input-group-text" style="background-color: white; height: 38px;"><a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a></span>
-                                </div>
-                            </div>
-                        </div>
-                            
-                        <div class="row mb-4">
-                            <div class="col-12 d-flex justify-content-start">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="form2Example34" checked />
-                                    <label class="form-check-label" for="form2Example34">Stay connected </label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-block mb-5 p-2" style="background-color: #F77070;"> 
-                            <span class="text-white font-weight-bold " style="font-size: 20px;"> Sign up</span>
-                        </button>
-
-
-                        <p><hr/></p>
-                    
-                        <div class="col-md-12 mt-5">
-                            <button class="btn btn-block d-flex justify-content-sm-between border border-2 p-2 justify-content-center btn-icon my-3">
-                                <i class="fab fa-facebook-f text-primary ml-2" style="font-size: 19px;"></i>
-                                <span class="d-sm-block d-none">Connect with Facebook</span> <span></span>
-                            </button>
-
-                            <button class="btn btn-block d-flex justify-content-sm-between border border-2 p-2 justify-content-center p-2 btn-icon my-2">
-                                <i class="fab fa-google text-danger ml-2" style="font-size: 19px;"></i>
-                                <span class="d-sm-block d-none">Connect with Google</span> <span></span>
-                            </button>
-
-                            <button class="btn btn-block d-flex justify-content-sm-between border border-2 p-2 justify-content-center p-2 btn-icon my-3">
-                                <i class="fab fa-apple text-dark ml-2" style="font-size: 22px;"></i>
-                                <span class="d-sm-block d-none">Connect with Apple</span> <span></span>
-                            </button>
-
-                            <div class="text-center py-3">
-                                <a href="" class="font-weight-normal">Any problem of connection ?</a>
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-                
-            </div> -->
 
         </div>
     </div>
-
     <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
+
 
 
 <!-- ------------------------------------------ start Header -------------------------------------- -->

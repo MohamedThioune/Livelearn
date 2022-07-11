@@ -39,6 +39,17 @@ if(isset($_POST['expert_add']) || isset($_POST['expert_add_artikel'])){
     header('Location:' . $path);
 }
 
+
+/**
+ * Skills Passport
+ */
+    else if (isset($_POST['skills_passport_add'])) {
+       var_dump($_POST);
+    }
+ /**
+ * Skills Passport
+ */
+
 else if(isset($_POST['topic_add'])){
 
     $categories = array();
@@ -624,7 +635,7 @@ if($dashboard == 'company' && $dashboard_page == 'profile'){
 else{
 ?>
 
-<div class="theme-content">
+<div class="theme-content" >
     <div class="theme-side-menu">
         <?php include_once(get_stylesheet_directory().'/template-parts/modules/dashboard-menu-'.$dashboard.'.php');?>
     </div>

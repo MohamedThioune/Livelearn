@@ -38,13 +38,125 @@ $link = ($user) ? '/dashboard/user' : '/';
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css'>
         <!-- get bootstrap icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-
+        <style>
+            .nav-pills .nav-link {
+                color: black !important;
+            }
+            .nav-pills .nav-link.active {
+                background: #023356 !important;
+                color: white !important;
+            }
+        </style>
 
         <title><?php bloginfo('name'); ?></title>
         <?php wp_head(); ?>
     </head>
     <body class="header-user canhas">
+
+
+        <!-- Modal -->
+        <div class="modal fade mt-5" id="bedrijfsprofiel_modal" tabindex="-1" role="dialog" 
+        aria-labelledby="exampleModalLabel" aria-hidden="true"  style="width:98%">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content px-md-5 px-1">
+                    <div class="modal-header border-0">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center mb-4">
+                            <p class="JouwOpleid" style="font-size: 20px !important">
+                                Creeër een bedrijfsprofiel of unlock de voordelen van jouw organisatie
+                            </p>
+                        </div>
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="height: 34px">
+                            <li class="nav-item w-50 text-center">
+                                <a class="nav-link text-dark active rounded rounded-pill h-100" id="pills-home-tab" data-toggle="pill"
+                                 href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"
+                                 style="padding-top: 5px !important; background: #E6E6E6">World onderdeel van je bedrijf</a>
+                            </li>
+                            <li class="nav-item w-50 text-center">
+                                <a class="nav-link text-dark rounded rounded-pill h-100" id="pills-profile-tab" data-toggle="pill" 
+                                href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"
+                                style="padding-top: 5px !important;background: #E6E6E6">Maak je bedrijfsprofiel</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                                <form class="formTestimonial m-0 w-100 p-3 bg-white">
+                                    <!-- <p class="title">Kies jouw persoonlijke scholingsadvies</p>
+                                    <p class="description">Vul onderstaande formulier in en we plannen het zo snel mogelijk in.</p> -->
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Voornaam" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Acheternaam*" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Bedrijf" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Zakelijk emailadres*" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Telefoon*" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Afdeling*" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
+                                    </div>
+                       
+                                    <button class="btn btnAanvraag rounded rounded-pill">Vraag aan</button>
+
+                                    <p class="description pt-4">
+                                        Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je 
+                                        direct toegang tot je bedrijfs leeromgeving
+                                    </p>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                                <form class="formTestimonial m-0 w-100 p-3 bg-white">
+                                    <!-- <p class="title">Kies jouw persoonlijke scholingsadvies</p>
+                                    <p class="description">Vul onderstaande formulier in en we plannen het zo snel mogelijk in.</p> -->
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Bedrijfsnaam" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Jouw zakelijke e-mailadres*" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Telefoonnummer" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Je afdeling" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Hoeveel medewerkers?" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
+                                    </div>
+                       
+                                    <button class="btn btnAanvraag rounded rounded-pill">Vraag aan</button>
+
+                                    <p class="description pt-4">
+                                        Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je 
+                                        direct toegang tot je bedrijfs leeromgeving
+                                    </p>
+
+                                    <p class="JouwOpleid pt-3">
+                                        Eerst lezen wat we doen? <a href="">Click hier!</a>
+                                    </p>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        
         <nav class="navbar navbar-expand-lg navbar-dark headerdashboard">
+            
             <div class="blockIconeWidth">
                 <button id="burger-web" class="largeElement btn">
                     <i class="fa fa-bars text-white" style="font-size: 25px"></i>
@@ -192,7 +304,8 @@ $link = ($user) ? '/dashboard/user' : '/';
                                 if(in_array( 'manager', $user->roles ) || in_array('administrator', $user->roles) )
                                     $ref_company = "/dashboard/company";
                         ?>
-                            <a href="<?= $ref_company; ?>">
+                            <!-- <a href="<?= $ref_company; ?>">  -->  <!-- old href -->
+                            <a href=""  data-toggle="modal" data-target="#bedrijfsprofiel_modal">
                                 <div class="userBlockNav">
                                     <img src="<?php echo $company_logo;?>" alt="">
                                 </div>
@@ -264,4 +377,4 @@ $link = ($user) ? '/dashboard/user' : '/';
                 </div>
             </div>
         </nav>
-     </body>
+     <!-- </body> -->

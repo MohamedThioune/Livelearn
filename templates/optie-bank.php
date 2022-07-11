@@ -90,33 +90,23 @@ $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 if($optie == "accept"){
     if($class == 'missing')
     {
+        $args = array(
+            'post_type'   => 'post',
+            'post_author' => $course->author_id,
+            'post_status' => 'publish',
+            'post_title'  => $course->titel
+        );
+        
+        $id_post = wp_insert_post($args);
+
         //Insert Artikel
-        if (strval($course->type) == "Artikel")
-        {
-            $args = array(
-                'post_type'   => 'post',
-                'post_author' => get_current_user_id(),
-                'post_status' => 'publish',
-                'post_title'  => $course->titel
-            );
-            
-            $id_post = wp_insert_post($args);
-           
+        if (strval($course->type) == "Artikel"){
             update_field('course_type', 'article', $id_post);
             update_field('article_itself', nl2br($course->long_description), $id_post);
         }
 
         //Insert YouTube
         if (strval($course->type) == "Video"){
-
-            $args = array(
-                'post_type' => 'course',
-                'post_author' => $course->author_id,
-                'post_status' => 'publish',
-                'post_title' => $course->titel
-            );
-
-            $id_post = wp_insert_post($args);
             $videos = explode(';', $course->videos);
             
             $youtube_video = array();
@@ -138,6 +128,18 @@ if($optie == "accept"){
             update_field('youtube_videos', $youtube_videos, $id_post);
         }
 
+        //Insert some other course type
+        $type = ['Opleidingen', 'Training', 'Masterclass', 'E-learning', 'Webinar'];
+        
+        if(in_array(strval($course->type), $type)){
+            $coursetype = "";
+            foreach($typos as $key => $typo)
+                if($course->type == $key)
+                    $coursetype == $typo;
+            
+            update_field('course_type', 'video', $id_post);
+        }
+
         /*
         ** UPDATE COMMON FIELDS
         */
@@ -147,6 +149,7 @@ if($optie == "accept"){
         update_field('long_description', nl2br($course->long_description), $id_post);
         update_field('url_image_xml', $course->image_xml, $id_post);
 
+        //Categories
         foreach($categorys as $type)
             if(stristr($course->onderwerpen, $type->cat_name) !== false)
                 array_push($onderwerpen, $type->cat_ID);
@@ -157,13 +160,18 @@ if($optie == "accept"){
             $company = get_post($course->company_id);
             update_field('company', $company, 'user_' . $course->author_id);
         }
+
+        //Date
+        $data_locaties = explode('~', strval($course->date_multiple));
+        if($data_locaties)
+            update_field('data_locaties_xml', $data_locaties, $id_post);
+
         /*
         ** END
         */
         
         $data = [ 'course_id' => $id_post]; // NULL value.
         $wpdb->update( $table, $data, $where );
-
 
     }
 }     
