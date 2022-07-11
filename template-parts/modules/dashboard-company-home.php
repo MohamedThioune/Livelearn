@@ -19,12 +19,6 @@
                         <img src="<?php echo get_stylesheet_directory_uri() ?>/img/Mijn_mensen.png" alt="">
                     </div>
                 </a>
-                 <!-- <a href="<?= $ref_company; ?>">  -->  <!-- old href -->
-                 <a href=""  data-toggle="modal" data-target="#bedrijfsprofiel_modal">
-                                <div class="userBlockNav">
-                                    <img src="<?php echo $company_logo;?>" alt="">
-                                </div>
-                            </a>
 
                 <a href="/dashboard/company/learning-modules/" class="cardCoursManager">
                     <p class="contentText">Jouw<br>
