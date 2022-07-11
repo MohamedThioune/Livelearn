@@ -25,7 +25,7 @@
   $users = get_users(); 
    
   //Get the URL content
-  $file = get_stylesheet_directory_uri()."/horizon-20220310.2227.xml";
+  $file = get_stylesheet_directory_uri()."/kenneth-smit-20220310.2227.xml";
   $xml = simplexml_load_file($file);
   $data_xml = $xml->program;
 
@@ -36,8 +36,6 @@
 
   //Retrieve courses
   foreach($data_xml as $key => $datum){
-    if($key == 1)
-      break;
 
     $post = array(
       'short_description' => $datum->programDescriptions->programSummaryText,
@@ -89,6 +87,8 @@
         }   
       }
     }
+
+    $company_id = get_field('company',  'user_' . $author_id)[0]->ID;
 
     // Value : course type
     if(in_array('masterclass:', $keywords) || in_array('Masterclass', $keywords) || in_array('masterclass', $keywords))
@@ -221,26 +221,11 @@
         }
 
         //Final value : categorie
-        $onderwerpen = join(',',$tags);
+        $onderwerpen = join(',' , $tags);
 
       /*
       End *
       */ 
-
-      // Get author of the course * 
-      foreach($users as $user) {
-        $teacher_id = get_field('teacher_id',  'user_' . $user->ID);
-        $company_user = get_field('company',  'user_' . $user->ID);
-        
-        if(strtolower($company_user[0]->post_title) == strval($post['org']) ){
-          $author_id = $user->ID;
-
-          if(strpos($teacher_id, strval($post['teacher_id'])) !== false){
-            $author_id = $user->ID;
-            break;
-          }   
-        }
-      }
 
       //Get the url media image to display on front
       foreach($datum->programDescriptions->media as $media)
@@ -248,24 +233,9 @@
           $image = $media->url;
           break;
         }
-
-      /*  
-      ** Course type
-      */
-      $course_type = "";
-      if(in_array('masterclass:', $keywords) || in_array('Masterclass', $keywords) || in_array('masterclass', $keywords))
-        $course_type = "masterclass";
-      else if(in_array('(training)', $keywords) || in_array('training', $keywords))
-        $course_type = "training";
-      else if(in_array('live', $keywords) && in_array('seminar', $keywords))
-        $course_type = "webinar";
-      else if(in_array('Live', $keywords) || in_array('Online', $keywords) || in_array('E-learning', $keywords) )
-        $course_type = "elearning";
-      else
-        $course_type = "course"; 
-
     
       $data_locaties_xml = array();
+      $data_locaties = "";
 
       /*
        Modify the dates
@@ -299,12 +269,11 @@
         
       }
 
-      $data_locaties_xml = join('~', $data_locaties_xml);
+      $data_locaties = join('~', $data_locaties_xml);
       
     /*  
     * * END
     */
-
 
     /*
     * * Data to create the course
@@ -325,12 +294,12 @@
         'teacher_id' => $datum->programCurriculum->teacher->id,
         'org' => strval($datum->programClassification->orgUnitId),
         'onderwerpen' => $onderwerpen, 
-        'date_multiple' => $data_locaties_xml, 
+        'date_multiple' => $data_locaties, 
         'course_id' => null,
         'author_id' => $author_id,
+        'company_id' => $company_id,
         'status' => $status
       );
-
     
     if(!in_array($meta_value, $meta_xmls)){ 
 
@@ -352,9 +321,16 @@
 
       if(empty($course)){
         delete_user_meta(1, $meta_key, $meta);
-        echo "****** Course # " . $course[0]->post_title . " not detected anymore<br><br>";
+        echo "****** Course # " . strval($datum->programDescriptions->programName) . " not detected anymore<br><br>";
       }
       else{
+        foreach($meta_data as $value){
+            $metax = explode('~',$value);
+            if($metax[0] == $meta_value){
+              $id = $metax[1];
+              break;
+          } 
+        }
         $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
 
         $course = $wpdb->get_results( $sql )[0];
@@ -404,9 +380,31 @@
           $change = true;
         }
        */
+
+        if($post['author_id'] != $course->author_id){
+          $data = [ 'author_id' => $author_id]; // NULL value.
+          $where = [ 'id' => $course->id ];
+          $updated = $wpdb->update( $table, $data, $where );
+          echo $wpdb->last_error;
+
+          echo '****** Author - ' . $message;
+          $change = true;
+        }
+
+        if($post['company_id'] != $course->company_id){
+          $data = [ 'company_id' => $company_id]; // NULL value.
+          $where = [ 'id' => $course->id ];
+          $updated = $wpdb->update( $table, $data, $where );
+          echo $wpdb->last_error;
+
+          echo '****** Company - ' . $message;
+          $change = true;
+        }
       
-       if(!$change)
-        echo '*** ~ *** No change found for this course ! *** ~ ***<br><br>';
+        if(!$change)
+          echo '*** ~ *** No change found for this course ! *** ~ ***<br><br>';
+        else
+          echo '<br><br>'; 
 
       }
     }
