@@ -255,9 +255,9 @@ $link = ($user) ? '/dashboard/user' : '/';
                         $company = get_field('company',  'user_' . $user->ID);
 
                         if(!empty($company)){
-                                if ( in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') {
+                            if ( in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') {
                             ?>
-                        <a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>
+                            <a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>
                         <?php }
                         }?>
 
@@ -304,8 +304,7 @@ $link = ($user) ? '/dashboard/user' : '/';
                                 if(in_array( 'manager', $user->roles ) || in_array('administrator', $user->roles) )
                                     $ref_company = "/dashboard/company";
                         ?>
-                            <!-- <a href="<?= $ref_company; ?>">  -->  <!-- old href -->
-                            <a href=""  data-toggle="modal" data-target="#bedrijfsprofiel_modal">
+                            <a <?php if(isset($ref_company)) echo'href="' .$ref_company. '"'; else echo 'data-toggle="modal" data-target="#bedrijfsprofiel_modal"'; ?> >
                                 <div class="userBlockNav">
                                     <img src="<?php echo $company_logo;?>" alt="">
                                 </div>

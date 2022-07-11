@@ -196,10 +196,12 @@ $companies = get_posts($args);
                             <select name="" id="">
                                 <?php
                                     foreach($categorys as $typo){
-                                        if(stristr($course->onderwerpen, $typo->cat_name) !== false)
-                                            echo '<option selected value="'. $typo->cat_name . '">' . $typo->cat_name . '</option>';
-                                        else
-                                            echo '<option value="'. $typo->cat_name . '">' . $typo->cat_name . '</option>';
+                                        foreach($categorys as $typo){
+                                            if(in_array($typo->cat_ID, $onderwerpen))
+                                                echo '<option selected value="'. $typo->cat_ID . '">' . $typo->cat_name . '</option>';
+                                            else
+                                                echo '<option value="'. $typo->cat_ID . '">' . $typo->cat_name . '</option>';
+                                        }
                                     }
                                 ?>
                             </select>
