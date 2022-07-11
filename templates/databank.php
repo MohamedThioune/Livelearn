@@ -28,6 +28,7 @@ $user = wp_get_current_user();
                <div class="headListeCourse">
                    <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img  src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
+                       &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="" width="25" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
                        &nbsp;&nbsp;<span id="reload-data"  class="bi bi-arrow-clockwise">Artikel</span>
                    <div hidden="true" id="loader" style="display:inline-block;" class="spinner-border spinner-border-sm text-primary" role="status">
                    </div>
@@ -118,15 +119,17 @@ $user = wp_get_current_user();
             </div>
         </div>
    </div> 
-
-</body>
-
+   
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
 
+
 <script>
+            
+            
 
     $('#reload-data').click(function(){
+        
         $.ajax({
             url: '/scrapping',
             type: 'POST',

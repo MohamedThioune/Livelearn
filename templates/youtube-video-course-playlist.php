@@ -101,7 +101,8 @@ $table = $wpdb->prefix . 'databank';
             'status' => $status
           );
 
-          $post_id = $wpdb->insert($table,$data);
+          $wpdb->insert($table,$data);
+          $post_id = $wpdb->insert_id;
 
           echo $wpdb->last_error;
 
