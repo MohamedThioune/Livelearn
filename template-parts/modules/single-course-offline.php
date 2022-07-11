@@ -290,7 +290,8 @@
                                         </div>
                                     </div>
                                     <?php
-                                       if ($user_id==0)
+                                     
+                                     if ($user_id==0)
                                        {
                                         echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
                                         wp_login_form([

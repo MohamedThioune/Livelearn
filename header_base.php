@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+
+<?php
+   global $wp;
+   $url = home_url( $wp->request );
+?>
 <style>
     #croieSearch {
         display: none;
@@ -138,7 +143,7 @@
     <div>
         
         <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
-        <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
             style="position: absolute;height: 120% !important; overflow-y:hidden !important;">
             <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
                 box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
@@ -159,7 +164,7 @@
                             <h3 class="text-center my-2">Sign Up</h3>
                             <div class="text-center">
                                 <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign in</a></p>
+                                data-toggle="modal" data-target="#SignInWithEmail">&nbsp; Sign in</a></p>
                             </div>
                         </div>  
 
@@ -170,7 +175,7 @@
 
                         <div class="text-center">
                             <p>Al een account? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                    data-toggle="modal" data-target="#exampleModalCenter">Log-in</a></p>
+                                                    data-toggle="modal" data-target="#SignInWithEmail">Log-in</a></p>
                         </div>
 
                     </div>
@@ -181,7 +186,7 @@
         <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
 
         <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
-        <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
             style="position: absolute;overflow-y:hidden !important;height: 110%; ">
             <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
             box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
@@ -201,7 +206,7 @@
                             <h3 class="text-center my-2">Sign In</h3>
                             <div class="text-center">
                                 <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                data-toggle="modal" data-target="#SignInWithEmail">&nbsp; Sign Up</a></p>
+                                data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign Up</a></p>
                             </div>
                         </div>
 
@@ -216,7 +221,7 @@
                         ?>
                         <div class="text-center">
                             <p>Nog geen account?  <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                data-toggle="modal" data-target="#SignInWithEmail">Meld je aan</a></p>
+                                                data-toggle="modal" data-target="#exampleModalCenter">Meld je aan</a></p>
                         </div>
                     </div>
                 </div>
