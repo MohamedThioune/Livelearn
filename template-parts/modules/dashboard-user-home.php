@@ -15,11 +15,12 @@ $user_post_view = get_posts(
     array(
         'post_type' => 'view',
         'post_status' => 'publish',
-        'post_author' => $user,
+        'author' => $user,
     )
-)[0];
+)[0];   
 
 $is_view=false;
+var_dump($user_post_view);
 
 if (count($user_post_view)!= 0)
 {
@@ -1636,12 +1637,14 @@ if(isset($_GET['message']))
             }
         }
         update_field('is_first_login', true, 'user_'.get_current_user_id());
+        header('Location:/dashboard/user');
         
     }
     
     $is_first_login=(get_field('is_first_login','user_' . get_current_user_id()));
     if (!$is_first_login && get_current_user_id() !=0 )
         {
+            // delete_user_meta(get_current_user_id(),'topic');
         
     ?>    
         <!-- Modal First Connection --> 
@@ -1654,7 +1657,7 @@ if(isset($_GET['message']))
                             <p class="pickText">Pick your favorite topics to set up your feeds</p>
                         </div>
                         <div class="modal-body">
-                        <form action="" method="post">
+                         <form method="post" name="first_login_form">
                             <div class="blockBaangerichte">
                                 <h1 class="titleSubTopic">Baangerichte</h1>
                                 <div class="hiddenCB">
