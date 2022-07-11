@@ -1,6 +1,5 @@
 <?php
 $page = dirname(__FILE__) . '/../../templates/check_visibility.php';
-
 require($page); 
 
 $courses = array();
@@ -44,7 +43,7 @@ if (count($user_post_view)!= 0)
                 $points+=4;
             if ($view['course'] -> price >= $course -> price)
                 $points+=2;
-                $percent = abs(($points/$max_points) * 100);
+            $percent = abs(($points/$max_points) * 100);
             if ($percent >= 70){
                 array_push($random_id, $course->ID);
                 array_push($recommended_courses, $course);
