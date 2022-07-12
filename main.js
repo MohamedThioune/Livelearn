@@ -730,6 +730,7 @@ jQuery(function($){
 
     });
 
+    
     function myFunction() {
         document.getElementById("autocomplete").classList.toggle("show");
     }
@@ -744,5 +745,6 @@ jQuery(function($){
 
         alert("testing close");
     });
+   
 
 });

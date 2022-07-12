@@ -48,6 +48,7 @@
         }
         .tabletsearch{display: none !important;}   
     }
+    
 </style>
 <html>
     <head>
@@ -709,7 +710,7 @@
                             </div>
                         </div>
                         <div class="second-element-mobile">
-                            <button id="burger" class=" btn burgerElement boxSousNav3-2">
+                            <button id="burger" onclick="showMenu()" class=" btn burgerElement boxSousNav3-2">
                                 <i class="fa fa-bars text-white" style="font-size: 25px"></i>
                             </button>
                             <button id="burgerCroie" class="btn croie">
@@ -764,7 +765,12 @@
                     </div>
                     <div class="block1">
                         <a href="/registreren" class="btnRegistreren">Registreren</a>
-                        <a href="#" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal" class="btnInloggen">Inloggen</a>
+                        <!-- <a href="#" data-toggle="modal" data-target="#SignInWithEmail"  onclick="showModalonMobile()"
+                         aria-label="Close" data-dismiss="modal" class="btnInloggen">Inloggen</a>         -->
+                        <!-- <a class="btnInloggen" id="testing" >Inloggen</a> -->
+                        <!-- <button onclick="myFunction()" id="tryIt">Try it</button> -->
+                        <a href="/inloggen" class="btnInloggen">Inloggen</a>
+                        
                     </div>
                 </div>
                 <div class="secondContentHeadMobile">
@@ -818,11 +824,11 @@
                                 <img class="fleG1 " src="<?php echo get_stylesheet_directory_uri();?>/img/fleG1.png" alt="">
                             </button>
                             <?php
-                            foreach($interesses as $interesse){
-                                ?>
+                                foreach($interesses as $interesse){
+                            ?>
                                 <a href="sub-topic?subtopic=<?php echo $interesse->cat_ID ?>" class="TextZorg"><?php echo $interesse->cat_name ?></a>
-                                <?php
-                            }
+                            <?php
+                                }
                             ?>
                         </div>
                     </div>
@@ -841,6 +847,7 @@
         </div>
     </div>
     <div id="main">
+    
         <script>
             $("#searchIconeTablet").click(function() {
                 // alert('cooooooll!');
@@ -849,7 +856,7 @@
                 // $("#headOne").hide();
                 // $("#croieProfil").hide();
                 $("#headTwo").hide();
-                $(".searchInputHedear").show();
+                $(".searchInputHedear").show(); 
                 // $("#burger").show();
                 $("#croieSearchTablet").show();
                 $("#profilView").show();
