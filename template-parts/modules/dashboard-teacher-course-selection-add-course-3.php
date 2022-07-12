@@ -45,11 +45,12 @@
                             $data = explode(';', $datum);
 
                             $data_first = $data[0];
-                            $data_first = explode(' ', explode('-', $data_first)[0])[0];
-                            
+
                             $location = explode('-', $data_first)[2];
                             $adress = explode('-', $data_first)[3];
 
+                            $data_first = explode(' ', explode('-', $data_first)[0])[0];
+                            
                             $max = intval(count($data)-1);
                             $data_last = $data[$max];
                             $data_last = explode(' ', explode('-', $data_last)[0])[0];
@@ -58,12 +59,13 @@
                             $data_last = str_replace('/', '.', $data_last);
 
                             //Conversion str to date
-                            $data_first = date('Y-m-d',strtotime($data_first));
-                            $data_last = date('Y-m-d',strtotime($data_last));
+                            $data_first = date('Y-m-d', strtotime($data_first));
+                            $data_last = date('Y-m-d', strtotime($data_last));
 
+                            $max++;
 
                             if($max > 3){
-                                $slice_array = array_slice( $data, 1, $max-1 );
+                                $slice_array = array_slice( $data, 1, $max-2 );
                                 foreach($slice_array as $key => $slice){
                                     $slice = explode(' ', explode('-', $slice)[0])[0];
                                     $data_between .= $slice;
@@ -128,16 +130,16 @@
                             </div>
                         </div>
 
-                            <div class="results"></div>
-                            <div class="buttons groupBtnData">
-
-                                <button type="button" class="add btn-newDate"> Complete with another section</button>
-                                <button type="submit" name="date_add" class="btn btn-info">Opslaan & verder</button>
-                            </div>
-
                     <?php
                     }
                     ?>
+                    <div class="results"></div>
+
+                    <div class="buttons groupBtnData">
+                        <button type="button" class="add btn-newDate"> Complete with another section</button>
+                        <button type="submit" name="date_add" class="btn btn-info">Opslaan & verder</button>
+                    </div>
+
                     <!-- element for clone -->
                     <div class="blockForClone">
                             <div class="attr">
