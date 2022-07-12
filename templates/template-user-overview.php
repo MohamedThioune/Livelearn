@@ -981,7 +981,9 @@
                                 </div>
                                 <div class="deToekomstBlock">
                                     <p class="deToekomstText"> <?php echo $course->post_title ?> </p>
-                                    <p class="platformText"> <?php echo get_field('short_description', $course->ID) ?> </p>
+                                   <div class="contentPlatformText">
+                                       <p class="platformText"> <?php echo get_field('short_description', $course->ID) ?> </p>
+                                   </div>
                                     <div class="detaiElementAgenda detaiElementAgendaModife">
                                         <div class="janBlock">
                                             <div class="colorFront"> 

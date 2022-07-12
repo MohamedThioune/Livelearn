@@ -69,6 +69,11 @@ $user = wp_get_current_user();
                            //Company
                            $company = get_field('company',  'user_' . $course->author_id);
                            $company_logo = (!empty($company)) ? get_field('company_logo', $company[0]->ID) : get_stylesheet_directory_uri() . '/img/placeholder.png'; 
+
+                           $onderwerpen = array();
+                           //Onderwerpen
+                           if($course->onderwerpen != "")
+                                $onderwerpen = explode(',', $course->onderwerpen);
                            
                            $state = $course->course_id ? 'present' : 'missing';
                            $key = $course->id;
@@ -78,7 +83,14 @@ $user = wp_get_current_user();
                                <td class="textTh courseDataBank" style="color:#212529;font-weight:bold"><?php echo $course->titel; ?></td>
                                <td class="textTh tdCenter"><?= $course->type; ?></td>
                                <td class="textTh tdCenter"><?= $course->prijs; ?></td>
-                               <td class="textTh courseOnderwerpen"><?= $course->onderwerpen; ?></td>
+                               <td class="textTh courseOnderwerpen">
+                                   <?php
+                                    if(!empty($onderwerpen))
+                                        foreach($onderwerpen as $value)
+                                            if($value)
+                                            echo (String)get_the_category_by_ID($value) . ','; 
+                                    ?>
+                                </td>
                                <td class="textTh tdCenter"><?= $course->status; ?></td>
                                <td class="textTh tdCenter"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo 'No author'; ?></td>
                                <td class="textTh tdCenter"> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo 'No company'; ?> </td>

@@ -73,14 +73,14 @@
                         </div>
                         <div class="overviewTreeBlock">
                             <p class="titleOvervien">Manager : <span><?php if(isset($superior->first_name) && isset($superior->last_name)) echo $superior->first_name . '' . $superior->last_name; else echo $superior->display_name; ?></span></p>
-                            <p class="titleOvervien">Company : <span><?php echo $company; ?></span></p>
+                            <p class="titleOvervien">Company : <br><span><?php echo $company; ?></span></p>
                         </div>
                         <br>
                         <div class="overviewFourBlock">
                             <?php if($experience){ ?>
 
                                 <div class="d-flex">
-                                    <p class="nameOtherSkill">Experience : <span><?php echo $experience; ?></span></p>
+                                    <p class="nameOtherSkill">Experience : <br><span><?php echo $experience; ?></span></p>
                                 </div>
                             <?php } if($languages){ ?>
 
