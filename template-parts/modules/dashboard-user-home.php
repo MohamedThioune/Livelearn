@@ -2,9 +2,9 @@
 $page = dirname(__FILE__) . '/../../templates/check_visibility.php';
 
 require($page); 
+
 $like_src=get_stylesheet_directory_uri()."/img/heart-like.png";
 $dislike_src=get_stylesheet_directory_uri()."/img/heart-dislike.png";
-
 
 $courses = array();
 
@@ -209,7 +209,7 @@ if(isset($_GET['message']))
             <?php
             $find = false;
             foreach($recommended_courses as $course){
-                
+
                 if(!get_field('visibility', $course->ID)) {
                     if(get_field('course_type', $course->ID) == "Opleidingen"){
 
@@ -300,35 +300,42 @@ if(isset($_GET['message']))
                         */ 
                         $company = get_field('company',  'user_' . $course->post_author);
             ?>
-                        <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
-                            <div class="blockLoveCourse" >
-                               
-                                  <button>
-                                    <?php
-                                        $favorites = get_field('favorited', $course->ID);
-                                        
-                                        if (in_array($user,$favorites))
-                                        {
-                                    ?>
-                                         <img class="btn_favourite" id="<?php echo $user."_".$course->ID ?>"  src="<?php echo $like_src;?>" alt="">   
-                                         
-                                         
-                                    <?php
-                                        }
-                                        else{
-                                    ?>
-                                         <img class="btn_favourite" id="<?php echo $user."_".$course->ID ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                    <?php
-                                        }
-                                    ?>
-                                </button>
-                            </div>
+                <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
+                    <div class="blockLoveCourse" >
+                        <button>
+                            <?php
+                                $favorites = get_field('favorited', $course->ID);
+                                
+                                if (in_array($user,$favorites))
+                                {
+                            ?>
+                                <img class="btn_favourite" id="<?php echo $user."_".$course->ID. "_course" ?>"  src="<?php echo $like_src;?>" alt="">   
+                                
+                                
+                            <?php
+                                }
+                                else{
+                            ?>
+                                <img class="btn_favourite" id="<?php echo $user."_".$course->ID ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                            <?php
+                                }
+                            ?>
+                        </button>
+                    </div>
 
-                            <a href="<?php echo get_permalink($course->ID) ?>">
-                                <div class="cardKraam">
-                                    <div class="headCardKraam">
-                                        <div class="blockImgCardCour">
-                                            <img src="<?php echo $thumbnail; ?>" alt="">
+                    <a href="<?php echo get_permalink($course->ID) ?>" class="" >
+                        <div class="cardKraam">
+                            <div class="headCardKraam">
+                                <div class="blockImgCardCour">
+                                    <img src="<?php echo $thumbnail; ?>" alt="">
+                                </div>
+                                <div class="blockgroup7">
+                                    <div class="iconeTextKraa">
+                                        <div class="sousiconeTextKraa">
+                                            <?php if($category != " ") { ?>
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/kraam.png" class="icon7" alt="">
+                                                <p class="kraaText"><?php echo $category ?></p>
+                                            <?php } ?>
                                         </div>
                                         <div class="sousiconeTextKraa">
                                             <?php if(get_field('degree', $course->ID)) { ?>
@@ -394,7 +401,6 @@ if(isset($_GET['message']))
                         break;
                     }
                 }
-                
             }
             if(!$find)
                 echo "<span class='opeleidingText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Geen overeenkomst met uw voorkeuren <i class='fas fa-smile-wink'></i></span>";
@@ -507,34 +513,8 @@ if(isset($_GET['message']))
                             $company = get_field('company',  'user_' . $course->post_author);
                         
                             ?>
-                                
-                            <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
 
-                            <div class="blockLoveCourse" >
-                               
-                               <button>
-                                 <?php
-                                     $favorites = get_field('favorited', $course->ID);
-                                     
-                                     if (in_array($user,$favorites))
-                                     {
-                                 ?>
-                                      <img class="btn_favourite" id="<?php echo $user."_".$course->ID ?>"  src="<?php echo $like_src;?>" alt="">   
-                                      
-                                      
-                                 <?php
-                                     }
-                                     else{
-                                 ?>
-                                      <img class="btn_favourite" id="<?php echo $user."_".$course->ID ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                 <?php
-                                     }
-                                 ?>
-                           
-                                </button>
-                         </div>
-
-                         <a href="<?php echo get_permalink($course->ID) ?>">
+                            <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
                                 <div class="cardKraam">
                                     <div class="headCardKraam">
                                         <div class="blockImgCardCour">
@@ -604,7 +584,6 @@ if(isset($_GET['message']))
                                     </div>
                                 </div>
                             </a>
-                            </div>
                         <?php
 
                             if($count['e_learning'] == 20)
@@ -721,34 +700,11 @@ if(isset($_GET['message']))
                             */ 
                             $company = get_field('company',  'user_' . $course->post_author);
                             ?>
-                            <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
-
-                            <div class="blockLoveCourse" >
-                               
-                               <button>
-                                 <?php
-                                     $favorites = get_field('favorited', $course->ID);
-                                     
-                                     if (in_array($user,$favorites))
-                                     {
-                                 ?>
-                                      <img class="btn_favourite" id="<?php echo $user."_".$course->ID ?>"  src="<?php echo $like_src;?>" alt="">   
-                                      
-                                      
-                                 <?php
-                                     }
-                                     else{
-                                 ?>
-                                      <img class="btn_favourite" id="<?php echo $user."_".$course->ID ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                 <?php
-                                     }
-                                 ?>
-                             </button>
-                         </div>
-
-                    <a href="<?php echo get_permalink($course->ID) ?>">
+                            <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
                                 <div class="cardKraam">
-                                    
+                                    <button class="btn btnCloche">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/cloche.png" alt="">
+                                    </button>
                                     <div class="headCardKraam">
                                         <div class="blockImgCardCour">
                                             <img src="<?php echo $thumbnail; ?>" alt="">
@@ -816,8 +772,7 @@ if(isset($_GET['message']))
                                         </p>
                                     </div>
                                 </div>
-                    </a>
-                            </div>
+                            </a>
                         <?php
                             if($count['workshop'] == 20)
                                 break;
@@ -932,35 +887,11 @@ if(isset($_GET['message']))
                         */ 
                         $company = get_field('company',  'user_' . $course->post_author);
             ?>
-                    <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
-                        
-                    <div class="blockLoveCourse" >
-                               
-                               <button>
-                                 <?php
-                                     $favorites = get_field('favorited', $course->ID);
-                                     
-                                     if (in_array($user,$favorites))
-                                     {
-                                 ?>
-                                      <img class="btn_favourite" id="<?php echo $user."_".$course->ID ?>"  src="<?php echo $like_src;?>" alt="">   
-                                      
-                                      
-                                 <?php
-                                     }
-                                     else{
-                                 ?>
-                                      <img class="btn_favourite" id="<?php echo $user."_".$course->ID ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                 <?php
-                                     }
-                                 ?>
-                             </button>
-                         </div>
-                        
-                
-    <a href="<?php echo get_permalink($course->ID) ?>">
-        <div class="cardKraam">
-                            
+                    <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
+                        <div class="cardKraam">
+                            <button class="btn btnCloche">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/cloche.png" alt="">
+                            </button>
                             <div class="headCardKraam">
                                 <div class="blockImgCardCour">
                                     <img src="<?php echo $thumbnail; ?>" alt="">
@@ -1028,8 +959,7 @@ if(isset($_GET['message']))
                                 </p>
                             </div>
                         </div>
-    </a>
-                    </div>
+                    </a>
                 <?php
                     if($count['masterclass'] == 20)
                         break;
@@ -1043,7 +973,6 @@ if(isset($_GET['message']))
 
             </div>
         </div>
-
     </div>
 
 <?php } ?>
@@ -1132,34 +1061,8 @@ if(isset($_GET['message']))
                 }
 
                 ?>
-                <div class="swiper-slide swipSlideEvents">
-                    
-                <div class="blockLoveCourse" >
-                               
-                               <button>
-                                 <?php
-                                     $favorites = get_field('favorited', $course->ID);
-                                     
-                                     if (in_array($user,$favorites))
-                                     {
-                                 ?>
-                                      <img class="btn_favourite" id="<?php echo $user."_".$course->ID ?>"  src="<?php echo $like_src;?>" alt="">   
-                                      
-                                      
-                                 <?php
-                                     }
-                                     else{
-                                 ?>
-                                      <img class="btn_favourite" id="<?php echo $user."_".$course->ID ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                 <?php
-                                     }
-                                 ?>
-                             </button>
-                         </div>
-                    
-            
-    <a href="<?php echo get_permalink($course->ID) ?>">
-        <div class="cardKraam">
+                <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swipSlideEvents">
+                    <div class="cardKraam">
                         <div class="headCardKraam">
                             <div class="blockImgCardCour2">
                                 <img src="<?php echo $thumbnail; ?>" alt="">
@@ -1194,8 +1097,7 @@ if(isset($_GET['message']))
                             </p>
                         </div>
                     </div>
-    </a>
-                </div>
+                </a>
                 <?php
                     if($count['event'] == 20)
                         break;
@@ -1308,34 +1210,11 @@ if(isset($_GET['message']))
                         */ 
                         $company = get_field('company',  'user_' . $course->post_author);
                 ?>
-                    <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
-                        
-                    <div class="blockLoveCourse" >
-                               
-                               <button>
-                                 <?php
-                                     $favorites = get_field('favorited', $course->ID);
-                                     
-                                     if (in_array($user,$favorites))
-                                     {
-                                 ?>
-                                      <img class="btn_favourite" id="<?php echo $user."_".$course->ID ?>"  src="<?php echo $like_src;?>" alt="">   
-                                      
-                                      
-                                 <?php
-                                     }
-                                     else{
-                                 ?>
-                                      <img class="btn_favourite" id="<?php echo $user."_".$course->ID ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                 <?php
-                                     }
-                                 ?>
-                             </button>
-                         </div>
-
-                    <a href="<?php echo get_permalink($course->ID) ?>">
+                    <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
                         <div class="cardKraam">
-                            
+                            <button class="btn btnCloche">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/cloche.png" alt="">
+                            </button>
                             <div class="headCardKraam">
                                 <div class="blockImgCardCour">
                                     <img src="<?php echo $thumbnail; ?>" alt="">
@@ -1404,7 +1283,6 @@ if(isset($_GET['message']))
                             </div>
                         </div>
                     </a>
-                    </div>
                 <?php
                     if($count['video'] == 20)
                         break;
@@ -1519,33 +1397,11 @@ if(isset($_GET['message']))
                         */ 
                         $company = get_field('company',  'user_' . $course->post_author);
             ?>
-                    <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
-                        
-                    <div class="blockLoveCourse" >
-                               
-                               <button>
-                                 <?php
-                                     $favorites = get_field('favorited', $course->ID);
-                                     
-                                     if (in_array($user,$favorites))
-                                     {
-                                 ?>
-                                      <img class="btn_favourite" id="<?php echo $user."_".$course->ID ?>"  src="<?php echo $like_src;?>" alt="">   
-                                      
-                                      
-                                 <?php
-                                     }
-                                     else{
-                                 ?>
-                                      <img class="btn_favourite" id="<?php echo $user."_".$course->ID ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                 <?php
-                                     }
-                                 ?>
-                             </button>
-                         </div>
-                    <a href="<?php echo get_permalink($course->ID) ?>">
+                    <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
                         <div class="cardKraam">
-                            
+                            <button class="btn btnCloche">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/cloche.png" alt="">
+                            </button>
                             <div class="headCardKraam">
                                 <div class="blockImgCardCour">
                                     <img src="<?php echo $thumbnail; ?>" alt="">
@@ -1614,8 +1470,6 @@ if(isset($_GET['message']))
                             </div>
                         </div>
                     </a>
-                    </div>
-
                 <?php
                     if($count['cursus'] == 20)
                         break;
@@ -1937,7 +1791,7 @@ if(isset($_GET['message']))
                 </div>
             </div>
         </div>
-<?php
+    <?php
     }  
 ?>
 
@@ -1948,15 +1802,16 @@ if(isset($_GET['message']))
     {
 
         btn_id=e.target.id;
+        meta_key = btn_id.split("_")[2];
         id = btn_id.split("_")[1];
         user_id= btn_id.split("_")[0];
-        
         
         console.log(e.target)
          $.ajax({
              url:"/like",
              method:"post",
              data:{
+                 meta_key:meta_key,
                  id:id,
                  user_id:user_id,
              },
@@ -1971,9 +1826,7 @@ if(isset($_GET['message']))
                     else
                     {
                         $("#"+btn_id).attr("src","<?php echo $like_src; ?>");
-                    }
-              
-                 //$('#autocomplete_favoured').html(data);
+                    }              
              }
          });
 
