@@ -25,7 +25,8 @@ if($_POST['user_id'] != 0 )
             add_user_meta($_POST['user_id'], $_POST['meta_key'], $_POST['id']);
             return true;
         }else
-            return false;        
+            if(($key = array_search($_POST['user_id'], $meta_data)) !== false)
+                unset($meta_data[$key]);   
     }
 
 $favorited = get_field('favorited', $_POST['id']);
