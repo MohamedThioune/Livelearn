@@ -317,7 +317,7 @@ if(isset($_GET['message']))
                                 }
                                 else{
                             ?>
-                                <img class="btn_favourite" id="<?php echo $user."_".$course->ID ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
                             <?php
                                 }
                             ?>
@@ -1812,9 +1812,9 @@ if(isset($_GET['message']))
              url:"/like",
              method:"post",
              data:{
-                 meta_key:meta_key,
-                 id:id,
-                 user_id:user_id,
+                 meta_key : meta_key,
+                 id : id,
+                 user_id : user_id,
              },
              dataType:"text",
              success: function(data){
