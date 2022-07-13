@@ -81,6 +81,9 @@ foreach($categories as $categ){
     }
 }
 
+// Saved courses
+$saved = get_user_meta($user->ID, 'course');
+
 /*
 * * Get interests courses
 */
@@ -303,10 +306,8 @@ if(isset($_GET['message']))
                 <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
                     <div class="blockLoveCourse" >
                         <button>
-                            <?php
-                                $favorites = get_field('favorited', $course->ID);
-                                
-                                if (in_array($user,$favorites))
+                            <?php                                
+                                if (in_array($course->ID, $saved))
                                 {
                             ?>
                                 <img class="btn_favourite" id="<?php echo $user."_".$course->ID. "_course" ?>"  src="<?php echo $like_src;?>" alt="">   
