@@ -3151,6 +3151,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     padding-left: 15px;
     display: flex;
 }
+
 .profilUserP .detailContentCandidat{
     background: white;
     padding-left: 25px;
@@ -5146,12 +5147,22 @@ nav .show{
 .hiddenCB div {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .hiddenCB input[type="checkbox"],
 .hiddenCB input[type="radio"] {
     display: none;
 
+}
+
+.step3SkillsPasspoort .input-group-locaties{
+    width: 65%;
+    margin: 0 auto;
+}
+
+.step5SkillsPasspoort .blockInputRadio label {
+    width: 41%;
 }
 
 .hiddenCB label {
@@ -8107,12 +8118,13 @@ ul#tabs-nav li.active {
 .blockInputRadio {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 .blockInputRadio label {
     display: inline-block;
     border: 1px solid;
     cursor: pointer;
-    width: 44%;
+    width: 21%;
     text-align: center;
     font-size: 15px;
     font-weight: 400;
@@ -8820,9 +8832,6 @@ ul#tabs-nav li.active {
 .formModifeChoose .select2-container {
     width: 100% !important;
 }
-.dropdown .userBlockNav{
-    border: none !important;
-}
 
 .groupInputDate .colM{
     width: 100%;
@@ -8955,8 +8964,23 @@ ul#tabs-nav li.active {
     width: 50%;
 }
 
-
-
+.modalLogoUser{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.modal-open .modal {
+    overflow-y: auto !important;
+}
+.theme-learning .contentProilView .detailContentCandidat{
+    display: block !important;
+}
+.contentPlatformText{
+    height: 53px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+}
 
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
