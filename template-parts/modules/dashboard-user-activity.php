@@ -367,7 +367,7 @@ if(!empty($enrolled))
         </div>
         <div class="globalCoursElement">
             <?php 
-            foreach($courses_favorite as $key=>$course) {
+            foreach($courses_favorite as $key => $course) {
                 if($key == 6)
                     break;
 
