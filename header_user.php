@@ -262,7 +262,7 @@ $link = ($user) ? '/dashboard/user' : '/';
                         }?>
 
                         <?php
-                            if ( in_array( 'teacher', $user->roles ) || in_array( 'administrator', $user->roles ) || $user->roles == 'administrator') {
+                            if ( in_array( 'hr', $user->roles ) || in_array( 'teacher', $user->roles ) || in_array( 'administrator', $user->roles ) || $user->roles == 'administrator') {
                             ?>
                         <a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>
                         <?php }?>
