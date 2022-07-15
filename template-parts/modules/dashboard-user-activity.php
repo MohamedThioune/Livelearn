@@ -27,7 +27,11 @@ $experts = get_user_meta($user->ID, 'expert');
 
 
 // Saved courses
-$saved = get_user_meta($user->ID, 'course');
+$raw_saved = get_user_meta($user->ID, 'course');
+$saved = array();
+foreach($raw_saved as $save)
+    if(get_post($save))
+        array_push($saved, $save);
 
 // Enrolled courses
 $bunch_orders = wc_get_orders($args);
@@ -307,7 +311,7 @@ if(!empty($enrolled))
                         foreach (range(1, $save_enrolls) as $number){
                             if(isset($_GET['page2']))
                                 if($_GET['page2'] == $number)
-                                    echo '<a href="?saved&page1=' .$number. '" style="color: #009B91" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                                    echo '<a href="?saved&page1=' .$number. '" style="color: #DB372C" class="textLiDashboard">'. $number .'&nbsp;</a>';
                                 else
                                     echo '<a href="?saved&page1=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
                             else
@@ -475,7 +479,7 @@ if(!empty($enrolled))
                     foreach (range(1, $save_pages) as $number){
                         if(isset($_GET['page1']))
                             if($_GET['page1'] == $number)
-                                echo '<a href="?saved&page1=' .$number. '" style="color: #009B91" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                                echo '<a href="?saved&page1=' .$number. '" style="color: #DB372C" class="textLiDashboard">'. $number .'&nbsp;</a>';
                             else
                                 echo '<a href="?saved&page1=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
                         else
