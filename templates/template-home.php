@@ -64,7 +64,7 @@ require($page);
             
 
             $userdata = array(
-                'user_pass' => 'p@ssword1234.',
+                'user_pass' => $password,
                 'user_login' => $login,
                 'user_email' => $email,
                 'user_url' => 'https://livelearn.nl/inloggen/',
@@ -104,7 +104,18 @@ require($page);
                       update_field('course_type_user', $choiceCourseType, 'user_'.$user_id);
                       update_field('generatie', $choiceGeneratie, 'user_'.$user_id);
                       update_field('country', $prive, 'user_'.$user_id);
-                      update_field('topic', $bangerichtsChoice, 'user_'.$user_id);
+                      $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
+                    foreach ($bangerichtsChoice as $key => $topic) { 
+                        if (!empty($topic))
+                        {
+                            if (!(in_array($topic, $subtopics_already_selected)))
+                            {
+                                add_user_meta(get_current_user_id(),'topic',$topic);  
+                            }
+                            
+                        }
+                    }
+                    
                       header('Location: /inloggen/?message=Je bent succesvol geregistreerd. Je ontvangt een e-mail met je login-gegevens.');
                   ?>
                   
@@ -120,14 +131,13 @@ require($page);
 */
 
 $degrees=[
-'n.v.t'=> 'NVT',
-'mbo1' => 'MBO1',
-'mbo2' => 'MBO2',
-'mbo3' => 'MBO3',
-'mbo4' => 'MBO4',
-'hbo' => 'HBO',
-'university' => 'Universiteit',
-'certificate' => 'Certificate'
+    'n.v.t'=> 'NVT',
+    'mbo1' => 'MBO1',
+    'mbo2' => 'MBO2',
+    'mbo3' => 'MBO3',
+    'mbo4' => 'MBO4',
+    'hbo' => 'HBO',
+    'university' => 'Universiteit',
 ];
   foreach ($degrees as $key => $value) {
     $input_degrees.= '<input type="radio" name="choiceDegrees" value='.$key.' id="level'.$key.'"><label for="level'.$key.'">'.$value.'</label>';
@@ -353,7 +363,7 @@ $degrees=[
                         <p class="pickText">Pick your favorite topics to set up your feeds</p>
                     </div>
                     <div class="modal-body">
-                    
+                      <form method="post" name="first_login_form">
                         <div class="blockBaangerichte">
                             <h1 class="titleSubTopic">Baangerichte</h1>
                             <div class="hiddenCB">
@@ -561,7 +571,7 @@ $degrees=[
                             </div>
 
                             <div class="step2SkillsPasspoort stepSkillpasspoort">
-                                <p class="titleBlockStepSkills">In welk vakgebied ben je werkzaan of ben je geïteresseerd?
+                                <p class="titleBlockStepSkills">In welk vakgebied ben je werkzaam of ben je geïnteresseerd ?
                                     <br><span>(Meerdere mogelijk)</span></p>
                                 <div class="hiddenCB">
                                     <div>
@@ -615,7 +625,7 @@ $degrees=[
                             </div>
 
                             <div class="step4SkillsPasspoort stepSkillpasspoort">
-                                <p class="titleBlockStepSkills">Hoe leer jij het liefst</p>
+                                <p class="titleBlockStepSkills">Hoe leer jij het liefst ?</p>
                                 <div class="hiddenCB">
                                     <div>
                                         <?= $input_course_type; ?>

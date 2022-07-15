@@ -67,19 +67,19 @@ $link = ($user) ? '/dashboard/user' : '/';
                     <div class="modal-body">
                         <div class="text-center mb-4">
                             <p class="JouwOpleid" style="font-size: 20px !important">
-                                Creeër een bedrijfsprofiel of unlock de voordelen van jouw organisatie
+                                Creëer een bedrijfsprofiel of unlock de voordelen van jouw organisatie
                             </p>
                         </div>
                         <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="height: 34px">
                             <li class="nav-item w-50 text-center">
                                 <a class="nav-link text-dark active rounded rounded-pill h-100" id="pills-home-tab" data-toggle="pill"
                                  href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"
-                                 style="padding-top: 5px !important; background: #E6E6E6">World onderdeel van je bedrijf</a>
+                                 style="padding-top: 5px !important; background: #E6E6E6">Word onderdeel van een bedrijf</a>
                             </li>
                             <li class="nav-item w-50 text-center">
                                 <a class="nav-link text-dark rounded rounded-pill h-100" id="pills-profile-tab" data-toggle="pill" 
                                 href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"
-                                style="padding-top: 5px !important;background: #E6E6E6">Maak je bedrijfsprofiel</a>
+                                style="padding-top: 5px !important;background: #E6E6E6">Maak een bedrijfsprofiel</a>
                             </li>
                         </ul>
 
@@ -92,7 +92,7 @@ $link = ($user) ? '/dashboard/user' : '/';
                                         <input type="text" placeholder="Voornaam" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
                                     </div>
                                     <div class="input-group">
-                                        <input type="text" placeholder="Acheternaam*" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
+                                        <input type="text" placeholder="Achternaam *" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
                                     </div>
                                     <div class="input-group">
                                         <input type="text" placeholder="Bedrijf" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
@@ -255,9 +255,9 @@ $link = ($user) ? '/dashboard/user' : '/';
                         $company = get_field('company',  'user_' . $user->ID);
 
                         if(!empty($company)){
-                                if ( in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') {
+                            if ( in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') {
                             ?>
-                        <a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>
+                            <a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>
                         <?php }
                         }?>
 
@@ -304,8 +304,7 @@ $link = ($user) ? '/dashboard/user' : '/';
                                 if(in_array( 'manager', $user->roles ) || in_array('administrator', $user->roles) )
                                     $ref_company = "/dashboard/company";
                         ?>
-                            <!-- <a href="<?= $ref_company; ?>">  -->  <!-- old href -->
-                            <a href=""  data-toggle="modal" data-target="#bedrijfsprofiel_modal">
+                            <a <?php if(isset($ref_company)) echo'href="' .$ref_company. '"'; else echo 'data-toggle="modal" data-target="#bedrijfsprofiel_modal"'; ?> >
                                 <div class="userBlockNav">
                                     <img src="<?php echo $company_logo;?>" alt="">
                                 </div>

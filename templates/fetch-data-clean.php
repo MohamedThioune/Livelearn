@@ -139,13 +139,14 @@ if ( isset ($id) ) {
           </div>';
 
     //type 
+    $onderwerpen = explode(',' , $course->onderwerpen); 
     echo '<div class="form-group"> 
           <select class="multipleSelect2" name="tags[]" id="selected_subtopics" multiple="true">';
             foreach($categorys as $typo){
-                if(stristr($course->onderwerpen, $typo->cat_name) !== false)
-                    echo '<option selected value="'. $typo->cat_name . '">' . $typo->cat_name . '</option>';
+                if(in_array($typo->cat_ID, $onderwerpen))
+                    echo '<option selected value="'. $typo->cat_ID . '">' . $typo->cat_name . '</option>';
                 else
-                    echo '<option value="'. $typo->cat_name . '">' . $typo->cat_name . '</option>';
+                    echo '<option value="'. $typo->cat_ID . '">' . $typo->cat_name . '</option>';
             }
     echo '</select>
           </div>';
