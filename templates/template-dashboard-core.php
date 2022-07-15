@@ -149,7 +149,6 @@ else if(isset($interest_save)){
             $message = "Al opgeslagen";
         }
         header("location:/dashboard/user/activity/?message=".$message);
-        
     }
 }
 
