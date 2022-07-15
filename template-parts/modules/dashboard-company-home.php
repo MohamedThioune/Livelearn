@@ -110,7 +110,7 @@
                             <img src="<?php echo get_stylesheet_directory_uri() ?>/img/Image-45.png" alt="">
                         </div>
                     </a>
-                   <?php if( in_array('administrator', $user_connected->roles) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles) ) { ?>
+                   <?php if( in_array('administrator', $user_connected->roles) || in_array('manager', $user_connected->roles) ) { ?>
                     <a href="/dashboard/company/grant" type="submit" style="border:none; background:white;" class="cardCours">
                         <p class="contentText">Selecteer <br>
                             <b>Je managers</b>
