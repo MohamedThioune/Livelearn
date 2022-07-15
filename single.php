@@ -204,17 +204,19 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                                                                 $read_category = array();
                                                                 if(!empty($category_default))
                                                                     foreach($category_default as $item)
-                                                                        if(!in_array($item['value'],$read_category)){
-                                                                            array_push($read_category,$item['value']);
-                                                                            echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
-                                                                        }
+                                                                        if($item)
+                                                                            if(!in_array($item['value'],$read_category)){
+                                                                                array_push($read_category,$item['value']);
+                                                                                echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
+                                                                            }
                         
                                                                 else if(!empty($category_xml))
                                                                     foreach($category_xml as $item)
-                                                                        if(!in_array($item['value'],$read_category)){
-                                                                            array_push($read_category,$item['value']);
-                                                                            echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
-                                                                        }
+                                                                        if($item)
+                                                                            if(!in_array($item['value'],$read_category)){
+                                                                                array_push($read_category,$item['value']);
+                                                                                echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
+                                                                            }
                                                             }
                                                             ?>
                                                         </ul>
@@ -432,17 +434,19 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                                 $read_category = array();
                                 if(!empty($category_default))
                                     foreach($category_default as $item)
-                                        if(!in_array($item,$read_category)){
-                                            array_push($read_category,$item);
-                                            echo '  <a href=#">'. (String)get_the_category_by_ID($item['value']) .  '</a>  ';
-                                        }
+                                        if($item)
+                                            if(!in_array($item,$read_category)){
+                                                array_push($read_category,$item);
+                                                echo '  <a href=#">'. (String)get_the_category_by_ID($item['value']) .  '</a>  ';
+                                            }
 
                                 else if(!empty($category_xml))
                                     foreach($category_xml as $item)
-                                        if(!in_array($item,$read_category)){
-                                            array_push($read_category,$item);
-                                            echo '  <a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a>  ';
-                                        }
+                                        if($item)
+                                            if(!in_array($item,$read_category)){
+                                                array_push($read_category,$item);
+                                                echo '  <a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a>  ';
+                                            }
                             }
                             ?>
                         </div>

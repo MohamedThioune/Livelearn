@@ -513,7 +513,6 @@ else if(isset($referee_employee)){
 else if(isset($databank)){
     $onderwerpen = "";
     $message = "";
-
     if(!empty($tags))
         foreach($tags as $tag)
             $onderwerpen .= $tag .',';
@@ -523,8 +522,8 @@ else if(isset($databank)){
         $number_items = count($start_date);
         $data_locaties = array();
         $row = "";
-        
-        for($i = 0; $i <= $number_items; $i++){
+
+        for($i = 0; $i < $number_items; $i++){
             if(!$start_date[$i])
                 continue;
 
@@ -547,6 +546,7 @@ else if(isset($databank)){
 
         $data_locaties_xml = join('~', $data_locaties);
     }
+
     
     if(isset($complete)) 
         $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'long_description' => $long_description, 'for_who' => $for_who, 'agenda' => $agenda, 'results' => $results, 'prijs' => $prijs, 'prijs_vat' => $prijs_vat, 'onderwerpen' => $onderwerpen, 'date_multiple' => $data_locaties_xml, 'level' => $level, 'language' => $language, 'author_id' => $author_id, 'company_id' => $company_id ]; // NULL value.
@@ -562,15 +562,15 @@ else if(isset($databank)){
             $message = "/edit-databank?id=" . $id . "&message=Something went wrong !"; 
         else
             $message = "/databank/?message=" . $wpdb->last_error;
-        //header("Location: ". $message);
-        //return false; 
+        header("Location: ". $message);
+        return false; 
     }else{ 
         if(isset($complete))
             $message = "/edit-databank?id=" . $id . "&message=Updated successfully !"; 
         else 
             $message = "/databank/?message=Updated successfully !"; 
-        //header("Location: ". $message);
-        //return true;
+        header("Location: ". $message);
+        return true;
     }
     
 }
@@ -602,7 +602,7 @@ else if(isset($date_add)){
         array_push($data_locaties, $row);
     }
 
-    update_field('data_locaties_xml', $data_locaties, $id);
+    update_field('data_locaties_xml',$data_locaties, $id);
 
     $path = '/dashboard/teacher/course-selection/?func=add-course&id=' .$id. '&step=4';
 

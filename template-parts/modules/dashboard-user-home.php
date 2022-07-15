@@ -82,7 +82,7 @@ foreach($categories as $categ){
 }
 
 // Saved courses
-$saved = get_user_meta($user->ID, 'course');
+$saved = get_user_meta($user, 'course');
 
 /*
 * * Get interests courses
@@ -310,9 +310,7 @@ if(isset($_GET['message']))
                                 if (in_array($course->ID, $saved))
                                 {
                             ?>
-                                <img class="btn_favourite" id="<?php echo $user."_".$course->ID. "_course" ?>"  src="<?php echo $like_src;?>" alt="">   
-                                
-                                
+                                <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">                        
                             <?php
                                 }
                                 else{
