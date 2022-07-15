@@ -1,26 +1,4 @@
 <?php /** Template Name: Edit Databank */ ?>
-<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.min.css" />
-<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.js"></script>
-<script type="text/javascript">
-    $(function () {
-        var selectedDates = [];
-        datePicker = $('[class*=Txt_Date]').datepicker({
-            multidate: true,
-            format: 'dd/mm/yyyy ',
-            todayHighlight: true,
-
-            language: 'en'
-        });
-        datePicker.on('changeDate', function (e) {
-            if (e.dates.length <= 10) {
-                selectedDates = e.dates;
-            } else {
-                datePicker.data('datepicker').setDates(selectedDates);
-                alert('You can only select 10 dates.');
-            }
-        });
-    });
-</script>
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
@@ -147,7 +125,7 @@ $companies = get_posts($args);
            <div class="">
                <h2>Modife Course Databank</h2>
                <form action="/dashboard/user/" method="POST">
-                   <input type="hidden" name="complete">
+                   <input type="hidden" name="complete" >
                    <input type="hidden" name="id" value="<?= $course->id ?>">
 
                    <div class="groupInputDate">
@@ -315,9 +293,11 @@ $companies = get_posts($args);
 
                    <?php
                     $data_en = explode('~', $course->date_multiple);
-                    if($data_en[0]){
+
+                    if(!empty($data_en)){
                         foreach($data_en as $key => $datum){
                             $data_between = "";
+                            $datum = $datum['value'];
                             $data = explode(';', $datum);
 
                             $data_first = $data[0];
@@ -410,9 +390,6 @@ $companies = get_posts($args);
                     }
                     ?>
                     <div class="results"></div>
-                    <div class="buttons groupBtnData">
-                        <button type="button" class="add btn-newDate"> Complete with another section</button>
-                    </div><br><br>
 
                     <!-- element for clone -->
                     <div class="blockForClone">
@@ -445,7 +422,7 @@ $companies = get_posts($args);
                         </div>
                     </div>
 
-                   <button type="submit" name="databank" class="btn btn-newDate" >
+                   <button type="submit" name="databank" class="btn btn-newDate" data-toggle="modal" data-target="#exampleModalDate">
                        Change
                    </button>
 
@@ -457,7 +434,28 @@ $companies = get_posts($args);
 
 </body>
 
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.min.css" />
+<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var selectedDates = [];
+        datePicker = $('[class*=Txt_Date]').datepicker({
+            multidate: true,
+            format: 'dd/mm/yyyy ',
+            todayHighlight: true,
 
+            language: 'en'
+        });
+        datePicker.on('changeDate', function (e) {
+            if (e.dates.length <= 10) {
+                selectedDates = e.dates;
+            } else {
+                datePicker.data('datepicker').setDates(selectedDates);
+                alert('You can only select 10 dates.');
+            }
+        });
+    });
+</script>
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>

@@ -26,6 +26,53 @@ $experts = get_user_meta($user->ID, 'expert');
 */
 
 
+// Saved courses
+$saved = get_user_meta($user->ID, 'course');
+
+// Enrolled courses
+$bunch_orders = wc_get_orders($args);
+$orders = array();
+$item_order = array();
+$enrolled = array();
+$enrolled_courses = array();
+
+foreach($bunch_orders as $order){
+    foreach ($order->get_items() as $item_id => $item ) {
+        $course_id = intval($item->get_product_id()) - 1;
+        if(!in_array($course_id, $enrolled))
+            array_push($enrolled, $course_id);
+    }
+}
+
+/*
+* * Pagination
+*/
+$max_saved = 6;
+$max_opgedane = 2;
+
+$const_saved = count($saved);
+$const_opgedane = count($enrolled);
+
+if( $const_saved % $max_saved == 0)
+    $save_pages = $const_saved/$max_saved;
+else
+    $save_pages = intval($const_saved/$max_saved) + 1;
+
+if( $const_opgedane % $max_opgedane == 0)
+    $save_enrolls = $const_opgedane/$max_opgedane;
+else
+    $save_enrolls = intval($const_opgedane/$max_opgedane) + 1;
+
+if(isset($_GET['saved'])){
+    $saved_number = ($_GET['page1'] - 1) * $max_saved;
+    $saved = array_slice($saved, $saved_number, $max_saved);
+}
+
+if(isset($_GET['opgedane'])){
+    $saved_number = ($_GET['page2'] - 1) * $max_opgedane;
+    $enrolled = array_slice($enrolled, $saved_number, $max_opgedane);
+}
+
 /*
 * * Get courses
 */
@@ -37,8 +84,6 @@ $args = array(
 
 $courses = get_posts($args);
 
-// Saved courses
-$saved = get_user_meta($user->ID, 'course');
 
 if(!empty($saved)){
     $args = array(
@@ -71,19 +116,6 @@ $args = array(
     'limit' => -1,
 );
 
-$bunch_orders = wc_get_orders($args);
-$orders = array();
-$item_order = array();
-$enrolled = array();
-$enrolled_courses = array();
-
-foreach($bunch_orders as $order){
-    foreach ($order->get_items() as $item_id => $item ) {
-        $course_id = intval($item->get_product_id()) - 1;
-        if(!in_array($course_id, $enrolled))
-            array_push($enrolled, $course_id);
-    }
-}
 
 /*
 * * Enrolled courses
@@ -269,11 +301,24 @@ if(!empty($enrolled))
                 else
                     echo "empty until now";
                 ?>
+
+                <?php
+                    if($save_enrolls)
+                        foreach (range(1, $save_enrolls) as $number){
+                            if(isset($_GET['page2']))
+                                if($_GET['page2'] == $number)
+                                    echo '<a href="?saved&page1=' .$number. '" style="color: #009B91" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                                else
+                                    echo '<a href="?saved&page1=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                            else
+                                echo '<a href="?saved&page1=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                        }
+                ?>
             </div>
         </div>
       
         <div class="col-lg-5">
-            <div class="cardNotification">
+            <div class="cardNotification"> 
                 <h2>Notificaties</h2>
                 <?php 
                 if(!empty($todos)){
@@ -421,7 +466,23 @@ if(!empty($enrolled))
             <?php
                 } 
             ?>
+            
         </div>
+            <center>
+            <br> <br>
+            <?php
+                if($save_pages)
+                    foreach (range(1, $save_pages) as $number){
+                        if(isset($_GET['page1']))
+                            if($_GET['page1'] == $number)
+                                echo '<a href="?saved&page1=' .$number. '" style="color: #009B91" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                            else
+                                echo '<a href="?saved&page1=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                        else
+                            echo '<a href="?saved&page1=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                    }
+            ?>
+            </center>
     </div>
 
 </div>
