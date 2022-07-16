@@ -11,6 +11,8 @@ $company_connected = $company[0]->post_title;
 $members = array();
 $numbers = array();
 
+$total_incomes  = 0;
+$total_expenses = 0;
 
 $orders = array();
 
@@ -31,11 +33,13 @@ foreach( $users as $user ) {
             foreach ($order->get_items() as $item_id => $item ) {
                 //Get woo orders from user
                 $course_id = intval($item->get_product_id()) - 1;
-                $prijs = get_field('prijs', $course_id);
+                $prijs = get_field('price', $course_id);
                 $expenses += $prijs; 
             }
         }
-        $member['expenses'] = $expenses;
+        $user->expenses = $expenses;
+
+        $total_expenses += $user->expenses;
         
         //Income by this user
         $args = array(
@@ -47,18 +51,21 @@ foreach( $users as $user ) {
             foreach( $order->get_items() as $item_id => $item ) {
                 $course_id = intval($item->get_product_id()) - 1;
                 $course = get_post($course_id);
-                $prijs = get_field('prijs', $course_id);
+                $prijs = get_field('price', $course_id);
                 if(isset($course->post_author))
                     if($course->post_author == $user->ID)
                         $incomes += $prijs;  
             }
         }
-        $member['incomes'] = $incomes;
-         
+        $user->incomes = $incomes;
+
+        $total_incomes += $user->incomes;
+
         array_push($members,$user);                            
     }
 }
 
+$maandelijke = count($members) * 5;
 ?>
 
 <style>
@@ -83,10 +90,10 @@ foreach( $users as $user ) {
                 <div class="card mb-3 radius-custom">
                     <div class="card-body">
                         <p class="card-text text-center"><strong>Maandelijkse kosten</strong> </p>   
-                        <h5 class="card-title text-center"> <strong>$0</strong> </h5>
+                        <h5 class="card-title text-center"> <strong>$<?= $maandelijke ?></strong> </h5>
                         <p class="card-text text-right h6">
                             <small class="text-muted">
-                                <strong>Last updated 3 mins ago</strong>
+                                <strong>Last updated 0 mins ago</strong>
                             </small>
                         </p>
                     </div>
@@ -96,7 +103,7 @@ foreach( $users as $user ) {
                 <div class="card mb-3 radius-custom" style="height: 89%;">
                     <div class="card-body">
                         <p class="card-text text-center"> <strong>Inkomsten verkochte kennisproducten</strong> <!-- Sale courses --> </p>
-                        <h5 class="card-title text-center"> <strong>$0</strong></h5>
+                        <h5 class="card-title text-center"> <strong>$<?= $total_incomes; ?></strong></h5>
                     </div>
                 </div>
             </div>
@@ -104,7 +111,7 @@ foreach( $users as $user ) {
                 <div class="card mb-3 radius-custom" style="height: 89%;">
                     <div class="card-body">
                         <p class="card-text text-center"> <strong>Uitgaven Opleidingen</strong> <!-- Purchased courses --> </p>
-                        <h5 class="card-title text-center"><strong>$0</strong></h5>
+                        <h5 class="card-title text-center"><strong>$<?= $total_expenses; ?></strong></h5>
                     </div>
                 </div>
             </div>
@@ -220,10 +227,10 @@ foreach( $users as $user ) {
                         ?>
                             <tr>
                                 <th scope="row"><?= $key; ?></th>
-                                <td><?= $member->display; ?></td>
+                                <td><?= $member->data->display_name; ?></td>
                                 <td>5</td> <!-- cost by this user 'const' -->
-                                <td>0</td> <!-- expense by this user 'var' -->
-                                <td>0</td> <!-- income by this user 'var' -->
+                                <td><?= $member->expenses ?></td> <!-- expense by this user 'var' -->
+                                <td><?= $member->incomes ?></td> <!-- income by this user 'var' -->
                                 <td>0</td> <!-- personal budget by this user 'var' -->
                                 <td>0</td> <!-- budget remaining by this user 'var' -->
                                 <td>
