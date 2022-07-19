@@ -11,6 +11,8 @@ $company_connected = $company[0]->post_title;
 $leerbudget = get_field('leerbudget', $company[0]->ID);
 $zelfstand_max = get_field('zelfstand_max', $company[0]->ID);
 
+echo $leerbudget;
+
 $members = array();
 $numbers = array();
 
@@ -83,6 +85,7 @@ $maandelijke = count($members) * 5;
 
     <div class="contentPageManager managerOverviewMensen">
         <br>
+        <?php if($_GET['message']) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span>" ?>
         <div class="contentOverviewMensen d-flex justify-content-md-between bg-white justify-content-center p-2 radius-custom"> 
             <div class="h5 pt-2"><strong>Budget <?= $company_connected; ?></strong></div>
         </div>
