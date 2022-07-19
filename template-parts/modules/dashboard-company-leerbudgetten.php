@@ -8,6 +8,9 @@ $user_id = get_current_user_id();
 $company = get_field('company',  'user_' . $user_id );
 $company_connected = $company[0]->post_title;
 
+$leerbudget = get_field('leerbudget', $company[0]->ID);
+$zelfstand_max = get_field('zelfstand_max', $company[0]->ID);
+
 $members = array();
 $numbers = array();
 
@@ -153,7 +156,7 @@ $maandelijke = count($members) * 5;
                             </div>
 
                             <form method="POST">
-                                <input type="hidden" name="company_id" value="<?= $company->ID; ?>">
+                                <input type="hidden" name="company_id" value="<?= $company[0]->ID; ?>">
 
                                 <div class="form-group py-4">
                                     <div class="row">
