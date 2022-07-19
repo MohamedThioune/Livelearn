@@ -25,7 +25,7 @@ foreach( $users as $user ) {
         //Expense by this user
         $args = array(
             'limit' => -1,
-            'customer_id' => $user_id,
+            'customer_id' => $user->ID,
         );
         $orders = wc_get_orders($args);
         $expenses = 0;
@@ -152,7 +152,8 @@ $maandelijke = count($members) * 5;
                                 <button type="button" class="btn-close bg-danger border-0 text-white fa-2x rounded border-3" data-bs-dismiss="modal" aria-label="Close">X</button>
                             </div>
 
-                            <form class="">
+                            <form method="POST">
+                                <input type="hidden" name="company_id" value="<?= $company->ID; ?>">
 
                                 <div class="form-group py-4">
                                     <div class="row">
@@ -161,7 +162,7 @@ $maandelijke = count($members) * 5;
                                             <strong class="h5">Leerbudget</strong></label>
                                         </div>
                                         <div class="col-md-9">
-                                            <input type="number" class="form-control border-0" id="inputPassword" placeholder="" style="background: #E0EFF4">
+                                            <input type="number" name="leerbudget" value="<?= $leerbudget; ?>" class="form-control border-0" id="inputPassword" placeholder="" style="background: #E0EFF4">
                                         </div>
                                     </div>
                                 </div>
@@ -173,14 +174,14 @@ $maandelijke = count($members) * 5;
                                                 <strong class="h5">Zelfstand Maximum</strong></label>
                                         </div>
                                         <div class="col-md-9 pt-2">
-                                            <input type="number" class="form-control border-0" id="inputPassword" placeholder="" style="background: #E0EFF4">
+                                            <input type="number" name="zelfstand_max" value="<?= $zelfstand_max; ?>" class="form-control border-0" id="inputPassword" placeholder="" style="background: #E0EFF4">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row d-flex justify-content-center">
                                     <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-                                    <button class="btn text-white" style="background: #00A89D"><strong>Naar bedrijfsniveau</strong></button>
+                                    <button class="btn text-white" style="background: #00A89D" name="define_budget"><strong>Naar bedrijfsniveau</strong></button>
                                 </div>
 
                             </form>
@@ -235,7 +236,7 @@ $maandelijke = count($members) * 5;
                                 <td>0</td> <!-- budget remaining by this user 'var' -->
                                 <td>
                                     <div class="dropdown text-white">
-                                        <p class="dropdown-toggle mb-0" type="button" data-toggle="dropdown">
+                                        <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
                                             <img  style="width:20px"
                                             src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                         </p>

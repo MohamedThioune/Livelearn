@@ -609,6 +609,13 @@ else if(isset($date_add)){
     header('Location: ' .$path);
 }
 
+else if(isset($define_budget)){
+    var_dump($leerbudget);
+    echo "<br>";
+    var_dump($zelfstand_max);
+    update_field('leerbudget', $leerbudget, $company_id);
+    update_field('zelfstand_max', $zelfstand_max, $company_id);
+}
 ?>
 <?php wp_head(); ?>
 
