@@ -19,6 +19,11 @@ $user = wp_get_current_user();
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
+
+<?php 
+    $websites=['smartwp','DeZZP','fmn','duurzaamgebouwd'];
+?>
+
 <!-- Content -->
 <body>
 
@@ -29,7 +34,17 @@ $user = wp_get_current_user();
                    <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img  src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
                        &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="" width="25" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
-                       &nbsp;&nbsp;<span id="reload-data"  class="bi bi-arrow-clockwise">Artikel</span>
+                       <!-- &nbsp;&nbsp;<span id="reload-data"  class="bi bi-arrow-clockwise">Artikel</span> -->
+                       &nbsp;&nbsp;&nbsp; <span>Artikel</span>
+                    <div class="col-md-3">
+                        
+                        <select id="select_field">
+                            <option value="">Get new contents from</option>
+                            <?php foreach ($websites as $website) { ?>
+                                <option class="selected_website" value="<?= $website ?>"><?= $website ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
                    <div hidden="true" id="loader" style="display:inline-block;" class="spinner-border spinner-border-sm text-primary" role="status">
                    </div>
                    </p>
@@ -88,7 +103,7 @@ $user = wp_get_current_user();
                                     if(!empty($onderwerpen))
                                         foreach($onderwerpen as $value)
                                             if($value)
-                                            echo (String)get_the_category_by_ID($value) . ','; 
+                                            //echo (String)get_the_category_by_ID($value) . ','; 
                                     ?>
                                 </td>
                                <td class="textTh tdCenter"><?= $course->status; ?></td>
@@ -138,7 +153,29 @@ $user = wp_get_current_user();
 
 <script>
             
-            
+    $('#select_field').click((e)=>{
+        let website= $('#select_field').val();
+        if (website != '')
+            $.ajax({
+                url: '/scrapping',
+                type: 'POST',
+                data: {
+                    'website': website ,
+                    'action': 'reload_data'
+                },
+                beforeSend:function(){
+                    $('#loader').attr('hidden',false)
+                    $('#select_field').attr('hidden',true)
+                },
+                complete: function(){},
+                success: function(data){
+                    $('#loader').attr('hidden',true)
+                    $('#select_field').attr('hidden',false)
+                    console.log(data);
+                    //location.reload();
+                }
+            });
+    });        
 
     $('#reload-data').click(function(){
         
