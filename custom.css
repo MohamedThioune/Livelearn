@@ -8919,6 +8919,7 @@ ul#tabs-nav li.active {
         opacity: 1;
     }
 }
+
 .block2evensTabs details summary::-webkit-details-marker {
     display: none;
 }

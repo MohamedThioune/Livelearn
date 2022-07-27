@@ -56,7 +56,7 @@ $link = ($user) ? '/dashboard/user' : '/';
 
         <!-- Modal -->
         <div class="modal fade mt-5" id="bedrijfsprofiel_modal" tabindex="-1" role="dialog" 
-        aria-labelledby="exampleModalLabel" aria-hidden="true"  style="width:98%">
+        aria-labelledby="exampleModalLabel" aria-hidden="true"  style="width:98%; overflow-y: hidden !important">
             <div class="modal-dialog" role="document">
                 <div class="modal-content px-md-5 px-1">
                     <div class="modal-header border-0">
@@ -64,7 +64,7 @@ $link = ($user) ? '/dashboard/user' : '/';
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body pt-0">
                         <div class="text-center mb-4">
                             <p class="JouwOpleid" style="font-size: 20px !important">
                                 Creëer een bedrijfsprofiel of unlock de voordelen van jouw organisatie
@@ -85,67 +85,22 @@ $link = ($user) ? '/dashboard/user' : '/';
 
                         <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                                <form class="formTestimonial m-0 w-100 p-3 bg-white">
-                                    <!-- <p class="title">Kies jouw persoonlijke scholingsadvies</p>
-                                    <p class="description">Vul onderstaande formulier in en we plannen het zo snel mogelijk in.</p> -->
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Voornaam" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Achternaam *" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Bedrijf" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Zakelijk emailadres*" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Telefoon*" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Afdeling*" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                       
-                                    <button class="btn btnAanvraag rounded rounded-pill">Vraag aan</button>
-
-                                    <p class="description pt-4">
-                                        Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je 
-                                        direct toegang tot je bedrijfs leeromgeving
-                                    </p>
-                                </form>
+                                <?php echo do_shortcode( ("[ninja_form id='10' title='false' description='false' ajax='true']")); ?>
+                                <p class="description pt-2 text-center">
+                                    Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je 
+                                    direct toegang tot je bedrijfs leeromgeving
+                                </p>
                             </div>
                             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                                <form class="formTestimonial m-0 w-100 p-3 bg-white">
-                                    <!-- <p class="title">Kies jouw persoonlijke scholingsadvies</p>
-                                    <p class="description">Vul onderstaande formulier in en we plannen het zo snel mogelijk in.</p> -->
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Bedrijfsnaam" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Jouw zakelijke e-mailadres*" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Telefoonnummer" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Je afdeling" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Hoeveel medewerkers?" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                       
-                                    <button class="btn btnAanvraag rounded rounded-pill">Vraag aan</button>
+                                <?php echo do_shortcode( ("[ninja_form id='9' title='false' description='false' ajax='true']")); ?>
+                                <p class="description pt-2 text-center">
+                                    Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je 
+                                    direct toegang tot je bedrijfs leeromgeving
+                                </p>
 
-                                    <p class="description pt-4">
-                                        Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je 
-                                        direct toegang tot je bedrijfs leeromgeving
-                                    </p>
-
-                                    <p class="JouwOpleid pt-3">
-                                        Eerst lezen wat we doen? <a href="">Click hier!</a>
-                                    </p>
-                                </form>
+                                <p class="JouwOpleid pt-3 text-center">
+                                    Eerst le    zen wat we doen? <a href="">Click hier!</a>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -283,7 +238,8 @@ $link = ($user) ? '/dashboard/user' : '/';
                     <ul class="elementHeaderUser ">
                         <li class="nav-item dropdown addButtonLink">
                             <a href="#" class="nav-link navModife4 btn dropdown-toggle" type="button" id="dropdownNavButtonAdd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/addition.png" alt="addition" >
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/addition.png" alt="addition" 
+                                style="width: 36px !important; height: 36px !important">
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonAdd">
                                 <a class="dropdown-item" href="/onderwer/">Onderwerpen</a>

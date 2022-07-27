@@ -841,7 +841,7 @@
                 <div class="block1">
                     <p class="elementsousMenuNav profilText"><b>Jouw profiel</b></p>
                     <a href="/registreren" class="elementsousMenuNav">Registreren</a>
-                    <a href="#" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal" class="elementsousMenuNav">Inloggen</a>
+                    <a href="/inloggen" class="elementsousMenuNav">Inloggen</a>
                 </div>
             </div>
         </div>

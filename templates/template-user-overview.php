@@ -46,52 +46,52 @@
                 continue;
 
             $experts = get_field('experts', $course->ID);    
-            if($course->post_author == $user->ID || in_array($user->ID, $experts) ){
-                array_push($courses, $course);
-                if(get_field('course_type', $course->ID) == "Opleidingen")
-                    array_push($opleidingen, $course);
-                else if(get_field('course_type', $course->ID) == "Workshop")
-                    array_push($workshops, $course);
-                else if(get_field('course_type', $course->ID) == "Masterclass")
-                    array_push($masterclasses, $course);
-                else if(get_field('course_type', $course->ID) == "Event")
-                    array_push($events, $course);
-                else if(get_field('course_type', $course->ID) == "E-learning")
-                    array_push($e_learnings, $course);
-                else if(get_field('course_type', $course->ID) == "Training")
-                    array_push($trainings, $course);
-                else if(get_field('course_type', $course->ID) == "Video")
-                    array_push($videos, $course);
+            // if($course->post_author == $user->ID || in_array($user->ID, $experts) ){
+            //     array_push($courses, $course);
+            //     if(get_field('course_type', $course->ID) == "Opleidingen")
+            //         array_push($opleidingen, $course);
+            //     else if(get_field('course_type', $course->ID) == "Workshop")
+            //         array_push($workshops, $course);
+            //     else if(get_field('course_type', $course->ID) == "Masterclass")
+            //         array_push($masterclasses, $course);
+            //     else if(get_field('course_type', $course->ID) == "Event")
+            //         array_push($events, $course);
+            //     else if(get_field('course_type', $course->ID) == "E-learning")
+            //         array_push($e_learnings, $course);
+            //     else if(get_field('course_type', $course->ID) == "Training")
+            //         array_push($trainings, $course);
+            //     else if(get_field('course_type', $course->ID) == "Video")
+            //         array_push($videos, $course);
 
-                $tree = get_the_category($course->ID);
+            //     $tree = get_the_category($course->ID);
 
-                if($tree){
-                    if(isset($tree[2]))
-                        $category = $tree[2]->cat_ID;
-                }else{
-                    $category_id = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]); 
-                    $category_xml = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                    if($category_xml != 0)
-                        $category = $category_xml;  
-                    if($category_id != 0)
-                        $category = $category_id; 
-                }                                    
+            //     if($tree){
+            //         if(isset($tree[2]))
+            //             $category = $tree[2]->cat_ID;
+            //     }else{
+            //         $category_id = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]); 
+            //         $category_xml = intval(get_field('category_xml',  $course->ID)[0]['value']);
+            //         if($category_xml != 0)
+            //             $category = $category_xml;  
+            //         if($category_id != 0)
+            //             $category = $category_id; 
+            //     }                                    
                 
-                if(!in_array($category, $categories) && $category != '')
-                    array_push($categories, $category);
+            //     if(!in_array($category, $categories) && $category != '')
+            //         array_push($categories, $category);
 
-            }
+            // }
 
             // Number of likes
-                $favoured = get_field('favorited', $course->ID);
-                if (is_array($favoured) || is_object($favoured))
-                foreach($favoured as $favour){
-                    $favour = $favour['value'];
-                    if($user->ID == $favour){
-                        $like++;
-                        break;
-                    }
-                }
+                // $favoured = get_field('favorited', $course->ID);
+                // if (is_array($favoured) || is_object($favoured))
+                // foreach($favoured as $favour){
+                //     $favour = $favour['value'];
+                //     if($user->ID == $favour){
+                //         $like++;
+                //         break;
+                //     }
+                // }
             
             
             
@@ -393,7 +393,7 @@
 
 
 <div class="firstBlock">
-    <div class="row tab-content" id="nav-tabContent">
+    <div class="row tab-content d-flex" id="nav-tabContent">
 
         <!-- ------------------------------------ Start Slide bar ---------------------------------------- -->
         <div class="col-md-3 pr-md-3">
@@ -401,7 +401,7 @@
                 <form action="/product-search/" method="POST">
                     <div class="LeerBlock pl-4" style="">
                         <div class="leerv">
-                            <p class="sousProduct1Title pt-1" style="color: #043356">LEERVORM</p>
+                            <p class="sousProduct1Title pt-1" style="color: #043356">LEERVORMdd</p>
                             <button class="btn btnClose pb-1 p-0 px-1 m-0" id="hide">
                                 <i class="bi bi-x text-dark" style="font-size: 35px"></i>
                             </button>
@@ -1759,7 +1759,7 @@
 
             ?>
             <div id="skills" class="m-md-2 m-2 mt-sm-5 mt-4" >
-                <div class="container">
+                <div class="container pr-md-3 pr-0" style="max-width: initial !important;">
                     <!-- <hr class="border-3" style="background-color: #023356"> -->
                     <div class="row d-flex justify-content-center">
                         <div class="col-md-8 col-11 ">
