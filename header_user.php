@@ -178,13 +178,13 @@ $link = ($user) ? '/dashboard/user' : '/';
                                 echo '<a class="dropdown-item" href="/dashboard/user">Eigen leeromgeving</a>';
 
                             if(!empty($company)){
-                                if ( in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') {
+                                if ( in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') {
                             ?>
                             <a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>
                             <?php }
                             }?>
                             <?php
-                            if ( in_array( 'teacher', $user->roles ) || in_array( 'administrator', $user->roles ) || $user->roles == 'administrator') {
+                            if ( in_array( 'hr', $user->roles ) || in_array( 'teacher', $user->roles ) || in_array( 'administrator', $user->roles ) || $user->roles == 'administrator') {
                             ?>
                             <a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>
                             <?php }?>
@@ -210,14 +210,14 @@ $link = ($user) ? '/dashboard/user' : '/';
                         $company = get_field('company',  'user_' . $user->ID);
 
                         if(!empty($company)){
-                            if ( in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') {
+                            if ( in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') {
                             ?>
                             <a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>
                         <?php }
                         }?>
 
                         <?php
-                            if ( in_array( 'teacher', $user->roles ) || in_array( 'administrator', $user->roles ) || $user->roles == 'administrator') {
+                            if ( in_array( 'hr', $user->roles ) || in_array( 'teacher', $user->roles ) || in_array( 'administrator', $user->roles ) || $user->roles == 'administrator') {
                             ?>
                         <a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>
                         <?php }?>
@@ -257,7 +257,7 @@ $link = ($user) ? '/dashboard/user' : '/';
                         <li class="nav-link companyButton">
                         <?php 
                             if($company_id)
-                                if(in_array( 'manager', $user->roles ) || in_array('administrator', $user->roles) )
+                                if(in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array('administrator', $user->roles) )
                                     $ref_company = "/dashboard/company";
                         ?>
                             <a <?php if(isset($ref_company)) echo'href="' .$ref_company. '"'; else echo 'data-toggle="modal" data-target="#bedrijfsprofiel_modal"'; ?> >

@@ -283,7 +283,7 @@ $orders = wc_get_orders($order_args);
         <div class="headListeCourse">
             <p class="JouwOpleid">Jouw opleidingen</p>
             <?php 
-                if ( in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
+                if ( in_array( 'hr', $user_in->roles ) || in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
                     echo '<a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>';
             ?>
         </div>

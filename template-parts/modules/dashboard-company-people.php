@@ -14,7 +14,7 @@
 
 
 if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span>"; 
-    if( in_array('administrator', $data_user->roles) || in_array( 'manager', $data_user->roles ) || $grant ) {
+    if( in_array('administrator', $data_user->roles) || in_array( 'manager', $data_user->roles ) || in_array('hr', $data_user->roles) || $grant ) {
 ?>
     <div class="cardPeople">
         <div class="headListeCourse">
@@ -57,7 +57,7 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
                             $image_user = get_stylesheet_directory_uri(). "/img/placeholder_user.png"; 
                         
                         $company = get_field('company',  'user_' . $user->ID);
-                        if(in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('manager', $data_user->roles) )
+                        if(in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('manager', $data_user->roles) || in_array('hr', $data_user->roles) )
                             if(in_array($user->ID, $ismanaged)){
                                 if($user_connected != $user->ID )
                                     if(!empty($company)){
@@ -106,9 +106,9 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
                                             <img class="removeImg" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
                                         </td>
                                     </tr>
-                                <?php
-                                    } 
-                        }
+                                    <?php
+                                        } 
+                                    }
                     }
                     ?>
                 </tbody>
