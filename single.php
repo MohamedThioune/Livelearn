@@ -58,6 +58,11 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
 
 ?>
 
+<style>
+    .selected {
+        border-bottom: 4px solid rgb(4 51 86);
+    }
+</style>
 <div class="main-wrapper ">
    
 
@@ -172,20 +177,22 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                                     <div class="tabbable-panel">
                                         <div class="tabbable-line">
                                             <ul class="nav nav-tabs ">
-                                                <li class="active">
-                                                    <a href="#tab_default_1" data-toggle="tab">
-                                                        Details</a>
+                                                <li class="" href="#tab_default_1">
+                                                    <a href="#tab_default_1" data-toggle="tab" class="selected">
+                                                        <div>
+                                                                Details
+                                                        </div>    
+                                                    </a>
                                                 </li>
                                                 <li>
                                                     <a href="#tab_default_2" data-toggle="tab">
-                                                        <i class="ti-comment mr-2"></i><?= $number_comments; ?> Comments
+                                                        <i class="ti-comment mr-2"></i><?= $number_comments; ?> Comments </a>
                                                 </li>
                                                 <li>
-                                                    <a href="#tab_default_3" data-toggle="tab">
-                                                     Add Comments
+                                                    <a href="#tab_default_3" data-toggle="tab">Add Comments </a>
                                                 </li>
                                             </ul>
-                                            <div class="tab-content">
+                                            <div class="tab-content d-flex">
                                                 <div class="tab-pane active" id="tab_default_1">
                                                     <h2 class="mt-3 mb-4"><?php echo the_title();?></h2>
                                                     <?php
@@ -282,7 +289,7 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                                                         echo "<h6>No reviews for this course ...</h6>";
                                                     ?>
                                                 </div>
-                                                <div class="tab-pane" id="tab_default_3">
+                                                <div class="tab-pane w-100" id="tab_default_3">
                                                     <?php
                                                     if($user_id != 0){
                                                     ?>
@@ -457,3 +464,10 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
 <?php get_footer();?>
 <?php wp_footer(); ?>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+     var $li = $('.tabbable-line li').click(function() {
+        $li.removeClass('selected');
+        $(this).addClass('selected');
+    });
+</script>

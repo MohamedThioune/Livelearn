@@ -121,7 +121,7 @@
                         <div class="tabs">
                             <ul id="tabs-nav">
                                 <li><a href="#tab1">Events</a></li>
-                                <li><a href="#tab2">Skills</a></li>
+                                <li><a href="#tab2">Skillsddd</a></li>
                                 <li><a href="#tab3">Reviews</a></li>
                                 <li><a href="#tab4">Add Reviews</a></li>
                             </ul> <!-- END tabs-nav -->

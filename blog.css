@@ -845,6 +845,9 @@ h3.quote::before {
 .tabbable-line > .nav-tabs > li.open, .tabbable-line > .nav-tabs > li:hover {
   border-bottom: 4px solid rgb(4 51 86);
 }
+/* .tabbable-line > .nav-tabs > li.open, .tabbable-line > .nav-tabs > li:active {
+  border-bottom: 4px solid red;
+} */
 .tabbable-line > .nav-tabs > li.open > a, .tabbable-line > .nav-tabs > li:hover > a {
   border: 0;
   background: none !important;

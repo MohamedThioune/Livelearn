@@ -13,7 +13,7 @@
 
     <div class="contentPageManager managerOverviewMensen">
         <br>
-        <div class="contentOverviewMensen d-flex justify-content-md-between bg-white justify-content-center p-2 radius-custom"> 
+        <div class="contentOverviewMensen d-flex justify-content-md-between bg-white justify-content-center p-2 radius-custom mx-4 mx-md-0"> 
             <div class="h5 pt-2"><strong>Buget Livelearn team</strong></div>
             <div><button class="btn e" style="background: #00A89D"><strong class="text-white">Naar bedrijfsniveau</strong></button></div>               
         </div>
@@ -21,7 +21,7 @@
         <div class="contentOverviewMensen mt-4"> 
 
             <div class="col-md-3 col-12 px-1  px-md-0 ">
-                <div class="card mb-3 radius-custom">
+                <div class="card mb-3 radius-custom" style="height: 125px;">
                     <div class="card-body">
                         <p class="card-text text-center"><strong>Maandelijkse kosten</strong> </p>   
                         <h5 class="card-title text-center"> <strong>$49,50</strong> </h5>
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="col-md-3 col-12 px-1 px-md-2  pr-md-0">
-                <div class="card mb-3 radius-custom" style="height: 89%;">
+                <div class="card mb-3 radius-custom" style="height: 125px;">
                     <div class="card-body">
                         <p class="card-text text-center"> <strong>Inkomsten verkochte kennisproducten</strong> </p>
                         <h5 class="card-title text-center"> <strong>$6,250</strong></h5>
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="col-md-3 col-12 px-1 px-md-2">
-                <div class="card mb-3 radius-custom" style="height: 89%;">
+                <div class="card mb-3 radius-custom" style="height: 125px;">
                     <div class="card-body">
                         <p class="card-text text-center"> <strong>Uitgaven Opleidingen</strong> </p>
                         <h5 class="card-title text-center"><strong>$9,273</strong></h5>
@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="col-md-3 col-12 px-1  px-md-0">
-                <div class="card mb-3 radius-custom">
+                <div class="card mb-3 radius-custom" style="height: 125px;">
                     <div class="card-body">
                         <p class="card-text text-center"> <strong>Budget resterend</strong> </p>
                         <h5 class="card-title text-center"><strong>$11,383</strong></h5>
@@ -126,7 +126,7 @@
         </div>
 
 
-        <div class="bg-white mt-5 p-2 radius-custom mx-4 mx-md-0" id="div_table" style="display:block" >  
+        <div class="bg-white mt-5 p-2 radius-custom mx-4 mx-md-0 mb-4" id="div_table" style="display:block" >  
             
             <!-- <div class="h5 pt-2"><strong>Buget Livelearn team</strong></div> -->
             <div class="d-flex justify-content-between w-100 border-bottom border-5 pb-2">
