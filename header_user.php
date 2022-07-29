@@ -100,7 +100,7 @@ $link = ($user) ? '/dashboard/user' : '/';
                                 </p>
 
                                 <p class="JouwOpleid pt-3 text-center">
-                                    Eerst le    zen wat we doen? <a href="">Click hier!</a>
+                                    Eerst le zen wat we doen? <a href="">Click hier!</a>
                                 </p>
                             </div>
                         </div>
