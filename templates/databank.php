@@ -21,7 +21,7 @@ $user = wp_get_current_user();
 
 
 <?php 
-    $websites=['smartwp','DeZZP','fmn','duurzaamgebouwd'];
+    $websites=['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandrinks','sportnext','nbvt','vsbnetwerk','tvvl','nedverbak','tnw','changeINC'];
 ?>
 
 <!-- Content -->
@@ -152,8 +152,9 @@ $user = wp_get_current_user();
 
 
 <script>
-            
-    $('#select_field').click((e)=>{
+
+    $('#select_field').click((e)=>
+    {
         let website= $('#select_field').val();
         if (website != '')
             $.ajax({

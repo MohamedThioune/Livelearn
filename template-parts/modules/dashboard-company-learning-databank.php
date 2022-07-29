@@ -167,7 +167,7 @@
                 <p class="JouwOpleid">Alle opleidingen</p>
                 <input type="search" class="searchInputAlle" placeholder="Zoek opleidingen, experts of ondervwerpen">
                 <?php 
-                if ( in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
+                if ( in_array( 'hr', $user_in->roles ) || in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
                     echo '<a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>';
                 ?>
             </div>

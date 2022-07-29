@@ -85,9 +85,9 @@ $link = ($user) ? '/dashboard/user' : '/';
 
                         <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                                <form class="formTestimonial m-0 w-100 p-3 bg-white">
-                                    <!-- <p class="title">Kies jouw persoonlijke scholingsadvies</p>
-                                    <p class="description">Vul onderstaande formulier in en we plannen het zo snel mogelijk in.</p> -->
+                                <!-- <form class="formTestimonial m-0 w-100 p-3 bg-white">
+                                     <p class="title">Kies jouw persoonlijke scholingsadvies</p>
+                                    <p class="description">Vul onderstaande formulier in en we plannen het zo snel mogelijk in.</p>
                                     <div class="input-group">
                                         <input type="text" placeholder="Voornaam" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
                                     </div>
@@ -113,13 +113,14 @@ $link = ($user) ? '/dashboard/user' : '/';
                                         Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je 
                                         direct toegang tot je bedrijfs leeromgeving
                                     </p>
-                                </form>
+                                 </form>  -->
+                                 <?php echo do_shortcode( ("[ninja_form id='10' title='false' description='false' ajax='true']")); ?>
                             </div>
                             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                                <form class="formTestimonial m-0 w-100 p-3 bg-white">
-                                    <!-- <p class="title">Kies jouw persoonlijke scholingsadvies</p>
+                                <!-- <form class="formTestimonial m-0 w-100 p-3 bg-white">
+                                     <p class="title">Kies jouw persoonlijke scholingsadvies</p>
                                     <p class="description">Vul onderstaande formulier in en we plannen het zo snel mogelijk in.</p> -->
-                                    <div class="input-group">
+                                    <!-- <div class="input-group">
                                         <input type="text" placeholder="Bedrijfsnaam" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
                                     </div>
                                     <div class="input-group">
@@ -144,8 +145,9 @@ $link = ($user) ? '/dashboard/user' : '/';
 
                                     <p class="JouwOpleid pt-3">
                                         Eerst lezen wat we doen? <a href="">Click hier!</a>
-                                    </p>
-                                </form>
+                                    </p> -->
+                                <!-- </form> -->
+                                <?php echo do_shortcode( ("[ninja_form id='9' title='false' description='false' ajax='true']")); ?>
                             </div>
                         </div>
                     </div>
@@ -223,13 +225,13 @@ $link = ($user) ? '/dashboard/user' : '/';
                                 echo '<a class="dropdown-item" href="/dashboard/user">Eigen leeromgeving</a>';
 
                             if(!empty($company)){
-                                if ( in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') {
+                                if ( in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') {
                             ?>
                             <a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>
                             <?php }
                             }?>
                             <?php
-                            if ( in_array( 'teacher', $user->roles ) || in_array( 'administrator', $user->roles ) || $user->roles == 'administrator') {
+                            if ( in_array( 'hr', $user->roles ) || in_array( 'teacher', $user->roles ) || in_array( 'administrator', $user->roles ) || $user->roles == 'administrator') {
                             ?>
                             <a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>
                             <?php }?>
@@ -255,14 +257,14 @@ $link = ($user) ? '/dashboard/user' : '/';
                         $company = get_field('company',  'user_' . $user->ID);
 
                         if(!empty($company)){
-                            if ( in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') {
+                            if ( in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') {
                             ?>
                             <a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>
                         <?php }
                         }?>
 
                         <?php
-                            if ( in_array( 'teacher', $user->roles ) || in_array( 'administrator', $user->roles ) || $user->roles == 'administrator') {
+                            if ( in_array( 'hr', $user->roles ) || in_array( 'teacher', $user->roles ) || in_array( 'administrator', $user->roles ) || $user->roles == 'administrator') {
                             ?>
                         <a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>
                         <?php }?>
@@ -301,7 +303,7 @@ $link = ($user) ? '/dashboard/user' : '/';
                         <li class="nav-link companyButton">
                         <?php 
                             if($company_id)
-                                if(in_array( 'manager', $user->roles ) || in_array('administrator', $user->roles) )
+                                if(in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array('administrator', $user->roles) )
                                     $ref_company = "/dashboard/company";
                         ?>
                             <a <?php if(isset($ref_company)) echo'href="' .$ref_company. '"'; else echo 'data-toggle="modal" data-target="#bedrijfsprofiel_modal"'; ?> >
