@@ -824,7 +824,7 @@
             <!-- ----------------------------------- Right side: small dashboard ------------------------------------- -->
             <div class="blockTwoOver">
                 <div class="btnGrou10">
-                    <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#direct-contact">
+                    <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#direct-contaEventsct">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
                         Direct contact
                     </a>
