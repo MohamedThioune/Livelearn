@@ -20,6 +20,7 @@ $todos = get_posts($args);
 $url = home_url( $wp->request );
 
 $link = ($user) ? '/dashboard/user' : '/'; 
+
 ?>
 
 <!DOCTYPE html>

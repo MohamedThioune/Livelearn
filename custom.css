@@ -25,6 +25,13 @@ body {
     max-width: unset;
 }
 
+.theme-error{
+    background-color:#ffcccc;
+    border:2px solid #cc0000;
+    color:#cc0000;
+    padding:8px 12px;
+    margin:8px 0;
+}
 
 .respMenu li a {
     color: #0a0a0a !important;
@@ -4958,8 +4965,8 @@ nav .show{
     margin-bottom: 20px;
 }
 .contentStats .statsImgCours {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     margin-right: 15px;
     border-radius: 7px;
     overflow: hidden;
