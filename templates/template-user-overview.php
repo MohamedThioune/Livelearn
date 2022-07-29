@@ -393,7 +393,7 @@
 
 
 <div class="firstBlock">
-    <div class="row tab-content" id="nav-tabContent">
+    <div class="row tab-content d-flex" id="nav-tabContent">
 
         <!-- ------------------------------------ Start Slide bar ---------------------------------------- -->
         <div class="col-md-3 pr-md-3">

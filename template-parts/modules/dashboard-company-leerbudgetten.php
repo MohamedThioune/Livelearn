@@ -1,6 +1,78 @@
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
+<?php 
+$users = get_users();
+
+$user_id = get_current_user_id();
+$company = get_field('company',  'user_' . $user_id );
+$company_connected = $company[0]->post_title;
+
+$leerbudget = get_field('leerbudget', $company[0]->ID);
+$zelfstand_max = get_field('zelfstand_max', $company[0]->ID);
+
+echo $leerbudget;
+
+$members = array();
+$numbers = array();
+
+$total_incomes  = 0;
+$total_expenses = 0;
+
+$orders = array();
+
+foreach( $users as $user ) {
+    $company = get_field('company',  'user_' . $user->ID);
+    if ($company[0]->post_title == $company_connected)
+    {
+        array_push($numbers,$user->ID);
+
+        //Expense by this user
+        $args = array(
+            'limit' => -1,
+            'customer_id' => $user->ID,
+        );
+        $orders = wc_get_orders($args);
+        $expenses = 0;
+        foreach($orders as $order){
+            foreach ($order->get_items() as $item_id => $item ) {
+                //Get woo orders from user
+                $course_id = intval($item->get_product_id()) - 1;
+                $prijs = get_field('price', $course_id);
+                $expenses += $prijs; 
+            }
+        }
+        $user->expenses = $expenses;
+
+        $total_expenses += $user->expenses;
+        
+        //Income by this user
+        $args = array(
+            'limit' => -1,
+        );
+        $bunch_orders = wc_get_orders($args);
+        $incomes = 0; 
+        foreach( $bunch_orders as $order ){
+            foreach( $order->get_items() as $item_id => $item ) {
+                $course_id = intval($item->get_product_id()) - 1;
+                $course = get_post($course_id);
+                $prijs = get_field('price', $course_id);
+                if(isset($course->post_author))
+                    if($course->post_author == $user->ID)
+                        $incomes += $prijs;  
+            }
+        }
+        $user->incomes = $incomes;
+
+        $total_incomes += $user->incomes;
+
+        array_push($members,$user);                            
+    }
+}
+
+$maandelijke = count($members) * 5;
+?>
+
 <style>
     .radius-custom {
         border-radius: 10px !important;
@@ -13,9 +85,9 @@
 
     <div class="contentPageManager managerOverviewMensen">
         <br>
+        <?php if($_GET['message']) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span>" ?>
         <div class="contentOverviewMensen d-flex justify-content-md-between bg-white justify-content-center p-2 radius-custom"> 
-            <div class="h5 pt-2"><strong>Buget Livelearn team</strong></div>
-            <div><button class="btn e" style="background: #00A89D"><strong class="text-white">Naar bedrijfsniveau</strong></button></div>               
+            <div class="h5 pt-2"><strong>Budget <?= $company_connected; ?></strong></div>
         </div>
 
         <div class="contentOverviewMensen mt-4"> 
@@ -24,35 +96,41 @@
                 <div class="card mb-3 radius-custom">
                     <div class="card-body">
                         <p class="card-text text-center"><strong>Maandelijkse kosten</strong> </p>   
-                        <h5 class="card-title text-center"> <strong>$49,50</strong> </h5>
-                        <p class="card-text text-right h6"><small class="text-muted">
-                            <strong>Last updated 3 mins ago</strong> </small></p>
+                        <h5 class="card-title text-center"> <strong>$<?= $maandelijke ?></strong> </h5>
+                        <p class="card-text text-right h6">
+                            <small class="text-muted">
+                                <strong>Last updated 0 mins ago</strong>
+                            </small>
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 col-12 px-1 px-md-2  pr-md-0">
                 <div class="card mb-3 radius-custom" style="height: 89%;">
                     <div class="card-body">
-                        <p class="card-text text-center"> <strong>Inkomsten verkochte kennisproducten</strong> </p>
-                        <h5 class="card-title text-center"> <strong>$6,250</strong></h5>
+                        <p class="card-text text-center"> <strong>Inkomsten verkochte kennisproducten</strong> <!-- Sale courses --> </p>
+                        <h5 class="card-title text-center"> <strong>$<?= $total_incomes; ?></strong></h5>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 col-12 px-1 px-md-2">
                 <div class="card mb-3 radius-custom" style="height: 89%;">
                     <div class="card-body">
-                        <p class="card-text text-center"> <strong>Uitgaven Opleidingen</strong> </p>
-                        <h5 class="card-title text-center"><strong>$9,273</strong></h5>
+                        <p class="card-text text-center"> <strong>Uitgaven Opleidingen</strong> <!-- Purchased courses --> </p>
+                        <h5 class="card-title text-center"><strong>$<?= $total_expenses; ?></strong></h5>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 col-12 px-1  px-md-0">
                 <div class="card mb-3 radius-custom">
                     <div class="card-body">
-                        <p class="card-text text-center"> <strong>Budget resterend</strong> </p>
-                        <h5 class="card-title text-center"><strong>$11,383</strong></h5>
-                        <p class="card-text text-right h6"><small class="text-muted">
-                            <strong>Last updated 3 mins ago</strong> </small></p>
+                        <p class="card-text text-center"> <strong>Budget resterend</strong> <!-- Remaining courses --> </p>
+                        <h5 class="card-title text-center"><strong>$0</strong></h5>
+                        <p class="card-text text-right h6">
+                            <small class="text-muted">
+                                <strong>Last updated 0 min ago</strong> 
+                            </small>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -76,11 +154,12 @@
                         <div class="bg-white p-2 radius-custom" id="div_table" style="display:block" >  
                             <!-- <div class="h5 pt-2"><strong>Buget Livelearn team</strong></div> -->
                             <div class="d-flex justify-content-between w-100 border-bottom border-5 pb-2">
-                                <div class="h5 pt-2"><strong>Buget Livelearn team</strong></div>
+                                <div class="h5 pt-2">Budget <strong><?= $company_connected; ?></strong></div>
                                 <button type="button" class="btn-close bg-danger border-0 text-white fa-2x rounded border-3" data-bs-dismiss="modal" aria-label="Close">X</button>
                             </div>
 
-                            <form class="">
+                            <form method="POST">
+                                <input type="hidden" name="company_id" value="<?= $company[0]->ID; ?>">
 
                                 <div class="form-group py-4">
                                     <div class="row">
@@ -89,8 +168,7 @@
                                             <strong class="h5">Leerbudget</strong></label>
                                         </div>
                                         <div class="col-md-9">
-                                            <input type="number" class="form-control border-0" id="inputPassword" placeholder=""
-                                            style="background: #E0EFF4">
+                                            <input type="number" name="leerbudget" value="<?= $leerbudget; ?>" class="form-control border-0" id="inputPassword" placeholder="" style="background: #E0EFF4">
                                         </div>
                                     </div>
                                 </div>
@@ -102,15 +180,14 @@
                                                 <strong class="h5">Zelfstand Maximum</strong></label>
                                         </div>
                                         <div class="col-md-9 pt-2">
-                                            <input type="number" class="form-control border-0" id="inputPassword" 
-                                            placeholder="" style="background: #E0EFF4">
+                                            <input type="number" name="zelfstand_max" value="<?= $zelfstand_max; ?>" class="form-control border-0" id="inputPassword" placeholder="" style="background: #E0EFF4">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row d-flex justify-content-center">
                                     <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-                                    <button class="btn text-white" style="background: #00A89D"><strong>Naar bedrijfsniveau</strong></button>
+                                    <button class="btn text-white" style="background: #00A89D" name="define_budget"><strong>Naar bedrijfsniveau</strong></button>
                                 </div>
 
                             </form>
@@ -128,9 +205,8 @@
 
         <div class="bg-white mt-5 p-2 radius-custom mx-4 mx-md-0" id="div_table" style="display:block" >  
             
-            <!-- <div class="h5 pt-2"><strong>Buget Livelearn team</strong></div> -->
             <div class="d-flex justify-content-between w-100 border-bottom border-5 pb-2">
-                <div class="h5 pt-2"><strong>Buget Livelearn team</strong></div>
+                <div class="h5 pt-2"><strong>Budget <?= $company_connected; ?></strong></div>
                 <div>
                     <!-- Button trigger modal -->
                     <button class="btn text-white" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background: #00A89D">
@@ -153,72 +229,34 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td>
-                                <div class="dropdown text-white">
-                                    <p class="dropdown-toggle mb-0" type="button" data-toggle="dropdown">
-                                        <img  style="width:20px"
-                                        src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                    </p>
-                                    <ul class="dropdown-menu">
-                                        <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
-                                        <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
-                                        <li class="my-1"><i class="fa fa-trash px-2"></i><a href="#" class="text-danger">Verwijder</a></li>
-                                    </ul>
-                                </div> 
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                            <td>@fat</td>
-                            <td>@fat</td>
-                            <td>@fat</td>
-                            <td>
-                                <div class="dropdown text-white">
-                                    <p class="dropdown-toggle  mb-0" type="button" data-toggle="dropdown">
-                                        <img  style="width:20px"
-                                        src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                    </p>
-                                    <ul class="dropdown-menu">
-                                        <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
-                                        <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
-                                        <li class="my-1"><i class="fa fa-trash px-2"></i><a href="#" class="text-danger">Verwijder</a></li>
-                                    </ul>
-                                </div> 
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry the Bird</td>
-                            <td>@twitter</td>
-                            <td>@twitter</td>
-                            <td>@twitter</td>
-                            <td>@twitter</td>
-                            <td>@twitter</td>
-                            <td>
-                                <div class="dropdown text-white">
-                                    <p class="dropdown-toggle  mb-0" type="button" data-toggle="dropdown">
-                                        <img  style="width:20px"
-                                        src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                    </p>
-                                    <ul class="dropdown-menu">
-                                        <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
-                                        <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
-                                        <li class="my-1"><i class="fa fa-trash px-2"></i><a href="#" class="text-danger">Verwijder</a></li>
-                                    </ul>
-                                </div> 
-                            </td>
-                        </tr>
+                        <?php
+                            foreach($members as $key=>$member){
+                        ?>
+                            <tr>
+                                <th scope="row"><?= $key; ?></th>
+                                <td><?= $member->data->display_name; ?></td>
+                                <td>5</td> <!-- cost by this user 'const' -->
+                                <td><?= $member->expenses ?></td> <!-- expense by this user 'var' -->
+                                <td><?= $member->incomes ?></td> <!-- income by this user 'var' -->
+                                <td>0</td> <!-- personal budget by this user 'var' -->
+                                <td>0</td> <!-- budget remaining by this user 'var' -->
+                                <td>
+                                    <div class="dropdown text-white">
+                                        <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
+                                            <img  style="width:20px"
+                                            src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        </p>
+                                        <ul class="dropdown-menu">
+                                            <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
+                                            <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
+                                            <li class="my-1"><i class="fa fa-trash px-2"></i><a href="#" class="text-danger">Verwijder</a></li>
+                                        </ul>
+                                    </div> 
+                                </td>
+                            </tr>
+                        <?php
+                            }
+                        ?>
                     </tbody>
                 </table>
             </div>

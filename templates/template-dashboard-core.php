@@ -513,33 +513,64 @@ else if(isset($referee_employee)){
 else if(isset($databank)){
     $onderwerpen = "";
     $message = "";
+
     if(!empty($tags))
         foreach($tags as $tag)
             $onderwerpen .= $tag .',';
+
+    //Date
+    if(isset($complete)){
+        $number_items = count($start_date);
+        $data_locaties = array();
+        $row = "";
+        
+        for($i = 0; $i <= $number_items; $i++){
+            if(!$start_date[$i])
+                continue;
+
+            $row = "";
+            $row_start_date = date("d/m/Y H:i:s", strtotime($start_date[$i]));
+            $row .= $row_start_date .'-'. $row_start_date .'-'. $location[$i] .'-'. $adress[$i] .';'; 
+
+            $middles = explode(',', $between_date[$i]);
+            foreach($middles as $middle){
+                $middle = str_replace('/', '.', $middle);
+                $row_middle = date("d/m/Y H:i:s", strtotime($middle));
+                $row .= $row_middle .'-'. $row_middle .'-'. $location[$i] .'-'. $adress[$i] .';';
+            }
+
+            $row_end_date = date("d/m/Y H:i:s", strtotime($end_date[$i]));
+            $row .= $row_end_date .'-'. $row_end_date .'-'. $location[$i] .'-'. $adress[$i];
+        
+            array_push($data_locaties, $row);
+        }
+
+        $data_locaties_xml = join('~', $data_locaties);
+    }
     
     if(isset($complete)) 
-        $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'long_description' => $long_description, 'for_who' => $for_who, 'agenda' => $agenda, 'results' => $results, 'prijs' => $prijs, 'prijs_vat' => $prijs_vat, 'onderwerpen' => $onderwerpen, 'level' => $level, 'language' => $language, 'author_id' => $author_id, 'company_id' => $company_id ]; // NULL value.
+        $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'long_description' => $long_description, 'for_who' => $for_who, 'agenda' => $agenda, 'results' => $results, 'prijs' => $prijs, 'prijs_vat' => $prijs_vat, 'onderwerpen' => $onderwerpen, 'date_multiple' => $data_locaties_xml, 'level' => $level, 'language' => $language, 'author_id' => $author_id, 'company_id' => $company_id ]; // NULL value.
     else 
         $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'prijs' => $prijs, 'onderwerpen' => $onderwerpen, 'author_id' => $author_id, 'company_id' => $company_id ]; // NULL value.
     
     $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 
     $updated = $wpdb->update( $table, $data, $where );
-
+ 
     if($updated === false){
         if(isset($complete))
             $message = "/edit-databank?id=" . $id . "&message=Something went wrong !"; 
         else
             $message = "/databank/?message=" . $wpdb->last_error;
-        header("Location: ". $message);
-        return false; 
+        //header("Location: ". $message);
+        //return false; 
     }else{ 
         if(isset($complete))
             $message = "/edit-databank?id=" . $id . "&message=Updated successfully !"; 
         else 
             $message = "/databank/?message=Updated successfully !"; 
-        header("Location: ". $message);
-        return true;
+        //header("Location: ". $message);
+        //return true;
     }
     
 }
@@ -571,13 +602,21 @@ else if(isset($date_add)){
         array_push($data_locaties, $row);
     }
 
-    update_field('data_locaties_xml',$data_locaties, $id);
+    update_field('data_locaties_xml', $data_locaties, $id);
 
     $path = '/dashboard/teacher/course-selection/?func=add-course&id=' .$id. '&step=4';
 
     header('Location: ' .$path);
 }
 
+else if(isset($define_budget)){
+    update_field('leerbudget', $leerbudget, $company_id);
+    update_field('zelfstand_max', $zelfstand_max, $company_id);
+
+    $message = '/dashboard/company/leerbudgetten/?message=Budget updated sucessfully'; 
+
+    header("Location: ". $message);
+}
 ?>
 <?php wp_head(); ?>
 
