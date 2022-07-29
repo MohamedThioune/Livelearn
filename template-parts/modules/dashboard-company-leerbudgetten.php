@@ -4,14 +4,16 @@
 <?php 
 $users = get_users();
 
-$user_id = get_current_user_id();
+$user_connected = wp_get_current_user();
+$user_id = $user_connected->ID;
+
 $company = get_field('company',  'user_' . $user_id );
+
 $company_connected = $company[0]->post_title;
+$company_id = $company[0]->ID;
 
 $leerbudget = get_field('leerbudget', $company[0]->ID);
 $zelfstand_max = get_field('zelfstand_max', $company[0]->ID);
-
-echo $leerbudget;
 
 $members = array();
 $numbers = array();
@@ -70,6 +72,8 @@ foreach( $users as $user ) {
     }
 }
 
+$budget_resterend = ($leerbudget + $total_incomes) - $total_expenses; 
+
 $maandelijke = count($members) * 5;
 ?>
 
@@ -84,8 +88,9 @@ $maandelijke = count($members) * 5;
 <div class="theme-learning">
 
     <div class="contentPageManager managerOverviewMensen">
-        <br>
         <?php if($_GET['message']) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span>" ?>
+        <br>
+        <br>
         <div class="contentOverviewMensen d-flex justify-content-md-between bg-white justify-content-center p-2 radius-custom"> 
             <div class="h5 pt-2"><strong>Budget <?= $company_connected; ?></strong></div>
         </div>
@@ -96,7 +101,7 @@ $maandelijke = count($members) * 5;
                 <div class="card mb-3 radius-custom">
                     <div class="card-body">
                         <p class="card-text text-center"><strong>Maandelijkse kosten</strong> </p>   
-                        <h5 class="card-title text-center"> <strong>$<?= $maandelijke ?></strong> </h5>
+                        <h5 class="card-title text-center"> <strong>$ <?= $maandelijke ?></strong> </h5>
                         <p class="card-text text-right h6">
                             <small class="text-muted">
                                 <strong>Last updated 0 mins ago</strong>
@@ -109,7 +114,7 @@ $maandelijke = count($members) * 5;
                 <div class="card mb-3 radius-custom" style="height: 89%;">
                     <div class="card-body">
                         <p class="card-text text-center"> <strong>Inkomsten verkochte kennisproducten</strong> <!-- Sale courses --> </p>
-                        <h5 class="card-title text-center"> <strong>$<?= $total_incomes; ?></strong></h5>
+                        <h5 class="card-title text-center"> <strong>$ <?= $total_incomes; ?></strong></h5>
                     </div>
                 </div>
             </div>
@@ -117,7 +122,7 @@ $maandelijke = count($members) * 5;
                 <div class="card mb-3 radius-custom" style="height: 89%;">
                     <div class="card-body">
                         <p class="card-text text-center"> <strong>Uitgaven Opleidingen</strong> <!-- Purchased courses --> </p>
-                        <h5 class="card-title text-center"><strong>$<?= $total_expenses; ?></strong></h5>
+                        <h5 class="card-title text-center"><strong>$ <?= $total_expenses; ?></strong></h5>
                     </div>
                 </div>
             </div>
@@ -125,7 +130,7 @@ $maandelijke = count($members) * 5;
                 <div class="card mb-3 radius-custom">
                     <div class="card-body">
                         <p class="card-text text-center"> <strong>Budget resterend</strong> <!-- Remaining courses --> </p>
-                        <h5 class="card-title text-center"><strong>$0</strong></h5>
+                        <h5 class="card-title text-center"><strong>$ <?= $budget_resterend; ?></strong></h5>
                         <p class="card-text text-right h6">
                             <small class="text-muted">
                                 <strong>Last updated 0 min ago</strong> 
@@ -135,14 +140,14 @@ $maandelijke = count($members) * 5;
                 </div>
             </div>
         
-            <!-- <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-                <img src="..." class="card-img-bottom" alt="...">
-            </div> -->
+           <!-- <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                    <img src="..." class="card-img-bottom" alt="...">
+                </div> -->
 
         </div>
 
@@ -159,7 +164,7 @@ $maandelijke = count($members) * 5;
                             </div>
 
                             <form method="POST">
-                                <input type="hidden" name="company_id" value="<?= $company[0]->ID; ?>">
+                                <input type="hidden" name="company_id" value="<?= $company_id; ?>">
 
                                 <div class="form-group py-4">
                                     <div class="row">
@@ -208,10 +213,17 @@ $maandelijke = count($members) * 5;
             <div class="d-flex justify-content-between w-100 border-bottom border-5 pb-2">
                 <div class="h5 pt-2"><strong>Budget <?= $company_connected; ?></strong></div>
                 <div>
-                    <!-- Button trigger modal -->
-                    <button class="btn text-white" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background: #00A89D">
-                        <strong>Naar bedrijfsniveau</strong>
-                    </button>
+                    <?php
+                    if(in_array('hr', $user_connected->roles))
+                    {
+                    ?>
+                        <!-- Button trigger modal -->
+                        <button class="btn text-white" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background: #00A89D">
+                            <strong>Naar bedrijfsniveau</strong>
+                        </button>
+                    <?php
+                    }
+                    ?>
                 </div>                             
             </div>
             <div class="table-responsive">
@@ -238,8 +250,8 @@ $maandelijke = count($members) * 5;
                                 <td>5</td> <!-- cost by this user 'const' -->
                                 <td><?= $member->expenses ?></td> <!-- expense by this user 'var' -->
                                 <td><?= $member->incomes ?></td> <!-- income by this user 'var' -->
-                                <td>0</td> <!-- personal budget by this user 'var' -->
-                                <td>0</td> <!-- budget remaining by this user 'var' -->
+                                <td><?= $zelfstand_max ?> </td> <!-- personal budget by this user 'var' -->
+                                <td><?php echo (($zelfstand_max + $member->incomes) - $member->expenses); ?></td> <!-- budget remaining by this user 'var' -->
                                 <td>
                                     <div class="dropdown text-white">
                                         <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">

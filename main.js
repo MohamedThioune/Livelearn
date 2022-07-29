@@ -1,5 +1,5 @@
 jQuery(function($){
-    
+
     //variable for offline courses date input
     $('.block2evens').each(function(){
         console.log('enting for reservations done');
@@ -15,7 +15,7 @@ jQuery(function($){
         });
     });
 
-    
+
     //header on scroll fix
     var height = ($('nav.navbar').css('height'));
     $('body').css('padding-top', height)
@@ -100,8 +100,8 @@ jQuery(function($){
         $('#Finish').removeClass('colorStep');
     });
 
-// clone section dashboard course step 3
-   /* $('.wrapperClone').on('click', '.remove', function() {
+    // clone section dashboard course step 3
+    /* $('.wrapperClone').on('click', '.remove', function() {
         $('.remove').closest('.wrapperClone').find('.elementClone').not(':first').last().remove();
 
     });
@@ -148,10 +148,15 @@ jQuery(function($){
 
 
 
+    //close login popup
+    $('.modal button.close').on('click', function(e){
+        e.preventDefault();
+        $(this).closest('.modal').removeClass('show');
+        console.log('close popup');
+    })
 
 
-
-// clone section dashboard course step 3
+    // clone section dashboard course step 3
 
     //variable for offline courses date input
     $('.block2evens').each(function(){
@@ -322,7 +327,7 @@ jQuery(function($){
     $('.tab-content').hide();
     $('.tab-content:first').show();
 
-// Click function
+    // Click function
     $('#tabs-nav li').click(function(){
         $('#tabs-nav li').removeClass('active');
         $(this).addClass('active');
@@ -352,7 +357,7 @@ jQuery(function($){
         let cl =$(this).attr('class').split(' ')[3];
         hidden=($(".cb_topics_bangricht_"+cl).attr('hidden'));
         $(".cb_topics_bangricht_"+cl).attr('hidden', !hidden);
-        
+
     });
 
     $(".btnFunctiegericht").click(function() {
@@ -391,7 +396,7 @@ jQuery(function($){
         $(".blockSkills").hide();
     });
 
-    
+
 
     // Pour assessments  backend
     $("#btnStratModal1").click(function() {
@@ -399,7 +404,7 @@ jQuery(function($){
         $(".contentAsessment").hide();
 
     });
-   
+
     $("#btnStart2").click(function() {
         $("#step1OverviewAssessmentBackend").hide();
         $("#step2OverviewAssessmentBackend").show();
@@ -428,7 +433,7 @@ jQuery(function($){
 
 
 
-//POur inuput recherche coté responsivité
+    //POur inuput recherche coté responsivité
     $("#searchIcone").click(function() {
         $("#searchIcone").hide();
         $("#burgerCroie").hide();
@@ -538,10 +543,10 @@ jQuery(function($){
         $( ".I-feddback" ).appendTo( document.body );
     }
 
-    $( "div" ).click(function() {
-        $(".FeedbackInput").hide();
-        $("I-feddback").Show();
-    });
+    //    $( "div" ).click(function() {
+    //        $(".FeedbackInput").hide();
+    //        $("I-feddback").Show();
+    //    });
 
 
     // début pour show more partie user profil passport
@@ -730,14 +735,13 @@ jQuery(function($){
 
     });
 
-    
     function myFunction() {
         document.getElementById("autocomplete").classList.toggle("show");
     }
 
 
 
-   
+
     $('#test').click(function() {
         //   if (!$(this.target).is('#popUpForm')) {
         //     $(".modalDialog").hide();
@@ -745,6 +749,5 @@ jQuery(function($){
 
         alert("testing close");
     });
-   
 
 });
