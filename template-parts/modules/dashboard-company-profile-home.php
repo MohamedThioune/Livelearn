@@ -410,7 +410,7 @@
     </div>
     <!-- Modal  -->
     <div class="modal modalEdu fade show" id="exampleModalWork" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog" role="document" style="width: 93% !important;">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Add New </h5>
@@ -588,20 +588,21 @@
                                             $internal_growth_subtopics= get_user_meta($user->ID,'topic_affiliate');
                                             foreach($internal_growth_subtopics as $key =>  $value){
 
-                                                echo '<div class="bloclCijfers">';
+                                                echo '<div class="bloclCijfers" style="height: 52px">';
                                                 echo '<p class="mb-0" style="width: 20%;">'.lcfirst((String)get_the_category_by_ID($value)).'</p>';
-                                                echo '<div class="rate feedback" id="selected_stars_'.($key+1).'">
-                                                            <input type="radio" id="star1_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="1" />
-                                                            <label class="ma_link" for="star1_'.$key.'" title="text">1 star</label>
-                                                            <input type="radio" id="star2_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="2" />
-                                                            <label class="ma_link" for="star2_'.$key.'" title="text">2 stars</label>
-                                                            <input type="radio" id="star3_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="3" />
-                                                            <label class="ma_link" for="star3_'.$key.'" title="text">3 stars</label>
-                                                            <input type="radio" id="star4_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="4" />
-                                                            <label class="ma_link" for="star4_'.$key.'" title="text">4 stars</label>
-                                                            <input type="radio" id="star5_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="5" />
-                                                            <label class="ma_link" for="star5_'.$key.'" title="text">5 stars</label>
-                                                        </div>';
+                                                echo '<div class="rating" id="selected_stars_'.($key+1).'">
+                                                        <input type="radio" id="star5_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="5" />
+                                                        <label class="star mt-4" for="star5_'.$key.'" title="Awesome" aria-hidden="true"></label>
+                                                        <input type="radio" id="star4_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="4" />
+                                                        <label class="star mt-4" for="star4_'.$key.'" title="Great" aria-hidden="true"></label>
+                                                        <input type="radio" id="star3_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="3" />
+                                                        <label class="star mt-4" for="star3_'.$key.'" title="Very good" aria-hidden="true"></label>
+                                                        <input type="radio" id="star2_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="2" />
+                                                        <label class="star mt-4" for="star2_'.$key.'" title="Good" aria-hidden="true"></label>
+                                                        <input type="radio" id="star1_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="1" />
+                                                        <label class="star mt-4" for="star1_'.$key.'" title="Bad" aria-hidden="true"></label>
+                                                    </div>';
+
                                                 echo '<div class="">
                                                             <div hidden class="group-input-settings" id="commentaire_hidden_'.($key+1).'">
                                                                 <label for="">'.lcfirst((String)get_the_category_by_ID($value)).' toelichting</label>
@@ -614,6 +615,35 @@
                                         }
 
                                         ?>
+                                        
+                                        <!-- old rate -->
+                                        <!-- <div class="rate feedback" id="selected_stars_'.($key+1).'">
+                                             <input type="radio" id="star1_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="1" />
+                                             <label class="ma_link" for="star1_'.$key.'" title="text">1 star</label>
+                                             <input type="radio" id="star2_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="2" />
+                                             <label class="ma_link" for="star2_'.$key.'" title="text">2 stars</label>
+                                             <input type="radio" id="star3_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="3" />
+                                             <label class="ma_link" for="star3_'.$key.'" title="text">3 stars</label>
+                                             <input type="radio" id="star4_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="4" />
+                                             <label class="ma_link" for="star4_'.$key.'" title="text">4 stars</label>
+                                             <input type="radio" id="star5_'.$key.'" name="'.lcfirst((String)get_the_category_by_ID($value)).'_rate" value="5" />
+                                             <label class="ma_link" for="star5_'.$key.'" title="text">5 stars</label>
+                                         </div> -->
+
+
+                                        <!--  the news rate get from course page -->
+                                        <!-- <div class="rating">
+                                            <input type="radio" id="star5" name="rating" value="5" />
+                                            <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                                            <input type="radio" id="star4" name="rating" value="4" />
+                                            <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                                            <input type="radio" id="star3" name="rating" value="3" />
+                                            <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                                            <input type="radio" id="star2" name="rating" value="2" />
+                                            <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                                            <input type="radio" id="star1" name="rating" value="1" />
+                                            <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
+                                        </div> -->
 
 
                                     </div>

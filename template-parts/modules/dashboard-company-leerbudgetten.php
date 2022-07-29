@@ -98,7 +98,7 @@ $maandelijke = count($members) * 5;
         <div class="contentOverviewMensen mt-4"> 
 
             <div class="col-md-3 col-12 px-1  px-md-0 ">
-                <div class="card mb-3 radius-custom">
+                <div class="card mb-3 radius-custom" style="height: 125px;">
                     <div class="card-body">
                         <p class="card-text text-center"><strong>Maandelijkse kosten</strong> </p>   
                         <h5 class="card-title text-center"> <strong>$ <?= $maandelijke ?></strong> </h5>
@@ -111,7 +111,7 @@ $maandelijke = count($members) * 5;
                 </div>
             </div>
             <div class="col-md-3 col-12 px-1 px-md-2  pr-md-0">
-                <div class="card mb-3 radius-custom" style="height: 89%;">
+                <div class="card mb-3 radius-custom" style="height: 125px;">
                     <div class="card-body">
                         <p class="card-text text-center"> <strong>Inkomsten verkochte kennisproducten</strong> <!-- Sale courses --> </p>
                         <h5 class="card-title text-center"> <strong>$ <?= $total_incomes; ?></strong></h5>
@@ -119,7 +119,7 @@ $maandelijke = count($members) * 5;
                 </div>
             </div>
             <div class="col-md-3 col-12 px-1 px-md-2">
-                <div class="card mb-3 radius-custom" style="height: 89%;">
+                <div class="card mb-3 radius-custom" style="height: 125px;">
                     <div class="card-body">
                         <p class="card-text text-center"> <strong>Uitgaven Opleidingen</strong> <!-- Purchased courses --> </p>
                         <h5 class="card-title text-center"><strong>$ <?= $total_expenses; ?></strong></h5>
@@ -127,7 +127,7 @@ $maandelijke = count($members) * 5;
                 </div>
             </div>
             <div class="col-md-3 col-12 px-1  px-md-0">
-                <div class="card mb-3 radius-custom">
+                <div class="card mb-3 radius-custom" style="height: 125px;">
                     <div class="card-body">
                         <p class="card-text text-center"> <strong>Budget resterend</strong> <!-- Remaining courses --> </p>
                         <h5 class="card-title text-center"><strong>$ <?= $budget_resterend; ?></strong></h5>
@@ -208,7 +208,7 @@ $maandelijke = count($members) * 5;
         </div>
 
 
-        <div class="bg-white mt-5 p-2 radius-custom mx-4 mx-md-0" id="div_table" style="display:block" >  
+        <div class="bg-white mt-5 p-2 radius-custom mx-4 mx-md-0 mb-4" id="div_table" style="display:block" >  
             
             <div class="d-flex justify-content-between w-100 border-bottom border-5 pb-2">
                 <div class="h5 pt-2"><strong>Budget <?= $company_connected; ?></strong></div>
