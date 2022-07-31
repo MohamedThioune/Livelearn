@@ -7,19 +7,40 @@ $company_connected = $company[0]->post_title;
 $users = get_users();
 $members = array();
 $numbers = array();
+$topic_views = array();
+$topic_followed = array();
+
 foreach ($users as $user ) {
     $company = get_field('company',  'user_' . $user->ID);
     if($company[0]->post_title == $company_connected)
     {
+        //Object & ID member
         array_push($numbers,$user->ID);
-        array_push($members,$user);                            
+        array_push($members,$user);
+        
+        //Views topic
+        $args = array(
+            'post_type' => 'view', 
+            'post_status' => 'publish',
+            'author' => $user->ID,
+        );
+        $views_stat_user = get_posts($args);
+        $stat_id = $views_stat_user[0]->ID;
+        $view = get_field('views_topic', $stat_id);
+        array_push($topic_views, $view);
+
+        //Followed topic
+        $topics_internal = get_user_meta($user->ID, 'topic_affiliate');
+        $topics_external = get_user_meta($user->ID, 'topic');
+        $topic_followed  = array_merge($topics_internal, $topics_external, $topic_followed);
     }
 }
+$topic_views_id = array_column($topic_views, 'view_id');
 
 //FADEL CODE 
 $most_active_members= '';
 foreach ($members as $key => $value) {
-    if ($key==3)
+    if ($key == 3)
         break;
 
     $image_author = get_field('profile_img',  'user_' . $value->ID);
@@ -31,7 +52,7 @@ foreach ($members as $key => $value) {
             <img id="money" src="' . $image_author . '" alt="">
         </div>
     <div>
-        <p class="nameCoursSales">'.$value->first_name.'</p>
+        <p class="nameCoursSales">'.$value->display_name.'</p>
         <p class="categoriesNameCours">'.get_field('role',  'user_' . $value->ID).'</p>
     </div>
     </div>
@@ -83,7 +104,20 @@ $cids = array_count_values($cids);
 $students = array_count_values($students);
 $students = count($students);
 arsort($cids);
-    
+
+//Most viewed topics
+$topic_views_id = array_count_values($topic_views_id);
+arsort($topic_views_id);
+
+var_dump($topic_views_id);
+
+
+//Most followed topics
+$topic_followed = array_count_values($topic_followed);
+arsort($topic_followed);
+
+var_dump($topic_followed);
+
 ?>
 
 
