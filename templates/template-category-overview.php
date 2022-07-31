@@ -1,14 +1,14 @@
 <?php /** Template Name: category overview */ ?>
-<?php 
+<?php
+
 global $wp;
 
-$url = home_url( $wp->request );
-
-$page = dirname(__FILE__) . '/check_visibility.php';
+$page = 'check_visibility.php';
 
 $url = home_url( $wp->request );
 
-require($page); 
+require($page);
+
 ?>
 <style>
      .checkmarkUpdated{
@@ -68,7 +68,9 @@ require($page);
     $category = ($_GET['category']) ?: ' ';
 
     $user_id = get_current_user_id();
-    
+
+    view_topic($category, $user_id);
+
     $courses = array();
 
     if($category != ' '){
