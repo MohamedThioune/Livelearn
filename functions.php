@@ -387,6 +387,7 @@ add_action( 'init', 'custom_post_type', 0 );
 function add_custom_roles(){
     add_role( 'teacher', 'Teacher', get_role( 'subscriber' )->capabilities );
     add_role( 'manager', 'Manager', get_role( 'subscriber' )->capabilities );
+    add_role( 'hr', 'HR', get_role( 'subscriber' )->capabilities );
 }
 add_action('init', 'add_custom_roles');
 
@@ -466,6 +467,25 @@ function create_product_for_course($post_id){
 
     }
 
+}
+
+//no redirect to wp admin
+add_filter( 'authenticate', function( $user, $username, $password ) {
+    // forcefully capture login failed to forcefully open wp_login_failed action, 
+    // so that this event can be captured
+    if ( empty( $username ) || empty( $password ) ) {
+        do_action( 'wp_login_failed', $user );
+    }
+    return $user;
+}, 10, 3 );
+add_action( 'wp_login_failed', 'my_front_end_login_fail' );  // hook failed login
+function my_front_end_login_fail( $username ) {
+    $referrer = $_SERVER['HTTP_REFERER'];  // where did the post submission come from?
+    // if there's a valid referrer, and it's not the default log-in screen
+    if ( !empty($referrer) && !strstr($referrer,'wp-login') && !strstr($referrer,'wp-admin') ) {
+        wp_redirect( $referrer . '?popup=1&login=failed' );  // let's append some information (login=failed) to the URL for the theme to use
+        exit;
+    }
 }
 
 

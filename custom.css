@@ -25,6 +25,13 @@ body {
     max-width: unset;
 }
 
+.theme-error{
+    background-color:#ffcccc;
+    border:2px solid #cc0000;
+    color:#cc0000;
+    padding:8px 12px;
+    margin:8px 0;
+}
 
 .respMenu li a {
     color: #0a0a0a !important;
@@ -8919,6 +8926,7 @@ ul#tabs-nav li.active {
         opacity: 1;
     }
 }
+
 .block2evensTabs details summary::-webkit-details-marker {
     display: none;
 }

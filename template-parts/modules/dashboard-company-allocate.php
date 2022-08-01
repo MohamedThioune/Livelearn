@@ -34,7 +34,7 @@
 
                 $user = get_users(array('include'=> $user_id))[0];
                 if (!empty($user->roles)){
-                    if ( !in_array('manager', $user->roles) && !in_array('administrator', $user->roles) ){
+                    if ( !in_array('manager', $user->roles) && !in_array('hr', $user->roles) && !in_array('administrator', $user->roles) ){
                         echo '<div class="titleOpleidingstype"><h2>You are not able to grant privileges</h2></div>';
                     }
                     else{                        
