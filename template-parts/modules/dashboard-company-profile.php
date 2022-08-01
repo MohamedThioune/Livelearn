@@ -22,6 +22,9 @@ if(!isset($id_user))
 
 $user = get_users(array('include'=> $id_user))[0]->data;
 
+//CONNECTED USER INFORMATIONS
+$user_connected = wp_get_current_user();
+
 $image = get_field('profile_img',  'user_' . $user->ID);
 if(!$image)
     $image = get_stylesheet_directory_uri() . '/img/Ellipse17.png';
@@ -81,7 +84,7 @@ $experts = get_user_meta($user->ID, 'expert');
 <div class="theme-content">
     <div class="theme-side-menu">
         <?php 
-            if(isset($superior)){
+            if(isset($superior) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles) ){
                 include_once('dashboard-menu-company.php');
             }else{
                 include_once('dashboard-menu-user.php');
@@ -90,7 +93,7 @@ $experts = get_user_meta($user->ID, 'expert');
     </div>
     <div class="theme-learning">
         <?php 
-            if(isset($superior)){
+            if(isset($superior) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles) ){
                 include_once('dashboard-company-profile-home.php');
             }else{
                 include_once('dashboard-user-profile-home.php');

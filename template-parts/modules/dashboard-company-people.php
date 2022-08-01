@@ -12,25 +12,24 @@
 
     $user = get_users(array('include'=> 1))[0]->data;
 
+    $members = array();
+    foreach($users as $user)
+        if($user_connected != $user->ID ){
+            $company = get_field('company',  'user_' . $user->ID);
+            if(!empty($company)){
+                $company = $company[0]->post_title;
+                if($company == $company_connected)
+                    array_push($members, $user);
+            }
+        }
+    
+    $count = count($members);
 
 if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span>"; 
-    if( in_array('administrator', $data_user->roles) || in_array( 'manager', $data_user->roles ) || $grant ) {
+    if( in_array('administrator', $data_user->roles) || in_array( 'manager', $data_user->roles ) || in_array('hr', $data_user->roles) || $grant ) {
 ?>
     <div class="cardPeople">
         <div class="headListeCourse">
-            <?php
-                $count = 0;
-                foreach($users as $user)
-                    if($user_connected != $user->ID ){
-                        $company = get_field('company',  'user_' . $user->ID);
-                        if(!empty($company)){
-                            $company = $company[0]->post_title;
-                            if($company == $company_connected)
-                                $count++;
-                        }
-                    }
-            ?>
-            
             <p class="JouwOpleid">Werknemers (<?= $count; ?>)</p>
             <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
             <a href="../people-mensen" class="btnNewCourse">Persoon toevoegen</a>
@@ -51,65 +50,32 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
                 </thead>
                 <tbody id="autocomplete_company_people">
                     <?php
-                    foreach($users as $user){
+                    foreach($members as $user){
                         $image_user = get_field('profile_img',  'user_' . $user->ID); 
                         if(!$image_user)  
-                            $image_user = get_stylesheet_directory_uri(). "/img/placeholder_user.png"; 
+                            $image_user = get_stylesheet_directory_uri(). "/img/placeholder_user.png";
                         
-                        $company = get_field('company',  'user_' . $user->ID);
-                        if(in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('manager', $data_user->roles) )
-                            if(in_array($user->ID, $ismanaged)){
-                                if($user_connected != $user->ID )
-                                    if(!empty($company)){
-                                        $company = $company[0]->post_title;
-                                        if($company == $company_connected){
-                                ?>
-                                <tr id="<?php echo $user->ID; ?>" >
-                                    <td class="textTh thModife">
-                                        <div class="ImgUser">
-                                        <a href="/dashboard/company/profile/?id=<?php echo $user->ID . '&manager='. $user_connected; ?>" > <img src="<?php echo $image_user ?>" alt=""> </a>
-                                        </div>
-                                    </td>
-                                    <td class="textTh"> <a href="/dashboard/company/profile/?id=<?php echo $user->ID . '&manager='. $user_connected; ?>" style="text-decoration:none;"><?php if(!empty($user->first_name)){echo $user->first_name;}else{echo $user->display_name;}?></a> </td>
-                                    <td class="textTh"><?php echo $user->user_email;?></td>
-                                    <td class="textTh"><?php echo get_field('telnr', 'user_'.$user->ID);?></td>
-                                    <td class="textTh elementOnder"><?php echo get_field('role', 'user_'.$user->ID);?></td>
-                                    <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
-                                    <td class="textTh">You</td>
-                                    <td class="titleTextListe remove">
-                                        <img class="removeImg" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
-                                    </td>
-                                </tr>
-                            <?php
-                                    } 
-                                }
-                            }
-                            else 
-                                if($user_connected != $user->ID)
-                                    if(!empty($company)){
-                                        $company = $company[0]->post_title;
-                                        if($company == $company_connected){
-                                    ?>
-                                    <tr id="<?php echo $user->ID; ?>">
-                                        <td class="textTh thModife">
-                                            <div class="ImgUser">
-                                            <a href="/dashboard/company/profile/?id=<?php echo $user->ID . '&manager='. $user_connected; ?>" > <img src="<?php echo $image_user ?>" alt=""> </a>
-                                            </div>
-                                        </td>
-                                        <td class="textTh"> <a href="/dashboard/company/profile/?id=<?php echo $user->ID . '&manager='. $user_connected; ?>" style="text-decoration:none;"><?php if(!empty($user->first_name)){echo $user->first_name;}else{echo $user->display_name;}?></a> </td>
-                                        <td class="textTh"><?php echo $user->user_email;?></td>
-                                        <td class="textTh"><?php echo get_field('telnr', 'user_'.$user->ID);?></td>
-                                        <td class="textTh elementOnder"><?php echo get_field('role', 'user_'.$user->ID);?></td>
-                                        <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
-                                        <td class="textTh"></td>
-                                        <td class="titleTextListe remove">
-                                            <img class="removeImg" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
-                                        </td>
-                                    </tr>
-                                <?php
-                                    } 
-                        }
-                    }
+                        $you  =  (in_array($user->ID, $ismanaged) || in_array('manager', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : '';
+                        
+                    ?>
+                        <tr id="<?php echo $user->ID; ?>" >
+                            <td class="textTh thModife">
+                                <div class="ImgUser">
+                                <a href="/dashboard/company/profile/?id=<?php echo $user->ID . '&manager='. $user_connected; ?>" > <img src="<?php echo $image_user ?>" alt=""> </a>
+                                </div>
+                            </td>
+                            <td class="textTh"> <a href="/dashboard/company/profile/?id=<?php echo $user->ID . '&manager='. $user_connected; ?>" style="text-decoration:none;"><?php if(!empty($user->first_name)){echo $user->first_name;}else{echo $user->display_name;}?></a> </td>
+                            <td class="textTh"><?php echo $user->user_email;?></td>
+                            <td class="textTh"><?php echo get_field('telnr', 'user_'.$user->ID);?></td>
+                            <td class="textTh elementOnder"><?php echo get_field('role', 'user_'.$user->ID);?></td>
+                            <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
+                            <td class="textTh"><?= $you ?></td>
+                            <td class="titleTextListe remove">
+                                <img class="removeImg" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
+                            </td>
+                        </tr>
+                    <?php
+                    } 
                     ?>
                 </tbody>
             </table>

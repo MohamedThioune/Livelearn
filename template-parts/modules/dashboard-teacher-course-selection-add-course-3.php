@@ -25,7 +25,6 @@
 
 <?php
     $data_en = get_field('data_locaties_xml', $_GET['id']);
-    print_r($dat_en[0]);
 ?>
 <div class="row">
     <div class="col-md-5 col-lg-8">

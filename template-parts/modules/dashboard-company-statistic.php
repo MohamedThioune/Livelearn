@@ -4,23 +4,45 @@
 $user_id = get_current_user_id();
 $company = get_field('company',  'user_' . $user_id );
 $company_connected = $company[0]->post_title;
-$users=get_users();
-$members=array();
-$numbers=array();
+$users = get_users();
+$members = array();
+$numbers = array();
+$topic_views = array();
+$topic_followed = array();
+
 foreach ($users as $user ) {
     $company = get_field('company',  'user_' . $user->ID);
-    if ($company[0]->post_title == $company_connected)
+    if($company[0]->post_title == $company_connected)
     {
+        //Object & ID member
         array_push($numbers,$user->ID);
-        array_push($members,$user);                            
+        array_push($members,$user);
+        
+        //Views topic
+        $args = array(
+            'post_type' => 'view', 
+            'post_status' => 'publish',
+            'author' => $user->ID,
+        );
+        $views_stat_user = get_posts($args);
+        $stat_id = $views_stat_user[0]->ID;
+        $view = get_field('views_topic', $stat_id);
+        array_push($topic_views, $view);
+
+        //Followed topic
+        $topics_internal = get_user_meta($user->ID, 'topic_affiliate');
+        $topics_external = get_user_meta($user->ID, 'topic');
+        $topic_followed  = array_merge($topics_internal, $topics_external, $topic_followed);
     }
 }
+$topic_views_id = array_column($topic_views, 'view_id');
 
 //FADEL CODE 
 $most_active_members= '';
 foreach ($members as $key => $value) {
-    if ($key==3)
+    if ($key == 3)
         break;
+
     $image_author = get_field('profile_img',  'user_' . $value->ID);
     $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
     $most_active_members.='
@@ -30,7 +52,7 @@ foreach ($members as $key => $value) {
             <img id="money" src="' . $image_author . '" alt="">
         </div>
     <div>
-        <p class="nameCoursSales">'.$value->first_name.'</p>
+        <p class="nameCoursSales">'.$value->display_name.'</p>
         <p class="categoriesNameCours">'.get_field('role',  'user_' . $value->ID).'</p>
     </div>
     </div>
@@ -52,65 +74,50 @@ $courses = get_posts($args);
 $outros = array();
 $outroes = array();
 $intros = array();
+$students = array();
 $sells = 0;
 
 $popular_courses = array();
 $sale_courses = array();
 
-foreach($courses as $course){
-    global $wpdb;
-    $outro = array();
-    $courseid = intval($course->ID) + 1;
-    $results = $wpdb->get_results("SELECT meta_value,entry_id FROM wpe7_gf_entry_meta WHERE form_id = 1 AND meta_value =" . $courseid);
-    $entries = count($results);
+//Popular courses
+$args = array(
+    'limit' => -1,
+);
 
-    if(!empty($results)){
-        foreach($results as $value){
-            $value = intval($value->meta_value) - 1;
-            if(array_search($value, array_column($outros, 'entry')) === false) {
-                $outro['values'] = $entries;
-                $outro['entry'] = $value;
-                array_push($outros, $outro);
+$bunch_orders = wc_get_orders($args);
+$cids = array();
+
+foreach( $bunch_orders as $order ){
+    foreach( $order->get_items() as $item_id => $item ) {
+        $course_id = intval($item->get_product_id()) - 1;
+        $course = get_post($course_id);
+        if(isset($course->post_author))
+            if(in_array($course->post_author, $numbers)){
+                array_push($cids, $course->ID);
+                array_push($students, $course->post_author);
+                $sells+=1;
             }
-            if(!in_array($value, $intros))
-                array_push($intros,$value);
-        }
     }
 }
-asort($outros);
-$outros = array_reverse($outros);
+$cids = array_count_values($cids);
+$students = array_count_values($students);
+$students = count($students);
+arsort($cids);
 
-foreach($outros as $key=>$outroe){
-    if($key <= 2)
-        array_push($outroes, $outroe['entry']);
-    $sells += intval($outroe['values']);
-}
+//Most viewed topics
+$topic_views_id = array_count_values($topic_views_id);
+arsort($topic_views_id);
 
-// The most popular courses 
-if(!empty($outroes)){
-    $args = array(
-        'post_type' => 'course', 
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'include' => $outroes,  
-    );
+var_dump($topic_views_id);
 
-    $popular_courses = get_posts($args);
-}
 
-// Sales stats
-if(!empty($intros)){
-    $args = array(
-        'post_type' => 'course', 
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'include' => $intros,  
-    );
+//Most followed topics
+$topic_followed = array_count_values($topic_followed);
+arsort($topic_followed);
 
-    $sale_courses = get_posts($args);
-}
+var_dump($topic_followed);
 
-    
 ?>
 
 
@@ -136,7 +143,7 @@ if(!empty($intros)){
                     <img id="student" src="<?php echo get_stylesheet_directory_uri();?>/img/ph_student.png" alt="">
                 </div>
                 <div class="detailCardActivity">
-                    <p class="numberActivity"><?php echo $sells; ?></p>
+                    <p class="numberActivity"><?php echo $students; ?></p>
                     <p class="nameCardActivity">Total Student</p>
                 </div>
             </div>
@@ -161,16 +168,13 @@ if(!empty($intros)){
                 
                     <p class="numberActivity"><?php echo count($members);?></p>
                     <p class="nameCardActivity">Active Members</p>
-                    
-                    
-
-
+                                
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-7">
+        <div class="col-md-7">
             <div class="cardEngagedAudiance">
                 <h2>Engaged Audiance</h2>
                 <div class="wrapper w-100">
@@ -178,158 +182,336 @@ if(!empty($intros)){
                 </div>
             </div>
         </div>
-        <div class="col-lg-5">
-            <div class="cardNotification">
+        <div class="col-md-5">
+            <div class="cardNotification mt-3 mt-md-0">
                 <h2>The most popular courses</h2>
-                <?php 
-                    foreach($popular_courses as $key=>$course) {
-                        if($key == 2)
+                    <?php
+                    $i = 0;
+                    foreach($cids as $key => $cid){
+                        $i++;
+                        if($i > 3)
                             break;
 
-                        $rand = intval(rand(5, 100));
+                        $course = get_post($key);
+                        
+                        /*
+                        * Categories
+                        */
+                        $category = ' ';
+                                        
+                        $category_id = 0;
+                        $category_string = " ";
+                        
+                        if($category == ' '){
+                            $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
+                            $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
+                            if($category_str != 0)
+                                $category = (String)get_the_category_by_ID($category_str);
+                            else if($category_id != 0)
+                                $category = (String)get_the_category_by_ID($category_id);                                    
+                        }
 
                         /*
-                        * Company
+                        * Price
                         */
-                        $company = get_field('company',  'user_' . $course->post_author);
-                        $company_title = $company[0]->post_title;
+                        $p = get_field('price', $course->ID);
+                        if($p != "0")
+                            $price =  number_format($p, 2, '.', ',') ;
+                        else
+                            $price = 'Gratis';
 
-                ?>   
-                    <a href="<?php echo get_permalink($course->ID); ?>" class="cartPopularCourse">
-                        <div class="circle_percent" data-percent="<?php echo $rand; ?>">
-                            <div class="circle_inner">
-                                <div class="round_per">
+                        /*
+                        * Thumbnails
+                        */ 
+                        $thumbnail = get_field('preview', $course->ID)['url'];
+                        if(!$thumbnail){
+                            $thumbnail = get_field('url_image_xml', $course->ID);
+                            if(!$thumbnail)
+                                $thumbnail = get_field('image', 'category_'. $category_id);
+                                if(!$thumbnail)
+                                    $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                        }    
+                    ?>
+                    <a href="">
+                        <div class="contentStats mb-3 mb-">
+                            <div class="contentImgName w-25">
+                                    <img src="<?= $thumbnail ?>"
+                                     class="img-fluid w-100 h-100" alt="">  
+                                <div class="ml-3">
+                                    <p class="nameCoursSales mb-0 mb-md-2"><?= $course->post_title ?></p>
+                                    <p class="categoriesNameCours"><?= $category ?></p>
                                 </div>
                             </div>
+                            <p class="priceHistory"><?= $price ?> $</p>
                         </div>
-                        <div>
-                            <p class="elementCardPopularCourse"> <b><?php echo $course->post_title; ?></b> </p>
-                            <p class="elementCardPopularCourse">By : <?php echo $company_title; ?></p>
-                            <button class="btn btnViewListRe">View list registered</button>
-                        </div>
-                    </a>
-                <?php
+                    </a>  
+                    <?php
                     }
-                ?>
+                    ?>  
+                    <div class="d-flex justify-content-center">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- ----------------------------------- end new table -------------------------------------- -->
                 </div>
             </div>
         </div>
     <div class="row">
-        <div class="col-lg-4 colModifeStats">
-            <div class="cardStats">
-                <h2>Sales stats</h2>
-                <?php 
-                foreach($sale_courses as $key=>$course) {
-                    if($key == 2)
-                        break;
-                        
-                    /*
-                    * Categories
-                    */
-                
-                    $category = ' ';
-                                
-                    $category_id = 0;
-                    $category_string = " ";
+        <div class="col-md-4 mt-3 mt-md-2">
+            <div class="cardStats mt-3 pb-0">
+                <h2>Most viewed topics</h2>
 
-                    $tree = get_the_terms($course->ID, 'course_category'); 
-                        if($tree)
-                            if(isset($tree[2]))
-                                $category = $tree[2]->name;
-                    
-                    if($category == ' '){
-                        $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
-                        $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                        if($category_str != 0)
-                            $category = (String)get_the_category_by_ID($category_str);
-                        else if($category_id != 0)
-                            $category = (String)get_the_category_by_ID($category_id);                                    
-                    }
-
-                    /*
-                    * Price
-                    */
-                    $p = get_field('price', $course->ID);
-                    if($p != "0")
-                        $price =  number_format($p, 2, '.', ',');
-                    else
-                        $price = 'Gratis';
-
-                    /*
-                    * Thumbnails
-                    */
-                    $thumbnail = get_field('preview', $course->ID)['url'];
-                    if(!$thumbnail){
-                        $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
-                        if(!$thumbnail)
-                            $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
-                    }
-
-                ?>
-                <div class="contentStats">
-                    <div class="contentImgName">
-                        <div class="statsImgCours">
-                            <img id="money" src="<?php echo $thumbnail;?>" alt="">
+                <!-- ---------------------------------- start new table ------------------------------------- -->
+                <a href="">
+                    <div class="contentStats mb-3">
+                        <div class="contentImgName">
+                            <div class="statsImgCours">
+                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                            </div>
+                        <div>
+                            <p class="nameCoursSales mb-0">Adobe xd Part 01</p>
+                            <p class="categoriesNameCours">Seydou</p>
                         </div>
-                       <div>
-                           <p class="nameCoursSales"><?php echo $course->post_title; ?></p>
-                           <p class="categoriesNameCours"><?php echo $category; ?></p>
-                       </div>
+                        </div>
+                        <p class="priceHistory">220 $</p>
                     </div>
-                    <p class="price"><?php echo $price ?></p>
+                </a>
+                <a href="">
+                    <div class="contentStats mb-3">
+                        <div class="contentImgName">
+                            <div class="statsImgCours">
+                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                            </div>
+                        <div>
+                            <p class="nameCoursSales mb-0">Mathmatics</p>
+                            <p class="categoriesNameCours">Mass</p>
+                        </div>
+                        </div>
+                        <p class="priceHistory">80 $</p>
+                    </div>
+                </a>    
+
+                <a href="">
+                    <div class="contentStats mb-3">
+                        <div class="contentImgName">
+                            <div class="statsImgCours">
+                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                            </div>
+                        <div>
+                            <p class="nameCoursSales mb-0">Angular</p>
+                            <p class="categoriesNameCours">Mamadou</p>
+                        </div>
+                        </div>
+                        <p class="priceHistory">30 $</p>
+                    </div>
+                </a>    
+
+                <a href="">
+                    <div class="contentStats mb-3">
+                        <div class="contentImgName">
+                            <div class="statsImgCours">
+                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                            </div>
+                        <div>
+                            <p class="nameCoursSales mb-0">Symfony</p>
+                            <p class="categoriesNameCours">Fadel</p>
+                        </div>
+                        </div>
+                        <p class="priceHistory">120 $</p>
+                    </div>
+                </a>     
+
+                <a href="">
+                    <div class="contentStats mb-3">
+                        <div class="contentImgName">
+                            <div class="statsImgCours">
+                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                            </div>
+                        <div>
+                            <p class="nameCoursSales mb-0">Adobe xd Part 01</p>
+                            <p class="categoriesNameCours">Alioune</p>
+                        </div>
+                        </div>
+                        <p class="priceHistory">90 $</p>
+                    </div> 
+                </a>
+
+                <div class="d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
-                <?php
-                    }
-                ?>
+                <!-- ----------------------------------- end new table -------------------------------------- -->
             </div>
         </div>
-        <div class="col-lg-4 colModifeStats">
-            <div class="cardStats">
-                <h2>Earnings history</h2>
+        <div class="col-md-4 mt-3 mt-md-2">
+            <div class="cardStats mt-3 pb-0">
+                <h2>Most followed topics</h2>
                 
-                <!-- <div class="contentStats">
-                    <div class="contentImgName">
-                        <div class="statsImgCours">
-                            <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                <!-- ---------------------------------- start new table ------------------------------------- -->
+                <a href="">
+                    <div class="contentStats mb-3">
+                        <div class="contentImgName">
+                            <div class="statsImgCours">
+                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                            </div>
+                        <div>
+                            <p class="nameCoursSales mb-0">Adobe xd Part 01</p>
+                            <p class="categoriesNameCours">Seydou</p>
                         </div>
-                       <div>
-                           <p class="nameCoursSales">Adobe xd Part 01</p>
-                           <p class="categoriesNameCours">UX-UI Design</p>
-                       </div>
+                        </div>
+                        <p class="priceHistory">220 $</p>
                     </div>
-                    <p class="priceHistory">20 $</p>
+                </a>
+                <a href="">
+                    <div class="contentStats mb-3">
+                        <div class="contentImgName">
+                            <div class="statsImgCours">
+                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                            </div>
+                        <div>
+                            <p class="nameCoursSales mb-0">Mathmatics</p>
+                            <p class="categoriesNameCours">Mass</p>
+                        </div>
+                        </div>
+                        <p class="priceHistory">80 $</p>
+                    </div>
+                </a>    
+
+                <a href="">
+                    <div class="contentStats mb-3">
+                        <div class="contentImgName">
+                            <div class="statsImgCours">
+                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                            </div>
+                        <div>
+                            <p class="nameCoursSales mb-0">Angular</p>
+                            <p class="categoriesNameCours">Mamadou</p>
+                        </div>
+                        </div>
+                        <p class="priceHistory">30 $</p>
+                    </div>
+                </a>    
+
+                <a href="">
+                    <div class="contentStats mb-3">
+                        <div class="contentImgName">
+                            <div class="statsImgCours">
+                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                            </div>
+                        <div>
+                            <p class="nameCoursSales mb-0">Symfony</p>
+                            <p class="categoriesNameCours">Fadel</p>
+                        </div>
+                        </div>
+                        <p class="priceHistory">120 $</p>
+                    </div>
+                </a>     
+
+                <a href="">
+                    <div class="contentStats mb-3">
+                        <div class="contentImgName">
+                            <div class="statsImgCours">
+                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                            </div>
+                        <div>
+                            <p class="nameCoursSales mb-0">Adobe xd Part 01</p>
+                            <p class="categoriesNameCours">Alioune</p>
+                        </div>
+                        </div>
+                        <p class="priceHistory">90 $</p>
+                    </div> 
+                </a>
+
+                <div class="d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
-                <div class="contentStats">
-                    <div class="contentImgName">
-                        <div class="statsImgCours">
-                            <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
-                        </div>
-                       <div>
-                           <p class="nameCoursSales">Adobe xd Part 01</p>
-                           <p class="categoriesNameCours">UX-UI Design</p>
-                       </div>
-                    </div>
-                    <p class="priceHistory">20 $</p>
-                </div>
-                <div class="contentStats">
-                    <div class="contentImgName">
-                        <div class="statsImgCours">
-                            <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
-                        </div>
-                       <div>
-                           <p class="nameCoursSales">Adobe xd Part 01</p>
-                           <p class="categoriesNameCours">UX-UI Design</p>
-                       </div>
-                    </div>
-                    <p class="priceHistory">20 $</p>
-                </div> -->
+                <!-- ----------------------------------- end new table -------------------------------------- -->
+
+               
             </div>
         </div>
-        <div class="col-lg-4 colModifeStats">
-            <div class="cardStats">
-                <h2>Most active members</h2>
-                    <?php echo $most_active_members ?>
+        <div class="col-md-4 mt-3 mt-md-2 mb-5 mb-md-0">
+            <div class="cardStats mt-3">
+                <h2>Most active users</h2>
+
+                <?php echo $most_active_members ?>
+
+                <div class="d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
             </div>
+
         </div>
     </div>
     </div>
@@ -340,7 +522,40 @@ if(!empty($intros)){
 
 
 <script src="<?php echo get_stylesheet_directory_uri();?>/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script>
+    const labels = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+    ];
+
+    const data = {
+        labels: labels,
+        datasets: [{
+        label: 'Monthly / Yearly users',
+        backgroundColor: '#023356',
+        borderColor: '#023356',
+        data: [0, 10, 5, 2, 20, 30, 45],
+        }]
+    };
+
+    const config = {
+        type: 'line',
+        data: data,
+        options: {}
+    };
+</script>
+<script>
+  const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+</script>
 <script >
 
     $(".circle_percent").each(function() {
@@ -348,6 +563,7 @@ if(!empty($intros)){
             $dataV = $this.data("percent"),
             $dataDeg = $dataV * 3.6,
             $round = $this.find(".round_per");
+
         $round.css("transform", "rotate(" + parseInt($dataDeg + 180) + "deg)");
         $this.append('<div class="circle_inbox"><span class="percent_text"></span></div>');
         $this.prop('Counter', 0).animate({Counter: $dataV},

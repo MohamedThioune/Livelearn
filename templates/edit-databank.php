@@ -1,4 +1,26 @@
 <?php /** Template Name: Edit Databank */ ?>
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.min.css" />
+<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var selectedDates = [];
+        datePicker = $('[class*=Txt_Date]').datepicker({
+            multidate: true,
+            format: 'dd/mm/yyyy ',
+            todayHighlight: true,
+
+            language: 'en'
+        });
+        datePicker.on('changeDate', function (e) {
+            if (e.dates.length <= 10) {
+                selectedDates = e.dates;
+            } else {
+                datePicker.data('datepicker').setDates(selectedDates);
+                alert('You can only select 10 dates.');
+            }
+        });
+    });
+</script>
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
@@ -174,7 +196,6 @@ $companies = get_posts($args);
                                 ?>
                             </select>
                         </div>
-                        
                         <div class="input-group">
                             <label for="">Language</label>
                             <select name="language" id="">
@@ -192,6 +213,19 @@ $companies = get_posts($args);
                     
                     <div class="groupInputDate">
                         <div class="input-group">
+                           <label for="">Course type</label>
+                           <select name="type" id="">
+                           <?php
+                            foreach($typos as $key=>$typo){
+                                if($course->type == $key)
+                                    echo '<option selected value="'. $key . '">' . $key . '</option>';
+                                else
+                                    echo '<option value="'. $key . '">' . $key . '</option>';
+                            }
+                            ?>
+                           </select>
+                       </div>
+                        <div class="input-group">
                             <label for="">Onderwerpen</label>
                             <select name="" id="">
                                 <?php
@@ -205,10 +239,6 @@ $companies = get_posts($args);
                                     }
                                 ?>
                             </select>
-                        </div>
-                        <div class="input-group">
-                            <label for="">Date_multiple</label>
-                            <input type="text" id="" class="datepicker Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
                         </div>
                     </div>
 
@@ -248,62 +278,174 @@ $companies = get_posts($args);
                        </div>
                    </div>
 
-                   <div class="groupInputDate">
-                       <div class="input-group">
-                           <label for="">Duration</label>
-                           <input type="text" name="duration" id="" value="<?= $course->duration; ?>" placeholder="Duration(Days)">
-                       </div>
-                       <div class="input-group">
-                           <label for="">Course type</label>
-                           <select name="type" id="">
-                           <?php
-                            foreach($typos as $key=>$typo){
-                                if($course->type == $key)
-                                    echo '<option selected value="'. $key . '">' . $key . '</option>';
-                                else
-                                    echo '<option value="'. $key . '">' . $key . '</option>';
-                            }
-                            ?>
-                           </select>
-                       </div>
-                   </div>
-
                    <div class="input-group-course">
                        <label for="">Short description</label>
-                       <textarea name="" id="" cols="30" rows="6">
+                       <textarea name="short_description" id="" cols="30" rows="6">
                        <?= $course->short_description ?> 
                        </textarea>
                    </div>
 
                    <div class="input-group-course">
                        <label for="">Long description</label>
-                       <textarea name="" id="" cols="30" rows="6">
+                       <textarea name="long_description" id="" cols="30" rows="6">
                        <?= $course->long_description ?> 
                        </textarea>
                    </div>
 
                    <div class="input-group-course">
                        <label for="">For who</label>
-                       <textarea name="" id="" cols="30" rows="6">
+                       <textarea name="for_who" id="" cols="30" rows="6">
                        <?= $course->for_who ?> 
                        </textarea>
                    </div>
 
                    <div class="input-group-course">
                        <label for="">Agenda</label>
-                       <textarea name="" id="" cols="30" rows="6">
-                       <?= $course->for_who ?> 
+                       <textarea name="agenda" id="" cols="30" rows="6">
+                       <?= $course->agenda ?> 
                        </textarea>
                    </div>
 
                    <div class="input-group-course">
                        <label for="">Results</label>
-                       <textarea name="" id="" cols="30" rows="6">
+                       <textarea name="results" id="" cols="30" rows="6">
                        <?= $course->results ?> 
                        </textarea>
                    </div>
 
-                   <button type="submit" name="databank" class="btn btn-newDate" data-toggle="modal" data-target="#exampleModalDate">
+                   <?php
+                    $data_en = explode('~', $course->date_multiple);
+                    if($data_en[0]){
+                        foreach($data_en as $key => $datum){
+                            $data_between = "";
+                            $data = explode(';', $datum);
+
+                            $data_first = $data[0];
+
+                            $location = explode('-', $data_first)[2];
+                            $adress = explode('-', $data_first)[3];
+
+                            $data_first = explode(' ', explode('-', $data_first)[0])[0];
+                            
+                            $max = intval(count($data)-1);
+                            $data_last = $data[$max];
+                            $data_last = explode(' ', explode('-', $data_last)[0])[0];
+
+                            $data_first = str_replace('/', '.', $data_first);
+                            $data_last = str_replace('/', '.', $data_last);
+
+                            //Conversion str to date
+                            $data_first = date('Y-m-d', strtotime($data_first));
+                            $data_last = date('Y-m-d', strtotime($data_last));
+
+                            $max++;
+
+                            if($max > 3){
+                                $slice_array = array_slice( $data, 1, $max-2 );
+                                foreach($slice_array as $key => $slice){
+                                    $slice = explode(' ', explode('-', $slice)[0])[0];
+                                    $data_between .= $slice;
+                                    if(isset($slice_array[$key + 1])) 
+                                        $data_between .= ','; 
+                                }
+                            }
+                        ?>
+                        <div class="groupInputDate">
+                            <div class="input-group form-group">
+                                <label for="">Start date</label>
+                                <input type="date" name="start_date[]" value="<?= $data_first ?>" required>
+                            </div>
+                        </div>
+                        <div class="input-group-course">
+                            <label for="">Dates between</label>
+                            <input type="text" name="between_date[]"  id="" value="<?= $data_between ?>" class="datepicker Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
+                        </div>
+                        <div class="groupInputDate">
+                            <div class="input-group">
+                                <label for="">End date</label>
+                                <input type="date" name="end_date[]" value="<?= $data_last ?>"  required>
+                            </div>
+                        </div>
+                        <div class="input-group-course">
+                            <label for="">Location</label>
+                            <input type="text" name="location[]" value="<?= $location ?>">
+                        </div>
+                        <div class="input-group-course">
+                            <label for="">Adress</label>
+                            <input type="text" name="adress[]" value="<?= $adress ?>">
+                        </div>
+                        <?php
+                        }
+                    }
+                    else{
+                    ?>
+                        <div class="">
+                            <div class="groupInputDate">
+                                <div class="input-group form-group colM">
+                                    <label for="">Start date</label>
+                                    <input type="date" name="start_date[]" required>
+                                </div>
+                            </div>
+                            <div class="input-group-course">
+                                <label for="">Dates between</label>
+                                <input type="text" name="between_date[]" id="" class="datepicker Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
+                            </div>
+                            <div class="groupInputDate ">
+                                <div class="input-group colM">
+                                    <label for="">End date</label>
+                                    <input type="date" name="end_date[]" required>
+                                </div>
+                            </div>
+                            <div class="input-group-course">
+                                <label for="">Location</label>
+                                <input type="text" name="location[]">
+                            </div>
+                            <div class="input-group-course">
+                                <label for="">Adress</label>
+                                <input type="text" name="adress[]">
+                            </div>
+                        </div>
+
+                    <?php
+                    }
+                    ?>
+                    <div class="results"></div>
+                    <div class="buttons groupBtnData">
+                        <button type="button" class="add btn-newDate"> Complete with another section</button>
+                    </div><br><br>
+
+                    <!-- element for clone -->
+                    <div class="blockForClone">
+                        <div class="attr">
+                            <div class="groupInputDate">
+                                <div class="input-group form-group colM">
+                                    <label for="">Start date</label>
+                                    <input type="date" name="start_date[]">
+                                </div>
+                            </div>
+                            <div class="input-group-course">
+                                <label for="">Dates between</label>
+                                <input type="text" name="between_date[]"  id="" class="datepicker Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
+                            </div>
+                            <div class="groupInputDate">
+                                <div class="input-group colM">
+                                    <label for="">End date</label>
+                                    <input type="date" name="end_date[]">
+                                </div>
+                            </div>
+                            <div class="input-group-course">
+                                <label for="">Location</label>
+                                <input type="text" name="location[]">
+                            </div>
+                            <div class="input-group-course">
+                                <label for="">Adress</label>
+                                <input type="text" name="adress[]">
+                            </div>
+                            <button class="btn btn-danger remove" type="button">Remove</button>
+                        </div>
+                    </div>
+
+                   <button type="submit" name="databank" class="btn btn-newDate" >
                        Change
                    </button>
 
@@ -314,6 +456,8 @@ $companies = get_posts($args);
    </div>
 
 </body>
+
+
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
