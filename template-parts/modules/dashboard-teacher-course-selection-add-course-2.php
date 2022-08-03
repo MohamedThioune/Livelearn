@@ -1,10 +1,9 @@
-
 <div class="row">
     <div class="col-md-5 col-lg-8">
         <div class="cardCoursGlocal">
             <div id="basis" class="w-100">
                 <div class="titleOpleidingstype">
-                    <h2>2.Uitgebreide beschrijving</h2>
+                    <h2>2.Uitgebreidess beschrijving</h2>
                 </div>
                 <?php
                     $offline = ['course','training','masterclass','cursus'];
