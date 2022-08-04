@@ -6,7 +6,7 @@ include_once 'simple_html_dom.php';
 
 class Article
 {
-    public  $title;
+    public $title;
     public $short_description;
     public $image;
     public $link;
@@ -38,7 +38,8 @@ class Article
 
 }
 
-function scrapeFrom($website): array{
+function scrapeFrom($website): array
+{
     switch ($website){
         case 'smartwp': return scrapeSmartWP(); break;
         case 'DeZZP' : return scrapeDeZZP(); break;
@@ -124,18 +125,21 @@ function scrapeDeZZP(): array{
     $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
     $date=$node->getElementsByTagName('time')->item(0)->nodeValue;
     $title=$node->getElementsByTagName('h2')->item(0)->nodeValue;
-    $link=$url.$node->getElementsByTagName('a')->item(0)->getAttribute('href');
-    
     $result_content=scrapper($link,$tag,$selector_class_content);
      if (!is_null($result_content))
      {
-      $content="";
-      foreach ($result_content->item(0)->getElementsByTagName('p') as $key => $node) {
-        $content.=$node->nodeValue;
+      foreach ($result_content as $key => $node) 
+      {
+        $content=$node->nodeValue;
+      }
+      // $content="";
+      // foreach ($result_content->item(0)->getElementsByTagName('p') as $key => $node) {
+      //   $content.=$node->nodeValue;
+      
       }
         
          
-     }
+     
      $article=new Article($title,$short_description,null,$link,$date,$content);
     $datas[]=$article;
   }
@@ -270,8 +274,8 @@ function persistArticle($article)
   $table = $wpdb->prefix . 'databank'; 
    $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml=".$article->getImage()." AND type= Artikel");
    $result = $wpdb->get_results($sql);
-  //var_dump($result);    
-       if(empty($result))
+    var_dump($result);    
+       if(!empty($result))
        {
           $status = 'extern';
           //Data to create the course
@@ -566,4 +570,6 @@ function persistArticle($article)
      var_dump($datas);
      return $datas;
    }
+
+   scrapeDeZZP();
    // Can't get image for nedverbak
