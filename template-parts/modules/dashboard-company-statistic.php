@@ -4,16 +4,23 @@
 $user_id = get_current_user_id();
 $company = get_field('company',  'user_' . $user_id );
 $company_connected = $company[0]->post_title;
+
 $users = get_users();
 $members = array();
 $numbers = array();
+
 $topic_views = array();
 $topic_followed = array();
+
+$stats_by_user = array();
 
 foreach ($users as $user ) {
     $company = get_field('company',  'user_' . $user->ID);
     if($company[0]->post_title == $company_connected)
     {
+        $topic_by_user = array();
+        $course_by_user = array();
+
         //Object & ID member
         array_push($numbers,$user->ID);
         array_push($members,$user);
@@ -26,16 +33,29 @@ foreach ($users as $user ) {
         );
         $views_stat_user = get_posts($args);
         $stat_id = $views_stat_user[0]->ID;
-        $view = get_field('views_topic', $stat_id);
-        array_push($topic_views, $view);
+        $view_topic = get_field('views_topic', $stat_id);
+        array_push($topic_views, $view_topic);
+
+        $view_course = get_field('views', $stat_id);
 
         //Followed topic
         $topics_internal = get_user_meta($user->ID, 'topic_affiliate');
         $topics_external = get_user_meta($user->ID, 'topic');
         $topic_followed  = array_merge($topics_internal, $topics_external, $topic_followed);
+
+        //Stats engagement
+        $stat_by_user['topic'] = $view_topic;
+        $stat_by_user['course'] = $view_course;
+        array_push($stats_by_user, $stat_by_user);
+
     }
 }
-$topic_views_id = array_column($topic_views, 'view_id');
+$topic_views_id = array_column($topic_views[5], 'view_id');
+
+
+/*
+* Check statistic by user *
+*/
 
 //FADEL CODE 
 $most_active_members= '';
@@ -109,14 +129,10 @@ arsort($cids);
 $topic_views_id = array_count_values($topic_views_id);
 arsort($topic_views_id);
 
-var_dump($topic_views_id);
-
-
 //Most followed topics
 $topic_followed = array_count_values($topic_followed);
 arsort($topic_followed);
 
-var_dump($topic_followed);
 
 ?>
 
@@ -279,80 +295,36 @@ var_dump($topic_followed);
                 <h2>Most viewed topics</h2>
 
                 <!-- ---------------------------------- start new table ------------------------------------- -->
-                <a href="">
-                    <div class="contentStats mb-3">
-                        <div class="contentImgName">
-                            <div class="statsImgCours">
-                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
-                            </div>
-                        <div>
-                            <p class="nameCoursSales mb-0">Adobe xd Part 01</p>
-                            <p class="categoriesNameCours">Seydou</p>
-                        </div>
-                        </div>
-                        <p class="priceHistory">220 $</p>
-                    </div>
-                </a>
-                <a href="">
-                    <div class="contentStats mb-3">
-                        <div class="contentImgName">
-                            <div class="statsImgCours">
-                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
-                            </div>
-                        <div>
-                            <p class="nameCoursSales mb-0">Mathmatics</p>
-                            <p class="categoriesNameCours">Mass</p>
-                        </div>
-                        </div>
-                        <p class="priceHistory">80 $</p>
-                    </div>
-                </a>    
+                <?php 
+                $i = 0;
+                foreach($topic_views_id as $key => $topic){
+                    $i++;
+                    if($i > 4)
+                        break;
+                    
+                    $name = (String)get_the_category_by_ID($key);
 
-                <a href="">
-                    <div class="contentStats mb-3">
-                        <div class="contentImgName">
-                            <div class="statsImgCours">
-                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                    $image_category = get_field('image', 'category_'. $key);
+                    $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/libay.png';
+                ?>
+                    <a href="/category-overview?category=<?php echo $key ; ?>">
+                        <div class="contentStats mb-3">
+                            <div class="contentImgName">
+                                <div class="statsImgCours">
+                                    <img id="money" src="<?= $image_category ?>" alt="">
+                                </div>
+                            <div>
+                                <p class="nameCoursSales mb-0"><?= $name ?></p>
+                                <p class="categoriesNameCours">x</p>
                             </div>
-                        <div>
-                            <p class="nameCoursSales mb-0">Angular</p>
-                            <p class="categoriesNameCours">Mamadou</p>
-                        </div>
-                        </div>
-                        <p class="priceHistory">30 $</p>
-                    </div>
-                </a>    
-
-                <a href="">
-                    <div class="contentStats mb-3">
-                        <div class="contentImgName">
-                            <div class="statsImgCours">
-                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
                             </div>
-                        <div>
-                            <p class="nameCoursSales mb-0">Symfony</p>
-                            <p class="categoriesNameCours">Fadel</p>
+                            <p class="priceHistory">x $</p>
                         </div>
-                        </div>
-                        <p class="priceHistory">120 $</p>
-                    </div>
-                </a>     
-
-                <a href="">
-                    <div class="contentStats mb-3">
-                        <div class="contentImgName">
-                            <div class="statsImgCours">
-                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
-                            </div>
-                        <div>
-                            <p class="nameCoursSales mb-0">Adobe xd Part 01</p>
-                            <p class="categoriesNameCours">Alioune</p>
-                        </div>
-                        </div>
-                        <p class="priceHistory">90 $</p>
-                    </div> 
-                </a>
-
+                    </a>
+                <?php
+                }
+                ?>
+                
                 <div class="d-flex justify-content-center">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
@@ -382,79 +354,35 @@ var_dump($topic_followed);
                 <h2>Most followed topics</h2>
                 
                 <!-- ---------------------------------- start new table ------------------------------------- -->
-                <a href="">
+                <?php 
+                $i=0;
+                foreach($topic_followed as $key => $topic){ 
+                    $i++;
+                    if($i > 4)
+                        break;
+
+                    $name = (String)get_the_category_by_ID($key);
+
+                    $image_category = get_field('image', 'category_'. $key);
+                    $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/libay.png';
+                ?>
+                <a href="category-overview?category=<?= $key; ?>">
                     <div class="contentStats mb-3">
                         <div class="contentImgName">
                             <div class="statsImgCours">
-                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
+                                <img id="money" src="<?= $image_category; ?>" alt="">
                             </div>
                         <div>
-                            <p class="nameCoursSales mb-0">Adobe xd Part 01</p>
-                            <p class="categoriesNameCours">Seydou</p>
+                            <p class="nameCoursSales mb-0"><?= $name; ?></p>
+                            <p class="categoriesNameCours">x</p>
                         </div>
                         </div>
-                        <p class="priceHistory">220 $</p>
+                        <p class="priceHistory">x $</p>
                     </div>
                 </a>
-                <a href="">
-                    <div class="contentStats mb-3">
-                        <div class="contentImgName">
-                            <div class="statsImgCours">
-                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
-                            </div>
-                        <div>
-                            <p class="nameCoursSales mb-0">Mathmatics</p>
-                            <p class="categoriesNameCours">Mass</p>
-                        </div>
-                        </div>
-                        <p class="priceHistory">80 $</p>
-                    </div>
-                </a>    
-
-                <a href="">
-                    <div class="contentStats mb-3">
-                        <div class="contentImgName">
-                            <div class="statsImgCours">
-                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
-                            </div>
-                        <div>
-                            <p class="nameCoursSales mb-0">Angular</p>
-                            <p class="categoriesNameCours">Mamadou</p>
-                        </div>
-                        </div>
-                        <p class="priceHistory">30 $</p>
-                    </div>
-                </a>    
-
-                <a href="">
-                    <div class="contentStats mb-3">
-                        <div class="contentImgName">
-                            <div class="statsImgCours">
-                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
-                            </div>
-                        <div>
-                            <p class="nameCoursSales mb-0">Symfony</p>
-                            <p class="categoriesNameCours">Fadel</p>
-                        </div>
-                        </div>
-                        <p class="priceHistory">120 $</p>
-                    </div>
-                </a>     
-
-                <a href="">
-                    <div class="contentStats mb-3">
-                        <div class="contentImgName">
-                            <div class="statsImgCours">
-                                <img id="money" src="<?php echo get_stylesheet_directory_uri();?>/img/libay.png" alt="">
-                            </div>
-                        <div>
-                            <p class="nameCoursSales mb-0">Adobe xd Part 01</p>
-                            <p class="categoriesNameCours">Alioune</p>
-                        </div>
-                        </div>
-                        <p class="priceHistory">90 $</p>
-                    </div> 
-                </a>
+                <?php
+                }
+                ?>
 
                 <div class="d-flex justify-content-center">
                     <nav aria-label="Page navigation example">

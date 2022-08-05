@@ -69,11 +69,15 @@ if($optie == "accept"){
         }
 
         $onderwerpen = explode(',', $course->onderwerpen);
-
+        
         /*
         ** UPDATE COMMON FIELDS
         */
 
+        //Experts
+        $contributors = explode(',', $course->contributors);
+
+        update_field('experts', $contributors, $id_post);
         update_field('short_description', nl2br($course->short_description), $id_post);
         update_field('long_description', nl2br($course->long_description), $id_post);
         update_field('url_image_xml', $course->image_xml, $id_post);

@@ -67,9 +67,10 @@ require($page);
 
     $category = ($_GET['category']) ?: ' ';
 
+    view_topic($category, $user_visibility);
+
     $user_id = get_current_user_id();
 
-    view_topic($category, $user_id);
 
     $courses = array();
 

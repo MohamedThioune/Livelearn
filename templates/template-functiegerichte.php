@@ -37,7 +37,7 @@
     <div class="container">
         <div class="BaangerichteBlock">
             <p class="wordDeBestText2">Functiegerichte groei</p>
-            <p class="altijdText2 paddingElement">De partener in professionele- en Persoonlijke groei met ons complete aanbod van Groeipaden. Opleidingen en Assessments.</p>
+            <p class="altijdText2 paddingElement">De partner in professionele- en persoonlijke groei met een compleet aanbod van leermodules</p>
         </div>
     </div>
 </div>

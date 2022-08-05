@@ -46,9 +46,7 @@
             
             if($last_name == null)
                 $last_name = "ANONYM";
-
-            
-             
+     
 
             $login = RandomString();
             $password = RandomString();
@@ -65,7 +63,7 @@
             );
 
             $user_id = wp_insert_user(wp_slash($userdata));
- 
+            var_dump($user_id);
             if(is_wp_error($user_id)){
                 $danger = $user_id->get_error_message();
                 ?>

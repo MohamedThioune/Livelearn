@@ -57,17 +57,16 @@ function scrapeFrom($website): array{
 }
 
 function scrapper($url,$html_tag,$class_selector){
-    $html_code=file_get_contents($url);
-    $dom= new DomDocument();
+    $html_code = file_get_contents($url);
+    $dom = new DomDocument();
     libxml_use_internal_errors(true);
-    $datas=array();
+    $datas = array();
     if (!empty($html_code))
     {
         $dom->loadHTML($html_code);
-        $dom_path=new DOMXPath($dom);
-        $query= '//'.$html_tag.'[@class='.$class_selector.']';
-        $result=$dom_path->query($query);
-        //var_dump($result);
+        $dom_path =new DOMXPath($dom);
+        $query = '//'.$html_tag.'[@class='.$class_selector.']';
+        $result = $dom_path->query($query);
         if (!is_null($result))
             return $result;
     }
@@ -94,13 +93,13 @@ function scrapeSmartWP()
         $date=$node->getElementsByTagName('time')->item(0)->nodeValue;
         $title=$node->getElementsByTagName('h2')->item(0)->nodeValue;
         $link=$url.$node->getElementsByTagName('a')->item(0)->getAttribute('href');
-        $result_content=scrapper($link,$tag,$selector_class_content);
+        $result_content = scrapper($link,$tag,$selector_class_content);
         if (!is_null($result_content))
         {
 
         var_dump($result_content[0]->getElementsByTagName('p') ->item(1)->nodeValue);
-            $content=$result_content->item(0)->nodeValue;
-            $article=new Article($title,$short_description,$image,$link,$date,$content);
+            $content = $result_content->item(0)->nodeValue;
+            $article = new Article($title,$short_description,$image,$link,$date,$content);
             $datas[]=$article;
             // var_dump($article ->getTitle());
         }

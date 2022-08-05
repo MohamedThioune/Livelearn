@@ -145,13 +145,9 @@ $companies = get_posts($args);
    <div class="contentDetailCourseDataBank">
        <div class="container-fluid">
            <div class="">
-            <?php 
-                if(isset($_GET["message"]))
-                    echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>";
-                ?>
                <h2>Modife Course Databank</h2>
                <form action="/dashboard/user/" method="POST">
-                   <input type="hidden" name="complete" value="all    ">
+                   <input type="hidden" name="complete">
                    <input type="hidden" name="id" value="<?= $course->id ?>">
 
                    <div class="groupInputDate">
@@ -160,7 +156,7 @@ $companies = get_posts($args);
                            <input type="text" name="titel" id="" value="<?= $course->titel; ?>" placeholder="Titel ...">
                        </div>
                        <div class="input-group">
-                           <la for="">Course type</la bel>
+                           <label for="">Course type</label>
                            <select name="type" id="">
                            <?php
                             foreach($typos as $key=>$typo){
