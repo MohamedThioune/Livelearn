@@ -16,6 +16,16 @@ extract($_POST);
 
 $user_data = wp_get_current_user();
 
+function RandomString(){
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randstring = '';
+    for ($i = 0; $i < 10; $i++) {
+        $rand = $characters[rand(0, strlen($characters))];
+        $randstring .= $rand;  
+    }
+    return $randstring;
+}
+
 if(empty($user_data->roles))
     header('Location:/');
 
@@ -518,8 +528,9 @@ else if(isset($databank)){
         foreach($tags as $tag)
             $onderwerpen .= $tag .',';
 
+
     //Date
-    if(isset($complete)){
+    if($complete == 'all'){
         $number_items = count($start_date);
         $data_locaties = array();
         $row = "";
@@ -548,31 +559,108 @@ else if(isset($databank)){
         $data_locaties_xml = join('~', $data_locaties);
     }
     
-    if(isset($complete)) 
+    if($complete == "all") 
         $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'long_description' => $long_description, 'for_who' => $for_who, 'agenda' => $agenda, 'results' => $results, 'prijs' => $prijs, 'prijs_vat' => $prijs_vat, 'onderwerpen' => $onderwerpen, 'date_multiple' => $data_locaties_xml, 'level' => $level, 'language' => $language, 'author_id' => $author_id, 'company_id' => $company_id ]; // NULL value.
-    else 
-        $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'prijs' => $prijs, 'onderwerpen' => $onderwerpen, 'author_id' => $author_id, 'company_id' => $company_id ]; // NULL value.
-    
+    else if($complete == "quick")
+        $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'prijs' => $prijs, 'onderwerpen' => $onderwerpen]; // NULL value.
+    else if($complete == "expert"){
+        
+        $args = array(
+            'post_type' => 'company', 
+            'post_status' => 'publish',
+            'posts_per_page' => -1,
+            'order' => 'DESC',
+        );
+        $companies = get_posts($args);
+
+        foreach($companies as $structure)
+           if($structure->post_title == $company_title){
+            $message = "/databank/?message=Dit bedrijf bestaat al.";
+            header("Location: ". $message);
+           }
+   
+        if($first_name == null)
+            $first_name = "ANONYM";
+        
+        if($last_name == null)
+            $last_name = "ANONYM";
+
+
+        $login = RandomString();
+        $password = RandomString();
+
+        $userdata = array(
+            'user_pass' => $password,
+            'user_login' => $login,
+            'user_email' => $email,
+            'user_url' => 'https://livelearn.nl/inloggen/',
+            'display_name' => $first_name,
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'role' => 'teacher'
+        );
+
+        $user_id = wp_insert_user(wp_slash($userdata));
+
+        if(is_wp_error($user_id)){
+            $danger = $user_id->get_error_message();
+            header("Location: ". $danger);
+        }
+        else{
+            $args = array(
+                'post_type'   => 'company',
+                'post_author' => 3,
+                'post_status' => 'publish',
+                'post_title'  => $company_title
+            );
+            
+            $id_company = wp_insert_post($args);
+            $companie = get_post($id_company);
+            update_field('company_address', $company_adress, $id_company);
+            update_field('company_place', $company_place, $id_company);
+            update_field('company_country', $company_country, $id_company);
+            
+            $subject = 'Je LiveLearn inschrijving is binnen! ✨';
+            $body = "
+            Bedankt voor je inschrijving<br>
+            <h1>Hello " . $first_name  . " FROM " . $companie->post_title . "</h1>,<br> 
+            Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br>
+            U hebt een cursus toegewezen gekregen en zult die zien zodra de beheerders ze hebben aanvaard.<br>
+            Log in om toegang te krijgen.<br><br>
+            <h4>Inloggen:</h4><br>
+            <h6><a href='https://livelearn.nl/inloggen/'> Connexion </a></h6>
+            ";
+        
+            $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+            wp_mail($email, $subject, $body, $headers, array( '' )) ; 
+            
+            $author_id = $user_id;
+
+            var_dump($user_id);
+
+            update_field('company', $companie, 'user_'.$user_id);
+        }
+
+        $data = ['author_id' => $author_id, 'company_id' => $company_id ]; // NULL value.
+    }
+
     $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 
     $updated = $wpdb->update( $table, $data, $where );
  
-    if($updated === false){
-        if(isset($complete))
+    if($updated === false)
+        if($complete == "all") 
             $message = "/edit-databank?id=" . $id . "&message=Something went wrong !"; 
         else
             $message = "/databank/?message=" . $wpdb->last_error;
-        //header("Location: ". $message);
-        //return false; 
-    }else{ 
-        if(isset($complete))
+    else 
+        if($complete == "all") 
             $message = "/edit-databank?id=" . $id . "&message=Updated successfully !"; 
-        else 
+        else
             $message = "/databank/?message=Updated successfully !"; 
-        //header("Location: ". $message);
-        //return true;
-    }
-    
+
+
+    header("Location: ". $message);
 }
 
 else if(isset($date_add)){

@@ -30,15 +30,19 @@ $user = wp_get_current_user();
    <div class="container-fluid">
        <div class="contentListeCourseDataBank">
            <div class="cardOverviewCours">
+                <?php 
+                if(isset($_GET["message"]))
+                    echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>";
+                ?>
                <div class="headListeCourse">
                    <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
-                       <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img  src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
-                       &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="" width="25" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
-                       <!-- &nbsp;&nbsp;<span id="reload-data"  class="bi bi-arrow-clockwise">Artikel</span> -->
-                       &nbsp;&nbsp;&nbsp; <span>Artikel</span>
+                       <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
+                       &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
+                       <strong style="border: #023356 solid; padding: 11 5"><span id="reload-data" class="bi bi-arrow-clockwise">Artikel</span></strong>
+                       
                     <div class="col-md-3">
                         
-                        <select id="select_field">
+                        <select class="form form-control"id="select_field">
                             <option value="">Get new contents from</option>
                             <?php foreach ($websites as $website) { ?>
                                 <option class="selected_website" value="<?= $website ?>"><?= $website ?></option>
@@ -107,7 +111,7 @@ $user = wp_get_current_user();
                                     ?>
                                 </td>
                                <td class="textTh tdCenter"><?= $course->status; ?></td>
-                               <td class="textTh tdCenter"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo 'No author'; ?></td>
+                               <td class="textTh tdCenter author"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo 'No author'; ?></td>
                                <td class="textTh tdCenter"> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo 'No company'; ?> </td>
                                <td class="tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a href="/edit-databank?id=<?= $key ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> </td>
                            </tr>
@@ -198,7 +202,7 @@ $user = wp_get_current_user();
                 //location.reload();
             }
         });
-        //location.reload();
+        location.reload();
     });
 
     $('.optie').click((e)=>{
@@ -231,12 +235,55 @@ $user = wp_get_current_user();
         
     });
 
-    $('.textTh').click((e)=>{
+    $('.courseDataBank').click((e)=>{
         var tr_element = e.target.parentElement.closest("tr");
         var key = tr_element.id;
 
         $.ajax({
-                url:"/fetch-data-clean",
+                url:"/fetch-data-clean-quick",
+                method:"post",
+                data:
+                {
+                    id:key,
+                },
+                dataType:"text",
+                success: function(data){
+                    // Get the modal
+                    console.log(data)
+                    var modal = document.getElementById("myModal");
+                    $('.display-fields-clean').html(data)
+                    // Get the button that opens the modal
+
+
+                    // Get the <span> element that closes the modal
+                    var span = document.getElementsByClassName("close")[0];
+
+                    // When the user clicks on the button, open the modal
+
+                        modal.style.display = "block";
+
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function() {
+                        modal.style.display = "none";
+                    }
+
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function(event) {
+                        if (event.target == modal) {
+                        modal.style.display = "none";
+                        }
+                    }
+                            
+                }
+        });
+    });
+
+    $('.author').click((e)=>{
+        var tr_element = e.target.parentElement.closest("tr");
+        var key = tr_element.id;
+
+        $.ajax({
+                url:"/fetch-data-clean-author",
                 method:"post",
                 data:
                 {

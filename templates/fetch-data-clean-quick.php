@@ -1,4 +1,4 @@
-<?php /** Template Name: Fetch data clean */ ?>
+<?php /** Template Name: Fetch data clean quick */ ?>
 
 <?php
 
@@ -94,11 +94,12 @@ if ( isset ($id) ) {
     $languages = ['English', 'Dutch', 'German', 'French'];
 
     $onderwerpen = explode(',', $course->onderwerpen);
-
-    $users = get_users();
-
-
+    
+    //short description
     $short_description = $course->short_description ? $course->short_description : 'Please fill in the resume';
+
+    //users 
+    $users = get_users();
 
     $company = get_field('company',  'user_' . $course->author_id)[0];
 
@@ -157,37 +158,59 @@ if ( isset ($id) ) {
     echo '<div class="form-group"> 
           <textarea name="short_description" class="form-control" rows="3" cols="30">' . $short_description . '</textarea><br>
           </div>';
-    
+
     //Expert
+    echo'<label>Author : </label><br>';
     echo '<div class="form-group"> 
-          <select class="multipleSelect2" name="author_id" id="selected_subtopics">';
-            if($course->author_id != 0)
-                foreach($users as $user)
-                    if($user->ID == $course->author_id)
-                        echo '<option selected value="'. $user->ID . '">' . $user->display_name . '</option>';
-                    else
-                        echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
-            else{
-                echo '<option value=""></option>';
-                foreach($users as $user)
-                    echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
-            }
+    <select class="multipleSelect2" name="author_id" id="selected_subtopics" required>';
+    if($course->author_id != 0)
+        foreach($users as $user)
+            if($user->ID == $course->author_id)
+                echo '<option selected value="'. $user->ID . '">' . $user->display_name . '</option>';
+            else
+                echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
+    else{
+        echo '<option value=""></option>';
+        foreach($users as $user)
+            echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
+    }
     echo '</select>
-          </div>';
+        </div>';
+
+    //Contributors
+    $contributors = explode(',', $course->contributors);
+
+    echo'<label>Contributors : </label><br>';
+    echo '<div class="form-group"> 
+    <select class="multipleSelect2" name="author_id" id="selected_subtopics" multiple>';
+    if(!empty($contributors))
+        foreach($users as $user)
+            if(in_array($user->ID,$contributors)
+                echo '<option selected value="'. $user->ID . '">' . $user->display_name . '</option>';
+            else
+                echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
+    else{
+        echo '<option value=""></option>';
+        foreach($users as $user)
+            echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
+    }
+    echo '</select>
+        </div>';
 
     //Company
     echo '<div class="form-group"> 
-            <select class="multipleSelect2" name="company_id" id="selected_subtopics">';
-            if(!empty($company))
-                echo '<option selected value="'. $company->ID . '">' . $company->post_title . '</option>';
-            else{
-                echo '<option value=""></option>';
-                foreach($companies as $companie)
-                    echo '<option value="'. $companie->ID . '">' . $companie->post_title . '</option>';
-            }
+        <select class="multipleSelect2" name="company_id" id="selected_subtopics" required>';
+        if(!empty($company))
+            echo '<option selected value="'. $company->ID . '">' . $company->post_title . '</option>';
+        else{
+            echo '<option value=""></option>';
+            foreach($companies as $companie)
+                echo '<option value="'. $companie->ID . '">' . $companie->post_title . '</option>';
+        }
     echo  '</select>
-        </div>';
+    </div>';
 
+    
 
 }
 
