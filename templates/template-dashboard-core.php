@@ -49,17 +49,6 @@ if(isset($_POST['expert_add']) || isset($_POST['expert_add_artikel'])){
     header('Location:' . $path);
 }
 
-
-/**
- * Skills Passport
- */
-    else if (isset($_POST['skills_passport_add'])) {
-       var_dump($_POST);
-    }
- /**
- * Skills Passport
- */
-
 else if(isset($_POST['topic_add'])){
 
     $categories = array();
@@ -528,7 +517,6 @@ else if(isset($databank)){
         foreach($tags as $tag)
             $onderwerpen .= $tag .',';
 
-
     //Date
     if($complete == 'all'){
         $number_items = count($start_date);
@@ -558,11 +546,12 @@ else if(isset($databank)){
 
         $data_locaties_xml = join('~', $data_locaties);
     }
+    $contributors = join(',', $contributors);
     
     if($complete == "all") 
         $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'long_description' => $long_description, 'for_who' => $for_who, 'agenda' => $agenda, 'results' => $results, 'prijs' => $prijs, 'prijs_vat' => $prijs_vat, 'onderwerpen' => $onderwerpen, 'date_multiple' => $data_locaties_xml, 'level' => $level, 'language' => $language, 'author_id' => $author_id, 'company_id' => $company_id ]; // NULL value.
     else if($complete == "quick")
-        $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'prijs' => $prijs, 'onderwerpen' => $onderwerpen]; // NULL value.
+        $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'prijs' => $prijs, 'onderwerpen' => $onderwerpen, 'author_id' => $author_id, 'company_id' => $company_id , 'contributors' => $contributors ]; // NULL value.
     else if($complete == "expert"){
         
         $args = array(

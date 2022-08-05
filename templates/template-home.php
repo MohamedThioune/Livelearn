@@ -659,12 +659,12 @@ $degrees=[
                                                 <input name="first_name"  type="text" placeholder="Voorman">
                                             </div>
                                             <div class="form-group-skills">
-                                                <label for="">Bedrijf</label>
-                                                <input name="companie" type="text" placeholder="Bedrijf">
-                                            </div>
-                                            <div class="form-group-skills">
                                                 <label for="">Achternaam</label>
                                                 <input name="last_name" type="text" placeholder="Achternaam">
+                                            </div>
+                                            <div class="form-group-skills">
+                                                <label for="">Bedrijf</label>
+                                                <input name="companie" type="text" placeholder="Bedrijf">
                                             </div>
                                             <!-- <div class="form-group-skills">
                                                 <label for="">Wachtwoord</label>

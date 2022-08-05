@@ -1,4 +1,5 @@
 <?php /** Template Name: Edit Databank */ ?>
+
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.min.css" />
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.js"></script>
 <script type="text/javascript">
@@ -25,6 +26,11 @@
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <?php
 
 extract($_GET);
@@ -36,6 +42,7 @@ $table = $wpdb->prefix . 'databank';
 $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
 
 $course = $wpdb->get_results( $sql )[0];
+
 
 /*
 * * Tags *
@@ -112,7 +119,7 @@ $typos = ['Opleidingen' => 'course', 'Training' => 'training', 'Workshop' => 'wo
 $levels = ['NVT' => 'n.v.t', 'MBO1' => 'mbo1', 'MBO2' => 'mbo2', 'MBO3' => 'mbo3', 'MBO4' => 'mbo4', 'HBO' => 'hbo', 'Universiteit' => 'university', 'Certificate' => 'certificate'];
 
 //array language 
-$languages = ['English', 'Dutch', 'German', 'French'];
+$languages = ['Dutch', 'English', 'German', 'French'];
 
 $onderwerpen = explode(',', $course->onderwerpen);
 
@@ -124,6 +131,8 @@ $for_who = $course->for_who ? $course->for_who : 'Please fill in the content';
 $agenda = $course->agenda ? $course->agenda : 'Please fill in the content';
 $results = $course->results ? $course->results : 'Please fill in the content';
 
+
+$contributors = array();
 
 $company = get_field('company',  'user_' . $course->author_id)[0];
 
@@ -160,19 +169,20 @@ $companies = get_posts($args);
                            <input type="text" name="titel" id="" value="<?= $course->titel; ?>" placeholder="Titel ...">
                        </div>
                        <div class="input-group">
-                           <la for="">Course type</la bel>
-                           <select name="type" id="">
-                           <?php
-                            foreach($typos as $key=>$typo){
-                                if($course->type == $key)
-                                    echo '<option selected value="'. $key . '">' . $key . '</option>';
-                                else
-                                    echo '<option value="'. $key . '">' . $key . '</option>';
-                            }
+                           <label for="">Company</label>
+                           <select class="multipleSelect2" name="company_id" id="" required>
+                            <?php
+                               if(!empty($company))
+                                 echo '<option selected value="'. $company->ID . '">' . $company->post_title . '</option>';
+                               else{
+                                 echo '<option value=""></option>';
+                                 foreach($companies as $companie)
+                                     echo '<option value="'. $companie->ID . '">' . $companie->post_title . '</option>';
+                               }
+                                 
                             ?>
                            </select>
                        </div>
-
                    </div>
         
                    <div class="groupInputDate">
@@ -189,7 +199,7 @@ $companies = get_posts($args);
                    <div class="groupInputDate">
                         <div class="input-group">
                             <label for="">Certificate</label>
-                            <select name="level" id="">
+                            <select  class="multipleSelect2" name="level" id="">
                                 <?php
                                 foreach($levels as $key=>$level){
                                     if($course->level == $key)
@@ -202,7 +212,7 @@ $companies = get_posts($args);
                         </div>
                         <div class="input-group">
                             <label for="">Language</label>
-                            <select name="language" id="">
+                            <select  class="multipleSelect2" name="language" id="">
                                 <?php
                                 foreach($languages as $language){
                                     if($course->language == $language)
@@ -231,7 +241,7 @@ $companies = get_posts($args);
                        </div>
                         <div class="input-group">
                             <label for="">Onderwerpen</label>
-                            <select name="" id="">
+                            <select class="multipleSelect2" name="" id="" multiple>
                                 <?php
                                     foreach($categorys as $typo){
                                         foreach($categorys as $typo){
@@ -249,7 +259,7 @@ $companies = get_posts($args);
                    <div class="groupInputDate">
                        <div class="input-group">
                            <label for="">Author</label>
-                           <select name="author_id" id="">
+                           <select class="multipleSelect2" name="author_id" id="" required>
                               <?php
                                if($course->author_id != 0)
                                     foreach($users as $user)
@@ -265,21 +275,29 @@ $companies = get_posts($args);
                               ?>
                            </select>
                        </div>
+
                        <div class="input-group">
-                           <label for="">Company</label>
-                           <select name="company_id" id="">
-                            <?php
-                               if(!empty($company))
-                                 echo '<option selected value="'. $company->ID . '">' . $company->post_title . '</option>';
-                               else{
-                                 echo '<option value=""></option>';
-                                 foreach($companies as $companie)
-                                     echo '<option value="'. $companie->ID . '">' . $companie->post_title . '</option>';
-                               }
-                                 
-                            ?>
+                           <label for="">Contributors</label>
+                           <select class="multipleSelect2" name="contributors" id="" multiple>
+                              <?php
+                               echo '<div class="form-group"> 
+                                <select class="multipleSelect2" name="contributors" id="selected_subtopics" multiple>';
+                                if(!empty($contributors))
+                                    foreach($users as $user)
+                                        if(in_array($user->ID, $contributors))
+                                            echo '<option selected value="'. $user->ID . '">' . $user->display_name . '</option>';
+                                        else
+                                            echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
+                                else{
+                                    echo '<option value=""></option>';
+                                    foreach($users as $user)
+                                        echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
+                                }
+                                echo '</select>
+                                    </div>';
+                              ?>
                            </select>
-                       </div>
+                       </div>                      
                    </div>
 
                    <div class="input-group-course">
@@ -461,10 +479,23 @@ $companies = get_posts($args);
 
 </body>
 
-
+<script id="rendered-js" >
+$(document).ready(function () {
+    //Select2
+    $(".multipleSelect2").select2({
+        placeholder: "Maak uw keuze.",
+         //placeholder
+    });
+});
+//# sourceURL=pen.js
+</script> 
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
+
+
+
+
 
 
 
