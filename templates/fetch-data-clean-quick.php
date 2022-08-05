@@ -182,10 +182,10 @@ if ( isset ($id) ) {
 
     echo'<label>Contributors : </label><br>';
     echo '<div class="form-group"> 
-    <select class="multipleSelect2" name="author_id" id="selected_subtopics" multiple>';
+    <select class="multipleSelect2" name="contributors" id="selected_subtopics" multiple>';
     if(!empty($contributors))
         foreach($users as $user)
-            if(in_array($user->ID,$contributors)
+            if(in_array($user->ID,$contributors))
                 echo '<option selected value="'. $user->ID . '">' . $user->display_name . '</option>';
             else
                 echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
