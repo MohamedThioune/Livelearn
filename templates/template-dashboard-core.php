@@ -549,7 +549,7 @@ else if(isset($databank)){
     $contributors = join(',', $contributors);
     
     if($complete == "all") 
-        $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'long_description' => $long_description, 'for_who' => $for_who, 'agenda' => $agenda, 'results' => $results, 'prijs' => $prijs, 'prijs_vat' => $prijs_vat, 'onderwerpen' => $onderwerpen, 'date_multiple' => $data_locaties_xml, 'level' => $level, 'language' => $language, 'author_id' => $author_id, 'company_id' => $company_id ]; // NULL value.
+        $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'long_description' => $long_description, 'for_who' => $for_who, 'agenda' => $agenda, 'results' => $results, 'prijs' => $prijs, 'prijs_vat' => $prijs_vat, 'onderwerpen' => $onderwerpen, 'date_multiple' => $data_locaties_xml, 'level' => $level, 'language' => $language, 'author_id' => $author_id, 'company_id' => $company_id, 'contributors' => $contributors ]; // NULL value.
     else if($complete == "quick")
         $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'prijs' => $prijs, 'onderwerpen' => $onderwerpen, 'author_id' => $author_id, 'company_id' => $company_id , 'contributors' => $contributors ]; // NULL value.
     else if($complete == "expert"){
@@ -639,7 +639,7 @@ else if(isset($databank)){
  
     if($updated === false)
         if($complete == "all") 
-            $message = "/edit-databank?id=" . $id . "&message=Something went wrong !"; 
+            $message = "/edit-databank?id=" . $id . "&message=" . $wpdb->last_error; 
         else
             $message = "/databank/?message=" . $wpdb->last_error;
     else 
@@ -647,7 +647,6 @@ else if(isset($databank)){
             $message = "/edit-databank?id=" . $id . "&message=Updated successfully !"; 
         else
             $message = "/databank/?message=Updated successfully !"; 
-
 
     header("Location: ". $message);
 }

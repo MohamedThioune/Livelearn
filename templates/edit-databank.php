@@ -29,7 +29,6 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <?php
 
@@ -132,7 +131,7 @@ $agenda = $course->agenda ? $course->agenda : 'Please fill in the content';
 $results = $course->results ? $course->results : 'Please fill in the content';
 
 
-$contributors = array();
+$contributors = explode(',', $course->contributors);
 
 $company = get_field('company',  'user_' . $course->author_id)[0];
 
@@ -160,7 +159,7 @@ $companies = get_posts($args);
                 ?>
                <h2>Modife Course Databank</h2>
                <form action="/dashboard/user/" method="POST">
-                   <input type="hidden" name="complete" value="all    ">
+                   <input type="hidden" name="complete" value="all">
                    <input type="hidden" name="id" value="<?= $course->id ?>">
 
                    <div class="groupInputDate">
@@ -170,7 +169,7 @@ $companies = get_posts($args);
                        </div>
                        <div class="input-group">
                            <label for="">Company</label>
-                           <select class="multipleSelect2" name="company_id" id="" required>
+                           <select class="multipleSelect2" name="company_id" id="">
                             <?php
                                if(!empty($company))
                                  echo '<option selected value="'. $company->ID . '">' . $company->post_title . '</option>';
@@ -241,15 +240,13 @@ $companies = get_posts($args);
                        </div>
                         <div class="input-group">
                             <label for="">Onderwerpen</label>
-                            <select class="multipleSelect2" name="" id="" multiple>
+                            <select class="multipleSelect2" name="tags[]" id="" multiple>
                                 <?php
                                     foreach($categorys as $typo){
-                                        foreach($categorys as $typo){
-                                            if(in_array($typo->cat_ID, $onderwerpen))
-                                                echo '<option selected value="'. $typo->cat_ID . '">' . $typo->cat_name . '</option>';
-                                            else
-                                                echo '<option value="'. $typo->cat_ID . '">' . $typo->cat_name . '</option>';
-                                        }
+                                        if(in_array($typo->cat_ID, $onderwerpen))
+                                            echo '<option selected value="'. $typo->cat_ID . '">' . $typo->cat_name . '</option>';
+                                        else
+                                            echo '<option value="'. $typo->cat_ID . '">' . $typo->cat_name . '</option>';
                                     }
                                 ?>
                             </select>
@@ -277,12 +274,10 @@ $companies = get_posts($args);
                        </div>
 
                        <div class="input-group">
-                           <label for="">Contributors</label>
-                           <select class="multipleSelect2" name="contributors" id="" multiple>
+                           <label for="">Contributors : </label>
+                           <select class="multipleSelect2" name="contributors[]" id="" multiple>
                               <?php
-                               echo '<div class="form-group"> 
-                                <select class="multipleSelect2" name="contributors" id="selected_subtopics" multiple>';
-                                if(!empty($contributors))
+                               if(!empty($contributors))
                                     foreach($users as $user)
                                         if(in_array($user->ID, $contributors))
                                             echo '<option selected value="'. $user->ID . '">' . $user->display_name . '</option>';
@@ -293,11 +288,9 @@ $companies = get_posts($args);
                                     foreach($users as $user)
                                         echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
                                 }
-                                echo '</select>
-                                    </div>';
                               ?>
                            </select>
-                       </div>                      
+                       </div>                   
                    </div>
 
                    <div class="input-group-course">
@@ -405,7 +398,7 @@ $companies = get_posts($args);
                             <div class="groupInputDate">
                                 <div class="input-group form-group colM">
                                     <label for="">Start date</label>
-                                    <input type="date" name="start_date[]" required>
+                                    <input type="date" name="start_date[]">
                                 </div>
                             </div>
                             <div class="input-group-course">
@@ -415,7 +408,7 @@ $companies = get_posts($args);
                             <div class="groupInputDate ">
                                 <div class="input-group colM">
                                     <label for="">End date</label>
-                                    <input type="date" name="end_date[]" required>
+                                    <input type="date" name="end_date[]">
                                 </div>
                             </div>
                             <div class="input-group-course">

@@ -188,45 +188,9 @@
         <div class="blockFormTestimonial" id="form_section">
             <div class="row d-flex justify-content-center">
                 <div class="col-md-6 col-11">
-                    <form class="formTestimonial">
-                        <p class="title">Kies jouw persoonlijke scholingsadvies</p>
-                        <p class="description">Vul onderstaande formulier in en we plannen het zo snel mogelijk in.</p>
-                        <div class="input-group">
-                            <input type="text" placeholder="Voornaam*">
-                        </div>
-                        <div class="input-group">
-                            <input type="text" placeholder="Acheternaam*">
-                        </div>
-                        <div class="input-group">
-                            <input type="text" placeholder="Voornaam*">
-                        </div>
-                        <div class="input-group">
-                            <input type="text" placeholder="Bedrijf">
-                        </div>
-                        <div class="input-group">
-                            <input type="text" placeholder="E-mailadres*">
-                        </div>
-                        <div class="input-group">
-                            <input type="text" placeholder="Telefoonnummer*">
-                        </div>
-                        <div class="input-group">
-                            <select class="form-select">
-                                <option disabled selected>Type advies*</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <select class="form-select">
-                                <option disabled selected>Hoogst afgeronde opleiding*</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <button class="btn btnAanvraag">Aanvraag indienen</button>
-                    </form>
+                    <?php
+                        echo do_shortcode("[gravityform id='11' title='false' description='false' ajax='true']");
+                    ?>
                 </div>
                 <div class="col-md-6 col-11">
                     <h2 class="watAnderenTitle">Wat anderen over ons Zeggen</h2>
