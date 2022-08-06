@@ -87,7 +87,13 @@ $user = wp_get_current_user();
 
                            //Company
                            $company = get_field('company',  'user_' . $course->author_id);
-                           $company_logo = (!empty($company)) ? get_field('company_logo', $company[0]->ID) : get_stylesheet_directory_uri() . '/img/placeholder.png'; 
+                           
+                           $company_logo = get_stylesheet_directory_uri() . '/img/placeholder.png';
+                           if(!empty($company))
+                                $company_logo = (get_field('company_logo', $company[0]->ID)) ? get_field('company_logo', $company[0]->ID) : get_stylesheet_directory_uri() . '/img/placeholder.png'; 
+
+                           //Thumbnail
+                           $image = $course->image_xml ? $course->image_xml : $company_logo;
 
                            $onderwerpen = array();
                            //Onderwerpen
@@ -98,7 +104,7 @@ $user = wp_get_current_user();
                            $key = $course->id;
                            ?>
                            <tr id="<?= $key ?>" class="<?= $state ?>">
-                               <td class="textTh"> <img src="<?= $course->image_xml; ?>" alt="image course" width="50" height="50"></td>
+                               <td class="textTh"> <img src="<?= $image; ?>" alt="image course" width="50" height="50"></td>
                                <td class="textTh courseDataBank" style="color:#212529;font-weight:bold"><?php echo $course->titel; ?></td>
                                <td class="textTh tdCenter"><?= $course->type; ?></td>
                                <td class="textTh tdCenter"><?= $course->prijs; ?></td>
@@ -107,12 +113,12 @@ $user = wp_get_current_user();
                                     if(!empty($onderwerpen))
                                         foreach($onderwerpen as $value)
                                             if($value)
-                                            //echo (String)get_the_category_by_ID($value) . ','; 
+                                                echo (String)get_the_category_by_ID($value) . ','; 
                                     ?>
                                 </td>
                                <td class="textTh tdCenter"><?= $course->status; ?></td>
-                               <td class="textTh tdCenter author"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo 'No author'; ?></td>
-                               <td class="textTh tdCenter"> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo 'No company'; ?> </td>
+                               <td class="textTh tdCenter author"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo '<b>No author</b>'; ?></td>
+                               <td class="textTh tdCenter author"> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo '<b>No company</b>'; ?> </td>
                                <td class="tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a href="/edit-databank?id=<?= $key ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> </td>
                            </tr>
                        <?php
