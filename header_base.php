@@ -414,7 +414,7 @@ $url = home_url( $wp->request );
                                     <li>
                                         <a href="/product-search">
                                             <div class="blockImg">
-                                                <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Functionalities.jpg" alt="">
                                             </div>
                                             <div>
                                                 <p class="subtitleSousElementHeader">Functionaliteiten</p>
@@ -487,7 +487,7 @@ $url = home_url( $wp->request );
                                     <li>
                                         <a href="/opleiders">
                                             <div class="blockImg">
-                                                <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Opleidingen-Header.jpg" alt="">
                                             </div>
                                             <div>
                                                 <p class="subtitleSousElementHeader">Opleidingen</p>
@@ -497,7 +497,7 @@ $url = home_url( $wp->request );
                                     <li>
                                         <a href="/product-search">
                                             <div class="blockImg">
-                                                <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/E-learning-header.jpg" alt="">
                                             </div>
                                             <div>
                                                 <p class="subtitleSousElementHeader">E-Learnings</p>
@@ -507,7 +507,7 @@ $url = home_url( $wp->request );
                                     <li>
                                         <a href="/product-search">
                                             <div class="blockImg">
-                                                <!-- <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Lezingen-header.jpg" alt="">
                                             </div>
                                             <div>
                                                 <p class="subtitleSousElementHeader">Lezingen</p>
@@ -517,7 +517,7 @@ $url = home_url( $wp->request );
                                     <li>
                                         <a href="/product-search">
                                             <div class="blockImg">
-                                                <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Trainingen.jpg" alt="">
                                             </div>
                                             <div>
                                                 <p class="subtitleSousElementHeader">Trainingen</p>
@@ -527,7 +527,7 @@ $url = home_url( $wp->request );
                                     <li>
                                         <a href="/product-search">
                                             <div class="blockImg">
-                                                <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Video's-header.jpg" alt="">
                                             </div>
                                             <div>
                                                 <p class="subtitleSousElementHeader">Video's</p>
@@ -537,7 +537,7 @@ $url = home_url( $wp->request );
                                     <li>
                                         <a href="/product-search">
                                             <div class="blockImg">
-                                                <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Evens-header.jpg" alt="">
                                             </div>
                                             <div>
                                                 <p class="subtitleSousElementHeader">Evens</p>
@@ -547,17 +547,17 @@ $url = home_url( $wp->request );
                                     <li>
                                         <a href="/product-search">
                                             <div class="blockImg">
-                                                <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/workshop.jpg" alt="">
                                             </div>
                                             <div>
-                                                <p class="subtitleSousElementHeader">Workshops</p>
+                                                    <p class="subtitleSousElementHeader">Workshops</p>
                                             </div>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="/blogs">
                                             <div class="blockImg">
-                                                <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Artikelen-header.jpg" alt="">
                                             </div>
                                             <div>
                                                 <p class="subtitleSousElementHeader">Artikelen</p>
@@ -567,7 +567,7 @@ $url = home_url( $wp->request );
                                     <li>
                                         <a href="/product-search">
                                             <div class="blockImg">
-                                                <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/webinar-header.jpg" alt="">
                                             </div>
                                             <div>
                                                 <p class="subtitleSousElementHeader">Webinars</p>
@@ -577,7 +577,7 @@ $url = home_url( $wp->request );
                                     <li>
                                         <a href="/product-search">
                                             <div class="blockImg">
-                                                <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Masterclasses-header.jpg" alt="">
                                             </div>
                                             <div>
                                                 <p class="subtitleSousElementHeader">Masterclasses</p>
@@ -587,7 +587,7 @@ $url = home_url( $wp->request );
                                     <li>
                                         <a href="/dashboard/user/assessment/">
                                             <div class="blockImg">
-                                                <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Assessments-header.jpg" alt="">
                                             </div>
                                             <div>
                                                 <p class="subtitleSousElementHeader">Assessments</p>
@@ -597,7 +597,7 @@ $url = home_url( $wp->request );
                                     <li>
                                         <a href="/product-search">
                                             <div class="blockImg">
-                                                <!--                                            <img src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/Image-79.png" alt="">-->
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Podcasts-header.jpg" alt="">
                                             </div>
                                             <div>
                                                 <p class="subtitleSousElementHeader">Podcasts</p>
