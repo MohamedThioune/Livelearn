@@ -5299,7 +5299,8 @@ form {
     }
 
     .sousBlockProduct4 {
-        padding-left: 15px;
+        padding-left: 30px;
+        padding-right: 15px;
     }
     .sousBlockProduct2 {
         padding-left: 15px;
@@ -5729,7 +5730,10 @@ form {
         overflow-x: hidden;
     }
     .blockCardSearch {
-        display: block;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+        margin-bottom: 10px;
     }
     .searchContentBlock {
         width: 100%;

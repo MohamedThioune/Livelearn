@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.min.css" />
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.js"></script>
 <script type="text/javascript">
     $(function () {
@@ -142,6 +142,7 @@
                     <!-- element for clone -->
                     <div class="blockForClone">
                             <div class="attr">
+                                <hr class="line-elemnt">
                                 <div class="groupInputDate">
                                     <div class="input-group form-group colM">
                                         <label for="">Start date</label>

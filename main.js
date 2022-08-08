@@ -72,8 +72,6 @@ jQuery(function($){
     });
 
 
-
-
     $("#btnTerug1SkillsPasspoort").click(function() {
         $(".step1SkillsPasspoort").show();
         $(".step2SkillsPasspoort").hide();
@@ -108,6 +106,8 @@ jQuery(function($){
     $('.wrapperClone').on('click', '.clone', function() {
         $('.clone').closest('.wrapperClone').find('.elementClone').first().clone().appendTo('.results');
     });*/
+
+    // for tabs company
 
 
 
