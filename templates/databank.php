@@ -38,11 +38,10 @@ $user = wp_get_current_user();
                    <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
                        &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
-                       <strong style="border: #023356 solid; padding: 11 5"><span id="reload-data" class="bi bi-arrow-clockwise">Artikel</span></strong>
                        
                     <div class="col-md-3">
                         
-                        <select class="form form-control"id="select_field">
+                        <select class="form form-control" id="select_field">
                             <option value="">Get new contents from</option>
                             <?php foreach ($websites as $website) { ?>
                                 <option class="selected_website" value="<?= $website ?>"><?= $website ?></option>
@@ -163,7 +162,7 @@ $user = wp_get_current_user();
 
 <script>
 
-    $('#select_field').click((e)=>
+    $('#select_field').change((e)=>
     {
         let website= $('#select_field').val();
         if (website != '')
@@ -183,33 +182,10 @@ $user = wp_get_current_user();
                     $('#loader').attr('hidden',true)
                     $('#select_field').attr('hidden',false)
                     console.log(data);
-                    //location.reload();
+                    location.reload();
                 }
             });
     });        
-
-    $('#reload-data').click(function(){
-        
-        $.ajax({
-            url: '/scrapping',
-            type: 'POST',
-            data: {
-                'action': 'reload_data'
-            },
-            beforeSend:function(){
-                $('#reload-data').hide()
-                $('#loader').attr('hidden',false)
-            },
-            complete: function(){},
-            success: function(data){
-                $('#reload-data').show()
-                $('#loader').attr('hidden',true)
-                console.log(data);
-                //location.reload();
-            }
-        });
-        location.reload();
-    });
 
     $('.optie').click((e)=>{
         var tr_element = e.target.parentElement.closest("tr");

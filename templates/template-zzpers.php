@@ -8,6 +8,29 @@
 
 <body>
 
+    <?php
+
+        $users = get_users();
+        $authors = array();
+        
+        foreach ($users as $key => $value) {
+            $company_user = get_field('company',  'user_' . $value->ID );
+            if($company_user[0]->post_title == 'DeZZP')
+                array_push($authors, $value->ID);
+        }
+
+        $args = array(
+            'post_type' => 'post',
+            'post_status' => 'publish',
+            'posts_per_page' => -1,
+            'author__in' => $authors,
+            'order' => 'DESC',
+            );
+    
+        $blogs = get_posts($args);
+
+    ?>
+
     <!-- old name => overview-organisations-1 -->
 
     <div>
@@ -174,457 +197,120 @@
                 <strong>Populaire groeipaden</strong>
             </p>
             <div class="row my-4 cards_slide" style="height: 350px">
-                 <div class="col-md-4 p-md-2 p-2">
-                    <a href="http://localhost/livelearn/course/the-webbuilder-course/" class="swiper-slide swiperSlideModife swiper-slide-active" role="group" aria-label="1 / 5" style="width: 313.333px; margin-right: 20px;">
-                        <div class="cardKraam2">
-                            <div class="headCardKraam">
-                                <div class="blockImgCardCour">
-                                    <img src="http://localhost/livelearn/wp-content/uploads/2022/04/App-builder.jpeg" alt="">
+                <?php 
+                foreach($blogs as $course){
+                    /*
+                    * Categories
+                    */
+                    $category = ' '; 
+                    $tree = get_the_terms($course->ID, 'course_category'); 
+                    if($tree)
+                        if(isset($tree[2]))
+                            $category = $tree[2]->name;
+                    $category_id = 0;
+                    if($category == ' '){
+                        $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
+                        if($category_id != 0)
+                            $category = (String)get_the_category_by_ID($category_id);
+                    } 
+
+                    /*
+                    * Price 
+                    */
+                    $p = " ";
+                    $p = get_field('price', $course->ID);
+                    if($p != "0")
+                        $price =  number_format($p, 2, '.', ',');
+                    else 
+                        $price = 'Gratis';
+
+                    /*
+                    * Thumbnails
+                    */ 
+                    $thumbnail = get_field('preview', $course->ID)['url'];
+                    if(!$thumbnail){
+                        $thumbnail = get_field('url_image_xml', $course->ID);
+                        if(!$thumbnail)
+                            $thumbnail = get_field('image', 'category_'. $category_id);
+                            if(!$thumbnail)
+                                $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                    }
+                    
+                    /*
+                    * Companies
+                    */ 
+                    $company = get_field('company',  'user_' . $course->post_author);
+                    $company_logo = get_field('company_logo', $company[0]->ID);
+                ?>
+                    <div class="col-md-4 p-md-2 p-2">
+                        <a href="<?= get_permalink($course->ID) ?>" class="swiper-slide swiperSlideModife swiper-slide-active" role="group" aria-label="1 / 5" style="width: 313.333px; margin-right: 20px;">
+                            <div class="cardKraam2">
+                                <div class="headCardKraam">
+                                   <div class="blockImgCardCour">
+                                        <img src="<?= $thumbnail; ?>" alt="">
+                                    </div>
+                                    
+                                    <div class="blockgroup7">
+                                        <div class="iconeTextKraa">
+                                            <?php if($category != " ") { ?>
+                                            <div class="sousiconeTextKraa">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/kraam.png" class="icon7" alt="">
+                                                <p class="kraaText"><?php echo $category ?></p>
+                                            </div>
+                                            <?php } ?>
+
+
+                                            <?php if(get_field('degree', $course->ID)) { ?>
+                                            <div class="sousiconeTextKraa">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" class="icon7" alt="">
+                                                <p class="kraaText"> <?php echo get_field('degree', $course->ID);?></p>
+                                            </div>
+                                            <?php } ?>
+
+                                        </div>
+                                        <div class="iconeTextKraa">
+                                            <!-- 
+                                            <div class="sousiconeTextKraa">
+                                                <img src="<?php echo get_stylesheet_directory_uri() . '/img/calend.png' ; ?>" class="icon7" alt="">
+                                                <p class="kraaText"> </p>
+                                            </div> -->
+                                            <div class="sousiconeTextKraa">
+                                                <img src="<?php echo get_stylesheet_directory_uri() . '/img/euro1.png'; ?>" class="icon7" alt="">
+                                                <p class="kraaText"><?= $price; ?>&nbsp;&nbsp;</p>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                   
                                 </div>
-                                <div class="blockgroup7">
-                                    <div class="iconeTextKraa">
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/kraam.png" class="icon7" alt="">
-                                            <p class="kraaText"> </p>
-                                        </div>
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/mbo3.png" class="icon7" alt="">
-                                            <p class="kraaText"></p>
-                                        </div>
-                                    </div>
-                                    <div class="iconeTextKraa">
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/calend.png" class="icon7" alt="">
-                                            <p class="kraaText"> </p>
-                                        </div>
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/euro1.png" class="icon7" alt="">
-                                            <p class="kraaText">3,421.00 &nbsp;&nbsp;</p>
+                                <div class="contentCardProd">
+                                    <div class="group8">
+                                        <div class="imgTitleCours">
+                                            <div class="imgCoursProd">
+                                                <img src="<?= $company_logo; ?>" width="25" alt="">
+                                            </div>
+                                            <p class="nameCoursProd"><?= $company[0]->post_title; ?></p>
+                                            </div>
+                                        <div class="group9">
+                                            <div class="blockOpein">
+                                                <!-- <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt=""> -->
+                                                <p class="lieuAm">Artikel</p>
+                                            </div>
+                                            <div class="blockOpein">
+                                                <!-- <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt=""> -->
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="contentCardProd">
-                                <div class="group8">
-                                    <div class="imgTitleCours">
-                                        <div class="imgCoursProd">
-                                            <img src="http://localhost/livelearn/wp-content/uploads/2021/11/logoWorkPlaceAcademy_01-1.png" width="25" alt="">
-                                        </div>
-                                        <p class="nameCoursProd">WorkPlace Academy</p>
-                                        </div>
-                                    <div class="group9">
-                                        <div class="blockOpein">
-                                            <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt="">
-                                            <p class="lieuAm">Opleidingen</p>
-                                        </div>
-                                        <div class="blockOpein">
-                                            <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt="">
-                                            <p class="lieuAm"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="werkText">The webbuilder course</p>
-                                <p class="descriptionPlatform">
-                                    Mooie tekst voor als korte beschrijving
-                                </p>
-                            </div>
-                        </div>
-                    </a>
-                 </div>
-                 <div class="col-md-4 p-md-2 p-2">
-                    <a href="http://localhost/livelearn/course/the-webbuilder-course/" class="swiper-slide swiperSlideModife swiper-slide-active" role="group" aria-label="1 / 5" style="width: 313.333px; margin-right: 20px;">
-                        <div class="cardKraam2">
-                            <div class="headCardKraam">
-                                <div class="blockImgCardCour">
-                                    <img src="http://localhost/livelearn/wp-content/uploads/2022/04/App-builder.jpeg" alt="">
-                                </div>
-                                <div class="blockgroup7">
-                                    <div class="iconeTextKraa">
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/kraam.png" class="icon7" alt="">
-                                            <p class="kraaText"> </p>
-                                        </div>
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/mbo3.png" class="icon7" alt="">
-                                            <p class="kraaText"></p>
-                                        </div>
-                                    </div>
-                                    <div class="iconeTextKraa">
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/calend.png" class="icon7" alt="">
-                                            <p class="kraaText"> </p>
-                                        </div>
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/euro1.png" class="icon7" alt="">
-                                            <p class="kraaText">3,421.00 &nbsp;&nbsp;</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="contentCardProd">
-                                <div class="group8">
-                                    <div class="imgTitleCours">
-                                                                            <div class="imgCoursProd">
-                                            <img src="http://localhost/livelearn/wp-content/uploads/2021/11/logoWorkPlaceAcademy_01-1.png" width="25" alt="">
-                                        </div>
-                                        <p class="nameCoursProd">WorkPlace Academy</p>
-                                                                        </div>
-                                    <div class="group9">
-                                        <div class="blockOpein">
-                                            <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt="">
-                                            <p class="lieuAm">Opleidingen</p>
-                                        </div>
-                                        <div class="blockOpein">
-                                            <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt="">
-                                            <p class="lieuAm"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="werkText">The webbuilder course</p>
-                                <p class="descriptionPlatform">
-                                    Mooie tekst voor als korte beschrijving                            </p>
-                            </div>
-                        </div>
-                    </a>
-                 </div>
-                 <div class="col-md-4 p-md-2 p-2">
-                    <a href="http://localhost/livelearn/course/the-webbuilder-course/" class="swiper-slide swiperSlideModife swiper-slide-active" role="group" aria-label="1 / 5" style="width: 313.333px; margin-right: 20px;">
-                        <div class="cardKraam2">
-                            <div class="headCardKraam">
-                                <div class="blockImgCardCour">
-                                    <img src="http://localhost/livelearn/wp-content/uploads/2022/04/App-builder.jpeg" alt="">
-                                </div>
-                                <div class="blockgroup7">
-                                    <div class="iconeTextKraa">
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/kraam.png" class="icon7" alt="">
-                                            <p class="kraaText"> </p>
-                                        </div>
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/mbo3.png" class="icon7" alt="">
-                                            <p class="kraaText"></p>
-                                        </div>
-                                    </div>
-                                    <div class="iconeTextKraa">
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/calend.png" class="icon7" alt="">
-                                            <p class="kraaText"> </p>
-                                        </div>
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/euro1.png" class="icon7" alt="">
-                                            <p class="kraaText">3,421.00 &nbsp;&nbsp;</p>
-                                        </div>
-                                    </div>
+                                    <p class="werkText"><?= $course->post_title ?></p>
+                                    <p class="descriptionPlatform">
+                                        <?php echo get_field('short_description', $course->ID) ?>
+                                    </p>
                                 </div>
                             </div>
-                            <div class="contentCardProd">
-                                <div class="group8">
-                                    <div class="imgTitleCours">
-                                                                            <div class="imgCoursProd">
-                                            <img src="http://localhost/livelearn/wp-content/uploads/2021/11/logoWorkPlaceAcademy_01-1.png" width="25" alt="">
-                                        </div>
-                                        <p class="nameCoursProd">WorkPlace Academy</p>
-                                                                        </div>
-                                    <div class="group9">
-                                        <div class="blockOpein">
-                                            <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt="">
-                                            <p class="lieuAm">Opleidingen</p>
-                                        </div>
-                                        <div class="blockOpein">
-                                            <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt="">
-                                            <p class="lieuAm"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="werkText">The webbuilder course</p>
-                                <p class="descriptionPlatform">
-                                    Mooie tekst voor als korte beschrijving                            </p>
-                            </div>
-                        </div>
-                    </a>
-                 </div>
-                 <div class="col-md-4 p-md-2 p-2">
-                    <a href="http://localhost/livelearn/course/the-webbuilder-course/" class="swiper-slide swiperSlideModife swiper-slide-active" role="group" aria-label="1 / 5" style="width: 313.333px; margin-right: 20px;">
-                        <div class="cardKraam2">
-                            <div class="headCardKraam">
-                                <div class="blockImgCardCour">
-                                    <img src="http://localhost/livelearn/wp-content/uploads/2022/04/App-builder.jpeg" alt="">
-                                </div>
-                                <div class="blockgroup7">
-                                    <div class="iconeTextKraa">
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/kraam.png" class="icon7" alt="">
-                                            <p class="kraaText"> </p>
-                                        </div>
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/mbo3.png" class="icon7" alt="">
-                                            <p class="kraaText"></p>
-                                        </div>
-                                    </div>
-                                    <div class="iconeTextKraa">
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/calend.png" class="icon7" alt="">
-                                            <p class="kraaText"> </p>
-                                        </div>
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/euro1.png" class="icon7" alt="">
-                                            <p class="kraaText">3,421.00 &nbsp;&nbsp;</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="contentCardProd">
-                                <div class="group8">
-                                    <div class="imgTitleCours">
-                                                                            <div class="imgCoursProd">
-                                            <img src="http://localhost/livelearn/wp-content/uploads/2021/11/logoWorkPlaceAcademy_01-1.png" width="25" alt="">
-                                        </div>
-                                        <p class="nameCoursProd">WorkPlace Academy</p>
-                                                                        </div>
-                                    <div class="group9">
-                                        <div class="blockOpein">
-                                            <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt="">
-                                            <p class="lieuAm">Opleidingen</p>
-                                        </div>
-                                        <div class="blockOpein">
-                                            <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt="">
-                                            <p class="lieuAm"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="werkText">The webbuilder course</p>
-                                <p class="descriptionPlatform">
-                                    Mooie tekst voor als korte beschrijving                            </p>
-                            </div>
-                        </div>
-                    </a>
-                 </div>
-            </div>
-            <div class="row my-4 cards_slide" style="height: 350px">
-                 <div class="col-md-4 p-md-2 p-2">
-                    <a href="http://localhost/livelearn/course/the-webbuilder-course/" class="swiper-slide swiperSlideModife swiper-slide-active" role="group" aria-label="1 / 5" style="width: 313.333px; margin-right: 20px;">
-                        <div class="cardKraam2">
-                            <div class="headCardKraam">
-                                <div class="blockImgCardCour">
-                                    <img src="http://localhost/livelearn/wp-content/uploads/2022/04/App-builder.jpeg" alt="">
-                                </div>
-                                <div class="blockgroup7">
-                                    <div class="iconeTextKraa">
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/kraam.png" class="icon7" alt="">
-                                            <p class="kraaText"> </p>
-                                        </div>
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/mbo3.png" class="icon7" alt="">
-                                            <p class="kraaText"></p>
-                                        </div>
-                                    </div>
-                                    <div class="iconeTextKraa">
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/calend.png" class="icon7" alt="">
-                                            <p class="kraaText"> </p>
-                                        </div>
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/euro1.png" class="icon7" alt="">
-                                            <p class="kraaText">3,421.00 &nbsp;&nbsp;</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="contentCardProd">
-                                <div class="group8">
-                                    <div class="imgTitleCours">
-                                                                            <div class="imgCoursProd">
-                                            <img src="http://localhost/livelearn/wp-content/uploads/2021/11/logoWorkPlaceAcademy_01-1.png" width="25" alt="">
-                                        </div>
-                                        <p class="nameCoursProd">WorkPlace Academy</p>
-                                                                        </div>
-                                    <div class="group9">
-                                        <div class="blockOpein">
-                                            <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt="">
-                                            <p class="lieuAm">Opleidingen</p>
-                                        </div>
-                                        <div class="blockOpein">
-                                            <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt="">
-                                            <p class="lieuAm"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="werkText">The webbuilder course</p>
-                                <p class="descriptionPlatform">
-                                    Mooie tekst voor als korte beschrijving                            </p>
-                            </div>
-                        </div>
-                    </a>
-                 </div>
-                 <div class="col-md-4 p-md-2 p-2">
-                    <a href="http://localhost/livelearn/course/the-webbuilder-course/" class="swiper-slide swiperSlideModife swiper-slide-active" role="group" aria-label="1 / 5" style="width: 313.333px; margin-right: 20px;">
-                        <div class="cardKraam2">
-                            <div class="headCardKraam">
-                                <div class="blockImgCardCour">
-                                    <img src="http://localhost/livelearn/wp-content/uploads/2022/04/App-builder.jpeg" alt="">
-                                </div>
-                                <div class="blockgroup7">
-                                    <div class="iconeTextKraa">
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/kraam.png" class="icon7" alt="">
-                                            <p class="kraaText"> </p>
-                                        </div>
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/mbo3.png" class="icon7" alt="">
-                                            <p class="kraaText"></p>
-                                        </div>
-                                    </div>
-                                    <div class="iconeTextKraa">
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/calend.png" class="icon7" alt="">
-                                            <p class="kraaText"> </p>
-                                        </div>
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/euro1.png" class="icon7" alt="">
-                                            <p class="kraaText">3,421.00 &nbsp;&nbsp;</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="contentCardProd">
-                                <div class="group8">
-                                    <div class="imgTitleCours">
-                                                                            <div class="imgCoursProd">
-                                            <img src="http://localhost/livelearn/wp-content/uploads/2021/11/logoWorkPlaceAcademy_01-1.png" width="25" alt="">
-                                        </div>
-                                        <p class="nameCoursProd">WorkPlace Academy</p>
-                                                                        </div>
-                                    <div class="group9">
-                                        <div class="blockOpein">
-                                            <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt="">
-                                            <p class="lieuAm">Opleidingen</p>
-                                        </div>
-                                        <div class="blockOpein">
-                                            <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt="">
-                                            <p class="lieuAm"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="werkText">The webbuilder course</p>
-                                <p class="descriptionPlatform">
-                                    Mooie tekst voor als korte beschrijving                            </p>
-                            </div>
-                        </div>
-                    </a>
-                 </div>
-                 <div class="col-md-4 p-md-2 p-2">
-                    <a href="http://localhost/livelearn/course/the-webbuilder-course/" class="swiper-slide swiperSlideModife swiper-slide-active" role="group" aria-label="1 / 5" style="width: 313.333px; margin-right: 20px;">
-                        <div class="cardKraam2">
-                            <div class="headCardKraam">
-                                <div class="blockImgCardCour">
-                                    <img src="http://localhost/livelearn/wp-content/uploads/2022/04/App-builder.jpeg" alt="">
-                                </div>
-                                <div class="blockgroup7">
-                                    <div class="iconeTextKraa">
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/kraam.png" class="icon7" alt="">
-                                            <p class="kraaText"> </p>
-                                        </div>
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/mbo3.png" class="icon7" alt="">
-                                            <p class="kraaText"></p>
-                                        </div>
-                                    </div>
-                                    <div class="iconeTextKraa">
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/calend.png" class="icon7" alt="">
-                                            <p class="kraaText"> </p>
-                                        </div>
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/euro1.png" class="icon7" alt="">
-                                            <p class="kraaText">3,421.00 &nbsp;&nbsp;</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="contentCardProd">
-                                <div class="group8">
-                                    <div class="imgTitleCours">
-                                                                            <div class="imgCoursProd">
-                                            <img src="http://localhost/livelearn/wp-content/uploads/2021/11/logoWorkPlaceAcademy_01-1.png" width="25" alt="">
-                                        </div>
-                                        <p class="nameCoursProd">WorkPlace Academy</p>
-                                                                        </div>
-                                    <div class="group9">
-                                        <div class="blockOpein">
-                                            <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt="">
-                                            <p class="lieuAm">Opleidingen</p>
-                                        </div>
-                                        <div class="blockOpein">
-                                            <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt="">
-                                            <p class="lieuAm"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="werkText">The webbuilder course</p>
-                                <p class="descriptionPlatform">
-                                    Mooie tekst voor als korte beschrijving                            </p>
-                            </div>
-                        </div>
-                    </a>
-                 </div>
-                 <div class="col-md-4 p-md-2 p-2">
-                    <a href="http://localhost/livelearn/course/the-webbuilder-course/" class="swiper-slide swiperSlideModife swiper-slide-active" role="group" aria-label="1 / 5" style="width: 313.333px; margin-right: 20px;">
-                        <div class="cardKraam2">
-                            <div class="headCardKraam">
-                                <div class="blockImgCardCour">
-                                    <img src="http://localhost/livelearn/wp-content/uploads/2022/04/App-builder.jpeg" alt="">
-                                </div>
-                                <div class="blockgroup7">
-                                    <div class="iconeTextKraa">
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/kraam.png" class="icon7" alt="">
-                                            <p class="kraaText"> </p>
-                                        </div>
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/mbo3.png" class="icon7" alt="">
-                                            <p class="kraaText"></p>
-                                        </div>
-                                    </div>
-                                    <div class="iconeTextKraa">
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/calend.png" class="icon7" alt="">
-                                            <p class="kraaText"> </p>
-                                        </div>
-                                        <div class="sousiconeTextKraa">
-                                            <img src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/euro1.png" class="icon7" alt="">
-                                            <p class="kraaText">3,421.00 &nbsp;&nbsp;</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="contentCardProd">
-                                <div class="group8">
-                                    <div class="imgTitleCours">
-                                                                            <div class="imgCoursProd">
-                                            <img src="http://localhost/livelearn/wp-content/uploads/2021/11/logoWorkPlaceAcademy_01-1.png" width="25" alt="">
-                                        </div>
-                                        <p class="nameCoursProd">WorkPlace Academy</p>
-                                                                        </div>
-                                    <div class="group9">
-                                        <div class="blockOpein">
-                                            <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt="">
-                                            <p class="lieuAm">Opleidingen</p>
-                                        </div>
-                                        <div class="blockOpein">
-                                            <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt="">
-                                            <p class="lieuAm"></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <p class="werkText">The webbuilder course</p>
-                                <p class="descriptionPlatform">
-                                    Mooie tekst voor als korte beschrijving</p>
-                            </div>
-                        </div>
-                    </a>
-                 </div>
+                        </a>
+                    </div>
+                <?php
+                }
+                ?>
             </div>
         </div>
     </section>
