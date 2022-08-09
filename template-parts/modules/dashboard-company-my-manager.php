@@ -104,4 +104,3 @@ $manager = get_users(array('include'=> $manager))[0]->data;
         </div>
     </div>
     </div>
-</div>
