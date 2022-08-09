@@ -13,9 +13,11 @@ class Article
     public $date;
     public $type;
     public $content;
+    public $author; 
+    public $company; 
     public $createdAt; 
 
-    public function __construct($title, $short_description, $image, $link, $date, $content)
+    public function __construct($title, $short_description, $image, $link, $date, $content, $author = null, $company = null)
     {
         $this->title = $title;
         $this->short_description = $short_description;
@@ -24,6 +26,8 @@ class Article
         $this->date = $date;
         $this->type = 'Artikel';
         $this->content = $content;
+        $this->author = $author;
+        $this->company = $company;
         $this->createdAt = new DateTime();
     }
 
@@ -36,6 +40,20 @@ class Article
     public function getContent(){return $this->content;}
     public function getCreatedAt(){return $this->createdAt;}
 
+     
+
+}
+
+function getAuthor($company){
+  $users = get_users();
+
+  foreach ($users as $key => $value) {
+    $company_user = get_field('company',  'user_' . $value->ID );
+    if($company_user[0]->post_title == $company)
+      return $value->ID;
+  }
+
+  return null;
 }
 
 function scrapeFrom($website): array
@@ -58,16 +76,17 @@ function scrapeFrom($website): array
 }
 
 function scrapper($url,$html_tag,$class_selector){
-    $html_code = file_get_contents($url);
-    $dom = new DomDocument();
+    $html_code=file_get_contents($url);
+    $dom= new DomDocument();
     libxml_use_internal_errors(true);
-    $datas = array();
+    $datas=array();
     if (!empty($html_code))
     {
         $dom->loadHTML($html_code);
-        $dom_path =new DOMXPath($dom);
-        $query = '//'.$html_tag.'[@class='.$class_selector.']';
-        $result = $dom_path->query($query);
+        $dom_path=new DOMXPath($dom);
+        $query= '//'.$html_tag.'[@class='.$class_selector.']';
+        $result=$dom_path->query($query);
+        //var_dump($result);
         if (!is_null($result))
             return $result;
     }
@@ -87,23 +106,22 @@ function scrapeSmartWP()
     
     if ($image!='/images/icons/facebook.svg')
     {
-        var_dump($image);
-        $title=$node->getElementsByTagName('h2')->item(0)->nodeValue;
-        $short_description=$node->getElementsByTagName('p')->item(0)->nodeValue;
-        $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
-        $date=$node->getElementsByTagName('time')->item(0)->nodeValue;
-        $title=$node->getElementsByTagName('h2')->item(0)->nodeValue;
-        $link=$url.$node->getElementsByTagName('a')->item(0)->getAttribute('href');
-        $result_content = scrapper($link,$tag,$selector_class_content);
-        if (!is_null($result_content))
-        {
-
-        var_dump($result_content[0]->getElementsByTagName('p') ->item(1)->nodeValue);
-            $content = $result_content->item(0)->nodeValue;
-            $article = new Article($title,$short_description,$image,$link,$date,$content);
-            $datas[]=$article;
-            // var_dump($article ->getTitle());
-        }
+      //var_dump($image);
+      $title=$node->getElementsByTagName('h2')->item(0)->nodeValue;
+      $short_description=$node->getElementsByTagName('p')->item(0)->nodeValue;
+      $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+      $date=$node->getElementsByTagName('time')->item(0)->nodeValue;
+      $title=$node->getElementsByTagName('h2')->item(0)->nodeValue;
+      $link=$url.$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+      $result_content=scrapper($link,$tag,$selector_class_content);
+      if (!is_null($result_content))
+      {
+        //var_dump($result_content[0]->getElementsByTagName('p') ->item(1)->nodeValue);
+        $content=$result_content->item(0)->nodeValue;
+        $article = new Article($title,$short_description,$image,$link,$date,$content);
+        $datas[]=$article;
+        //var_dump($article ->getTitle());
+      }
     }
   }
     //var_dump($datas);
@@ -116,6 +134,11 @@ function scrapeDeZZP(): array{
   $selector_class='"tg-item-inner"';
   $selector_class_content='"x-row-inner"';
   $node_articles=scrapper($url."/zzp-nieuws/",$tag,$selector_class);
+  $title_company = 'DeZZP';
+
+  $author = getAuthor($title_company);
+  $company = get_field('company', 'user_' . $author)[0]->ID;
+
   foreach ($node_articles as $key => $node) 
   {
     //$image=$node->getElementsByTagName('img')->item(0)->getAttribute('src') ?? '';
@@ -125,24 +148,15 @@ function scrapeDeZZP(): array{
     $date=$node->getElementsByTagName('time')->item(0)->nodeValue;
     $title=$node->getElementsByTagName('h2')->item(0)->nodeValue;
     $result_content=scrapper($link,$tag,$selector_class_content);
-     if (!is_null($result_content))
-     {
-      foreach ($result_content as $key => $node) 
-      {
-        $content=$node->nodeValue;
-      }
-      // $content="";
-      // foreach ($result_content->item(0)->getElementsByTagName('p') as $key => $node) {
-      //   $content.=$node->nodeValue;
-      
-      }
-        
-         
+
+    if (!is_null($result_content))
+    foreach ($result_content as $key => $node) 
+      $content=$node->nodeValue;
      
-     $article=new Article($title,$short_description,null,$link,$date,$content);
-    $datas[]=$article;
+    $article = new Article($title,$short_description,null,$link,$date,$content,$author,$company);
+    $datas[] = $article;
   }
-  var_dump($datas);
+
   return $datas;
 }
 
@@ -271,34 +285,42 @@ function persistArticle($article)
 {
   global $wpdb;
   $table = $wpdb->prefix . 'databank'; 
-   $sql = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml=".$article->getImage()." AND type= Artikel");
-   $result = $wpdb->get_results($sql);
-    var_dump($result);    
-       if(!empty($result))
-       {
-          $status = 'extern';
-          //Data to create the course
-          $data = array(
-            'titel' => $article->getTitle(),
-            'type' => 'Artikel',
-            'videos' => NULL, 
-            'short_description' => $article->getShortDescription(),
-            'long_description' => $article->getcontent(),
-            'duration' => NULL, 
-            'prijs' => 0, 
-            'prijs_vat' => 0,
-            'image_xml' => $article->getImage(), 
-            'onderwerpen' => '', 
-            'date_multiple' => $article->getDate() ?? NULL, 
-            'course_id' => null,
-            'author_id' => 0,
-            'status' => $status
-          );
-           $wpdb->insert($table,$data);
-           $id_post = $wpdb->insert_id;
-           echo $wpdb->last_error;
-     }
-   }
+  $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($article->getImage(), 'Artikel'));
+  $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE titel = %s AND type = %s", array($article->getTitle(), 'Artikel'));
+
+  $result_image = $wpdb->get_results($sql_image);
+  $result_title = $wpdb->get_results($sql_title);
+
+  if(!isset($result_image[0]) && !isset($result_title[0]))
+  {
+    $status = 'extern';
+    //Data to create the course
+    $data = array(
+      'titel' => $article->getTitle(),
+      'type' => 'Artikel',
+      'videos' => NULL, 
+      'short_description' => $article->getShortDescription(),
+      'long_description' => $article->getcontent(),
+      'duration' => NULL, 
+      'prijs' => 0, 
+      'prijs_vat' => 0,
+      'image_xml' => $article->getImage(), 
+      'onderwerpen' => '', 
+      'date_multiple' => $article->getDate() ?? NULL, 
+      'course_id' => null,
+      'author_id' => $article->author,
+      'company_id' =>  $article->company,
+      'contributors' => null,
+      'status' => $status
+    );
+
+    //var_dump($data);
+    $wpdb->insert($table,$data);
+    $id_post = $wpdb->insert_id;
+    echo $wpdb->last_error;
+  }
+
+}
 
    function scrapeBouwendNederland(){
     $url = 'https://www.bouwendnederland.nl/actueel/nieuws';
@@ -570,5 +592,3 @@ function persistArticle($article)
      return $datas;
    }
 
-   scrapeDeZZP();
-   // Can't get image for nedverbak
