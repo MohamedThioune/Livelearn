@@ -676,12 +676,20 @@ ul.sub-menu li a {
     font-weight: bold;
     font-size: 14px;
     margin-bottom: 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .descriptionPlatform {
     color: #42454D;
     font-size: 14px;
     margin-bottom: 5px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
 }
 
 .swiper-slide4 {
@@ -5429,7 +5437,7 @@ nav .show{
 }
 .btnCommunity{
     background: #47a99e;
-    color: white;
+    color: white !important;
     padding: 9px 25px;
     border-radius: 10px;
     margin-top: 15px;
@@ -7388,6 +7396,7 @@ ul#tabs-nav li.active {
     border-radius: 100%;
     overflow: hidden;
     background: #e0eff4;
+    border: 1px solid #b5dad6;
 
 }
 .blockdropdownnHeader ul li a .blockImg img{
@@ -7563,6 +7572,9 @@ ul#tabs-nav li.active {
     right: 116px;
     padding: 3px 25px;
     border-radius: 10px;
+}
+.btn-Zoek:hover{
+    color: #FFFFFF !important;
 }
 .groupeBtn-Jouw-inloggen{
     display: flex;
@@ -8992,6 +9004,77 @@ ul#tabs-nav li.active {
     text-overflow: ellipsis;
     word-wrap: break-word;
 }
+.circleIndicator{
+ text-align: center;
+}
+.circleIndicator i{
+    color: #043356;
+    margin-right: auto;
+    margin-left: 2px;
+    font-size: 22px;
+    margin-top: 9px;
+}
+.colorStep i{
+    color: white;
+    font-size: 22px;
+    margin-top: 9px;
+}
+.line-elemnt {
+    border-top: 1px solid #95a7a5;
+    padding-top: 15px;
+    width: 70%;
+    margin-top: 0;
+}
+.headTabsCompany{
+    display: flex;
+    margin-bottom: 20px;
+}
+.headTabsCompany li{
+    width: 50%;
+}
+.headTabsCompany li button{
+    width: 100%;
+}
+.btnCustomTabs {
+    background: white;
+    border: none;
+    padding: 8px 10px 9px;
+    width: 100%;
+    height: auto;
+    color: #043356;
+    font-size: 16px;
+    font-weight: 500;
+}
+.btnactive{
+    background: #043356;
+    color: white;
+}
+.btnactive:hover{
+    color: white !important;
+}
+#tab2Content{
+    display: none;
+}
+#edit-company-data-form .acf-actions a{
+    color: #FFFFFF !important;
+}
+
+#tab2Content label strong {
+    font-weight: 500 !important;
+    color: #212529 !important;
+    font-size: 16px;
+}
+#tab2Content input{
+    background: #E0EFF4;
+    width: 90%;
+    margin-left: auto;
+}
+
+#tab2Content button {
+    background: #00A89D;
+    margin-top: 25px;
+}
+
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 

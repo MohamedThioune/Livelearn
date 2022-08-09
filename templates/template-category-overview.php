@@ -509,14 +509,13 @@ require($page);
                 <button class="btn btnIcone8" id="show"><img src="<?php echo get_stylesheet_directory_uri();?>/img/filter.png" alt=""></button>
             </div>
         </div>
-        <!-- ------------------------------------ End  Slide bar ---------------------------------------- -->                    
-
-        <br><br>
+        <!-- ------------------------------------ End  Slide bar ---------------------------------------- -->
        <!-- ------------------------------------------ Start Content ------------------------------------ -->
         <?php 
             if(isset($courses) && !empty($courses)){
             ?>
         <div class="col-md-9">
+            a
             <?php
                 if(!empty($opleidingen)){                    
             ?>

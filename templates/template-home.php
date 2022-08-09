@@ -535,27 +535,39 @@ $degrees=[
                     <form name="skills_passport_add" method="post">
                         <div class="blockStepSkillsPaspoort">
                             <div class="setp" >
-                                <div class="circleIndicator colorStep" id="Niveau"></div>
-                                <p class="textOpleidRight">Niveau</p>
+                                <div class="circleIndicator colorStep" id="Niveau">
+                                    <i class="fa fa-level-up" aria-hidden="true"></i>
+                                </div>
+                                <p class="textOpleidRight">Level</p>
                             </div>
                             <div class="setp" >
-                                <div class="circleIndicator" id="Vakgebied"></div>
+                                <div class="circleIndicator" id="Vakgebied">
+                                    <i class="fa fa-file"></i>
+                                </div>
                                 <p class="textOpleidRight">Vakgebied (en) </p>
                             </div>
                             <div class="setp" >
-                                <div class="circleIndicator" id="Locatie"></div>
+                                <div class="circleIndicator" id="Locatie">
+                                    <i class="fa fa-map-marker"></i>
+                                </div>
                                 <p class="textOpleidRight">Locatie</p>
                             </div>
                             <div class="setp" >
-                                <div class="circleIndicator" id="Leervorm"></div>
+                                <div class="circleIndicator" id="Leervorm">
+                                    <i class="fa fa-graduation-cap"></i>
+                                </div>
                                 <p class="textOpleidRight">Leervorm</p>
                             </div>
                             <div class="setp" >
-                                <div class="circleIndicator" id="Generatie"></div>
+                                <div class="circleIndicator" id="Generatie">
+                                    <i class="fa fa-calendar-check"></i>
+                                </div>
                                 <p class="textOpleidRight">Generatie</p>
                             </div>
                             <div class="setp" >
-                                <div class="circleIndicator" id="Finish"></div>
+                                <div class="circleIndicator" id="Finish">
+                                    <i class="fa fa-flag-checkered"></i>
+                                </div>
                                 <p class="textOpleidRight">Finish</p>
                             </div>
                         </div>

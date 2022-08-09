@@ -171,7 +171,20 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                         </div>
                     </div>-->
                     <h2 class="titleBlog"><?php echo the_title();?></h2>
-                    <p class="datePublish"><?php echo get_the_date('d F'); ?></p>
+                   <div class="dateAndShare">
+                       <p class="datePublish"><?php echo get_the_date('d F'); ?></p>
+                       <ul class="blockShare">
+                           <li class="list-inline-item shareTitle"> Share: </li>
+                           <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+                           <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                           <li class="list-inline-item">
+                               <a href="#"><i class="fab fa-linkedin-in text-muted"></i></a>
+                           </li>
+                           <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
+                           <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                       </ul>
+                   </div>
+
                     <div class="single-blog-item">
                         <img src="<?= $image; ?>" alt="" class="img-fluid rounded">
                     </div>
@@ -211,16 +224,7 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                         </ul>
                     </div>
                     <div class="commentAndShare">
-                        <ul class="blockShare">
-                            <li class="list-inline-item shareTitle"> Share: </li>
-                            <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
-                            <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-                            <li class="list-inline-item">
-                                <a href="#"><i class="fab fa-linkedin-in text-muted"></i></a>
-                            </li>
-                            <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
-                            <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
-                        </ul>
+
                         <button class="btn ti-comment" data-toggle="modal" data-target="#myModal2"><i class="fas fa-comment" aria-hidden="true"></i><?= $number_comments; ?> Comments</button>
                     </div>
 
@@ -292,10 +296,15 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                 <div class="col-lg-4">
                     <div class="sidebar-wrap">
                         <div class="sidebar-widget card border-0 mb-3">
-                            <center><a href="<?php echo "/user-overview/?id=" . $post->post_author; ?>" target="_blank" ><img src="<?php echo $author; ?>" alt="" class="img-fluid"></a></center>
+                            <center>
+                                <a href="<?php echo "/user-overview/?id=" . $post->post_author; ?>" target="_blank" >
+                                    <img src="<?php echo $author; ?>" alt="" class="img-fluid">
+                                </a>
+                            </center>
                             <div class="card-body p-4 text-center">
                                 <a href="<?php echo "/user-overview/?id=" . $post->post_author; ?>" target="_blank" rel="noopener noreferrer"><h5 class="mb-0 mt-4"><?php echo(get_userdata($post->post_author)->data->display_name); ?></h5></a>
                                 <p><?php echo $functie; ?></p>
+                                <button class="btn btnFollow">Follow</button>
                                 <p><?php echo $biographical; ?></p>
 
                                 <ul class="list-inline author-socials">
