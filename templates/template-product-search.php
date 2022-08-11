@@ -17,13 +17,18 @@
 
 
         $args = array(
-            'post_type' => 'course', 
+            'post_type' => array('post','course'), 
             'post_status' => 'publish',
             'posts_per_page' => -1,
         );
         $global_courses = get_posts($args);
 
- 
+        /* 
+        ~ Header filter 
+        */
+        if($_GET['filter'] == "header")
+            $leervom = array($_GET['opleidin']);
+
         /* 
         * Get courses 
         */
@@ -33,7 +38,7 @@
         if(isset($search)){
             $courses = array();
             $args = array(
-                'post_type' => 'course', 
+                'post_type' => array('post','course'), 
                 'post_status' => 'publish',
                 'posts_per_page' => -1,
             );
@@ -57,23 +62,20 @@
                                 
                     $tree = get_the_terms($course->ID, 'course_category');
                     $tree = $tree[2]->ID;
-                    $categories_id = get_field('categories',  $course->ID);
-                    $categories_xml = get_field('category_xml',  $course->ID);
+                    $category_default = get_field('categories', $course->ID);
+                    $category_xml = get_field('category_xml', $course->ID);
                     $categories = array();
-        
-                    if($categories_xml)
-                        foreach($categories_xml as $categorie){
-                            $categorie = $categorie['value'];
-                            if(!in_array($categorie, $categories))
-                                array_push($categories, $categorie);
-                        }
-        
-                    if($categories_id){
-                        if(!empty($categories_id))
-                            $categories = array();  
-                            foreach($categories_id as $categorie)                    
-                                $categories = explode(',', $categorie['value']);
-                    }
+
+                    if(!empty($category_default))
+                        foreach($category_default as $item)
+                            if($item)
+                                if(!in_array($item['value'], $categories));
+                                  
+                    else if(!empty($category_xml))
+                        foreach($category_xml as $item)
+                            if($item)
+                                if(!in_array($item['value'], $categories))
+                                    array_push($categories,$item['value']);
         
         
                     if(in_array($category, $trees) || $categories)
@@ -94,20 +96,6 @@
 
                     if($course->post_author == $user || in_array($user, $expert) ){
                         array_push($courses, $course);
-                        if(get_field('course_type', $course->ID) == "Opleidingen")
-                            array_push($opleidingen, $course);
-                        else if(get_field('course_type', $course->ID) == "Workshop")
-                            array_push($workshops, $course);
-                        else if(get_field('course_type', $course->ID) == "Masterclass")
-                            array_push($masterclasses, $course);
-                        else if(get_field('course_type', $course->ID) == "Event")
-                            array_push($events, $course);
-                        else if(get_field('course_type', $course->ID) == "E-learning")
-                            array_push($e_learnings, $course);
-                        else if(get_field('course_type', $course->ID) == "Training")
-                            array_push($trainings, $course);
-                        else if(get_field('course_type', $course->ID) == "Video")
-                            array_push($videos, $course);
                         
                         $tree = get_the_category($course->ID);
 
@@ -154,7 +142,7 @@
                 }
         
                 $args = array(
-                    'post_type' => 'course', 
+                    'post_type' => array('post','course'), 
                     'posts_per_page' => -1,
                     'author__in' => $users_companie,  
                 );
@@ -162,7 +150,7 @@
                 $courses = get_posts($args);
             }else{
                 $args = array(
-                    'post_type' => 'course', 
+                    'post_type' => array('post','course'), 
                     'post_status' => 'publish',
                     'posts_per_page' => -1,
                 );
@@ -461,6 +449,12 @@
                                 <input type="checkbox" id="event" name="leervom[]" value="Training" <?php if(isset($leervom)) if(in_array('Training', $leervom)) echo "checked" ; else echo ""  ?> >
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
+                        </div>
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">Artikel
+                                <input type="checkbox" id="event" name="leervom[]" value="Artikel" <?php if(isset($leervom)) if(in_array('Artikel', $leervom)) echo "checked" ; else echo ""  ?> >
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
                         </div> 
                         <br>
                     </div>
@@ -550,8 +544,11 @@
             ?>
             <div class="sousBlockProduct4">
                 <div class="row d-flex justify-content-center">
-                    <?php foreach($courses as $course) {?>
-                    <?php  
+                    <?php 
+                    foreach($courses as $key => $course){
+                        if($key == 20)
+                            break;
+
                         /*
                         * Categories and Date
                         */  
@@ -611,7 +608,7 @@
                         }
                       
                         //Image author of this post 
-                        $image_author = get_field('profile_img',  'user_' . $course->post_author);
+                        $image_author = get_field('profile_img',  'user_' . $course->post_author) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png' ;
                      ?>
                     <a href="<?php echo get_permalink($course->ID) ?>" class="col-md-11 pl-0">
                         <div class="blockCardSearch">

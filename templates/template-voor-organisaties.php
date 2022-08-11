@@ -23,11 +23,9 @@
             <div class="col-md-6 col-sm-12 order-md-1 order-0 pb-md-0 pb-3">
                 <div class="blockForm2">
                     <p><b>Activeer zakelijke</b> <br> Leeromgeving </p>
-                    <form action="" class="formBoekGratis">
                         <?php
-                        echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true']");
+                            echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true']");
                         ?>
-                    </form>
                 </div>
             </div>
         </div>

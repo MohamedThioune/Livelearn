@@ -23,17 +23,13 @@ $tik_tok = get_field('tik_tok',  'user_' . $post->post_author);
 $image = get_the_post_thumbnail_url($post->ID);
 if(!$image)
     $image = get_field('preview', $post->ID)['url'];
-else if(!$image)
-    $image = get_field('url_image_xml', $post->ID);
-else if(!$image)
-    $image = get_stylesheet_directory_uri() . '/img/libay.png';
-
 if(!$image)
     $image = get_field('url_image_xml', $post->ID);
+if(!$image)
+    $image = get_stylesheet_directory_uri() . '/img/blog/1.jpg';
 
-$author = get_field('profile_img',  'user_' . $post->post_author);
-if(!$author)
-    $author = get_stylesheet_directory_uri() . 'img/blog/blog-author.jpg';
+//Author
+$user_picture = get_field('profile_img', $post->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
 $biographical = get_field('biographical_info',  'user_' . $post->post_author);
 
@@ -211,14 +207,13 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                                                 array_push($read_category,$item['value']);
                                                 echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
                                             }
-
-                                            else if(!empty($category_xml))
-                                                foreach($category_xml as $item)
-                                                    if($item)
-                                                        if(!in_array($item['value'],$read_category)){
-                                                            array_push($read_category,$item['value']);
-                                                            echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
-                                                        }
+                                else if(!empty($category_xml))
+                                    foreach($category_xml as $item)
+                                        if($item)
+                                            if(!in_array($item['value'],$read_category)){
+                                                array_push($read_category,$item['value']);
+                                                echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
+                                            }
                             }
                             ?>
                         </ul>
@@ -298,7 +293,7 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                         <div class="sidebar-widget card border-0 mb-3">
                             <center>
                                 <a href="<?php echo "/user-overview/?id=" . $post->post_author; ?>" target="_blank" >
-                                    <img src="<?php echo $author; ?>" alt="" class="img-fluid">
+                                    <img src="<?php echo $user_picture; ?>" alt="" class="img-fluid">
                                 </a>
                             </center>
                             <div class="card-body p-4 text-center">

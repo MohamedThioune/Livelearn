@@ -56,8 +56,7 @@ $link = ($user) ? '/dashboard/user' : '/';
 
 
         <!-- Modal -->
-        <div class="modal fade mt-5" id="bedrijfsprofiel_modal" tabindex="-1" role="dialog" 
-        aria-labelledby="exampleModalLabel" aria-hidden="true"  style="width:98%; overflow-y: hidden !important">
+        <div class="modal fade mt-5" id="bedrijfsprofiel_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="width:98%; overflow-y: hidden !important">
             <div class="modal-dialog" role="document">
                 <div class="modal-content px-md-5 px-1">
                     <div class="modal-header border-0">
@@ -86,14 +85,14 @@ $link = ($user) ? '/dashboard/user' : '/';
 
                         <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                                <?php echo do_shortcode( ("[ninja_form id='10' title='false' description='false' ajax='true']")); ?>
+                                <?php echo do_shortcode("[gravityform id='14' title='false' description='false' ajax='true']"); ?>                                
                                 <p class="description pt-2 text-center">
                                     Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je 
                                     direct toegang tot je bedrijfs leeromgeving
                                 </p>
                             </div>
                             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                                <?php echo do_shortcode( ("[ninja_form id='9' title='false' description='false' ajax='true']")); ?>
+                            <?php echo do_shortcode("[gravityform id='15' title='false' description='false' ajax='true']"); ?>                                
                                 <p class="description pt-2 text-center">
                                     Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je 
                                     direct toegang tot je bedrijfs leeromgeving
