@@ -32,13 +32,26 @@ global $post;
                     $image = get_the_post_thumbnail_url($blog->ID);
                     if(!$image)
                         $image = get_field('preview', $blog->ID)['url'];
-                    else if(!$image)
-                        $image = get_field('url_image_xml', $blog->ID);
-                    else
-                        $image = get_stylesheet_directory_uri() . '/img/blog/1.jpg';
-
                     if(!$image)
                         $image = get_field('url_image_xml', $blog->ID);
+                    if(!$image)
+                        $image = get_stylesheet_directory_uri() . '/img/blog/1.jpg';
+
+                    //Author
+                    $user_picture = get_field('profile_img', $blog->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
+                    //Category
+                    $category = ' ';
+                    $category_id = 0;
+                    $category_string = " ";
+                    if($category == ' '){
+                        $category_str = intval(explode(',', get_field('categories',  $blog->ID)[0]['value'])[0]);
+                        $category_id = intval(get_field('category_xml',  $blog->ID)[0]['value']);
+                        if($category_str != 0)
+                            $category = (String)get_the_category_by_ID($category_str);
+                        else if($category_id != 0)
+                            $category = (String)get_the_category_by_ID($category_id);                                    
+                    }
 
                     ?>
                     <a href="<?php echo get_the_permalink($blog->ID);?>" class="card-containe">
@@ -46,7 +59,7 @@ global $post;
                             <img src="<?= $image; ?>" alt="img-Blog" />
                         </div>
                         <div class="card-body">
-                            <span class="card-badge card-badge-blue">Car design</span>
+                            <span class="card-badge card-badge-blue"><?= $category; ?></span>
                             <h1>
                                 <?php echo $blog->post_title;?>
                             </h1>
@@ -54,7 +67,7 @@ global $post;
                                 <?= $short; ?>
                             </p>
                             <div class="card-author">
-                                <img  src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                                <img  src="<?= $user_picture; ?>" alt="">
                                 <div class="author-info">
                                     <p class="author-name"><?php the_author_meta( 'user_nicename' , $blog->post_author ); ?></p>
                                     <p class="post-timestamp"><?php echo get_the_date('d-m-Y', $blog->ID);?></p>

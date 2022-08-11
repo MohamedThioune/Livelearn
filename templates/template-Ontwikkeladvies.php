@@ -193,7 +193,7 @@
                     ?>
                 </div>
                 <div class="col-md-6 col-11">
-                    <h2 class="watAnderenTitle">Wat anderen over ons Zeggen</h2>
+                    <h2 class="watAnderenTitle">Wat anderen over ons zeggen</h2>
                     <div class="cardTestimonialZeggen">
                         <div class="blockImg">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/suit-guy.png">
