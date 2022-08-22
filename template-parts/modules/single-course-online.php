@@ -706,7 +706,12 @@ extract($_GET);
                                     <div class="swiper">
                                         <div class="swiper-wrapper">
                                             <?php
+                                            //var_dump($experts);
+
                                             foreach($experts as $expert){
+                                                if($expert == "")
+                                                    continue;
+                                                    
                                                 $expert = get_users(array('include'=> $expert))[0]->data;
                                                 $company = get_field('company',  'user_' . $expert->ID);
                                                 $title = $company[0]->post_title;

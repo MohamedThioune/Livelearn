@@ -32,7 +32,6 @@ $table = $wpdb->prefix . 'databank';
 
   $author_id = 0;
 
-
   foreach($users as $user){
       $name_user = strtolower($user->data->display_name);
 

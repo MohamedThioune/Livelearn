@@ -149,7 +149,7 @@ jQuery(function($){
 
 
     //close login popup
-    $('.modal button.close').on('click', function(e){
+    $('.modal button.close, .modal a[data-target="#exampleModalCenter"]').on('click', function(e){
         e.preventDefault();
         $(this).closest('.modal').removeClass('show');
         console.log('close popup');

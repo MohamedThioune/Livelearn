@@ -34,7 +34,7 @@ $order_args = array(
 );
 $orders = wc_get_orders($order_args);
 
-/*
+    /*
     ** Categories - all  * 
     */
 

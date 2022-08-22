@@ -625,8 +625,6 @@ else if(isset($databank)){
             
             $author_id = $user_id;
 
-            var_dump($user_id);
-
             update_field('company', $companie, 'user_'.$user_id);
         }
 
@@ -698,12 +696,9 @@ else if(isset($define_budget)){
 
 <?php get_header();?>
 
-
-
 <?php
 
 global $post;
-
 
 $parents = get_post_ancestors( $post->ID );
 

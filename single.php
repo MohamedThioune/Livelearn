@@ -52,6 +52,13 @@ $reviews = get_field('reviews', $post->ID);
 
 $number_comments = !empty($reviews) ? count($reviews) : '0';
 
+$experts = array($post->post_author);
+$expert = get_field('experts', $post->ID);
+
+if(isset($expert[0]))
+    foreach ($expert as $key => $value) 
+        array_push($experts, $value);
+
 ?>
 
 <style>

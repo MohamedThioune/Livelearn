@@ -116,6 +116,7 @@ if ( isset ($id) ) {
     */
 
     echo '<input type="hidden" name="id" value="' . $course->id . '">';
+    echo '<input type="hidden" name="complete" value="quick">';
 
     //titel 
     echo '<div class="form-group"> 
@@ -160,7 +161,6 @@ if ( isset ($id) ) {
           </div>';
 
     //Expert
-    echo'<label>Author : </label><br>';
     echo '<div class="form-group"> 
     <select class="multipleSelect2" name="author_id" id="selected_subtopics" required>';
     if($course->author_id != 0)
@@ -170,7 +170,7 @@ if ( isset ($id) ) {
             else
                 echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
     else{
-        echo '<option value=""></option>';
+        echo '<option value="">Select the author</option>';
         foreach($users as $user)
             echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
     }
@@ -180,7 +180,6 @@ if ( isset ($id) ) {
     //Contributors
     $contributors = explode(',', $course->contributors);
 
-    echo'<label>Contributors : </label><br>';
     echo '<div class="form-group"> 
     <select class="multipleSelect2" name="contributors" id="selected_subtopics" multiple>';
     if(!empty($contributors))
@@ -190,7 +189,7 @@ if ( isset ($id) ) {
             else
                 echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
     else{
-        echo '<option value=""></option>';
+        echo '<option value="">Select the experts</option>';
         foreach($users as $user)
             echo '<option value="'. $user->ID . '">' . $user->display_name . '</option>';
     }
@@ -203,7 +202,7 @@ if ( isset ($id) ) {
         if(!empty($company))
             echo '<option selected value="'. $company->ID . '">' . $company->post_title . '</option>';
         else{
-            echo '<option value=""></option>';
+            echo '<option value="">Select the company</option>';
             foreach($companies as $companie)
                 echo '<option value="'. $companie->ID . '">' . $companie->post_title . '</option>';
         }
