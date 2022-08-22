@@ -1047,7 +1047,7 @@
                             /*
                             * Categories
                             */
-                            $category = '- '; 
+                            $category = '-'; 
 
                             $tree = get_the_terms($course->ID, 'course_category'); 
 
@@ -1066,11 +1066,13 @@
                                     $category = (String)get_the_category_by_ID($category_id);                                    
                             }
 
+                            $location = '~';
                             /*
                             * Date
                             */ 
-                            $location = '~';
-
+                            $day = "~";
+                            $month = "~"; 
+    
                             $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
 
                             $dates = get_field('dates', $course->ID);
@@ -1086,6 +1088,13 @@
                                 if($data){
                                     $date = $data[0]['data'][0]['start_date'];
 
+                                    $strotime = str_replace('/', '-', $date);
+                                    $strtotime_start = strtotime($strotime);
+                                    $strtotime_now = strtotime(date("Y-m-d h:i:s"));
+                                    if($strtotime_now > $strtotime_start)
+                                        continue;
+                                    //echo $date;
+    
                                     $day = explode('/', explode(' ', $date)[0])[0];
                                     $month = explode('/', explode(' ', $date)[0])[1];
                                     $month = $calendar[$month];
@@ -1095,12 +1104,24 @@
                                 else{
                                     $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
                                     $date = $data[0];
+
+                                    $strotime = str_replace('/', '-', $date);
+                                    $strtotime_start = strtotime($strotime);
+                                    $strtotime_now = strtotime(date("Y-m-d h:i:s"));
+                                    if($strtotime_now > $strtotime_start)
+                                        continue;
+                                    //echo $date;
+        
                                     $day = explode('/', explode(' ', $date)[0])[0];
                                     $month = explode('/', explode(' ', $date)[0])[1];
                                     $month = $calendar[$month];
                                     $location = $data[2];
                                 }
                             }
+
+
+                            if($day == "~")
+                                continue;
                         
                             /*
                             * Price 
@@ -1166,7 +1187,7 @@
                         </a>
                     <?php
                         $i++;
-                        if($i == 4)
+                        if($i == 6)
                             break;
                     }  
                                         

@@ -37,6 +37,7 @@ function cpt_taxonomies() {
         'hierarchical'      => true,
         'labels'            => $labels,
         'show_ui'           => true,
+        'show_in_rest'        => true,
         'show_admin_column' => true,
         'query_var'         => true,
         'rewrite'           => array( 'slug' => 'course_category' ),
@@ -73,6 +74,7 @@ function custom_post_type() {
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
+        'show_in_rest'        => true,
         'show_in_menu'        => true,
         'show_in_nav_menus'   => true,
         'show_in_admin_bar'   => true,
@@ -156,6 +158,7 @@ function custom_post_type() {
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
+        'show_in_rest'        => true,
         'show_in_menu'        => true,
         'show_in_nav_menus'   => true,
         'show_in_admin_bar'   => true,
@@ -172,7 +175,6 @@ function custom_post_type() {
 
     register_post_type( 'feedback', $feedback_args );
 
-    // - -- -
 
     $assessment = array(
         'name'                => _x( 'Assessments', 'Assessment', 'assessment' ),
@@ -365,6 +367,7 @@ function custom_post_type() {
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
+        'show_in_rest'        => true,
         'show_in_menu'        => true,
         'show_in_nav_menus'   => true,
         'show_in_admin_bar'   => true,
@@ -391,7 +394,7 @@ function add_custom_roles(){
 }
 add_action('init', 'add_custom_roles');
 
-
+ 
 //redirect 'return to shop'
 add_filter( 'woocommerce_return_to_shop_redirect', 'bbloomer_change_return_shop_url' );
 

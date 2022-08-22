@@ -6,49 +6,187 @@ require($page);
 $like_src = get_stylesheet_directory_uri()."/img/heart-like.png";
 $dislike_src = get_stylesheet_directory_uri()."/img/heart-dislike.png";
 
-$courses = array();
-
 extract($_POST);
 
-$random_id = array(); 
-
+//The user
 $user = get_current_user_id();
 
+$courses = array();
+$course_id = array();
+$random_id = array(); 
+$count = array('Opleidingen' => 0, 'Workshop' => 0, 'Masterclass' => 0, 'Event' => 0, 'E_learning' => 0, 'Training' => 0, 'Video' => 0, 'Artikel' => 0);
+
+$categories = array();
+
+//Categories
+$cats = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'orderby'    => 'name',
+    'exclude' => 'Uncategorized',
+    'parent'     => 0,
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+foreach($cats as $category){
+    $cat_id = strval($category->cat_ID);
+    $category = intval($cat_id);
+    array_push($categories, $category);
+}
+
+//Categories
+$bangerichts = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[1],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$functies = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[0],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$skills = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[3],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$interesses = get_categories( array(
+    'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+    'parent'  => $categories[2],
+    'hide_empty' => 0, // change to 1 to hide categores not having a single post
+) );
+
+$subtopics = array(); 
+foreach($categories as $categ){
+    //Topics
+    $topicss = get_categories(
+        array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categ,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ) 
+    );
+
+    foreach ($topicss as  $value) {
+        $subtopic = get_categories( 
+             array(
+             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+             'parent'  => $value->cat_ID,
+             'hide_empty' => 0,
+              //  change to 1 to hide categores not having a single post
+            ) 
+        );
+        $subtopics = array_merge($subtopics, $subtopic);      
+    }
+}
+
+// Saved courses
+$saved = get_user_meta($user, 'course');
+
+// Get interests courses
+$topics_external = get_user_meta($user, 'topic');
+$topics_internal = get_user_meta($user, 'topic_affiliate');
+
+$topics = array();
+if(!empty($topics_external))
+    $topics = $topics_external;
+
+if(!empty($topics_internal))
+    foreach($topics_internal as $value)
+        array_push($topics, $value);
+
+$experts = get_user_meta($user, 'expert');
+$args = array(
+    'post_type' => array('course', 'post'), 
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'order' => 'DESC'
+);
+$global_courses = get_posts($args);
+
+foreach ($global_courses as $key => $course) {    
+    //Control visibility
+    if(!visibility($course, $visibility_company))
+        continue;
+    
+    //Preferences categories
+    $category_default = get_field('categories', $course->ID);
+    $category_xml = get_field('category_xml', $course->ID);
+    $read_category = array();
+    if(!empty($category_default))
+        foreach($category_default as $item)
+            if($item)
+                if(!in_array($item['value'],$read_category))
+                    array_push($read_category,$item['value']);
+                
+    else if(!empty($category_xml))
+        foreach($category_xml as $item)
+            if($item)
+                if(!in_array($item['value'],$read_category))
+                    array_push($read_category,$item['value']);
+                
+    foreach($topics as $topic_value){
+        if($read_category)
+            if(in_array($topic_value, $read_category) ){
+                if(!in_array($course->ID, $course_id)){
+                    array_push($course_id, $course->ID);
+                    array_push($courses, $course);        
+                    break;
+                }
+        }
+    }
+
+    //Preference author
+    if(in_array($course->post_author, $experts)){
+        if(!in_array($course->ID, $course_id)){
+            array_push($course_id, $course->ID);
+            array_push($courses, $course);        
+        }
+    }
+
+    //Preference expert
+    $experties = get_field('experts', $course->ID);  
+    foreach($experties as $topic_expert){
+        if(in_array($topic_expert, $experts)){
+            if(!in_array($course->ID, $course_id)){
+                array_push($course_id, $course->ID);
+                array_push($courses, $course);        
+                break;
+            }
+        }
+    }
+}
+
+
+//Views
 $user_post_view = get_posts(
     array(
         'post_type' => 'view',
         'post_status' => 'publish',
         'author' => $user,
+        'order' => 'DESC'
     )
 )[0];   
-
 $is_view = false;
 
 if (count($user_post_view)!= 0)
 {
+    $courses_id = array();
     $is_view=true;
-    $args = array(
-        'post_type' => 'course',
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'order' => 'DESC',
-        );
-
-    $all_courses = get_posts($args);
+   
     $all_user_views = (get_field('views', $user_post_view->ID));
     $max_points = 10;
     $recommended_courses = array();
 
     foreach($all_user_views as $key => $view) {
-        foreach ($all_courses as $key => $course) {
+        foreach ($courses as $key => $course) {
             $points = 0;
-
-            //Price
-            $view_prijs = get_field('price', $view['course']->ID);
-
-            /*
-            * Read category
-            */
+            
+            //Control visibility
+            if(!visibility($course, $visibility_company))
+                continue;
 
             //Read category viewed
             $read_category_view = array();
@@ -82,10 +220,9 @@ if (count($user_post_view)!= 0)
                     if($item)
                         if(!in_array($item['value'],$read_category_course))
                             array_push($read_category_course, $item['value']);
-    
-            /*
-            * End
-            */
+            
+            //Price view
+            $view_prijs = get_field('price', $view['course']->ID);
 
             foreach($read_category_view as $value){
                 if($points == 6)
@@ -99,8 +236,10 @@ if (count($user_post_view)!= 0)
                 $points += 1;
             
             $percent = abs(($points/$max_points) * 100);
-            if ($percent >= 60)
+            if ($percent >= 50)
                 if(!in_array($course->ID, $random_id)){
+                    if(get_field('course_type', $course->ID))
+                        $count[get_field('course_type', $course->ID)]++; 
                     array_push($random_id, $course->ID);
                     array_push($recommended_courses, $course);
                 }
@@ -108,145 +247,23 @@ if (count($user_post_view)!= 0)
     }
 }
 
-$subtopics = array(); 
-foreach($categories as $categ){
-    //Topics
-    $topicss = get_categories(
-        array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'parent'  => $categ,
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-        ) 
-    );
-
-    foreach ($topicss as  $value) {
-        $subtopic = get_categories( 
-                array(
-                'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-                'parent'  => $value->cat_ID,
-                'hide_empty' => 0,
-                //  change to 1 to hide categores not having a single post
-            ) 
-        );
-        $subtopics = array_merge($subtopics, $subtopic);      
-    }
-}
-
-// Saved courses
-$saved = get_user_meta($user, 'course');
-
-/*
-* * Get interests courses
-*/
-
-$topics = get_user_meta($user, 'topic');
-
-$experts = get_user_meta($user, 'expert');
-
-$args = array(
-    'post_type' => array('course', 'post'), 
-    'post_status' => 'publish',
-    'posts_per_page' => -1,
-);
-
-$global_courses = get_posts($args);
-
-$opleidingen = array();
-$workshops = array();
-$masterclasses = array();
-$events = array();
-$e_learnings = array();
-$trainings = array();
-$videos = array();
-$courses_id = array();
-
-
-$args = array(
-    'post_type' => 'course', 
-    'post_status' => 'publish',
-    'posts_per_page' => -1,
-    'author__in' => $experts,
-);
-
-$expert_courses = get_posts($args);
-$count = array('Opleidingen' => 0, 'Workshop' => 0, 'Masterclass' => 0, 'Event' => 0, 'E_learning' => 0, 'Training' => 0, 'Video' => 0, 'Artikel' => 0);
-$loop_break = array();
-
-foreach ($recommended_courses as $key => $course) {
-    if(get_field('course_type', $course->ID))
-      $count[get_field('course_type', $course->ID)]++; 
-}
-
 arsort($count);
+$count_trend = array_slice($count, 5, 4, true);
 $count = array_slice($count, 0, 4, true);
+
+$count_trend_keys = array_keys($count_trend);
+
 $keys = array_keys($count);
 shuffle($keys);
 $count = array_merge(array_flip($keys), $count);
 
-foreach($global_courses as $course)
-{
-    if(!visibility($course, $visibility_company))
-        continue;                
-
-    /*
-    * Categories
-    */ 
-
-    $category_id = 0;
-    $experts = get_field('experts', $course->ID);
-                
-    $tree = get_the_terms($course->ID, 'course_category');
-    $tree = $tree[2]->ID;
-    $categories_id = get_field('categories',  $course->ID);
-    $categories_xml = get_field('category_xml',  $course->ID);
-    $categories = array();
-
-    if($categories_xml)
-        foreach($categories_xml as $categorie){
-            $categorie = $categorie['value'];
-            if(!in_array($categorie, $categories))
-                array_push($categories, $categorie);
-        }
-
-    if($categories_id)
-        if(!empty($categories_id)){
-            $categories = array();  
-            foreach($categories_id as $categorie)                    
-                $categories = explode(',', $categorie['value']);
-        }
-
-    foreach($topics as $topic_value){
-        if(in_array($topic_value, $trees) || $categories)
-            if(in_array($topic_value, $trees) || in_array($topic_value, $categories) ){
-                if(!in_array($course->ID,$courses_id)){
-                    array_push($courses, $course);
-                    array_push($courses_id, $course->ID);
-                    break;
-                }
-        }
-    }
-
-    foreach($experts as $topic_expert){
-        $experties = get_field('experts', $course->ID);    
-        if($course->post_author == $topic_expert || in_array($topic_expert, $experties) ){
-            if(!in_array($course->ID,$courses_id)){
-                array_push($courses, $course);
-                array_push($courses_id, $course->ID);
-                break;
-            }
-        }
-    }
-   
-}
-
 $bool = false;
 
 if (count($recommended_courses) == 0){
-    $courses = array_merge($courses, $expert_courses);
+    $courses_id = array();
     $recommended_courses = $courses;
     $bool = true;
 } 
-
 
 //Activitien
 shuffle($recommended_courses);
@@ -262,12 +279,8 @@ if(isset($_GET['message']))
 
 
 <?php
-    $limit = 0;
     foreach($count as $key => $value){
         $count['limit'] = 0;
-        $limit += 1;
-        if($limit > 4)
-            break;
     ?>
 
     <?php
@@ -378,19 +391,19 @@ if(isset($_GET['message']))
                         <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
                             <div class="blockLoveCourse" >
                                 <button>
-                                    <?php                                
-                                        if (in_array($course->ID, $saved))
-                                        {
-                                    ?>
-                                        <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">                        
-                                    <?php
-                                        }
-                                        else{
-                                    ?>
-                                        <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                    <?php
-                                        }
-                                    ?>
+                                <?php                                
+                                    if (in_array($course->ID, $saved))
+                                    {
+                                ?>
+                                    <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt=""> 
+                                <?php
+                                    }
+                                    else{
+                                ?>
+                                    <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                <?php
+                                    }
+                                ?>
                                 </button>
                             </div>
 
@@ -593,7 +606,7 @@ if(isset($_GET['message']))
                                         if (in_array($course->ID, $saved))
                                         {
                                     ?>
-                                        <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">                        
+                                        <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt=""> 
                                     <?php
                                         }
                                         else{
@@ -698,9 +711,225 @@ if(isset($_GET['message']))
     } 
     ?>
 
+    <div class="block-treaning">
+        <p class="trendingTitle">Trends</p>
+        <div class="swiper-container swipeContaine4">
+        <div class="swiper-wrapper">
+            <?php
+            $i = 0;
+            $find = false;
+            foreach($courses as $key => $course){
+                if($i == 20)
+                    break;
+                
+                //Control visibility
+                if(!visibility($course, $visibility_company))
+                    continue;
+
+                //Check-in
+                if(in_array($course->ID, $random_id))
+                    continue;
+                           
+                //Trends : Course Type remaining
+                $course_type = get_field('course_type', $course->ID);
+                if(!in_array($course_type, $count_trend_keys))
+                    continue;
+
+                $i++;
+        
+                $find = true;
+
+                $month = '';
+                $location = 'Virtual';
+
+                /*
+                * Categories
+                */
+                $category = ' '; 
+
+                $tree = get_the_terms($course->ID, 'course_category'); 
+
+                if($tree)
+                    if(isset($tree[2]))
+                        $category = $tree[2]->name;
+
+                $category_id = 0;
+            
+                if($category == ' '){
+                    $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
+                    if($category_id != 0)
+                        $category = (String)get_the_category_by_ID($category_id);
+                }
+
+                /*
+                *  Date and Location
+                */ 
+
+                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];    
+
+                $data = get_field('data_locaties', $course->ID);
+                if($data){
+                    $date = $data[0]['data'][0]['start_date'];
+
+                    $day = explode('/', explode(' ', $date)[0])[0];
+                    $month = explode('/', explode(' ', $date)[0])[1];
+                    $month = $calendar[$month];
+                    
+                    $location = $data[0]['data'][0]['location'];
+                }
+                else{
+                    $dates = get_field('dates', $course->ID);
+                    if($dates){
+                        $day = explode('-', explode(' ', $dates[0]['date'])[0])[2];
+                        $month = explode('-', explode(' ', $dates[0]['date'])[0])[1];
+
+                        $month = $calendar[$month]; 
+                    }else{
+                        $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
+                        $date = $data[0];
+                        $day = explode('/', explode(' ', $date)[0])[0];
+                        $month = explode('/', explode(' ', $date)[0])[1];
+                        $month = $calendar[$month];
+                        $location = $data[2];
+                    }
+
+                }
+
+                /*
+                * Price 
+                */
+                $p = " ";
+                $p = get_field('price', $course->ID);
+                if($p != "0")
+                    $price =  number_format($p, 2, '.', ',');
+                else 
+                    $price = 'Gratis';
+
+                /*
+                * Thumbnails
+                */ 
+                $thumbnail = get_field('preview', $course->ID)['url'];
+                if(!$thumbnail){
+                    $thumbnail = get_field('url_image_xml', $course->ID);
+                    if(!$thumbnail)
+                        $thumbnail = get_field('image', 'category_'. $category_id);
+                        if(!$thumbnail)
+                            $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                }
+                
+                /*
+                * Companies
+                */ 
+                $company = get_field('company',  'user_' . $course->post_author);
+            ?>
+
+                <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
+                    <div class="blockLoveCourse" >
+                        <button>
+                        <?php                                
+                            if (in_array($course->ID, $saved))
+                            {
+                        ?>
+                            <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt=""> 
+                        <?php
+                            }
+                            else{
+                        ?>
+                            <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                        <?php
+                            }
+                        ?>
+                        </button>
+                    </div>
+
+                    <a href="<?php echo get_permalink($course->ID) ?>" class="" >
+                        <div class="cardKraam">
+                            <div class="headCardKraam">
+                                <div class="blockImgCardCour">
+                                    <img src="<?php echo $thumbnail; ?>" alt="">
+                                </div>
+                                <div class="blockgroup7">
+                                    <div class="iconeTextKraa">
+                                        <div class="sousiconeTextKraa">
+                                            <?php if($category != " ") { ?>
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/kraam.png" class="icon7" alt="">
+                                                <p class="kraaText"><?php echo $category ?></p>
+                                            <?php } ?>
+                                        </div>
+                                        <div class="sousiconeTextKraa">
+                                            <?php if(get_field('degree', $course->ID)) { ?>
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" class="icon7" alt="">
+                                                <p class="kraaText"> <?php echo get_field('degree', $course->ID);?></p>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                    <div class="iconeTextKraa">
+                                        <div class="sousiconeTextKraa">
+                                            <?php if($day) { ?>
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/calend.png" class="icon7" alt="">
+                                                <p class="kraaText"> <?php echo $day . " " . $month ?></p>
+                                            <?php } ?>
+                                        </div>
+                                        <div class="sousiconeTextKraa">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/euro1.png" class="icon7" alt="">
+                                            <p class="kraaText"><?php echo $price ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contentCardProd">
+                                <div class="group8">
+                                    <div class="imgTitleCours">
+                                        <?php
+                                        if(!empty($company)){
+                                            $company_title = $company[0]->post_title;
+                                            $company_id = $company[0]->ID;
+                                            $company_logo = get_field('company_logo', $company_id);
+                                            ?>
+                                            <div class="colorFront">
+                                                <img src="<?php echo $company_logo; ?>" width="15" alt="">
+                                            </div>
+                                            <p class="textJan"><?php echo $company_title; ?></p>
+                                            <?php
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="group9">
+                                        <div class="blockOpein">
+                                            <img class="iconAm" src="<?php echo get_stylesheet_directory_uri();?>/img/graduat.png" alt="">
+                                            <p class="lieuAm"><?= $course_type; ?></p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <img class="iconAm1" src="<?php echo get_stylesheet_directory_uri();?>/img/map.png" alt="">
+                                            <p class="lieuAm"><?php echo $location; ?></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="werkText"> <?php echo $course->post_title;?></p>
+                                <p class="descriptionPlatform">
+                                    <?php echo get_field('short_description', $course->ID) ?>
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+
+            <?php
+            }
+            
+            if(!$find)
+                echo "<span class='opeleidingText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Geen overeenkomst met uw voorkeuren <i class='fas fa-smile-wink'></i></span>";
+            ?>
+
+            </div>
+        </div>
+    </div>
+
 <?php
+
     /*
-    ** Categories - all  * 
+    ** New user pick favorites topics* 
     */
 
     $categories = array();
@@ -1012,11 +1241,10 @@ if(isset($_GET['message']))
 <script>
     $(".btn_favourite").click((e)=>
     {
-
-        btn_id=e.target.id;
+        btn_id = e.target.id;
         meta_key = btn_id.split("_")[2];
         id = btn_id.split("_")[1];
-        user_id= btn_id.split("_")[0];
+        user_id = btn_id.split("_")[0];
         
         console.log(e.target)
          $.ajax({
@@ -1041,7 +1269,5 @@ if(isset($_GET['message']))
                     }              
              }
          });
-
-        
     })
 </script>

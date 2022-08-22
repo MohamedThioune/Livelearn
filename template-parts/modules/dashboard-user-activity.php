@@ -91,7 +91,7 @@ $courses = get_posts($args);
 
 if(!empty($saved)){
     $args = array(
-        'post_type' => 'course', 
+        'post_type' => array('course', 'post'),
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'include' => $saved,  

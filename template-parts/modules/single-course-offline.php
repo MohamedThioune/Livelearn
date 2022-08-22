@@ -348,7 +348,7 @@
 
                                 if($who){
                                     ?>
-                                    <h6 class="textDirect mt-3" style="text-align: left"><b>For who :</b></h6>
+                                    <h6 class="textDirect p-0 mt-3" style="text-align: left"><b>For who :</b></h6>
                                     </span> <?php echo $who; ?> </span>
                                     <?php
                                 }
@@ -903,6 +903,9 @@
                             <div class="swiper-wrapper">
                                 <?php
                                     foreach($experts as $expert){
+                                        if($expert == "")
+                                            continue;
+                                        
                                         $expert = get_users(array('include'=> $expert))[0]->data;
                                         $company = get_field('company',  'user_' . $expert->ID);
                                         $title = $company[0]->post_title;

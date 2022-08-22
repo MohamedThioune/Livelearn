@@ -1768,9 +1768,11 @@ require($page);
 
             <div class="row mr-md-2 mr-1">
                 <?php
+                    $i = 0;
                     foreach($courses as $key=>$course){
-                        if($key == 6)
+                        if($i == 6)
                             break;
+
                         $location = '~';
                         /*
                         * Categories and Date
@@ -1792,16 +1794,20 @@ require($page);
 
                         $dates = get_field('dates', $course->ID);
                         if($dates){
-                            
                             $day = explode('-', explode(' ', $dates[0]['date'])[0])[2];
                             $month = explode('-', explode(' ', $dates[0]['date'])[0])[1];
-
                             $month = $calendar[$month]; 
-                            
                         }else{
                             $data = get_field('data_locaties', $course->ID);
                             if($data){
                                 $date = $data[0]['data'][0]['start_date'];
+                                
+                                $strotime = str_replace('/', '-', $date);
+                                $strtotime_start = strtotime($strotime);
+                                $strtotime_now = strtotime(date("Y-m-d h:i:s"));
+                                if($strtotime_now > $strtotime_start)
+                                    continue;
+                                //echo $date;
 
                                 $day = explode('/', explode(' ', $date)[0])[0];
                                 $month = explode('/', explode(' ', $date)[0])[1];
@@ -1810,14 +1816,27 @@ require($page);
                                 $location = $data[0]['data'][0]['location'];
                             }
                             else{
-                                $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
+                                $data = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
                                 $date = $data[0];
+
+                                $strotime = str_replace('/', '-', $date);
+                                $strtotime_start = strtotime($strotime);
+                                $strtotime_now = strtotime(date("Y-m-d h:i:s"));
+                                if($strtotime_now > $strtotime_start)
+                                    continue;
+                                //echo $date;
+
                                 $day = explode('/', explode(' ', $date)[0])[0];
                                 $month = explode('/', explode(' ', $date)[0])[1];
                                 $month = $calendar[$month];
                                 $location = $data[2];
                             }
                         }
+
+                        if($day == "~")
+                            continue;
+
+                        $i++;
                         
                         /*
                         * Price 
