@@ -1,28 +1,3 @@
-<style>
-.card-profil {
-    width: 350px;
-    transition: all 0.5s;
-}
-.image img {
-    transition: all 0.5s
-}
-.image .profil img:hover {
-    transform: scale(1.5)
-}
-.name, .number, .icons i{
-    font-size: 22px;
-}
-.idd, .join, .text span {
-    font-size: 14px;
-}
-.idd1, .follow {
-    font-size: 12px
-}
-.follow, .text span {
-    font-weight: 500;
-    /* cursor: pointer; */
-}
-</style>
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
@@ -113,120 +88,6 @@
 </div>
 <!-- ------------------------------------------ End modals ---------------------------------------------- -->
 
-
-<!-- --------------------------------------- Start modal to see detail and follow  ----------------------------- -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="max-width: 500px !important">
-        <div class="modal-content">
-            <div class="modal-header d-flex justify-content-end border-bottom-0">
-                <button type="button" class="text-white border-0 p-2 px-3 rounded  rounded-3 font-weight-bold"
-                 data-dismiss="modal" aria-label="Close" style="background: #023356">x</button>
-            </div>
-            <div class="modal-body px-md-4 px-3">
-
-                <div class="container mb-4 p-3 d-flex justify-content-center"> 
-                    <div class="card-profil p-1 border-0"> 
-                        <div class="image d-flex flex-column justify-content-center align-items-center"> 
-                            
-                            <?php
-                                foreach($experts as $expert){
-                                    $expert = get_users(array('include'=> $expert))[0]->data;
-                                    // $company = get_field('company',  'user_' . $expert->ID);
-                                    $title = $company[0]->post_title;
-                                    $image_profil = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                    
-                            ?>
-
-                                <button class="profil rounded rounded-pill btn-secondary" style="height: 140px; width: 140px"> 
-                                    <img src="<?php echo $image_profil; ?>" height="100" width="100" />
-                                </button> 
-                                <span class="name mt-3 font-weight-bold"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span> 
-                                  
-                                <div class="d-flex flex-row justify-content-center align-items-center my-3"> 
-                                    <span class="number fw-bold"> <?php echo $title; ?></span> 
-                                </div> 
-
-                          
-                                <div class=" d-flex mt-2 w-100"> 
-                                    <a class="btn text-light w-100 py-2 px-3 h6 font-weight-bold rounded rounded-2 mx-2"
-                                    href="user-overview?id=<?php echo $expert->ID; ?>" style="background: #00A89D;">Detail</a> 
-                                </div> 
-                                <form action="/dashboard/user/" method="POST">
-                                    <input type="hidden" name="meta_value" value="<?php echo $expert->ID; ?>" id="">
-                                    <input type="hidden" name="user_id" value="<?php echo $user_id ?>" id="">
-                                    <input type="hidden" name="meta_key" value="expert" id="">
-                                    <?php
-                                        if($user_id != 0 )
-                                        {
-                                            $experts_followed= get_user_meta($user_id, 'expert');
-                                            if (in_array($expert->ID,$experts_followed))
-                                            {
-                                    ?>
-                                                <div class=" d-flex mt-2 w-100"> 
-                                                    <button type='submit' class='btn btn-danger rounded-pill text-white font-weight-bold p-1 px-2' name='delete' >verwijder uit leeromgeving</button>
-                                                </div> 
-                                    <?php            
-                                            }
-                                            else
-                                            {
-                                    ?>
-                                                <div class=" d-flex mt-2 w-100"> 
-                                                    <button type='submit' class='btn rounded-pill text-white font-weight-bold p-1 px-2' style='background: #00A89D' name='interest_push' >Toevoegen aan Leeromgeving</button>
-                                                </div> 
-                                    <?php
-                                            }
-                                        } 
-                                    ?>
-                                </form>    
-                                
-                                
-                                <!-- <div class="text mt-3 text-center"> 
-                                    <span style="color: #545454">Eleanor Pena is a creator of minimalistic x bold graphics and digital artwork.<br><br> 
-                                    Artist/ Creative Director by Day #NFT minting@ with FND night. </span> 
-                                </div>  -->
-                                <div class="gap-3 mt-3 icons d-flex flex-row justify-content-center align-items-center"> 
-                                    <?php 
-                                        $social_networks=['facebook', 'twitter', 'instagram', 'linkedin','discord'];
-                                        foreach($social_networks as $social_network){
-                                            $social_network_url = get_field($social_network, 'user_' . $expert->ID);
-                                            if($social_network_url){
-                                    ?>
-                                               <span>
-                                               <a href="<?php echo $social_network_url; ?>" class="text-dark mx-2"><i class="fa fa-<?php echo $social_network; ?>"></i></a>
-                                               </span>
-                                    <?php
-                                            }
-                                        }
-                                                
-                                    ?>
-                                   
-                                </div> 
-                                <div class=" px-2 rounded mt-4" style="background-color: #ccc"> 
-                                <?php 
-                                     $udata = get_userdata( $user->ID );
-                                     $registered = $udata->user_registered;
-                                     $joined_date= date( "M Y", strtotime( $registered ) );
-                                ?>
-                                    <span class="fw-bold" >Joined <?= $joined_date; ?></span> 
-                                </div> 
-
-                            <?php
-                                }
-                            ?>
-
-                        </div> 
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
-<!-- --------------------------------------- End modal to see detail and follow  ----------------------------- -->
-
-
-
-
 <div class="liveOverBlock">
     <div class="container-fluid">
         <div class="overElement">
@@ -246,7 +107,6 @@
 
                     <a href="/opleider-courses?companie=<?= $company_id; ?>" class="roundBlack" >
                         <img src="<?= $company_logo; ?>" alt="company logo">
-                        <!-- <p>Lorem, ipsum.</p>     -->
                     </a>
                     <a href="/opleider-courses?companie=<?= $company_id; ?>" class="livelearnText2 text-uppercase"><?= $company_title; ?></a>
                     <?php
@@ -761,17 +621,18 @@
 
                 <div class="CardpriceLive">
                     <?php
-                    if(!empty($company)) {
+                    if(!empty($company))
+                    {
                         $company_id = $company[0]->ID;
                         $company_title = $company[0]->post_title;
                         $company_logo = get_field('company_logo', $company_id);
-                    ?>
-                        <div class="imgCardPrice"  href="/opleider-courses?companie=<?php echo $company_id ; ?>">
-                            <a href="/opleider-courses?companie=<?php echo $company_id ; ?>"><img src="<?php echo $company_logo; ?>" alt="company logo"></a>
+                        ?>
+                        <div href="/opleider-courses?companie=<?php echo $company_id ; ?>"  class="imgCardPrice">
+                            <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" ><img src="<?php echo $company_logo; ?>" alt="company logo"></a>
                         </div>
                         <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="liveTextCadPrice h5"><?php echo $company_title; ?></a>
 
-                    <?php
+                        <?php
                     }
                     ?>
                     <form action="/dashboard/user/" method="POST">
@@ -824,8 +685,7 @@
                                     $title = $company[0]->post_title;
                                     $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                     ?>
-                                    <!-- href="user-overview?id=<?php echo $expert->ID; ?>"  -->
-                                    <a data-toggle="modal" data-target="#exampleModal" class="swiper-slide">
+                                    <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
                                         <div class="my-2 d-flex flex-column mx-md-0 mx-1">
                                             <div class="imgCardPrice" style="height: 50px; width:50px">
                                                 <img src="<?php echo $image; ?>" alt="teacher photo">
