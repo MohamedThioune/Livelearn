@@ -13,93 +13,93 @@ require($page);
 
 <?php
 
-    function RandomString()
-    {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $randstring = '';
-        for ($i = 0; $i < 10; $i++) {
-            $rand = $characters[rand(0, strlen($characters))];
-            $randstring .= $rand;  
-        }
-        return $randstring;
+function RandomString()
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randstring = '';
+    for ($i = 0; $i < 10; $i++) {
+        $rand = $characters[rand(0, strlen($characters))];
+        $randstring .= $rand;  
     }
+    return $randstring;
+}
 
-    extract($_POST);
+extract($_POST);
 
-    if(isset($skill_passport)){
-        // $args = array(
-        //     'post_type' => 'company', 
-        //     'post_status' => 'publish',
-        //     'posts_per_page' => -1,
-        //     'order' => 'DESC',                        
-        // );
-        // $companies = get_posts($args);
-    
-        // foreach($companies as $company){
-        //     if($company->post_title == $companie){
-        //         $companie = $company;
-        //         break;
-        //     }
-        // }
-    
-        if($first_name == null)
-            $first_name = "ANONYM";
-        if($last_name == null)
-            $last_name = "ANONYM";
-        $login = RandomString();
-        $password = RandomString();
-        $userdata = array(
-            'user_pass' => $password,
-            'user_login' => $login,
-            'user_email' => $email,
-            'user_url' => 'https://livelearn.nl/inloggen/',
-            'display_name' => $first_name,
-            'first_name' => $first_name,
-            'last_name' => $last_name,
-            'role' => 'subscriber'
-        );  
-        $user_id = wp_insert_user(wp_slash($userdata));
-    
-        if(is_wp_error($user_id))
-            $message = $user_id->get_error_message();   
-        else
-        {   
-            //Mail register
-            $subject = 'Je LiveLearn inschrijving is binnen! ✨';
-            $body = "
-                Bedankt voor je inschrijving<br>
-                <h1>Hello " . $first_name  . "</h1>,<br> 
-                Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br><br>
-                <h4>Inloggen:</h4><br>
-                <h6><a href='https:livelearn.nl/inloggen/'> Log in </a></h6>
-                    ";
-            $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
-            wp_mail($email, $subject, $body, $headers, array( '' )) ; 
-            
-            //Custom fields
-            update_field('telnr', $telefoonnummer, 'user_' . $user_id);
-            update_field('degree_user', $choiceDegrees, 'user_'.$user_id);
-            //update_field('company', $companie, 'user_'.$user_id);
-            update_field('work', $work, 'user_'.$user_id);
-            update_field('course_type_user', $choiceCourseType, 'user_'.$user_id);
-            update_field('generatie', $choiceGeneratie, 'user_'.$user_id);
-            update_field('country', $prive, 'user_'.$user_id);
-    
-            $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
-            foreach ($bangerichtsChoice as $key => $topic) { 
-                if (!empty($topic))
+if(isset($skill_passport)){
+    // $args = array(
+    //     'post_type' => 'company', 
+    //     'post_status' => 'publish',
+    //     'posts_per_page' => -1,
+    //     'order' => 'DESC',                        
+    // );
+    // $companies = get_posts($args);
+
+    // foreach($companies as $company){
+    //     if($company->post_title == $companie){
+    //         $companie = $company;
+    //         break;
+    //     }
+    // }
+
+    if($first_name == null)
+        $first_name = "ANONYM";
+    if($last_name == null)
+        $last_name = "ANONYM";
+    $login = RandomString();
+    $password = RandomString();
+    $userdata = array(
+        'user_pass' => $password,
+        'user_login' => $login,
+        'user_email' => $email,
+        'user_url' => 'https://livelearn.nl/inloggen/',
+        'display_name' => $first_name,
+        'first_name' => $first_name,
+        'last_name' => $last_name,
+        'role' => 'subscriber'
+    );  
+    $user_id = wp_insert_user(wp_slash($userdata));
+
+    if(is_wp_error($user_id))
+        $message = $user_id->get_error_message();   
+    else
+    {   
+        //Mail register
+        $subject = 'Je LiveLearn inschrijving is binnen! ✨';
+        $body = "
+            Bedankt voor je inschrijving<br>
+            <h1>Hello " . $first_name  . "</h1>,<br> 
+            Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br><br>
+            <h4>Inloggen:</h4><br>
+            <h6><a href='https:livelearn.nl/inloggen/'> Log in </a></h6>
+                ";
+        $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+        wp_mail($email, $subject, $body, $headers, array( '' )) ; 
+        
+        //Custom fields
+        update_field('telnr', $telefoonnummer, 'user_' . $user_id);
+        update_field('degree_user', $choiceDegrees, 'user_'.$user_id);
+        //update_field('company', $companie, 'user_'.$user_id);
+        update_field('work', $work, 'user_'.$user_id);
+        update_field('course_type_user', $choiceCourseType, 'user_'.$user_id);
+        update_field('generatie', $choiceGeneratie, 'user_'.$user_id);
+        update_field('country', $prive, 'user_'.$user_id);
+
+        $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
+        foreach ($bangerichtsChoice as $key => $topic) { 
+            if (!empty($topic))
+            {
+                if (!(in_array($topic, $subtopics_already_selected)))
                 {
-                    if (!(in_array($topic, $subtopics_already_selected)))
-                    {
-                        add_user_meta(get_current_user_id(),'topic',$topic);  
-                    }
-                    
+                    add_user_meta(get_current_user_id(),'topic',$topic);  
                 }
+                
             }
-            $message = "Your account created successfully";       
         }
-        header('Location: /?message=' . $message);
+        $message = "Your account created successfully";       
     }
+    header('Location: /?message=' . $message);
+}
 
 /** 
  * Skills Passport
