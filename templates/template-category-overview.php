@@ -393,7 +393,7 @@ require($page);
                     <div class="LeerBlock pl-4" style="">
                         <div class="leerv">
                             <p class="sousProduct1Title" style="color: #043356;">LEERVORM</p>
-                            <button class="btn btnClose" id="hide">
+                            <button class="btn btnClose" id="filterHideMobile">
                                 <!-- <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/X.png" alt=""> -->
                                 <i class="bi bi-x text-dark" style="font-size: 35px"></i>
                             </button>
@@ -515,7 +515,7 @@ require($page);
             </div>
             <div class="mob filterBlock">
                 <p class="fliterElementText">Filter</p>
-                <button class="btn btnIcone8" id="show"><img src="<?php echo get_stylesheet_directory_uri();?>/img/filter.png" alt=""></button>
+                <button class="btn btnIcone8" id="filterActiveOnMobile"><img src="<?php echo get_stylesheet_directory_uri();?>/img/filter.png" alt=""></button>
             </div>
         </div>
         <!-- ------------------------------------ End  Slide bar ---------------------------------------- -->
@@ -523,7 +523,7 @@ require($page);
         <?php 
             if(isset($courses) && !empty($courses)){
             ?>
-        <div class="col-md-9">
+        <div class="col-md-9 tabUserOverview">
             
             <?php
                 if(!empty($opleidingen)){                    
@@ -1768,11 +1768,9 @@ require($page);
 
             <div class="row mr-md-2 mr-1">
                 <?php
-                    $i = 0;
                     foreach($courses as $key=>$course){
-                        if($i == 6)
+                        if($key == 6)
                             break;
-
                         $location = '~';
                         /*
                         * Categories and Date
@@ -1794,20 +1792,16 @@ require($page);
 
                         $dates = get_field('dates', $course->ID);
                         if($dates){
+                            
                             $day = explode('-', explode(' ', $dates[0]['date'])[0])[2];
                             $month = explode('-', explode(' ', $dates[0]['date'])[0])[1];
+
                             $month = $calendar[$month]; 
+                            
                         }else{
                             $data = get_field('data_locaties', $course->ID);
                             if($data){
                                 $date = $data[0]['data'][0]['start_date'];
-                                
-                                $strotime = str_replace('/', '-', $date);
-                                $strtotime_start = strtotime($strotime);
-                                $strtotime_now = strtotime(date("Y-m-d h:i:s"));
-                                if($strtotime_now > $strtotime_start)
-                                    continue;
-                                //echo $date;
 
                                 $day = explode('/', explode(' ', $date)[0])[0];
                                 $month = explode('/', explode(' ', $date)[0])[1];
@@ -1816,27 +1810,14 @@ require($page);
                                 $location = $data[0]['data'][0]['location'];
                             }
                             else{
-                                $data = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
+                                $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
                                 $date = $data[0];
-
-                                $strotime = str_replace('/', '-', $date);
-                                $strtotime_start = strtotime($strotime);
-                                $strtotime_now = strtotime(date("Y-m-d h:i:s"));
-                                if($strtotime_now > $strtotime_start)
-                                    continue;
-                                //echo $date;
-
                                 $day = explode('/', explode(' ', $date)[0])[0];
                                 $month = explode('/', explode(' ', $date)[0])[1];
                                 $month = $calendar[$month];
                                 $location = $data[2];
                             }
                         }
-
-                        if($day == "~")
-                            continue;
-
-                        $i++;
                         
                         /*
                         * Price 
@@ -1962,16 +1943,6 @@ require($page);
 
 </script>
 <script>
-    $(document).ready(function(){
-        $("#hide").click(function(){
-            event.preventDefault();
-            $(".sousProductTest").hide();
-        });
-        $("#show").click(function(){
-            event.preventDefault();
-            $(".sousProductTest").show();
-        });
-    });
 
 // make a border bottom after clicking button 
     $(document).ready(function(){

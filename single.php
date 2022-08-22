@@ -52,13 +52,6 @@ $reviews = get_field('reviews', $post->ID);
 
 $number_comments = !empty($reviews) ? count($reviews) : '0';
 
-$experts = array($post->post_author);
-$expert = get_field('experts', $post->ID);
-
-if(isset($expert[0]))
-    foreach ($expert as $key => $value) 
-        array_push($experts, $value);
-
 ?>
 
 <style>
@@ -214,13 +207,14 @@ if(isset($expert[0]))
                                                 array_push($read_category,$item['value']);
                                                 echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
                                             }
-                                else if(!empty($category_xml))
-                                    foreach($category_xml as $item)
-                                        if($item)
-                                            if(!in_array($item['value'],$read_category)){
-                                                array_push($read_category,$item['value']);
-                                                echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
-                                            }
+
+                                            else if(!empty($category_xml))
+                                                foreach($category_xml as $item)
+                                                    if($item)
+                                                        if(!in_array($item['value'],$read_category)){
+                                                            array_push($read_category,$item['value']);
+                                                            echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
+                                                        }
                             }
                             ?>
                         </ul>

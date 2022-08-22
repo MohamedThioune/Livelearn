@@ -109,7 +109,18 @@ jQuery(function($){
 
     // for tabs company
 
-
+    $("#tab2").click(function() {
+        $("#tab2").addClass('btnactive') ;
+        $("#tab1").removeClass('btnactive') ;
+        $("#tab2Content").show();
+        $("#tab1Content").hide();
+    });
+    $("#tab1").click(function() {
+        $("#tab1").addClass('btnactive') ;
+        $("#tab2").removeClass('btnactive') ;
+        $("#tab1Content").show();
+        $("#tab2Content").hide();
+    });
 
     /* Variables */
     var row = $(".attr");
@@ -149,7 +160,7 @@ jQuery(function($){
 
 
     //close login popup
-    $('.modal button.close, .modal a[data-target="#exampleModalCenter"]').on('click', function(e){
+    $('.modal button.close').on('click', function(e){
         e.preventDefault();
         $(this).closest('.modal').removeClass('show');
         console.log('close popup');
@@ -215,6 +226,15 @@ jQuery(function($){
         $("#croieProfil").hide();
         $(".croie").toggle();
     });
+    $(".btnRegistrerenInloggen").click(function() {
+        $(".headSousMobilePrincipale").hide();
+        $(".burgerElement").show();
+        $("#croieSearch").hide();
+        $("#croieProfil").hide();
+        $(".croie").toggle();
+    });
+
+
 
     $("#richting-bineen").click(function() {
         $(".firstContentHeadSousMobile").hide();
@@ -265,11 +285,20 @@ jQuery(function($){
         $("#voorOpleidersModal").hide();
         $("#OpleidingenModal").toggle();
     });
+
     $(".activeModalHeader").click(function() {
         $("#voorOrganisatiModal").hide();
         $("#voorOpleidersModal").hide();
         $("#OpleidingenModal").hide();
         $(".activeModalHeader").hide();
+    });
+
+    //Filter bar on category page
+    $("#filterActiveOnMobile").click(function() {
+        $(".sousProductTest").show();
+    });
+    $("#filterHideMobile").click(function(){
+        $(".sousProductTest").hide();
     });
 
 
@@ -325,7 +354,7 @@ jQuery(function($){
     // Show the first tab and hide the rest
     $('#tabs-nav li:first-child').addClass('active');
     $('.tab-content').hide();
-    $('.tab-content:first').show();
+    $('.tab-content:first-child').show();
 
     // Click function
     $('#tabs-nav li').click(function(){

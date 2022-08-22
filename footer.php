@@ -255,6 +255,8 @@
     var swiper = new Swiper('.swiper-container-3', {
         slidesPerView: 3.9,
         spaceBetween: 20,
+        preventClicks: true,
+        preventClicksPropagation: true,
         breakpoints: {
             780: {
                 slidesPerView: 1,
@@ -276,6 +278,8 @@
 <script>
     var swiper = new Swiper('.swiper-container', {
         slidesPerView: 'auto',
+        preventClicks: true,
+        preventClicksPropagation: true,
         spaceBetween: 30,
         pagination: {
             el: '.swiper-pagination',
@@ -287,6 +291,8 @@
 <script>
     var swiper = new Swiper('.swipeContaine2', {
         slidesPerView: 3.9,
+        preventClicks: true,
+        preventClicksPropagation: true,
         spaceBetween: 20,
         breakpoints: {
             780: {
@@ -308,6 +314,8 @@
 <script>
     var swiper = new Swiper('.swiper-container-3', {
         slidesPerView: 3.9,
+        preventClicks: true,
+        preventClicksPropagation: true,
         spaceBetween: 20,
         breakpoints: {
             780: {
@@ -331,6 +339,8 @@
     var swiper = new Swiper('.swipeContaine2', {
         slidesPerView: 7,
         spaceBetween: 20,
+        preventClicks: true,
+        preventClicksPropagation: true,
         observer: true,
         observeParents: true,
         allowSlideNext: false,

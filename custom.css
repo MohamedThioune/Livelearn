@@ -572,14 +572,14 @@ ul.sub-menu li a {
 
 .blockgroup7 {
     position: absolute;
-    bottom: 15px;
-    background: #023356;
+    bottom: 0px;
+    background: #02335685;
     color: #D6E0DF;
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 6px 10px;
-    border-radius: 14px;
+    padding: 5px 10px;
+    border-radius: 10px;
 }
 
 .iconeTextKraa {
@@ -608,12 +608,11 @@ ul.sub-menu li a {
 
 .contentCardProd {
     padding: 20px 15px;
-    max-height: 290px;
+    max-height: 225px;
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 20px;
 }
-
 .group8 {
     display: flex;
     justify-content: space-between;
@@ -632,10 +631,13 @@ ul.sub-menu li a {
     margin-top: -4px;
     margin-bottom: 15px;
     overflow: hidden;
+    border: 1px solid #b5b5b5;
 }
 
 .imgCoursProd img {
-    width: 100%
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .nameCoursProd {
@@ -646,6 +648,13 @@ ul.sub-menu li a {
     margin-bottom: 0;
     margin-top: 0px;
     margin-left: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    height: fit-content;
+    width: 50%;
 }
 
 .group9 {
@@ -669,6 +678,12 @@ ul.sub-menu li a {
     margin-right: 10px;
     margin-bottom: 0;
     color: #42454D;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    height: fit-content;
 }
 
 .werkText {
@@ -685,7 +700,7 @@ ul.sub-menu li a {
 .descriptionPlatform {
     color: #42454D;
     font-size: 14px;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 4;
@@ -5148,7 +5163,7 @@ nav .show{
     right: 0;
     height: fit-content;
     max-height: calc(100% - 120px);
-    overflow-y: auto;
+    overflow-y: auto !important;
     box-sizing: content-box;
 }
 .pickText{
@@ -5221,8 +5236,9 @@ nav .show{
 }
 
 .modalEcosyteme .modal-header{
-    padding: 5px 10px !important;
+    padding: 0px 10px !important;
     margin-bottom: 15px;
+    margin-top: 0;
 }
 .modalEcosyteme .modal-dialog {
     width: 44% !important;
@@ -6226,6 +6242,12 @@ tbody{
 .extensive .sidBarDashboard{
     height: auto;
     min-height: 100vh;
+}
+.contentBtnCardProduct .single_add_to_cart_button.button.alt {
+    font-size: 15px !important;
+    padding: 7px 15px 8px !important;
+    border-radius: 7px !important;
+    text-transform: unset !important;
 }
 .contentBtnCardProduct .single_add_to_cart_button.button.alt:hover {
     background-color: #043356 !important;
@@ -8918,7 +8940,6 @@ ul#tabs-nav li.active {
     border: 1px solid #d7d7d7;
     border-radius: 3px;
     background: #FFFFFF;
-    padding: 20px 15px 10px;
     margin-bottom: 15px;
 }
 
@@ -8940,7 +8961,7 @@ ul#tabs-nav li.active {
 }
 
 .block2evensTabs details summary::-webkit-details-marker {
-    display: none;
+    display: none !important;
 }
 
 .block2evensTabs details summary {
@@ -8949,7 +8970,11 @@ ul#tabs-nav li.active {
     cursor: pointer;
     font-size: 15px;
     font-weight: 500;
-    list-style: none;
+    background: #f0f0f0;
+}
+
+.block2evensTabs details summary::marker {
+   content: "";
 }
 
 .block2evensTabs details summary:after {
@@ -8958,16 +8983,19 @@ ul#tabs-nav li.active {
     font-size: 1.75rem;
     line-height: 0;
     margin-top: 0.75rem;
-    right: 0;
+    right: 15px;
     font-weight: 200;
     transform-origin: center;
     transition: 200ms linear;
-    top: -4px;
-    color: #043356;
+    top: 15px;
 }
 .prixEvens {
     font-size: 15px !important;
     font-weight: 400;
+    z-index: 999;
+    position: relative;
+    opacity: 1;
+    color: #030303;
 }
 .block2evensTabs details[open] summary:after {
     transform: rotate(45deg);
@@ -8976,15 +9004,19 @@ ul#tabs-nav li.active {
 }
 .block2evensTabs details summary {
     outline: 0;
+    margin-bottom: 0;
 }
 .block2evensTabs details .detailSummary {
     display: flex;
     justify-content: space-between;
+    padding: 18px 15px;
+    margin-bottom: 0;
 }
 .block2evensTabs details summary .headTabsAccordion {
     display: flex;
     justify-content: space-between;
     width: 50%;
+    padding: 15px 16px;
 }
 
 .modalLogoUser{
@@ -9073,6 +9105,71 @@ ul#tabs-nav li.active {
 #tab2Content button {
     background: #00A89D;
     margin-top: 25px;
+}
+#ModalFollowExpert .modal-header {
+    padding: 10px 0;
+    margin-top: 0;
+}
+#ModalFollowExpert .modal-dialog {
+    max-width: 500px;
+    margin-top: 60px;
+}
+.blockExpertFollown{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.blockExpertFollown:last-child{
+    margin-bottom: 10px;
+}
+.blockImageExpertFollow{
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    overflow: hidden;
+    border: 1px solid #bebec0;
+    padding: 2px;
+    margin-right: 13px;
+}
+.blockImageExpertFollow img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.nameExpert{
+    margin-bottom: 3px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #043356;
+}
+.titleExpert {
+    color: black;
+    font-size: 14px;
+    margin-left: -5px;
+    margin-bottom: 0;
+}
+.btnFollowExpert{
+    background: #043356 !important;
+    border-radius: 8px !important;
+    color: white !important;
+    font-size: 15px;
+    padding: 5px 18px;
+}
+
+.swiper-slide .btnFollowExpert {
+    background: #043356 !important;
+    border-radius: 8px !important;
+    color: white !important;
+    font-size: 15px;
+    padding: 5px 25px;
+    width: fit-content;
+    margin: 15px auto 0;
+}
+.blockTextGlovale .text-limit {
+    color: #4e4e4e;
+    line-height: 30px;
+    font-size: 16px;
 }
 
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
@@ -9426,9 +9523,6 @@ ul#tabs-nav li.active {
     .iconeTextKraa {
         display: flex;
         margin-bottom: 3px;
-    }
-    .group8 {
-        flex-wrap: wrap;
     }
     .cardOverviewCours {
         background: white;
@@ -10107,7 +10201,7 @@ ul#tabs-nav li.active {
         display: none;
     }
     .swiper-slide4 {
-        width: 306px !important;
+        width: 355px !important;
         margin-right: 15px !important;
     }
     .blockgroup7 {
@@ -10124,9 +10218,6 @@ ul#tabs-nav li.active {
     .iconeTextKraa {
         display: flex;
         margin-bottom: 3px;
-    }
-    .group8 {
-        flex-wrap: wrap;
     }
     .imgCoursProd {
         margin-bottom: 8px;
