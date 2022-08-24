@@ -260,7 +260,6 @@ extract($_GET);
                             </div>
                         </div>
                         <!-- fin Modal deel -->
-                        
                     </div>
                 </div>
                 <!-- -------------------------------------- End Icons row ------------------------------------->
@@ -683,8 +682,54 @@ extract($_GET);
                                     <input type="hidden" name="meta_key" value="expert" id="">
                                     <?php
                                     if($user_id != 0 && $user_id != $post->post_author)
-                                        echo "<input type='submit' class='btnLeerom' style='border:none' name='interest_push' value='+ Leeromgeving'>";
+                                        echo " <button type=\"button\" class=\"btn btnLeerom\" data-toggle=\"modal\" data-target=\"#ModalFollowExpert\">
+                                                 + Leeromgeving
+                                                </button>";
                                     ?>
+
+                                    <!-- Modal follow expert -->
+                                    <div class="modal fade" id="ModalFollowExpert" tabindex="-1" role="dialog" aria-labelledby="ModalFollowExpertLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Follow Expert</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <?php
+                                                    foreach($experts as $expert){
+                                                        $expert = get_users(array('include'=> $expert))[0]->data;
+                                                        $company = get_field('company',  'user_' . $expert->ID);
+                                                        $title = $company[0]->post_title;
+                                                        $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                                        ?>
+                                                        <div class="blockExpertFollown">
+                                                            <div class="d-flex">
+                                                                <div class="blockImageExpertFollow">
+                                                                    <img alt="Expert Image" src="<?php echo $image; ?>" alt="teacher photo">
+                                                                </div>
+                                                                <div>
+                                                                    <p class="nameExpert"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></p>
+                                                                    <p class="titleExpert"><?php echo $title; ?></p>
+                                                                </div>
+                                                            </div>
+                                                            <button class="btn btnFollowExpert">Follow</button>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
                                 </form>
                                 <?php
                                 if($user_id == 0 )
@@ -707,12 +752,7 @@ extract($_GET);
                                     <div class="swiper">
                                         <div class="swiper-wrapper">
                                             <?php
-                                            //var_dump($experts);
-
                                             foreach($experts as $expert){
-                                                if($expert == "")
-                                                    continue;
-                                                    
                                                 $expert = get_users(array('include'=> $expert))[0]->data;
                                                 $company = get_field('company',  'user_' . $expert->ID);
                                                 $title = $company[0]->post_title;
@@ -1007,6 +1047,16 @@ extract($_GET);
     })
 </script>
 
+<script>
+    // scroll down on click button
+    $( '.btnScroolEvent' ).on( 'click', function(e){
+        $( 'html, body' ).animate({
+            scrollTop: $(".customTabs").offset().top
+        }, '500' );
+        e.preventDefault();
+
+    });
+</script>
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>

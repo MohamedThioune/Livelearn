@@ -15,7 +15,6 @@
         <title><?php bloginfo('name'); ?></title>
         <?php wp_head(); ?>
     </head>
-    
     <body>
         <div class="contentOne">
             <nav class="navbar navWeb navbar-expand-lg navbar-dark navModife">

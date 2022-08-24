@@ -13,94 +13,119 @@ require($page);
 
 <?php
 
-function RandomString()
-{
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $randstring = '';
-    for ($i = 0; $i < 10; $i++) {
-        $rand = $characters[rand(0, strlen($characters))];
-        $randstring .= $rand;  
-    }
-    return $randstring;
-}
+    if (isset($_POST))
+    {
+        //var_dump($_POST);
 
-extract($_POST);
-
-if(isset($skill_passport)){
-    // $args = array(
-    //     'post_type' => 'company', 
-    //     'post_status' => 'publish',
-    //     'posts_per_page' => -1,
-    //     'order' => 'DESC',                        
-    // );
-    // $companies = get_posts($args);
-
-    // foreach($companies as $company){
-    //     if($company->post_title == $companie){
-    //         $companie = $company;
-    //         break;
-    //     }
-    // }
-
-    if($first_name == null)
-        $first_name = "ANONYM";
-    if($last_name == null)
-        $last_name = "ANONYM";
-    $login = RandomString();
-    $password = RandomString();
-    $userdata = array(
-        'user_pass' => $password,
-        'user_login' => $login,
-        'user_email' => $email,
-        'user_url' => 'https://livelearn.nl/inloggen/',
-        'display_name' => $first_name,
-        'first_name' => $first_name,
-        'last_name' => $last_name,
-        'role' => 'subscriber'
-    );  
-    $user_id = wp_insert_user(wp_slash($userdata));
-
-    if(is_wp_error($user_id))
-        $message = $user_id->get_error_message();   
-    else
-    {   
-        //Mail register
-        $subject = 'Je LiveLearn inschrijving is binnen! ✨';
-        $body = "
-            Bedankt voor je inschrijving<br>
-            <h1>Hello " . $first_name  . "</h1>,<br> 
-            Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br><br>
-            <h4>Inloggen:</h4><br>
-            <h6><a href='https:livelearn.nl/inloggen/'> Log in </a></h6>
-                ";
-        $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
-        wp_mail($email, $subject, $body, $headers, array( '' )) ; 
-        
-        //Custom fields
-        update_field('telnr', $telefoonnummer, 'user_' . $user_id);
-        update_field('degree_user', $choiceDegrees, 'user_'.$user_id);
-        //update_field('company', $companie, 'user_'.$user_id);
-        update_field('work', $work, 'user_'.$user_id);
-        update_field('course_type_user', $choiceCourseType, 'user_'.$user_id);
-        update_field('generatie', $choiceGeneratie, 'user_'.$user_id);
-        update_field('country', $prive, 'user_'.$user_id);
-
-        $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
-        foreach ($bangerichtsChoice as $key => $topic) { 
-            if (!empty($topic))
-            {
-                if (!(in_array($topic, $subtopics_already_selected)))
-                {
-                    add_user_meta(get_current_user_id(),'topic',$topic);  
-                }
-                
-            }
+        function RandomString()
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randstring = '';
+        for ($i = 0; $i < 10; $i++) {
+            $rand = $characters[rand(0, strlen($characters))];
+            $randstring .= $rand;  
         }
-        $message = "Your account created successfully";       
+        return $randstring;
     }
-    header('Location: /?message=' . $message);
-}
 
+//   if(!empty($company))
+//     $company_manager = $company[0]->post_title;
+
+    extract($_POST);
+    //var_dump($email);
+    if(isset($email)){
+       
+        if($email != null)
+        {
+             $args = array(
+                 'post_type' => 'company', 
+                 'post_status' => 'publish',
+                 'posts_per_page' => -1,
+                 'order' => 'DESC',                        
+             );
+        
+             $companies = get_posts($args);
+
+             foreach($companies as $company){
+                 if($company->post_title == $company){
+                     $companie = $company;
+                     break;
+                 }
+             }
+
+            if($first_name == null)
+                $first_name = "ANONYM";
+            
+            if($last_name == null)
+                $last_name = "ANONYM";
+            
+                $login = RandomString();
+                $password = RandomString();
+            
+
+            $userdata = array(
+                'user_pass' => $password,
+                'user_login' => $login,
+                'user_email' => $email,
+                'user_url' => 'https://livelearn.nl/inloggen/',
+                'display_name' => $first_name,
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'role' => 'subscriber'
+            );
+
+            $user_id = wp_insert_user(wp_slash($userdata));
+             if(is_wp_error($user_id)){
+                 $danger = $user_id->get_error_message();
+                 ?>
+                  <script>
+                     window.location.replace("/?message=".$danger);
+                  </script>
+                  <?php
+                  echo ("<span class='alert alert-info'>" .  $danger . "</span>");   
+              }else
+                  {
+                      $subject = 'Je LiveLearn inschrijving is binnen! ✨';
+                      $body = "
+                      Bedankt voor je inschrijving<br>
+                      <h1>Hello " . $first_name  . "</h1>,<br> 
+                      Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br><br>
+                      <h4>Inloggen:</h4><br>
+                      <h6><a href='https:livelearn.nl/inloggen/'> Log in </a></h6>
+                      ";
+                
+                      $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+                      wp_mail($email, $subject, $body, $headers, array( '' )) ; 
+                      
+                      update_field('telnr', $telefoonnummer, 'user_' . $user_id);
+                      update_field('degree_user', $choiceDegrees, 'user_'.$user_id);
+                      update_field('company', $companie, 'user_'.$user_id);
+                      update_field('work', $work, 'user_'.$user_id);
+                      update_field('course_type_user', $choiceCourseType, 'user_'.$user_id);
+                      update_field('generatie', $choiceGeneratie, 'user_'.$user_id);
+                      update_field('country', $prive, 'user_'.$user_id);
+                      $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
+                    foreach ($bangerichtsChoice as $key => $topic) { 
+                        if (!empty($topic))
+                        {
+                            if (!(in_array($topic, $subtopics_already_selected)))
+                            {
+                                add_user_meta(get_current_user_id(),'topic',$topic);  
+                            }
+                            
+                        }
+                    }
+                    
+                      header('Location: /inloggen/?message=Je bent succesvol geregistreerd. Je ontvangt een e-mail met je login-gegevens.');
+                  ?>
+                  
+             <?php
+               
+             }
+         }
+     }
+     }
+    
 /** 
  * Skills Passport
 */
@@ -114,31 +139,31 @@ $degrees=[
     'hbo' => 'HBO',
     'university' => 'Universiteit',
 ];
-foreach ($degrees as $key => $value) 
+  foreach ($degrees as $key => $value) {
     $input_degrees.= '<input type="radio" name="choiceDegrees" value='.$key.' id="level'.$key.'"><label for="level'.$key.'">'.$value.'</label>';
+  }
 
-
-$generaties=[
+  $generaties=[
     'Generatie BabyBoom (1940-1960)' => 'BabyBoom',
     'Generatie X (1961-1980)' => 'X',
     'Millenials (1981-1995)' => 'Millennials',
     'Generatie Z (1996-nu)' => 'Z',
 ];
-foreach ($generaties as $key => $value) 
-    $input_generaties.= '<input type="radio" name="choiceGeneratie" value='.$value.' id="generatie'.$key.'"><label for="generatie'.$key.'">'.$key.'</label>';
-    
-$course_type=['Opleidingen','E-learnings','Lezingen','Trainingen','Videos','Events','Workshop','Artikelen','Webinars','Masterclasses','Assessments','Podcasts'];
-foreach ($course_type as $key => $value) {
-    $input_course_type.= '
-        <div class="blockInputCheck">
+    foreach ($generaties as $key => $value) {
+        $input_generaties.= '<input type="radio" name="choiceGeneratie" value='.$value.' id="generatie'.$key.'"><label for="generatie'.$key.'">'.$key.'</label>';
+    }
+
+    $course_type=['Opleidingen','E-learnings','Lezingen','Trainingen','Videos','Events','Workshop','Artikelen','Webinars','Masterclasses','Assessments','Podcasts'];
+    foreach ($course_type as $key => $value) {
+         $input_course_type.= '
+         <div class="blockInputCheck">
              <input type="checkbox" name="choiceCourseType[]" value='.$value.' id="courseType'.$key.'"/><label class="labelChoose btnBaangerichte" for="courseType'.$key.'">'.$value.'</label>
         </div>';
         
     }
-
-    /* 
-     * Skills Passport
-    */
+/** 
+ * Skills Passport
+*/
     $args = array(
         'post_type' => array('course', 'post'), 
         'post_status' => 'publish',
@@ -478,7 +503,6 @@ foreach ($course_type as $key => $value) {
                     ?>
 
                         <div class="groupeBtn-Jouw-inloggen">
-                            <?php if($_GET['message']) echo "<div><span class='alert alert-info'>" . $_GET['message'] . "</span></div><br>" ?>
                             <button type="button" class="btn jouwn-skills elementWeb" data-toggle="modal" data-target="#SkillsModal" >Jouw skills paspoort in 6 stappen</button>
                             <button type="button" class="jouwn-skills elementMobile" data-toggle="modal" data-target="#SkillsModal" >Skills Paspoort</button>
                             <a href="/inloggen" class="inloggenbtn">Inloggen</a>
@@ -508,7 +532,7 @@ foreach ($course_type as $key => $value) {
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form name="skills_passport_add" method="POST">
+                    <form name="skills_passport_add" method="post">
                         <div class="blockStepSkillsPaspoort">
                             <div class="setp" >
                                 <div class="circleIndicator colorStep" id="Niveau">
@@ -589,20 +613,20 @@ foreach ($course_type as $key => $value) {
                                         <label for="">Privé</label>
                                         <select name="prive" class="form-control" id="exampleFormControlSelect1">
                                             <option value="" disabled selected>Selecteer de stad waar je woont</option>
-                                            <option value="Amsterdam">Amsterdam</option>
-                                            <option value="London">London</option>
-                                            <option value="Berlin">Berlin</option>
-                                            <option value="Quebec">Quebec</option>
+                                            <option>Dakar</option>
+                                            <option>London</option>
+                                            <option>Berlin</option>
+                                            <option>Quebec</option>
                                         </select>
                                     </div>
                                     <div class="form-group-skillsP">
                                         <label for="">Werk</label>
                                         <select name="work" class="form-control" id="exampleFormControlSelect1">
                                             <option value="" disabled selected>Selecteer de stad waar je werkt</option>
-                                            <option value="Amsterdam">Amsterdam</option>
-                                            <option value="London">London</option>
-                                            <option value="Berlin">Berlin</option>
-                                            <option value="Quebec">Quebec</option>
+                                            <option>Dakar</option>
+                                            <option>London</option>
+                                            <option>Berlin</option>
+                                            <option>Quebec</option>
                                         </select>
                                     </div>
                                 </div>
@@ -644,11 +668,11 @@ foreach ($course_type as $key => $value) {
                                         <div class="input-group-register">
                                             <div class="form-group-skills">
                                                 <label for="">Voornaam</label>
-                                                <input name="first_name"  type="text" placeholder="Voorman" required>
+                                                <input name="first_name"  type="text" placeholder="Voorman">
                                             </div>
                                             <div class="form-group-skills">
                                                 <label for="">Achternaam</label>
-                                                <input name="last_name" type="text" placeholder="Achternaam" required>
+                                                <input name="last_name" type="text" placeholder="Achternaam">
                                             </div>
                                             <div class="form-group-skills">
                                                 <label for="">Bedrijf</label>
@@ -660,21 +684,23 @@ foreach ($course_type as $key => $value) {
                                             </div> -->
                                             <div class="form-group-skills">
                                                 <label for="">Email</label>
-                                                <input name="email" type="text" placeholder="Email" required>
+                                                <input name="email" type="text" placeholder="Email">
                                             </div>
                                             <div class="form-group-skills">
                                                 <label for="">Telefoonnummer</label>
-                                                <input name="telefoonnummer" type="text" placeholder="Telefoonnummer" required>
+                                                <input name="telefoonnummer" type="text" placeholder="Telefoonnummer">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="text-center w-100 groupBtnStepSkillsP">
                                         <button type="button" class="btn btnTerug" id="btnTerug5SkillsPasspoort">Terug</button>
-                                        <button name="skill_passport" type="submit" class="btn btn-volgende">Maak je skills paspoort</button>
+                                        <button type="submit" class="btn btn-volgende">Maak je skills paspoort</button>
                                     </div>
                                 </div>
+
                             </div>
-                        </div>
+                        
+                    </div>
                 </form>
                 </div>
         </div>
@@ -965,8 +991,8 @@ foreach ($course_type as $key => $value) {
                         * Categories
                         */
                         $location = 'Virtual';
-                        $day = "";
-                        $month = '';
+                        $day = "<p><i class='fas fa-calendar-week'></i></p>";
+                        $month = ' ';
 
                         $category = ' ';
                                     
@@ -1005,9 +1031,6 @@ foreach ($course_type as $key => $value) {
                             $month = $calendar[$month];
                             $location = $data[2];
                         }
-
-                        if($day == "")
-                            continue;
 
                         /*
                         * Price
@@ -1111,23 +1134,7 @@ foreach ($course_type as $key => $value) {
         <div class="swiper-container swiper-container-3">
             <div class="swiper-wrapper">
                 <?php
-                  $author_id = 0;
-                  $users = get_users();
 
-                  foreach($users as $user){
-                      $name_user = strtolower($user->data->display_name);
-                      if($name_user == "Livelean" || $name_user == "livelean"){
-                        $author_id = intval($user->data->ID);
-                        $name_user = $user->display_name;
-                        $featured = get_field('featured', 'user_' . $author_id);
-                        if($featured)
-                            break;
-                      }
-                  }
-
-                  if(!empty($featured))
-                    $courses = $featured;
-                  
                   $i = 0;
 
                   foreach($courses as $course){
@@ -1544,11 +1551,11 @@ foreach ($course_type as $key => $value) {
 
 <script>
 
-    // $('.bangricht').click(()=>{
-    //     alert('bangricht');
-    // });
+    $('.bangricht').click(()=>{
+        alert('bangricht');
+    });
 
-    $('#search').keyup(function(){
+     $('#search').keyup(function(){
         var txt = $(this).val();
 
         event.stopPropagation();
