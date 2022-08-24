@@ -313,7 +313,7 @@
             <input type="hidden" name="meta_key" value="expert" id="">
             <div>
             <?php
-            if($user_id != 0 )
+            if($user_id != 0 && $user_id != $_GET['id'] )
             {
                 $experts= get_user_meta($user_id, 'expert');
                 if (in_array($user->ID,$experts))

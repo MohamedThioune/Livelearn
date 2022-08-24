@@ -184,7 +184,7 @@ $link = ($user) ? '/dashboard/user' : '/';
                             <?php }
                             }?>
                             <?php
-                            if ( in_array( 'hr', $user->roles ) || in_array( 'teacher', $user->roles ) || in_array( 'administrator', $user->roles ) || $user->roles == 'administrator') {
+                            if ( in_array( 'hr', $user->roles ) || in_array( 'author', $user->roles ) || in_array( 'administrator', $user->roles ) || $user->roles == 'administrator') {
                             ?>
                             <a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>
                             <?php }?>
@@ -209,18 +209,15 @@ $link = ($user) ? '/dashboard/user' : '/';
                         <?php
                         $company = get_field('company',  'user_' . $user->ID);
 
-                        if(!empty($company)){
-                            if ( in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') {
-                            ?>
-                            <a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>
-                        <?php }
-                        }?>
+                        if(!empty($company))
+                            if ( in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') 
+                                echo '<a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>';
+                        ?>
 
                         <?php
-                            if ( in_array( 'hr', $user->roles ) || in_array( 'teacher', $user->roles ) || in_array( 'administrator', $user->roles ) || $user->roles == 'administrator') {
-                            ?>
-                        <a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>
-                        <?php }?>
+                            if ( in_array( 'hr', $user->roles ) || in_array( 'author', $user->roles ) || in_array( 'administrator', $user->roles ) || $user->roles == 'administrator') 
+                                echo '<a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>';
+                        ?>
                     </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">

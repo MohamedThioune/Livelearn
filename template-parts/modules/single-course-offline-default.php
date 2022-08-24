@@ -274,7 +274,8 @@
                             <li><a href="#tab2">Skills</a></li>
                             <li><a href="#tab3">Reviews</a></li>
                             <li><a href="#tab4">Add Reviews</a></li>
-                        </ul> <!-- END tabs-nav -->
+                        </ul> 
+                        <!-- END tabs-nav -->
                         <div id="tabs-content">
                             <div id="tab1" class="tab-content">
 
@@ -614,40 +615,40 @@
                                 <?php 
                                 if($user_id != 0){
                                 ?>
-                                <form class="formSingleCoourseReview " action="../../dashboard/user/" method="POST">
-                                    <input type="hidden" name="user_id" value="<?= $user_id; ?>">
-                                    <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
+                               <div class="formSingleCoourseReview">
                                     <label>Rating</label>
                                     <div class="rating-element2">
                                         <div class="rating"> 
-                                            <input type="radio" id="star5" name="rating" value="5" />
+                                            <input type="radio" id="star5" class="stars" name="rating" value="5" />
                                             <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                                            <input type="radio" id="star4" name="rating" value="4" />
+                                            <input type="radio" id="star4" class="stars" name="rating" value="4" />
                                             <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                                            <input type="radio" id="star3" name="rating" value="3" />
+                                            <input type="radio" id="star3" class="stars" name="rating" value="3" />
                                             <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                                            <input type="radio" id="star2" name="rating" value="2" />
+                                            <input type="radio" id="star2" class="stars" name="rating" value="2" />
                                             <label class="star" for="star2" title="Good" aria-hidden="true"></label>
                                             <input type="radio" id="star1" name="rating" value="1" />
-                                            <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
+                                            <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
                                         </div>
                                         <span class="rating-counter"></span>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="">Feedback</label>
-                                        <textarea name="feedback_content" rows="10"></textarea>
+                                        <textarea name="feedback_content" id="feedback" rows="10"></textarea>
                                     </div>
-                                    <input type='submit' class='btn btn-sendRating' name='review_post' value='Send'>
-                                </form>
+                                    <input type="button" class='btn btn-sendRating' id='btn_review' name='review_post' value='Send'>
+                                </div>
                                 <?php
                                 }
                                 else
                                     echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> You must sign-in for review </button>";
                                 ?>
                             </div>
-                        </div> <!-- END tabs-content -->
-                    </div> <!-- END tabs -->
+                        </div> 
+                        <!-- END tabs-content -->
+                    </div> 
+                    <!-- END tabs -->
                 </div>
                 <!--------------------------------------- end Text description -------------------------------------- -->
             </div>
@@ -946,7 +947,7 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js'></script>
 
 
-    <script>
+<script>
     $("#btn_favorite").click((e)=>
     {
         $(e.preventDefault());
@@ -965,6 +966,35 @@
             success: function(data){
                 console.log(data);
                 $('#autocomplete_favoured').html(data);
+            }
+        });
+    })
+</script>
+
+<script>
+    $("#btn_review").click((e)=>
+    {
+        $(e.preventDefault());
+        var user_id = $("#user_id").val();
+        var id = $("#course_id").val();
+        var feedback = $("#feedback").val();
+        var stars = $('input[name=rating]:checked').val()
+
+        $.ajax({
+
+            url:"/like",
+            method:"post",
+            data:{
+                id:id,
+                user_id:user_id,
+                feedback:feedback,
+                stars:stars,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#tab2').html(data);
+                alert('Review successfully sent');
             }
         });
     })
