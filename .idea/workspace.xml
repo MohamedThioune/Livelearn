@@ -1,11 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="" />
+    <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog.css" beforeDir="false" afterPath="$PROJECT_DIR$/blog.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/header_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/single.php" beforeDir="false" afterPath="$PROJECT_DIR$/single.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline-default.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline-default.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-Ontwikkeladvies.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-Ontwikkeladvies.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-creëren.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-creëren.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-ecosysteme.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-ecosysteme.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-grootbedrijf.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-grootbedrijf.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-mkb.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-mkb.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-uitleggen.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-uitleggen.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-verkopen.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-verkopen.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-voor-organisaties.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-organisaties.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-zzpers.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-zzpers.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -190,13 +212,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/wamp64/www/liveLearn-wordpressBiss/wp-content/themes/fluidify-child",
-    "nodejs_package_manager_path": "npm"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/wamp64/www/liveLearn-wordpressBiss/wp-content/themes/fluidify-child&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -641,6 +663,14 @@
       <workItem from="1659966531734" duration="1882000" />
       <workItem from="1661182398380" duration="1001000" />
       <workItem from="1661190319040" duration="287000" />
+      <workItem from="1661190760727" duration="768000" />
+      <workItem from="1661256533536" duration="237000" />
+      <workItem from="1661256820821" duration="3171000" />
+      <workItem from="1661262166254" duration="4718000" />
+      <workItem from="1661285168304" duration="379000" />
+      <workItem from="1661338215604" duration="5134000" />
+      <workItem from="1661344461385" duration="3542000" />
+      <workItem from="1661375612423" duration="2126000" />
     </task>
     <servers />
   </component>

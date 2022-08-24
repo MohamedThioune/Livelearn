@@ -476,12 +476,6 @@ foreach($global_blogs as $blog)
                     </div>
 
                 </div>
-
-
-
-
-
-
           <!--      <p class="sousBlockTitleProduct"> Roadpath "<?php /*if( isset($title_road_path) && isset($expert_road_path) ) echo $title_road_path . '" by ' . $expert_road_path; */?> </p>
                 <div class="blockCardOpleidingen ">
 

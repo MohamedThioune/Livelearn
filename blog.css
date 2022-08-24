@@ -1031,8 +1031,6 @@ textarea.form-control {
   font-size: 16px;
 }
 .commentAndShare {
-  display: flex;
-  align-items: center;
   margin-bottom: 30px;
 }
 .ti-comment {
@@ -1281,7 +1279,7 @@ a {
     margin-bottom: 30px;
   }
   .blog-wrap{
-    padding: 10px 20px !important;
+    padding: 30px 20px !important;
   }
   .blockShare {
     margin-right: 20px;
@@ -1300,7 +1298,7 @@ a {
     margin-top: 30px !important;
   }
   .titleBlog {
-    font-size: 26px;
+    font-size: 21px;
     font-weight: 500;
     margin-bottom: 10px;
     line-height: 30px;

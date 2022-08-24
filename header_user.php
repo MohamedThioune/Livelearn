@@ -268,14 +268,14 @@ $link = ($user) ? '/dashboard/user' : '/';
 
                         </li>
                        
-                        <div class="second-element-mobile" id="burgerAndbelief">
+                      <!--  <div class="second-element-mobile" id="burgerAndbelief">
                             <button id="burger" class=" btn burgerElement boxSousNav3-2">
                                 <i class="fa fa-bars text-white" style="font-size: 25px"></i>
                             </button>
                             <button id="burgerCroie" class="btn croie">
                                 <i class="bi bi-x-lg text-white" style="font-size: 25px"></i>
                             </button>
-                        </div>
+                        </div>-->
 
 
                         <li class="position-relative dropdown dropdownNotificationToggle">

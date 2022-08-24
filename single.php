@@ -184,6 +184,15 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                     <div class="single-blog-item">
                         <img src="<?= $image; ?>" alt="" class="img-fluid rounded">
                     </div>
+                    <div class="blockAuthorMobile">
+                        <div class="d-flex align-items-center">
+                            <a class="imgAuthorBlock" href="<?php echo "/user-overview/?id=" . $post->post_author; ?>" target="_blank" >
+                                <img src="<?php echo $user_picture; ?>" alt="" class="img-fluid">
+                            </a>
+                            <p class="NameAuthor"><?php echo(get_userdata($post->post_author)->data->display_name);?></p>
+                        </div>
+                        <button class="btn FollowButton">Follow</button>
+                    </div>
                     <div class="blockDescriptionBlog" id="">
 
                         <?php
@@ -193,7 +202,7 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                     </div>
                     <div class="tag-option">
                         <ul class="list-inline">
-                            <li class="TagsTitle">Tags: </li>
+                            <li class="TagsTitle">Onderwerpen: </li>
                             <?php
                             if(!empty($posttags))
                                 foreach($posttags as $posttag)
@@ -220,8 +229,35 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                         </ul>
                     </div>
                     <div class="commentAndShare">
+                        <p class="titleComment"><i class="fas fa-comment" aria-hidden="true"></i><?= $number_comments; ?> Comments</p>
+                        <?php
+                        if(!empty($reviews)){
+                            foreach($reviews as $review){
+                                $user = $review['user'];
+                                $image_author = get_field('profile_img',  'user_' . $user->ID);
+                                $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+                                $rating = $review['rating'];
+                                ?>
+                                <div class="sousBlockComments">
+                                    <div class="d-flex">
+                                        <div class="auteurImgComment">
+                                            <img src="<?= $image_author; ?>" alt="">
+                                        </div>
+                                        <div>
+                                            <p class="NameAutorComment"><?= $user->display_name; ?></p>
+                                            <p class="date"></p>
+                                        </div>
+                                    </div>
+                                    <p class="comment"><?= $review['feedback']; ?></p>
+                                </div>
+                                <?php
+                            }
+                        }
+                        else
+                            echo "<h6>No reviews for this course ...</h6>";
+                        ?>
 
-                        <button class="btn ti-comment" data-toggle="modal" data-target="#myModal2"><i class="fas fa-comment" aria-hidden="true"></i><?= $number_comments; ?> Comments</button>
+                        <button class="btn AddCommentBtn" data-toggle="modal" data-target="#myModal2">Add Comments</button>
                     </div>
 
 
@@ -230,38 +266,12 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <p><?= $number_comments; ?> Comments</p>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 </div>
 
                                 <div class="modal-body">
-                                    <?php
-                                    if(!empty($reviews)){
-                                        foreach($reviews as $review){
-                                            $user = $review['user'];
-                                            $image_author = get_field('profile_img',  'user_' . $user->ID);
-                                            $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
-                                            $rating = $review['rating'];
-                                            ?>
-                                            <div class="sousBlockComments">
-                                                <div class="d-flex">
-                                                    <div class="auteurImgComment">
-                                                        <img src="<?= $image_author; ?>" alt="">
-                                                    </div>
-                                                    <div>
-                                                        <p class="NameAutorComment"><?= $user->display_name; ?></p>
-                                                        <p class="date"></p>
-                                                    </div>
-                                                </div>
-                                                <p class="comment"><?= $review['feedback']; ?></p>
-                                            </div>
-                                            <?php
-                                        }
-                                    }
-                                    else
-                                        echo "<h6>No reviews for this course ...</h6>";
-                                    ?>
-                                    <div class="blockAddComment">
+
+                                    <div class="blockAddComment2">
                                         <?php
                                         if($user_id != 0){
                                             ?>
@@ -346,7 +356,7 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                         </div>
 
                         <div class="sidebar-widget latest-post card border-0 p-4 mb-3">
-                            <h5>Latest Posts</h5>
+                            <h5>Andere artikelen</h5>
                             
                             <?php
                             $latests = wp_get_recent_posts(array('numberposts' => 3));
@@ -366,7 +376,7 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                         </div>
 
                         <div class="sidebar-widget bg-white rounded tags p-4 mb-3">
-                            <h5 class="mb-4">Tags</h5>
+                            <h5 class="mb-4">Onderwerpen</h5>
 
                             <?php
                             if ($posttags)
