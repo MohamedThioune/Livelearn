@@ -96,7 +96,7 @@ extract($_GET);
                         }
                         else{
                             if(isset($lesson))
-                                echo '<iframe width="730" height="433" src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay;
+                                echo '<iframe class="iframeVideo" width="730" height="433" src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay;
                                     
                                     ; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
                             else
@@ -586,11 +586,11 @@ extract($_GET);
                 <div class="btnGrou10">
                     <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#direct-contact">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
-                        Direct contact
+                        <p class="textBtnContact">Direct contact</p>
                     </a>
                     <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#voor-wie">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/question.png" alt="">
-                        Voor wie
+                        <p class="textBtnContact">Voor wie</p>
                     </a>
                 </div>
                 <p class="afspeeText">Afspeellijst</p>
@@ -743,7 +743,7 @@ extract($_GET);
                                 <p class="btwText">BTW: € <?php $prijsvat ?></p>
 
 
-                                <a href="#bookdates" class="btn btnKoop">Koop deze <?php echo $course_type; ?></a>
+                                <a href="#bookdates" class="btn btnKoop">Schrijf je in  <?php echo  $course_type; ?></a>
                             </div>
                             <div class="col-12 my-5" style="background-color: #E0EFF4">
                                 <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around justify-content-center">
@@ -808,8 +808,6 @@ extract($_GET);
 
 
         <div class="bloxkWorldMembre formDirect ">
-            <!-- <p class="wordnuText">Word nu <b>LIFT Member</b> en ontvang persoonlijke korting</p>
-            <a href="" class="btn btnPlan">Planeen 15min afspraak in</a> -->
             <div class="row d-flex justify-content-center">
                 <div class="col-md-2">
                     <img class="imgDanForm" src="<?php echo $photo_daniel; ?>" alt="photo daniel" srcset="">

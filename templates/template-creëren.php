@@ -18,7 +18,7 @@
                         Via jouw eigen teacher dashboard creëren je in een paar klikken een nieuw kennisproduct dat
                         je meteen met de wereld kan delen óf intern binnen jouw organisatie kan verspreiden
                     </p>
-                    <a href="" class="btn rounded rounded-pill fw-bold px-4 text-white" style="background: #00A89D">
+                    <a data-toggle="modal" data-target="#exampleModalCenter"  aria-label="Close" data-dismiss="modal"  class="btn rounded rounded-pill fw-bold px-4 text-white" style="background: #00A89D">
                         <strong>Start met creêren</strong>  
                     </a>
 
@@ -116,7 +116,7 @@
                         en betaal je alleen voor de transactie wanneer iemand een boeking maakt. Dit maakt aanbieden via LiveLearn een 
                         win-win voor iedereen.
                     </p>
-                    <a href="" class="btn btn-primary rounded rounded-pill fw-bold px-4" style="background: #00A89D">
+                    <a data-toggle="modal" data-target="#exampleModalCenter"  aria-label="Close" data-dismiss="modal" class="btn btnMaakVerkopen rounded rounded-pill fw-bold text-white" style="background: #00A89D">
                         <strong>Maak je omgeving</strong>  
                     </a>
                 </div>
@@ -141,12 +141,12 @@
                             We helpen je graag met jouw specifieke vragen omtrent talent management 
                             en de toepasbaarheid hiervan binnen je organisatie.
                         </p>
-                    </div>    
+                    </div>
                     <a href="mailto:contact@livelearn.nl" class="btn btn-default rounded-pill px-5 my-2 ml-md-0 ml-2" style="background: #E3EFF4">
                         <strong class="text-dark">Email </strong>
                     </a>
-                    <a href="tel: +31621610903" class="btn btn-default rounded-pill px-5 my-2 ml-md-3" style="background: #00A89D">
-                        <strong >Bellen</strong> 
+                    <a href="tel: +31627003962" class="btn btn-default text-white rounded-pill px-5 my-2 ml-md-3" style="background: #00A89D">
+                        <strong >Bellen</strong>
                     </a>
                 </div>
             </div>

@@ -361,7 +361,6 @@
                                 }
                             ?>
                         </div>
-                       <br>
 
                    </div>
                     <?php 
@@ -427,7 +426,6 @@
                                                                         }
                                                                         ?>
                                                                     </div>
-                                                                    <p class="prixEvens">€ <?php echo $price; ?></p>
                                                                 </div>
 
                                                             </summary>
@@ -451,7 +449,9 @@
                                                                                     <input type="hidden" data-attr="dateNameStart" value="<?php echo $day . ', ' . $hour . ', ' . $location  ?>">
                                                                                 <?php }?>
                                                                                 <div class="d-flex">
-                                                                                    <p class="numberEvens"><?php echo $i+1 ?></p>
+                                                                                    <div class="numberEvens">
+                                                                                        <p><?php echo $i+1 ?></p>
+                                                                                    </div>
                                                                                     <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
                                                                                 </div>
                                                                                 <p class="prixEvens">€ <?php echo $price; ?></p>
@@ -549,7 +549,6 @@
                                                                     }
                                                                     ?>
                                                                 </div>
-                                                                <p class="prixEvens">€ <?php echo $price; ?></p>
                                                             </div>
 
                                                         </summary>
@@ -572,7 +571,9 @@
                                                                            <input type="hidden" data-attr="dateNameStart" value="<?php echo $day . ', ' . $hour . ', ' . $location  ?>">
                                                                        <?php }?>
                                                                        <div class="d-flex align-items-center">
-                                                                           <p class="numberEvens"><?php echo $x+1 ?></p>
+                                                                          <div class="numberEvens">
+                                                                              <p ><?php echo $x+1 ?></p>
+                                                                          </div>
                                                                            <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
                                                                        </div>
                                                                        <p class="prixEvens">€ <?php echo $price; ?></p>
@@ -821,19 +822,19 @@
                 <div class="btnGrou10">
                     <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#direct-contact">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
-                        Direct contact
+                        <p class="textBtnContact">Direct contact</p>
                     </a>
                     <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#incompany">
-                        <i class="fas fa-house-damage px-2" style="font-size: 20px"></i>
-                        Incompany
+                        <i class="fas fa-house-damage " style="font-size: 20px"></i>
+                        <p class="textBtnContact">Incompany</p>
                     </a>
                     <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#offerte">
-                        <i class="fab fa-buffer px-2" style="font-size: 20px"></i>
-                        Brochure
+                        <i class="fab fa-buffer " style="font-size: 20px"></i>
+                        <p class="textBtnContact">Brochure</p>
                     </a>
                     <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#voor-wie">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/question.png" alt="">
-                        Voor wie
+                       <p class="textBtnContact"> Voor wie</p>
                     </a>
                 </div>
 
@@ -924,10 +925,10 @@
 
                     <p class="PrisText">Prijs vanaf</p>
                     <p class="opeleidingText"><?= $course_type?>: € <?php echo $price ?></p>
-                    <p class="btwText">BTW: € <?php echo $prijsvat ?></p>
+                    <p class="btwText">BTWd: € <?php echo $prijsvat ?></p>
 
 
-                    <button href="#bookdates" class="btn btnKoop btnScroolEvent text-white PrisText" style="background: #043356">Koop deze <?php echo $course_type; ?></button>
+                    <button href="#bookdates" class="btn btnKoop btnScroolEvent text-white PrisText" style="background: #043356">Schrijf je in <?php echo  $course_type; ?></button>
                 </div>
 
                 <div class="col-12 my-5" style="background-color: #E0EFF4">
