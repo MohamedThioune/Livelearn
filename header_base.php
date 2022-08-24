@@ -147,7 +147,7 @@ $url = home_url( $wp->request );
 
             <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
             <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-                 style="position: absolute;height: 120% !important; overflow-y:hidden !important;">
+                 style="position: absolute;height: auto !important; overflow-y:hidden !important;">
                 <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
                                                                  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
 
@@ -190,7 +190,7 @@ $url = home_url( $wp->request );
 
             <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
             <div class="modal modalEcosyteme fade <?php if(isset($_GET['popup'])){echo 'show';}?>" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-                 style="position: absolute;overflow-y:hidden !important;height: 110%;<?php if(isset($_GET['popup'])){echo 'display:block;';}?>">
+                 style="position: absolute;overflow-y:hidden !important;height: auto;<?php if(isset($_GET['popup'])){echo 'display:block;';}?>">
                 <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
                                                                  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
 
@@ -517,7 +517,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=header&opleidin=Training">
+                                        <a href="/product-search">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Trainingen.jpg" alt="">
                                             </div>
@@ -542,7 +542,7 @@ $url = home_url( $wp->request );
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Evens-header.jpg" alt="">
                                             </div>
                                             <div>
-                                                <p class="subtitleSousElementHeader">Evens</p>
+                                                <p class="subtitleSousElementHeader">Events</p>
                                             </div>
                                         </a>
                                     </li>
@@ -637,7 +637,7 @@ $url = home_url( $wp->request );
                                 <a class="nav-link" href="#" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal"><b>Inloggen</b></a>
                             </li>
                             <li class="">
-                                <a href="/registreren" class="nav-link worden">Lid worden</a>
+                                <a href="#" data-toggle="modal" data-target="#exampleModalCenter"  aria-label="Close" data-dismiss="modal" class="nav-link worden">Lid worden</a>
                             </li>
                         </ul>
 
@@ -771,8 +771,8 @@ $url = home_url( $wp->request );
                             <a href="/voor-organisaties" class="elementsousMenuNav">Voor organisaties</a>
                         </div>
                         <div class="block1">
-                            <a href="/registreren" class="btnRegistreren">Registreren</a>
-                            <a href="#" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal" class="btnInloggen">Inloggen</a>
+                            <a href="#" data-toggle="modal" data-target="#exampleModalCenter"  aria-label="Close" data-dismiss="modal" class="btnRegistreren btnRegistrerenInloggen">Registreren</a>
+                            <a href="#" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal" class="btnInloggen btnRegistrerenInloggen">Inloggen</a>
                         </div>
                     </div>
                     <div class="secondContentHeadMobile">
@@ -842,8 +842,8 @@ $url = home_url( $wp->request );
                 <div class="elementGroupGroeien">
                     <div class="block1">
                         <p class="elementsousMenuNav profilText"><b>Jouw profiel</b></p>
-                        <a href="/registreren" class="elementsousMenuNav">Registreren</a>
-                        <a href="#" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal" class="elementsousMenuNav">Inloggen</a>
+                        <a href="#" data-toggle="modal" data-target="#exampleModalCenter"  aria-label="Close" data-dismiss="modal" class="elementsousMenuNav btnRegistrerenInloggen">Registreren</a>
+                        <a href="#" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal" class="elementsousMenuNav btnRegistrerenInloggen">Inloggen</a>
                     </div>
                 </div>
             </div>
