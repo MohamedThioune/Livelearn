@@ -304,11 +304,26 @@ else if(isset($interest_push)){
         $meta_data = get_user_meta($user_id, $meta_key);
         if(!in_array($meta_value,$meta_data)){
             add_user_meta($user_id, $meta_key, $meta_value);
-            $message = "Succesvol toegevoegd";
+            if(isset($artikel)){
+                $path = get_permalink($artikel) . "/?message=Succesvol followed";
+                header("location: " .$path);
+            }
+            else{
+                $message = "Succesvol toegevoegd";
+                header("location: ../../dashboard/user/?message=".$message);
+            }
+            
         }else{
-            $message = "Reeds aanwezig in jouw favorieten";
+            if(isset($artikel)){
+                $path = get_permalink($artikel) . "/?message=Reeds aanwezig in jouw favorieten";
+                header("location: " .$path);
+            }
+            else{
+                $message = "Reeds aanwezig in jouw favorieten";
+                header("location: ../../dashboard/user/?message=".$message);
+            }
         }
-        header("location:../../dashboard/user/?message=".$message);
+        
         
     }
 }
@@ -325,13 +340,19 @@ else if(isset($interest_push)){
 else if(isset($delete)){
     if($meta_value != null){
         if(delete_user_meta($user_id, $meta_key, $meta_value)){
-            $message = "Met succes verwijderd";
-            if($meta_key == "topic" || $meta_key == "topic_affiliate")
-                header("location:/dashboard/user/?message=".$message);
+            if(isset($artikel)){
+                $path = get_permalink($artikel) . "/?message=Succesvol unfollowed";
+                header("location: " .$path);
+            }
             else{
-                $user_connected = get_current_user_id();
-                $content = "/dashboard/company/profile/?id=" . $user_id . '&manager='. $user_connected . "?message=" . $message; 
-                header("location:".$content);
+                $message = "Met succes verwijderd";
+                if($meta_key == "topic" || $meta_key == "topic_affiliate")
+                    header("location: /dashboard/user/?message=".$message);
+                else{
+                    $user_connected = get_current_user_id();
+                    $content = "/dashboard/company/profile/?id=" . $user_id . '&manager='. $user_connected . "?message=" . $message; 
+                    header("location: ".$content);
+                }
             }
         }
     }
@@ -586,7 +607,7 @@ else if(isset($databank)){
             'display_name' => $first_name,
             'first_name' => $first_name,
             'last_name' => $last_name,
-            'role' => 'teacher'
+            'role' => 'author'
         );
 
         $user_id = wp_insert_user(wp_slash($userdata));

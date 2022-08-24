@@ -1,3 +1,7 @@
+<?php
+
+
+?>
 <style>
     a{
         text-decoration: none !important;
@@ -133,8 +137,9 @@
                     ?>
                     <div class="content-text p-4 pb-0">
                         <h4 class="text-dark">Voor wie ?</h4>
-                        <p class="m-0"><strong>This course is followed up by <?php if(isset($author->first_name) && isset($author->last_name)) echo $author->first_name . '' . $author->last_name; else echo $author->display_name; ?> </strong></p>
-                        <p><em>This line rendered as italicized text.</em></p>
+                        <p class="m-0">
+                            <?= $for_who ?>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -199,7 +204,7 @@
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-calendar-alt" style="font-size: 25px;"></i>
-                            <span class="textIconeLearning mt-1"><?= $number_course_day." dagdeel" ?></span>
+                            <span class="textIconeLearning mt-1"><?= $dagdeel." dagdeel" ?></span>
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-graduation-cap" style="font-size: 25px;"></i>
@@ -377,12 +382,14 @@
                     <div class="tabs">
                         <ul id="tabs-nav">
                             <li><a href="#tab1">Events</a></li>
-                            <li><a href="#tab2">Reviews</a></li>
-                            <li><a href="#tab3">Add Reviews</a></li>
+                            <li><a href="#tab2">Skills</a></li>
+                            <li><a href="#tab3">Reviews</a></li>
+                            <li><a href="#tab4">Add Reviews</a></li>
                         </ul> <!-- END tabs-nav -->
                         <div id="tabs-content">
                             <div id="tab1" class="tab-content">
-                                <?php
+
+                            <?php
                                 $data = get_field('data_locaties', $post->ID);
                                 if(!$data){
                                     $data = get_field('data_locaties_xml', $post->ID);
@@ -411,31 +418,32 @@
                                                 ?>
                                                 <a id="bookdates" name="bookdates"></a>
 
+
                                                 <!-------------------------------------------- Start cards on bottom --------------------------- -->
                                                 <div class="block2evens block2evensTabs">
                                                     <section>
                                                         <details>
                                                             <summary class="dateText1">
 
-                                                                <div class="headTabsAccordion">
-                                                                    <div>
-                                                                        <?php
-                                                                        echo $agenda_start;
-                                                                        if($date_start != '' && $date_end != '')
-                                                                        {
-                                                                            echo ' - ';
-                                                                            echo $agenda_end;
-                                                                        }
-                                                                        ?>
-                                                                    </div>
-                                                                    <p class="prixEvens">€ <?php echo $price; ?></p>
-                                                                </div>
+                                                               <div class="headTabsAccordion">
+                                                                   <div>
+                                                                       <?php
+                                                                       echo $agenda_start;
+                                                                       if($date_start != '' && $date_end != '')
+                                                                       {
+                                                                           echo ' - ';
+                                                                           echo $agenda_end;
+                                                                       }
+                                                                       ?>
+                                                                   </div>
+                                                                   <p class="prixEvens">€ <?php echo $price; ?></p>
+                                                               </div>
 
                                                             </summary>
                                                             <div class="detailSummary">
 
                                                                 <div class="dateBlock">
-                                                                    <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
+                                                                     <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
                                                                 </div>
                                                                 <div class="BlocknumberEvenement">
 
@@ -510,9 +518,7 @@
                                                     </section>
                                                 </div>
 
-
                                                 <!-------------------------------------------- End cards on bottom --------------------------- -->
-
 
                                                 <?php
                                             }
@@ -644,9 +650,38 @@
                                         }
                                     }
                                 }
-                                ?>
+                            ?>
                             </div>
+
                             <div id="tab2" class="tab-content">
+                                <h2>Skills</h2>
+                                <?php
+                                    $category_default = get_field('categories', $post->ID);
+                                    $category_xml = get_field('category_xml', $post->ID);
+                                
+                                ?>
+                                <div class="blockSkillsTabs">
+                                    <?php
+                                        $read_category = array();
+                                        if(!empty($category_default))
+                                            foreach($category_default as $item){
+                                                if(!in_array($item['value'],$read_category)){
+                                                    array_push($read_category,$item['value']);
+                                                    echo '<p class="skillsElement">'. (String)get_the_category_by_ID($item['value']) . '</p>';
+                                                }
+                                            }
+
+                                        else if(!empty($category_xml))
+                                            foreach($category_xml as $item)
+                                                if(!in_array($item['value'],$read_category)){
+                                                    array_push($read_category,$item['value']);
+                                                    echo '<p class="skillsElement">'. (String)get_the_category_by_ID($item['value']) . '</p>';
+                                                }
+                                    ?>
+                                </div>
+                            </div>
+
+                            <div id="tab3" class="tab-content">
                                 <?php
                                 if(!empty($reviews)){
                                     foreach($reviews as $review){
@@ -686,43 +721,42 @@
                                     echo "<h6>No reviews for this course ...</h6>";
                                 ?>
                             </div>
-                            <div id="tab3" class="tab-content">
+                            <div id="tab4" class="tab-content">
                                 <?php 
                                 if($user_id != 0){
                                 ?>
-                                <form class="formSingleCoourseReview " action="../../dashboard/user/" method="POST">
-                                    <input type="hidden" name="user_id" value="<?= $user_id; ?>">
-                                    <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
+                               <div class="formSingleCoourseReview">
                                     <label>Rating</label>
                                     <div class="rating-element2">
                                         <div class="rating"> 
-                                            <input type="radio" id="star5" name="rating" value="5" />
+                                            <input type="radio" id="star5" class="stars" name="rating" value="5" />
                                             <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                                            <input type="radio" id="star4" name="rating" value="4" />
+                                            <input type="radio" id="star4" class="stars" name="rating" value="4" />
                                             <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                                            <input type="radio" id="star3" name="rating" value="3" />
+                                            <input type="radio" id="star3" class="stars" name="rating" value="3" />
                                             <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                                            <input type="radio" id="star2" name="rating" value="2" />
+                                            <input type="radio" id="star2" class="stars" name="rating" value="2" />
                                             <label class="star" for="star2" title="Good" aria-hidden="true"></label>
                                             <input type="radio" id="star1" name="rating" value="1" />
-                                            <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
+                                            <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
                                         </div>
                                         <span class="rating-counter"></span>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="">Feedback</label>
-                                        <textarea name="feedback_content" rows="10"></textarea>
+                                        <textarea name="feedback_content" id="feedback" rows="10"></textarea>
                                     </div>
-                                    <input type='submit' class='btn btn-sendRating' name='review_post' value='Send'>
-                                </form>
+                                    <input type="button" class='btn btn-sendRating' id='btn_review' name='review_post' value='Send'>
+                                </div>
                                 <?php
                                 }
                                 else
                                     echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> You must sign-in for review </button>";
                                 ?>
                             </div>
-                        </div> <!-- END tabs-content -->
+                        </div> 
+                        <!-- END tabs-content -->
                     </div> <!-- END tabs -->
                 </div>
             </div>
@@ -1068,6 +1102,35 @@
             success: function(data){
                 console.log(data);
                 $('#autocomplete_favoured').html(data);
+            }
+        });
+    })
+</script>
+
+<script>
+    $("#btn_review").click((e)=>
+    {
+        $(e.preventDefault());
+        var user_id = $("#user_id").val();
+        var id = $("#course_id").val();
+        var feedback = $("#feedback").val();
+        var stars = $('input[name=rating]:checked').val()
+        $.ajax({
+
+            url:"/review",
+            method:"post",
+            data:{
+                id:id,
+                user_id:user_id,
+                feedback_content:feedback,
+                stars:stars,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#tab3').html(data);
+                $("#feedback").val(' ');
+                alert('Review successfully sent');
             }
         });
     })

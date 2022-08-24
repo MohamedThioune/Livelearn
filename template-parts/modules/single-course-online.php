@@ -133,7 +133,7 @@ extract($_GET);
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-calendar-alt" style="font-size: 25px;"></i>
-                            <span class="textIconeLearning mt-1"><?= $duration_day; ?> dagdee</span>
+                            <span class="textIconeLearning mt-1"><?= $duration_day; ?> dagdeel</span>
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-graduation-cap" style="font-size: 25px;"></i>
@@ -367,7 +367,7 @@ extract($_GET);
                                 <?php
                                 if($user_id != 0){
                                 ?>
-                                <form class="formSingleCoourseReview " action="../../dashboard/user/" method="POST">
+                                <div class="formSingleCoourseReview">
                                     <input type="hidden" name="user_id" value="<?= $user_id; ?>">
                                     <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
                                     <div class="rating">
@@ -387,7 +387,7 @@ extract($_GET);
                                         <textarea name="feedback_content" rows="10"></textarea>
                                     </div>
                                     <input type='submit' class='btn btn-sendRating' name='review_post' value='Send'>
-                                </form>
+                                </div>
                                 <?php
                                 }
                                 else
@@ -477,8 +477,9 @@ extract($_GET);
                                 ?>
                                 <div class="content-text p-4 pb-0">
                                     <h4 class="text-dark">Voor wie ?</h4>
-                                    <p class="m-0"><strong>This course is followed up by <?php if(isset($author->first_name) && isset($author->last_name)) echo $author->first_name . '' . $author->last_name; else echo $author->display_name; ?> </strong></p>
-                                    <p><em>This line rendered as italicized text.</em></p>
+                                    <p class="m-0">
+                                        <?= $for_who ?>
+                                    </p>
                                 </div>
                             </div>
                         </div>
