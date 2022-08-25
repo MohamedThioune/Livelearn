@@ -193,8 +193,8 @@
 
     <section>
         <div class="container-fluid my-5">
-            <p class="krijgText krijgText px-2 px-md-1"> 
-                <strong>Populaire groeipaden</strong>
+            <p class="krijgText2 ">
+               Populaire groeipaden
             </p>
             <div class="row my-4 cards_slide" style="height: 350px">
                 <?php 
@@ -293,7 +293,7 @@
                                         <div class="group9">
                                             <div class="blockOpein">
                                                 <!-- <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt=""> -->
-                                                <p class="lieuAm">Artikel</p>
+                                                <p class="lieuAm">Artikelen voor ZZPers</p>
                                             </div>
                                             <div class="blockOpein">
                                                 <!-- <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt=""> -->
@@ -314,7 +314,140 @@
             </div>
         </div>
     </section>
-
+    <section>
+        <div class="container-fluid">
+            <p class="krijgText2">Leerpaden</p>
+            <div class="swiper-container swiper-container-3">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide swiperSlideModife">
+                        <div class="cardRoadPath">
+                            <div class="headRoadPath">
+                                <p class="titleRoadPath ">Test Road Path</p>
+                            </div>
+                            <div class="categoriesRoadPath">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/op-seach.png" alt="">
+                                <p class="">Handel</p>
+                            </div>
+                            <div class="footer-road-path">
+                                <button type="" class="btn btnRemoveRoadPath remove">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
+                                    <span>Remove</span>
+                                </button>
+                                <a href="" class="seeRoadPath">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/oeil.png" alt="">
+                                    <span>see</span>
+                                </a>
+                                <a href="/" class="seeRoadPath">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/overviewD.png" alt="">
+                                    <span>Overview</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide swiperSlideModife">
+                        <div class="cardRoadPath">
+                            <div class="headRoadPath">
+                                <p class="titleRoadPath ">Test Road Path</p>
+                            </div>
+                            <div class="categoriesRoadPath">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/op-seach.png" alt="">
+                                <p class="">Handel</p>
+                            </div>
+                            <div class="footer-road-path">
+                                <button type="" class="btn btnRemoveRoadPath remove">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
+                                    <span>Remove</span>
+                                </button>
+                                <a href="" class="seeRoadPath">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/oeil.png" alt="">
+                                    <span>see</span>
+                                </a>
+                                <a href="/" class="seeRoadPath">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/overviewD.png" alt="">
+                                    <span>Overview</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide swiperSlideModife">
+                        <div class="cardRoadPath">
+                            <div class="headRoadPath">
+                                <p class="titleRoadPath ">Test Road Path</p>
+                            </div>
+                            <div class="categoriesRoadPath">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/op-seach.png" alt="">
+                                <p class="">Handel</p>
+                            </div>
+                            <div class="footer-road-path">
+                                <button type="" class="btn btnRemoveRoadPath remove">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
+                                    <span>Remove</span>
+                                </button>
+                                <a href="" class="seeRoadPath">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/oeil.png" alt="">
+                                    <span>see</span>
+                                </a>
+                                <a href="/" class="seeRoadPath">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/overviewD.png" alt="">
+                                    <span>Overview</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide swiperSlideModife">
+                        <div class="cardRoadPath">
+                            <div class="headRoadPath">
+                                <p class="titleRoadPath ">Test Road Path</p>
+                            </div>
+                            <div class="categoriesRoadPath">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/op-seach.png" alt="">
+                                <p class="">Handel</p>
+                            </div>
+                            <div class="footer-road-path">
+                                <button type="" class="btn btnRemoveRoadPath remove">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
+                                    <span>Remove</span>
+                                </button>
+                                <a href="" class="seeRoadPath">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/oeil.png" alt="">
+                                    <span>see</span>
+                                </a>
+                                <a href="/" class="seeRoadPath">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/overviewD.png" alt="">
+                                    <span>Overview</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide swiperSlideModife">
+                        <div class="cardRoadPath">
+                            <div class="headRoadPath">
+                                <p class="titleRoadPath ">Test Road Path</p>
+                            </div>
+                            <div class="categoriesRoadPath">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/op-seach.png" alt="">
+                                <p class="">Handel</p>
+                            </div>
+                            <div class="footer-road-path">
+                                <button type="" class="btn btnRemoveRoadPath remove">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
+                                    <span>Remove</span>
+                                </button>
+                                <a href="" class="seeRoadPath">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/oeil.png" alt="">
+                                    <span>see</span>
+                                </a>
+                                <a href="/" class="seeRoadPath">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/overviewD.png" alt="">
+                                    <span>Overview</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <section>
         <div class="container-fluid my-5 px-md-4">
             <div class="row">

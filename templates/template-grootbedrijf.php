@@ -429,12 +429,12 @@
                             We helpen je graag met jouw specifieke vragen omtrent talent
                             management en de toepasbaarheid hiervan binnen je organisatie.
                         </p>
-                    </div>    
+                    </div>
                     <a href="mailto:contact@livelearn.nl" class="btn btn-default rounded-pill px-5 my-2 ml-md-0 ml-2" style="background: #E3EFF4">
                         <strong class="text-dark">Email </strong>
                     </a>
-                    <a href="tel: +31621610903" class="btn btn-default rounded-pill px-5 my-2 ml-md-3" style="background: #00A89D">
-                        <strong >Bellen</strong> 
+                    <a href="tel: +31627003962" class="btn btn-default text-white rounded-pill px-5 my-2 ml-md-3" style="background: #00A89D">
+                        <strong >Bellen</strong>
                     </a>
                 </div>
             </div>
