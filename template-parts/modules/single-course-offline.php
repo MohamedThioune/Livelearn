@@ -731,7 +731,7 @@
                                 <?php 
                                 if($user_id != 0){
                                 ?>
-                               <div class="formSingleCoourseReview">
+                                <div class="formSingleCoourseReview">
                                     <label>Rating</label>
                                     <div class="rating-element2">
                                         <div class="rating"> 
