@@ -2645,7 +2645,7 @@ input:focus-visible {
     position: relative;
 }
 .wordDeBestText2 {
-    font-size: 40px;
+    font-size: 24px;
     line-height: 42px;
     margin: 0px auto 10px;
 }
@@ -3526,7 +3526,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     border-radius: 20px;
     margin-top: 15px;
     position: relative;
-    z-index: 9999;
+    z-index: 9;
 }
 .blockEducationIndividualPage{
     display: none;
@@ -3993,9 +3993,6 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 .content-ecosysteme{
     background: #F4F7F6;
 }
-.contentPricing{
-    background: #F4F7F6;
-}
 .topCollection{
     background: white;
     padding: 35px 0px;
@@ -4091,8 +4088,11 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     padding: 25px 30px;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0px 0px 1px 1px #c4c4c4;
+    box-shadow: 0px 0px 3px #9c9fa2 !important;
     margin-bottom: 30px;
+}
+.cardPricing:hover {
+    box-shadow: 0px 0px 10px #9c9fa2 !important;
 }
 .titleCardPPricing {
     color: #043356;
@@ -6136,6 +6136,10 @@ input:checked ~ .assassment {
     border-radius: unset !important;
     font-size: 15px;
     margin-bottom: 30px;
+    color: #FFFFFF !important;
+}
+.beschiBlockText:hover{
+    cursor: pointer;
 }
 .img-fluid-course img{
     width: 100%;
@@ -6512,6 +6516,11 @@ tbody{
     border-radius: 13px;
     background: #FFFFFF;
 }
+.krijgText2{
+    font-size: 24px;
+    font-weight: bold;
+    color: #023356;
+}
 .titleRoadPath {
     font-size: 17px;
     color: #043356;
@@ -6614,9 +6623,6 @@ tbody{
 }
 .dropdown-item {
     background-color: #ffffff !important;
-}
-.liveOverBlock {
-    padding-top: 100px;
 }
 .footerCardSkillsssessment{
     display: flex;
@@ -8251,7 +8257,7 @@ ul#tabs-nav li.active {
     margin-bottom: 35px;
 }
 .btnBekijk2 {
-    color: white;
+    color: white !important;
     padding: 11px 20px;
     font-size: 15px;
     background: #47a99e;
@@ -8497,7 +8503,7 @@ ul#tabs-nav li.active {
 
 .blockFooterOntwikkeladvies .btnBellen {
     background: #47a99e;
-    color: #ffffff;
+    color: #ffffff !important;
     font-weight: 600;
     padding: 10px 45px;
     border-radius: 23px;
@@ -9171,7 +9177,41 @@ ul#tabs-nav li.active {
     line-height: 30px;
     font-size: 16px;
 }
-
+.blockOneOver p{
+    color: #4e4e4e;
+    line-height: 30px;
+    font-size: 16px;
+}
+#tabs-content .btnactive{
+    background: none !important;
+}
+.blockAuthorMobile{
+    display: none;
+}
+.titleComment {
+    font-size: 18px;
+    font-weight: 500;
+}
+.titleComment i {
+    margin-right: 8px;
+}
+.AddCommentBtn {
+    background: #00a89d;
+    color: white !important;
+    font-weight: 500;
+    margin-top: 20px;
+    padding: 7px 20px 8px;
+    font-size: 15px;
+}
+.btnMaakVerkopen{
+    padding: 8px 25px 9px;
+}
+.krijgText {
+    font-size: 17px;
+}
+.btn-outline-realblue:hover{
+    color: #FFFFFF !important;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -9179,8 +9219,13 @@ ul#tabs-nav li.active {
         font-size: 25px;
         margin-bottom: 20px;
     }
+    .blockImgCour iframe {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover;
+    }
     .head-ontwikkeladvies {
-        padding: 60px 0;
+        padding: 30px 0;
     }
     .blockImgontwikkeladvies {
         width: 80%;
@@ -11488,6 +11533,40 @@ ul#tabs-nav li.active {
     .customSocialMedia .nsl-button-svg-container {
         width: 85px !important;
     }
+    .blockAuthorMobile{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        margin-top: 30px;
+    }
+    .blockAuthorMobile .imgAuthorBlock {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        border: 1px solid #0000002b;
+        padding: 3px;
+    }
+    .blockAuthorMobile .imgAuthorBlock img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .blockAuthorMobile .NameAuthor {
+        color: rgb(46 46 46);
+        font-size: 16px;
+        margin-bottom: 2px;
+        margin-left: 10px;
+        font-weight: 600;
+    }
+    .FollowButton {
+        background: #47a99e;
+        color: white !important;
+        font-size: 15px;
+        padding: 5px 20px;
+        height: fit-content;
+        border-radius: 5px;
+    }
 }
 @media all and (max-width: 400px) {
     .textIconeLearning {
@@ -11501,13 +11580,14 @@ ul#tabs-nav li.active {
         margin-bottom: 20px;
     }
     .head-ontwikkeladvies {
-        padding: 60px 0;
+        padding: 30px 0;
     }
     .blockImgontwikkeladvies {
-        width: 80%;
+        width: 100%;
         margin-left: auto;
         margin-right: auto;
         margin-top: 33px;
+        margin-bottom: 30px;
     }
     .elkeVolgendeTitle {
         font-size: 24px;
