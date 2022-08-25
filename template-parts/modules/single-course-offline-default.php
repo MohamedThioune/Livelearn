@@ -499,7 +499,10 @@
                                         <label for="">Feedback</label>
                                         <textarea name="feedback_content" id="feedback" rows="10"></textarea>
                                     </div>
+                                    
                                     <input type="button" class='btn btn-sendRating' id='btn_review' name='review_post' value='Send'>
+                                    <div id="info_review">
+                                    </div>
                                 </div>
                                 <?php
                                 }
@@ -856,7 +859,7 @@
                 console.log(data);
                 $('#tab3').html(data);
                 $("#feedback").val(' ');
-                alert('Review successfully sent');
+                $('#info_review').html("<span class='alert alert-success'>Your review sent successfully</span>");
             }
         });
     })
