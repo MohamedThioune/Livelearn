@@ -475,7 +475,9 @@
                                 <?php 
                                 if($user_id != 0){
                                 ?>
-                               <div class="formSingleCoourseReview">
+                                <div class="formSingleCoourseReview">
+                                    <input type="hidden" id="user_id" value="<?php echo $user_id; ?>">
+                                    <input type="hidden" id="course_id" value="<?php echo $post->ID; ?>">
                                     <label>Rating</label>
                                     <div class="rating-element2">
                                         <div class="rating"> 
@@ -839,21 +841,21 @@
         var id = $("#course_id").val();
         var feedback = $("#feedback").val();
         var stars = $('input[name=rating]:checked').val()
-
         $.ajax({
 
-            url:"/like",
+            url:"/review",
             method:"post",
             data:{
                 id:id,
                 user_id:user_id,
-                feedback:feedback,
+                feedback_content:feedback,
                 stars:stars,
             },
             dataType:"text",
             success: function(data){
                 console.log(data);
-                $('#tab2').html(data);
+                $('#tab3').html(data);
+                $("#feedback").val(' ');
                 alert('Review successfully sent');
             }
         });

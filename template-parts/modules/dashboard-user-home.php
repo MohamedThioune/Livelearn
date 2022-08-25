@@ -385,7 +385,8 @@ if(isset($_GET['message']))
                                 * Companies
                                 */ 
                                 $company = get_field('company',  'user_' . $course->post_author);
-
+                                
+                                //Course Type
                                 $course_type = get_field('course_type', $course->ID);
                     ?>
                         <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
@@ -597,7 +598,12 @@ if(isset($_GET['message']))
                                 */ 
                                 $company = get_field('company',  'user_' . $course->post_author);
 
+                                //Course Type
                                 $course_type = get_field('course_type', $course->ID);
+
+                                //Other case : youtube
+                                $youtube_videos = get_field('youtube_videos', $course->ID);
+
                     ?>
                         <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
                             <div class="blockLoveCourse" >
@@ -622,7 +628,12 @@ if(isset($_GET['message']))
                                 <div class="cardKraam">
                                     <div class="headCardKraam">
                                         <div class="blockImgCardCour">
-                                            <img src="<?php echo $thumbnail; ?>" alt="">
+                                            <?php
+                                            if($youtube_videos && $course_type == 'Video')
+                                                echo '<iframe width="355" height="170" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                                            else
+                                                echo '<img src="' . $thumbnail .'" alt="">';
+                                            ?>
                                         </div>
                                         <div class="blockgroup7">
                                             <div class="iconeTextKraa">

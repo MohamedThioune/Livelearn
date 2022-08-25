@@ -9,12 +9,16 @@
     $review['user'] = get_user_by('ID', $user_id);
     $review['rating'] = $stars;
     $review['feedback'] = $feedback_content;
+    var_dump($review['feedback']);
     if($review['user']){ 
         if(!$reviews)
             $reviews = array();
         array_push($reviews,$review);
         update_field('reviews',$reviews, $id);
+        $message = "Your review added successfully"; 
     }
+    else 
+        $message = "User not find...";         
 
     $reviews = get_field('reviews', $id);
     if(!empty($reviews)){
