@@ -1,4 +1,4 @@
-<?php /** Template Name: Fetch data clean author */ ?>
+<?php /** Template Name: Fetch data clean company */ ?>
 
 <?php
 
