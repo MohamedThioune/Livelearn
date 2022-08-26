@@ -66,16 +66,14 @@ require($page);
 <?php 
 
     $category = ($_GET['category']) ?: ' ';
-
-    view_topic($category, $user_visibility);
-
     $user_id = get_current_user_id();
 
+    view_topic($category, $user_visibility);
 
     $courses = array();
 
     if($category != ' '){
-
+        
         $args = array(
             'post_type' => array('course', 'post'), 
             'post_status' => 'publish',
