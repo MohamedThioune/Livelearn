@@ -251,7 +251,7 @@ foreach($global_blogs as $blog)
                             <div class="p-2 my-3">
                                 <a href="" class="btnContact rounded-pill rounded" style="background-color: #00A89D"
                                  data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/logoMobil.png" alt="" class="text-danger">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn_white.png" alt="" class="text-danger">
                                     Join community
                                 </a>
                             </div>
