@@ -622,7 +622,7 @@ else if(isset($databank)){
             wp_mail($email, $subject, $body, $headers, array( '' )) ; 
         }
 
-        $data = ['author_id' => $author_id ]; // NULL value.
+        $data = [ 'author_id' => $user_id ]; // NULL value.
     }
     else if($complete  == "company"){
         $args = array(
@@ -644,7 +644,7 @@ else if(isset($databank)){
         Send email to user affected to these new company
         */
 
-        $data = ['company_id' => $company_id ]; // NULL value.
+        $data = [ 'company_id' => $id_company ]; // NULL value.
     }
 
     $where = [ 'id' => $id ]; // NULL value in WHERE clause.
