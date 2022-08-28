@@ -3,6 +3,10 @@
 <?php
 global $post;
 
+global $wp;
+
+$url = home_url( $wp->request );
+
 $posttags = get_the_tags();
 
 if(!$posttags){
@@ -157,7 +161,8 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-8">
-                   <!-- <div class="head-single">
+                   <!-- 
+                    <div class="head-single">
                         <div class="imgProfilAuthor">
                             <img src="<?php /*echo $author; */?>" alt="" class="img-fluid">
                         </div>
@@ -165,8 +170,10 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                             <p class="NameAuthor"><?php /*echo(get_userdata($post->post_author)->data->display_name); */?></p>
 
                         </div>
-                    </div>-->
-                    <h2 class="titleBlog"><?php echo the_title();?></h2>
+                    </div>
+                    -->
+                   <?php if($_GET['message']) echo "<div><span class='alert alert-info'>" . $_GET['message'] . "</span></div><br>" ?>
+                   <h2 class="titleBlog"><?php echo the_title();?></h2>
                    <div class="dateAndShare">
                        <p class="datePublish"><?php echo get_the_date('d F'); ?></p>
                        <ul class="blockShare">
@@ -310,7 +317,26 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                             <div class="card-body p-4 text-center">
                                 <a href="<?php echo "/user-overview/?id=" . $post->post_author; ?>" target="_blank" rel="noopener noreferrer"><h5 class="mb-0 mt-4"><?php echo(get_userdata($post->post_author)->data->display_name); ?></h5></a>
                                 <p><?php echo $functie; ?></p>
-                                <button class="btn btnFollow">Follow</button>
+                                <form action="/dashboard/user/" method="POST">
+                                    <input type="hidden" name="artikel" value="<?php echo $post->ID; ?>" id="">
+                                    <input type="hidden" name="meta_value" value="<?php echo $post->post_author; ?>" id="">
+                                    <input type="hidden" name="user_id" value="<?php echo $user_id ?>" id="">
+                                    <input type="hidden" name="meta_key" value="expert" id="">
+
+                                    <div>
+                                        <?php
+                                        if($user_id != 0 && $user_id != $post->post_author)
+                                        {
+                                            $experts = get_user_meta($user_id, 'expert');
+                                            if (in_array($post->post_author, $experts))
+                                                echo "<button type='submit' class='btn btnFollow' name='delete'>Unfollow</button>";
+                                            else
+                                                echo "<button type='submit' class='btn btnFollow' name='interest_push'>Follow</button>"; 
+                                        } 
+                                        ?>
+                                    </div>
+                                </form>
+
                                 <p><?php echo $biographical; ?></p>
 
                                 <ul class="list-inline author-socials">

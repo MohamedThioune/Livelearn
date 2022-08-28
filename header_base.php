@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 
 <?php
+
 global $wp;
 $url = home_url( $wp->request );
+
 ?>
 
 <style>
@@ -218,7 +220,7 @@ $url = home_url( $wp->request );
 
                             <?php
                             wp_login_form([
-                                'redirect' => '/',
+                                'redirect' => $url,
                                 'remember' => false,
                                 'label_username' => 'Wat is je e-mailadres?',
                                 'placeholder_email' => 'E-mailadress',

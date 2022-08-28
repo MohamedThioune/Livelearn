@@ -304,11 +304,26 @@ else if(isset($interest_push)){
         $meta_data = get_user_meta($user_id, $meta_key);
         if(!in_array($meta_value,$meta_data)){
             add_user_meta($user_id, $meta_key, $meta_value);
-            $message = "Succesvol toegevoegd";
+            if(isset($artikel)){
+                $path = get_permalink($artikel) . "/?message=Succesvol followed";
+                header("location: " .$path);
+            }
+            else{
+                $message = "Succesvol toegevoegd";
+                header("location: ../../dashboard/user/?message=".$message);
+            }
+            
         }else{
-            $message = "Reeds aanwezig in jouw favorieten";
+            if(isset($artikel)){
+                $path = get_permalink($artikel) . "/?message=Reeds aanwezig in jouw favorieten";
+                header("location: " .$path);
+            }
+            else{
+                $message = "Reeds aanwezig in jouw favorieten";
+                header("location: ../../dashboard/user/?message=".$message);
+            }
         }
-        header("location:../../dashboard/user/?message=".$message);
+        
         
     }
 }
@@ -325,13 +340,19 @@ else if(isset($interest_push)){
 else if(isset($delete)){
     if($meta_value != null){
         if(delete_user_meta($user_id, $meta_key, $meta_value)){
-            $message = "Met succes verwijderd";
-            if($meta_key == "topic" || $meta_key == "topic_affiliate")
-                header("location:/dashboard/user/?message=".$message);
+            if(isset($artikel)){
+                $path = get_permalink($artikel) . "/?message=Succesvol unfollowed";
+                header("location: " .$path);
+            }
             else{
-                $user_connected = get_current_user_id();
-                $content = "/dashboard/company/profile/?id=" . $user_id . '&manager='. $user_connected . "?message=" . $message; 
-                header("location:".$content);
+                $message = "Met succes verwijderd";
+                if($meta_key == "topic" || $meta_key == "topic_affiliate")
+                    header("location: /dashboard/user/?message=".$message);
+                else{
+                    $user_connected = get_current_user_id();
+                    $content = "/dashboard/company/profile/?id=" . $user_id . '&manager='. $user_connected . "?message=" . $message; 
+                    header("location: ".$content);
+                }
             }
         }
     }
@@ -517,6 +538,10 @@ else if(isset($databank)){
         foreach($tags as $tag)
             $onderwerpen .= $tag .',';
 
+    //GET COURSE ID 
+    $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
+    $course = $wpdb->get_results( $sql )[0];
+    
     //Date
     if($complete == 'all'){
         $number_items = count($start_date);
@@ -553,21 +578,7 @@ else if(isset($databank)){
     else if($complete == "quick")
         $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'prijs' => $prijs, 'onderwerpen' => $onderwerpen, 'author_id' => $author_id, 'company_id' => $company_id , 'contributors' => $contributors ]; // NULL value.
     else if($complete == "expert"){
-        
-        $args = array(
-            'post_type' => 'company', 
-            'post_status' => 'publish',
-            'posts_per_page' => -1,
-            'order' => 'DESC',
-        );
-        $companies = get_posts($args);
 
-        foreach($companies as $structure)
-           if($structure->post_title == $company_title){
-            $message = "/databank/?message=Dit bedrijf bestaat al.";
-            header("Location: ". $message);
-           }
-   
         if($first_name == null)
             $first_name = "ANONYM";
         
@@ -586,7 +597,7 @@ else if(isset($databank)){
             'display_name' => $first_name,
             'first_name' => $first_name,
             'last_name' => $last_name,
-            'role' => 'teacher'
+            'role' => 'author'
         );
 
         $user_id = wp_insert_user(wp_slash($userdata));
@@ -595,24 +606,11 @@ else if(isset($databank)){
             $danger = $user_id->get_error_message();
             header("Location: ". $danger);
         }
-        else{
-            $args = array(
-                'post_type'   => 'company',
-                'post_author' => 3,
-                'post_status' => 'publish',
-                'post_title'  => $company_title
-            );
-            
-            $id_company = wp_insert_post($args);
-            $companie = get_post($id_company);
-            update_field('company_address', $company_adress, $id_company);
-            update_field('company_place', $company_place, $id_company);
-            update_field('company_country', $company_country, $id_company);
-            
+        else{ 
             $subject = 'Je LiveLearn inschrijving is binnen! ✨';
             $body = "
             Bedankt voor je inschrijving<br>
-            <h1>Hello " . $first_name  . " FROM " . $companie->post_title . "</h1>,<br> 
+            <h1>Hello " . $first_name  . "</h1>,<br> 
             Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br>
             U hebt een cursus toegewezen gekregen en zult die zien zodra de beheerders ze hebben aanvaard.<br>
             Log in om toegang te krijgen.<br><br>
@@ -622,13 +620,31 @@ else if(isset($databank)){
         
             $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
             wp_mail($email, $subject, $body, $headers, array( '' )) ; 
-            
-            $author_id = $user_id;
-
-            update_field('company', $companie, 'user_'.$user_id);
         }
 
-        $data = ['author_id' => $author_id, 'company_id' => $company_id ]; // NULL value.
+        $data = [ 'author_id' => $user_id ]; // NULL value.
+    }
+    else if($complete  == "company"){
+        $args = array(
+            'post_type'   => 'company',
+            'post_author' => 3,
+            'post_status' => 'publish',
+            'post_title'  => $company_title
+        );
+        
+        $id_company = wp_insert_post($args);
+        $companie = get_post($id_company);
+        update_field('company_address', $company_adress, $id_company);
+        update_field('company_place', $company_place, $id_company);
+        update_field('company_country', $company_country, $id_company);
+
+        update_field('company', $companie, 'user_'. $course->author_id);
+
+        /*
+        Send email to user affected to these new company
+        */
+
+        $data = [ 'company_id' => $id_company ]; // NULL value.
     }
 
     $where = [ 'id' => $id ]; // NULL value in WHERE clause.
