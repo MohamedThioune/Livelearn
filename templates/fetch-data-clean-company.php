@@ -1,4 +1,4 @@
-<?php /** Template Name: Fetch data clean author */ ?>
+<?php /** Template Name: Fetch data clean company */ ?>
 
 <?php
 
@@ -20,21 +20,21 @@ if ( isset($id) ) {
     */
 
     echo '<input type="hidden" name="id" value="' . $course->id . '">';
-    echo '<input type="hidden" name="complete" value="expert">';
+    echo '<input type="hidden" name="complete" value="company">';
     
     ?>
 
     <div class="contentPageManager managerOverviewMensen">
         <div class="contentOverviewMensen">
-            <h4 class="titleBlockOverviewMensen">CREATE EXPERT</h4>
+            <h4 class="titleBlockOverviewMensen">CREATE COMPANY</h4>
             <div class="">
                 <br>
                 <ul>
-                    <li> <input type="text" name="first_name" placeholder="Voornaam" required>       </li>
-                    <li> <input type="text" name="last_name" placeholder="Achternaam" required>      </li>
-                    <li> <input type="email" name="email" placeholder="ZaKelijk mailadres" required> </li>
+                    <li> <input type="text" name="company_title" placeholder="Company Title" required> </li>
+                    <li> <input type="text" name="company_adress" placeholder="Company Adress"> </li>
+                    <li> <input type="text" name="company_place" placeholder="Company Place"> </li>
+                    <li> <input type="text" name="company_country" placeholder="Company Country" required> </li>
                 </ul>
-
             </div>
         </div>
     </div>

@@ -9,7 +9,6 @@
             multidate: true,
             format: 'dd/mm/yyyy ',
             todayHighlight: true,
-
             language: 'en'
         });
         datePicker.on('changeDate', function (e) {
@@ -18,7 +17,7 @@
             } else {
                 datePicker.data('datepicker').setDates(selectedDates);
                 alert('You can only select 10 dates.');
-            }
+            } 
         });
     });
 </script>

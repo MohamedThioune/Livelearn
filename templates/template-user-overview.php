@@ -12,6 +12,8 @@
     $user = ($_GET['id']) ? get_userdata($_GET['id'])->data : ' ';
     $user_id = get_current_user_id();
 
+    view_user($user->ID, $user_visibility);
+
     if($user != ' '){
         $name = $user->display_name;
         
@@ -43,7 +45,6 @@
         $volgend = 0;
 
         $users = get_users();
-
  
         foreach($global_courses as $course)
         {  
@@ -313,7 +314,7 @@
             <input type="hidden" name="meta_key" value="expert" id="">
             <div>
             <?php
-            if($user_id != 0 )
+            if($user_id != 0 && $user_id != $_GET['id'] )
             {
                 $experts= get_user_meta($user_id, 'expert');
                 if (in_array($user->ID,$experts))

@@ -96,9 +96,7 @@ extract($_GET);
                         }
                         else{
                             if(isset($lesson))
-                                echo '<iframe class="iframeVideo" width="730" height="433" src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay;
-                                    
-                                    ; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                                echo '<iframe width="730" height="433" src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
                             else
                                 if(!empty(get_field('preview', $post->ID)))
                                     echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
@@ -133,7 +131,7 @@ extract($_GET);
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-calendar-alt" style="font-size: 25px;"></i>
-                            <span class="textIconeLearning mt-1"><?= $duration_day; ?> dagdee</span>
+                            <span class="textIconeLearning mt-1"><?= $duration_day; ?> dagdeel</span>
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-graduation-cap" style="font-size: 25px;"></i>
@@ -366,27 +364,30 @@ extract($_GET);
                                 <?php
                                 if($user_id != 0){
                                 ?>
-                                <form class="formSingleCoourseReview " action="../../dashboard/user/" method="POST">
-                                    <input type="hidden" name="user_id" value="<?= $user_id; ?>">
-                                    <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
-                                    <div class="rating">
-                                        <input type="radio" id="star5" name="rating" value="5" />
-                                        <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                                        <input type="radio" id="star4" name="rating" value="4" />
-                                        <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                                        <input type="radio" id="star3" name="rating" value="3" />
-                                        <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                                        <input type="radio" id="star2" name="rating" value="2" />
-                                        <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                                        <input type="radio" id="star1" name="rating" value="1" />
-                                        <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
+                                <div class="formSingleCoourseReview">
+                                    <label>Rating</label>
+                                    <div class="rating-element2">
+                                        <div class="rating"> 
+                                            <input type="radio" id="star5" class="stars" name="rating" value="5" />
+                                            <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                                            <input type="radio" id="star4" class="stars" name="rating" value="4" />
+                                            <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                                            <input type="radio" id="star3" class="stars" name="rating" value="3" />
+                                            <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                                            <input type="radio" id="star2" class="stars" name="rating" value="2" />
+                                            <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                                            <input type="radio" id="star1" name="rating" value="1" />
+                                            <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
+                                        </div>
+                                        <span class="rating-counter"></span>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="">Feedback</label>
-                                        <textarea name="feedback_content" rows="10"></textarea>
+                                        <textarea name="feedback_content" id="feedback" rows="10"></textarea>
                                     </div>
-                                    <input type='submit' class='btn btn-sendRating' name='review_post' value='Send'>
-                                </form>
+                                    <input type="button" class='btn btn-sendRating' id='btn_review' name='review_post' value='Send'>
+                                </div>
                                 <?php
                                 }
                                 else
@@ -476,8 +477,9 @@ extract($_GET);
                                 ?>
                                 <div class="content-text p-4 pb-0">
                                     <h4 class="text-dark">Voor wie ?</h4>
-                                    <p class="m-0"><strong>This course is followed up by <?php if(isset($author->first_name) && isset($author->last_name)) echo $author->first_name . '' . $author->last_name; else echo $author->display_name; ?> </strong></p>
-                                    <p><em>This line rendered as italicized text.</em></p>
+                                    <p class="m-0">
+                                        <?= $for_who ?>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -586,11 +588,11 @@ extract($_GET);
                 <div class="btnGrou10">
                     <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#direct-contact">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
-                        <p class="textBtnContact">Direct contact</p>
+                        Direct contact
                     </a>
                     <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#voor-wie">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/question.png" alt="">
-                        <p class="textBtnContact">Voor wie</p>
+                        Voor wie
                     </a>
                 </div>
                 <p class="afspeeText">Afspeellijst</p>
@@ -743,7 +745,7 @@ extract($_GET);
                                 <p class="btwText">BTW: € <?php $prijsvat ?></p>
 
 
-                                <a href="#bookdates" class="btn btnKoop">Schrijf je in  <?php echo  $course_type; ?></a>
+                                <a href="#bookdates" class="btn btnKoop">Koop deze <?php echo $course_type; ?></a>
                             </div>
                             <div class="col-12 my-5" style="background-color: #E0EFF4">
                                 <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around justify-content-center">
@@ -808,6 +810,8 @@ extract($_GET);
 
 
         <div class="bloxkWorldMembre formDirect ">
+            <!-- <p class="wordnuText">Word nu <b>LIFT Member</b> en ontvang persoonlijke korting</p>
+            <a href="" class="btn btnPlan">Planeen 15min afspraak in</a> -->
             <div class="row d-flex justify-content-center">
                 <div class="col-md-2">
                     <img class="imgDanForm" src="<?php echo $photo_daniel; ?>" alt="photo daniel" srcset="">
@@ -1039,6 +1043,35 @@ extract($_GET);
             success: function(data){
                 console.log(data);
                 $('#autocomplete_favoured').html(data);
+            }
+        });
+    })
+</script>
+
+<script>
+    $("#btn_review").click((e)=>
+    {
+        $(e.preventDefault());
+        var user_id = $("#user_id").val();
+        var id = $("#course_id").val();
+        var feedback = $("#feedback").val();
+        var stars = $('input[name=rating]:checked').val()
+
+        $.ajax({
+
+            url:"/review",
+            method:"post",
+            data:{
+                id:id,
+                user_id:user_id,
+                feedback:feedback,
+                stars:stars,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#tab2').html(data);
+                alert('Review successfully sent');
             }
         });
     })

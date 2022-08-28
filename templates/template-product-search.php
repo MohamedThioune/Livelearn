@@ -156,8 +156,7 @@
                 );
                 $courses = get_posts($args);
 
-                foreach($courses as $course)
-                {
+                foreach($courses as $course){
                     $experts = get_field('experts', $course->ID);
                     if(!in_array($course->post_author, $profes))
                         array_push($profes, $course->post_author);
