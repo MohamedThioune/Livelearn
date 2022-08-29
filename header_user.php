@@ -123,7 +123,8 @@ $link = ($user) ? '/dashboard/user' : '/';
             <div class="container-fluid containerModife">
                 <div class="elementMobile groupBtnMobile">
                     <div class="nav-item" href="#">
-                        <button class="btn bntNotification" data-toggle="modal" data-target="#ModalNotification">
+                        <!-- <button class="btn bntNotification" data-toggle="modal" data-target="#ModalNotification"> -->
+                        <button class="btn bntNotification">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
                             <span style="color:white" class="alertNotification"><?=count($todos);?></span>
                         </button>
@@ -142,6 +143,10 @@ $link = ($user) ? '/dashboard/user' : '/';
                                             foreach($todos as $todo){
                                                 if($key == 4)
                                                     break;
+
+                                                $read = get_field('read_feedback', $todo->ID);
+                                                if($read)
+                                                    continue;
 
                                                 $type = get_field('type_feedback', $todo->ID);
                                                 $manager = get_field('manager_feedback', $todo->ID);
@@ -330,3 +335,4 @@ $link = ($user) ? '/dashboard/user' : '/';
             </div>
         </nav>
      <!-- </body> -->
+     
