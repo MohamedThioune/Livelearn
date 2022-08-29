@@ -25,15 +25,15 @@ if ( isset($id) ) {
     ?>
 
     <div class="contentPageManager managerOverviewMensen">
-        <div class="contentOverviewMensen">
+        <div class="">
             <h4 class="titleBlockOverviewMensen">CREATE COMPANY</h4>
             <div class="">
                 <br>
                 <ul>
-                    <li> <input type="text" name="company_title" placeholder="Company Title" required> </li>
-                    <li> <input type="text" name="company_adress" placeholder="Company Adress"> </li>
-                    <li> <input type="text" name="company_place" placeholder="Company Place"> </li>
-                    <li> <input type="text" name="company_country" placeholder="Company Country" required> </li>
+                    <div class="form-group"> <input type="text" class="form-control" name="company_title" placeholder="Company Title" required> </div>
+                    <div class="form-group"> <input type="text" class="form-control" name="company_adress" placeholder="Company Adress"> </div>
+                    <div class="form-group"> <input type="text" class="form-control" name="company_place" placeholder="Company Place"> </div>
+                    <div class="form-group"> <input type="text" class="form-control" name="company_country" placeholder="Company Country" required> </div>
                 </ul>
             </div>
         </div>
