@@ -26,7 +26,7 @@
                     <a href="mailto:contact@livelearn.nl" class="btn btn-default rounded-pill px-5 my-2 ml-md-0 ml-2" style="background: #E3EFF4">
                         <strong class="text-dark">Email </strong>
                     </a>
-                    <a href="tel: +30627003962" class="btn btn-default rounded-pill px-5 my-2 ml-md-3" style="background: #00A89D">
+                    <a href="tel: +31627003962" class="btn btn-default rounded-pill px-5 my-2 ml-md-3" style="background: #00A89D">
                         <strong >Bellen</strong> 
                     </a>
                 </div>
