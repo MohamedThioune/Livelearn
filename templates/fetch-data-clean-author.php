@@ -25,16 +25,12 @@ if ( isset($id) ) {
     ?>
 
     <div class="contentPageManager managerOverviewMensen">
-        <div class="contentOverviewMensen">
+        <div class="">
             <h4 class="titleBlockOverviewMensen">CREATE EXPERT</h4>
             <div class="">
-                <br>
-                <ul>
-                    <li> <input type="text" name="first_name" placeholder="Voornaam" required>       </li>
-                    <li> <input type="text" name="last_name" placeholder="Achternaam" required>      </li>
-                    <li> <input type="email" name="email" placeholder="ZaKelijk mailadres" required> </li>
-                </ul>
-
+                <div class="form-group">  <input type="text" class="form-control" name="first_name" placeholder="Voornaam" required>       </div>
+                <div class="form-group"> <input type="text" class="form-control" name="last_name" placeholder="Achternaam" required>      </div>
+                <div class="form-group">  <input type="email" class="form-control" name="email" placeholder="ZaKelijk mailadres" required> </div>
             </div>
         </div>
     </div>
