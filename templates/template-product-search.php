@@ -537,7 +537,7 @@
         <div class="col-md-9">
             <?php
                 if(empty($courses)){
-                    echo "<br><center><h3 class='liverTilteHead2'>No matches found 💣 </h3></center>";
+                    echo "<br><center><h3 class='liverTilteHead2'>No matches found </h3></center>";
                 }
                 else{
             ?>
