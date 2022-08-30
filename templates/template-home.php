@@ -1032,7 +1032,7 @@ $degrees=[
                             $location = $data[2];
                         }
 
-                        if($month != '')
+                        if($month == '')
                             continue;
                         
                         /*
