@@ -179,6 +179,14 @@ $duration_day = get_field('duration_day', $post->ID);
 $attachments_xml = get_field('attachment_xml', $post->ID);
 $reviews = get_field('reviews', $post->ID);
 
+$my_review_bool = false;
+
+foreach ($reviews as $key => $review)
+    if($review['user']->ID == $user_id){
+        $my_review_bool = true;
+        break;
+    }
+
 $offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop'];
 $other_offline = ['Opleidingen', 'Cursus'];
 $online = ['E-learning', 'Video', 'Webinar'];
