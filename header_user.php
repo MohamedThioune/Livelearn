@@ -369,6 +369,10 @@ if(!empty($notifications))
                 dataType:"text",
                 success: function(data){
                     // Get the modal
+                    notification =  '<button class="btn bntNotification" data-toggle="modal" data-target="#ModalNotification">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
+                            <span style="color:white" class="alertNotification"><?=count($todos);?></span>
+                        </button>';
                     console.log(data);
                 }
         });
