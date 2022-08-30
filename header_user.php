@@ -22,8 +22,8 @@ $url = home_url( $wp->request );
 
 $link = ($user) ? '/dashboard/user' : '/'; 
 
-if(!empty($todos))
-    foreach($todos as $todo){
+if(!empty($notifications))
+    foreach($notifications as $todo){
 
         $read = get_field('read_feedback', $todo->ID);
         if($read)
@@ -320,12 +320,15 @@ if(!empty($todos))
                                         </a>
                                 <?php
                                         }
-                                    }else{
+                                        echo '<div class="">
+                                                  <a href="/dashboard/user/activity" class="btn BekijkNotifications">Bekijk alle notificaties</a>
+                                              </div>';
+                                    }
+                                    else{
                                 ?>
                                         <div>
                                             <div class="">
                                                 <p class="feedbackText">Empty until now ...</p>
-                                                <a href="/dashboard/user/activity" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                             </div>
                                         </div>
                                 <?php
@@ -367,30 +370,6 @@ if(!empty($todos))
                 success: function(data){
                     // Get the modal
                     console.log(data);
-                    var modal = document.getElementById("dropdownMenuButton");
-                    // $('.display-fields-clean').html(data)
-                    // Get the button that opens the modal
-
-
-                    // Get the <span> element that closes the modal
-                    //var span = document.getElementsByClassName("close")[0];
-
-                    // When the user clicks on the button, open the modal
-
-                        modal.style.display = "block";
-
-                    // When the user clicks on <span> (x), close the modal
-                    // span.onclick = function() {
-                    //     modal.style.display = "none";
-                    // }
-
-                    // When the user clicks anywhere outside of the modal, close it
-                    window.onclick = function(event) {
-                        if (event.target == modal) {
-                        modal.style.display = "none";
-                        }
-                    }
-                            
                 }
         });
     });
