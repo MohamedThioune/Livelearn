@@ -1180,7 +1180,10 @@
                 console.log(data);
                 $('#tab3').html(data);
                 $("#feedback").val(' ');
-                $('#info_review').html("<span class='alert alert-success'>Your review sent successfully</span>");
+                if(data)
+                    $('#info_review').html("<span class='alert alert-success'>Your review sent successfully</span>");
+                else
+                    $('#info_review').html("<span class='alert alert-error'>You already sent a review for this course</span>");
             }
         });
     })
