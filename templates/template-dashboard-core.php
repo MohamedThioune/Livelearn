@@ -652,12 +652,12 @@ else if(isset($databank)){
     $updated = $wpdb->update( $table, $data, $where );
  
     if($updated === false)
-        if($complete == "all") 
-            $message = "/edit-databank?id=" . $id . "&message=" . $wpdb->last_error; 
+        if($complete == "all" || $complete == "quick") 
+            $message = "/edit-databank?id=" . $id . "&message=" . $wpdb->last_error;
         else
             $message = "/databank/?message=" . $wpdb->last_error;
     else 
-        if($complete == "all") 
+        if($complete == "all" || $complete == "quick") 
             $message = "/edit-databank?id=" . $id . "&message=Updated successfully !"; 
         else
             $message = "/databank/?message=Updated successfully !"; 
