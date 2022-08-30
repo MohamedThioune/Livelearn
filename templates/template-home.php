@@ -992,7 +992,7 @@ $degrees=[
                         */
                         $location = 'Virtual';
                         $day = "<p><i class='fas fa-calendar-week'></i></p>";
-                        $month = ' ';
+                        $month = '';
 
                         $category = ' ';
                                     
@@ -1032,6 +1032,9 @@ $degrees=[
                             $location = $data[2];
                         }
 
+                        if($month != '')
+                            continue;
+                        
                         /*
                         * Price
                         */
@@ -1590,36 +1593,32 @@ $degrees=[
 
 <script>
     $('.bntNotification').click((e)=>{
-        var tr_element = e.target.parentElement.closest("tr");
-        var key = tr_element.id;
-
         $.ajax({
-                url:"/fetch-data-clean-author",
-                method:"post",
+                url:"/read-notification",
+                method:"get",
                 data:
                 {
-                    id:key,
                 },
                 dataType:"text",
                 success: function(data){
                     // Get the modal
-                    console.log(data)
+                    console.log(data);
                     var modal = document.getElementById("ModalNotification");
                     // $('.display-fields-clean').html(data)
                     // Get the button that opens the modal
 
 
                     // Get the <span> element that closes the modal
-                    var span = document.getElementsByClassName("close")[0];
+                    //var span = document.getElementsByClassName("close")[0];
 
                     // When the user clicks on the button, open the modal
 
                         modal.style.display = "block";
 
                     // When the user clicks on <span> (x), close the modal
-                    span.onclick = function() {
-                        modal.style.display = "none";
-                    }
+                    // span.onclick = function() {
+                    //     modal.style.display = "none";
+                    // }
 
                     // When the user clicks anywhere outside of the modal, close it
                     window.onclick = function(event) {
