@@ -16,7 +16,7 @@
                         </a>
                     </li>
                     <li class="elementTextDashboard">
-                        <a href="/dashboard/company/people-mensen/" class="d-flex">
+                        <a href="/dashboard/company/people/" class="d-flex">
                             <div class="elementImgSidebar" >
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Mijn-mensen.png" >
                             </div>
@@ -76,7 +76,7 @@
                            <div class="elementImgSidebar imgSide2" >
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Manage-Organisatie.png" >
                             </div>
-                            <span> De organisatie</span>
+                            <span> Selecteer je manager</span>
                         </a>
                     </li>
                     <li class="elementTextDashboard">

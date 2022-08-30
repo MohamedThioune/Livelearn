@@ -260,7 +260,7 @@ $orders = wc_get_orders($order_args);
             <div class="row d-flex text-center justify-content-center align-items-center h-50">
                 <div class="col-md-11  p-4">
                     <form action='/dashboard/user/' method='POST'>
-                    <label for='member_id'><b>Deel deze cursus met uw team :</b></label><br>
+                    <label for='member_id'><b>Deel met de volgende medewerkers :</b></label><br>
                     <div class="form-group display-experts">
                     </div> 
                     <div id="modal-content">
@@ -380,7 +380,7 @@ $orders = wc_get_orders($order_args);
                             </p>             
                         </td>
                         <td class="textTh"><?php echo $day; ?></td>
-                        <td class="textTh" id="live"> <input type="button" class="btnNewCourse rent" id="<?= $course->ID; ?>"  value="Activeer" /> </td>
+                        <td class="textTh" id="live"> <input type="button" class="btnNewCourse rent" id="<?= $course->ID; ?>"  value="Deel" /> </td>
                     </tr>
                     <?php
                     }

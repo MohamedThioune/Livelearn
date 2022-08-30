@@ -29,8 +29,8 @@
             </button>
         </div>
     </div>
-    <div class="row d-flex justify-content-center">
-        <div class="col-md-7 col-10">
+    <div class="row ">
+        <div class="col-md-12">
           
             <!-- Tabs navs -->
             <ul class="headTabsCompany" role="tablist">

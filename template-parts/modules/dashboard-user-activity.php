@@ -323,7 +323,10 @@ if(!empty($enrolled))
       
         <div class="col-lg-5">
             <div class="cardNotification"> 
-                <h2>Notificaties</h2>
+                <div class="headCardNotification">
+                    <h2>Notificaties</h2>
+                    <a href="/dashboard/user/notification" class="btn btnOnderwerp2">See all</a>
+                </div>
                 <?php 
                 if(!empty($todos)){
                 foreach($todos as $key=>$todo) {
@@ -351,7 +354,7 @@ if(!empty($enrolled))
                 <?php
                     }
                 ?>
-                 <a href="/dashboard/user/notification" class="btn btnOnderwerp">See all</a>
+
                  <?php
                     }
                     else 
