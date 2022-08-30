@@ -55,7 +55,7 @@ if($topic != 0){
     ) );
 }
 $args = array(
-    'post_type' => array('course','post'),
+    'post_type' => 'post',
     'post_status' => 'publish',
     'posts_per_page' => -1,
     'order' => 'DESC',
