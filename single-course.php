@@ -96,6 +96,12 @@ if($category == ' '){
 $user_id = get_current_user_id();
 
 /*
+* User informations
+*/
+$email_user = wp_get_current_user()->email;
+$phone_user = get_field('telnr', 'user_' . $user_id);
+
+/*
 * Companies user
 */
 $company_connected = get_field('company',  'user_' . $user_id);

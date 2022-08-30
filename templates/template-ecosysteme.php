@@ -54,6 +54,7 @@ if($topic != 0){
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
 }
+
 $args = array(
     'post_type' => 'post',
     'post_status' => 'publish',
@@ -62,6 +63,7 @@ $args = array(
 );
 
 $global_blogs = get_posts($args);
+
 $blogs = array();
 $blogs_id = array();
 $others = array();
