@@ -136,7 +136,7 @@ if(!empty($todos))
                 <div class="elementMobile groupBtnMobile">
                     <div class="nav-item" href="#">
                         <!-- <button class="btn bntNotification" data-toggle="modal" data-target="#ModalNotification"> -->
-                        <button class="btn bntNotification" >
+                        <button class="btn bntNotification" data-toggle="modal" data-target="#ModalNotification">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
                             <span style="color:white" class="alertNotification"><?=count($todos);?></span>
                         </button>
@@ -294,7 +294,7 @@ if(!empty($todos))
 
                         <li class="position-relative dropdown dropdownNotificationToggle">
                             <!-- <button class="btn bntNotification elementWeb dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
-                            <button class="btn bntNotification elementWeb dropdown-toggle" type="button">
+                            <button class="btn bntNotification elementWeb dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
                                 <?php if(!empty($todos)){ ?> <span style="color:white" class="alertNotification"><?=count($todos);?></span> <?php } ?>
                             </button>
@@ -367,7 +367,7 @@ if(!empty($todos))
                 success: function(data){
                     // Get the modal
                     console.log(data);
-                    var modal = document.getElementById("ModalNotification");
+                    var modal = document.getElementById("dropdownMenuButton");
                     // $('.display-fields-clean').html(data)
                     // Get the button that opens the modal
 
