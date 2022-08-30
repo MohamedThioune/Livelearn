@@ -181,7 +181,7 @@ $reviews = get_field('reviews', $post->ID);
 
 $my_review_bool = false;
 
-foreach ($reviews as $key => $review)
+foreach ($reviews as $review)
     if($review['user']->ID == $user_id){
         $my_review_bool = true;
         break;
@@ -198,7 +198,7 @@ else if(in_array($course_type, $other_offline))
 else if(in_array($course_type, $online))
     include_once('template-parts/modules/single-course-online.php');
 
-
+echo 'Review Bool : ' . $my_review_bool ;
 ?> 
 
 <?php
