@@ -38,7 +38,7 @@
                 <div class="d-flex justify-content-center">
 
                     <div>
-                        <a href="#" class="mx-3 d-flex flex-column ">
+                        <a href="https://wa.me/<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
                             <i style="font-size: 50px; height: 49px; margin-top: -4px;"
                                 class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>
                         </a>
@@ -47,9 +47,9 @@
                         </div>
                     </div>
                     <div>
-                        <a href="#" class="mx-3 d-flex flex-column ">
+                        <a href="mailto:<?= $email_user ?>" class="mx-3 d-flex flex-column ">
                             <i style="font-size: 25px"
-                            class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
+                                class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
                             <!-- <span class="bd-highlight fw-bold text-primary mt-2">email</span> -->
                         </a>
                         <div class="mt-3 text-center">
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <div>
-                        <a href="#" class="mx-3 d-flex flex-column ">
+                        <a href="sms:<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
                             <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>
                         </a>
                         <div class="mt-3 text-center">
@@ -66,9 +66,9 @@
                     </div>
 
                     <div>
-                        <a href="#" class="mx-3 d-flex flex-column ">
+                        <a href="tel:<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
                             <i class="bd-highlight bi bi-telephone-x border border-3 border-primary rounded-circle text-primary shadow"
-                            style="font-size: 20px; padding: 6px 11px;"></i>
+                                style="font-size: 20px; padding: 6px 11px;"></i>
                             <!-- <span class="bd-highlight fw-bold text-primary mt-2">call</span> -->
                         </a>
                         <div class="mt-3 text-center">
