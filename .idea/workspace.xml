@@ -3,11 +3,16 @@
   <component name="ChangeListManager">
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/edit-databank.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/edit-databank.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-contact.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-contact.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-ecosysteme.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-ecosysteme.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-product-search.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-product-search.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-voor-organisaties.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-organisaties.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/header_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-modules.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-modules.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-leerbudgetten.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-leerbudgetten.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-company.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-company.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-statistic.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-statistic.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-menu-company.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-menu-company.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-activity.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-activity.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-config.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-config.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -662,6 +667,11 @@
       <workItem from="1661426388086" duration="1072000" />
       <workItem from="1661428142418" duration="3965000" />
       <workItem from="1661442846293" duration="2187000" />
+      <workItem from="1661506406363" duration="186000" />
+      <workItem from="1661683109987" duration="3664000" />
+      <workItem from="1661759006619" duration="2980000" />
+      <workItem from="1661768471268" duration="2257000" />
+      <workItem from="1661875342519" duration="4027000" />
     </task>
     <servers />
   </component>
