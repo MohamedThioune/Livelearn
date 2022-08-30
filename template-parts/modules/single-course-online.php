@@ -315,7 +315,7 @@ extract($_GET);
                     <div class="tabs">
                         <ul id="tabs-nav">
                             <li><a href="#tab2">Reviews</a></li>
-                            <li><a href="#tab3">Add Reviews</a></li>
+                            <?php if(!$my_review_bool) echo '<li><a href="#tab3">Add Reviews</a></li>'; ?>
                         </ul> <!-- END tabs-nav -->
                         <div id="tabs-content">
                             <div id="tab2" class="tab-content">
@@ -362,7 +362,7 @@ extract($_GET);
                             </div>
                             <div id="tab3" class="tab-content">
                                 <?php
-                                if($user_id != 0){
+                                if($user_id != 0 && !$my_review_bool){
                                 ?>
                                 <div class="formSingleCoourseReview">
                                     <label>Rating</label>
