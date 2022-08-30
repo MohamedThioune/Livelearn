@@ -15,11 +15,23 @@ $args = array(
     'posts_per_page' => -1,
 );
 
-$todos = get_posts($args);
+$notifications = get_posts($args);
+$todos = array();
 
 $url = home_url( $wp->request );
 
 $link = ($user) ? '/dashboard/user' : '/'; 
+
+if(!empty($notifications))
+    foreach($notifications as $todo){
+
+        $read = get_field('read_feedback', $todo->ID);
+        if($read)
+            continue;
+
+        array_push($todos,$todo);
+    }
+
 
 ?>
 
@@ -123,6 +135,7 @@ $link = ($user) ? '/dashboard/user' : '/';
             <div class="container-fluid containerModife">
                 <div class="elementMobile groupBtnMobile">
                     <div class="nav-item" href="#">
+                        <!-- <button class="btn bntNotification" data-toggle="modal" data-target="#ModalNotification"> -->
                         <button class="btn bntNotification" data-toggle="modal" data-target="#ModalNotification">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
                             <span style="color:white" class="alertNotification"><?=count($todos);?></span>
@@ -142,6 +155,10 @@ $link = ($user) ? '/dashboard/user' : '/';
                                             foreach($todos as $todo){
                                                 if($key == 4)
                                                     break;
+
+                                                $read = get_field('read_feedback', $todo->ID);
+                                                if($read)
+                                                    continue;
 
                                                 $type = get_field('type_feedback', $todo->ID);
                                                 $manager = get_field('manager_feedback', $todo->ID);
@@ -276,17 +293,22 @@ $link = ($user) ? '/dashboard/user' : '/';
 
 
                         <li class="position-relative dropdown dropdownNotificationToggle">
+                            <!-- <button class="btn bntNotification elementWeb dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
                             <button class="btn bntNotification elementWeb dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
                                 <?php if(!empty($todos)){ ?> <span style="color:white" class="alertNotification"><?=count($todos);?></span> <?php } ?>
                             </button>
-                            <div class="dropdown-menu dropdownNotificationWeb" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-menu dropdownNotificationWeb" aria-labelledby="dropdownMenuButton" id="ModalNotification">
                                 <h5 class="modal-title" id="exampleModalLabel">Notifications</h5>
                                 <?php
                                     if(!empty($todos)){
                                         foreach($todos as $todo){
                                             if($key == 4)
                                                 break;
+
+                                            $read = get_field('read_feedback', $todo->ID);
+                                            if($read)
+                                                continue;
 
                                             $type = get_field('type_feedback', $todo->ID);
                                             $manager = get_field('manager_feedback', $todo->ID);
@@ -298,12 +320,15 @@ $link = ($user) ? '/dashboard/user' : '/';
                                         </a>
                                 <?php
                                         }
-                                    }else{
+                                        echo '<div class="">
+                                                  <a href="/dashboard/user/activity" class="btn BekijkNotifications">Bekijk alle notificaties</a>
+                                              </div>';
+                                    }
+                                    else{
                                 ?>
                                         <div>
                                             <div class="">
                                                 <p class="feedbackText">Empty until now ...</p>
-                                                <a href="/dashboard/user/activity" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                             </div>
                                         </div>
                                 <?php
@@ -330,3 +355,26 @@ $link = ($user) ? '/dashboard/user' : '/';
             </div>
         </nav>
      <!-- </body> -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+    $('.bntNotification').click((e)=>{
+        $.ajax({
+                url:"/read-notification",
+                method:"get",
+                data:
+                {
+                },
+                dataType:"text",
+                success: function(data){
+                    // Get the modal
+                    notification =  '<button class="btn bntNotification" data-toggle="modal" data-target="#ModalNotification">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
+                            <span style="color:white" class="alertNotification"><?=count($todos);?></span>
+                        </button>';
+                    console.log(data);
+                }
+        });
+    });
+</script>

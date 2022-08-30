@@ -77,7 +77,7 @@ function scrapeFrom($website): array
 
 function scrapper($url,$html_tag,$class_selector){
     $html_code=file_get_contents($url);
-    $dom= new DomDocument();
+    $dom = new DomDocument();
     libxml_use_internal_errors(true);
     $datas=array();
     if (!empty($html_code))

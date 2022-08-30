@@ -315,7 +315,7 @@ extract($_GET);
                     <div class="tabs">
                         <ul id="tabs-nav">
                             <li><a href="#tab2">Reviews</a></li>
-                            <li><a href="#tab3">Add Reviews</a></li>
+                            <?php if(!$my_review_bool) echo '<li><a href="#tab3">Add Reviews</a></li>'; ?>
                         </ul> <!-- END tabs-nav -->
                         <div id="tabs-content">
                             <div id="tab2" class="tab-content">
@@ -362,7 +362,7 @@ extract($_GET);
                             </div>
                             <div id="tab3" class="tab-content">
                                 <?php
-                                if($user_id != 0){
+                                if($user_id != 0 && !$my_review_bool){
                                 ?>
                                 <div class="formSingleCoourseReview">
                                     <label>Rating</label>
@@ -411,7 +411,7 @@ extract($_GET);
                             <div class="d-flex justify-content-center">
 
                                 <div>
-                                    <a href="#" class="mx-3 d-flex flex-column ">
+                                    <a href="https://wa.me/<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
                                         <i style="font-size: 50px; height: 49px; margin-top: -4px;"
                                             class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>
                                     </a>
@@ -420,9 +420,9 @@ extract($_GET);
                                     </div>
                                 </div>
                                 <div>
-                                    <a href="#" class="mx-3 d-flex flex-column ">
+                                    <a href="mailto:<?= $email_user ?>" class="mx-3 d-flex flex-column ">
                                         <i style="font-size: 25px"
-                                        class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
+                                            class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
                                         <!-- <span class="bd-highlight fw-bold text-primary mt-2">email</span> -->
                                     </a>
                                     <div class="mt-3 text-center">
@@ -430,7 +430,7 @@ extract($_GET);
                                     </div>
                                 </div>
                                 <div>
-                                    <a href="#" class="mx-3 d-flex flex-column ">
+                                    <a href="sms:<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
                                         <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>
                                     </a>
                                     <div class="mt-3 text-center">
@@ -439,9 +439,9 @@ extract($_GET);
                                 </div>
 
                                 <div>
-                                    <a href="#" class="mx-3 d-flex flex-column ">
+                                    <a href="tel:<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
                                         <i class="bd-highlight bi bi-telephone-x border border-3 border-primary rounded-circle text-primary shadow"
-                                        style="font-size: 20px; padding: 6px 11px;"></i>
+                                            style="font-size: 20px; padding: 6px 11px;"></i>
                                         <!-- <span class="bd-highlight fw-bold text-primary mt-2">call</span> -->
                                     </a>
                                     <div class="mt-3 text-center">

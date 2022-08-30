@@ -3,13 +3,21 @@
 <?php 
 
     extract($_POST);
+    $reviews = get_field('reviews', $id); 
+    $current_user  = get_current_user_id();
+    $my_review_bool = false;
+    foreach ($reviews as $review)
+        if($review['user']->ID == $current_user){
+            $my_review_bool = true;
+            return 0;
+        }
 
-    $reviews = get_field('reviews', $id);
+   
     $review = array();
     $review['user'] = get_user_by('ID', $user_id);
     $review['rating'] = $stars;
     $review['feedback'] = $feedback_content;
-    if($review['user']){ 
+    if($review['user'] && !$my_review_bool ){ 
         if(!$reviews)
             $reviews = array();
         array_push($reviews,$review);
@@ -54,7 +62,7 @@
         }
         echo $row_review;
     }
-    else 
-        //echo "<h6>No reviews found for this course ...<h6>";
-   
+
+    return 1;
+    
 ?>

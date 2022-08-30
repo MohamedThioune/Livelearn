@@ -111,8 +111,8 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     ?>
                                 </td>
                                <td class="textTh tdCenter"><?= $course->status; ?></td>
-                               <td class="textTh tdCenter author"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo '<b>No author</b>'; ?></td>
-                               <td class="textTh tdCenter author"> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo '<b>No company</b>'; ?> </td>
+                               <td class="textTh tdCenter <?php if($course->author_id) echo ''; else echo 'author';  ?>"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo '<b>No author</b>'; ?></td>
+                               <td class="textTh tdCenter <?php if(!empty($company)) echo ''; else echo 'company';  ?>"> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo '<b>No company</b>'; ?> </td>
                                <td class="tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a href="/edit-databank?id=<?= $key ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> </td>
                            </tr>
                        <?php
@@ -261,6 +261,49 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
         $.ajax({
                 url:"/fetch-data-clean-author",
+                method:"post",
+                data:
+                {
+                    id:key,
+                },
+                dataType:"text",
+                success: function(data){
+                    // Get the modal
+                    console.log(data)
+                    var modal = document.getElementById("myModal");
+                    $('.display-fields-clean').html(data)
+                    // Get the button that opens the modal
+
+
+                    // Get the <span> element that closes the modal
+                    var span = document.getElementsByClassName("close")[0];
+
+                    // When the user clicks on the button, open the modal
+
+                        modal.style.display = "block";
+
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function() {
+                        modal.style.display = "none";
+                    }
+
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function(event) {
+                        if (event.target == modal) {
+                        modal.style.display = "none";
+                        }
+                    }
+                            
+                }
+        });
+    });
+
+    $('.company').click((e)=>{
+        var tr_element = e.target.parentElement.closest("tr");
+        var key = tr_element.id;
+
+        $.ajax({
+                url:"/fetch-data-clean-company",
                 method:"post",
                 data:
                 {

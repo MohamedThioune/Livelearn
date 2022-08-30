@@ -96,6 +96,12 @@ if($category == ' '){
 $user_id = get_current_user_id();
 
 /*
+* User informations
+*/
+$email_user = wp_get_current_user()->email;
+$phone_user = get_field('telnr', 'user_' . $user_id);
+
+/*
 * Companies user
 */
 $company_connected = get_field('company',  'user_' . $user_id);
@@ -173,6 +179,14 @@ $duration_day = get_field('duration_day', $post->ID);
 $attachments_xml = get_field('attachment_xml', $post->ID);
 $reviews = get_field('reviews', $post->ID);
 
+$my_review_bool = false;
+
+foreach ($reviews as $review)
+    if($review['user']->ID == $user_id){
+        $my_review_bool = true;
+        break;
+    }
+
 $offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop'];
 $other_offline = ['Opleidingen', 'Cursus'];
 $online = ['E-learning', 'Video', 'Webinar'];
@@ -184,7 +198,7 @@ else if(in_array($course_type, $other_offline))
 else if(in_array($course_type, $online))
     include_once('template-parts/modules/single-course-online.php');
 
-
+echo 'Review Bool : ' . $my_review_bool ;
 ?> 
 
 <?php
