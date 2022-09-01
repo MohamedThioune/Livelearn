@@ -11813,6 +11813,9 @@ ul#tabs-nav li.active {
     .textThBorder a .emoji{
         margin-right: 8px !important;
     }
+    .checkFilter{
+        color: #023356 !important;
+    }
 }
 
 

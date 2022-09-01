@@ -1171,9 +1171,9 @@
                 $('#tab3').html(data);
                 $("#feedback").val(' ');
                 if(data)
-                    $('#info_review').html("<span class='alert alert-success'>Your review sent successfully</span>");
+                    $('#info_review').html("<span class='alert alert-success'>Your comments sent successfully</span>");
                 else
-                    $('#info_review').html("<span class='alert alert-error'>You already sent a review for this course</span>");
+                    $('#info_review').html("<span class='alert alert-error'>You already sent a comments for this course</span>");
             }
         });
     })
