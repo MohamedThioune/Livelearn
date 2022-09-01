@@ -524,7 +524,7 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
 
         $.ajax({
 
-            url:"/fetch-company-people",
+            url:"/fetch-company-course",
             method:"post",
             data:{
                 search_user_course : txt,
