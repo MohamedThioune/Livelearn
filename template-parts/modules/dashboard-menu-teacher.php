@@ -1,4 +1,6 @@
 <?php
+    global $wp;
+
     $user = get_users(array('include'=> get_current_user_id()))[0]->data;
     $image = get_field('profile_img',  'user_' . $user->ID);
     $company = get_field('company',  'user_' . $user->ID);
@@ -6,6 +8,10 @@
 
     if(!empty($company))
         $company = $company[0]->post_title;
+
+    $url = $wp->request;
+    
+    $option_menu = explode('/', $url);
 ?>
 <section class="sidBarDashboard sidBarDashboardIndividual" name="section1">
     <ul class="">
@@ -14,7 +20,10 @@
                 <div class="elementImgSidebar" >
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/Dashboard.png" >
                 </div>
-                <span >Dashboard</span>
+                <?php
+                if(!isset($option_menu[2])) echo '<span><b>Dashboard</b></span>'; else echo '<span>Dashboard</span>';
+                ?>
+                
             </a>
         </li>
         <li class="elementTextDashboard">
@@ -22,7 +31,9 @@
                 <div class="elementImgSidebar" >
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/Opleiding_toevoegen.png" >
                 </div>
-                <span > Opleiding toevoegen</span>
+                <?php
+                if($option_menu[2] == 'course-selection') echo '<span><b>Opleiding toevoegen</b></span>'; else echo '<span>Opleiding toevoegen</span>';
+                ?>
             </a>
         </li>
         <li class="elementTextDashboard">
@@ -30,7 +41,9 @@
                 <div class="elementImgSidebar" >
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/Overzicht_opleidingen.png" >
                 </div>
-                <span > Overzicht opleidingen</span>
+                <?php
+                if($option_menu[2] == 'course-overview') echo '<span><b>Overzicht opleidingen</b></span>'; else echo '<span>Overzicht opleidingen</span>';
+                ?>
             </a>
         </li>
         <li class="elementTextDashboard">
@@ -38,7 +51,9 @@
                 <div class="elementImgSidebar" >
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/Inschrijvingen.png" >
                 </div>
-                <span > Inschrijvingen</span>
+                <?php
+                if($option_menu[2] == 'courses') echo '<span><b>Inschrijvingen</b></span>'; else echo '<span>Inschrijvingen</span>';
+                ?>
             </a>
         </li>
         <li class="elementTextDashboard">

@@ -6,7 +6,7 @@
 
     $url = home_url( $wp->request ); 
 
-    $page = dirname(__FILE__) . '/check_visibility.php';
+    $page = 'check_visibility.php';
     require($page); 
 
     $user = ($_GET['id']) ? get_userdata($_GET['id'])->data : ' ';

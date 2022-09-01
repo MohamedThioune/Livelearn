@@ -13,11 +13,7 @@ require($page);
 
 <?php
 
-    if (isset($_POST))
-    {
-        //var_dump($_POST);
-
-        function RandomString()
+    function RandomString()
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randstring = '';
@@ -28,11 +24,10 @@ require($page);
         return $randstring;
     }
 
-//   if(!empty($company))
-//     $company_manager = $company[0]->post_title;
+    if (isset($_POST))
+    {
 
     extract($_POST);
-    //var_dump($email);
     if(isset($email)){
        
         if($email != null)

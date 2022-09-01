@@ -121,14 +121,6 @@ $educations = get_field('education',  'user_' . $user->ID);
 $portfolios = get_field('portfolio',  'user_' . $user->ID);
 $awards = get_field('awards',  'user_' . $user->ID);
 
-if(!empty($bunch)){
-    ?>
-        <script>
-         window.location.replace("/dashboard/user/settings/?message=Your personal information has been sucessfully updated");
-        </script>
-    <?php
-}
-
 //Delete personalization
 if(isset($delete_education)){
     foreach($educations as $key => $value){
@@ -157,8 +149,8 @@ else if(isset($delete_experience)){
         else
             array_push($bunch,$value);
     }
-    update_field('experience', $bunch, 'user_'. $user->ID);
-    $experiences = get_field('experience',  'user_' . $user->ID);
+    update_field('work', $bunch, 'user_'. $user->ID);
+    $experiences = get_field('work',  'user_' . $user->ID);
 }
 else if(isset($delete_awards)){
     foreach($awards as $key => $value){
@@ -171,10 +163,18 @@ else if(isset($delete_awards)){
     $awards = get_field('awards',  'user_' . $user->ID);
 }
 
+if(!empty($bunch)){
+    ?>
+        <script>
+         window.location.replace("/dashboard/user/settings/?message=Your personal information has been sucessfully updated");
+        </script>
+    <?php
+}
 
 ?>
 <div class="content-settings">
     <h1 class="titleSetting">Profiel Informatie</h1>
+    <?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>" ; ?>
 
     <div class="content-tab">
         <div class="content-button-tabs">
@@ -196,7 +196,7 @@ else if(isset($delete_awards)){
             <?php $options = array(
                 'post_id' => 'user_'. get_current_user_id(),
                 'form' => true,
-                'fields' => array('profile_img', 'function', 'telnr', 'experience', 'country', 'age', 'gender', 'education_level', 'language', 'biographical_info'),
+                'fields' => array('profile_img', 'function', 'telnr', 'experience', 'country', 'date_born', 'gender', 'education_level', 'language', 'biographical_info'),
                 'html_before_fields' => '',
                 'html_after_fields' => '',
                 'html_updated_message'  => '<div id="message" class="alert alert-success updated">Informations user updated<p></p></div>',
@@ -208,7 +208,6 @@ else if(isset($delete_awards)){
         </div>
         <div id="Portfolio" class="b-tab contentBlockSetting">
             <div class="group-input-settings">
-                <?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span>" ; ?>
                 <label for="">Education</label>
                 <button class="btn btnAddEdu" data-toggle="modal" data-target="#exampleModalEdu"> Add Education
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/plus.png" alt="">
@@ -254,7 +253,7 @@ else if(isset($delete_awards)){
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Add New Education</h5>
+                                                        <h5 class="modal-title" id="exampleModalLabel">Edit Education</h5>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
@@ -266,7 +265,7 @@ else if(isset($delete_awards)){
                                                                 <div class="col-lg-12 col-md-12">
                                                                     <div class="group-input-settings">
                                                                         <label for="">School</label>
-                                                                        <input name="school" type="text" placeholder="SOnatel Academy" value="<?php echo $value[1] ?>" required>
+                                                                        <input name="school" type="text" placeholder="Sonatel Academy" value="<?php echo $value[1] ?>" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-12 col-md-12">
@@ -325,7 +324,7 @@ else if(isset($delete_awards)){
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="group-input-settings">
                                                     <label for="">School</label>
-                                                    <input name="school" type="text" placeholder="SOnatel Academy" required>
+                                                    <input name="school" type="text" placeholder="Sonatel Academy" required>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-md-12">
@@ -409,7 +408,7 @@ else if(isset($delete_awards)){
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Add New Work & Experience</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">Edit Work/Experience</h5>
                                                     <button type="button" class="close"  aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -523,8 +522,9 @@ else if(isset($delete_awards)){
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/plus.png" alt="">
                 </button>
                 <br>
-                <?php
-                if($portfolios)
+                <div class="categorieDetailCandidat workExperiece">
+                    <?php
+                    if($portfolios)
                     if(!empty($portfolios))
                         foreach($portfolios as $value) {
                             $value = explode(";", $value);
@@ -547,7 +547,7 @@ else if(isset($delete_awards)){
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Add New Project</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Edit Project</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -580,8 +580,45 @@ else if(isset($delete_awards)){
                                 </div>
 
                             </div>
+                    <?php } ?>
+                </div>
 
-                        <?php } ?>
+                <div class="elementInputImgSetting">
+                    <!-- Modal education -->
+                    <div class="modal modalEdu fade" id="exampleModalProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add New Project</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="" method="POST">
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="group-input-settings">
+                                                    <label for="">Title</label>
+                                                    <input name="title" type="text" placeholder="" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="group-input-settings">
+                                                    <label for="">Description</label>
+                                                    <textarea name="description" id="" rows="4"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btnSaveSetting" type="submit" name="add_project" >Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="group-input-settings">
@@ -627,7 +664,7 @@ else if(isset($delete_awards)){
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Add New Award</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">Edit Award</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>

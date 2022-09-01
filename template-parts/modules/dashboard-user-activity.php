@@ -142,6 +142,18 @@ if(!empty($enrolled))
         $enrolled_courses = array_merge($kennis_video, $enrolled_courses);
 }
 
+//Statistic views
+//Views
+$user_post_view = get_posts(
+    array(
+        'post_type' => 'view',
+        'post_status' => 'publish',
+        'author' => $user->ID,
+        'order' => 'DESC'
+    )
+)[0];   
+
+$views_user_count = count(get_field('views_user', $user_post_view->ID));
 
 ?>
 
@@ -192,7 +204,7 @@ if(!empty($enrolled))
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/glif.png" alt="">
                 </div>
                 <div class="detailCardActivity">
-                    <p class="numberActivity">0</p>
+                    <p class="numberActivity"><?= $views_user_count; ?></p>
                     <p class="nameCardActivity">Profil View</p>
                 </div>
             </div>
@@ -331,7 +343,16 @@ if(!empty($enrolled))
                         break;
 
                     $type = get_field('type_feedback', $todo->ID);
-                    $manager = get_field('manager_feedback', $todo->ID);
+                    $manager = get_userdata( get_field('manager_feedback', $todo->ID) );
+
+                    $manager_name_display = "";
+                    if(isset($manager->first_name) && isset($manager->last_name)) 
+                        $manager_name_display = $manager->first_name . '' . $manager->last_name; 
+                    else 
+                        $manager_name_display = $manager->display_name;
+
+                    if(!$manager_name_display)
+                        $manager_name_display = "A manager";
 
                     $image = get_field('profile_img',  'user_' . $manager->ID);
                     if(!$image)
@@ -343,7 +364,7 @@ if(!empty($enrolled))
                             <div class="circleNotification">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification 1.png" alt="">
                             </div>
-                            <p class="feddBackNotification"><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name; else echo $manager->display_name; ?> send you a  <span><?=$type;?></span></p>
+                            <p class="feddBackNotification"><?= $manager_name_display; ?> sent you a  <span><?=$type;?></span></p>
                         </div>
                         <br>
                     <!-- div><p class="hoursText"></p></div> -->                    
@@ -363,7 +384,7 @@ if(!empty($enrolled))
     <div class="cardFavoriteCourses">
         <div class="d-flex aligncenter justify-content-between">
             <h2>Favoriete kennisproducten</h2>
-            <input type="search" placeholder="search" class="inputSearchCourse">
+            <input type="search" id="search_txt_course" placeholder="search" class="inputSearchCourse">
         </div>
         <div class="globalCoursElement">
             <?php 
@@ -490,3 +511,27 @@ if(!empty($enrolled))
     </div>
 
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+
+     $('#search_txt_course).keyup(function(){
+        var txt = $(this).val();
+
+        $.ajax({
+
+            url:"/fetch-company-people",
+            method:"post",
+            data:{
+                search_user_course : txt,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete_company_people').html(data);
+            }
+        });
+
+    });
+</script>
