@@ -9025,6 +9025,7 @@ ul#tabs-nav li.active {
     justify-content: space-between;
     padding: 18px 15px;
     margin-bottom: 0;
+    align-items: center;
 }
 .block2evensTabs details summary .headTabsAccordion {
     display: flex;
@@ -9219,6 +9220,76 @@ ul#tabs-nav li.active {
 }
 .btn-outline-realblue:hover{
     color: #FFFFFF !important;
+}
+.roadPathBlock{
+    width: 100%;
+    padding: 30px 20px 30px;
+    height: 110px;
+    margin-top: 10px;
+}
+.blockManageTeam{
+    margin-left: -6px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.cardBlockManage {
+    display: grid;
+    width: 240px;
+    background: #FFF;
+    border-radius: 7px;
+    padding: 20px 15px;
+    text-align: center;
+    height: 178px;
+    margin: 0 6px 20px;
+}
+.cardBlockManage img{
+    width: 77px;
+    margin: 0 auto 15px;
+}
+.cardBlockManage span {
+    color: #023356;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22px;
+    margin-bottom: 15px;
+}
+.contentBlockCourse .fa {
+    color: #023356;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 16px;
+    margin-top: 5px;
+}
+.contentBlockCourse .passEtape i {
+    color: #ffffff;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 18px;
+    margin-top: 5px;
+}
+.contentBlockCourse .passEtape2 i {
+    color: #023356;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 16px;
+    margin-top: 5px;
+}
+.numberEvens{
+    color: #FFFFFF !important;
+}
+.btnContactEco {
+    padding: 15px 20px;
+    background: #E0EFF4;
+    width: fit-content;
+    text-align: center;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    color: #ffffff !important;
+}
+.btnContactEco img{
+    width: 24px;
+    margin-right: 10px
 }
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
