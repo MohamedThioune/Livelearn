@@ -335,7 +335,10 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
       
         <div class="col-lg-5">
             <div class="cardNotification"> 
-                <h2>Notificaties</h2>
+                <div class="headCardNotification">
+                    <h2>Notificaties</h2>
+                    <a href="/dashboard/user/notification" class="btn btnOnderwerp2">See all</a>
+                </div>
                 <?php 
                 if(!empty($todos)){
                 foreach($todos as $key=>$todo) {
@@ -372,7 +375,7 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
                 <?php
                     }
                 ?>
-                 <a href="/dashboard/user/notification" class="btn btnOnderwerp">See all</a>
+
                  <?php
                     }
                     else 

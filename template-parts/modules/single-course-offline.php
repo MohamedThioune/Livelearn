@@ -439,10 +439,6 @@
 
                                                                 </summary>
                                                                 <div class="detailSummary">
-
-                                                                    <div class="dateBlock">
-                                                                        <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
-                                                                    </div>
                                                                     <div class="BlocknumberEvenement">
 
                                                                         <?php
@@ -469,12 +465,6 @@
                                                                     </div>
 
                                                                     <div class="blockPriceEvens">
-
-                                                                        <p class="exText">Ex BTW</p>
-                                                                        <div class="product-attr">
-
-
-                                                                        </div>
                                                                         <div class="contentBtnCardProduct">
                                                                             <!-- <a href="" class="btn btnReserveer">Reserveer<br><br></a> -->
                                                                             <!-- <a href="" class="btn btnSchrijf">Schrijf mij in!</a> -->
