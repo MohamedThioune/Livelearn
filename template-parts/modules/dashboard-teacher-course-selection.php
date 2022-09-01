@@ -65,14 +65,14 @@
                         <small>Coming soon!</small>
                     </p>
                 </a>
-                <a href="/dashboard/teacher/list-road-path" class="cardCours cardCoursInitial" >
-                    <p class="contentText">
-                        <b>Road Path</b>
-                    </p>
-                </a>
                 <a href="/dashboard/teacher/list-podcast" class="cardCours cardCoursInitial" >
                     <p class="contentText">
                         <b>Podcast</b>
+                    </p>
+                </a>
+                <a href="/dashboard/teacher/list-road-path" class="cardCours cardCoursInitial roadPathBlock" >
+                    <p class="contentText">
+                        <b>Road Path</b>
                     </p>
                 </a>
             </div>
