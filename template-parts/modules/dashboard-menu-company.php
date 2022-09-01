@@ -1,3 +1,10 @@
+<?php
+    global $wp;
+
+    $url = $wp->request;
+    
+    $option_menu = explode('/', $url);
+?>
 <section id="sectionDashboard1" class="sidBarDashboard sidBarDashboardIndividual" name="section1"
     style="overflow-x: hidden !important;">
     <button class="btn btnSidbarMobCroix">
@@ -12,15 +19,19 @@
                            <div class="elementImgSidebar" >
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Dashboard.png" >
                             </div>
-                            <span>Dashboard</span>
+                            <?php
+                            if(!isset($option_menu[2])) echo '<span><b>Dashboard</b></span>'; else echo '<span>Dashboard</span>';
+                            ?>
                         </a>
                     </li>
                     <li class="elementTextDashboard">
-                        <a href="/dashboard/company/people-mensen/" class="d-flex">
+                        <a href="/dashboard/company/people/" class="d-flex">
                             <div class="elementImgSidebar" >
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Mijn-mensen.png" >
                             </div>
-                            <span> Mensen</span>
+                            <?php
+                            if($option_menu[2] == 'people') echo '<span><b>Mensen</b></span>'; else echo '<span>Mensen</span>';
+                            ?>
                         </a>
                     </li>
                     <li class="elementTextDashboard">
@@ -28,7 +39,9 @@
                             <div class="elementImgSidebar" >
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Overzicht_opleidingen.png" >
                             </div>
-                            <span> Onze leermodules</span>
+                            <?php
+                            if($option_menu[2] == 'learning-modules') echo '<span><b>Onze leermodules</b></span>'; else echo '<span>Onze leermodules</span>';
+                            ?>
                         </a>
                     </li>
                     <li class="elementTextDashboard">
@@ -36,7 +49,9 @@
                            <div class="elementImgSidebar" >
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Leer-databank.png" >
                             </div>
-                            <span>Leer-databank</span>
+                            <?php
+                            if($option_menu[2] == 'learning-databank') echo '<span><b>Leer-databank</b></span>'; else echo '<span>Leer-databank</span>';
+                            ?>
                         </a>
                     </li>
                     <li class="elementTextDashboard">
@@ -44,7 +59,9 @@
                             <div class="elementImgSidebar" >
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Financien.png" >
                             </div>
-                            <span>Leerbudgetten</span>
+                            <?php
+                            if($option_menu[2] == 'leerbudgetten') echo '<span><b>Leerbudgetten</b></span>'; else echo '<span>Leerbudgetten</span>';
+                            ?>
                         </a>
                     </li>
                     <li class="elementTextDashboard">
@@ -56,11 +73,13 @@
                         </a>
                     </li>
                     <li class="elementTextDashboard">
-                        <a href="#" class="d-flex">
+                        <a href="/dashboard/company/statistic" class="d-flex">
                             <div class="elementImgSidebar" >
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Statistieken.png" >
                             </div>
-                            <span> Statistieken</span>
+                            <?php
+                            if($option_menu[2] == 'statistic') echo '<span><b>Statistieken</b></span>'; else echo '<span>Statistieken</span>';
+                            ?>
                         </a>
                     </li>
                     <li class="elementTextDashboard">
@@ -68,15 +87,19 @@
                            <div class="elementImgSidebar" >
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Instellingen.png" >
                             </div>
-                            <span> Instellingen</span>
+                            <?php
+                            if($option_menu[2] == 'profile-company') echo '<span><b>Instellingen</b></span>'; else echo '<span>Instellingen</span>';
+                            ?>
                         </a>
                     </li>
                     <li class="elementTextDashboard">
-                        <a href="/dashboard/company/people/" class="d-flex">
+                        <a href="/dashboard/company/allocate/" class="d-flex">
                            <div class="elementImgSidebar imgSide2" >
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Manage-Organisatie.png" >
                             </div>
-                            <span> De organisatie</span>
+                            <?php
+                            if($option_menu[2] == 'allocate') echo '<span><b>De organisatie</b></span>'; else echo '<span>De organisatie</span>';
+                            ?>
                         </a>
                     </li>
                     <li class="elementTextDashboard">

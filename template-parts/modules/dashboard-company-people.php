@@ -55,7 +55,7 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
                         if(!$image_user)  
                             $image_user = get_stylesheet_directory_uri(). "/img/placeholder_user.png";
                         
-                        $you  =  (in_array($user->ID, $ismanaged) || in_array('manager', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : '';
+                        $you  =  (in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('manager', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : '';
                         
                     ?>
                         <tr id="<?php echo $user->ID; ?>" >

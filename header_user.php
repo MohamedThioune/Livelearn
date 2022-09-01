@@ -1,5 +1,5 @@
 <?php
-global $wp;
+global $wp; 
 
 $user = wp_get_current_user();
 
@@ -273,8 +273,11 @@ if(!empty($notifications))
                             if($company_id)
                                 if(in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array('administrator', $user->roles) )
                                     $ref_company = "/dashboard/company";
+                                else
+                                    $ref_company = "#";
+ 
                         ?>
-                            <a <?php if(isset($ref_company)) echo'href="' .$ref_company. '"'; else echo 'data-toggle="modal" data-target="#bedrijfsprofiel_modal"'; ?> >
+                            <a <?php if(isset($ref_company)) echo'href ="' .$ref_company. '"'; else echo 'data-toggle="modal" data-target="#bedrijfsprofiel_modal"'; ?> >
                                 <div class="userBlockNav">
                                     <img src="<?php echo $company_logo;?>" alt="">
                                 </div>
