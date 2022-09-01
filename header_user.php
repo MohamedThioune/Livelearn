@@ -324,7 +324,7 @@ if(!empty($notifications))
                                 <?php
                                         }
                                         echo '<div class="">
-                                                  <a href="/dashboard/user/activity" class="btn BekijkNotifications">Bekijk alle notificaties</a>
+                                                  <a href="/dashboard/user/detail-notification/?todo=6620" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                               </div>';
                                     }
                                     else{

@@ -1886,7 +1886,6 @@ body, html {
     width: 100%;
     align-items: center;
     padding: 10px 0;
-    margin-bottom: 15px;
 }
 
 .blockPriceEvens {
@@ -1904,9 +1903,11 @@ body, html {
     background: #023356;
     border-radius: 100%;
     margin-bottom: 1px;
-    width: 28px;
+    width: 30px;
     height: 28px;
+    padding-bottom: 2px;
     text-align: center;
+    color: #FFFFFF !important;
 }
 .numberEvens p{
     color: #FFFFFF !important;

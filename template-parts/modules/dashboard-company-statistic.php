@@ -264,7 +264,7 @@ arsort($topic_followed);
                     <?php
                     }
                     ?>  
-                    <div class="d-flex justify-content-center">
+                    <div class="d-flex justify-content-center blockPagination">
                         <nav aria-label="Page navigation example">
                             <ul class="pagination">
                                 <li class="page-item">

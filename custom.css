@@ -1041,7 +1041,7 @@ ul.sub-menu li a {
 }
 
 .btnNewCourse {
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     background: #023356;
     font-size: 14px;
     padding: 4px 20px;
@@ -1383,12 +1383,13 @@ ul.sub-menu li a {
 }
 
 .sidBarDashboardIndividual {
-    width: 100%;
-    position: sticky;
+    width: 300px;
+    position: fixed;
     padding: 21px 5px 15px 20px;
     overflow-y: auto;
-    max-height: 90vh;
-    overflow-x: hidden !important;
+    max-height: 100vh;
+    left: 0;
+    top: 100px;
 }
 .profilUserP .otherSkills {
     background: rgba(230, 235, 242, 0.5);
@@ -3159,7 +3160,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 }
 .btndoawnloadCv{
     background: #043356;
-    color: white;
+    color: white !important;
     width: fit-content;
     padding: 8px 30px 8px;
     font-size: 15px;
@@ -4650,6 +4651,13 @@ overflow: -moz-scrollbars-none;
     box-shadow: 0px 6px 15px rgba(64, 79, 104, 0.05);
     border-radius: 8px;
     padding: 20px;
+    position: relative;
+}
+.blockPagination{
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
 }
 .cardFavoriteCourses{
     width: 100%;
@@ -9017,6 +9025,7 @@ ul#tabs-nav li.active {
     justify-content: space-between;
     padding: 18px 15px;
     margin-bottom: 0;
+    align-items: center;
 }
 .block2evensTabs details summary .headTabsAccordion {
     display: flex;
@@ -9211,6 +9220,76 @@ ul#tabs-nav li.active {
 }
 .btn-outline-realblue:hover{
     color: #FFFFFF !important;
+}
+.roadPathBlock{
+    width: 100%;
+    padding: 30px 20px 30px;
+    height: 110px;
+    margin-top: 10px;
+}
+.blockManageTeam{
+    margin-left: -6px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.cardBlockManage {
+    display: grid;
+    width: 240px;
+    background: #FFF;
+    border-radius: 7px;
+    padding: 20px 15px;
+    text-align: center;
+    height: 178px;
+    margin: 0 6px 20px;
+}
+.cardBlockManage img{
+    width: 77px;
+    margin: 0 auto 15px;
+}
+.cardBlockManage span {
+    color: #023356;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22px;
+    margin-bottom: 15px;
+}
+.contentBlockCourse .fa {
+    color: #023356;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 16px;
+    margin-top: 5px;
+}
+.contentBlockCourse .passEtape i {
+    color: #ffffff;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 18px;
+    margin-top: 5px;
+}
+.contentBlockCourse .passEtape2 i {
+    color: #023356;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 16px;
+    margin-top: 5px;
+}
+.numberEvens{
+    color: #FFFFFF !important;
+}
+.btnContactEco {
+    padding: 15px 20px;
+    background: #E0EFF4;
+    width: fit-content;
+    text-align: center;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    color: #ffffff !important;
+}
+.btnContactEco img{
+    width: 24px;
+    margin-right: 10px
 }
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -10526,9 +10605,12 @@ ul#tabs-nav li.active {
     .detailContentCandidat .fistBlock {
         background: white;
         width: 100%;
-        padding-right: 20px;
-        padding-top: 30px;
-        padding-left: 20px;
+        padding-right: 0;
+        padding-top: 10px;
+        padding-left: 0;
+    }
+    .profilUserP .detailContentCandidat {
+        padding-left: 15px;
     }
     .skills{
         height: 161px;
@@ -10568,19 +10650,30 @@ ul#tabs-nav li.active {
         width: 100%;
         justify-content: center;
         flex-wrap: wrap;
+        margin-left: 0;
     }
     .contentMap{
         width: 100%;
         margin-left: 0;
-        margin-right: -89px;
-        text-align: center;
+        margin-right: 0px;
         justify-content: center;
+        margin-bottom: 12px;
     }
     .elementInputImgSetting .modal {
-        left: -2px;
+        left: 0;
+        right: 0;
+        width: 95%;
+        margin: 0 auto;
+        top: 35px;
+    }
+    .elementInputImgSetting .modal .modal-header {
+        margin-top: 5px;
+    }
+    .elementInputImgSetting .modal .group-input-settings {
+        margin: 0px -10px 20px -12px !important;
     }
     .contentMap:last-child{
-        margin-right: -89px;
+        margin-right: 0px;
     }
     #show-more1{
         display: block;
@@ -11525,7 +11618,33 @@ ul#tabs-nav li.active {
 .radius-custom  {
     border-radius: 10px !important;
 }
-
+.acf-icon.-pencil:before {
+    color: white !important;
+}
+.acf-icon.-cancel:before {
+    color: white !important;
+}
+.headCardNotification{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    margin-top: -1px;
+}
+.cardNotification .headCardNotification h2 {
+    margin-bottom: 0;
+}
+.headCardNotification .btnOnderwerp2 {
+    background: #023356!important;
+    color: white!important;
+    border-radius: 12px!important;
+    font-size: 14px!important;
+    min-width: 90px;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 7px 15px!important;
+}
 @media all and (max-width: 640px) {
     #field_5_3 {
         padding-top: 100px;
