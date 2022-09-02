@@ -135,7 +135,6 @@ if(!empty($notifications))
             <div class="container-fluid containerModife">
                 <div class="elementMobile groupBtnMobile">
                     <div class="nav-item" href="#">
-                        <!-- <button class="btn bntNotification" data-toggle="modal" data-target="#ModalNotification"> -->
                         <button class="btn bntNotification" data-toggle="modal" data-target="#ModalNotification">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
                             <span style="color:white" class="alertNotification"><?=count($todos);?></span>
@@ -296,7 +295,6 @@ if(!empty($notifications))
 
 
                         <li class="position-relative dropdown dropdownNotificationToggle">
-                            <!-- <button class="btn bntNotification elementWeb dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
                             <button class="btn bntNotification elementWeb dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
                                 <?php if(!empty($todos)){ ?> <span style="color:white" class="alertNotification"><?=count($todos);?></span> <?php } ?>
@@ -366,16 +364,10 @@ if(!empty($notifications))
         $.ajax({
                 url:"/read-notification",
                 method:"get",
-                data:
-                {
-                },
+                data:{},
                 dataType:"text",
                 success: function(data){
                     // Get the modal
-                    notification =  '<button class="btn bntNotification" data-toggle="modal" data-target="#ModalNotification">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
-                            <span style="color:white" class="alertNotification"><?=count($todos);?></span>
-                        </button>';
                     console.log(data);
                 }
         });
