@@ -184,8 +184,7 @@ body, html {
 .inputSearch {
     min-width: 345px;
     padding-left: 15px;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 14px
 }
 
 .boxOne {
@@ -3465,9 +3464,13 @@ form {
 }
 
 .showallLink {
-    color: #043356;
     font-weight: bold;
     text-decoration: revert;
+    color: #707070;
+    background: #dfeef3;
+    padding: 8px 15px;
+    border-radius: 18px;
+    position: relative;
 }
 
 .showallLink:hover {
