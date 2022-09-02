@@ -25,7 +25,7 @@
     
     $count = count($members);
 
-if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span>"; 
+if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"; 
     if( in_array('administrator', $data_user->roles) || in_array( 'manager', $data_user->roles ) || in_array('hr', $data_user->roles) || $grant ) {
 ?>
     <div class="cardPeople">

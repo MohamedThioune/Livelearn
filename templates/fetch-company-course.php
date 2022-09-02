@@ -25,7 +25,7 @@ $row_company_course = " ";
 
 if(isset($search_user_course)){
     foreach($courses_favorite as $course){
-        $filter = $course->title;
+        $filter = $course->post_title;
 
         /*
         * Location

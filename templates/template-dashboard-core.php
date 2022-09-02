@@ -503,20 +503,70 @@ else if(isset($change_password)){
     header("Location: ". $message);
 }
 else if(isset($referee_employee)){    
-    $allocution = array();
+    $allocution = get_field('allocation', $course_id);
+    $user_id = get_current_user_id();
+
+    $posts = get_post($course_id);
+    //Get categories
+    $posttags = get_the_tags();
+    if(!$posttags){
+        $category_default = get_field('categories', $course_id);
+        $category_xml = get_field('category_xml', $course_id);
+    }
+    $read_category = array();
+    $onderwerp_feedback = "";
+    if(!empty($category_default))
+        foreach($category_default as $item)
+            if($item)
+                if(!in_array($item['value'],$read_category)){
+                    array_push($read_category,$item['value']);
+                    $onderwerp_feedback .= $item['value'] . ';';
+                }
+                
+    else if(!empty($category_xml))
+        foreach($category_xml as $item)
+            if($item)
+                if(!in_array($item['value'],$read_category)){
+                    array_push($read_category,$item['value']);
+                    $onderwerp_feedback .= $item['value'] . ';';
+                }
+    //Create feedback
+    $manager = get_user_by('id', get_current_user_id());
+    $title_feedback = $manager->display_name . 'share you a course.';
+    $type = 'Gedeelde cursus';
+
+    $beschrijving_feedback = '<p>' . $manager->display_name . ' heeft de cursus met u gedeeld : <br>
+    <a href="' . get_permalink($course_id) . '">' . $posts->post_title . '</a><br><br>
+    Veel plezier bij het lezen !';
+
     
     if(!empty($selected_members))
-        foreach($selected_members as $expert){
+        foreach($selected_members as $expert)
             if(!in_array($expert, $allocution)){
                 array_push($allocution, $expert);
                 $posts = get_field('kennis_video', 'user_' . $expert);
+               
+                //Data to create the feedback
+                $post_data = array(
+                    'post_title' => $title_feedback,
+                    'post_author' => $expert,
+                    'post_type' => 'feedback',
+                    'post_status' => 'publish'
+                    );
+
+                //Create
+                $post_id = wp_insert_post($post_data);
+                //Add further informations for feedback
+                update_field('onderwerp_feedback', $onderwerp_feedback, $post_id);
+                update_field('manager_feedback', $manager, $post_id);
+                update_field('type_feedback', $type, $post_id);
+                update_field('beschrijving_feedback', $beschrijving_feedback, $post_id);
+
                 if(!empty($posts))
                     array_push($posts, get_post($course_id));
-                else 
-                    $posts = get_post($course_id);
+
                 update_field('kennis_video', $posts, 'user_' . $expert);
             }
-        }
 
     //Adding new subtopics on course
     update_field('allocation', $allocution, $course_id);
@@ -527,7 +577,6 @@ else if(isset($referee_employee)){
         $message = get_permalink($course_id) . '/?message=Allocution successfully'; 
 
     header("Location: ". $message);
-
 }
 
 else if(isset($databank)){

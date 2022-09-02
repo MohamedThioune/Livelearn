@@ -7,7 +7,7 @@
 
     extract($_POST);
 
-    if(isset($single)){
+    if(isset($single_add_people)){
        
         if($email != null)
         {
@@ -33,7 +33,6 @@
             );
 
             $user_id = wp_insert_user(wp_slash($userdata));
-            var_dump($user_id);
             if(is_wp_error($user_id)){
                 $danger = $user_id->get_error_message();
                 ?>
@@ -77,8 +76,8 @@
         }
 
     }
-    else if(isset($multiple)){
-        if(!empty($emails))
+    else if(isset($multiple_add_people)){ 
+        if(!empty($emails)){
             foreach($emails as $email){
                 if($email != null)
                 {
@@ -99,41 +98,33 @@
                     );
         
                     $user_id = wp_insert_user(wp_slash($userdata));
-                    var_dump($user_id);
                     if(is_wp_error($user_id)){
-                        $danger = $user_id->get_error_message();
-                        ?>
-                         <script>
-                            window.location.replace("/dashboard/company/people-mensen/?message=Er is een fout opgetreden, probeer het opnieuw.");
-                        </script>
-                        <?php
-                        echo ("<span class='alert alert-info'>" .  $danger . "</span>");   
-                    }else
-                        {
-                            update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
-                            update_field('company', $company[0], 'user_'.$user_id);
+                        continue;
+                    }else{
 
-                            $subject = 'Je LiveLearn inschrijving is binnen! ✨';
-                            $body = "
-                            Bedankt voor je inschrijving<br>
-                            <h1>Hello " . $first_name  . "</h1>,<br> 
-                            Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br><br>
-                            <h4>Inloggen:</h4><br>
-                            <h6><a href='https://livelearn.nl/inloggen/'> Connexion </a></h6>
-                            ";
-                        
-                            $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
-                            wp_mail($email, $subject, $body, $headers, array( '' )) ; 
-                        ?>
-                         <script>
-                            window.location.replace("/dashboard/company/people/?message=U heeft met succes een nieuwe werknemer aangemaakt ✔️ ");
-                        </script>
-        
-                    <?php
-                       
+                        update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
+                        update_field('company', $company[0], 'user_'.$user_id);
+
+                        $subject = 'Je LiveLearn inschrijving is binnen! ✨';
+                        $body = "
+                        Bedankt voor je inschrijving<br>
+                        <h1>Hello and welcome to livelearn</h1>,<br> 
+                        Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br><br>
+                        <h4>Inloggen:</h4><br>
+                        <h6><a href='https://livelearn.nl/inloggen/'> Connexion </a></h6>
+                        ";
+                    
+                        $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+                        wp_mail($email, $subject, $body, $headers, array( '' )) ;
                     }
                 }
             }
+            ?>
+            <script>
+                window.location.replace("/dashboard/company/people/?message=U heeft met succes een nieuwe werknemer aangemaakt ✔️ ");
+            </script>
+        <?php
+        }
         else
         {
             ?>
@@ -161,7 +152,7 @@
                             <li> <input type="email" name="email" placeholder="ZaKelijk mailadres" required> </li>
                         </ul>
                         <br><br>
-                        <button type="submit" name="single" class="btn btnMensenToevoegen">Werknemer toevoegen</button>
+                        <button type="submit" name="single_add_people" class="btn btnMensenToevoegen">Werknemer toevoegen</button>
                     </div>
             </form>
         </div>
@@ -173,10 +164,10 @@
                         <li><input type="email" name="emails[]" placeholder="ZaKelijk mailadres"></li>
                         <li><input type="email" name="emails[]" placeholder="ZaKelijk mailadres"></li>
                         <li><input type="email" name="emails[]" placeholder="ZaKelijk mailadres"></li>
-                        <li><a href=""><b>+meer</b></a></li>
+                        <li><a href="#"><b>+meer</b></a></li>
                     </ul>
                     <br><br>
-                    <button type="submit" name="multiple" class="btn btnMensenToevoegen" disabled>Werknemer toevoegen</button>
+                    <button type="submit" name="multiple_add_people" class="btn btnMensenToevoegen">Werknemer toevoegen</button>
                 </div>
             </form>
         </div>

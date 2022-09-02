@@ -389,7 +389,7 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
             <h2>Favoriete kennisproducten</h2>
             <input type="search" id="search_txt_course" placeholder="search" class="inputSearchCourse">
         </div>
-        <div class="globalCoursElement">
+        <div class="globalCoursElement" id="autocomplete_company_course" >
             <?php 
             foreach($courses_favorite as $key => $course) {
                 if($key == 6)
@@ -519,7 +519,7 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
 
 <script>
 
-     $('#search_txt_course).keyup(function(){
+    $('#search_txt_course').keyup(function(){
         var txt = $(this).val();
 
         $.ajax({
@@ -532,7 +532,7 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
             dataType:"text",
             success: function(data){
                 console.log(data);
-                $('#autocomplete_company_people').html(data);
+                $('#autocomplete_company_course').html(data);
             }
         });
 
