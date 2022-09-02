@@ -296,7 +296,7 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                                             <?php
                                         }
                                         else
-                                            echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> You must sign-in for review </button>";
+                                            echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> You must sign-in to make a comment. </button>";
                                         ?>
                                     </div>
 
@@ -331,10 +331,18 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                                                 echo "<button type='submit' class='btn btnFollow' name='delete'>Unfollow</button>";
                                             else
                                                 echo "<button type='submit' class='btn btnFollow' name='interest_push'>Follow</button>"; 
-                                        } 
+                                        }
+                                       
                                         ?>
                                     </div>
                                 </form>
+                                <?php
+                                    if($user_id == 0)
+                                        echo "                                
+                                        <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='btn btnFollow'> 
+                                            Follow                                            
+                                        </button>";
+                                ?>
 
                                 <p><?php echo $biographical; ?></p>
 

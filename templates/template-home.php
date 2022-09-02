@@ -568,7 +568,7 @@ $degrees=[
                         </div>
                     
                             <div class="step1SkillsPasspoort">
-                                <p class="titleBlockStepSkills">Wat is jouw hoogst afgeronde opleiding ? 🧑🧑🧑🧑</p>
+                                <p class="titleBlockStepSkills">Wat is jouw hoogst afgeronde opleiding ? </p>
                                 <div class="blockInputRadio">
                                     <?= $input_degrees; ?>
                                 </div>
@@ -1132,7 +1132,23 @@ $degrees=[
         <div class="swiper-container swiper-container-3">
             <div class="swiper-wrapper">
                 <?php
+                  $author_id = 0;
+                  $users = get_users();
 
+                  foreach($users as $user){
+                      $name_user = strtolower($user->data->display_name);
+                      if($name_user == "Livelean" || $name_user == "livelean"){
+                        $author_id = intval($user->data->ID);
+                        $name_user = $user->display_name;
+                        $featured = get_field('featured', 'user_' . $author_id);
+                        if($featured)
+                            break;
+                      }
+                  }
+
+                  if(!empty($featured))
+                    $courses = $featured;
+                  
                   $i = 0;
 
                   foreach($courses as $course){
@@ -1278,6 +1294,7 @@ $degrees=[
                         break;
                 }?>
             </div>
+
         </div>
     </div>
 </div>

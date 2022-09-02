@@ -956,7 +956,7 @@
                     <p class="btwText">BTW: € <?php echo $prijsvat ?></p>
 
 
-                    <button href="#bookdates" class="btn btnKoop btnScroolEvent text-white PrisText" style="background: #043356">Koop deze <?php echo $course_type; ?></button>
+                    <button href="#bookdates" class="btn btnKoop btnScroolEvent text-white PrisText" style="background: #043356">Schrijf je in <?php echo $course_type; ?></button>
                 </div>
 
                 <div class="col-12 my-5" style="background-color: #E0EFF4">

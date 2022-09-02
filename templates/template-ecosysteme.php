@@ -144,7 +144,10 @@ foreach($global_blogs as $blog)
 }
 
 //The user
-$user = get_current_user_id();
+$user_id = get_current_user_id();
+
+//Saved courses
+$saved = get_user_meta($user_id, 'course');
 
 ?>
 
@@ -541,21 +544,23 @@ $user = get_current_user_id();
                                     <div class="headCardKraam">
                                         <img src="<?php echo $image; ?>" alt="">
                                     </div>
-                                    <button class="btn btnImgCoeurEcosysteme">
-                                        <?php                                
-                                            if (in_array($blog->ID, $saved))
-                                            {
-                                        ?>
-                                            <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt=""> 
-                                        <?php
-                                            }
-                                            else{
-                                        ?>
-                                            <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                        <?php
-                                            }
-                                        ?>
-                                    </button>
+                                    <div>
+                                        <button class="btn btnImgCoeurEcosysteme">
+                                            <?php                                
+                                                if (in_array($blog->ID, $saved))
+                                                {
+                                            ?>
+                                                <img class="btn_favourite" id="<?php echo $user_id."_".$blog->ID."_course" ?>"  src="<?php echo $like_src;?>" alt=""> 
+                                            <?php
+                                                }
+                                                else{
+                                            ?>
+                                                <img class="btn_favourite" id="<?php echo $user_id."_".$blog->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                            <?php
+                                                }
+                                            ?>
+                                        </button>
+                                    </div>
                                     <div class="contentCardProd">
                                         <div class="group8">
                                             <div class="imgTitleCours">
@@ -687,12 +692,12 @@ $user = get_current_user_id();
                                             if (in_array($blog->ID, $saved))
                                             {
                                         ?>
-                                            <img class="btn_favourite" id="<?php echo $user."_".$blog->ID."_course" ?>"  src="<?php echo $like_src;?>" alt=""> 
+                                            <img class="btn_favourite" id="<?php echo $user_id."_".$blog->ID."_course" ?>"  src="<?php echo $like_src;?>" alt=""> 
                                         <?php
                                             }
                                             else{
                                         ?>
-                                            <img class="btn_favourite" id="<?php echo $user."_".$blog->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                            <img class="btn_favourite" id="<?php echo $user_id."_".$blog->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
                                         <?php
                                             }
                                         ?>                                    

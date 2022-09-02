@@ -120,8 +120,6 @@ if(!empty($notifications))
             </div>
         </div>
 
-
-        
         <nav class="navbar navbar-expand-lg navbar-dark headerdashboard">
             
             <div class="blockIconeWidth">

@@ -745,7 +745,7 @@ extract($_GET);
                                 <p class="btwText">BTW: € <?php $prijsvat ?></p>
 
 
-                                <a href="#bookdates" class="btn btnKoop">Koop deze <?php echo $course_type; ?></a>
+                                <a href="#bookdates" class="btn btnKoop">Schrijf je in<?php echo $course_type; ?></a>
                             </div>
                             <div class="col-12 my-5" style="background-color: #E0EFF4">
                                 <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around justify-content-center">
