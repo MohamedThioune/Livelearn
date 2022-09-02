@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
 <?php 
+$like_src = get_stylesheet_directory_uri()."/img/heart-like.png";
+$dislike_src = get_stylesheet_directory_uri()."/img/heart-dislike.png";
 
 $topic = (isset($_GET['topic'])) ? $_GET['topic'] : 0;
 $name_topic =  ($topic != 0) ? (String)get_the_category_by_ID($topic) : '';
@@ -140,6 +142,10 @@ foreach($global_blogs as $blog)
      **
     */ 
 }
+
+//The user
+$user = get_current_user_id();
+
 ?>
 
 <div>
@@ -536,7 +542,19 @@ foreach($global_blogs as $blog)
                                         <img src="<?php echo $image; ?>" alt="">
                                     </div>
                                     <button class="btn btnImgCoeurEcosysteme">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/coeur1.png" alt="">
+                                        <?php                                
+                                            if (in_array($blog->ID, $saved))
+                                            {
+                                        ?>
+                                            <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt=""> 
+                                        <?php
+                                            }
+                                            else{
+                                        ?>
+                                            <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                        <?php
+                                            }
+                                        ?>
                                     </button>
                                     <div class="contentCardProd">
                                         <div class="group8">
@@ -665,7 +683,19 @@ foreach($global_blogs as $blog)
                                         <img src="<?php echo $image; ?>" alt="">
                                     </div>
                                     <button class="btn btnImgCoeurEcosysteme">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/coeur1.png" alt="">
+                                        <?php                                
+                                            if (in_array($blog->ID, $saved))
+                                            {
+                                        ?>
+                                            <img class="btn_favourite" id="<?php echo $user."_".$blog->ID."_course" ?>"  src="<?php echo $like_src;?>" alt=""> 
+                                        <?php
+                                            }
+                                            else{
+                                        ?>
+                                            <img class="btn_favourite" id="<?php echo $user."_".$blog->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                        <?php
+                                            }
+                                        ?>                                    
                                     </button>
                                     <div class="contentCardProd">
                                         <div class="group8">
@@ -760,6 +790,40 @@ foreach($global_blogs as $blog)
 
     });
 
+</script>
+
+<script>
+    $(".btn_favourite").click((e)=>
+    {
+        btn_id = e.target.id;
+        meta_key = btn_id.split("_")[2];
+        id = btn_id.split("_")[1];
+        user_id = btn_id.split("_")[0];
+        
+        console.log(e.target)
+         $.ajax({
+             url:"/like",
+             method:"post",
+             data:{
+                 meta_key : meta_key,
+                 id : id,
+                 user_id : user_id,
+             },
+             dataType:"text",
+             success: function(data){
+                 console.log(data);
+                  let src=$("#"+btn_id).attr("src");
+                    if(src=="<?php echo $like_src; ?>")
+                    {
+                        $("#"+btn_id).attr("src","<?php echo $dislike_src; ?>");
+                    }
+                    else
+                    {
+                        $("#"+btn_id).attr("src","<?php echo $like_src; ?>");
+                    }              
+             }
+         });
+    })
 </script>
 
 <script>

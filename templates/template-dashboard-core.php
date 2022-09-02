@@ -532,7 +532,7 @@ else if(isset($referee_employee)){
                 }
     //Create feedback
     $manager = get_user_by('id', get_current_user_id());
-    $title_feedback = $manager->display_name . 'share you a course.';
+    $title_feedback = $manager->display_name . ' share you a course.';
     $type = 'Gedeelde cursus';
 
     $beschrijving_feedback = '<p>' . $manager->display_name . ' heeft de cursus met u gedeeld : <br>
@@ -560,7 +560,7 @@ else if(isset($referee_employee)){
                 update_field('onderwerp_feedback', $onderwerp_feedback, $post_id);
                 update_field('manager_feedback', $manager, $post_id);
                 update_field('type_feedback', $type, $post_id);
-                update_field('beschrijving_feedback', $beschrijving_feedback, $post_id);
+                update_field('beschrijving_feedback', nl2br($beschrijving_feedback), $post_id);
 
                 if(!empty($posts))
                     array_push($posts, get_post($course_id));
