@@ -500,7 +500,7 @@ $degrees=[
                         <div class="groupeBtn-Jouw-inloggen">
                             <button type="button" class="btn jouwn-skills elementWeb" data-toggle="modal" data-target="#SkillsModal" >Jouw skills paspoort in 6 stappen</button>
                             <button type="button" class="jouwn-skills elementMobile" data-toggle="modal" data-target="#SkillsModal" >Skills Paspoort</button>
-                            <a href="/inloggen" class="inloggenbtn">Inloggen</a>
+                            <a href="#" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal"  class="inloggenbtn">Inloggen</a>
                         </div>
 
                     <?php 

@@ -487,7 +487,7 @@
                                 <?php
                                 }
                                 else
-                                    echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> You must sign-in for review </button>";
+                                    echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> You must sign-in for comments</button>";
                                 ?>
                             </div>
                         </div> 
@@ -839,7 +839,7 @@
                 console.log(data);
                 $('#tab3').html(data);
                 $("#feedback").val(' ');
-                $('#info_review').html("<span class='alert alert-success'>Your review sent successfully</span>");
+                $('#info_review').html("<span class='alert alert-success'>Your comments sent successfully</span>");
             }
         });
     })
