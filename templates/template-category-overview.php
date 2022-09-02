@@ -528,7 +528,7 @@ require($page);
                 </form>
 
             </div>
-            <div class="mob filterBlock">
+            <div class="mob filterBlockMobil filterBlock">
                 <p class="fliterElementText">Filter</p>
                 <button class="btn btnIcone8" id="filterActiveOnMobile"><img src="<?php echo get_stylesheet_directory_uri();?>/img/filter.png" alt=""></button>
             </div>
