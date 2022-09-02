@@ -1,5 +1,5 @@
 <?php
-global $wp;
+global $wp; 
 
 $user = wp_get_current_user();
 
@@ -135,7 +135,6 @@ if(!empty($notifications))
             <div class="container-fluid containerModife">
                 <div class="elementMobile groupBtnMobile">
                     <div class="nav-item" href="#">
-                        <!-- <button class="btn bntNotification" data-toggle="modal" data-target="#ModalNotification"> -->
                         <button class="btn bntNotification" data-toggle="modal" data-target="#ModalNotification">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
                             <span style="color:white" class="alertNotification"><?=count($todos);?></span>
@@ -273,8 +272,11 @@ if(!empty($notifications))
                             if($company_id)
                                 if(in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array('administrator', $user->roles) )
                                     $ref_company = "/dashboard/company";
+                                else
+                                    $ref_company = "#";
+ 
                         ?>
-                            <a <?php if(isset($ref_company)) echo'href="' .$ref_company. '"'; else echo 'data-toggle="modal" data-target="#bedrijfsprofiel_modal"'; ?> >
+                            <a <?php if(isset($ref_company)) echo'href ="' .$ref_company. '"'; else echo 'data-toggle="modal" data-target="#bedrijfsprofiel_modal"'; ?> >
                                 <div class="userBlockNav">
                                     <img src="<?php echo $company_logo;?>" alt="">
                                 </div>
@@ -293,7 +295,6 @@ if(!empty($notifications))
 
 
                         <li class="position-relative dropdown dropdownNotificationToggle">
-                            <!-- <button class="btn bntNotification elementWeb dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
                             <button class="btn bntNotification elementWeb dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
                                 <?php if(!empty($todos)){ ?> <span style="color:white" class="alertNotification"><?=count($todos);?></span> <?php } ?>
@@ -363,16 +364,10 @@ if(!empty($notifications))
         $.ajax({
                 url:"/read-notification",
                 method:"get",
-                data:
-                {
-                },
+                data:{},
                 dataType:"text",
                 success: function(data){
                     // Get the modal
-                    notification =  '<button class="btn bntNotification" data-toggle="modal" data-target="#ModalNotification">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
-                            <span style="color:white" class="alertNotification"><?=count($todos);?></span>
-                        </button>';
                     console.log(data);
                 }
         });

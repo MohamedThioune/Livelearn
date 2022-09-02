@@ -198,7 +198,6 @@ else if(in_array($course_type, $other_offline))
 else if(in_array($course_type, $online))
     include_once('template-parts/modules/single-course-online.php');
 
-echo 'Review Bool : ' . $my_review_bool ;
 ?> 
 
 <?php

@@ -63,7 +63,7 @@
     }
 
     function view_topic($topic_id, $user_visibility){
-        $user_id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;
+        $user_id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;         
         if(!$user_id)
             return false;
 
@@ -133,8 +133,8 @@
         $view = get_field('views_user', $stat_id);
         
         $one_view = array();
-        $one_view['view_id'] = $topic_id;
-        $one_view['view_name'] = (String)get_the_category_by_ID($topic_id);
+        $one_view['view_id'] = $expert_id;
+        $one_view['view_name'] = get_userdata($expert_id)->display_name;
         $one_view['view_date'] = date('d/m/Y H:i:s');
 
         if(!empty($view))

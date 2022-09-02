@@ -223,14 +223,13 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                                                 array_push($read_category,$item['value']);
                                                 echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
                                             }
-
-                                            else if(!empty($category_xml))
-                                                foreach($category_xml as $item)
-                                                    if($item)
-                                                        if(!in_array($item['value'],$read_category)){
-                                                            array_push($read_category,$item['value']);
-                                                            echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
-                                                        }
+                                else if(!empty($category_xml))
+                                    foreach($category_xml as $item)
+                                        if($item)
+                                            if(!in_array($item['value'],$read_category)){
+                                                array_push($read_category,$item['value']);
+                                                echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
+                                            }
                             }
                             ?>
                         </ul>
