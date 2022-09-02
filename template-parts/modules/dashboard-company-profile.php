@@ -33,8 +33,21 @@ $company = get_field('company',  'user_' . $user->ID);
 $function = get_field('role',  'user_' . $user->ID);
 $experience = get_field('experience',  'user_' . $user->ID);
 $country = get_field('country',  'user_' . $user->ID);
-$date_born = explode ('/', get_field('age',  'user_' . $user->ID))[2];
-$age = date('Y') - intval($date_born);
+
+$date_born = get_field('date_born',  'user_' . $user->ID);
+if(!$date_born)
+    $date_birth =  "No birth";
+else{
+    //explode the date to get month, day and year
+    $birthDate = explode("/", $date_born);
+    //get age from date or birthdate
+    $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[0], $birthDate[2]))) > date("md")
+        ? ((date("Y") - $birthDate[2]) - 1)
+        : (date("Y") - $birthDate[2]));
+
+    $age .= ' Years';
+} 
+
 $gender = get_field('gender',  'user_' . $user->ID);
 $education_level = get_field('education_level',  'user_' . $user->ID);
 $languages = get_field('language',  'user_' . $user->ID);
@@ -84,7 +97,7 @@ $experts = get_user_meta($user->ID, 'expert');
 <div class="theme-content">
     <div class="theme-side-menu">
         <?php 
-            if(isset($superior) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles) ){
+            if(isset($superior) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles) || in_array('administrator', $user_connected->roles) ){
                 include_once('dashboard-menu-company.php');
             }else{
                 include_once('dashboard-menu-user.php');
@@ -93,7 +106,7 @@ $experts = get_user_meta($user->ID, 'expert');
     </div>
     <div class="theme-learning">
         <?php 
-            if(isset($superior) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles) ){
+            if(isset($superior) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles) || in_array('administrator', $user_connected->roles) ){
                 include_once('dashboard-company-profile-home.php');
             }else{
                 include_once('dashboard-user-profile-home.php');

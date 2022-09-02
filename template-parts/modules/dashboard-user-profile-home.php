@@ -198,7 +198,7 @@
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/waiting1.png" alt="">
                     <div>
                         <p class="nameOtherSkill">Age</p>
-                        <p class="DetailOtherSkill"><?php echo $age; ?> Years</p>
+                        <p class="DetailOtherSkill"><?php echo $age; ?></p>
                     </div>
                 </div>
                 <?php } if($gender){ ?>

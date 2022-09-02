@@ -9,7 +9,7 @@
     foreach ($reviews as $review)
         if($review['user']->ID == $current_user){
             $my_review_bool = true;
-            return 0;
+            break;
         }
 
    
@@ -60,7 +60,6 @@
                                 
                            </div>';
         }
-        echo $row_review;
     }
 
     return 1;

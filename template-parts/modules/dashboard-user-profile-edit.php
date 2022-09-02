@@ -14,7 +14,6 @@ if(isset($_POST['passport'])){
 if(!isset($id_user))
     $id_user = get_current_user_id();
 
-
 $user = get_users(array('include'=> $id_user))[0]->data;
 
 $image = get_field('profile_img',  'user_' . $user->ID);
@@ -25,7 +24,7 @@ $company = get_field('company',  'user_' . $user->ID);
 $function = get_field('role',  'user_' . $user->ID);
 $experience = get_field('experience',  'user_' . $user->ID);
 $country = get_field('country',  'user_' . $user->ID);
-$age = get_field('age',  'user_' . $user->ID);
+$age = get_field('date_born',  'user_' . $user->ID);
 $gender = get_field('gender',  'user_' . $user->ID);
 $education_level = get_field('education_level',  'user_' . $user->ID);
 $languages = get_field('language',  'user_' . $user->ID);
@@ -260,7 +259,7 @@ $experts = get_user_meta($user->ID, 'expert');
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/waiting1.png" alt="">
                     <div>
                         <p class="nameOtherSkill">Age</p>
-                        <p class="DetailOtherSkill"><?php echo $age; ?> Years</p>
+                        <p class="DetailOtherSkill"><?php echo $age; ?></p>
                     </div>
                 </div>
                 <?php } if($gender){ ?>
