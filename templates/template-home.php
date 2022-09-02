@@ -568,7 +568,7 @@ $degrees=[
                         </div>
                     
                             <div class="step1SkillsPasspoort">
-                                <p class="titleBlockStepSkills">Wat is jouw hoogst afgeronde opleiding ? 🧑🧑🧑🧑</p>
+                                <p class="titleBlockStepSkills">Wat is jouw hoogst afgeronde opleiding ?</p>
                                 <div class="blockInputRadio">
                                     <?= $input_degrees; ?>
                                 </div>
