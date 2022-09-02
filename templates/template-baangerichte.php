@@ -124,8 +124,7 @@
 
 <!-- jQuery CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<!--<script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
---><!-- slick Carousel CDN -->
+
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
 
 <script>

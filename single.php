@@ -439,7 +439,7 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
 <?php get_footer();?>
 <?php wp_footer(); ?>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script>
      var $li = $('.tabbable-line li').click(function() {
         $li.removeClass('selected');
