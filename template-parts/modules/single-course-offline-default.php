@@ -654,7 +654,7 @@
                     <p class="btwText">LIFT member korting: 28%</p>
 
 
-                    <button href="#bookdates" class="btn btnKoop text-white PrisText" style="background: #043356">Koop deze <?php echo $course_type; ?></button>
+                    <button href="#bookdates" class="btn btnKoop text-white PrisText" style="background: #043356">Schrijf je in <?php echo $course_type; ?></button>
                 </div>
                 <div class="col-12 my-5" style="background-color: #E0EFF4">
                     <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around
