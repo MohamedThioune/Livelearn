@@ -634,7 +634,7 @@ $url = home_url( $wp->request );
 
                             </li>
                             <li class="nav-item" >
-                                <a class="nav-link" href="#" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal"><b>Inloggen</b></a>
+                                <a class="nav-link" href="/inloggen/"><b>Inloggen</b></a>
                             </li>
                             <li class="">
                                 <a href="#" data-toggle="modal" data-target="#exampleModalCenter"  aria-label="Close" data-dismiss="modal" class="nav-link worden">Lid worden</a>
@@ -842,8 +842,8 @@ $url = home_url( $wp->request );
                 <div class="elementGroupGroeien">
                     <div class="block1">
                         <p class="elementsousMenuNav profilText"><b>Jouw profiel</b></p>
-                        <a href="#" data-toggle="modal" data-target="#exampleModalCenter"  aria-label="Close" data-dismiss="modal" class="elementsousMenuNav btnRegistrerenInloggen">Registreren</a>
-                        <a href="#" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal" class="elementsousMenuNav btnRegistrerenInloggen">Inloggen</a>
+                        <a href="/registreren/" class="elementsousMenuNav btnRegistrerenInloggen">Registreren</a>
+                        <a href="/inloggen/" class="elementsousMenuNav btnRegistrerenInloggen">Inloggen</a>
                     </div>
                 </div>
             </div>

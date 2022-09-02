@@ -294,7 +294,7 @@ jQuery(function($){
     });
 
     //Filter bar on category page
-    $("#filterActiveOnMobile").click(function() {
+    $(".filterBlockMobil").click(function() {
         $(".sousProductTest").show();
     });
     $("#filterHideMobile").click(function(){
