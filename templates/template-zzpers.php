@@ -124,11 +124,11 @@
         <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
     </div>
 
-    <section class="py-4 px-3">
-        <div class="container-fluid my-md-5">
+    <section class="">
+        <div class="container-fluid">
              <div class="row">
-                 <div class="col-md-8 p-2 order-md-1 order-2 text-md-left text-center">
-                    <p class="wordDeBestText2 mx-md-0 py-0 mt-0" style="color: #023356"> <strong class="">ZZP'ers en Startups</strong> </p>                   
+                 <div class="col-md-8">
+                    <p class="wordDeBestText2 " style="color: #023356"> <strong class="">ZZP'ers en Startups</strong> </p>
                     <p class="krijgText"> 
                         Waarschijnlijk ben jij al druk genoeg met het draaiende houden van je bedrijf.
                         Daarom zorgen wij als LiveLearn dat jij alle trends en ontwikkelingen direct in je eigen
@@ -314,7 +314,7 @@
             </div>
         </div>
     </section>
-    <section>
+    <section class="blockRoadTest">
         <div class="container-fluid">
             <p class="krijgText2">Leerpaden</p>
             <div class="swiper-container swiper-container-3">
@@ -449,10 +449,10 @@
         </div>
     </section>
     <section>
-        <div class="container-fluid my-5 px-md-4">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12 p-2 order-md-1 order-2 text-md-left text-center px-4 px-md-3">
-                    <p class="wordDeBestText2 mx-md-0 py-0 mt-0" style="max-width: 100%"> <strong>Plug-and-play ontwikkel platform </strong></p>                   
+                <div class="col-md-12">
+                    <p class="wordDeBestText2 " style="max-width: 100%"> <strong>Plug-and-play ontwikkel platform </strong></p>
                     <p class="krijgText"> 
                         Je kan je eigen ontwikkelomgeving eenvoudig opzetten. LiveLearn helpt je met het optimaal gebruik maken van het platform
                         en welke kennisproducten het best bij jouw organisatie passen. Mocht zelf al materiaal hebben, dan voeg je dit eenvoudig toe
@@ -637,7 +637,7 @@
                     <a href="mailto:contact@livelearn.nl" class="btn btn-default rounded-pill px-5 my-2 ml-md-0 ml-2" style="background: #E3EFF4">
                         <strong class="text-dark">Email </strong>
                     </a>
-                    <a href="tel: +31621610903" class="btn btn-default rounded-pill px-5 my-2 ml-md-3" style="background: #00A89D">
+                    <a href="tel: +31621610903" class="btn btn-default bellnColor rounded-pill px-5 my-2 ml-md-3" style="background: #00A89D">
                         <strong >Bellen</strong> 
                     </a>
                 </div>
