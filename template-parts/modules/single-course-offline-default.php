@@ -88,7 +88,7 @@
 </div>
 <!-- ------------------------------------------ End modals ---------------------------------------------- -->
 
-<div class="liveOverBlock">
+<div class="liveOverBlock2">
     <div class="container-fluid">
         <div class="overElement">
             <div class="blockOneOver">

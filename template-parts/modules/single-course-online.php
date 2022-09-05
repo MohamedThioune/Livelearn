@@ -35,9 +35,6 @@ extract($_GET);
         top: -5px;
         position: relative;
     }
-    .liveOverBlock {
-        padding-top: 50px;
-    }
 </style>
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
@@ -109,10 +106,10 @@ extract($_GET);
 
                 </div>
 
-                <?php 
+                <?php
                     if($course_price != "Gratis")
                         echo '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="startTextBtn btn">Start nu voor ' . $course_price . '</a>';
-                    else 
+                    else
                         echo '<a href="?topic=0&lesson=0" class="startTextBtn btn">Start nu voor ' . $course_price . '</a>';
                 ?>
 
@@ -168,7 +165,7 @@ extract($_GET);
                             <button class="btn iconeText open-modal" data-open="modal1">
                                 <i class="fa fa-share" style="font-size: 25px;"></i><br>
                                 <span class="textIconeLearning mt-1">Deel</span>
-                            </button>                           
+                            </button>
                         </div>
                         <!-- début Modal deel -->
                         <div class="modal" id="modal1" data-animation="fadeIn">
@@ -325,7 +322,7 @@ extract($_GET);
                                         $user = $review['user'];
                                         $image_author = get_field('profile_img',  'user_' . $user->ID);
                                         $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
-                                        $rating = $review['rating'];  
+                                        $rating = $review['rating'];
                                     ?>
                                     <div class="review-info-card">
                                         <div class="review-user-mini-profile">
@@ -341,7 +338,7 @@ extract($_GET);
                                                             if($i == $rating)
                                                                 echo '<input type="radio" name="rating" value="' . $i . ' " checked disabled/>
                                                                 <label class="star" title="" aria-hidden="true"></label>';
-                                                            else 
+                                                            else
                                                                 echo '<input type="radio" name="rating" value="' . $i . ' " disabled/>
                                                                     <label class="star" title="" aria-hidden="true"></label>';
                                                         }
@@ -367,7 +364,7 @@ extract($_GET);
                                 <div class="formSingleCoourseReview">
                                     <label>Rating</label>
                                     <div class="rating-element2">
-                                        <div class="rating"> 
+                                        <div class="rating">
                                             <input type="radio" id="star5" class="stars" name="rating" value="5" />
                                             <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
                                             <input type="radio" id="star4" class="stars" name="rating" value="4" />
@@ -508,14 +505,14 @@ extract($_GET);
                         <div class="modal-body  px-md-4 px-0">
                             <div class="mb-4">
                                 <div class="text-center">
-                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
-                                </div>  
+                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                                </div>
                                 <h3 class="text-center my-2">Sign Up</h3>
                                 <div class="text-center">
                                     <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
                                     data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign in</a></p>
                                 </div>
-                            </div>  
+                            </div>
 
 
                             <?php
@@ -529,7 +526,7 @@ extract($_GET);
 
                         </div>
                     </div>
-                
+
                 </div>
             </div>
             <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
@@ -550,7 +547,7 @@ extract($_GET);
                         <div class="modal-body  px-md-5 px-4">
                             <div class="mb-4">
                                 <div class="text-center">
-                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
                                 </div>
                                 <h3 class="text-center my-2">Sign In</h3>
                                 <div class="text-center">

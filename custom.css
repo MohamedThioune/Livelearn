@@ -9294,6 +9294,35 @@ ul#tabs-nav li.active {
 .filterBlockMobil{
     cursor: pointer;
 }
+.liveOverBlock {
+    padding-top: 100px;
+}
+.canhas .liveOverBlock{
+    padding-top: 60px;
+}
+.liveOverBlock2{
+    padding-top: 40px;
+}
+.canhas .liveOverBlock2{
+    padding-top: 0px;
+}
+.meerInformatieBtn{
+    background: #47a99e !important;
+    color: #ffffff !important;
+    padding: 14px 22px;
+    border-radius: 20px;
+    top: 35px;
+    position: relative;
+    z-index: 9;
+    font-weight: 600;
+    font-size: 15px;
+}
+.bellnColor{
+    color: #FFFFFF !important;
+}
+.blockRoadTest{
+    margin-bottom: 35px;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -9632,9 +9661,6 @@ ul#tabs-nav li.active {
     #search-button,
     #search-button2 {
         display: none;
-    }
-    .swiper-slide4 {
-        width: 295px !important;
     }
     .blockgroup7 {
         flex-wrap: wrap;
@@ -10328,7 +10354,7 @@ ul#tabs-nav li.active {
         display: none;
     }
     .swiper-slide4 {
-        width: 355px !important;
+        width: 85% !important;
         margin-right: 15px !important;
     }
     .blockgroup7 {
@@ -11614,6 +11640,9 @@ ul#tabs-nav li.active {
     .groupBtnData{
         width: 100%;
     }
+    .colModifAgenda{
+        padding-right: 0 !important;
+    }
 
 
 
@@ -11833,7 +11862,7 @@ ul#tabs-nav li.active {
     }
 
     .swiper-slide4 {
-        width: 330px!important;
+        width: 85% !important;
     }
     #page {
         z-index: 99999;
