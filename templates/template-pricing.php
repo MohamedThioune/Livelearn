@@ -34,15 +34,21 @@ $artikel = $blogs[0];
                         <p class="titleCardPPricing">Individueel skills paspoort</p>
                         <p class="sousTitlePricing">Altijd gratis</p>
                         <div class="blockCardPricing">
-                            <div class="circleSpanEigen"></div>
+                            <div class="circleSpanEigen">
+                                <i class="fas fa-book-reader"></i>
+                            </div>
                             <p>Eigen leeromgving</p>
                         </div>
                         <div class="blockCardPricing">
-                            <div class="circleSpanEigen"></div>
+                            <div class="circleSpanEigen">
+                                <i class="fas fa-tag"></i>
+                            </div>
                             <p>Top wel 65% korting op scholing</p>
                         </div>
                         <div class="blockCardPricing">
-                            <div class="circleSpanEigen"></div>
+                            <div class="circleSpanEigen">
+                                <i class="fas fa-comments"></i>
+                            </div>
                             <p>24/7 toegang tot carriereadvies</p>
                         </div>
                         <div class="footerCardSkills">
@@ -59,15 +65,21 @@ $artikel = $blogs[0];
                         <p class="titleCardPPricing">Deel jouw kennis / vaardigheden</p>
                         <p class="sousTitlePricing">No cure no pay</p>
                         <div class="blockCardPricing">
-                            <div class="circleSpanEigen"></div>
+                            <div class="circleSpanEigen">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
                             <p>Eigen teacher portaal</p>
                         </div>
                         <div class="blockCardPricing">
-                            <div class="circleSpanEigen"></div>
+                            <div class="circleSpanEigen">
+                                <i class="fas fa fa-bar-chart"></i>
+                            </div>
                             <p>Statistieken en best practices</p>
                         </div>
                         <div class="blockCardPricing">
-                            <div class="circleSpanEigen"></div>
+                            <div class="circleSpanEigen">
+                                <i class="fas fa-eye" aria-hidden="true"></i>
+                            </div>
                             <p>Zichtbaarheid bij 250+ klanten</p>
                         </div>
                         <div class="footerCardSkills">
@@ -84,15 +96,21 @@ $artikel = $blogs[0];
                         <p class="titleCardPPricing">Upskill jouw team / organisatie</p>
                         <p class="sousTitlePricing">€4,95 p.m.</p>
                         <div class="blockCardPricing">
-                            <div class="circleSpanEigen"></div>
+                            <div class="circleSpanEigen">
+                                <i class="fas fa-bullseye" aria-hidden="true"></i>
+                            </div>
                             <p>Een organisatie portaal</p>
                         </div>
                         <div class="blockCardPricing">
-                            <div class="circleSpanEigen"></div>
+                            <div class="circleSpanEigen">
+                                <i class="fas fa-link" aria-hidden="true"></i>
+                            </div>
                             <p>Koppelingen met huidige systemen</p>
                         </div>
                         <div class="blockCardPricing">
-                            <div class="circleSpanEigen"></div>
+                            <div class="circleSpanEigen">
+                                <i class="fas fa-directions"></i>
+                            </div>
                             <p>Begeleiding voor gehele organisatie</p>
                         </div>
                         <div class="footerCardSkills">

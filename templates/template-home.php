@@ -572,7 +572,8 @@ $degrees=[
                                 <div class="blockInputRadio">
                                     <?= $input_degrees; ?>
                                 </div>
-                                <div class="text-center w-100">
+                                <div class="text-center w-100 groupBtnStepSkillsP">
+                                    <button type="button" class="btn btnSkip" id="btnSkip">Sikp</button>
                                     <button type="button" class="btn btn-volgende" id="btnStep1SkillsPasspoort">Volgende</button>
                                 </div>
                             </div>

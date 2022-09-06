@@ -4255,6 +4255,7 @@ form {
 }
 .searchContentBlock{
     width: 67%;
+    position: relative;
 }
 .searchBlock .sousProductTest {
     background: #e0eff4;
@@ -5754,6 +5755,7 @@ form {
     }
     .searchBlock{
         overflow-x: hidden;
+        padding-top: 20px;
     }
     .blockCardSearch {
         display: flex;
