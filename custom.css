@@ -4122,6 +4122,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     height: 30px;
     background: #043356;
     border-radius: 100%;
+    text-align: center;
 }
 .blockCardPricing p{
     color: #043356;
@@ -4165,6 +4166,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 #cardPricing3 .circleSpanEigen {
     background: #d6d6d6;
 }
+
 #cardPricing3 .sousTitlePricing {
     color: #ffffff;
     background: #F69405;
@@ -9322,6 +9324,22 @@ ul#tabs-nav li.active {
 }
 .blockRoadTest{
     margin-bottom: 35px;
+}
+.circleSpanEigen i{
+    color: white;
+    margin-top: 10px;
+    font-size: 12px;
+}
+#cardPricing3 .circleSpanEigen i {
+    color: #023356;
+}
+.btnSkip{
+    color: #043356;
+    font-weight: 600;
+    padding: 0;
+    border-radius: 0;
+    font-size: 17px;
+    width: 130px;
 }
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
