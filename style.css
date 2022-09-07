@@ -60,9 +60,10 @@ body, html {
     padding: 0 !important;
     margin: 0 -15px;
     position:relative;
-    width: -webkit-fill-available;
     z-index: 1111;
     display: flex;
+    left: 0;
+    right: 0;
 }
 .headerdashboard-content{
     width: 100%;
