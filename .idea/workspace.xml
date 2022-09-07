@@ -4,11 +4,6 @@
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/header_base.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-category-overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-category-overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-home.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -673,6 +668,11 @@
       <workItem from="1662026337192" duration="10814000" />
       <workItem from="1662109638067" duration="2992000" />
       <workItem from="1662133157909" duration="4924000" />
+      <workItem from="1662142784819" duration="1341000" />
+      <workItem from="1662368028368" duration="9898000" />
+      <workItem from="1662394581442" duration="5096000" />
+      <workItem from="1662460861063" duration="7039000" />
+      <workItem from="1662544718008" duration="10079000" />
     </task>
     <servers />
   </component>

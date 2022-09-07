@@ -43,7 +43,7 @@ body {
 }
 
 .elementTextDashboard a span {
-    color: #7f7f7f;
+    color: #023356;
     font-size: 16px;
 }
 
@@ -4122,6 +4122,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     height: 30px;
     background: #043356;
     border-radius: 100%;
+    text-align: center;
 }
 .blockCardPricing p{
     color: #043356;
@@ -4165,6 +4166,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 #cardPricing3 .circleSpanEigen {
     background: #d6d6d6;
 }
+
 #cardPricing3 .sousTitlePricing {
     color: #ffffff;
     background: #F69405;
@@ -9294,6 +9296,54 @@ ul#tabs-nav li.active {
 .filterBlockMobil{
     cursor: pointer;
 }
+.liveOverBlock {
+    padding-top: 100px;
+}
+.canhas .liveOverBlock{
+    padding-top: 60px;
+}
+.liveOverBlock2{
+    padding-top: 40px;
+}
+.canhas .liveOverBlock2{
+    padding-top: 0px;
+}
+.meerInformatieBtn{
+    background: #47a99e !important;
+    color: #ffffff !important;
+    padding: 14px 22px;
+    border-radius: 20px;
+    top: 35px;
+    position: relative;
+    z-index: 9;
+    font-weight: 600;
+    font-size: 15px;
+}
+.bellnColor{
+    color: #FFFFFF !important;
+}
+.blockRoadTest{
+    margin-bottom: 35px;
+}
+.circleSpanEigen i{
+    color: white;
+    margin-top: 10px;
+    font-size: 12px;
+}
+#cardPricing3 .circleSpanEigen i {
+    color: #023356;
+}
+.btnSkip{
+    color: #043356;
+    font-weight: 600;
+    padding: 0;
+    border-radius: 0;
+    font-size: 17px;
+    width: 130px;
+}
+.extensive .sidBarDashboardIndividual {
+    width: fit-content;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -9632,9 +9682,6 @@ ul#tabs-nav li.active {
     #search-button,
     #search-button2 {
         display: none;
-    }
-    .swiper-slide4 {
-        width: 295px !important;
     }
     .blockgroup7 {
         flex-wrap: wrap;
@@ -10328,7 +10375,7 @@ ul#tabs-nav li.active {
         display: none;
     }
     .swiper-slide4 {
-        width: 355px !important;
+        width: 85% !important;
         margin-right: 15px !important;
     }
     .blockgroup7 {
@@ -11614,7 +11661,14 @@ ul#tabs-nav li.active {
     .groupBtnData{
         width: 100%;
     }
-
+    .colModifAgenda{
+        padding-right: 0 !important;
+    }
+    #ModalNotification .modal-header {
+        padding: 0 10px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
 
 
 }
@@ -11833,7 +11887,7 @@ ul#tabs-nav li.active {
     }
 
     .swiper-slide4 {
-        width: 330px!important;
+        width: 85% !important;
     }
     #page {
         z-index: 99999;

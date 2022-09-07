@@ -60,9 +60,10 @@ body, html {
     padding: 0 !important;
     margin: 0 -15px;
     position:relative;
-    width: -webkit-fill-available;
     z-index: 1111;
     display: flex;
+    left: 0;
+    right: 0;
 }
 .headerdashboard-content{
     width: 100%;
@@ -1595,10 +1596,6 @@ body, html {
     font-size: 16px;
     text-align: center;
     color: #42454d;
-}
-
-.liveOverBlock {
-    padding-top: 50px;
 }
 
 .blockImgCour {
@@ -3464,11 +3461,9 @@ form {
 }
 
 .showallLink {
-    font-weight: bold;
-    text-decoration: revert;
-    color: #707070;
+    color: #707070 !important;
     background: #dfeef3;
-    padding: 8px 15px;
+    padding: 8px 20px;
     border-radius: 18px;
     position: relative;
 }
@@ -4261,6 +4256,7 @@ form {
 }
 .searchContentBlock{
     width: 67%;
+    position: relative;
 }
 .searchBlock .sousProductTest {
     background: #e0eff4;
@@ -5760,6 +5756,7 @@ form {
     }
     .searchBlock{
         overflow-x: hidden;
+        padding-top: 20px;
     }
     .blockCardSearch {
         display: flex;

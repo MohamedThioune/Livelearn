@@ -222,7 +222,9 @@
                                     echo "
                                         <button type='submit' class='' name='interest_save' style='border:none; background:white'> 
                                             <i class='fas fa-bell' style='font-size: 25px;'></i><br>
-                                            <span class='textIconeLearning mt-1'>Bewaar</span>
+                                                                              <button type='submit' class='' name='interest_save' style='border:none; background:white'> 
+                                            <i class='fas fa-bell' style='font-size: 25px;'></i><br>
+      <span class='textIconeLearning mt-1'>Bewaar</span>
                                         </button>
                                         ";
                                 ?>

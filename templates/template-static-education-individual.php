@@ -76,7 +76,7 @@
                 <p class="altjidText bottomTextMaak">- Maak eenvoudig jouw gratis gepersonaliseerde leeromgeving</p>
                 <p class="altjidText bottomTextMaak">- Altijd direct antwoord op je vragen over je ontwikkeling</p>
                 <p class="altjidText bottomTextMaak">- Het grootste aanbod van zakelijke artikelen, podcasts, videos en trainingen.</p>
-                <a href="/static-education-advice"  class="btn btnMeerInformation">Meer informatie</a>
+                <a href="/static-education-advice"  class="meerInformatieBtn">Meer informatie</a>
             </div>
             <div class="col-md-4 col-sm-12">
                 <div class="blockForm" style="width:100%">
