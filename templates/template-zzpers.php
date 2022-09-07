@@ -343,8 +343,7 @@
                         $road_path_topic = get_field('topic_road_path', $value->ID);
                         if($road_path_topic)
                             $road_path_topic = (String)get_the_category_by_ID($road_path_topic);
-                        else
-                            $road_path_topic = "none";
+
                         $preview = get_field('preview', $value->ID)['url'];
                         if(!$preview){
                             $preview = get_field('url_image_xml', $value->ID);
@@ -362,23 +361,29 @@
                             <div class="headRoadPath">
                                 <p class="titleRoadPath "><?= $road_path_title; ?></p>
                             </div>
-                            <!-- <div class="categoriesRoadPath">
+                            <?php
+                            if(!$road_path_topic){
+                            ?>
+                            <div class="categoriesRoadPath">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/op-seach.png" alt="">
-                                <p class="">Handel</p>
-                            </div> -->
+                                <p class=""><?= $road_path_topic; ?></p>
+                            </div>
+                            <?php
+                            }
+                            ?>
                             <div class="footer-road-path">
                                 <!-- <button type="" class="btn btnRemoveRoadPath remove">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
                                     <span>Remove</span>
                                 </button> -->
-                                <a href="" class="seeRoadPath">
+                                <a href="/detail-product-road?id=<?= $value->ID; ?>" class="seeRoadPath">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/oeil.png" alt="">
                                     <span>see</span>
                                 </a>
-                                <a href="/" class="seeRoadPath">
+                                <!-- <a href="/detail-product-road?id=<?= $value->ID; ?>" class="seeRoadPath">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/overviewD.png" alt="">
                                     <span>Overview</span>
-                                </a>
+                                </a> -->
                             </div>
                         </div>
                     </div>
