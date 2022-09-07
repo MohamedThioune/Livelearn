@@ -75,6 +75,10 @@ function scrapeFrom($website): array
         case 'nvab': return scrapeNvab(); break;
         case 'vbw': return scrapevbw(); break;
         case 'kndb': return scrapekndb(); break;
+        case 'fgz': return scrapefgz(); break;
+        case 'cvah': return scrapecvah(); break;
+        case 'nbov': return scrapeNbov(); break;
+        case 'nuvo': return scrapeNuvo(); break;
     }
 }
 
