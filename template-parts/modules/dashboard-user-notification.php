@@ -71,12 +71,14 @@ $todos = get_posts($args);
 
                     $type = get_field('type_feedback', $todo->ID);
                     $manager = get_field('manager_feedback', $todo->ID);
+                    $manager = get_user_by('id', $manager);
 
+                    
                     $image = get_field('profile_img',  'user_' . $manager->ID);
                     if(!$image)
                         $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 
-                    if($type == "Feedback" || $type == "Compliment")
+                    if($type == "Feedback" || $type == "Compliment" || $type == "Gedeelde cursus")
                         $beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
                     else if($type == "Persoonlijk ontwikkelplan")
                         $beschrijving_feedback = get_field('opmerkingen', $todo->ID);
@@ -87,8 +89,8 @@ $todos = get_posts($args);
                 <tr>                
                     <td scope="row"><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"> <strong><?=$todo->post_title;?></strong> </a></td>
                     <td><?=$type?></td>
-                    <td class="descriptionNotification"><a href="dashboard/user/detail-notification/todos=<?php echo $key; ?>"><?=$beschrijving_feedback?> </a></td>
-                    <td><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name; else echo $manager->display_name; ?></td>
+                    <td class="descriptionNotification"><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"><?=$beschrijving_feedback?> </a></td>
+                    <td><?= $manager_display; ?></td>
                     <!-- 
                     <td>Weekly</td>
                     <td>
