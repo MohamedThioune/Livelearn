@@ -37,7 +37,7 @@
             'post_type' => 'learnpath',
             'post_status' => 'publish',
             'posts_per_page' => -1,
-            'author_in' => $authors
+            'author__in' => $authors
         );
 
         $leerpaden = get_posts($args);
@@ -362,7 +362,7 @@
                                 <p class="titleRoadPath "><?= $road_path_title; ?></p>
                             </div>
                             <?php
-                            if(!$road_path_topic){
+                            if($road_path_topic){
                             ?>
                             <div class="categoriesRoadPath">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/op-seach.png" alt="">
