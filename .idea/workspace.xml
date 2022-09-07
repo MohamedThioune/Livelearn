@@ -5,11 +5,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/edit-databank.php" beforeDir="false" afterPath="$PROJECT_DIR$/edit-databank.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-pricing.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-pricing.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-product-search.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-product-search.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/summernote-lite.css" beforeDir="false" afterPath="$PROJECT_DIR$/summernote.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/summernote.js" beforeDir="false" afterPath="$PROJECT_DIR$/summernote.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/edit-databank.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/edit-databank.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -677,7 +677,8 @@
       <workItem from="1662142784819" duration="1341000" />
       <workItem from="1662368028368" duration="9898000" />
       <workItem from="1662394581442" duration="5096000" />
-      <workItem from="1662460861063" duration="6276000" />
+      <workItem from="1662460861063" duration="7039000" />
+      <workItem from="1662544718008" duration="9247000" />
     </task>
     <servers />
   </component>

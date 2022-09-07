@@ -5,8 +5,7 @@
 <?php get_header(); ?>
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
 
 
 <!-- Content -->
@@ -89,7 +88,6 @@
                    <div class="input-group-course">
                        <label for="">Long description</label>
                           <textarea  name="" class="summernoteElement" id="summernoteEditBank"></textarea>
-                       <textarea id="summernote" name="editordata"></textarea>
 
                    </div>
 
@@ -123,6 +121,7 @@
 </body>
 
 <?php get_footer(); ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script>
     $('.summernoteElement').summernote({
         placeholder: 'Hello stand alone ui',

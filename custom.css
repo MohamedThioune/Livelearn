@@ -43,7 +43,7 @@ body {
 }
 
 .elementTextDashboard a span {
-    color: #7f7f7f;
+    color: #023356;
     font-size: 16px;
 }
 
@@ -9341,6 +9341,9 @@ ul#tabs-nav li.active {
     font-size: 17px;
     width: 130px;
 }
+.extensive .sidBarDashboardIndividual {
+    width: fit-content;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -11661,7 +11664,11 @@ ul#tabs-nav li.active {
     .colModifAgenda{
         padding-right: 0 !important;
     }
-
+    #ModalNotification .modal-header {
+        padding: 0 10px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
 
 
 }
