@@ -155,7 +155,7 @@ function scrapevbw(){
       $title=$node->getElementsByTagName('"agenda-title title h4"')->item(0)->nodeValue;
       $short_description=$node->getElementsByTagName('"agenda-description description"')->item(2)->nodeValue;
       $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
-      $date=$node->getElementsByTagName('h6')->item(0)->nodeValue;
+      // $date=$node->getElementsByTagName('h6')->item(0)->nodeValue;
       $title=$node->getElementsByTagName('h4')->item(0)->nodeValue;
       $link=$url.$node->getElementsByTagName('a')->item(0)->getAttribute('href');
       
@@ -170,7 +170,7 @@ function scrapevbw(){
             $content.=$node->nodeValue;
           }
       }
-      $article=new Article($title,$short_description,null,$link,$date,$content);
+      $article=new Article($title,$short_description,null,$link,null,$content);
       $datas[]=$article;
     }
     if($datas!=null)
@@ -193,7 +193,7 @@ function scrapefgz(){
     $title=$node->getElementsByTagName('"news_heading-def"')->item(0)->nodeValue;
     $short_description=$node->getElementsByTagName('p')->item(0)->nodeValue;
     $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
-    $date=$node->getElementsByTagName('h4')->item(0)->nodeValue;
+    // $date=$node->getElementsByTagName('h4')->item(0)->nodeValue;
     $title=$node->getElementsByTagName('h3')->item(0)->nodeValue;
     $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
     
@@ -207,7 +207,7 @@ function scrapefgz(){
         }
         // var_dump($content);
     }
-    $article=new Article($title,$short_description,$image,$link,$date,$content);
+    $article=new Article($title,$short_description,$image,$link,null,$content);
     $datas[]=$article;
     // var_dump($title);
   }
@@ -261,7 +261,7 @@ function scrapecvah(){
       $image=$url.$node->getElementsByTagName('img')->item(0)->getAttribute('src') ?? '';
       $title=$node->getElementsByTagName('"agenda-title title h4"')->item(0)->nodeValue;
       $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
-      $date=$node->getElementsByTagName('h6')->item(0)->nodeValue;
+      // $date=$node->getElementsByTagName('h6')->item(0)->nodeValue;
       $title=$node->getElementsByTagName('h4')->item(0)->nodeValue;
       $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
       $short_description=$node->getElementsByTagName('h4')->item(0)->nodeValue;
@@ -275,7 +275,7 @@ function scrapecvah(){
             $content.=$node->nodeValue;
           }
       }
-      $article=new Article($title,$short_description,$image,$link,$date,$content);
+      $article=new Article($title,$short_description,$image,$link,null,$content);
       $datas[]=$article;
       // var_dump($title);
     }
@@ -295,7 +295,7 @@ function scrapeNbov(){
     $image=$node->getElementsByTagName('img')->item(0)->getAttribute('src') ?? '';
     $title=$node->getElementsByTagName('"article-title"')->item(0)->nodeValue;
     $link=$url.$node->getElementsByTagName('a')->item(0)->getAttribute('href');
-    $date=$node->getElementsByTagName('"article-date light-grey"')->item(0)->nodeValue;
+    // $date=$node->getElementsByTagName('"article-date light-grey"')->item(0)->nodeValue;
     // $title=$node->getElementsByTagName('h1')->item(0)->nodeValue;
     //$link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
     
@@ -307,7 +307,7 @@ function scrapeNbov(){
         $short_description = substr($content,0,100);
         // var_dump($content);
       }
-     $article=new Article($title,$short_description.'...',$image,$link,$date,$content);
+     $article=new Article($title,$short_description.'...',$image,$link,null,$content);
     $datas[]=$article;
   }
   var_dump($datas);
@@ -327,7 +327,7 @@ function scrapeNuvo(){
       $title=$node->getElementsByTagName('"post-title"')->item(0)->nodeValue;
       $short_description=$node->getElementsByTagName('p')->item(0)->nodeValue;
       $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
-      $date=$node->getElementsByTagName('"post-meta-entry"')->item(0)->nodeValue;
+      // $date=$node->getElementsByTagName('"post-meta-entry"')->item(0)->nodeValue;
       $title=$node->getElementsByTagName('h5')->item(0)->nodeValue;
       
       $result_content=scrapper($link,"main",$selector_class_content);
@@ -344,7 +344,7 @@ function scrapeNuvo(){
         $temp= array_shift($contenu);
         $content= implode(" ",$contenu);
       }
-      $article=new Article($title,$short_description,$image,$link,$date,$content);
+      $article=new Article($title,$short_description,$image,$link,null,$content);
       $datas[]=$article;
       // var_dump($title);
     }
