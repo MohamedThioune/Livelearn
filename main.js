@@ -34,7 +34,6 @@ jQuery(function($){
         $(".step5SkillsPasspoort").hide();
         $(".step2SkillsPasspoort").show();
         $('#Vakgebied').addClass('colorStep');
-
     });
     $("#btnStep2SkillsPasspoort").click(function() {
         $(".step1SkillsPasspoort").hide();
@@ -43,7 +42,6 @@ jQuery(function($){
         $(".step4SkillsPasspoort").hide();
         $(".step3SkillsPasspoort").show();
         $('#Locatie').addClass('colorStep');
-
     });
     $("#btnStep3SkillsPasspoort").click(function() {
         $(".step1SkillsPasspoort").hide();
@@ -69,6 +67,20 @@ jQuery(function($){
         $(".step5SkillsPasspoort").hide();
         $(".step6SkillsPasspoort").show();
         $('#Finish').addClass('colorStep');
+    });
+
+    $("#btnSkip").click(function() {
+        $(".step1SkillsPasspoort").hide();
+        $(".step2SkillsPasspoort").hide();
+        $(".step3SkillsPasspoort").hide();
+        $(".step4SkillsPasspoort").hide();
+        $(".step5SkillsPasspoort").hide();
+        $(".step6SkillsPasspoort").show();
+        $('#Finish').addClass('colorStep');
+        $('#Generatie').addClass('colorStep');
+        $('#Leervorm').addClass('colorStep');
+        $('#Locatie').addClass('colorStep');
+        $('#Vakgebied').addClass('colorStep');
     });
 
 

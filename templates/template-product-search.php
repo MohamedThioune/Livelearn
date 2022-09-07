@@ -609,7 +609,7 @@
                         //Image author of this post 
                         $image_author = get_field('profile_img',  'user_' . $course->post_author) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png' ;
                      ?>
-                    <a href="<?php echo get_permalink($course->ID) ?>" class="col-md-11 pl-0">
+                    <a href="<?php echo get_permalink($course->ID) ?>" class="col-md-11">
                         <div class="blockCardSearch">
                             <div class="searchContentBlock">
                                 <p class="deToekomstText"><?php echo $course->post_title; ?></p>

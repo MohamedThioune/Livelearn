@@ -2,6 +2,8 @@
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.min.css" />
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.js"></script>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css'>
+
 <script type="text/javascript">
     $(function () {
         var selectedDates = [];
@@ -27,8 +29,6 @@
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <?php
 
 extract($_GET);
@@ -147,7 +147,6 @@ $companies = get_posts($args);
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
 <!-- Content -->
-<body>
 
    <div class="contentDetailCourseDataBank">
        <div class="container-fluid">
@@ -300,7 +299,7 @@ $companies = get_posts($args);
 
                    <div class="input-group-course">
                        <label for="">Long description</label>
-                       <textarea name="long_description" id="editor" cols="30" rows="6"><?= $course->long_description ?></textarea>
+                       <div class="summernote" name="long_description"><?= $course->long_description ?></div>
                    </div>
 
                    <div class="input-group-course">
@@ -466,7 +465,9 @@ $companies = get_posts($args);
        </div>
    </div>
 
-</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/summernote.js"></script>
+   <script src='https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.8/purify.min.js'></script
 
 <script id="rendered-js" >
 $(document).ready(function () {
@@ -478,7 +479,7 @@ $(document).ready(function () {
 });
 //# sourceURL=pen.js
 </script>
-
+<script src="<?php echo get_stylesheet_directory_uri();?>/customSurmmote.js"></script>
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
 

@@ -1128,7 +1128,7 @@
                             //Image author of this post 
                             $image_author = get_field('profile_img',  'user_' . $course->post_author);
                     ?>
-                    <a href="<?php echo get_permalink($course->ID) ?>" class="col-md-12">
+                    <a href="<?php echo get_permalink($course->ID) ?>" class="col-md-12 colModifAgenda">
                         <div class="blockCardFront">
                             <div class="workshopBlock">
                                 <img class="" src="<?php echo $thumbnail ?>" alt="">
@@ -2184,6 +2184,17 @@
             el: '.swiper-pagination',
             clickable: true,
         },
+        breakpoints: {
+            780: {
+                slidesPerView: 1,
+                spaceBetween: 40,
+
+            },
+            1230: {
+                slidesPerView: 3.9,
+                spaceBetween: 20,
+            }
+        },
     });
 </script>
 <script>
@@ -2193,6 +2204,17 @@
         pagination: {
             el: '.swiper-pagination',
             clickable: true,
+        },
+        breakpoints: {
+            780: {
+                slidesPerView: 1,
+                spaceBetween: 40,
+
+            },
+            1230: {
+                slidesPerView: 3.9,
+                spaceBetween: 20,
+            }
         },
     });
 </script>
@@ -2204,6 +2226,7 @@
             780: {
                 slidesPerView: 1,
                 spaceBetween: 40,
+
             },
             1230: {
                 slidesPerView: 3.9,
