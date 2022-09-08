@@ -261,7 +261,7 @@ $orders = wc_get_orders($order_args);
             <div class="row d-flex text-center justify-content-center align-items-center h-50">
                 <div class="col-md-11  p-4">
                     <form action='/dashboard/user/' method='POST'>
-                        <label for='member_id'><b>Deel met de volgende medewerkers :</b></label><br>
+                        <label for='member_id'><b>Selecteer met wie je wil delen  :</b></label><br>
                         <div class="form-group display-experts">
                         </div> 
                         <div id="modal-content">
