@@ -162,7 +162,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         let website= $('#select_field').val();
         if (website != '')
             $.ajax({
-                url: '/livelearn/scrapping',
+                url: '/scrapping',
                 type: 'POST',
                 data: {
                     'website': website ,

@@ -54,50 +54,46 @@
                 <div class="contentBlockRight">
                     <a href="/dashboard/teacher/course-selection/" class="contentBlockCourse">
                         <div class="circleIndicator passEtape">
-                            <i class="fa fa-info"></i>
+                            <i class="fa fa-book"></i>
                         </div>
                         <p class="textOpleidRight">Opleidingstype</p>
                     </a>
-                    <a href="/dashboard/teacher/course-selection/?func=add-course<?php echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
-                        <div class="circleIndicator passEtape">
-                            <i class="fa fa-file-text"></i>
+                    <a href="/dashboard/teacher/course-selection/?func=add-course<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
+                        <div class="circleIndicator passEtape2">
+                            <i class="fa fa-info"></i>
                         </div>
                         <p class="textOpleidRight">Basis informatie</p>
                     </a>
-                    <?php if(isset($_GET['id'])){ ?>
-                    <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=2&edit" class="contentBlockCourse">
-                        <div class="circleIndicator passEtape">
+                    <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=2&edit'; else echo "#"; ?>" class="contentBlockCourse">
+                        <div class="circleIndicator">
                             <i class="fa fa-file-text"></i>
                         </div>
                         <p class="textOpleidRight">Uitgebreide beschrijving</p>
                     </a>
-                    <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=3&edit" class="contentBlockCourse">
-                        <div class="circleIndicator passEtape">
-                            <i class="fa fa-calendar" aria-hidden="true">
-                            </i>
+                    <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=3&edit'; else echo "#" ?>" class="contentBlockCourse">
+                        <div class="circleIndicator">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
                         </div>
                         <p class="textOpleidRight ">Data en locaties</p>
                     </a>
-                    <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=4&edit" class="contentBlockCourse">
-                        <div class="circleIndicator passEtape">
+                    <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=4&edit'; else echo "#" ?>" class="contentBlockCourse">
+                        <div class="circleIndicator">
                             <i class="fa fa-paste" aria-hidden="true"></i>
                         </div>
                         <p class="textOpleidRight">Details en onderwepren</p>
                     </a>
-                    <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=5&edit" class="contentBlockCourse">
-                        <div class="circleIndicator passEtape">
+                    <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=5&edit'; else echo "#" ?>" class="contentBlockCourse">
+                        <div class="circleIndicator">
                             <i class="fa fa-tag" aria-hidden="true"></i>
                         </div>
                         <p class="textOpleidRight">Tags</p>
                     </a>
-                    <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=6&edit" class="contentBlockCourse">
-                        <div class="circleIndicator passEtape2">
+                    <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=6&edit'; else echo "#" ?>" class="contentBlockCourse">
+                        <div class="circleIndicator">
                             <i class="fa fa-users" aria-hidden="true"></i>
                         </div>
                         <p class="textOpleidRight">Experts</p>
                     </a>
-                    <?php } ?>
-
                 </div>
             </div>
         </div>
