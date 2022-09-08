@@ -80,6 +80,7 @@ function scrapeFrom($website): array
         case 'nbov': return scrapeNbov(); break;
         case 'nuvo': return scrapeNuvo(); break;
         case 'CBD': return scrapeCbd(); break;
+        case 'Hoorzaken': return scrapeHoorzaken(); break;
     }
 }
 
@@ -403,7 +404,7 @@ function scrapeCbd(){
       // $date=$node->getElementsByTagName('h6')->item(0)->nodeValue;
       $title=$node->getElementsByTagName('h3')->item(0)->nodeValue;
       $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
-      $short_description=$node->getElementsByTagName('p')->item(0)->nodeValue;
+      $short_description=$node->getElementsByTagName('"excerpt"')->item(0)->nodeValue;
       $result_content=scrapper($link,$tag,$selector_class_content);
 
       //var_dump($result_content);
@@ -422,7 +423,42 @@ function scrapeCbd(){
     return $datas;
 }
 
-scrapeCbd();
+// scrapeCbd();
+
+function scrapeHoorzaken(){
+  $url = 'https://www.hoorzaken.nl';
+    $tag='div';
+    $selector_class='"block post"';
+    $selector_class_content='"entry-content"';
+    $node_articles=scrapper($url."/nieuws/",$tag,$selector_class);
+    foreach ($node_articles as $key => $node) 
+    {
+      $image=$node->getElementsByTagName('img')->item(0)->getAttribute('src') ?? '';
+      // $title=$node->getElementsByTagName('"small"')->item(0)->nodeValue;
+      $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+      // $date=$node->getElementsByTagName('h6')->item(0)->nodeValue;
+      $title=trim($node->getElementsByTagName('h3')->item(0)->nodeValue);
+      $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+      $short_description=trim($node->getElementsByTagName('p')->item(0)->nodeValue);
+      $result_content=scrapper($link,$tag,$selector_class_content);
+
+      //var_dump($result_content);
+      if (!is_null($result_content))
+      {
+          $content="";
+          foreach ($result_content->item(0)->getElementsByTagName('p') as $key => $node) {
+            $content.=$node->nodeValue;
+          }
+      }
+      $article=new Article($title,$short_description,$image,$link,null,$content);
+      $datas[]=$article;
+      // var_dump($title);
+    }
+    var_dump($datas);
+    return $datas;
+}
+
+// scrapeHoorzaken();
 
 #------------------------------------------------------------------------------------------------
 
