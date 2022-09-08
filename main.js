@@ -26,6 +26,22 @@ jQuery(function($){
 
     });
 
+    $(".hideBarFilterBlock").hide();
+    // For filter
+
+    $(".filterBlock").click(function(){
+        $(".formFilterDatabank, .hideBarFilterBlock").show();
+    });
+    $(".hideBarFilterBlock").click(function(){
+        $(".formFilterDatabank, .hideBarFilterBlock").hide();
+    });
+
+
+
+    $(".bntNotification").click(function() {
+        $(".alertNotification").hide();
+    });
+
     // for modal skills passport home page
     $("#btnStep1SkillsPasspoort").click(function() {
         $(".step1SkillsPasspoort").hide();
