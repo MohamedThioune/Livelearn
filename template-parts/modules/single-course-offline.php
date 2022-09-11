@@ -222,9 +222,7 @@
                                     echo "
                                         <button type='submit' class='' name='interest_save' style='border:none; background:white'> 
                                             <i class='fas fa-bell' style='font-size: 25px;'></i><br>
-                                                                              <button type='submit' class='' name='interest_save' style='border:none; background:white'> 
-                                            <i class='fas fa-bell' style='font-size: 25px;'></i><br>
-      <span class='textIconeLearning mt-1'>Bewaar</span>
+                                            <span class='textIconeLearning mt-1'>Bewaar</span>
                                         </button>
                                         ";
                                 ?>
@@ -436,7 +434,6 @@
                                                                         }
                                                                         ?>
                                                                     </div>
-                                                                    <p class="prixEvens">€ <?php echo $price; ?></p>
                                                                 </div>
 
                                                                 </summary>
@@ -548,7 +545,6 @@
                                                                         }
                                                                         ?>
                                                                     </div>
-                                                                    <p class="prixEvens">€ <?php echo $price; ?></p>
                                                                 </div>
 
                                                             </summary>

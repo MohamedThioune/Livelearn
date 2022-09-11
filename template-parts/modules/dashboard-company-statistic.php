@@ -325,7 +325,7 @@ arsort($topic_followed);
                 }
                 ?>
                 
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center blockPagination">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <li class="page-item">
@@ -384,7 +384,7 @@ arsort($topic_followed);
                 }
                 ?>
 
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center blockPagination">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <li class="page-item">
@@ -416,7 +416,7 @@ arsort($topic_followed);
 
                 <?php echo $most_active_members ?>
 
-                <div class="d-flex justify-content-center">
+                <div class="d-flex justify-content-center blockPagination">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <li class="page-item">

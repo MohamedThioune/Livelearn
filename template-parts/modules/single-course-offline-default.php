@@ -88,7 +88,7 @@
 </div>
 <!-- ------------------------------------------ End modals ---------------------------------------------- -->
 
-<div class="liveOverBlock2">
+<div class="liveOverBlock">
     <div class="container-fluid">
         <div class="overElement">
             <div class="blockOneOver">
@@ -185,7 +185,7 @@
                                                                         }
                                                                         ?>
                                                                     </div>
-                                                                    <p class="prixEvens">€ <?php echo $price; ?></p>
+
                                                                 </div>
 
                                                                 </summary>
@@ -209,6 +209,7 @@
                                                                                     <p class="numberEvens"><?php echo $i+1 ?></p>
                                                                                     <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
                                                                                 </div>
+                                                                                <p class="prixEvens">€ <?php echo $price; ?></p>
                                                                                 <?php
                                                                             }
                                                                         }
@@ -298,7 +299,6 @@
                                                                         }
                                                                         ?>
                                                                     </div>
-                                                                    <p class="prixEvens">€ <?php echo $price; ?></p>
                                                                 </div>
 
                                                             </summary>
@@ -322,6 +322,7 @@
                                                                             <p class="numberEvens"><?php echo $x+1 ?></p>
                                                                             <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
                                                                         </div>
+                                                                        <p class="prixEvens">€ <?php echo $price; ?></p>
                                                                         <?php
                                                                         $x+=1;
                                                                     }
