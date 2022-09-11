@@ -72,7 +72,7 @@
                 </a>
                 <a href="/dashboard/teacher/list-road-path" class="cardCours cardCoursInitial roadPathBlock" >
                     <p class="contentText">
-                        <b>Road Path</b>
+                        <b>Leer Path</b>
                     </p>
                 </a>
             </div>

@@ -1385,11 +1385,17 @@ ul.sub-menu li a {
 .sidBarDashboardIndividual {
     width: 300px;
     position: fixed;
-    padding: 21px 5px 15px 20px;
+    padding: 100px 5px 15px 20px;
     overflow-y: auto;
     max-height: 100vh;
     left: 0;
-    top: 100px;
+    top: 0;
+}
+body {
+    padding-top: 0px !important;
+}
+.theme-learning {
+    padding-top: 55px;
 }
 .profilUserP .otherSkills {
     background: rgba(230, 235, 242, 0.5);
@@ -1931,10 +1937,10 @@ input:focus-visible {
 .contentOverviewMensen{
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-around;
 }
 .blockOverviewMensen{
-    width: 32%;
-    margin-right: 10px;
+    width: 47%;
     background: white;
     border-radius: 13px;
     margin-bottom: 15px;
@@ -3630,7 +3636,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 }
 .navbar {
     height: 60px;
-    position: fixed;
+    position: fixed !important;
     top: 0;
     z-index: 99;
 }
@@ -4626,8 +4632,9 @@ overflow: -moz-scrollbars-none;
     border: 1px solid #ECEDF2;
     box-shadow: 0px 6px 15px rgba(64, 79, 104, 0.05);
     border-radius: 8px;
-    padding: 20px;
+    padding: 20px 20px 110px;
     margin-top: 50px;
+    position: relative;
 }
 .cardStats h2{
     font-weight: 500;
@@ -9305,9 +9312,7 @@ ul#tabs-nav li.active {
 .liveOverBlock2{
     padding-top: 40px;
 }
-.canhas .liveOverBlock2{
-    padding-top: 0px;
-}
+
 .meerInformatieBtn{
     background: #47a99e !important;
     color: #ffffff !important;
@@ -9344,6 +9349,62 @@ ul#tabs-nav li.active {
 .extensive .sidBarDashboardIndividual {
     width: fit-content;
 }
+.headFilterCourse form{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0px;
+}
+.headFilterCourse form .priceFilter {
+    display: flex;
+}
+.headFilterCourse form .priceFilter input{
+    width: 124px;
+    margin: 0 5px;
+    font-size: 14px;
+    padding: 3px 10px;
+    border: 1px solid #cbcbcb;
+}
+.headFilterCourse form select{
+    width: 125px;
+    padding: 5px 8px !important;
+}
+.headFilterCourse form .textFilter{
+    margin-bottom: 0;
+    color: #023356;
+    font-weight: 600;
+    margin-right: 12px;
+    margin-left: 10px;
+}
+.headFilterCourse form .date {
+    width: 150px;
+    margin: 0 10px;
+}
+.btnApplyFilter {
+    margin-right: 10px;
+    background-color: rgb(192, 233, 244) !important;
+    font-size: 14px !important;
+    padding: 6px 20px !important;
+}
+.headFilterCourse form .priceInput{
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 10px;
+    display: flex;
+}
+.headFilterCourse form .priceInput .input-group{
+    align-items: center;
+    width: 65px;
+    justify-content: space-between;
+    margin: 0 5px;
+}
+.headFilterCourse form .priceInput .input-group label{
+    margin-bottom: 0;
+}
+.hideBarFilterBlock{
+    display: none;
+}
+
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -11649,7 +11710,7 @@ ul#tabs-nav li.active {
         padding: 5px 5px;
     }
     .formHeaderUser {
-        display: none;
+        display: none !important;
     }
     .btn-newDate {
         margin-bottom: 25px;
@@ -11668,6 +11729,65 @@ ul#tabs-nav li.active {
         padding: 0 10px;
         margin-bottom: 10px;
         margin-top: 10px;
+    }
+
+    .headFilterCourse .formFilterDatabank{
+        display: none;
+        position: fixed;
+        left: 0;
+        right: 0;
+        width: 100%;
+        min-height: 100vh;
+        top: 0;
+        bottom: 0;
+        background: rgb(244, 247, 246);
+        color: rgb(4, 51, 86);
+        border-top: none;
+        overflow-y: scroll;
+        z-index: 99999;
+        padding: 50px 15px;
+        margin-top: 0;
+    }
+    .headFilterCourse form .textFilter {
+        display: none;
+    }
+    .headFilterCourse form select {
+        width: 80%;
+        padding: 10px 10px !important;
+        margin-bottom: 30px;
+    }
+    .headFilterCourse form .priceInput {
+        margin: 0 0px;
+        display: block;
+    }
+    .headFilterCourse form .priceFilter input {
+        width: 80%;
+        margin: 0 0px 20px;
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+    .headFilterCourse form .priceInput .input-group {
+        align-items: center;
+        width: 70px;
+        justify-content: space-between;
+        margin: 0 0px 30px;
+    }
+    .headFilterCourse form .date {
+        width: 80%;
+        margin: 0 0px 40px;
+    }
+    .hideBarFilterBlock{
+        display: block;
+        position: absolute;
+        right: 30px;
+        font-size: 20px;
+        color: #043356;
+        font-weight: 300;
+        padding: 0;
+        top: 20px;
+    }
+    .headFilterCourse form .priceFilter {
+        display: block;
     }
 
 
