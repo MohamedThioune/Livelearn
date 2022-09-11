@@ -367,7 +367,6 @@
                             ?>
                         </div>
                        <br>
-
                    </div>
                     <?php 
                         if($agenda || $who || $results ) 
