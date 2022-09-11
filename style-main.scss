@@ -1,0 +1,23 @@
+/*
+ Theme Name:   Fluidify child
+ Theme URI:    https://www.influid.nl/
+ Description:  Fluidify Child Theme
+ Author:       Influid
+ Author URI:   https://www.influid.nl/
+ Template:     fluidify
+ Version:      1.0.0
+ Tags:         custom child
+ Text Domain:  fluidify-child
+*/
+
+@import "style.css";
+@import "custom.css";
+@import "blog.css";
+@import "woo.scss";
+@import "style-dashboard.scss";
+@import url("//use.fontawesome.com/releases/v5.15.3/css/all.css");
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
+$font-body: 'Ubuntu';
+
+

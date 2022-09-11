@@ -1,0 +1,53 @@
+.blockIconeWidth{
+    display: none;
+}
+.logoDashboard{
+    margin-left: 0px !important;
+}
+#burgerAndbelief{
+    display: none !important;
+}
+#profilDropdown{
+    display: block !important;
+}
+.elementHeaderUser {
+    padding-right: 2px;
+}
+#profilDropdown a{
+    color: #043356 !important;
+    margin: 0 5px !important;
+    font-weight: 500;
+    font-size: 14px;
+}
+.logoMobile img {
+    width: 100%;
+    margin-left: 4px;
+}
+
+
+/* -------------------------------------------- See profile ---------------------------------------------------- */
+.card-profil {
+    width: 350px;
+    transition: all 0.5s;
+}
+.image img {
+    transition: all 0.5s
+}
+.image .profil img:hover {
+    transform: scale(1.5)
+}
+.name, .number, .icons i{
+    font-size: 22px;
+}
+.idd, .join, .text span {
+    font-size: 14px;
+}
+.idd1, .follow {
+    font-size: 12px
+}
+.follow, .text span {
+    font-weight: 500;
+    /* cursor: pointer; */
+}
+/* -------------------------------------------- See profile ---------------------------------------------------- */
+
