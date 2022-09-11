@@ -183,7 +183,7 @@
                 <p class="e-learningTitle"><?php echo $post->post_title;?></p>
                 <!-- Image -->
                 <div class="img-fluid-course">
-                    <img src="<?=$image?>" alt="">
+                    <img src="<?= $thumbnail ?>" alt="">
                 </div>
 
 
