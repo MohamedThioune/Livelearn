@@ -191,7 +191,7 @@ $offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidin
 $online = ['E-learning', 'Video', 'Webinar'];
 
 if(in_array($course_type, $offline))
-    include_once('template-parts/modules/single-course-offline-default.php');
+    include_once('template-parts/modules/single-course-offline.php');
 else if(in_array($course_type, $online))
     include_once('template-parts/modules/single-course-online.php');
 
