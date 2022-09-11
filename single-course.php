@@ -157,20 +157,14 @@ if(!$favoured)
 /*
 * Image
 */
-$image = get_field('preview', $post->ID)['url'];
-if(!$image){
-    $image = get_field('url_image_xml', $post->ID);
-    if(!$image)
-        $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-}
-
-
-/*
-* Preview
-*/ 
-$thumbnail = get_the_post_thumbnail_url($post->ID);
+$thumbnail = get_field('preview', $post->ID)['url'];
 if(!$thumbnail)
-    $thumbnail = get_stylesheet_directory_uri() . '/img/placeholder.png';
+    $thumbnail = get_the_post_thumbnail_url($post->ID);
+if(!$thumbnail){
+    $thumbnail = get_field('url_image_xml', $post->ID);
+    if(!$thumbnail)
+        $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+}
 
 /*
 * Others
