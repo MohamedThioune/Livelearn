@@ -98,8 +98,8 @@ $user_id = get_current_user_id();
 /*
 * User informations
 */
-$email_user = wp_get_current_user()->email;
-$phone_user = get_field('telnr', 'user_' . $user_id);
+$email_user = get_user_by('ID', $post->post_author)->email;
+$phone_user = get_field('telnr', 'user_' . $post->post_author);
 
 /*
 * Companies user
@@ -187,19 +187,16 @@ foreach ($reviews as $review)
         break;
     }
 
-$offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop'];
-$other_offline = ['Opleidingen', 'Cursus'];
+$offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
 $online = ['E-learning', 'Video', 'Webinar'];
 
 if(in_array($course_type, $offline))
     include_once('template-parts/modules/single-course-offline-default.php');
-else if(in_array($course_type, $other_offline))
-    include_once('template-parts/modules/single-course-offline.php');
 else if(in_array($course_type, $online))
     include_once('template-parts/modules/single-course-online.php');
 
 ?> 
-
+ 
 <?php
 
 get_footer();
