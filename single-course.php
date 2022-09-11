@@ -157,13 +157,15 @@ if(!$favoured)
 /*
 * Image
 */
-$thumbnail = get_field('preview', $post->ID)['url'];
-if(!$thumbnail)
-    $thumbnail = get_the_post_thumbnail_url($post->ID);
+$thumbnail = get_field('preview', $course->ID)['url'];
 if(!$thumbnail){
-    $thumbnail = get_field('url_image_xml', $post->ID);
+    $thumbnail = get_the_post_thumbnail_url($post->ID);
     if(!$thumbnail)
-        $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+        $thumbnail = get_field('url_image_xml', $course->ID);
+        if(!$thumbnail)
+            $thumbnail = get_field('image', 'category_'. $category_id);
+            if(!$thumbnail)
+                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
 }
 
 /*
