@@ -80,8 +80,8 @@
         </div>
         <div class="blockFooter MobileFooter">
 
-            <button class="accordion">Voor organisaties</button>
-            <div class="panel">
+            <a href="#menu1" class="button">Voor organisaties</a>
+            <div id="menu1" class="content">
                 <ul>
                     <li><a class="" href="/zzpers/"> Voor ZZP’ers</a></li>
                     <li> <a class="" href="/mkb/">Voor het MKB </a></li>
@@ -91,8 +91,8 @@
                 </ul>
             </div>
 
-            <button class="accordion">Voor opleiders </button>
-            <div class="panel">
+            <button href="#menu2" class="button">Voor opleiders </button>
+            <div id="menu2" class="content">
                 <ul>
                     <li> <a class="" href="/verkopen/">Verkopen</a></li>
                     <li> <a class="" href="/creeren/">Creëren</a></li>
@@ -102,8 +102,8 @@
                 </ul>
             </div>
 
-            <button class="accordion">Over ons</button>
-            <div class="panel">
+            <button href="#menu3" class="button">Over ons</button>
+            <div id="menu3" class="content">
                 <ul>
                     <li> <a class="" href="/static-education-advice/">Wat doen we? </a></li>
                     <li> <a class="" href="/contact/">Contact </a></li>
@@ -113,8 +113,8 @@
                 </ul>
             </div>
 
-            <button class="accordion">Leerproducten</button>
-            <div class="panel">
+            <button href="#menu4" class="button">Leerproducten</button>
+            <div id="menu4" class="content">
                 <ul>
                     <li> <a class="" href="/baangerichte/"> Richting een baan</a></li>
                     <li> <a class="" href="/functiegerichte/">Groei binnen je functie </a></li>
@@ -166,12 +166,29 @@
             placeholder: "Maak een keuze" //placeholder
         });
     });
-    //# sourceURL=pen.js
+    //# sourceURL=pen.j
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
+<script>
+    const buttons = document.querySelectorAll('.button');
+
+    buttons.forEach(function(button, index) {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            this.parentNode.classList.toggle('on');
+
+            buttons.forEach(function(button2, index2) {
+                if ( index !== index2 ) {
+                    button2.parentNode.classList.remove('on');
+                }
+            });
+        });
+    });
+</script>
 <script>
     jQuery(function($){
         $('#header-search').keyup(function(){

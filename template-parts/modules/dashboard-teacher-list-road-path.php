@@ -90,7 +90,7 @@ $interesses = get_categories( array(
 <div class="contentRoadMap">
    <div class="d-flex justify-content-between headContentRoad">
        <h1 class="roadCourTitle">Leerpad</h1>
-       <button class="btn btnAddRoadMap" type="button" data-toggle="modal" data-target="#modalRoadMap">Add new road path</button>
+       <button class="btn btnAddRoadMap" type="button" data-toggle="modal" data-target="#modalRoadMap">Add new leerpad</button>
    </div>
    <?php
         if(isset($_GET['message']))
