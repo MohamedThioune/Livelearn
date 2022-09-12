@@ -1,28 +1,8 @@
 <?php /** Template Name: Edit Databank */ ?>
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.min.css" />
-<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.js"></script>
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css'>
 
-<script type="text/javascript">
-    $(function () {
-        var selectedDates = [];
-        datePicker = $('[class*=Txt_Date]').datepicker({
-            multidate: true,
-            format: 'dd/mm/yyyy ',
-            todayHighlight: true,
-            language: 'en'
-        });
-        datePicker.on('changeDate', function (e) {
-            if (e.dates.length <= 10) {
-                selectedDates = e.dates;
-            } else {
-                datePicker.data('datepicker').setDates(selectedDates);
-                alert('You can only select 10 dates.');
-            } 
-        });
-    });
-</script>
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
@@ -468,7 +448,27 @@ $companies = get_posts($args);
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/summernote.js"></script>
    <script src='https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.8/purify.min.js'></script
+<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.js"></script>
 
+<script type="text/javascript">
+    $(function () {
+        var selectedDates = [];
+        datePicker = $('[class*=Txt_Date]').datepicker({
+            multidate: true,
+            format: 'dd/mm/yyyy ',
+            todayHighlight: true,
+            language: 'en'
+        });
+        datePicker.on('changeDate', function (e) {
+            if (e.dates.length <= 10) {
+                selectedDates = e.dates;
+            } else {
+                datePicker.data('datepicker').setDates(selectedDates);
+                alert('You can only select 10 dates.');
+            }
+        });
+    });
+</script>
 <script id="rendered-js" >
 $(document).ready(function () {
     //Select2
