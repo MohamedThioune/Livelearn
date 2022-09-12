@@ -682,7 +682,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<script src="js/style.js"></script>
+
 <script>
     var swiper = new Swiper('.swiper-container', {
         slidesPerView: '3',

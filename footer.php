@@ -292,7 +292,6 @@
             el: '.swiper-pagination',
             clickable: true,
         },
-        $('.swiper-container').on('touchstart', onTouchStart),
 
     });
 </script>
