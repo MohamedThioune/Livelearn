@@ -6,7 +6,7 @@
                     <h2>2.Uitgebreidess beschrijving</h2>
                 </div>
                 <?php
-                    $offline = ['course','training','masterclass','cursus'];
+                    $offline = ['course','training','workshop','masterclass','cursus'];
                     if(in_array($_GET['type'], $offline))
                         update_field('course_type', $_GET['type'], $_GET['id']);
 
