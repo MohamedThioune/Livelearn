@@ -98,8 +98,8 @@ $user_id = get_current_user_id();
 /*
 * User informations
 */
-$email_user = wp_get_current_user()->email;
-$phone_user = get_field('telnr', 'user_' . $user_id);
+$email_user = get_user_by('ID', $post->post_author)->email;
+$phone_user = get_field('telnr', 'user_' . $post->post_author);
 
 /*
 * Companies user
@@ -157,20 +157,16 @@ if(!$favoured)
 /*
 * Image
 */
-$image = get_field('preview', $post->ID)['url'];
-if(!$image){
-    $image = get_field('url_image_xml', $post->ID);
-    if(!$image)
-        $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+$thumbnail = get_field('preview', $course->ID)['url'];
+if(!$thumbnail){
+    $thumbnail = get_the_post_thumbnail_url($post->ID);
+    if(!$thumbnail)
+        $thumbnail = get_field('url_image_xml', $course->ID);
+        if(!$thumbnail)
+            $thumbnail = get_field('image', 'category_'. $category_id);
+            if(!$thumbnail)
+                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
 }
-
-
-/*
-* Preview
-*/ 
-$thumbnail = get_the_post_thumbnail_url($post->ID);
-if(!$thumbnail)
-    $thumbnail = get_stylesheet_directory_uri() . '/img/placeholder.png';
 
 /*
 * Others
@@ -187,19 +183,16 @@ foreach ($reviews as $review)
         break;
     }
 
-$offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop'];
-$other_offline = ['Opleidingen', 'Cursus'];
+$offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
 $online = ['E-learning', 'Video', 'Webinar'];
 
 if(in_array($course_type, $offline))
-    include_once('template-parts/modules/single-course-offline-default.php');
-else if(in_array($course_type, $other_offline))
     include_once('template-parts/modules/single-course-offline.php');
 else if(in_array($course_type, $online))
     include_once('template-parts/modules/single-course-online.php');
 
 ?> 
-
+ 
 <?php
 
 get_footer();

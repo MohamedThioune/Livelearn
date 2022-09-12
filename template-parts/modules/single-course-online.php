@@ -264,7 +264,7 @@ extract($_GET);
                     <div class="text-limit">
                         <?php echo $long_description; ?>
                         <div class=" moreText">
-                        <?php
+                            <?php
                                 if($agenda){
                             ?>
                                     <h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Agenda :</b></h6>
@@ -289,11 +289,13 @@ extract($_GET);
                             ?>
                         </div>
                         <br>
-
                    </div>
-
-                    <button type="button" class="btn btn-lg lees_alles mb-5 mt-3 w-md-25 px-4 border border-3 border-dark
-                     read-more-btn ">Lees alles</button>
+                   <?php 
+                        if($agenda || $who || $results ) 
+                            echo '<button type="button" class="btn btn-lg lees_alles mb-5 mt-3 w-md-25 px-4 border border-3 border-dark read-more-btn">Lees alles</button>';
+                        else 
+                            echo '<h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Leeg tot nu toe ...</b></h6>';
+                    ?>
 
                 </div>
                 <!----------------------------------- End Text description ----------------------------------- -->
