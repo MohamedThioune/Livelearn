@@ -4,6 +4,7 @@
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-5.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-5.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -672,7 +673,10 @@
       <workItem from="1662368028368" duration="9898000" />
       <workItem from="1662394581442" duration="5096000" />
       <workItem from="1662460861063" duration="7039000" />
-      <workItem from="1662544718008" duration="10079000" />
+      <workItem from="1662544718008" duration="28728000" />
+      <workItem from="1662717351890" duration="6369000" />
+      <workItem from="1662739646861" duration="2122000" />
+      <workItem from="1662984731987" duration="2997000" />
     </task>
     <servers />
   </component>

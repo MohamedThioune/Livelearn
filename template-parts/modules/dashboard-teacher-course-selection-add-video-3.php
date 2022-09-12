@@ -3,7 +3,7 @@
         <div class="cardCoursGlocal">
             <div id="basis" class="w-100">
                 <div class="titleOpleidingstype">
-                    <h2>3.voeg video’s toe</h2>
+                    <h2>3.Voeg video’s toe</h2>
                 </div>
                 <?php 
                 acf_form(array(
