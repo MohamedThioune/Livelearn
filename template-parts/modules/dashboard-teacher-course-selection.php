@@ -25,7 +25,7 @@
                         <b>Masterclass</b>
                     </p>
                 </a>
-                <a href="?func=add-elearning" class="cardCours cardCoursInitial" >
+                <a href="#" class="cardCours cardCoursInitial" >
                     <p class="contentText">
                         <b>E-Learning</b>
                         <small>Coming soon!</small>
@@ -67,7 +67,9 @@
                 </a>
                 <a href="/dashboard/teacher/list-podcast" class="cardCours cardCoursInitial" >
                     <p class="contentText">
-                        <b>Podcast</b>
+                        <b>Podcast</b><br/>
+                        <small>Coming soon!</small>
+
                     </p>
                 </a>
                 <a href="/dashboard/teacher/list-road-path" class="cardCours cardCoursInitial roadPathBlock" >
