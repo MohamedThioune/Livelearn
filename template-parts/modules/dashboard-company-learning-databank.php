@@ -74,8 +74,6 @@
     }
 
 </style>
-         
-
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -170,6 +168,44 @@
                 if ( in_array( 'hr', $user_in->roles ) || in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
                     echo '<a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>';
                 ?>
+            </div>
+            <div class="headFilterCourse">
+                <div class="mob filterBlock m-2 mr-4">
+                    <p class="fliterElementText">Filter</p>
+                    <button class="btn btnIcone8" id="show"><img src="<?php echo get_stylesheet_directory_uri();?>/img/filter.png" alt=""></button>
+                </div>
+                <form action="" class="formFilterDatabank">
+                    <P class="textFilter">Filter :</P>
+                    <button class="btn hideBarFilterBlock"><i class="fa fa-close"></i></button>
+                    <select name="dropdown">
+                        <option value="" disabled selected>Leervoom</option>
+                        <option value="blue">Opleiding</option>
+                        <option value="red">Masterclass</option>
+                        <option value="green">GWorkshop</option>
+                        <option value="green">E-Learning</option>
+                        <option value="green">Event</option>
+                        <option value="green">Video</option>
+                        <option value="green">Training</option>
+                        <option value="green">Artikel</option>
+                    </select>
+                   <div class="priceInput">
+                       <div class="priceFilter">
+                           <input type="number"  placeholder="min Prijs">
+                           <input type="number"  placeholder="tot Prijs">
+                       </div>
+                       <div class="input-group">
+                           <label for="">Gratis</label>
+                           <input type="checkbox">
+                       </div>
+                   </div>
+                    <select name="dropdown">
+                        <option value="" disabled selected>Status</option>
+                        <option value="blue">Live </option>
+                        <option value="red">Not live</option>
+                    </select>
+                    <input type='date' class="form-control date" placeholder="selecteer een datum" />
+                    <button class="btn btnApplyFilter" type="submit">Apply</button>
+                </form>
             </div>
             <div class="contentCardListeCourse">
                 <table class="table table-responsive">
@@ -355,8 +391,7 @@
 
        </div> 
 
-</div> 
-
+</div>
 <!-- script-modal -->
 <script>
     var id_course;
@@ -425,6 +460,5 @@
   }
   })
 });
-</script>  
+</script>
 
-    

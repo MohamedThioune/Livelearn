@@ -5646,6 +5646,7 @@ form {
         top: 0;
         z-index: 1111;
         height: 100%;
+        overflow-y: scroll;
     }
     .container-fluid {
         padding: unset !important;

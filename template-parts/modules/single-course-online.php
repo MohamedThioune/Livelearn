@@ -1,5 +1,5 @@
 <?php
-extract($_GET);
+extract($_GET); 
 ?>
 <style>
     .swiper {
