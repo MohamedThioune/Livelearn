@@ -9456,6 +9456,12 @@ ul#tabs-nav li.active {
 .blockFooter li.on .content {
     display: block;
 }
+.addCourseStep {
+    background: white;
+    border-radius: 12px;
+    padding: 12px 20px 18px !important;
+    margin-bottom: 17px !important;
+}
 
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
