@@ -183,7 +183,7 @@
                 <p class="e-learningTitle"><?php echo $post->post_title;?></p>
                 <!-- Image -->
                 <div class="img-fluid-course">
-                    <img src="<?=$image?>" alt="">
+                    <img src="<?= $thumbnail ?>" alt="">
                 </div>
 
 
@@ -367,10 +367,9 @@
                             ?>
                         </div>
                        <br>
-
                    </div>
                     <?php 
-                        if($long_description || $agenda || $who || $results ) 
+                        if($agenda || $who || $results ) 
                             echo '<button type="button" class="btn btn-lg lees_alles my-4 w-md-25 px-4 border border-1 border-dark read-more-btn">Lees alles</button>';
                         else 
                             echo '<h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Leeg tot nu toe ...</b></h6>';
@@ -919,7 +918,32 @@
                                                     <p class="titleExpert"><?php echo $title; ?></p>
                                                 </div>
                                             </div>
-                                            <button class="btn btnFollowExpert">Follow</button>
+                                            <form action="/dashboard/user/" method="POST">
+                                                <input type="hidden" name="artikel" value="<?= $post->ID; ?>" id="">
+                                                <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
+                                                <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
+                                                <input type="hidden" name="meta_key" value="expert" id="">
+                                                <div>
+                                                    <?php
+                                                    if($user_id != 0 && $user_id != $expert->ID)
+                                                    {
+                                                        $saves_expert = get_user_meta($user_id, 'expert');
+                                                        if (in_array($expert->ID, $saves_expert))
+                                                            echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
+                                                        else
+                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                    }
+                                                    
+                                                    ?>
+                                                </div>
+                                            </form>
+                                            <?php
+                                                if($user_id == 0)
+                                                    echo "                                
+                                                    <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='btn btnFollowExpert'> 
+                                                        Follow                                            
+                                                    </button>";
+                                            ?>
                                         </div>
                                         <?php } ?>
                                     </div>

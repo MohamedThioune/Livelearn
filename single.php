@@ -198,7 +198,32 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                             </a>
                             <p class="NameAuthor"><?php echo(get_userdata($post->post_author)->data->display_name);?></p>
                         </div>
-                        <button class="btn FollowButton">Follow</button>
+                        <form action="/dashboard/user/" method="POST">
+                            <input type="hidden" name="artikel" value="<?= $post->ID; ?>" id="">
+                            <input type="hidden" name="meta_value" value="<?= $post->post_author; ?>" id="">
+                            <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
+                            <input type="hidden" name="meta_key" value="expert" id="">
+                            <div>
+                                <?php
+                                if($user_id != 0 && $user_id != $post->post_author)
+                                {
+                                    $saves_experts = get_user_meta($user_id, 'expert');
+                                    if (in_array($post->post_author, $saves_experts))
+                                        echo "<button type='submit' class='btn FollowButton' name='delete'>Unfollow</button>";
+                                    else
+                                        echo "<button type='submit' class='btn FollowButton' name='interest_push'>Follow</button>"; 
+                                }
+                                
+                                ?>
+                            </div>
+                        </form>
+                        <?php
+                            if($user_id == 0)
+                                echo "                                
+                                <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='btn FollowButton'> 
+                                    Follow                                            
+                                </button>";
+                        ?>
                     </div>
                     <div class="blockDescriptionBlog" id="">
 
