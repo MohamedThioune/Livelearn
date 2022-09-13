@@ -198,10 +198,3 @@ else if(in_array($course_type, $online))
 get_footer();
 
 ?>
-?> 
-
-<?php
-
-get_footer();
-
-?>

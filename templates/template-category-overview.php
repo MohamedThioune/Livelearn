@@ -151,18 +151,33 @@ require($page);
                     //Check date for agenda
                     $date_bool = false;
                     $data = get_field('dates', $course->ID);
-                    if(isset($data[0]['date']))
-                        $data = true;
+                    $data = $data[0]['date'];
+                    if(isset($data)){
+                        $date = strtotime(date('Y-m-d'));
+                        $data = strtotime(str_replace('/', '.'));
+                        if($data >= $date)
+                            $date_bool = true;
+                    }
                     else{
                         $data = get_field('data_locaties', $course->ID);
-                        if(isset($data[0]['data'][0]['start_date']))
-                            $date_bool = true;
-                        else{
-                            $data = get_field('data_locaties_xml', $course->ID)[0];
-                            if($data != "")
+                        $data = $data[0]['data'][0]['start_date'];
+                        if(isset($data)){
+                            $date = strtotime(date('Y-m-d'));
+                            $data = strtotime(str_replace('/', '.'));
+                            if($data >= $date)
                                 $date_bool = true;
                         }
+                        else{
+                            $data = get_field('data_locaties_xml', $course->ID)[0];
+                            if($data != ""){
+                                $date = strtotime(date('Y-m-d'));
+                                $data = strtotime(str_replace('/', '.'));
+                                if($data >= $date)
+                                    $date_bool = true;
+                            }
+                        }
                     }
+
                     if($date_bool)
                         array_push($agenda, $course);
 

@@ -327,12 +327,7 @@
             </div>
         </div>
     </section>
-<<<<<<< HEAD
-    
-    <section>
-=======
     <section class="blockRoadTest">
->>>>>>> origin/frontSeydou
         <div class="container-fluid">
         <?php 
         if(!empty($leerpaden)){

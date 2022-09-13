@@ -74,7 +74,7 @@ $url = home_url( $wp->request );
         <meta property="og:title" content="Livelearn">
         <meta property="og:description" content="Ontdek, ontwikkel en maak carriere">
         <meta property="og:image" content="<?php echo get_stylesheet_directory_uri() . '/img/logo_livelearn.png' ?>">
-        <!-- meta property="og:url" content="http://euro-travel-example.com/index.htm"> -->
+        <meta property="og:url" content="<?= $url ?>">
 
         <title><?php bloginfo('name'); ?></title>
         <?php wp_head(); ?>

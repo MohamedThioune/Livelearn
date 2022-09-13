@@ -171,16 +171,6 @@
                 </div>
             </form>
         </div>
-        <div class="importBlock2 blockOverviewMensen">
-            <h2 class="titleBlockOverviewMensen">Import Lijst</h2>
-            <div class="file-upload">
-                <div class="file-select">
-                    <button type="submit" class="file-select-button btnMensenToevoegen" id="fileName" disabled>Lijst importeren</button>
-                    <div class="file-select-name" id="noFileLijs">IMPORT (Excel, CSV)</div>
-                    <input type="file" name="chooseFileLijs" id="chooseFileLijs">
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
