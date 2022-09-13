@@ -5,21 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/footer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taxonomy-category.php" beforeDir="false" afterPath="$PROJECT_DIR$/taxonomy-category.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-allocate.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-allocate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-road-path.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-road-path.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-road-path.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-road-path.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/databank.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/databank.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/detail-assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/detail-assessment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/edit-databank.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/edit-databank.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-Ontwikkeladvies.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-Ontwikkeladvies.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-detail-product-road.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-detail-product-road.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-product-search.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-product-search.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-skillsPassport.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-skillsPassport.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -692,7 +677,8 @@
       <workItem from="1662717351890" duration="6369000" />
       <workItem from="1662739646861" duration="2122000" />
       <workItem from="1662984731987" duration="3914000" />
-      <workItem from="1662996058093" duration="6665000" />
+      <workItem from="1662996058093" duration="6982000" />
+      <workItem from="1663067683228" duration="4777000" />
     </task>
     <servers />
   </component>
