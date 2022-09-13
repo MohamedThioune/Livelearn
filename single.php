@@ -1,6 +1,6 @@
-<?php get_header();?>
+<?php 
+get_header();
 
-<?php
 global $post;
 
 global $wp;

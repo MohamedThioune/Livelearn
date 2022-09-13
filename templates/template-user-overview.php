@@ -425,7 +425,7 @@
                 <form action="/product-search/" method="POST">
                     <div class="LeerBlock pl-4" style="">
                         <div class="leerv">
-                            <p class="sousProduct1Title pt-1" style="color: #043356">LEERVORMdd</p>
+                            <p class="sousProduct1Title pt-1" style="color: #043356">LEERVORM</p>
                             <button class="btn btnClose pb-1 p-0 px-1 m-0" id="hide">
                                 <i class="bi bi-x text-dark" style="font-size: 35px"></i>
                             </button>
