@@ -1010,7 +1010,7 @@ $degrees=[
                         $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
                         $datas = get_field('data_locaties', $course->ID);
-                        if($data){
+                        if($datas){
                             $data = $datas[0]['data'][0]['start_date'];
                             if($data != ""){
                                 $day = explode('/', explode(' ', $data)[0])[0];
@@ -1028,17 +1028,15 @@ $degrees=[
                             $location = $datas[2];
                         }
 
-                        if($month)
+                        if(!$month)
                             continue;
-                        
-                        var_dump($data);
 
                         if(isset($data)){
                             $date_now = strtotime(date('Y-m-d'));
-                            $data = strtotime(str_replace('/', '.'));
+                            $data = strtotime(str_replace('/', '.', $data));
                             if($data < $date_now)
                                 continue;
-                        }
+                        }   
                         
                         /*
                         * Price
