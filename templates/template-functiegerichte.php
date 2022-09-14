@@ -37,7 +37,7 @@
     <div class="container">
         <div class="BaangerichteBlock">
             <p class="wordDeBestText2">Functiegerichte groei</p>
-            <p class="altijdText2 paddingElement">De partener in professionele- en Persoonlijke groei met ons complete aanbod van Groeipaden. Opleidingen en Assessments.</p>
+            <p class="altijdText2 paddingElement">De partner in professionele- en persoonlijke groei met een compleet aanbod van leermodules</p>
         </div>
     </div>
 </div>
@@ -121,8 +121,8 @@
 <?php wp_footer(); ?>
 
 <!-- jQuery CDN -->
-<script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- slick Carousel CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
 
 

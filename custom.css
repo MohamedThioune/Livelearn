@@ -25,6 +25,13 @@ body {
     max-width: unset;
 }
 
+.theme-error{
+    background-color:#ffcccc;
+    border:2px solid #cc0000;
+    color:#cc0000;
+    padding:8px 12px;
+    margin:8px 0;
+}
 
 .respMenu li a {
     color: #0a0a0a !important;
@@ -36,7 +43,7 @@ body {
 }
 
 .elementTextDashboard a span {
-    color: #7f7f7f;
+    color: #023356;
     font-size: 16px;
 }
 
@@ -565,14 +572,14 @@ ul.sub-menu li a {
 
 .blockgroup7 {
     position: absolute;
-    bottom: 15px;
-    background: #023356;
+    bottom: 0px;
+    background: #02335685;
     color: #D6E0DF;
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 6px 10px;
-    border-radius: 14px;
+    padding: 5px 10px;
+    border-radius: 10px;
 }
 
 .iconeTextKraa {
@@ -601,12 +608,11 @@ ul.sub-menu li a {
 
 .contentCardProd {
     padding: 20px 15px;
-    max-height: 290px;
+    max-height: 225px;
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 20px;
 }
-
 .group8 {
     display: flex;
     justify-content: space-between;
@@ -625,10 +631,13 @@ ul.sub-menu li a {
     margin-top: -4px;
     margin-bottom: 15px;
     overflow: hidden;
+    border: 1px solid #b5b5b5;
 }
 
 .imgCoursProd img {
-    width: 100%
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .nameCoursProd {
@@ -639,6 +648,13 @@ ul.sub-menu li a {
     margin-bottom: 0;
     margin-top: 0px;
     margin-left: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    height: fit-content;
+    width: 50%;
 }
 
 .group9 {
@@ -662,6 +678,12 @@ ul.sub-menu li a {
     margin-right: 10px;
     margin-bottom: 0;
     color: #42454D;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    height: fit-content;
 }
 
 .werkText {
@@ -669,12 +691,20 @@ ul.sub-menu li a {
     font-weight: bold;
     font-size: 14px;
     margin-bottom: 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .descriptionPlatform {
     color: #42454D;
     font-size: 14px;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
 }
 
 .swiper-slide4 {
@@ -1011,7 +1041,7 @@ ul.sub-menu li a {
 }
 
 .btnNewCourse {
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     background: #023356;
     font-size: 14px;
     padding: 4px 20px;
@@ -1353,12 +1383,13 @@ ul.sub-menu li a {
 }
 
 .sidBarDashboardIndividual {
-    width: 100%;
-    position: sticky;
+    width: 300px;
+    position: fixed;
     padding: 21px 5px 15px 20px;
     overflow-y: auto;
-    max-height: 90vh;
-    overflow-x: hidden !important;
+    max-height: 100vh;
+    left: 0;
+    top: 100px;
 }
 .profilUserP .otherSkills {
     background: rgba(230, 235, 242, 0.5);
@@ -2615,7 +2646,7 @@ input:focus-visible {
     position: relative;
 }
 .wordDeBestText2 {
-    font-size: 40px;
+    font-size: 24px;
     line-height: 42px;
     margin: 0px auto 10px;
 }
@@ -2885,8 +2916,8 @@ body .gform_wrapper ul li.gfield {
     top: 15px;
 }
 .sidebar-widget .img-fluid {
-    width: 100px !important;
-    height: 100px !important;
+    width: 85px !important;
+    height: 85px !important;
     margin: 25px auto -31px !important;
     border-radius: 100% !important;
     overflow: hidden;
@@ -3129,7 +3160,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 }
 .btndoawnloadCv{
     background: #043356;
-    color: white;
+    color: white !important;
     width: fit-content;
     padding: 8px 30px 8px;
     font-size: 15px;
@@ -3496,7 +3527,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     border-radius: 20px;
     margin-top: 15px;
     position: relative;
-    z-index: 9999;
+    z-index: 9;
 }
 .blockEducationIndividualPage{
     display: none;
@@ -3963,9 +3994,6 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 .content-ecosysteme{
     background: #F4F7F6;
 }
-.contentPricing{
-    background: #F4F7F6;
-}
 .topCollection{
     background: white;
     padding: 35px 0px;
@@ -4061,8 +4089,11 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     padding: 25px 30px;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0px 0px 1px 1px #c4c4c4;
+    box-shadow: 0px 0px 3px #9c9fa2 !important;
     margin-bottom: 30px;
+}
+.cardPricing:hover {
+    box-shadow: 0px 0px 10px #9c9fa2 !important;
 }
 .titleCardPPricing {
     color: #043356;
@@ -4091,6 +4122,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     height: 30px;
     background: #043356;
     border-radius: 100%;
+    text-align: center;
 }
 .blockCardPricing p{
     color: #043356;
@@ -4134,6 +4166,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 #cardPricing3 .circleSpanEigen {
     background: #d6d6d6;
 }
+
 #cardPricing3 .sousTitlePricing {
     color: #ffffff;
     background: #F69405;
@@ -4620,6 +4653,13 @@ overflow: -moz-scrollbars-none;
     box-shadow: 0px 6px 15px rgba(64, 79, 104, 0.05);
     border-radius: 8px;
     padding: 20px;
+    position: relative;
+}
+.blockPagination{
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    right: 0;
 }
 .cardFavoriteCourses{
     width: 100%;
@@ -4958,8 +4998,8 @@ nav .show{
     margin-bottom: 20px;
 }
 .contentStats .statsImgCours {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     margin-right: 15px;
     border-radius: 7px;
     overflow: hidden;
@@ -5133,7 +5173,7 @@ nav .show{
     right: 0;
     height: fit-content;
     max-height: calc(100% - 120px);
-    overflow-y: auto;
+    overflow-y: auto !important;
     box-sizing: content-box;
 }
 .pickText{
@@ -5206,8 +5246,9 @@ nav .show{
 }
 
 .modalEcosyteme .modal-header{
-    padding: 5px 10px !important;
+    padding: 0px 10px !important;
     margin-bottom: 15px;
+    margin-top: 0;
 }
 .modalEcosyteme .modal-dialog {
     width: 44% !important;
@@ -5422,7 +5463,7 @@ nav .show{
 }
 .btnCommunity{
     background: #47a99e;
-    color: white;
+    color: white !important;
     padding: 9px 25px;
     border-radius: 10px;
     margin-top: 15px;
@@ -6105,6 +6146,10 @@ input:checked ~ .assassment {
     border-radius: unset !important;
     font-size: 15px;
     margin-bottom: 30px;
+    color: #FFFFFF !important;
+}
+.beschiBlockText:hover{
+    cursor: pointer;
 }
 .img-fluid-course img{
     width: 100%;
@@ -6211,6 +6256,12 @@ tbody{
 .extensive .sidBarDashboard{
     height: auto;
     min-height: 100vh;
+}
+.contentBtnCardProduct .single_add_to_cart_button.button.alt {
+    font-size: 15px !important;
+    padding: 7px 15px 8px !important;
+    border-radius: 7px !important;
+    text-transform: unset !important;
 }
 .contentBtnCardProduct .single_add_to_cart_button.button.alt:hover {
     background-color: #043356 !important;
@@ -6475,6 +6526,11 @@ tbody{
     border-radius: 13px;
     background: #FFFFFF;
 }
+.krijgText2{
+    font-size: 24px;
+    font-weight: bold;
+    color: #023356;
+}
 .titleRoadPath {
     font-size: 17px;
     color: #043356;
@@ -6577,9 +6633,6 @@ tbody{
 }
 .dropdown-item {
     background-color: #ffffff !important;
-}
-.liveOverBlock {
-    padding-top: 100px;
 }
 .footerCardSkillsssessment{
     display: flex;
@@ -7381,6 +7434,7 @@ ul#tabs-nav li.active {
     border-radius: 100%;
     overflow: hidden;
     background: #e0eff4;
+    border: 1px solid #b5dad6;
 
 }
 .blockdropdownnHeader ul li a .blockImg img{
@@ -7556,6 +7610,9 @@ ul#tabs-nav li.active {
     right: 116px;
     padding: 3px 25px;
     border-radius: 10px;
+}
+.btn-Zoek:hover{
+    color: #FFFFFF !important;
 }
 .groupeBtn-Jouw-inloggen{
     display: flex;
@@ -8210,7 +8267,7 @@ ul#tabs-nav li.active {
     margin-bottom: 35px;
 }
 .btnBekijk2 {
-    color: white;
+    color: white !important;
     padding: 11px 20px;
     font-size: 15px;
     background: #47a99e;
@@ -8456,7 +8513,7 @@ ul#tabs-nav li.active {
 
 .blockFooterOntwikkeladvies .btnBellen {
     background: #47a99e;
-    color: #ffffff;
+    color: #ffffff !important;
     font-weight: 600;
     padding: 10px 45px;
     border-radius: 23px;
@@ -8899,7 +8956,6 @@ ul#tabs-nav li.active {
     border: 1px solid #d7d7d7;
     border-radius: 3px;
     background: #FFFFFF;
-    padding: 20px 15px 10px;
     margin-bottom: 15px;
 }
 
@@ -8919,8 +8975,9 @@ ul#tabs-nav li.active {
         opacity: 1;
     }
 }
+
 .block2evensTabs details summary::-webkit-details-marker {
-    display: none;
+    display: none !important;
 }
 
 .block2evensTabs details summary {
@@ -8929,7 +8986,11 @@ ul#tabs-nav li.active {
     cursor: pointer;
     font-size: 15px;
     font-weight: 500;
-    list-style: none;
+    background: #f0f0f0;
+}
+
+.block2evensTabs details summary::marker {
+   content: "";
 }
 
 .block2evensTabs details summary:after {
@@ -8938,16 +8999,19 @@ ul#tabs-nav li.active {
     font-size: 1.75rem;
     line-height: 0;
     margin-top: 0.75rem;
-    right: 0;
+    right: 15px;
     font-weight: 200;
     transform-origin: center;
     transition: 200ms linear;
-    top: -4px;
-    color: #043356;
+    top: 15px;
 }
 .prixEvens {
     font-size: 15px !important;
     font-weight: 400;
+    z-index: 999;
+    position: relative;
+    opacity: 1;
+    color: #030303;
 }
 .block2evensTabs details[open] summary:after {
     transform: rotate(45deg);
@@ -8956,15 +9020,20 @@ ul#tabs-nav li.active {
 }
 .block2evensTabs details summary {
     outline: 0;
+    margin-bottom: 0;
 }
 .block2evensTabs details .detailSummary {
     display: flex;
     justify-content: space-between;
+    padding: 18px 15px;
+    margin-bottom: 0;
+    align-items: center;
 }
 .block2evensTabs details summary .headTabsAccordion {
     display: flex;
     justify-content: space-between;
     width: 50%;
+    padding: 15px 16px;
 }
 
 .modalLogoUser{
@@ -8984,7 +9053,297 @@ ul#tabs-nav li.active {
     text-overflow: ellipsis;
     word-wrap: break-word;
 }
+.circleIndicator{
+ text-align: center;
+}
+.circleIndicator i{
+    color: #043356;
+    margin-right: auto;
+    margin-left: 2px;
+    font-size: 22px;
+    margin-top: 9px;
+}
+.colorStep i{
+    color: white;
+    font-size: 22px;
+    margin-top: 9px;
+}
+.line-elemnt {
+    border-top: 1px solid #95a7a5;
+    padding-top: 15px;
+    width: 70%;
+    margin-top: 0;
+}
+.headTabsCompany{
+    display: flex;
+    margin-bottom: 20px;
+}
+.headTabsCompany li{
+    width: 50%;
+}
+.headTabsCompany li button{
+    width: 100%;
+}
+.btnCustomTabs {
+    background: white;
+    border: none;
+    padding: 8px 10px 9px;
+    width: 100%;
+    height: auto;
+    color: #043356;
+    font-size: 16px;
+    font-weight: 500;
+}
+.btnactive{
+    background: #043356;
+    color: white;
+}
+.btnactive:hover{
+    color: white !important;
+}
+#tab2Content{
+    display: none;
+}
+#edit-company-data-form .acf-actions a{
+    color: #FFFFFF !important;
+}
 
+#tab2Content label strong {
+    font-weight: 500 !important;
+    color: #212529 !important;
+    font-size: 16px;
+}
+#tab2Content input{
+    background: #E0EFF4;
+    width: 90%;
+    margin-left: auto;
+}
+
+#tab2Content button {
+    background: #00A89D;
+    margin-top: 25px;
+}
+#ModalFollowExpert .modal-header {
+    padding: 10px 0;
+    margin-top: 0;
+}
+#ModalFollowExpert .modal-dialog {
+    max-width: 500px;
+    margin-top: 60px;
+}
+.blockExpertFollown{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.blockExpertFollown:last-child{
+    margin-bottom: 10px;
+}
+.blockImageExpertFollow{
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    overflow: hidden;
+    border: 1px solid #bebec0;
+    padding: 2px;
+    margin-right: 13px;
+}
+.blockImageExpertFollow img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.nameExpert{
+    margin-bottom: 3px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #043356;
+}
+.titleExpert {
+    color: black;
+    font-size: 14px;
+    margin-left: -5px;
+    margin-bottom: 0;
+}
+.btnFollowExpert{
+    background: #043356 !important;
+    border-radius: 8px !important;
+    color: white !important;
+    font-size: 15px;
+    padding: 5px 18px;
+}
+
+.swiper-slide .btnFollowExpert {
+    background: #043356 !important;
+    border-radius: 8px !important;
+    color: white !important;
+    font-size: 15px;
+    padding: 5px 25px;
+    width: fit-content;
+    margin: 15px auto 0;
+}
+.blockTextGlovale .text-limit {
+    color: #4e4e4e;
+    line-height: 30px;
+    font-size: 16px;
+}
+.blockOneOver p{
+    color: #4e4e4e;
+    line-height: 30px;
+    font-size: 16px;
+}
+#tabs-content .btnactive{
+    background: none !important;
+}
+.blockAuthorMobile{
+    display: none;
+}
+.titleComment {
+    font-size: 18px;
+    font-weight: 500;
+}
+.titleComment i {
+    margin-right: 8px;
+}
+.AddCommentBtn {
+    background: #00a89d;
+    color: white !important;
+    font-weight: 500;
+    margin-top: 20px;
+    padding: 7px 20px 8px;
+    font-size: 15px;
+}
+.btnMaakVerkopen{
+    padding: 8px 25px 9px;
+}
+.krijgText {
+    font-size: 17px;
+}
+.btn-outline-realblue:hover{
+    color: #FFFFFF !important;
+}
+.roadPathBlock{
+    width: 100%;
+    padding: 30px 20px 30px;
+    height: 110px;
+    margin-top: 10px;
+}
+.blockManageTeam{
+    margin-left: -6px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.cardBlockManage {
+    display: grid;
+    width: 240px;
+    background: #FFF;
+    border-radius: 7px;
+    padding: 20px 15px;
+    text-align: center;
+    height: 178px;
+    margin: 0 6px 20px;
+}
+.cardBlockManage img{
+    width: 77px;
+    margin: 0 auto 15px;
+}
+.cardBlockManage span {
+    color: #023356;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22px;
+    margin-bottom: 15px;
+}
+.contentBlockCourse .fa {
+    color: #023356;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 16px;
+    margin-top: 5px;
+}
+.contentBlockCourse .passEtape i {
+    color: #ffffff;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 18px;
+    margin-top: 5px;
+}
+.contentBlockCourse .passEtape2 i {
+    color: #023356;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 16px;
+    margin-top: 5px;
+}
+.numberEvens{
+    color: #FFFFFF !important;
+}
+.btnContactEco {
+    padding: 15px 20px;
+    background: #E0EFF4;
+    width: fit-content;
+    text-align: center;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    color: #ffffff !important;
+}
+.btnContactEco img{
+    width: 24px;
+    margin-right: 10px
+}
+.filterBlockMobil{
+    cursor: pointer;
+}
+.liveOverBlock {
+    padding-top: 100px;
+}
+.canhas .liveOverBlock{
+    padding-top: 60px;
+}
+.liveOverBlock2{
+    padding-top: 40px;
+}
+.canhas .liveOverBlock2{
+    padding-top: 0px;
+}
+.meerInformatieBtn{
+    background: #47a99e !important;
+    color: #ffffff !important;
+    padding: 14px 22px;
+    border-radius: 20px;
+    top: 35px;
+    position: relative;
+    z-index: 9;
+    font-weight: 600;
+    font-size: 15px;
+}
+.bellnColor{
+    color: #FFFFFF !important;
+}
+.blockRoadTest{
+    margin-bottom: 35px;
+}
+.circleSpanEigen i{
+    color: white;
+    margin-top: 10px;
+    font-size: 12px;
+}
+#cardPricing3 .circleSpanEigen i {
+    color: #023356;
+}
+.btnSkip{
+    color: #043356;
+    font-weight: 600;
+    padding: 0;
+    border-radius: 0;
+    font-size: 17px;
+    width: 130px;
+}
+.extensive .sidBarDashboardIndividual {
+    width: fit-content;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -8992,8 +9351,13 @@ ul#tabs-nav li.active {
         font-size: 25px;
         margin-bottom: 20px;
     }
+    .blockImgCour iframe {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover;
+    }
     .head-ontwikkeladvies {
-        padding: 60px 0;
+        padding: 30px 0;
     }
     .blockImgontwikkeladvies {
         width: 80%;
@@ -9319,9 +9683,6 @@ ul#tabs-nav li.active {
     #search-button2 {
         display: none;
     }
-    .swiper-slide4 {
-        width: 295px !important;
-    }
     .blockgroup7 {
         flex-wrap: wrap;
         padding-bottom: 1px;
@@ -9336,9 +9697,6 @@ ul#tabs-nav li.active {
     .iconeTextKraa {
         display: flex;
         margin-bottom: 3px;
-    }
-    .group8 {
-        flex-wrap: wrap;
     }
     .cardOverviewCours {
         background: white;
@@ -10017,7 +10375,7 @@ ul#tabs-nav li.active {
         display: none;
     }
     .swiper-slide4 {
-        width: 306px !important;
+        width: 85% !important;
         margin-right: 15px !important;
     }
     .blockgroup7 {
@@ -10034,9 +10392,6 @@ ul#tabs-nav li.active {
     .iconeTextKraa {
         display: flex;
         margin-bottom: 3px;
-    }
-    .group8 {
-        flex-wrap: wrap;
     }
     .imgCoursProd {
         margin-bottom: 8px;
@@ -10300,9 +10655,12 @@ ul#tabs-nav li.active {
     .detailContentCandidat .fistBlock {
         background: white;
         width: 100%;
-        padding-right: 20px;
-        padding-top: 30px;
-        padding-left: 20px;
+        padding-right: 0;
+        padding-top: 10px;
+        padding-left: 0;
+    }
+    .profilUserP .detailContentCandidat {
+        padding-left: 15px;
     }
     .skills{
         height: 161px;
@@ -10342,19 +10700,30 @@ ul#tabs-nav li.active {
         width: 100%;
         justify-content: center;
         flex-wrap: wrap;
+        margin-left: 0;
     }
     .contentMap{
         width: 100%;
         margin-left: 0;
-        margin-right: -89px;
-        text-align: center;
+        margin-right: 0px;
         justify-content: center;
+        margin-bottom: 12px;
     }
     .elementInputImgSetting .modal {
-        left: -2px;
+        left: 0;
+        right: 0;
+        width: 95%;
+        margin: 0 auto;
+        top: 35px;
+    }
+    .elementInputImgSetting .modal .modal-header {
+        margin-top: 5px;
+    }
+    .elementInputImgSetting .modal .group-input-settings {
+        margin: 0px -10px 20px -12px !important;
     }
     .contentMap:last-child{
-        margin-right: -89px;
+        margin-right: 0px;
     }
     #show-more1{
         display: block;
@@ -11292,20 +11661,87 @@ ul#tabs-nav li.active {
     .groupBtnData{
         width: 100%;
     }
-
+    .colModifAgenda{
+        padding-right: 0 !important;
+    }
+    #ModalNotification .modal-header {
+        padding: 0 10px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
 
 
 }
 .radius-custom  {
     border-radius: 10px !important;
 }
-
+.acf-icon.-pencil:before {
+    color: white !important;
+}
+.acf-icon.-cancel:before {
+    color: white !important;
+}
+.headCardNotification{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    margin-top: -1px;
+}
+.cardNotification .headCardNotification h2 {
+    margin-bottom: 0;
+}
+.headCardNotification .btnOnderwerp2 {
+    background: #023356!important;
+    color: white!important;
+    border-radius: 12px!important;
+    font-size: 14px!important;
+    min-width: 90px;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 7px 15px!important;
+}
 @media all and (max-width: 640px) {
     #field_5_3 {
         padding-top: 100px;
     }
     .customSocialMedia .nsl-button-svg-container {
         width: 85px !important;
+    }
+    .blockAuthorMobile{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        margin-top: 30px;
+    }
+    .blockAuthorMobile .imgAuthorBlock {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        border: 1px solid #0000002b;
+        padding: 3px;
+    }
+    .blockAuthorMobile .imgAuthorBlock img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .blockAuthorMobile .NameAuthor {
+        color: rgb(46 46 46);
+        font-size: 16px;
+        margin-bottom: 2px;
+        margin-left: 10px;
+        font-weight: 600;
+    }
+    .FollowButton {
+        background: #47a99e;
+        color: white !important;
+        font-size: 15px;
+        padding: 5px 20px;
+        height: fit-content;
+        border-radius: 5px;
     }
 }
 @media all and (max-width: 400px) {
@@ -11320,13 +11756,14 @@ ul#tabs-nav li.active {
         margin-bottom: 20px;
     }
     .head-ontwikkeladvies {
-        padding: 60px 0;
+        padding: 30px 0;
     }
     .blockImgontwikkeladvies {
-        width: 80%;
+        width: 100%;
         margin-left: auto;
         margin-right: auto;
         margin-top: 33px;
+        margin-bottom: 30px;
     }
     .elkeVolgendeTitle {
         font-size: 24px;
@@ -11433,6 +11870,9 @@ ul#tabs-nav li.active {
     .textThBorder a .emoji{
         margin-right: 8px !important;
     }
+    .checkFilter{
+        color: #023356 !important;
+    }
 }
 
 
@@ -11447,7 +11887,7 @@ ul#tabs-nav li.active {
     }
 
     .swiper-slide4 {
-        width: 330px!important;
+        width: 85% !important;
     }
     #page {
         z-index: 99999;

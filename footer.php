@@ -21,14 +21,11 @@
                         <div class="footer-menu footer-menu--1">
                             <h4 class="footer-widget-title">Voor organisaties</h4>
                             <ul>
-                                <li><a class="" href="#">Scholing van personeel</a></li>
-                                <li> <a class="" href="#">Ons learning experience platform</a></li>
-                                <li> <a class="" href="#">Onboarding </a></li>
-                                <li> <a class="" href="#">Outplacement </a></li>
-                                <li> <a class="" href="#">Leercultuur </a></li>
-                                <li> <a class="" href="#">Financiering met Leerfonds</a></li>
-                                <li> <a class="" href="#">Cases</a></li>
-                                <li> <a class="" href="#">Contact</a></li>
+                                <li><a class="" href="/zzpers/"> Voor ZZP’ers</a></li>
+                                <li> <a class="" href="/mkb/">Voor het MKB </a></li>
+                                <li> <a class="" href="/mkb/">Voor Corporates </a></li>
+                                <li> <a class="" href="/pricing/">Pricing </a></li>
+                                <li> <a class="" href="voor-organisaties/">Maak een gratis omgeving</a></li>
                             </ul>
                         </div>
                         <!-- end /.footer-menu -->
@@ -40,13 +37,11 @@
                         <div class="footer-menu">
                             <h4 class="footer-widget-title">Voor opleiders </h4>
                             <ul>
-                                <li> <a class="" href="#">Aanmelden </a></li>
-                                <li> <a class="" href="#">Ons platform </a></li>
-                                <li> <a class="" href="#">Beheer al jouw content </a></li>
-                                <li> <a class="" href="#">Opleidingen toevoegen</a></li>
-                                <li> <a class="" href="#">E-learning toevoegen</a></li>
-                                <li> <a class="" href="#"> Cases </a></li>
-                                <li> <a class="" href="#">Contact</a></li>
+                                <li> <a class="" href="/verkopen/">Verkopen</a></li>
+                                <li> <a class="" href="/creeren/">Creëren</a></li>
+                                <li> <a class="" href="/uitleggen/">Uitleggen</a></li>
+                                <li> <a class="" href="/opleiders/">Alle opleiders </a></li>
+                                <li> <a class="" href="/voor-teachers/">Maak een gratis omgeving </a></li>
                             </ul>
                         </div>
                     </div>
@@ -57,12 +52,11 @@
                         <div class="footer-menu no-padding">
                             <h4 class="footer-widget-title">Over ons</h4>
                             <ul>
-                                <li> <a class="" href="#"> LIFT lid worden / leerfonds</a></li>
-                                <li> <a class="" href="#">Onze onderwerpen </a></li>
-                                <li> <a class="" href="#">Onze opleiders </a></li>
-                                <li> <a class="" href="#">Onze experts</a></li>
-                                <li> <a class="" href="#">Wie zijn wij</a></li>
-                                <li> <a class="" href="#">Verhalen van gebruikers</a></li>
+                                <li> <a class="" href="/static-education-advice/">Wat doen we? </a></li>
+                                <li> <a class="" href="/contact/">Contact </a></li>
+                                <li> <a class="" href="/product-search/">Alle opleidingen</a></li>
+                                <li> <a class="" href="/static-education-individual/">Maak een account </a></li>
+                                <li> <a class="" href="/ontwikkeladvies/">Carriere advies</a></li>
                             </ul>
                         </div>
                     </div>
@@ -71,12 +65,13 @@
                 <div class="sousBlockFooter">
                     <div class="footer-widget">
                         <div class="footer-menu no-padding">
-                            <h4 class="footer-widget-title">Opleidingen</h4>
+                            <h4 class="footer-widget-title">Leerproducten</h4>
                             <ul>
-                                <li> <a class="" href="#">Richting een baan </a></li>
-                                <li> <a class="" href="#">Groei binnen je functie </a></li>
-                                <li> <a class="" href="#">Specifieke skills </a></li>
-                                <li> <a class="" href="#">Persoonlijke interesses </a></li>
+                                <li> <a class="" href="/baangerichte/"> Richting een baan</a></li>
+                                <li> <a class="" href="/functiegerichte/">Groei binnen je functie </a></li>
+                                <li> <a class="" href="/skill/">Specifieke skills</a></li>
+                                <li> <a class="" href="/persoonlijke/">Persoonlijke interesses</a></li>
+                                <li> <a class="" href="/onderwer/">Bekijk alle onderwerpen</a></li>
                             </ul>
                         </div>
                     </div>
@@ -88,49 +83,44 @@
             <button class="accordion">Voor organisaties</button>
             <div class="panel">
                 <ul>
-                    <li><a class="" href="#">Scholing van personeel</a></li>
-                    <li> <a class="" href="#">Ons learning experience platform</a></li>
-                    <li> <a class="" href="#">Onboarding </a></li>
-                    <li> <a class="" href="#">Outplacement </a></li>
-                    <li> <a class="" href="#">Leercultuur </a></li>
-                    <li> <a class="" href="#">Financiering met Leerfonds</a></li>
-                    <li> <a class="" href="#">Cases</a></li>
-                    <li> <a class="" href="#">Contact</a></li>
+                    <li><a class="" href="/zzpers/"> Voor ZZP’ers</a></li>
+                    <li> <a class="" href="/mkb/">Voor het MKB </a></li>
+                    <li> <a class="" href="/mkb/">Voor Corporates </a></li>
+                    <li> <a class="" href="/pricing/">Pricing </a></li>
+                    <li> <a class="" href="voor-organisaties/">Maak een gratis omgeving</a></li>
                 </ul>
             </div>
 
             <button class="accordion">Voor opleiders </button>
             <div class="panel">
                 <ul>
-                    <li> <a class="" href="#">Aanmelden </a></li>
-                    <li> <a class="" href="#">Ons platform </a></li>
-                    <li> <a class="" href="#">Beheer al jouw content </a></li>
-                    <li> <a class="" href="#">Opleidingen toevoegen</a></li>
-                    <li> <a class="" href="#">E-learning toevoegen</a></li>
-                    <li> <a class="" href="#"> Cases </a></li>
-                    <li> <a class="" href="#">Contact</a></li>
+                    <li> <a class="" href="/verkopen/">Verkopen</a></li>
+                    <li> <a class="" href="/creeren/">Creëren</a></li>
+                    <li> <a class="" href="/uitleggen/">Uitleggen</a></li>
+                    <li> <a class="" href="/opleiders/">Alle opleiders </a></li>
+                    <li> <a class="" href="/voor-teachers/">Maak een gratis omgeving </a></li>
                 </ul>
             </div>
 
             <button class="accordion">Over ons</button>
             <div class="panel">
                 <ul>
-                    <li> <a class="" href="#"> LIFT lid worden / leerfonds</a></li>
-                    <li> <a class="" href="#">Onze onderwerpen </a></li>
-                    <li> <a class="" href="#">Onze opleiders </a></li>
-                    <li> <a class="" href="#">Onze experts</a></li>
-                    <li> <a class="" href="#">Wie zijn wij</a></li>
-                    <li> <a class="" href="#">Verhalen van gebruikers</a></li>
+                    <li> <a class="" href="/static-education-advice/">Wat doen we? </a></li>
+                    <li> <a class="" href="/contact/">Contact </a></li>
+                    <li> <a class="" href="/product-search/">Alle opleidingen</a></li>
+                    <li> <a class="" href="/static-education-individual/">Maak een account </a></li>
+                    <li> <a class="" href="/ontwikkeladvies/">Carriere advies</a></li>
                 </ul>
             </div>
 
-            <button class="accordion">Opleidingen</button>
+            <button class="accordion">Leerproducten</button>
             <div class="panel">
                 <ul>
-                    <li> <a class="" href="#">Richting een baan </a></li>
-                    <li> <a class="" href="#">Groei binnen je functie </a></li>
-                    <li> <a class="" href="#">Specifieke skills </a></li>
-                    <li> <a class="" href="#">Persoonlijke interesses </a></li>
+                    <li> <a class="" href="/baangerichte/"> Richting een baan</a></li>
+                    <li> <a class="" href="/functiegerichte/">Groei binnen je functie </a></li>
+                    <li> <a class="" href="/skill/">Specifieke skills</a></li>
+                    <li> <a class="" href="/persoonlijke/">Persoonlijke interesses</a></li>
+                    <li> <a class="" href="/onderwer/">Bekijk alle onderwerpen</a></li>
                 </ul>
             </div>
             <div class="imgBlockFooter">
@@ -255,6 +245,8 @@
     var swiper = new Swiper('.swiper-container-3', {
         slidesPerView: 3.9,
         spaceBetween: 20,
+        preventClicks: true,
+        preventClicksPropagation: true,
         breakpoints: {
             780: {
                 slidesPerView: 1,
@@ -276,17 +268,23 @@
 <script>
     var swiper = new Swiper('.swiper-container', {
         slidesPerView: 'auto',
+        preventClicks: true,
+        preventClicksPropagation: true,
         spaceBetween: 30,
         pagination: {
             el: '.swiper-pagination',
             clickable: true,
         },
+        $('.swiper-container').on('touchstart', onTouchStart),
+
     });
 </script>
 
 <script>
     var swiper = new Swiper('.swipeContaine2', {
         slidesPerView: 3.9,
+        preventClicks: true,
+        preventClicksPropagation: true,
         spaceBetween: 20,
         breakpoints: {
             780: {
@@ -308,6 +306,8 @@
 <script>
     var swiper = new Swiper('.swiper-container-3', {
         slidesPerView: 3.9,
+        preventClicks: true,
+        preventClicksPropagation: true,
         spaceBetween: 20,
         breakpoints: {
             780: {
@@ -331,6 +331,8 @@
     var swiper = new Swiper('.swipeContaine2', {
         slidesPerView: 7,
         spaceBetween: 20,
+        preventClicks: true,
+        preventClicksPropagation: true,
         observer: true,
         observeParents: true,
         allowSlideNext: false,

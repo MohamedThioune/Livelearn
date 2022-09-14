@@ -170,7 +170,6 @@
 
         </div>
     </section>
-
     <section class="mb-5" style="background: #023356">
          <div class="container-fluid">
              <div class="row py-md-0 py-4 d-flex justify-content-center">
@@ -347,9 +346,9 @@
                 </div>
                 
                 <div class="col-md-3 col-10 text-center">
-                    <button type="submit" class="btn rounded-pill p-2 px-5 m-1 btn btn-outline-realblue w-100">
-                        <strong class="h5">Vraag een demo aan</strong>
-                    </button>
+                    <a href="#contact_section" type="submit" class="btn  rounded-pill p-2 px-5 m-1 btn btn-outline-realblue w-100">
+                        <strong class="h5 vraagButton">Vraag een demo aan</strong>
+                    </a>
                 </div>
                 
             </div>
@@ -430,12 +429,12 @@
                             We helpen je graag met jouw specifieke vragen omtrent talent
                             management en de toepasbaarheid hiervan binnen je organisatie.
                         </p>
-                    </div>    
+                    </div>
                     <a href="mailto:contact@livelearn.nl" class="btn btn-default rounded-pill px-5 my-2 ml-md-0 ml-2" style="background: #E3EFF4">
                         <strong class="text-dark">Email </strong>
                     </a>
-                    <a href="tel: +31621610903" class="btn btn-default rounded-pill px-5 my-2 ml-md-3" style="background: #00A89D">
-                        <strong >Bellen</strong> 
+                    <a href="tel: +31627003962" class="btn btn-default text-white rounded-pill px-5 my-2 ml-md-3" style="background: #00A89D">
+                        <strong >Bellen</strong>
                     </a>
                 </div>
             </div>
@@ -450,10 +449,19 @@
 <?php wp_footer(); ?>
 
 <!-- jQuery CDN -->
-<script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- slick Carousel CDN -->
-<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
+<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
+<script>
+    // scroll down on click button
+    $( '.vraagButton' ).on( 'click', function(e){
+        $( 'html, body' ).animate({
+            scrollTop: $("#contact_section").offset().top
+        }, '500' );
+        e.preventDefault();
+
+    });
+</script>
 
 <script type="text/javascript">
     $('.logo_slider').slick({

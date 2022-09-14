@@ -6,6 +6,8 @@
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
+
+
 <!-- Content -->
 <body>
 
@@ -85,7 +87,8 @@
 
                    <div class="input-group-course">
                        <label for="">Long description</label>
-                       <textarea name="" id="" cols="30" rows="6"></textarea>
+                          <textarea  name="" class="summernoteElement" id="summernoteEditBank"></textarea>
+
                    </div>
 
                    <div class="input-group-course">
@@ -108,14 +111,34 @@
                    </button>
 
                </form>
-
            </div>
        </div>
    </div>
 
+
+
+
 </body>
 
 <?php get_footer(); ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+    $('.summernoteElement').summernote({
+        placeholder: 'Hello stand alone ui',
+        tabsize: 2,
+        height: 195,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video']],
+            ['view', ['fullscreen', 'codeview', 'help']]
+        ]
+    });
+</script>
+
 <?php wp_footer(); ?>
 
 

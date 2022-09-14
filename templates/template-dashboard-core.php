@@ -16,6 +16,16 @@ extract($_POST);
 
 $user_data = wp_get_current_user();
 
+function RandomString(){
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randstring = '';
+    for ($i = 0; $i < 10; $i++) {
+        $rand = $characters[rand(0, strlen($characters))];
+        $randstring .= $rand;  
+    }
+    return $randstring;
+}
+
 if(empty($user_data->roles))
     header('Location:/');
 
@@ -38,17 +48,6 @@ if(isset($_POST['expert_add']) || isset($_POST['expert_add_artikel'])){
 
     header('Location:' . $path);
 }
-
-
-/**
- * Skills Passport
- */
-    else if (isset($_POST['skills_passport_add'])) {
-       var_dump($_POST);
-    }
- /**
- * Skills Passport
- */
 
 else if(isset($_POST['topic_add'])){
 
@@ -305,11 +304,26 @@ else if(isset($interest_push)){
         $meta_data = get_user_meta($user_id, $meta_key);
         if(!in_array($meta_value,$meta_data)){
             add_user_meta($user_id, $meta_key, $meta_value);
-            $message = "Succesvol toegevoegd";
+            if(isset($artikel)){
+                $path = get_permalink($artikel) . "/?message=Succesvol followed";
+                header("location: " .$path);
+            }
+            else{
+                $message = "Succesvol toegevoegd";
+                header("location: ../../dashboard/user/?message=".$message);
+            }
+            
         }else{
-            $message = "Reeds aanwezig in jouw favorieten";
+            if(isset($artikel)){
+                $path = get_permalink($artikel) . "/?message=Reeds aanwezig in jouw favorieten";
+                header("location: " .$path);
+            }
+            else{
+                $message = "Reeds aanwezig in jouw favorieten";
+                header("location: ../../dashboard/user/?message=".$message);
+            }
         }
-        header("location:../../dashboard/user/?message=".$message);
+        
         
     }
 }
@@ -326,13 +340,19 @@ else if(isset($interest_push)){
 else if(isset($delete)){
     if($meta_value != null){
         if(delete_user_meta($user_id, $meta_key, $meta_value)){
-            $message = "Met succes verwijderd";
-            if($meta_key == "topic" || $meta_key == "topic_affiliate")
-                header("location:/dashboard/user/?message=".$message);
+            if(isset($artikel)){
+                $path = get_permalink($artikel) . "/?message=Succesvol unfollowed";
+                header("location: " .$path);
+            }
             else{
-                $user_connected = get_current_user_id();
-                $content = "/dashboard/company/profile/?id=" . $user_id . '&manager='. $user_connected . "?message=" . $message; 
-                header("location:".$content);
+                $message = "Met succes verwijderd";
+                if($meta_key == "topic" || $meta_key == "topic_affiliate")
+                    header("location: /dashboard/user/?message=".$message);
+                else{
+                    $user_connected = get_current_user_id();
+                    $content = "/dashboard/company/profile/?id=" . $user_id . '&manager='. $user_connected . "?message=" . $message; 
+                    header("location: ".$content);
+                }
             }
         }
     }
@@ -483,20 +503,70 @@ else if(isset($change_password)){
     header("Location: ". $message);
 }
 else if(isset($referee_employee)){    
-    $allocution = array();
+    $allocution = get_field('allocation', $course_id);
+    $user_id = get_current_user_id();
+
+    $posts = get_post($course_id);
+    //Get categories
+    $posttags = get_the_tags();
+    if(!$posttags){
+        $category_default = get_field('categories', $course_id);
+        $category_xml = get_field('category_xml', $course_id);
+    }
+    $read_category = array();
+    $onderwerp_feedback = "";
+    if(!empty($category_default))
+        foreach($category_default as $item)
+            if($item)
+                if(!in_array($item['value'],$read_category)){
+                    array_push($read_category,$item['value']);
+                    $onderwerp_feedback .= $item['value'] . ';';
+                }
+                
+    else if(!empty($category_xml))
+        foreach($category_xml as $item)
+            if($item)
+                if(!in_array($item['value'],$read_category)){
+                    array_push($read_category,$item['value']);
+                    $onderwerp_feedback .= $item['value'] . ';';
+                }
+    //Create feedback
+    $manager = get_user_by('id', get_current_user_id());
+    $title_feedback = $manager->display_name . ' share you a course.';
+    $type = 'Gedeelde cursus';
+
+    $beschrijving_feedback = '<p>' . $manager->display_name . ' heeft de cursus met u gedeeld : <br>
+    <a href="' . get_permalink($course_id) . '">' . $posts->post_title . '</a><br><br>
+    Veel plezier bij het lezen !';
+
     
     if(!empty($selected_members))
-        foreach($selected_members as $expert){
+        foreach($selected_members as $expert)
             if(!in_array($expert, $allocution)){
                 array_push($allocution, $expert);
                 $posts = get_field('kennis_video', 'user_' . $expert);
+               
+                //Data to create the feedback
+                $post_data = array(
+                    'post_title' => $title_feedback,
+                    'post_author' => $expert,
+                    'post_type' => 'feedback',
+                    'post_status' => 'publish'
+                    );
+
+                //Create
+                $post_id = wp_insert_post($post_data);
+                //Add further informations for feedback
+                update_field('onderwerp_feedback', $onderwerp_feedback, $post_id);
+                update_field('manager_feedback', $manager, $post_id);
+                update_field('type_feedback', $type, $post_id);
+                update_field('beschrijving_feedback', nl2br($beschrijving_feedback), $post_id);
+
                 if(!empty($posts))
                     array_push($posts, get_post($course_id));
-                else 
-                    $posts = get_post($course_id);
+
                 update_field('kennis_video', $posts, 'user_' . $expert);
             }
-        }
 
     //Adding new subtopics on course
     update_field('allocation', $allocution, $course_id);
@@ -507,7 +577,6 @@ else if(isset($referee_employee)){
         $message = get_permalink($course_id) . '/?message=Allocution successfully'; 
 
     header("Location: ". $message);
-
 }
 
 else if(isset($databank)){
@@ -518,8 +587,12 @@ else if(isset($databank)){
         foreach($tags as $tag)
             $onderwerpen .= $tag .',';
 
+    //GET COURSE ID 
+    $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
+    $course = $wpdb->get_results( $sql )[0];
+    
     //Date
-    if(isset($complete)){
+    if($complete == 'all'){
         $number_items = count($start_date);
         $data_locaties = array();
         $row = "";
@@ -547,32 +620,98 @@ else if(isset($databank)){
 
         $data_locaties_xml = join('~', $data_locaties);
     }
+    $contributors = join(',', $contributors);
     
-    if(isset($complete)) 
-        $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'long_description' => $long_description, 'for_who' => $for_who, 'agenda' => $agenda, 'results' => $results, 'prijs' => $prijs, 'prijs_vat' => $prijs_vat, 'onderwerpen' => $onderwerpen, 'date_multiple' => $data_locaties_xml, 'level' => $level, 'language' => $language, 'author_id' => $author_id, 'company_id' => $company_id ]; // NULL value.
-    else 
-        $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'prijs' => $prijs, 'onderwerpen' => $onderwerpen, 'author_id' => $author_id, 'company_id' => $company_id ]; // NULL value.
-    
+    if($complete == "all") 
+        $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'long_description' => $long_description, 'for_who' => $for_who, 'agenda' => $agenda, 'results' => $results, 'prijs' => $prijs, 'prijs_vat' => $prijs_vat, 'onderwerpen' => $onderwerpen, 'date_multiple' => $data_locaties_xml, 'level' => $level, 'language' => $language, 'author_id' => $author_id, 'company_id' => $company_id, 'contributors' => $contributors ]; // NULL value.
+    else if($complete == "quick")
+        $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'prijs' => $prijs, 'onderwerpen' => $onderwerpen, 'author_id' => $author_id, 'company_id' => $company_id , 'contributors' => $contributors ]; // NULL value.
+    else if($complete == "expert"){
+
+        if($first_name == null)
+            $first_name = "ANONYM";
+        
+        if($last_name == null)
+            $last_name = "ANONYM";
+
+
+        $login = RandomString();
+        $password = RandomString();
+
+        $userdata = array(
+            'user_pass' => $password,
+            'user_login' => $login,
+            'user_email' => $email,
+            'user_url' => 'https://livelearn.nl/inloggen/',
+            'display_name' => $first_name,
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'role' => 'author'
+        );
+
+        $user_id = wp_insert_user(wp_slash($userdata));
+
+        if(is_wp_error($user_id)){
+            $danger = $user_id->get_error_message();
+            header("Location: ". $danger);
+        }
+        else{ 
+            $subject = 'Je LiveLearn inschrijving is binnen! ✨';
+            $body = "
+            Bedankt voor je inschrijving<br>
+            <h1>Hello " . $first_name  . "</h1>,<br> 
+            Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br>
+            U hebt een cursus toegewezen gekregen en zult die zien zodra de beheerders ze hebben aanvaard.<br>
+            Log in om toegang te krijgen.<br><br>
+            <h4>Inloggen:</h4><br>
+            <h6><a href='https://livelearn.nl/inloggen/'> Connexion </a></h6>
+            ";
+        
+            $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+            wp_mail($email, $subject, $body, $headers, array( '' )) ; 
+        }
+
+        $data = [ 'author_id' => $user_id ]; // NULL value.
+    }
+    else if($complete  == "company"){
+        $args = array(
+            'post_type'   => 'company',
+            'post_author' => 3,
+            'post_status' => 'publish',
+            'post_title'  => $company_title
+        );
+        
+        $id_company = wp_insert_post($args);
+        $companie = get_post($id_company);
+        update_field('company_address', $company_adress, $id_company);
+        update_field('company_place', $company_place, $id_company);
+        update_field('company_country', $company_country, $id_company);
+
+        update_field('company', $companie, 'user_'. $course->author_id);
+
+        /*
+        Send email to user affected to these new company
+        */
+
+        $data = [ 'company_id' => $id_company ]; // NULL value.
+    }
+
     $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 
     $updated = $wpdb->update( $table, $data, $where );
  
-    if($updated === false){
-        if(isset($complete))
-            $message = "/edit-databank?id=" . $id . "&message=Something went wrong !"; 
+    if($updated === false)
+        if($complete == "all" || $complete == "quick") 
+            $message = "/edit-databank?id=" . $id . "&message=" . $wpdb->last_error;
         else
             $message = "/databank/?message=" . $wpdb->last_error;
-        //header("Location: ". $message);
-        //return false; 
-    }else{ 
-        if(isset($complete))
+    else 
+        if($complete == "all" || $complete == "quick") 
             $message = "/edit-databank?id=" . $id . "&message=Updated successfully !"; 
-        else 
+        else
             $message = "/databank/?message=Updated successfully !"; 
-        //header("Location: ". $message);
-        //return true;
-    }
-    
+
+    header("Location: ". $message);
 }
 
 else if(isset($date_add)){
@@ -622,12 +761,9 @@ else if(isset($define_budget)){
 
 <?php get_header();?>
 
-
-
 <?php
 
 global $post;
-
 
 $parents = get_post_ancestors( $post->ID );
 

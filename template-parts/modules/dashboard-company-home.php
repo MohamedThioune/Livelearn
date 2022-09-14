@@ -36,8 +36,7 @@
                         <img src="<?php echo get_stylesheet_directory_uri() ?>/img/LiveLearn_leerdatabank.png" alt="">
                     </div>
                 </a>
-                <a href="#" class="cardCoursManager">
-                    <small>Coming soon!</small>
+                <a href="/dashboard/company/leerbudgetten" class="cardCoursManager">
                     <p class="contentText">Overzicht<br>
                         <b>Leerbudget</b>
                     </p>
@@ -70,12 +69,12 @@
                         <img src="<?php echo get_stylesheet_directory_uri() ?>/img/Image27.png" alt="">
                     </div>
                 </a>
-                <a href="/dashboard/company/allocate/" class="cardCoursManager">
-                    <p class="contentText">De<br>
-                        <b>Organisatie</b>
+                <a href="/dashboard/company/grant" type="submit" style="border:none; background:white;" class="cardCours">
+                    <p class="contentText">Selecteer <br>
+                        <b>Je managers</b>
                     </p>
-                    <div class="blockImgcardCoursManagerGlobal">
-                        <img src="<?php echo get_stylesheet_directory_uri() ?>/img/Image33.png" alt="">
+                    <div class="blockImgCardCoursGlobal">
+                        <img src="<?php echo get_stylesheet_directory_uri() ?>/img/chrono.png" alt="">
                     </div>
                 </a>
             </div>
@@ -83,13 +82,13 @@
             <div class="allBlockWorjforce">
                 <p class="workforceTitle">De workforce</p>
                 <div class="groupCard">
-                    <a href="#" class="cardCours">
+    <!--                <a href="#" class="cardCours">
                         <small>Coming soon!</small>
                         <p class="contentText">Werknemer<br>
                             <b>Instroom</b>
                         </p>
                         <div class="blockImgCardCoursGlobal">
-                            <img src="<?php echo get_stylesheet_directory_uri() ?>/img/image-43.png" alt="">
+                            <img src="<?php /*echo get_stylesheet_directory_uri() */?>/img/image-43.png" alt="">
                         </div>
                     </a>
                     <a href="#" class="cardCours">
@@ -98,7 +97,7 @@
                             <b>Doorstroom</b>
                         </p>
                         <div class="blockImgCardCoursGlobal">
-                            <img src="<?php echo get_stylesheet_directory_uri() ?>/img/Image-44.png" alt="">
+                            <img src="<?php /*echo get_stylesheet_directory_uri() */?>/img/Image-44.png" alt="">
                         </div>
                     </a>
                     <a href="#" class="cardCours">
@@ -107,19 +106,19 @@
                             <b>Uitstroom</b>
                         </p>
                         <div class="blockImgCardCoursGlobal">
-                            <img src="<?php echo get_stylesheet_directory_uri() ?>/img/Image-45.png" alt="">
+                            <img src="<?php /*echo get_stylesheet_directory_uri() */?>/img/Image-45.png" alt="">
                         </div>
-                    </a>
+                    </a>-->
                     
-                   <?php if( in_array('administrator', $user_connected->roles) || in_array('manager', $user_connected->roles) ) { ?>
-                    <a href="/dashboard/company/grant" type="submit" style="border:none; background:white;" class="cardCours">
-                        <p class="contentText">Selecteer <br>
-                            <b>Je managers</b>
-                        </p>
-                        <div class="blockImgCardCoursGlobal">
-                            <img src="<?php echo get_stylesheet_directory_uri() ?>/img/chrono.png" alt="">
-                        </div>
-                    </a> 
+                   <?php if( in_array('administrator', $user_connected->roles) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles)) { ?>
+                       <a href="/dashboard/company/allocate/" class="cardCoursManager">
+                           <p class="contentText">De<br>
+                               <b>Organisatie</b>
+                           </p>
+                           <div class="blockImgcardCoursManagerGlobal">
+                               <img src="<?php echo get_stylesheet_directory_uri() ?>/img/Image33.png" alt="">
+                           </div>
+                       </a>
                     <?php } ?>
                 </div>
             </div>
@@ -129,7 +128,6 @@
 </div>
 
 
-</html>
 
 
 

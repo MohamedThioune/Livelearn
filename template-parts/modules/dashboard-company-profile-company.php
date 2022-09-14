@@ -29,30 +29,27 @@
             </button>
         </div>
     </div>
-    <div class="row d-flex justify-content-center">
-        <div class="col-md-7 col-10">
+    <div class="row ">
+        <div class="col-md-12">
           
             <!-- Tabs navs -->
-            <ul class="nav nav-tabs nav-fill mb-3 bg-white rounded" id="ex1" role="tablist">
+            <ul class="headTabsCompany" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active rounded mx-0 border-0" id="ex2-tab-1" data-mdb-toggle="tab" href="#ex2-tabs-1"
-                        role="tab" aria-controls="ex2-tabs-1" aria-selected="true">
-                        
-                        <h6> Algemene bedrijfsinformatie  </h6>
-                    </a>
+                    <button class="btn btnCustomTabs btnactive" type="button" id="tab1">
+                        Algemene bedrijfsinformatie
+                    </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link rounded mx-0 border-0 bg-white" id="ex2-tab-2" data-mdb-toggle="tab" href="#ex2-tabs-2"
-                        role="tab" aria-controls="ex2-tabs-2" aria-selected="false"> 
-                        <h6>Financiêle informatie  </h6> 
-                    </a>    
+                    <button class="btnCustomTabs btn" type="button" id="tab2">
+                        Financiêle informatie
+                    </button>
                 </li>
             </ul>
             <!-- Tabs navs -->
 
             <!-- Tabs content -->
-            <div class="tab-content" id="ex2-content">
-                <div class="tab-pane fade show active" id="ex2-tabs-1" role="tabpanel" aria-labelledby="ex2-tab-1">
+            <div class="tabContentCompany">
+                <div class="tab-pane show"  id="tab1Content" class="tab">
                     <?php
                         $current_user = wp_get_current_user();
                         $company = get_field('company', 'user_'.$current_user->ID);
@@ -69,7 +66,7 @@
                         }
                     ?>
                 </div>
-                <div class="tab-pane fade" id="ex2-tabs-2" role="tabpanel" aria-labelledby="ex2-tab-2">
+                <div class="tab-pane"  id="tab2Content" class="tab">
                     <div class="bg-white mt-5 p-2 radius-custom mb-4" id="div_table" style="display:block" >  
                         <!-- <div class="h5 pt-2"><strong>Buget Livelearn team</strong></div> -->
                         <div class="d-flex justify-content-between w-100 border-bottom border-5 pb-2">
@@ -196,14 +193,25 @@
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
         <div class="col-md-5"></div>
     </div>
 </div>
 
 <!-- MDB -->
-<script
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.js"
-></script>
+<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.js"></script>-->
+<script>
+    $("#tab2").click(function() {
+        $("#tab2").addClass('btnactive') ;
+        $("#tab1").removeClass('btnactive') ;
+        $("#tab2Content").show();
+        $("#tab1Content").hide();
+    });
+    $("#tab1").click(function() {
+        $("#tab1").addClass('btnactive') ;
+        $("#tab2").removeClass('btnactive') ;
+        $("#tab1Content").show();
+        $("#tab2Content").hide();
+    });
+</script>

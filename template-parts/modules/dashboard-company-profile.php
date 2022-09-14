@@ -22,6 +22,9 @@ if(!isset($id_user))
 
 $user = get_users(array('include'=> $id_user))[0]->data;
 
+//CONNECTED USER INFORMATIONS
+$user_connected = wp_get_current_user();
+
 $image = get_field('profile_img',  'user_' . $user->ID);
 if(!$image)
     $image = get_stylesheet_directory_uri() . '/img/Ellipse17.png';
@@ -30,8 +33,21 @@ $company = get_field('company',  'user_' . $user->ID);
 $function = get_field('role',  'user_' . $user->ID);
 $experience = get_field('experience',  'user_' . $user->ID);
 $country = get_field('country',  'user_' . $user->ID);
-$date_born = explode ('/', get_field('age',  'user_' . $user->ID))[2];
-$age = date('Y') - intval($date_born);
+
+$date_born = get_field('date_born',  'user_' . $user->ID);
+if(!$date_born)
+    $date_birth =  "No birth";
+else{
+    //explode the date to get month, day and year
+    $birthDate = explode("/", $date_born);
+    //get age from date or birthdate
+    $age = (date("md", date("U", mktime(0, 0, 0, $birthDate[1], $birthDate[0], $birthDate[2]))) > date("md")
+        ? ((date("Y") - $birthDate[2]) - 1)
+        : (date("Y") - $birthDate[2]));
+
+    $age .= ' Years';
+} 
+
 $gender = get_field('gender',  'user_' . $user->ID);
 $education_level = get_field('education_level',  'user_' . $user->ID);
 $languages = get_field('language',  'user_' . $user->ID);
@@ -81,20 +97,26 @@ $experts = get_user_meta($user->ID, 'expert');
 <div class="theme-content">
     <div class="theme-side-menu">
         <?php 
-            if(isset($superior)){
-                include_once('dashboard-menu-company.php');
-            }else{
+            if(isset($_GET['manager']))
+                if(isset($superior) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles) || in_array('administrator', $user_connected->roles) )
+                    include_once('dashboard-menu-company.php');
+                else
+                    include_once('dashboard-menu-user.php');  
+            else
                 include_once('dashboard-menu-user.php');
-            }
+                
         ?>
     </div>
     <div class="theme-learning">
         <?php 
-            if(isset($superior)){
-                include_once('dashboard-company-profile-home.php');
-            }else{
+            if(isset($_GET['manager']))
+                if(isset($superior) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles) || in_array('administrator', $user_connected->roles) )
+                    include_once('dashboard-company-profile-home.php');
+                else
+                    include_once('dashboard-user-profile-home.php');
+            else
                 include_once('dashboard-user-profile-home.php');
-            }
+                
         ?>
     </div>
 </div>

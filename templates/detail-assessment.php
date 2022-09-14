@@ -17,9 +17,9 @@ function timeToSeconds(string $time): int
     $assessment_id=$_GET['assessment_id'];
     $assessment=get_post ($assessment_id);
     $assessment_array=array(
-        'id'=>$assessment_id,
-        'title'=>$assessment->post_title,
-        'description_assessment'=>get_field('description_assessment',$assessment_id),
+        'id'=> $assessment_id,
+        'title'=> $assessment->post_title,
+        'description_assessment'=> get_field('description_assessment',$assessment_id),
         'how_it_works' => get_field('how_it_works', $assessment_id),
         'difficulty_assessment' => get_field('difficulty_assessment', $assessment_id),
         'image_assessment' => get_field('image_assessement', $assessment_id)['url'],

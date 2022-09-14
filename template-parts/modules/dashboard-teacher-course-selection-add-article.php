@@ -42,19 +42,27 @@
             <p class="courseToevoegenText">Course toevoegen</p>
             <div class="contentBlockRight">
                 <a href="/dashboard/teacher/course-selection/?func=add-article<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&edit'; ?>" class="contentBlockCourse">
-                    <div class="circleIndicator  passEtape2"></div>
+                    <div class="circleIndicator  passEtape2">
+                        <i class="fa fa-info"></i>
+                    </div>
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>
                 <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=2" class="contentBlockCourse">
-                    <div class="circleIndicator "></div>
-                    <p class="textOpleidRight">Article Itself</p>
+                    <div class="circleIndicator ">
+                        <i class="fa fa-font"></i>
+                    </div>
+                    <p class="textOpleidRight">Schrijf je artikel</p>
                 </a>
                 <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=3" class="contentBlockCourse">
-                    <div class="circleIndicator "></div>
+                    <div class="circleIndicator ">
+                        <i class="fa fa-tag" aria-hidden="true"></i>
+                    </div>
                     <p class="textOpleidRight">Tags</p>
                 </a>
                 <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=4" class="contentBlockCourse">
-                    <div class="circleIndicator "></div>
+                    <div class="circleIndicator ">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                    </div>
                     <p class="textOpleidRight">Experts</p>
                 </a>
             </div>

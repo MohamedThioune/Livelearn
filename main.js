@@ -1,5 +1,5 @@
 jQuery(function($){
-    
+
     //variable for offline courses date input
     $('.block2evens').each(function(){
         console.log('enting for reservations done');
@@ -15,7 +15,7 @@ jQuery(function($){
         });
     });
 
-    
+
     //header on scroll fix
     var height = ($('nav.navbar').css('height'));
     $('body').css('padding-top', height)
@@ -34,7 +34,6 @@ jQuery(function($){
         $(".step5SkillsPasspoort").hide();
         $(".step2SkillsPasspoort").show();
         $('#Vakgebied').addClass('colorStep');
-
     });
     $("#btnStep2SkillsPasspoort").click(function() {
         $(".step1SkillsPasspoort").hide();
@@ -43,7 +42,6 @@ jQuery(function($){
         $(".step4SkillsPasspoort").hide();
         $(".step3SkillsPasspoort").show();
         $('#Locatie').addClass('colorStep');
-
     });
     $("#btnStep3SkillsPasspoort").click(function() {
         $(".step1SkillsPasspoort").hide();
@@ -71,7 +69,19 @@ jQuery(function($){
         $('#Finish').addClass('colorStep');
     });
 
-
+    $("#btnSkip").click(function() {
+        $(".step1SkillsPasspoort").hide();
+        $(".step2SkillsPasspoort").hide();
+        $(".step3SkillsPasspoort").hide();
+        $(".step4SkillsPasspoort").hide();
+        $(".step5SkillsPasspoort").hide();
+        $(".step6SkillsPasspoort").show();
+        $('#Finish').addClass('colorStep');
+        $('#Generatie').addClass('colorStep');
+        $('#Leervorm').addClass('colorStep');
+        $('#Locatie').addClass('colorStep');
+        $('#Vakgebied').addClass('colorStep');
+    });
 
 
     $("#btnTerug1SkillsPasspoort").click(function() {
@@ -100,8 +110,8 @@ jQuery(function($){
         $('#Finish').removeClass('colorStep');
     });
 
-// clone section dashboard course step 3
-   /* $('.wrapperClone').on('click', '.remove', function() {
+    // clone section dashboard course step 3
+    /* $('.wrapperClone').on('click', '.remove', function() {
         $('.remove').closest('.wrapperClone').find('.elementClone').not(':first').last().remove();
 
     });
@@ -109,7 +119,20 @@ jQuery(function($){
         $('.clone').closest('.wrapperClone').find('.elementClone').first().clone().appendTo('.results');
     });*/
 
+    // for tabs company
 
+    $("#tab2").click(function() {
+        $("#tab2").addClass('btnactive') ;
+        $("#tab1").removeClass('btnactive') ;
+        $("#tab2Content").show();
+        $("#tab1Content").hide();
+    });
+    $("#tab1").click(function() {
+        $("#tab1").addClass('btnactive') ;
+        $("#tab2").removeClass('btnactive') ;
+        $("#tab1Content").show();
+        $("#tab2Content").hide();
+    });
 
     /* Variables */
     var row = $(".attr");
@@ -148,10 +171,15 @@ jQuery(function($){
 
 
 
+    //close login popup
+    $('.modal button.close').on('click', function(e){
+        e.preventDefault();
+        $(this).closest('.modal').removeClass('show');
+        console.log('close popup');
+    })
 
 
-
-// clone section dashboard course step 3
+    // clone section dashboard course step 3
 
     //variable for offline courses date input
     $('.block2evens').each(function(){
@@ -210,6 +238,15 @@ jQuery(function($){
         $("#croieProfil").hide();
         $(".croie").toggle();
     });
+    $(".btnRegistrerenInloggen").click(function() {
+        $(".headSousMobilePrincipale").hide();
+        $(".burgerElement").show();
+        $("#croieSearch").hide();
+        $("#croieProfil").hide();
+        $(".croie").toggle();
+    });
+
+
 
     $("#richting-bineen").click(function() {
         $(".firstContentHeadSousMobile").hide();
@@ -260,11 +297,20 @@ jQuery(function($){
         $("#voorOpleidersModal").hide();
         $("#OpleidingenModal").toggle();
     });
+
     $(".activeModalHeader").click(function() {
         $("#voorOrganisatiModal").hide();
         $("#voorOpleidersModal").hide();
         $("#OpleidingenModal").hide();
         $(".activeModalHeader").hide();
+    });
+
+    //Filter bar on category page
+    $(".filterBlockMobil").click(function() {
+        $(".sousProductTest").show();
+    });
+    $("#filterHideMobile").click(function(){
+        $(".sousProductTest").hide();
     });
 
 
@@ -320,9 +366,9 @@ jQuery(function($){
     // Show the first tab and hide the rest
     $('#tabs-nav li:first-child').addClass('active');
     $('.tab-content').hide();
-    $('.tab-content:first').show();
+    $('.tab-content:first-child').show();
 
-// Click function
+    // Click function
     $('#tabs-nav li').click(function(){
         $('#tabs-nav li').removeClass('active');
         $(this).addClass('active');
@@ -352,7 +398,7 @@ jQuery(function($){
         let cl =$(this).attr('class').split(' ')[3];
         hidden=($(".cb_topics_bangricht_"+cl).attr('hidden'));
         $(".cb_topics_bangricht_"+cl).attr('hidden', !hidden);
-        
+
     });
 
     $(".btnFunctiegericht").click(function() {
@@ -391,7 +437,7 @@ jQuery(function($){
         $(".blockSkills").hide();
     });
 
-    
+
 
     // Pour assessments  backend
     $("#btnStratModal1").click(function() {
@@ -399,7 +445,7 @@ jQuery(function($){
         $(".contentAsessment").hide();
 
     });
-   
+
     $("#btnStart2").click(function() {
         $("#step1OverviewAssessmentBackend").hide();
         $("#step2OverviewAssessmentBackend").show();
@@ -428,7 +474,7 @@ jQuery(function($){
 
 
 
-//POur inuput recherche coté responsivité
+    //POur inuput recherche coté responsivité
     $("#searchIcone").click(function() {
         $("#searchIcone").hide();
         $("#burgerCroie").hide();
@@ -538,10 +584,10 @@ jQuery(function($){
         $( ".I-feddback" ).appendTo( document.body );
     }
 
-    $( "div" ).click(function() {
-        $(".FeedbackInput").hide();
-        $("I-feddback").Show();
-    });
+    //    $( "div" ).click(function() {
+    //        $(".FeedbackInput").hide();
+    //        $("I-feddback").Show();
+    //    });
 
 
     // début pour show more partie user profil passport
@@ -730,14 +776,13 @@ jQuery(function($){
 
     });
 
-    
     function myFunction() {
         document.getElementById("autocomplete").classList.toggle("show");
     }
 
 
 
-   
+
     $('#test').click(function() {
         //   if (!$(this.target).is('#popUpForm')) {
         //     $(".modalDialog").hide();
@@ -745,6 +790,5 @@ jQuery(function($){
 
         alert("testing close");
     });
-   
 
 });

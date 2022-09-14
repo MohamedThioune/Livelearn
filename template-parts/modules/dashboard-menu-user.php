@@ -2,6 +2,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" integrity="sha512-q3eWabyZPc1XTCmF+8/LuE1ozpg5xxn7iO89yfSOd5/oKvyqLngoNGsx8jq92Y8eXJ/IRxQbEC+FGSYxtk2oiw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <?php
+global $wp;
+
+$url = $wp->request;
+
+$option_menu = explode('/', $url);
 
 if(!isset($_GET['id']))
     $user = get_users(array('include'=> get_current_user_id()))[0]->data;   
@@ -23,6 +28,12 @@ $topics_internal = get_user_meta($user->ID,'topic_affiliate');
 $topics_external = get_user_meta($user->ID,'topic');
 $experts = get_user_meta($user->ID, 'expert');
 
+$user_name_display = "";
+if(isset($user->first_name) && isset($user->last_name)) 
+    $user_name_display = $user->first_name . '' . $user->last_name; 
+else 
+    $user_name_display = $user->display_name;
+
 /*
 * * End  
 */
@@ -36,25 +47,34 @@ style="overflow-x: hidden !important;">
         <li class="elementTextDashboard">
             <a href="/dashboard/company/profile/" class="d-flex userdash">
                 <div class="iconeElement"> <img src="<?php echo $image ?>" alt="profile photo"> </div>
-                <p class="textLiDashboard"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . '' . $user->last_name; else echo $user->display_name; ?></p>
+                <?php
+                if($option_menu[2] == 'profile') echo '<p class="textLiDashboard"><b>' . $user_name_display .  '</b></p>'; else echo  '<p class="textLiDashboard">' . $user_name_display .  '</p>';
+                ?>
             </a>
         </li>
         <li class="elementTextDashboard">
             <a href="/dashboard/user/" class="d-flex">
                 <div class="iconeElement"><img src="<?php echo get_stylesheet_directory_uri();?>/img/dashb.png"></div>
-                <p class="textLiDashboard">Mijn dashboard</p>
+                <?php
+                if(!isset($option_menu[2])) echo '<p class="textLiDashboard"><b>Mijn dashboard</b></p>'; else echo  '<p class="textLiDashboard">Mijn dashboard</p>';
+                ?>
+               
             </a>
         </li>
         <li class="elementTextDashboard">
             <a href="/dashboard/user/activity" class="d-flex">
                 <div class="iconeElement"><img src="<?php echo get_stylesheet_directory_uri();?>/img/Statistieken.png"></div>
-                <p class="textLiDashboard">Mijn Activiteiten</p>
+                <?php
+                if($option_menu[2] == 'activity') echo '<p class="textLiDashboard"><b>Mijn Activiteiten</b></p>'; else echo  '<p class="textLiDashboard">Mijn Activiteiten</p>';
+                ?>
             </a>
         </li>
         <li class="elementTextDashboard">
             <a href="/dashboard/user/assessment" class="d-flex">
                 <div class="iconeElement"><img class="iconAssesment1" src="<?php echo get_stylesheet_directory_uri();?>/img/assessment.png" alt=""></div>
-                <p class="textLiDashboard">Assessments</p>
+                <?php
+                if($option_menu[2] == 'assessment') echo '<p class="textLiDashboard"><b>Assessments</b></p>'; else echo  '<p class="textLiDashboard">Assessments</p>';
+                ?>
             </a>
         </li>
         <p class="textOnder">ONDERWERPEN <span> <a href="/onderwer"> Voeg toe </a></span></p>

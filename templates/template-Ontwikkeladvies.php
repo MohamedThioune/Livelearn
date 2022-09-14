@@ -8,96 +8,94 @@
 
 <div>
 
-
-        <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
-        <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-            style="position: absolute;height: 150% !important; overflow-y:hidden !important;">
-            <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
-                box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
-
-                <div class="modal-content">
-
-                    <div class="modal-header border-bottom-0">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body  px-md-4 px-0">
-                        <div class="mb-4">
-                            <div class="text-center">
-                                <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
-                            </div>  
-                            <h3 class="text-center my-2">Sign Up</h3>
-                            <div class="text-center">
-                                <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign in</a></p>
-                            </div>
-                        </div>  
-
-
-                        <?php
-                            echo (do_shortcode('[user_registration_form id="59"]'));
-                        ?>
-
-                        <div class="text-center">
-                            <p>Al een account? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                    data-toggle="modal" data-target="#exampleModalCenter">Log-in</a></p>
-                        </div>
-
-                    </div>
-                </div>
-            
-            </div>
-        </div>
-        <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
-
-        <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
-        <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-            style="position: absolute;overflow-y:hidden !important;height: 110%; ">
-            <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+    <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
+    <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="position: absolute;height: 150% !important; overflow-y:hidden !important;">
+        <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
             box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
 
-                <div class="modal-content">
-                    <div class="modal-header border-bottom-0">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+            <div class="modal-content">
 
-                    <div class="modal-body  px-md-5 px-4">
-                        <div class="mb-4">
-                            <div class="text-center">
-                                <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
-                            </div>
-                            <h3 class="text-center my-2">Sign In</h3>
-                            <div class="text-center">
-                                <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                data-toggle="modal" data-target="#SignInWithEmail">&nbsp; Sign Up</a></p>
-                            </div>
-                        </div>
-
-                        <?php
-                        wp_login_form([
-                            'redirect' => $url,
-                            'remember' => false,
-                            'label_username' => 'Wat is je e-mailadres?',
-                            'placeholder_email' => 'E-mailadress',
-                            'label_password' => 'Wat is je wachtwoord?'
-                        ]);
-                        ?>
-                        <div class="text-center">
-                            <p>Nog geen account?  <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                data-toggle="modal" data-target="#SignInWithEmail">Meld je aan</a></p>
-                        </div>
-                    </div>
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
 
+                <div class="modal-body  px-md-4 px-0">
+                    <div class="mb-4">
+                        <div class="text-center">
+                            <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                        </div>  
+                        <h3 class="text-center my-2">Sign Up</h3>
+                        <div class="text-center">
+                            <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                            data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign in</a></p>
+                        </div>
+                    </div>  
 
+
+                    <?php
+                        echo (do_shortcode('[user_registration_form id="59"]'));
+                    ?>
+
+                    <div class="text-center">
+                        <p>Al een account? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                                data-toggle="modal" data-target="#exampleModalCenter">Log-in</a></p>
+                    </div>
+
+                </div>
             </div>
+        
         </div>
-        <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
+    </div>
+    <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
 
+    <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
+    <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="position: absolute;overflow-y:hidden !important;height: 110%; ">
+        <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body  px-md-5 px-4">
+                    <div class="mb-4">
+                        <div class="text-center">
+                            <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                        </div>
+                        <h3 class="text-center my-2">Sign In</h3>
+                        <div class="text-center">
+                            <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                            data-toggle="modal" data-target="#SignInWithEmail">&nbsp; Sign Up</a></p>
+                        </div>
+                    </div>
+
+                    <?php
+                    wp_login_form([
+                        'redirect' => $url,
+                        'remember' => false,
+                        'label_username' => 'Wat is je e-mailadres?',
+                        'placeholder_email' => 'E-mailadress',
+                        'label_password' => 'Wat is je wachtwoord?'
+                    ]);
+                    ?>
+                    <div class="text-center">
+                        <p>Nog geen account?  <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                            data-toggle="modal" data-target="#SignInWithEmail">Meld je aan</a></p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
 
 </div>
 
@@ -188,48 +186,12 @@
         <div class="blockFormTestimonial" id="form_section">
             <div class="row d-flex justify-content-center">
                 <div class="col-md-6 col-11">
-                    <form class="formTestimonial">
-                        <p class="title">Kies jouw persoonlijke scholingsadvies</p>
-                        <p class="description">Vul onderstaande formulier in en we plannen het zo snel mogelijk in.</p>
-                        <div class="input-group">
-                            <input type="text" placeholder="Voornaam*">
-                        </div>
-                        <div class="input-group">
-                            <input type="text" placeholder="Acheternaam*">
-                        </div>
-                        <div class="input-group">
-                            <input type="text" placeholder="Voornaam*">
-                        </div>
-                        <div class="input-group">
-                            <input type="text" placeholder="Bedrijf">
-                        </div>
-                        <div class="input-group">
-                            <input type="text" placeholder="E-mailadres*">
-                        </div>
-                        <div class="input-group">
-                            <input type="text" placeholder="Telefoonnummer*">
-                        </div>
-                        <div class="input-group">
-                            <select class="form-select">
-                                <option disabled selected>Type advies*</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <select class="form-select">
-                                <option disabled selected>Hoogst afgeronde opleiding*</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <button class="btn btnAanvraag">Aanvraag indienen</button>
-                    </form>
+                    <?php
+                        echo do_shortcode("[gravityform id='11' title='false' description='false' ajax='true']");
+                    ?>
                 </div>
                 <div class="col-md-6 col-11">
-                    <h2 class="watAnderenTitle">Wat anderen over ons Zeggen</h2>
+                    <h2 class="watAnderenTitle">Wat anderen over ons zeggen</h2>
                     <div class="cardTestimonialZeggen">
                         <div class="blockImg">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/suit-guy.png">
@@ -306,8 +268,13 @@
                     <h2  class="titleContact">Direct contact met één van onze adviseurs?</h2>
                     <p class="descriptionContact">We helpen je graag met jouw specifieke vragen omtrent talent management en de toepasbaarheid hiervan binnen je organisatie.</p>
                     <div class="groupBtnFooter">
-                        <a href="" class="btnemail btn">Email</a>
-                        <a href="" class="btnBellen btn">Bellen</a>
+<<<<<<< HEAD
+                        <a href="mailto:" class="btnemail btn">Email</a>
+                        <a href="tel:" class="btnBellen btn">Bellen</a>
+=======
+                        <a href = "mailto: contact@livelearn.nl" class="btnemail btn">Email</a>
+                        <a href="tel: +31627003962" class="btnBellen btn">Bellen</a>
+>>>>>>> origin/frontSeydou
                     </div>
                 </div>
             </div>

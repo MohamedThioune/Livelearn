@@ -1,7 +1,11 @@
-<?php get_header();?>
+<?php 
+get_header();
 
-<?php
 global $post;
+
+global $wp;
+
+$url = home_url( $wp->request );
 
 $posttags = get_the_tags();
 
@@ -23,17 +27,13 @@ $tik_tok = get_field('tik_tok',  'user_' . $post->post_author);
 $image = get_the_post_thumbnail_url($post->ID);
 if(!$image)
     $image = get_field('preview', $post->ID)['url'];
-else if(!$image)
-    $image = get_field('url_image_xml', $post->ID);
-else if(!$image)
-    $image = get_stylesheet_directory_uri() . '/img/libay.png';
-
 if(!$image)
     $image = get_field('url_image_xml', $post->ID);
+if(!$image)
+    $image = get_stylesheet_directory_uri() . '/img/blog/1.jpg';
 
-$author = get_field('profile_img',  'user_' . $post->post_author);
-if(!$author)
-    $author = get_stylesheet_directory_uri() . 'img/blog/blog-author.jpg';
+//Author
+$user_picture = get_field('profile_img', $post->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
 $biographical = get_field('biographical_info',  'user_' . $post->post_author);
 
@@ -58,6 +58,11 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
 
 ?>
 
+<style>
+    .selected {
+        border-bottom: 4px solid rgb(4 51 86);
+    }
+</style>
 <div class="main-wrapper ">
    
 
@@ -153,201 +158,174 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
 
 
     <section class="section blog-wrap bg-gray">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="row">
-                        <div class="col-lg-12 mb-5">
-                            <div class="single-blog-item">
-                                <img src="<?= $image; ?>" alt="" class="img-fluid rounded">
+                   <!-- 
+                    <div class="head-single">
+                        <div class="imgProfilAuthor">
+                            <img src="<?php /*echo $author; */?>" alt="" class="img-fluid">
+                        </div>
+                        <div class="auhuorElement">
+                            <p class="NameAuthor"><?php /*echo(get_userdata($post->post_author)->data->display_name); */?></p>
 
-                                <div class="blog-item-content bg-white blogPadding">
+                        </div>
+                    </div>
+                    -->
+                   <?php if($_GET['message']) echo "<div><span class='alert alert-info'>" . $_GET['message'] . "</span></div><br>" ?>
+                   <h2 class="titleBlog"><?php echo the_title();?></h2>
+                   <div class="dateAndShare">
+                       <p class="datePublish"><?php echo get_the_date('d F'); ?></p>
+                       <ul class="blockShare">
+                           <li class="list-inline-item shareTitle"> Share: </li>
+                           <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+                           <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                           <li class="list-inline-item">
+                               <a href="#"><i class="fab fa-linkedin-in text-muted"></i></a>
+                           </li>
+                           <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
+                           <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                       </ul>
+                   </div>
 
-                                    <div class="headElementBlog">
-                                        <p>
-                                            <?php if($posttags) echo $posttags[0]->name; else if($category_default) echo  (String)get_the_category_by_ID($category_default[0]['value']); else if($category_xml) echo  (String)get_the_category_by_ID($category_xml[0]['value']); ?> </p>
+                    <div class="single-blog-item">
+                        <img src="<?= $image; ?>" alt="" class="img-fluid rounded">
+                    </div>
+                    <div class="blockAuthorMobile">
+                        <div class="d-flex align-items-center">
+                            <a class="imgAuthorBlock" href="<?php echo "/user-overview/?id=" . $post->post_author; ?>" target="_blank" >
+                                <img src="<?php echo $user_picture; ?>" alt="" class="img-fluid">
+                            </a>
+                            <p class="NameAuthor"><?php echo(get_userdata($post->post_author)->data->display_name);?></p>
+                        </div>
+                        <form action="/dashboard/user/" method="POST">
+                            <input type="hidden" name="artikel" value="<?= $post->ID; ?>" id="">
+                            <input type="hidden" name="meta_value" value="<?= $post->post_author; ?>" id="">
+                            <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
+                            <input type="hidden" name="meta_key" value="expert" id="">
+                            <div>
+                                <?php
+                                if($user_id != 0 && $user_id != $post->post_author)
+                                {
+                                    $saves_experts = get_user_meta($user_id, 'expert');
+                                    if (in_array($post->post_author, $saves_experts))
+                                        echo "<button type='submit' class='btn FollowButton' name='delete'>Unfollow</button>";
+                                    else
+                                        echo "<button type='submit' class='btn FollowButton' name='interest_push'>Follow</button>"; 
+                                }
+                                
+                                ?>
+                            </div>
+                        </form>
+                        <?php
+                            if($user_id == 0)
+                                echo "                                
+                                <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='btn FollowButton'> 
+                                    Follow                                            
+                                </button>";
+                        ?>
+                    </div>
+                    <div class="blockDescriptionBlog" id="">
 
-                                        <p><i class="ti-time mr-1"></i> <?php echo get_the_date('d F'); ?></p>
-                                    </div>
-                                    <div class="tabbable-panel">
-                                        <div class="tabbable-line">
-                                            <ul class="nav nav-tabs ">
-                                                <li class="active">
-                                                    <a href="#tab_default_1" data-toggle="tab">
-                                                        Details</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#tab_default_2" data-toggle="tab">
-                                                        <i class="ti-comment mr-2"></i><?= $number_comments; ?> Comments
-                                                </li>
-                                                <li>
-                                                    <a href="#tab_default_3" data-toggle="tab">
-                                                     Add Comments
-                                                </li>
-                                            </ul>
-                                            <div class="tab-content">
-                                                <div class="tab-pane active" id="tab_default_1">
-                                                    <h2 class="mt-3 mb-4"><?php echo the_title();?></h2>
-                                                    <?php
-                                                    if(!the_content())
-                                                        echo $content;
-                                                    ?>
-
-                                                    <div class="tag-option mt-5 clearfix">
-                                                        <ul class="float-left list-inline">
-                                                            <li>Tags:&nbsp;</li>
-                                                            <?php
-                                                            if(!empty($posttags))
-                                                                foreach($posttags as $posttag)
-                                                                    echo '<li class="list-inline-item"><a href="#" rel="tag">' . $posttag->name . '</a></li>';
-                                                            else{
-                                                                $read_category = array();
-                                                                if(!empty($category_default))
-                                                                    foreach($category_default as $item)
-                                                                        if($item)
-                                                                            if(!in_array($item['value'],$read_category)){
-                                                                                array_push($read_category,$item['value']);
-                                                                                echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
-                                                                            }
-                        
-                                                                else if(!empty($category_xml))
-                                                                    foreach($category_xml as $item)
-                                                                        if($item)
-                                                                            if(!in_array($item['value'],$read_category)){
-                                                                                array_push($read_category,$item['value']);
-                                                                                echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
-                                                                            }
-                                                            }
-                                                            ?>
-                                                        </ul>
-
-                                                        <ul class="float-right list-inline">
-                                                            <li class="list-inline-item"> Share: </li>
-                                                            <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
-                                                            <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-                                                            <li class="list-inline-item">
-                                                                <a href="#"><i class="fab fa-linkedin-in text-muted"></i></a>
-                                                            </li>
-                                                            <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
-                                                            <li class="list-inline-item"><a href="#" target="_blank"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="tab-pane" id="tab_default_2">
-                                                <?php
-                                                if(!empty($reviews)){
-                                                    foreach($reviews as $review){
-                                                        $user = $review['user'];
-                                                        $image_author = get_field('profile_img',  'user_' . $user->ID);
-                                                        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
-                                                        $rating = $review['rating']; 
-                                                ?> 
-                                                    <div class="sousBlockComments">
-                                                        <div class="d-flex">
-                                                            <div class="auteurImgComment">
-                                                                <img src="<?= $image_author; ?>" alt="">
-                                                            </div>
-                                                            <div>
-                                                                <p class="NameAutorComment"><?= $user->display_name; ?></p>
-                                                                <p class="date"></p>
-                                                            </div>
-                                                        </div>
-                                                        <p class="comment"><?= $review['feedback']; ?></p>
-                                                        <!-- <button class="replyBtn btn">Reply</button>
-                                                        <form class="replayForm">
-                                                            <div class="form-group">
-                                                                <label for="exampleFormControlTextarea1">Comment</label>
-                                                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                                            </div>
-                                                            <div class="buttonSend">
-                                                                <button class="btn btnSendComment sendReplay">Send</button>
-                                                            </div>
-                                                        </form>
-                                                        <div class="otherReplay">
-                                                            <div class="d-flex">
-                                                                <div class="auteurImgComment">
-                                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
-                                                                </div>
-                                                                <div>
-                                                                    <p class="NameAutorComment">Daniel</p>
-                                                                    <p class="date">20 Dec</p>
-                                                                </div>
-                                                            </div>
-                                                            <p class="comment">Loren ipsum This paragraph is dedicated to expressing my skills what I have been able to acquire during my professional experience.
-                                                                Outside of let'say all the information that could be deemed relevant to a allow me to be known through my cursus.</p>
-                                                        </div> -->
-                                                    </div>
-                                                        <?php
-                                                        }
-                                                    }
-                                                    else 
-                                                        echo "<h6>No reviews for this course ...</h6>";
-                                                    ?>
-                                                </div>
-                                                <div class="tab-pane" id="tab_default_3">
-                                                    <?php
-                                                    if($user_id != 0){
-                                                    ?>
-                                                    <form action="/dashboard/user/" method="POST">
-                                                        <input type="hidden" name="user_id" value="<?= $user_id; ?>">
-                                                        <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
-                                                        
-                                                        <div class="form-group">
-                                                            <label for="exampleFormControlTextarea1">Comment</label>
-                                                            <textarea class="form-control" id="exampleFormControlTextarea1" name="feedback_content" rows="3"></textarea>
-                                                        </div>
-                                                       <div class="buttonSend">
-                                                           <button type="submit" name="review_post" class="btn btnSendComment">Send</button>
-                                                       </div>
-                                                    </form>
-                                                    <?php
-                                                    }
-                                                    else
-                                                        echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> You must sign-in for review </button>";
-                                                    ?>
-                                                </div>
-                                            </div>
+                        <?php
+                        if(!the_content())
+                            echo $content;
+                        ?>
+                    </div>
+                    <div class="tag-option">
+                        <ul class="list-inline">
+                            <li class="TagsTitle">Onderwerpen: </li>
+                            <?php
+                            if(!empty($posttags))
+                                foreach($posttags as $posttag)
+                                    echo '<li class="list-inline-item"><a href="#" rel="tag">' . $posttag->name . '</a></li>';
+                            else{
+                                $read_category = array();
+                                if(!empty($category_default))
+                                    foreach($category_default as $item)
+                                        if($item)
+                                            if(!in_array($item['value'],$read_category)){
+                                                array_push($read_category,$item['value']);
+                                                echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
+                                            }
+                                else if(!empty($category_xml))
+                                    foreach($category_xml as $item)
+                                        if($item)
+                                            if(!in_array($item['value'],$read_category)){
+                                                array_push($read_category,$item['value']);
+                                                echo '<li class="list-inline-item"><a href="#" rel="tag">'. (String)get_the_category_by_ID($item['value']) . '</a></li>';
+                                            }
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                    <div class="commentAndShare">
+                        <p class="titleComment"><i class="fas fa-comment" aria-hidden="true"></i><?= $number_comments; ?> Comments</p>
+                        <?php
+                        if(!empty($reviews)){
+                            foreach($reviews as $review){
+                                $user = $review['user'];
+                                $image_author = get_field('profile_img',  'user_' . $user->ID);
+                                $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+                                $rating = $review['rating'];
+                                ?>
+                                <div class="sousBlockComments">
+                                    <div class="d-flex">
+                                        <div class="auteurImgComment">
+                                            <img src="<?= $image_author; ?>" alt="">
+                                        </div>
+                                        <div>
+                                            <p class="NameAutorComment"><?= $user->display_name; ?></p>
+                                            <p class="date"></p>
                                         </div>
                                     </div>
+                                    <p class="comment"><?= $review['feedback']; ?></p>
                                 </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-12 mb-5">
-                            <div class="posts-nav bg-white p-5 d-lg-flex d-md-flex justify-content-between ">
-
                                 <?php
-                                $prev = get_previous_post();
+                            }
+                        }
+                        else
+                            echo "<h6>No reviews for this course ...</h6>";
+                        ?>
 
-                                $prev_link = get_permalink($prev);
+                        <button class="btn AddCommentBtn" data-toggle="modal" data-target="#myModal2">Add Comments</button>
+                    </div>
 
-                                ?>
-                                <a class="post-prev align-items-center" href="<?php echo $prev_link;?>">
-                                    <div class="posts-prev-item mb-4 mb-lg-0">
-                                        <span class="nav-posts-desc text-color">- Previous Post</span>
 
-                                        <h6 class="nav-posts-title mt-1">
-                                            <?php echo get_the_title($prev);?>
-                                        </h6>
+                    <!-- Modal -->
+                    <div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </div>
+
+                                <div class="modal-body">
+
+                                    <div class="blockAddComment2">
+                                        <?php
+                                        if($user_id != 0){
+                                            ?>
+                                            <form action="/dashboard/user/" method="POST">
+                                                <input type="hidden" name="user_id" value="<?= $user_id; ?>">
+                                                <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
+
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlTextarea1">Add new Comment</label>
+                                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="feedback_content" rows="3"></textarea>
+                                                </div>
+                                                <div class="buttonSend">
+                                                    <button type="submit" name="review_post" class="btn btnSendComment">Send</button>
+                                                </div>
+                                            </form>
+                                            <?php
+                                        }
+                                        else
+                                            echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> You must sign-in to make a comment. </button>";
+                                        ?>
                                     </div>
-                                </a>
-                                <div class="border"></div>
 
-                                <?php
-                                $next = get_next_post();
-
-                                $next_link = get_permalink($next);
-
-                                ?>
-                                <a class="posts-next" href="<?php echo $next_link;?>">
-                                    <div class="posts-next-item pt-4 pt-lg-0">
-                                        <span class="nav-posts-desc text-lg-right text-md-right text-color d-block">- Next Post</span>
-                                        <h6 class="nav-posts-title mt-1">
-                                            <?php echo get_the_title($next);?>
-                                        </h6>
-                                    </div>
-                                </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -355,10 +333,42 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                 <div class="col-lg-4">
                     <div class="sidebar-wrap">
                         <div class="sidebar-widget card border-0 mb-3">
-                            <center><a href="<?php echo "/user-overview/?id=" . $post->post_author; ?>" target="_blank" ><img src="<?php echo $author; ?>" alt="" class="img-fluid"></a></center>
+                            <center>
+                                <a href="<?php echo "/user-overview/?id=" . $post->post_author; ?>" target="_blank" >
+                                    <img src="<?php echo $user_picture; ?>" alt="" class="img-fluid">
+                                </a>
+                            </center>
                             <div class="card-body p-4 text-center">
                                 <a href="<?php echo "/user-overview/?id=" . $post->post_author; ?>" target="_blank" rel="noopener noreferrer"><h5 class="mb-0 mt-4"><?php echo(get_userdata($post->post_author)->data->display_name); ?></h5></a>
                                 <p><?php echo $functie; ?></p>
+                                <form action="/dashboard/user/" method="POST">
+                                    <input type="hidden" name="artikel" value="<?php echo $post->ID; ?>" id="">
+                                    <input type="hidden" name="meta_value" value="<?php echo $post->post_author; ?>" id="">
+                                    <input type="hidden" name="user_id" value="<?php echo $user_id ?>" id="">
+                                    <input type="hidden" name="meta_key" value="expert" id="">
+
+                                    <div>
+                                        <?php
+                                        if($user_id != 0 && $user_id != $post->post_author)
+                                        {
+                                            $experts = get_user_meta($user_id, 'expert');
+                                            if (in_array($post->post_author, $experts))
+                                                echo "<button type='submit' class='btn btnFollow' name='delete'>Unfollow</button>";
+                                            else
+                                                echo "<button type='submit' class='btn btnFollow' name='interest_push'>Follow</button>"; 
+                                        }
+                                       
+                                        ?>
+                                    </div>
+                                </form>
+                                <?php
+                                    if($user_id == 0)
+                                        echo "                                
+                                        <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='btn btnFollow'> 
+                                            Follow                                            
+                                        </button>";
+                                ?>
+
                                 <p><?php echo $biographical; ?></p>
 
                                 <ul class="list-inline author-socials">
@@ -404,7 +414,7 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                         </div>
 
                         <div class="sidebar-widget latest-post card border-0 p-4 mb-3">
-                            <h5>Latest Posts</h5>
+                            <h5>Andere artikelen</h5>
                             
                             <?php
                             $latests = wp_get_recent_posts(array('numberposts' => 3));
@@ -424,7 +434,7 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
                         </div>
 
                         <div class="sidebar-widget bg-white rounded tags p-4 mb-3">
-                            <h5 class="mb-4">Tags</h5>
+                            <h5 class="mb-4">Onderwerpen</h5>
 
                             <?php
                             if ($posttags)
@@ -461,3 +471,10 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
 <?php get_footer();?>
 <?php wp_footer(); ?>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+     var $li = $('.tabbable-line li').click(function() {
+        $li.removeClass('selected');
+        $(this).addClass('selected');
+    });
+</script>

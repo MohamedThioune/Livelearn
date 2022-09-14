@@ -37,6 +37,7 @@ function cpt_taxonomies() {
         'hierarchical'      => true,
         'labels'            => $labels,
         'show_ui'           => true,
+        'show_in_rest'        => true,
         'show_admin_column' => true,
         'query_var'         => true,
         'rewrite'           => array( 'slug' => 'course_category' ),
@@ -73,6 +74,7 @@ function custom_post_type() {
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
+        'show_in_rest'        => true,
         'show_in_menu'        => true,
         'show_in_nav_menus'   => true,
         'show_in_admin_bar'   => true,
@@ -156,6 +158,7 @@ function custom_post_type() {
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
+        'show_in_rest'        => true,
         'show_in_menu'        => true,
         'show_in_nav_menus'   => true,
         'show_in_admin_bar'   => true,
@@ -172,7 +175,6 @@ function custom_post_type() {
 
     register_post_type( 'feedback', $feedback_args );
 
-    // - -- -
 
     $assessment = array(
         'name'                => _x( 'Assessments', 'Assessment', 'assessment' ),
@@ -365,6 +367,7 @@ function custom_post_type() {
         'hierarchical'        => false,
         'public'              => true,
         'show_ui'             => true,
+        'show_in_rest'        => true,
         'show_in_menu'        => true,
         'show_in_nav_menus'   => true,
         'show_in_admin_bar'   => true,
@@ -391,7 +394,7 @@ function add_custom_roles(){
 }
 add_action('init', 'add_custom_roles');
 
-
+ 
 //redirect 'return to shop'
 add_filter( 'woocommerce_return_to_shop_redirect', 'bbloomer_change_return_shop_url' );
 
@@ -469,6 +472,25 @@ function create_product_for_course($post_id){
 
 }
 
+//no redirect to wp admin
+add_filter( 'authenticate', function( $user, $username, $password ) {
+    // forcefully capture login failed to forcefully open wp_login_failed action, 
+    // so that this event can be captured
+    if ( empty( $username ) || empty( $password ) ) {
+        do_action( 'wp_login_failed', $user );
+    }
+    return $user;
+}, 10, 3 );
+add_action( 'wp_login_failed', 'my_front_end_login_fail' );  // hook failed login
+function my_front_end_login_fail( $username ) {
+    $referrer = $_SERVER['HTTP_REFERER'];  // where did the post submission come from?
+    // if there's a valid referrer, and it's not the default log-in screen
+    if ( !empty($referrer) && !strstr($referrer,'wp-login') && !strstr($referrer,'wp-admin') ) {
+        wp_redirect( $referrer . '?popup=1&login=failed' );  // let's append some information (login=failed) to the URL for the theme to use
+        exit;
+    }
+}
+
 
 //change labels/placeholders on woo
 function override_default_address_checkout_fields( $fields ) {
@@ -527,4 +549,21 @@ function set_assign_data( $entry, $form ) {
     }
 
 }
+
+add_filter( 'rest_authentication_errors', function( $result ) {
+    if ( true === $result || is_wp_error( $result ) ) {
+        return $result;
+    }
+
+    if ( ! is_user_logged_in() ) {
+        return new WP_Error(
+            'rest_not_logged_in',
+            __( 'You are not currently logged in.' ),
+            array( 'status' => 401 )
+        );
+    }
+
+    return $result;
+});
+
 

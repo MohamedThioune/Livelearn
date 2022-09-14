@@ -10,11 +10,14 @@
             $type = get_field('type_feedback', $value->ID);
             $manager = get_field('manager_feedback', $value->ID);
 
-            $image = get_field('profile_img',  'user_' . $manager->ID);
+            $image = get_field('profile_img',  'user_' . $manager);
             if(!$image)
                 $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+
+            $manager = get_user_by('id', $manager);
+            $manager_display = ($manager->first_name) ?: $manager->display_name;
         
-            if($type == "Feedback" || $type == "Compliment")
+            if($type == "Feedback" || $type == "Compliment" || $type == "Gedeelde cursus")
                 $beschrijving_feedback = get_field('beschrijving_feedback', $value->ID);
             else if($type == "Persoonlijk ontwikkelplan")
                 $beschrijving_feedback = get_field('opmerkingen', $value->ID);
@@ -32,14 +35,14 @@
             <div class="col-lg-7">
                 <div class="cardRecentlyEnrolled">
                 <div class="w-100">
-                    <h2 class="notificationBy">Notifications By </h2>
+                    <h2 class="notificationBy">Notifications By</h2>
                     <div class="globalnotificationBy">
                         <div class="contentImgName">
                             <div class="contentImg">
                                 <img src="<?=$image?>" alt="">
                             </div>
                             <div>
-                                <p class="name"><?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->last_name; else echo $manager->display_name; ?></p>
+                                <p class="name"><?= $manager_display ?></p>
                                 <p class="name"><?php echo $role ?></p>
                             </div>
                         </div>
