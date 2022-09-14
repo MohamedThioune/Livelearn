@@ -1,7 +1,5 @@
 <?php
-
 extract($_GET);
-
 ?>
 <style>
     .swiper {
@@ -34,9 +32,6 @@ extract($_GET);
         font-size: 22px;
         top: -5px;
         position: relative;
-    }
-    .liveOverBlock {
-        padding-top: 50px;
     }
 </style>
 
@@ -96,9 +91,7 @@ extract($_GET);
                         }
                         else{
                             if(isset($lesson))
-                                echo '<iframe width="730" height="433" src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay;
-                                    
-                                    ; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                                echo '<iframe width="730" height="433" src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
                             else
                                 if(!empty(get_field('preview', $post->ID)))
                                     echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
@@ -111,10 +104,10 @@ extract($_GET);
 
                 </div>
 
-                <?php 
+                <?php
                     if($course_price != "Gratis")
                         echo '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="startTextBtn btn">Start nu voor ' . $course_price . '</a>';
-                    else 
+                    else
                         echo '<a href="?topic=0&lesson=0" class="startTextBtn btn">Start nu voor ' . $course_price . '</a>';
                 ?>
 
@@ -133,7 +126,7 @@ extract($_GET);
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-calendar-alt" style="font-size: 25px;"></i>
-                            <span class="textIconeLearning mt-1"><?= $duration_day; ?> dagdee</span>
+                            <span class="textIconeLearning mt-1"><?= $duration_day; ?> dagdeel</span>
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-graduation-cap" style="font-size: 25px;"></i>
@@ -170,7 +163,7 @@ extract($_GET);
                             <button class="btn iconeText open-modal" data-open="modal1">
                                 <i class="fa fa-share" style="font-size: 25px;"></i><br>
                                 <span class="textIconeLearning mt-1">Deel</span>
-                            </button>                           
+                            </button>
                         </div>
                         <!-- début Modal deel -->
                         <div class="modal" id="modal1" data-animation="fadeIn">
@@ -269,7 +262,7 @@ extract($_GET);
                     <div class="text-limit">
                         <?php echo $long_description; ?>
                         <div class=" moreText">
-                        <?php
+                            <?php
                                 if($agenda){
                             ?>
                                     <h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Agenda :</b></h6>
@@ -294,11 +287,13 @@ extract($_GET);
                             ?>
                         </div>
                         <br>
-
                    </div>
-
-                    <button type="button" class="btn btn-lg lees_alles mb-5 mt-3 w-md-25 px-4 border border-3 border-dark
-                     read-more-btn ">Lees alles</button>
+                   <?php 
+                        if($agenda || $who || $results ) 
+                            echo '<button type="button" class="btn btn-lg lees_alles mb-5 mt-3 w-md-25 px-4 border border-3 border-dark read-more-btn">Lees alles</button>';
+                        else 
+                            echo '<h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Leeg tot nu toe ...</b></h6>';
+                    ?>
 
                 </div>
                 <!----------------------------------- End Text description ----------------------------------- -->
@@ -317,7 +312,7 @@ extract($_GET);
                     <div class="tabs">
                         <ul id="tabs-nav">
                             <li><a href="#tab2">Reviews</a></li>
-                            <li><a href="#tab3">Add Reviews</a></li>
+                            <?php if(!$my_review_bool) echo '<li><a href="#tab3">Add Reviews</a></li>'; ?>
                         </ul> <!-- END tabs-nav -->
                         <div id="tabs-content">
                             <div id="tab2" class="tab-content">
@@ -327,7 +322,7 @@ extract($_GET);
                                         $user = $review['user'];
                                         $image_author = get_field('profile_img',  'user_' . $user->ID);
                                         $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
-                                        $rating = $review['rating'];  
+                                        $rating = $review['rating'];
                                     ?>
                                     <div class="review-info-card">
                                         <div class="review-user-mini-profile">
@@ -343,7 +338,7 @@ extract($_GET);
                                                             if($i == $rating)
                                                                 echo '<input type="radio" name="rating" value="' . $i . ' " checked disabled/>
                                                                 <label class="star" title="" aria-hidden="true"></label>';
-                                                            else 
+                                                            else
                                                                 echo '<input type="radio" name="rating" value="' . $i . ' " disabled/>
                                                                     <label class="star" title="" aria-hidden="true"></label>';
                                                         }
@@ -364,29 +359,32 @@ extract($_GET);
                             </div>
                             <div id="tab3" class="tab-content">
                                 <?php
-                                if($user_id != 0){
+                                if($user_id != 0 && !$my_review_bool){
                                 ?>
-                                <form class="formSingleCoourseReview " action="../../dashboard/user/" method="POST">
-                                    <input type="hidden" name="user_id" value="<?= $user_id; ?>">
-                                    <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
-                                    <div class="rating">
-                                        <input type="radio" id="star5" name="rating" value="5" />
-                                        <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                                        <input type="radio" id="star4" name="rating" value="4" />
-                                        <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                                        <input type="radio" id="star3" name="rating" value="3" />
-                                        <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                                        <input type="radio" id="star2" name="rating" value="2" />
-                                        <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                                        <input type="radio" id="star1" name="rating" value="1" />
-                                        <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
+                                <div class="formSingleCoourseReview">
+                                    <label>Rating</label>
+                                    <div class="rating-element2">
+                                        <div class="rating">
+                                            <input type="radio" id="star5" class="stars" name="rating" value="5" />
+                                            <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                                            <input type="radio" id="star4" class="stars" name="rating" value="4" />
+                                            <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                                            <input type="radio" id="star3" class="stars" name="rating" value="3" />
+                                            <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                                            <input type="radio" id="star2" class="stars" name="rating" value="2" />
+                                            <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                                            <input type="radio" id="star1" name="rating" value="1" />
+                                            <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
+                                        </div>
+                                        <span class="rating-counter"></span>
                                     </div>
+
                                     <div class="form-group">
                                         <label for="">Feedback</label>
-                                        <textarea name="feedback_content" rows="10"></textarea>
+                                        <textarea name="feedback_content" id="feedback" rows="10"></textarea>
                                     </div>
-                                    <input type='submit' class='btn btn-sendRating' name='review_post' value='Send'>
-                                </form>
+                                    <input type="button" class='btn btn-sendRating' id='btn_review' name='review_post' value='Send'>
+                                </div>
                                 <?php
                                 }
                                 else
@@ -410,7 +408,7 @@ extract($_GET);
                             <div class="d-flex justify-content-center">
 
                                 <div>
-                                    <a href="#" class="mx-3 d-flex flex-column ">
+                                    <a href="https://wa.me/<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
                                         <i style="font-size: 50px; height: 49px; margin-top: -4px;"
                                             class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>
                                     </a>
@@ -419,9 +417,9 @@ extract($_GET);
                                     </div>
                                 </div>
                                 <div>
-                                    <a href="#" class="mx-3 d-flex flex-column ">
+                                    <a href="mailto:<?= $email_user ?>" class="mx-3 d-flex flex-column ">
                                         <i style="font-size: 25px"
-                                        class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
+                                            class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
                                         <!-- <span class="bd-highlight fw-bold text-primary mt-2">email</span> -->
                                     </a>
                                     <div class="mt-3 text-center">
@@ -429,7 +427,7 @@ extract($_GET);
                                     </div>
                                 </div>
                                 <div>
-                                    <a href="#" class="mx-3 d-flex flex-column ">
+                                    <a href="sms:<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
                                         <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>
                                     </a>
                                     <div class="mt-3 text-center">
@@ -438,9 +436,9 @@ extract($_GET);
                                 </div>
 
                                 <div>
-                                    <a href="#" class="mx-3 d-flex flex-column ">
+                                    <a href="tel:<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
                                         <i class="bd-highlight bi bi-telephone-x border border-3 border-primary rounded-circle text-primary shadow"
-                                        style="font-size: 20px; padding: 6px 11px;"></i>
+                                            style="font-size: 20px; padding: 6px 11px;"></i>
                                         <!-- <span class="bd-highlight fw-bold text-primary mt-2">call</span> -->
                                     </a>
                                     <div class="mt-3 text-center">
@@ -476,8 +474,9 @@ extract($_GET);
                                 ?>
                                 <div class="content-text p-4 pb-0">
                                     <h4 class="text-dark">Voor wie ?</h4>
-                                    <p class="m-0"><strong>This course is followed up by <?php if(isset($author->first_name) && isset($author->last_name)) echo $author->first_name . '' . $author->last_name; else echo $author->display_name; ?> </strong></p>
-                                    <p><em>This line rendered as italicized text.</em></p>
+                                    <p class="m-0">
+                                        <?= $for_who ?>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -506,14 +505,14 @@ extract($_GET);
                         <div class="modal-body  px-md-4 px-0">
                             <div class="mb-4">
                                 <div class="text-center">
-                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
-                                </div>  
+                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                                </div>
                                 <h3 class="text-center my-2">Sign Up</h3>
                                 <div class="text-center">
                                     <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
                                     data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign in</a></p>
                                 </div>
-                            </div>  
+                            </div>
 
 
                             <?php
@@ -527,7 +526,7 @@ extract($_GET);
 
                         </div>
                     </div>
-                
+
                 </div>
             </div>
             <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
@@ -548,7 +547,7 @@ extract($_GET);
                         <div class="modal-body  px-md-5 px-4">
                             <div class="mb-4">
                                 <div class="text-center">
-                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
                                 </div>
                                 <h3 class="text-center my-2">Sign In</h3>
                                 <div class="text-center">
@@ -681,8 +680,54 @@ extract($_GET);
                                     <input type="hidden" name="meta_key" value="expert" id="">
                                     <?php
                                     if($user_id != 0 && $user_id != $post->post_author)
-                                        echo "<input type='submit' class='btnLeerom' style='border:none' name='interest_push' value='+ Leeromgeving'>";
+                                        echo " <button type=\"button\" class=\"btn btnLeerom\" data-toggle=\"modal\" data-target=\"#ModalFollowExpert\">
+                                                 + Leeromgeving
+                                                </button>";
                                     ?>
+
+                                    <!-- Modal follow expert -->
+                                    <div class="modal fade" id="ModalFollowExpert" tabindex="-1" role="dialog" aria-labelledby="ModalFollowExpertLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Follow Expert</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <?php
+                                                    foreach($experts as $expert){
+                                                        $expert = get_users(array('include'=> $expert))[0]->data;
+                                                        $company = get_field('company',  'user_' . $expert->ID);
+                                                        $title = $company[0]->post_title;
+                                                        $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                                        ?>
+                                                        <div class="blockExpertFollown">
+                                                            <div class="d-flex">
+                                                                <div class="blockImageExpertFollow">
+                                                                    <img alt="Expert Image" src="<?php echo $image; ?>" alt="teacher photo">
+                                                                </div>
+                                                                <div>
+                                                                    <p class="nameExpert"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></p>
+                                                                    <p class="titleExpert"><?php echo $title; ?></p>
+                                                                </div>
+                                                            </div>
+                                                            <button class="btn btnFollowExpert">Follow</button>
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+
                                 </form>
                                 <?php
                                 if($user_id == 0 )
@@ -697,7 +742,7 @@ extract($_GET);
                                 <p class="btwText">BTW: € <?php $prijsvat ?></p>
 
 
-                                <a href="#bookdates" class="btn btnKoop">Koop deze <?php echo $course_type; ?></a>
+                                <a href="#bookdates" class="btn btnKoop">Schrijf je in<?php echo $course_type; ?></a>
                             </div>
                             <div class="col-12 my-5" style="background-color: #E0EFF4">
                                 <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around justify-content-center">
@@ -1000,6 +1045,45 @@ extract($_GET);
     })
 </script>
 
+<script>
+    $("#btn_review").click((e)=>
+    {
+        $(e.preventDefault());
+        var user_id = $("#user_id").val();
+        var id = $("#course_id").val();
+        var feedback = $("#feedback").val();
+        var stars = $('input[name=rating]:checked').val()
+
+        $.ajax({
+
+            url:"/review",
+            method:"post",
+            data:{
+                id:id,
+                user_id:user_id,
+                feedback:feedback,
+                stars:stars,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#tab2').html(data);
+                alert('Review successfully sent');
+            }
+        });
+    })
+</script>
+
+<script>
+    // scroll down on click button
+    $( '.btnScroolEvent' ).on( 'click', function(e){
+        $( 'html, body' ).animate({
+            scrollTop: $(".customTabs").offset().top
+        }, '500' );
+        e.preventDefault();
+
+    });
+</script>
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>

@@ -7,7 +7,7 @@ global $wpdb;
 $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank ORDER BY id DESC");
 $courses = $wpdb->get_results( $sql );
 $user = wp_get_current_user();
-
+$websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandrinks','sportnext','nbvt','vsbnetwerk','tvvl','nedverbak','tnw','changeINC','--------------------------','nvab','vbw','kndb','fgz','cvah','nbov','nuvo','CBD','Hoorzaken'];
 ?>
 
 <?php wp_head(); ?>
@@ -16,13 +16,7 @@ $user = wp_get_current_user();
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-
-<?php 
-    $websites=['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandrinks','sportnext','nbvt','vsbnetwerk','tvvl','nedverbak','tnw','changeINC'];
-?>
 
 <!-- Content -->
 <body>
@@ -30,15 +24,18 @@ $user = wp_get_current_user();
    <div class="container-fluid">
        <div class="contentListeCourseDataBank">
            <div class="cardOverviewCours">
+                <?php 
+                if(isset($_GET["message"]))
+                    echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>";
+                ?>
                <div class="headListeCourse">
                    <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
-                       <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img  src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
-                       &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="" width="25" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
-                       <!-- &nbsp;&nbsp;<span id="reload-data"  class="bi bi-arrow-clockwise">Artikel</span> -->
-                       &nbsp;&nbsp;&nbsp; <span>Artikel</span>
+                       <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
+                       &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
+                       
                     <div class="col-md-3">
                         
-                        <select id="select_field">
+                        <select class="form form-control" id="select_field">
                             <option value="">Get new contents from</option>
                             <?php foreach ($websites as $website) { ?>
                                 <option class="selected_website" value="<?= $website ?>"><?= $website ?></option>
@@ -83,7 +80,13 @@ $user = wp_get_current_user();
 
                            //Company
                            $company = get_field('company',  'user_' . $course->author_id);
-                           $company_logo = (!empty($company)) ? get_field('company_logo', $company[0]->ID) : get_stylesheet_directory_uri() . '/img/placeholder.png'; 
+                           
+                           $company_logo = get_stylesheet_directory_uri() . '/img/placeholder.png';
+                           if(!empty($company))
+                                $company_logo = (get_field('company_logo', $company[0]->ID)) ? get_field('company_logo', $company[0]->ID) : get_stylesheet_directory_uri() . '/img/placeholder.png'; 
+
+                           //Thumbnail
+                           $image = $course->image_xml ? $course->image_xml : $company_logo;
 
                            $onderwerpen = array();
                            //Onderwerpen
@@ -94,7 +97,7 @@ $user = wp_get_current_user();
                            $key = $course->id;
                            ?>
                            <tr id="<?= $key ?>" class="<?= $state ?>">
-                               <td class="textTh"> <img src="<?= $course->image_xml; ?>" alt="image course" width="50" height="50"></td>
+                               <td class="textTh"> <img src="<?= $image; ?>" alt="image course" width="50" height="50"></td>
                                <td class="textTh courseDataBank" style="color:#212529;font-weight:bold"><?php echo $course->titel; ?></td>
                                <td class="textTh tdCenter"><?= $course->type; ?></td>
                                <td class="textTh tdCenter"><?= $course->prijs; ?></td>
@@ -103,12 +106,12 @@ $user = wp_get_current_user();
                                     if(!empty($onderwerpen))
                                         foreach($onderwerpen as $value)
                                             if($value)
-                                            //echo (String)get_the_category_by_ID($value) . ','; 
+                                                echo (String)get_the_category_by_ID($value) . ','; 
                                     ?>
                                 </td>
                                <td class="textTh tdCenter"><?= $course->status; ?></td>
-                               <td class="textTh tdCenter"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo 'No author'; ?></td>
-                               <td class="textTh tdCenter"> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo 'No company'; ?> </td>
+                               <td class="textTh tdCenter <?php if($course->author_id) echo ''; else echo 'author';  ?>"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo '<b>No author</b>'; ?></td>
+                               <td class="textTh tdCenter <?php if(!empty($company)) echo ''; else echo 'company';  ?>"> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo '<b>No company</b>'; ?> </td>
                                <td class="tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a href="/edit-databank?id=<?= $key ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> </td>
                            </tr>
                        <?php
@@ -153,7 +156,7 @@ $user = wp_get_current_user();
 
 <script>
 
-    $('#select_field').click((e)=>
+    $('#select_field').change((e)=>
     {
         let website= $('#select_field').val();
         if (website != '')
@@ -173,33 +176,10 @@ $user = wp_get_current_user();
                     $('#loader').attr('hidden',true)
                     $('#select_field').attr('hidden',false)
                     console.log(data);
-                    //location.reload();
+                    location.reload();
                 }
             });
     });        
-
-    $('#reload-data').click(function(){
-        
-        $.ajax({
-            url: '/scrapping',
-            type: 'POST',
-            data: {
-                'action': 'reload_data'
-            },
-            beforeSend:function(){
-                $('#reload-data').hide()
-                $('#loader').attr('hidden',false)
-            },
-            complete: function(){},
-            success: function(data){
-                $('#reload-data').show()
-                $('#loader').attr('hidden',true)
-                console.log(data);
-                //location.reload();
-            }
-        });
-        //location.reload();
-    });
 
     $('.optie').click((e)=>{
         var tr_element = e.target.parentElement.closest("tr");
@@ -231,12 +211,98 @@ $user = wp_get_current_user();
         
     });
 
-    $('.textTh').click((e)=>{
+    $('.courseDataBank').click((e)=>{
         var tr_element = e.target.parentElement.closest("tr");
         var key = tr_element.id;
 
         $.ajax({
-                url:"/fetch-data-clean",
+                url:"/fetch-data-clean-quick",
+                method:"post",
+                data:
+                {
+                    id:key,
+                },
+                dataType:"text",
+                success: function(data){
+                    // Get the modal
+                    console.log(data)
+                    var modal = document.getElementById("myModal");
+                    $('.display-fields-clean').html(data)
+                    // Get the button that opens the modal
+
+
+                    // Get the <span> element that closes the modal
+                    var span = document.getElementsByClassName("close")[0];
+
+                    // When the user clicks on the button, open the modal
+
+                        modal.style.display = "block";
+
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function() {
+                        modal.style.display = "none";
+                    }
+
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function(event) {
+                        if (event.target == modal) {
+                        modal.style.display = "none";
+                        }
+                    }
+                            
+                }
+        });
+    });
+
+    $('.author').click((e)=>{
+        var tr_element = e.target.parentElement.closest("tr");
+        var key = tr_element.id;
+
+        $.ajax({
+                url:"/fetch-data-clean-author",
+                method:"post",
+                data:
+                {
+                    id:key,
+                },
+                dataType:"text",
+                success: function(data){
+                    // Get the modal
+                    console.log(data)
+                    var modal = document.getElementById("myModal");
+                    $('.display-fields-clean').html(data)
+                    // Get the button that opens the modal
+
+
+                    // Get the <span> element that closes the modal
+                    var span = document.getElementsByClassName("close")[0];
+
+                    // When the user clicks on the button, open the modal
+
+                        modal.style.display = "block";
+
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function() {
+                        modal.style.display = "none";
+                    }
+
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function(event) {
+                        if (event.target == modal) {
+                        modal.style.display = "none";
+                        }
+                    }
+                            
+                }
+        });
+    });
+
+    $('.company').click((e)=>{
+        var tr_element = e.target.parentElement.closest("tr");
+        var key = tr_element.id;
+
+        $.ajax({
+                url:"/fetch-data-clean-company",
                 method:"post",
                 data:
                 {

@@ -380,7 +380,7 @@
           $change = true;
         }
        */
-
+ 
         if($post['author_id'] != $course->author_id){
           $data = [ 'author_id' => $author_id]; // NULL value.
           $where = [ 'id' => $course->id ];

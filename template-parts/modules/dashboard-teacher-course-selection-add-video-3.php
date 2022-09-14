@@ -3,7 +3,7 @@
         <div class="cardCoursGlocal">
             <div id="basis" class="w-100">
                 <div class="titleOpleidingstype">
-                    <h2>3.Data en locaties</h2>
+                    <h2>3.Voeg video’s toe</h2>
                 </div>
                 <?php 
                 acf_form(array(
@@ -91,7 +91,7 @@
                 </a>
                 <a href="/dashboard/teacher/course-selection/?func=add-video&id=<?php echo $_GET['id'];?>&step=3" class="contentBlockCourse">
                     <div class="circleIndicator passEtape2"></div>
-                    <p class="textOpleidRight ">Data en locaties</p>
+                    <p class="textOpleidRight ">voeg video’s toe</p>
                 </a>
                 <a href="/dashboard/teacher/course-selection/?func=add-video&id=<?php echo $_GET['id'];?>&step=4" class="contentBlockCourse">
                     <div class="circleIndicator"></div>

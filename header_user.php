@@ -1,5 +1,5 @@
 <?php
-global $wp;
+global $wp; 
 
 $user = wp_get_current_user();
 
@@ -15,11 +15,24 @@ $args = array(
     'posts_per_page' => -1,
 );
 
-$todos = get_posts($args);
+$notifications = get_posts($args);
+$todos = array();
 
 $url = home_url( $wp->request );
 
 $link = ($user) ? '/dashboard/user' : '/'; 
+
+if(!empty($notifications))
+    foreach($notifications as $todo){
+
+        $read = get_field('read_feedback', $todo->ID);
+        if($read)
+            continue;
+
+        array_push($todos,$todo);
+    }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -55,8 +68,7 @@ $link = ($user) ? '/dashboard/user' : '/';
 
 
         <!-- Modal -->
-        <div class="modal fade mt-5" id="bedrijfsprofiel_modal" tabindex="-1" role="dialog" 
-        aria-labelledby="exampleModalLabel" aria-hidden="true"  style="width:98%">
+        <div class="modal fade mt-5" id="bedrijfsprofiel_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="width:98%; overflow-y: hidden !important">
             <div class="modal-dialog" role="document">
                 <div class="modal-content px-md-5 px-1">
                     <div class="modal-header border-0">
@@ -64,7 +76,7 @@ $link = ($user) ? '/dashboard/user' : '/';
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body pt-0">
                         <div class="text-center mb-4">
                             <p class="JouwOpleid" style="font-size: 20px !important">
                                 Creëer een bedrijfsprofiel of unlock de voordelen van jouw organisatie
@@ -85,69 +97,22 @@ $link = ($user) ? '/dashboard/user' : '/';
 
                         <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                                <!-- <form class="formTestimonial m-0 w-100 p-3 bg-white">
-                                     <p class="title">Kies jouw persoonlijke scholingsadvies</p>
-                                    <p class="description">Vul onderstaande formulier in en we plannen het zo snel mogelijk in.</p>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Voornaam" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Achternaam *" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Bedrijf" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Zakelijk emailadres*" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Telefoon*" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Afdeling*" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                       
-                                    <button class="btn btnAanvraag rounded rounded-pill">Vraag aan</button>
-
-                                    <p class="description pt-4">
-                                        Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je 
-                                        direct toegang tot je bedrijfs leeromgeving
-                                    </p>
-                                 </form>  -->
-                                 <?php echo do_shortcode( ("[ninja_form id='10' title='false' description='false' ajax='true']")); ?>
+                                <?php echo do_shortcode("[gravityform id='14' title='false' description='false' ajax='true']"); ?>                                
+                                <p class="description pt-2 text-center">
+                                    Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je 
+                                    direct toegang tot je bedrijfs leeromgeving
+                                </p>
                             </div>
                             <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                                <!-- <form class="formTestimonial m-0 w-100 p-3 bg-white">
-                                     <p class="title">Kies jouw persoonlijke scholingsadvies</p>
-                                    <p class="description">Vul onderstaande formulier in en we plannen het zo snel mogelijk in.</p> -->
-                                    <!-- <div class="input-group">
-                                        <input type="text" placeholder="Bedrijfsnaam" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Jouw zakelijke e-mailadres*" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Telefoonnummer" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Je afdeling" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" placeholder="Hoeveel medewerkers?" class="text-center rounded rounded-pill" style="background: #E0EFF4 !important;">
-                                    </div>
-                       
-                                    <button class="btn btnAanvraag rounded rounded-pill">Vraag aan</button>
+                            <?php echo do_shortcode("[gravityform id='15' title='false' description='false' ajax='true']"); ?>                                
+                                <p class="description pt-2 text-center">
+                                    Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je 
+                                    direct toegang tot je bedrijfs leeromgeving
+                                </p>
 
-                                    <p class="description pt-4">
-                                        Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je 
-                                        direct toegang tot je bedrijfs leeromgeving
-                                    </p>
-
-                                    <p class="JouwOpleid pt-3">
-                                        Eerst lezen wat we doen? <a href="">Click hier!</a>
-                                    </p> -->
-                                <!-- </form> -->
-                                <?php echo do_shortcode( ("[ninja_form id='9' title='false' description='false' ajax='true']")); ?>
+                                <p class="JouwOpleid pt-3 text-center">
+                                    Eerst le zen wat we doen? <a href="">Click hier!</a>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -155,8 +120,6 @@ $link = ($user) ? '/dashboard/user' : '/';
             </div>
         </div>
 
-
-        
         <nav class="navbar navbar-expand-lg navbar-dark headerdashboard">
             
             <div class="blockIconeWidth">
@@ -189,6 +152,10 @@ $link = ($user) ? '/dashboard/user' : '/';
                                             foreach($todos as $todo){
                                                 if($key == 4)
                                                     break;
+
+                                                $read = get_field('read_feedback', $todo->ID);
+                                                if($read)
+                                                    continue;
 
                                                 $type = get_field('type_feedback', $todo->ID);
                                                 $manager = get_field('manager_feedback', $todo->ID);
@@ -231,7 +198,7 @@ $link = ($user) ? '/dashboard/user' : '/';
                             <?php }
                             }?>
                             <?php
-                            if ( in_array( 'hr', $user->roles ) || in_array( 'teacher', $user->roles ) || in_array( 'administrator', $user->roles ) || $user->roles == 'administrator') {
+                            if ( in_array( 'hr', $user->roles ) || in_array( 'author', $user->roles ) || in_array( 'administrator', $user->roles ) || $user->roles == 'administrator') {
                             ?>
                             <a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>
                             <?php }?>
@@ -256,18 +223,15 @@ $link = ($user) ? '/dashboard/user' : '/';
                         <?php
                         $company = get_field('company',  'user_' . $user->ID);
 
-                        if(!empty($company)){
-                            if ( in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') {
-                            ?>
-                            <a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>
-                        <?php }
-                        }?>
+                        if(!empty($company))
+                            if ( in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') 
+                                echo '<a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>';
+                        ?>
 
                         <?php
-                            if ( in_array( 'hr', $user->roles ) || in_array( 'teacher', $user->roles ) || in_array( 'administrator', $user->roles ) || $user->roles == 'administrator') {
-                            ?>
-                        <a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>
-                        <?php }?>
+                            if ( in_array( 'hr', $user->roles ) || in_array( 'author', $user->roles ) || in_array( 'administrator', $user->roles ) || $user->roles == 'administrator') 
+                                echo '<a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>';
+                        ?>
                     </div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -285,7 +249,8 @@ $link = ($user) ? '/dashboard/user' : '/';
                     <ul class="elementHeaderUser ">
                         <li class="nav-item dropdown addButtonLink">
                             <a href="#" class="nav-link navModife4 btn dropdown-toggle" type="button" id="dropdownNavButtonAdd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/addition.png" alt="addition" >
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/addition.png" alt="addition" 
+                                style="width: 36px !important; height: 36px !important">
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonAdd">
                                 <a class="dropdown-item" href="/onderwer/">Onderwerpen</a>
@@ -305,8 +270,11 @@ $link = ($user) ? '/dashboard/user' : '/';
                             if($company_id)
                                 if(in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array('administrator', $user->roles) )
                                     $ref_company = "/dashboard/company";
+                                else
+                                    $ref_company = "#";
+ 
                         ?>
-                            <a <?php if(isset($ref_company)) echo'href="' .$ref_company. '"'; else echo 'data-toggle="modal" data-target="#bedrijfsprofiel_modal"'; ?> >
+                            <a <?php if(isset($ref_company)) echo'href ="' .$ref_company. '"'; else echo 'data-toggle="modal" data-target="#bedrijfsprofiel_modal"'; ?> >
                                 <div class="userBlockNav">
                                     <img src="<?php echo $company_logo;?>" alt="">
                                 </div>
@@ -314,14 +282,14 @@ $link = ($user) ? '/dashboard/user' : '/';
 
                         </li>
                        
-                        <div class="second-element-mobile" id="burgerAndbelief">
+                      <!--  <div class="second-element-mobile" id="burgerAndbelief">
                             <button id="burger" class=" btn burgerElement boxSousNav3-2">
                                 <i class="fa fa-bars text-white" style="font-size: 25px"></i>
                             </button>
                             <button id="burgerCroie" class="btn croie">
                                 <i class="bi bi-x-lg text-white" style="font-size: 25px"></i>
                             </button>
-                        </div>
+                        </div>-->
 
 
                         <li class="position-relative dropdown dropdownNotificationToggle">
@@ -329,13 +297,17 @@ $link = ($user) ? '/dashboard/user' : '/';
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
                                 <?php if(!empty($todos)){ ?> <span style="color:white" class="alertNotification"><?=count($todos);?></span> <?php } ?>
                             </button>
-                            <div class="dropdown-menu dropdownNotificationWeb" aria-labelledby="dropdownMenuButton">
+                            <div class="dropdown-menu dropdownNotificationWeb" aria-labelledby="dropdownMenuButton" id="ModalNotification">
                                 <h5 class="modal-title" id="exampleModalLabel">Notifications</h5>
                                 <?php
                                     if(!empty($todos)){
                                         foreach($todos as $todo){
                                             if($key == 4)
                                                 break;
+
+                                            $read = get_field('read_feedback', $todo->ID);
+                                            if($read)
+                                                continue;
 
                                             $type = get_field('type_feedback', $todo->ID);
                                             $manager = get_field('manager_feedback', $todo->ID);
@@ -347,12 +319,15 @@ $link = ($user) ? '/dashboard/user' : '/';
                                         </a>
                                 <?php
                                         }
-                                    }else{
+                                        echo '<div class="">
+                                                  <a href="/dashboard/user/detail-notification/?todo=6620" class="btn BekijkNotifications">Bekijk alle notificaties</a>
+                                              </div>';
+                                    }
+                                    else{
                                 ?>
                                         <div>
                                             <div class="">
                                                 <p class="feedbackText">Empty until now ...</p>
-                                                <a href="/dashboard/user/activity" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                             </div>
                                         </div>
                                 <?php
@@ -379,3 +354,20 @@ $link = ($user) ? '/dashboard/user' : '/';
             </div>
         </nav>
      <!-- </body> -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+    $('.bntNotification').click((e)=>{
+        $.ajax({
+                url:"/read-notification",
+                method:"get",
+                data:{},
+                dataType:"text",
+                success: function(data){
+                    // Get the modal
+                    console.log(data);
+                }
+        });
+    });
+</script>

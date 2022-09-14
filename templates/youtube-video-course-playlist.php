@@ -32,7 +32,6 @@ $table = $wpdb->prefix . 'databank';
 
   $author_id = 0;
 
-
   foreach($users as $user){
       $name_user = strtolower($user->data->display_name);
 
@@ -44,10 +43,8 @@ $table = $wpdb->prefix . 'databank';
   }
 
   $playlists_id = get_field('youtube_playlists', 'user_'. $author_id);
-  if(!$playlists_id)
-    echo '<h3>No news playlists found</h3>';
 
-  if(!empty($playlists_id))
+  if($playlists_id || !empty($playlists_id))
     foreach($playlists_id as $playlist_id){
       $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&id=" . $playlist_id . "&key=" . $api_key; 
     

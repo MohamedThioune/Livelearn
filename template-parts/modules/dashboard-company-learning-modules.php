@@ -34,7 +34,7 @@ $order_args = array(
 );
 $orders = wc_get_orders($order_args);
 
-/*
+    /*
     ** Categories - all  * 
     */
 
@@ -234,7 +234,8 @@ $orders = wc_get_orders($order_args);
                     </div>
                     <div class="d-flex justify-content-end">
                         <button id="save_subtopics" type="button" class="btn text-white" style="background: #023356;">
-                            <strong>Save</strong> </button>
+                            <strong>Save</strong> 
+                        </button>
                     </div>
                 </div>
             </div>
@@ -260,15 +261,15 @@ $orders = wc_get_orders($order_args);
             <div class="row d-flex text-center justify-content-center align-items-center h-50">
                 <div class="col-md-11  p-4">
                     <form action='/dashboard/user/' method='POST'>
-                    <label for='member_id'><b>Deel deze cursus met uw team :</b></label><br>
-                    <div class="form-group display-experts">
-                    </div> 
-                    <div id="modal-content">
-                             
-                    </div>
-                    <center><input type='submit' class='btn text-white' name='referee_employee' value='Save' style='background: #023356; border: none;'/></center>
-                    <div class="d-flex justify-content-end">
-                    </div>
+                        <label for='member_id'><b>Deel met de volgende medewerkers :</b></label><br>
+                        <div class="form-group display-experts">
+                        </div> 
+                        <div id="modal-content">
+                                
+                        </div>
+                        <center><input type='submit' class='btn text-white' name='referee_employee' value='Save' style='background: #023356; border: none;'/></center>
+                        <div class="d-flex justify-content-end">
+                        </div>
                     </form>
 
                 </div>
@@ -380,7 +381,7 @@ $orders = wc_get_orders($order_args);
                             </p>             
                         </td>
                         <td class="textTh"><?php echo $day; ?></td>
-                        <td class="textTh" id="live"> <input type="button" class="btnNewCourse rent" id="<?= $course->ID; ?>"  value="Activeer" /> </td>
+                        <td class="textTh" id="live"> <input type="button" class="btnNewCourse rent" id="<?= $course->ID; ?>" value="Deel" /> </td>
                     </tr>
                     <?php
                     }

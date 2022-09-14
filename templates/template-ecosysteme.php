@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
 <?php 
+$like_src = get_stylesheet_directory_uri()."/img/heart-like.png";
+$dislike_src = get_stylesheet_directory_uri()."/img/heart-dislike.png";
 
 $topic = (isset($_GET['topic'])) ? $_GET['topic'] : 0;
 $name_topic =  ($topic != 0) ? (String)get_the_category_by_ID($topic) : '';
@@ -54,6 +56,7 @@ if($topic != 0){
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ) );
 }
+
 $args = array(
     'post_type' => 'post',
     'post_status' => 'publish',
@@ -62,7 +65,9 @@ $args = array(
 );
 
 $global_blogs = get_posts($args);
+
 $blogs = array();
+$blogs_id = array();
 $others = array();
 $teachers = array();
 $teachers_all = array();
@@ -82,38 +87,35 @@ foreach($global_blogs as $blog)
     $category_id = 0;
     $experts = get_field('experts', $blog->ID);
     
-    $trees = array();
-    $tree = get_the_terms($blog->ID, 'course_category');
-    foreach($tree as $tre)
-        array_push($trees, $tre->term_id);
-    
-    $categories_id = get_field('categories',  $blog->ID);
+    $trees = get_the_terms($blog->ID, 'course_category');
+    $trees = $trees[2]->ID;
+
+    $category_default = get_field('categories',  $blog->ID);
     $categories_xml = get_field('category_xml',  $blog->ID);
     $categories = array();
 
     /*
     * Merge categories from customize and xml
-    */ 
+    */
+    if(!empty($category_default))
+    foreach($category_default as $item)
+        if($item)
+            if(!in_array($item['value'], $categories))
+                array_push($categories,$item['value']);
+            
+    else if(!empty($category_xml))
+        foreach($category_xml as $item)
+            if($item)
+                if(!in_array($item['value'], $categories))
+                    array_push($categories,$item['value']);
 
-
-    if($categories_xml)
-        foreach($categories_xml as $categorie){
-            $categorie = $categorie['value'];
-            if(!in_array($categorie, $categories))
-                array_push($categories, $categorie);
-        }
-
-    if($categories_id)
-        if(!empty($categories_id)){
-            $categories = array();  
-            foreach($categories_id as $categorie)                    
-                $categories = explode(',', $categorie['value']);
-        }
     $born = false;
     foreach($categoriees as $categoriee){
         if(in_array($categoriee, $trees) || $categories)
             if(in_array($categoriee, $trees) || in_array($categoriee, $categories)){
                 array_push($blogs, $blog);
+                array_push($blogs_id, $blog->ID);
+
                 $born = true;
                 /*
                  ** Push experts 
@@ -127,8 +129,7 @@ foreach($global_blogs as $blog)
                 /*
                  **
                 */ 
-                break;
-                
+                break;                
             }
     }
     if(!$born){
@@ -141,6 +142,13 @@ foreach($global_blogs as $blog)
      **
     */ 
 }
+
+//The user
+$user_id = get_current_user_id();
+
+//Saved courses
+$saved = get_user_meta($user_id, 'course');
+
 ?>
 
 <div>
@@ -249,9 +257,9 @@ foreach($global_blogs as $blog)
                         
                         <div class="groupBtnEcosysteme">
                             <div class="p-2 my-3">
-                                <a href="" class="btnContact rounded-pill rounded" style="background-color: #00A89D"
+                                <a href="" class="btnContactEco rounded-pill rounded" style="background-color: #00A89D"
                                  data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/logoMobil.png" alt="" class="text-danger">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn_white.png" alt="" class="text-danger">
                                     Join community
                                 </a>
                             </div>
@@ -310,8 +318,9 @@ foreach($global_blogs as $blog)
                     </a>
                     <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownMenuLink">
                         <a class="dropdown-item" href="#">Last 7 days</a>
-                        <a class="dropdown-item" href="#"> last month</a>
-                        <a class="dropdown-item" href="#"> last 7 year</a>
+                        <a class="dropdown-item" href="#">Last 1 month</a>
+                        <a class="dropdown-item" href="#">Last 1 year</a>
+                        <a class="dropdown-item" href="#">All time</a>
                     </div>
                 </div>
             </div>
@@ -474,104 +483,7 @@ foreach($global_blogs as $blog)
                             <?php } ?>
                         </div>
                     </div>
-
                 </div>
-
-
-
-
-
-
-          <!--      <p class="sousBlockTitleProduct"> Roadpath "<?php /*if( isset($title_road_path) && isset($expert_road_path) ) echo $title_road_path . '" by ' . $expert_road_path; */?> </p>
-                <div class="blockCardOpleidingen ">
-
-                    <div class="swiper-container swipeContaine4">
-                        <div class="swiper-wrapper">
-                            <?php
-/*                            foreach($road_paths as $blog) {
-
-                            $tag = '';
-                            $image = null;
-
-                            //Image
-                            $image = get_the_post_thumbnail_url($blog->ID);
-                            if(!$image)
-                                $image = get_field('preview', $blog->ID)['url'];
-                                    if(!$image){
-                                        $image = get_field('url_image_xml', $blog->ID);
-                                        if(!$image)
-                                            $image = get_stylesheet_directory_uri() . '/img/libay.png';
-                                    }
-
-                            $author = get_field('profile_img',  'user_' . $blog->post_author);
-
-                            //Summary
-                            $summary = get_the_excerpt($blog->ID);
-
-                            if(!$summary)
-                                $summary = get_field('short_description', $blog->ID);
-
-                            //Tags
-                            $tree = get_the_tags($blog->ID);
-
-                            if($tree)
-                                if(isset($tree[2]))
-                                    $tag = $tree[2]->name;
-
-                            if($tag = ''){
-                                $tagS = intval(explode(',', get_field('categories',  $blog->ID)[0]['value'])[0]);
-                                $tagI = intval(get_field('category_xml',  $blog->ID)[0]['value']);
-                                if($tagS != 0)
-                                    $tag = (String)get_the_category_by_ID($tagS);
-                                else if($tagI != 0)
-                                    $tag = (String)get_the_category_by_ID($tagI);                                    
-                            }
-
-                            $type_course = get_field('course_type', $blog->ID);
-                            */?>
-                            <a href="<?php /*echo get_permalink($blog->ID) */?>" class="swiper-slide swiper-slide4">
-                                <div class="cardKraam2">
-                                    <div class="headCardKraam">
-                                        <img src="<?php /*echo $image; */?>" alt="">
-                                    </div>
-                                    <button class="btn btnImgCoeurEcosysteme">
-                                        <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/coeur1.png" alt="">
-                                    </button>
-                                    <div class="contentCardProd">
-                                        <div class="group8">
-                                            <div class="imgTitleCours">
-                                                <div class="imgCoursProd">
-                                                    <img src="<?php /*echo $author; */?>" alt="">
-                                                </div>
-                                                <p class="nameCoursProd"><?php /*echo(get_userdata($blog->post_author)->data->display_name); */?></p>
-                                            </div>
-                                            <div class="group9">
-                                                <div class="blockOpein">
-                                                    <img class="iconAm" src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/graduat.png" alt="">
-                                                    <p class="lieuAm"><?/*= $type_course; */?></p>
-                                                </div>
-                                                <?php /*if($tag != '') { */?>
-                                                <div class="blockOpein">
-                                                    &#x0023;&#xFE0F;&#x20E3;
-                                                    <p class="lieuAm"><?php /*echo $tag; */?></p>
-                                                </div>
-                                                <?php /*} */?>
-                                            </div>
-                                        </div>
-                                        <p class="werkText"><?php /*echo $blog->post_title; */?></p>
-                                        <p class="descriptionPlatform">
-                                            <?php /*echo $summary; */?>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                            <?php
-/*                            }
-                            */?>
-                        </div>
-                    </div>
-
-                </div>-->
             </div>
             <?php
             }
@@ -589,7 +501,7 @@ foreach($global_blogs as $blog)
                         <div class="swiper-wrapper">
                             <?php
                             foreach($blogs as $blog) {
-
+                                                            
                             $tag = '';
                             $image = null;
 
@@ -632,9 +544,23 @@ foreach($global_blogs as $blog)
                                     <div class="headCardKraam">
                                         <img src="<?php echo $image; ?>" alt="">
                                     </div>
-                                    <button class="btn btnImgCoeurEcosysteme">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/coeur1.png" alt="">
-                                    </button>
+                                    <div>
+                                        <button class="btn btnImgCoeurEcosysteme">
+                                            <?php                                
+                                                if (in_array($blog->ID, $saved))
+                                                {
+                                            ?>
+                                                <img class="btn_favourite" id="<?php echo $user_id."_".$blog->ID."_course" ?>"  src="<?php echo $like_src;?>" alt=""> 
+                                            <?php
+                                                }
+                                                else{
+                                            ?>
+                                                <img class="btn_favourite" id="<?php echo $user_id."_".$blog->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                            <?php
+                                                }
+                                            ?>
+                                        </button>
+                                    </div>
                                     <div class="contentCardProd">
                                         <div class="group8">
                                             <div class="imgTitleCours">
@@ -715,15 +641,21 @@ foreach($global_blogs as $blog)
                             <?php
                             foreach($others as $blog) {
 
+                            if(in_array($blog->ID, $blogs_id))
+                                continue;
+
                             $tag = '';
                             $image = null;
 
-                            //Image
+                              //Image
                             $image = get_the_post_thumbnail_url($blog->ID);
                             if(!$image)
                                 $image = get_field('preview', $blog->ID)['url'];
-                            else if(!$image)
-                                $image = get_stylesheet_directory_uri() . '/img/libay.png';
+                                    if(!$image){
+                                        $image = get_field('url_image_xml', $blog->ID);
+                                        if(!$image)
+                                            $image = get_stylesheet_directory_uri() . '/img/libay.png';
+                                    }
                                     
 
                             $author = get_field('profile_img',  'user_' . $blog->post_author);
@@ -756,7 +688,19 @@ foreach($global_blogs as $blog)
                                         <img src="<?php echo $image; ?>" alt="">
                                     </div>
                                     <button class="btn btnImgCoeurEcosysteme">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/coeur1.png" alt="">
+                                        <?php                                
+                                            if (in_array($blog->ID, $saved))
+                                            {
+                                        ?>
+                                            <img class="btn_favourite" id="<?php echo $user_id."_".$blog->ID."_course" ?>"  src="<?php echo $like_src;?>" alt=""> 
+                                        <?php
+                                            }
+                                            else{
+                                        ?>
+                                            <img class="btn_favourite" id="<?php echo $user_id."_".$blog->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                        <?php
+                                            }
+                                        ?>                                    
                                     </button>
                                     <div class="contentCardProd">
                                         <div class="group8">
@@ -851,6 +795,40 @@ foreach($global_blogs as $blog)
 
     });
 
+</script>
+
+<script>
+    $(".btn_favourite").click((e)=>
+    {
+        btn_id = e.target.id;
+        meta_key = btn_id.split("_")[2];
+        id = btn_id.split("_")[1];
+        user_id = btn_id.split("_")[0];
+        
+        console.log(e.target)
+         $.ajax({
+             url:"/like",
+             method:"post",
+             data:{
+                 meta_key : meta_key,
+                 id : id,
+                 user_id : user_id,
+             },
+             dataType:"text",
+             success: function(data){
+                 console.log(data);
+                  let src=$("#"+btn_id).attr("src");
+                    if(src=="<?php echo $like_src; ?>")
+                    {
+                        $("#"+btn_id).attr("src","<?php echo $dislike_src; ?>");
+                    }
+                    else
+                    {
+                        $("#"+btn_id).attr("src","<?php echo $like_src; ?>");
+                    }              
+             }
+         });
+    })
 </script>
 
 <script>

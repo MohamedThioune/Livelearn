@@ -13,11 +13,7 @@ require($page);
 
 <?php
 
-    if (isset($_POST))
-    {
-        //var_dump($_POST);
-
-        function RandomString()
+    function RandomString()
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randstring = '';
@@ -28,11 +24,10 @@ require($page);
         return $randstring;
     }
 
-//   if(!empty($company))
-//     $company_manager = $company[0]->post_title;
+    if (isset($_POST))
+    {
 
     extract($_POST);
-    //var_dump($email);
     if(isset($email)){
        
         if($email != null)
@@ -505,7 +500,7 @@ $degrees=[
                         <div class="groupeBtn-Jouw-inloggen">
                             <button type="button" class="btn jouwn-skills elementWeb" data-toggle="modal" data-target="#SkillsModal" >Jouw skills paspoort in 6 stappen</button>
                             <button type="button" class="jouwn-skills elementMobile" data-toggle="modal" data-target="#SkillsModal" >Skills Paspoort</button>
-                            <a href="/inloggen" class="inloggenbtn">Inloggen</a>
+                            <a href="#" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal"  class="inloggenbtn">Inloggen</a>
                         </div>
 
                     <?php 
@@ -535,37 +530,50 @@ $degrees=[
                     <form name="skills_passport_add" method="post">
                         <div class="blockStepSkillsPaspoort">
                             <div class="setp" >
-                                <div class="circleIndicator colorStep" id="Niveau"></div>
-                                <p class="textOpleidRight">Niveau</p>
+                                <div class="circleIndicator colorStep" id="Niveau">
+                                    <i class="fa fa-level-up" aria-hidden="true"></i>
+                                </div>
+                                <p class="textOpleidRight">Level</p>
                             </div>
                             <div class="setp" >
-                                <div class="circleIndicator" id="Vakgebied"></div>
+                                <div class="circleIndicator" id="Vakgebied">
+                                    <i class="fa fa-file"></i>
+                                </div>
                                 <p class="textOpleidRight">Vakgebied (en) </p>
                             </div>
                             <div class="setp" >
-                                <div class="circleIndicator" id="Locatie"></div>
+                                <div class="circleIndicator" id="Locatie">
+                                    <i class="fa fa-map-marker"></i>
+                                </div>
                                 <p class="textOpleidRight">Locatie</p>
                             </div>
                             <div class="setp" >
-                                <div class="circleIndicator" id="Leervorm"></div>
+                                <div class="circleIndicator" id="Leervorm">
+                                    <i class="fa fa-graduation-cap"></i>
+                                </div>
                                 <p class="textOpleidRight">Leervorm</p>
                             </div>
                             <div class="setp" >
-                                <div class="circleIndicator" id="Generatie"></div>
+                                <div class="circleIndicator" id="Generatie">
+                                    <i class="fa fa-calendar-check"></i>
+                                </div>
                                 <p class="textOpleidRight">Generatie</p>
                             </div>
                             <div class="setp" >
-                                <div class="circleIndicator" id="Finish"></div>
+                                <div class="circleIndicator" id="Finish">
+                                    <i class="fa fa-flag-checkered"></i>
+                                </div>
                                 <p class="textOpleidRight">Finish</p>
                             </div>
                         </div>
                     
                             <div class="step1SkillsPasspoort">
-                                <p class="titleBlockStepSkills">Wat is jouw hoogst afgeronde opleiding ? 🧑🧑🧑🧑</p>
+                                <p class="titleBlockStepSkills">Wat is jouw hoogst afgeronde opleiding ?</p>
                                 <div class="blockInputRadio">
                                     <?= $input_degrees; ?>
                                 </div>
-                                <div class="text-center w-100">
+                                <div class="text-center w-100 groupBtnStepSkillsP">
+                                    <button type="button" class="btn btnSkip" id="btnSkip">Sikp</button>
                                     <button type="button" class="btn btn-volgende" id="btnStep1SkillsPasspoort">Volgende</button>
                                 </div>
                             </div>
@@ -659,12 +667,12 @@ $degrees=[
                                                 <input name="first_name"  type="text" placeholder="Voorman">
                                             </div>
                                             <div class="form-group-skills">
-                                                <label for="">Bedrijf</label>
-                                                <input name="companie" type="text" placeholder="Bedrijf">
-                                            </div>
-                                            <div class="form-group-skills">
                                                 <label for="">Achternaam</label>
                                                 <input name="last_name" type="text" placeholder="Achternaam">
+                                            </div>
+                                            <div class="form-group-skills">
+                                                <label for="">Bedrijf</label>
+                                                <input name="companie" type="text" placeholder="Bedrijf">
                                             </div>
                                             <!-- <div class="form-group-skills">
                                                 <label for="">Wachtwoord</label>
@@ -980,7 +988,7 @@ $degrees=[
                         */
                         $location = 'Virtual';
                         $day = "<p><i class='fas fa-calendar-week'></i></p>";
-                        $month = ' ';
+                        $month = '';
 
                         $category = ' ';
                                     
@@ -1001,25 +1009,35 @@ $degrees=[
                         */
                         $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
-                        $data = get_field('data_locaties', $course->ID);
-                        if($data){
-                            $date = $data[0]['data'][0]['start_date'];
-                            if($date != ""){
-                                $day = explode('/', explode(' ', $date)[0])[0];
-                                $mon = explode('/', explode(' ', $date)[0])[1];
+                        $datas = get_field('data_locaties', $course->ID);
+                        if($datas){
+                            $data = $datas[0]['data'][0]['start_date'];
+                            if($data != ""){
+                                $day = explode('/', explode(' ', $data)[0])[0];
+                                $mon = explode('/', explode(' ', $data)[0])[1];
                                 $month = $calendar[$mon];
                             }
 
-                            $location = $data[0]['data'][0]['location'];
+                            $location = $datas[0]['data'][0]['location'];
                         }else{
-                            $data = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
-                            $date = $data[0];
-                            $day = explode('/', explode(' ', $date)[0])[0];
-                            $month = explode('/', explode(' ', $date)[0])[1];
+                            $datas = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
+                            $data = $datas[0];
+                            $day = explode('/', explode(' ', $data)[0])[0];
+                            $month = explode('/', explode(' ', $data)[0])[1];
                             $month = $calendar[$month];
-                            $location = $data[2];
+                            $location = $datas[2];
                         }
 
+                        if(!$month)
+                            continue;
+
+                        if(isset($data)){
+                            $date_now = strtotime(date('Y-m-d'));
+                            $data = strtotime(str_replace('/', '.', $data));
+                            if($data < $date_now)
+                                continue;
+                        }   
+                        
                         /*
                         * Price
                         */
@@ -1122,7 +1140,23 @@ $degrees=[
         <div class="swiper-container swiper-container-3">
             <div class="swiper-wrapper">
                 <?php
+                  $author_id = 0;
+                  $users = get_users();
 
+                  foreach($users as $user){
+                      $name_user = strtolower($user->data->display_name);
+                      if($name_user == "Livelean" || $name_user == "livelean"){
+                        $author_id = intval($user->data->ID);
+                        $name_user = $user->display_name;
+                        $featured = get_field('featured', 'user_' . $author_id);
+                        if($featured)
+                            break;
+                      }
+                  }
+
+                  if(!empty($featured))
+                    $courses = $featured;
+                  
                   $i = 0;
 
                   foreach($courses as $course){
@@ -1268,6 +1302,7 @@ $degrees=[
                         break;
                 }?>
             </div>
+
         </div>
     </div>
 </div>
@@ -1573,6 +1608,47 @@ $degrees=[
         }
         else
             $('#autocomplete').html("<center> <small>Typing ... </small> <center>");
+    });
+</script>
+
+<script>
+    $('.bntNotification').click((e)=>{
+        $.ajax({
+                url:"/read-notification",
+                method:"get",
+                data:
+                {
+                },
+                dataType:"text",
+                success: function(data){
+                    // Get the modal
+                    console.log(data);
+                    var modal = document.getElementById("ModalNotification");
+                    // $('.display-fields-clean').html(data)
+                    // Get the button that opens the modal
+
+
+                    // Get the <span> element that closes the modal
+                    //var span = document.getElementsByClassName("close")[0];
+
+                    // When the user clicks on the button, open the modal
+
+                        modal.style.display = "block";
+
+                    // When the user clicks on <span> (x), close the modal
+                    // span.onclick = function() {
+                    //     modal.style.display = "none";
+                    // }
+
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function(event) {
+                        if (event.target == modal) {
+                        modal.style.display = "none";
+                        }
+                    }
+                            
+                }
+        });
     });
 </script>
 

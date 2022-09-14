@@ -13,7 +13,7 @@
                     <div class="">
                         <h1 class="CreeerText2">Creëer een constant lerende organisatie en trek talent aan</h1>
                         <p class="StimuleerText2">Stimuleer de in- en doorstroom van jouw (flexibele) werknemers, zodat zij jouw bedrijf naar het volgende niveau kunnen tillen.</p>
-                        <a class="btn btnMeerInformation" href="/overview-organisaties">Meer informatie</a>
+                        <a href="/overview-organisaties" class="meerInformatieBtn" >Meer informatie</a>
                     </div>
                     <div class="imgComponent2 mb-md-0 mb-4">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/Groupe8.png" alt="">
@@ -22,12 +22,10 @@
             </div>
             <div class="col-md-6 col-sm-12 order-md-1 order-0 pb-md-0 pb-3">
                 <div class="blockForm2">
-                    <p><b>Activeer zakelijke</b> <br> Leeromgeving </p>
-                    <form action="" class="formBoekGratis">
+                    <p><b>Activeer zakelijke Leeromgeving</b> <br>het is gratis </p>
                         <?php
-                        echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true']");
+                            echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true']");
                         ?>
-                    </form>
                 </div>
             </div>
         </div>

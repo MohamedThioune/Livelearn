@@ -60,9 +60,10 @@ body, html {
     padding: 0 !important;
     margin: 0 -15px;
     position:relative;
-    width: -webkit-fill-available;
     z-index: 1111;
     display: flex;
+    left: 0;
+    right: 0;
 }
 .headerdashboard-content{
     width: 100%;
@@ -183,7 +184,8 @@ body, html {
 
 .inputSearch {
     min-width: 345px;
-    padding-left: 25px;
+    padding-left: 15px;
+    font-size: 14px
 }
 
 .boxOne {
@@ -1020,7 +1022,7 @@ body, html {
 .stratGrtisBleu {
     border-radius: 10px;
     background: #023356;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     font-size: 14px;
     font-weight: bold;
     padding: 4px 15px 6px;
@@ -1596,10 +1598,6 @@ body, html {
     color: #42454d;
 }
 
-.liveOverBlock {
-    padding-top: 50px;
-}
-
 .blockImgCour {
     width: 100%;
     height: 443px;
@@ -1638,13 +1636,22 @@ body, html {
 .btnContact {
     padding: 15px 20px;
     background: #E0EFF4;
-    font-weight: bold;
-    font-size: 15px;
-    color: #023356;
-    justify-content: space-between;
     width: 48%;
     text-align: center;
     margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    color: #023356 !important;
+}
+.btnContact i{
+    color: #023356 !important;
+    margin-right: 10px;
+}
+.textBtnContact{
+    font-weight: bold;
+    font-size: 15px;
+    color: #023356;
+    margin-bottom: 0;
 }
 
 .btnContact img {
@@ -1680,7 +1687,7 @@ body, html {
 }
 
 .startTextBtn {
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     background: #023356;
     width: 100% !important;
     height: 48px;
@@ -1711,13 +1718,14 @@ body, html {
 
 .btnLeerom {
     padding: 10px 15px;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     background-color: #00A89D;
     font-weight: bold;
     font-size: 15px;
     margin-bottom: 15px;
     border-radius: 9px;
     line-height: 28px;
+    margin-top: 20px;
 }
 
 .PrisText {
@@ -1869,7 +1877,11 @@ body, html {
 }
 
 .BlocknumberEvenement {
-    width: 42%;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    padding: 10px 0;
 }
 
 .blockPriceEvens {
@@ -1884,26 +1896,29 @@ body, html {
 }
 
 .numberEvens {
-    font-size: 13px;
     background: #023356;
-    color: #FFFFFF;
-    font-weight: bold;
     border-radius: 100%;
-    padding: 2px 10px;
     margin-bottom: 1px;
-    height: fit-content;
-    padding-top: 4px;
-    padding-bottom: 3px;
+    width: 30px;
+    height: 28px;
+    padding-bottom: 2px;
+    text-align: center;
+    color: #FFFFFF !important;
+}
+.numberEvens p{
+    color: #FFFFFF !important;
+    font-size: 13px !important;
+    font-weight: bold;
+    margin-bottom: 0;
+    margin-top: -2px;
 }
 
 .dateEvens {
     color: #707070;
-    font-size: 13px;
-    padding: 2px 15px;
-    width: 316px;
-    border: 1px solid #D6E0DF;
-    border-radius: 11px;
-    margin-bottom: 8px;
+    font-size: 14px;
+    padding: 0px 15px;
+    border: 0px solid #D6E0DF;
+    margin-bottom: 0;
 }
 
 .block7 {
@@ -1926,7 +1941,7 @@ body, html {
     right: 0;
     bottom: 8px;
     background: #023356;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     font-weight: bold;
     font-size: 14px;
     padding: 2px 23px;
@@ -2007,7 +2022,7 @@ body, html {
 
 .sousProduct1 {
     background: #023356;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     padding: 25px 0px;
     min-height: 100vh;
     position: static;
@@ -2042,6 +2057,7 @@ body, html {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    color: #023356 !important;
 }
 
 
@@ -2209,8 +2225,8 @@ body, html {
 
 .sousProductTest {
     width: 100%;
-    background: #023356;
-    color: #FFFFFF;
+    background: #F4F7F6;
+    color: #043356 !important;
     padding: 25px 0px;
     position: static;
     display: block;
@@ -2247,7 +2263,7 @@ body, html {
     position: absolute;
     bottom: 15px;
     background: #023356;
-    color: #D6E0DF;
+    color: #D6E0DF !important;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -2258,7 +2274,7 @@ body, html {
     position: absolute;
     bottom: 15px;
     background: #023356;
-    color: #D6E0DF;
+    color: #D6E0DF !important;
     display: flex;
     justify-content: space-between;
     width: 91%;
@@ -2448,7 +2464,7 @@ body, html {
 
 .btnMeer {
     padding: 2px 30px !important;
-    color: white;
+    color: white !important;
     background: #023356;
     border-radius: 10px;
     font-size: 14px;
@@ -2578,7 +2594,7 @@ body, html {
 .boxOne4 {
     height: 85vh;
     background: #00A89D;
-    color: white;
+    color: white !important;
     position: relative;
     display: flex;
     align-items: center;
@@ -2888,7 +2904,7 @@ body, html {
 
 .meldText {
     background: #023356;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     font-size: 18px;
     font-weight: bold;
     border-radius: 15px;
@@ -3161,6 +3177,8 @@ a:hover {
 }
 .deToekomstBlock{
     width: 75%;
+    position: relative;
+    padding-bottom: 30px;
 }
 .containWorkshopAgenda{
     position: absolute;
@@ -3171,18 +3189,23 @@ a:hover {
     display: flex;
     width: 100%;
     justify-content: space-between;
+    position: absolute;
+    bottom: 0px;
 }
 
 .janBlock {
     display: flex;
+    margin-right: 10px;
 }
 
 .euroBlock {
     display: flex;
+    margin-right: 10px;
 }
 
 .zwoleBlock {
     display: flex;
+    margin-right: 10px;
 }
 
 .facilityBlock {
@@ -3202,7 +3225,7 @@ a:hover {
 
 .blockDateFront {
     background: #023356;
-    color: white;
+    color: white !important;
     width: 50px;
     opacity: 11;
     position: relative;
@@ -3253,6 +3276,12 @@ a:hover {
     margin-bottom: 2px;
     color: #707070;
     margin-left: 4px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+
 }
 
 .euroImg {
@@ -3432,9 +3461,11 @@ form {
 }
 
 .showallLink {
-    color: #043356;
-    font-weight: bold;
-    text-decoration: revert;
+    color: #707070 !important;
+    background: #dfeef3;
+    padding: 8px 20px;
+    border-radius: 18px;
+    position: relative;
 }
 
 .showallLink:hover {
@@ -4225,6 +4256,7 @@ form {
 }
 .searchContentBlock{
     width: 67%;
+    position: relative;
 }
 .searchBlock .sousProductTest {
     background: #e0eff4;
@@ -4839,6 +4871,7 @@ form {
         height: 21px;
         border: none;
         background: #00A89D;
+        color: #ffffff !important;
         position: relative;
         top: 15px;
         border-radius: 4px;
@@ -5029,7 +5062,7 @@ form {
     }
     .btnContact {
         padding: 15px 15px;
-        width: 100%;
+        width: 49%;
     }
     .sousBlockCours {
         display: flex;
@@ -5211,7 +5244,7 @@ form {
     .sousProduct1 {
         width: 100%;
         background: #023356;
-        color: #FFFFFF;
+        color: #FFFFFF !important;
         padding: 25px 0px;
         min-height: 100vh;
         position: fixed;
@@ -5247,7 +5280,7 @@ form {
         width: 100%;
     }
     .swipeContaine4 {
-        padding-left: 0 !important;
+        padding-left: 0px !important;
     }
     .swiper-slide4 {
         width: 87% !important;
@@ -5297,15 +5330,11 @@ form {
         display: flex;
         justify-content: space-between;
     }
-
-    .sousBlockProduct4 {
-        padding-left: 15px;
-    }
-    .sousBlockProduct2 {
-        padding-left: 15px;
-    }
     .sousBlockProduct6 {
         padding-left: 15px;
+    }
+    .tabUserOverview{
+        padding-left: 30px !important;
     }
     .AgendaDate2 {
         padding: 8px 9px 6px !important;
@@ -5405,7 +5434,7 @@ form {
     }
     .btnRegistreren {
         background: #00A89D;
-        color: #FFFFFF;
+        color: #FFFFFF !important;
         font-size: 15px;
         width: 100%;
         text-align: center;
@@ -5416,7 +5445,7 @@ form {
     }
     .btnInloggen {
         background: #023356;
-        color: #FFFFFF;
+        color: #FFFFFF !important;
         font-size: 15px;
         width: 100%;
         text-align: center;
@@ -5610,7 +5639,7 @@ form {
         display: none;
         width: 100%;
         background: #023356;
-        color: #FFFFFF;
+        color: #FFFFFF !important;
         padding: 25px 0px;
         min-height: 100vh;
         position: fixed;
@@ -5727,9 +5756,13 @@ form {
     }
     .searchBlock{
         overflow-x: hidden;
+        padding-top: 20px;
     }
     .blockCardSearch {
-        display: block;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+        margin-bottom: 10px;
     }
     .searchContentBlock {
         width: 100%;

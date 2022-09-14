@@ -34,9 +34,9 @@
 
         $views_stat_user = get_posts($args);
 
-        if(!empty($views_stat_user)){
+        if(!empty($views_stat_user))
             $stat_id = $views_stat_user[0]->ID;
-        }else{
+        else{
             $data = array(
                 'post_type' => 'view',
                 'post_author' => $user_id,
@@ -59,5 +59,89 @@
             $view = array($one_view); 
         
         update_field('views', $view, $stat_id);
+
+    }
+
+    function view_topic($topic_id, $user_visibility){
+        $user_id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;         
+        if(!$user_id)
+            return false;
+
+        $args = array(
+            'post_type' => 'view', 
+            'post_status' => 'publish',
+            'author' => $user_id,
+        );
+
+        $views_stat_user = get_posts($args);
+
+        if(!empty($views_stat_user))
+            $stat_id = $views_stat_user[0]->ID;
+        else{
+            $data = array(
+                'post_type' => 'view',
+                'post_author' => $user_id,
+                'post_status' => 'publish',
+                'post_title' => $user_visibility->display_name . ' - View',
+                );
+            
+            $stat_id = wp_insert_post($data);
+        }
+
+        $view = get_field('views_topic', $stat_id);
+        
+        $one_view = array();
+        $one_view['view_id'] = $topic_id;
+        $one_view['view_name'] = (String)get_the_category_by_ID($topic_id);
+        $one_view['view_date'] = date('d/m/Y H:i:s');
+
+        if(!empty($view))
+            array_push($view, $one_view);
+        else 
+            $view = array($one_view); 
+        
+        update_field('views_topic', $view, $stat_id);
+
+    }
+
+    function view_user($expert_id, $user_visibility){
+        $user_id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;
+        if(!$user_id)
+            return false;
+
+        $args = array(
+            'post_type' => 'view', 
+            'post_status' => 'publish',
+            'author' => $user_id,
+        );
+
+        $views_stat_user = get_posts($args);
+
+        if(!empty($views_stat_user))
+            $stat_id = $views_stat_user[0]->ID;
+        else{
+            $data = array(
+                'post_type' => 'view',
+                'post_author' => $user_id,
+                'post_status' => 'publish',
+                'post_title' => $user_visibility->display_name . ' - View',
+                );
+            
+            $stat_id = wp_insert_post($data);
+        }
+
+        $view = get_field('views_user', $stat_id);
+        
+        $one_view = array();
+        $one_view['view_id'] = $expert_id;
+        $one_view['view_name'] = get_userdata($expert_id)->display_name;
+        $one_view['view_date'] = date('d/m/Y H:i:s');
+
+        if(!empty($view))
+            array_push($view, $one_view);
+        else 
+            $view = array($one_view); 
+        
+        update_field('views_user', $view, $stat_id);
 
     }

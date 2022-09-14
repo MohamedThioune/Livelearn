@@ -34,7 +34,7 @@
                 <div class="d-flex justify-content-center">
 
                     <div>
-                        <a href="#" class="mx-3 d-flex flex-column ">
+                        <a href="https://wa.me/<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
                             <i style="font-size: 50px; height: 49px; margin-top: -4px;"
                                 class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>
                         </a>
@@ -43,9 +43,9 @@
                         </div>
                     </div>
                     <div>
-                        <a href="#" class="mx-3 d-flex flex-column ">
+                        <a href="mailto:<?= $email_user ?>" class="mx-3 d-flex flex-column ">
                             <i style="font-size: 25px"
-                            class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
+                                class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
                             <!-- <span class="bd-highlight fw-bold text-primary mt-2">email</span> -->
                         </a>
                         <div class="mt-3 text-center">
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <div>
-                        <a href="#" class="mx-3 d-flex flex-column ">
+                        <a href="sms:<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
                             <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>
                         </a>
                         <div class="mt-3 text-center">
@@ -62,9 +62,9 @@
                     </div>
 
                     <div>
-                        <a href="#" class="mx-3 d-flex flex-column ">
+                        <a href="tel:<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
                             <i class="bd-highlight bi bi-telephone-x border border-3 border-primary rounded-circle text-primary shadow"
-                            style="font-size: 20px; padding: 6px 11px;"></i>
+                                style="font-size: 20px; padding: 6px 11px;"></i>
                             <!-- <span class="bd-highlight fw-bold text-primary mt-2">call</span> -->
                         </a>
                         <div class="mt-3 text-center">
@@ -133,8 +133,9 @@
                     ?>
                     <div class="content-text p-4 pb-0">
                         <h4 class="text-dark">Voor wie ?</h4>
-                        <p class="m-0"><strong>This course is followed up by <?php if(isset($author->first_name) && isset($author->last_name)) echo $author->first_name . '' . $author->last_name; else echo $author->display_name; ?> </strong></p>
-                        <p><em>This line rendered as italicized text.</em></p>
+                        <p class="m-0">
+                            <?= $for_who ?>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -178,11 +179,11 @@
                 <p class="e-learningTitle"><?php echo $post->post_title;?></p>
                 <!-- Image -->
                 <div class="img-fluid-course">
-                    <img src="<?=$image?>" alt="">
+                    <img src="<?= $thumbnail ?>" alt="">
                 </div>
 
 
-                <p class="beschiBlockText">Beschikbaarheid en prijs</p>
+                <p class="beschiBlockText btnScroolEvent">Beschikbaarheid en prijs</p>
 
                 <!-- -------------------------------------- Start Icons row ------------------------------------->
                 <div class="d-flex elementcourseIcone sousBlock mx-md-2 mx-sm-2 text-center">
@@ -199,7 +200,7 @@
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-calendar-alt" style="font-size: 25px;"></i>
-                            <span class="textIconeLearning mt-1"><?= $number_course_day." dagdeel" ?></span>
+                            <span class="textIconeLearning mt-1"><?= $dagdeel." dagdeel" ?></span>
                         </div>
                         <div class="d-flex flex-column mx-md-3 mx-2">
                             <i class="fas fa-graduation-cap" style="font-size: 25px;"></i>
@@ -362,10 +363,9 @@
                             ?>
                         </div>
                        <br>
-
                    </div>
                     <?php 
-                        if($long_description || $agenda || $who || $results ) 
+                        if($agenda || $who || $results ) 
                             echo '<button type="button" class="btn btn-lg lees_alles my-4 w-md-25 px-4 border border-1 border-dark read-more-btn">Lees alles</button>';
                         else 
                             echo '<h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Leeg tot nu toe ...</b></h6>';
@@ -377,45 +377,46 @@
                     <div class="tabs">
                         <ul id="tabs-nav">
                             <li><a href="#tab1">Events</a></li>
-                            <li><a href="#tab2">Reviews</a></li>
-                            <li><a href="#tab3">Add Reviews</a></li>
+                            <li><a href="#tab2">Skills</a></li>
+                            <li><a href="#tab3">Reviews</a></li>
+                            <?php if(!$my_review_bool) echo '<li><a href="#tab4">Add Reviews</a></li>'; ?>
                         </ul> <!-- END tabs-nav -->
                         <div id="tabs-content">
                             <div id="tab1" class="tab-content">
                                 <?php
-                                $data = get_field('data_locaties', $post->ID);
-                                if(!$data){
-                                    $data = get_field('data_locaties_xml', $post->ID);
-                                    $xml_parse = true;
-                                }
+                                    $data = get_field('data_locaties', $post->ID);
+                                    if(!$data){
+                                        $data = get_field('data_locaties_xml', $post->ID);
+                                        $xml_parse = true;
+                                    }
 
-                                if(!isset($xml_parse)){
-                                    if(!empty($data)){
-                                        foreach($data as $datum) {
-                                            $date_end = '';
-                                            $date_start = '';
-                                            $agenda_start = '';
-                                            $agenda_end = '';
-                                            if(!empty($datum['data'])){
-                                                $date_start = $datum['data'][0]['start_date'];
-                                                if($date_start)
-                                                    if(count($datum['data']) >= 1){
-                                                        $date_end = $datum['data'][count($datum['data'])-1]['start_date'];
-                                                        $agenda_start = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
-                                                        if($date_end)
-                                                            $agenda_end = explode('/', explode(' ', $date_end)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_end)[0])[1]];
-                                                    }
-                                            }
+                                    if(!isset($xml_parse)){
+                                        if(!empty($data)){
+                                            foreach($data as $datum) {
+                                                $date_end = '';
+                                                $date_start = '';
+                                                $agenda_start = '';
+                                                $agenda_end = '';
+                                                if(!empty($datum['data'])){
+                                                    $date_start = $datum['data'][0]['start_date'];
+                                                    if($date_start)
+                                                        if(count($datum['data']) >= 1){
+                                                            $date_end = $datum['data'][count($datum['data'])-1]['start_date'];
+                                                            $agenda_start = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
+                                                            if($date_end)
+                                                                $agenda_end = explode('/', explode(' ', $date_end)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_end)[0])[1]];
+                                                        }
+                                                }
 
-                                            if(!empty($datum['data'])){
-                                                ?>
-                                                <a id="bookdates" name="bookdates"></a>
+                                                if(!empty($datum['data'])){
+                                                    ?>
+                                                    <a id="bookdates" name="bookdates"></a>
 
-                                                <!-------------------------------------------- Start cards on bottom --------------------------- -->
-                                                <div class="block2evens block2evensTabs">
-                                                    <section>
-                                                        <details>
-                                                            <summary class="dateText1">
+                                                    <!-------------------------------------------- Start cards on bottom --------------------------- -->
+                                                    <div class="block2evens block2evensTabs">
+                                                        <section>
+                                                            <details>
+                                                                <summary class="dateText1">
 
                                                                 <div class="headTabsAccordion">
                                                                     <div>
@@ -428,225 +429,238 @@
                                                                         }
                                                                         ?>
                                                                     </div>
-                                                                    <p class="prixEvens">€ <?php echo $price; ?></p>
+                                                                </div>
+
+                                                                </summary>
+                                                                <div class="detailSummary">
+                                                                    <div class="BlocknumberEvenement">
+
+                                                                        <?php
+
+                                                                        for($i = 0; $i < count($datum['data']); $i++) {
+                                                                            $date_start = $datum['data'][$i]['start_date'];
+                                                                            $location = $datum['data'][$i]['location'];
+                                                                            if($date_start != null) {
+                                                                                $day = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
+                                                                                $hour = explode(' ', $date_start)[1];
+
+                                                                                ?>
+                                                                                <?php if($i === 0){?>
+                                                                                    <input type="hidden" data-attr="dateNameStart" value="<?php echo $day . ', ' . $hour . ', ' . $location  ?>">
+                                                                                <?php }?>
+                                                                                <div class="d-flex">
+                                                                                    <p class="numberEvens"><?php echo $i+1 ?></p>
+                                                                                    <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
+                                                                                </div>
+                                                                                <?php
+                                                                            }
+                                                                        }
+                                                                        ?>
+                                                                    </div>
+
+                                                                    <div class="blockPriceEvens">
+                                                                        <div class="contentBtnCardProduct">
+                                                                            <!-- <a href="" class="btn btnReserveer">Reserveer<br><br></a> -->
+                                                                            <!-- <a href="" class="btn btnSchrijf">Schrijf mij in!</a> -->
+                                                                            <?php do_action( 'woocommerce_before_add_to_cart_form' ); ?>
+                                                                            <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
+                                                                                <?php do_action( 'woocommerce_before_add_to_cart_button' ); ?>
+                                                                                <?php
+                                                                                do_action( 'woocommerce_before_add_to_cart_quantity' );
+
+                                                                                woocommerce_quantity_input(
+                                                                                    array(
+                                                                                        'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
+                                                                                        'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
+                                                                                        'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
+                                                                                    )
+                                                                                );
+
+                                                                                do_action( 'woocommerce_after_add_to_cart_quantity' );
+
+                                                                                if($user_id != 0 && $user_id != $post->post_author){
+                                                                                    ?>
+                                                                                    <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="single_add_to_cart_button button alt">Reserveren</button>
+
+                                                                                <?php }
+                                                                                do_action( 'woocommerce_after_add_to_cart_button' ); ?>
+                                                                            </form>
+
+                                                                            <?php
+                                                                            if($user_id == 0)
+                                                                                echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
+                                                                            do_action( 'woocommerce_after_add_to_cart_form' ); ?>
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                </div>
+                                                            </details>
+
+                                                        </section>
+                                                    </div>
+
+                                                    <!-------------------------------------------- End cards on bottom --------------------------- -->
+
+                                                    <?php
+                                                }
+
+                                            }
+                                        }
+                                    }else{
+                                        if($data){
+                                            $it = 0;
+                                            foreach($data as $datum){
+                                                $infos = explode(';', $datum['value']);
+                                                $number = count($infos)-1;
+                                                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];
+                                                $date_start = explode(' ', $infos[0]);
+                                                $date_end = explode(' ', $infos[$number]);
+                                                $d_start = explode('/',$date_start[0]);
+                                                $d_end = explode('/',$date_end[0]);
+                                                $h_start = explode('-', $date[1])[0];
+                                                $h_end = explode('-', $date_end[1])[0];
+                                                $agenda_start = $d_start[0] . ' ' . $calendar[$d_start[1]];
+                                                $agenda_end = $d_end[0] . ' ' . $calendar[$d_end[1]];
+                                                ?>
+                                                <a id="bookdates" name="bookdates"></a>
+                                                <div class="block2evens block2evensTabs">
+                                                    <section>
+                                                        <details>
+                                                            <summary class="dateText1">
+
+                                                                <div class="headTabsAccordion">
+                                                                    <div>
+                                                                        <?php
+                                                                        echo $agenda_start;
+                                                                        if($date_start != $date_end)
+                                                                        {
+                                                                            echo ' - ';
+                                                                            echo $agenda_end;
+                                                                        }
+                                                                        ?>
+                                                                    </div>
                                                                 </div>
 
                                                             </summary>
                                                             <div class="detailSummary">
 
-                                                                <div class="dateBlock">
-                                                                    <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
-                                                                </div>
-                                                                <div class="BlocknumberEvenement">
+                                                                <div class="w-100">
 
                                                                     <?php
+                                                                    if(!empty($infos))
+                                                                        $x = 0;
+                                                                    foreach($infos as $key=>$info) {
+                                                                        $date = explode(' ', $info);
+                                                                        $d = explode('/',$date[0]);
+                                                                        $day = $d[0] . ' ' . $calendar[$d[1]];
+                                                                        $hour = explode(':', explode('-', $date[1])[0])[0] .':'. explode(':', explode('-', $date[1])[0])[1];
+                                                                        $location = explode('-',$date[2])[1];
+                                                                        ?>
+                                                                    <div class="BlocknumberEvenement">
+                                                                        <?php if($x === 0){?>
+                                                                            <input type="hidden" data-attr="dateNameStart" value="<?php echo $day . ', ' . $hour . ', ' . $location  ?>">
+                                                                        <?php }?>
+                                                                        <div class="d-flex align-items-center">
+                                                                            <p class="numberEvens"><?php echo $x+1 ?></p>
+                                                                            <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
+                                                                        </div>
+                                                                        <p class="prixEvens">€ <?php echo $price; ?></p>
+                                                                        <div class="blockPriceEvens">
 
-                                                                    for($i = 0; $i < count($datum['data']); $i++) {
-                                                                        $date_start = $datum['data'][$i]['start_date'];
-                                                                        $location = $datum['data'][$i]['location'];
-                                                                        if($date_start != null) {
-                                                                            $day = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
-                                                                            $hour = explode(' ', $date_start)[1];
 
-                                                                            ?>
-                                                                            <?php if($i === 0){?>
-                                                                                <input type="hidden" data-attr="dateNameStart" value="<?php echo $day . ', ' . $hour . ', ' . $location  ?>">
-                                                                            <?php }?>
-                                                                            <div class="d-flex">
-                                                                                <p class="numberEvens"><?php echo $i+1 ?></p>
-                                                                                <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
+                                                                            <div class="product-attr">
+
+
                                                                             </div>
-                                                                            <?php
-                                                                        }
+                                                                            <div class="contentBtnCardProduct">
+                                                                                <!-- <a href="" class="btn btnReserveer">Reserveer<br><br></a> -->
+                                                                                <!-- <a href="" class="btn btnSchrijf">Schrijf mij in!</a> -->
+                                                                                <?php do_action( 'woocommerce_before_add_to_cart_form' ); ?>
+
+                                                                                <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
+                                                                                    <?php do_action( 'woocommerce_before_add_to_cart_button' ); ?>
+                                                                                    <?php
+                                                                                    do_action( 'woocommerce_before_add_to_cart_quantity' );
+
+                                                                                    woocommerce_quantity_input(
+                                                                                        array(
+                                                                                            'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
+                                                                                            'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
+                                                                                            'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
+                                                                                        )
+                                                                                    );
+
+                                                                                    do_action( 'woocommerce_after_add_to_cart_quantity' );
+                                                                                    if($user_id != 0 && $user_id != $post->post_author){
+                                                                                        ?>
+                                                                                        <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="single_add_to_cart_button button alt">Reserveren</button>
+
+                                                                                    <?php }
+
+                                                                                    do_action( 'woocommerce_after_add_to_cart_button' ); ?>
+                                                                                </form>
+
+
+                                                                                <?php
+                                                                                if($user_id == 0)
+                                                                                    echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
+
+                                                                                do_action( 'woocommerce_after_add_to_cart_form' ); ?>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                        <?php
+                                                                        $x+=1;
                                                                     }
                                                                     ?>
                                                                 </div>
-
-                                                                <div class="blockPriceEvens">
-
-                                                                    <p class="exText">Ex BTW</p>
-                                                                    <div class="product-attr">
-
-
-                                                                    </div>
-                                                                    <div class="contentBtnCardProduct">
-                                                                        <!-- <a href="" class="btn btnReserveer">Reserveer<br><br></a> -->
-                                                                        <!-- <a href="" class="btn btnSchrijf">Schrijf mij in!</a> -->
-                                                                        <?php do_action( 'woocommerce_before_add_to_cart_form' ); ?>
-                                                                        <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
-                                                                            <?php do_action( 'woocommerce_before_add_to_cart_button' ); ?>
-                                                                            <?php
-                                                                            do_action( 'woocommerce_before_add_to_cart_quantity' );
-
-                                                                            woocommerce_quantity_input(
-                                                                                array(
-                                                                                    'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
-                                                                                    'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
-                                                                                    'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
-                                                                                )
-                                                                            );
-
-                                                                            do_action( 'woocommerce_after_add_to_cart_quantity' );
-
-                                                                            if($user_id != 0 && $user_id != $post->post_author){
-                                                                                ?>
-                                                                                <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="single_add_to_cart_button button alt">Reserveren</button>
-
-                                                                            <?php }
-                                                                            do_action( 'woocommerce_after_add_to_cart_button' ); ?>
-                                                                        </form>
-
-                                                                        <?php
-                                                                        if($user_id == 0)
-                                                                            echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
-                                                                        do_action( 'woocommerce_after_add_to_cart_form' ); ?>
-                                                                    </div>
-                                                                </div>
-
 
                                                             </div>
                                                         </details>
 
                                                     </section>
+
                                                 </div>
-
-
-                                                <!-------------------------------------------- End cards on bottom --------------------------- -->
-
-
                                                 <?php
+                                                $it++;
+                                                if($it == 4)
+                                                    break;
                                             }
-
                                         }
                                     }
-                                }else{
-                                    if($data){
-                                        $it = 0;
-                                        foreach($data as $datum){
-                                            $infos = explode(';', $datum['value']);
-                                            $number = count($infos)-1;
-                                            $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];
-                                            $date_start = explode(' ', $infos[0]);
-                                            $date_end = explode(' ', $infos[$number]);
-                                            $d_start = explode('/',$date_start[0]);
-                                            $d_end = explode('/',$date_end[0]);
-                                            $h_start = explode('-', $date[1])[0];
-                                            $h_end = explode('-', $date_end[1])[0];
-                                            $agenda_start = $d_start[0] . ' ' . $calendar[$d_start[1]];
-                                            $agenda_end = $d_end[0] . ' ' . $calendar[$d_end[1]];
-                                            ?>
-                                            <a id="bookdates" name="bookdates"></a>
-                                            <div class="block2evens block2evensTabs">
-
-                                                <section>
-                                                    <details>
-                                                        <summary class="dateText1">
-
-                                                            <div class="headTabsAccordion">
-                                                                <div>
-                                                                    <?php
-                                                                    echo $agenda_start;
-                                                                    if($date_start != $date_end)
-                                                                    {
-                                                                        echo ' - ';
-                                                                        echo $agenda_end;
-                                                                    }
-                                                                    ?>
-                                                                </div>
-                                                                <p class="prixEvens">€ <?php echo $price; ?></p>
-                                                            </div>
-
-                                                        </summary>
-                                                        <div class="detailSummary">
-
-                                                            <div class="dateBlock">
-                                                                <p class="inclusiefText">Beschrijving van de verschillende data voor deze cursus en de bijbehorende plaats</p>
-                                                            </div>
-                                                            <div class="BlocknumberEvenement">
-
-                                                                <?php
-                                                                if(!empty($infos))
-                                                                    $x = 0;
-                                                                foreach($infos as $key=>$info) {
-                                                                    $date = explode(' ', $info);
-                                                                    $d = explode('/',$date[0]);
-                                                                    $day = $d[0] . ' ' . $calendar[$d[1]];
-                                                                    $hour = explode(':', explode('-', $date[1])[0])[0] .':'. explode(':', explode('-', $date[1])[0])[1];
-                                                                    $location = explode('-',$date[2])[1];
-                                                                    ?>
-                                                                    <?php if($x === 0){?>
-                                                                        <input type="hidden" data-attr="dateNameStart" value="<?php echo $day . ', ' . $hour . ', ' . $location  ?>">
-                                                                    <?php }?>
-                                                                    <div class="d-flex">
-                                                                        <p class="numberEvens"><?php echo $x+1 ?></p>
-                                                                        <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
-                                                                    </div>
-                                                                    <?php
-                                                                    $x+=1;
-                                                                }
-                                                                ?>
-                                                            </div>
-
-                                                            <div class="blockPriceEvens">
-
-                                                                <p class="exText">Ex BTW</p>
-                                                                <div class="product-attr">
-
-
-                                                                </div>
-                                                                <div class="contentBtnCardProduct">
-                                                                    <!-- <a href="" class="btn btnReserveer">Reserveer<br><br></a> -->
-                                                                    <!-- <a href="" class="btn btnSchrijf">Schrijf mij in!</a> -->
-                                                                    <?php do_action( 'woocommerce_before_add_to_cart_form' ); ?>
-
-                                                                    <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
-                                                                        <?php do_action( 'woocommerce_before_add_to_cart_button' ); ?>
-                                                                        <?php
-                                                                        do_action( 'woocommerce_before_add_to_cart_quantity' );
-
-                                                                        woocommerce_quantity_input(
-                                                                            array(
-                                                                                'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
-                                                                                'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
-                                                                                'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
-                                                                            )
-                                                                        );
-
-                                                                        do_action( 'woocommerce_after_add_to_cart_quantity' );
-                                                                        if($user_id != 0 && $user_id != $post->post_author){
-                                                                            ?>
-                                                                            <button type="submit" name="add-to-cart" value="<?php echo esc_attr( $product->get_id() ); ?>" class="single_add_to_cart_button button alt">Reserveren</button>
-
-                                                                        <?php }
-
-                                                                        do_action( 'woocommerce_after_add_to_cart_button' ); ?>
-                                                                    </form>
-
-
-                                                                    <?php
-                                                                    if($user_id == 0)
-                                                                        echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
-
-                                                                    do_action( 'woocommerce_after_add_to_cart_form' ); ?>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </details>
-
-                                                </section>
-
-                                            </div>
-                                            <?php
-                                            $it++;
-                                            if($it == 4)
-                                                break;
-                                        }
-                                    }
-                                }
                                 ?>
                             </div>
+
                             <div id="tab2" class="tab-content">
+                                <h2>Skills</h2>
+                                <?php
+                                    $category_default = get_field('categories', $post->ID);
+                                    $category_xml = get_field('category_xml', $post->ID);
+                                
+                                ?>
+                                <div class="blockSkillsTabs">
+                                    <?php
+                                        $read_category = array();
+                                        if(!empty($category_default))
+                                            foreach($category_default as $item){
+                                                if(!in_array($item['value'],$read_category)){
+                                                    array_push($read_category,$item['value']);
+                                                    echo '<p class="skillsElement">'. (String)get_the_category_by_ID($item['value']) . '</p>';
+                                                }
+                                            }
+
+                                        else if(!empty($category_xml))
+                                            foreach($category_xml as $item)
+                                                if(!in_array($item['value'],$read_category)){
+                                                    array_push($read_category,$item['value']);
+                                                    echo '<p class="skillsElement">'. (String)get_the_category_by_ID($item['value']) . '</p>';
+                                                }
+                                    ?>
+                                </div>
+                            </div>
+
+                            <div id="tab3" class="tab-content">
                                 <?php
                                 if(!empty($reviews)){
                                     foreach($reviews as $review){
@@ -686,43 +700,46 @@
                                     echo "<h6>No reviews for this course ...</h6>";
                                 ?>
                             </div>
-                            <div id="tab3" class="tab-content">
+
+                            <div id="tab4" class="tab-content">
                                 <?php 
-                                if($user_id != 0){
+                                if($user_id != 0 && !$my_review_bool){
                                 ?>
-                                <form class="formSingleCoourseReview " action="../../dashboard/user/" method="POST">
-                                    <input type="hidden" name="user_id" value="<?= $user_id; ?>">
-                                    <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
+                                <div class="formSingleCoourseReview">
                                     <label>Rating</label>
                                     <div class="rating-element2">
                                         <div class="rating"> 
-                                            <input type="radio" id="star5" name="rating" value="5" />
+                                            <input type="radio" id="star5" class="stars" name="rating" value="5" />
                                             <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                                            <input type="radio" id="star4" name="rating" value="4" />
+                                            <input type="radio" id="star4" class="stars" name="rating" value="4" />
                                             <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                                            <input type="radio" id="star3" name="rating" value="3" />
+                                            <input type="radio" id="star3" class="stars" name="rating" value="3" />
                                             <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                                            <input type="radio" id="star2" name="rating" value="2" />
+                                            <input type="radio" id="star2" class="stars" name="rating" value="2" />
                                             <label class="star" for="star2" title="Good" aria-hidden="true"></label>
                                             <input type="radio" id="star1" name="rating" value="1" />
-                                            <label class="star" for="star1" title="Bad" aria-hidden="true"></label>
+                                            <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
                                         </div>
                                         <span class="rating-counter"></span>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="">Feedback</label>
-                                        <textarea name="feedback_content" rows="10"></textarea>
+                                        <textarea name="feedback_content" id="feedback" rows="10"></textarea>
                                     </div>
-                                    <input type='submit' class='btn btn-sendRating' name='review_post' value='Send'>
-                                </form>
+                                    <input type="button" class='btn btn-sendRating' id='btn_review' name='review_post' value='Send'>
+
+                                    <div id="info_review">
+                                    </div>
+                                </div>
                                 <?php
                                 }
                                 else
                                     echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> You must sign-in for review </button>";
                                 ?>
                             </div>
-                        </div> <!-- END tabs-content -->
+                        </div> 
+                        <!-- END tabs-content -->
                     </div> <!-- END tabs -->
                 </div>
             </div>
@@ -864,8 +881,75 @@
                         <input type="hidden" name="meta_key" value="expert" id="">
                         <?php
                         if($user_id != 0 && $user_id != $post->post_author)
-                            echo "<input type='submit' class='btnLeerom' style='border:none' name='interest_push' value='+ Leeromgeving'>";
+                            echo " <button type=\"button\" class=\"btn btnLeerom\" data-toggle=\"modal\" data-target=\"#ModalFollowExpert\">
+                                     + Leeromgeving
+                                    </button>";
                         ?>
+
+                        <!-- Modal follow expert -->
+                        <div class="modal fade" id="ModalFollowExpert" tabindex="-1" role="dialog" aria-labelledby="ModalFollowExpertLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Follow Expert</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <?php
+                                        foreach($experts as $expert){
+                                        $expert = get_users(array('include'=> $expert))[0]->data;
+                                        $company = get_field('company',  'user_' . $expert->ID);
+                                        $title = $company[0]->post_title;
+                                        $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                        ?>
+                                        <div class="blockExpertFollown">
+                                            <div class="d-flex">
+                                                <div class="blockImageExpertFollow">
+                                                    <img alt="Expert Image" src="<?php echo $image; ?>" alt="teacher photo">
+                                                </div>
+                                                <div>
+                                                    <p class="nameExpert"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></p>
+                                                    <p class="titleExpert"><?php echo $title; ?></p>
+                                                </div>
+                                            </div>
+                                            <form action="/dashboard/user/" method="POST">
+                                                <input type="hidden" name="artikel" value="<?= $post->ID; ?>" id="">
+                                                <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
+                                                <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
+                                                <input type="hidden" name="meta_key" value="expert" id="">
+                                                <div>
+                                                    <?php
+                                                    if($user_id != 0 && $user_id != $expert->ID)
+                                                    {
+                                                        $saves_expert = get_user_meta($user_id, 'expert');
+                                                        if (in_array($expert->ID, $saves_expert))
+                                                            echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
+                                                        else
+                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                    }
+                                                    
+                                                    ?>
+                                                </div>
+                                            </form>
+                                            <?php
+                                                if($user_id == 0)
+                                                    echo "                                
+                                                    <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='btn btnFollowExpert'> 
+                                                        Follow                                            
+                                                    </button>";
+                                            ?>
+                                        </div>
+                                        <?php } ?>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </form>
                     <?php
                     if($user_id == 0 )
@@ -890,7 +974,7 @@
                     <p class="btwText">BTW: € <?php echo $prijsvat ?></p>
 
 
-                    <button href="#bookdates" class="btn btnKoop text-white PrisText" style="background: #043356">Koop deze <?php echo $course_type; ?></button>
+                    <button href="#bookdates" class="btn btnKoop btnScroolEvent text-white PrisText" style="background: #043356">Schrijf je in <?php echo $course_type; ?></button>
                 </div>
 
                 <div class="col-12 my-5" style="background-color: #E0EFF4">
@@ -915,6 +999,7 @@
                                             </div>
                                             <span class="textIconeLearning"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span>
                                             <span><?php echo $title; ?></span>
+                                            <button class="btn btnFollowExpert">Follow</button>
                                         </div>
                                     </a>
                                  <?php } ?>
@@ -1043,8 +1128,18 @@
         });
     });
     //# sourceURL=pen.js
-</script>    
+</script>
 
+<script>
+    // scroll down on click button
+    $( '.btnScroolEvent' ).on( 'click', function(e){
+        $( 'html, body' ).animate({
+            scrollTop: $(".customTabs").offset().top
+        }, '500' );
+        e.preventDefault();
+
+    });
+</script>
 
 <script>
     $("#btn_favorite").click((e)=>
@@ -1065,6 +1160,38 @@
             success: function(data){
                 console.log(data);
                 $('#autocomplete_favoured').html(data);
+            }
+        });
+    })
+</script>
+
+<script>
+    $("#btn_review").click((e)=>
+    {
+        $(e.preventDefault());
+        var user_id = $("#user_id").val();
+        var id = $("#course_id").val();
+        var feedback = $("#feedback").val();
+        var stars = $('input[name=rating]:checked').val()
+        $.ajax({
+
+            url:"/review",
+            method:"post",
+            data:{
+                id:id,
+                user_id:user_id,
+                feedback_content:feedback,
+                stars:stars,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#tab3').html(data);
+                $("#feedback").val(' ');
+                if(data)
+                    $('#info_review').html("<span class='alert alert-success'>Your comments sent successfully</span>");
+                else
+                    $('#info_review').html("<span class='alert alert-error'>You already sent a comments for this course</span>");
             }
         });
     })

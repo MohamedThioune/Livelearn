@@ -159,7 +159,7 @@ if (isset ($_POST['id_course'])  && $_POST['action'] == 'get_course_subtopics') 
     $(document).ready(function () {
         //Select2
         $(".multipleSelect2").select2({
-            placeholder: "Select subtopics",
+            placeholder: "Maak uw keuze",
              //placeholder
         });
     });

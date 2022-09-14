@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.min.css" />
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.js"></script>
 <script type="text/javascript">
     $(function () {
@@ -33,7 +33,7 @@
                 <div class="titleOpleidingstype">
                     <h2>3.Data en locaties</h2>
                 </div>
-                
+
                 <form action="" method="POST" class="wrapperClone" id="attributes">
                     <input type="hidden" name="id" value="<?= $_GET['id']; ?>">
                     <?php
@@ -49,7 +49,7 @@
                             $adress = explode('-', $data_first)[3];
 
                             $data_first = explode(' ', explode('-', $data_first)[0])[0];
-                            
+
                             $max = intval(count($data)-1);
                             $data_last = $data[$max];
                             $data_last = explode(' ', explode('-', $data_last)[0])[0];
@@ -68,12 +68,12 @@
                                 foreach($slice_array as $key => $slice){
                                     $slice = explode(' ', explode('-', $slice)[0])[0];
                                     $data_between .= $slice;
-                                    if(isset($slice_array[$key + 1])) 
-                                        $data_between .= ','; 
+                                    if(isset($slice_array[$key + 1]))
+                                        $data_between .= ',';
                                 }
                             }
                         ?>
-                        <div class="groupInputDate">
+                        <div class="groupInputDate blockDateW100">
                             <div class="input-group form-group">
                                 <label for="">Start date</label>
                                 <input type="date" name="start_date[]" value="<?= $data_first ?>" required>
@@ -83,7 +83,7 @@
                             <label for="">Dates between</label>
                             <input type="text" name="between_date[]"  id="" value="<?= $data_between ?>" class="datepicker Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
                         </div>
-                        <div class="groupInputDate">
+                        <div class="groupInputDate blockDateW100">
                             <div class="input-group">
                                 <label for="">End date</label>
                                 <input type="date" name="end_date[]" value="<?= $data_last ?>"  required>
@@ -135,15 +135,16 @@
                     <div class="results"></div>
 
                     <div class="buttons groupBtnData">
-                        <button type="button" class="add btn-newDate"> Complete with another section</button>
+                        <button type="button" class="add btn-newDate"> + Extra startdatum</button>
                         <button type="submit" name="date_add" class="btn btn-info">Opslaan & verder</button>
                     </div>
 
                     <!-- element for clone -->
                     <div class="blockForClone">
                             <div class="attr">
-                                <div class="groupInputDate">
-                                    <div class="input-group form-group colM">
+                                <hr class="line-elemnt">
+                                <div class="groupInputDate blockDateW100">
+                                    <div class="input-group form-group ">
                                         <label for="">Start date</label>
                                         <input type="date" name="start_date[]">
                                     </div>
@@ -152,8 +153,8 @@
                                     <label for="">Dates between</label>
                                     <input type="text" name="between_date[]"  id="" class="datepicker Txt_Date" placeholder="Pick the multiple dates" style="cursor: pointer;">
                                 </div>
-                                <div class="groupInputDate">
-                                    <div class="input-group colM">
+                                <div class="groupInputDate blockDateW100">
+                                    <div class="input-group">
                                         <label for="">End date</label>
                                         <input type="date" name="end_date[]">
                                     </div>
@@ -179,35 +180,47 @@
             <p class="courseToevoegenText">Course toevoegen</p>
             <div class="contentBlockRight">
                 <a href="/dashboard/teacher/course-selection/" class="contentBlockCourse">
-                    <div class="circleIndicator passEtape"></div>
+                    <div class="circleIndicator passEtape">
+                        <i class="fa fa-book"></i>
+                    </div>
                     <p class="textOpleidRight">Opleidingstype</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-course<?php if(isset($_GET['edit'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
-                    <div class="circleIndicator passEtape"></div>
+                <a href="/dashboard/teacher/course-selection/?func=add-course<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
+                    <div class="circleIndicator passEtape2">
+                        <i class="fa fa-info"></i>
+                    </div>
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>
-                <?php if(isset($_GET['id'])){ ?>
-                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=2&edit" class="contentBlockCourse">
-                    <div class="circleIndicator passEtape"></div>
+                <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=2&edit'; else echo "#"; ?>" class="contentBlockCourse">
+                    <div class="circleIndicator">
+                        <i class="fa fa-file-text"></i>
+                    </div>
                     <p class="textOpleidRight">Uitgebreide beschrijving</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=3&edit" class="contentBlockCourse">
-                    <div class="circleIndicator passEtape2"></div>
+                <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=3&edit'; else echo "#" ?>" class="contentBlockCourse">
+                    <div class="circleIndicator">
+                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                    </div>
                     <p class="textOpleidRight ">Data en locaties</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=4&edit" class="contentBlockCourse">
-                    <div class="circleIndicator"></div>
+                <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=4&edit'; else echo "#" ?>" class="contentBlockCourse">
+                    <div class="circleIndicator">
+                        <i class="fa fa-paste" aria-hidden="true"></i>
+                    </div>
                     <p class="textOpleidRight">Details en onderwepren</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=5&edit" class="contentBlockCourse">
-                    <div class="circleIndicator"></div>
+                <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=5&edit'; else echo "#" ?>" class="contentBlockCourse">
+                    <div class="circleIndicator">
+                        <i class="fa fa-tag" aria-hidden="true"></i>
+                    </div>
                     <p class="textOpleidRight">Tags</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'];?>&type=<?= $_GET['type'] ?>&step=6&edit" class="contentBlockCourse">
-                    <div class="circleIndicator"></div>
+                <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=6&edit'; else echo "#" ?>" class="contentBlockCourse">
+                    <div class="circleIndicator">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                    </div>
                     <p class="textOpleidRight">Experts</p>
                 </a>
-                <?php } ?>
             </div>
         </div>
     </div>

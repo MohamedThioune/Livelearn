@@ -29,8 +29,8 @@ if($_POST['user_id'] != 0 )
                 unset($meta_data[$key]);   
     }
 
-$favorited = get_field('favorited', $_POST['id']);
-echo count($favorited);
+$favorite = get_field('favorited', $_POST['id']);
+echo count($favorite);
 
 
 
