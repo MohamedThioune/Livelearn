@@ -82,6 +82,11 @@ function scrapeFrom($website): array
         case 'CBD': return scrapeCbd(); break;
         case 'Hoorzaken': return scrapeHoorzaken(); break;
         case 'knvvn': return scrapeHoorzaken(); break;
+        case 'Nvtl': return scrapeNvtl(); break;
+        case 'Stiba': return scrapeStiba(); break;
+        case 'Nfofruit': return scrapeNfofruit(); break;
+        case 'Iro': return scrapeIro(); break;
+        case 'Lto': return scrapeLto(); break;
     }
 }
 
@@ -310,13 +315,13 @@ function scrapeNbov(){
         $short_description = trim(substr($content,0,100));
         // var_dump($content);
       }
-     $article=new Article($title,$short_description.'...',$image,$link,null,trim($content));
+     $article=new Article($title,$short_description,$image,$link,null,$content);
     $datas[]=$article;
   }
   var_dump($datas);
   return $datas;
 }
-scrapeNbov();
+// scrapeNbov();
 
 function scrapeNuvo(){
     $url = 'https://www.nuvo.nl/';
@@ -510,8 +515,122 @@ function scrapeNvtl(){
       // $date=$node->getElementsByTagName('h6')->item(0)->nodeValue;
       $title=trim($node->getElementsByTagName('h3')->item(0)->nodeValue);
       // $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
-      $short_description=scrapper($url."/nieuws/".$title,'div','p')->item(0)->nodeValue;
-      $result_content=scrapper($url."/nieuws".$link,'div',$selector_class_content);
+      
+      for($i=1;$i<=2;$i++){
+        $selector_class_content = '"col-md-6 kolom-'.$i.'"';
+        $result_content= scrapper($link,$tag,$selector_class_content);
+      
+        // var_dump($title);
+        if (!is_null($result_content))
+        {
+            $content="";
+            foreach ($result_content->item(0)->getElementsByTagName('p') as $key => $node) {
+              $content.=$node->nodeValue;
+            }
+            $short_description = trim(substr($content,0,100));
+        }
+      }
+      $article=new Article($title,$short_description,null,$link,null,$content);
+      $datas[]=$article;
+      // var_dump($title);
+    }
+    var_dump($datas);
+    return $datas;
+}
+
+// scrapeNvtl();
+
+function scrapeStiba(){
+  $url = 'https://www.stiba.nl/';
+    $tag='div';
+    $selector_class='"blog-carousel"';
+    $selector_class_content='"blog-carousel-desc"';
+    $node_articles=scrapper($url."/category/berichten/",$tag,$selector_class);
+    foreach ($node_articles as $key => $node) 
+    {
+      // $image=$node->getElementsByTagName('img')->item(0)->getAttribute('src') ?? '';
+      // $title=$node->getElementsByTagName('"agenda-title title h4"')->item(0)->nodeValue;
+      $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+      // $date=$node->getElementsByTagName('h6')->item(0)->nodeValue;
+      $title=$node->getElementsByTagName('h3')->item(0)->nodeValue;
+      $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+      $short_description=$node->getElementsByTagName('"blog-carousel-desc"')->item(0)->nodeValue;
+      $result_content=scrapper($link,$tag,$selector_class_content);
+
+      //var_dump($result_content);
+      if (!is_null($result_content))
+      {
+          $content="";
+          foreach ($result_content->item(0)->getElementsByTagName('p') as $key => $node) {
+            if ($key == 0){
+              $short_description=$node->nodeValue;
+            }else{
+              $content.=$node->nodeValue;
+            }
+          }
+      }
+      $article=new Article($title,$short_description,null,$link,null,$content);
+      $datas[]=$article;
+      // var_dump($title);
+    }
+    var_dump($datas);
+    return $datas;
+}
+// scrapeStiba();
+
+function scrapeNfofruit(){
+  $url = 'https://www.nfofruit.nl';
+    $tag='div';
+    $selector_class='"post-module-news"';
+    $selector_class_content='"postcontent"';
+    $node_articles=scrapper($url."/nieuwsoverzicht/",$tag,$selector_class);
+    foreach ($node_articles as $key => $node) 
+    {
+      // $image=$node->getElementsByTagName('img')->item(0)->getAttribute('src') ?? '';
+      $title=$node->getElementsByTagName('"news_title"')->item(0)->nodeValue;
+      $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+      // $date=$node->getElementsByTagName('h6')->item(0)->nodeValue;
+      $title=$node->getElementsByTagName('h3')->item(0)->nodeValue;
+      $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+      $short_description=$node->getElementsByTagName('"news_description"')->item(0)->nodeValue;
+      $result_content=scrapper($link,$tag,$selector_class_content);
+
+      //var_dump($result_content);
+      if (!is_null($result_content))
+      {
+          $content="";
+          foreach ($result_content->item(0)->getElementsByTagName('p') as $key => $node) {
+            if ($key==0){
+              $short_description=$node->nodeValue;
+            }  
+            $content.=$node->nodeValue;
+          }
+      }
+      $article=new Article($title,$short_description,null,$link,null,$content);
+      $datas[]=$article;
+      // var_dump($title);
+    }
+    var_dump($datas);
+    return $datas;
+}
+// scrapeNfofruit();
+
+function scrapeIro(){
+  $url = 'https://iro.nl/nl';
+    $tag='li';
+    $selector_class='"tease tease--news col s12 m4"';
+    $selector_class_content='"block--content"';
+    $node_articles=scrapper($url."/nieuws-en-pers/",$tag,$selector_class);
+    foreach ($node_articles as $key => $node) 
+    {
+      // $image=$node->getElementsByTagName('" lazyloaded"')->item(0)->getAttribute('src') ?? '';
+      $title=$node->getElementsByTagName('"tease__title"')->item(0)->nodeValue;
+      $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+      // $date=$node->getElementsByTagName('h6')->item(0)->nodeValue;
+      $title=trim($node->getElementsByTagName('h3')->item(0)->nodeValue);
+      $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+      $short_description=trim($node->getElementsByTagName('p')->item(0)->nodeValue);
+      $result_content=scrapper($link,'section',$selector_class_content);
 
       //var_dump($result_content);
       if (!is_null($result_content))
@@ -521,7 +640,7 @@ function scrapeNvtl(){
             $content.=$node->nodeValue;
           }
       }
-      $article=new Article($title,$short_description,$image,$link,null,$content);
+      $article=new Article($title,$short_description,null,$link,null,$content);
       $datas[]=$article;
       // var_dump($title);
     }
@@ -529,7 +648,114 @@ function scrapeNvtl(){
     return $datas;
 }
 
-// scrapeNvtl();
+// scrapeIro();
+
+// function scrapeGreenkeeper(){
+//   $url = 'https://greenkeeper.nl';
+//     $tag='tr';
+//     $selector_class='';
+//     $selector_class_content='"block--content"';
+//     $node_articles=scrapper($url,$tag,$selector_class);
+//     foreach ($node_articles as $key => $node) 
+//     {
+//       // $image=$node->getElementsByTagName('" lazyloaded"')->item(0)->getAttribute('src') ?? '';
+//       $title=$node->getElementsByTagName('"nieuws_titel1"')->item(0)->nodeValue;
+//       $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+//       // $date=$node->getElementsByTagName('h6')->item(0)->nodeValue;
+//       $title=trim($node->getElementsByTagName('h2')->item(0)->nodeValue);
+//       $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+//       $short_description=trim($node->getElementsByTagName('"nieuws_samenvatting"')->item(0)->nodeValue);
+//       $result_content=scrapper($link,'section',$selector_class_content);
+
+//       //var_dump($result_content);
+//       if (!is_null($result_content))
+//       {
+//           $content="";
+//           foreach ($result_content->item(0)->getElementsByTagName('p') as $key => $node) {
+//             $content.=$node->nodeValue;
+//           }
+//       }
+//       $article=new Article($title,$short_description,null,$link,null,$content);
+//       $datas[]=$article;
+//       // var_dump($title);
+//     }
+//     var_dump($datas);
+//     return $datas;
+// }
+
+// scrapeGreenkeeper();
+
+function scrapeLto(){
+    $url = 'https://www.lto.nl';
+    $tag='div';
+    $selector_class='"content"';
+    $selector_class_content='"WP_content wrap_more"';
+    $node_articles=scrapper($url."/nieuws/",$tag,$selector_class);
+    foreach ($node_articles as $key => $node) 
+    {
+      // $image=$node->getElementsByTagName('" lazyloaded"')->item(0)->getAttribute('src') ?? '';
+      $title=$node->getElementsByTagName('"title"')->item(0)->nodeValue;
+      $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+      // $date=$node->getElementsByTagName('h6')->item(0)->nodeValue;
+      $title=trim($node->getElementsByTagName('h3')->item(0)->nodeValue);
+      $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+      $short_description=trim($node->getElementsByTagName('p')->item(0)->nodeValue);
+      $result_content=scrapper($link,$tag,$selector_class_content);
+
+      //var_dump($result_content);
+      if (!is_null($result_content))
+      {
+          $content="";
+          foreach ($result_content->item(0)->getElementsByTagName('p') as $key => $node) {
+            $content.=$node->nodeValue;
+          }
+      }
+      $article=new Article($title,$short_description,null,$link,null,$content);
+      $datas[]=$article;
+      // var_dump($title);
+    }
+    var_dump($datas);
+    return $datas;
+}
+
+// scrapeLto();
+
+function scrapeBna(){
+  $url = 'https://bna.nl';
+  $datas=array();
+    $tag='li';
+    $selector_class='"card for-everyone"';
+    $selector_class_content='"article__wysiwyg is-wysiwyg article__content-block long-read"';
+    $node_articles=scrapper($url."/nieuws/",$tag,$selector_class);
+    echo "test";
+    foreach ($node_articles as $key => $node) 
+    {
+      // $image=$node->getElementsByTagName('" lazyloaded"')->item(0)->getAttribute('src') ?? '';
+      $title=$node->getElementsByTagName('"card__title"')->item(0)->nodeValue;
+      $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+      // $date=$node->getElementsByTagName('h6')->item(0)->nodeValue;
+      $title=trim($node->getElementsByTagName('h3')->item(0)->nodeValue);
+      $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+      $short_description=scrapper($link,'div','p')->item(0)->nodeValue;
+      $result_content=scrapper($link,'div',$selector_class_content);
+
+      //var_dump($result_content);
+      if (!is_null($result_content))
+      {
+          $content="";
+          foreach ($result_content->item(0)->getElementsByTagName('p') as $key => $node) {
+            $content.=$node->nodeValue;
+          }
+      }
+      $article=new Article($title,$short_description,null,$link,null,$content);
+      $datas[]=$article;
+      // var_dump($title);
+    }
+    var_dump($datas);
+    return $datas;
+}
+
+scrapeBna();
 
 #------------------------------------------------------------------------------------------------
 
