@@ -57,7 +57,8 @@ function scrapeFrom($website): array
     }
 }
 
-function scrapper($url,$html_tag,$class_selector){
+function scrapper($url,$html_tag,$class_selector)
+{
     $html_code=file_get_contents($url);
     $dom= new DomDocument();
     libxml_use_internal_errors(true);
@@ -440,7 +441,7 @@ function persistArticle($article)
   return $datas;
  };
 
- function scrapeComputable(){
+ function scrapeComputable() {
   $url = 'https://www.computable.nl';
   $tag='a';
   $selector_class='"articlerow sc-follow"';
@@ -571,5 +572,38 @@ function persistArticle($article)
      return $datas;
    }
 
-   scrapeDeZZP();
+   function scrapeNVAB(){
+    $url = 'https://www.nvab.nl';
+    $tag='div';
+    $selector_class='"newsitem graybg"';
+    $selector_class_content='"news-link"';
+    $node_articles=scrapper($url."/nieuws/",$tag,$selector_class);
+    foreach ($node_articles as $key => $node) 
+    {
+      //$image=$node->getElementsByTagName('img')->item(0)->getAttribute('src') ?? '';
+      $title=$node->getElementsByTagName('"title"')->item(0)->nodeValue;
+      $short_description=$node->getElementsByTagName('p')->item(2)->nodeValue;
+      $link=$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+      $date=$node->getElementsByTagName('"date"')->item(0)->nodeValue;
+      $title=$node->getElementsByTagName('p')->item(0)->nodeValue;
+      $link=$url.$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+      
+      $result_content=scrapper($link,$tag,$selector_class_content);
+      var_dump($result_content);
+       if (!is_null($result_content))
+       {
+          $content="";
+          foreach ($result_content->item(0)->getElementsByTagName('p') as $key => $node) {
+            if ($key==0)
+            continue;
+            $content.=$node->nodeValue;
+          }
+       }
+       $article=new Article($title,$short_description,null,$link,$date,$content);
+      $datas[]=$article;
+    }
+    var_dump($datas);
+    return $datas;
+  }
+ 
    // Can't get image for nedverbak
