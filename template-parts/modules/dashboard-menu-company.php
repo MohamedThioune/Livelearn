@@ -4,6 +4,10 @@
     $url = $wp->request;
     
     $option_menu = explode('/', $url);
+
+    $user = wp_get_current_user();
+    if ( !in_array( 'hr', $user->roles ) && !in_array( 'manager', $user->roles ) && !in_array( 'administrator', $user->roles ) && $user->roles != 'administrator') 
+        header('Location: /dashboard/user');
 ?>
 <section id="sectionDashboard1" class="sidBarDashboard sidBarDashboardIndividual" name="section1"
     style="overflow-x: hidden !important;">
