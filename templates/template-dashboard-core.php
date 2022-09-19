@@ -1,6 +1,9 @@
 <?php /** Template Name: dashboard core */ ?>
 <?php
 
+$page = 'check_visibility.php';
+require($page); 
+
 global $wpdb;
 
 $table = $wpdb->prefix . 'databank'; 
@@ -701,12 +704,12 @@ else if(isset($databank)){
     $updated = $wpdb->update( $table, $data, $where );
  
     if($updated === false)
-        if($complete == "all" || $complete == "quick") 
+        if($complete == "all") 
             $message = "/edit-databank?id=" . $id . "&message=" . $wpdb->last_error;
         else
             $message = "/databank/?message=" . $wpdb->last_error;
     else 
-        if($complete == "all" || $complete == "quick") 
+        if($complete == "all") 
             $message = "/edit-databank?id=" . $id . "&message=Updated successfully !"; 
         else
             $message = "/databank/?message=Updated successfully !"; 

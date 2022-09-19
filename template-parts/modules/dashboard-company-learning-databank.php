@@ -76,12 +76,10 @@
 </style>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
 <?php
-   $args = array(
+    $args = array(
     'post_type' => 'course', 
     'post_status' => 'publish',
     'posts_per_page' => -1,
@@ -222,7 +220,9 @@
                     <tbody>
                         <?php 
                         foreach($courses as $course){
-
+                            if(!visibility($course, $visibility_company))
+                                continue;
+            
                             $category = ' ';
 
                             $tree = get_the_terms($course->ID, 'course_category'); 
@@ -392,73 +392,74 @@
        </div> 
 
 </div>
+
 <!-- script-modal -->
 <script>
     var id_course;
     $('.td_subtopics').click((e)=>{
         id_course = e.target.id;
-     $.ajax({
+        $.ajax({
+                url:"/fetch-subtopics-course",
+                method:"post",
+                data:
+                {
+                    id_course:id_course,
+                    action:'get_course_subtopics'
+                },
+            dataType:"text",
+            success: function(data){
+                // Get the modal
+                //console.log(data)
+        var modal = document.getElementById("myModal");
+        $('.display-subtopics').html(data)
+        // Get the button that opens the modal
+        
+        
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        
+        // When the user clicks on the button, open the modal
+        
+            modal.style.display = "block";
+        
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+            modal.style.display = "none";
+            }
+        }
+                
+                
+            }
+        });
+    });
+    
+    $('#save_subtopics').click(()=>{
+        var subtopics = $('#selected_subtopics').val()
+        $.ajax({
             url:"/fetch-subtopics-course",
             method:"post",
             data:
-            {
+                {
+                add_subtopics:subtopics,
                 id_course:id_course,
-                action:'get_course_subtopics'
-            },
-        dataType:"text",
-        success: function(data){
-            // Get the modal
-            //console.log(data)
-    var modal = document.getElementById("myModal");
-    $('.display-subtopics').html(data)
-    // Get the button that opens the modal
-    
-    
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-    
-    // When the user clicks on the button, open the modal
-    
-        modal.style.display = "block";
-    
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-    
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-        modal.style.display = "none";
-        }
-    }
-            
-            
-        }
+                action:'add_subtopics'
+                },
+            dataType:"text",
+            success: function(data){
+                
+                let modal=$('#myModal');
+                modal.attr('style', { display: "none" });
+                //modal.style.display = "none";
+                $('#'+id_course).html(data)
+                //console.log(data)
+            }
+        })
     });
-});
-    
-  $('#save_subtopics').click(()=>{
-      var subtopics = $('#selected_subtopics').val()
-      $.ajax({
-  url:"/fetch-subtopics-course",
-  method:"post",
-  data:
-    {
-      add_subtopics:subtopics,
-      id_course:id_course,
-      action:'add_subtopics'
-    },
-  dataType:"text",
-  success: function(data){
-      
-      let modal=$('#myModal');
-      modal.attr('style', { display: "none" });
-      //modal.style.display = "none";
-      $('#'+id_course).html(data)
-      //console.log(data)
-  }
-  })
-});
 </script>
 
