@@ -65,7 +65,7 @@
                         <small>Coming soon!</small>
                     </p>
                 </a>
-                <a href="#" class="cardCours cardCoursInitial" >
+                <a href="/dashboard/teacher/list-podcast" class="cardCours cardCoursInitial" >
                     <p class="contentText">
                         <b>Podcast</b><br/>
                         <small>Coming soon!</small>

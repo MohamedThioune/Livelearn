@@ -726,9 +726,11 @@ h3.quote::before {
   margin-left: 15px;
 }
 .titleBlog {
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 500;
   margin-bottom: 20px;
+  color: #023356;
+  line-height: 29px;
 }
 
 

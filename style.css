@@ -1747,7 +1747,7 @@ body, html {
 
 .btnKoop {
     background-color: #023356;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     font-weight: bold;
     padding: 10px 22px;
     border-radius: 10px;

@@ -6,6 +6,9 @@
     body{
         padding-top: 0 !important;
     }
+    .canhas .liveOverBlock {
+        padding-top: 100px;
+    }
     .bi-x-lg::before {
         top: -5px;
         position: relative;
