@@ -444,11 +444,7 @@ arsort($topic_followed);
     </div>
     </div>
 
-
-
-</div>
-
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 

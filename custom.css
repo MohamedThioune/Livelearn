@@ -4481,12 +4481,9 @@ overflow: -moz-scrollbars-none;
     background-color: #043356;
     font-size: 16px;
     font-weight: 500;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     padding: 12px 18px;
     border-radius: 14px;
-}
-.contentCart a:hover{
-    color: #FFFFFF;
 }
 .blockTopBanen .swiper-slide2{
     max-width: 162px;
@@ -6325,17 +6322,20 @@ tbody{
     width: 65%;
     padding-right: 25px;
 }
-.woocommerce .wrapper .container .cart-collaterals {
+.woocommerce .wrapper .container .cart-checkOut {
     width: 34%;
-    background: #f7f6f9;
+}
+.woocommerce .wrapper .container .cart-collaterals {
+    width: 100%;
+    background: #e0eff4;
     padding: 20px 25px;
 }
 .woocommerce .cart-collaterals .cart_totals {
     width: 100%;
 }
 .woocommerce .theme-cart-row.cart_item {
-    background-color: unset !important;
-    padding: 20px 0 35px !important;
+    background-color: #e0eff4 !important;
+    padding: 20px 100px 35px !important;
     border-radius: unset !important;
     margin-bottom: 40px !important;
     border-top: 1px solid #dbdae3;
@@ -6346,9 +6346,10 @@ tbody{
 }
 .woocommerce-cart-form .theme-cart__product-name a{
     color: #39364f !important;
-    font-weight: 400 !important;
+    font-weight: 700 !important;
     font-size: 1.125rem !important;
     line-height: 1.5rem !important;
+    text-transform: uppercase;
 }
 .woocommerce .theme-cart-row.cart_item .theme-cart__price-wrapper {
     width: 100% !important;
@@ -6363,10 +6364,7 @@ tbody{
     color: #39364f !important;
     margin-bottom: 7px !important;
 }
-.woocommerce .theme-cart-row.cart_item .theme-cart__price-wrapper .quantity .input-text.qty {
-    width: 28% !important;
-    padding: 3px 8px !important;
-}
+
 .theme-cart__price-wrapper .row .col-4 div{
     color: #515361;
     font-size: 15px;
@@ -6375,9 +6373,10 @@ tbody{
    font-weight: 700;
 }
 .cart_totals h2 {
-    font-size: 23px;
-    color: #1e0a3c;
+    font-size: 21px;
+    color: #023356;
     margin-bottom: 10px;
+    font-weight: 600;
 }
 .woocommerce table.shop_table {
     border: 0px solid rgba(0,0,0,.1) !important;
@@ -6393,6 +6392,11 @@ tbody{
 .woocommerce .wc-proceed-to-checkout a.checkout-button {
     padding: 14px 20px !important;
     border-radius: 5px !important;
+    background: #023356 !important;
+    color: white !important;
+    width: 100%;
+    text-align: center;
+    font-family: "Ubuntu" !important;
 }
 .woocommerce .theme-cart-row.cart_item .theme-cart__product-name .variation dd {
     font-size: 14px !important;
@@ -6409,17 +6413,16 @@ tbody{
     margin-right: 25px;
 }
 .checkout .wrapper-woocommerce .container {
-    width: 35%;
     margin: 0;
-    background: #f7f6f9;
+    background: #e0eff4;
     padding: 20px 25px;
     height: fit-content;
 }
 .woocommerce .theme-checkout__details{
     position: relative;
     margin-bottom: 20px;
-    background-color: unset !important;
-    padding: unset !important;
+    background-color: #e0eff4 !important;
+    padding: 25px 30px !important;
     border-radius: unset !important;
 }
 .checkout .col2-set .container{
@@ -6446,6 +6449,9 @@ tbody{
     color: #39364f;
     margin-bottom: 15px;
 }
+.blockFormCheckout .form-row label{
+    display: none !important;
+}
 .woocommerce form .form-row select {
     cursor: pointer;
     margin: 0;
@@ -6461,17 +6467,21 @@ tbody{
     margin-top: -10px !important;
 }
 .woocommerce-billing-fields h3 {
-    font-size: 23px;
-    margin-bottom: 30px;
+    font-size: 21px;
+    margin-bottom: 20px;
+    color: #023356;
+    font-weight: 600;
 }
+
 .woocommerce-additional-fields h3 {
     font-size: 23px;
     margin-bottom: 20px;
 }
 #order_review_heading {
-    font-size: 23px;
+    font-size: 21px;
+    color: #023356;
     margin-bottom: 10px;
-    margin-top: 3px;
+    font-weight: 600;
 }
 #place_order{
     padding: 14px 25px !important;
@@ -6516,11 +6526,12 @@ tbody{
     color: #043356;
 }
 .woocommerce table.shop_table th {
-    padding: 9px 30px !important;
+    padding: 6px 5px !important;
     font-size: 15px;
+    color: #023356;
 }
 .woocommerce table.shop_table td {
-    padding: 9px 30px !important;
+    padding: 6px 5px !important;
 }
 .woocommerce-column__title h2{
     font-size: 23px !important;
@@ -9432,13 +9443,10 @@ ul#tabs-nav li.active {
     padding: 7px 30px 10px;
     margin-right: 20px;
 }
-
-
-
 .blockFooter ul {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 4px;
     margin: 0;
     padding: 0;
     max-width: 500px;
@@ -9642,6 +9650,139 @@ ul#tabs-nav li.active {
 }
 .btnLessHoe:hover{
     color: #FFFFFF !important;
+}
+.groupCompanyAuthorCart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 17px;
+}
+.groupCompanyAuthorCart .company, .groupCompanyAuthorCart .author{
+    display: flex;
+    align-items: center;
+    margin: 0 5px;
+}
+.groupCompanyAuthorCart .imgElement{
+    width: 40px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 100%;
+    border: 1px solid #aeaeae;
+}
+.groupCompanyAuthorCart .imgElement img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.groupCompanyAuthorCart .Name{
+    margin: 0 10px;
+    color: #023356;
+    font-size: 14px;
+}
+.variationBlockCart .variation dt{
+    display: none;
+}
+.variationBlockCart {
+    text-align: center;
+    background: white;
+    padding: 10px 50px;
+    width: fit-content;
+    margin: 0 auto 23px;
+    border-radius: 10px;
+    color: #023356;
+    font-weight: 500;
+}
+.variationBlockCart .variation{
+    margin-bottom: 0;
+}
+.variationBlockCart .variation-Option{
+    margin-bottom: 0;
+}
+.woocommerce .theme-cart-row.cart_item .theme-cart__product-name {
+    margin-bottom: 10px !important;
+}
+.hrcustomInCart{
+    margin-bottom: 25px !important;
+    border-top: 2px solid rgb(102 102 102 / 45%) !important;
+}
+.shortDescriptionCart{
+    color: #023356;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.blockPriceWapperDescription{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.blockPriceWapperDescription .firstBlock{
+    width: 70%;
+}
+.blockPriceWapperDescription .secondBlock{
+    width: 20%;
+}
+.blockPriceWapperDescription .input-text{
+    width: 57% !important;
+    padding: 5px 5px 5px 15px !important;
+    border: 0 !important;
+}
+.blockImgCartCourse {
+    width: 100%;
+    height: 160px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+.blockImgCartCourse img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.woocommerce .woocommerce-checkout .wrapper-woocommerce .cart-checkOut {
+    width: 34%;
+}
+.blockFormCheckout .woocommerce-input-wrapper input {
+    padding: 12px;
+    border: none !important;
+    margin-bottom: 0 !important;
+}
+.blockFormCheckout .woocommerce-input-wrapper {
+    margin-bottom: 10px !important;
+}
+.blockFormCheckout .theme-checkout__extra {
+    background-color: none !important;
+    padding: 0 !important;
+    border-radius: 0px !important;
+    margin-bottom: 10px !important;
+    margin-top: 15px !important;
+}
+.blockFormCheckout hr {
+    margin-top: 14px;
+    margin-bottom: 23px;
+    border: 0;
+    border-top: 2px solid rgb(102 102 102 / 26%);
+}
+.blockFormCheckout .woocommerce-additional-fields h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #023356;
+    font-weight: 600;
+}
+.blockFormCheckout #payment {
+    background: unset !important;
+    border-radius: unset !important;
+}
+.blockFormCheckout #place_order {
+    padding: 14px 20px !important;
+    border-radius: 5px !important;
+    background: #023356 !important;
+    color: white !important;
+    width: 100%;
+    text-align: center;
+    font-family: "Ubuntu" !important;
+}
+.blockFormCheckout form .form-row .input-text{
+    border: none !important;
 }
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -11504,7 +11645,7 @@ ul#tabs-nav li.active {
     }
     .cart_totals h2 {
         font-size: 20px;
-        color: #1e0a3c;
+        color: #023356;
         margin-bottom: 5px;
     }
     .woocommerce-checkout .wrapper-woocommerce {
@@ -11526,8 +11667,6 @@ ul#tabs-nav li.active {
         margin-bottom: 20px;
     }
     .checkout .wrapper-woocommerce .container {
-        width: 95%;
-        background: #f7f6f9;
         padding: 20px 10px;
         height: fit-content;
         margin: 0 10px;
@@ -12077,9 +12216,12 @@ ul#tabs-nav li.active {
         margin-bottom: 0px;
         padding: 5px 0 20px;
     }
+    .MobileFooter .card .collapse{
+        padding-left: 30px;
+    }
 
 
-}
+    }
 .radius-custom  {
     border-radius: 10px !important;
 }

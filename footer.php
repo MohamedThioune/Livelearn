@@ -78,51 +78,86 @@
                 </div>
             </div>
         </div>
+
         <div class="blockFooter MobileFooter">
 
-            <button class="accordion">Voor organisaties</button>
-            <div class="panel">
-                <ul>
-                    <li><a class="" href="/zzpers/"> Voor ZZP’ers</a></li>
-                    <li> <a class="" href="/mkb/">Voor het MKB </a></li>
-                    <li> <a class="" href="/mkb/">Voor Corporates </a></li>
-                    <li> <a class="" href="/pricing/">Pricing </a></li>
-                    <li> <a class="" href="voor-organisaties/">Maak een gratis omgeving</a></li>
-                </ul>
+            <div class="accordion" id="accordionExample">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Voor organisaties
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <ul>
+                            <li><a class="linkElementFooter" href="/zzpers/"> Voor ZZP’ers</a></li>
+                            <li> <a class="linkElementFooter" href="/mkb/">Voor het MKB </a></li>
+                            <li> <a class="linkElementFooter" href="/mkb/">Voor Corporates </a></li>
+                            <li> <a class="linkElementFooter" href="/pricing/">Pricing </a></li>
+                            <li> <a class="linkElementFooter" href="voor-organisaties/">Maak een gratis omgeving</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                Voor opleiders
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <ul>
+                            <li> <a class="linkElementFooter" href="/verkopen/">Verkopen</a></li>
+                            <li> <a class="linkElementFooter" href="/creeren/">Creëren</a></li>
+                            <li> <a class="linkElementFooter" href="/uitleggen/">Uitleggen</a></li>
+                            <li> <a class="linkElementFooter" href="/opleiders/">Alle opleiders </a></li>
+                            <li> <a class="linkElementFooter" href="/voor-teachers/">Maak een gratis omgeving </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Over ons
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                        <ul>
+                            <li> <a class="linkElementFooter" href="/static-education-advice/">Wat doen we? </a></li>
+                            <li> <a class="linkElementFooter" href="/contact/">Contact </a></li>
+                            <li> <a class="linkElementFooter" href="/product-search/">Alle opleidingen</a></li>
+                            <li> <a class="linkElementFooter" href="/static-education-individual/">Maak een account </a></li>
+                            <li> <a class="linkElementFooter" href="/ontwikkeladvies/">Carriere advies</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header" id="headingFour">
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                Leerproducten
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                        <ul>
+                            <li> <a class="linkElementFooter" href="/baangerichte/"> Richting een baan</a></li>
+                            <li> <a class="linkElementFooter" href="/functiegerichte/">Groei binnen je functie </a></li>
+                            <li> <a class="linkElementFooter" href="/skill/">Specifieke skills</a></li>
+                            <li> <a class="linkElementFooter" href="/persoonlijke/">Persoonlijke interesses</a></li>
+                            <li> <a class="linkElementFooter" href="/onderwer/">Bekijk alle onderwerpen</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
-            <button class="accordion">Voor opleiders </button>
-            <div class="panel">
-                <ul>
-                    <li> <a class="" href="/verkopen/">Verkopen</a></li>
-                    <li> <a class="" href="/creeren/">Creëren</a></li>
-                    <li> <a class="" href="/uitleggen/">Uitleggen</a></li>
-                    <li> <a class="" href="/opleiders/">Alle opleiders </a></li>
-                    <li> <a class="" href="/voor-teachers/">Maak een gratis omgeving </a></li>
-                </ul>
-            </div>
-
-            <button class="accordion">Over ons</button>
-            <div class="panel">
-                <ul>
-                    <li> <a class="" href="/static-education-advice/">Wat doen we? </a></li>
-                    <li> <a class="" href="/contact/">Contact </a></li>
-                    <li> <a class="" href="/product-search/">Alle opleidingen</a></li>
-                    <li> <a class="" href="/static-education-individual/">Maak een account </a></li>
-                    <li> <a class="" href="/ontwikkeladvies/">Carriere advies</a></li>
-                </ul>
-            </div>
-
-            <button class="accordion">Leerproducten</button>
-            <div class="panel">
-                <ul>
-                    <li> <a class="" href="/baangerichte/"> Richting een baan</a></li>
-                    <li> <a class="" href="/functiegerichte/">Groei binnen je functie </a></li>
-                    <li> <a class="" href="/skill/">Specifieke skills</a></li>
-                    <li> <a class="" href="/persoonlijke/">Persoonlijke interesses</a></li>
-                    <li> <a class="" href="/onderwer/">Bekijk alle onderwerpen</a></li>
-                </ul>
-            </div>
             <div class="imgBlockFooter">
                 <!-- <img src="<?php echo get_stylesheet_directory_uri();?>/img/logoFooter.png" alt="" class="logoFooter"> -->            </div>
             <div class="resauxsociaux">
@@ -151,6 +186,7 @@
     <!-- end /.footer-big -->
 </footer>
 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
@@ -166,12 +202,31 @@
             placeholder: "Maak een keuze" //placeholder
         });
     });
-    //# sourceURL=pen.js
+    //# sourceURL=pen.j
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
+
+
+<!--<script>
+    const buttons = document.querySelectorAll('.button');
+
+    buttons.forEach(function(button, index) {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            this.parentNode.classList.toggle('on');
+
+            buttons.forEach(function(button2, index2) {
+                if ( index !== index2 ) {
+                    button2.parentNode.classList.remove('on');
+                }
+            });
+        });
+    });
+</script>-->
 <script>
     jQuery(function($){
         $('#header-search').keyup(function(){

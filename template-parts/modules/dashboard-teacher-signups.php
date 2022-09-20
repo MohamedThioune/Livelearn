@@ -220,7 +220,6 @@ $inkomsten = count($orders) * $price;
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
 <script>
     var id_course;
     $('.search-signups').keyup(function(){
