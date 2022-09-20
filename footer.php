@@ -179,24 +179,24 @@
                 <a class="" href="#">Privacybeleid </a>
                 <a class="" href="#">contact</a>
             </div>
-            
+
+
+
         </div>
         <!-- end /.container -->
     </div>
     <!-- end /.footer-big -->
+
 </footer>
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script>
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-
 <script id="rendered-js" >
     $(document).ready(function () {
         //Chosen
-        // $(".multipleChosen").chosen({
-        //     placeholder_text_multiple: "Maak een keuze" //placeholder
-        // });
+        $(".multipleChosen").chosen({
+            placeholder_text_multiple: "Maak een keuze" //placeholder
+        });
         //Select2
         $(".multipleSelect2").select2({
             placeholder: "Maak een keuze" //placeholder
