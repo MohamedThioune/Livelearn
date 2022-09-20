@@ -383,7 +383,6 @@ $degrees=[
                                     echo $row_bangrichts;
                                     ?>
                                 </div>
-
                                 <button type="button" class="btn btnNext" id="nextblockBaangerichte">Next</button>
                             </div>
                         </div>

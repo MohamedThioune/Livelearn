@@ -516,7 +516,6 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
 <script>
 
     $('#search_txt_course').keyup(function(){

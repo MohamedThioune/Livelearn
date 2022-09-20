@@ -1,9 +1,4 @@
 
-<!-- MDB -->
-<!-- <link
-  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.css"
-  rel="stylesheet"
-/> -->
 <style>
     .nav-tabs .nav-link.active {
         background: #023356 !important;
@@ -199,8 +194,9 @@
     </div>
 </div>
 
-<!-- MDB -->
-<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.js"></script>-->
+
+-->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script>
     $("#tab2").click(function() {
         $("#tab2").addClass('btnactive') ;
