@@ -9,6 +9,7 @@
                 acf_form(array(
                     'post_id'       => $_GET['id'],
                     'fields' => array('data_virtual'),
+                    'uploader' => 'basic',
                     'submit_value'  => __('Opslaan & verder'),
                     'return' => '?func=add-video&id=%post_id%&step=4'
                 )); 

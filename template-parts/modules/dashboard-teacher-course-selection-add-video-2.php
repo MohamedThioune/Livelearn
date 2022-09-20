@@ -1,5 +1,6 @@
 
 <div class="row">
+    <?php if($_GET['message']) echo "<span class='alert alert-error'>" . $_GET['message'] . "</span><br><br>"; ?>
     <div class="col-md-5 col-lg-8">
         <div class="cardCoursGlocal">
             <div id="basis" class="w-100">
@@ -33,15 +34,15 @@
                     <div class="circleIndicator  passEtape"></div>
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-video&id=<?php echo $_GET['id'];?>&step=2" class="contentBlockCourse">
+                <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=2&edit'; echo '?message=Please finish this step before'?>" class="contentBlockCourse">
                     <div class="circleIndicator passEtape2"></div>
                     <p class="textOpleidRight">Uitgebreide beschrijving</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-video&id=<?php echo $_GET['id'];?>&step=3" class="contentBlockCourse">
+                <a  href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=3&edit'; echo '?message=Please finish this step before'?>" class="contentBlockCourse">
                     <div class="circleIndicator"></div>
                     <p class="textOpleidRight ">voeg video’s toe</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-video&id=<?php echo $_GET['id'];?>&step=4" class="contentBlockCourse">
+                <a  href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=4&edit'; echo '?message=Please finish this step before'?>" class="contentBlockCourse">
                     <div class="circleIndicator"></div>
                     <p class="textOpleidRight">Details en onderwepren</p>
                 </a>

@@ -13,6 +13,7 @@
                         'post_title'   => true,
                         'post_excerpt'   => true,
                         'fields' => array('preview','price','short_description','visibility','online_location'),
+                        'uploader' => 'basic',
                         'submit_value'  => __('Opslaan & verder'),
                         'return' => '?func=add-add-white&id='.$_GET['id'].'&step=2&type='.$_GET['type']
                     ));
@@ -27,6 +28,7 @@
                         'post_title'   => true,
                         'post_excerpt'   => true,
                         'fields' => array('preview','price','short_description', 'visibility', 'online_location'),
+                        'uploader' => 'basic',
                         'submit_value'  => __('Opslaan & verder'),
                         'return' => '?func=add-add-white&id=%post_id%&step=2&type='.$_GET['type']
                     )); 
