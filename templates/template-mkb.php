@@ -1,4 +1,4 @@
-<?php /** Template Name: Mkb template */ ?>
+<?php /** Template Name: Mkb1 template */ ?>
 
 <?php wp_head(); ?>
 <?php get_header(); ?>

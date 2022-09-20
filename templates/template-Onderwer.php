@@ -166,7 +166,6 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
 
 
-    <script src="js/style.js"></script>
     <script>
 
 

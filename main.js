@@ -16,6 +16,7 @@ jQuery(function($){
     });
 
 
+
     //header on scroll fix
     var height = ($('nav.navbar').css('height'));
     $('body').css('padding-top', height)

@@ -7,14 +7,14 @@ function enqueue_parent_styles() {
     wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js', array(), null, true);
     //wp_enqueue_style( 'inl-style', get_stylesheet_directory_uri().'/inl.css' );
     wp_enqueue_style( 'slick-style', get_stylesheet_directory_uri().'/assets/js/libs/slick/slick.css' );
-    wp_enqueue_style( 'slick-theme-style', get_stylesheet_directory_uri().'/assets/js/libs/slick/slick-theme.css' ); 
+    wp_enqueue_style( 'slick-theme-style', get_stylesheet_directory_uri().'/assets/js/libs/slick/slick-theme.css' );
     wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/assets/bootstrap/js/bootstrap.min.js', array(), '3.0.0', true );
     wp_enqueue_script( 'slick-js', get_stylesheet_directory_uri() . '/assets/js/libs/slick/slick.min.js');
     wp_enqueue_script( 'script', get_stylesheet_directory_uri().'/main.js' );
     if(is_user_logged_in()){
         wp_enqueue_script( 'script-user', get_stylesheet_directory_uri().'/main-user.js' );
     }
-    wp_enqueue_script('jquery-ui-widget'); 
+    wp_enqueue_script('jquery-ui-widget');
 }
 
 function cpt_taxonomies() {
@@ -394,7 +394,7 @@ function add_custom_roles(){
 }
 add_action('init', 'add_custom_roles');
 
- 
+
 //redirect 'return to shop'
 add_filter( 'woocommerce_return_to_shop_redirect', 'bbloomer_change_return_shop_url' );
 
@@ -474,7 +474,7 @@ function create_product_for_course($post_id){
 
 //no redirect to wp admin
 add_filter( 'authenticate', function( $user, $username, $password ) {
-    // forcefully capture login failed to forcefully open wp_login_failed action, 
+    // forcefully capture login failed to forcefully open wp_login_failed action,
     // so that this event can be captured
     if ( empty( $username ) || empty( $password ) ) {
         do_action( 'wp_login_failed', $user );
@@ -565,11 +565,3 @@ add_filter( 'rest_authentication_errors', function( $result ) {
 
     return $result;
 });
-
-
-function remove_jquery_migrate_notice() {
-    $m= $GLOBALS['wp_scripts']->registered['jquery-migrate'];
-    $m->extra['before'][]='temp_jm_logconsole = window.console.log; window.console.log=null;';
-    $m->extra['after'][]='window.console.log=temp_jm_logconsole;';
-}
-add_action( 'init', 'remove_jquery_migrate_notice', 5 );

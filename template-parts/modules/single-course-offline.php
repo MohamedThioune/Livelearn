@@ -1197,8 +1197,6 @@
     })
 </script>
 
-</script>
-
 <script>
 
     const swiper = new Swiper('.swiper', {
