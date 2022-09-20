@@ -339,7 +339,7 @@ if(!empty($notifications))
                         $user_image_account = (get_field('profile_img',  'user_' . $user->ID)) ? get_field('profile_img',  'user_' . $user->ID) :  get_stylesheet_directory_uri() . '/img/placeholder_user.png';  
                         ?>
 
-                        <li class="nav-item item4 dropdown elementWeb" id="profilDropdown">
+                        <li class="nav-item item4 dropdown" id="profilDropdown">
                             <a href="#" class="nav-link navModife4 btn dropdown-toggle" type="button" id="dropdownNavButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="userBlockNav" src="<?= $user_image_account; ?>" alt="">
                             </a>

@@ -1,5 +1,4 @@
 <?php /** Template Name: Edit Databank */ ?>
-
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
@@ -7,7 +6,6 @@
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css'>
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
-
 <?php
 
 extract($_GET);
