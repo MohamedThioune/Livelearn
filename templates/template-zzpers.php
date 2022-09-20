@@ -395,12 +395,10 @@
         }
         else
             echo '<p class="krijgText2">No roadpath yet !</p>';
-
         ?>
         </div>
     </section>
     
-    ?>
     <section>
         <div class="container-fluid">
             <div class="row">

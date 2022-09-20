@@ -9,6 +9,12 @@ extract($_GET);
         color: #023356 !important;
         font-size: 12px;
     }
+    body{
+        padding-top: 0 !important;
+    }
+    .canhas .liveOverBlock {
+        padding-top: 100px;
+    }
      /* ------------------- Show more Text -------------- */
     .text-limit p,.text-limit .moreText{
         display:none;

@@ -9443,13 +9443,10 @@ ul#tabs-nav li.active {
     padding: 7px 30px 10px;
     margin-right: 20px;
 }
-
-
-
 .blockFooter ul {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 4px;
     margin: 0;
     padding: 0;
     max-width: 500px;
@@ -12219,9 +12216,12 @@ ul#tabs-nav li.active {
         margin-bottom: 0px;
         padding: 5px 0 20px;
     }
+    .MobileFooter .card .collapse{
+        padding-left: 30px;
+    }
 
 
-}
+    }
 .radius-custom  {
     border-radius: 10px !important;
 }

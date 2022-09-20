@@ -93,6 +93,7 @@
         $trainings = array();
         $videos = array();
         $artikels = array();
+        $agenda = array();
 
         $teachers = array();
 
@@ -118,6 +119,37 @@
                     array_push($videos, $course);
                 else if(get_field('course_type', $course->ID) == "Artikel")
                     array_push($artikels, $course);
+
+                //Check date for agenda
+                $date_bool = false;
+                $date = strtotime(date('Y-m-d'));
+                $data = get_field('dates', $course->ID);
+                $data = $data[0]['date'];
+                if($data){
+                    $data = strtotime(str_replace('/', '.', $data));
+                    if($data >= $date)
+                        $date_bool = true;
+                }
+                else{
+                    $data = get_field('data_locaties', $course->ID);
+                    $data = $data[0]['data'][0]['start_date'];
+                    if($data){
+                        $data = strtotime(str_replace('/', '.', $data));
+                        if($data >= $date)
+                            $date_bool = true;
+                    }
+                    else{
+                        $datas = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
+                        $data = $datas[0];
+                        if($data){
+                            $data = strtotime(str_replace('/', '.', $data));
+                            if($data >= $date)
+                                $date_bool = true;
+                        }
+                    }
+                }
+                if($date_bool)
+                    array_push($agenda, $course);
 
                 if(!in_array($course->post_author, $teachers))
                     array_push($teachers, $course->post_author);
@@ -1393,6 +1425,7 @@
             </div>
             <?php
                 }
+            if(!empty($agenda)){
             ?>
             <div class="sousBlockProduct4">
                     <div class="headsousBlockProduct4">
@@ -1406,21 +1439,24 @@
                     <div class="row mr-md-2 mr-1">
                         <?php
                             $i = 0;
-                            foreach($courses as $course){
+                            foreach($agenda as $course){
                                 $location = '~';
+                                
                                 /*
                                 * Categories and Date
                                 */ 
-
-                                $tree = get_the_category($course->ID);
-                                if($tree){
-                                    if(isset($tree[2]))
-                                        $category = $tree[2]->cat_name;
-                                    else 
-                                        if(isset($tree[1]))
-                                            $category = $tree[1]->cat_name;
-                                }else 
-                                    $category = ' ~ ';
+                                $category = ' ';        
+                                $category_id = 0;
+                                $category_string = " ";
+                                
+                                if($category == ' '){
+                                    $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
+                                    $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
+                                    if($category_str != 0)
+                                        $category = (String)get_the_category_by_ID($category_str);
+                                    else if($category_id != 0)
+                                        $category = (String)get_the_category_by_ID($category_id);                                    
+                                }
 
                                 $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];    
 
@@ -1527,7 +1563,7 @@
                 </div>
             </div>
             <?php
-
+                }
                 }
             ?>
         </div>
