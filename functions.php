@@ -382,6 +382,7 @@ function custom_post_type() {
 
     );
 
+
     register_post_type( 'company', $company_args );
 }
 add_action( 'init', 'custom_post_type', 0 );
