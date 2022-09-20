@@ -97,7 +97,6 @@ require($page);
 
         foreach($global_courses as $course)
         {
-
             if(!visibility($course, $visibility_company))
                 continue;
     
@@ -148,19 +147,32 @@ require($page);
                     else if(get_field('course_type', $course->ID) == "Video")
                         array_push($videos, $course);
                     
-                    //Check date for agenda
+                   //Check date for agenda
                     $date_bool = false;
+                    $date = strtotime(date('Y-m-d'));
                     $data = get_field('dates', $course->ID);
-                    if(isset($data[0]['date']))
-                        $data = true;
+                    $data = $data[0]['date'];
+                    if($data){
+                        $data = strtotime(str_replace('/', '.', $data));
+                        if($data >= $date)
+                            $date_bool = true;
+                    }
                     else{
                         $data = get_field('data_locaties', $course->ID);
-                        if(isset($data[0]['data'][0]['start_date']))
-                            $date_bool = true;
-                        else{
-                            $data = get_field('data_locaties_xml', $course->ID)[0];
-                            if($data != "")
+                        $data = $data[0]['data'][0]['start_date'];
+                        if($data){
+                            $data = strtotime(str_replace('/', '.', $data));
+                            if($data >= $date)
                                 $date_bool = true;
+                        }
+                        else{
+                            $datas = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
+                            $data = $datas[0];
+                            if($data){
+                                $data = strtotime(str_replace('/', '.', $data));
+                                if($data >= $date)
+                                    $date_bool = true;
+                            }
                         }
                     }
                     if($date_bool)
@@ -1691,22 +1703,31 @@ require($page);
                                 break;
                                 
                             $location = '~';
+                            
                             /*
                             * Categories and Date
-                            */ 
+                            */
+                            $category = ' ';        
+                            $category_id = 0;
+                            $category_string = " ";
+                            
+                            if($category == ' '){
+                                $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
+                                $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
+                                if($category_str != 0)
+                                    $category = (String)get_the_category_by_ID($category_str);
+                                else if($category_id != 0)
+                                    $category = (String)get_the_category_by_ID($category_id);                                    
+                            }
+
                             $day = "~";
                             $month = "~"; 
-
                             $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];    
-
                             $dates = get_field('dates', $course->ID);
                             if($dates){
-                                
                                 $day = explode('-', explode(' ', $dates[0]['date'])[0])[2];
                                 $month = explode('-', explode(' ', $dates[0]['date'])[0])[1];
-
                                 $month = $calendar[$month]; 
-                                
                             }else{
                                 $data = get_field('data_locaties', $course->ID);
                                 if($data){

@@ -97,20 +97,26 @@ $experts = get_user_meta($user->ID, 'expert');
 <div class="theme-content">
     <div class="theme-side-menu">
         <?php 
-            if(isset($superior) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles) || in_array('administrator', $user_connected->roles) ){
-                include_once('dashboard-menu-company.php');
-            }else{
+            if(isset($_GET['manager']))
+                if(isset($superior) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles) || in_array('administrator', $user_connected->roles) )
+                    include_once('dashboard-menu-company.php');
+                else
+                    include_once('dashboard-menu-user.php');  
+            else
                 include_once('dashboard-menu-user.php');
-            }
+                
         ?>
     </div>
     <div class="theme-learning">
         <?php 
-            if(isset($superior) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles) || in_array('administrator', $user_connected->roles) ){
-                include_once('dashboard-company-profile-home.php');
-            }else{
+            if(isset($_GET['manager']))
+                if(isset($superior) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles) || in_array('administrator', $user_connected->roles) )
+                    include_once('dashboard-company-profile-home.php');
+                else
+                    include_once('dashboard-user-profile-home.php');
+            else
                 include_once('dashboard-user-profile-home.php');
-            }
+                
         ?>
     </div>
 </div>

@@ -1,8 +1,4 @@
 <?php
-$page = dirname(__FILE__) . '/../../templates/check_visibility.php';
-
-require($page); 
-
 $like_src = get_stylesheet_directory_uri()."/img/coeur1.png";
 $dislike_src = get_stylesheet_directory_uri()."/img/heart-dislike.png";
 
