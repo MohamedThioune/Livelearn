@@ -5,6 +5,7 @@
             <div id="basis" class="w-100">
                 <div class="titleOpleidingstype">
                     <h2>1.Basis informatie</h2>
+                    <?php if($_GET['message']) echo "<span class='alert alert-error courseToevoegenText' style='color:red'>* " . $_GET['message'] . "</span><br><br>"; ?>
                 </div>
                 <?php 
                 if(isset($_GET['edit']) && isset($_GET['id'])){
@@ -13,7 +14,6 @@
                         'post_title'   => true,
                         'post_excerpt'   => true,
                         'fields' => array('preview','price','short_description','visibility','online_location'),
-                        'uploader' => 'basic',
                         'submit_value'  => __('Opslaan & verder'),
                         'return' => '?func=add-add-white&id='.$_GET['id'].'&step=2&type='.$_GET['type']
                     ));
@@ -28,7 +28,6 @@
                         'post_title'   => true,
                         'post_excerpt'   => true,
                         'fields' => array('preview','price','short_description', 'visibility', 'online_location'),
-                        'uploader' => 'basic',
                         'submit_value'  => __('Opslaan & verder'),
                         'return' => '?func=add-add-white&id=%post_id%&step=2&type='.$_GET['type']
                     )); 
@@ -37,31 +36,24 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3 col-lg-4 col-sm-12">
-        
+    <div class="col-md-3 col-lg-4 col-sm-12">  
         <div class="blockCourseToevoegen">
             <p class="courseToevoegenText">Course toevoegen</p>
             <div class="contentBlockRight">
                 <a href="/dashboard/teacher/course-selection/?func=add-white&id=<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
-                    <div class="circleIndicator  passEtape">
-                        <i class="fa fa-info"></i>
-                    </div>
+                    <div class="circleIndicator  passEtape"></div>
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=2&edit" class="contentBlockCourse">
+                <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-add-white&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=2&edit'; else echo "?func=add-add-white&type=" . $_GET['type'] . "&message=Please finish this step before"; ?>" class="contentBlockCourse">
                     <div class="circleIndicator passEtape2"></div>
                     <p class="textOpleidRight">Online or location</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=3&edit" class="contentBlockCourse">
-                    <div class="circleIndicator passEtape2">
-                        <i class="fa fa-tag" aria-hidden="true"></i>
-                    </div>
+                <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-add-white&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=3&edit'; else echo "?func=add-add-white&type=" . $_GET['type'] . "&message=Please finish this step before"; ?>"class="contentBlockCourse">
+                    <div class="circleIndicator"></div>
                     <p class="textOpleidRight ">Tags</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=4&edit" class="contentBlockCourse">
-                    <div class="circleIndicator passEtape2">
-                        <i class="fa fa-users" aria-hidden="true"></i>
-                    </div>
+                <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-add-white&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=4&edit'; else echo "?func=add-add-white&type=" . $_GET['type'] . "&message=Please finish this step before"; ?>" class="contentBlockCourse">
+                    <div class="circleIndicator"></div>
                     <p class="textOpleidRight">Expert</p>
                 </a>
             </div>

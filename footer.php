@@ -188,8 +188,6 @@
     <!-- end /.footer-big -->
 
 </footer>
-
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script>
 <script id="rendered-js" >
@@ -204,6 +202,20 @@
         });
     });
     //# sourceURL=pen.j
+</script>
+<script>
+    $('.bntNotification').click((e)=>{
+        $.ajax({
+                url:"/read-notification",
+                method:"get",
+                data:{},
+                dataType:"text",
+                success: function(data){
+                    // Get the modal
+                    console.log(data);
+                }
+        });
+    });
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
