@@ -6143,13 +6143,13 @@ input:checked ~ .assassment {
     height: 320px;
     width: 100%;
     border-radius: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 0px;
     overflow: hidden;
 }
 .beschiBlockText {
     border-radius: unset !important;
     font-size: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 30px !important;
     color: #FFFFFF !important;
 }
 .beschiBlockText:hover{
@@ -6263,9 +6263,11 @@ tbody{
 }
 .contentBtnCardProduct .single_add_to_cart_button.button.alt {
     font-size: 15px !important;
-    padding: 7px 15px 8px !important;
-    border-radius: 7px !important;
     text-transform: unset !important;
+    font-weight: 700;
+    padding: 0.65rem 1.5rem !important;
+    width: 100%;
+    border-radius: 0 !important;
 }
 .contentBtnCardProduct .single_add_to_cart_button.button.alt:hover {
     background-color: #043356 !important;
@@ -8983,7 +8985,7 @@ ul#tabs-nav li.active {
 
 .block2evensTabs section {
     box-sizing: border-box;
-    border: 1px solid #d7d7d7;
+    border: 1px solid #e0eff4;
     border-radius: 3px;
     background: #FFFFFF;
     margin-bottom: 15px;
@@ -9016,7 +9018,7 @@ ul#tabs-nav li.active {
     cursor: pointer;
     font-size: 15px;
     font-weight: 500;
-    background: #f0f0f0;
+    background: #e0eff4;
 }
 
 .block2evensTabs details summary::marker {
@@ -9024,16 +9026,20 @@ ul#tabs-nav li.active {
 }
 
 .block2evensTabs details summary:after {
-    content: "+";
+    content: "Bekijk details +";
     position: absolute;
-    font-size: 1.75rem;
     line-height: 0;
     margin-top: 0.75rem;
     right: 15px;
-    font-weight: 200;
     transform-origin: center;
     transition: 200ms linear;
-    top: 15px;
+    top: 4px;
+    background: #043356;
+    border-radius: 0;
+    color: #fff;
+    font-size: .9em;
+    font-weight: 700;
+    padding: 15px 14px;
 }
 .prixEvens {
     font-size: 15px !important;
@@ -9044,9 +9050,13 @@ ul#tabs-nav li.active {
     color: #030303;
 }
 .block2evensTabs details[open] summary:after {
-    transform: rotate(45deg);
-    font-size: 2rem;
-    color: red !important;
+    content: "Sluit details -";
+    color: black !important;
+    background: unset;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 15px 14px;
+    top: 2px;
 }
 .block2evensTabs details summary {
     outline: 0;
@@ -9055,15 +9065,16 @@ ul#tabs-nav li.active {
 .block2evensTabs details .detailSummary {
     display: flex;
     justify-content: space-between;
-    padding: 18px 15px;
+    padding: 0px;
     margin-bottom: 0;
-    align-items: center;
 }
 .block2evensTabs details summary .headTabsAccordion {
     display: flex;
     justify-content: space-between;
-    width: 50%;
+    width: 78%;
     padding: 15px 16px;
+    overflow: hidden;
+    align-items: center;
 }
 
 .modalLogoUser{
@@ -9221,7 +9232,9 @@ ul#tabs-nav li.active {
 .blockOneOver p{
     color: #4e4e4e;
     line-height: 30px;
-    font-size: 16px;
+    font-size: 15px;
+    margin-bottom: 0;
+    font-weight: 400;
 }
 #tabs-content .btnactive{
     background: none !important;
@@ -9783,6 +9796,85 @@ ul#tabs-nav li.active {
 }
 .blockFormCheckout form .form-row .input-text{
     border: none !important;
+}
+.headTabsAccordion .Date__inner{
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 0;
+    width: 25%;
+    margin-right: 15px;
+}
+.headTabsAccordion .location{
+    width: 55%;
+    margin-right: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #023356;
+    line-height: 30px;
+    font-size: 14px;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+}
+.headTabsAccordion .prixEvens{
+    color: #707070;
+    line-height: 30px;
+    font-size: 14px;
+    margin-bottom: 0;
+    font-weight: 400;
+    width: 15%;
+}
+.detailSummary .Course-info{
+    width: 55%;
+    padding: 20px 15px;
+
+}
+.detailSummary .Course-chechkout{
+    width: 45%;
+    box-sizing: border-box;
+    padding: 20px 15px;
+    background: #E0EFF4;
+}
+.detailSummary h3{
+    color: black;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+.Course-people{
+    appearance: none;
+    background: #fff !important;
+    border: 0;
+    bottom: 0;
+    box-shadow: none;
+    color: #000 !important;
+    cursor: pointer;
+    display: block;
+    height: 34px;
+    padding: 0 0 2px 13px !important;
+    position: relative;
+    top: 0;
+    width: 100%;
+}
+.Course-people:focus-visible{
+    border: none !important;
+}
+.tablePrice{
+    position: relative;
+    width: 100%;
+}
+.tablePrice .price {
+    color: #000000;
+    line-height: 30px;
+    font-size: 20px;
+    margin-bottom: 0;
+    font-weight: 600;
+    text-align: right;
+}
+.tablePrice .price p{
+    font-size: 26px;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 15px;
 }
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
