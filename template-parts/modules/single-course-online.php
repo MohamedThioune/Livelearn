@@ -611,6 +611,7 @@ extract($_GET);
                             </div>";
                             else if(!empty($courses)){
                                 foreach($courses as $key => $course){
+                                    var_dump($course);
                                     ?>
                                     <div class="sousBlockCours">
                                         <?php
