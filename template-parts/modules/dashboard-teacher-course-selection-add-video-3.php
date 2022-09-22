@@ -98,6 +98,14 @@
                     <div class="circleIndicator"></div>
                     <p class="textOpleidRight">Details en onderwepren</p>
                 </a>
+                <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=5&edit'; ?>"  class="contentBlockCourse">
+                    <div class="circleIndicator"></div>
+                    <p class="textOpleidRight">Tags</p>
+                </a>
+                <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=6&edit'; ?>"  class="contentBlockCourse">
+                    <div class="circleIndicator"></div>
+                    <p class="textOpleidRight">Experts</p>
+                </a>
             </div>
         </div>
     </div>
