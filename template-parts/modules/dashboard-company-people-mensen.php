@@ -107,11 +107,11 @@
 
                         $subject = 'Je LiveLearn inschrijving is binnen! ✨';
                         $body = "
-                        Bedankt voor je inschrijving<br>
-                        <h1>Hello and welcome to livelearn</h1>,<br> 
-                        Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br><br>
-                        <h4>Inloggen:</h4><br>
-                        <h6><a href='https://livelearn.nl/inloggen/'> Connexion </a></h6>
+                            Bedankt voor je inschrijving<br>
+                            <h1>Hello and welcome to livelearn</h1>,<br> 
+                            Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br><br>
+                            <h4>Inloggen:</h4><br>
+                            <h6><a href='https://livelearn.nl/inloggen/'> Connexion </a></h6>
                         ";
                     
                         $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
