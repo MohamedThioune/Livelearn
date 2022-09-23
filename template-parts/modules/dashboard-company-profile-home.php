@@ -50,6 +50,8 @@
         }
     }
 
+    $user = get_users(array('include'=> $_GET['id']))[0]->data;
+
 ?>
 <div class="contentProilView">
 

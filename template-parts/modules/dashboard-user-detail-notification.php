@@ -217,7 +217,7 @@
             <div class="col-lg-7">
                 <div class="cardRecentlyEnrolled">
                     <div class="w-100">
-                        <h2 class="notificationBy"> Error occured when try to find this notification, check your right access.</h2>
+                        <h2 class="notificationBy"> Error occured when try to find this notification, make sure that it exists and you have the access rights.</h2>
                     </div>
                 </div>
             </div>
