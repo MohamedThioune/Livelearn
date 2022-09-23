@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/footer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline-default.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline-default.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -692,7 +696,8 @@
       <workItem from="1663321444333" duration="6771000" />
       <workItem from="1663583538296" duration="10669000" />
       <workItem from="1663673194292" duration="6779000" />
-      <workItem from="1663685997472" duration="498000" />
+      <workItem from="1663685997472" duration="1729000" />
+      <workItem from="1663844415772" duration="13627000" />
     </task>
     <servers />
   </component>

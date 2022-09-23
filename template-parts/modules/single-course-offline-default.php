@@ -175,7 +175,7 @@
                                                                 <summary class="dateText1">
 
                                                                 <div class="headTabsAccordion">
-                                                                    <div>
+                                                                    <p class="Date__inner">
                                                                         <?php
                                                                         echo $agenda_start;
                                                                         if($date_start != '' && $date_end != '')
@@ -184,14 +184,17 @@
                                                                             echo $agenda_end;
                                                                         }
                                                                         ?>
-                                                                    </div>
+                                                                    </p>
+                                                                    <p class="location"><?php echo $location_start  ?></p>
+                                                                    <p class="prixEvens">€ <?php echo $price; ?></p>
 
                                                                 </div>
 
                                                                 </summary>
                                                                 <div class="detailSummary">
-                                                                    <div class="BlocknumberEvenement">
 
+                                                                    <div class="Course-info">
+                                                                        <h3>Cursus</h3>
                                                                         <?php
 
                                                                         for($i = 0; $i < count($datum['data']); $i++) {
@@ -205,18 +208,35 @@
                                                                                 <?php if($i === 0){?>
                                                                                     <input type="hidden" data-attr="dateNameStart" value="<?php echo $day . ', ' . $hour . ', ' . $location  ?>">
                                                                                 <?php }?>
-                                                                                <div class="d-flex">
-                                                                                    <p class="numberEvens"><?php echo $i+1 ?></p>
-                                                                                    <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
+                                                                                <div class="blockDateEvens">
+                                                                                    <!--                                                                        <p class="numberEvens"><?php /*echo $x+1 */?></p>
+-->                                                                                  <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
                                                                                 </div>
-                                                                                <p class="prixEvens">€ <?php echo $price; ?></p>
                                                                                 <?php
                                                                             }
                                                                         }
                                                                         ?>
                                                                     </div>
-
-                                                                    <div class="blockPriceEvens">
+                                                                    <div class="Course-chechkout">
+                                                                        <h3>Boek training</h3>
+                                                                        <select class="Course-people" name="" id="">
+                                                                            <option value="1"> 1 persoon </option>
+                                                                            <option value="2"> 2 persoon </option>
+                                                                            <option value="3"> 3 persoon </option>
+                                                                        </select>
+                                                                        <table class="tablePrice">
+                                                                            <tbody>
+                                                                            <tr>
+                                                                                <th>1x reguliere trainingsprijs</th>
+                                                                                <td><p class="prix">€ <?php echo $price; ?></p></td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                            <tfoot>
+                                                                            <tr>
+                                                                                <td colspan="2"><div class="price"><p>€ <?php echo $price; ?></p></div></td>
+                                                                            </tr>
+                                                                            </tfoot>
+                                                                        </table>
                                                                         <div class="contentBtnCardProduct">
                                                                             <!-- <a href="" class="btn btnReserveer">Reserveer<br><br></a> -->
                                                                             <!-- <a href="" class="btn btnSchrijf">Schrijf mij in!</a> -->
@@ -250,8 +270,6 @@
                                                                             do_action( 'woocommerce_after_add_to_cart_form' ); ?>
                                                                         </div>
                                                                     </div>
-
-
                                                                 </div>
                                                             </details>
 
@@ -289,7 +307,8 @@
                                                             <summary class="dateText1">
 
                                                                 <div class="headTabsAccordion">
-                                                                    <div>
+
+                                                                    <p class="Date__inner">
                                                                         <?php
                                                                         echo $agenda_start;
                                                                         if($date_start != $date_end)
@@ -298,13 +317,16 @@
                                                                             echo $agenda_end;
                                                                         }
                                                                         ?>
-                                                                    </div>
+                                                                    </p>
+                                                                    <p class="location"><?php echo $location_start  ?></p>
+                                                                    <p class="prixEvens">€ <?php echo $price; ?></p>
+
                                                                 </div>
 
                                                             </summary>
                                                             <div class="detailSummary">
-                                                                <div class="BlocknumberEvenement">
-
+                                                                <div class="Course-info">
+                                                                    <h3>Cursus</h3>
                                                                     <?php
                                                                     if(!empty($infos))
                                                                         $x = 0;
@@ -318,18 +340,35 @@
                                                                         <?php if($x === 0){?>
                                                                             <input type="hidden" data-attr="dateNameStart" value="<?php echo $day . ', ' . $hour . ', ' . $location  ?>">
                                                                         <?php }?>
-                                                                        <div class="d-flex">
-                                                                            <p class="numberEvens"><?php echo $x+1 ?></p>
-                                                                            <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
+                                                                        <div class="blockDateEvens">
+                                                                            <!--                                                                        <p class="numberEvens"><?php /*echo $x+1 */?></p>
+-->                                                                        <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
                                                                         </div>
-                                                                        <p class="prixEvens">€ <?php echo $price; ?></p>
                                                                         <?php
                                                                         $x+=1;
                                                                     }
                                                                     ?>
                                                                 </div>
-
-                                                                <div class="blockPriceEvens">
+                                                                <div class="Course-chechkout">
+                                                                    <h3>Boek training</h3>
+                                                                    <select class="Course-people" name="" id="">
+                                                                        <option value="1"> 1 persoon </option>
+                                                                        <option value="2"> 2 persoon </option>
+                                                                        <option value="3"> 3 persoon </option>
+                                                                    </select>
+                                                                    <table class="tablePrice">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <th>1x reguliere trainingsprijs</th>
+                                                                            <td><p class="prix">€ <?php echo $price; ?></p></td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                        <tfoot>
+                                                                        <tr>
+                                                                            <td colspan="2"><div class="price"><p>€ <?php echo $price; ?></p></div></td>
+                                                                        </tr>
+                                                                        </tfoot>
+                                                                    </table>
                                                                     <div class="contentBtnCardProduct">
                                                                         <!-- <a href="" class="btn btnReserveer">Reserveer<br><br></a> -->
                                                                         <!-- <a href="" class="btn btnSchrijf">Schrijf mij in!</a> -->
