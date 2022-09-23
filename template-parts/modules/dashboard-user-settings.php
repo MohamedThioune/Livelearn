@@ -217,17 +217,14 @@ if(!empty($bunch)){
                     <?php
                     if($educations)
                         if(!empty($educations))
-                            foreach($educations as $key=>$value) {
+                            foreach($educations as $key => $value) {
                                 if($value != null){
                                     $value = explode(";", $value);
-                                    $year_start = explode("-", $value[2])[0];
-                                    $year_end = explode("-", $value[3])[0];
-                                    if($year_start && !$year_end)
-                                        $year = $year_start;
-                                    else if($year_end && !$year_start)
-                                        $year = $year_end;
-                                    else if($year_end != $year_start)
-                                        $year = $year_start .'-'. $year_end;
+                                    if(isset($value[2]))
+                                        $year = explode("-", $value[2])[0];
+                                    if(isset($value[3]))
+                                        if(intval($value[2]) != intval($value[3])) 
+                                            $year = $year . "-" .  explode("-", $value[3])[0];
                                     ?>
                                     <div class="contentEducationCandidat">
                                         <div class="titleDateEducation">
@@ -375,15 +372,11 @@ if(!empty($bunch)){
                         if(!empty($experiences))
                             foreach($experiences as $key=>$value) {
                                 $value = explode(";", $value);
-                                $year_start = explode("-", $value[2])[0];
-                                $year_end = explode("-", $value[3])[0];
-                                if($year_start && !$year_end)
-                                    $year = $year_start;
-                                else if($year_end && !$year_start)
-                                    $year = $year_end;
-                                else if($year_end != $year_start)
-                                    $year = $year_start .'-'. $year_end;
-
+                                if(isset($value[2]))
+                                    $year = explode("-", $value[2])[0];
+                                if(isset($value[3]))
+                                    if(intval($value[2]) != intval($value[3])) 
+                                        $year = $year . "-" .  explode("-", $value[3])[0];
                                 ?>
                                 <div class="contentEducationCandidat">
                                     <div class="titleDateEducation">

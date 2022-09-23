@@ -76,7 +76,7 @@ extract($_GET);
                 <div class="blockImgCour">
                     <?php
 
-                    if( !empty($courses) && !empty($youtube_videos) ){
+                    if(!empty($courses) && !empty($youtube_videos) ){
                         if(!empty(get_field('preview', $post->ID)))
                             echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
                         else
@@ -607,11 +607,10 @@ extract($_GET);
                             <?php
                             if(!empty($courses) && !empty($youtube_videos))
                                 echo "<div class='sousBlockCours'>
-                                <span> No lesson as far, soon available </span>
-                            </div>";
+                                        <span> No lesson as far, soon available </span>
+                                     </div>";
                             else if(!empty($courses)){
                                 foreach($courses as $key => $course){
-                                    var_dump($course);
                                     ?>
                                     <div class="sousBlockCours">
                                         <?php
@@ -622,18 +621,19 @@ extract($_GET);
                                                 $style = "color:#F79403";
                                         }
                                         ?>
-                                        <a style="<?= $style; ?>" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo ($course['course_topic']['course_topic_title']);?></a>
+                                        <a style="<?= $style; ?>" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo ($course['course_topic']['course_topic_title']);?></a><br>
                                         <?php
                                         if(!empty($course['course_topic']['course_topic_lessons']))
-                                            foreach($course['course_topic']['course_topic_lessons'] as $sand => $value){
-                                                if(isset($lesson)) if($lesson == $sand) { ?>
-                                                    <div class="d-flex contentListVidoeCourse">
-                                                    <img class="playElement mr-3" style="width:22px;" src="<?php echo get_stylesheet_directory_uri() ?>/img/play.png" alt=""> <?php } ?>
-                                                <a href="?topic=<?php echo (int)$key; ?>&lesson=<?php echo (int)$sand; ?>" class="textChapitreCours textChapitreCours2"><?php echo ($value['course_lesson']['course_lesson_title']);?></a>
-                                                </div>
-
-
+                                            foreach($course['course_topic']['course_topic_lessons'] as $sand => $value){                                                ?>
+                                                <div class="d-flex contentListVidoeCourse">
                                                 <?php
+                                                if(isset($lesson))
+                                                if($lesson == $sand)
+                                                    echo '<img class="playElement mr-3" style="width:22px;" src="' . get_stylesheet_directory_uri() . '/img/play.png" alt="">';
+                                                ?>
+                                                    <a href="?topic=<?php echo (int)$key; ?>&lesson=<?php echo (int)$sand; ?>" class="textChapitreCours textChapitreCours2 liveTextCadPrice" style="color:red">&nbsp;&nbsp;<?php echo ($value['course_lesson']['course_lesson_title']);?></a>
+                                                </div>
+                                            <?php
                                             }
                                         ?>
                                     </div>
