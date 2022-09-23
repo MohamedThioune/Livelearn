@@ -76,12 +76,9 @@ extract($_GET);
                 <div class="blockImgCour">
                     <?php
 
-                    if(!empty($courses) && !empty($youtube_videos) ){
-                        if(!empty(get_field('preview', $post->ID)))
-                            echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
-                        else
-                            echo "<img src='" . $image . "' alt='thumbnail placeholder'>";
-                    }else{
+                    if(!empty($courses) && !empty($youtube_videos) )
+                        echo "<img src='" . $thumbnail . "' alt='preview image'>";
+                    else{
                         if(!empty($courses)){
                             if(isset($topic) && isset($lesson))
                                 echo " <video class='blockImgCour' poster='' controls>
@@ -90,19 +87,13 @@ extract($_GET);
                                             <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
                                         </video>";
                             else
-                                if(!empty(get_field('preview', $post->ID)))
-                                    echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
-                                else
-                                    echo "<img src='" . $image . "' alt='thumbnail placeholder'>";
+                                echo "<img src='" . $thumbnail . "' alt='preview image'>";
                         }
                         else{
                             if(isset($lesson))
                                 echo '<iframe width="730" height="433" src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
                             else
-                                if(!empty(get_field('preview', $post->ID)))
-                                    echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
-                                else
-                                    echo "<img src='" . $image . "' alt='thumbnail placeholder'>";
+                                echo "<img src='" . $thumbnail . "' alt='preview image'>";
                         }
                     }
 

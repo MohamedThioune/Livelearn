@@ -929,49 +929,49 @@
                                     </div>
                                     <div class="modal-body">
                                         <?php
-                                        foreach($experts as $expert){
-                                        $expert = get_users(array('include'=> $expert))[0]->data;
-                                        $company = get_field('company',  'user_' . $expert->ID);
-                                        $title = $company[0]->post_title;
-                                        $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                        ?>
-                                        <div class="blockExpertFollown">
-                                            <div class="d-flex">
-                                                <div class="blockImageExpertFollow">
-                                                    <img alt="Expert Image" src="<?php echo $image; ?>" alt="teacher photo">
-                                                </div>
-                                                <div>
-                                                    <p class="nameExpert"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></p>
-                                                    <p class="titleExpert"><?php echo $title; ?></p>
-                                                </div>
-                                            </div>
-                                            <form action="/dashboard/user/" method="POST">
-                                                <input type="hidden" name="artikel" value="<?= $post->ID; ?>" id="">
-                                                <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
-                                                <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
-                                                <input type="hidden" name="meta_key" value="expert" id="">
-                                                <div>
-                                                    <?php
-                                                    if($user_id != 0 && $user_id != $expert->ID)
-                                                    {
-                                                        $saves_expert = get_user_meta($user_id, 'expert');
-                                                        if (in_array($expert->ID, $saves_expert))
-                                                            echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
-                                                        else
-                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
-                                                    }
-                                                    
-                                                    ?>
-                                                </div>
-                                            </form>
-                                            <?php
-                                                if($user_id == 0)
-                                                    echo "                                
-                                                    <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='btn btnFollowExpert'> 
-                                                        Follow                                            
-                                                    </button>";
+                                        foreach($experts as $value){
+                                            $expert = get_users(array('include'=> $value))[0]->data;
+                                            $company = get_field('company',  'user_' . $expert->ID);
+                                            $title = $company[0]->post_title;
+                                            $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                             ?>
-                                        </div>
+                                            <div class="blockExpertFollown">
+                                                <div class="d-flex">
+                                                    <div class="blockImageExpertFollow">
+                                                        <img alt="Expert Image" src="<?php echo $image; ?>" alt="teacher photo">
+                                                    </div>
+                                                    <div>
+                                                        <p class="nameExpert"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></p>
+                                                        <p class="titleExpert"><?php echo $title; ?></p>
+                                                    </div>
+                                                </div>
+                                                <form action="/dashboard/user/" method="POST">
+                                                    <input type="hidden" name="artikel" value="<?= $post->ID; ?>" id="">
+                                                    <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
+                                                    <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
+                                                    <input type="hidden" name="meta_key" value="expert" id="">
+                                                    <div>
+                                                        <?php
+                                                        if($user_id != 0 && $user_id != $expert->ID)
+                                                        {
+                                                            $saves_expert = get_user_meta($user_id, 'expert');
+                                                            if (in_array($expert->ID, $saves_expert))
+                                                                echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
+                                                            else
+                                                                echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                        }
+                                                        
+                                                        ?>
+                                                    </div>
+                                                </form>
+                                                <?php
+                                                    if($user_id == 0)
+                                                        echo "                                
+                                                        <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='btn btnFollowExpert'> 
+                                                            Follow                                            
+                                                        </button>";
+                                                ?>
+                                            </div>
                                         <?php } ?>
                                     </div>
                                     <div class="modal-footer">
@@ -1017,8 +1017,8 @@
                         <div class="swiper">
                             <div class="swiper-wrapper">
                                 <?php
-                                    foreach($experts as $expert){
-                                        $expert = get_users(array('include'=> $expert))[0]->data;
+                                    foreach($experts as $value){
+                                        $expert = get_users(array('include'=> $value))[0]->data;
                                         $company = get_field('company',  'user_' . $expert->ID);
                                         $title = $company[0]->post_title;
                                         $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';

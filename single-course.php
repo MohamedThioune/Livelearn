@@ -120,7 +120,7 @@ foreach($users as $user) {
         array_push($users_choose, $user->ID);
 }
 
-if($post->post_author == 0){
+if(!$post->post_author){
     $user_choose = $users_choose[array_rand($users_choose, 1)];
 
     $arg = array(
@@ -145,7 +145,12 @@ $company = get_field('company',  'user_' . $post->post_author);
 $expert = get_field('experts', $post->ID);
 $author = array($user_choose);
 
-$experts = array_merge($expert, $author);
+if(isset($expert[0]))
+    $experts = array_merge($expert, $author);
+else
+    $experts = $author;
+
+var_dump($experts);
 
 /*
 * Likes

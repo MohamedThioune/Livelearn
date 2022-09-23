@@ -574,9 +574,9 @@ else if(isset($referee_employee)){
     //Adding new subtopics on course
     update_field('allocation', $allocution, $course_id);
 
-    if($path="dashboard")
+    if($path == "dashboard")
         $message = '/dashboard/company/learning-modules/?message=Allocution successfully'; 
-    else if($path="course")
+    else if($path == "course")
         $message = get_permalink($course_id) . '/?message=Allocution successfully'; 
 
     header("Location: ". $message);
