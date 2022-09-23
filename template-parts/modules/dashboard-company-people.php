@@ -70,7 +70,7 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
                             <td class="textTh elementOnder"><?php echo get_field('role', 'user_'.$user->ID);?></td>
                             <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
                             <td class="textTh"><?= $you ?></td>
-                            <td class="titleTextListe remove">
+                            <td class="titleTextListe <?php if($you != '') echo 'remove' ?>">
                                 <?php 
                                 if($you != '')
                                     echo '<img class="removeImg" src="' . get_stylesheet_directory_uri() . '/img/dashRemove.png" alt="">';
