@@ -8,6 +8,7 @@ $company_connected = $company[0]->post_title;
 $users = get_users();
 $members = array();
 $numbers = array();
+$numbers_count = array();
 
 $topic_views = array();
 $topic_followed = array();
@@ -36,6 +37,11 @@ foreach ($users as $user ) {
         $view_topic = get_field('views_topic', $stat_id);
         array_push($topic_views, $view_topic);
 
+        $view_user = get_field('views_user', $stat_id);
+        $number_count['id'] = $user->ID; 
+        $number_count['digit'] = count($view_user); 
+        array_push($numbers_count, $number_count);
+
         $view_course = get_field('views', $stat_id);
 
         //Followed topic
@@ -44,6 +50,7 @@ foreach ($users as $user ) {
         $topic_followed  = array_merge($topics_internal, $topics_external, $topic_followed);
 
         //Stats engagement
+        $stat_by_user['user'] = $view_user;
         $stat_by_user['topic'] = $view_topic;
         $stat_by_user['course'] = $view_course;
         array_push($stats_by_user, $stat_by_user);
@@ -51,7 +58,8 @@ foreach ($users as $user ) {
     }
 }
 $topic_views_id = array_column($topic_views[5], 'view_id');
-
+$keys = array_column($numbers_count, 'digit');
+array_multisort($keys, SORT_DESC, $numbers_count);
 
 /*
 * Check statistic by user *
@@ -59,26 +67,33 @@ $topic_views_id = array_column($topic_views[5], 'view_id');
 
 //FADEL CODE 
 $most_active_members= '';
-foreach ($members as $key => $value) {
-    if ($key == 3)
-        break;
+$i = 0;
+if(!empty($numbers_count))
+    foreach ($numbers_count as $element) {
+        $value = get_user_by('ID', $element['id']);
+        $i++;
+        if($i > 3)
+            break;
 
-    $image_author = get_field('profile_img',  'user_' . $value->ID);
-    $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-    $most_active_members.='
-    <div class="contentStats">
-    <div class="contentImgName">
-        <div class="statsImgCours">
-            <img id="money" src="' . $image_author . '" alt="">
+        $image_author = get_field('profile_img',  'user_' . $value->ID);
+        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $most_active_members.='
+        <div class="contentStats">
+        <div class="contentImgName">
+            <div class="statsImgCours">
+                <img id="money" src="' . $image_author . '" alt="">
+            </div>
+        <div>
+            <p class="nameCoursSales">'.$value->display_name.'</p>
+            <p class="categoriesNameCours">'.get_field('role',  'user_' . $value->ID).'</p>
         </div>
-    <div>
-        <p class="nameCoursSales">'.$value->display_name.'</p>
-        <p class="categoriesNameCours">'.get_field('role',  'user_' . $value->ID).'</p>
-    </div>
-    </div>
-    <a href="/user-overview?id='. $value->ID .'" class="btn btnViewProfilActiveM">View Profil</a>
-    </div>';
-}
+        </div>
+        <a href="/user-overview?id='. $value->ID .'" class="btn btnViewProfilActiveM">View Profil</a>
+        </div>';
+    }
+else 
+    $most_active_members ="<p>You don't active members yet !</p>";
+
 
 /*
 * * Get courses
@@ -103,6 +118,7 @@ $sale_courses = array();
 //Popular courses
 $args = array(
     'limit' => -1,
+    'post_status' => array('wc-processing'),
 );
 
 $bunch_orders = wc_get_orders($args);
@@ -307,7 +323,7 @@ arsort($topic_followed);
                     $image_category = get_field('image', 'category_'. $key);
                     $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/libay.png';
                 ?>
-                    <a href="/category-overview?category=<?php echo $key ; ?>">
+                    <p>
                         <div class="contentStats mb-3">
                             <div class="contentImgName">
                                 <div class="statsImgCours">
@@ -315,12 +331,12 @@ arsort($topic_followed);
                                 </div>
                             <div>
                                 <p class="nameCoursSales mb-0"><?= $name ?></p>
-                                <p class="categoriesNameCours">x</p>
+                                <p class="categoriesNameCours"><?= $topic ?> views</p>
                             </div>
                             </div>
-                            <p class="priceHistory">x $</p>
+                           <a href="category-overview?category=<?php echo $key; ?>" target="_blank" class="priceHistory">Overview</a>
                         </div>
-                    </a>
+                    </p>
                 <?php
                 }
                 ?>
@@ -366,7 +382,7 @@ arsort($topic_followed);
                     $image_category = get_field('image', 'category_'. $key);
                     $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/libay.png';
                 ?>
-                <a href="category-overview?category=<?= $key; ?>">
+                <p>
                     <div class="contentStats mb-3">
                         <div class="contentImgName">
                             <div class="statsImgCours">
@@ -374,12 +390,12 @@ arsort($topic_followed);
                             </div>
                         <div>
                             <p class="nameCoursSales mb-0"><?= $name; ?></p>
-                            <p class="categoriesNameCours">x</p>
+                            <p class="categoriesNameCours"><?= $topic ?> followers</p>
                         </div>
                         </div>
-                        <p class="priceHistory">x $</p>
+                        <a href="category-overview?category=<?php echo $key; ?>" target="_blank" class="priceHistory">Overview</a>
                     </div>
-                </a>
+                </p>
                 <?php
                 }
                 ?>
