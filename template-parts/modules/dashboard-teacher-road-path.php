@@ -1,9 +1,5 @@
 <?php 
 
-$page = dirname(__FILE__) . '/../../templates/check_visibility.php';
- 
-require($page); 
-
 $user_id = get_current_user_id();
 
 /*
