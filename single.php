@@ -1,6 +1,11 @@
 <?php 
 get_header();
+?>
+<head>
+    <meta name=”robots” content=”noindex,nofollow”>
+</head>
 
+<?
 global $post;
 
 global $wp;

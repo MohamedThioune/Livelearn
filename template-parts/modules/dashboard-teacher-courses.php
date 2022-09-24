@@ -1,7 +1,4 @@
 <?php
-$page = dirname(__FILE__) . '/../../templates/check_visibility.php';
- 
-require($page); 
 
 $id = get_current_user_id();
 
@@ -15,7 +12,6 @@ if($id != 0){
 
     $courses = get_posts($args);
 }
-
 ?>
 <div class="contentListeCourse">
     <div class="cardOverviewCours">
@@ -41,7 +37,7 @@ if($id != 0){
                     foreach($courses as $course){
                         if(!visibility($course, $visibility_company))
                             continue;
-                
+
                         /*
                         * Categories
                         */

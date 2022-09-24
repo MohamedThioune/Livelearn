@@ -4,7 +4,7 @@ $id = get_current_user_id();
 
 if($id){
     $args = array(
-        'post_type' => 'course', 
+        'post_type' => array('post', 'course'), 
         'posts_per_page' => -1,
         'author' => $id,  
     );
