@@ -76,12 +76,9 @@ extract($_GET);
                 <div class="blockImgCour">
                     <?php
 
-                    if( !empty($courses) && !empty($youtube_videos) ){
-                        if(!empty(get_field('preview', $post->ID)))
-                            echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
-                        else
-                            echo "<img src='" . $image . "' alt='thumbnail placeholder'>";
-                    }else{
+                    if(!empty($courses) && !empty($youtube_videos) )
+                        echo "<img src='" . $thumbnail . "' alt='preview image'>";
+                    else{
                         if(!empty($courses)){
                             if(isset($topic) && isset($lesson))
                                 echo " <video class='blockImgCour' poster='' controls>
@@ -90,19 +87,13 @@ extract($_GET);
                                             <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
                                         </video>";
                             else
-                                if(!empty(get_field('preview', $post->ID)))
-                                    echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
-                                else
-                                    echo "<img src='" . $image . "' alt='thumbnail placeholder'>";
+                                echo "<img src='" . $thumbnail . "' alt='preview image'>";
                         }
                         else{
                             if(isset($lesson))
                                 echo '<iframe width="730" height="433" src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
                             else
-                                if(!empty(get_field('preview', $post->ID)))
-                                    echo "<img src='" . get_field('preview', $post->ID)['url'] . "' alt='preview img'>";
-                                else
-                                    echo "<img src='" . $image . "' alt='thumbnail placeholder'>";
+                                echo "<img src='" . $thumbnail . "' alt='preview image'>";
                         }
                     }
 
@@ -607,8 +598,8 @@ extract($_GET);
                             <?php
                             if(!empty($courses) && !empty($youtube_videos))
                                 echo "<div class='sousBlockCours'>
-                                <span> No lesson as far, soon available </span>
-                            </div>";
+                                        <span> No lesson as far, soon available </span>
+                                     </div>";
                             else if(!empty($courses)){
                                 foreach($courses as $key => $course){
                                     ?>
@@ -621,18 +612,19 @@ extract($_GET);
                                                 $style = "color:#F79403";
                                         }
                                         ?>
-                                        <a style="<?= $style; ?>" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo ($course['course_topic']['course_topic_title']);?></a>
+                                        <a style="<?= $style; ?>" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo ($course['course_topic']['course_topic_title']);?></a><br>
                                         <?php
                                         if(!empty($course['course_topic']['course_topic_lessons']))
-                                            foreach($course['course_topic']['course_topic_lessons'] as $sand => $value){
-                                                if(isset($lesson)) if($lesson == $sand) { ?>
-                                                    <div class="d-flex contentListVidoeCourse">
-                                                    <img class="playElement mr-3" style="width:22px;" src="<?php echo get_stylesheet_directory_uri() ?>/img/play.png" alt=""> <?php } ?>
-                                                <a href="?topic=<?php echo (int)$key; ?>&lesson=<?php echo (int)$sand; ?>" class="textChapitreCours textChapitreCours2"><?php echo ($value['course_lesson']['course_lesson_title']);?></a>
-                                                </div>
-
-
+                                            foreach($course['course_topic']['course_topic_lessons'] as $sand => $value){                                                ?>
+                                                <div class="d-flex contentListVidoeCourse">
                                                 <?php
+                                                if(isset($lesson))
+                                                if($lesson == $sand)
+                                                    echo '<img class="playElement mr-3" style="width:22px;" src="' . get_stylesheet_directory_uri() . '/img/play.png" alt="">';
+                                                ?>
+                                                    <a href="?topic=<?php echo (int)$key; ?>&lesson=<?php echo (int)$sand; ?>" class="textChapitreCours textChapitreCours2 liveTextCadPrice" style="color:red">&nbsp;&nbsp;<?php echo ($value['course_lesson']['course_lesson_title']);?></a>
+                                                </div>
+                                            <?php
                                             }
                                         ?>
                                     </div>

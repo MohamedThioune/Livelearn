@@ -1,66 +1,5 @@
 <?php /** Template Name: template gratis carriere */ ?>
 
-<?php
-extract($_POST);
-
-extract($_GET);
-
-if(isset($education_individual))
-    if(isset($email)){
-
-        if($email != null)
-        {
-
-            if($first_name == null)
-                $first_name = "ANONYM";
-
-            if($last_name == null)
-                $last_name = "ANONYM";
-
-            $userdata = array(
-                'user_pass' => $password,
-                'user_login' => $user_login,
-                'user_email' => $email,
-                'user_url' => 'http://livelearn.nl/',
-                'display_name' => $first_name,
-                'first_name' => $first_name,
-                'last_name' => $last_name,
-                'role' => 'Klant'
-            );
-
-            $user_id = wp_insert_user(wp_slash($userdata));
-
-            if(is_wp_error($user_id)){
-                $danger = $user_id->get_error_message();
-                header("location:registreren?message=".$danger."&danger");
-
-            }else{
-                $success = "U bent succesvol geregistreerd<br>";
-                update_field('telnr', $phone, 'user_'.$user_id);
-                update_field('subscription_company', $bedrij, 'user_'.$user_id);
-
-                $subject = 'Welcome onboard ✨';
-                $body = "
-                    <h1>Hello " . $first_name  . "</h1><br> 
-                    Your are successfully registered , welcome onboard<br><br>
-                    <h4><a href='http://livelearn.nl/inloggen'> Connexion </a></h4>
-                    ";
-
-                $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
-
-                wp_mail($email, $subject, $body, $headers, array( '' )) ;
-                header("location:static-education-individual?message=".$success."&success");
-
-            }
-
-
-        }
-        else{
-            $danger = "Vul de e-mail in, alsjeblieft";
-            header("location:static-education-individual?message=".$danger."&danger");
-        }
-    }
-?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
@@ -111,7 +50,7 @@ if(isset($education_individual))
                 </div>
                 <div class="text-center">
                     <h2 class="titleWinWar">We hebben<b> 50 plaatsen</b></h2>
-                    <p class="descriptionWinWar">Gratis ontwikkeltraject t.w.v €700 p.p voor je operationele team (max. MBO2)</p>
+                    <p class="descriptionWinWar">Gratis ontwikkeltraject t.w.v €700 p.p.</p>
                 </div>
                 <img class="volImg" src="<?php echo get_stylesheet_directory_uri();?>/img/vol_is_vol.png"  alt="">
             </div>
@@ -131,16 +70,16 @@ if(isset($education_individual))
                         <p><b>Meld je direct vrijblijvend aan</b></p>
                         <p>Vul onderstaand formulier in en we plannen zo snel mogelijk en afspraak in</p>
                         <?php
-                        echo do_shortcode("[gravityform id='16' title='false' description='false' ajax='true']");
+                        echo do_shortcode("[gravityform id='16' title='false' description='false' ajax='false']");
                         ?>
-                        <div class="d-flex">
+                        <!-- <div class="d-flex">
                             <input type="checkbox" id="livelearn" name="livelearn" value="livelearn">
                             <label for="vehicle1">Ik ga akkoord met de algemene voorwaarden van <a href="/privacy">Livelearn B.V</a></label>
                         </div>
                         <div class="d-flex">
                             <input type="checkbox" id="manpower" name="manpower" value="manpower">
                             <label for="vehicle1">Ik ga akkoord met de algemene voorwaarden van <a href="https://www.manpower.nl/nl/privacy-statement">Manpower Group</a></label>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

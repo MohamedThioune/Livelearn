@@ -4,6 +4,17 @@
 get_header();
 ?>
 
+<head>
+    <meta name=”robots” content=”noindex,nofollow”>
+</head>
+
+<?php
+$page = 'check_visibility.php';
+ 
+require($page); 
+
+?>
+
 <?php
 $query = new WP_Query( array( 'post_type' => 'post' ) );
 $blogs = $query->posts;
@@ -25,6 +36,9 @@ global $post;
                 <div class="containe-blog">
                     <?php
                     foreach($blogs as $blog) {
+                    if(!visibility($blog, $visibility_company))
+                        continue;
+                        
                     //Description
                     $short = ($blog->post_excerpt) ? : get_field('short_description', $blog->ID);
 

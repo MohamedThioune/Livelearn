@@ -23,6 +23,8 @@ $total_expenses = 0;
 
 $orders = array();
 
+$managed = get_field('managed',  'user_' . get_current_user_id());
+
 foreach( $users as $user ) {
     $company = get_field('company',  'user_' . $user->ID);
     if ($company[0]->post_title == $company_connected)
@@ -33,6 +35,7 @@ foreach( $users as $user ) {
         $args = array(
             'limit' => -1,
             'customer_id' => $user->ID,
+            'post_status' => array('wc-processing'),
         );
         $orders = wc_get_orders($args);
         $expenses = 0;
@@ -51,6 +54,7 @@ foreach( $users as $user ) {
         //Income by this user
         $args = array(
             'limit' => -1,
+            'post_status' => array('wc-processing'),
         );
         $bunch_orders = wc_get_orders($args);
         $incomes = 0; 
@@ -68,7 +72,11 @@ foreach( $users as $user ) {
 
         $total_incomes += $user->incomes;
 
-        array_push($members,$user);                            
+        if(in_array('administrator', $user_connected->roles) || in_array('hr', $user_connected->roles))
+            array_push($members,$user);
+        else
+            if(in_array($user->id, $managed))
+                array_push($members,$user);                      
     }
 }
 
@@ -83,7 +91,7 @@ $maandelijke = count($members) * 5;
     }
 </style>
 
-
+<?php if(in_array('administrator', $user_connected->roles) || in_array('hr', $user_connected->roles) || in_array('manager', $user_connected->roles) ) { ?>
 <div class="contentPageManager managerOverviewMensen">
     <?php if($_GET['message']) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span>" ?>
     <div class="contentOverviewMensen d-flex justify-content-md-between bg-white justify-content-center p-2 radius-custom">
@@ -321,7 +329,7 @@ $maandelijke = count($members) * 5;
 
 
 </div>
-
+<?php } ?>
 
 
 

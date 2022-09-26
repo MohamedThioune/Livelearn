@@ -26,7 +26,7 @@
     $count = count($members);
 
 if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"; 
-    if( in_array('administrator', $data_user->roles) || in_array( 'manager', $data_user->roles ) || in_array('hr', $data_user->roles) || $grant ) {
+    if( in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) || $grant ) {
 ?>
     <div class="cardPeople">
         <div class="headListeCourse">
@@ -55,7 +55,7 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
                         if(!$image_user)  
                             $image_user = get_stylesheet_directory_uri(). "/img/placeholder_user.png";
                         
-                        $you  =  (in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('manager', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : '';
+                        $you  =  (in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : '';
                         
                     ?>
                         <tr id="<?php echo $user->ID; ?>" >
@@ -70,8 +70,11 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
                             <td class="textTh elementOnder"><?php echo get_field('role', 'user_'.$user->ID);?></td>
                             <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
                             <td class="textTh"><?= $you ?></td>
-                            <td class="titleTextListe remove">
-                                <img class="removeImg" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
+                            <td class="titleTextListe <?php if($you != '') echo 'remove' ?>">
+                                <?php 
+                                if($you != '')
+                                    echo '<img class="removeImg" src="' . get_stylesheet_directory_uri() . '/img/dashRemove.png" alt="">';
+                                ?>
                             </td>
                         </tr>
                     <?php
@@ -93,7 +96,7 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
     $(".remove").click(function(){
         var id = $(this).parents("tr").attr("id");
 
-        if(confirm('Are you sure you want to remove this record ?'))
+        if(confirm('Are you sure you want to remove this user from your company ?'))
         {
             $.ajax({
                url: '/delete-user',
@@ -105,14 +108,13 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
                success: function(data) {
                     $("#"+id).remove();
                     console.log(data);
-                    alert("Record removed successfully");  
+                    alert("User removed successfully");  
                }
             });
         }
     });
 
 </script>
-
 
 <script>
 

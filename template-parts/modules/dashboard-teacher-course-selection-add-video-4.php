@@ -10,7 +10,7 @@
                         'post_id'       => $_GET['id'],
                         'field_groups' => array('group_6155e73fb1744'),
                         'submit_value'  => __('Opslaan & naar overzicht'),
-                        'return' => '/dashboard/teacher/course-overview/'
+                        'return' => '?func=add-video&id=%post_id%&step=5'
                     )); 
                 ?>
             </div>
@@ -39,6 +39,14 @@
                 <a href="/dashboard/teacher/course-selection/?func=add-video&id=<?php echo $_GET['id'];?>&step=4" class="contentBlockCourse">
                     <div class="circleIndicator passEtape2"></div>
                     <p class="textOpleidRight">Details en onderwepren</p>
+                </a>
+                <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=5&edit'; ?>"  class="contentBlockCourse">
+                    <div class="circleIndicator"></div>
+                    <p class="textOpleidRight">Tags</p>
+                </a>
+                <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=6&edit'; ?>"  class="contentBlockCourse">
+                    <div class="circleIndicator"></div>
+                    <p class="textOpleidRight">Experts</p>
                 </a>
             </div>
         </div>

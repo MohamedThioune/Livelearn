@@ -20,7 +20,6 @@
         return $bool;
     }
 
-
     function view($course, $user_visibility){
         $user_id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;
         if(!$user_id)
