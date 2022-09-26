@@ -4,7 +4,7 @@
     <?php wp_head(); ?>
     <?php get_header(); ?>
     <?php
-    $page = dirname(__FILE__) . '/check_visibility.php';
+    $page = 'check_visibility.php';
     require($page); 
     ?>
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />

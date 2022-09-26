@@ -9,6 +9,8 @@
                     <?php if($_GET['message']) echo "<span class='alert alert-error courseToevoegenText' style='color:red'>* " . $_GET['message'] . "</span><br><br>"; ?>
                 </div>
                 <?php
+                    update_field('course_type', 'article', $_GET['id']);
+
                     if(isset($_GET['id']))
                         acf_form(array(
                             'post_id'       => $_GET['id'],
@@ -27,7 +29,7 @@
             <p class="courseToevoegenText">Course toevoegen</p>
             <div class="contentBlockRight">
                 <a href="/dashboard/teacher/course-selection/?func=add-article<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
-                    <div class="circleIndicator  passEtape">
+                    <div class="circleIndicator passEtape">
                         <i class="fa fa-info"></i>
                     </div>
                     <p class="textOpleidRight">Basis informatie</p>
