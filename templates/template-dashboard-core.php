@@ -561,7 +561,7 @@ else if(isset($referee_employee)){
                 $post_id = wp_insert_post($post_data);
                 //Add further informations for feedback
                 update_field('onderwerp_feedback', $onderwerp_feedback, $post_id);
-                update_field('manager_feedback', $manager, $post_id);
+                update_field('manager_feedback', $manager->ID, $post_id);
                 update_field('type_feedback', $type, $post_id);
                 update_field('beschrijving_feedback', nl2br($beschrijving_feedback), $post_id);
 

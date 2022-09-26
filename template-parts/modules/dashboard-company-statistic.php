@@ -264,7 +264,7 @@ arsort($topic_followed);
                                     $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
                         }    
                     ?>
-                    <a href="">
+                    <a href="<?php echo get_permalink($course->ID) ?>">
                         <div class="contentStats mb-3 mb-">
                             <div class="contentImgName w-25">
                                     <img src="<?= $thumbnail ?>"
@@ -334,7 +334,7 @@ arsort($topic_followed);
                                 <p class="categoriesNameCours"><?= $topic ?> views</p>
                             </div>
                             </div>
-                           <a href="category-overview?category=<?php echo $key; ?>" target="_blank" class="priceHistory">Overview</a>
+                           <a href="/category-overview?category=<?php echo $key; ?>" target="_blank" class="priceHistory">Overview</a>
                         </div>
                     </p>
                 <?php
@@ -393,7 +393,7 @@ arsort($topic_followed);
                             <p class="categoriesNameCours"><?= $topic ?> followers</p>
                         </div>
                         </div>
-                        <a href="category-overview?category=<?php echo $key; ?>" target="_blank" class="priceHistory">Overview</a>
+                        <a href="/category-overview?category=<?php echo $key; ?>" target="_blank" class="priceHistory">Overview</a>
                     </div>
                 </p>
                 <?php
