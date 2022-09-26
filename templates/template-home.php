@@ -2,14 +2,16 @@
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
-<?php 
+<?php
 
 $page = dirname(__FILE__) . '/check_visibility.php';
-require($page); 
+require($page);
 
 ?>
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/mobiscroll.javascript.min.css" />
+<script src="<?php echo get_stylesheet_directory_uri();?>/city.js"></script>
 
 <?php
 
@@ -19,7 +21,7 @@ require($page);
         $randstring = '';
         for ($i = 0; $i < 10; $i++) {
             $rand = $characters[rand(0, strlen($characters))];
-            $randstring .= $rand;  
+            $randstring .= $rand;
         }
         return $randstring;
     }
@@ -29,16 +31,16 @@ require($page);
 
     extract($_POST);
     if(isset($email)){
-       
+
         if($email != null)
         {
              $args = array(
-                 'post_type' => 'company', 
+                 'post_type' => 'company',
                  'post_status' => 'publish',
                  'posts_per_page' => -1,
-                 'order' => 'DESC',                        
+                 'order' => 'DESC',
              );
-        
+
              $companies = get_posts($args);
 
              foreach($companies as $company){
@@ -50,13 +52,13 @@ require($page);
 
             if($first_name == null)
                 $first_name = "ANONYM";
-            
+
             if($last_name == null)
                 $last_name = "ANONYM";
-            
+
                 $login = RandomString();
                 $password = RandomString();
-            
+
 
             $userdata = array(
                 'user_pass' => $password,
@@ -77,7 +79,7 @@ require($page);
                      window.location.replace("/?message=".$danger);
                   </script>
                   <?php
-                  echo ("<span class='alert alert-info'>" .  $danger . "</span>");   
+                  echo ("<span class='alert alert-info'>" .  $danger . "</span>");
               }else
                   {
                       $subject = 'Je LiveLearn inschrijving is binnen! ✨';
@@ -88,10 +90,10 @@ require($page);
                       <h4>Inloggen:</h4><br>
                       <h6><a href='https:livelearn.nl/inloggen/'> Log in </a></h6>
                       ";
-                
-                      $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
-                      wp_mail($email, $subject, $body, $headers, array( '' )) ; 
-                      
+
+                      $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
+                      wp_mail($email, $subject, $body, $headers, array( '' )) ;
+
                       update_field('telnr', $telefoonnummer, 'user_' . $user_id);
                       update_field('degree_user', $choiceDegrees, 'user_'.$user_id);
                       update_field('company', $companie, 'user_'.$user_id);
@@ -100,28 +102,28 @@ require($page);
                       update_field('generatie', $choiceGeneratie, 'user_'.$user_id);
                       update_field('country', $prive, 'user_'.$user_id);
                       $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
-                    foreach ($bangerichtsChoice as $key => $topic) { 
+                    foreach ($bangerichtsChoice as $key => $topic) {
                         if (!empty($topic))
                         {
                             if (!(in_array($topic, $subtopics_already_selected)))
                             {
-                                add_user_meta(get_current_user_id(),'topic',$topic);  
+                                add_user_meta(get_current_user_id(),'topic',$topic);
                             }
-                            
+
                         }
                     }
-                    
+
                       header('Location: /inloggen/?message=Je bent succesvol geregistreerd. Je ontvangt een e-mail met je login-gegevens.');
                   ?>
-                  
+
              <?php
-               
+
              }
          }
      }
      }
-    
-/** 
+
+/**
  * Skills Passport
 */
 
@@ -154,13 +156,13 @@ $degrees=[
          <div class="blockInputCheck">
              <input type="checkbox" name="choiceCourseType[]" value='.$value.' id="courseType'.$key.'"/><label class="labelChoose btnBaangerichte" for="courseType'.$key.'">'.$value.'</label>
         </div>';
-        
+
     }
-/** 
+/**
  * Skills Passport
 */
     $args = array(
-        'post_type' => array('course', 'post'), 
+        'post_type' => array('course', 'post'),
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'order' => 'DESC',
@@ -169,7 +171,7 @@ $degrees=[
     $courses = get_posts($args);
 
     /*
-    ** Categories - all  * 
+    ** Categories - all  *
     */
 
     $categories = array();
@@ -217,7 +219,7 @@ $degrees=[
 <?php
 
 
-    $subtopics = array();  
+    $subtopics = array();
     foreach($categories as $categ){
         //Topics
         $topicss = get_categories(
@@ -225,19 +227,19 @@ $degrees=[
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
             'parent'  => $categ,
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
-            ) 
+            )
         );
 
         foreach ($topicss as  $value) {
-            $subtopic = get_categories( 
+            $subtopic = get_categories(
                  array(
                  'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
                  'parent'  => $value->cat_ID,
                  'hide_empty' => 0,
                   //  change to 1 to hide categores not having a single post
-                ) 
+                )
             );
-            $subtopics = array_merge($subtopics, $subtopic);      
+            $subtopics = array_merge($subtopics, $subtopic);
         }
     }
 
@@ -245,7 +247,7 @@ $degrees=[
 
 
     foreach($bangerichts as $key1=>$tag){
-        
+
         //Topics
         $cats_bangerichts = get_categories( array(
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
@@ -256,18 +258,18 @@ $degrees=[
         {
             $row_bangrichts.='<div hidden=true class="cb_topics_bangricht_'.($key1+1).'" '.($key1+1).'">';
             foreach($cats_bangerichts as $key => $value)
-            {   
+            {
                 $row_bangrichts .= '
                 <input type="checkbox" name="choice_bangrichts_'.$value->cat_ID.'" value= '.$value->cat_ID .' id=subtopics_bangricht_'.$value->cat_ID.' /><label class="labelChoose" for=subtopics_bangricht_'.$value->cat_ID.'>'. $value->cat_name .'</label>';
             }
             $row_bangrichts.= '</div>';
         }
-      
+
     }
 
     foreach($functies as $key1 =>$tag)
     {
-        
+
         //Topics
         $cats_functies = get_categories(
             array(
@@ -279,7 +281,7 @@ $degrees=[
         {
             $row_functies.='<div hidden=true class="cb_topics_funct_'.($key1+1).'" '.($key1+1).'">';
             foreach($cats_functies as $key => $value)
-            {   
+            {
             $row_functies .= '
             <input type="checkbox" name="choice_functies_'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_funct_'.($value->cat_ID).'" /><label class="labelChoose" for="cb_funct_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
             }
@@ -298,13 +300,13 @@ $degrees=[
         {
             $row_skills.='<div hidden=true class="cb_topics_skills_'.($key1+1).'" '.($key1+1).'">';
             foreach($cats_skills as $key => $value)
-            {   
+            {
                     $row_skills .= '
                     <input type="checkbox" name="choice_skills'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_skills_'.($value->cat_ID).'" /><label class="labelChoose"  for="cb_skills_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
             }
             $row_skills.= '</div>';
         }
-      
+
     }
 
     foreach($interesses as $key1=>$tag){
@@ -318,37 +320,37 @@ $degrees=[
         {
             $row_interesses.='<div hidden=true class="cb_topics_personal_'.($key1+1).'" '.($key1+1).'">';
             foreach($cats_interesses as $key => $value)
-            {   
+            {
             $row_interesses .= '
             <input type="checkbox" name="choice_interesses_'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_interesses_'.($value->cat_ID).'" /><label class="labelChoose"  for="cb_interesses_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
             }
             $row_interesses.= '</div>';
         }
-      
+
     }
-      
+
     if (isset($_POST["subtopics_first_login"])){
         unset($_POST["subtopics_first_login"]);
         $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
-        foreach ($_POST as $key => $subtopics) { 
+        foreach ($_POST as $key => $subtopics) {
             if (isset($_POST[$key]))
             {
                 if (!(in_array($_POST[$key], $subtopics_already_selected)))
                 {
-                    add_user_meta(get_current_user_id(),'topic',$_POST[$key]);  
+                    add_user_meta(get_current_user_id(),'topic',$_POST[$key]);
                 }
-                
+
             }
         }
         update_field('is_first_login', true, 'user_'.get_current_user_id());
     }
-    
+
     $is_first_login = (get_field('is_first_login','user_' . get_current_user_id()));
     if (!$is_first_login && get_current_user_id() !=0 )
     {
-        
-    ?>    
-    <!-- Modal First Connection --> 
+
+    ?>
+    <!-- Modal First Connection -->
     <div class="contentModalFirst">
         <div class="modal" id="myFirstModal" tabindex="-1" role="dialog" aria-labelledby="myFirstModalScrollableTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -475,14 +477,14 @@ $degrees=[
         </div>
     </div>
     <?php
-    }  
+    }
     ?>
 
 
 
 
 <div class="contentOne">
-  
+
     <div class="boxOne3">
         <div class="container">
             <div class="voorBlock">
@@ -492,8 +494,8 @@ $degrees=[
                     <input id="search" type="search" class="jAuto searchInputHome form-control"
                         placeholder="Zoek opleidingen, experts of onderwerpen" name="search" autocomplete="off">
                     <button class="btn btn-Zoek elementWeb">Zoek</button>
-                    <?php 
-                        if(get_current_user_id()==0){ 
+                    <?php
+                        if(get_current_user_id()==0){
                     ?>
 
                         <div class="groupeBtn-Jouw-inloggen">
@@ -502,7 +504,7 @@ $degrees=[
                             <a href="#" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal"  class="inloggenbtn">Inloggen</a>
                         </div>
 
-                    <?php 
+                    <?php
                         }
                     ?>
                     <div class="dropdown-menuSearch" id="list">
@@ -565,7 +567,7 @@ $degrees=[
                                 <p class="textOpleidRight">Finish</p>
                             </div>
                         </div>
-                    
+
                             <div class="step1SkillsPasspoort">
                                 <p class="titleBlockStepSkills">Wat is jouw hoogst afgeronde opleiding ?</p>
                                 <div class="blockInputRadio">
@@ -604,25 +606,74 @@ $degrees=[
                             <div class="step3SkillsPasspoort stepSkillpasspoort">
                                 <p class="titleBlockStepSkills">Geef de locatie(s) aan waar jij woont of werkt</p>
                                 <div class="input-group-locaties">
-                                    <div class="form-group-skillsP">
-                                        <label for="">Privé</label>
-                                        <select name="prive" class="form-control" id="exampleFormControlSelect1">
-                                            <option value="" disabled selected>Selecteer de stad waar je woont</option>
-                                            <option>Dakar</option>
-                                            <option>London</option>
-                                            <option>Berlin</option>
-                                            <option>Quebec</option>
-                                        </select>
+                                    <div class="inputGroupLocaties">
+                                        <p class="priveBlockTitle">Privé:</p>
+                                        <!-- country -->
+                                        <div class='row align-items-center'>
+                                            <div class='col-md-3 col-xs-3'>
+                                                <p><b>Country</b></p>
+                                            </div>
+                                            <div class='col-md-9 col-xs-9'>
+                                                <select id="country" class='form-control' required><option value="">-- Country --</option></select>
+                                            </div>
+                                        </div>
+                                        <!-- end country row -->
+
+                                        <!-- region -->
+                                        <div class='row align-items-center'>
+                                            <div class='col-md-3 col-xs-3'>
+                                                <p><b>Region</b></p>
+                                            </div>
+                                            <div class='col-md-9 col-xs-9'>
+                                                <select id="region" class='form-control' required><option value="">-- Region --</option></select>
+                                            </div>
+                                        </div>
+                                        <!-- end region row -->
+
+                                        <!-- city -->
+                                        <div class='row align-items-center'>
+                                            <div class='col-md-3 col-xs-3'>
+                                                <p><b>City</b></p>
+                                            </div>
+                                            <div class='col-md-9 col-xs-9'>
+                                                <select id="city" class='form-control' required><option value="">-- City --</option></select>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group-skillsP">
-                                        <label for="">Werk</label>
-                                        <select name="work" class="form-control" id="exampleFormControlSelect1">
-                                            <option value="" disabled selected>Selecteer de stad waar je werkt</option>
-                                            <option>Dakar</option>
-                                            <option>London</option>
-                                            <option>Berlin</option>
-                                            <option>Quebec</option>
-                                        </select>
+
+                                    <div class="inputGroupLocaties">
+                                        <p class="priveBlockTitle">Werk:</p>
+                                        <!-- country -->
+                                        <div class='row align-items-center'>
+                                            <div class='col-md-3 col-xs-3'>
+                                                <p><b>Country</b></p>
+                                            </div>
+                                            <div class='col-md-9 col-xs-9'>
+                                                <select id="countryBiss" class='form-control' required><option value="">-- Country --</option></select>
+                                            </div>
+                                        </div>
+                                        <!-- end country row -->
+
+                                        <!-- region -->
+                                        <div class='row align-items-center'>
+                                            <div class='col-md-3 col-xs-3'>
+                                                <p><b>Region</b></p>
+                                            </div>
+                                            <div class='col-md-9 col-xs-9'>
+                                                <select id="regionBiss" class='form-control' required><option value="">-- Region --</option></select>
+                                            </div>
+                                        </div>
+                                        <!-- end region row -->
+
+                                        <!-- city -->
+                                        <div class='row align-items-center'>
+                                            <div class='col-md-3 col-xs-3'>
+                                                <p><b>City</b></p>
+                                            </div>
+                                            <div class='col-md-9 col-xs-9'>
+                                                <select id="cityBiss" class='form-control' required><option value="">-- City --</option></select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="text-center w-100 groupBtnStepSkillsP">
@@ -637,9 +688,9 @@ $degrees=[
                                     <div>
                                         <?= $input_course_type; ?>
                                     </div>
-                                    
+
                                 </div>
-                                    
+
                                     <div class="text-center w-100 groupBtnStepSkillsP">
                                         <button type="button" class="btn btnTerug" id="btnTerug3SkillsPasspoort">Terug</button>
                                         <button type="button" class="btn btn-volgende" id="btnStep4SkillsPasspoort">Volgende stap</button>
@@ -694,7 +745,7 @@ $degrees=[
                                 </div>
 
                             </div>
-                        
+
                     </div>
                 </form>
                 </div>
@@ -950,7 +1001,7 @@ $degrees=[
             <?php
                 echo do_shortcode("[gravityform id='10' title='false' description='false' ajax='true']");
             ?>
-         
+
         </div>
     </div>
 </div>
@@ -990,17 +1041,17 @@ $degrees=[
                         $month = '';
 
                         $category = ' ';
-                                    
+
                         $category_id = 0;
                         $category_string = " ";
-                        
+
                         if($category == ' '){
                             $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
                             $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
                             if($category_str != 0)
                                 $category = (String)get_the_category_by_ID($category_str);
                             else if($category_id != 0)
-                                $category = (String)get_the_category_by_ID($category_id);                                    
+                                $category = (String)get_the_category_by_ID($category_id);
                         }
 
                         /*
@@ -1035,8 +1086,8 @@ $degrees=[
                             $data = strtotime(str_replace('/', '.', $data));
                             if($data < $date_now)
                                 continue;
-                        }   
-                        
+                        }
+
                         /*
                         * Price
                         */
@@ -1059,7 +1110,7 @@ $degrees=[
 
                         if(!$thumbnail)
                             $thumbnail = get_stylesheet_directory_uri() . '/img/placeholder.png';
-                        
+
                         /*
                             * Companies
                         */
@@ -1155,7 +1206,7 @@ $degrees=[
 
                   if(!empty($featured))
                     $courses = $featured;
-                  
+
                   $i = 0;
 
                   foreach($courses as $course){
@@ -1167,17 +1218,17 @@ $degrees=[
                     * Categories
                     */
                     $category = ' ';
-                                    
+
                     $category_id = 0;
                     $category_string = " ";
-                    
+
                     if($category == ' '){
                         $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
                         $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
                         if($category_str != 0)
                             $category = (String)get_the_category_by_ID($category_str);
                         else if($category_id != 0)
-                            $category = (String)get_the_category_by_ID($category_id);                                    
+                            $category = (String)get_the_category_by_ID($category_id);
                     }
                     /*
                     *  Date and Location
@@ -1565,11 +1616,14 @@ $degrees=[
         </div>
     </div>
 </div>
+<script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-1b93190375e9ccc259df3a57c1abc0e64599724ae30d7ea4c6877eb615f89387.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
+
+<script src="<?php echo get_stylesheet_directory_uri();?>/city.js"></script>
 
 <script>
 
@@ -1645,7 +1699,7 @@ $degrees=[
                         modal.style.display = "none";
                         }
                     }
-                            
+
                 }
         });
     });
