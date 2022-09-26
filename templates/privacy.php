@@ -1,70 +1,10 @@
 <?php /** Template Name: privacy */ ?>
-
-<?php
-extract($_POST);
-
-extract($_GET);
-
-if(isset($education_individual))
-    if(isset($email)){
-
-        if($email != null)
-        {
-
-            if($first_name == null)
-                $first_name = "ANONYM";
-
-            if($last_name == null)
-                $last_name = "ANONYM";
-
-            $userdata = array(
-                'user_pass' => $password,
-                'user_login' => $user_login,
-                'user_email' => $email,
-                'user_url' => 'http://livelearn.nl/',
-                'display_name' => $first_name,
-                'first_name' => $first_name,
-                'last_name' => $last_name,
-                'role' => 'Klant'
-            );
-
-            $user_id = wp_insert_user(wp_slash($userdata));
-
-            if(is_wp_error($user_id)){
-                $danger = $user_id->get_error_message();
-                header("location:registreren?message=".$danger."&danger");
-
-            }else{
-                $success = "U bent succesvol geregistreerd<br>";
-                update_field('telnr', $phone, 'user_'.$user_id);
-                update_field('subscription_company', $bedrij, 'user_'.$user_id);
-
-                $subject = 'Welcome onboard ✨';
-                $body = "
-                    <h1>Hello " . $first_name  . "</h1><br> 
-                    Your are successfully registered , welcome onboard<br><br>
-                    <h4><a href='http://livelearn.nl/inloggen'> Connexion </a></h4>
-                    ";
-
-                $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );
-
-                wp_mail($email, $subject, $body, $headers, array( '' )) ;
-                header("location:static-education-individual?message=".$success."&success");
-
-            }
-
-
-        }
-        else{
-            $danger = "Vul de e-mail in, alsjeblieft";
-            header("location:static-education-individual?message=".$danger."&danger");
-        }
-    }
-?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
+
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+
 <div class="container">
     <div class="mt-5">
 
@@ -166,6 +106,7 @@ if(isset($education_individual))
             autoriteit (bijvoorbeeld de Autoriteit Persoonsgegevens).</p>
     </div>
 </div>
+
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
 

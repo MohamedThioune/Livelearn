@@ -1,20 +1,31 @@
 
 <?php
-    /*
+   /*
     * * Feedbacks
     */
+    $args = array(
+        'post_type' => 'feedback', 
+        'author' => $user->ID,
+        'orderby' => 'post_date',
+        'order' => 'DESC',
+        'posts_per_page' => -1,
+    );
+
+    $todos = get_posts($args);
+
     $user_id = get_current_user_id();
     if($_GET['todo'] > 0 ){
+
         $value = get_post($_GET['todo']);   
         if(!empty($value)){
             $type = get_field('type_feedback', $value->ID);
-            $manager = get_field('manager_feedback', $value->ID);
+            $manager_id = get_field('manager_feedback', $value->ID);
 
             $image = get_field('profile_img',  'user_' . $manager);
             if(!$image)
                 $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 
-            $manager = get_user_by('id', $manager);
+            $manager = get_user_by('id', $manager_id);
             $manager_display = ($manager->first_name) ?: $manager->display_name;
         
             if($type == "Feedback" || $type == "Compliment" || $type == "Gedeelde cursus")
@@ -26,11 +37,19 @@
 
             $role = get_field('role',  'user_' . $manager->ID);
         } 
-    } 
+    }
+
+    $state = false;
+    foreach($todos as $todo)
+        if($todo->ID == $_GET['todo']){
+            $state = true;
+            break;
+        }
+            
 ?>
 <div class="contentActivity">
     <h1 class="activityTitle">Detail Notification</h1>
-    <?php if($value){?>
+    <?php if($value && $state){?>
         <div class="row">
             <div class="col-lg-7">
                 <div class="cardRecentlyEnrolled">
@@ -160,8 +179,16 @@
                             break;
 
                         $type = get_field('type_feedback', $todo->ID);
-                        $manager = get_field('manager_feedback', $todo->ID);
-                        $image = get_field('profile_img',  'user_' . $manager->ID);
+                        $manager_id = get_field('manager_feedback', $todo->ID);
+                        if($manager_id){
+                            $manager = get_user_by('ID', $manager_id);
+                            $image = get_field('profile_img',  'user_' . $manager->ID);
+                            $manager_display = $manager->display_name;
+                        }else{
+                            $manager_display = 'Anonymous';
+                            $image = 0;
+                        }
+
                         if(!$image)
                             $image = get_stylesheet_directory_uri() . '/img/Group216.png';
                     ?>
@@ -171,7 +198,7 @@
                                     <img src="<?php echo $image ?>" alt="">
                                 </div>
                                 <p class="feddBackNotification">
-                                    <?php if(isset($manager->first_name) && isset($manager->first_name)) echo $manager->first_name .' '. $manager->first_name; else echo $manager->display_name; ?> send you a  <span><?=$type?></span></p>
+                                    <?= $manager_display ?> send you a  <span><?=$type?></span></p>
                             </div>
                             <!-- <p class="hoursText">0 hours ago</p> -->                    
                         </div>
@@ -190,7 +217,7 @@
             <div class="col-lg-7">
                 <div class="cardRecentlyEnrolled">
                     <div class="w-100">
-                        <h2 class="notificationBy"> Error occured , when try to find this notification.</h2>
+                        <h2 class="notificationBy"> Error occured when try to find this notification, make sure that it exists and you have the access rights.</h2>
                     </div>
                 </div>
             </div>

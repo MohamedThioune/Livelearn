@@ -561,7 +561,7 @@ else if(isset($referee_employee)){
                 $post_id = wp_insert_post($post_data);
                 //Add further informations for feedback
                 update_field('onderwerp_feedback', $onderwerp_feedback, $post_id);
-                update_field('manager_feedback', $manager, $post_id);
+                update_field('manager_feedback', $manager->ID, $post_id);
                 update_field('type_feedback', $type, $post_id);
                 update_field('beschrijving_feedback', nl2br($beschrijving_feedback), $post_id);
 
@@ -574,9 +574,9 @@ else if(isset($referee_employee)){
     //Adding new subtopics on course
     update_field('allocation', $allocution, $course_id);
 
-    if($path="dashboard")
+    if($path == "dashboard")
         $message = '/dashboard/company/learning-modules/?message=Allocution successfully'; 
-    else if($path="course")
+    else if($path == "course")
         $message = get_permalink($course_id) . '/?message=Allocution successfully'; 
 
     header("Location: ". $message);

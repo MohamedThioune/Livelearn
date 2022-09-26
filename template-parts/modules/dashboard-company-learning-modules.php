@@ -1,9 +1,4 @@
 <?php
-
-$page = dirname(__FILE__) . '/../../templates/check_visibility.php';
- 
-require($page); 
-
 $user_connected = get_current_user_id();
 $company_connected = get_field('company',  'user_' . $user_connected);
 $users_companie = array();

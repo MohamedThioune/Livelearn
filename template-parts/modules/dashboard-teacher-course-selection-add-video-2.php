@@ -33,17 +33,25 @@
                     <div class="circleIndicator  passEtape"></div>
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-video&id=<?php echo $_GET['id'];?>&step=2" class="contentBlockCourse">
+                <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=2&edit'; ?>" class="contentBlockCourse">
                     <div class="circleIndicator passEtape2"></div>
                     <p class="textOpleidRight">Uitgebreide beschrijving</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-video&id=<?php echo $_GET['id'];?>&step=3" class="contentBlockCourse">
+                <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=3&edit'; ?>"  class="contentBlockCourse">
                     <div class="circleIndicator"></div>
                     <p class="textOpleidRight ">voeg video’s toe</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-video&id=<?php echo $_GET['id'];?>&step=4" class="contentBlockCourse">
+                <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=4&edit'; ?>"  class="contentBlockCourse">
                     <div class="circleIndicator"></div>
                     <p class="textOpleidRight">Details en onderwepren</p>
+                </a>
+                <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=5&edit'; ?>"  class="contentBlockCourse">
+                    <div class="circleIndicator"></div>
+                    <p class="textOpleidRight">Tags</p>
+                </a>
+                <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=6&edit'; ?>"  class="contentBlockCourse">
+                    <div class="circleIndicator"></div>
+                    <p class="textOpleidRight">Experts</p>
                 </a>
             </div>
         </div>

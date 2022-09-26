@@ -354,20 +354,3 @@ if(!empty($notifications))
             </div>
         </nav>
      <!-- </body> -->
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-<script>
-    $('.bntNotification').click((e)=>{
-        $.ajax({
-                url:"/read-notification",
-                method:"get",
-                data:{},
-                dataType:"text",
-                success: function(data){
-                    // Get the modal
-                    console.log(data);
-                }
-        });
-    });
-</script>

@@ -3,6 +3,10 @@
 <body>
     <?php wp_head(); ?>
     <?php get_header(); ?>
+    <?php
+    $page = 'check_visibility.php';
+    require($page); 
+    ?>
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
     <?php require_once('postal.php'); ?>
@@ -545,6 +549,10 @@
                 <div class="row d-flex justify-content-center">
                     <?php 
                     foreach($courses as $key => $course){
+                        
+                        if(!visibility($course, $visibility_company))
+                            continue;
+
                         if($key == 20)
                             break;
 

@@ -674,8 +674,8 @@ $url = home_url( $wp->request );
                 <div class="ProfilGraduatioBlock">
                     <div class="sousNav1">
                         <!-- <button id="croieProfil" class="btn">
-<img src="<?php echo get_stylesheet_directory_uri();?>/img/XMobile.png" alt="">
-</button> -->
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/XMobile.png" alt="">
+                            </button> -->
 
                         <div class="d-flex flex-row">
                             <div id="profil-element-first" class="first-element-mobile">

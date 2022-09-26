@@ -67,14 +67,19 @@ $todos = get_posts($args);
                <tbody>
                <?php 
                 
-                foreach($todos as $key=>$todo) {
+                foreach($todos as $key => $todo) {
 
                     $type = get_field('type_feedback', $todo->ID);
-                    $manager = get_field('manager_feedback', $todo->ID);
-                    $manager = get_user_by('id', $manager);
-
+                    $manager_id = get_field('manager_feedback', $todo->ID);
+                    if($manager_id){
+                        $manager = get_user_by('ID', $manager_id);
+                        $image = get_field('profile_img',  'user_' . $manager->ID);
+                        $manager_display = $manager->display_name;
+                    }else{
+                        $manager_display = 'Anonymous';
+                        $image = 0;
+                    }
                     
-                    $image = get_field('profile_img',  'user_' . $manager->ID);
                     if(!$image)
                         $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 

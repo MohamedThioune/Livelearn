@@ -55,7 +55,7 @@
                             acf_form([
                                 'id' => 'edit-company-data-form',
                                 'post_id' => $company->ID,
-                                'field_groups' => [408],
+                                'field_groups' => array('group_617a8f52267b4'),
                                 'new_post' => false,
                             ]);
                         }
@@ -194,9 +194,7 @@
     </div>
 </div>
 
-
 -->
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script>
     $("#tab2").click(function() {
         $("#tab2").addClass('btnactive') ;
