@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobiscroll.javascript.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/mobapiCity.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/template-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-skill.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-skill.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -548,7 +547,7 @@
       <workItem from="1664194799073" duration="360000" />
       <workItem from="1664195337553" duration="372000" />
       <workItem from="1664207201309" duration="720000" />
-      <workItem from="1664208387769" duration="6260000" />
+      <workItem from="1664208387769" duration="7038000" />
     </task>
     <servers />
   </component>
