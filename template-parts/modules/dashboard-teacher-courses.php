@@ -23,18 +23,19 @@ if($id != 0){
             <table class="table table-responsive">
                 <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">Actie</th>
                         <th scope="col">Sign-Ups</th>
                         <th scope="col">Titel</th>
                         <th scope="col">Prijs</th>
                         <th scope="col">Onderwerp(en)</th>
                         <th scope="col">Startdatum</th>
-                        <th></th>
+                        <th scope="col">Optie</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php 
-                    foreach($courses as $course){
+                    foreach($courses as $key => $course){
                         if(!visibility($course, $visibility_company))
                             continue;
 
@@ -80,6 +81,7 @@ if($id != 0){
                         }
                     ?>
                     <tr data-attr="<?php echo $course->ID;?>">
+                        <td scope="row"><?= $key; ?></td>
                         <td class="textTh">
                             <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $course->ID;?>&edit"><i class="fas fa-edit"></i></a>
                         </td>
@@ -90,8 +92,22 @@ if($id != 0){
                         <td class="textTh"><?php echo $price; ?></td>
                         <td class="textTh "><?php echo $category; ?></td>
                         <td class="textTh"><?php echo $day; ?></td>
+                        <td class="textTh">
+                            <div class="dropdown text-white">
+                                <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
+                                    <img  style="width:20px"
+                                          src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                </p>
+                                <ul class="dropdown-menu">
+                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
+                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
+                                    <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
+                                </ul>
+                            </div>
+                        </td>
 <!--                         <td><a class="del-course" data-attr="<?php echo $course->ID;?>" href="#"><i class="fas fa-trash-alt" style="color:red;"></i></a></td>
  -->                    </tr>
+
                     <?php
                     }
                     ?>

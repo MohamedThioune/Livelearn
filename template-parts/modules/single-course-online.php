@@ -400,7 +400,7 @@ extract($_GET);
             </div>
 
             <!-- -----------------------------------Start Modal Direct contact & Voor wie ----------------------------------------------- -->
-            <div class="modal fade" id="direct-contact" tabindex="-1" aria-labelledby="direct-contactModalLabel" aria-hidden="true">
+            <div class="modal fade" id="direct-contact" tabindex="-1" role="dialog" aria-labelledby="direct-contactModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-course">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -460,7 +460,7 @@ extract($_GET);
             </div>
             <!-- -------------------------------------------------- End Modal Direct contact & Voor wie -------------------------------------- -->
 
-            <div class="modal fade" id="voor-wie" tabindex="-1" aria-labelledby="voor-wieModalLabel" aria-hidden="true">
+            <div class="modal fade" id="voor-wie" tabindex="-1" role="dialog" aria-labelledby="voor-wieModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-course">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -586,14 +586,14 @@ extract($_GET);
             <!-- ---------------------------------- Start Right Side Dashboard -------------------------------- -->
             <div class="blockTwoOver">
                 <div class="btnGrou10">
-                    <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#direct-contact">
+                    <button type="button" class="btnContact" data-toggle="modal" data-target="#direct-contact">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
                         Direct contact
-                    </a>
-                    <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#voor-wie">
+                    </button>
+                    <button type="button" class="btnContact" data-toggle="modal" data-target="#voor-wie">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/question.png" alt="">
                         Voor wie
-                    </a>
+                    </button>
                 </div>
                 <p class="afspeeText">Afspeellijst</p>
 

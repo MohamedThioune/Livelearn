@@ -26,12 +26,14 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
 <!-- ---------------------------------------- Start modals ---------------------------------------------- -->
-<div class="modal fade" id="direct-contact" tabindex="-1" aria-labelledby="direct-contactModalLabel" aria-hidden="true">
+<div class="modal fade" id="direct-contact" tabindex="-1" role="dialog" aria-labelledby="direct-contactModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-course">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="direct-contactModalLongTitle">Direct contact</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="d-flex justify-content-center">
@@ -85,12 +87,15 @@
     </div>
 </div>
 
-<div class="modal fade" id="incompany" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<div class="modal fade" id="incompany" tabindex="-1" role="dialog" aria-labelledby="incompanyModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-course">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Incompany</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
 
@@ -103,12 +108,14 @@
     </div>
 </div>
 
-<div class="modal fade" id="offerte" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="offerte" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-course">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Brochure</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                <?php
@@ -119,12 +126,14 @@
     </div>
 </div>
 
-<div class="modal fade" id="voor-wie" tabindex="-1" aria-labelledby="voor-wieModalLabel" aria-hidden="true">
+<div class="modal fade" id="voor-wie" tabindex="-1" role="dialog" aria-labelledby="voor-wieModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-course">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="voor-wieModalLongTitle"></h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <div class="">
@@ -872,22 +881,22 @@
             <!-- ----------------------------------- Right side: small dashboard ------------------------------------- -->
             <div class="blockTwoOver">
                 <div class="btnGrou10">
-                    <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#direct-contact">
+                    <button type="button" class="btnContact" data-toggle="modal" data-target="#direct-contact">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
                         Direct contact
-                    </a>
-                    <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#incompany">
+                    </button>
+                    <button type="button" class="btnContact" data-toggle="modal" data-target="#incompany">
                         <i class="fas fa-house-damage px-2" style="font-size: 20px"></i>
                         Incompany
-                    </a>
-                    <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#offerte">
+                    </button>
+                    <button type="button" class="btnContact" data-toggle="modal" data-target="#offerte">
                         <i class="fab fa-buffer px-2" style="font-size: 20px"></i>
                         Brochure
-                    </a>
-                    <a href="" class="btnContact" data-bs-toggle="modal" data-bs-target="#voor-wie">
+                    </button>
+                    <button type="button" class="btnContact" data-toggle="modal" data-target="#voor-wie">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/question.png" alt="">
                         Voor wie
-                    </a>
+                    </button>
                 </div>
 
                 <div class="CardpriceLive">
