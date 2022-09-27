@@ -29,6 +29,7 @@ $video_single = "Video";
             <table class="table table-responsive">
                 <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">Actie</th>
                         <th scope="col">Verkoop</th>
                         <th scope="col">Titel</th>
@@ -41,7 +42,7 @@ $video_single = "Video";
                 </thead>
                 <tbody>
                     <?php 
-                    foreach($courses as $course){
+                    foreach($courses as $key => $course){
 
                         /*
                         * Categories
@@ -106,6 +107,7 @@ $video_single = "Video";
                         //Course Type
                         $course_type = get_field('course_type', $course->ID);
                     ?>
+
                     <tr id="<?php echo $course->ID;?>" >
                         <?php
                         $path_edit  = "";
@@ -119,6 +121,7 @@ $video_single = "Video";
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-course&id=" . $course->ID ."&edit";
 
                         ?>
+                        <td scope="row"><?= $key; ?></td>
                         <td class="textTh">
                             <a href="<?= $path_edit ?>"><i class="fas fa-edit"></i></a>
                         </td>
@@ -128,7 +131,19 @@ $video_single = "Video";
                         <td class="textTh"><?php echo $price; ?></td>
                         <td class="textTh "><?php echo $category ?></td>
                         <td class="textTh"><?php echo $day; ?></td>
-                        <td class="textTh remove"><i class='delete-course fas fa-trash-alt'></i></td>
+                        <td class="textTh">
+                            <div class="dropdown text-white">
+                                <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
+                                    <img  style="width:20px"
+                                          src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                </p>
+                                <ul class="dropdown-menu">
+                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
+                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
+                                    <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
+                                </ul>
+                            </div>
+                        </td>
                     </tr>
                     <?php
                     }

@@ -284,6 +284,7 @@ $orders = wc_get_orders($order_args);
             <table class="table table-responsive" id="table">
                 <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">Titel</th>
                         <th scope="col">Leervorm</th>
                         <th scope="col">Prijs</th>
@@ -349,10 +350,11 @@ $orders = wc_get_orders($order_args);
 
                     ?>
                     <tr>
+                        <td scope="row"><?= $key; ?></td>
                         <td class="textTh"><a style="color:#212529;" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
                         <td class="textTh"><?php echo $course_type; ?></td>
                         <td class="textTh"><?php echo $price; ?></td>
-                        <td id= <?php echo $course->ID; ?> class="textTh td_subtopics">
+                        <td id= "<?php echo $course->ID; ?>" class="textTh td_subtopics" >
                                 <?php
                                     $course_subtopics = get_field('categories', $course->ID);
                                     $field='';
@@ -372,7 +374,19 @@ $orders = wc_get_orders($order_args);
                             </p>             
                         </td>
                         <td class="textTh"><?php echo $day; ?></td>
-                        <td class="textTh" id="live"> <input type="button" class="btnNewCourse rent" id="<?= $course->ID; ?>" value="Deel" /> </td>
+                        <td class="textTh">
+                            <div class="dropdown text-white">
+                                <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
+                                    <img  style="width:20px"
+                                          src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                </p>
+                                <ul class="dropdown-menu">
+                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
+                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
+                                    <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
+                                </ul>
+                            </div>
+                        </td>
                     </tr>
                     <?php
                     }
