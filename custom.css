@@ -2652,7 +2652,7 @@ input:focus-visible {
     position: relative;
 }
 .wordDeBestText2 {
-    font-size: 24px;
+    font-size: 28px;
     line-height: 42px;
     margin: 0px auto 10px;
 }
@@ -8182,10 +8182,10 @@ ul#tabs-nav li.active {
 .blockSkillsTabs .skillsElement{
     min-width: 18%;
     text-align: center;
-    padding: 4px 5px 5px;
-    background: #02aa9f78;
+    padding: 4px 20px 5px;
+    background: #00A89D;
     border-radius: 20px;
-    color: #002743;
+    color: #ffffff;
     margin: 0 8px 10px;
     font-size: 14px;
 }
@@ -9082,6 +9082,9 @@ ul#tabs-nav li.active {
     right: 0;
     top: 0;
 }
+.modal-open {
+    padding-right: 0 !important;
+}
 .modal-open .modal {
     overflow-y: auto !important;
 }
@@ -9331,6 +9334,7 @@ ul#tabs-nav li.active {
     display: flex;
     align-items: center;
     color: #ffffff !important;
+
 }
 .btnContactEco img{
     width: 24px;
@@ -9903,6 +9907,37 @@ ul#tabs-nav li.active {
 }
 .inputGroupLocaties:last-child{
     margin-bottom: 0px;
+}
+.e-learningTitle {
+    font-size: 21px !important;
+    font-weight: bold !important;
+    margin-top: 14px;
+    margin-bottom: 25px !important;
+}
+
+.contentCardListeCourse td .dropdown-menu li input {
+    background: none;
+    border: none;
+    color: #023356;
+    margin-left: -4px;
+}
+.contentCardListeCourse td .dropdown-toggle {
+    text-align: center;
+}
+.contentCardListeCourse td .dropdown-toggle::after{
+  display: none !important;
+}
+.contentCardListeCourse td .remove {
+    margin-left: 8px;
+}
+.contentCardListeCourse td span {
+    font-size: 14px;
+    color: #023356;
+    margin-left: 3px;
+    cursor: pointer;
+}
+.contentCardListeCourse td .dropdown-toggle img{
+    cursor: pointer;
 }
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {

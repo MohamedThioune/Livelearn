@@ -240,7 +240,7 @@ $maandelijke = count($members) * 5;
                     <th scope="col">Opbrengsten kennisproducten</th>
                     <th scope="col">Persoongebonden budget</th>
                     <th scope="col">Budget resterend</th>
-                    <th scope="col">#</th>
+                    <th scope="col">Optie</th>
                 </tr>
                 </thead>
                 <tbody>

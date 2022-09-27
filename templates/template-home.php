@@ -629,16 +629,6 @@ $degrees=[
                                             </div>
                                         </div>
                                         <!-- end region row -->
-
-                                        <!-- city -->
-                                        <div class='row align-items-center'>
-                                            <div class='col-md-3 col-xs-3'>
-                                                <p><b>City</b></p>
-                                            </div>
-                                            <div class='col-md-9 col-xs-9'>
-                                                <select id="city" class='form-control' required><option value="">-- City --</option></select>
-                                            </div>
-                                        </div>
                                     </div>
 
                                     <div class="inputGroupLocaties">
@@ -664,16 +654,6 @@ $degrees=[
                                             </div>
                                         </div>
                                         <!-- end region row -->
-
-                                        <!-- city -->
-                                        <div class='row align-items-center'>
-                                            <div class='col-md-3 col-xs-3'>
-                                                <p><b>City</b></p>
-                                            </div>
-                                            <div class='col-md-9 col-xs-9'>
-                                                <select id="cityBiss" class='form-control' required><option value="">-- City --</option></select>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="text-center w-100 groupBtnStepSkillsP">

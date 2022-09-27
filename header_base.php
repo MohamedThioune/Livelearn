@@ -259,7 +259,7 @@ $url = home_url( $wp->request );
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link nav-linModife dropdown-toggle" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#voorOpleiders"  id="opleiders" href="/voor-teacher-2/">Voor opleiders </a>
+                            <a class="nav-link nav-linModife dropdown-toggle" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#voorOpleiders"  id="opleiders" href="/voor-teachers/">Voor opleiders </a>
                         </li>
                     </ul>
 

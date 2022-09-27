@@ -1569,8 +1569,8 @@ body, html {
 }
 
 .e-learningTitle {
-    font-size: 21px;
-    font-weight: bold;
+    font-size: 21px !important;
+    font-weight: bold !important;
     margin-top: 14px;
     margin-bottom: 40px;
 }
@@ -1642,6 +1642,7 @@ body, html {
     display: flex;
     align-items: center;
     color: #023356 !important;
+    border: none !important;
 }
 .btnContact i{
     color: #023356 !important;
