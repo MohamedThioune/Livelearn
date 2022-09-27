@@ -13,7 +13,6 @@
                     'return' => '?func=add-video&id=%post_id%&step=4'
                 )); 
                 ?>
-
             </div>
         </div>
     </div>
