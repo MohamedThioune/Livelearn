@@ -69,14 +69,14 @@
                         <img src="<?php echo get_stylesheet_directory_uri() ?>/img/Image27.png" alt="">
                     </div>
                 </a>
-                <a href="/dashboard/company/grant" type="submit" style="border:none; background:white;" class="cardCours">
+                <!-- <a href="/dashboard/company/grant" type="submit" style="border:none; background:white;" class="cardCours">
                     <p class="contentText">Selecteer <br>
                         <b>Je managers</b>
                     </p>
                     <div class="blockImgCardCoursGlobal">
                         <img src="<?php echo get_stylesheet_directory_uri() ?>/img/chrono.png" alt="">
                     </div>
-                </a>
+                </a> -->
             </div>
 
             <div class="allBlockWorjforce">
