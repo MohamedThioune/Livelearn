@@ -22,16 +22,7 @@
         }
 
 ?>
-<div class="blockManageTeam">
-    <button class="btn cardBlockManage">
-        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Mijn_mensen.png" alt="">
-        <span>Jij managed deze medewerkers</span>
-    </button>
-    <button class="btn cardBlockManage">
-        <img src="<?php echo get_stylesheet_directory_uri();?>/img/hierarchical.png" alt="">
-        <span>Beheer de managers in je organisatie</span>
-    </button>
-</div>
+
 <div class="row">
     <div class="col-md-5 col-lg-12">
         <div class="cardCoursGlocal">
@@ -90,3 +81,6 @@
         </div>
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
