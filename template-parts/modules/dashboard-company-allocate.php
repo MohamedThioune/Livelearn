@@ -68,7 +68,7 @@
                                     ?>
                                     </select>
                                 </div>
-                                <button type="submit" name="allocate_push" class="btn btn-info">Activeer</button>
+                                <button type="submit" name="allocate_push" class="btn btn-info">Apply</button>
                             </div>
                         </form>
                 <?php

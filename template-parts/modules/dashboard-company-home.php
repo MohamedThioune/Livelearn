@@ -83,7 +83,7 @@
                 <p class="workforceTitle">De workforce</p>
                 <div class="groupCard">
                    <?php if( in_array('administrator', $user_connected->roles) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles)) { ?>
-                       <a href="/dashboard/company/allocate/" class="cardCoursManager">
+                       <a href="/dashboard/company/de-organisatie/" class="cardCoursManager">
                            <p class="contentText">De<br>
                                <b>Organisatie</b>
                            </p>
