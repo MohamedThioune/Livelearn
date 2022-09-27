@@ -911,7 +911,7 @@
                         <input type="hidden" name="user_id" value="<?php echo $user_id ?>" id="">
                         <input type="hidden" name="meta_key" value="expert" id="">
                         <?php
-                        if($user_id != 0 && $user_id != $post->post_author)
+                        if($user_id != 0 )
                             echo " <button type=\"button\" class=\"btn btnLeerom\" data-toggle=\"modal\" data-target=\"#ModalFollowExpert\">
                                      + Leeromgeving
                                     </button>";
@@ -929,6 +929,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <?php
+                                        $saves_expert = get_user_meta($user_id, 'expert');
                                         foreach($experts as $value){
                                             $expert = get_users(array('include'=> $value))[0]->data;
                                             $company = get_field('company',  'user_' . $expert->ID);
@@ -954,7 +955,6 @@
                                                         <?php
                                                         if($user_id != 0 && $user_id != $expert->ID)
                                                         {
-                                                            $saves_expert = get_user_meta($user_id, 'expert');
                                                             if (in_array($expert->ID, $saves_expert))
                                                                 echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
                                                             else
@@ -1017,6 +1017,7 @@
                         <div class="swiper">
                             <div class="swiper-wrapper">
                                 <?php
+                                    $saves_expert = get_user_meta($user_id, 'expert');
                                     foreach($experts as $value){
                                         $expert = get_users(array('include'=> $value))[0]->data;
                                         $company = get_field('company',  'user_' . $expert->ID);
@@ -1030,7 +1031,23 @@
                                             </div>
                                             <span class="textIconeLearning"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span>
                                             <span><?php echo $title; ?></span>
-                                            <button class="btn btnFollowExpert">Follow</button>
+                                            <form action="/dashboard/user/" method="POST">
+                                                <input type="hidden" name="artikel" value="<?= $post->ID; ?>" id="">
+                                                <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
+                                                <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
+                                                <input type="hidden" name="meta_key" value="expert" id="">
+                                                <div>
+                                                    <?php
+                                                    if($user_id != 0 && $user_id != $expert->ID)
+                                                    {
+                                                        if (in_array($expert->ID, $saves_expert))
+                                                            echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
+                                                        else
+                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </form>
                                         </div>
                                     </a>
                                  <?php } ?>
