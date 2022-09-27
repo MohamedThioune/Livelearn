@@ -708,7 +708,7 @@ extract($_GET);
                                     <input type="hidden" name="user_id" value="<?php echo $user_id ?>" id="">
                                     <input type="hidden" name="meta_key" value="expert" id="">
                                     <?php
-                                    if($user_id != 0 && $user_id != $post->post_author)
+                                    if($user_id != 0)
                                         echo " <button type=\"button\" class=\"btn btnLeerom\" data-toggle=\"modal\" data-target=\"#ModalFollowExpert\">
                                                  + Leeromgeving
                                                 </button>";
