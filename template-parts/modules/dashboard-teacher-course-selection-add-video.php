@@ -60,9 +60,9 @@
                 </a>
                 <a  href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=3&edit'; echo '?func=add-video&message=Please finish this step before' ?>" class="contentBlockCourse">
                     <div class="circleIndicator">
-                        <i class="fa fa-movie" aria-hidden="true"></i>
+                        <i class="fa fa-film" aria-hidden="true"></i>
                     </div>
-                    <p class="textOpleidRight ">voeg video’s toe</p>
+                    <p class="textOpleidRight ">voeg video's toe</p>
                 </a>
                 <a  href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=4&edit'; echo '?func=add-video&message=Please finish this step before' ?>" class="contentBlockCourse">
                     <div class="circleIndicator">

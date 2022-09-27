@@ -9,7 +9,6 @@
                 acf_form(array(
                     'post_id'       => $_GET['id'],
                     'fields' => array('data_virtual'),
-                    'uploader' => 'basic',
                     'submit_value'  => __('Opslaan & verder'),
                     'return' => '?func=add-video&id=%post_id%&step=4'
                 )); 
@@ -42,9 +41,9 @@
                 </a>
                 <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=3&edit'; ?>"  class="contentBlockCourse">
                     <div class="circleIndicator passEtape2">
-                        <i class="fa fa-movie" aria-hidden="true"></i>
+                        <i class="fa fa-film" aria-hidden="true"></i>
                     </div>
-                    <p class="textOpleidRight ">voeg video’s toe</p>
+                    <p class="textOpleidRight ">voeg video's toe</p>
                 </a>
                 <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=4&edit'; ?>"  class="contentBlockCourse">
                     <div class="circleIndicator">
