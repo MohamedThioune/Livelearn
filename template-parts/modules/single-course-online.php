@@ -80,11 +80,17 @@ extract($_GET);
                         echo "<img src='" . $thumbnail . "' alt='preview image'>";
                     else{
                         if(!empty($courses)){
+                            // if(isset($topic) && isset($lesson))
+                            //     echo " <video class='blockImgCour' poster='' controls>
+                            //                 <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
+                            //                 <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/webm; codecs='vp8, vorbis'' />
+                            //                 <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
+                            //             </video>";
                             if(isset($topic) && isset($lesson))
                                 echo " <video class='blockImgCour' poster='' controls>
-                                            <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
-                                            <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/webm; codecs='vp8, vorbis'' />
-                                            <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
+                                            <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
+                                            <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/webm; codecs='vp8, vorbis'' />
+                                            <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
                                         </video>";
                             else
                                 echo "<img src='" . $thumbnail . "' alt='preview image'>";
@@ -601,9 +607,10 @@ extract($_GET);
                                         <span> No lesson as far, soon available </span>
                                      </div>";
                             else if(!empty($courses)){
-                                foreach($courses as $key => $course){
-                                    ?>
-                                    <div class="sousBlockCours">
+                                ?>
+                                <!--
+                                    foreach($courses as $key => $course){
+                                        <div class="sousBlockCours">
                                         <?php
                                         if(isset($topic))
                                         {
@@ -627,8 +634,32 @@ extract($_GET);
                                             <?php
                                             }
                                         ?>
-                                    </div>
-                                <?php }
+                                        </div> 
+                                    }
+                                -->
+                                <div class="sousBlockCours">
+                                    <?php
+                                    if(isset($topic))
+                                        if($topic == $key) {
+                                            echo '<img class="playElement" src="'.  get_stylesheet_directory_uri() . '/img/play.png" alt="">';
+                                        }
+                                    ?>
+                                    <a style="color:#F79403" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo $post->post_title; ?></a>
+                                    <?php
+                                    foreach($courses as $key => $video){
+                                        $style = "";
+                                        if(isset($lesson))
+                                            if($lesson == $key)
+                                                $style = "color:#F79403";
+                                        echo '  
+                                        <a href="?topic=0&lesson=' . $key . '"  class="d-flex contentListVidoeCourse">
+                                            <img class="" width="35px" height="20px" src="'. $thumbnail .'" alt="">
+                                            <span style="' .$style . '" class="textChapitreCours">' . $video['course_lesson_title'] . '</span>
+                                        </a>';
+                                    }
+                                    ?>
+                                </div>
+                            <?php       
                             }
                             else{
                                 ?>
