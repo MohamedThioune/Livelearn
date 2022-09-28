@@ -106,30 +106,6 @@
                             ?>
                         </a>
                     </li>
-                    <li class="elementTextDashboard">
-                        <a href="#" class="d-flex">
-                           <div class="elementImgSidebar imgSide2" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Doorstroom.png" >
-                            </div>
-                            <span>Instroom</span>
-                        </a>
-                    </li>
-                    <li class="elementTextDashboard">
-                        <a href="#" class="d-flex">
-                            <div class="elementImgSidebar imgSide2" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Instroom.png" >
-                            </div>
-                            <span>Doorstroom</span>
-                        </a>
-                    </li>
-                    <li class="elementTextDashboard">
-                        <a href="#" class="d-flex">
-                            <div class="elementImgSidebar imgSide2" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Uitstroom.png" >
-                            </div>
-                            <span>Uitstroom</span>
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>
