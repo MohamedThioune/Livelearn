@@ -4,20 +4,6 @@
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/header_base.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/orange-dribbble-5 (1).webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/orange-dribbble-5.webp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/xml-orange.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-databank.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-databank.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-modules.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-modules.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-leerbudgetten.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-leerbudgetten.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-people.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-people.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-courses.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-courses.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-home.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -562,7 +548,8 @@
       <workItem from="1664207201309" duration="720000" />
       <workItem from="1664208387769" duration="7785000" />
       <workItem from="1664274862594" duration="5094000" />
-      <workItem from="1664280624736" duration="12764000" />
+      <workItem from="1664280624736" duration="15842000" />
+      <workItem from="1664358537880" duration="10026000" />
     </task>
     <servers />
   </component>
