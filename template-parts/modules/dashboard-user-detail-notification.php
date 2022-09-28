@@ -27,6 +27,14 @@
 
             $manager = get_user_by('id', $manager_id);
             $manager_display = ($manager->first_name) ?: $manager->display_name;
+
+            $manager_id = get_field('manager_feedback', $value->ID);
+            if($manager_id){
+                $manager = get_user_by('ID', $manager_id);
+                $manager_display = $manager->display_name;
+            }else
+                $manager_display = 'A manager';
+            
         
             if($type == "Feedback" || $type == "Compliment" || $type == "Gedeelde cursus")
                 $beschrijving_feedback = get_field('beschrijving_feedback', $value->ID);
@@ -132,11 +140,11 @@
                                                 <div class="d-flex">
                                                     <div class="mr-3">
                                                         <input type="radio" id="JA" name="hulp_radio_JA" value="JA" '. ($hulp_nodig == 'JA') ? 'checked' : ''  .' disabled>
-                                                            <label for="JA">JA</label>
+                                                        <label for="JA">JA</label>
                                                     </div>
                                                     <div>
                                                         <input type="radio" id="NEE" name="hulp_radio_JA" value="NEE" '. ($hulp_nodig == 'NEE') ? 'checked' : ''  .' disabled>
-                                                            <label for="NEE">NEE</label>
+                                                        <label for="NEE">NEE</label>
                                                     </div>
                                                 </div>
                                             </div>';
