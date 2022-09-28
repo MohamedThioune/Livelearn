@@ -1,6 +1,7 @@
 <?php
 
     $user_id = get_current_user_id();
+    $user = get_user_by('ID', $user_id);
 
     extract($_POST);
     
@@ -20,7 +21,10 @@
         }
 
 ?>
-
+<?php 
+    if(!in_array($user->roles, 'administrator') && !in_array($user->roles, 'hr'))
+        header("Location: /dashboard/company/de-organisatie" );
+?>
 <div class="row">
     <div class="col-md-5 col-lg-12">
         <div class="cardCoursGlocal">
@@ -61,7 +65,7 @@
                                                             <label class='form-check-label' for='flexCheckDefault'>"
                                                             . $display . "
                                                             </label>
-                                                          </div>";
+                                                        </div>";
                                                 
                                                 } 
                                             }

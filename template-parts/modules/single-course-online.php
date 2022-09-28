@@ -405,7 +405,9 @@ extract($_GET);
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="direct-contactModalLongTitle">Direct contact</h5>
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                         <div class="modal-body">
                             <div class="d-flex justify-content-center">
@@ -465,7 +467,9 @@ extract($_GET);
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="voor-wieModalLongTitle"></h5>
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                         <div class="modal-body">
                             <div class="">
@@ -742,7 +746,24 @@ extract($_GET);
                                                                     <p class="titleExpert"><?php echo $title; ?></p>
                                                                 </div>
                                                             </div>
-                                                            <button class="btn btnFollowExpert">Follow</button>
+                                                            <form action="/dashboard/user/" method="POST">
+                                                                <input type="hidden" name="artikel" value="<?= $post->ID; ?>" id="">
+                                                                <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
+                                                                <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
+                                                                <input type="hidden" name="meta_key" value="expert" id="">
+                                                                <div>
+                                                                    <?php
+                                                                    if($user_id != 0 && $user_id != $expert->ID)
+                                                                    {
+                                                                        if (in_array($expert->ID, $saves_expert))
+                                                                            echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
+                                                                        else
+                                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                                    }
+                                                                    
+                                                                    ?>
+                                                                </div>
+                                                            </form>  
                                                         </div>
                                                     <?php } ?>
                                                 </div>
