@@ -9972,6 +9972,13 @@ ul#tabs-nav li.active {
     display: table;
     width:100%;
 }
+.tab-content .formSingleCoourseReview  .rating-element2{
+position: relative;
+}
+.tab-content .formSingleCoourseReview  .rating > label:before {
+    margin: 14px 5px 0px;
+    font-size: 25px;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
