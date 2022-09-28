@@ -75,7 +75,7 @@ $todos = get_posts($args);
                         $image = get_field('profile_img',  'user_' . $manager->ID);
                         $manager_display = $manager->display_name;
                     }else{
-                        $manager_display = 'Anonymous';
+                        $manager_display = 'A manager';
                         $image = 0;
                     }
 

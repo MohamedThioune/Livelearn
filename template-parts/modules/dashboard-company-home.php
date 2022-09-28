@@ -77,12 +77,8 @@
                         <img src="<?php echo get_stylesheet_directory_uri() ?>/img/chrono.png" alt="">
                     </div>
                 </a> -->
-            </div>
-
-            <div class="allBlockWorjforce">
-                <p class="workforceTitle">De workforce</p>
-                <div class="groupCard">
-                   <?php if( in_array('administrator', $user_connected->roles) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles)) { ?>
+                <?php 
+                if(in_array('administrator', $user_connected->roles) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles)) { ?>
                        <a href="/dashboard/company/de-organisatie/" class="cardCoursManager">
                            <p class="contentText">De<br>
                                <b>Organisatie</b>
@@ -91,8 +87,7 @@
                                <img src="<?php echo get_stylesheet_directory_uri() ?>/img/Image33.png" alt="">
                            </div>
                        </a>
-                    <?php } ?>
-                </div>
+                <?php } ?>
             </div>
         </div>
     </div>

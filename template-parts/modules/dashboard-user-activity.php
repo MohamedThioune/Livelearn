@@ -33,7 +33,12 @@ foreach($raw_saved as $save)
     if(get_post($save))
         array_push($saved, $save);
 
-// Enrolled courses
+//Orders - enrolled courses  
+$args = array(
+    'customer_id' => $user->ID,
+    'limit' => -1,
+);
+
 $bunch_orders = wc_get_orders($args);
 $orders = array();
 $item_order = array();
@@ -113,13 +118,6 @@ $args = array(
 );
 
 $todos = get_posts($args);
-
-//Orders  
-$args = array(
-    'customer_id' => $user->ID,
-    'limit' => -1,
-);
-
 
 /*
 * * Enrolled courses
@@ -350,7 +348,7 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
 
                     $manager_name_display = "";
                     if(isset($manager->first_name) && isset($manager->last_name)) 
-                        $manager_name_display = $manager->first_name . '' . $manager->last_name; 
+                        $manager_name_display = $manager->first_name . ' ' . $manager->last_name; 
                     else 
                         $manager_name_display = $manager->display_name;
 
