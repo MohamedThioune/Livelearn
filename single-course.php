@@ -98,7 +98,7 @@ $user_id = get_current_user_id();
 /*
 * User informations
 */
-$email_user = get_userdata($post->post_author)->data->email;
+$email_user = get_user_by('ID', $post->post_author)->user_email;
 $phone_user = get_field('telnr', 'user_' . $post->post_author);
 
 /*
@@ -149,8 +149,6 @@ if(isset($expert[0]))
     $experts = array_merge($expert, $author);
 else
     $experts = $author;
-
-var_dump($experts);
 
 /*
 * Likes

@@ -1,5 +1,7 @@
 <?php
     $user_id = get_current_user_id();
+    $user = wp_get_current_user();
+
     $allocate_basic = get_field('managed', 'user_'.$user_id);
     if(!$allocate_basic)
         $allocate_basic = array();
@@ -27,8 +29,14 @@
         <img src="<?php echo get_stylesheet_directory_uri();?>/img/Mijn_mensen.png" alt="">
         <span>Jij managed deze medewerkers</span>
     </a>
-    <a href="/dashboard/company/grant" class="btn cardBlockManage">
-        <img src="<?php echo get_stylesheet_directory_uri();?>/img/hierarchical.png" alt="">
-        <span>Beheer de managers in je organisatie</span>
-    </a>
+    <?php 
+        if(in_array($user->roles, 'administrator') || in_array($user->roles, 'hr')){
+    ?>
+        <a href="/dashboard/company/grant" class="btn cardBlockManage">
+            <img src="<?php echo get_stylesheet_directory_uri();?>/img/hierarchical.png" alt="">
+            <span>Beheer de managers in je organisatie</span>
+        </a>
+    <?php
+        }
+    ?>
 </div>
