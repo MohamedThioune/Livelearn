@@ -51,22 +51,21 @@ $todos = get_posts($args);
             <h2>My Alerts</h2>
             <input type="search" placeholder="search" class="inputSearchCourse">
         </div>
-       <div class="tableAlert">
-           <table class="table table-responsive">
-               <thead class="thead-light">
+        <div class="contentCardListeCourse">
+            <table class="table table-responsive tableNotification">
+                <thead>
                 <tr>
+                    <th scope="col">#</th>
                     <th scope="col">Title</th>
                     <th scope="col">Type</th>
                     <th scope="col-4">Alert </th>
                     <th scope="col">By</th>
-                    <!-- 
-                    <th scope="col">Times</th>
-                    <th scope="col">Actions</th> -->
+                    <th scope="col">Optie</th>
                 </tr>
-               </thead>
-               <tbody>
-               <?php 
-                
+                </thead>
+                <tbody>
+                <?php
+
                 foreach($todos as $key => $todo) {
 
                     $type = get_field('type_feedback', $todo->ID);
@@ -79,7 +78,7 @@ $todos = get_posts($args);
                         $manager_display = 'Anonymous';
                         $image = 0;
                     }
-                    
+
                     if(!$image)
                         $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 
@@ -89,28 +88,42 @@ $todos = get_posts($args);
                         $beschrijving_feedback = get_field('opmerkingen', $todo->ID);
                     else if($type == "Beoordeling Gesprek")
                         $beschrijving_feedback = get_field('algemene_beoordeling', $todo->ID);
-                
-                ?>
-                <tr>                
-                    <td scope="row"><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"> <strong><?=$todo->post_title;?></strong> </a></td>
-                    <td><?=$type?></td>
-                    <td class="descriptionNotification"><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"><?=$beschrijving_feedback?> </a></td>
-                    <td><?= $manager_display; ?></td>
-                    <!-- 
+
+                    ?>
+                    <tr>
+                        <td scope="row"><?= $key; ?></td>
+                        <td ><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"> <strong><?=$todo->post_title;?></strong> </a></td>
+                        <td><?=$type?></td>
+                        <td class="descriptionNotification"><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"><?=$beschrijving_feedback?> </a></td>
+                        <td><?= $manager_display; ?></td>
+                        <td class="textTh">
+                            <div class="dropdown text-white">
+                                <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
+                                    <img  style="width:20px"
+                                          src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                </p>
+                                <ul class="dropdown-menu">
+                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
+                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
+                                    <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
+                                </ul>
+                            </div>
+                        </td>
+                        <!--
                     <td>Weekly</td>
                     <td>
                         <button class="btn bntDelete">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/delete.png">
                         </button>
                     </td> -->
-                </tr>
-               <?php
-                    }
+                    </tr>
+                    <?php
+                }
                 ?>
-               
-               </tbody>
-           </table>
-       </div>
+
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </div>
