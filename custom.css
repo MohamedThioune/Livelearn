@@ -3390,7 +3390,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     overflow: hidden;
 }
 .content-settings{
-
+    position: relative;
 }
 .titleSetting{
     color: #043356;
@@ -9939,12 +9939,54 @@ ul#tabs-nav li.active {
 .contentCardListeCourse td .dropdown-toggle img{
     cursor: pointer;
 }
+#left-area .woocommerce-result-count {
+    color: #999999;
+    font-size: 17px;
+    margin-bottom: 35px;
+}
+.group-input-settings .multipleSelectSkills .select2-container--default .select2-selection--multiple{
+    background-color: white !important;
+    width: 100%;
+    border: 1px solid #848484 !important;
+    display: block;
+}
+.multipleSelectSkills .select2-selection--multiple .select2-selection__rendered{
+    box-sizing: border-box;
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 5px !important;
+    width: 100% !important;
+}
+.multipleSelectSkills input{
+    background: transparent !important;
+    padding: 0px !important;
+    margin: 0px !important;
+}
+#Portfolio .categorieDetailCandidat {
+    margin-bottom: 0;
+}
+.goBackProfil{
+    display: none;
+}
+.tableNotification{
+    display: table;
+    width:100%;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
     .head-ontwikkeladvies h1 {
         font-size: 25px;
         margin-bottom: 20px;
+    }
+    .goBackProfil{
+        display: block;
+    }
+    .goBackProfil img{
+        position: absolute;
+        left: 10px;
+        top: 20px;
+        width: 35px;
     }
     .blockImgCour iframe {
         width: 100% !important;
@@ -12411,6 +12453,16 @@ ul#tabs-nav li.active {
     }
     .MobileFooter .card .collapse{
         padding-left: 30px;
+    }
+    .firstBlock .sousBlockProduct2 {
+        padding: 0 15px;
+    }
+    .contentElementHeadCandidat a{
+        font-weight: bold;
+        font-size: 1.3em;
+        text-align: center;
+        width: fit-content;
+        margin: 0 auto;
     }
 
 

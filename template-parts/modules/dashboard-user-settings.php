@@ -173,6 +173,9 @@ if(!empty($bunch)){
 
 ?>
 <div class="content-settings">
+    <a href="/profile" class="goBackProfil">
+        <img src="<?php echo get_stylesheet_directory_uri();?>/img/bi_arrow-left.png" alt="">
+    </a>
     <h1 class="titleSetting">Profiel Informatie</h1>
     <?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>" ; ?>
 
@@ -304,6 +307,7 @@ if(!empty($bunch)){
                             }
                     ?>
                 </div>
+
                 <div class="elementInputImgSetting">
                     <!-- Modal education -->
                     <div class="modal modalEdu fade" id="exampleModalEdu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -359,13 +363,23 @@ if(!empty($bunch)){
                     </div>
                 </div>
             </div>
-
+            <div class="group-input-settings">
+                <label for="">Skills</label>
+                <div class="form-group formModifeChoose multipleSelectSkills">
+                    <select class="js-select2-multi" multiple="multiple">
+                        <option>Select A</option>
+                        <option>Select B</option>
+                        <option>Select C</option>
+                        <option>Select D</option>
+                    </select>
+                </div>
+            </div>
             <div class="group-input-settings">
                 <label for="">Work Experience</label>
                 <button class="btn btnAddEdu" data-toggle="modal" data-target="#exampleModalWork"> Add Work Experience
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/plus.png" alt="">
                 </button>
-                <br>
+
                 <div class="categorieDetailCandidat workExperiece">
                     <?php
                     if($experiences)
@@ -614,139 +628,7 @@ if(!empty($bunch)){
                 </div>
             </div>
 
-            <div class="group-input-settings">
-                <label for="">Awards</label>
-                <button class="btn btnAddEdu" data-toggle="modal" data-target="#exampleModalAward"> Add Awards
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/plus.png" alt="">
-                </button>
-                <br>
-                <div class="categorieDetailCandidat awards">
-                    <?php
-                    if($awards)
-                        if(!empty($awards))
-                            foreach($awards as $value) {
-                                $value = explode(";", $value);
-                                $year_start = explode("-", $value[2])[0];
-                                $year_end = explode("-", $value[3])[0];
-                                if($year_start && !$year_end)
-                                    $year = $year_start;
-                                else if($year_end && !$year_start)
-                                    $year = $year_end;
-                                else if($year_end != $year_start)
-                                    $year = $year_start .'-'. $year_end;
-                                ?>
-                                <div class="contentEducationCandidat">
-                                    <div class="titleDateEducation">
-                                        <p class="titleCoursCandiddat"><?php echo $value[0]; ?> </p>
-                                        <?php if($year) { ?>
-                                            <p class="dateCourCandidat"><?php echo $year; ?></p>
-                                        <?php } ?>
-                                    </div>
-                                    <p class="textDetailCategorie"><?php echo $value[1]; ?></p>
-                                    <form action="" method="POST">
-                                        <input type="hidden" name="id" value="<?php echo $key; ?>">
-                                        <button class="btn btn-danger" style="color:white" name="delete_awards" type="submit"><i class="fa fa-trash"></i></button>
-                                    </form>
-                                    <button class="btn btn-warning" style="color:white" data-toggle="modal" data-target="#editModalAward<?php echo $key; ?>"><i class="fas fa-edit"></i></button>
-                                </div>
-                                <br>
 
-                                <div class="elementInputImgSetting">
-                                    <!-- Modal Awards Experience -->
-                                    <div class="modal modalEdu fade show" id="editModalAward<?php echo $key; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Edit Award</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <form action="/dashboard/user/settings/" method="POST">
-                                                    <div class="modal-body">
-                                                        <div class="row">
-                                                            <div class="col-lg-12 col-md-12">
-                                                                <div class="group-input-settings">
-                                                                    <label for="">Title</label>
-                                                                    <input name="title" type="text" value="<?php echo $value[0] ?>"  placeholder="Engineer">
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-12 col-md-12">
-                                                                <div class="group-input-settings">
-                                                                    <label for="">Description</label>
-                                                                    <textarea name="description" id="" rows="4"><?php echo $value[1] ?></textarea>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-lg-12 col-md-12">
-                                                                <div class="group-input-settings">
-                                                                    <label for="">Date</label>
-                                                                    <input name="date" type="date" placeholder="" value="<?php echo $value[3] ?>" required>
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button class="btn btnSaveSetting" name="add_award" type="submit" >Save</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            <?php } ?>
-
-                </div>
-                <div class="elementInputImgSetting">
-                    <!-- Modal Awards Experience -->
-                    <div class="modal modalEdu fade show" id="exampleModalAward" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Add New Award</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form action="/dashboard/user/settings/" method="POST">
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="group-input-settings">
-                                                    <label for="">Title</label>
-                                                    <input name="title" type="text" placeholder="Engineer">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="group-input-settings">
-                                                    <label for="">Description</label>
-                                                    <textarea name="description" id="" rows="4"></textarea>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="group-input-settings">
-                                                    <label for="">Date</label>
-                                                    <input name="date" type="date" placeholder="" requ>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btnSaveSetting" name="add_award" type="submit" >Save</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
         </div>
 
         <div id="social" class="b-tab contentBlockSetting">
@@ -831,3 +713,18 @@ if(!empty($bunch)){
     var connectTabs = new Tabs();
 
 </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".js-select2").select2();
+            $(".js-select2-multi").select2();
+
+            $(".large").select2({
+                dropdownCssClass: "big-drop",
+            });
+        });
+    </script>
+
+    </div>
+</div>
