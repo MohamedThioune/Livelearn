@@ -1,7 +1,6 @@
 <?php
-
-    $user_id = get_current_user_id();
-    $user = get_user_by('ID', $user_id);
+    $user = wp_get_current_user();
+    $user_id = $user->ID;
 
     extract($_POST);
     
@@ -22,7 +21,7 @@
 
 ?>
 <?php 
-    if(!in_array($user->roles, 'administrator') && !in_array($user->roles, 'hr'))
+    if(!in_array('administrator', $user->roles) && !in_array('hr', $user->roles))
         header("Location: /dashboard/company/de-organisatie" );
 ?>
 <div class="row">

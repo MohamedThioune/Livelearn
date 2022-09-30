@@ -199,7 +199,7 @@ if(!empty($bunch)){
             <?php $options = array(
                 'post_id' => 'user_'. get_current_user_id(),
                 'form' => true,
-                'fields' => array('profile_img', 'function', 'telnr', 'experience', 'country', 'date_born', 'gender', 'education_level', 'language', 'biographical_info'),
+                'fields' => array('first_name','user_email', 'profile_img', 'function', 'telnr', 'experience', 'country', 'date_born', 'gender', 'education_level', 'language', 'biographical_info'),
                 'html_before_fields' => '',
                 'html_after_fields' => '',
                 'html_updated_message'  => '<div id="message" class="alert alert-success updated">Informations user updated<p></p></div>',
@@ -671,8 +671,7 @@ if(!empty($bunch)){
     </div>
 </div>
 
-
-    <script>
+<script>
     'use strict';
 
     function Tabs() {
@@ -711,20 +710,16 @@ if(!empty($bunch)){
     }
 
     var connectTabs = new Tabs();
-
 </script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $(".js-select2").select2();
-            $(".js-select2-multi").select2();
+<script>
+    $(document).ready(function() {
+        $(".js-select2").select2();
+        $(".js-select2-multi").select2();
 
-            $(".large").select2({
-                dropdownCssClass: "big-drop",
-            });
+        $(".large").select2({
+            dropdownCssClass: "big-drop",
         });
-    </script>
+    });
+</script>
 
-    </div>
-</div>

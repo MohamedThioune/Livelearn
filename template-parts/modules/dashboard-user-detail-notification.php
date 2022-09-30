@@ -21,7 +21,7 @@
             $type = get_field('type_feedback', $value->ID);
             $manager_id = get_field('manager_feedback', $value->ID);
 
-            $image = get_field('profile_img',  'user_' . $manager);
+            $image = get_field('profile_img',  'user_' . $manager_id);
             if(!$image)
                 $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 
@@ -66,7 +66,7 @@
                     <div class="globalnotificationBy">
                         <div class="contentImgName">
                             <div class="contentImg">
-                                <img src="<?=$image?>" alt="">
+                                <img src="<?= $image ?>" alt="">
                             </div>
                             <div>
                                 <p class="name"><?= $manager_display ?></p>
@@ -183,6 +183,9 @@
                     <?php 
                     
                     foreach($todos as $key=>$todo) {
+                        if($todo->ID == $_GET['todo'])
+                            continue;
+                            
                         if($key == 10)
                             break;
 
@@ -200,7 +203,7 @@
                         if(!$image)
                             $image = get_stylesheet_directory_uri() . '/img/Group216.png';
                     ?>
-                        <div class="SousBlockNotification">
+                        <a  href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="SousBlockNotification">
                             <div class="d-flex align-items-center">
                                 <div class="circleNotification">
                                     <img src="<?php echo $image ?>" alt="">
@@ -209,7 +212,7 @@
                                     <?= $manager_display ?> send you a  <span><?=$type?></span></p>
                             </div>
                             <!-- <p class="hoursText">0 hours ago</p> -->                    
-                        </div>
+                        </a>
                     <?php
                         }
                     ?>
