@@ -34,15 +34,20 @@ $args = array(
 );
 $bunch_orders = wc_get_orders($args);
 $orders = array();
-$vip_customer_name = array();
+$item_order = array();
+
 foreach($bunch_orders as $order){
-    $item_order_first_name = $order->data['billing']['first_name'];
+    $item_order['id'] = $order->data['customer_id'];
+    $item_order['first_name'] = $order->data['billing']['first_name'];
+    $item_order['last_name'] = $order->data['billing']['last_name'];
     foreach ($order->get_items() as $item_id => $item ) {
         $course_id = intval($item->get_product_id()) - 1;
-        $price = get_field('price', $course_id);
-        if($course_id > 200){
-            array_push($vip_customer_name, $item_order_first_name);  
-            break;
+        if($course_id == $_GET['parse']){
+            $item_order['name']= $item->get_name();
+            $item_order['datenr'] = $item->get_meta_data('Option')[0]->value;
+            $item_order['companie_title'] = get_field('company',  'user_' . $customer_id)[0]->post_title;
+            $item_order['function']  = get_field('role',  'user_' . $customer_id);
+            array_push($orders, $item_order);  
         }
     }
 }
@@ -220,6 +225,7 @@ $inkomsten = count($orders) * $price;
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 <script>
     var id_course;
     $('.search-signups').keyup(function(){

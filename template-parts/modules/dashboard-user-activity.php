@@ -36,6 +36,7 @@ foreach($raw_saved as $save)
 //Orders - enrolled courses  
 $args = array(
     'customer_id' => $user->ID,
+    'order' => 'DESC',
     'limit' => -1,
 );
 
@@ -82,6 +83,8 @@ if(isset($_GET['opgedane'])){
     $enrolled = array_slice($enrolled, $saved_number, $max_opgedane);
 }
 
+
+
 /*
 * * Get courses
 */
@@ -122,7 +125,7 @@ $todos = get_posts($args);
 /*
 * * Enrolled courses
 */
-$kennis_video = get_field('kennis_video', 'user_' . $user->ID);
+//$kennis_video = get_field('kennis_video', 'user_' . $user->ID);
 
 if(!empty($enrolled))
 {
@@ -136,8 +139,8 @@ if(!empty($enrolled))
 
     $enrolled_courses = get_posts($args);
 
-    if(!empty($kennis_video))
-        $enrolled_courses = array_merge($kennis_video, $enrolled_courses);
+    // if(!empty($kennis_video))
+    //     $enrolled_courses = array_merge($kennis_video, $enrolled_courses);
 }
 
 //Statistic views
@@ -315,19 +318,20 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
                 else
                     echo "empty until now";
                 ?>
-
+                <br>
                 <?php
                     if($save_enrolls)
                         foreach (range(1, $save_enrolls) as $number){
                             if(isset($_GET['page2']))
                                 if($_GET['page2'] == $number)
-                                    echo '<a href="?saved&page1=' .$number. '" style="color: #DB372C" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                                    echo '<a href="?opgedane&page2=' .$number. '" style="color: #DB372C" class="textLiDashboard">'. $number .'&nbsp;</a>';
                                 else
-                                    echo '<a href="?saved&page1=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                                    echo '<a href="?opgedane&page2=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
                             else
-                                echo '<a href="?saved&page1=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                                echo '<a href="?opgedane&page2=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
                         }
                 ?>
+                
             </div>
         </div>
       

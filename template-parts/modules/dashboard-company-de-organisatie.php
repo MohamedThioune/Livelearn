@@ -22,7 +22,6 @@
             $success = true;
             $message = "Successfully assigning employees as their manager";
         }
-
 ?>
 <div class="blockManageTeam">
     <a href="/dashboard/company/allocate/" class="btn cardBlockManage">
@@ -30,7 +29,7 @@
         <span>Jij managed deze medewerkers</span>
     </a>
     <?php 
-        if(in_array($user->roles, 'administrator') || in_array($user->roles, 'hr')){
+        if(in_array('administrator', $user->roles) || in_array('hr', $user->roles)){
     ?>
         <a href="/dashboard/company/grant" class="btn cardBlockManage">
             <img src="<?php echo get_stylesheet_directory_uri();?>/img/hierarchical.png" alt="">
