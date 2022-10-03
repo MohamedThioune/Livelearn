@@ -161,7 +161,7 @@
         <div class="cardOverviewCours">
             <div class="headListeCourse">
                 <p class="JouwOpleid">Alle opleidingen</p>
-                <input type="search" class="searchInputAlle" placeholder="Zoek opleidingen, experts of ondervwerpen">
+                <input id="search_txt_company" class="form-control inputSearch2" type="search" placeholder="Zoek opleidingen, experts of ondervwerpen" aria-label="Search" >
                 <?php 
                 if ( in_array( 'hr', $user_in->roles ) || in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
                     echo '<a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>';

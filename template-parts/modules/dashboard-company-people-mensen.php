@@ -161,14 +161,22 @@ else if(isset($multiple_add_people)){
         <div class="blockOverviewMensen">
             <h2 class="titleBlockOverviewMensen">Groep Toevoegen </h2>
             <form action="/dashboard/company/people-mensen/" method="POST">
-                <div class="bodyBlockOverviewMensen">
+                <div class="bodyBlockOverviewMensen" >
                     <ul>
-                        <li><input type="email" name="emails[]" placeholder="ZaKelijk mailadres"></li>
-                        <li><input type="email" name="emails[]" placeholder="ZaKelijk mailadres"></li>
-                        <li><input type="email" name="emails[]" placeholder="ZaKelijk mailadres"></li>
-                        <li><a href="#"><b>+meer</b></a></li>
+                        <li><input type="email" name="emails[]" class="" placeholder="ZaKelijk mailadres"></li>
+                        <li><input type="email" name="emails[]" class="" placeholder="ZaKelijk mailadres"></li>
+                        <li id="item_details"><input name="emails[]" type="email"  id="item_name" class="input_text" placeholder="ZaKelijk mailadres" /></li>
                     </ul>
-                    <br><br>
+                    <ul id="new_item_details" class="new_item_details"></ul>
+                    <div class="groupBtnMesen">
+                        <div class="contentInputRemoveItem" style="display:none;" id="removeitem">
+                            <input type="button" name="remove_item" id="remove_item" value="-Verwijderen" class="cv-form-control button cv-submit">
+                        </div>
+                        <div >
+                            <input type="button" name="add_item" id="add_item" value="+Meer" class="cv-form-control button cv-submit">
+                        </div>
+                    </div>
+
                     <button type="submit" name="multiple_add_people" class="btn btnMensenToevoegen">Werknemer toevoegen</button>
                 </div>
             </form>
@@ -177,21 +185,38 @@ else if(isset($multiple_add_people)){
 </div>
 
 
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script>
     $('#chooseFileLijs').bind('change', function () {
         var filename = $("#chooseFileLijs").val();
         if (/^\s*$/.test(filename)) {
             $(".file-upload").removeClass('active');
-            $("#noFileLijs").text("No file chosen...");
+            $("#noFileLijs").email-clone-mesen("No file chosen...");
         }
         else {
             $(".file-upload").addClass('active');
-            $("#noFileLijs").text(filename.replace("C:\\fakepath\\", ""));
+            $("#noFileLijs").email-clone-mesen(filename.replace("C:\\fakepath\\", ""));
         }
     });
 
 </script>
+<script>
+    jQuery(function ($) {
+        $('#add_item').click(function () {
+            var button = $('#item_details').clone();
+            button.find('input').val('');
+            button.removeAttr('id');//ID of an element must be uniue
+            $(".new_item_details").append(button);
+            $('#removeitem').show();
+        });
+        $('#remove_item').click(function (e) {
+            $("#new_item_details > li").last().remove();
+            $('#removeitem').toggle( !$("#new_item_details").is(":empty") );
+            e.preventDefault();
+        });
+    });
 
+</script>
 
 
 
