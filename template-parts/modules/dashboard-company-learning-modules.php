@@ -178,7 +178,7 @@ $video = null;
     <div class="cardOverviewCours">
         <div class="headListeCourse">
             <p class="JouwOpleid">Gekochte opleidingen</p>
-            <!-- <a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>-->
+            <input id="search_txt_company" class="form-control inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
         </div>
 
         <div class="contentCardListeCourse">

@@ -6,6 +6,8 @@ $user_in = wp_get_current_user();
     <div class="cardOverviewCours">
         <div class="headListeCourse">
             <p class="JouwOpleid">Jouw leerpaden</p>
+            <input id="search_txt_company" class="form-control inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
+
             <?php 
                 if ( in_array( 'hr', $user_in->roles ) || in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
                     echo '<a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>';
