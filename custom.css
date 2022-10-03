@@ -1430,6 +1430,17 @@ ul.sub-menu li a {
     width: 250px !important;
     text-overflow: ellipsis;
     overflow: hidden;
+    background: #F0F5F7;
+    border-radius: 8px;
+    color: #023356;
+    border: none;
+    padding: 13px 15px;
+    height: 40px;
+}
+.inputSearch2:focus{
+    background: #F0F5F7 !important;
+    border-radius: 8px;
+    color: #023356 !important;
 }
 .thModife{
     padding: unset !important;
@@ -1973,8 +1984,38 @@ input:focus-visible {
     border-bottom: 1px solid #b9b9b9;
     padding: 0 15px 5px;
 }
+.bodyBlockOverviewMensen #new_item_details li:last-child{
+    border-bottom: 0px !important;
+}
 .bodyBlockOverviewMensen ul li a{
     color: #043356 !important;
+}
+.contentInputRemoveItem {
+    margin: -10px -15px 8px;
+    border-bottom: 1px solid #b9b9b9;
+    padding: 0 15px 5px;
+}
+.contentInputRemoveItem #remove_item {
+    color: red;
+    font-size: 15px;
+    border: none;
+    border-radius: 3px;
+    background: none;
+}
+.groupBtnMesen #add_item{
+    background: none;
+    color: #023356;
+    padding: 5px 15px;
+    font-weight: 500;
+    font-size: 14px;
+    border: 1px solid #023356;
+    border-radius: 6px;
+    margin-top: 20px;
+}
+.groupBtnMesen #add_item:hover{
+    background: #023356;
+    color: #ffffff;
+    border: 1px solid #023356;
 }
 
 .btnMensenToevoegen {
@@ -3458,10 +3499,10 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 }
 .contentBlockSetting {
     background: white;
-    padding: 25px 20px;
-    border: 1px solid #ECEDF2;
-    box-shadow: 3px 1px 65px 13px rgb(196 196 196 / 10%);
-    border-radius: 8px;
+    border-left: 1px solid #ECEDF2;
+    border-right: 1px solid #ECEDF2;
+    border-bottom: 1px solid #ECEDF2;
+    border-radius: 0;
     margin-bottom: 30px;
 }
 .group-input-settings{
@@ -4284,11 +4325,11 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 .overviewSecondBlock {
     margin-left: 13px;
     margin-right: 13px;
-    min-width: 18%;
+    min-width: 22%;
 }
 .overviewTreeBlock{
     margin-right: 15px;
-    min-width: 20%;
+    min-width: 24%;
 }
 .overviewTreeBlock .titleOvervien {
     color: #2a2a2a;
@@ -4347,37 +4388,55 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     background: #464b8b40;
 }
 .btnAddToDo{
-    width: 100%;
-    background: #47A99E;
-    border-radius: 15px;
-    color: #FFFFFF;
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 20px;
+    background: none;
+    width: fit-content;
+    color: #47A99E;
+    border: 1px solid #47A99E;
+    padding: 10px 25px;
+    margin-bottom: 35px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px;
 }
 .btnAddToDo:hover{
+    background: #47A99E;
     color: #FFFFFF !important;
+    font-weight: 600;
 }
 .activiteRecent{
     display: flex;
+    margin: 0 -15px 20px;
+    padding: 2px 15px;
+    border-bottom: 1px solid #bdbdbd47;
 }
 .activiteRecent img:first-child{
-    width: 32px;
-    margin-right: 10px;
-    height: 32px;
+    width: 40px;
+    margin-right: 5px;
+    height: 40px;
+    border-radius: 100%;
+    overflow: hidden;
+}
+.btn-removeAdd{
+    padding: 0 !important;
+}
+.btn-removeAdd img{
+    border-radius: unset !important;
+    margin-right: 0 !important;
+    width: 20px !important;
+    height: 20px !important;
+    margin-top: 10px;
 }
 .contentRecentActivite{
-    border: 1px solid #bdbdbd;
     box-sizing: border-box;
-    padding: 13px;
-    width: 71%;
+    padding: 0 15px;
+    width: 90%;
 }
 .titleActivite{
     color: #4A4A4A;
     font-size: 15px;
     margin-bottom: 6px;
 }
-.activiteRecent{
+.activiteRecentText{
     color: #696969;
     font-size: 13px;
     margin-bottom: 15px;
@@ -8734,8 +8793,8 @@ ul#tabs-nav li.active {
     display: flex;
     justify-content: space-between;
     background: white;
+    border: 1px solid #ECEDF2;
     box-shadow: 3px 1px 65px 13px rgb(196 196 196 / 10%);
-    border-radius: 0px;
 }
 .content-button-tabs button{
     width: 24.5%;
@@ -8880,7 +8939,6 @@ ul#tabs-nav li.active {
 }
 .addBlockComment {
     background: white;
-    padding: 15px;
     height: 100%;
 }
 .detailContentCandidat .nav-link.active {
@@ -9973,11 +10031,14 @@ ul#tabs-nav li.active {
     width:100%;
 }
 .tab-content .formSingleCoourseReview  .rating-element2{
-position: relative;
+    position: relative;
 }
 .tab-content .formSingleCoourseReview  .rating > label:before {
     margin: 14px 5px 0px;
     font-size: 25px;
+}
+#btn-remove-mesen {
+    display: none;
 }
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
