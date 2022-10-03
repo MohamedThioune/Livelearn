@@ -160,11 +160,11 @@ if(!$favoured)
 /*
 * Image
 */
-$thumbnail = get_field('preview', $course->ID)['url'];
+$thumbnail = get_field('preview', $post->ID)['url'];
 if(!$thumbnail){
     $thumbnail = get_the_post_thumbnail_url($post->ID);
     if(!$thumbnail)
-        $thumbnail = get_field('url_image_xml', $course->ID);
+        $thumbnail = get_field('url_image_xml', $post->ID);
         if(!$thumbnail)
             $thumbnail = get_field('image', 'category_'. $category_id);
             if(!$thumbnail)

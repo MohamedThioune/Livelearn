@@ -13,7 +13,7 @@ foreach($users as $user) {
 }
 
 $args = array(
-    'post_type' => 'course', 
+    'post_type' => array('course','post','leerpad'),
     'posts_per_page' => -1,
     'author__in' => $users_companie,  
 );

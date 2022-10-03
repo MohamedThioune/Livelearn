@@ -300,7 +300,7 @@ $interesses = get_categories( array(
         $name_topic =  ($topic_road_path != 0) ? (String)get_the_category_by_ID($topic_road_path) : '';
 
         ?>
-        <section class="col-lg-4" id="<?=  $road->ID; ?>">
+        <section class="col-lg-4" id="<?= $road->ID; ?>">
             <div class="cardRoadPath">
                 <div class="headRoadPath">
                     <p class="titleRoadPath "><?= $road->post_title; ?></p>
@@ -318,7 +318,7 @@ $interesses = get_categories( array(
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/oeil.png" alt="">
                         <span>see</span>
                     </a>
-                    <a href="/" class="seeRoadPath">
+                    <a href="/detail-product-road/?id=<?= $road->ID; ?>" class="seeRoadPath">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/overviewD.png" alt="">
                         <span>Overview</span>
                     </a>
