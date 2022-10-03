@@ -60,6 +60,8 @@
                                 
                            </div>';
         }
+
+        return $row_review;
     }
 
     return 1;
