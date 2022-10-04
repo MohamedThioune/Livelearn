@@ -97,7 +97,6 @@ require($page);
 
         foreach($global_courses as $course)
         {
-
             if(!visibility($course, $visibility_company))
                 continue;
     

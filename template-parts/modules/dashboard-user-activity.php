@@ -33,7 +33,13 @@ foreach($raw_saved as $save)
     if(get_post($save))
         array_push($saved, $save);
 
-// Enrolled courses
+//Orders - enrolled courses  
+$args = array(
+    'customer_id' => $user->ID,
+    'order' => 'DESC',
+    'limit' => -1,
+);
+
 $bunch_orders = wc_get_orders($args);
 $orders = array();
 $item_order = array();
@@ -77,6 +83,8 @@ if(isset($_GET['opgedane'])){
     $enrolled = array_slice($enrolled, $saved_number, $max_opgedane);
 }
 
+
+
 /*
 * * Get courses
 */
@@ -114,17 +122,10 @@ $args = array(
 
 $todos = get_posts($args);
 
-//Orders  
-$args = array(
-    'customer_id' => $user->ID,
-    'limit' => -1,
-);
-
-
 /*
 * * Enrolled courses
 */
-$kennis_video = get_field('kennis_video', 'user_' . $user->ID);
+//$kennis_video = get_field('kennis_video', 'user_' . $user->ID);
 
 if(!empty($enrolled))
 {
@@ -138,8 +139,8 @@ if(!empty($enrolled))
 
     $enrolled_courses = get_posts($args);
 
-    if(!empty($kennis_video))
-        $enrolled_courses = array_merge($kennis_video, $enrolled_courses);
+    // if(!empty($kennis_video))
+    //     $enrolled_courses = array_merge($kennis_video, $enrolled_courses);
 }
 
 //Statistic views
@@ -317,19 +318,20 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
                 else
                     echo "empty until now";
                 ?>
-
+                <br>
                 <?php
                     if($save_enrolls)
                         foreach (range(1, $save_enrolls) as $number){
                             if(isset($_GET['page2']))
                                 if($_GET['page2'] == $number)
-                                    echo '<a href="?saved&page1=' .$number. '" style="color: #DB372C" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                                    echo '<a href="?opgedane&page2=' .$number. '" style="color: #DB372C" class="textLiDashboard">'. $number .'&nbsp;</a>';
                                 else
-                                    echo '<a href="?saved&page1=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                                    echo '<a href="?opgedane&page2=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
                             else
-                                echo '<a href="?saved&page1=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                                echo '<a href="?opgedane&page2=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
                         }
                 ?>
+                
             </div>
         </div>
       
@@ -350,7 +352,7 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
 
                     $manager_name_display = "";
                     if(isset($manager->first_name) && isset($manager->last_name)) 
-                        $manager_name_display = $manager->first_name . '' . $manager->last_name; 
+                        $manager_name_display = $manager->first_name . ' ' . $manager->last_name; 
                     else 
                         $manager_name_display = $manager->display_name;
 
@@ -362,7 +364,7 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
                         $image = get_stylesheet_directory_uri() . '/img/Group216.png';
                 
                 ?>
-                    <a href="/dashboard/user/detail-notification/?todo=<?=$todo->ID?>" class="SousBlockNotification">
+                    <a href="/dashboard/user/detail-notification?todo=<?php echo $todo->ID; ?>" class="SousBlockNotification">
                         <div class="d-flex align-items-center">
                             <div class="circleNotification">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification 1.png" alt="">
@@ -516,7 +518,6 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
 <script>
 
     $('#search_txt_course').keyup(function(){

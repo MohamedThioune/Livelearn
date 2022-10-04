@@ -4,213 +4,66 @@
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-databank.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-databank.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-modules.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-modules.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-paths.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-paths.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-people-mensen.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-people-mensen.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-home.php" afterDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ComposerSettings">
-    <execution />
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>single-blog-item</find>
-      <find>&lt;i</find>
-      <find>.commentAndShare</find>
-      <find>.modal.right .modal-body {</find>
-      <find>Comment</find>
-      <find>scroll</find>
-      <find>bar</find>
-      <find>-webkit</find>
-      <find>.section</find>
-      <find>.sidebar-widget .img-fluid</find>
-      <find>code_preview0</find>
-      <find>summernote</find>
-      <find>sidebar-wrap</find>
-      <find>.sidebar-wrap</find>
-      <find>Blogs</find>
-      <find>.containe-blog .card-image img</find>
-      <find>.containe-blog .card-containe</find>
-      <find>Share</find>
-      <find>.blockDescriptionBlog ul li {</find>
-      <find>datePublish</find>
-      <find>.titleBlog</find>
-      <find>Jouw skills paspoort in 6 stappen</find>
-      <find>blockCardSearch</find>
-      <find>.sousBlockProduct4</find>
-      <find>.blockCardSearch</find>
-      <find>.werkText</find>
-      <find>@media</find>
-      <find>attr</find>
-      <find>ex2-tab-1</find>
-      <find>tab2Content</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>h4</replace>
-      <replace>contentImgAssessment</replace>
-      <replace>value=&quot;&quot;</replace>
-      <replace>a href=&quot;/dashboard/teacher/road-path/&quot; class=&quot;seeRoadPath&quot;</replace>
-      <replace>modal-dialog modal-dialog-course</replace>
-      <replace>&lt;a href=&quot;/detail-product-road&quot; class=&quot;btn btnDiscover&quot;&gt;Discover&lt;/a&gt;</replace>
-      <replace>&lt;a href=&quot;/product-podcast&quot;&gt;&lt;/a&gt;</replace>
-      <replace>rating-container-custom</replace>
-      <replace>#voorOpleidersModal</replace>
-      <replace>top: 63px;</replace>
-      <replace>a href=&quot;/product-search&quot;</replace>
-      <replace>modalEcosyteme modalSingleCourse</replace>
-      <replace>dates between</replace>
-      <replace>col-md-4</replace>
-      <replace>bodyCardOverviewOrganisatie</replace>
-      <replace>imgcardOverviewOrganisatie</replace>
-      <replace>&lt;img src=&quot;&lt;?php echo get_stylesheet_directory_uri();?&gt;/img/conversation.png&quot; alt=&quot;&quot;&gt;</replace>
-      <replace>CardQuestion</replace>
-      <replace>subTitleCardVolgende</replace>
-      <replace>skillsPassport</replace>
-      <replace>blockDescription</replace>
-      <replace>btn_dislike</replace>
-      <replace>btn_like</replace>
-      <replace>block2evensTabs</replace>
-      <replace>block2evens block2evensTabs</replace>
-    </replaceStrings>
+    <execution>
+      <executable />
+    </execution>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="stable" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline-Event.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline-Lezing.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline-Masterclass.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline-Training.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline-Workshop.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/single-course-online.php" />
-        <option value="$PROJECT_DIR$/test.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline-default.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" />
-        <option value="$PROJECT_DIR$/../../../wp-config.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-company-people-mensen.php" />
-        <option value="$PROJECT_DIR$/templates/template-user-overview.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php" />
-        <option value="$PROJECT_DIR$/templates/template-single.php" />
-        <option value="$PROJECT_DIR$/templates/edit-databank.php" />
-        <option value="$PROJECT_DIR$/header_teacher.php" />
-        <option value="$PROJECT_DIR$/header_user.php" />
-        <option value="$PROJECT_DIR$/summernote.min.js" />
-        <option value="$PROJECT_DIR$/footer.php" />
-        <option value="$PROJECT_DIR$/summernote.min.css" />
-        <option value="$PROJECT_DIR$/summernote.css" />
-        <option value="$PROJECT_DIR$/edit-databank.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-2.php" />
-        <option value="$PROJECT_DIR$/templates/archive.php" />
-        <option value="$PROJECT_DIR$/single.php" />
-        <option value="$PROJECT_DIR$/blog.css" />
-        <option value="$PROJECT_DIR$/templates/template-category-overview.php" />
-        <option value="$PROJECT_DIR$/templates/template-home.php" />
-        <option value="$PROJECT_DIR$/header_base.php" />
-        <option value="$PROJECT_DIR$/style.css" />
-        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-company-home.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-company-my-manager.php" />
-        <option value="$PROJECT_DIR$/templates/template-baangerichte.php" />
-        <option value="$PROJECT_DIR$/templates/template-functiegerichte.php" />
-        <option value="$PROJECT_DIR$/templates/template-grootbedrijf.php" />
-        <option value="$PROJECT_DIR$/templates/template-mkb.php" />
-        <option value="$PROJECT_DIR$/templates/template-Onderwer.php" />
-        <option value="$PROJECT_DIR$/templates/template-opleiders.php" />
-        <option value="$PROJECT_DIR$/templates/template-persoonlijke.php" />
-        <option value="$PROJECT_DIR$/templates/template-product-search.php" />
-        <option value="$PROJECT_DIR$/templates/template-registreren.php" />
-        <option value="$PROJECT_DIR$/templates/template-skill.php" />
-        <option value="$PROJECT_DIR$/templates/template-topic.php" />
-        <option value="$PROJECT_DIR$/templates/template-voor-teacher.php" />
-        <option value="$PROJECT_DIR$/templates/topic.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php" />
-        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-3.php" />
-        <option value="$PROJECT_DIR$/custom.css" />
-        <option value="$PROJECT_DIR$/main.js" />
-        <option value="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-company.php" />
-      </list>
-    </option>
-  </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="NodePackageJsonFileManager">
-    <packageJsonPaths>
-      <path value="$PROJECT_DIR$/assets/js/libs/package.json" />
-      <path value="$PROJECT_DIR$/assets/js/libs/slick-1.8.1/package.json" />
-    </packageJsonPaths>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="10" />
-    <option name="y" value="47" />
-    <option name="width" value="1346" />
-    <option name="height" value="701" />
-  </component>
   <component name="ProjectId" id="2DiWSsTqur2umzCPauMZUvX1w0s" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="fluidify-child" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fluidify-child" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fluidify-child" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fluidify-child" type="462c0819:PsiDirectoryNode" />
-              <item name="template-parts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="fluidify-child" type="b2602c69:ProjectViewProjectNode" />
-              <item name="fluidify-child" type="462c0819:PsiDirectoryNode" />
-              <item name="template-parts" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
-  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/wamp64/www/liveLearn-wordpressBiss/wp-content/themes/fluidify-child&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
-  }
-}</component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\liveLearn-wordpressBiss\wp-content\themes\fluidify-child\templates" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/templates" />
       <recent name="$PROJECT_DIR$/template-parts/modules" />
     </key>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -672,382 +525,58 @@
       <workItem from="1662368028368" duration="9898000" />
       <workItem from="1662394581442" duration="5096000" />
       <workItem from="1662460861063" duration="7039000" />
-      <workItem from="1662544718008" duration="10079000" />
+      <workItem from="1662544718008" duration="28728000" />
+      <workItem from="1662717351890" duration="6369000" />
+      <workItem from="1662739646861" duration="2122000" />
+      <workItem from="1662984731987" duration="3914000" />
+      <workItem from="1662996058093" duration="6982000" />
+      <workItem from="1663067683228" duration="5575000" />
+      <workItem from="1663083640286" duration="5599000" />
+      <workItem from="1663092187165" duration="1440000" />
+      <workItem from="1663096528015" duration="8412000" />
+      <workItem from="1663155746954" duration="446000" />
+      <workItem from="1663166516882" duration="6605000" />
+      <workItem from="1663177793039" duration="2676000" />
+      <workItem from="1663184255353" duration="50000" />
+      <workItem from="1663184818831" duration="2712000" />
+      <workItem from="1663229309515" duration="15058000" />
+      <workItem from="1663321444333" duration="6771000" />
+      <workItem from="1663583538296" duration="10669000" />
+      <workItem from="1663673194292" duration="6779000" />
+      <workItem from="1663685997472" duration="1729000" />
+      <workItem from="1663844415772" duration="14982000" />
+      <workItem from="1663926870463" duration="8042000" />
+      <workItem from="1664189033639" duration="918000" />
+      <workItem from="1664192662866" duration="48000" />
+      <workItem from="1664194673722" duration="40000" />
+      <workItem from="1664194799073" duration="360000" />
+      <workItem from="1664195337553" duration="372000" />
+      <workItem from="1664207201309" duration="720000" />
+      <workItem from="1664208387769" duration="7785000" />
+      <workItem from="1664274862594" duration="5094000" />
+      <workItem from="1664280624736" duration="15842000" />
+      <workItem from="1664358537880" duration="10741000" />
+      <workItem from="1664532183044" duration="2942000" />
+      <workItem from="1664540465018" duration="2643000" />
+      <workItem from="1664791338085" duration="15005000" />
     </task>
     <servers />
   </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="652894000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1366" height="743" extended-state="6" />
-    <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2962121" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.2903752" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
-      <window_info anchor="right" id="Database" order="7" />
-      <window_info anchor="right" id="Maven Projects" order="8" />
-      <window_info anchor="right" x="0" y="0" width="291" height="543" id="Documentation" order="9" side_tool="true" weight="0.32954547" />
-    </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27348486" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Capture Tool" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.2903752" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
-      <window_info anchor="right" id="Database" order="7" />
-      <window_info anchor="right" id="Maven Projects" order="8" />
-      <window_info anchor="right" x="0" y="0" width="291" height="543" id="Documentation" order="9" side_tool="true" weight="0.32954547" />
-    </layout-to-restore>
-  </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="1" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/template-creëren.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1943" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-dashboard.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-84" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-dashboard-core.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9893" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-detail-product-road.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-9608" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-ecosysteme.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-11693" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-functiegerichte.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="121" lean-forward="true" selection-start-line="121" selection-end-line="121" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-mkb.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="452" column="77" selection-start-line="452" selection-start-column="77" selection-end-line="452" selection-end-column="77" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-lift-lid.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2559" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-inloggen.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-519" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-grootbedrijf.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="447" column="22" lean-forward="true" selection-start-line="447" selection-start-column="22" selection-end-line="447" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-Onderwer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="169" column="12" lean-forward="true" selection-start-line="169" selection-start-column="12" selection-end-line="169" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-Ontwikkeladvies.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4493" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-opleider-courses.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-20250" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-opleiders.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
-          <caret line="71" column="7" lean-forward="true" selection-start-line="71" selection-start-column="7" selection-end-line="71" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-overview-organisations-5.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1658" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-overviewOrganisaties.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1433" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-persoonlijke.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="131" column="22" lean-forward="true" selection-start-line="131" selection-start-column="22" selection-end-line="131" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-pricing.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1193" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-product-road-path.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1104" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-product-search.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="682" column="22" lean-forward="true" selection-start-line="682" selection-start-column="22" selection-end-line="682" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-recruitement.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5828" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-registreren.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="120" column="35" lean-forward="true" selection-start-line="120" selection-start-column="35" selection-end-line="120" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-single.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2123" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-skill.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="123" lean-forward="true" selection-start-line="123" selection-end-line="123" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-skillsPassport.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="252" column="85" selection-start-line="252" selection-start-column="85" selection-end-line="252" selection-end-column="85" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-static-education-advice.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2798" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-static-education-individual.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3083" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-sub-topic.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-578" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-topic.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="1291" column="21" lean-forward="true" selection-start-line="1291" selection-start-column="21" selection-end-line="1291" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-uitleggen.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="149" column="72" selection-start-line="149" selection-start-column="72" selection-end-line="149" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-user-overview.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-28808" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-verkopen.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2003" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-voor-organisaties.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2918" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-voor-teacher.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="204" column="21" lean-forward="true" selection-start-line="204" selection-start-column="21" selection-end-line="204" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/youtube-video-course-playlist.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1808" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/youtube-video-course-channel.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2319" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/trash-user.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/trash-course.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/topic-ajax.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1929" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/topic.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="1296" column="27" lean-forward="true" selection-start-line="1296" selection-start-column="27" selection-end-line="1296" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-xml-parse.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5859" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-voor-teachers.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1254" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/template-voor-teacher-detail.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1329" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/usefull_functions.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-8049" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6030" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-3.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2160">
-          <caret line="144" column="56" selection-start-line="144" selection-start-column="56" selection-end-line="144" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="870">
-          <caret line="58" column="13" selection-start-line="58" selection-start-column="13" selection-end-line="58" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/single.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3096">
-          <caret line="415" column="9" selection-start-line="415" selection-start-column="9" selection-end-line="415" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/custom.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="9072" column="19" selection-start-line="9072" selection-start-column="19" selection-end-line="9072" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="110" lean-forward="true" selection-start-line="110" selection-end-line="110" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-company.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="199" column="6" lean-forward="true" selection-start-line="199" selection-start-column="6" selection-end-line="199" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
   </component>
   <component name="masterDetails">
     <states>

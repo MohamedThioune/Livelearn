@@ -1,9 +1,22 @@
 <?php 
 get_header();
 
+$page = dirname(__FILE__) . '/templates/check_visibility.php';
+ 
+require($page); 
+
+?>
+<head>
+    <meta name=”robots” content=”noindex,nofollow”>
+</head>
+
+<?
 global $post;
 
 global $wp;
+
+if(!visibility($post, $visibility_company))
+    header('location: /'); 
 
 $url = home_url( $wp->request );
 

@@ -1,26 +1,4 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.min.css" />
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.js"></script>
-<script type="text/javascript">
-    $(function () {
-        var selectedDates = [];
-        datePicker = $('[class*=Txt_Date]').datepicker({
-            multidate: true,
-            format: 'dd/mm/yyyy ',
-            todayHighlight: true,
-
-            language: 'en'
-        });
-        datePicker.on('changeDate', function (e) {
-            if (e.dates.length <= 10) {
-                selectedDates = e.dates;
-            } else {
-                datePicker.data('datepicker').setDates(selectedDates);
-                alert('You can only select 10 dates.');
-            }
-        });
-    });
-</script>
 
 
 <?php
@@ -186,19 +164,19 @@
                     <p class="textOpleidRight">Opleidingstype</p>
                 </a>
                 <a href="/dashboard/teacher/course-selection/?func=add-course<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
-                    <div class="circleIndicator passEtape2">
+                    <div class="circleIndicator passEtape">
                         <i class="fa fa-info"></i>
                     </div>
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>
                 <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=2&edit'; else echo "#"; ?>" class="contentBlockCourse">
-                    <div class="circleIndicator">
+                    <div class="circleIndicator passEtape">
                         <i class="fa fa-file-text"></i>
                     </div>
                     <p class="textOpleidRight">Uitgebreide beschrijving</p>
                 </a>
                 <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=3&edit'; else echo "#" ?>" class="contentBlockCourse">
-                    <div class="circleIndicator">
+                    <div class="circleIndicator passEtape2">
                         <i class="fa fa-calendar" aria-hidden="true"></i>
                     </div>
                     <p class="textOpleidRight ">Data en locaties</p>
@@ -225,7 +203,27 @@
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var selectedDates = [];
+        datePicker = $('[class*=Txt_Date]').datepicker({
+            multidate: true,
+            format: 'dd/mm/yyyy ',
+            todayHighlight: true,
 
-
+            language: 'en'
+        });
+        datePicker.on('changeDate', function (e) {
+            if (e.dates.length <= 10) {
+                selectedDates = e.dates;
+            } else {
+                datePicker.data('datepicker').setDates(selectedDates);
+                alert('You can only select 10 dates.');
+            }
+        });
+    });
+</script>
 
 

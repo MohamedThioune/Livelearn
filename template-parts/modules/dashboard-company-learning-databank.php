@@ -76,8 +76,6 @@
 </style>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
 <?php
@@ -163,7 +161,7 @@
         <div class="cardOverviewCours">
             <div class="headListeCourse">
                 <p class="JouwOpleid">Alle opleidingen</p>
-                <input type="search" class="searchInputAlle" placeholder="Zoek opleidingen, experts of ondervwerpen">
+                <input id="search_txt_company" class="form-control inputSearch2" type="search" placeholder="Zoek opleidingen, experts of ondervwerpen" aria-label="Search" >
                 <?php 
                 if ( in_array( 'hr', $user_in->roles ) || in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
                     echo '<a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>';
@@ -211,17 +209,19 @@
                 <table class="table table-responsive">
                     <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">Titel</th>
                    <!-- <th scope="col">Leervorm</th> -->                    
                         <th scope="col">Prijs</th>
                         <th scope="col">Onderwerp(en)</th>
                         <th scope="col">Startdatum</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Optie</th>
                     </tr>
                     </thead>
                     <tbody>
                         <?php 
-                        foreach($courses as $course){
+                        foreach($courses as $key => $course){
 
                             $category = ' ';
 
@@ -300,6 +300,7 @@
                         
                         ?>
                         <tr>
+                            <td scope="row"><?= $key; ?></td>
                             <td class="textTh "><a style="color:#212529;font-weight:bold" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
                             <td class="textTh"><?php echo $price; ?></td>
                             <?php
@@ -346,6 +347,19 @@
                         </td>
                             <td class="textTh"><?php echo $day; ?></td>
                             <td class="textTh">Live</td>
+                            <td class="textTh">
+                                <div class="dropdown text-white">
+                                    <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
+                                        <img  style="width:20px"
+                                              src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                    </p>
+                                    <ul class="dropdown-menu">
+                                        <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
+                                        <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
+                                        <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
+                                    </ul>
+                                </div>
+                            </td>
                         </tr>
                         <?php
                         }
@@ -389,9 +403,9 @@
           </div>
            
 
-       </div> 
+       </div>
 
-</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <!-- script-modal -->
 <script>
     var id_course;

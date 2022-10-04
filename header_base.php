@@ -62,11 +62,11 @@ $url = home_url( $wp->request );
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/custom.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/main.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/rating.css" />
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css'>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css'>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css'>
-        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css'>
         <!-- get bootstrap icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
@@ -259,7 +259,7 @@ $url = home_url( $wp->request );
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link nav-linModife dropdown-toggle" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#voorOpleiders"  id="opleiders" href="/voor-teacher-2/">Voor opleiders </a>
+                            <a class="nav-link nav-linModife dropdown-toggle" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#voorOpleiders"  id="opleiders" href="/voor-teachers/">Voor opleiders </a>
                         </li>
                     </ul>
 
@@ -674,8 +674,8 @@ $url = home_url( $wp->request );
                 <div class="ProfilGraduatioBlock">
                     <div class="sousNav1">
                         <!-- <button id="croieProfil" class="btn">
-<img src="<?php echo get_stylesheet_directory_uri();?>/img/XMobile.png" alt="">
-</button> -->
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/XMobile.png" alt="">
+                            </button> -->
 
                         <div class="d-flex flex-row">
                             <div id="profil-element-first" class="first-element-mobile">

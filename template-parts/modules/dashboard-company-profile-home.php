@@ -50,11 +50,13 @@
         }
     }
 
+    $user = get_users(array('include'=> $_GET['id']))[0]->data;
+
 ?>
 <div class="contentProilView">
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div id="profilVIewDetail" class="detailContentCandidat">
                 <div>
                     <?php
@@ -73,14 +75,14 @@
                         </div>
                         <div class="overviewTreeBlock">
                             <p class="titleOvervien">Manager : <span><?php if(isset($superior->first_name) && isset($superior->last_name)) echo $superior->first_name . '' . $superior->last_name; else echo $superior->display_name; ?></span></p>
-                            <p class="titleOvervien">Company : <br><span><?php echo $company; ?></span></p>
+                            <p class="titleOvervien">Company : <span><?php echo $company; ?></span></p>
                         </div>
                         <br>
                         <div class="overviewFourBlock">
                             <?php if($experience){ ?>
 
                                 <div class="d-flex">
-                                    <p class="nameOtherSkill">Experience : <br><span><?php echo $experience; ?></span></p>
+                                    <p class="nameOtherSkill">Experience : <span><?php echo $experience; ?></span></p>
                                 </div>
                             <?php } if($languages){ ?>
 
@@ -101,62 +103,51 @@
                             <?php } ?>
                         </div>
                     </div>
-                    <div class="categorieDetailCandidat">
-                        <h2 class="titleCategorieDetailCandidat">Over</h2>
-                        <p class="textDetailCategorie"><?php echo $biographical_info;  ?></p>
+
+                </div>
+
+
+                <div class="content-tab">
+                    <div class="content-button-tabs">
+                        <button  data-tab="Over" class="b-nav-tab btn active">
+                           Over
+                        </button>
+                        <button  data-tab="Skills" class="b-nav-tab btn">
+                            Skills
+                        </button>
+                        <button  data-tab="Certificaten" class="b-nav-tab btn">
+                            Certificaten
+                        </button>
+                        <button  data-tab="Statistieken" class="b-nav-tab btn">
+                            Statistieken
+                        </button>
+                        <button  data-tab="Interne-groei" class="b-nav-tab btn">
+                            Interne groei
+                        </button>
+                        <button  data-tab="Externe-groei" class="b-nav-tab btn">
+                            Externe groei
+                        </button>
+                        <button  data-tab="Feedback" class="b-nav-tab btn">
+                            Feedback
+                        </button>
                     </div>
-                    <?php
-                    if($educations){
-                        ?>
-                        <div class="categorieDetailCandidat">
-                            <h2 class="titleCategorieDetailCandidat">Education</h2>
+
+                    <div id="Over" class="b-tab active contentBlockSetting">
+                        <div class="content">
+                            <p class="textDetailCategorie"><?php echo $biographical_info;  ?></p>
                             <?php
-                            foreach($educations as $value) {
-                                $value = explode(";", $value);
-                                $year_start = explode("-", $value[2])[0];
-                                $year_end = explode("-", $value[3])[0];
-                                if($year_start && !$year_end)
-                                    $year = $year_start;
-                                else if($year_end && !$year_start)
-                                    $year = $year_end;
-                                else if($year_end != $year_start)
-                                    $year = $year_start .'-'. $year_end;
+                            if($educations){
                                 ?>
-                                <div class="contentEducationCandidat">
-                                    <div class="titleDateEducation">
-                                        <p class="titleCoursCandiddat"><?php echo $value[1]; ?></p>
-                                        <?php if($year) { ?>
-                                            <p class="dateCourCandidat"><?php echo $year; ?></p>
-                                        <?php } ?>
-                                    </div>
-                                    <p class="schoolCandidat"><?php echo $value[0]; ?></p>
-                                    <p class="textDetailCategorie"><?php echo $value[4]?: ''; ?></p>
-                                </div>
-                            <?php } ?>
-                        </div>
-                        <?php
-                    }
-                    ?>
-
-                    <?php
-                    if($experiences){
-                        ?>
-                        <div class="categorieDetailCandidat workExperiece">
-                            <h2 class="titleCategorieDetailCandidat ex">Work & Experience</h2>
-                            <?php
-                            if($experiences)
-                                if(!empty($experiences))
-                                    foreach($experiences as $value) {
+                                <div class="categorieDetailCandidat">
+                                    <h2 class="titleCategorieDetailCandidat">Education</h2>
+                                    <?php
+                                    foreach($educations as $value) {
                                         $value = explode(";", $value);
-                                        $year_start = explode("-", $value[2])[0];
-                                        $year_end = explode("-", $value[3])[0];
-                                        if($year_start && !$year_end)
-                                            $year = $year_start;
-                                        else if($year_end && !$year_start)
-                                            $year = $year_end;
-                                        else if($year_end != $year_start)
-                                            $year = $year_start .'-'. $year_end;
-
+                                        if(isset($value[2]))
+                                            $year = explode("-", $value[2])[0];
+                                        if(isset($value[3]))
+                                            if(intval($value[2]) != intval($value[3]))
+                                                $year = $year . "-" .  explode("-", $value[3])[0];
                                         ?>
                                         <div class="contentEducationCandidat">
                                             <div class="titleDateEducation">
@@ -166,254 +157,321 @@
                                                 <?php } ?>
                                             </div>
                                             <p class="schoolCandidat"><?php echo $value[0]; ?></p>
-                                            <p class="textDetailCategorie"><?php echo $value[4]?: '' ?> </p>
+                                            <p class="textDetailCategorie"><?php echo $value[4]?: ''; ?></p>
                                         </div>
-
                                     <?php } ?>
-                        </div>
-                        <?php
-                    }
-                    ?>
-                </div>
-                <div class="layout--tabs">
-                    <div class="">
-                        <div class="nav-tabs-wrapper">
-                            <ul class="nav nav-tabs" id="tabs-title-region-nav-tabs" role="tablist">
-                                <li class="nav-item ">
-                                    <a class="nav-link active" data-toggle="tab" role="tab" href="#block-simple-text-2" aria-selected="true" aria-controls="block-simple-text-2" id="block-simple-text-2-tab">Skills</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-3" aria-selected="false" aria-controls="block-simple-text-3" id="block-simple-text-3-tab">Certificaten</a>
-                                </li>
-                                <!--
-                                    <li class="nav-item">
-                                     <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-4" aria-selected="false" aria-controls="block-simple-text-4" id="block-simple-text-4-tab">Feedback</a>
-                                     </li>
-                                  -->
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-5" aria-selected="false" aria-controls="block-simple-text-5" id="block-simple-text-5-tab">Statistieken</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-6" aria-selected="false" aria-controls="block-simple-text-6" id="block-simple-text-6-tab">Interne groei</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" role="tab" href="#block-simple-text-7" aria-selected="false" aria-controls="block-simple-text-7" id="block-simple-text-7-tab">Externe groei</a>
-                                </li>
+                                </div>
+                                <?php
+                            }
+                            ?>
 
-                            </ul>
-                        </div>
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="tab-content">
-                                    <div id="block-simple-text-2" class="tab-pane active block block-layout-builder block-inline-blockqfcc-blocktype-simple-text" role="tabpanel" aria-labelledby="block-simple-text-2-tab">
-
-                                        <?php
-                                        if(!empty($topics)){
-                                            foreach($topics as $topic){
-                                                $name = (String)get_the_category_by_ID($topic);
+                            <?php
+                            if($experiences){
+                                ?>
+                                <div class="categorieDetailCandidat workExperiece">
+                                    <h2 class="titleCategorieDetailCandidat ex">Work & Experience</h2>
+                                    <?php
+                                    if($experiences)
+                                        if(!empty($experiences))
+                                            foreach($experiences as $value) {
+                                                $value = explode(";", $value);
+                                                if(isset($value[2]))
+                                                    $year = explode("-", $value[2])[0];
+                                                if(isset($value[3]))
+                                                    if(intval($value[2]) != intval($value[3]))
+                                                        $year = $year . "-" .  explode("-", $value[3])[0];
                                                 ?>
-                                                <div class="skillBar">
-                                                    <label for=""><?php echo $name;  ?></label>
-                                                    <div data-progress="react" data-value="<?php echo rand(5, 100); ?>">
+                                                <div class="contentEducationCandidat">
+                                                    <div class="titleDateEducation">
+                                                        <p class="titleCoursCandiddat"><?php echo $value[1]; ?></p>
+                                                        <?php if($year) { ?>
+                                                            <p class="dateCourCandidat"><?php echo $year; ?></p>
+                                                        <?php } ?>
+                                                    </div>
+                                                    <p class="schoolCandidat"><?php echo $value[0]; ?></p>
+                                                    <p class="textDetailCategorie"><?php echo $value[4]?: '' ?> </p>
+                                                </div>
+
+                                            <?php } ?>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                    <div id="Skills" class="b-tab contentBlockSetting">
+                        <div class="content">
+                            <?php
+                            if(!empty($topics)){
+                                foreach($topics as $topic){
+                                    $name = (String)get_the_category_by_ID($topic);
+                                    ?>
+                                    <div class="skillBar">
+                                        <label for=""><?php echo $name;  ?></label>
+                                        <div data-progress="react" data-value="<?php echo rand(5, 100); ?>">
                                                     <span class="progress">
                                                         <span id="react" class="progress-bar orange"></span>
                                                     </span>
-                                                    </div>
+                                        </div>
+                                    </div>
+                                <?php }
+                            }else {
+                                echo "<p class='textDetailCategorie'>we do not have statistics at this time </p>";
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                    <div id="Certificaten" class="b-tab contentBlockSetting">
+                        <div class="content">
+                            <div class="categorieDetailCandidat workExperiece">
+                                <?php
+                                if($awards){
+                                    if(!empty($awards))
+                                        foreach($awards as $value) {
+                                            $value = explode(";", $value);
+                                            $year_start = explode("-", $value[2])[0];
+                                            $year_end = explode("-", $value[3])[0];
+                                            if($year_start && !$year_end)
+                                                $year = $year_start;
+                                            else if($year_end && !$year_start)
+                                                $year = $year_end;
+                                            else if($year_end != $year_start)
+                                                $year = $year_start .'-'. $year_end;
+                                            ?>
+                                            <div class="contentEducationCandidat">
+                                                <div class="titleDateEducation">
+                                                    <p class="titleCoursCandiddat"><?php echo $value[0]; ?> </p>
+                                                    <?php if($year) { ?>
+                                                        <p class="dateCourCandidat"><?php echo $year; ?></p>
+                                                    <?php } ?>
                                                 </div>
-                                            <?php }
-                                        }else {
-                                            echo "<p class='textDetailCategorie'>we do not have statistics at this time </p>";
+                                                <p class="textDetailCategorie"><?php echo $value[1]; ?></p>
+                                            </div>
+                                            <?php
+                                        }
+                                }
+                                else
+                                    echo "<p class='textDetailCategorie'>we do not have statistics at this time </p>";
+                                ?>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="Statistieken" class="b-tab contentBlockSetting">
+                        <div class="content">
+                            <h2 class="titleCategorieDetailCandidat ex">Statistic</h2>
+                            <p class="textDetailCategorie">we do not have statistics at this time </p>
+                        </div>
+                    </div>
+
+                    <div id="Interne-groei" class="b-tab contentBlockSetting">
+                        <div class="content">
+                            <form action="" method="POST">
+
+                                <div class="form-group formModifeChoose">
+
+                                    <select class="multipleSelect2" name="selected_subtopics[]" multiple="true" required>
+                                        <?php
+                                        //Subtopics
+                                        foreach($subtopics as $value){
+                                            echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
                                         }
                                         ?>
+                                    </select>
+                                    <input type="hidden" name="manager" value=<?=$manager->ID?> >
+                                    <input type="hidden" name="id_user" value=<?=$user->ID?> >
+                                    <button name="add_internal_growth" class="btn btnVoegTab " type="submit">Voeg toe</button>
+                                </div>
 
-                                    </div>
-                                    <div id="block-simple-text-3" class="tab-pane  block block-layout-builder block-inline-blockqfcc-blocktype-simple-text" role="tabpanel" aria-labelledby="block-simple-text-3-tab">
+                                <?php
+                                if (!empty (get_user_meta($user->ID,'topic_affiliate')))
+                                {
+                                    $internal_growth_subtopics= get_user_meta($user->ID,'topic_affiliate');
+                                    ?>
 
-                                        <div class="categorieDetailCandidat workExperiece">
-                                            <?php
-                                            if($awards){
-                                                if(!empty($awards))
-                                                    foreach($awards as $value) {
-                                                        $value = explode(";", $value);
-                                                        $year_start = explode("-", $value[2])[0];
-                                                        $year_end = explode("-", $value[3])[0];
-                                                        if($year_start && !$year_end)
-                                                            $year = $year_start;
-                                                        else if($year_end && !$year_start)
-                                                            $year = $year_end;
-                                                        else if($year_end != $year_start)
-                                                            $year = $year_start .'-'. $year_end;
-                                                        ?>
-                                                        <div class="contentEducationCandidat">
-                                                            <div class="titleDateEducation">
-                                                                <p class="titleCoursCandiddat"><?php echo $value[0]; ?> </p>
-                                                                <?php if($year) { ?>
-                                                                    <p class="dateCourCandidat"><?php echo $year; ?></p>
-                                                                <?php } ?>
-                                                            </div>
-                                                            <p class="textDetailCategorie"><?php echo $value[1]; ?></p>
-                                                        </div>
-                                                        <?php
-                                                    }
-                                            }
-                                            else
-                                                echo "<p class='textDetailCategorie'>we do not have statistics at this time </p>";
-                                            ?>
-
-                                        </div>
-                                    </div>
-
-                                    <!--
-                                        <div id="block-simple-text-4" class="tab-pane  block block-layout-builder block-inline-blockqfcc-blocktype-simple-text" role="tabpanel" aria-labelledby="block-simple-text-4-tab">
-                                         <h2 class="titleCategorieDetailCandidat ex">Feedback</h2>
-                                         <p class="textDetailCategorie">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>
-                                        </div>
-                                     -->
-                                    <div id="block-simple-text-5" class="tab-pane  block block-layout-builder block-inline-blockqfcc-blocktype-simple-text" role="tabpanel" aria-labelledby="block-simple-text-4-tab">
-                                        <h2 class="titleCategorieDetailCandidat ex">Statistic</h2>
-                                        <p class="textDetailCategorie">we do not have statistics at this time </p>
-                                    </div>
-                                    <div id="block-simple-text-6" class="tab-pane  block block-layout-builder block-inline-blockqfcc-blocktype-simple-text" role="tabpanel" aria-labelledby="block-simple-text-4-tab">
-                                        <form action="" method="POST">
-
-                                            <div class="form-group formModifeChoose">
-
-                                                <select class="multipleSelect2" name="selected_subtopics[]" multiple="true" required>
-                                                    <?php
-                                                    //Subtopics
-                                                    foreach($subtopics as $value){
-                                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                                    }
-                                                    ?>
-                                                </select>
-                                                <input type="hidden" name="manager" value=<?=$manager->ID?> >
-                                                <input type="hidden" name="id_user" value=<?=$user->ID?> >
-                                                <button name="add_internal_growth" class="btn btnVoegTab " type="submit">Voeg toe</button>
-                                            </div>
-
-                                            <?php
-                                            if (!empty (get_user_meta($user->ID,'topic_affiliate')))
-                                            {
-                                                $internal_growth_subtopics= get_user_meta($user->ID,'topic_affiliate');
-                                                ?>
-
-                                                <div class="inputGroein">
-                                                    <?php
-                                                    foreach($internal_growth_subtopics as $value){
-                                                        echo "
+                                    <div class="inputGroein">
+                                        <?php
+                                        foreach($internal_growth_subtopics as $value){
+                                            echo "
                                                 <form action='/dashboard/user/' method='POST'>
                                                 <input type='hidden' name='meta_value' value='". $value . "' id=''>
                                                 <input type='hidden' name='user_id' value='". $user->ID . "' id=''>
                                                 <input type='hidden' name='meta_key' value='topic_affiliate' id=''>";
-                                                        echo "<p> <button type='submit' name='delete' style='border:none;background:#C7D8F5'><i style='font-size 0.5em; color:white'class='fa fa-trash'></i>&nbsp;".(String)get_the_category_by_ID($value)."</button></p>";
-                                                        echo "</form>";
+                                            echo "<p> <button type='submit' name='delete' style='border:none;background:#C7D8F5'><i style='font-size 0.5em; color:white'class='fa fa-trash'></i>&nbsp;".(String)get_the_category_by_ID($value)."</button></p>";
+                                            echo "</form>";
 
-                                                        ?>
-
-
-                                                        <?php
-                                                    }
-                                                    ?>
-                                                </div>
-
-                                                <?php
-                                            }else {
-                                                echo "<p>No topics yet</p>" ;
-                                            }
                                             ?>
-                                        </form>
-                                    </div>
-                                    <div id="block-simple-text-7" class="tab-pane  block block-layout-builder block-inline-blockqfcc-blocktype-simple-text" role="tabpanel" aria-labelledby="block-simple-text-4-tab">
-                                        <div class="inputGroein">
+
 
                                             <?php
-                                            if (!empty (get_user_meta($user->ID,'topic')))
-                                            {
-                                                $external_growth_subtopics = get_user_meta($user->ID,'topic');
-                                                ?>
-
-                                                <div class="inputGroein">
-                                                    <?php
-                                                    foreach($external_growth_subtopics as $value){
-                                                        echo "<p>".(String)get_the_category_by_ID($value)."</p>";
-                                                    }
-
-                                                    ?>
-                                                </div>
-
-                                                <?php
-                                            }else {
-                                                echo "<p>No topics yet</p>" ;
-                                            }
-                                            ?>
-
-                                        </div>
+                                        }
+                                        ?>
                                     </div>
-                                </div>
+
+                                    <?php
+                                }else {
+                                    echo "<p>No topics yet</p>" ;
+                                }
+                                ?>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div id="Externe-groei" class="b-tab contentBlockSetting">
+                        <div class="content">
+                            <div class="inputGroein">
+
+                                <?php
+                                if (!empty (get_user_meta($user->ID,'topic')))
+                                {
+                                    $external_growth_subtopics = get_user_meta($user->ID,'topic');
+                                    ?>
+
+                                    <div class="inputGroein">
+                                        <?php
+                                        foreach($external_growth_subtopics as $value){
+                                            echo "<p>".(String)get_the_category_by_ID($value)."</p>";
+                                        }
+
+                                        ?>
+                                    </div>
+
+                                    <?php
+                                }else {
+                                    echo "<p>No topics yet</p>" ;
+                                }
+                                ?>
+
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="addBlockComment">
-                <div class="otherSkills">
-                    <button class="btn btnAddToDo"  data-toggle="modal" data-target="#exampleModalWork">Add to do</button>
-                    <?php
-                    if(!empty($todos))
-                        foreach($todos as $key=>$todo) {
-                            if($key == 8)
-                                break;
 
-                            $type = get_field('type_feedback', $todo->ID);
-                            $manager = get_field('manager_feedback', $todo->ID);
+                    <div id="Feedback" class="b-tab contentBlockSetting">
+                        <div class="content">
+                            <div class="addBlockComment">
+                                <div class="otherSkills">
+                                    <button class="btn btnAddToDo"  data-toggle="modal" data-target="#exampleModalWork">Toevoegen om te doen</button>
+                                    <?php
+                                    if(!empty($todos))
+                                        foreach($todos as $key=>$todo) {
+                                            if($key == 8)
+                                                break;
 
-                            $image = get_field('profile_img',  'user_' . $manager->ID);
-                            if(!$image)
-                                $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+                                            $type = get_field('type_feedback', $todo->ID);
+                                            $manager = get_field('manager_feedback', $todo->ID);
 
-                            if($type == "Feedback" || $type == "Compliment")
-                                $beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
-                            else if($type == "Persoonlijk ontwikkelplan")
-                                $beschrijving_feedback = get_field('opmerkingen', $todo->ID);
-                            else if($type == "Beoordeling Gesprek")
-                                $beschrijving_feedback = get_field('algemene_beoordeling', $todo->ID);
+                                            $image = get_field('profile_img',  'user_' . $manager->ID);
+                                            if(!$image)
+                                                $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 
-                            ?>
-                            <div class="activiteRecent">
-                                <img width="25" src="<?php echo $image ?>" alt="">
-                                <div class="contentRecentActivite">
-                                    <div class="titleActivite"><?=$todo->post_title;?> by <span style="font-weight:bold">
+                                            if($type == "Feedback" || $type == "Compliment")
+                                                $beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
+                                            else if($type == "Persoonlijk ontwikkelplan")
+                                                $beschrijving_feedback = get_field('opmerkingen', $todo->ID);
+                                            else if($type == "Beoordeling Gesprek")
+                                                $beschrijving_feedback = get_field('algemene_beoordeling', $todo->ID);
+
+                                            ?>
+                                            <div class="activiteRecent">
+                                                <img width="25" src="<?php echo $image ?>" alt="">
+                                                <div class="contentRecentActivite">
+                                                    <div class="titleActivite"><?=$todo->post_title;?> by <span style="font-weight:bold">
                                 <?php
                                 if(isset($manager->first_name)) echo $manager->first_name ; else echo $manager->display_name;
                                 ?>
                                 </span>
-                                    </div>
-                                    <p class="activiteRecent"><?php if($beschrijving_feedback) echo $beschrijving_feedback; else echo ""; ?></p>
-                                </div>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <form action="" method="POST">
-                                    <input type="hidden" name="id" value="<?php echo $todo->ID; ?>">
-                                    <input type="hidden" name="user_id" value="<?php echo $user->ID; ?>">
-                                    <button class="btn btn-removeAdd"  name="delete_todos" type="submit">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="remove-Image">
-                                    </button>
-                                </form>
-                            </div>
-                        <?php }
+                                                    </div>
+                                                    <p class="activiteRecentText"><?php if($beschrijving_feedback) echo $beschrijving_feedback; else echo ""; ?></p>
+                                                </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <form action="" method="POST">
+                                                    <input type="hidden" name="id" value="<?php echo $todo->ID; ?>">
+                                                    <input type="hidden" name="user_id" value="<?php echo $user->ID; ?>">
+                                                    <button class="btn btn-removeAdd"  name="delete_todos" type="submit">
+                                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/trash.png" alt="remove-Image">
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        <?php }
 
-                    ?>
+                                    ?>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <script>
+                        'use strict';
+
+                        function Tabs() {
+                            var bindAll = function() {
+                                var menuElements = document.querySelectorAll('[data-tab]');
+                                for(var i = 0; i < menuElements.length ; i++) {
+                                    menuElements[i].addEventListener('click', change, false);
+                                }
+                            };
+
+                            var clear = function() {
+                                var menuElements = document.querySelectorAll('[data-tab]');
+                                for(var i = 0; i < menuElements.length ; i++) {
+                                    menuElements[i].classList.remove('active');
+                                    var id = menuElements[i].getAttribute('data-tab');
+                                    document.getElementById(id).classList.remove('active');
+                                }
+                            };
+
+                            var change = function(e) {
+                                clear();
+                                e.target.classList.add('active');
+                                var id = e.currentTarget.getAttribute('data-tab');
+                                document.getElementById(id).classList.add('active');
+                            };
+
+                            bindAll();
+
+                            //window.location.hash = target_panel_selector ;
+                            if(history.pushState) {
+                                history.pushState(null, null, target_panel_selector);
+                            } else {
+                                window.location.hash = target_panel_selector;
+                            }
+                            return false;
+                        }
+
+                        var connectTabs = new Tabs();
+
+                    </script>
+
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+                    <script>
+                        $(document).ready(function() {
+                            $(".js-select2").select2();
+                            $(".js-select2-multi").select2();
+
+                            $(".large").select2({
+                                dropdownCssClass: "big-drop",
+                            });
+                        });
+                    </script>
 
                 </div>
+
             </div>
         </div>
+   <!--     <div class="col-md-4">
+
+        </div>-->
     </div>
     <!-- Modal  -->
     <div class="modal modalEdu fade show" id="exampleModalWork" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document" style="width: 93% !important;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add New </h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Nieuw toevoegen </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -742,8 +800,7 @@
 
 </div>
 
-
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script>
 

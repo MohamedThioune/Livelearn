@@ -15,6 +15,7 @@ if(is_user_logged_in()){
 }else{
     include_once(dirname(__FILE__).'/header_base.php');
 }
-//include_once(dirname(__FILE__).'/header_base.php');	
-?>
+//include_once(dirname(__FILE__).'/header_base.php');
+?>	
+
 

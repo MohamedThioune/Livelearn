@@ -1,4 +1,4 @@
-<?php /** Template Name: detail product road path template */ ?>
+<?php /** Template Name: single product road */ ?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
@@ -8,11 +8,21 @@ $user_id = get_current_user_id();
 $leerpad =  ($_GET['id'] != 0) ? get_post($_GET['id']) : null;
 
 $leerpadden = get_field('road_path', $leerpad->ID);
+$course_type_leerpad = get_field('course_type', $leerpad->ID);
+$prijs_leerpad = get_field('price', $leerpad->ID) ?: 'Gratis';
+$prijsvat_leerpad = get_field('prijsvat', $leerpad->ID) ?: '0';
 
 $profile_picture = get_field('profile_img',  'user_' . $leerpad->post_author);
 if(!$profile_picture)
     $profile_picture = get_stylesheet_directory_uri() ."/img/placeholder_user.png";
 $name = get_userdata($leerpad->post_author)->data->display_name;
+
+/*
+* User informations
+*/
+$email_user = get_user_by('ID', $leerpad->post_author)->user_email;
+$phone_user = get_field('telnr', 'user_' . $leerpad->post_author);
+
 
 if(isset($_GET['position']))
     $position = $_GET['position'];
@@ -25,13 +35,14 @@ else
 
 $actual_infos = $leerpadden[$position]->post_title;
 
-$preview = get_field('preview', $leerpadden[$position]->ID)['url'];
+$preview = get_field('preview', $leerpad->ID)['url'];
 if(!$preview){
-    $preview = get_field('url_image_xml', $leerpadden[$position]->ID);
+    $preview = get_the_post_thumbnail_url($leerpad->ID);
     if(!$preview)
-        $preview = get_stylesheet_directory_uri() . "/img/libay.png";
+        $preview = get_field('url_image_xml', $leerpad->ID);
+            if(!$preview)
+                $preview = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
 }
-
 $description = get_field('long_description', $leerpadden[$position]->ID);
 
 /*
@@ -49,6 +60,14 @@ if(!$favoured)
 */
 
 $reviews = get_field('reviews', $leerpad->ID);
+$my_review_bool = false;
+
+foreach ($reviews as $review)
+    if($review['user']->ID == $user_id){
+        $my_review_bool = true;
+        break;
+    }
+
 
 
 ?>
@@ -67,18 +86,18 @@ $reviews = get_field('reviews', $leerpad->ID);
                     <div class="d-flex justify-content-center">
 
                         <div>
-                            <a href="#" class="mx-3 d-flex flex-column ">
+                            <a href="https://wa.me/<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
                                 <i style="font-size: 50px; height: 49px; margin-top: -4px;"
-                                   class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>
+                                    class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>
                             </a>
                             <div class="mt-3 text-center">
                                 <span class="bd-highlight fw-bold text-success mt-2">whatsapp</span>
                             </div>
                         </div>
                         <div>
-                            <a href="#" class="mx-3 d-flex flex-column ">
+                            <a href="mailto:<?= $email_user ?>" class="mx-3 d-flex flex-column ">
                                 <i style="font-size: 25px"
-                                   class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
+                                    class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
                                 <!-- <span class="bd-highlight fw-bold text-primary mt-2">email</span> -->
                             </a>
                             <div class="mt-3 text-center">
@@ -86,7 +105,7 @@ $reviews = get_field('reviews', $leerpad->ID);
                             </div>
                         </div>
                         <div>
-                            <a href="#" class="mx-3 d-flex flex-column ">
+                            <a href="sms:<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
                                 <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>
                             </a>
                             <div class="mt-3 text-center">
@@ -95,9 +114,9 @@ $reviews = get_field('reviews', $leerpad->ID);
                         </div>
 
                         <div>
-                            <a href="#" class="mx-3 d-flex flex-column ">
+                            <a href="tel:<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
                                 <i class="bd-highlight bi bi-telephone-x border border-3 border-primary rounded-circle text-primary shadow"
-                                   style="font-size: 20px; padding: 6px 11px;"></i>
+                                    style="font-size: 20px; padding: 6px 11px;"></i>
                                 <!-- <span class="bd-highlight fw-bold text-primary mt-2">call</span> -->
                             </a>
                             <div class="mt-3 text-center">
@@ -106,7 +125,6 @@ $reviews = get_field('reviews', $leerpad->ID);
                         </div>
 
                     </div>
-
                 </div>
                 <!-- <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -124,9 +142,7 @@ $reviews = get_field('reviews', $leerpad->ID);
                 </div>
                 <div class="modal-body">
                     <div class="">
-                        <!-- <img alt="course design_undrawn"
-                     src="<?php echo get_stylesheet_directory_uri(); ?>/img/voorwie.png"> -->
-
+                       
                         <?php
                         $author = get_user_by('id', $leerpad->post_author);
                         ?>
@@ -225,7 +241,7 @@ $reviews = get_field('reviews', $leerpad->ID);
                                             <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                                             <hr class="hrModifeDeel">
                                             <?php
-                                            if ($user_id==0)
+                                            if ($user_id != 0)
                                             {
                                                 ?>
                                                 <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
@@ -276,7 +292,7 @@ $reviews = get_field('reviews', $leerpad->ID);
                                             </div>
                                         </div>
                                         <?php
-                                        if ($user_id==0)
+                                        if ($user_id == 0)
                                         {
                                             ?>
                                             <div id='Intern' class='tabcontent px-md-5 p-3'>
@@ -310,7 +326,7 @@ $reviews = get_field('reviews', $leerpad->ID);
                         <div class="tabs">
                             <ul id="tabs-nav">
                                 <li><a href="#tab2">Reviews</a></li>
-                                <li><a href="#tab3">Add Reviews</a></li>
+                                <?php if(!$my_review_bool) { ?> <li><a href="#tab3">Add Reviews</a></li> <?php } ?>
                             </ul> <!-- END tabs-nav -->
                             <div id="tabs-content">
                             <div id="tab2" class="tab-content">
@@ -358,27 +374,33 @@ $reviews = get_field('reviews', $leerpad->ID);
                                 <?php 
                                 if($user_id != 0){
                                 ?>
-                                <form action="../../dashboard/user/" method="POST">
-                                    <input type="hidden" name="user_id" value="<?= $user_id; ?>">
-                                    <input type="hidden" name="course_id" value="<?= $post->ID; ?>">
-                                    <!--<div class="form-group">
-                                        <label for="rating-container-custom">Rating</label>
-                                        <div id="rating-container-custom">
-                                            <ul class="list">
-                                                <li></li>
-                                                <li></li>
-                                                <li></li>
-                                                <li></li>
-                                                <li></li>
-                                            </ul>
+                                <div class="formSingleCoourseReview">
+                                    <label>Rating</label>
+                                    <div class="rating-element2">
+                                        <div class="rating"> 
+                                            <input type="radio" id="star5" class="stars" name="rating" value="5" />
+                                            <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                                            <input type="radio" id="star4" class="stars" name="rating" value="4" />
+                                            <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                                            <input type="radio" id="star3" class="stars" name="rating" value="3" />
+                                            <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                                            <input type="radio" id="star2" class="stars" name="rating" value="2" />
+                                            <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                                            <input type="radio" id="star1" name="rating" value="1" />
+                                            <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
                                         </div>
-                                    </div> -->
+                                        <span class="rating-counter"></span>
+                                    </div>
+
                                     <div class="form-group">
                                         <label for="">Feedback</label>
-                                        <textarea name="feedback_content" rows="10"></textarea>
+                                        <textarea name="feedback_content" id="feedback" rows="10"></textarea>
                                     </div>
-                                    <input type='submit' class='btn btn-sendRating' name='review_post' value='Send'>
-                                </form>
+                                    <input type="button" class='btn btn-sendRating' id='btn_review' name='review_post' value='Send'>
+
+                                    <div id="info_review">
+                                    </div>
+                                </div>
                                 <?php
                                 }
                                 else
@@ -565,11 +587,11 @@ $reviews = get_field('reviews', $leerpad->ID);
                         ?>
 
                         <?php
-                        $data = get_field('data_locaties', $course->ID);
+                        $data = get_field('data_locaties', $leerpad->ID);
                         if($data)
                             $location = $data[0]['data'][0]['location'];
                         else{
-                            $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
+                            $data = explode('-', get_field('field_619f82d58ab9d', $leerpad->ID)[0]['value']);
                             $location = $data[2];
                         }
                         ?>
@@ -578,12 +600,10 @@ $reviews = get_field('reviews', $leerpad->ID);
                         <p class="opeleidingText"><?php echo $location; ?></p>
 
                         <p class="PrisText">Prijs vanaf</p>
-                        <p class="opeleidingText">Opleiding: € <?php echo $price ?></p>
-                        <p class="btwText">BTW: € <?php echo $prijsvat ?></p>
+                        <p class="opeleidingText">Opleiding: € <?php echo $prijs_leerpad ?></p>
+                        <p class="btwText">BTW: € <?php echo $prijsvat_leerpad ?></p>
                         <p class="btwText">LIFT member korting: 28%</p>
-
-
-                        <button href="#bookdates" class="btn btnKoop text-white PrisText" style="background: #043356">Koop deze <?php echo $course_type; ?></button>
+                        <button href="#bookdates" class="btn btnKoop text-white PrisText" style="background: #043356">Koop deze <?php echo $course_type_leerpad; ?></button>
                     </div>
 
                 </div>
@@ -599,7 +619,7 @@ $reviews = get_field('reviews', $leerpad->ID);
                         <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                         <hr class="hrModifeDeel">
                         <?php
-                        if ($user_id==0)
+                        if ($user_id != 0)
                         {
                             ?>
                             <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
@@ -650,7 +670,7 @@ $reviews = get_field('reviews', $leerpad->ID);
                         </div>
                     </div>
                     <?php
-                    if ($user_id==0)
+                    if ($user_id == 0)
                     {
                         ?>
                         <div id="Intern" class="tabcontent">
@@ -673,7 +693,7 @@ $reviews = get_field('reviews', $leerpad->ID);
 
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         $("#btn_favorite").click((e)=>
         {
@@ -698,157 +718,190 @@ $reviews = get_field('reviews', $leerpad->ID);
         })
     </script>
     <script>
-        // Rating
-        const list = document.querySelector('.list')
-        const lis = list.children;
+    $("#btn_review").click((e)=>
+    {
+        $(e.preventDefault());
+        var user_id = $("#user_id").val();
+        var id = $("#course_id").val();
+        var feedback = $("#feedback").val();
+        var stars = $('input[name=rating]:checked').val()
+        $.ajax({
 
-        for (var i = 0; i < lis.length; i++) {
-            lis[i].id = i;
-            lis[i].addEventListener('mouseenter', handleEnter);
-            lis[i].addEventListener('mouseleave', handleLeave);
-            lis[i].addEventListener('click', handleClick);
-        }
-
-        function handleEnter(e) {
-            e.target.classList.add('hover');
-            for (var i = 0; i <= e.target.id; i++) {
-                lis[i].classList.add('hover');
-            }
-        }
-
-        function handleLeave(e) {
-            [...lis].forEach(item => {
-                item.classList.remove('hover');
-            });
-        }
-
-        function handleClick(e){
-            [...lis].forEach((item,i) => {
-                item.classList.remove('selected');
-                if(i <= e.target.id){
-                    item.classList.add('selected');
-                }
-            });
-        }
-
-    </script>
-
-    <script>
-
-        const swiper = new Swiper('.swiper', {
-            // Optional parameters
-            // direction: 'vertical',
-            // loop: true,
-
-            // If we need pagination
-            pagination: {
-                el: '.swiper-pagination',
+            url:"/review",
+            method:"post",
+            data:{
+                id:id,
+                user_id:user_id,
+                feedback_content:feedback,
+                stars:stars,
             },
-
-            // Navigation arrows
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-
-            // And if we need scrollbar
-            scrollbar: {
-                el: '.swiper-scrollbar',
-            },
-        });
-
-
-    </script>
-    <script>
-        const openEls = document.querySelectorAll("[data-open]");
-        const closeEls = document.querySelectorAll("[data-close]");
-        const isVisible = "is-visible";
-
-        for (const el of openEls) {
-            el.addEventListener("click", function() {
-                const modalId = this.dataset.open;
-                document.getElementById(modalId).classList.add(isVisible);
-            });
-        }
-
-        for (const el of closeEls) {
-            el.addEventListener("click", function() {
-                this.parentElement.parentElement.parentElement.classList.remove(isVisible);
-            });
-        }
-
-        document.addEventListener("click", e => {
-            if (e.target == document.querySelector(".modal.is-visible")) {
-                document.querySelector(".modal.is-visible").classList.remove(isVisible);
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#tab2').html(data);
+                $("#feedback").val(' ');
+                if(data)
+                    $('#info_review').html("<span class='alert alert-success'>Your comments sent successfully</span>");
+                else
+                    $('#info_review').html("<span class='alert alert-error'>You already sent a comments for this course</span>");
             }
         });
+    })
+</script>
 
-        document.addEventListener("keyup", e => {
-            // if we press the ESC
-            if (e.key == "Escape" && document.querySelector(".modal.is-visible")) {
-                document.querySelector(".modal.is-visible").classList.remove(isVisible);
+<script>
+    // Rating
+    const list = document.querySelector('.list')
+    const lis = list.children;
+
+    for (var i = 0; i < lis.length; i++) {
+        lis[i].id = i;
+        lis[i].addEventListener('mouseenter', handleEnter);
+        lis[i].addEventListener('mouseleave', handleLeave);
+        lis[i].addEventListener('click', handleClick);
+    }
+
+    function handleEnter(e) {
+        e.target.classList.add('hover');
+        for (var i = 0; i <= e.target.id; i++) {
+            lis[i].classList.add('hover');
+        }
+    }
+
+    function handleLeave(e) {
+        [...lis].forEach(item => {
+            item.classList.remove('hover');
+        });
+    }
+
+    function handleClick(e){
+        [...lis].forEach((item,i) => {
+            item.classList.remove('selected');
+            if(i <= e.target.id){
+                item.classList.add('selected');
             }
         });
+    }
 
-    </script>
+</script>
 
-    <!-- script for Tabs-->
-    <script>
-        function openCity(evt, cityName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(cityName).style.display = "block";
-            evt.currentTarget.className += " active";
+<script>
+
+    const swiper = new Swiper('.swiper', {
+        // Optional parameters
+        // direction: 'vertical',
+        // loop: true,
+
+        // If we need pagination
+        pagination: {
+            el: '.swiper-pagination',
+        },
+
+        // Navigation arrows
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+        // And if we need scrollbar
+        scrollbar: {
+            el: '.swiper-scrollbar',
+        },
+    });
+
+
+</script>
+
+<script>
+    const openEls = document.querySelectorAll("[data-open]");
+    const closeEls = document.querySelectorAll("[data-close]");
+    const isVisible = "is-visible";
+
+    for (const el of openEls) {
+        el.addEventListener("click", function() {
+            const modalId = this.dataset.open;
+            document.getElementById(modalId).classList.add(isVisible);
+        });
+    }
+
+    for (const el of closeEls) {
+        el.addEventListener("click", function() {
+            this.parentElement.parentElement.parentElement.classList.remove(isVisible);
+        });
+    }
+
+    document.addEventListener("click", e => {
+        if (e.target == document.querySelector(".modal.is-visible")) {
+            document.querySelector(".modal.is-visible").classList.remove(isVisible);
         }
+    });
 
-        // see more text ----course offline and online ------------------ //
-        const readMoreBtn = document.querySelector('.read-more-btn');
-        const text = document.querySelector('.text-limit');
-
-        readMoreBtn.addEventListener('click', (e) => {
-            //    alert('test');
-            text.classList.toggle('show-more'); // add show more class
-            if(readMoreBtn.innerText === 'Lees alles') {
-                readMoreBtn.innerText = "Lees minder";
-            } else {
-                readMoreBtn.innerText = "Lees alles";
-            }
-        }) ;
-
-    </script>
-
-    <!-- script for Copy Link-->
-    <script>
-        var inputCopyGroups = document.querySelectorAll('.input-group-copy');
-
-        for (var i = 0; i < inputCopyGroups.length; i++) {
-            var _this = inputCopyGroups[i];
-            var btn = _this.getElementsByClassName('btn')[0];
-            var input = _this.getElementsByClassName('form-control')[0];
-
-            input.addEventListener('click', function(e) {
-                this.select();
-            });
-            btn.addEventListener('click', function(e) {
-                var input = this.parentNode.parentNode.getElementsByClassName('form-control')[0];
-                input.select();
-                try {
-                    var success = document.execCommand('copy');
-                    console.log('Copying ' + (success ? 'Succeeded' : 'Failed'));
-                } catch (err) {
-                    console.log('Copying failed');
-                }
-            });
+    document.addEventListener("keyup", e => {
+        // if we press the ESC
+        if (e.key == "Escape" && document.querySelector(".modal.is-visible")) {
+            document.querySelector(".modal.is-visible").classList.remove(isVisible);
         }
+    });
 
-    </script>
+</script>
+
+<!-- script for Tabs-->
+<script>
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // see more text ----course offline and online ------------------ //
+    const readMoreBtn = document.querySelector('.read-more-btn');
+    const text = document.querySelector('.text-limit');
+
+    readMoreBtn.addEventListener('click', (e) => {
+        //    alert('test');
+        text.classList.toggle('show-more'); // add show more class
+        if(readMoreBtn.innerText === 'Lees alles') {
+            readMoreBtn.innerText = "Lees minder";
+        } else {
+            readMoreBtn.innerText = "Lees alles";
+        }
+    }) ;
+
+</script>
+
+<!-- script for Copy Link-->
+<script>
+    var inputCopyGroups = document.querySelectorAll('.input-group-copy');
+
+    for (var i = 0; i < inputCopyGroups.length; i++) {
+        var _this = inputCopyGroups[i];
+        var btn = _this.getElementsByClassName('btn')[0];
+        var input = _this.getElementsByClassName('form-control')[0];
+
+        input.addEventListener('click', function(e) {
+            this.select();
+        });
+        btn.addEventListener('click', function(e) {
+            var input = this.parentNode.parentNode.getElementsByClassName('form-control')[0];
+            input.select();
+            try {
+                var success = document.execCommand('copy');
+                console.log('Copying ' + (success ? 'Succeeded' : 'Failed'));
+            } catch (err) {
+                console.log('Copying failed');
+            }
+        });
+    }
+
+</script>
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>

@@ -395,12 +395,10 @@
         }
         else
             echo '<p class="krijgText2">No roadpath yet !</p>';
-
         ?>
         </div>
     </section>
     
-    ?>
     <section>
         <div class="container-fluid">
             <div class="row">
@@ -606,7 +604,7 @@
 <?php wp_footer(); ?>
 
 <!-- jQuery CDN -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 <!-- slick Carousel CDN -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
 

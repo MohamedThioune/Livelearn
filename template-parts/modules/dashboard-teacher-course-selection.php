@@ -59,7 +59,7 @@
                         <small></small>
                     </p>
                 </a>
-                <a href="?func=add-webinar" class="cardCours cardCoursInitial" >
+                <a href="#" class="cardCours cardCoursInitial" >
                     <p class="contentText">
                         <b>Webinar</b><br />
                         <small>Coming soon!</small>
@@ -67,13 +67,14 @@
                 </a>
                 <a href="#" class="cardCours cardCoursInitial" >
                     <p class="contentText">
-                        <b>Podcast</b>
+                        <b>Podcast</b><br/>
                         <small>Coming soon!</small>
+
                     </p>
                 </a>
-                <a href="/dashboard/teacher/list-road-path" class="cardCours cardCoursInitial roadPathBlock" >
+                <a href="?func=add-road" class="cardCours cardCoursInitial roadPathBlock" >
                     <p class="contentText">
-                        <b>Road Path</b>
+                        <b>Leer Path</b>
                     </p>
                 </a>
             </div>

@@ -22,16 +22,7 @@
         }
 
 ?>
-<div class="blockManageTeam">
-    <button class="btn cardBlockManage">
-        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Mijn_mensen.png" alt="">
-        <span>Jij managed deze medewerkers</span>
-    </button>
-    <button class="btn cardBlockManage">
-        <img src="<?php echo get_stylesheet_directory_uri();?>/img/hierarchical.png" alt="">
-        <span>Beheer de managers in je organisatie</span>
-    </button>
-</div>
+
 <div class="row">
     <div class="col-md-5 col-lg-12">
         <div class="cardCoursGlocal">
@@ -61,6 +52,8 @@
                                         <?php
                                         //Get users from company
                                         foreach($users as $element){
+                                            if(in_array('administrator', $element->roles) || in_array('hr', $element->roles) || in_array('manager', $element->roles))
+                                                continue;
                                             $companies = get_field('company',  'user_' . $element->ID);
                                             if( !empty($company) && $user_id != $element->ID && !in_array($element->ID, $allocate_basic) ){
                                                 $companie = $companies[0]->post_title;
@@ -75,7 +68,7 @@
                                     ?>
                                     </select>
                                 </div>
-                                <button type="submit" name="allocate_push" class="btn btn-info">Activeer</button>
+                                <button type="submit" name="allocate_push" class="btn btn-info">Apply</button>
                             </div>
                         </form>
                 <?php
@@ -89,4 +82,5 @@
     </div>
 </div>
 
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+

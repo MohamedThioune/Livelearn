@@ -45,10 +45,10 @@ if(!empty($notifications))
         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/custom.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/rating.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css'>
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- get bootstrap icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
         <style>
@@ -237,7 +237,7 @@ if(!empty($notifications))
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- input search -->
                     <form action="/product-search" method="POST" class="form-inline ml-auto mb-0 formHeaderUser">
-                        <input id="header-search" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, exports en onderwerpen" aria-label="Search">
+                        <input id="header-search" class="form-control InputDropdown1 mr-sm-2 inputSearch" name="search" type="search" placeholder="Zoek opleidingen, experts en onderwerpen" aria-label="Search">
                         <div class="dropdown-menuSearch headerDrop" id="header-list">
                             <div class="list-autocomplete" id="header">
                                 <center> <i class='hasNoResults'>No matching results</i> </center>
@@ -339,7 +339,7 @@ if(!empty($notifications))
                         $user_image_account = (get_field('profile_img',  'user_' . $user->ID)) ? get_field('profile_img',  'user_' . $user->ID) :  get_stylesheet_directory_uri() . '/img/placeholder_user.png';  
                         ?>
 
-                        <li class="nav-item item4 dropdown elementWeb" id="profilDropdown">
+                        <li class="nav-item item4 dropdown" id="profilDropdown">
                             <a href="#" class="nav-link navModife4 btn dropdown-toggle" type="button" id="dropdownNavButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="userBlockNav" src="<?= $user_image_account; ?>" alt="">
                             </a>
@@ -354,20 +354,3 @@ if(!empty($notifications))
             </div>
         </nav>
      <!-- </body> -->
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-<script>
-    $('.bntNotification').click((e)=>{
-        $.ajax({
-                url:"/read-notification",
-                method:"get",
-                data:{},
-                dataType:"text",
-                success: function(data){
-                    // Get the modal
-                    console.log(data);
-                }
-        });
-    });
-</script>

@@ -5,6 +5,7 @@
             <div id="basis" class="w-100">
                 <div class="titleOpleidingstype">
                     <h2>1.Basis informatie</h2>
+                    <?php if($_GET['message']) echo "<span class='alert alert-error courseToevoegenText' style='color:red'>* " . $_GET['message'] . "</span><br><br>"; ?>
                 </div>
                 <?php 
 
@@ -13,7 +14,7 @@
                         'post_id'       => $_GET['id'],
                         'post_title'   => true,
                         'post_excerpt'   => true,
-                        'fields' => array('field_610f19a34af16','field_610f0d9b21fb8', 'short_description', 'visibility'),
+                        'fields' => array('preview', 'price', 'short_description', 'visibility'),
                         'submit_value'  => __('Opslaan & verder'),
                         'return' => '?func=add-video&id='.$_GET['id'].'&step=2'
                     ));
@@ -27,7 +28,7 @@
                         ),
                         'post_title'   => true,
                         'post_excerpt'   => true,
-                        'fields' => array('field_610f19a34af16','field_610f0d9b21fb8', 'short_description', 'visibility'),
+                        'fields' => array('preview', 'price', 'short_description', 'visibility'),
                         'submit_value'  => __('Opslaan & verder'),
                         'return' => '?func=add-video&id=%post_id%&step=2'
                     )); 
@@ -46,28 +47,40 @@
                     <p class="textOpleidRight">Opleidingstype</p>
                 </a>
                 <a href="/dashboard/teacher/course-selection/?func=add-video<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&edit'; ?>" class="contentBlockCourse">
-                    <div class="circleIndicator passEtape2">
+                    <div class="circleIndicator passEtape">
                         <i class="fa fa-info"></i>
                     </div>
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-video&id=<?php echo $_GET['id'];?>&step=2" class="contentBlockCourse">
-                    <div class="circleIndicator ">
+                <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=2&edit'; echo '?func=add-video&message=Please finish this step before' ?>" class="contentBlockCourse">
+                    <div class="circleIndicator passEtape2">
                         <i class="fa fa-file-text"></i>
                     </div>
                     <p class="textOpleidRight">Uitgebreide beschrijving</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-video&id=<?php echo $_GET['id'];?>&step=3" class="contentBlockCourse">
+                <a  href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=3&edit'; echo '?func=add-video&message=Please finish this step before' ?>" class="contentBlockCourse">
                     <div class="circleIndicator">
-                        <i class="fa fa-play"></i>
+                        <i class="fa fa-film" aria-hidden="true"></i>
                     </div>
-                    <p class="textOpleidRight ">voeg video’s toe</p>
+                    <p class="textOpleidRight ">voeg video's toe</p>
                 </a>
-                <a href="/dashboard/teacher/course-selection/?func=add-video&id=<?php echo $_GET['id'];?>&step=4" class="contentBlockCourse">
+                <a  href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=4&edit'; echo '?func=add-video&message=Please finish this step before' ?>" class="contentBlockCourse">
                     <div class="circleIndicator">
                         <i class="fa fa-paste" aria-hidden="true"></i>
                     </div>
                     <p class="textOpleidRight">Details en onderwepren</p>
+                </a>
+                <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=5&edit'; else echo '?func=add-video&message=Please finish this step before' ?>" class="contentBlockCourse">
+                    <div class="circleIndicator">
+                        <i class="fa fa-tag" aria-hidden="true"></i>
+                    </div>
+                    <p class="textOpleidRight">Tags</p>
+                </a>
+                <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=6&edit'; else echo '?func=add-video&message=Please finish this step before' ?>" class="contentBlockCourse">
+                    <div class="circleIndicator">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                    </div>
+                    <p class="textOpleidRight">Experts</p>
                 </a>
             </div>
         </div>
