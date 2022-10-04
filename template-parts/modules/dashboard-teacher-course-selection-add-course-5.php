@@ -116,7 +116,7 @@
             foreach($cats_bangerichts as $key => $value)
             {
                 $selected = in_array($value->cat_ID,$already_linked_tags) ? 'checked' : '' ;   
-                echo $selected;
+                
                                     $row_bangrichts .= '
                 <input '.$selected.' class="selected" type="checkbox" name="choice_bangrichts_'.$value->cat_ID.'" value= '.$value->cat_ID .' id=subtopics_bangricht_'.$value->cat_ID.' /><label class="labelChoose" for=subtopics_bangricht_'.$value->cat_ID.'>'. $value->cat_name .'</label>';
             }
