@@ -38,4 +38,8 @@
     <?php
         }
     ?>
+    <a href="#" class="btn cardBlockManage">
+        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image_69.png" alt="">
+        <span>Afdelingen</span>
+    </a>
 </div>
