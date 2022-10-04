@@ -309,7 +309,7 @@ $degrees=[
 
     }
 
-    foreach($interesses as $key1=>$tag){
+    foreach($interesses as $key1=>$tag) {
         //Topics
             $cats_interesses = get_categories( array(
                 'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
@@ -1607,9 +1607,7 @@ $degrees=[
 
 <script>
 
-    $('.bangricht').click(()=>{
-        alert('bangricht');
-    });
+ 
 
      $('#search').keyup(function(){
         var txt = $(this).val();
