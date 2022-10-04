@@ -175,6 +175,7 @@ $video = null;
 
 
 <div class="contentListeCourse">
+    <!-- 
     <div class="cardOverviewCours">
         <div class="headListeCourse">
             <p class="JouwOpleid">Gekochte opleidingen</p>
@@ -207,7 +208,8 @@ $video = null;
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> 
+    -->
 
     <!-- The Modal -->
     <div id="myModal" class="modal">
