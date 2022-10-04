@@ -13,7 +13,7 @@ foreach($users as $user) {
 }
 
 $args = array(
-    'post_type' => 'course', 
+    'post_type' => array('course','post','leerpad'),
     'posts_per_page' => -1,
     'author__in' => $users_companie,  
 );
@@ -79,6 +79,14 @@ $orders = wc_get_orders($order_args);
         }
     }
 
+// Edit url 
+$opleidingen = ['Opleidingen','Training','Workshop','Masterclass','Cursus'];
+
+$white = ['Lezing','Event'];
+
+$article = null;
+
+$video = null;
 
 ?>
 
@@ -167,6 +175,7 @@ $orders = wc_get_orders($order_args);
 
 
 <div class="contentListeCourse">
+    <!-- 
     <div class="cardOverviewCours">
         <div class="headListeCourse">
             <p class="JouwOpleid">Gekochte opleidingen</p>
@@ -199,7 +208,8 @@ $orders = wc_get_orders($order_args);
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> 
+    -->
 
     <!-- The Modal -->
     <div id="myModal" class="modal">
@@ -346,10 +356,20 @@ $orders = wc_get_orders($order_args);
                             $price = 'Gratis';
 
                         // Course type
-                        $course_type = get_field('course_type', $course->ID) 
+                        $course_type = get_field('course_type', $course->ID);
 
+                        //Edit url 
+                        $edit_url = "#";
+                        if(in_array($course_type, $opleidingen))
+                            $edit_url = '/dashboard/teacher/course-selection/?func=add-course&id=' . $course->ID . '&edit';
+                        else if(in_array($course_type, $white))
+                            $edit_url = '/dashboard/teacher/course-selection/?func=add-white&id=' . $course->ID . '&edit';
+                        else if($course_type == 'Artikel')
+                            $edit_url = '/dashboard/teacher/course-selection/?func=add-article&id=' . $course->ID . '&edit';
+                        else if($course_type == 'Video')
+                            $edit_url = '/dashboard/teacher/course-selection/?func=add-video&id=' . $course->ID . '&edit';
                     ?>
-                    <tr>
+                    <tr id="<?php echo $course->ID; ?>">
                         <td scope="row"><?= $key; ?></td>
                         <td class="textTh"><a style="color:#212529;" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
                         <td class="textTh"><?php echo $course_type; ?></td>
@@ -377,13 +397,14 @@ $orders = wc_get_orders($order_args);
                         <td class="textTh">
                             <div class="dropdown text-white">
                                 <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
-                                    <img  style="width:20px"
+                                    <img style="width:20px"
                                           src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                 </p>
                                 <ul class="dropdown-menu">
-                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
-                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
-                                    <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
+                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?php echo get_permalink($course->ID) ?>" target="_blank">Bekijk</a></li>
+                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="<?= $edit_url ?>" target="_blank">Pas aan</a></li>
+                                    <li class="my-1"><i class="fa fa-share px-2"></i><input type="button" id="" value="Share"/></li>
+                                    <li class="my-1 remove" id="live"><i class="fa fa-trash px-2 "></i><input type="button" id="" value="Verwijderen"/></li>
                                 </ul>
                             </div>
                         </td>
@@ -512,4 +533,27 @@ $orders = wc_get_orders($order_args);
         }
         })
     });
+</script>
+
+<script type="text/javascript">
+    $(".remove").click(function(){
+        var id = $(this).parents("tr").attr("id");
+
+        if(confirm('Are you sure to remove this record ?'))
+        {
+            $.ajax({
+               url: '/delete-course',
+               type: 'GET',
+               data: {id: id},
+               error: function() {
+                  alert('Something is wrong');
+               },
+               success: function(data) {
+                    $("#"+id).remove();
+                    alert("Record removed successfully");
+               }
+            });
+        }
+    });
+
 </script>

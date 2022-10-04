@@ -4,7 +4,7 @@ $id = get_current_user_id();
 
 if($id){
     $args = array(
-        'post_type' => array('post', 'course'), 
+        'post_type' => array('post', 'course', 'learnpath'),
         'posts_per_page' => -1,
         'author' => $id,  
     );
@@ -15,7 +15,7 @@ $artikel_single = "Artikel";
 $white_type_array =  ['Lezing', 'Event'];
 $course_type_array = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'Cursus'];
 $video_single = "Video";
-
+$leerpad_single  = 'Leerpad';
 
 ?>
 <div class="contentListeCourse">
@@ -112,18 +112,21 @@ $video_single = "Video";
                         <?php
                         $path_edit  = "";
                         if($course_type == $artikel_single)
-                            $path_edit = "/dashboard/teacher/course-selection/?func=add-add-article&id=" . $course->ID ."&edit";
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-article&id=" . $course->ID ."&edit";
                         else if($course_type == $video_single)
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-video&id=" . $course->ID ."&edit";
                         else if(in_array($course_type,$white_type_array))
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-add-white&id=" . $course->ID ."&edit";
                         else if(in_array($course_type,$course_type_array))
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-course&id=" . $course->ID ."&edit";
+                        else if($course_type == $leerpad_single)
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-road&id=" . $course->ID ."&edit";
 
+                        $link = ($course_type == "Leerpad") ? '/detail-product-road?id=' . $course->ID : get_permalink($course->ID);
                         ?>
                         <td scope="row"><?= $key; ?></td>
                         <td class="textTh"><?php if(!empty(get_field('visibility',$course->ID))){echo 'nee';}else{echo 'ja';}?></td>
-                        <td class="textTh "><a style="color:#212529;font-weight:bold" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
+                        <td class="textTh "><a style="color:#212529;font-weight:bold" href="<?= $link ?>"><?php echo $course->post_title; ?></a></td>
                         <td class="textTh"><?php echo $course_type; ?></td>
                         <td class="textTh"><?php echo $price; ?></td>
                         <td class="textTh "><?php echo $category ?></td>
@@ -139,6 +142,9 @@ $video_single = "Video";
                                     <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
                                     <li class="my-2"><i class="fas fa-edit px-2"></i><a href="<?= $path_edit ?>">Actie</a></li>
                                     <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
+                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?= $link ?>">Bekijk</a></li>
+                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="<?= $path_edit ?>">Pas aan</a></li>
+                                    <li class="my-1 remove" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
                                 </ul>
                             </div>
                         </td>
@@ -153,6 +159,7 @@ $video_single = "Video";
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script type="text/javascript">
     $(".remove").click(function(){

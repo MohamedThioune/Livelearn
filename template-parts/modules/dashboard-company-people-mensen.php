@@ -101,6 +101,7 @@ else if(isset($multiple_add_people)){
                 $user_id = wp_insert_user(wp_slash($userdata));
                 if(is_wp_error($user_id)){
                     $indicator = "Een fout bij het aanmaken van de e-mails, zorg ervoor dat alle e-mails niet al bestaan.";
+                    $error = false;
                     continue;
                 }else{
 
@@ -121,11 +122,20 @@ else if(isset($multiple_add_people)){
                 }
             }
         }
+        if(!isset($error)){
         ?>
-         <script>
+        <script>
             window.location.replace("/dashboard/company/people/?message=<?php echo $indicator ?>");
         </script>
     <?php
+        }
+        else{
+        ?>
+        <script>
+            window.location.replace("/dashboard/company/people-mensen/?message=<?php echo $indicator ?>");
+        </script>
+        <?php
+        }
     }
     else
     {

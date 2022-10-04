@@ -1,6 +1,7 @@
 
 <?php
-   /*
+    $user = wp_get_current_user();
+    /*
     * * Feedbacks
     */
     $args = array(
@@ -20,13 +21,20 @@
         if(!empty($value)){
             $type = get_field('type_feedback', $value->ID);
             $manager_id = get_field('manager_feedback', $value->ID);
-
-            $image = get_field('profile_img',  'user_' . $manager);
+            var_dump($manager_id);
+            $image = get_field('profile_img',  'user_' . $manager_id);
             if(!$image)
                 $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 
-            $manager = get_user_by('id', $manager_id);
+            $manager = get_user_by('ID', $manager_id);
             $manager_display = ($manager->first_name) ?: $manager->display_name;
+
+            $manager_id = get_field('manager_feedback', $value->ID);
+            if($manager_id)
+                $manager_display = ($manager->first_name) ?: $manager->display_name;
+            else
+                $manager_display = 'A manager';
+            
         
             if($type == "Feedback" || $type == "Compliment" || $type == "Gedeelde cursus")
                 $beschrijving_feedback = get_field('beschrijving_feedback', $value->ID);
@@ -58,7 +66,7 @@
                     <div class="globalnotificationBy">
                         <div class="contentImgName">
                             <div class="contentImg">
-                                <img src="<?=$image?>" alt="">
+                                <img src="<?= $image ?>" alt="">
                             </div>
                             <div>
                                 <p class="name"><?= $manager_display ?></p>
@@ -132,11 +140,11 @@
                                                 <div class="d-flex">
                                                     <div class="mr-3">
                                                         <input type="radio" id="JA" name="hulp_radio_JA" value="JA" '. ($hulp_nodig == 'JA') ? 'checked' : ''  .' disabled>
-                                                            <label for="JA">JA</label>
+                                                        <label for="JA">JA</label>
                                                     </div>
                                                     <div>
                                                         <input type="radio" id="NEE" name="hulp_radio_JA" value="NEE" '. ($hulp_nodig == 'NEE') ? 'checked' : ''  .' disabled>
-                                                            <label for="NEE">NEE</label>
+                                                        <label for="NEE">NEE</label>
                                                     </div>
                                                 </div>
                                             </div>';
@@ -175,6 +183,9 @@
                     <?php 
                     
                     foreach($todos as $key=>$todo) {
+                        if($todo->ID == $_GET['todo'])
+                            continue;
+                            
                         if($key == 10)
                             break;
 
@@ -185,14 +196,14 @@
                             $image = get_field('profile_img',  'user_' . $manager->ID);
                             $manager_display = $manager->display_name;
                         }else{
-                            $manager_display = 'Anonymous';
+                            $manager_display = 'A manager';
                             $image = 0;
                         }
 
                         if(!$image)
                             $image = get_stylesheet_directory_uri() . '/img/Group216.png';
                     ?>
-                        <div class="SousBlockNotification">
+                        <a  href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="SousBlockNotification">
                             <div class="d-flex align-items-center">
                                 <div class="circleNotification">
                                     <img src="<?php echo $image ?>" alt="">
@@ -201,7 +212,7 @@
                                     <?= $manager_display ?> send you a  <span><?=$type?></span></p>
                             </div>
                             <!-- <p class="hoursText">0 hours ago</p> -->                    
-                        </div>
+                        </a>
                     <?php
                         }
                     ?>

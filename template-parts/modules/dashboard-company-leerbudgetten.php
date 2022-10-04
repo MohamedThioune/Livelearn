@@ -104,7 +104,7 @@ $maandelijke = count($members) * 5;
             <div class="card mb-3 radius-custom" style="height: 125px;">
                 <div class="card-body">
                     <p class="card-text text-center"><strong>Maandelijkse kosten</strong> </p>
-                    <h5 class="card-title text-center"> <strong>$ <?= $maandelijke ?></strong> </h5>
+                    <h5 class="card-title text-center"> <strong>€ <?= $maandelijke ?></strong> </h5>
                     <p class="card-text text-right h6">
                         <small class="text-muted">
                             <strong>Last updated 0 mins ago</strong>
@@ -117,7 +117,7 @@ $maandelijke = count($members) * 5;
             <div class="card mb-3 radius-custom" style="height: 125px;">
                 <div class="card-body">
                     <p class="card-text text-center"> <strong>Inkomsten verkochte kennisproducten</strong> <!-- Sale courses --> </p>
-                    <h5 class="card-title text-center"> <strong>$ <?= $total_incomes; ?></strong></h5>
+                    <h5 class="card-title text-center"> <strong>€ <?= $total_incomes; ?></strong></h5>
                 </div>
             </div>
         </div>
@@ -125,7 +125,7 @@ $maandelijke = count($members) * 5;
             <div class="card mb-3 radius-custom" style="height: 125px;">
                 <div class="card-body">
                     <p class="card-text text-center"> <strong>Uitgaven Opleidingen</strong> <!-- Purchased courses --> </p>
-                    <h5 class="card-title text-center"><strong>$ <?= $total_expenses; ?></strong></h5>
+                    <h5 class="card-title text-center"><strong>€ <?= $total_expenses; ?></strong></h5>
                 </div>
             </div>
         </div>
@@ -133,7 +133,7 @@ $maandelijke = count($members) * 5;
             <div class="card mb-3 radius-custom" style="height: 125px;">
                 <div class="card-body">
                     <p class="card-text text-center"> <strong>Budget resterend</strong> <!-- Remaining courses --> </p>
-                    <h5 class="card-title text-center"><strong>$ <?= $budget_resterend; ?></strong></h5>
+                    <h5 class="card-title text-center"><strong>€ <?= $budget_resterend; ?></strong></h5>
                     <p class="card-text text-right h6">
                         <small class="text-muted">
                             <strong>Last updated 0 min ago</strong>
@@ -251,10 +251,10 @@ $maandelijke = count($members) * 5;
                         <th scope="row"><?= $key; ?></th>
                         <td><?= $member->data->display_name; ?></td>
                         <td>5</td> <!-- cost by this user 'const' -->
-                        <td><?= $member->expenses ?></td> <!-- expense by this user 'var' -->
-                        <td><?= $member->incomes ?></td> <!-- income by this user 'var' -->
-                        <td><?= $zelfstand_max ?> </td> <!-- personal budget by this user 'var' -->
-                        <td><?php echo (($zelfstand_max + $member->incomes) - $member->expenses); ?></td> <!-- budget remaining by this user 'var' -->
+                        <td>€ <?= $member->expenses ?></td> <!-- expense by this user 'var' -->
+                        <td>€ <?= $member->incomes ?></td> <!-- income by this user 'var' -->
+                        <td>€ <?= $zelfstand_max ?> </td> <!-- personal budget by this user 'var' -->
+                        <td>€ <?php echo (($zelfstand_max + $member->incomes) - $member->expenses); ?></td> <!-- budget remaining by this user 'var' -->
                         <td>
                             <div class="dropdown text-white">
                                 <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">

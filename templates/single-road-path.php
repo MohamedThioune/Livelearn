@@ -38,12 +38,17 @@ $leerpaden = get_posts($args);
                 foreach($leerpaden as $leerpad){
                     $title = $leerpad->post_title;
                     $road_path = get_field('road_path', $leerpad->ID);
-                    $preview = get_field('preview', $road_path[0]->ID)['url'];
-                    if(!$preview){
-                        $preview = get_field('url_image_xml', $road_path[0]->ID);
-                        if(!$preview)
-                            $preview = get_stylesheet_directory_uri() . "/img/libay.png";
+                    $thumbnail = get_field('preview', $leerpad->ID)['url'];
+                    if(!$thumbnail){
+                        $thumbnail = get_the_post_thumbnail_url($leerpad->ID);
+                        if(!$thumbnail)
+                            $thumbnail = get_field('url_image_xml', $leerpad->ID);
+                            if(!$thumbnail)
+                                $thumbnail = get_field('image', 'category_'. $category_id);
+                                if(!$thumbnail)
+                                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                     }
+                    
 
                     $profile_picture = get_field('profile_img',  'user_' . $user->ID);
                     if(!$profile_picture)

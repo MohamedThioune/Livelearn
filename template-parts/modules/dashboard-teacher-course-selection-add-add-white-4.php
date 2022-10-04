@@ -8,8 +8,9 @@
     $expert = get_field('experts', $post->ID);    
 
     foreach($users as $user)
-        if(in_array('author', $user->roles) || in_array('teacher', $user->roles))
-            array_push($members, $user);  
+    if(in_array('author', $user->roles) || in_array('teacher', $user->roles))
+        array_push($members, $user);   
+
 ?>
     <div class="row">
         <div class="col-md-5 col-lg-8">
