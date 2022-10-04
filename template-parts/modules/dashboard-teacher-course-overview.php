@@ -23,14 +23,14 @@ $video_single = "Video";
         <div class="headListeCourse">
             <?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span>"?>
             <p class="JouwOpleid">Overzicht leermodules</p>
+            <input type="search" id="" placeholder="zoeken" class="inputSearchCourse">
             <a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe</a>
         </div>
-        <div class="contentCardListeCourse">
-            <table class="table table-responsive">
+        <div class="contentCardListeCourse table-responsive overflowOverviewTable">
+            <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Actie</th>
                         <th scope="col">Verkoop</th>
                         <th scope="col">Titel</th>
                         <th scope="col">Type</th>
@@ -122,9 +122,6 @@ $video_single = "Video";
 
                         ?>
                         <td scope="row"><?= $key; ?></td>
-                        <td class="textTh">
-                            <a href="<?= $path_edit ?>"><i class="fas fa-edit"></i></a>
-                        </td>
                         <td class="textTh"><?php if(!empty(get_field('visibility',$course->ID))){echo 'nee';}else{echo 'ja';}?></td>
                         <td class="textTh "><a style="color:#212529;font-weight:bold" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
                         <td class="textTh"><?php echo $course_type; ?></td>
@@ -140,6 +137,7 @@ $video_single = "Video";
                                 <ul class="dropdown-menu">
                                     <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
                                     <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
+                                    <li class="my-2"><i class="fas fa-edit px-2"></i><a href="<?= $path_edit ?>">Actie</a></li>
                                     <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
                                 </ul>
                             </div>
