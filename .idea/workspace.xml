@@ -5,10 +5,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-databank.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-databank.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-modules.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-modules.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-paths.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-paths.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-people-mensen.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-people-mensen.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-statistic.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-statistic.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-signups.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-signups.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-activity.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-activity.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -559,6 +559,8 @@
       <workItem from="1664532183044" duration="2942000" />
       <workItem from="1664540465018" duration="2643000" />
       <workItem from="1664791338085" duration="15005000" />
+      <workItem from="1664872254625" duration="851000" />
+      <workItem from="1664882275068" duration="8432000" />
     </task>
     <servers />
   </component>

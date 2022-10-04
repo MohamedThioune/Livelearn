@@ -387,7 +387,7 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
     <div class="cardFavoriteCourses">
         <div class="d-flex aligncenter justify-content-between">
             <h2>Favoriete kennisproducten</h2>
-            <input type="search" id="search_txt_course" placeholder="search" class="inputSearchCourse">
+            <input type="search" id="search_txt_course" placeholder="zoeken" class="inputSearchCourse">
         </div>
         <div class="globalCoursElement" id="autocomplete_company_course" >
             <?php 
