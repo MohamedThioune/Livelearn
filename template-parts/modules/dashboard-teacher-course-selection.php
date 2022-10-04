@@ -59,20 +59,20 @@
                         <small></small>
                     </p>
                 </a>
-                <a href="?func=add-webinar" class="cardCours cardCoursInitial" >
+                <a href="#" class="cardCours cardCoursInitial" >
                     <p class="contentText">
                         <b>Webinar</b><br />
                         <small>Coming soon!</small>
                     </p>
                 </a>
-                <a href="/dashboard/teacher/list-podcast" class="cardCours cardCoursInitial" >
+                <a href="#" class="cardCours cardCoursInitial" >
                     <p class="contentText">
                         <b>Podcast</b><br/>
                         <small>Coming soon!</small>
 
                     </p>
                 </a>
-                <a href="/dashboard/teacher/list-road-path" class="cardCours cardCoursInitial roadPathBlock" >
+                <a href="?func=add-road" class="cardCours cardCoursInitial roadPathBlock" >
                     <p class="contentText">
                         <b>Leer Path</b>
                     </p>

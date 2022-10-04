@@ -34,19 +34,19 @@
                     </div>
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>
-                <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-add-article&id=' . $_GET['id'] . '&step=2&edit'; echo '?func=add-add-article&message=Please finish this step before'?>" class="contentBlockCourse">
+                <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-add-article&id=' . $_GET['id'] . '&step=2&edit'; ?>" class="contentBlockCourse">
                     <div class="circleIndicator passEtape2">
                         <i class="fa fa-font"></i>
                     </div>
                     <p class="textOpleidRight">Schrijf je artikel</p>
                 </a>
-                <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-add-article&id=' . $_GET['id'] . '&step=3&edit'; echo '?func=add-add-article&message=Please finish this step before'?>" class="contentBlockCourse">
+                <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-add-article&id=' . $_GET['id'] . '&step=3&edit'; ?>" class="contentBlockCourse">
                     <div class="circleIndicator">
                         <i class="fa fa-tag" aria-hidden="true"></i>
                     </div>
                     <p class="textOpleidRight">Tags</p>
                 </a>
-                <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-add-article&id=' . $_GET['id'] . '&step=4&edit'; echo '?func=add-add-article&message=Please finish this step before'?>" class="contentBlockCourse">
+                <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-add-article&id=' . $_GET['id'] . '&step=4&edit'; ?>" class="contentBlockCourse">
                     <div class="circleIndicator">
                         <i class="fa fa-users" aria-hidden="true"></i>
                     </div>

@@ -4,6 +4,8 @@
             <div id="basis" class="w-100">
                 <div class="titleOpleidingstype">
                     <h2>1.Basis informatie</h2>
+                    <?php if($_GET['message']) echo "<span class='alert alert-error courseToevoegenText' style='color:red'>* " . $_GET['message'] . "</span><br><br>"; ?>
+
                 </div>
                 <?php 
 
@@ -68,7 +70,7 @@
                     <div class="circleIndicator">
                         <i class="fa fa-paste" aria-hidden="true"></i>
                     </div>
-                    <p class="textOpleidRight">Details en onderwepren</p>
+                    <p class="textOpleidRight">Onderwerpen</p>
                 </a>
                 <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=5&edit'; else echo  "?func=add-course&type=" . $_GET['type']. "&message=Please finish this step before" ?>" class="contentBlockCourse">
                     <div class="circleIndicator">
