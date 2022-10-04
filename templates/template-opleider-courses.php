@@ -49,7 +49,6 @@
 </style>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
-<body>
 <?php wp_head(); ?>
 <?php get_header(); ?>
 <?php 
@@ -1578,7 +1577,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<script src="js/style.js"></script>
 <script>
     var swiper = new Swiper('.swiper-container', {
         slidesPerView: '3',

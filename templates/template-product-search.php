@@ -3,6 +3,10 @@
 <body>
     <?php wp_head(); ?>
     <?php get_header(); ?>
+    <?php
+    $page = 'check_visibility.php';
+    require($page); 
+    ?>
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
     <?php require_once('postal.php'); ?>
@@ -395,7 +399,7 @@
                     <div class="LeerBlock pl-4" >
                         <div class="leerv">
                             <p class="sousProduct1Title" style="color: #043356">LEERVORM</p>
-                            <button class="btn btnClose pb-1 p-0 px-1 m-0" id="hide">
+                            <button type="reset" class="btn btnClose pb-1 p-0 px-1 m-0" id="hide">
                                 <i class="bi bi-x text-dark" style="font-size: 35px"></i>
                             </button>
                         </div>
@@ -524,9 +528,9 @@
                 </form>
 
             </div>
-            <div class="mob filterBlock m-2 mr-4">
+            <div class="mob filterBlock m-2 mr-4" id="show">
                 <p class="fliterElementText">Filter</p>
-                <button class="btn btnIcone8" id="show"><img src="<?php echo get_stylesheet_directory_uri();?>/img/filter.png" alt=""></button>
+                <button class="btn btnIcone8" ><img src="<?php echo get_stylesheet_directory_uri();?>/img/filter.png" alt=""></button>
             </div>
         </div>
             <!-- ------------------------------------ End  Slide bar ---------------------------------------- -->                    
@@ -545,6 +549,10 @@
                 <div class="row d-flex justify-content-center">
                     <?php 
                     foreach($courses as $key => $course){
+                        
+                        if(!visibility($course, $visibility_company))
+                            continue;
+
                         if($key == 20)
                             break;
 
@@ -682,7 +690,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<script src="js/style.js"></script>
+
 <script>
     var swiper = new Swiper('.swiper-container', {
         slidesPerView: '3',
@@ -726,13 +734,11 @@
 </script>
 <script>
     $(document).ready(function(){
-        $("#hide").click(function(){
-            event.preventDefault();
-            $(".sousProductTest").hide();
-        });
         $("#show").click(function(){
-            event.preventDefault();
             $(".sousProductTest").show();
+        });
+        $("#hide").click(function(){
+            $(".sousProductTest").hide();
         });
     });
 </script>

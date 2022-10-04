@@ -26,7 +26,7 @@
     $count = count($members);
 
 if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"; 
-    if( in_array('administrator', $data_user->roles) || in_array( 'manager', $data_user->roles ) || in_array('hr', $data_user->roles) || $grant ) {
+    if( in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) || $grant ) {
 ?>
     <div class="cardPeople">
         <div class="headListeCourse">
@@ -38,27 +38,29 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
             <table class="table table-responsive">
                 <thead>
                     <tr>
-                        <th scope="col"></th>
+                        <th scope="col">#</th>
+                        <th scope="col">Afbeelding</th>
                         <th scope="col">Naam</th>
                         <th scope="col">Email</th>
                         <th scope="col">Telefoonnummer</th>
                         <th scope="col" class="thOnder">Functie</th>
                         <th scope="col">Afdeling</th>
                         <th scope="col">Manager</th>
-                        <th scope="col">Actie</th>
+                        <th scope="col">Optie</th>
                     </tr>
                 </thead>
                 <tbody id="autocomplete_company_people">
                     <?php
-                    foreach($members as $user){
+                    foreach($members as  $key => $user){
                         $image_user = get_field('profile_img',  'user_' . $user->ID); 
                         if(!$image_user)  
                             $image_user = get_stylesheet_directory_uri(). "/img/placeholder_user.png";
                         
-                        $you  =  (in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('manager', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : '';
+                        $you  =  (in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : '';
                         
                     ?>
                         <tr id="<?php echo $user->ID; ?>" >
+                            <td scope="row"><?= $key; ?></td>
                             <td class="textTh thModife">
                                 <div class="ImgUser">
                                 <a href="/dashboard/company/profile/?id=<?php echo $user->ID . '&manager='. $user_connected; ?>" > <img src="<?php echo $image_user ?>" alt=""> </a>
@@ -70,8 +72,26 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
                             <td class="textTh elementOnder"><?php echo get_field('role', 'user_'.$user->ID);?></td>
                             <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
                             <td class="textTh"><?= $you ?></td>
-                            <td class="titleTextListe remove">
-                                <img class="removeImg" src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
+                            <td class="textTh">
+                                <div class="dropdown text-white">
+                                    <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
+                                        <img  style="width:20px"
+                                              src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                    </p>
+                                    <ul class="dropdown-menu">
+                                        <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
+                                        <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
+                                        <li class="my-1">
+                                            <div class="<?php if($you != '') echo 'remove' ?>">
+                                                <?php
+                                                if($you != '')
+                                                    echo '<img class="removeImg" src="' . get_stylesheet_directory_uri() . '/img/deleteIcone.png" alt="">';
+                                                ?>
+                                                <span>Verwijderen</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
                             </td>
                         </tr>
                     <?php
@@ -93,7 +113,7 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
     $(".remove").click(function(){
         var id = $(this).parents("tr").attr("id");
 
-        if(confirm('Are you sure you want to remove this record ?'))
+        if(confirm('Are you sure you want to remove this user from your company ?'))
         {
             $.ajax({
                url: '/delete-user',
@@ -105,14 +125,13 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
                success: function(data) {
                     $("#"+id).remove();
                     console.log(data);
-                    alert("Record removed successfully");  
+                    alert("User removed successfully");  
                }
             });
         }
     });
 
 </script>
-
 
 <script>
 

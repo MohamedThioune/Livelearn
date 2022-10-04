@@ -8,8 +8,9 @@
     $expert = get_field('experts', $post->ID);    
 
     foreach($users as $user)
-        if(in_array('author', $user->roles) || in_array('teacher', $user->roles))
-            array_push($members, $user);  
+    if(in_array('author', $user->roles) || in_array('teacher', $user->roles))
+        array_push($members, $user);   
+
 ?>
     <div class="row">
         <div class="col-md-5 col-lg-8">
@@ -54,19 +55,27 @@
                 <p class="courseToevoegenText">Course toevoegen</p>
                 <div class="contentBlockRight">
                     <a href="/dashboard/teacher/course-selection/?func=add-white&id=<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
-                        <div class="circleIndicator  passEtape"></div>
+                        <div class="circleIndicator passEtape">
+                            <i class="fa fa-info"></i>
+                        </div>                            
                         <p class="textOpleidRight">Basis informatie</p>
                     </a>
                     <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=2&edit" class="contentBlockCourse">
-                        <div class="circleIndicator passEtape"></div>
+                        <div class="circleIndicator passEtape">
+                            <i class="fa fa-globe"></i>
+                        </div>
                         <p class="textOpleidRight">Online or location</p>
                     </a>
                     <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=3&edit" class="contentBlockCourse">
-                        <div class="circleIndicator passEtape"></div>
+                        <div class="circleIndicator passEtape">
+                            <i class="fa fa-tag" aria-hidden="true"></i>
+                        </div>
                         <p class="textOpleidRight ">Tags</p>
                     </a>
                     <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=4&edit" class="contentBlockCourse">
-                        <div class="circleIndicator passEtape2"></div>
+                        <div class="circleIndicator passEtape">
+                            <i class="fa fa-users" aria-hidden="true"></i>
+                        </div>
                         <p class="textOpleidRight">Expert</p>
                     </a>
                 </div>
@@ -74,9 +83,8 @@
         </div>
         
     </div>
-   
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script>
     $("#search_expert").keyup(()=>
     { 

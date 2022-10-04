@@ -1,4 +1,4 @@
-<?php /** Template Name: Mkb template */ ?>
+<?php /** Template Name: Mkb1 template */ ?>
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
@@ -115,15 +115,18 @@
                         hoe je hier mee om moet gaan en daarom bieden wij een eenvoudig op te zetten ontwikkelomgeving
                         voor MKB bedrijven.
                     </p>
-                    <div>
-                        <button type="submit" class="btn rounded-pill p-2 px-4 my-2" style="background: #00A89D"
+                    <div class="groupBtnMkb">
+                        <button type="submit" class="btn rounded-pill " style="background: #00A89D"
                             data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">
                             <strong class="h5 text-white">Je eigen leeromgeving </strong>
                         </button>
 
-                        <a type="submit" class="btn btn-outline-realblue rounded-pill p-2 px-2 px-md-4 my-2 ml-md-3" href="#contact_section">
+                        <a type="submit" class="btn btn-outline-realblue rounded-pill" href="#contact_section">
                             <strong class="h5">Contact met een adviseur</strong>
                         </a>
+                        <div class="imgServiceLogo">
+                            <img  src="<?php echo get_stylesheet_directory_uri();?>/img/MKB_servicedesk.png" alt="">
+                        </div>
 
                     </div>
                  </div>

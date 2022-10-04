@@ -98,7 +98,7 @@ $user_id = get_current_user_id();
 /*
 * User informations
 */
-$email_user = get_userdata($post->post_author)->data->email;
+$email_user = get_user_by('ID', $post->post_author)->user_email;
 $phone_user = get_field('telnr', 'user_' . $post->post_author);
 
 /*
@@ -120,7 +120,7 @@ foreach($users as $user) {
         array_push($users_choose, $user->ID);
 }
 
-if($post->post_author == 0){
+if(!$post->post_author){
     $user_choose = $users_choose[array_rand($users_choose, 1)];
 
     $arg = array(
@@ -145,7 +145,10 @@ $company = get_field('company',  'user_' . $post->post_author);
 $expert = get_field('experts', $post->ID);
 $author = array($user_choose);
 
-$experts = array_merge($expert, $author);
+if(isset($expert[0]))
+    $experts = array_merge($expert, $author);
+else
+    $experts = $author;
 
 /*
 * Likes
@@ -157,11 +160,11 @@ if(!$favoured)
 /*
 * Image
 */
-$thumbnail = get_field('preview', $course->ID)['url'];
+$thumbnail = get_field('preview', $post->ID)['url'];
 if(!$thumbnail){
     $thumbnail = get_the_post_thumbnail_url($post->ID);
     if(!$thumbnail)
-        $thumbnail = get_field('url_image_xml', $course->ID);
+        $thumbnail = get_field('url_image_xml', $post->ID);
         if(!$thumbnail)
             $thumbnail = get_field('image', 'category_'. $category_id);
             if(!$thumbnail)

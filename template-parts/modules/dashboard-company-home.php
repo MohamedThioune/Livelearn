@@ -69,49 +69,17 @@
                         <img src="<?php echo get_stylesheet_directory_uri() ?>/img/Image27.png" alt="">
                     </div>
                 </a>
-                <a href="/dashboard/company/grant" type="submit" style="border:none; background:white;" class="cardCours">
+                <!-- <a href="/dashboard/company/grant" type="submit" style="border:none; background:white;" class="cardCours">
                     <p class="contentText">Selecteer <br>
                         <b>Je managers</b>
                     </p>
                     <div class="blockImgCardCoursGlobal">
                         <img src="<?php echo get_stylesheet_directory_uri() ?>/img/chrono.png" alt="">
                     </div>
-                </a>
-            </div>
-
-            <div class="allBlockWorjforce">
-                <p class="workforceTitle">De workforce</p>
-                <div class="groupCard">
-    <!--                <a href="#" class="cardCours">
-                        <small>Coming soon!</small>
-                        <p class="contentText">Werknemer<br>
-                            <b>Instroom</b>
-                        </p>
-                        <div class="blockImgCardCoursGlobal">
-                            <img src="<?php /*echo get_stylesheet_directory_uri() */?>/img/image-43.png" alt="">
-                        </div>
-                    </a>
-                    <a href="#" class="cardCours">
-                        <small>Coming soon!</small>
-                        <p class="contentText">Werknemer<br>
-                            <b>Doorstroom</b>
-                        </p>
-                        <div class="blockImgCardCoursGlobal">
-                            <img src="<?php /*echo get_stylesheet_directory_uri() */?>/img/Image-44.png" alt="">
-                        </div>
-                    </a>
-                    <a href="#" class="cardCours">
-                        <small>Coming soon!</small>
-                        <p class="contentText">Werknemer<br>
-                            <b>Uitstroom</b>
-                        </p>
-                        <div class="blockImgCardCoursGlobal">
-                            <img src="<?php /*echo get_stylesheet_directory_uri() */?>/img/Image-45.png" alt="">
-                        </div>
-                    </a>-->
-                    
-                   <?php if( in_array('administrator', $user_connected->roles) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles)) { ?>
-                       <a href="/dashboard/company/allocate/" class="cardCoursManager">
+                </a> -->
+                <?php 
+                if(in_array('administrator', $user_connected->roles) || in_array('manager', $user_connected->roles) || in_array('hr', $user_connected->roles)) { ?>
+                       <a href="/dashboard/company/de-organisatie/" class="cardCoursManager">
                            <p class="contentText">De<br>
                                <b>Organisatie</b>
                            </p>
@@ -119,8 +87,7 @@
                                <img src="<?php echo get_stylesheet_directory_uri() ?>/img/Image33.png" alt="">
                            </div>
                        </a>
-                    <?php } ?>
-                </div>
+                <?php } ?>
             </div>
         </div>
     </div>

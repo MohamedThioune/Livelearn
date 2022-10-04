@@ -1,9 +1,4 @@
 
-<!-- MDB -->
-<!-- <link
-  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.css"
-  rel="stylesheet"
-/> -->
 <style>
     .nav-tabs .nav-link.active {
         background: #023356 !important;
@@ -60,7 +55,7 @@
                             acf_form([
                                 'id' => 'edit-company-data-form',
                                 'post_id' => $company->ID,
-                                'field_groups' => [408],
+                                'field_groups' => array('group_617a8f52267b4'),
                                 'new_post' => false,
                             ]);
                         }
@@ -199,8 +194,7 @@
     </div>
 </div>
 
-<!-- MDB -->
-<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.2.0/mdb.min.js"></script>-->
+-->
 <script>
     $("#tab2").click(function() {
         $("#tab2").addClass('btnactive') ;

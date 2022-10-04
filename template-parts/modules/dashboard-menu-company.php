@@ -4,6 +4,10 @@
     $url = $wp->request;
     
     $option_menu = explode('/', $url);
+
+    $user = wp_get_current_user();
+    if ( !in_array( 'hr', $user->roles ) && !in_array( 'manager', $user->roles ) && !in_array( 'administrator', $user->roles ) && $user->roles != 'administrator') 
+        header('Location: /dashboard/user');
 ?>
 <section id="sectionDashboard1" class="sidBarDashboard sidBarDashboardIndividual" name="section1"
     style="overflow-x: hidden !important;">
@@ -100,30 +104,6 @@
                             <?php
                             if($option_menu[2] == 'allocate') echo '<span><b>De organisatie</b></span>'; else echo '<span>De organisatie</span>';
                             ?>
-                        </a>
-                    </li>
-                    <li class="elementTextDashboard">
-                        <a href="#" class="d-flex">
-                           <div class="elementImgSidebar imgSide2" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Doorstroom.png" >
-                            </div>
-                            <span>Instroom</span>
-                        </a>
-                    </li>
-                    <li class="elementTextDashboard">
-                        <a href="#" class="d-flex">
-                            <div class="elementImgSidebar imgSide2" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Instroom.png" >
-                            </div>
-                            <span>Doorstroom</span>
-                        </a>
-                    </li>
-                    <li class="elementTextDashboard">
-                        <a href="#" class="d-flex">
-                            <div class="elementImgSidebar imgSide2" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Uitstroom.png" >
-                            </div>
-                            <span>Uitstroom</span>
                         </a>
                     </li>
                 </ul>

@@ -89,8 +89,8 @@ $interesses = get_categories( array(
 ?>
 <div class="contentRoadMap">
    <div class="d-flex justify-content-between headContentRoad">
-       <h1 class="roadCourTitle">Road Cours Path</h1>
-       <button class="btn btnAddRoadMap" type="button" data-toggle="modal" data-target="#modalRoadMap">Add new road path</button>
+       <h1 class="roadCourTitle">Leerpad</h1>
+       <button class="btn btnAddRoadMap" type="button" data-toggle="modal" data-target="#modalRoadMap">Add new leerpad</button>
    </div>
    <?php
         if(isset($_GET['message']))
@@ -300,7 +300,7 @@ $interesses = get_categories( array(
         $name_topic =  ($topic_road_path != 0) ? (String)get_the_category_by_ID($topic_road_path) : '';
 
         ?>
-        <section class="col-lg-4" id="<?=  $road->ID; ?>">
+        <section class="col-lg-4" id="<?= $road->ID; ?>">
             <div class="cardRoadPath">
                 <div class="headRoadPath">
                     <p class="titleRoadPath "><?= $road->post_title; ?></p>
@@ -318,7 +318,7 @@ $interesses = get_categories( array(
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/oeil.png" alt="">
                         <span>see</span>
                     </a>
-                    <a href="/" class="seeRoadPath">
+                    <a href="/detail-product-road/?id=<?= $road->ID; ?>" class="seeRoadPath">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/overviewD.png" alt="">
                         <span>Overview</span>
                     </a>
@@ -334,8 +334,7 @@ $interesses = get_categories( array(
 
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" ></script>
---><script>
+<script>
      $('#search_path').keyup(function(){
         var txt = $(this).val();
         event.stopPropagation();

@@ -1,9 +1,5 @@
 <?php 
 
-$page = dirname(__FILE__) . '/../../templates/check_visibility.php';
- 
-require($page); 
-
 $user_id = get_current_user_id();
 
 /*
@@ -310,7 +306,6 @@ $title_road_path = get_field('title_road_path', 'user_'.$user_id);
 
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" ></script>-->
 <script>
      $('#search_path').keyup(function(){
         var txt = $(this).val();

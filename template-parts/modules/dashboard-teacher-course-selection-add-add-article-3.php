@@ -482,8 +482,8 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
         
     </div>
 
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script>
 
     var selected_subtopics_id=[];

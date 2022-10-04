@@ -16,6 +16,7 @@ jQuery(function($){
     });
 
 
+
     //header on scroll fix
     var height = ($('nav.navbar').css('height'));
     $('body').css('padding-top', height)
@@ -24,6 +25,22 @@ jQuery(function($){
         console.log('menu toggled');
         $(".dropdownMenuDashboard").toggle();
 
+    });
+
+    $(".hideBarFilterBlock").hide();
+    // For filter
+
+    $(".filterBlock").click(function(){
+        $(".formFilterDatabank, .hideBarFilterBlock").show();
+    });
+    $(".hideBarFilterBlock").click(function(){
+        $(".formFilterDatabank, .hideBarFilterBlock").hide();
+    });
+
+
+
+    $(".bntNotification").click(function() {
+        $(".alertNotification").hide();
     });
 
     // for modal skills passport home page

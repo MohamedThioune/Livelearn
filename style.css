@@ -1569,8 +1569,8 @@ body, html {
 }
 
 .e-learningTitle {
-    font-size: 21px;
-    font-weight: bold;
+    font-size: 21px !important;
+    font-weight: bold !important;
     margin-top: 14px;
     margin-bottom: 40px;
 }
@@ -1642,6 +1642,7 @@ body, html {
     display: flex;
     align-items: center;
     color: #023356 !important;
+    border: none !important;
 }
 .btnContact i{
     color: #023356 !important;
@@ -1747,7 +1748,7 @@ body, html {
 
 .btnKoop {
     background-color: #023356;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     font-weight: bold;
     padding: 10px 22px;
     border-radius: 10px;
@@ -5646,6 +5647,7 @@ form {
         top: 0;
         z-index: 1111;
         height: 100%;
+        overflow-y: scroll;
     }
     .container-fluid {
         padding: unset !important;
