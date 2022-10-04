@@ -58,15 +58,16 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
                         
                         $you  =  (in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : '';
                         
+                        $link = "/dashboard/company/profile/?id=" . $user->ID . '&manager='. $user_connected; 
                     ?>
                         <tr id="<?php echo $user->ID; ?>" >
                             <td scope="row"><?= $key; ?></td>
                             <td class="textTh thModife">
                                 <div class="ImgUser">
-                                <a href="/dashboard/company/profile/?id=<?php echo $user->ID . '&manager='. $user_connected; ?>" > <img src="<?php echo $image_user ?>" alt=""> </a>
+                                <a href="<?= $link; ?>" > <img src="<?php echo $image_user ?>" alt=""> </a>
                                 </div>
                             </td>
-                            <td class="textTh"> <a href="/dashboard/company/profile/?id=<?php echo $user->ID . '&manager='. $user_connected; ?>" style="text-decoration:none;"><?php if(!empty($user->first_name)){echo $user->first_name;}else{echo $user->display_name;}?></a> </td>
+                            <td class="textTh"> <a href="<?= $link; ?>" style="text-decoration:none;"><?php if(!empty($user->first_name)){echo $user->first_name;}else{echo $user->display_name;}?></a> </td>
                             <td class="textTh"><?php echo $user->user_email;?></td>
                             <td class="textTh"><?php echo get_field('telnr', 'user_'.$user->ID);?></td>
                             <td class="textTh elementOnder"><?php echo get_field('role', 'user_'.$user->ID);?></td>
@@ -79,9 +80,9 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
                                               src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                     </p>
                                     <ul class="dropdown-menu">
-                                        <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
-                                        <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
-                                        <li class="my-1">
+                                        <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?= $link; ?>" target="_blank">Bekijk</a></li>
+                                        <li class="my-2"><i class="fa fa-gear px-2"></i><a href="<?= $link; ?>" target="_blank">Pas aan</a></li>
+                                        <li class="my-1 ">
                                             <div class="<?php if($you != '') echo 'remove' ?>">
                                                 <?php
                                                 if($you != '')
@@ -125,7 +126,7 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
                success: function(data) {
                     $("#"+id).remove();
                     console.log(data);
-                    alert("User removed successfully");  
+                    alert("User removed successfully from your company !");  
                }
             });
         }
