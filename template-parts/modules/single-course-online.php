@@ -115,9 +115,9 @@ extract($_GET);
                 ?>
 
                 <!-- -------------------------------------- Start Icons row ------------------------------------->
-                <div class="d-flex elementcourseIcone justify-content-md-between justify-content-around mx-md-2 my-3 mx-sm-2 text-center">
+                <div class="d-flex elementcourseIcone justify-content-md-between justify-content-around text-center">
                     <div class="d-flex flex-row block1">
-                        <div class="d-flex flex-column mx-md-3 mx-2">
+                        <div class="d-flex flex-column mrIcone">
                             <input type="hidden" id="user_id" value="<?php echo $user_id; ?>">
                             <input type="hidden" id="course_id" value="<?php echo $post->ID; ?>">
                             <!-- <img class="iconeCours" src="<?php echo get_stylesheet_directory_uri();?>/img/love.png" alt=""> -->
@@ -162,8 +162,8 @@ extract($_GET);
                                     ";
                             ?>
                         </div>
-                        <div class="d-flex flex-column mx-md-3 mx-2">
-                            <button class="btn iconeText open-modal" data-open="modal1">
+                        <div class="d-flex flex-column mlIcone">
+                            <button class="btn open-modal" data-open="modal1">
                                 <i class="fa fa-share" style="font-size: 25px;"></i><br>
                                 <span class="textIconeLearning mt-1">Deel</span>
                             </button>
@@ -791,9 +791,9 @@ extract($_GET);
                                 <p class="opeleidingText"><?php echo $course_type; ?> : € <?php echo $price ?></p>
                                 <p class="btwText">BTW: € <?php $prijsvat ?></p>
 
-
-                                <a href="#bookdates" class="btn btnKoop">Schrijf je in<?php echo $course_type; ?></a>
-                            </div>
+                                <a href="#bookdates" class="btn btnKoop">Schrijf je in</a>
+<!--                                <a href="#bookdates" class="btn btnKoop">Schrijf je in<?php /*echo $course_type; */?></a>
+-->                            </div>
                             <div class="col-12 my-5" style="background-color: #E0EFF4">
                                 <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around justify-content-center">
 
