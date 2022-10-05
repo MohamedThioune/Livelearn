@@ -189,6 +189,8 @@ foreach ($reviews as $review)
 $offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
 $online = ['E-learning', 'Video', 'Webinar'];
 
+$share_txt = "Hello, i share this course with ya *" . $post->post_title . "* \n Link : " . get_permalink($post->ID) . "\nHope you'll like it.";
+
 if(in_array($course_type, $offline))
     include_once('template-parts/modules/single-course-offline.php');
 else if(in_array($course_type, $online))

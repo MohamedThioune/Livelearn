@@ -179,9 +179,9 @@ extract($_GET);
                                     </div>
                                     <div id="Extern" class="tabcontent">
                                         <div class="contentElementPartage">
-                                            <button id="whatsapp"  class="btn contentIcone">
+                                            <a href="https://wa.me/?text=<?= $share_txt ?>" target="_blank" id="whatsapp"  class="btn contentIcone">
                                                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/whatsapp.png" alt="">
-                                            </button>
+                                            </a>
                                             <p class="titleIcone">WhatsApp</p>
                                         </div>
                                         <div class="contentElementPartage">
@@ -203,9 +203,9 @@ extract($_GET);
                                             <p class="titleIcone">Linkedin</p>
                                         </div>
                                         <div class="contentElementPartage">
-                                            <button id="sms" class="btn contentIcone">
+                                            <a href="sms:?&body=<?= $share_txt ?>" target="_blank" id="sms" class="btn contentIcone">
                                                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/sms.png" alt="">
-                                            </button>
+                                            </a>
                                             <p class="titleIcone">Sms</p>
                                         </div>
                                         <div>
