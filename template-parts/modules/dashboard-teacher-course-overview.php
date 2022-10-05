@@ -138,13 +138,9 @@ $leerpad_single  = 'Leerpad';
                                           src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                 </p>
                                 <ul class="dropdown-menu">
-                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
-                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
-                                    <li class="my-2"><i class="fas fa-edit px-2"></i><a href="<?= $path_edit ?>">Actie</a></li>
-                                    <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
                                     <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?= $link ?>">Bekijk</a></li>
                                     <li class="my-2"><i class="fa fa-gear px-2"></i><a href="<?= $path_edit ?>">Pas aan</a></li>
-                                    <li class="my-1 remove" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
+                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
                                 </ul>
                             </div>
                         </td>
@@ -162,7 +158,7 @@ $leerpad_single  = 'Leerpad';
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script type="text/javascript">
-    $(".remove").click(function(){
+    $(".remove_opleidingen").click(function(){
         var id = $(this).parents("tr").attr("id");
 
         if(confirm('Are you sure to remove this record ?'))
