@@ -69,7 +69,7 @@
                             <div><i class="fa fa-gear fa-2x pt-1"></i></div>
                         </div>
 
-                        <form class="">
+                        <form method="POST" action="" class="">
 
                             <div class="form-group py-4">
                                 <div class="row">
