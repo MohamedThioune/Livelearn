@@ -4,7 +4,7 @@ $id = get_current_user_id();
 
 if($id){
     $args = array(
-        'post_type' => array('post', 'course', 'learnpath'), 
+        'post_type' => array('post', 'course', 'learnpath'),
         'posts_per_page' => -1,
         'author' => $id,  
     );
@@ -23,10 +23,11 @@ $leerpad_single  = 'Leerpad';
         <div class="headListeCourse">
             <?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span>"?>
             <p class="JouwOpleid">Overzicht leermodules</p>
+            <input type="search" id="" placeholder="zoeken" class="inputSearchCourse">
             <a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe</a>
         </div>
-        <div class="contentCardListeCourse">
-            <table class="table table-responsive">
+        <div class="contentCardListeCourse table-responsive overflowOverviewTable">
+            <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -137,6 +138,10 @@ $leerpad_single  = 'Leerpad';
                                           src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                 </p>
                                 <ul class="dropdown-menu">
+                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
+                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
+                                    <li class="my-2"><i class="fas fa-edit px-2"></i><a href="<?= $path_edit ?>">Actie</a></li>
+                                    <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
                                     <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?= $link ?>">Bekijk</a></li>
                                     <li class="my-2"><i class="fa fa-gear px-2"></i><a href="<?= $path_edit ?>">Pas aan</a></li>
                                     <li class="my-1 remove" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>

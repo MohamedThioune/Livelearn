@@ -175,6 +175,7 @@ $video = null;
 
 
 <div class="contentListeCourse">
+    <!-- 
     <div class="cardOverviewCours">
         <div class="headListeCourse">
             <p class="JouwOpleid">Gekochte opleidingen</p>
@@ -207,7 +208,8 @@ $video = null;
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> 
+    -->
 
     <!-- The Modal -->
     <div id="myModal" class="modal">
@@ -220,7 +222,7 @@ $video = null;
             <div class="modal-header mx-4">
                 <h5 class="modal-title" id="exampleModalLabel">Subtopics </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('myModal').style.display='none'" >
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">x</span>
                 </button>
             </div>
             <div class="row d-flex text-center justify-content-center align-items-center h-50">
@@ -366,6 +368,7 @@ $video = null;
                             $edit_url = '/dashboard/teacher/course-selection/?func=add-article&id=' . $course->ID . '&edit';
                         else if($course_type == 'Video')
                             $edit_url = '/dashboard/teacher/course-selection/?func=add-video&id=' . $course->ID . '&edit';
+                        //Assessment
                     ?>
                     <tr id="<?php echo $course->ID; ?>">
                         <td scope="row"><?= $key; ?></td>
@@ -373,22 +376,20 @@ $video = null;
                         <td class="textTh"><?php echo $course_type; ?></td>
                         <td class="textTh"><?php echo $price; ?></td>
                         <td id= "<?php echo $course->ID; ?>" class="textTh td_subtopics" >
-                                <?php
-                                    $course_subtopics = get_field('categories', $course->ID);
-                                    $field='';
-                                    if($course_subtopics!=null){
-                                        if (is_array($course_subtopics) || is_object($course_subtopics)){
-                                            foreach ($course_subtopics as $key =>  $course_subtopic) {
-                                                if ($course_subtopic!="" && $course_subtopic!="Array")
-                                                    $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
-                                            }
-                                            $field=substr($field,0,-1);
-                                            echo $field;
-                                        
-                                            }
+                            <?php
+                                $course_subtopics = get_field('categories', $course->ID);
+                                $field='';
+                                if($course_subtopics!=null){
+                                    if (is_array($course_subtopics) || is_object($course_subtopics)){
+                                        foreach ($course_subtopics as $key =>  $course_subtopic) {
+                                            if ($course_subtopic!="" && $course_subtopic!="Array")
+                                                $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                        }
+                                        $field = substr($field,0,-1);
+                                        echo $field;
                                     }
-                                    
-                                ?>
+                                }
+                            ?>
                             </p>             
                         </td>
                         <td class="textTh"><?php echo $day; ?></td>
@@ -401,8 +402,8 @@ $video = null;
                                 <ul class="dropdown-menu">
                                     <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?php echo get_permalink($course->ID) ?>" target="_blank">Bekijk</a></li>
                                     <li class="my-2"><i class="fa fa-gear px-2"></i><a href="<?= $edit_url ?>" target="_blank">Pas aan</a></li>
-                                    <li class="my-1"><i class="fa fa-share px-2"></i><input type="button" id="" value="Share"/></li>
-                                    <li class="my-1 remove" id="live"><i class="fa fa-trash px-2 "></i><input type="button" id="" value="Verwijderen"/></li>
+                                    <!-- <li class="my-1"><i class="fa fa-share px-2"></i><input type="button" id="" value="Share"/></li> -->
+                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2 "></i><input type="button" id="" value="Verwijderen"/></li>
                                 </ul>
                             </div>
                         </td>
@@ -534,7 +535,7 @@ $video = null;
 </script>
 
 <script type="text/javascript">
-    $(".remove").click(function(){
+    $(".remove_opleidingen").click(function(){
         var id = $(this).parents("tr").attr("id");
 
         if(confirm('Are you sure to remove this record ?'))
