@@ -198,9 +198,9 @@
                 <p class="beschiBlockText btnScroolEvent">Beschikbaarheid en prijs</p>
 
                 <!-- -------------------------------------- Start Icons row ------------------------------------->
-                <div class="d-flex elementcourseIcone sousBlock mx-md-2 mx-sm-2 text-center">
+                <div class="d-flex elementcourseIcone sousBlock text-center">
                     <div class="d-flex flex-row block1">
-                        <div class="d-flex flex-column mx-md-3 mx-2">
+                        <div class="d-flex flex-column mrIcone">
                             <input type="hidden" id="user_id" value="<?php echo $user_id; ?>">
                             <input type="hidden" id="course_id" value="<?php echo $post->ID; ?>">
                             <!-- <img class="iconeCours" src="<?php echo get_stylesheet_directory_uri();?>/img/love.png" alt=""> -->
@@ -245,8 +245,8 @@
                                 ";
                             ?>
                         </div>
-                        <div class="d-flex flex-column mx-md-3 mx-2">
-                            <button class="btn iconeText open-modal" data-open="modal1">
+                        <div class="d-flex flex-column mlIcone">
+                            <button class="btn open-modal" data-open="modal1">
                                 <i class="fa fa-share" style="font-size: 25px;"></i><br>
                                 <span class="textIconeLearning mt-1">Deel</span>
                             </button>
