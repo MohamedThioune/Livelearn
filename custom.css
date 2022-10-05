@@ -2693,7 +2693,7 @@ input:focus-visible {
     position: relative;
 }
 .wordDeBestText2 {
-    font-size: 28px;
+    font-size: 34px;
     line-height: 42px;
     margin: 0px auto 10px;
 }
@@ -6214,7 +6214,7 @@ input:checked ~ .assassment {
     height: 320px;
     width: 100%;
     border-radius: 8px;
-    margin-bottom: 0px;
+    margin-bottom: 25px;
     overflow: hidden;
 }
 .beschiBlockText {
@@ -6704,6 +6704,7 @@ tbody{
 }
 .elementcourseIcone{
     justify-content: space-between !important;
+    margin-left: -3px;
 }
 .dashboardsElement{
     display: flex;
@@ -10035,8 +10036,12 @@ ul#tabs-nav li.active {
 #Portfolio .categorieDetailCandidat {
     margin-bottom: 0;
 }
-.goBackProfil{
-    display: none;
+
+.goBackProfil img{
+    position: absolute;
+    left: 10px;
+    top: 0px;
+    width: 35px;
 }
 .tableNotification{
     display: table;
@@ -10082,6 +10087,29 @@ ul#tabs-nav li.active {
 }
 .overflowOverviewTable tbody .textTh .dropdown-toggle {
     margin-left: -35px;
+}
+.mrIcone{
+    margin-right: 0.5rem!important;
+}
+.mlIcone{
+    margin-left: 0.5rem!important;
+}
+
+.progress-bar {
+    background-color: #023356 !important;
+}
+.showPassport {
+    width: 27px;
+    height: 30px;
+    padding: 0;
+}
+.showPassport img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+#show-less1{
+    transform: rotate(180deg);
 }
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -12023,15 +12051,16 @@ ul#tabs-nav li.active {
     .elementcourseIcone{
         justify-content: space-between !important;
         align-items: center;
+        margin-left: 0px;
     }
     .elementcourseIcone .block1{
         width: 100%;
         justify-content: space-between;
     }
     .elementcourseIcone .block2 {
-        width: 74%;
+        width: 49%;
         justify-content: space-between;
-        margin-right: -30px;
+        margin-right: 0;
         margin-left: 8px;
         padding-top: 8px;
     }
