@@ -12,7 +12,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
     extract($_POST);
     $articles = scrapeFrom($website);
     foreach ($articles as $article){
-        persistArticle($article);
+      persistArticle($article);
     } 
 }
 ?>
