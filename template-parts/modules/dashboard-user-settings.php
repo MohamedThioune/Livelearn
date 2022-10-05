@@ -187,6 +187,9 @@ if(!empty($bunch)){
             <button  data-tab="Portfolio" class="b-nav-tab btn">
                 Portfolio
             </button>
+            <button  data-tab="Skills" class="b-nav-tab btn">
+                Skills
+            </button>
             <button  data-tab="social" class="b-nav-tab btn">
                 Social Network
             </button>
@@ -363,17 +366,7 @@ if(!empty($bunch)){
                     </div>
                 </div>
             </div>
-            <div class="group-input-settings">
-                <label for="">Skills</label>
-                <div class="form-group formModifeChoose multipleSelectSkills">
-                    <select class="js-select2-multi" multiple="multiple">
-                        <option>Select A</option>
-                        <option>Select B</option>
-                        <option>Select C</option>
-                        <option>Select D</option>
-                    </select>
-                </div>
-            </div>
+
             <div class="group-input-settings">
                 <label for="">Work Experience</label>
                 <button class="btn btnAddEdu" data-toggle="modal" data-target="#exampleModalWork"> Add Work Experience
@@ -631,6 +624,20 @@ if(!empty($bunch)){
 
         </div>
 
+        <div id="Skills" class="b-tab contentBlockSetting" >
+            <div class="group-input-settings">
+                <label for="">Skills</label>
+                <div class="form-group formModifeChoose multipleSelectSkills">
+                    <select class="js-select2-multi" multiple="multiple">
+                        <option>Select A</option>
+                        <option>Select B</option>
+                        <option>Select C</option>
+                        <option>Select D</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
         <div id="social" class="b-tab contentBlockSetting">
             <?php $options = array(
                 'post_id' => 'user_'. get_current_user_id(),
@@ -670,6 +677,7 @@ if(!empty($bunch)){
         </div>
     </div>
 </div>
+
 
 <script>
     'use strict';

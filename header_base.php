@@ -767,7 +767,7 @@ $url = home_url( $wp->request );
                         </div>
                         <div class="block1">
                             <a href="/static-education-individual" class="elementsousMenuNav">Voor individuen</a>
-                            <a href="voor-teacher-2" class="elementsousMenuNav">Voor opleiders en experts</a>
+                            <a href="/voor-teachers/" class="elementsousMenuNav">Voor opleiders en experts</a>
                             <a href="/voor-organisaties" class="elementsousMenuNav">Voor organisaties</a>
                         </div>
                         <div class="block1">
