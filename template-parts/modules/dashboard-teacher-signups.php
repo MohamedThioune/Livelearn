@@ -123,32 +123,34 @@ $inkomsten = count($orders) * $price;
                         <div class="headListeCourse">
                             <p class="JouwOpleid">Inschrijvingen</p>
                             <div class="d-flex">
-                                <input type="search" id="<?= $_GET['parse']; ?>" class="btnZoek search-signups" placeholder="Zoek personen" />
+                                <input type="search" id="<?= $_GET['parse']; ?>" placeholder="Zoek personen" class="inputSearchCourse">
                                 <!-- <a href="" class="btnActiviteit">Actie</a> -->
                             </div>
                         </div>
-                        <div class="contentCardListeCourse">
+                        <div class="contentCardListeCourse table-responsive">
                             <?php
                             if(!empty($orders)){
                             ?>
-                            <table class="table table-responsive">
+                            <table class="table">
                                 <thead>
                                 <tr>
-                                    <th scope="col"></th>
+                                    <th scope="col">#</th>
                                     <th scope="col">Naam</th>
                                     <th scope="col">Achternaam</th>
                                     <th scope="col">Bedrijf</th>
                                     <th scope="col">Functie</th>
                                     <th scope="col">Prijs</th>
                                     <th scope="col">Betaaid</th>
+                                    <th scope="col">Optie</th>
                                 </tr>
                                 </thead>
                                 <tbody id="autocomplete_signups">
                                     <?php
                                     $subscriber_bool = false;
-                                    foreach($orders as $order){
+                                    foreach($orders as $key =>  $order){
                                     ?>
                                         <tr>
+                                            <td scope="row"><?= $key; ?></td>
                                             <td class="textTh pl-3 thModife">
                                                 <input type="checkbox">
                                             </td>
@@ -158,6 +160,19 @@ $inkomsten = count($orders) * $price;
                                             <td class="textTh"><?= $order['function'];; ?></td>
                                             <td class="textTh">€ <?php echo $price ?></td>
                                             <td class="textTh">Prive</td>
+                                            <td class="textTh">
+                                                <div class="dropdown text-white">
+                                                    <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
+                                                        <img  style="width:20px"
+                                                              src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                                    </p>
+                                                    <ul class="dropdown-menu">
+                                                        <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
+                                                        <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
+                                                        <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
+                                                    </ul>
+                                                </div>
+                                            </td>
                                         </tr>
                                     <?php 
                                     }

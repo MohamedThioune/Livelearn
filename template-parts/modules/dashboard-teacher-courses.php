@@ -79,8 +79,20 @@ if($id != 0){
                                     $day = explode(' ', $date)[0];
                                 }
                         }
+                        $course_type = get_field('course_type', $course->ID);
+                        //Edit url 
+                        $edit_url = "#";
+                        if(in_array($course_type, $opleidingen))
+                            $edit_url = '/dashboard/teacher/course-selection/?func=add-course&id=' . $course->ID . '&edit';
+                        else if(in_array($course_type, $white))
+                            $edit_url = '/dashboard/teacher/course-selection/?func=add-white&id=' . $course->ID . '&edit';
+                        else if($course_type == 'Artikel')
+                            $edit_url = '/dashboard/teacher/course-selection/?func=add-article&id=' . $course->ID . '&edit';
+                        else if($course_type == 'Video')
+                            $edit_url = '/dashboard/teacher/course-selection/?func=add-video&id=' . $course->ID . '&edit';
+                        //Assessment
                     ?>
-                    <tr data-attr="<?php echo $course->ID;?>">
+                    <tr id="<?php echo $course->ID; ?>" data-attr="<?php echo $course->ID;?>">
                         <td scope="row"><?= $key; ?></td>
                         <td class="textTh">
                             <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $course->ID;?>&edit"><i class="fas fa-edit"></i></a>
@@ -99,14 +111,13 @@ if($id != 0){
                                           src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                 </p>
                                 <ul class="dropdown-menu">
-                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
-                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
-                                    <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
+                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?php echo get_permalink($course->ID) ?>" target="_blank">Bekijk</a></li>
+                                    <li class="my-2"><a href="<?php $edit_url ?>"><i class="fa fa-gear px-2"></i> Pas aan</a></li>
+                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="" value="Verwijderen"/></li>
                                 </ul>
                             </div>
                         </td>
-<!--                         <td><a class="del-course" data-attr="<?php echo $course->ID;?>" href="#"><i class="fas fa-trash-alt" style="color:red;"></i></a></td>
- -->                    </tr>
+                    </tr>
 
                     <?php
                     }
@@ -118,4 +129,27 @@ if($id != 0){
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
+<script type="text/javascript">
+    $(".remove_opleidingen").click(function(){
+        var id = $(this).parents("tr").attr("id");
+
+        if(confirm('Are you sure to remove this record ?'))
+        {
+            $.ajax({
+               url: '/delete-course',
+               type: 'GET',
+               data: {id: id},
+               error: function() {
+                  alert('Something is wrong');
+               },
+               success: function(data) {
+                    $("#"+id).remove();
+                    alert("Record removed successfully");
+               }
+            });
+        }
+    });
+
+</script>

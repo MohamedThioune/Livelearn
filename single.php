@@ -36,15 +36,18 @@ $instagram = get_field('instagram',  'user_' . $post->post_author);
 $discord = get_field('discord',  'user_' . $post->post_author);
 $tik_tok = get_field('tik_tok',  'user_' . $post->post_author);
 
-//Image
-$image = get_the_post_thumbnail_url($post->ID);
-if(!$image)
-    $image = get_field('preview', $post->ID)['url'];
-if(!$image)
-    $image = get_field('url_image_xml', $post->ID);
-if(!$image)
-    $image = get_stylesheet_directory_uri() . '/img/blog/1.jpg';
+$course_type = get_field('course_type', $post->ID);
 
+//Image - article
+$image = get_field('preview', $post->ID)['url'];
+if(!$image){
+    $image = get_the_post_thumbnail_url($post->ID);
+    if(!$image)
+        $image = get_field('url_image_xml', $post->ID);
+            if(!$image)
+                $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+}
+    
 //Author
 $user_picture = get_field('profile_img', $post->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
