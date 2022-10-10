@@ -198,17 +198,12 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
         <div class="col-md-5 col-lg-8">
             <div class="cardCoursGlocal">
                 <div id="basis" class="w-100">
-                    <?php 
-                    if(!isset($step2)){     
-                    ?>
+                  
                     <div class="titleOpleidingstype">
                         <h2>TAGS</h2>
                     </div>
-                    <?php
-                    }
-                    ?>
 
-                    <form id="step1">
+                    <!-- <form id="step1">
                         <div class="acf-field">
                             <input type="hidden" id="course_id" value="<?= $_GET['id'] ?>">
                             <label for="locate">Specifieke baan :</label><br>
@@ -312,8 +307,7 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
 
                             <button type="button" name="step1" id="btn-ajax" class="btn btn-info">Apply</button>
                         </div>
-                    </form>
-
+                    </form> -->
 
                     <!-- New selectable subtopics  -->
 
@@ -328,7 +322,17 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                                     <?php
                                         foreach($bangerichts as $key => $value)
                                         {
-                                            //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                            $state = false;
+                                            $childrens = get_term_children($value->cat_ID, 'course_category');
+                                            foreach($choosen_categories as $element)
+                                                if(in_array($element, $childrens) && !in_array($element, $displayed)){
+                                                    echo '<input checked type="checkbox" value= '.$value->cat_ID .' id="cb_topics_bangricht'.($key+1).'" /><label class="labelChoose btnBaangerichte subtopics_bangricht_'.($key+1).' '.($key+1).'" for="cb_topics_bangricht'.($key+1).'">'. $value->cat_name .'</label>';
+                                                    array_push($displayed, $element);
+                                                    $state = true;
+                                                }
+    
+                                                if($state)
+                                                    continue;
                                             echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_bangricht'.($key+1).'" /><label class="labelChoose btnBaangerichte subtopics_bangricht_'.($key+1).' '.($key+1).'" for="cb_topics_bangricht'.($key+1).'">'. $value->cat_name .'</label>';
                                         }
                                     ?>
