@@ -566,3 +566,95 @@ add_filter( 'rest_authentication_errors', function( $result ) {
 
     return $result;
 });
+
+function filter_woocommerce_api_product_response( $product_data, $product, $fields, $this_server ) { 
+    $product_data['vendor_id'] = get_post_field( 'post_author', $product->id);
+    $product_data['vendor_name'] = get_the_author_meta( 'display_name', $product_data['vendor_id']);
+        return $product_data; 
+
+
+};      
+add_filter( 'woocommerce_api_product_response', 'filter_woocommerce_api_product_response', 10, 4 ); 
+
+/*
+** Endpoints - API
+*/
+function seperate_tags(){
+
+    $categories = array();
+    $datum = array();
+    $main = array();
+    $topics = array();
+    $topics_sub = array();
+
+    $cats = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'orderby'    => 'name',
+        'exclude' => 'Uncategorized',
+        'parent'     => 0,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    foreach($cats as $category){
+        array_push($main, $category);
+        $cat_id = strval($category->cat_ID);
+        $category = intval($cat_id);
+        array_push($categories, $category);
+    }
+
+    $datum['categories'] = $main;
+
+    //Categories
+    $bangerichts = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[1],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    $functies = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[0],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    $skills = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[3],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    $interesses = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[2],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    $topics = array_merge($bangerichts, $functies, $skills, $interesses);
+
+    $datum['topics'] = $topics;
+
+    foreach($topics as $tag){
+        //Topics
+        $cats = get_categories( array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent' => $tag->cat_ID,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ));
+        if (!empty($cats))
+            foreach($cats as $key => $value)
+                array_push($topics_sub, $value); 
+    }
+
+    $datum['sub'] = $topics_sub;
+
+    return $datum;
+
+}
+
+//Callbacks 
+add_action( 'rest_api_init', function () {
+  register_rest_route( 'custom/v1', '/tags', array(
+    'methods' => 'GET',
+    'callback' => 'seperate_tags',
+  ) );
+} );

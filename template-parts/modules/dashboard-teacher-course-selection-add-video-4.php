@@ -8,7 +8,7 @@
                 <?php 
                     acf_form(array(
                         'post_id'       => $_GET['id'],
-                        'field_groups' => array('group_6155e73fb1744'),
+                        'fields' => array('incompany_mogelijk', 'geacrediteerd', 'btw-klasse'),
                         'submit_value'  => __('Opslaan & naar overzicht'),
                         'return' => '?func=add-video&id=%post_id%&step=5'
                     )); 
