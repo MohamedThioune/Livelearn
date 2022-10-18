@@ -268,13 +268,8 @@
                     <h2  class="titleContact">Direct contact met één van onze adviseurs?</h2>
                     <p class="descriptionContact">We helpen je graag met jouw specifieke vragen omtrent talent management en de toepasbaarheid hiervan binnen je organisatie.</p>
                     <div class="groupBtnFooter">
-<<<<<<< HEAD
-                        <a href="mailto:" class="btnemail btn">Email</a>
-                        <a href="tel:" class="btnBellen btn">Bellen</a>
-=======
                         <a href = "mailto: contact@livelearn.nl" class="btnemail btn">Email</a>
                         <a href="tel: +31627003962" class="btnBellen btn">Bellen</a>
->>>>>>> origin/frontSeydou
                     </div>
                 </div>
             </div>

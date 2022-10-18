@@ -3,211 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages.desktop" beforeDir="false" afterPath="$PROJECT_DIR$/Pages.desktop" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog.css" beforeDir="false" afterPath="$PROJECT_DIR$/blog.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blog.xcss" beforeDir="false" afterPath="$PROJECT_DIR$/blog.xcss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bootstrap-datepicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap-datepicker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bootstrap-datepicker.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap-datepicker.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/city.js" beforeDir="false" afterPath="$PROJECT_DIR$/city.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ckeditor.js" beforeDir="false" afterPath="$PROJECT_DIR$/ckeditor.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customSurmmote.js" beforeDir="false" afterPath="$PROJECT_DIR$/customSurmmote.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/edit-databank.php" beforeDir="false" afterPath="$PROJECT_DIR$/edit-databank.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/font-awsome.js" beforeDir="false" afterPath="$PROJECT_DIR$/font-awsome.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/footer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/footer.xphp" beforeDir="false" afterPath="$PROJECT_DIR$/footer.xphp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/header.php" beforeDir="false" afterPath="$PROJECT_DIR$/header.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/header_base.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_base.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/header_teacher.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_teacher.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/header_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_user.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/horizon-20220310.2227.xml" beforeDir="false" afterPath="$PROJECT_DIR$/horizon-20220310.2227.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inl.css" beforeDir="false" afterPath="$PROJECT_DIR$/inl.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kenneth-smit-20220310.2227.xml" beforeDir="false" afterPath="$PROJECT_DIR$/kenneth-smit-20220310.2227.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main-user.js" beforeDir="false" afterPath="$PROJECT_DIR$/main-user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/main.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.js~HEAD" beforeDir="false" afterPath="$PROJECT_DIR$/main.js~HEAD" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobapiCity.js" beforeDir="false" afterPath="$PROJECT_DIR$/mobapiCity.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pied d'athlète sur les .txt" beforeDir="false" afterPath="$PROJECT_DIR$/pied d'athlète sur les .txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/possible-20220310.2227.xml" beforeDir="false" afterPath="$PROJECT_DIR$/possible-20220310.2227.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rating.css" beforeDir="false" afterPath="$PROJECT_DIR$/rating.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/review.php" beforeDir="false" afterPath="$PROJECT_DIR$/review.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/search-bar.php" beforeDir="false" afterPath="$PROJECT_DIR$/search-bar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/single-course.php" beforeDir="false" afterPath="$PROJECT_DIR$/single-course.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/single.php" beforeDir="false" afterPath="$PROJECT_DIR$/single.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/single.xphp" beforeDir="false" afterPath="$PROJECT_DIR$/single.xphp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/style-dashboard.css" beforeDir="false" afterPath="$PROJECT_DIR$/style-dashboard.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/style-dashboard.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/style-dashboard.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/style-dashboard.scss" beforeDir="false" afterPath="$PROJECT_DIR$/style-dashboard.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/style-main.css" beforeDir="false" afterPath="$PROJECT_DIR$/style-main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/style-main.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/style-main.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/style-main.scss" beforeDir="false" afterPath="$PROJECT_DIR$/style-main.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/style.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/style.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/style.scss" beforeDir="false" afterPath="$PROJECT_DIR$/style.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/summernote.css" beforeDir="false" afterPath="$PROJECT_DIR$/summernote.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/summernote.js" beforeDir="false" afterPath="$PROJECT_DIR$/summernote.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/taxonomy-category.php" beforeDir="false" afterPath="$PROJECT_DIR$/taxonomy-category.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-allocate.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-allocate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-assign.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-assign.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-de-organisatie.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-de-organisatie.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-grant.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-grant.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-databank.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-databank.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-modules.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-modules.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-paths.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-paths.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-leerbudgetten.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-leerbudgetten.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-my-manager.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-my-manager.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-people-mensen.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-people-mensen.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-people.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-people.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-company.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-company.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-statistic.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-statistic.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-menu-company.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-menu-company.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-menu-teacher.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-menu-teacher.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-people.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-people.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-article-2.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-article-2.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-article-3.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-article-3.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-article-4.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-article-4.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-assessment-2.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-assessment-2.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-assessment-3.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-assessment-3.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-white-2.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-white-2.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-white-3.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-white-3.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-white-4.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-white-4.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-article.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-article.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-assessment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-2.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-2.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-3.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-3.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-4.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-4.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-5.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-5.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-6.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-6.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-road-2.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-road-2.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-road-3.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-road-3.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-road-4.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-road-4.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-road.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-road.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-2.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-2.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-3.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-3.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-4.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-4.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-5.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-5.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-6.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video-6.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-video.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-white.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-white.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-courses.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-courses.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-detail-profile-teacher.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-detail-profile-teacher.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-detail-profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-detail-profile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-podcast.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-podcast.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-road-path.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-list-road-path.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-profile-teacher.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-profile-teacher.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-road-path.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-road-path.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-signups.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-signups.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-activity.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-activity.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-assessment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-dataclean.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-dataclean.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-detail-notification.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-detail-notification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-detail-profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-detail-profile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-notification.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-notification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-profile-edit.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-profile-edit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-profile-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-profile-home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-settings.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/product-podcast.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/product-podcast.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline-default.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline-default.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template.css" beforeDir="false" afterPath="$PROJECT_DIR$/template.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/answer-assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/answer-assessment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/archive.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/archive.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/check_visibility.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/check_visibility.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/databank.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/databank.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/detail-assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/detail-assessment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/edit-databank.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/edit-databank.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fetch-company-course.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fetch-company-course.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fetch-company-people.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fetch-company-people.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fetch-data-clean-author.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fetch-data-clean-author.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fetch-data-clean-company.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fetch-data-clean-company.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fetch-data-clean-quick.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fetch-data-clean-quick.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fetch-data-clean.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fetch-data-clean.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fetch-expert.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fetch-expert.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fetch-rent.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fetch-rent.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fetch-signups.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fetch-signups.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fetch-subtopics-course.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fetch-subtopics-course.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/fetch.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/fetch.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/headerDashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/headerDashboard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/layaoutManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layaoutManager.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/layaoutTeacher.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layaoutTeacher.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/like.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/like.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/optie-bank.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/optie-bank.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/postal.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/postal.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/privacy.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/privacy.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/read-notification.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/read-notification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/review.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/review.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/scrapping-template.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/scrapping-template.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/simple_html_dom.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/simple_html_dom.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/single-product-road-path.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/single-product-road-path.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/single-road-path.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/single-road-path.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-Onderwer.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-Onderwer.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/template-Ontwikkeladvies.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-Ontwikkeladvies.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-baangerichte.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-baangerichte.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-candidat-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-candidat-home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-category-overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-category-overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-contact.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-contact.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-creëren.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-creëren.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-dashboard-core.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-dashboard-core.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-dashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-dashboard.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-ecosysteme.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-ecosysteme.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-firstModal.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-firstModal.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-functiegerichte.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-functiegerichte.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-gratis-carriere.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-gratis-carriere.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-grootbedrijf.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-grootbedrijf.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-home.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-inloggen.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-inloggen.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-lift-lid.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-lift-lid.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-mkb.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-mkb.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-opleider-courses.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-opleider-courses.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-opleiders.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-opleiders.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-overview-organisations-5.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-overview-organisations-5.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-overviewOrganisaties.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-overviewOrganisaties.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-persoonlijke.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-persoonlijke.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-pricing.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-pricing.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-product-search.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-product-search.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-recruitement.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-recruitement.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-registreren.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-registreren.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-single.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-single.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-skill.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-skill.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-skillsPassport.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-skillsPassport.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-static-education-advice.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-static-education-advice.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-static-education-individual.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-static-education-individual.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-sub-topic.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-sub-topic.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-topic.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-topic.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-uitleggen.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-uitleggen.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-user-overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-user-overview.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-verkopen.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-verkopen.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-voor-organisaties.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-organisaties.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-voor-teacher-detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-teacher-detail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-voor-teacher.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-teacher.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-voor-teachers.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-teachers.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-xml-parse.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-xml-parse.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/template-zzpers.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-zzpers.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/topic-ajax.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/topic-ajax.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/topic.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/topic.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/trash-course.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/trash-course.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/trash-user.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/trash-user.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/usefull_functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/usefull_functions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/youtube-video-course-channel.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/youtube-video-course-channel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/youtube-video-course-playlist.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/youtube-video-course-playlist.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tvvl-20220310.1412.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tvvl-20220310.1412.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/winc-academy-20220308.1758.xml" beforeDir="false" afterPath="$PROJECT_DIR$/winc-academy-20220308.1758.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/woo.scss" beforeDir="false" afterPath="$PROJECT_DIR$/woo.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wp-config.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-config.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -239,8 +40,11 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../test" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -761,6 +565,10 @@
       <workItem from="1664872254625" duration="851000" />
       <workItem from="1664882275068" duration="10478000" />
       <workItem from="1664984896488" duration="8605000" />
+      <workItem from="1665568013755" duration="662000" />
+      <workItem from="1665927919259" duration="12809000" />
+      <workItem from="1665998919508" duration="1963000" />
+      <workItem from="1666035301227" duration="140000" />
     </task>
     <servers />
   </component>
