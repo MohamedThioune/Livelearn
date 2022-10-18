@@ -186,9 +186,10 @@ foreach ($reviews as $review)
         break;
     }
 
- 
-
 $share_txt = "Hello, i share this course with ya *" . $post->post_title . "* \n Link : " . get_permalink($post->ID) . "\nHope you'll like it.";
+
+$offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
+$online = ['E-learning', 'Video', 'Webinar'];
 
 if(in_array($course_type, $offline))
     include_once('template-parts/modules/single-course-offline.php');

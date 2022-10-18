@@ -326,8 +326,6 @@ else if(isset($interest_push)){
                 header("location: ../../dashboard/user/?message=".$message);
             }
         }
-        
-        
     }
 }
 

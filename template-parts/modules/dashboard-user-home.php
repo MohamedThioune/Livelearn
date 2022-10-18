@@ -155,7 +155,6 @@ foreach ($global_courses as $key => $course) {
     }
 }
 
-
 //Views
 $user_post_view = get_posts(
     array(
@@ -293,11 +292,9 @@ if(isset($_GET['message']))
                     foreach($recommended_courses as $course){
 
                         if(!get_field('visibility', $course->ID)) {
-                            if(get_field('course_type', $course->ID) == $key){
+                            if(get_field('course_type', $course->ID) == 'Artikel'){
 
                                 $count['limit'] = $count['limit'] + 1;
-
-                                $find = true;
 
                                 $month = '';
                                 $location = 'Virtual';
@@ -319,40 +316,6 @@ if(isset($_GET['message']))
                                     $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
                                     if($category_id != 0)
                                         $category = (String)get_the_category_by_ID($category_id);
-                                }
-
-                                /*
-                                *  Date and Location
-                                */ 
-
-                                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];    
-
-                                $data = get_field('data_locaties', $course->ID);
-                                if($data){
-                                    $date = $data[0]['data'][0]['start_date'];
-
-                                    $day = explode('/', explode(' ', $date)[0])[0];
-                                    $month = explode('/', explode(' ', $date)[0])[1];
-                                    $month = $calendar[$month];
-                                    
-                                    $location = $data[0]['data'][0]['location'];
-                                }
-                                else{
-                                    $dates = get_field('dates', $course->ID);
-                                    if($dates){
-                                        $day = explode('-', explode(' ', $dates[0]['date'])[0])[2];
-                                        $month = explode('-', explode(' ', $dates[0]['date'])[0])[1];
-
-                                        $month = $calendar[$month]; 
-                                    }else{
-                                        $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                                        $date = $data[0];
-                                        $day = explode('/', explode(' ', $date)[0])[0];
-                                        $month = explode('/', explode(' ', $date)[0])[1];
-                                        $month = $calendar[$month];
-                                        $location = $data[2];
-                                    }
-
                                 }
 
                                 /*
@@ -384,6 +347,8 @@ if(isset($_GET['message']))
                                 
                                 //Course Type
                                 $course_type = get_field('course_type', $course->ID);
+
+                                $find = true;
                     ?>
                         <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
                             <div class="blockLoveCourse" >
@@ -509,8 +474,6 @@ if(isset($_GET['message']))
 
                                 $count['limit'] = $count['limit'] + 1;
 
-                                $find = true;
-
                                 $month = '';
                                 $location = 'Virtual';
 
@@ -535,36 +498,33 @@ if(isset($_GET['message']))
 
                                 /*
                                 *  Date and Location
-                                */ 
+                                */
+                                $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
-                                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];    
-
-                                $data = get_field('data_locaties', $course->ID);
-                                if($data){
-                                    $date = $data[0]['data'][0]['start_date'];
-
-                                    $day = explode('/', explode(' ', $date)[0])[0];
-                                    $month = explode('/', explode(' ', $date)[0])[1];
-                                    $month = $calendar[$month];
-                                    
-                                    $location = $data[0]['data'][0]['location'];
-                                }
-                                else{
-                                    $dates = get_field('dates', $course->ID);
-                                    if($dates){
-                                        $day = explode('-', explode(' ', $dates[0]['date'])[0])[2];
-                                        $month = explode('-', explode(' ', $dates[0]['date'])[0])[1];
-
-                                        $month = $calendar[$month]; 
-                                    }else{
-                                        $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                                        $date = $data[0];
-                                        $day = explode('/', explode(' ', $date)[0])[0];
-                                        $month = explode('/', explode(' ', $date)[0])[1];
-                                        $month = $calendar[$month];
-                                        $location = $data[2];
+                                $datas = get_field('data_locaties', $course->ID);
+                                if($datas){
+                                    $data = $datas[0]['data'][0]['start_date'];
+                                    if($data != ""){
+                                        $day = explode('/', explode(' ', $data)[0])[0];
+                                        $mon = explode('/', explode(' ', $data)[0])[1];
+                                        $month = $calendar[$mon];
                                     }
 
+                                    $location = $datas[0]['data'][0]['location'];
+                                }else{
+                                    $datas = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
+                                    $data = $datas[0];
+                                    $day = explode('/', explode(' ', $data)[0])[0];
+                                    $month = explode('/', explode(' ', $data)[0])[1];
+                                    $month = $calendar[$month];
+                                    $location = $datas[2];
+                                }
+
+                                if(!empty($data)){
+                                    $date_now = strtotime(date('Y-m-d'));
+                                    $data = strtotime(str_replace('/', '.', $data));
+                                    if($data < $date_now)
+                                        continue;
                                 }
 
                                 /*
@@ -599,6 +559,8 @@ if(isset($_GET['message']))
 
                                 //Other case : youtube
                                 $youtube_videos = get_field('youtube_videos', $course->ID);
+
+                                $find = true;
 
                     ?>
                         <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
@@ -744,8 +706,6 @@ if(isset($_GET['message']))
 
                 $i++;
         
-                $find = true;
-
                 $month = '';
                 $location = 'Virtual';
 
@@ -828,6 +788,8 @@ if(isset($_GET['message']))
                 * Companies
                 */ 
                 $company = get_field('company',  'user_' . $course->post_author);
+
+                $find = true;
             ?>
 
                 <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">

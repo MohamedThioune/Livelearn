@@ -651,10 +651,517 @@ function seperate_tags(){
 
 }
 
+function follow_meta( WP_REST_Request $request){
+    $user_id = get_current_user_id();
+    $informations = array();
+
+    if($request['meta_value'] == null || $request['meta_key'] == null){
+        $informations['error'] = 'Please fill the value of the metadata !';
+        return $informations;
+    }
+
+    $category = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'orderby'    => 'name',
+        'include' => $request['meta_value'],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    if(!isset($category[0]) && !get_user_by('ID', $request['meta_value'])){
+        $informations['error'] = 'Please fill correctly the value of the metadata !';
+        return $informations;
+    }
+
+    $meta_data = get_user_meta($user_id, $request['meta_key']);
+    if(!in_array($request['meta_value'], $meta_data)){
+        add_user_meta($user_id, $request['meta_key'], $request['meta_value']);
+        $informations['success'] = 'Subscribed successfully !';
+    }else{
+        delete_user_meta($user_id, $request['meta_key'], $request['meta_value']);
+        $informations['success'] = 'Unsubscribed successfully !';
+    }
+
+    return $informations;
+}
+
+function tracker_course(WP_REST_Request $request){
+    $user_visibility = wp_get_current_user();
+    $informations = array();
+
+    $course = get_post($request['course_id']);
+
+    if(empty($course))
+        return ['error' => 'Please fill the ID correctly !'];
+
+    $user_id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;
+    if(!$user_id)
+        return false;
+
+    $args = array(
+        'post_type' => 'view', 
+        'post_status' => 'publish',
+        'author' => $user_id,
+    );
+
+    $views_stat_user = get_posts($args);
+
+    if(!empty($views_stat_user))
+        $stat_id = $views_stat_user[0]->ID;
+    else{
+        $data = array(
+            'post_type' => 'view',
+            'post_author' => $user_id,
+            'post_status' => 'publish',
+            'post_title' => $user_visibility->display_name . ' - View',
+            );
+        
+        $stat_id = wp_insert_post($data);
+    }
+
+    $view = get_field('views', $stat_id);
+    
+    $one_view = array();
+    $one_view['course'] = $course;
+    $one_view['date'] = date('d/m/Y H:i:s');
+
+    if(!empty($view))
+        array_push($view, $one_view);
+    else 
+        $view = array($one_view); 
+    
+    update_field('views', $view, $stat_id);
+
+    return ['success' => 'Tracker course executed successfully !'];
+
+}
+
+function recommended_course(){
+    //The user
+    $user = get_current_user_id();
+
+    //The company
+    $company_visibility = get_field('company',  'user_' . $user_visibility->ID);
+    if(!empty($company_visibility))
+        $visibility_company = $company_visibility[0]->post_title;
+    
+    $i = 0;
+
+    $courses = array();
+    $course_id = array();
+    $random_id = array(); 
+    $categories = array();
+
+    //Categories
+    $cats = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'orderby'    => 'name',
+        'exclude' => 'Uncategorized',
+        'parent'     => 0,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    foreach($cats as $category){
+        $cat_id = strval($category->cat_ID);
+        $category = intval($cat_id);
+        array_push($categories, $category);
+    }
+
+    /*
+    ** Categories
+    */
+    $bangerichts = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[1],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+    $functies = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[0],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+    $skills = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[3],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+    $interesses = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent'  => $categories[2],
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+    $subtopics = array(); 
+    foreach($categories as $categ){
+        //Topics
+        $topicss = get_categories(
+            array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $categ,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            ) 
+        );
+
+        foreach ($topicss as  $value) {
+            $subtopic = get_categories( 
+                array(
+                'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                'parent'  => $value->cat_ID,
+                'hide_empty' => 0,
+                //  change to 1 to hide categores not having a single post
+                ) 
+            );
+            $subtopics = array_merge($subtopics, $subtopic);      
+        }
+    }
+
+    // Get interests courses
+    $topics_external = get_user_meta($user, 'topic');
+    $topics_internal = get_user_meta($user, 'topic_affiliate');
+
+    $topics = array();
+    if(!empty($topics_external))
+        $topics = $topics_external;
+
+    if(!empty($topics_internal))
+        foreach($topics_internal as $value)
+            array_push($topics, $value);
+
+    $experts = get_user_meta($user, 'expert');
+    $args = array(
+        'post_type' => array('course', 'post'), 
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC'
+    );
+    $global_courses = get_posts($args);
+
+    foreach ($global_courses as $key => $course) {    
+        //Control visibility
+        $invisibility = get_field('visibility', $course->ID);
+        $company = get_field('company',  'user_' . $course->post_author);
+        if(!empty($company))
+            $company_title = $company[0]->post_title;
+        if($invisibility && $visibility_company != $company_title )
+            continue;
+        
+        //Preferences categories
+        $category_default = get_field('categories', $course->ID);
+        $category_xml = get_field('category_xml', $course->ID);
+        $read_category = array();
+        if(!empty($category_default))
+            foreach($category_default as $item)
+                if($item)
+                    if(!in_array($item['value'],$read_category))
+                        array_push($read_category,$item['value']);
+                    
+        else if(!empty($category_xml))
+            foreach($category_xml as $item)
+                if($item)
+                    if(!in_array($item['value'],$read_category))
+                        array_push($read_category,$item['value']);
+                    
+        foreach($topics as $topic_value){
+            if($read_category)
+                if(in_array($topic_value, $read_category) ){
+                    if(!in_array($course->ID, $course_id)){
+                        array_push($course_id, $course->ID);
+                        array_push($courses, $course);  
+                        break;
+                    }
+            }
+        }
+
+        //Preference author
+        if(in_array($course->post_author, $experts)){
+            if(!in_array($course->ID, $course_id)){
+                array_push($course_id, $course->ID);
+                array_push($courses, $course);       
+            }
+        }
+
+        //Preference expert
+        $experties = get_field('experts', $course->ID);  
+        foreach($experties as $topic_expert){
+            if(in_array($topic_expert, $experts)){
+                if(!in_array($course->ID, $course_id)){
+                    array_push($course_id, $course->ID);
+                    array_push($courses, $course);  
+                    break;
+                }
+            }
+        }
+
+    }
+
+    $courses = array_slice($courses, 0, 150);
+
+    //Views
+    $user_post_view = get_posts(
+        array(
+            'post_type' => 'view',
+            'post_status' => 'publish',
+            'author' => $user,
+            'order' => 'DESC'
+        )
+    )[0];   
+    $is_view = false;
+
+    if (count($user_post_view)!= 0)
+    {
+        $courses_id = array();
+        $is_view=true;
+    
+        $all_user_views = (get_field('views', $user_post_view->ID));
+        $max_points = 10;
+        $recommended_courses = array();
+
+        foreach($all_user_views as $key => $view) {
+            foreach ($courses as $key => $course) {
+                $points = 0;
+
+                //Read category viewed
+                $read_category_view = array();
+                $category_default = get_field('categories', $view['course']->ID);
+                $category_xml = get_field('category_xml', $view['course']->ID);        
+                if(!empty($category_default))
+                    foreach($category_default as $item)
+                        if($item)
+                            if(!in_array($item['value'],$read_category_view))
+                                array_push($read_category_view, $item['value']);
+                            
+                else if(!empty($category_xml))
+                    foreach($category_xml as $item)
+                        if($item)
+                            if(!in_array($item['value'],$read_category_view))
+                                array_push($read_category_view, $item['value']);
+                            
+                
+                //Read category course
+                $read_category_course = array();
+                $category_default = get_field('categories', $view['course']->ID);
+                $category_xml = get_field('category_xml', $view['course']->ID);        
+                if(!empty($category_default))
+                    foreach($category_default as $item)
+                        if($item)
+                            if(!in_array($item['value'],$read_category_course))
+                                array_push($read_category_course, $item['value']);
+                            
+                else if(!empty($category_xml))
+                    foreach($category_xml as $item)
+                        if($item)
+                            if(!in_array($item['value'],$read_category_course))
+                                array_push($read_category_course, $item['value']);
+                
+                //Price view
+                $view_prijs = get_field('price', $view['course']->ID);
+
+                foreach($read_category_view as $value){
+                    if($points == 6)
+                        break;
+                    if(in_array($value, $read_category_course))
+                        $points += 3;
+                }
+                if ($view['course']->post_author == $course->post_author) 
+                    $points += 3;
+                if ($view_prijs <= $course->price)
+                    $points += 1;
+                
+                $percent = abs(($points/$max_points) * 100);
+                if ($percent >= 65)
+                    if(!in_array($course->ID, $random_id)){
+                        array_push($random_id, $course->ID);
+                        array_push($recommended_courses, $course);
+                    }
+            }
+        }
+    }
+
+    $recommended_courses = array_slice($recommended_courses, 0, 20); 
+
+    if (empty($recommended_courses))
+        $recommended_courses = $courses;
+
+    shuffle($recommended_courses);
+    if (!empty($recommended_courses))
+        return $recommended_courses;
+    else 
+        return ["error" => "Nothing to show, don't ask me why 😅 !"];
+}
+
+function store_comments(WP_REST_Request $request){
+    $id = $request['course_id'];
+    $stars = $request['stars'];
+    $feedback_content =  $request['feedback_content'];
+
+    if(!$id || !$stars || !$feedback_content)
+        return ['error' => 'Please fill all data required !'];
+
+    $reviews = get_field('reviews', $id);
+    $informations = array();
+    $current_user  = get_current_user_id();
+    $my_review_bool = false;
+    foreach ($reviews as $review)
+        if($review['user']->ID == $current_user){
+            $my_review_bool = true;
+            return ['error' => 'You already comment this course !'];
+        }
+
+    $review = array();
+    $review['user'] = $current_user;
+    $review['rating'] = $stars;
+    $review['feedback'] = $feedback_content;
+    if(!$reviews)
+        $reviews = array();
+    array_push($reviews,$review);
+    update_field('reviews',$reviews, $id);
+
+    $informations['success'] = "Comment sent successfully !";
+    $informations['data'] = $review;
+
+    return $informations;
+}
+
+function comments_course($data){
+    $reviews = get_field('reviews', $data['id']);
+
+    if(!empty($reviews))
+        return $reviews;
+    else
+        return ['error' => 'No reviews for this course !'];
+}
+
+function notification_display(){
+    $user = wp_get_current_user();
+
+    /*
+    * * Feedbacks
+    */
+
+    $args = array(
+        'post_type' => 'feedback', 
+        'author' => $user->ID,
+        'orderby' => 'post_date',
+        'order' => 'DESC',
+        'posts_per_page' => -1,
+    );
+
+    $notifications = get_posts($args);
+    $todos = array();
+
+    if(!empty($notifications))
+        foreach($notifications as $todo){
+            $read = get_field('read_feedback', $todo->ID);
+            if($read)
+                continue;
+            array_push($todos,$todo);
+        }
+
+    if(!empty($todos))
+        return $todos;
+    else
+        return ['error' => 'No notification you didn\'t see yet !'];
+}
+
+function notification($data){
+
+    $feedback = array();
+
+    $value = get_post($data['id']);   
+    if(!empty($value)){
+        $feedback['type'] = get_field('type_feedback', $value->ID);
+        $manager_id = get_field('manager_feedback', $value->ID);
+        $feedback['image'] = get_field('profile_img',  'user_' . $manager_id);
+        if(!$feedback['image'] )
+            $feedback['image']  = get_stylesheet_directory_uri() . '/img/Group216.png';
+
+        $feedback['manager'] = get_user_by('ID', $manager_id);
+    
+        if($feedback['type'] == "Feedback" || $feedback['type'] == "Compliment" || $feedback['type'] == "Gedeelde cursus")
+            $feedback['beschrijving_feedback'] = get_field('beschrijving_feedback', $value->ID);
+        else if($feedback['type'] == "Persoonlijk ontwikkelplan")
+            $feedback['beschrijving_feedback'] = get_field('opmerkingen', $value->ID);
+        else if($feedback['type'] == "Beoordeling Gesprek")
+            $feedback['beschrijving_feedback'] = get_field('algemene_beoordeling', $value->ID);
+
+    } 
+
+    return $feedback;
+}
+
+function agreement(WP_REST_Request $request){
+    global $wpdb;
+
+    $table = $wpdb->prefix . 'agreement_content_artikel'; 
+
+    $website = $request['website'];
+    $url = $request['url'];
+    $response = $request['response'];
+
+    if(!$website || !$url || empty($response))
+        return ['error' => 'Please fill all data required !'];
+
+    //Get agreement
+    $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}agreement_content_artikel WHERE url = %s", $url);
+    $agreement = $wpdb->get_results( $sql )[0];
+    $updated = ['response' => $response];
+    $where = [ 'url' => $url ]; // NULL value in WHERE clause.
+    $inserted = ['website' => $website, 'url' => $url, 'response' => $response];
+
+    if(!empty($agreement))
+        $activated = $wpdb->update( $table, $updated, $where);
+    else
+        $activated = $wpdb->insert( $table, $inserted);
+
+    if($activated)
+        return ['success' => 'Agreement sent successfully !'];
+    else
+        return ['error' => 'Something went wrong !'];
+}
+
 //Callbacks 
 add_action( 'rest_api_init', function () {
   register_rest_route( 'custom/v1', '/tags', array(
     'methods' => 'GET',
     'callback' => 'seperate_tags',
   ) );
+
+  register_rest_route( 'custom/v1', '/follow', array(
+    'methods' => 'POST',
+    'callback' => 'follow_meta',
+  ) );
+
+  register_rest_route( 'custom/v1', '/tracker/course', array(
+    'methods' => 'POST',
+    'callback' => 'tracker_course',
+  ) );
+
+  register_rest_route( 'custom/v1', '/recommended/course', array(
+    'methods' => 'GET',
+    'callback' => 'recommended_course',
+  ) );
+
+  register_rest_route( 'custom/v1', '/comment', array(
+    'methods' => 'POST',
+    'callback' => 'store_comments',
+  ) );
+
+  register_rest_route( 'custom/v1', '/comment/(?P<id>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'comments_course',
+  ) );
+
+  register_rest_route( 'custom/v1', '/notification', array(
+    'methods' => 'GET',
+    'callback' => 'notification_display',
+  ) );
+
+  register_rest_route( 'custom/v1', '/notification/(?P<id>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'notification',
+  ) );
+
+  register_rest_route( 'custom/v1', '/agreement/artikel', array(
+    'methods' => 'POST',
+    'callback' => 'agreement',
+  ) );
+
 } );
