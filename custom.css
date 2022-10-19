@@ -267,7 +267,7 @@ ul.sub-menu li a {
 }
 .btn-outline-realblue:hover {
     background-color: #043356;
-    color: white;  
+    color: white;
 }
 
 
@@ -9917,6 +9917,40 @@ ul#tabs-nav li.active {
 .blocklogoZppers{
     margin-bottom: 30px;
 }
+.paywall-block{
+    background: #E0EFF4;
+    text-align: center;
+    padding: 25px 20px;
+}
+.title-paywall{
+    color: #023356;
+    font-size: 27px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+.sub-title-paywall {
+    font-size: 20px;
+    color: #000000;
+    margin-bottom: 30px;
+}
+.btn-paywall{
+    background: #00A89D;
+    color: white !important;
+    padding: 8px 15px;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+.text-not-sure-which {
+    width: 310px;
+    margin: 0 auto 8px;
+    font-size: 14px;
+    color: #000000;
+}
+.text-not-sure-which a{
+    color: #023356 !important;
+    font-weight: 500;
+}
+
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -12369,6 +12403,18 @@ ul#tabs-nav li.active {
     }
     .blocklogoZppers img{
         width: 115px !important;
+    }
+    .title-paywall {
+        font-size: 23px;
+        margin-bottom: 10px;
+    }
+    .sub-title-paywall {
+        font-size: 18px;
+        margin-bottom: 25px;
+    }
+    .btn-paywall {
+        margin-bottom: 25px;
+        font-size: 14px;
     }
 
 
