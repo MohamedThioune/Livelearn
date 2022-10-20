@@ -1308,6 +1308,40 @@ function scrapeNoa(){
 
 // scrapeNoa();
 
+function scrapeNvj(){
+  $url="https://www.nvj.nl";
+  $tag='article';
+  $selector_class='"node node-nieuws node-promoted node-teaser viewmode-teaser clearfix"';
+  $selector_class_content='"field field-body field-value"';
+  $node_articles=scrapper($url."/nieuws/",$tag,$selector_class);
+  foreach ($node_articles as $key => $node)
+  {
+    $image=$url.$node->getElementsByTagName('img')->item(0)->getAttribute('src') ?? '';
+    $title=trim($node->getElementsByTagName('h2')->item(0)->nodeValue);
+    $link=$url.$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+    // $date=$node->getElementsByTagName('h6')->item(0)->nodeValue;
+    $short_description=trim($node->getElementsByTagName('p')->item(0)->nodeValue);
+    // $title=trim($node->getElementsByTagName('h2')->item(0)->nodeValue);
+    $link=$url.$node->getElementsByTagName('a')->item(0)->getAttribute('href');
+    $result_content=scrapper($link,'div',$selector_class_content);
+    // var_dump($link);
+    if (!is_null($result_content))
+    {
+        $content=""; 
+        foreach ($result_content->item(0)->getElementsByTagName('p') as $key => $node) {
+          $content.=$node->nodeValue;
+        }
+    }
+    $article=new Article($title,$short_description,$image,$link,null,$content);
+    $datas[]=$article;
+    // var_dump($title);
+  }
+  var_dump($datas);
+  return $datas;
+  }
+
+// scrapeNvj();
+
 #------------------------------------------------------------------------------------------------
 
 function scrapeSmartWP()
