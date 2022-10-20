@@ -1295,7 +1295,7 @@ function scrapeFmn(): array{
         var_dump($content);
       }
      $article=new Article($title,$short_description,$image,$link,$date,$content);
-    $datas[]=$article;
+    $datas[] = $article;
   }
   //var_dump($datas);
   return $datas;
