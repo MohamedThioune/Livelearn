@@ -3,12 +3,9 @@
 <?php get_header(); ?>
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
-<<<<<<< HEAD
-=======
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.min.css" />
 <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css'>
->>>>>>> origin/frontSeydou
 <?php
 
 extract($_GET);
@@ -279,7 +276,7 @@ $companies = get_posts($args);
 
                    <div class="input-group-course">
                        <label for="">Long description</label>
-                       <div class="summernote" name="long_description"><?= $course->long_description ?></div>
+                       <textarea class="summernote" name="long_description"><?= $course->long_description ?></textarea>
                    </div>
 
                    <div class="input-group-course">
@@ -445,15 +442,9 @@ $companies = get_posts($args);
        </div>
    </div>
 
-<<<<<<< HEAD
-<?php get_footer(); ?>
-<?php wp_footer(); ?>
-
-=======
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/summernote.js"></script>
-   <script src='https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.8/purify.min.js'></script
->>>>>>> origin/frontSeydou
+<script src='https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.8/purify.min.js'></script>
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.js"></script>
 
 <script type="text/javascript">
@@ -471,25 +462,22 @@ $companies = get_posts($args);
             } else {
                 datePicker.data('datepicker').setDates(selectedDates);
                 alert('You can only select 10 dates.');
-<<<<<<< HEAD
-            } 
-        });
-=======
             }
         });
     });
 </script>
+
 <script id="rendered-js" >
 $(document).ready(function () {
     //Select2
     $(".multipleSelect2").select2({
         placeholder: "Maak uw keuze.",
          //placeholder
->>>>>>> origin/frontSeydou
     });
 });
 //# sourceURL=pen.js
 </script>
+
 <script src="<?php echo get_stylesheet_directory_uri();?>/customSurmmote.js"></script>
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
