@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/Pages.desktop" beforeDir="false" afterPath="$PROJECT_DIR$/Pages.desktop" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/blog.css" beforeDir="false" afterPath="$PROJECT_DIR$/blog.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/blog.xcss" beforeDir="false" afterPath="$PROJECT_DIR$/blog.xcss" afterDir="false" />
@@ -208,6 +209,14 @@
       <change beforePath="$PROJECT_DIR$/winc-academy-20220308.1758.xml" beforeDir="false" afterPath="$PROJECT_DIR$/winc-academy-20220308.1758.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/woo.scss" beforeDir="false" afterPath="$PROJECT_DIR$/woo.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wp-config.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-config.php" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/header_base.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-Ontwikkeladvies.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-Ontwikkeladvies.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-zzpers.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-zzpers.php" afterDir="false" />
+>>>>>>> master
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -239,8 +248,16 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+<<<<<<< HEAD
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../test" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+>>>>>>> master
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -761,6 +778,13 @@
       <workItem from="1664872254625" duration="851000" />
       <workItem from="1664882275068" duration="10478000" />
       <workItem from="1664984896488" duration="8605000" />
+<<<<<<< HEAD
+=======
+      <workItem from="1665568013755" duration="662000" />
+      <workItem from="1665927919259" duration="12809000" />
+      <workItem from="1665998919508" duration="1963000" />
+      <workItem from="1666035301227" duration="140000" />
+>>>>>>> master
     </task>
     <servers />
   </component>
