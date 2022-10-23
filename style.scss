@@ -1,0 +1,36 @@
+/*
+ Theme Name:   Fluidify child
+ Theme URI:    https://www.influid.nl/
+ Description:  Fluidify Child Theme
+ Author:       Influid
+ Author URI:   https://www.influid.nl/
+ Template:     fluidify
+ Version:      1.0.0
+ Tags:         custom child
+ Text Domain:  fluidify-child
+*/
+
+//should be removed after cleanup
+@use 'legacy/style-legacy.scss';
+@use 'legacy/main.scss';
+@use 'legacy/style-main.scss';
+@use 'legacy/template.scss';
+@use 'legacy/inl.scss';
+@use 'legacy/rating.scss';
+@use 'legacy/header.scss';
+@use 'legacy/custom.scss';
+@use 'legacy/blog.scss';
+@use 'legacy/summernote.scss';
+@use 'legacy/woo.scss';
+@use "legacy/style-dashboard.scss";
+@use "legacy/style.scss";
+
+
+
+//the new structured files
+@use 'assets/scss/headers.scss';
+@use 'assets/scss/footers.scss';
+@use 'assets/scss/buttons.scss';
+@use 'assets/scss/elements.scss';
+@use 'assets/scss/modals.scss';
+@use 'assets/scss/mods.scss';
