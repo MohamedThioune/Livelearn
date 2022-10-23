@@ -19,45 +19,65 @@
 
   global $wpdb;
 
+  function RandomString(){
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randstring = '';
+    for ($i = 0; $i < 10; $i++) {
+        $rand = $characters[rand(0, strlen($characters))];
+        $randstring .= $rand;  
+    }
+    return $randstring;
+  }
+
   $table = $wpdb->prefix . 'databank';
   
   //Get all users
   $users = get_users(); 
    
   //Get the URL content
-  $file = get_stylesheet_directory_uri()."/aeres-tech-20221018.0223.xml";
+  $file = get_stylesheet_directory_uri()."/academie-voor-arbeidsmarktcommunicatie-b.v-20221018.0223.xml";
   $xml = simplexml_load_file($file);
   $data_xml = $xml->program;
 
   //Start inserting course 
-  echo "<h2 class='titleGroupText'>RESUME <i class='fas fa-spinner fa-pulse'></i> </h2>";
+  echo "<h1 class='titleGroupText' style='font-weight:bold'>SCRIPT XML PARSING</h1>";
 
   $author_id = NULL;
 
+  echo "<h3>".$data_xml[0]->programClassification->orgUnitId." running <i class='fas fa-spinner fa-pulse'></i></h3><br><br>";
 
   //Retrieve courses
-  $i = 0;
+  //$i = 0;
   foreach($data_xml as $key => $datum){
-    $i++;
-    if($i == 2)
-      break;
+    // $i++;
+    // if($i == 2)
+    //   break;
 
     $status = 'extern';
     $course_type = "";
     $image = "";
-
-    //Get the url media image to display on front
+    
+    /*
+    Get the url media image 
+    */
     foreach($datum->programDescriptions->media as $media)
-    if($media->type == "image"){
-      $image = $media->url;
-      break;
-    }
+      if($media->type == "image"){
+        $image = $media->url;
+        break;
+      }
+    /*
+    ** END
+    */
 
     //Redundance check "Image & Title"
     $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s", strval($image));
     $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE titel = %s", strval($datum->programDescriptions->programName));
 
-    $check_image = $wpdb->get_results($sql_image);
+    if($image != "")
+      $check_image = $wpdb->get_results($sql_image);
+    else
+      $check_image = 1;
+
     $check_title = $wpdb->get_results($sql_title);
     
     $post = array(
@@ -94,8 +114,9 @@
     /*
     ** -- Main fields --
     */ 
-    
-    //Implemet author 
+
+    $company = null;
+    //Implement author of this course
     foreach($users as $user) {
       $teacher_id = get_field('teacher_id',  'user_' . $user->ID);
       $company_user = get_field('company',  'user_' . $user->ID);
@@ -106,10 +127,13 @@
         if(strpos($teacher_id, strval($post['teacher_id'])) !== false){
           $author_id = $user->ID;
           break;
-        }   
+        } 
+
+        $company = $company_user[0];
+        $company_id = $company_user[0]->ID;  
       }
     }
-
+ 
     if(!$author_id)
     {
       $args = array(
@@ -118,25 +142,26 @@
       );
 
       $companies = get_posts($args);
-      $company = NULL;
       foreach($companies as $value) 
         if(strtolower($value->post_title) == strval($post['org']) ){
           $company = $value;
+          $company_id = $value->ID;
           break;
         }
 
       $login = RandomString();
       $password = RandomString();
-      $email = "author@expertise.nl";
-      $first_name = explode(' ', strval(datum->programCurriculum->teacher->name))[0];
-      $last_name = explode(' ', strval(datum->programCurriculum->teacher->name))[1];
+      $random = RandomString();
+      $email = "author_" . $random . "@expertise.nl";
+      $first_name = explode(' ', strval($datum->programCurriculum->teacher->name))[0];
+      $last_name = explode(' ', strval($datum->programCurriculum->teacher->name))[1];
 
       $userdata = array(
           'user_pass' => $password,
           'user_login' => $login,
           'user_email' => $email,
           'user_url' => 'https://livelearn.nl/inloggen/',
-          'display_name' => strval(datum->programCurriculum->teacher->name),
+          'display_name' => strval($datum->programCurriculum->teacher->name),
           'first_name' => $first_name,
           'last_name' => $last_name,
           'role' => 'teacher'
@@ -146,9 +171,10 @@
     }
 
     //Accord the author a company
-    update_field('company', $company, 'user_' . $author_id);
+    if(!is_wp_error($author_id))
+      update_field('company', $company, 'user_' . $author_id);
 
-    //Fill the company if do not exist -next version
+    //Fill the company if do not exist "next-version"
 
     // Value : course type
     if(in_array('masterclass:', $keywords) || in_array('Masterclass', $keywords) || in_array('masterclass', $keywords))
@@ -161,24 +187,7 @@
       $course_type = "E-learning";
     else
       $course_type = "Opleidingen"; 
-      
-    /*
-    Get the url media image & attachment to display on front
-    */
-    $attachment = array();
-    foreach($datum->programDescriptions->media as $media){
-      if($media->type == "image")
-        $image = $media->url;
-      else
-        array_push($attachment, $media->url);
-    } 
-
-    $attachment_xml = join(',', $attachment);
-    /*
-    ** END
-    */
     
-      
     // Value : description    
     if($datum->programDescriptions->programDescriptionHtml)
       $descriptionHtml = $datum->programDescriptions->programDescriptionHtml;
@@ -287,16 +296,23 @@
       End *
       */ 
 
-      //Get the url media image to display on front
-      foreach($datum->programDescriptions->media as $media)
-        if($media->type == "image"){
+      /*
+      Get the url media image & attachment to display on front
+      */
+      $attachment = array();
+      foreach($datum->programDescriptions->media as $media){
+        if($media->type == "image")
           $image = $media->url;
-          break;
-        }
+        else
+          array_push($attachment, $media->url);
+      } 
+      $attachment_xml = join(',', $attachment);
+      /*
+      ** END
+      */
     
       $data_locaties_xml = array();
       $data_locaties = "";
-
       /*
        Modify the dates
       */ 
@@ -328,7 +344,6 @@
         array_push($data_locaties_xml, $infos);
         
       }
-
       $data_locaties = join('~', $data_locaties_xml);
       
     /*  
@@ -360,15 +375,13 @@
       'company_id' => $company_id,
       'status' => $status
     );
-
-    var_dump($post)
     
     if( !isset($check_image[0]) && !isset($check_title[0]) ){ 
 
-      // $wpdb->insert($table, $post);
-      // $post_id = $wpdb->insert_id;
+      $wpdb->insert($table, $post);
+      $post_id = $wpdb->insert_id;
 
-      // echo $wpdb->last_error;
+      echo $wpdb->last_error;
 
       echo "<span class='textOpleidRight'> Course_ID: " . $datum->programClassification->programId . " - Insertion done successfully <br><br></span>";
 
@@ -377,17 +390,10 @@
       $course = array(1);
 
       if(empty($course)){
-        delete_user_meta(1, $meta_key, $meta);
         echo "****** Course # " . strval($datum->programDescriptions->programName) . " not detected anymore<br><br>";
       }
       else{
-        foreach($meta_data as $value){
-            $metax = explode('~',$value);
-            if($metax[0] == $meta_value){
-              $id = $metax[1];
-              break;
-          } 
-        }
+       
         $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
 
         $course = $wpdb->get_results( $sql )[0];
@@ -442,7 +448,6 @@
           $data = [ 'author_id' => $author_id]; // NULL value.
           $where = [ 'id' => $course->id ];
           $updated = $wpdb->update( $table, $data, $where );
-          echo $wpdb->last_error;
 
           echo '****** Author - ' . $message;
           $change = true;
@@ -452,7 +457,6 @@
           $data = [ 'company_id' => $company_id]; // NULL value.
           $where = [ 'id' => $course->id ];
           $updated = $wpdb->update( $table, $data, $where );
-          echo $wpdb->last_error;
 
           echo '****** Company - ' . $message;
           $change = true;
