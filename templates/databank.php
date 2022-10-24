@@ -6,7 +6,7 @@ global $wpdb;
 /*
 * * Pagination
 */
-$pagination = 25;
+$pagination = 40;
 var_dump($_GET['id']);
 
 if(isset($_GET['id']))
