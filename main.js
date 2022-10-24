@@ -263,8 +263,6 @@ jQuery(function($){
         $(".croie").toggle();
     });
 
-
-
     $("#richting-bineen").click(function() {
         $(".firstContentHeadSousMobile").hide();
         $(".sousMenuBlock1").show();

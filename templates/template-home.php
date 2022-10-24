@@ -811,48 +811,48 @@ $degrees=[
         <div class="row paddingElement7">
             <div class="col-lg-4  col-md-6">
                 <a href="/static-education-individual">
-                    <div class="cardModife3">
-                        <div class="boxImgCard3">
+                    <div class="cardModife3 theme-card">
+                        <div class="boxImgCard3 theme-card-img">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/phoneHomme.png" alt="">
-                            <p  class="startGratis">Skill paspoort</p>
+                            <p  class="startGratis theme-card-category">Skill paspoort</p>
                         </div>
-                        <div class="textGroup">
-                            <p class="voorText2">Voor Individuen</p>
-                            <p class="dePaterneText">Direct en gratis je persoonlijke skill paspoort. Blijf groeien gedurende je carrière of vind een
+                        <div class="textGroup theme-card-body">
+                            <p class="voorText2 theme-card-title">Voor Individuen</p>
+                            <p class="dePaterneText theme-card-description">Direct en gratis je persoonlijke skill paspoort. Blijf groeien gedurende je carrière of vind een
                                 nieuwe uitdaging</p>
-                            <p class="merrText text-center">Meer Informatie</p>
+                            <p class="merrText text-center theme-card-button">Meer Informatie</p>
                         </div>
                     </div>
                 </a>
             </div>
             <div class="col-lg-4  col-md-6">
                 <a href="/voor-teachers">
-                    <div class="cardModife3">
-                        <div class="boxImgCard3">
+                    <div class="cardModife3 theme-card ">
+                        <div class="boxImgCard3 theme-card-img">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/hmTableau.png" alt="">
-                            <p class="startGratis">Word partner</p>
+                            <p class="startGratis theme-card-category">Word partner</p>
                         </div>
-                        <div class="textGroup">
-                            <p class="voorText2">Voor opleiders / experts</p>
-                            <p class="dePaterneText">Word partner van LiveLearn. Bied je training, cursus of e-learning eenvoudig aan en bereik
+                        <div class="textGroup theme-card-body">
+                            <p class="voorText2 theme-card-title">Voor opleiders / experts</p>
+                            <p class="dePaterneText theme-card-description">Word partner van LiveLearn. Bied je training, cursus of e-learning eenvoudig aan en bereik
                                 nieuwe klanten.</p>
-                            <p class="merrText text-center">Meer Informatie</p>
+                            <p class="merrText text-center theme-card-button">Meer Informatie</p>
                         </div>
                     </div>
                 </a>
             </div>
             <div class="col-lg-4  col-md-6">
                 <a href="/voor-organisaties">
-                    <div class="cardModife3">
-                        <div class="boxImgCard3">
+                    <div class="cardModife3 theme-card ">
+                        <div class="boxImgCard3 theme-card-img">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/sta.png" alt="">
-                            <p class="startGratis">Start gratis</p>
+                            <p class="startGratis theme-card-category">Start gratis</p>
                         </div>
-                        <div class="textGroup">
-                            <p class="voorText2">Voor organisaties</p>
-                            <p class="dePaterneText">Een lerende organisatie binnen een paar klikken. LiveLearn is jouw beste partner voor een
+                        <div class="textGroup theme-card-body">
+                            <p class="voorText2 theme-card-title">Voor organisaties</p>
+                            <p class="dePaterneText theme-card-description">Een lerende organisatie binnen een paar klikken. LiveLearn is jouw beste partner voor een
                                 future-proof organisatie.</p>
-                            <p class="merrText text-center">Meer Informatie</p>
+                            <p class="merrText text-center theme-card-button">Meer Informatie</p>
                         </div>
                     </div>
                 </a>
@@ -865,48 +865,48 @@ $degrees=[
             <div class="swiper-wrapper">
                 <div class="swiper-slide swiper-slide3">
                     <a href="/static-education-individual">
-                        <div class="cardModife3">
-                            <div class="boxImgCard3">
+                        <div class="cardModife3 theme-card ">
+                            <div class="boxImgCard3 theme-card-img">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/phoneHomme.png" alt="">
-                                <p  class="startGratis">Skill paspoort</p>
+                                <p  class="startGratis theme-card-category">Skill paspoort</p>
                             </div>
-                            <div class="textGroup">
-                                <p class="voorText2">Voor Individuen</p>
-                                <p class="dePaterneText">Direct en gratis je persoonlijke skill paspoort. Blijf groeien gedurende je carrière of vind een
+                            <div class="textGroup theme-card-body">
+                                <p class="voorText2 theme-card-title">Voor Individuen</p>
+                                <p class="dePaterneText theme-card-description">Direct en gratis je persoonlijke skill paspoort. Blijf groeien gedurende je carrière of vind een
                                     nieuwe uitdaging</p>
-                                <p class="merrText text-center">Meer Informatie</p>
+                                <p class="merrText text-center theme-card-button">Meer Informatie</p>
                             </div>
                         </div>
                     </a>
                 </div>
                 <div class="swiper-slide swiper-slide3">
                     <a href="/voor-teachers">
-                        <div class="cardModife3">
-                            <div class="boxImgCard3">
+                        <div class="cardModife3 theme-card ">
+                            <div class="boxImgCard3 theme-card-img">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/hmTableau.png" alt="">
-                                <p class="startGratis">Word partner</p>
+                                <p class="startGratis theme-card-category">Word partner</p>
                             </div>
-                            <div class="textGroup">
-                                <p class="voorText2">Voor opleiders / experts</p>
-                                <p class="dePaterneText">Word partner van LiveLearn. Bied je training, cursus of e-learning eenvoudig aan en bereik
+                            <div class="textGroup theme-card-body">
+                                <p class="voorText2 theme-card-title">Voor opleiders / experts</p>
+                                <p class="dePaterneText theme-card-description">Word partner van LiveLearn. Bied je training, cursus of e-learning eenvoudig aan en bereik
                                     nieuwe klanten.</p>
-                                <p class="merrText text-center">Meer Informatie</p>
+                                <p class="merrText text-center theme-card-button">Meer Informatie</p>
                             </div>
                         </div>
                     </a>
                 </div>
                 <div class="swiper-slide swiper-slide3">
                     <a href="/voor-organisaties">
-                        <div class="cardModife3">
-                            <div class="boxImgCard3">
+                        <div class="cardModife3 theme-card ">
+                            <div class="boxImgCard3 theme-card-img">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/sta.png" alt="">
-                                <p class="startGratis">Start gratis</p>
+                                <p class="startGratis theme-card-category">Start gratis</p>
                             </div>
-                            <div class="textGroup">
-                                <p class="voorText2">Voor organisaties</p>
-                                <p class="dePaterneText">Een lerende organisatie binnen een paar klikken. LiveLearn is jouw beste partner voor een
+                            <div class="textGroup theme-card-body">
+                                <p class="voorText2 theme-card-title">Voor organisaties</p>
+                                <p class="dePaterneText theme-card-description">Een lerende organisatie binnen een paar klikken. LiveLearn is jouw beste partner voor een
                                     future-proof organisatie.</p>
-                                <p class="merrText text-center">Meer Informatie</p>
+                                <p class="merrText text-center theme-card-button">Meer Informatie</p>
                             </div>
                         </div>
                     </a>
@@ -1002,7 +1002,7 @@ $degrees=[
 <div class="blockAgenda">
     <div class="blockText8">
         <p class="titleAgenda">Een agenda vol leer-mogelijkheden</p>
-        <p class="dePaterneText">Groei op zakelijk gebied of ontdek nieuwe talenten.</p>
+        <p class="dePaterneText theme-card-description">Groei op zakelijk gebied of ontdek nieuwe talenten.</p>
     </div>
     <div class="blockFrontAgenda">
         <div class="container-fluid">
