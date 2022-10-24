@@ -25,6 +25,7 @@
 </style>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
+
 <!-- ---------------------------------------- Start modals ---------------------------------------------- -->
 <div class="modal fade" id="direct-contact" tabindex="-1" role="dialog" aria-labelledby="direct-contactModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-course">
@@ -161,7 +162,7 @@
     <div class="container-fluid">
         <div class="overElement">
             <div class="blockOneOver">
-                <?php 
+                <?php
                 if(isset($_GET["message"]))
                     echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>";
                 ?>
@@ -303,7 +304,7 @@
                                         </div>
                                     </div>
                                     <?php
-                                     
+
                                      if ($user_id==0)
                                        {
                                         echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
@@ -326,7 +327,7 @@
                                                         if(in_array($user, $allocution))
                                                             echo "<option selected  value='" . $user . "'>" . $name . "</option>";
                                                         else
-                                                            echo "<option value='" . $user . "'>" . $name . "</option>";   
+                                                            echo "<option value='" . $user . "'>" . $name . "</option>";
                                                     }
                                                 echo "</select></br></br>";
                                                 echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
@@ -376,10 +377,10 @@
                         </div>
                        <br>
                    </div>
-                    <?php 
-                        if($agenda || $who || $results ) 
+                    <?php
+                        if($agenda || $who || $results )
                             echo '<button type="button" class="btn btn-lg lees_alles my-4 w-md-25 px-4 border border-1 border-dark read-more-btn">Lees alles</button>';
-                        else 
+                        else
                             echo '<h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Leeg tot nu toe ...</b></h6>';
                     ?>
                 </div>
@@ -411,7 +412,7 @@
                                                 $agenda_end = '';
                                                 if(!empty($datum['data'])){
                                                     $date_start = $datum['data'][0]['start_date'];
-                                                
+
                                                     if($date_start)
                                                         if(count($datum['data']) >= 1){
                                                             $date_end = $datum['data'][count($datum['data'])-1]['start_date'];
@@ -677,7 +678,7 @@
                                 <?php
                                     $category_default = get_field('categories', $post->ID);
                                     $category_xml = get_field('category_xml', $post->ID);
-                                
+
                                 ?>
                                 <div class="blockSkillsTabs">
                                     <?php
@@ -698,6 +699,41 @@
                                                 }
                                     ?>
                                 </div>
+
+                                <div class="content-card-skills">
+                                    <div class="card-skills">
+                                        <div class="group">
+                                            <span class="donut-chart has-big-cente">50</span>
+                                        </div>
+                                        <p class="name-course">Workforce management</p>
+                                        <div class="footer-card-skills">
+                                            <button class="btn btnToevoegen">+ Toevoegen</button>
+                                            <button class="btn btn-dote">. . .</button>
+                                        </div>
+                                    </div>
+                                    <div class="card-skills">
+                                        <div class="group">
+                                            <span class="donut-chart has-big-cente">97</span>
+                                        </div>
+                                        <p class="name-course">Workforce management</p>
+                                        <div class="footer-card-skills">
+                                            <button class="btn btnToevoegen">+ Toevoegen</button>
+                                            <button class="btn btn-dote">. . .</button>
+                                        </div>
+                                    </div>
+                                    <div class="card-skills">
+                                        <div class="group">
+                                            <span class="donut-chart has-big-cente">10</span>
+                                        </div>
+                                        <p class="name-course">Workforce management</p>
+                                        <div class="footer-card-skills">
+                                            <button class="btn btnToevoegen">+ Toevoegen</button>
+                                            <button class="btn btn-dote">. . .</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
                             </div>
 
                             <div id="tab3" class="tab-content">
@@ -707,7 +743,7 @@
                                         $user = $review['user'];
                                         $image_author = get_field('profile_img',  'user_' . $user->ID);
                                         $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
-                                        $rating = $review['rating'];                   
+                                        $rating = $review['rating'];
                                     ?>
                                     <div class="review-info-card">
                                         <div class="review-user-mini-profile">
@@ -722,7 +758,7 @@
                                                         if($i == $rating)
                                                             echo '<input type="radio" name="rating" value="' . $i . ' " checked disabled/>
                                                             <label class="star" title="" aria-hidden="true"></label>';
-                                                        else 
+                                                        else
                                                             echo '<input type="radio" name="rating" value="' . $i . ' " disabled/>
                                                                 <label class="star" title="" aria-hidden="true"></label>';
                                                     }
@@ -736,19 +772,19 @@
                                 <?php
                                     }
                                 }
-                                else 
+                                else
                                     echo "<h6>No reviews for this course ...</h6>";
                                 ?>
                             </div>
 
                             <div id="tab4" class="tab-content">
-                                <?php 
+                                <?php
                                 if($user_id != 0 && !$my_review_bool){
                                 ?>
                                 <div class="formSingleCoourseReview">
                                     <label>Rating</label>
                                     <div class="rating-element2">
-                                        <div class="rating"> 
+                                        <div class="rating">
                                             <input type="radio" id="star5" class="stars" name="rating" value="5" />
                                             <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
                                             <input type="radio" id="star4" class="stars" name="rating" value="4" />
@@ -778,13 +814,13 @@
                                     echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> You must sign-in for review </button>";
                                 ?>
                             </div>
-                        </div> 
+                        </div>
                         <!-- END tabs-content -->
                     </div> <!-- END tabs -->
                 </div>
             </div>
 
-           
+
 
 
             <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
@@ -804,14 +840,14 @@
                         <div class="modal-body  px-md-4 px-0">
                             <div class="mb-4">
                                 <div class="text-center">
-                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
-                                </div>  
+                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                                </div>
                                 <h3 class="text-center my-2">Sign Up</h3>
                                 <div class="text-center">
                                     <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
                                     data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign in</a></p>
                                 </div>
-                            </div>  
+                            </div>
 
 
                             <?php
@@ -825,7 +861,7 @@
 
                         </div>
                     </div>
-                
+
                 </div>
             </div>
             <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
@@ -846,7 +882,7 @@
                         <div class="modal-body  px-md-5 px-4">
                             <div class="mb-4">
                                 <div class="text-center">
-                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
                                 </div>
                                 <h3 class="text-center my-2">Sign In</h3>
                                 <div class="text-center">
@@ -967,9 +1003,9 @@
                                                             if (in_array($expert->ID, $saves_expert))
                                                                 echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
                                                             else
-                                                                echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                                echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
                                                         }
-                                                        
+
                                                         ?>
                                                     </div>
                                                 </form>
@@ -1052,7 +1088,7 @@
                                                         if (in_array($expert->ID, $saves_expert))
                                                             echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
                                                         else
-                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
                                                     }
                                                     ?>
                                                 </div>
@@ -1369,8 +1405,9 @@
             }
         });
     }
- 
+
 </script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/donu-chart.js"></script>
 
 
 <?php get_footer(); ?>

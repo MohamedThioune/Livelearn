@@ -79,18 +79,7 @@ body, html {
     z-index: 111;
     display: none;
 }
-.navModife4:focus {
-    outline: 0;
-    -webkit-box-shadow: unset !important;
-    box-shadow: unset !important;
-}
 
-.navModife {
-    background: #023356;
-    color: #ffffff !important;
-    border-bottom: 1px solid #7070706e;
-    padding: 0 !important;
-}
 .userBlockNav {
     width: 40px;
     height: 40px;
@@ -172,20 +161,6 @@ body, html {
     margin: 0 10px !important;
     font-weight: 500;
     font-size: 14px;
-}
-
-.worden {
-    background: #00A89D;
-    font-weight: bold;
-    border-radius: 30px;
-    padding: 8px 15px !important;
-    margin: 0 0px !important;
-}
-
-.inputSearch {
-    min-width: 345px;
-    padding-left: 15px;
-    font-size: 14px
 }
 
 .boxOne {
