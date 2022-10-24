@@ -21,7 +21,6 @@
         if(!empty($value)){
             $type = get_field('type_feedback', $value->ID);
             $manager_id = get_field('manager_feedback', $value->ID);
-            var_dump($manager_id);
             $image = get_field('profile_img',  'user_' . $manager_id);
             if(!$image)
                 $image = get_stylesheet_directory_uri() . '/img/Group216.png';
