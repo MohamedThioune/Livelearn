@@ -9950,7 +9950,155 @@ ul#tabs-nav li.active {
     color: #023356 !important;
     font-weight: 500;
 }
+#exampleModalPaywall {
+    margin-top: 50px;
+    text-align: center;
+    background: #00000099;
+}
+#exampleModalPaywall .modal-dialog{
+    height: fit-content;
+    margin-top: 100px;
+    align-items: unset !important;
+    min-height: unset !important;
+    width: 540px !important;
+}
+#exampleModalPaywall .modal-header {
+    padding: 0px 0 10px;
+    margin-top: 5px;
+}
+#exampleModalPaywall .modal-header h5{
+    text-align: center;
+    width: 100%;
+    font-size: 27px;
+}
+#exampleModalPaywall .modal-header .close {
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
+.description-text-paywall {
+    font-size: 20px;
+}
+.price-paywall{
+    color: #023356;
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
 
+.content-card-skills {
+    display: flex;
+    flex-wrap: wrap;
+}
+.content-card-skills .card-skills{
+    border-radius: 0.5rem;
+    box-shadow: 0px 1px 5px 0px rgb(15 31 44 / 25%);
+    background-color: #fff;
+    min-height: 240px;
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    width: 31.5%;
+    padding: 25px 20px;
+    position: relative;
+    margin: 0 7.5px 20px;
+}
+.content-card-skills .card-skills .name-course {
+    font-weight: 500;
+    font-size: 17px;
+}
+.content-card-skills .card-skills .donut-chart{
+    width: 75px !important;
+    height: 75px !important;
+    margin-bottom: 18px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.content-card-skills .card-skills .donut-chart-svg {
+    overflow: visible; /* Circle edges get clipped? */
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.content-card-skills .card-skills .donut-chart-background {
+    fill: #e0eff4;
+    border: 1px solid;
+    border-radius: 100%;
+}
+.content-card-skills .card-skills .donut-chart-foreground {
+    fill: white;
+}
+.content-card-skills .card-skills .donut-chart-text {
+    text-anchor: middle;
+    fill: #023356;
+}
+/* Optional override values */
+.content-card-skills .card-skills .donut-chart.has-bg .donut-chart-background {
+    fill: #eee;
+}
+.content-card-skills .card-skills .donut-chart.has-foreground .donut-chart-foreground {
+    fill: #eaccd4;
+}
+.content-card-skills .card-skills .donut-chart.has-foreground .donut-chart-text {
+    fill: #060f58;
+}
+.content-card-skills .card-skills .code {
+    display: inline-block;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #eee;
+    margin-bottom: 20px;
+}
+.content-card-skills .card-skills .footer-card-skills{
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    left: 0;
+    align-items: center;
+    padding: 0 15px;
+}
+.content-card-skills .card-skills .footer-card-skills .btnToevoegen {
+    font-size: 14px;
+    border: 1px solid #d4d7d9;
+    border-radius: 1000px;
+    color: #6d767e;
+    padding: 5px 15px 4px;
+    font-weight: 600;
+}
+.content-card-skills .card-skills .footer-card-skills .btn-dote {
+    padding: 0 !important;
+    font-size: 23px;
+    font-weight: 700;
+    margin-top: -8px;
+}
+
+.group-input-settings .content-card-skills .card-skills .footer-card-skills {
+    text-align: right;
+    display: unset;
+}
+.content-card-skills .card-skills .footer-card-skills .btn-dote:after{
+    display: none !important;
+}
+.content-card-skills .card-skills .footer-card-skills .dropdown-menu{
+    left: -115px !important;
+}
+.content-card-skills .card-skills .footer-card-skills .dropdown-menu .dropdown-item .fa{
+    float: right;
+}
+.content-card-skills .card-skills .footer-card-skills .dropdown-menu .dropdown-item .fa-trash {
+    margin-right: 3px;
+}
+.content-card-skills .card-skills .footer-card-skills .dropdown-menu .trash{
+    color: red !important;
+}
+.skillBar-col{
+    margin: 5px 0 40px;
+}
+.addSkills {
+    margin-bottom: 30px;
+}
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 

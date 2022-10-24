@@ -172,6 +172,8 @@ if(!empty($bunch)){
 }
 
 ?>
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/nouislider.min.css">
+
 <div class="content-settings">
     <a href="/profile" class="goBackProfil">
         <img src="<?php echo get_stylesheet_directory_uri();?>/img/bi_arrow-left.png" alt="">
@@ -626,14 +628,143 @@ if(!empty($bunch)){
 
         <div id="Skills" class="b-tab contentBlockSetting" >
             <div class="group-input-settings">
-                <label for="">Skills</label>
-                <div class="form-group formModifeChoose multipleSelectSkills">
-                    <select class="js-select2-multi" multiple="multiple">
-                        <option>Select A</option>
-                        <option>Select B</option>
-                        <option>Select C</option>
-                        <option>Select D</option>
-                    </select>
+
+                <button class="btn btnAddEdu addSkills" data-toggle="modal" data-target="#exampleModalAddSkills"> Add Skills
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/plus.png" alt="">
+                </button>
+
+                <div class="content-card-skills">
+                    <div class="card-skills">
+                        <div class="group position-relative">
+                            <span class="donut-chart has-big-cente">50</span> <span class="pourentageElement">%</span>
+                        </div>
+                        <p class="name-course">Workforce management</p>
+                        <div class="footer-card-skills">
+                            <button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills">Edit <i class="fa fa-edit"></i></a>
+                                <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-skills">
+                        <div class="group">
+                            <span class="donut-chart has-big-cente">97</span>
+                        </div>
+                        <p class="name-course">Workforce management</p>
+                        <div class="footer-card-skills">
+                            <button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills">Edit <i class="fa fa-edit"></i></a>
+                                <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-skills">
+                        <div class="group">
+                            <span class="donut-chart has-big-cente">10</span>
+                        </div>
+                        <p class="name-course">Workforce management</p>
+                        <div class="footer-card-skills">
+                            <button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills">Edit <i class="fa fa-edit"></i></a>
+                                <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                        <!-- Strat add skills-->
+                            <div class="modal modalEdu fade" id="exampleModalAddSkills" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Beoordeel jouw expertise in "Personeel"</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form action="" method="POST">
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="group-input-settings">
+                                                        <label for="">Name Skills</label>
+                                                        <input name="school" type="text" placeholder="Management" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12 skillBar-col">
+                                                    <div class="group-input-settings">
+                                                        <label for="">Kies uw vaardigheidsniveau in percentage</label>
+                                                        <div class="slider-wrapper">
+                                                            <div id="skilsPercentage"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12">
+                                                    <div class="group-input-settings">
+                                                        <label for="">Uw procentuele vaardigheden</label>
+                                                        <input type="text" id="SkillBar" name="SkillBar" placeholder="">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btnSaveSetting" type="submit" name="add_education" >Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--  End add edit skills-->
+
+
+                    <!-- Strat modal edit skills-->
+                    <div class="modal modalEdu fade" id="exampleModalSkills" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Edit Skills</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="" method="POST">
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="group-input-settings">
+                                                    <label for="">Name Skills</label>
+                                                    <input name="school" type="text" placeholder="Management" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 skillBar-col">
+                                                <div class="group-input-settings">
+                                                    <label for="">Kies uw vaardigheidsniveau in percentage</label>
+                                                    <div class="slider-wrapper">
+                                                        <div id="edit"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12">
+                                                <div class="group-input-settings">
+                                                    <label for="">Uw procentuele vaardigheden</label>
+                                                    <input type="text" id="SkillBarEdit" name="SkillBarEdit" placeholder="">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btnSaveSetting" type="submit" name="add_education" >Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  End modal edit skills-->
+
                 </div>
             </div>
         </div>
@@ -730,4 +861,111 @@ if(!empty($bunch)){
         });
     });
 </script>
+
+        <script src="<?php echo get_stylesheet_directory_uri();?>/donu-chart.js"></script>
+        <script src="<?php echo get_stylesheet_directory_uri();?>/nouislider.min.js"></script>
+
+        <!--  script for add skills-->
+        <script>
+            const SliderSkills = document.querySelector("#skilsPercentage")
+            var labels = { 0: 'Beginner', 10: '10%', 20: '20%', 30: '30%', 40: '40%', 50: '50%', 60: '60%', 70: '70%', 80: '80%', 90: '90%', 100: 'Expert', };
+            noUiSlider.create(skilsPercentage, {
+                start: 10,
+                connect: [true, false],
+                tooltips: {
+                    to: function(value) {
+                        return value > 200 ? '200+' : parseInt(value)
+                    }
+                },
+                range: {
+                    'min': 0,
+                    '10%': 10,
+                    '20%': 20,
+                    '30%': 30,
+                    '40%': 40,
+                    '50%': 50,
+                    '60%': 60,
+                    '70%': 70,
+                    '80%': 80,
+                    '90%': 90,
+                    'max': 100
+                },
+                pips: {
+                    mode: 'steps',
+                    filter: function (value, type) {
+                        return type === 0 ? -1 : 1;
+                    },
+                    format: {
+                        suffix: '%',
+                        to: function (value) {
+                            return labels[value];
+                        }
+
+                    }
+                }
+            });
+
+            var SkillBarInput = document.getElementById('SkillBar');
+            SliderSkills.noUiSlider.on('update', function (values, handle, unencoded) {
+                var SkillBarValue = values[handle];
+                SkillBarInput.value = Math.round(SkillBarValue);
+            });
+
+            SkillBarInput.addEventListener('change', function () {
+                SliderSkills.noUiSlider.set([null, this.value]);
+            });
+
+        </script>
+
+        <!--  script For edit skills-->
+        <script>
+            const edit = document.querySelector("#edit")
+            var labels = { 0: 'Beginner', 10: '10%', 20: '20%', 30: '30%', 40: '40%', 50: '50%', 60: '60%', 70: '70%', 80: '80%', 90: '90%', 100: 'Expert', };
+            noUiSlider.create(edit, {
+                start: 10,
+                connect: [true, false],
+                tooltips: {
+                    to: function(value) {
+                        return value > 100 ? '100+' : parseInt(value)
+                    }
+                },
+                range: {
+                    'min': 0,
+                    '10%': 10,
+                    '20%': 20,
+                    '30%': 30,
+                    '40%': 40,
+                    '50%': 50,
+                    '60%': 60,
+                    '70%': 70,
+                    '80%': 80,
+                    '90%': 90,
+                    'max': 100
+                },
+                pips: {
+                    mode: 'steps',
+                    filter: function (value, type) {
+                        return type === 0 ? -1 : 1;
+                    },
+                    format: {
+                        to: function (value) {
+                            return labels[value];
+                        }
+                    }
+                }
+            });
+
+            var SkillBarInput2 = document.getElementById('SkillBarEdit');
+            edit.noUiSlider.on('update', function (values, handle, unencoded) {
+                var SkillBarValue2 = values[handle];
+                SkillBarInput2.value = Math.round(SkillBarValue2);
+            });
+
+            SkillBarInput2.addEventListener('change', function () {
+                edit.noUiSlider.set([null, this.value]);
+            });
+        </script>
+
+
+
 

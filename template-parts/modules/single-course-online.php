@@ -682,12 +682,32 @@ extract($_GET);
                                             if($lesson == $key)
                                                 $style = "color:#F79403";
                                         echo '  
-                                        <a href="?topic=0&lesson=' . $key . '"  class="d-flex contentListVidoeCourse">
+                                        <a href="?topic=0&lesson=' . $key . '"  class="d-flex contentListVidoeCourse" data-toggle="modal" data-target="#exampleModalPaywall">
                                             <img class="" width="35px" height="20px" src="'. $video['thumbnail_url'] . '" alt="">
                                             <span style="' .$style . '" class="textChapitreCours">' . $video['title'] . '</span>
                                         </a>';
                                     }
                                     ?>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalPaywall" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle">Get Acces Now </h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p class="description-text-paywall">Please purchase this course to continue</p>
+                                                    <p class="price-paywall">$150</p>
+                                                    <a class="btn btn-paywall" href="">Buying Now <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/arrowhead.png" alt=""></a>
+                                                    <p class="text-not-sure-which">Not Sure which is right now for you ?
+                                                        <a href="">Discover the benefits of taking this course now</a> </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <?php
                             }

@@ -4,7 +4,13 @@
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/single.php" beforeDir="false" afterPath="$PROJECT_DIR$/single.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/header.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/header_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/single-course.php" beforeDir="false" afterPath="$PROJECT_DIR$/single-course.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-settings.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-home.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -566,6 +572,16 @@
       <workItem from="1665998919508" duration="1963000" />
       <workItem from="1666035301227" duration="140000" />
       <workItem from="1666098658143" duration="10825000" />
+      <workItem from="1666192294194" duration="1067000" />
+      <workItem from="1666196793615" duration="1283000" />
+      <workItem from="1666204225633" duration="2441000" />
+      <workItem from="1666208210746" duration="1098000" />
+      <workItem from="1666249898120" duration="26000" />
+      <workItem from="1666251623681" duration="1358000" />
+      <workItem from="1666263304470" duration="14210000" />
+      <workItem from="1666344012876" duration="15428000" />
+      <workItem from="1666370710166" duration="4079000" />
+      <workItem from="1666605707950" duration="1122000" />
     </task>
     <servers />
   </component>
@@ -584,6 +600,17 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/header_base.php</url>
+          <line>192</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="masterDetails">
     <states>
