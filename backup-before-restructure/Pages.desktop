@@ -1,0 +1,6 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Lien vers Pages
+Type=Link
+URL=http://localhost/liveLearn-wordpress/wordpressLIvelearn/wp-admin/edit.php?post_type=page
+Icon=text-html

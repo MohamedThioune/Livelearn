@@ -1,0 +1,200 @@
+$primary-color: #023356;
+$white-color: #ffffff;
+$gray-color: #707070;
+$light-grey-color: #d0d0d0;
+$green: #47a99e;
+
+
+.footerLive {
+  background: $primary-color;
+  position: relative;
+  z-index: 11;
+  margin: 0 -15px;
+  .footer-big {
+    padding: 40px 0 20px 0;
+    .blockFooter {
+      display: flex;
+      justify-content: space-between;
+      .sousBlockFooter {
+        width: 19%;
+        .footer-widget {
+          margin-bottom: 40px;
+          .widget-about {
+            img {
+              margin-top: 9px;
+            }
+            .contact-details {
+              margin: 30px 0 0 0;
+              li {
+                &:last-child {
+                  margin-bottom: 0;
+                }
+                a {
+                  color: $green !important;
+                }
+              }
+            }
+          }
+        }
+      }
+      ul {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin: 0;
+        padding: 0;
+        max-width: 500px;
+        width: 100%;
+        list-style: none;
+      }
+    }
+  }
+  .blockFooter {
+    .sousBlockFooter {
+      .footer-widget {
+        .footer-menu--1 {
+          width: 100%;
+        }
+        .footer-menu {
+          .footer-widget-title {
+            line-height: 42px;
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}
+.footer-big {
+  .footer-menu {
+    ul {
+      li {
+        a {
+          color: $light-grey-color !important;
+        }
+      }
+    }
+  }
+  p {
+    color: $light-grey-color !important;
+  }
+  ul {
+    li {
+      color: $light-grey-color !important;
+    }
+  }
+}
+.MobileFooter {
+  display: none;
+}
+@media (min-width: 300px) and (max-width: 767px) {
+  .footerLive {
+    width: 100%;
+    margin: 0;
+    .footer-big {
+      .MobileFooter {
+        .accordion {
+          background-color: $primary-color;
+          color: #fff;
+          cursor: pointer;
+          border-bottom: 1px solid white;
+          padding: 15px;
+          border-top: none;
+          border-left: none;
+          width: 100%;
+          text-align: left;
+          outline: none;
+          font-size: 15px;
+          transition: 0.4s;
+          -webkit-transition: 0.4s;
+          -moz-transition: 0.4s;
+          -ms-transition: 0.4s;
+          -o-transition: 0.4s;
+          margin-bottom: 10px;
+        }
+        .card {
+          background-color: $primary-color;
+          color: white;
+          border-bottom: 1px solid rgb(199 199 199 / 13%) !important;
+          .card-header {
+            padding: 0.75rem 0 !important;
+            background-color: rgb(4 51 86) !important;
+            border-bottom: 1px solid rgba(0,0,0,.125);
+            .btn-link {
+              font-weight: 600;
+              color: white !important;
+              text-decoration: none;
+            }
+          }
+          .collapse {
+            padding-left: 30px;
+            padding-bottom: 20px;
+          }
+          .blockFooter {
+            ul {
+              display: flex;
+              flex-direction: column;
+              gap: 4px;
+              margin: 0;
+              padding: 0;
+              max-width: 500px;
+              width: 100%;
+              list-style: none;
+            }
+          }
+        }
+        .resauxsociaux {
+          text-align: center;
+          margin: 20px auto;
+          a {
+            img {
+              width: 30px;
+              padding: 2px;
+              margin: 0 6px;
+            }
+          }
+        }
+        .element8 {
+          display: grid;
+          text-align: center;
+          a {
+            color: $white-color !important;
+            padding-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+  .MobileFooter {
+    display: block;
+  }
+  .footer-big {
+    .footer-menu {
+      ul {
+        li {
+          a {
+            color: $light-grey-color !important;
+          }
+        }
+      }
+    }
+    p {
+      color: $light-grey-color !important;
+    }
+    ul {
+      li {
+        color: $light-grey-color !important;
+      }
+    }
+  }
+  .imgBlockFooter {
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 15px;
+  }
+  .desktopFooter {
+    display: none;
+  }
+}
