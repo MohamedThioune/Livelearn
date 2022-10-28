@@ -7,7 +7,6 @@ $gray-color: #707070;
   background: $primary-color;
   color: $white-color !important;
   border-bottom: 1px solid #7070706e;
-  padding: 0 !important;
   background: $primary-color;
   color: $white-color !important;
   border-bottom: 1px solid #7070706e;
@@ -291,8 +290,6 @@ form {
 }
 @media all and (min-width: 300px) and (max-width: 767px) {
   .dropdown-menuSearch {
-    left: 0;
-    width: 100%;
     left: 0;
     width: 100%;
   }
