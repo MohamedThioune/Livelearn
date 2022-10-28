@@ -974,8 +974,8 @@ $degrees=[
 </div>
 <div class="blockAl joum">
     <div class="container-fluid">
-        <div class="alJoum">
-            <div class="blockImGDaniel">
+        <div class="alJoum theme-banner bg__lightblue">
+            <div class="blockImGDaniel block-img-banner">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/daniel.png" alt="">
             </div>
             <?php
@@ -1098,7 +1098,7 @@ $degrees=[
                         $company_id = $company[0]->ID;
                         $company_logo = get_field('company_logo', $company_id);
                     ?>
-                    <a href="<?php echo get_permalink($course->ID) ?>" class="blockCardFront" style="color:#43454D">
+                    <a href="<?php echo get_permalink($course->ID) ?>" class="blockCardFront theme-product--horizontal" style="color:#43454D">
                         <div class="workshopBlock">
                             <img class="" src="<?php echo $thumbnail ?>" alt="">
                             <div class="containWorkshopAgenda">
@@ -1262,8 +1262,8 @@ $degrees=[
                     $company_id = $company[0]->ID;
                     $company_logo = get_field('company_logo', $company_id);
                     ?>
-                    <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiperSlideModife">
-                        <div class="cardKraam2">
+                    <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiperSlideModife ">
+                        <div class="cardKraam2 theme-product--card">
                             <div class="headCardKraam">
                                 <div class="blockImgCardCour">
                                     <img src="<?php echo $thumbnail ?>" alt="">

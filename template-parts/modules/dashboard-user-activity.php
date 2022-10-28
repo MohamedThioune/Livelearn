@@ -334,7 +334,6 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
                 
             </div>
         </div>
-      
         <div class="col-lg-5">
             <div class="cardNotification"> 
                 <div class="headCardNotification">
@@ -383,6 +382,66 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
                     else 
                         echo "empty until now";
                 ?>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="cardNotification card-badge-notifications">
+                <h2>the badges you have unlocked</h2>
+                <div class="content-badges content-badge-notifications">
+                    <a href="" class="card">
+                        <div class="block-icons">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/validate-badge.png" alt="">
+                        </div>
+                        <p class="title">Complete and verified profile </p>
+                        <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                        <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                    </a>
+                    <a href="" class="card">
+                        <div class="block-icons">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_awards.png" alt="">
+                        </div>
+                        <p class="title">Complete and verified profile </p>
+                        <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                        <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                    </a>
+                    <a href="" class="card">
+                        <div class="block-icons">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/gg_awards.png" alt="">
+                        </div>
+                        <p class="title">Complete and verified profile </p>
+                        <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                        <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                    </a>
+                    <a href="" class="card ">
+                        <div class="card-lock">
+                            <img class="img-card-lock" src="<?php echo get_stylesheet_directory_uri();?>/img/lock-2.png" alt="">
+                        </div>
+                        <div class="block-icons">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/validate-badge.png" alt="">
+                        </div>
+                        <p class="title">Complete and verified profile </p>
+                        <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                        <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                    </a>
+                    <a href="" class="card">
+                        <div class="block-icons">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/validate-badge.png" alt="">
+                        </div>
+                        <p class="title">Complete and verified profile </p>
+                        <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                        <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                    </a>
+                    <a href="" class="card">
+                        <div class="block-icons">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/validate-badge.png" alt="">
+                        </div>
+                        <p class="title">Complete and verified profile </p>
+                        <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                        <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

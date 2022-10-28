@@ -10099,6 +10099,87 @@ ul#tabs-nav li.active {
 .addSkills {
     margin-bottom: 30px;
 }
+.content-badges{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.content-badges .card{
+    background: #FFFFFF;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0px 1px 3px 0px rgb(10 30 38 / 8%);
+    min-height: 240px;
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    width: 31%;
+    position: relative;
+    margin: 0 7px 20px;
+    border: 1px solid #ebecff;
+    position: relative;
+}
+.content-badges .card .card-lock{
+    position: absolute;
+    background: #c5c5c5c9;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.label-badge{
+    color: #043356;
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 25px;
+}
+.block-icons {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 20px;
+    background: #E0EFF4;
+    border: 2px dashed #000000;
+    border-radius: 100%;
+}
+.block-icons img{
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+}
+.content-badges .card .title{
+    font-size: 18px;
+    line-height: 29px;
+    text-align: center;
+    color: #000000;
+    font-weight: 500;
+}
+.content-badges .card .awarded{
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    color: #000000;
+}
+.content-badges .card .awarded span{
+    color: #043356;
+}
+.content-badges .card .date-awarded{
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 22px;
+}
+.content-badges .card .date-awarded span{
+    font-weight: 600;
+    color: #868686;
+}
+.img-card-lock{
+    right: 20px;
+    position: absolute;
+    top: 20px;
+}
+.card-badge-notifications {
+    margin: 30px 0;
+}
+
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
 
@@ -12564,6 +12645,22 @@ ul#tabs-nav li.active {
         margin-bottom: 25px;
         font-size: 14px;
     }
+    .content-card-skills .card-skills {
+        margin: 0 7px 20px;
+        width: 45%;
+    }
+    .contentBlockSetting .group-input-settings {
+        padding: 0px 20px;
+    }
+    .modalEdu .modal-title {
+        margin-bottom: 0;
+        line-height: 1.5;
+        font-size: 20px;
+    }
+    #exampleModalAddSkills .modal-dialog {
+        width: 91% !important;
+    }
+
 
 
     }
