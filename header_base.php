@@ -58,11 +58,11 @@ $url = home_url( $wp->request );
         <meta name='keywords' content="fluidify">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/custom.css" />
+        <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/header.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/main.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/rating.css" />
-        <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/header.css" />
+        <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/swiper.css" />
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css'>
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css'>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -76,6 +76,7 @@ $url = home_url( $wp->request );
         <meta property="og:description" content="Ontdek, ontwikkel en maak carriere">
         <meta property="og:image" content="<?php echo get_stylesheet_directory_uri() . '/img/logo_livelearn.png' ?>">
         <meta property="og:url" content="<?= $url ?>">
+
         <title><?php bloginfo('name'); ?></title>
         <?php wp_head(); ?>
     </head>

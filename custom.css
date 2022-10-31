@@ -10176,9 +10176,134 @@ ul#tabs-nav li.active {
     position: absolute;
     top: 20px;
 }
+.btn-see {
+    background: #00aa9e;
+    width: 230px;
+    color: white;
+    padding: 8px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: fit-content;
+    margin: auto;
+}
+.text-title-certifications{
+    font-size: 20px !important;
+    line-height: 29px !important;
+    margin-top: 20px;
+}
+
 .card-badge-notifications {
     margin: 30px 0;
+    padding-bottom: 0px;
 }
+.content-badge-notifications .block-icons {
+    width: 70px;
+    height: 70px;
+}
+.content-badge-notifications .card{
+    width: 48%;
+    margin: 0 5px 20px;
+    padding: 25px 20px;
+}
+.content-badge-notifications .card .title {
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+.content-badge-notifications .card .date-awarded {
+    margin-bottom: 0px;
+}
+.content-badge-notifications .card .awarded {
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+.cardNotification .Certificate{
+    background: #FFFFFF;
+    border: 15px solid #023356;
+    border-radius: 3px;
+    padding: 25px;
+}
+.cardNotification .Certificate .logo{
+    width: 150px;
+    margin-bottom: 30px;
+}
+.cardNotification .Certificate .logo img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.cardNotification .Certificate .name-certifica{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 21px;
+    color: #212529;
+    text-align: center;
+    text-transform: uppercase;
+}
+.Certificate .certificate-of-completion{
+    font-style: italic;
+    font-weight: 500;
+    font-size: 35px;
+    line-height: 46px;
+    color: #023356;
+    text-align: center;
+}
+.Certificate .trainees-name{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 30px;
+    text-align: center;
+    color: #000000;
+}
+.Certificate .description-certificate{
+    font-size: 21px;
+    line-height: 35px;
+    text-align: center;
+    color: #000000;
+}
+.Certificate .topic-description{
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 35px;
+    text-align: center;
+    color: #212529;
+}
+.Certificate .topic-details{
+    font-size: 15px;
+    line-height: 25px;
+    text-align: center;
+    color: #023356;
+    font-weight: 500;
+    margin-bottom: 45px;
+}
+.Certificate .footer-certificate{
+    display: flex;
+    justify-content: space-between;
+}
+.logo-company-certificate {
+    width: 130px;
+}
+.Certificate .footer-certificate .title{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 15px;
+    text-align: center;
+    color: #023356;
+}
+.Certificate .footer-certificate .sub-title{
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 23px;
+    text-align: center;
+    color: #212529;
+    margin-bottom: 10px;
+}
+
 
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 @media all and (min-width: 300px) and (max-width: 767px) {
