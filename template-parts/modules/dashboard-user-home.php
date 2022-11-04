@@ -164,9 +164,10 @@ $user_post_view = get_posts(
         'order' => 'DESC'
     )
 )[0];   
+
 $is_view = false;
 
-if (count($user_post_view)!= 0)
+if (!empty($user_post_view))
 {
     $courses_id = array();
     $is_view=true;
@@ -254,7 +255,7 @@ $count = array_merge(array_flip($keys), $count);
 
 $bool = false;
 
-if (count($recommended_courses) == 0){
+if (empty($recommended_courses)){
     $courses_id = array();
     $recommended_courses = $courses;
     $bool = true;
@@ -974,7 +975,8 @@ if(isset($_GET['message']))
             'parent' => $tag->cat_ID,
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
         ));
-        if (count($cats_bangerichts)!=0)
+
+        if (!empty($cats_bangerichts))
         {
             $row_bangrichts.='<div hidden=true class="cb_topics_bangricht_'.($key1+1).'" '.($key1+1).'">';
             foreach($cats_bangerichts as $key => $value)
@@ -989,7 +991,6 @@ if(isset($_GET['message']))
 
     foreach($functies as $key1 =>$tag)
     {
-        
         //Topics
         $cats_functies = get_categories(
             array(
@@ -997,7 +998,8 @@ if(isset($_GET['message']))
             'parent' => $tag->cat_ID,
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
         ));
-        if (count($cats_functies)!=0)
+
+        if (!empty($cats_functies))
         {
             $row_functies.='<div hidden=true class="cb_topics_funct_'.($key1+1).'" '.($key1+1).'">';
             foreach($cats_functies as $key => $value)
@@ -1016,7 +1018,8 @@ if(isset($_GET['message']))
             'parent' => $tag->cat_ID,
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
         ));
-        if (count($cats_skills)!=0)
+
+        if (!empty($cats_skills))
         {
             $row_skills.='<div hidden=true class="cb_topics_skills_'.($key1+1).'" '.($key1+1).'">';
             foreach($cats_skills as $key => $value)
@@ -1031,12 +1034,12 @@ if(isset($_GET['message']))
 
     foreach($interesses as $key1=>$tag){
         //Topics
-            $cats_interesses = get_categories( array(
-                'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-                'parent' => $tag->cat_ID,
-                'hide_empty' => 0, // change to 1 to hide categores not having a single post
-            ));
-            if (count($cats_interesses)!=0)
+        $cats_interesses = get_categories( array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent' => $tag->cat_ID,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ));
+        if (!empty($cats_interesses))
         {
             $row_interesses.='<div hidden=true class="cb_topics_personal_'.($key1+1).'" '.($key1+1).'">';
             foreach($cats_interesses as $key => $value)
@@ -1046,7 +1049,6 @@ if(isset($_GET['message']))
             }
             $row_interesses.= '</div>';
         }
-      
     }
 
     if (isset($_POST["subtopics_first_login"]))
