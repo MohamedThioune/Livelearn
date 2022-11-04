@@ -299,6 +299,7 @@ if(isset($_GET['message']))
 
                                 $month = '';
                                 $location = 'Virtual';
+                                $day = '';
 
                                 /*
                                 * Categories
@@ -307,17 +308,17 @@ if(isset($_GET['message']))
 
                                 $tree = get_the_terms($course->ID, 'course_category'); 
 
-                                if($tree)
-                                    if(isset($tree[2]))
-                                        $category = $tree[2]->name;
+                                // if($tree)
+                                //     if(isset($tree[2]))
+                                //         $category = $tree[2]->name;
 
-                                $category_id = 0;
+                                // $category_id = 0;
                             
-                                if($category == ' '){
-                                    $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                                    if($category_id != 0)
-                                        $category = (String)get_the_category_by_ID($category_id);
-                                }
+                                // if($category == ' '){
+                                //     $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
+                                //     if($category_id != 0)
+                                //         $category = (String)get_the_category_by_ID($category_id);
+                                // }
 
                                 /*
                                 * Price 
@@ -483,19 +484,19 @@ if(isset($_GET['message']))
                                 */
                                 $category = ' '; 
 
-                                $tree = get_the_terms($course->ID, 'course_category'); 
+                                // $tree = get_the_terms($course->ID, 'course_category'); 
 
-                                if($tree)
-                                    if(isset($tree[2]))
-                                        $category = $tree[2]->name;
+                                // if($tree)
+                                //     if(isset($tree[2]))
+                                //         $category = $tree[2]->name;
 
-                                $category_id = 0;
+                                // $category_id = 0;
                             
-                                if($category == ' '){
-                                    $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                                    if($category_id != 0)
-                                        $category = (String)get_the_category_by_ID($category_id);
-                                }
+                                // if($category == ' '){
+                                //     $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
+                                //     if($category_id != 0)
+                                //         $category = (String)get_the_category_by_ID($category_id);
+                                // }
 
                                 /*
                                 *  Date and Location
@@ -503,30 +504,30 @@ if(isset($_GET['message']))
                                 $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
                                 $datas = get_field('data_locaties', $course->ID);
-                                if($datas){
-                                    $data = $datas[0]['data'][0]['start_date'];
-                                    if($data != ""){
-                                        $day = explode('/', explode(' ', $data)[0])[0];
-                                        $mon = explode('/', explode(' ', $data)[0])[1];
-                                        $month = $calendar[$mon];
-                                    }
+                                // if($datas){
+                                //     $data = $datas[0]['data'][0]['start_date'];
+                                //     if($data != ""){
+                                //         $day = explode('/', explode(' ', $data)[0])[0];
+                                //         $mon = explode('/', explode(' ', $data)[0])[1];
+                                //         $month = $calendar[$mon];
+                                //     }
 
-                                    $location = $datas[0]['data'][0]['location'];
-                                }else{
-                                    $datas = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
-                                    $data = $datas[0];
-                                    $day = explode('/', explode(' ', $data)[0])[0];
-                                    $month = explode('/', explode(' ', $data)[0])[1];
-                                    $month = $calendar[$month];
-                                    $location = $datas[2];
-                                }
+                                //     $location = $datas[0]['data'][0]['location'];
+                                // }else{
+                                //     $datas = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
+                                //     $data = $datas[0];
+                                //     $day = explode('/', explode(' ', $data)[0])[0];
+                                //     $month = explode('/', explode(' ', $data)[0])[1];
+                                //     $month = $calendar[$month];
+                                //     $location = $datas[2];
+                                // }
 
-                                if(!empty($data)){
-                                    $date_now = strtotime(date('Y-m-d'));
-                                    $data = strtotime(str_replace('/', '.', $data));
-                                    if($data < $date_now)
-                                        continue;
-                                }
+                                // if(!empty($data)){
+                                //     $date_now = strtotime(date('Y-m-d'));
+                                //     $data = strtotime(str_replace('/', '.', $data));
+                                //     if($data < $date_now)
+                                //         continue;
+                                // }
 
                                 /*
                                 * Price 
