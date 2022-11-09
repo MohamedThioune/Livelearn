@@ -34,6 +34,7 @@ $function = get_field('role',  'user_' . $user->ID);
 $experience = get_field('experience',  'user_' . $user->ID);
 $country = get_field('country',  'user_' . $user->ID);
 
+$age = 
 $date_born = get_field('date_born',  'user_' . $user->ID);
 if(!$date_born)
     $date_birth =  "No birth";

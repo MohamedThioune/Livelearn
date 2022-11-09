@@ -20,7 +20,7 @@
         if(!empty($value)){
             $type = get_field('type_feedback', $value->ID);
             $manager_id = get_field('manager_feedback', $value->ID);
-
+            var_dump($manager_id);
             $image = get_field('profile_img',  'user_' . $manager_id);
             if(!$image)
                 $image = get_stylesheet_directory_uri() . '/img/Group216.png';
@@ -28,8 +28,7 @@
             $manager = get_user_by('id', $manager_id);
             $manager_display = ($manager->first_name) ?: $manager->display_name;
 
-            $manager_id = get_field('manager_feedback', $value->ID);
-            if($manager_id){
+            if($manager){
                 $manager = get_user_by('ID', $manager_id);
                 $manager_display = $manager->display_name;
             }else

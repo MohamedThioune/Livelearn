@@ -183,7 +183,7 @@
                         <p class="DetailOtherSkill"><?php echo $experience; ?> Years</p>
                     </div>
                 </div>
-                <?php } if($age){ ?>
+                <?php } if(isset($age)){ ?>
                 <div class="elementOtherSkills">
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/waiting1.png" alt="">
                     <div>

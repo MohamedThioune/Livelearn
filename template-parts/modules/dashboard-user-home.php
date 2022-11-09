@@ -133,26 +133,28 @@ foreach ($global_courses as $key => $course) {
                 }
         }
     }
-
+    //var_dump($experts);
     //Preference author
-    if(in_array($course->post_author, $experts)){
-        if(!in_array($course->ID, $course_id)){
-            array_push($course_id, $course->ID);
-            array_push($courses, $course);        
-        }
-    }
-
-    //Preference expert
-    $experties = get_field('experts', $course->ID);  
-    foreach($experties as $topic_expert){
-        if(in_array($topic_expert, $experts)){
+    if(!empty($experts))
+        if(in_array($course->post_author, $experts)){
             if(!in_array($course->ID, $course_id)){
                 array_push($course_id, $course->ID);
                 array_push($courses, $course);        
-                break;
             }
         }
-    }
+
+    //Preference expert
+    $experties = get_field('experts', $course->ID); 
+    if(!empty($experties)) 
+        foreach($experties as $topic_expert){
+            if(in_array($topic_expert, $experts)){
+                if(!in_array($course->ID, $course_id)){
+                    array_push($course_id, $course->ID);
+                    array_push($courses, $course);        
+                    break;
+                }
+            }
+        }
 }
 
 //Views
@@ -170,13 +172,16 @@ $is_view = false;
 if (!empty($user_post_view))
 {
     $courses_id = array();
-    $is_view=true;
+    $is_view = true;
    
     $all_user_views = (get_field('views', $user_post_view->ID));
     $max_points = 10;
     $recommended_courses = array();
 
     foreach($all_user_views as $key => $view) {
+        if(!$view['course'])
+            continue;
+            
         foreach ($courses as $key => $course) {
             $points = 0;
             
@@ -292,66 +297,75 @@ if(isset($_GET['message']))
                     $find = false;
                     foreach($recommended_courses as $course){
 
-                        if(!get_field('visibility', $course->ID)) {
-                            if(get_field('course_type', $course->ID) == 'Artikel'){
+                        if(get_field('course_type', $course->ID) == 'Artikel'){
+                            if(!empty($company_visibility))
+                                if(!visibility($course, $visibility_company))
+                                    continue;
 
-                                $count['limit'] = $count['limit'] + 1;
+                            $count['limit'] = $count['limit'] + 1;
 
-                                $month = '';
-                                $location = 'Virtual';
-                                $day = '';
+                            $month = '';
+                            $location = 'Virtual';
+                            $day = '';
 
-                                /*
-                                * Categories
-                                */
-                                $category = ' '; 
+                            /*
+                            * Categories
+                            */
+                            $location = 'Virtual';
+                            $day = "<p><i class='fas fa-calendar-week'></i></p>";
+                            $month = '';
 
-                                $tree = get_the_terms($course->ID, 'course_category'); 
-
-                                // if($tree)
-                                //     if(isset($tree[2]))
-                                //         $category = $tree[2]->name;
-
-                                // $category_id = 0;
-                            
-                                // if($category == ' '){
-                                //     $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                                //     if($category_id != 0)
-                                //         $category = (String)get_the_category_by_ID($category_id);
-                                // }
-
-                                /*
-                                * Price 
-                                */
-                                $p = " ";
-                                $p = get_field('price', $course->ID);
-                                if($p != "0")
-                                    $price =  number_format($p, 2, '.', ',');
-                                else 
-                                    $price = 'Gratis';
-
-                                /*
-                                * Thumbnails
-                                */ 
-                                $thumbnail = get_field('preview', $course->ID)['url'];
-                                if(!$thumbnail){
-                                    $thumbnail = get_field('url_image_xml', $course->ID);
-                                    if(!$thumbnail)
-                                        $thumbnail = get_field('image', 'category_'. $category_id);
-                                        if(!$thumbnail)
-                                            $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                            $category = ' ';
+                            $category_id = 0;
+                            $category_string = " ";
+                            if($category == ' '){
+                                $one_category = get_field('categories',  $course->ID);
+                                if(isset($one_category[0]))
+                                    $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                                else{
+                                    $one_category = get_field('category_xml',  $course->ID);
+                                    if(isset($one_category[0]))
+                                        $category_id = intval($one_category[0]['value']);
                                 }
-                                
-                                /*
-                                * Companies
-                                */ 
-                                $company = get_field('company',  'user_' . $course->post_author);
-                                
-                                //Course Type
-                                $course_type = get_field('course_type', $course->ID);
 
-                                $find = true;
-                    ?>
+                                if($category_str != 0)
+                                    $category = (String)get_the_category_by_ID($category_str);
+                                else if($category_id != 0)
+                                    $category = (String)get_the_category_by_ID($category_id);
+                            }
+
+                            /*
+                            * Price 
+                            */
+                            $p = " ";
+                            $p = get_field('price', $course->ID);
+                            if($p != "0")
+                                $price =  number_format($p, 2, '.', ',');
+                            else 
+                                $price = 'Gratis';
+
+                            /*
+                            * Thumbnails
+                            */ 
+                            $thumbnail = get_field('preview', $course->ID)['url'];
+                            if(!$thumbnail){
+                                $thumbnail = get_field('url_image_xml', $course->ID);
+                                if(!$thumbnail)
+                                    $thumbnail = get_field('image', 'category_'. $category_id);
+                                    if(!$thumbnail)
+                                        $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                            }
+                            
+                            /*
+                            * Companies
+                            */ 
+                            $company = get_field('company',  'user_' . $course->post_author);
+                            
+                            //Course Type
+                            $course_type = get_field('course_type', $course->ID);
+
+                            $find = true;
+                        ?>
                         <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
                             <div class="blockLoveCourse" >
                                 <button>
@@ -445,10 +459,10 @@ if(isset($_GET['message']))
                         </div>
 
                         <?php
-                            if($count['limit'] == 20)
-                                break;
-                            }
+                        if($count['limit'] == 20)
+                            break;
                         }
+
                     }
                     if(!$find)
                         echo "<span class='opeleidingText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Geen overeenkomst met uw voorkeuren <i class='fas fa-smile-wink'></i></span>";
@@ -471,100 +485,122 @@ if(isset($_GET['message']))
                     $find = false;
                     foreach($recommended_courses as $course){
 
-                        if(!get_field('visibility', $course->ID)) {
-                            if(get_field('course_type', $course->ID) == $key){
+                        if(get_field('course_type', $course->ID) == $key){
+                            if(!empty($company_visibility))
+                                if(!visibility($course, $visibility_company))
+                                    continue;
 
-                                $count['limit'] = $count['limit'] + 1;
+                            $count['limit'] = $count['limit'] + 1;
+                            $data = array();
+                            $month = '';
+                            $location = 'Virtual';
 
-                                $month = '';
-                                $location = 'Virtual';
+                            /*
+                            * Categories
+                            */
+                            $location = 'Virtual';
+                            $day = "<p><i class='fas fa-calendar-week'></i></p>";
+                            $month = '';
 
-                                /*
-                                * Categories
-                                */
-                                $category = ' '; 
-
-                                // $tree = get_the_terms($course->ID, 'course_category'); 
-
-                                // if($tree)
-                                //     if(isset($tree[2]))
-                                //         $category = $tree[2]->name;
-
-                                // $category_id = 0;
-                            
-                                // if($category == ' '){
-                                //     $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                                //     if($category_id != 0)
-                                //         $category = (String)get_the_category_by_ID($category_id);
-                                // }
-
-                                /*
-                                *  Date and Location
-                                */
-                                $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
-
-                                $datas = get_field('data_locaties', $course->ID);
-                                // if($datas){
-                                //     $data = $datas[0]['data'][0]['start_date'];
-                                //     if($data != ""){
-                                //         $day = explode('/', explode(' ', $data)[0])[0];
-                                //         $mon = explode('/', explode(' ', $data)[0])[1];
-                                //         $month = $calendar[$mon];
-                                //     }
-
-                                //     $location = $datas[0]['data'][0]['location'];
-                                // }else{
-                                //     $datas = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
-                                //     $data = $datas[0];
-                                //     $day = explode('/', explode(' ', $data)[0])[0];
-                                //     $month = explode('/', explode(' ', $data)[0])[1];
-                                //     $month = $calendar[$month];
-                                //     $location = $datas[2];
-                                // }
-
-                                // if(!empty($data)){
-                                //     $date_now = strtotime(date('Y-m-d'));
-                                //     $data = strtotime(str_replace('/', '.', $data));
-                                //     if($data < $date_now)
-                                //         continue;
-                                // }
-
-                                /*
-                                * Price 
-                                */
-                                $p = " ";
-                                $p = get_field('price', $course->ID);
-                                if($p != "0")
-                                    $price =  number_format($p, 2, '.', ',');
-                                else 
-                                    $price = 'Gratis';
-
-                                /*
-                                * Thumbnails
-                                */ 
-                                $thumbnail = get_field('preview', $course->ID)['url'];
-                                if(!$thumbnail){
-                                    $thumbnail = get_field('url_image_xml', $course->ID);
-                                    if(!$thumbnail)
-                                        $thumbnail = get_field('image', 'category_'. $category_id);
-                                        if(!$thumbnail)
-                                            $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                            $category = ' ';
+                            $category_id = 0;
+                            $category_string = " ";
+                            if($category == ' '){
+                                $one_category = get_field('categories',  $course->ID);
+                                if(isset($one_category[0]))
+                                    $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                                else{
+                                    $one_category = get_field('category_xml',  $course->ID);
+                                    if(isset($one_category[0]))
+                                        $category_id = intval($one_category[0]['value']);
                                 }
-                                
-                                /*
-                                * Companies
-                                */ 
-                                $company = get_field('company',  'user_' . $course->post_author);
 
-                                //Course Type
-                                $course_type = get_field('course_type', $course->ID);
+                                if($category_str != 0)
+                                    $category = (String)get_the_category_by_ID($category_str);
+                                else if($category_id != 0)
+                                    $category = (String)get_the_category_by_ID($category_id);
+                            }
 
-                                //Other case : youtube
-                                $youtube_videos = get_field('youtube_videos', $course->ID);
+                            /*
+                            *  Date and Location
+                            */
+                            $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
-                                $find = true;
+                            $datas = get_field('data_locaties', $course->ID);
 
-                    ?>
+                            if($datas){
+                                $data = $datas[0]['data'][0]['start_date'];
+                                if($data != ""){
+                                    $day = explode('/', explode(' ', $data)[0])[0];
+                                    $mon = explode('/', explode(' ', $data)[0])[1];
+                                    $month = $calendar[$mon];
+                                }
+
+                                $location = $datas[0]['data'][0]['location'];
+                            }else{
+                                $datum = get_field('data_locaties_xml', $course->ID);
+
+                                if($datum)
+                                    if(isset($datum[0]['value']))
+                                        $element = $datum[0]['value'];
+
+                                if(!isset($element))
+                                    continue;
+
+                                $datas = explode('-', $element);
+
+                                $data = $datas[0];
+                                $day = explode('/', explode(' ', $data)[0])[0];
+                                $month = explode('/', explode(' ', $data)[0])[1];
+                                $month = $calendar[$month];
+                                $location = $datas[2];
+                            }
+
+                            //Course Type
+                            $course_type = get_field('course_type', $course->ID);
+
+                            if(!empty($data) && $course_type != "Video" )
+                                if($data){
+                                    $date_now = strtotime(date('Y-m-d'));
+                                    $data = strtotime(str_replace('/', '.', $data));
+                                    if($data < $date_now)
+                                        continue;
+                                }
+                            
+
+                            /*
+                            * Price 
+                            */
+                            $p = " ";
+                            $p = get_field('price', $course->ID);
+                            if($p != "0")
+                                $price =  number_format($p, 2, '.', ',');
+                            else 
+                                $price = 'Gratis';
+
+                            /*
+                            * Thumbnails
+                            */ 
+                            $thumbnail = get_field('preview', $course->ID)['url'];
+                            if(!$thumbnail){
+                                $thumbnail = get_field('url_image_xml', $course->ID);
+                                if(!$thumbnail)
+                                    $thumbnail = get_field('image', 'category_'. $category_id);
+                                    if(!$thumbnail)
+                                        $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                            }
+                            
+                            /*
+                            * Companies
+                            */ 
+                            $company = get_field('company',  'user_' . $course->post_author);
+
+                            //Other case : youtube
+                            $youtube_videos = get_field('youtube_videos', $course->ID);
+
+                            $find = true;
+
+                        ?>
                         <div class="swiper-slide swiper-slide4" data-swiper-slide-index="0">
                             <div class="blockLoveCourse" >
                                 <button>
@@ -663,9 +699,8 @@ if(isset($_GET['message']))
                         </div>
 
                         <?php
-                            if($count['limit'] == 20)
-                                break;
-                            }
+                        if($count['limit'] == 20)
+                            break;
                         }
                     }
                     if(!$find)
