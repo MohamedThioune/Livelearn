@@ -1026,6 +1026,11 @@ function store_comments(WP_REST_Request $request){
 
 function comments_course($data){
     $reviews = get_field('reviews', $data['id']);
+    
+    foreach($reviews as $review){
+        $image = get_field('profile_img',  'user_' .  $review['user']->ID);
+        $review->image = $image;
+    }
 
     if(!empty($reviews))
         return $reviews;
@@ -1155,10 +1160,8 @@ function agreement(WP_REST_Request $request){
         return ['error' => 'Something went wrong !'];
 }
 
-function following($data){
-    $value = get_user_by('id', $data['id']);   
-    if(!$value)
-        return ['error' => 'Something went wrong !'];
+function following(){
+    $value = wp_get_current_user();   
 
     $infos = array();
 
@@ -1251,7 +1254,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'delete_comments',
   ) );
 
-  register_rest_route( 'custom/v1', '/following/(?P<id>\d+)', array(
+  register_rest_route( 'custom/v1', '/following', array(
     'methods' => 'GET',
     'callback' => 'following',
   ) );
