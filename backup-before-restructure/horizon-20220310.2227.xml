@@ -1,0 +1,662 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<programs xmlns="http://studieData.nl/schema/edudex/program">
+<program xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://studieData.nl/schema/edudex/program http://studieData.nl/schema/edudex/program.xsd">
+  <editor><![CDATA[edwin.zoetemeijer@h-l.nl]]></editor>
+  <expires>2022-09-10</expires>
+  <format><![CDATA[Edudex]]></format>
+  <generator><![CDATA[Publisher 2.0]]></generator>
+  <includeInCatalog>rio/stap</includeInCatalog>
+  <inPublication>true</inPublication>
+  <lastEdited>2022-03-10T17:10:12.243</lastEdited>
+  <programAdmission>
+    <applicationOpen>true</applicationOpen>
+    <applicationType>individual</applicationType>
+    <maxNumberOfParticipants>12</maxNumberOfParticipants>
+    <minNumberOfParticipants>6</minNumberOfParticipants>
+    <paymentDue>up-front</paymentDue>
+    <requiredLevel>bachelor</requiredLevel>
+    <startDateDetermination>fixed starting date</startDateDetermination>
+  </programAdmission>
+  <programClassification>
+    <degree>certificate</degree>
+    <orgUnitId><![CDATA[horizon]]></orgUnitId>
+    <priceCategory/>
+    <programDuration unit="month">5</programDuration>
+    <programForm>part-time</programForm>
+    <programId>BB</programId>
+    <programLevel>bachelor</programLevel>
+    <programLocation/>
+    <programType>training</programType>
+    <startingYear>2018</startingYear>
+    <targetFunctionRijksoverheid>F0</targetFunctionRijksoverheid>
+    <targetFunctionRijksoverheid>F1</targetFunctionRijksoverheid>
+    <targetFunctionRijksoverheid>F2</targetFunctionRijksoverheid>
+    <targetFunctionRijksoverheid>F3</targetFunctionRijksoverheid>
+    <targetFunctionRijksoverheid>F4</targetFunctionRijksoverheid>
+    <targetFunctionRijksoverheid>F5</targetFunctionRijksoverheid>
+    <targetFunctionRijksoverheid>F6</targetFunctionRijksoverheid>
+    <targetFunctionRijksoverheid>F7</targetFunctionRijksoverheid>
+    <targetFunctionRijksoverheid>F8</targetFunctionRijksoverheid>
+    <targetSector>A</targetSector>
+    <targetSector>B</targetSector>
+    <targetSector>C</targetSector>
+    <targetSector>D</targetSector>
+    <targetSector>E</targetSector>
+    <targetSector>F</targetSector>
+    <targetSector>G</targetSector>
+    <targetSector>H</targetSector>
+    <targetSector>I</targetSector>
+    <targetSector>J</targetSector>
+    <targetSector>K</targetSector>
+    <targetSector>L</targetSector>
+    <targetSector>M</targetSector>
+    <targetSector>N</targetSector>
+    <targetSector>O</targetSector>
+    <targetSector>P</targetSector>
+    <targetSector>Q</targetSector>
+    <targetSector>R</targetSector>
+    <targetSector>S</targetSector>
+    <targetSector>T</targetSector>
+    <targetSector>U</targetSector>
+    <theme>change management</theme>
+    <theme>communication</theme>
+    <theme>personal development</theme>
+    <themeRijksoverheidLevel1>T9</themeRijksoverheidLevel1>
+  </programClassification>
+  <programCompetences/>
+  <programContacts>
+    <contactData>
+      <contactName><![CDATA[Trainingscoördinatie]]></contactName>
+      <email><![CDATA[info@horizontraining.nl]]></email>
+      <role><![CDATA[Opleidingsadvies]]></role>
+      <telephone><![CDATA[088-5560200]]></telephone>
+      <webLink><![CDATA[http://horizontraining.nl]]></webLink>
+    </contactData>
+  </programContacts>
+  <programCurriculum>
+    <instructionLanguage>
+      <languageCode>nl</languageCode>
+      <percentage>100</percentage>
+    </instructionLanguage>
+    <instructionMode>classroom teaching</instructionMode>
+    <instructionMode>training</instructionMode>
+    <studyLoad period="program">45</studyLoad>
+  </programCurriculum>
+  <programDescriptions>
+    <programName xml:lang="nl"><![CDATA[Backbone Programma]]></programName>
+    <programSummaryText xml:lang="nl"><![CDATA[Een training voor de ervaren professional in een sleutelfunctie of leidinggevende rol. Met jouw persoonlijke kwaliteiten als basis werken we aan je effectiviteit.]]></programSummaryText>
+    <programSummaryHtml xml:lang="nl"><![CDATA[Een training voor de ervaren professional in een sleutelfunctie of leidinggevende rol. Met jouw persoonlijke kwaliteiten als basis werken we aan je effectiviteit.]]></programSummaryHtml>
+    <programDescriptionText xml:lang="nl"><![CDATA[Maak jouw professionaliteit ‘toekomstproof’ en vergroot daarmee jouw betekenis!
+]]></programDescriptionText>
+    <programDescriptionHtml xml:lang="nl"><![CDATA[<p><span>Maak jouw professionaliteit ‘toekomstproof’ en vergroot daarmee jouw betekenis!</span></p>]]></programDescriptionHtml>
+    <subjectText>
+      <subject>characteristics</subject>
+      <header1 xml:lang="nl"><![CDATA[Meer over dit programma]]></header1>
+      <descriptionHtml xml:lang="nl"><![CDATA[<p>Als ervaren professional ben je voor je omgeving een stabiele en productieve ‘backbone’ werknemer, maar in organisaties van vandaag de dag ben je eigenlijk veel meer dan dat. Je bent een belangrijke schakel en je weet precies hoe je met de uiteenlopende belangen van alle verschillende samenwerkingspartners in de business moet omgaan. Jij ziet kansen om de organisatie en business te ontwikkelen. </p><p><br></p><p>Vanuit jouw backbone positie ben jij dé persoon om de benodigde vernieuwingen ook in praktijk te brengen. Omdat je het werk al jaren doet ben je gewend geraakt aan een bepaalde manier van werken. Soms lukt het je niet om effectief je idee tot uitvoering te brengen. In het Backbone programma ontwikkel je jezelf zodat je die (business)focus kunt realiseren. Daarmee draag je bij aan de wendbaarheid en de toekomst van je organisatie (en die van jezelf!).</p>]]></descriptionHtml>
+      <descriptionText xml:lang="nl"><![CDATA[Als ervaren professional ben je voor je omgeving een stabiele en productieve ‘backbone’ werknemer, maar in organisaties van vandaag de dag ben je eigenlijk veel meer dan dat. Je bent een belangrijke schakel en je weet precies hoe je met de uiteenlopende belangen van alle verschillende samenwerkingspartners in de business moet omgaan. Jij ziet kansen om de organisatie en business te ontwikkelen. 
+
+Vanuit jouw backbone positie ben jij dé persoon om de benodigde vernieuwingen ook in praktijk te brengen. Omdat je het werk al jaren doet ben je gewend geraakt aan een bepaalde manier van werken. Soms lukt het je niet om effectief je idee tot uitvoering te brengen. In het Backbone programma ontwikkel je jezelf zodat je die (business)focus kunt realiseren. Daarmee draag je bij aan de wendbaarheid en de toekomst van je organisatie (en die van jezelf!).
+]]></descriptionText>
+    </subjectText>
+    <subjectText>
+      <subject>student profile</subject>
+      <header1 xml:lang="nl"><![CDATA[Voor wie?]]></header1>
+      <descriptionHtml xml:lang="nl"><![CDATA[<p><b>Voor wie is het Backbone programma?</b></p><p>Dit programma is bestemd voor alle ervaren ‘backbone’ professionals die zichzelf en hun organisatie wendbaar en toekomstgericht willen maken. Onze deelnemers zijn een brede groep van specialisten en vakprofessionals op HBO werk- en denkniveau, van in elk geval 30 jaar en ouder met minimaal 5 jaar werkervaring. Vanuit hun expertise kunnen ze ook in een rol zitten als lijn-, project- of procesmanager, of in een agile-omgeving als coach, productowner of scrummaster functioneren. </p>]]></descriptionHtml>
+      <descriptionText xml:lang="nl"><![CDATA[Voor wie is het Backbone programma?
+Dit programma is bestemd voor alle ervaren ‘backbone’ professionals die zichzelf en hun organisatie wendbaar en toekomstgericht willen maken. Onze deelnemers zijn een brede groep van specialisten en vakprofessionals op HBO werk- en denkniveau, van in elk geval 30 jaar en ouder met minimaal 5 jaar werkervaring. Vanuit hun expertise kunnen ze ook in een rol zitten als lijn-, project- of procesmanager, of in een agile-omgeving als coach, productowner of scrummaster functioneren. 
+]]></descriptionText>
+    </subjectText>
+    <subjectText>
+      <subject>objectives</subject>
+      <header1 xml:lang="nl"><![CDATA[Doelen en resultaten]]></header1>
+      <descriptionHtml xml:lang="nl"><![CDATA[<p>Het doel van het Backbone programma is dat jij hernieuwd zicht krijgt op jouw talent. En doordat je werkt aan jouw (zelfgekozen) businessfocus wordt jouw toegevoegde waarde nog groter. </p><p><br></p><p><b>Met dit programma behaal je de volgende resultaten:</b></p><ol><li>Concrete resultaten op jouw businessfocus</li><li>Ontwikkeling van vaardigheden</li><li>Aangescherpte professionele identiteit</li><li>Wendbaarheid en leervermogen</li></ol><p><br></p><p><b>Concrete resultaten op jouw businessfocus</b></p><ul><li>Vanuit het programma word je begeleid om concrete resultaten te halen op jouw businessfocus; hiermee haal je alles uit je talent en geef je een nieuwe impuls aan de business. </li></ul><p><b>Ontwikkeling van vaardigheden</b></p><ul><li>Je verwerft vaardigheden om mensen mee te krijgen in complexe situaties, waarin uiteenlopende belangen en sterke emoties spelen. </li><li>Je leert je expertise beter te verbinden met de belangen en denkwijzen van anderen waardoor je impact groter wordt.</li></ul><p><b>Professionele identiteit</b></p><ul><li>Je scherpt je professionele profiel aan waardoor jouw expertise beter herkenbaar wordt voor jouw omgeving.</li><li>Zonder dat je daar harder voor hoeft te lopen word je steeds meer gevraagd voor de juiste dingen, namelijk waar je goed in bent, waar je plezier in hebt en wat je zinvol vindt.</li></ul><p><b>Wendbaarheid</b></p><ul><li>Je hebt meer zicht op je kwaliteiten én je ontwikkelpotentieel. </li><li>Je hebt je visie en je netwerk verbreed waardoor je voor jezelf én de business mogelijkheden ziet die je eerder niet zag.</li></ul><p>Met deze resultaten kun je je eigen ontwikkeling en die van de business blijven sturen. Je legt hiermee een basis om steeds opnieuw je waarde voor de business te bewijzen: je leert navigeren. </p>]]></descriptionHtml>
+      <descriptionText xml:lang="nl"><![CDATA[Het doel van het Backbone programma is dat jij hernieuwd zicht krijgt op jouw talent. En doordat je werkt aan jouw (zelfgekozen) businessfocus wordt jouw toegevoegde waarde nog groter. 
+
+Met dit programma behaal je de volgende resultaten:
+- - Concrete resultaten op jouw businessfocus
+- Ontwikkeling van vaardigheden
+- Aangescherpte professionele identiteit
+- Wendbaarheid en leervermogen
+
+Concrete resultaten op jouw businessfocus
+
+- Vanuit het programma word je begeleid om concrete resultaten te halen op jouw businessfocus; hiermee haal je alles uit je talent en geef je een nieuwe impuls aan de business. 
+
+Ontwikkeling van vaardigheden
+
+- Je verwerft vaardigheden om mensen mee te krijgen in complexe situaties, waarin uiteenlopende belangen en sterke emoties spelen. 
+- Je leert je expertise beter te verbinden met de belangen en denkwijzen van anderen waardoor je impact groter wordt.
+
+Professionele identiteit
+
+- Je scherpt je professionele profiel aan waardoor jouw expertise beter herkenbaar wordt voor jouw omgeving.
+- Zonder dat je daar harder voor hoeft te lopen word je steeds meer gevraagd voor de juiste dingen, namelijk waar je goed in bent, waar je plezier in hebt en wat je zinvol vindt.
+
+Wendbaarheid
+
+- Je hebt meer zicht op je kwaliteiten én je ontwikkelpotentieel. 
+- Je hebt je visie en je netwerk verbreed waardoor je voor jezelf én de business mogelijkheden ziet die je eerder niet zag.
+
+Met deze resultaten kun je je eigen ontwikkeling en die van de business blijven sturen. Je legt hiermee een basis om steeds opnieuw je waarde voor de business te bewijzen: je leert navigeren. 
+]]></descriptionText>
+    </subjectText>
+    <subjectText>
+      <subject>curriculum</subject>
+      <header1 xml:lang="nl"><![CDATA[Opzet van het programma]]></header1>
+      <descriptionHtml xml:lang="nl"><![CDATA[<p><b>Leren op je werkplek via het Learning Experience Platform (LXP):</b></p><p>Tijdens het programma heb je de beschikking over een LXP. Dit is een online-omgeving waar je rond de thema’s van het programma verschillende ‘learning experiences’ vindt. Deze bestaan uit korte praktijkopdrachten, filmpjes, infographics, blogs en andere aantrekkelijke content. De LXP nodigt je uit om de draad van het traject in de dagelijkse praktijk vast te houden en toe te passen. De LXP nodigt je ook uit om je leerproces in eigen hand te nemen. Je kiest de items die interessant voor je zijn, je plant die zelf in en je schakelt zelf de mensen in die jou helpen bij je leerproces.</p><p><br></p><p><b>Oriëntatie opdracht:</b></p><p>Samen met je team, je leidinggevende en je (interne) partners formuleer je een businessfocus die jou uitdaagt om uit je comfortzone te stappen en je persoonlijke ontwikkeling te versnellen. Dit vraagt om een eerste verkenning van jouw (verborgen) kwaliteiten en je ontwikkelpotentieel, én van de kansen in de business.</p><p><br></p><p><b>Praktische informatie:</b></p><ul><li>Negendaagse training van 22 dagdelen: vier blokken van twee aaneengesloten dagen met avondprogramma en overnachtingen en een afsluiting van een dag.</li><li>Daarnaast heb je een (individueel) start- en coachgesprek met de trainer.</li><li>Studiebelasting: naast de bijeenkomsten is de studiebelasting 2 á 4 uur per week (gedurende de looptijd van het programma ca. 40 uur). Onder andere neem je de tijd om het startgesprek voor te bereiden om jouw businessfocus te bepalen.</li></ul>]]></descriptionHtml>
+      <descriptionText xml:lang="nl"><![CDATA[Leren op je werkplek via het Learning Experience Platform (LXP):
+Tijdens het programma heb je de beschikking over een LXP. Dit is een online-omgeving waar je rond de thema’s van het programma verschillende ‘learning experiences’ vindt. Deze bestaan uit korte praktijkopdrachten, filmpjes, infographics, blogs en andere aantrekkelijke content. De LXP nodigt je uit om de draad van het traject in de dagelijkse praktijk vast te houden en toe te passen. De LXP nodigt je ook uit om je leerproces in eigen hand te nemen. Je kiest de items die interessant voor je zijn, je plant die zelf in en je schakelt zelf de mensen in die jou helpen bij je leerproces.
+
+Oriëntatie opdracht:
+Samen met je team, je leidinggevende en je (interne) partners formuleer je een businessfocus die jou uitdaagt om uit je comfortzone te stappen en je persoonlijke ontwikkeling te versnellen. Dit vraagt om een eerste verkenning van jouw (verborgen) kwaliteiten en je ontwikkelpotentieel, én van de kansen in de business.
+
+Praktische informatie:
+
+- Negendaagse training van 22 dagdelen: vier blokken van twee aaneengesloten dagen met avondprogramma en overnachtingen en een afsluiting van een dag.
+- Daarnaast heb je een (individueel) start- en coachgesprek met de trainer.
+- Studiebelasting: naast de bijeenkomsten is de studiebelasting 2 á 4 uur per week (gedurende de looptijd van het programma ca. 40 uur). Onder andere neem je de tijd om het startgesprek voor te bereiden om jouw businessfocus te bepalen.
+
+]]></descriptionText>
+    </subjectText>
+    <subjectText>
+      <subject>course schedule</subject>
+      <header1 xml:lang="nl"><![CDATA[Opbouw van de training en modules]]></header1>
+      <descriptionHtml xml:lang="nl"><![CDATA[<p><b>Modules</b></p><ul><li>Oriëntatieopdracht businessfocus</li><li>1-op-1 startgesprek met de trainer</li><li>Module 1 | Talent en Business</li><li>Module 2 | De Kracht van Dialoog</li><li>Individuele coaching</li><li>Module 3 | Beïnvloeden en veranderen</li><li>Module 4 | Persoonlijk Leiderschap</li><li>Afsluiting ‘finishfoto’</li></ul>]]></descriptionHtml>
+      <descriptionText xml:lang="nl"><![CDATA[Modules
+
+- Oriëntatieopdracht businessfocus
+- 1-op-1 startgesprek met de trainer
+- Module 1 | Talent en Business
+- Module 2 | De Kracht van Dialoog
+- Individuele coaching
+- Module 3 | Beïnvloeden en veranderen
+- Module 4 | Persoonlijk Leiderschap
+- Afsluiting ‘finishfoto’
+
+]]></descriptionText>
+    </subjectText>
+    <webLink>https://horizontraining.nl/trainingen/backbone-programma/</webLink>
+  </programDescriptions>
+  <programSchedule>
+    <genericProgramRun>
+      <contactHoursPartOfDay>day</contactHoursPartOfDay>
+      <contactHoursPartOfDay>evening</contactHoursPartOfDay>
+      <cost>
+        <amount>4995.00</amount>
+        <amountVAT>1048.95</amountVAT>
+        <amountIsFinal>true</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <VATExemptAmount>5494.50</VATExemptAmount>
+        <VATExemptAmountVAT>0.00</VATExemptAmountVAT>
+      </cost>
+      <cost>
+        <amount>1316.00</amount>
+        <amountVAT>276.36</amountVAT>
+        <amountIsFinal>true</amountIsFinal>
+        <costType>accommodation</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <VATExemptAmount>1447.60</VATExemptAmount>
+        <VATExemptAmountVAT>0.00</VATExemptAmountVAT>
+      </cost>
+      <numberOfContactSessions>7</numberOfContactSessions>
+    </genericProgramRun>
+    <programRun>
+      <id>BB.010426</id>
+      <status>application opened</status>
+      <startDate isFinal="true">2022-06-27</startDate>
+      <endDate isFinal="true">2022-12-22</endDate>
+      <cost>
+        <amount>4995.00</amount>
+        <amountVAT>1048.95</amountVAT>
+        <amountIsFinal>true</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <VATExemptAmount>5494.50</VATExemptAmount>
+        <VATExemptAmountVAT>0.00</VATExemptAmountVAT>
+      </cost>
+      <cost>
+        <amount>1316.00</amount>
+        <amountVAT>276.36</amountVAT>
+        <amountIsFinal>true</amountIsFinal>
+        <costType>accommodation</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <VATExemptAmount>1447.60</VATExemptAmount>
+        <VATExemptAmountVAT>0.00</VATExemptAmountVAT>
+      </cost>
+      <courseDay>
+        <id>a0E4I0000110mo2UAA</id>
+        <date>2022-06-27</date>
+        <name xml:lang="nl">Module 1</name>
+        <startTime>09:00:00</startTime>
+        <endTime>21:00:00</endTime>
+        <location>
+          <locationName xml:lang="nl">Nog niet bekend</locationName>
+          <address/>
+          <zipcode/>
+          <city/>
+          <country>nl</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>a0E4I0000110mo3UAA</id>
+        <date>2022-06-28</date>
+        <name xml:lang="nl">Module 1</name>
+        <startTime>09:00:00</startTime>
+        <endTime>17:00:00</endTime>
+        <location>
+          <locationName xml:lang="nl">Nog niet bekend</locationName>
+          <address/>
+          <zipcode/>
+          <city/>
+          <country>nl</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>a0E4I0000110mo4UAA</id>
+        <date>2022-09-07</date>
+        <name xml:lang="nl">Module 2</name>
+        <startTime>09:00:00</startTime>
+        <endTime>21:00:00</endTime>
+        <location>
+          <locationName xml:lang="nl">Nog niet bekend</locationName>
+          <address/>
+          <zipcode/>
+          <city/>
+          <country>nl</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>a0E4I0000110mo5UAA</id>
+        <date>2022-09-08</date>
+        <name xml:lang="nl">Module 2</name>
+        <startTime>09:00:00</startTime>
+        <endTime>17:00:00</endTime>
+        <location>
+          <locationName xml:lang="nl">Nog niet bekend</locationName>
+          <address/>
+          <zipcode/>
+          <city/>
+          <country>nl</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>a0E4I0000110mo6UAA</id>
+        <date>2022-10-04</date>
+        <name xml:lang="nl">Coaching</name>
+        <startTime>09:00:00</startTime>
+        <endTime>17:00:00</endTime>
+        <location>
+          <locationName xml:lang="nl">Nog niet bekend</locationName>
+          <address/>
+          <zipcode/>
+          <city/>
+          <country>nl</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>a0E4I0000110mo7UAA</id>
+        <date>2022-10-10</date>
+        <name xml:lang="nl">Coaching</name>
+        <startTime>09:00:00</startTime>
+        <endTime>17:00:00</endTime>
+        <location>
+          <locationName xml:lang="nl">Nog niet bekend</locationName>
+          <address/>
+          <zipcode/>
+          <city/>
+          <country>nl</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>a0E4I0000110mo8UAA</id>
+        <date>2022-11-01</date>
+        <name xml:lang="nl">Module 3</name>
+        <startTime>09:00:00</startTime>
+        <endTime>21:00:00</endTime>
+        <location>
+          <locationName xml:lang="nl">Nog niet bekend</locationName>
+          <address/>
+          <zipcode/>
+          <city/>
+          <country>nl</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>a0E4I0000110mo9UAA</id>
+        <date>2022-11-02</date>
+        <name xml:lang="nl">Module 3</name>
+        <startTime>09:00:00</startTime>
+        <endTime>17:00:00</endTime>
+        <location>
+          <locationName xml:lang="nl">Nog niet bekend</locationName>
+          <address/>
+          <zipcode/>
+          <city/>
+          <country>nl</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>a0E4I0000110moAUAQ</id>
+        <date>2022-11-28</date>
+        <name xml:lang="nl">Module 4</name>
+        <startTime>09:00:00</startTime>
+        <endTime>20:00:00</endTime>
+        <location>
+          <locationName xml:lang="nl">Nog niet bekend</locationName>
+          <address/>
+          <zipcode/>
+          <city/>
+          <country>nl</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>a0E4I0000110moBUAQ</id>
+        <date>2022-11-29</date>
+        <name xml:lang="nl">Module 4</name>
+        <startTime>09:00:00</startTime>
+        <endTime>17:00:00</endTime>
+        <location>
+          <locationName xml:lang="nl">Nog niet bekend</locationName>
+          <address/>
+          <zipcode/>
+          <city/>
+          <country>nl</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>a0E4I0000110moCUAQ</id>
+        <date>2022-12-22</date>
+        <name xml:lang="nl">Afsluiting</name>
+        <startTime>09:00:00</startTime>
+        <endTime>17:00:00</endTime>
+        <location>
+          <locationName xml:lang="nl">Nog niet bekend</locationName>
+          <address/>
+          <zipcode/>
+          <city/>
+          <country>nl</country>
+        </location>
+      </courseDay>
+      <location>
+        <locationName xml:lang="nl">Nog niet bekend</locationName>
+        <address/>
+        <zipcode/>
+        <city/>
+        <country>nl</country>
+      </location>
+    </programRun>
+  </programSchedule>
+</program>
+
+<program xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://studieData.nl/schema/edudex/program http://studieData.nl/schema/edudex/program.xsd">
+  <editor><![CDATA[edwin.zoetemeijer@h-l.nl]]></editor>
+  <expires>2022-09-10</expires>
+  <format><![CDATA[Edudex]]></format>
+  <generator><![CDATA[Publisher 2.0]]></generator>
+  <includeInCatalog>rio/stap</includeInCatalog>
+  <inPublication>true</inPublication>
+  <lastEdited>2022-03-10T17:10:12.243</lastEdited>
+  <programAdmission>
+    <applicationOpen>true</applicationOpen>
+    <applicationType>individual</applicationType>
+    <maxNumberOfParticipants>10</maxNumberOfParticipants>
+    <minNumberOfParticipants>6</minNumberOfParticipants>
+    <paymentDue>up-front</paymentDue>
+    <requiredLevel>bachelor</requiredLevel>
+    <startDateDetermination>fixed starting date</startDateDetermination>
+  </programAdmission>
+  <programClassification>
+    <credits system="PE">0</credits>
+    <degree>certificate</degree>
+    <orgUnitId><![CDATA[horizon]]></orgUnitId>
+    <priceCategory/>
+    <programDuration unit="week">6</programDuration>
+    <programForm>part-time</programForm>
+    <programId>LT</programId>
+    <programLevel>bachelor</programLevel>
+    <programLocation/>
+    <programType>training</programType>
+    <startingYear>2022</startingYear>
+    <targetFunctionRijksoverheid>F0</targetFunctionRijksoverheid>
+    <targetFunctionRijksoverheid>F3</targetFunctionRijksoverheid>
+    <targetFunctionRijksoverheid>F5</targetFunctionRijksoverheid>
+    <targetFunctionRijksoverheid>F6</targetFunctionRijksoverheid>
+    <targetFunctionRijksoverheid>F7</targetFunctionRijksoverheid>
+    <targetSector>A</targetSector>
+    <targetSector>C</targetSector>
+    <targetSector>D</targetSector>
+    <targetSector>E</targetSector>
+    <targetSector>F</targetSector>
+    <targetSector>G</targetSector>
+    <targetSector>J</targetSector>
+    <targetSector>K</targetSector>
+    <targetSector>M</targetSector>
+    <targetSector>O</targetSector>
+    <targetSector>P</targetSector>
+    <targetSector>Q</targetSector>
+    <targetSector>R</targetSector>
+    <targetSector>S</targetSector>
+    <theme>change management</theme>
+    <theme>coaching</theme>
+    <theme>communication</theme>
+    <themeRijksoverheidLevel1>T7</themeRijksoverheidLevel1>
+  </programClassification>
+  <programCompetences>
+    <competenceRijksoverheid>C1</competenceRijksoverheid>
+    <competenceRijksoverheid>C2</competenceRijksoverheid>
+    <competenceRijksoverheid>C3</competenceRijksoverheid>
+    <competenceRijksoverheid>C7</competenceRijksoverheid>
+    <competenceRijksoverheid>C17</competenceRijksoverheid>
+  </programCompetences>
+  <programContacts>
+    <contactData>
+      <contactName><![CDATA[Trainingscoördinatie]]></contactName>
+      <email><![CDATA[info@horizontraining.nl]]></email>
+      <role><![CDATA[Opleidingsadvies]]></role>
+      <telephone><![CDATA[088-5560200]]></telephone>
+      <webLink><![CDATA[http://horizontraining.nl]]></webLink>
+    </contactData>
+  </programContacts>
+  <programCurriculum>
+    <instructionLanguage>
+      <languageCode>nl</languageCode>
+      <percentage>100</percentage>
+    </instructionLanguage>
+    <instructionMode>classroom teaching</instructionMode>
+    <studyLoad period="program">4</studyLoad>
+  </programCurriculum>
+  <programDescriptions>
+    <programName xml:lang="nl"><![CDATA[Leidinggeven aan talentontwikkeling]]></programName>
+    <programSummaryText xml:lang="nl"><![CDATA[Een training voor leidinggevenden die nieuwsgierig zijn hoe ze effectief de aansluiting kunnen maken tussen talentontwikkeling en de gevraagde  businessdoelstellingen.]]></programSummaryText>
+    <programSummaryHtml xml:lang="nl"><![CDATA[Een training voor leidinggevenden die nieuwsgierig zijn hoe ze effectief de aansluiting kunnen maken tussen talentontwikkeling en de gevraagde  businessdoelstellingen.]]></programSummaryHtml>
+    <programDescriptionText xml:lang="nl"><![CDATA[Creëer een goed leerklimaat voor ervaren professionals zodat je een wendbaar team neerzet.
+]]></programDescriptionText>
+    <programDescriptionHtml xml:lang="nl"><![CDATA[<p>Creëer een goed leerklimaat voor ervaren professionals zodat je een wendbaar team neerzet.</p>]]></programDescriptionHtml>
+    <subjectText>
+      <subject>characteristics</subject>
+      <header1 xml:lang="nl"><![CDATA[Meer over dit programma]]></header1>
+      <descriptionHtml xml:lang="nl"><![CDATA[<p>Het geheim van een wendbare organisatie wordt onder andere bepaald door talentontwikkeling van de (ervaren) professionals. De VUCA-wereld met haar vele veranderingen en onzekerheden vraagt namelijk om razendsnelle aanpassingen en ontwikkelingen van organisaties. Deze voortdurende veranderingen in de business doen een appèl op het talent en het lerend vermogen van alle professionals in jouw team en ook op jou als leidinggevende. </p><p><br></p><p>Hoe zorg je er dan voor dat je team wendbaar genoeg is om betekenisvol werk te doen in de business van morgen? Dit is misschien wel de mooiste uitdaging van jouw functie, want wat geeft meer voldoening dan mensen te zien groeien onder jouw leiding en daarbij ook relevant te blijven voor de business van morgen?</p><p><br></p><p><b>Als leidinggevende vraag je je af: </b></p><ul><li>Hoe herken ik het (verborgen) talent van verschillende medewerkers? </li><li>Hoe verbind ik het talent van mijn medewerkers met de gewenste richting van de business?</li><li>Op welke manier spreek ik mijn mensen aan, zodat ze zelf het initiatief nemen om hun talent in te zetten?</li><li>Hoe ga ik om met weerstand die opspeelt als ik mensen spreek over persoonlijke ontwikkeling?</li><li>Hoe stimuleer ik het zelflerend vermogen van de professionals in mijn team?</li><li>Hoe creëer ik een klimaat waarin teamleden elkaar uitdagen en inspireren? </li></ul><p>Kortom: vraag jij je ook af hoe je kunt bouwen aan een effectief en wendbaar team? Dan is de training Leidinggeven aan Talentontwikkeling iets voor jou!</p>]]></descriptionHtml>
+      <descriptionText xml:lang="nl"><![CDATA[Het geheim van een wendbare organisatie wordt onder andere bepaald door talentontwikkeling van de (ervaren) professionals. De VUCA-wereld met haar vele veranderingen en onzekerheden vraagt namelijk om razendsnelle aanpassingen en ontwikkelingen van organisaties. Deze voortdurende veranderingen in de business doen een appèl op het talent en het lerend vermogen van alle professionals in jouw team en ook op jou als leidinggevende.
+
+Hoe zorg je er dan voor dat je team wendbaar genoeg is om betekenisvol werk te doen in de business van morgen? Dit is misschien wel de mooiste uitdaging van jouw functie, want wat geeft meer voldoening dan mensen te zien groeien onder jouw leiding en daarbij ook relevant te blijven voor de business van morgen?
+
+Als leidinggevende vraag je je af:
+
+- Hoe herken ik het (verborgen) talent van verschillende medewerkers?
+- Hoe verbind ik het talent van mijn medewerkers met de gewenste richting van de business?
+- Op welke manier spreek ik mijn mensen aan, zodat ze zelf het initiatief nemen om hun talent in te zetten?
+- Hoe ga ik om met weerstand die opspeelt als ik mensen spreek over persoonlijke ontwikkeling?
+- Hoe stimuleer ik het zelflerend vermogen van de professionals in mijn team?
+- Hoe creëer ik een klimaat waarin teamleden elkaar uitdagen en inspireren?
+
+Kortom: vraag jij je ook af hoe je kunt bouwen aan een effectief en wendbaar team? Dan is de training Leidinggeven aan Talentontwikkeling iets voor jou!
+]]></descriptionText>
+    </subjectText>
+    <subjectText>
+      <subject>student profile</subject>
+      <header1 xml:lang="nl"><![CDATA[Voor wie?]]></header1>
+      <descriptionHtml xml:lang="nl"><![CDATA[<p>Deze training is bestemd voor teamleiders en managers die leidinggeven aan professionals, zowel in de uitvoering als in de staf. Onze deelnemers zijn werkzaam binnen commerciële of publieke organisaties. De mogelijke functietitels lopen uiteen van leidinggevende, coach, projectleider tot bijvoorbeeld scrum master of programmamanager. Zij hebben verantwoordelijkheid voor de inhoudelijke resultaten van hun team en de daarbij behorende persoonlijke ontwikkeling van teamleden. </p><p><br></p><p>Onze deelnemers hebben een hbo werk- en denkniveau en hebben in ieder geval drie jaar ervaring in een leidinggevende rol.</p>]]></descriptionHtml>
+      <descriptionText xml:lang="nl"><![CDATA[Deze training is bestemd voor teamleiders en managers die leidinggeven aan professionals, zowel in de uitvoering als in de staf. Onze deelnemers zijn werkzaam binnen commerciële of publieke organisaties. De mogelijke functietitels lopen uiteen van leidinggevende, coach, projectleider tot bijvoorbeeld scrum master of programmamanager. Zij hebben verantwoordelijkheid voor de inhoudelijke resultaten van hun team en de daarbij behorende persoonlijke ontwikkeling van teamleden.
+
+Onze deelnemers hebben een hbo werk- en denkniveau en hebben in ieder geval drie jaar ervaring in een leidinggevende rol.
+]]></descriptionText>
+    </subjectText>
+    <subjectText>
+      <subject>objectives</subject>
+      <header1 xml:lang="nl"><![CDATA[Doelen en resultaten]]></header1>
+      <descriptionHtml xml:lang="nl"><![CDATA[<p>Het doel van de training Leidinggeven aan Talentontwikkeling is om leidinggevenden te leren hoe ze effectief de aansluiting kunnen maken tussen talentontwikkeling en de gevraagde businessdoelstellingen. Na deze training:</p><p><br></p><ul><li>Heb je kennis van en kun je werken met het Horizonmodel voor Talentontwikkeling&copy;;</li><li>Begrijp je hoe je ervaren professionals effectief kunt uitdagen om meer uit hun talent te halen;</li><li>Heb je geoefend met technieken waarmee je een waarderend appèl kunt doen op ervaren professionals, o.a. ‘appreciative inquiry’ en ‘groeigerichte feedback’;</li><li>En weet je hoe je het leerklimaat in jouw team kunt vaststellen en verbeteren.</li></ul><p>Al tijdens de voorbereiding ga je aan de slag met jouw team en jouw business. Daardoor kun je het geleerde in de training onmiddellijk toepassen in de praktijk. In de voorbereiding richt je je onder andere op de volgende vragen:</p><p><br></p><ul><li>Wat zijn de belangrijkste businessuitdagingen voor jouw team?</li><li>Welke beweging moet jouw team maken om deze uitdagingen succesvol op te pakken?</li><li>Wat betekent dat voor de inzet en ontwikkeling van ieders talent?</li></ul>]]></descriptionHtml>
+      <descriptionText xml:lang="nl"><![CDATA[Het doel van de training Leidinggeven aan Talentontwikkeling is om leidinggevenden te leren hoe ze effectief de aansluiting kunnen maken tussen talentontwikkeling en de gevraagde businessdoelstellingen. Na deze training:
+
+- Heb je kennis van en kun je werken met het Horizonmodel voor Talentontwikkeling&copy;;
+- Begrijp je hoe je ervaren professionals effectief kunt uitdagen om meer uit hun talent te halen;
+- Heb je geoefend met technieken waarmee je een waarderend appèl kunt doen op ervaren professionals, o.a. ‘appreciative inquiry’ en ‘groeigerichte feedback’;
+- En weet je hoe je het leerklimaat in jouw team kunt vaststellen en verbeteren.
+
+Al tijdens de voorbereiding ga je aan de slag met jouw team en jouw business. Daardoor kun je het geleerde in de training onmiddellijk toepassen in de praktijk. In de voorbereiding richt je je onder andere op de volgende vragen:
+
+- Wat zijn de belangrijkste businessuitdagingen voor jouw team?
+- Welke beweging moet jouw team maken om deze uitdagingen succesvol op te pakken?
+- Wat betekent dat voor de inzet en ontwikkeling van ieders talent?
+
+]]></descriptionText>
+    </subjectText>
+    <subjectText>
+      <subject>curriculum</subject>
+      <header1 xml:lang="nl"><![CDATA[Inhoud en onderwerpen]]></header1>
+      <descriptionHtml xml:lang="nl"><![CDATA[<p>In het programma combineren we theoretische kennis met praktische tools. Bovendien bevat een trainingsdag werkvormen die alle niveaus van leren bedienen: zingeving, emotioneel, cognitief en fysiek. Een inkijkje in elementen die in het programma zijn opgenomen: </p><ul><li>minicollege(s) over bruikbare theoretische concepten of modellen die direct meer inzicht geven in het herkennen en ontwikkelen van talent (zoals het <span>Horizonmodel voor Talentontwikkeling&copy;)</span>;</li><li>oefeningen en praktische tips om met de talentontwikkeling van diverse persoonlijkheden en ontwikkelniveaus van medewerkers aan de slag te gaan;</li><li>situaties en persoonlijke cases oefenen en uitspelen met bedrijfsacteurs;</li><li>kennis, inzichten en tools (zoals een behulpzame vragenlijst) om het leerklimaat van het team vast te stellen en (waar nodig) te versterken;</li><li>persoonsgerichte feedback, zodat jouw effectiviteit en je gesprekvaardigheden worden versterkt.</li></ul>]]></descriptionHtml>
+      <descriptionText xml:lang="nl"><![CDATA[In het programma combineren we theoretische kennis met praktische tools. Bovendien bevat een trainingsdag werkvormen die alle niveaus van leren bedienen: zingeving, emotioneel, cognitief en fysiek. Een inkijkje in elementen die in het programma zijn opgenomen:
+
+- minicollege(s) over bruikbare theoretische concepten of modellen die direct meer inzicht geven in het herkennen en ontwikkelen van talent (zoals het Horizonmodel voor Talentontwikkeling&copy;);
+- oefeningen en praktische tips om met de talentontwikkeling van diverse persoonlijkheden en ontwikkelniveaus van medewerkers aan de slag te gaan;
+- situaties en persoonlijke cases oefenen en uitspelen met bedrijfsacteurs;
+- kennis, inzichten en tools (zoals een behulpzame vragenlijst) om het leerklimaat van het team vast te stellen en (waar nodig) te versterken;
+- persoonsgerichte feedback, zodat jouw effectiviteit en je gesprekvaardigheden worden versterkt.
+
+]]></descriptionText>
+    </subjectText>
+    <subjectText>
+      <subject>course schedule</subject>
+      <header1 xml:lang="nl"><![CDATA[Praktische informatie en opbouw van het programma]]></header1>
+      <descriptionHtml xml:lang="nl"><![CDATA[<p><b>Opbouw: </b></p><ul><li>Twee modules (twee trainingsdagen) en twee individuele coachgesprekken.</li><li>De trainingsdagen zijn van 9.00 uur tot 17.00 uur op een conferentieoord in Midden-Nederland.</li><li>De individuele coachgesprekken zijn online (via Teams of Zoom, 30 minuten). Het startgesprek vindt plaats voorafgaand aan de eerste trainingsdag. Het tweede gesprek plan je na de tweede trainingsdag in met de trainer. </li><li>Tussen module 1 en 2 zit ongeveer vier weken.</li></ul><p><b>Studiebelasting:</b> naast de bijeenkomsten en coaching is de studiebelasting een à twee uur per week (gedurende de looptijd van het programma ca. vier uur).</p><p><b>Groepsgrootte:</b> minimaal zes en maximaal twaalf deelnemers.</p>]]></descriptionHtml>
+      <descriptionText xml:lang="nl"><![CDATA[Opbouw:
+
+- Twee modules (twee trainingsdagen) en twee individuele coachgesprekken.
+- De trainingsdagen zijn van 9.00 uur tot 17.00 uur op een conferentieoord in Midden-Nederland.
+- De individuele coachgesprekken zijn online (via Teams of Zoom, 30 minuten). Het startgesprek vindt plaats voorafgaand aan de eerste trainingsdag. Het tweede gesprek plan je na de tweede trainingsdag in met de trainer.
+- Tussen module 1 en 2 zit ongeveer vier weken.
+
+Studiebelasting: naast de bijeenkomsten en coaching is de studiebelasting een à twee uur per week (gedurende de looptijd van het programma ca. vier uur).
+Groepsgrootte: minimaal zes en maximaal twaalf deelnemers.
+]]></descriptionText>
+    </subjectText>
+    <webLink>https://horizontraining.nl/training/leidinggeven-aan-talentontwikkeling/</webLink>
+  </programDescriptions>
+  <programSchedule>
+    <genericProgramRun>
+      <contactHoursPartOfDay>day</contactHoursPartOfDay>
+      <cost>
+        <amount>1495.00</amount>
+        <amountVAT>313.95</amountVAT>
+        <amountIsFinal>true</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <VATExemptAmount>1644.50</VATExemptAmount>
+        <VATExemptAmountVAT>0.00</VATExemptAmountVAT>
+      </cost>
+      <cost>
+        <amount>195.00</amount>
+        <amountVAT>40.95</amountVAT>
+        <amountIsFinal>true</amountIsFinal>
+        <costType>accommodation</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <VATExemptAmount>214.50</VATExemptAmount>
+        <VATExemptAmountVAT>0.00</VATExemptAmountVAT>
+      </cost>
+      <numberOfContactSessions>4</numberOfContactSessions>
+    </genericProgramRun>
+    <programRun>
+      <id>LT.010598</id>
+      <status>application opened</status>
+      <startDate isFinal="true">2022-07-06</startDate>
+      <endDate isFinal="true">2022-09-26</endDate>
+      <cost>
+        <amount>1495.00</amount>
+        <amountVAT>313.95</amountVAT>
+        <amountIsFinal>true</amountIsFinal>
+        <costType>tuition fee</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <VATExemptAmount>1644.50</VATExemptAmount>
+        <VATExemptAmountVAT>0.00</VATExemptAmountVAT>
+      </cost>
+      <cost>
+        <amount>195.00</amount>
+        <amountVAT>40.95</amountVAT>
+        <amountIsFinal>true</amountIsFinal>
+        <costType>accommodation</costType>
+        <currency>eur</currency>
+        <isRequiredCost>true</isRequiredCost>
+        <VATExemptAmount>214.50</VATExemptAmount>
+        <VATExemptAmountVAT>0.00</VATExemptAmountVAT>
+      </cost>
+      <courseDay>
+        <id>a0E4I0000111W3DUAU</id>
+        <date>2022-07-06</date>
+        <name xml:lang="nl">Dag 1</name>
+        <startTime>09:00:00</startTime>
+        <endTime>17:00:00</endTime>
+        <location>
+          <locationName xml:lang="nl">Nog niet bekend</locationName>
+          <address/>
+          <zipcode/>
+          <city/>
+          <country>nl</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>a0E4I0000111W3EUAU</id>
+        <date>2022-09-06</date>
+        <name xml:lang="nl">Dag 2</name>
+        <startTime>09:00:00</startTime>
+        <endTime>17:00:00</endTime>
+        <location>
+          <locationName xml:lang="nl">Nog niet bekend</locationName>
+          <address/>
+          <zipcode/>
+          <city/>
+          <country>nl</country>
+        </location>
+      </courseDay>
+      <courseDay>
+        <id>a0E4I0000111W3FUAU</id>
+        <date>2022-09-26</date>
+        <name xml:lang="nl">Coaching</name>
+        <startTime>09:00:00</startTime>
+        <endTime>17:00:00</endTime>
+        <location>
+          <locationName xml:lang="nl">Nog niet bekend</locationName>
+          <address/>
+          <zipcode/>
+          <city/>
+          <country>nl</country>
+        </location>
+      </courseDay>
+      <location>
+        <locationName xml:lang="nl">Nog niet bekend</locationName>
+        <address/>
+        <zipcode/>
+        <city/>
+        <country>nl</country>
+      </location>
+    </programRun>
+  </programSchedule>
+</program>
+
+</programs>

@@ -3,18 +3,93 @@
   <component name="ChangeListManager">
     <list default="true" id="7c002403-5f9c-4ce2-bcc0-88df5131dc96" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/templates/edit-databank.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/edit-databank.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/template-contact.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-contact.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/template-ecosysteme.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-ecosysteme.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/template-product-search.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-product-search.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/template-voor-organisaties.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-organisaties.php" afterDir="false" />
     </list>
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/Pages.desktop" beforeDir="false" afterPath="$PROJECT_DIR$/Pages.desktop" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog.css" beforeDir="false" afterPath="$PROJECT_DIR$/blog.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blog.xcss" beforeDir="false" afterPath="$PROJECT_DIR$/blog.xcss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap-datepicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap-datepicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bootstrap-datepicker.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/bootstrap-datepicker.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/city.js" beforeDir="false" afterPath="$PROJECT_DIR$/city.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ckeditor.js" beforeDir="false" afterPath="$PROJECT_DIR$/ckeditor.js" afterDir="false" />
+=======
+>>>>>>> origin/frontSeydou
+      <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/header.css" beforeDir="false" afterPath="$PROJECT_DIR$/header.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/header_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/single-course.php" beforeDir="false" afterPath="$PROJECT_DIR$/single-course.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-settings.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-home.php" afterDir="false" />
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/templates/template-inloggen.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-inloggen.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-lift-lid.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-lift-lid.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-mkb.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-mkb.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-opleider-courses.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-opleider-courses.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-opleiders.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-opleiders.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-overview-organisations-5.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-overview-organisations-5.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-overviewOrganisaties.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-overviewOrganisaties.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-persoonlijke.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-persoonlijke.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-pricing.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-pricing.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-product-search.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-product-search.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-recruitement.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-recruitement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-registreren.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-registreren.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-single.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-single.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-skill.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-skill.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-skillsPassport.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-skillsPassport.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-static-education-advice.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-static-education-advice.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-static-education-individual.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-static-education-individual.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-sub-topic.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-sub-topic.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-topic.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-topic.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-uitleggen.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-uitleggen.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-user-overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-user-overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-verkopen.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-verkopen.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-voor-organisaties.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-organisaties.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-voor-teacher-detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-teacher-detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-voor-teacher.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-teacher.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-voor-teachers.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-voor-teachers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-xml-parse.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-xml-parse.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-zzpers.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-zzpers.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/topic-ajax.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/topic-ajax.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/topic.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/topic.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/trash-course.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/trash-course.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/trash-user.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/trash-user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/usefull_functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/usefull_functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/youtube-video-course-channel.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/youtube-video-course-channel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/youtube-video-course-playlist.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/youtube-video-course-playlist.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tvvl-20220310.1412.xml" beforeDir="false" afterPath="$PROJECT_DIR$/tvvl-20220310.1412.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/winc-academy-20220308.1758.xml" beforeDir="false" afterPath="$PROJECT_DIR$/winc-academy-20220308.1758.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/woo.scss" beforeDir="false" afterPath="$PROJECT_DIR$/woo.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wp-config.php" beforeDir="false" afterPath="$PROJECT_DIR$/wp-config.php" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/header_base.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-Ontwikkeladvies.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-Ontwikkeladvies.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-zzpers.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-zzpers.php" afterDir="false" />
+>>>>>>> master
+=======
+>>>>>>> origin/frontSeydou
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+>>>>>>> origin/frontSeydou
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ComposerSettings">
+<<<<<<< HEAD
     <execution />
   </component>
   <component name="FindInProjectRecents">
@@ -77,15 +152,25 @@
       <replace>block2evensTabs</replace>
       <replace>block2evens block2evensTabs</replace>
     </replaceStrings>
+=======
+    <execution>
+      <executable />
+    </execution>
+>>>>>>> origin/frontSeydou
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
+<<<<<<< HEAD
         <entry key="$PROJECT_DIR$" value="main" />
+=======
+        <entry key="$PROJECT_DIR$" value="stable" />
+>>>>>>> origin/frontSeydou
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+<<<<<<< HEAD
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -196,10 +281,17 @@
       <pane id="Scope" />
     </panes>
   </component>
+=======
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2DiWSsTqur2umzCPauMZUvX1w0s" />
+>>>>>>> origin/frontSeydou
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
@@ -209,12 +301,53 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+=======
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+<<<<<<< HEAD
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+<<<<<<< HEAD
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../test" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+>>>>>>> master
+=======
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+>>>>>>> origin/frontSeydou
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\liveLearn-wordpressBiss\wp-content\themes\fluidify-child\templates" />
+>>>>>>> origin/frontSeydou
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/templates" />
       <recent name="$PROJECT_DIR$/template-parts/modules" />
     </key>
   </component>
+<<<<<<< HEAD
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+=======
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+>>>>>>> origin/frontSeydou
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -662,6 +795,7 @@
       <workItem from="1661426388086" duration="1072000" />
       <workItem from="1661428142418" duration="3965000" />
       <workItem from="1661442846293" duration="2187000" />
+<<<<<<< HEAD
     </task>
     <servers />
   </component>
@@ -733,18 +867,107 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+=======
+      <workItem from="1661506406363" duration="186000" />
+      <workItem from="1661683109987" duration="3664000" />
+      <workItem from="1661759006619" duration="2980000" />
+      <workItem from="1661768471268" duration="2257000" />
+      <workItem from="1661875342519" duration="4285000" />
+      <workItem from="1661936229237" duration="543000" />
+      <workItem from="1661951580075" duration="7829000" />
+      <workItem from="1662026337192" duration="10814000" />
+      <workItem from="1662109638067" duration="2992000" />
+      <workItem from="1662133157909" duration="4924000" />
+      <workItem from="1662142784819" duration="1341000" />
+      <workItem from="1662368028368" duration="9898000" />
+      <workItem from="1662394581442" duration="5096000" />
+      <workItem from="1662460861063" duration="7039000" />
+      <workItem from="1662544718008" duration="28728000" />
+      <workItem from="1662717351890" duration="6369000" />
+      <workItem from="1662739646861" duration="2122000" />
+      <workItem from="1662984731987" duration="3914000" />
+      <workItem from="1662996058093" duration="6982000" />
+      <workItem from="1663067683228" duration="5575000" />
+      <workItem from="1663083640286" duration="5599000" />
+      <workItem from="1663092187165" duration="1440000" />
+      <workItem from="1663096528015" duration="8412000" />
+      <workItem from="1663155746954" duration="446000" />
+      <workItem from="1663166516882" duration="6605000" />
+      <workItem from="1663177793039" duration="2676000" />
+      <workItem from="1663184255353" duration="50000" />
+      <workItem from="1663184818831" duration="2712000" />
+      <workItem from="1663229309515" duration="15058000" />
+      <workItem from="1663321444333" duration="6771000" />
+      <workItem from="1663583538296" duration="10669000" />
+      <workItem from="1663673194292" duration="6779000" />
+      <workItem from="1663685997472" duration="1729000" />
+      <workItem from="1663844415772" duration="14982000" />
+      <workItem from="1663926870463" duration="8042000" />
+      <workItem from="1664189033639" duration="918000" />
+      <workItem from="1664192662866" duration="48000" />
+      <workItem from="1664194673722" duration="40000" />
+      <workItem from="1664194799073" duration="360000" />
+      <workItem from="1664195337553" duration="372000" />
+      <workItem from="1664207201309" duration="720000" />
+      <workItem from="1664208387769" duration="7785000" />
+      <workItem from="1664274862594" duration="5094000" />
+      <workItem from="1664280624736" duration="15842000" />
+      <workItem from="1664358537880" duration="10741000" />
+      <workItem from="1664532183044" duration="2942000" />
+      <workItem from="1664540465018" duration="2643000" />
+      <workItem from="1664791338085" duration="15005000" />
+      <workItem from="1664872254625" duration="851000" />
+      <workItem from="1664882275068" duration="10478000" />
+      <workItem from="1664984896488" duration="8605000" />
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> origin/frontSeydou
+      <workItem from="1665568013755" duration="662000" />
+      <workItem from="1665927919259" duration="12809000" />
+      <workItem from="1665998919508" duration="1963000" />
+      <workItem from="1666035301227" duration="140000" />
+<<<<<<< HEAD
+>>>>>>> master
+=======
+      <workItem from="1666098658143" duration="10825000" />
+      <workItem from="1666192294194" duration="1067000" />
+      <workItem from="1666196793615" duration="1283000" />
+      <workItem from="1666204225633" duration="2441000" />
+      <workItem from="1666208210746" duration="1098000" />
+      <workItem from="1666249898120" duration="26000" />
+      <workItem from="1666251623681" duration="1358000" />
+      <workItem from="1666263304470" duration="14210000" />
+      <workItem from="1666344012876" duration="15428000" />
+      <workItem from="1666370710166" duration="4079000" />
+      <workItem from="1666605707950" duration="1122000" />
+>>>>>>> origin/frontSeydou
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+>>>>>>> origin/frontSeydou
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
+<<<<<<< HEAD
             <State />
+=======
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+>>>>>>> origin/frontSeydou
           </value>
         </entry>
       </map>
     </option>
   </component>
+<<<<<<< HEAD
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/templates/template-creëren.php">
       <provider selected="true" editor-type-id="text-editor">
@@ -1037,6 +1260,18 @@
         </state>
       </provider>
     </entry>
+=======
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/header_base.php</url>
+          <line>192</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+>>>>>>> origin/frontSeydou
   </component>
   <component name="masterDetails">
     <states>

@@ -13,10 +13,10 @@ if(isset($_GET['id']))
     $page = intval($_GET['id']);
     if($page)
         $offset = ($page - 1) * $pagination;
-$sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE (state = 0 AND date_multiple IS NOT NULL) OR (state = 0 AND type = 'Artikel' AND type = 'Video') ORDER BY id DESC LIMIT %d OFFSET %d", array($pagination, $offset));
+$sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank ORDER BY id DESC LIMIT %d OFFSET %d", array($pagination, $offset));
 $courses = $wpdb->get_results( $sql );
 
-$sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank WHERE (state = 0 AND date_multiple IS NOT NULL) OR (state = 0 AND type = 'Artikel' AND type = 'Video') ");
+$sql_count = $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}databank");
 $count = $wpdb->get_results( $sql_count );
 $count = $count[0]->{'COUNT(*)'};
 
@@ -88,6 +88,8 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                         <tbody>
                         <?php
                         foreach($courses as $course){
+                            if($course->state)
+                                continue;
 
                             //Author Image
                             $image_author = get_field('profile_img',  'user_' . $course->author_id);

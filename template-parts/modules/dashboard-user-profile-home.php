@@ -52,10 +52,10 @@
                     <h2 class="titleCategorieDetailCandidat">Skills</h2>
                     <div>
                         <button class="btn showPassport"  id="show-more1">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/ant-design_down-circle-filled.png" alt="">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/down-chevron-skills.png" alt="">
                         </button>
                         <button class="btn showPassport"  id="show-less1">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/ant-design_up-circle-filled.png" alt="">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/down-chevron-skills.png" alt="">
                         </button>
                     </div>
                 </div>

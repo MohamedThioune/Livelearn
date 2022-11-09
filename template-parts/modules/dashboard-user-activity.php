@@ -386,6 +386,101 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="cardNotification card-badge-notifications">
+                <h2>the badges you have unlocked</h2>
+                <div class="content-badges content-badge-notifications">
+                    <a href="" class="card">
+                        <div class="block-icons">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/validate-badge.png" alt="">
+                        </div>
+                        <p class="title">Complete and verified profile </p>
+                        <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                        <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                    </a>
+                    <a href="" class="card">
+                        <div class="block-icons">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_awards.png" alt="">
+                        </div>
+                        <p class="title">Complete and verified profile </p>
+                        <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                        <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                    </a>
+                    <a href="" class="card">
+                        <div class="block-icons">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/gg_awards.png" alt="">
+                        </div>
+                        <p class="title">Complete and verified profile </p>
+                        <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                        <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                    </a>
+                    <a href="" class="card ">
+                        <div class="card-lock">
+                            <img class="img-card-lock" src="<?php echo get_stylesheet_directory_uri();?>/img/lock-2.png" alt="">
+                        </div>
+                        <div class="block-icons">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/validate-badge.png" alt="">
+                        </div>
+                        <p class="title">Complete and verified profile </p>
+                        <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                        <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="cardNotification card-badge-notifications">
+                <h2 class="text-title-certifications">Click on the button to see your certifications</h2>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-see" data-toggle="modal" data-target="#ModalCertificate">
+                    See
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="ModalCertificate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+
+                            <div class="modal-body">
+                                <div>
+                                    <div class="Certificate" id="content">
+                                        <div class="logo">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image49.png" alt="">
+                                        </div>
+                                        <p class="name-certifica">RENR NCLEX AND CONTINUING EDUCATION (CME) ONLINE</p>
+                                        <p class="certificate-of-completion">Certificate of Completion
+                                        <p class="trainees-name">Mouhamed</p>
+                                        <p class="description-certificate">has completed <span class="hours-certificate">[hours]</span> hours on topic title here online on Date <span class="date-certificate">[Date of Completion]</span></p>
+                                        <p class="topic-description">The Topic consists of [hours] Continuity hours and includes the following:</p>
+                                        <p class="topic-details">Contract adminitrator - Types of claim - Claim Strategy - Delay analysis - Thepreliminaries to a claim - The essential elements to a successful claim - in 20 Video format</p>
+                                        <div class="footer-certificate">
+                                            <div>
+                                                <p class="title">Accredited by</p>
+                                                <img class="logo-company-certificate" src="<?php echo get_stylesheet_directory_uri();?>/img/Image49.png" alt="">
+                                            </div>
+                                            <div>
+                                                <p class="title">Signed by</p>
+                                                <p class="sub-title">Daniel vdk</p>
+                                            </div>
+                                            <div>
+                                                <p class="title">Date</p>
+                                                <p class="sub-title">04 / 05 / 2022</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="editor"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <div class="cardFavoriteCourses">
         <div class="d-flex aligncenter justify-content-between">
             <h2>Favoriete kennisproducten</h2>
@@ -518,6 +613,11 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<<<<<<< HEAD
+=======
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+>>>>>>> origin/frontSeydou
 <script>
 
     $('#search_txt_course').keyup(function(){
@@ -538,4 +638,8 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
         });
 
     });
+<<<<<<< HEAD
 </script>
+=======
+</script>
+>>>>>>> origin/frontSeydou

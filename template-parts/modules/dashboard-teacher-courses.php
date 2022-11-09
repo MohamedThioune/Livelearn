@@ -11,6 +11,12 @@ if($id != 0){
     );
 
     $courses = get_posts($args);
+    $artikel_single = "Artikel";
+    $white_type_array =  ['Lezing', 'Event'];
+    $course_type_array = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'Cursus'];
+    $video_single = "Video";
+    $leerpad_single  = 'Leerpad';
+
 }
 ?>
 <div class="contentListeCourse">
@@ -24,7 +30,6 @@ if($id != 0){
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Actie</th>
                         <th scope="col">Sign-Ups</th>
                         <th scope="col">Titel</th>
                         <th scope="col">Prijs</th>
@@ -79,16 +84,29 @@ if($id != 0){
                                     $day = explode(' ', $date)[0];
                                 }
                         }
+                        $course_type = get_field('course_type', $course->ID);
+                        $path_edit  = "";
+                        if($course_type == $artikel_single)
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-article&id=" . $course->ID ."&edit";
+                        else if($course_type == $video_single)
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-video&id=" . $course->ID ."&edit";
+                        else if(in_array($course_type,$white_type_array))
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-add-white&id=" . $course->ID ."&edit";
+                        else if(in_array($course_type,$course_type_array))
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-course&id=" . $course->ID ."&edit";
+                        else if($course_type == $leerpad_single)
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-road&id=" . $course->ID ."&edit";
+
+                        $link = ($course_type == "Leerpad") ? '/detail-product-road?id=' . $course->ID : get_permalink($course->ID);
+
+                        //Assessment
                     ?>
-                    <tr data-attr="<?php echo $course->ID;?>">
+                    <tr id="<?php echo $course->ID; ?>" data-attr="<?php echo $course->ID;?>">
                         <td scope="row"><?= $key; ?></td>
-                        <td class="textTh">
-                            <a href="/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $course->ID;?>&edit"><i class="fas fa-edit"></i></a>
-                        </td>
                         <td class="textTh">
                             <a href="/dashboard/teacher/signups/?parse=<?php echo $course->ID;?>"><i class="fas fa-globe-africa"></i></a>
                         </td>
-                        <td class="textTh elementOnder"><a style="color:#212529;font-weight:bold" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
+                        <td class="textTh elementOnder"><a style="color:#212529;font-weight:bold" href="<?php echo $link ?>"><?php echo $course->post_title; ?></a></td>
                         <td class="textTh"><?php echo $price; ?></td>
                         <td class="textTh "><?php echo $category; ?></td>
                         <td class="textTh"><?php echo $day; ?></td>
@@ -99,14 +117,13 @@ if($id != 0){
                                           src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                 </p>
                                 <ul class="dropdown-menu">
-                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
-                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
-                                    <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
+                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?php echo $link; ?>" target="_blank">Bekijk</a></li>
+                                    <li class="my-2"><a href="<?php echo $path_edit; ?>"><i class="fa fa-gear px-2"></i> Pas aan</a></li>
+                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="" value="Verwijderen"/></li>
                                 </ul>
                             </div>
                         </td>
-<!--                         <td><a class="del-course" data-attr="<?php echo $course->ID;?>" href="#"><i class="fas fa-trash-alt" style="color:red;"></i></a></td>
- -->                    </tr>
+                    </tr>
 
                     <?php
                     }
@@ -118,4 +135,27 @@ if($id != 0){
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
+<script type="text/javascript">
+    $(".remove_opleidingen").click(function(){
+        var id = $(this).parents("tr").attr("id");
+
+        if(confirm('Are you sure to remove this record ?'))
+        {
+            $.ajax({
+               url: '/delete-course',
+               type: 'GET',
+               data: {id: id},
+               error: function() {
+                  alert('Something is wrong');
+               },
+               success: function(data) {
+                    $("#"+id).remove();
+                    alert("Record removed successfully");
+               }
+            });
+        }
+    });
+
+</script>
