@@ -61,11 +61,14 @@ do_action( 'woocommerce_before_cart' ); ?>
                             echo wp_kses_post( apply_filters( 'woocommerce_cart_item_name', sprintf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $_product->get_name() ), $cart_item, $cart_item_key ) );
                         }
 
+<<<<<<< HEAD
                         do_action( 'woocommerce_after_cart_item_name', $cart_item, $cart_item_key );
 
                         // Meta data.
                         echo wc_get_formatted_cart_item_data( $cart_item ); // PHPCS: XSS ok.
 
+=======
+>>>>>>> origin/frontSeydou
                         // Backorder notification.
                         if ( $_product->backorders_require_notification() && $_product->is_on_backorder( $cart_item['quantity'] ) ) {
                             echo wp_kses_post( apply_filters( 'woocommerce_cart_item_backorder_notification', '<p class="backorder_notification">' . esc_html__( 'Available on backorder', 'woocommerce' ) . '</p>', $product_id ) );
@@ -73,22 +76,60 @@ do_action( 'woocommerce_before_cart' ); ?>
                         ?>
                     </div>
 
+<<<<<<< HEAD
+=======
+                    <div class="groupCompanyAuthorCart">
+                        <div class="company">
+                            <div class="imgElement">
+                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                            </div>
+                            <p class="Name">Livelearn</p>
+                        </div>
+                        <div class="author">
+                            <div class="imgElement">
+                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Image54.png" alt="">
+                            </div>
+                            <p class="Name">Daniel</p>
+                        </div>
+                    </div>
+
+                    <div class="variationBlockCart" data-title="<?php esc_attr_e( 'Product', 'woocommerce' ); ?>">
+                        <?php
+                        do_action( 'woocommerce_after_cart_item_name', $cart_item, $cart_item_key );
+                        // Meta data.
+                        echo wc_get_formatted_cart_item_data( $cart_item ); // PHPCS: XSS ok.
+                        ?>
+                    </div>
+                    <hr class="hrcustomInCart">
+>>>>>>> origin/frontSeydou
                     <div class="theme-cart__product-attr-date" data-title="<?php esc_attr_e( 'Date', 'woocommerce' ); ?>">
 
                     </div>
 
                     <div class="theme-cart__price-wrapper">
+<<<<<<< HEAD
                         <div class="row">
                             <div class="col-4">
                                 <span class="theme-cart__price__title">Prijs</span>
+=======
+                        <div class="blockPriceWapperDescription">
+                            <div class="firstBlock">
+                                <p class="shortDescriptionCart">Deelname aan opleiding werkkamersessie 'Acquieren is werven'.</p>
+                              <!--  <span class="theme-cart__price__title">Prijs</span>-->
+>>>>>>> origin/frontSeydou
                                 <div class="theme-cart__product-price" data-title="<?php esc_attr_e( 'Price', 'woocommerce' ); ?>">
                                     <?php
                         echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key ); // PHPCS: XSS ok.
                                     ?>
                                 </div>
                             </div>
+<<<<<<< HEAD
                             <div class="col-4">
                                 <span class="theme-cart__price__title">Aantal</span>
+=======
+                            <div class="secondBlock">
+                            <!--  <span class="theme-cart__price__title">Aantal</span>-->
+>>>>>>> origin/frontSeydou
                                 <div class="theme-cart__product-quantity" data-title="<?php esc_attr_e( 'Quantity', 'woocommerce' ); ?>">
                                     <?php
                         if ( $_product->is_sold_individually() ) {
@@ -111,6 +152,7 @@ do_action( 'woocommerce_before_cart' ); ?>
                                     ?>
                                 </div>
                             </div>
+<<<<<<< HEAD
                             <div class="col-4">
                                 <span class="theme-cart__price__title">Totaal</span>
                                 <div class="theme-cart__product-subtotal" data-title="<?php esc_attr_e( 'Subtotal', 'woocommerce' ); ?>">
@@ -119,6 +161,16 @@ do_action( 'woocommerce_before_cart' ); ?>
                                     ?>
                                 </div>
                             </div>
+=======
+                           <!-- <div class="col-4">
+                                <span class="theme-cart__price__title">Totaaleee</span>
+                                <div class="theme-cart__product-subtotal" data-title="<?php /*esc_attr_e( 'Subtotal', 'woocommerce' ); */?>">
+                                    <?php
+/*                        echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); // PHPCS: XSS ok.
+                                    */?>
+                                </div>
+                            </div>-->
+>>>>>>> origin/frontSeydou
                         </div>
                     </div>
                 </div>
@@ -131,7 +183,10 @@ do_action( 'woocommerce_before_cart' ); ?>
 
                 <div class="theme-cart__actions">
                     <div class="theme-cart__actions">
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/frontSeydou
                         <?php if ( wc_coupons_enabled() ) { ?>
                         <div class="coupon">
                             <label for="coupon_code"><?php esc_html_e( 'Coupon:', 'woocommerce' ); ?></label> <input type="text" name="coupon_code" class="input-text" id="coupon_code" value="" placeholder="<?php esc_attr_e( 'Coupon code', 'woocommerce' ); ?>" /> <button type="submit" class="button" name="apply_coupon" value="<?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?>"><?php esc_attr_e( 'Apply coupon', 'woocommerce' ); ?></button>
@@ -154,6 +209,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 
         <?php do_action( 'woocommerce_before_cart_collaterals' ); ?>
 
+<<<<<<< HEAD
         <div class="cart-collaterals">
             <?php
             /**
@@ -165,6 +221,25 @@ do_action( 'woocommerce_before_cart' ); ?>
             do_action( 'woocommerce_cart_collaterals' );
             ?>
         </div>
+=======
+
+      <div class="cart-checkOut">
+          <div class="blockImgCartCourse">
+              <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Edge-west.png" alt="">
+          </div>
+          <div class="cart-collaterals">
+              <?php
+              /**
+               * Cart collaterals hook.
+               *
+               * @hooked woocommerce_cross_sell_display
+               * @hooked woocommerce_cart_totals - 10
+               */
+              do_action( 'woocommerce_cart_collaterals' );
+              ?>
+          </div>
+      </div>
+>>>>>>> origin/frontSeydou
     </div>
 </div>
 <?php do_action( 'woocommerce_after_cart' ); ?>

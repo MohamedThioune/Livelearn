@@ -192,6 +192,9 @@ if(!empty($bunch)){
             <button  data-tab="Skills" class="b-nav-tab btn">
                 Skills
             </button>
+            <button  data-tab="badge" class="b-nav-tab btn">
+                Badges
+            </button>
             <button  data-tab="social" class="b-nav-tab btn">
                 Social Network
             </button>
@@ -636,7 +639,7 @@ if(!empty($bunch)){
                 <div class="content-card-skills">
                     <div class="card-skills">
                         <div class="group position-relative">
-                            <span class="donut-chart has-big-cente">50</span> <span class="pourentageElement">%</span>
+                            <span class="donut-chart has-big-cente">50</span>
                         </div>
                         <p class="name-course">Workforce management</p>
                         <div class="footer-card-skills">
@@ -690,7 +693,7 @@ if(!empty($bunch)){
                                                 <div class="col-lg-12 col-md-12">
                                                     <div class="group-input-settings">
                                                         <label for="">Name Skills</label>
-                                                        <input name="school" type="text" placeholder="Management" required>
+                                                        <div class=""></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12 col-md-12 skillBar-col">
@@ -766,6 +769,63 @@ if(!empty($bunch)){
                     <!--  End modal edit skills-->
 
                 </div>
+            </div>
+        </div>
+
+        <div id="badge" class="b-tab contentBlockSetting">
+            <label class="label-badge" for="">Badges</label>
+            <div class="content-badges">
+                <a href="" class="card">
+                    <div class="block-icons">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/validate-badge.png" alt="">
+                    </div>
+                    <p class="title">Complete and verified profile </p>
+                    <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                    <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                </a>
+                <a href="" class="card">
+                    <div class="block-icons">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_awards.png" alt="">
+                    </div>
+                    <p class="title">Complete and verified profile </p>
+                    <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                    <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                </a>
+                <a href="" class="card">
+                    <div class="block-icons">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/gg_awards.png" alt="">
+                    </div>
+                    <p class="title">Complete and verified profile </p>
+                    <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                    <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                </a>
+                <a href="" class="card ">
+                    <div class="card-lock">
+                        <img class="img-card-lock" src="<?php echo get_stylesheet_directory_uri();?>/img/lock-2.png" alt="">
+                    </div>
+                    <div class="block-icons">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/validate-badge.png" alt="">
+                    </div>
+                    <p class="title">Complete and verified profile </p>
+                    <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                    <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                </a>
+                <a href="" class="card">
+                    <div class="block-icons">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/validate-badge.png" alt="">
+                    </div>
+                    <p class="title">Complete and verified profile </p>
+                    <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                    <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                </a>
+                <a href="" class="card">
+                    <div class="block-icons">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/validate-badge.png" alt="">
+                    </div>
+                    <p class="title">Complete and verified profile </p>
+                    <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                    <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                </a>
             </div>
         </div>
 

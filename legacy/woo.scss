@@ -1,0 +1,194 @@
+.woocommerce{
+    .cart-collaterals{
+        .cart_totals{
+            float:left;
+        }
+    }
+
+    .actions,
+    .woocommerce-form-coupon-toggle{
+        display:none !important;
+    }
+
+    .woocommerce-order{
+        padding:48px 0;
+        width:1440px;
+        margin:0 auto;
+    }
+
+    .theme-checkout{
+        &__details{
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        &__extra{
+            background-color:#E0EFF4;
+            padding:48px;
+            border-radius:15px;
+            position: relative;
+            margin-bottom:24px;
+
+        }
+    }
+
+    .wrapper-woocommerce{
+        padding: 30px 50px;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .product-thumbnail{
+        width:125px;
+    }
+
+    .form{
+        .form-row{
+            display:block;
+        }
+    }
+
+    .woocommerce-input-wrapper{
+        width:100%;
+        input{
+            padding:12px;
+        }
+    }
+
+    /* cart */
+    .theme-cart__actions{
+        display:none;
+    }
+
+    .theme-cart-row.cart_item{
+
+        .theme-cart{
+            &__product-remove{
+                position:absolute;
+                top:12px;
+                right:12px;
+            }
+
+            &__product-name{
+                color: #47a99e;
+                font-size: 18px;
+                margin-bottom: 20px;
+                font-weight:500;
+
+                .variation{
+                    dt{
+                        display:none;
+                    }
+                    dd{
+                        font-size:14px;
+                        padding:6px 12px;
+                        margin-top:12px;
+                        border-radius:5px;
+                        border:1px solid #999;
+                        display:inline-block;
+                        color:#023356;
+                        font-weight:400;
+                    }
+                }
+            }
+
+            &__price-wrapper{
+                width:350px;
+                max-width:100%;
+
+                .quantity{
+                    .input-text.qty{
+                        width: 100%;
+                        text-align: left;
+                        padding: 6px 8px;
+                        border-radius: 5px;
+                        border: 1px solid #999;
+                    }
+                }
+
+            }
+            &__price__title{
+                color: #023356;
+                font-size: 16px;
+                margin-bottom: 4px;
+                font-weight:500;
+                display:block;
+            }
+        }
+    }
+
+
+    .wc-proceed-to-checkout{
+        a.checkout-button{
+            padding: 12px 30px;
+            background-color: #47a99e;
+            border-radius: 10px;
+            color: #fff;
+            font-family: "Ubuntu-Regular";
+            border:none;
+            font-size:16px;
+
+            &:hover{
+                background-color:#043356;
+            }
+        }
+    }
+
+    .form-row.place-order{
+        .button.alt{
+            padding: 12px 30px;
+            background-color: #47a99e;
+            border-radius: 10px;
+            color: #fff;
+            font-family: "Ubuntu-Regular";
+            border:none;
+            font-size:16px;
+
+            &:hover{
+                background-color:#043356;
+            }
+        }
+    }
+
+    .form-row.notes{
+        &#order_comments_field{
+            display:block;
+        }
+    }
+}
+
+
+.contentBtnCardProduct{
+    .single_add_to_cart_button.button.alt{
+        display: inline-block;
+        font-size: 14px;
+        font-size: 0.8125rem;
+        font-weight: 400;
+        padding:12px;
+        text-transform: uppercase;
+        border-radius: 0;
+        transition: all 0.2s ease;
+        background-color: #023356;
+        color: #FFFFFF;
+        border:none;
+        border-radius:0;
+
+        &:hover{
+            background-color:#E0EFF4;
+        }
+    }
+}
+
+
+
+//product containers
+#yith-wapo-container{
+    display:none;
+}
+.contentBtnCardProduct{
+    .quantity{
+        display:none;
+    }
+}

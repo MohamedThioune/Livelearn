@@ -163,10 +163,7 @@ else if(isset($_POST['add_todo_feedback']) || isset($_POST['add_todo_compliment'
     $id_user = $_POST['id_user'];
     $title_feedback = $_POST['title_feedback'];
     $type = $_POST['type'];
-    $manager_id = 0;
     $manager = get_user_by('id',$_POST['manager']);
-    if($manager)
-        $manager_id = $manager->ID;
 
     $onderwerp_feedback='';
     if (isset ($_POST['onderwerp_feedback']) &&  !empty($_POST['onderwerp_feedback']))
@@ -188,7 +185,7 @@ else if(isset($_POST['add_todo_feedback']) || isset($_POST['add_todo_compliment'
 
     //Add further informations for feedback
     update_field('onderwerp_feedback', $onderwerp_feedback, $post_id);
-    update_field('manager_feedback', $manager_id, $post_id);
+    update_field('manager_feedback', $manager, $post_id);
     update_field('type_feedback', $type, $post_id);
     update_field('beschrijving_feedback', $beschrijving_feedback, $post_id);
 
@@ -201,10 +198,7 @@ else if(isset($_POST['add_todo_beoordelingsgesprek'])){
     $id_user = $_POST['id_user'];
     $title_beoordelingsgesprek = $_POST['title_beoordelingsgesprek'];
     $type = $_POST['type'];
-    $manager_id = 0;
     $manager = get_user_by('id',$_POST['manager']);
-    if($manager)
-        $manager_id = $manager->ID;
 
     $algemene_beoordeling = $_POST['algemene_beoordeling'];
     $rates_comments='';
@@ -232,7 +226,7 @@ else if(isset($_POST['add_todo_beoordelingsgesprek'])){
     $post_id = wp_insert_post($post_data);
     //Add further informations for Beoordelingsgesprek
     update_field('rate_comments', $rates_comments, $post_id);
-    update_field('manager_feedback', $manager_id, $post_id);
+    update_field('manager_feedback', $manager, $post_id);
     update_field('type_feedback', $type, $post_id);
     update_field('algemene_beoordeling', $algemene_beoordeling, $post_id);
 
@@ -246,10 +240,7 @@ else if(isset($_POST['add_todo_persoonlijk']))
     $id_user = $_POST['id_user'];
     $title_feedback = $_POST['title_persoonlijk'];
     $type = $_POST['type'];
-    $manager_id = 0;
     $manager = get_user_by('id',$_POST['manager']);
-    if($manager)
-        $manager_id = $manager->ID;
 
     $onderwerp_feedback = '';
     if (isset ($_POST['onderwerp_pop']) &&  !empty($_POST['onderwerp_pop']))
@@ -280,7 +271,7 @@ else if(isset($_POST['add_todo_persoonlijk']))
     update_field('je_bereiken', $wat_bereiken, $post_id);
     update_field('je_dit_bereike', $hoe_bereiken, $post_id);
     update_field('hulp_nodig', $hulp_radio_JA, $post_id);
-    update_field('manager_feedback', $manager_id, $post_id);
+    update_field('manager_feedback', $manager, $post_id);
     update_field('type_feedback', $type, $post_id);
     update_field('opmerkingen', $opmerkingen, $post_id);
 
@@ -335,8 +326,6 @@ else if(isset($interest_push)){
                 header("location: ../../dashboard/user/?message=".$message);
             }
         }
-        
-        
     }
 }
 

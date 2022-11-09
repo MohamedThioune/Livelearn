@@ -74,7 +74,7 @@
                 </a>
                 <a href="?func=add-road" class="cardCours cardCoursInitial roadPathBlock" >
                     <p class="contentText">
-                        <b>Leer Path</b>
+                        <b>Leerpad</b>
                     </p>
                 </a>
             </div>

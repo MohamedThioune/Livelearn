@@ -217,7 +217,7 @@ arsort($topic_followed);
         <div class="col-md-5">
             <div class="cardNotification mt-3 mt-md-0">
                 <h2>The most popular courses</h2>
-                    <?php
+                <?php
                     $i = 0;
                     foreach($cids as $key => $cid){
                         $i++;
@@ -264,19 +264,22 @@ arsort($topic_followed);
                                     $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
                         }    
                     ?>
+
                     <a href="<?php echo get_permalink($course->ID) ?>">
-                        <div class="contentStats mb-3 mb-">
-                            <div class="contentImgName w-25">
-                                    <img src="<?= $thumbnail ?>"
-                                     class="img-fluid w-100 h-100" alt="">  
-                                <div class="ml-3">
-                                    <p class="nameCoursSales mb-0 mb-md-2"><?= $course->post_title ?></p>
+                        <div class="contentStatsMostPopular">
+                            <div class="contentImgName">
+                                <div class="blockImgMost">
+                                    <img src="<?= $thumbnail ?>">
+                                </div>
+                                <div class="">
+                                    <p class="nameCoursSales "><?= $course->post_title ?></p>
                                     <p class="categoriesNameCours"><?= $category ?></p>
+                                    <p class="priceHistory"><?= $price ?> $</p>
                                 </div>
                             </div>
-                            <p class="priceHistory"><?= $price ?> $</p>
                         </div>
-                    </a>  
+                    </a>
+
                     <?php
                     }
                     ?>  
