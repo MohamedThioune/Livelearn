@@ -1165,3 +1165,9 @@ add_action( 'rest_api_init', function () {
   ) );
 
 } );
+add_filter('admin_email_check_interval', '__return_false');
+
+function wpc_admin_email_check_interval($interval) {
+    return 8 * MONTH_IN_SECONDS;
+}
+add_filter('admin_email_check_interval', 'wpc_admin_email_check_interval');

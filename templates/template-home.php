@@ -1595,6 +1595,7 @@ $degrees=[
                 </div>
         </div>
     </div>
+
 </div>
 <script src="<?php echo get_stylesheet_directory_uri();?>/mobapiCity.js"></script>
 
