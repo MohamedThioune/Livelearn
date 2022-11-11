@@ -59,12 +59,20 @@
                         </button>
                     </div>
                 </div>
-                <?php foreach($topics as $topic){ 
-                    $name = (String)get_the_category_by_ID($topic);    
+                <?php foreach($topics as $value){ 
+                    $topic = get_the_category_by_ID($value);
+                    $note = 0;
+                    if(!$topic)
+                        continue;
+                    if(!empty($skills_note))
+                        foreach($skills_note as $skill)
+                            if($skill['id'] == $value)
+                                $note = $skill['note'];
+                    $name_topic = (String)$topic;    
                 ?>
                     <div class="skillBar">
-                        <label for=""><?php echo $name;  ?></label>
-                        <div data-progress="react" data-value="<?php echo rand(5, 100); ?>"> 
+                        <label for=""><?php echo $name_topic;  ?></label>
+                        <div data-progress="react" data-value="<?= $note ?>"> 
                             <span class="progress">
                                 <span id="react" class="progress-bar orange"></span>
                             </span>

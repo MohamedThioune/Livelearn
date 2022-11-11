@@ -119,6 +119,8 @@
       */ 
 
       $company = null;
+      $users = get_users();
+      $api_name_company = array("WorkPlace Academy");
       //Implement author of this course
       foreach($users as $user) {
         $teacher_id = get_field('teacher_id',  'user_' . $user->ID);
@@ -157,11 +159,11 @@
         $random = RandomString();
         $email = "author_" . strval($datum->programClassification->orgUnitId) . $random . "@expertise.nl";
         $first_name = explode(' ', strval($datum->programCurriculum->teacher->name))[0];
-        $last_name = explode(' ', strval($datum->programCurriculum->teacher->name))[1];
+        //$last_name = explode(' ', strval($datum->programCurriculum->teacher->name))[1];
 
         $userdata = array(
             'user_pass' => $password,
-            'user_login' => $login,
+            'user _login' => $login,
             'user_email' => $email,
             'user_url' => 'https://livelearn.nl/inloggen/',
             'display_name' => strval($datum->programCurriculum->teacher->name),

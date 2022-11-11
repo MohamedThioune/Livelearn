@@ -921,6 +921,27 @@ function recommended_course(){
         foreach($all_user_views as $key => $view) {
             foreach ($courses as $key => $course) {
                 $points = 0;
+                $course->image = "";
+                $course->author_image = "";
+
+
+                $course_type = get_field('course_type', $course->ID);
+
+                /*
+                * Thumbnails
+                */
+                $course->image = get_field('preview', $course->ID)['url'];
+                if(!$course->image){
+                    $course->image = get_the_post_thumbnail_url($course->ID);
+                    if(!$course->image)
+                        $course->image = get_field('url_image_xml', $course->ID);
+                            if(!$course->image)
+                                $course->image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                }
+                
+                //Image author
+                $course->author_image = get_field('profile_img', 'user_' . $course->post_author);
+                $course->author_image = $course->author_image ?: get_stylesheet_directory_uri() . '/img/user.png';
 
                 //Read category viewed
                 $read_category_view = array();
@@ -970,7 +991,7 @@ function recommended_course(){
                     $points += 1;
                 
                 $percent = abs(($points/$max_points) * 100);
-                if ($percent >= 65)
+                if ($percent >= 50)
                     if(!in_array($course->ID, $random_id)){
                         array_push($random_id, $course->ID);
                         array_push($recommended_courses, $course);
@@ -999,6 +1020,10 @@ function store_comments(WP_REST_Request $request){
     if(!$id || !$stars || !$feedback_content)
         return ['error' => 'Please fill all data required !'];
 
+    $valuable = [1,2,3,4,5];
+    if(!in_array($stars, $valuable))
+        return ['error' => 'The stars must be between 1 till 5!'];
+
     $reviews = get_field('reviews', $id);
     $informations = array();
     $current_user  = get_current_user_id();
@@ -1011,6 +1036,7 @@ function store_comments(WP_REST_Request $request){
 
     $review = array();
     $review['user'] = $current_user;
+    $review['user_image'] = get_field('profile_img', 'user_' . $review['user']);
     $review['rating'] = $stars;
     $review['feedback'] = $feedback_content;
     if(!$reviews)
@@ -1026,14 +1052,17 @@ function store_comments(WP_REST_Request $request){
 
 function comments_course($data){
     $reviews = get_field('reviews', $data['id']);
+    $bunch = array();
     
     foreach($reviews as $review){
+
         $image = get_field('profile_img',  'user_' .  $review['user']->ID);
-        $review->image = $image;
+        $review['image'] = $image;
+        array_push($bunch, $review);
     }
 
-    if(!empty($reviews))
-        return $reviews;
+    if(!empty($bunch))
+        return $bunch;
     else
         return ['error' => 'No reviews for this course !'];
 }
