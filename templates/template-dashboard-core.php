@@ -757,6 +757,40 @@ else if(isset($define_budget)){
 
     header("Location: ". $message);
 }
+
+else if(isset($note_skill_edit)){
+    $user_id = get_current_user_id();
+    $skills = get_field('skills', 'user_' . $user_id);
+    $skill = array();
+    $skill['id'] = $id;
+    $skill['note'] = $note;
+    $bool = false;
+    $bunch = array();
+
+    if(empty($skills))
+        $skills = array();
+    else
+        foreach($skills as $item){
+            if($item['id'] == $id){
+                $item['note'] = $note;
+                $bool = true;
+            }
+            array_push($bunch, $item);
+        }
+
+    if(!$bool)
+        array_push($skills, $skill);
+    else
+        $skills = $bunch;
+
+    var_dump($skills);
+    update_field('skills', $skills, 'user_' . $user_id);
+    $message = '/dashboard/user/settings/?message=Note updated sucessfully'; 
+
+    header("Location: ". $message);
+}
+
+
 ?>
 <?php wp_head(); ?>
 

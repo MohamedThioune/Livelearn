@@ -1022,10 +1022,6 @@ $degrees=[
                         /*
                         * Categories
                         */
-                        $location = 'Virtual';
-                        $day = "<p><i class='fas fa-calendar-week'></i></p>";
-                        $month = '';
-
                         $category = ' ';
                         $category_id = 0;
                         $category_string = " ";
@@ -1048,8 +1044,11 @@ $degrees=[
                         /*
                         *  Date and Location
                         */
-                        $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+                        $location = 'Virtual';
+                        $day = "<p><i class='fas fa-calendar-week'></i></p>";
+                        $month = '';
 
+                        $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
                         $datas = get_field('data_locaties', $course->ID);
 
                         if($datas){
@@ -1102,7 +1101,6 @@ $degrees=[
                         /*
                         * Thumbnails
                         */
-                        //Image
                         $thumbnail = get_the_post_thumbnail_url($course->ID);
                         if(!$thumbnail)
                             $thumbnail = get_field('preview', $course->ID)['url'];
@@ -1220,7 +1218,6 @@ $degrees=[
                     * Categories
                     */
                     $category = ' ';
-
                     $category_id = 0;
                     $category_string = " ";
 
@@ -1236,29 +1233,39 @@ $degrees=[
                     *  Date and Location
                     */
                     $location = 'Virtual';
-                    $month = "";
-                    $day = "";
+                    $day = "<p><i class='fas fa-calendar-week'></i></p>";
+                    $month = '';
 
-                    $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];
+                    $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+                    $datas = get_field('data_locaties', $course->ID);
 
-                    $data = get_field('data_locaties', $course->ID);
-                    // if($data){
-                    //     $date = $data[0]['data'][0]['start_date'];
+                    if($datas){
+                        $data = $datas[0]['data'][0]['start_date'];
+                        if($data != ""){
+                            $day = explode('/', explode(' ', $data)[0])[0];
+                            $mon = explode('/', explode(' ', $data)[0])[1];
+                            $month = $calendar[$mon];
+                        }
 
-                    //     $day = explode('/', explode(' ', $date)[0])[0];
-                    //     $month = explode('/', explode(' ', $date)[0])[1];
-                    //     $month = $calendar[$month];
+                        $location = $datas[0]['data'][0]['location'];
+                    }else{
+                        $datum = get_field('data_locaties_xml', $course->ID);
 
-                    //     $location = $data[0]['data'][0]['location'];
-                    // }
-                    // else{
-                    //     $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                    //     $date = $data[0];
-                    //     $day = explode('/', explode(' ', $date)[0])[0];
-                    //     $month = explode('/', explode(' ', $date)[0])[1];
-                    //     $month = $calendar[$month];
-                    //     $location = $data[2];
-                    // }
+                        if($datum)
+                            if(isset($datum[0]['value']))
+                                $element = $datum[0]['value'];
+
+                        if(!isset($element))
+                            continue;
+
+                        $datas = explode('-', $element);
+
+                        $data = $datas[0];
+                        $day = explode('/', explode(' ', $data)[0])[0];
+                        $month = explode('/', explode(' ', $data)[0])[1];
+                        $month = $calendar[$month];
+                        $location = $datas[2];
+                    }
 
                     /*
                     * Price

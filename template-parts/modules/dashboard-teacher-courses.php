@@ -5,7 +5,7 @@ $id = get_current_user_id();
 if($id != 0){
 
     $args = array(
-        'post_type' => array('course','post','leerpad'),
+        'post_type' => array('course','post','leerpad','assessment'),
         'posts_per_page' => -1,
         'author' => $id,  
     );
@@ -79,10 +79,13 @@ if($id != 0){
                             if($dates)
                                 $day = explode(' ', $dates[0]['date']);
                             else{
-                                    $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
+                                $data = get_field('data_locaties_xml', $course->ID);
+                                if(!empty($data)){
+                                    $data = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
                                     $date = $data[0];
                                     $day = explode(' ', $date)[0];
                                 }
+                            }
                         }
                         $course_type = get_field('course_type', $course->ID);
                         $path_edit  = "";

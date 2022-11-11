@@ -79,14 +79,93 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
 <?php
-   $args = array(
-    'post_type' => 'course', 
+
+    $args = array(
+    'post_type' => array('course','post','leerpad','assessment'),
     'post_status' => 'publish',
     'posts_per_page' => -1,
     'order' => 'DESC',                          
     );
-
     $courses = get_posts($args);
+
+    extract($_POST);
+
+    if(isset($filter_databank)){
+        ## START WITH THE FILTERS
+        /**
+        * Leervom Group
+        */
+        if(!empty($leervom)){
+            $i = 0;
+            foreach($courses as $datum){ 
+                $coursetype = get_field('course_type', $datum->ID);
+                if(!in_array($coursetype, $leervom)){
+                    unset($courses[$i]);
+                }
+                $i++;
+            }
+        }
+        /**
+        * Price interval 
+        */
+        if(isset($min) || isset($max) || isset($gratis)){
+            if(isset($gratis)){
+                if($gratis){
+                    $prices = array(); 
+                    foreach($courses as $datum){
+                        $price = intval(get_field('price', $datum->ID));
+                        if($price == 0)
+                            array_push($prices,$datum);
+                    }
+                }
+            }else if(isset($min) || isset($max)){
+                if($min || $max){
+                    $prices = array(); 
+                    $tmp = 0;
+                    if($min != null && $max!= null){
+                        if($min > $max) {
+                            $tmp = $min;
+                            $min = $max;
+                            $max = $tmp;
+                        }
+                        //Here we got interval
+                        foreach($courses as $datum){
+                            $price = intval(get_field('price', $datum->ID));
+                            $min = intval($min);
+                            $max = intval($max);
+                            if($price >= $min)
+                                if($price <= $max)
+                                    array_push($prices,$datum);
+                        }
+                    }
+                    else{
+                        //Tested by one value 
+                        foreach($courses as $datum){
+                            $price = intval(get_field('price', $datum->ID));
+                            if($min == null){
+                                $max = intval($max);
+                                if($price <= $max)
+                                    array_push($prices,$datum);
+                            }
+                            else if($max == null){
+                                $min = intval($min);
+                                if($price >= $min)
+                                    array_push($prices,$datum);
+                            }
+                        }
+                    }
+                }
+            }
+            if(isset($prices)){
+                if(!empty($prices)){
+                    $courses = $prices;
+                }
+                else{
+                    $courses = array();
+                }
+            }
+        }
+    } 
 
     $user_in = wp_get_current_user();
 
@@ -172,37 +251,42 @@
                     <p class="fliterElementText">Filter</p>
                     <button class="btn btnIcone8" id="show"><img src="<?php echo get_stylesheet_directory_uri();?>/img/filter.png" alt=""></button>
                 </div>
-                <form action="" class="formFilterDatabank">
+                <form action="" method="POST" >
                     <P class="textFilter">Filter :</P>
                     <button class="btn hideBarFilterBlock"><i class="fa fa-close"></i></button>
-                    <select name="dropdown">
-                        <option value="" disabled selected>Leervoom</option>
-                        <option value="blue">Opleiding</option>
-                        <option value="red">Masterclass</option>
-                        <option value="green">GWorkshop</option>
-                        <option value="green">E-Learning</option>
-                        <option value="green">Event</option>
-                        <option value="green">Video</option>
-                        <option value="green">Training</option>
-                        <option value="green">Artikel</option>
+                    <select name="leervom[]">
+                        <option value="" disabled>Leervoom</option>
+                        <option value="Opleidingen" <?php if(isset($leervom)) if(in_array('Opleidingen', $leervom)) echo "selected" ; else echo ""  ?>>Opleidingen</option>
+                        <option value="Training"    <?php if(isset($leervom)) if(in_array('Training', $leervom)) echo "selected" ; else echo ""  ?> >Training</option>
+                        <option value="Workshop"    <?php if(isset($leervom)) if(in_array('Workshop', $leervom)) echo "selected" ; else echo ""  ?> >Workshop</option>
+                        <option value="E-learning"  <?php if(isset($leervom)) if(in_array('E-learning', $leervom)) echo "selected" ; else echo ""  ?> >E-learning</option>
+                        <option value="Masterclass" <?php if(isset($leervom)) if(in_array('Masterclass', $leervom)) echo "selected" ; else echo ""  ?> >Masterclass</option>
+                        <option value="Video"  <?php if(isset($leervom)) if(in_array('Video', $leervom)) echo "selected" ; else echo ""  ?> >Video</option>
+                        <option value="Assessment"  <?php if(isset($leervom)) if(in_array('Assessment', $leervom)) echo "selected" ; else echo ""  ?> >Assessment</option>
+                        <option value="Lezing" <?php if(isset($leervom)) if(in_array('Lezing', $leervom)) echo "selected" ; else echo ""  ?> >Lezing</option>
+                        <option value="Event"  <?php if(isset($leervom)) if(in_array('Event', $leervom)) echo "selected" ; else echo ""  ?> >Event</option>
+                        <option value="Leerpad"<?php if(isset($leervom)) if(in_array('Leerpad', $leervom)) echo "selected" ; else echo ""  ?> >Leerpad</option>
+                        <option value="Artikel"<?php if(isset($leervom)) if(in_array('Artikel', $leervom)) echo "selected" ; else echo ""  ?> >Artikel</option>
+                        <option value="Podcast"<?php if(isset($leervom)) if(in_array('Podcast', $leervom)) echo "selected" ; else echo ""  ?> >Podcast</option>
+
                     </select>
                    <div class="priceInput">
                        <div class="priceFilter">
-                           <input type="number"  placeholder="min Prijs">
-                           <input type="number"  placeholder="tot Prijs">
+                           <input type="number" name="min" value="<?php if(isset($min)) echo $min ?>" placeholder="min Prijs">
+                           <input type="number" name="max" value="<?php if(isset($max)) echo $max ?>" placeholder="tot Prijs">
                        </div>
                        <div class="input-group">
                            <label for="">Gratis</label>
-                           <input type="checkbox">
+                           <input name="gratis" type="checkbox" <?php if(isset($gratis)) echo 'checked'; else  echo  '' ?> >
                        </div>
                    </div>
-                    <select name="dropdown">
+                    <select name="status">
                         <option value="" disabled selected>Status</option>
-                        <option value="blue">Live </option>
-                        <option value="red">Not live</option>
+                        <option value="Live">Live</option>
+                        <option value="Not Live">Not live</option>
                     </select>
-                    <input type='date' class="form-control date" placeholder="selecteer een datum" />
-                    <button class="btn btnApplyFilter" type="submit">Apply</button>
+                   <!-- <input type='date' class="form-control date" placeholder="selecteer een datum" /> -->
+                    <button class="btn btnApplyFilter" name="filter_databank" type="submit">Apply</button>
                 </form>
             </div>
             <div class="contentCardListeCourse">
@@ -250,21 +334,27 @@
                             /*
                             *  Date and Location
                             */ 
+                            $day = "<i class='fas fa-calendar-week'></i>";
+                            $month = ' ';
                             $location = ' ';
-
+                        
                             $data = get_field('data_locaties', $course->ID);
-                            if(!empty($data)){
-                                $date = $data[0]['data'];
-                                if(!empty($date)){
-                                    $date = $date[0]['start_date'];
-                                    $day = explode(' ', $date)[0];
-                                }
+                            if($data){
+                                $date = $data[0]['data'][0]['start_date'];
+                                $day = explode(' ', $date)[0];
                             }
                             else{
-                                $day = "~";
-                                $data = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
-                                $date = $data[0];
-                                $day = explode(' ', $date)[0];
+                                $dates = get_field('dates', $course->ID);
+                                if($dates)
+                                    $day = explode(' ', $dates[0]['date']);
+                                else{
+                                    $data = get_field('data_locaties_xml', $course->ID);
+                                    if(!empty($data)){
+                                        $data = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
+                                        $date = $data[0];
+                                        $day = explode(' ', $date)[0];
+                                    }
+                                }
                             }
 
                             $tags = get_field('categories', $course->ID);
