@@ -168,7 +168,7 @@ $interesses = get_categories( array(
                                                             <div class="imgCoursRoad">
                                                                 <img class="" src="<?= $image; ?>" alt="">
                                                             </div>
-                                                            <div class="">
+                                                            <div class="detail-block-road">
                                                                 <p class="titleCoursRoad"><?= $course->post_title; ?></p>
                                                                 <div class="sousBlockCategorieRoad ">
                                                                     <img class="euroImg" src="<?php echo get_stylesheet_directory_uri();?>/img/grad-search.png" alt="">

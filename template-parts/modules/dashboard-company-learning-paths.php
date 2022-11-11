@@ -14,7 +14,7 @@ $user_in = wp_get_current_user();
             ?>
         </div>
         <div class="contentCardListeCourse">
-            <table class="table table-responsive">
+            <table class="table table-responsive table-responive-modife">
                 <thead>
                     <tr>
                         <th scope="col">Titel</th>

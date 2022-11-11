@@ -441,10 +441,10 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
                 <div class="modal fade" id="ModalCertificate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
-
-                            <div class="modal-body">
-                                <div>
-                                    <div class="Certificate" id="content">
+                        <button class="btn btn-primary" class="html2PdfConverter" onclick="createPDF()">html to PDF </button>
+                            <div class="modal-body" id="element-to-print">
+                                <div >
+                                    <div class="Certificate">
                                         <div class="logo">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image49.png" alt="">
                                         </div>
@@ -469,7 +469,7 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="editor"></div>
+                                    
                                 </div>
                             </div>
 
@@ -612,8 +612,9 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
+<script src="https://cdn.bootcss.com/html2pdf.js/0.9.1/html2pdf.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.1/html2pdf.bundle.min.js"></script>
+
 <script>
 
     $('#search_txt_course').keyup(function(){
@@ -635,3 +636,20 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
 
     });
 </script>
+
+<script>
+         function createPDF() {
+            var element = document.getElementById('element-to-print');
+            html2pdf(element, {
+                margin:1,
+                padding:0,
+                filename: 'certificat.pdf',
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 1 },
+                jsPDF: { unit: 'in', format: 'A4', orientation: 'P' ,'UTF-8', array(0, 0, 0, 0)},
+                class: createPDF
+            });
+        };
+    </script>
+
+
