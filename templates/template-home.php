@@ -1074,13 +1074,14 @@ $degrees=[
 
                         if(empty($data))
                             continue;
+
+                        var_dump($data);
+
                             
                         $date_now = strtotime(date('Y-m-d'));
                         $data_course = strtotime(str_replace('/', '.', $data));
                         if($data_course < $date_now)
                             continue;
-                        
-                        var_dump($data);
 
                         /*
                         * Price
