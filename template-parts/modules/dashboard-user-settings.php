@@ -783,7 +783,7 @@ if(!empty($bunch)){
         <div id="badge" class="b-tab contentBlockSetting">
             <label class="label-badge" for="">Badges</label>
             <div class="content-badges">
-                <a href="" class="card">
+                <a href="#" class="card">
                     <div class="block-icons">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/validate-badge.png" alt="">
                     </div>

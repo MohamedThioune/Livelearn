@@ -235,6 +235,13 @@
         }
     }
 
+    $artikel_single = "Artikel"; 
+    $white_type_array =  ['Lezing', 'Event'];
+    $course_type_array = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'Cursus'];
+    $video_single = "Video";
+    $leerpad_single  = 'Leerpad';
+    $podcast_single = 'Podcast';
+
 ?>
     <div class="contentListeCourse learningDatabankContent">
         <div class="cardOverviewCours">
@@ -306,22 +313,33 @@
                     <tbody>
                         <?php 
                         foreach($courses as $key => $course){
+                            if(!visibility($course, $visibility_company))
+                                continue;    
 
                             $category = ' ';
 
-                            $tree = get_the_terms($course->ID, 'course_category'); 
-
-                            if($tree)
-                                if(isset($tree[2]))
-                                    $category = $tree[2]->name;
-                                
+                            /*
+                            * Categories
+                            */
+                            $category = ' ';
                             $category_id = 0;
-                            
+                            $category_str = 0;
                             if($category == ' '){
-                                $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                                if($category_id != 0)
+                                $one_category = get_field('categories',  $course->ID);
+                                if(isset($one_category[0]))
+                                    $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                                else{
+                                    $one_category = get_field('category_xml',  $course->ID);
+                                    if(isset($one_category[0]))
+                                        $category_id = intval($one_category[0]['value']);
+                                }
+
+                                if($category_str != 0)
+                                    $category = (String)get_the_category_by_ID($category_str);
+                                else if($category_id != 0)
                                     $category = (String)get_the_category_by_ID($category_id);
                             }
+
                             /*
                             * Price 
                             */
@@ -349,8 +367,8 @@
                                     $day = explode(' ', $dates[0]['date']);
                                 else{
                                     $data = get_field('data_locaties_xml', $course->ID);
-                                    if(!empty($data)){
-                                        $data = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
+                                    if(isset($data[0]['value'])){
+                                        $data = explode('-', $data[0]['value']);
                                         $date = $data[0];
                                         $day = explode(' ', $date)[0];
                                     }
@@ -387,6 +405,33 @@
                                     }
                                 update_field('categories', $tags, $course->ID);
                             }
+
+                             // Course type
+                            $course_type = get_field('course_type', $course->ID);
+
+                            $path_edit  = "";
+                            if($course_type == $artikel_single)
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-article&id=" . $course->ID ."&edit";
+                            else if($course_type == $video_single)
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-video&id=" . $course->ID ."&edit";
+                            else if(in_array($course_type,$white_type_array))
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-add-white&id=" . $course->ID ."&edit";
+                            else if(in_array($course_type,$course_type_array))
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-course&id=" . $course->ID ."&edit";
+                            else if($course_type == $leerpad_single)
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-road&id=" . $course->ID ."&edit";
+                            else if($course_type == 'Assessment')
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-assessment&id=" . $course->ID ."&edit";
+                            else if($course_type == 'Podcast')
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-podcast&id=" . $course->ID ."&edit";
+
+                            $link = "";    
+                            if($course_type == "Leerpad")
+                                $link = '/detail-product-road?id=' . $course->ID ;
+                            else if($course_type == "Assessment")
+                                $link = '/detail-assessment?assessment_id=' . $course->ID;
+                            else
+                                $link = get_permalink($course->ID);
                         
                         ?>
                         <tr>
@@ -411,8 +456,8 @@
                                     
                                 }
                             }
-                        }
-                        else
+                            }
+                            else
                             {
                                 ?>
                                 <td class="textTh ">
@@ -422,17 +467,17 @@
                                         if($course_subtopics!=null){
                                         if (is_array($course_subtopics) || is_object($course_subtopics)){
                                             foreach ($course_subtopics as $key =>  $course_subtopic) {
-                                                   if ($course_subtopic!="" && $course_subtopic!="Array")
-                                                       $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
-                                          }
-                                             $field=substr($field,0,-1);
-                                             echo $field;
+                                                if ($course_subtopic!="" && $course_subtopic!="Array")
+                                                    $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                        }
+                                            $field=substr($field,0,-1);
+                                            echo $field;
                                         
                                     }
                                 }
                             }
 
-                                ?>
+                            ?>
                             </p>             
                         </td>
                             <td class="textTh"><?php echo $day; ?></td>
@@ -440,13 +485,14 @@
                             <td class="textTh">
                                 <div class="dropdown text-white">
                                     <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
-                                        <img  style="width:20px"
+                                        <img style="width:20px"
                                               src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                     </p>
                                     <ul class="dropdown-menu">
-                                        <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
-                                        <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
-                                        <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
+                                        <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?php echo $link; ?>" target="_blank">Bekijk</a></li>
+                                        <li class="my-2"><i class="fa fa-gear px-2"></i><a href="<?= $path_edit ?>" target="_blank">Pas aan</a></li>
+                                        <!-- <li class="my-1"><i class="fa fa-share px-2"></i><input type="button" id="" value="Share"/></li> -->
+                                        <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2 "></i><input type="button" id="" value="Verwijderen"/></li>
                                     </ul>
                                 </div>
                             </td>

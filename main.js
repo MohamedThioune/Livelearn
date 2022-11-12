@@ -1,7 +1,7 @@
-jQuery(function($){
+jQuery(function($) {
 
     //variable for offline courses date input
-    $('.block2evens').each(function(){
+    $('.block2evens').each(function() {
         console.log('enting for reservations done');
         var dateNameStart = $(this).find('input[data-attr="dateNameStart"]').val();
         $(this).find('.yith-wapo-option input').val(dateNameStart);
@@ -9,13 +9,11 @@ jQuery(function($){
 
     //scroll down
     $(function() {
-        $('.bntStarted').click (function() {
-            $('html, body').animate({scrollTop: $('.blockFormDeveloper').offset().top }, 'slow');
+        $('.bntStarted').click(function() {
+            $('html, body').animate({ scrollTop: $('.blockFormDeveloper').offset().top }, 'slow');
             return false;
         });
     });
-
-
 
     //header on scroll fix
     var height = ($('nav.navbar').css('height'));
@@ -30,10 +28,10 @@ jQuery(function($){
     $(".hideBarFilterBlock").hide();
     // For filter
 
-    $(".filterBlock").click(function(){
+    $(".filterBlock").click(function() {
         $(".formFilterDatabank, .hideBarFilterBlock").show();
     });
-    $(".hideBarFilterBlock").click(function(){
+    $(".hideBarFilterBlock").click(function() {
         $(".formFilterDatabank, .hideBarFilterBlock").hide();
     });
 
@@ -139,14 +137,14 @@ jQuery(function($){
     // for tabs company
 
     $("#tab2").click(function() {
-        $("#tab2").addClass('btnactive') ;
-        $("#tab1").removeClass('btnactive') ;
+        $("#tab2").addClass('btnactive');
+        $("#tab1").removeClass('btnactive');
         $("#tab2Content").show();
         $("#tab1Content").hide();
     });
     $("#tab1").click(function() {
-        $("#tab1").addClass('btnactive') ;
-        $("#tab2").removeClass('btnactive') ;
+        $("#tab1").addClass('btnactive');
+        $("#tab2").removeClass('btnactive');
         $("#tab1Content").show();
         $("#tab2Content").hide();
     });
@@ -165,36 +163,36 @@ jQuery(function($){
     $('#attributes .attr:first-child').find('.remove').hide();
 
     /* Doc ready */
-    $(".add").on('click', function () {
+    $(".add").on('click', function() {
         addRow();
-        if($("#attributes .attr").length > 1) {
+        if ($("#attributes .attr").length > 1) {
             //alert("Can't remove row.");
             $(".remove").show();
         }
     });
-    $(".remove").on('click', function () {
-        if($("#attributes .attr").size() == 1) {
+    $(".remove").on('click', function() {
+        if ($("#attributes .attr").size() == 1) {
             //alert("Can't remove row.");
             $(".remove").hide();
         } else {
             removeRow($(this));
 
-            if($("#attributes .attr").size() == 1) {
+            if ($("#attributes .attr").size() == 1) {
                 $(".remove").hide();
             }
 
         }
     });
 
-// strat for print or doawnload certificat
+    // strat for print or doawnload certificat
 
 
-// end code for print or doawnload certificat
+    // end code for print or doawnload certificat
 
 
 
     //close login popup
-    $('.modal button.close').on('click', function(e){
+    $('.modal button.close').on('click', function(e) {
         e.preventDefault();
         $(this).closest('.modal').removeClass('show');
         console.log('close popup');
@@ -204,7 +202,7 @@ jQuery(function($){
     // clone section dashboard course step 3
 
     //variable for offline courses date input
-    $('.block2evens').each(function(){
+    $('.block2evens').each(function() {
         console.log('enting for reservations done');
         var dateNameStart = $(this).find('input[data-attr="dateNameStart"]').val();
         $(this).find('.yith-wapo-option input').val(dateNameStart);
@@ -297,6 +295,12 @@ jQuery(function($){
         $("#upBlock3").show();
     });
 
+    $("#upBlock3").click(function() {
+        $(".firstContentHeadSousMobile").show();
+        $(".sousMenuBlock3").hide();
+        $(".btnUp").hide();
+    });
+
     $("#voorOrganisati").click(function() {
         $("#voorOrganisatiModal").toggle();
         $(".activeModalHeader").show();
@@ -329,7 +333,7 @@ jQuery(function($){
     $(".filterBlockMobil").click(function() {
         $(".sousProductTest").show();
     });
-    $("#filterHideMobile").click(function(){
+    $("#filterHideMobile").click(function() {
         $(".sousProductTest").hide();
     });
 
@@ -389,7 +393,7 @@ jQuery(function($){
     $('.tab-content:first-child').show();
 
     // Click function
-    $('#tabs-nav li').click(function(){
+    $('#tabs-nav li').click(function() {
         $('#tabs-nav li').removeClass('active');
         $(this).addClass('active');
         $('.tab-content').hide();
@@ -401,12 +405,12 @@ jQuery(function($){
 
     //focus
 
-    $(function(){
-        $("#inputSearchElementPath").focus(function(){
+    $(function() {
+        $("#inputSearchElementPath").focus(function() {
             $('.searchElementPath img').hide();
         });
 
-        $("#inputSearchElementPath").focusout(function(){
+        $("#inputSearchElementPath").focusout(function() {
             $('.searchElementPath img').show();
         });
     })
@@ -415,31 +419,31 @@ jQuery(function($){
     // Pour first modal after login
     $(".btnBaangerichte").click(function() {
         $(".subtopicBaangerichte").show();
-        let cl =$(this).attr('class').split(' ')[3];
-        hidden=($(".cb_topics_bangricht_"+cl).attr('hidden'));
-        $(".cb_topics_bangricht_"+cl).attr('hidden', !hidden);
+        let cl = $(this).attr('class').split(' ')[3];
+        hidden = ($(".cb_topics_bangricht_" + cl).attr('hidden'));
+        $(".cb_topics_bangricht_" + cl).attr('hidden', !hidden);
 
     });
 
     $(".btnFunctiegericht").click(function() {
         $(".subtopicFunctiegericht").show();
-        let cl =$(this).attr('class').split(' ')[3];
-        hidden=($(".cb_topics_funct_"+cl).attr('hidden'));
-        $(".cb_topics_funct_"+cl).attr('hidden', !hidden);
+        let cl = $(this).attr('class').split(' ')[3];
+        hidden = ($(".cb_topics_funct_" + cl).attr('hidden'));
+        $(".cb_topics_funct_" + cl).attr('hidden', !hidden);
     });
 
     $(".btnSkills").click(function() {
         $(".subtopicSkills").show();
-        let cl =$(this).attr('class').split(' ')[3];
-        hidden=($(".cb_topics_skills_"+cl).attr('hidden'));
-        $(".cb_topics_skills_"+cl).attr('hidden', !hidden);
+        let cl = $(this).attr('class').split(' ')[3];
+        hidden = ($(".cb_topics_skills_" + cl).attr('hidden'));
+        $(".cb_topics_skills_" + cl).attr('hidden', !hidden);
     });
 
     $(".btnPersonal").click(function() {
         $(".subtopicPersonal").show();
-        let cl =$(this).attr('class').split(' ')[3];
-        hidden=($(".cb_topics_personal_"+cl).attr('hidden'));
-        $(".cb_topics_personal_"+cl).attr('hidden', !hidden);
+        let cl = $(this).attr('class').split(' ')[3];
+        hidden = ($(".cb_topics_personal_" + cl).attr('hidden'));
+        $(".cb_topics_personal_" + cl).attr('hidden', !hidden);
     });
 
     $("#nextblockBaangerichte").click(function() {
@@ -596,12 +600,12 @@ jQuery(function($){
     });
 
 
-    for ( var i = 0; i < 21; i++ ) {
-        $( ".btf" ).appendTo( document.body );
+    for (var i = 0; i < 21; i++) {
+        $(".btf").appendTo(document.body);
     }
 
-    for ( var i = 0; i < 21; i++ ) {
-        $( ".I-feddback" ).appendTo( document.body );
+    for (var i = 0; i < 21; i++) {
+        $(".I-feddback").appendTo(document.body);
     }
 
     //    $( "div" ).click(function() {
@@ -613,7 +617,7 @@ jQuery(function($){
     // début pour show more partie user profil passport
 
     $(document).ready(function() {
-        if (height >= 162 ){
+        if (height >= 162) {
             $(".skills").addClass("cacher");
             $("#show-more1").show();
 
@@ -661,16 +665,13 @@ jQuery(function($){
         $("#" + progress)
             .stop()
             .css({ width: 0 })
-            .animate(
-            { width: size + "%" },
-            {
+            .animate({ width: size + "%" }, {
                 duration: 2000,
                 step: function(valeur, fx) {
                     var elem = $(fx.elem);
                     elem.text(parseInt(valeur, 10) + "%");
                 }
-            }
-        );
+            });
     });
     // Déclenche l'animation
     oBtns.trigger("click");
@@ -688,12 +689,12 @@ jQuery(function($){
 
     // début pour user profil settings preview img
 
-    $('.file-input-img-choose').change(function(){
+    $('.file-input-img-choose').change(function() {
         var curElement = $('.imageChoose');
         console.log(curElement);
         var reader = new FileReader();
 
-        reader.onload = function (e) {
+        reader.onload = function(e) {
             // get loaded data and render thumbnail.
             curElement.attr('src', e.target.result);
         };
@@ -738,7 +739,7 @@ jQuery(function($){
     var select = $('#select');
     var selected = $('#selected');
 
-    select.on('change', function(){
+    select.on('change', function() {
         var selectedOptionText = $(this).children(':selected').text();
 
         selected.text(selectedOptionText);

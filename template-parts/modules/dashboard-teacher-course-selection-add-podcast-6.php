@@ -1,13 +1,11 @@
 <?php
     $users = get_users();
-  
+
     $members = array();
-    
+
     $post = get_post($_GET['id']);
     $author = array($post->post_author);
     $expert = get_field('experts', $post->ID);    
-
-    $experts = array_merge($author, $expert);
 
     foreach($users as $user)
         if(in_array('author', $user->roles) || in_array('teacher', $user->roles))
@@ -24,15 +22,16 @@
                         <div class="acf-field">
                             <label for="locate">Wijs andere experts uit uw team aan voor deze cursus :</label><br>
                             <div class="form-group formModifeChoose" >
+                                
                                 <div class="form-group formModifeChoose">
-
+                                    
                                     <select name="experts[]" id="autocomplete" class="multipleSelect2" multiple="true">
                                         <?php 
                                             foreach($members as $member) {
                                                 if(in_array($member->ID,$experts)){
                                                     echo "<option selected value='" . $member->ID ."'>" . $member->display_name . "</option>";
                                                     continue;
-                                                }
+                                                } 
                                                 echo "<option value='" . $member->ID ."'>" . $member->display_name . "</option>";
                                             }
                                         ?>
@@ -43,7 +42,6 @@
                             <button type="submit" name="expert_add" class="btn btn-info">Finish</button> 
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -52,33 +50,52 @@
             <div class="blockCourseToevoegen">
                 <p class="courseToevoegenText">Course toevoegen</p>
                 <div class="contentBlockRight">
-                    <a href="/dashboard/teacher/course-selection/?func=add-white&id=<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
+                    <a href="/dashboard/teacher/course-selection/" class="contentBlockCourse">
+                        <div class="circleIndicator passEtape">
+                            <i class="fa fa-book"></i>
+                        </div>
+                        <p class="textOpleidRight">Opleidingstype</p>
+                    </a>
+                    <a href="/dashboard/teacher/course-selection/?func=add-podcast<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&edit'; ?>" class="contentBlockCourse">
                         <div class="circleIndicator passEtape">
                             <i class="fa fa-info"></i>
-                        </div>                            
+                        </div>
                         <p class="textOpleidRight">Basis informatie</p>
                     </a>
-                    <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=2&edit" class="contentBlockCourse">
+                    <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-podcast&id=' . $_GET['id'] . '&step=2&edit'; ?>" class="contentBlockCourse">
                         <div class="circleIndicator passEtape">
-                            <i class="fa fa-globe"></i>
+                            <i class="fa fa-file-text"></i>
                         </div>
-                        <p class="textOpleidRight">Online or location</p>
+                        <p class="textOpleidRight">Uitgebreide beschrijving</p>
                     </a>
-                    <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=3&edit" class="contentBlockCourse">
+                    <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-podcast&id=' . $_GET['id'] . '&step=3&edit'; ?>"  class="contentBlockCourse">
+                        <div class="circleIndicator passEtape">
+                            <i class="fa fa-music" aria-hidden="true"></i>
+                        </div>
+                        <p class="textOpleidRight ">Podcasts toevoegen</p>
+                    </a>
+                    <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-podcast&id=' . $_GET['id'] . '&step=4&edit'; ?>"  class="contentBlockCourse">
+                        <div class="circleIndicator passEtape">
+                            <i class="fa fa-paste" aria-hidden="true"></i>
+                        </div>
+                        <p class="textOpleidRight">Onderwepren</p>
+                    </a>
+                    <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-podcast&id=' . $_GET['id'] . '&step=5&edit'; ?>"  class="contentBlockCourse">
                         <div class="circleIndicator passEtape">
                             <i class="fa fa-tag" aria-hidden="true"></i>
                         </div>
-                        <p class="textOpleidRight ">Tags</p>
+                        <p class="textOpleidRight">Tags</p>
                     </a>
-                    <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=4&edit" class="contentBlockCourse">
-                        <div class="circleIndicator passEtape">
+                    <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-podcast&id=' . $_GET['id'] . '&step=6&edit'; ?>"  class="contentBlockCourse">
+                        <div class="circleIndicator passEtape2">
                             <i class="fa fa-users" aria-hidden="true"></i>
                         </div>
-                        <p class="textOpleidRight">Expert</p>
+                        <p class="textOpleidRight">Experts</p>
                     </a>
                 </div>
             </div>
         </div>
+        
     </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -87,8 +104,7 @@
     { 
         var search=$("#search_expert").val()
         console.log(search)
-        $.ajax(
-            {
+        $.ajax({
                     url:"/fetch-expert",
                     method:"post",
                     data:{
@@ -102,6 +118,3 @@
                 });
     })
 </script>
-
-
-    
