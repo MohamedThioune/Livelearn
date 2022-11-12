@@ -1069,14 +1069,13 @@ $degrees=[
                             }
                         }
 
+                        var_dump($data);
+
                         if($data)
                             continue;
 
                         if(empty($data))
                             continue;
-
-                        var_dump($data);
-
                             
                         $date_now = strtotime(date('Y-m-d'));
                         $data_course = strtotime(str_replace('/', '.', $data));
