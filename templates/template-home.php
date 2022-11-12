@@ -1069,17 +1069,15 @@ $degrees=[
                             }
                         }
 
-                        if(!$month)
-                            continue;
-
-                        var_dump($data);
-                        
                         if($data){
                             $date_now = strtotime(date('Y-m-d'));
                             $data_course = strtotime(str_replace('/', '.', $data));
                             if($data_course < $date_now)
                                 continue;
                         }
+                        else
+                            continue;
+
 
                         /*
                         * Price
