@@ -1071,11 +1071,13 @@ $degrees=[
 
                         if(!$month)
                             continue;
+
+                        var_dump($data);
                         
-                        if(isset($data)){
+                        if($data){
                             $date_now = strtotime(date('Y-m-d'));
-                            $data = strtotime(str_replace('/', '.', $data));
-                            if($data < $date_now)
+                            $data_course = strtotime(str_replace('/', '.', $data));
+                            if($data_course < $date_now)
                                 continue;
                         }
 
@@ -1212,11 +1214,11 @@ $degrees=[
                     $category_str = 0;
                     if($category == ' '){
                         $one_category = get_field('categories',  $course->ID);
-                        if(isset($one_category[0]))
+                        if(isset($one_category[0]['value']))
                             $category_str = intval(explode(',', $one_category[0]['value'])[0]);
                         else{
                             $one_category = get_field('category_xml',  $course->ID);
-                            if(isset($one_category[0]))
+                            if(isset($one_category[0]['value']))
                                 $category_id = intval($one_category[0]['value']);
                         }
 

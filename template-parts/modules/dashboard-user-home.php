@@ -483,6 +483,7 @@ if(isset($_GET['message']))
                     <div class="swiper-wrapper">
                     <?php
                     $find = false;
+                    $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
                     foreach($recommended_courses as $course){
 
                         if(get_field('course_type', $course->ID) == $key){
@@ -498,20 +499,16 @@ if(isset($_GET['message']))
                             /*
                             * Categories
                             */
-                            $location = 'Virtual';
-                            $day = "<p><i class='fas fa-calendar-week'></i></p>";
-                            $month = '';
-
                             $category = ' ';
                             $category_id = 0;
-                            $category_string = " ";
+                            $category_str = 0;
                             if($category == ' '){
                                 $one_category = get_field('categories',  $course->ID);
-                                if(isset($one_category[0]))
+                                if(isset($one_category[0]['value']))
                                     $category_str = intval(explode(',', $one_category[0]['value'])[0]);
                                 else{
                                     $one_category = get_field('category_xml',  $course->ID);
-                                    if(isset($one_category[0]))
+                                    if(isset($one_category[0]['value']))
                                         $category_id = intval($one_category[0]['value']);
                                 }
 
@@ -524,8 +521,6 @@ if(isset($_GET['message']))
                             /*
                             *  Date and Location
                             */
-                            $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
-
                             $datas = get_field('data_locaties', $course->ID);
 
                             if($datas){
@@ -560,7 +555,7 @@ if(isset($_GET['message']))
                             //Course Type
                             $course_type = get_field('course_type', $course->ID);
 
-                            if(!empty($data) && $course_type != "Video" )
+                            if(!empty($data) && $course_type != "Video")
                                 if($data){
                                     $date_now = strtotime(date('Y-m-d'));
                                     $data = strtotime(str_replace('/', '.', $data));
@@ -568,7 +563,6 @@ if(isset($_GET['message']))
                                         continue;
                                 }
                             
-
                             /*
                             * Price 
                             */
