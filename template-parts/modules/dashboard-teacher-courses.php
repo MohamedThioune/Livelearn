@@ -3,7 +3,6 @@
 $id = get_current_user_id();
 
 if($id != 0){
-
     $args = array(
         'post_type' => array('course','post','leerpad','assessment'),
         'posts_per_page' => -1,
@@ -18,8 +17,9 @@ if($id != 0){
     $leerpad_single  = "Leerpad";
     $assessment_single = "Assessment";
     $podcast_single = "Podcast";
-
 }
+
+$calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 ?>
 <div class="contentListeCourse">
     <div class="cardOverviewCours">
