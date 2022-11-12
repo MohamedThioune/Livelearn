@@ -1016,6 +1016,8 @@ $degrees=[
             <div class="sousBlockFrontAgenda">
                 <?php
                     $i = 0;
+                    $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+
                     foreach($courses as $course){
                         if(!empty($company_visibility))
                             if(!visibility($course, $visibility_company))
@@ -1049,39 +1051,39 @@ $degrees=[
                         $day = "<i class='fas fa-calendar-week'></i>";
                         $month = NULL;
                         $location = ' ';
-                    
-                        $data = get_field('data_locaties', $course->ID);
-                        if($data){
-                            $date = $data[0]['data'][0]['start_date'];
-                            $day = explode(' ', $date)[0];
-                        }
-                        else{
-                            $dates = get_field('dates', $course->ID);
-                            if($dates)
-                                $day = explode(' ', $dates[0]['date']);
-                            else{
-                                $data = get_field('data_locaties_xml', $course->ID);
-                                if(isset($data[0]['value'])){
-                                    $data = explode('-', $data[0]['value']);
-                                    $date = $data[0];
-                                    $day = explode(' ', $date)[0];
-                                }
+
+                        $datas = get_field('data_locaties', $course->ID);
+                        if($datas){
+                            $data = $datas[0]['data'][0]['start_date'];
+                            if($data != ""){
+                                $day = explode('/', explode(' ', $data)[0])[0];
+                                $mon = explode('/', explode(' ', $data)[0])[1];
+                                $month = $calendar[$mon];
+                            }
+
+                            $location = $datas[0]['data'][0]['location'];
+                        }else{
+                            $datum = get_field('data_locaties_xml', $course->ID);
+                            if(isset($datum[0]['value'])){
+                                $datas = explode('-', $datum[0]['value']);
+                                $data = $datas[0];
+                                $day = explode('/', explode(' ', $data)[0])[0];
+                                $month = explode('/', explode(' ', $data)[0])[1];
+                                $month = $calendar[$month];
+                                $location = $datas[2];
                             }
                         }
 
-                        var_dump($data);
-
-                        if($data)
+                        if(!$month)
                             continue;
 
-                        if(empty($data))
-                            continue;
-                            
-                        $date_now = strtotime(date('Y-m-d'));
-                        $data_course = strtotime(str_replace('/', '.', $data));
-                        if($data_course < $date_now)
-                            continue;
-
+                        if(isset($data)){
+                            $date_now = strtotime(date('Y-m-d'));
+                            $data = strtotime(str_replace('/', '.', $data));
+                            if($data < $date_now)
+                                continue;
+                        }
+                        
                         /*
                         * Price
                         */
