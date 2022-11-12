@@ -47,61 +47,51 @@
                 </div>
             </div>
         </div>
-
+       
         <div class="col-md-3 col-lg-4 col-sm-12">
             <div class="blockCourseToevoegen">
                 <p class="courseToevoegenText">Course toevoegen</p>
                 <div class="contentBlockRight">
-                    <a href="/dashboard/teacher/course-selection/?func=add-white&id=<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&type=' . $_GET['type']. '&edit'; ?>" class="contentBlockCourse">
+                    <a href="/dashboard/teacher/course-selection/" class="contentBlockCourse">
+                        <div class="circleIndicator passEtape">
+                            <i class="fa fa-book"></i>
+                        </div>
+                        <p class="textOpleidRight">Opleidingstype</p>
+                    </a>
+                    <a href="/dashboard/teacher/course-selection/?func=add-assessment<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&edit'; ?>" class="contentBlockCourse">
                         <div class="circleIndicator passEtape">
                             <i class="fa fa-info"></i>
-                        </div>                            
+                        </div>
                         <p class="textOpleidRight">Basis informatie</p>
                     </a>
-                    <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=2&edit" class="contentBlockCourse">
+                    <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-add-assessment&id=' . $_GET['id'] . '&step=2&edit'; ?>" class="contentBlockCourse">
                         <div class="circleIndicator passEtape">
-                            <i class="fa fa-globe"></i>
+                            <i class="fa fa-question"></i>
                         </div>
-                        <p class="textOpleidRight">Online or location</p>
+                        <p class="textOpleidRight">Vragen</p>
                     </a>
-                    <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=3&edit" class="contentBlockCourse">
+                    <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-add-assessment&id=' . $_GET['id'] . '&step=3&edit'; ?>" class="contentBlockCourse">
                         <div class="circleIndicator passEtape">
-                            <i class="fa fa-tag" aria-hidden="true"></i>
+                            <i class="fa fa-file-text"></i>
                         </div>
-                        <p class="textOpleidRight ">Tags</p>
+                        <p class="textOpleidRight">Beschrijving Assessment</p>
                     </a>
-                    <a href="/dashboard/teacher/course-selection/?func=add-add-white&id=<?php echo $_GET['id'];?>&step=4&edit" class="contentBlockCourse">
+                    <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-add-assessment&id=' . $_GET['id'] . '&step=4&edit'; ?>" class="contentBlockCourse">
                         <div class="circleIndicator passEtape">
+                            <i class="fa fa-paste" aria-hidden="true"></i>
+                        </div>
+                        <p class="textOpleidRight">Onderwerpen</p>
+                    </a>
+                    <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-add-assessment&id=' . $_GET['id'] . '&step=5&edit'; ?>" class="contentBlockCourse">
+                        <div class="circleIndicator passEtape2">
                             <i class="fa fa-users" aria-hidden="true"></i>
                         </div>
-                        <p class="textOpleidRight">Expert</p>
+                        <p class="textOpleidRight">Experts</p>
                     </a>
                 </div>
             </div>
         </div>
+
     </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script>
-    $("#search_expert").keyup(()=>
-    { 
-        var search=$("#search_expert").val()
-        console.log(search)
-        $.ajax(
-            {
-                    url:"/fetch-expert",
-                    method:"post",
-                    data:{
-                     search_expert:search
-                    },
-                    dataType:"text",
-                    success: function(data){
-                        console.log(data);
-                        $('#autocomplete').html(data);
-                    }
-                });
-    })
-</script>
-
-
-    
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>

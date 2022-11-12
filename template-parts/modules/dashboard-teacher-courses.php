@@ -15,7 +15,9 @@ if($id != 0){
     $white_type_array =  ['Lezing', 'Event'];
     $course_type_array = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'Cursus'];
     $video_single = "Video";
-    $leerpad_single  = 'Leerpad';
+    $leerpad_single  = "Leerpad";
+    $assessment_single = "Assessment";
+    $podcast_single = "Podcast";
 
 }
 ?>
@@ -39,7 +41,8 @@ if($id != 0){
                     </tr>
                 </thead>
                 <tbody>
-                    <?php 
+                    <?php
+                    $i = 1; 
                     foreach($courses as $key => $course){
                         if(!visibility($course, $visibility_company))
                             continue;
@@ -48,15 +51,24 @@ if($id != 0){
                         * Categories
                         */
                         $category = ' ';
-                        $location = ' ';
-                        $day = "<p><i class='fas fa-calendar-week'></i></p>";
-                        $month = ' ';
+                        $category_id = 0;
+                        $category_str = 0;
+                        if($category == ' '){
+                            $one_category = get_field('categories',  $course->ID);
+                            if(isset($one_category[0]))
+                                $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                            else{
+                                $one_category = get_field('category_xml',  $course->ID);
+                                if(isset($one_category[0]))
+                                    $category_id = intval($one_category[0]['value']);
+                            }
 
-                        $tree = get_the_terms($course->ID, 'course_category'); 
+                            if($category_str != 0)
+                                $category = (String)get_the_category_by_ID($category_str);
+                            else if($category_id != 0)
+                                $category = (String)get_the_category_by_ID($category_id);
+                        }
 
-                        if($tree)
-                            if(isset($tree[2]))
-                                $category = $tree[2]->name;
                         /*
                         * Price 
                         */
@@ -69,6 +81,10 @@ if($id != 0){
                         /*
                         *  Date and Location
                         */ 
+                        $day = "<i class='fas fa-calendar-week'></i>";
+                        $month = ' ';
+                        $location = ' ';
+                    
                         $data = get_field('data_locaties', $course->ID);
                         if($data){
                             $date = $data[0]['data'][0]['start_date'];
@@ -80,13 +96,17 @@ if($id != 0){
                                 $day = explode(' ', $dates[0]['date']);
                             else{
                                 $data = get_field('data_locaties_xml', $course->ID);
-                                if(!empty($data)){
-                                    $data = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
+                                if(isset($data[0]['value'])){
+                                    $data = explode('-', $data[0]['value']);
                                     $date = $data[0];
                                     $day = explode(' ', $date)[0];
                                 }
                             }
                         }
+
+                        if($day == "<i class='fas fa-calendar-week'></i>")
+                            continue;
+
                         $course_type = get_field('course_type', $course->ID);
                         $path_edit  = "";
                         if($course_type == $artikel_single)
@@ -99,13 +119,22 @@ if($id != 0){
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-course&id=" . $course->ID ."&edit";
                         else if($course_type == $leerpad_single)
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-road&id=" . $course->ID ."&edit";
+                        else if($course_type == $assessment_single)
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-assessment&id=" . $course->ID ."&edit";
+                        else if($course_type == $podcast_single)
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-podcast&id=" . $course->ID ."&edit";
 
-                        $link = ($course_type == "Leerpad") ? '/detail-product-road?id=' . $course->ID : get_permalink($course->ID);
-
-                        //Assessment
+                        $link = "";    
+                        if($course_type == "Leerpad")
+                            $link = '/detail-product-road?id=' . $course->ID ;
+                        else if($course_type == "Assessment")
+                            $link = '/detail-assessment?assessment_id=' . $course->ID;
+                        else
+                            $link = get_permalink($course->ID);
+                                            
                     ?>
                     <tr id="<?php echo $course->ID; ?>" data-attr="<?php echo $course->ID;?>">
-                        <td scope="row"><?= $key; ?></td>
+                        <td scope="row"><?= $i; ?></td>
                         <td class="textTh">
                             <a href="/dashboard/teacher/signups/?parse=<?php echo $course->ID;?>"><i class="fas fa-globe-africa"></i></a>
                         </td>
@@ -129,6 +158,7 @@ if($id != 0){
                     </tr>
 
                     <?php
+                    $i+=1;
                     }
                     ?>
 

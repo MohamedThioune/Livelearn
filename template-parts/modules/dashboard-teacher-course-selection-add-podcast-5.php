@@ -437,7 +437,7 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                             </form>
                         </div>
 
-                    <form action='/dashboard/teacher/course-selection/?func=add-video&id=<?php echo $_GET['id'] ?>&step=6' method='post'>
+                    <form action='/dashboard/teacher/course-selection/?func=add-podcast&id=<?php echo $_GET['id'] ?>&step=6' method='post'>
                         <div class='acf-field' id="autocomplete_ajax">
                         </div>
                     </form>
@@ -457,37 +457,37 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                         </div>
                         <p class="textOpleidRight">Opleidingstype</p>
                     </a>
-                    <a href="/dashboard/teacher/course-selection/?func=add-video<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&edit'; ?>" class="contentBlockCourse">
+                    <a href="/dashboard/teacher/course-selection/?func=add-podcast<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&edit'; ?>" class="contentBlockCourse">
                         <div class="circleIndicator passEtape">
                             <i class="fa fa-info"></i>
                         </div>
                         <p class="textOpleidRight">Basis informatie</p>
                     </a>
-                    <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=2&edit'; ?>" class="contentBlockCourse">
+                    <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-podcast&id=' . $_GET['id'] . '&step=2&edit'; ?>" class="contentBlockCourse">
                         <div class="circleIndicator passEtape">
                             <i class="fa fa-file-text"></i>
                         </div>
                         <p class="textOpleidRight">Uitgebreide beschrijving</p>
                     </a>
-                    <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=3&edit'; ?>"  class="contentBlockCourse">
+                    <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-podcast&id=' . $_GET['id'] . '&step=3&edit'; ?>"  class="contentBlockCourse">
                         <div class="circleIndicator passEtape">
-                            <i class="fa fa-film" aria-hidden="true"></i>
+                            <i class="fa fa-music" aria-hidden="true"></i>
                         </div>
-                        <p class="textOpleidRight ">voeg video's toe</p>
+                        <p class="textOpleidRight ">Podcasts toevoegen</p>
                     </a>
-                    <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=4&edit'; ?>"  class="contentBlockCourse">
+                    <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-podcast&id=' . $_GET['id'] . '&step=4&edit'; ?>"  class="contentBlockCourse">
                         <div class="circleIndicator passEtape">
                             <i class="fa fa-paste" aria-hidden="true"></i>
                         </div>
-                        <p class="textOpleidRight">Details en onderwepren</p>
+                        <p class="textOpleidRight">Onderwepren</p>
                     </a>
-                    <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=5&edit'; ?>"  class="contentBlockCourse">
+                    <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-podcast&id=' . $_GET['id'] . '&step=5&edit'; ?>"  class="contentBlockCourse">
                         <div class="circleIndicator passEtape2">
                             <i class="fa fa-tag" aria-hidden="true"></i>
                         </div>
                         <p class="textOpleidRight">Tags</p>
                     </a>
-                    <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=6&edit'; ?>"  class="contentBlockCourse">
+                    <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-podcast&id=' . $_GET['id'] . '&step=6&edit'; ?>"  class="contentBlockCourse">
                         <div class="circleIndicator">
                             <i class="fa fa-users" aria-hidden="true"></i>
                         </div>
@@ -520,7 +520,7 @@ var selected_subtopics_id=[];
         const urlParams = new URLSearchParams(queryString);
         const id = urlParams.get('id')
         const step = urlParams.get('step')
-        const url = "?func=add-video&id="+id+"&step="
+        const url = "?func=add-podcast&id="+id+"&step="
         $.ajax({
             url:url+step,
             method:"post",

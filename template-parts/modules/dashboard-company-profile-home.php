@@ -494,11 +494,7 @@
         <div class="modal-dialog" role="document" style="width: 93% !important;">
             <div class="modal-content">
                 <div class="modal-header">
-<<<<<<< HEAD
-                    <h5 class="modal-title" id="exampleModalLabel">Add New </h5>
-=======
                     <h5 class="modal-title" id="exampleModalLabel">Nieuw toevoegen </h5>
->>>>>>> origin/frontSeydou
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

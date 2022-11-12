@@ -1,10 +1,12 @@
-
+<?php
+$user = get_user_by('ID', $id_user);
+?>
 <div class="contentPassport profilUserP">
     <div class="headPassport">
         <div class="blockImageCandidat">
             <img src="<?php echo $image; ?>" alt="">
         </div>
-        <p class="nameCandidat"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . '' . $user->last_name; else echo $user->display_name; ?></p>
+        <p class="nameCandidat"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . ' ' . $user->last_name; else echo $user->display_name; ?></p>
         <p class="professionCandidat"><?php echo $function; ?></p>
         <div class="contentElementHeadCandidat">
             <div class="contentTag">

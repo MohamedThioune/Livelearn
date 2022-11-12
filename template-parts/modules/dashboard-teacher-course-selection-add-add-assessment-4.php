@@ -1,21 +1,22 @@
 <?php
 
-    /** 
+/** 
  *  Handling adding tags to courses v2
 */
-if (isset($_GET['edit']))
-{
-    
-    $already_linked_tags = array();
-    if (get_field('categories',$_GET['id'])!=null)
+    if (isset($_GET['edit']))
     {
-        foreach (get_field('categories',$_GET['id']) as $key => $value) 
+        
+        $already_linked_tags = array();
+        if (get_field('categories',$_GET['id'])!=null)
         {
-            array_push($already_linked_tags,$value['value']);
-        } 
+            foreach (get_field('categories',$_GET['id']) as $key => $value) 
+            {
+                array_push($already_linked_tags,$value['value']);
+            } 
+        }
+        
     }
     
-}
 
     /*
     ** Categories - all  * 
@@ -74,6 +75,33 @@ if (isset($_GET['edit']))
             array_merge($choosen_categories, explode(',', $choosen['value']));
     }
 
+    $subtopics = array();  
+    foreach($categories as $categ){
+        //Topics
+        $topicss = get_categories(
+            array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $categ,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            ) 
+        );
+
+        foreach ($topicss as  $value) {
+            $subtopic = get_categories( 
+                 array(
+                 'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                 'parent'  => $value->cat_ID,
+                 'hide_empty' => 0,
+                  //  change to 1 to hide categores not having a single post
+                ) 
+            );
+            $subtopics = array_merge($subtopics, $subtopic);      
+        }
+    }
+
+
+
+
     foreach($bangerichts as $key1=>$tag){
         
         //Topics
@@ -88,8 +116,7 @@ if (isset($_GET['edit']))
             foreach($cats_bangerichts as $key => $value)
             {
                 $selected = in_array($value->cat_ID,$already_linked_tags) ? 'checked' : '' ;   
-                
-                                    $row_bangrichts .= '
+                $row_bangrichts .= '
                 <input '.$selected.' class="selected" type="checkbox" name="choice_bangrichts_'.$value->cat_ID.'" value= '.$value->cat_ID .' id=subtopics_bangricht_'.$value->cat_ID.' /><label class="labelChoose" for=subtopics_bangricht_'.$value->cat_ID.'>'. $value->cat_name .'</label>';
             }
             $row_bangrichts.= '</div>';
@@ -168,8 +195,11 @@ if (isset($_GET['edit']))
         }
       
     }
+
+    
     
 ?>
+
 
 <?php
 /**
@@ -195,15 +225,16 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
     }
 ?>
 
+
     <div class="row">
         <div class="col-md-5 col-lg-8">
             <div class="cardCoursGlocal">
                 <div id="basis" class="w-100">
-                  
+                   
                     <div class="titleOpleidingstype">
                         <h2>TAGS</h2>
                     </div>
-                  
+                   
                     <!-- <form id="step1">
                         <div class="acf-field">
                             <input type="hidden" id="course_id" value="<?= $_GET['id'] ?>">
@@ -288,7 +319,8 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                                 <select id="form-control-interess" class="multipleSelect2" multiple="true">
                                     <?php
                                     //Persoonlikje interesses
-                                    foreach($interesses as $value){
+                                    foreach($interesses as $value)
+                                    {
                                         $state = false;
                                         $childrens = get_term_children($value->cat_ID, 'course_category');
                                         foreach($choosen_categories as $element)
@@ -300,24 +332,22 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
 
                                             if($state)
                                                 continue;
-                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";                                    }
+                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";                                   
+                                    }
                                     ?>
                                 </select>
 
                             </div>
                             <button type="button" name="step1" id="btn-ajax" class="btn btn-info">Apply</button>
                         </div>
-
-                        
-
                     </form> -->
 
                     <div class="addCourseStep">
-                            <form method="post" name="first_login_form" id="first_login_form">
-                            <div class="blockBaangerichte">
-                                <h1 class="titleSubTopic">Baangerichte</h1>
-                                <div class="hiddenCB">
-                                    <div>
+                        <form method="post" name="first_login_form" id="first_login_form">
+                        <div class="blockBaangerichte">
+                            <h1 class="titleSubTopic">Baangerichte</h1>
+                            <div class="hiddenCB">
+                                <div>
                                     <?php
                                         foreach($bangerichts as $key => $value)
                                         {
@@ -335,109 +365,110 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                                             echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_bangricht'.($key+1).'" /><label class="labelChoose btnBaangerichte subtopics_bangricht_'.($key+1).' '.($key+1).'" for="cb_topics_bangricht'.($key+1).'">'. $value->cat_name .'</label>';
                                         }
                                     ?>
+                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnBaangerichte" for="cb1">Choice A</label> -->
 
-                                    </div>
-                                </div>
-                                <div class="subtopicBaangerichte">
-
-                                    <div class="hiddenCB">
-                                        <p class="pickText">Pick the sub-topics matching with the course you are creating</p>
-                                        
-                                        <?php
-                                        echo $row_bangrichts;
-                                        ?>
-                                    </div>
-
-                                    <button type="button" class="btn btnNext" id="nextblockBaangerichte">Next</button>
                                 </div>
                             </div>
+                            <div class="subtopicBaangerichte">
 
-                            <div class="blockfunctiegericht">
-                                <h1 class="titleSubTopic">functiegericht</h1>
                                 <div class="hiddenCB">
-                                    <div>
-                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnFunctiegericht" for="cb1">Choice A</label> -->
-                                        <?php
-                                        foreach($functies as $key => $value)
-                                        {
-                                            //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                            echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_funct'.($key+1).'" /><label class="labelChoose btnFunctiegericht subtopics_funct_'.($key+1).' '.($key+1).'"  for="cb_topics_funct'.($key+1).'">'. $value->cat_name .'</label>';
-                                        }
-                                        ?>
-                                    </div>
+                                    <p class="pickText">Pick the sub-topics matching with the course you are creating</p>
+                                    
+                                    <?php
+                                    echo $row_bangrichts;
+                                    ?>
                                 </div>
-                                <div class="subtopicFunctiegericht">
-                                    <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
-                                    <div class="hiddenCB">
-                                        
-                                        <?php
-                                            echo $row_functies;
-                                        ?>
-                                    </div>
-                                    <button type="button" class="btn btnNext" id="nextFunctiegericht">Next</button>
-                                </div>
+
+                                <button type="button" class="btn btnNext" id="nextblockBaangerichte">Next</button>
                             </div>
-
-                            <div class="blockSkills">
-                                <h1 class="titleSubTopic">Skills</h1>
-                                <div class="hiddenCB">
-                                    <div>
-                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnSkills" for="cb1">Choice A</label> -->
-
-                                        <?php
-                                        foreach($skills as $key => $value)
-                                        {
-                                            //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                            echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_skills'.($key+1).'" /><label class="labelChoose btnSkills subtopics_skills_'.($key+1).' '.($key+1).'" for=cb_skills'.($key+1).'>'. $value->cat_name .'</label>';
-                                        }
-                                        ?>
-
-                                    </div>
-                                </div>
-                                <div class="subtopicSkills">
-                                    <div class="hiddenCB">
-                                        <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
-                                        
-                                        <?php
-                                            echo $row_skills;
-                                        ?>
-                                    </div>
-                                    <button type="button" class="btn btnNext" id="nextSkills">Next</button>
-                                </div>
-                            </div>
-
-                            <div class="blockPersonal">
-                                <h1 class="titleSubTopic">Personal interest </h1>
-                                <div class="hiddenCB">
-                                    <div>
-                                        <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnPersonal" for="cb1">Choice A</label> -->
-
-                                        <?php
-                                        foreach($interesses as $key => $value)
-                                        {
-                                            //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
-                                            echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_personal'.($key+1).'" /><label class="labelChoose btnPersonal subtopics_personal_'.($key+1).' '.($key+1).'" for="cb_topics_personal'.($key+1).'">'. $value->cat_name .'</label>';
-                                        }
-                                        ?>
-
-                                    </div>
-                                </div>
-                                <div class="subtopicPersonal">
-                                    <div class="hiddenCB">
-                                        <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
-                                        
-                                        <?php
-                                            echo $row_interesses;
-                                        ?>
-                                    </div>
-                                    <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Save</button>
-                                </div>
-                            </div>
-                        
-                            </form>
                         </div>
 
-                    <form action='/dashboard/teacher/course-selection/?func=add-video&id=<?php echo $_GET['id'] ?>&step=6' method='post'>
+                        <div class="blockfunctiegericht">
+                            <h1 class="titleSubTopic">functiegericht</h1>
+                            <div class="hiddenCB">
+                                <div>
+                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnFunctiegericht" for="cb1">Choice A</label> -->
+                                    <?php
+                                    foreach($functies as $key => $value)
+                                    {
+                                        //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                        echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_funct'.($key+1).'" /><label class="labelChoose btnFunctiegericht subtopics_funct_'.($key+1).' '.($key+1).'"  for="cb_topics_funct'.($key+1).'">'. $value->cat_name .'</label>';
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="subtopicFunctiegericht">
+                                <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
+                                <div class="hiddenCB">
+                                    
+                                    <?php
+                                        echo $row_functies;
+                                    ?>
+                                </div>
+                                <button type="button" class="btn btnNext" id="nextFunctiegericht">Next</button>
+                            </div>
+                        </div>
+
+                        <div class="blockSkills">
+                            <h1 class="titleSubTopic">Skills</h1>
+                            <div class="hiddenCB">
+                                <div>
+                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnSkills" for="cb1">Choice A</label> -->
+
+                                    <?php
+                                    foreach($skills as $key => $value)
+                                    {
+                                        //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                        echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_skills'.($key+1).'" /><label class="labelChoose btnSkills subtopics_skills_'.($key+1).' '.($key+1).'" for=cb_skills'.($key+1).'>'. $value->cat_name .'</label>';
+                                    }
+                                    ?>
+
+                                </div>
+                            </div>
+                            <div class="subtopicSkills">
+                                <div class="hiddenCB">
+                                    <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
+                                    
+                                    <?php
+                                        echo $row_skills;
+                                    ?>
+                                </div>
+                                <button type="button" class="btn btnNext" id="nextSkills">Next</button>
+                            </div>
+                        </div>
+
+                        <div class="blockPersonal">
+                            <h1 class="titleSubTopic">Personal interest </h1>
+                            <div class="hiddenCB">
+                                <div>
+                                    <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnPersonal" for="cb1">Choice A</label> -->
+
+                                    <?php
+                                    foreach($interesses as $key => $value)
+                                    {
+                                        //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
+                                        echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_personal'.($key+1).'" /><label class="labelChoose btnPersonal subtopics_personal_'.($key+1).' '.($key+1).'" for="cb_topics_personal'.($key+1).'">'. $value->cat_name .'</label>';
+                                    }
+                                    ?>
+
+                                </div>
+                            </div>
+                            <div class="subtopicPersonal">
+                                <div class="hiddenCB">
+                                    <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
+                                    
+                                    <?php
+                                        echo $row_interesses;
+                                    ?>
+                                </div>
+                                <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Save</button>
+                            </div>
+                        </div>
+                    
+                        </form>
+                    </div>
+
+                    <form action='/dashboard/teacher/course-selection/?func=add-add-assessement&id=<?php echo $_GET['id'] ?>&step=5' method='post'>
                         <div class='acf-field' id="autocomplete_ajax">
                         </div>
                     </form>
@@ -446,7 +477,7 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
             </div>
         </div>
 
-
+       
         <div class="col-md-3 col-lg-4 col-sm-12">
             <div class="blockCourseToevoegen">
                 <p class="courseToevoegenText">Course toevoegen</p>
@@ -457,37 +488,31 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                         </div>
                         <p class="textOpleidRight">Opleidingstype</p>
                     </a>
-                    <a href="/dashboard/teacher/course-selection/?func=add-video<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&edit'; ?>" class="contentBlockCourse">
+                    <a href="/dashboard/teacher/course-selection/?func=add-assessment<?php if(isset($_GET['id'])) echo '&id=' .$_GET['id'] . '&edit'; ?>" class="contentBlockCourse">
                         <div class="circleIndicator passEtape">
                             <i class="fa fa-info"></i>
                         </div>
                         <p class="textOpleidRight">Basis informatie</p>
                     </a>
-                    <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=2&edit'; ?>" class="contentBlockCourse">
+                    <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-add-assessment&id=' . $_GET['id'] . '&step=2&edit'; ?>" class="contentBlockCourse">
+                        <div class="circleIndicator passEtape">
+                            <i class="fa fa-question"></i>
+                        </div>
+                        <p class="textOpleidRight">Vragen</p>
+                    </a>
+                    <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-add-assessment&id=' . $_GET['id'] . '&step=3&edit'; ?>" class="contentBlockCourse">
                         <div class="circleIndicator passEtape">
                             <i class="fa fa-file-text"></i>
                         </div>
-                        <p class="textOpleidRight">Uitgebreide beschrijving</p>
+                        <p class="textOpleidRight">Beschrijving Assessment</p>
                     </a>
-                    <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=3&edit'; ?>"  class="contentBlockCourse">
-                        <div class="circleIndicator passEtape">
-                            <i class="fa fa-film" aria-hidden="true"></i>
-                        </div>
-                        <p class="textOpleidRight ">voeg video's toe</p>
-                    </a>
-                    <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=4&edit'; ?>"  class="contentBlockCourse">
-                        <div class="circleIndicator passEtape">
+                    <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-add-assessment&id=' . $_GET['id'] . '&step=4&edit'; ?>" class="contentBlockCourse">
+                        <div class="circleIndicator passEtape2">
                             <i class="fa fa-paste" aria-hidden="true"></i>
                         </div>
-                        <p class="textOpleidRight">Details en onderwepren</p>
+                        <p class="textOpleidRight">Onderwerpen</p>
                     </a>
-                    <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=5&edit'; ?>"  class="contentBlockCourse">
-                        <div class="circleIndicator passEtape2">
-                            <i class="fa fa-tag" aria-hidden="true"></i>
-                        </div>
-                        <p class="textOpleidRight">Tags</p>
-                    </a>
-                    <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=6&edit'; ?>"  class="contentBlockCourse">
+                    <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-add-assessment&id=' . $_GET['id'] . '&step=5&edit'; ?>" class="contentBlockCourse">
                         <div class="circleIndicator">
                             <i class="fa fa-users" aria-hidden="true"></i>
                         </div>
@@ -502,8 +527,7 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script>
-
-var selected_subtopics_id=[];
+    var selected_subtopics_id=[];
     $(".selected").click((e)=>{
         let tags_id = e.target.value;
         let if_exist = selected_subtopics_id.indexOf(tags_id);
@@ -520,7 +544,7 @@ var selected_subtopics_id=[];
         const urlParams = new URLSearchParams(queryString);
         const id = urlParams.get('id')
         const step = urlParams.get('step')
-        const url = "?func=add-video&id="+id+"&step="
+        const url = "?func=add-course&id="+id+"&step="
         $.ajax({
             url:url+step,
             method:"post",
@@ -535,7 +559,7 @@ var selected_subtopics_id=[];
             }
     })
     });
-
+    
     $("#btn-ajax").click((e)=>
     {
         $(e.preventDefault())

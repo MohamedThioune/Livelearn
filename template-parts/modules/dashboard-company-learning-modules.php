@@ -81,12 +81,12 @@ $orders = wc_get_orders($order_args);
         }
     }
 
-    $artikel_single = "Artikel";
+    $artikel_single = "Artikel"; 
     $white_type_array =  ['Lezing', 'Event'];
     $course_type_array = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'Cursus'];
     $video_single = "Video";
     $leerpad_single  = 'Leerpad';
-    
+    $podcast_single = 'Podcast';
 
 ?>
 
@@ -279,7 +279,7 @@ $orders = wc_get_orders($order_args);
         </div>
         
 
-    </div> 
+    </div>  
 		
     <div class="cardOverviewCours">
         <div class="headListeCourse">
@@ -349,8 +349,8 @@ $orders = wc_get_orders($order_args);
                                 $day = explode(' ', $dates[0]['date']);
                             else{
                                 $data = get_field('data_locaties_xml', $course->ID);
-                                if(!empty($data)){
-                                    $data = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
+                                if(isset($data[0]['value'])){
+                                    $data = explode('-', $data[0]['value']);
                                     $date = $data[0];
                                     $day = explode(' ', $date)[0];
                                 }
@@ -380,9 +380,18 @@ $orders = wc_get_orders($order_args);
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-course&id=" . $course->ID ."&edit";
                         else if($course_type == $leerpad_single)
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-road&id=" . $course->ID ."&edit";
+                        else if($course_type == 'Assessment')
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-assessment&id=" . $course->ID ."&edit";
+                        else if($course_type == 'Podcast')
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-podcast&id=" . $course->ID ."&edit";
 
-                        $link = ($course_type == "Leerpad") ? '/detail-product-road?id=' . $course->ID : get_permalink($course->ID);
-                        //Assessment
+                        $link = "";    
+                        if($course_type == "Leerpad")
+                            $link = '/detail-product-road?id=' . $course->ID ;
+                        else if($course_type == "Assessment")
+                            $link = '/detail-assessment?assessment_id=' . $course->ID;
+                        else
+                            $link = get_permalink($course->ID);
                     ?>
                     <tr id="<?php echo $course->ID; ?>">
                         <td scope="row"><?= $key; ?></td>
@@ -480,7 +489,7 @@ $orders = wc_get_orders($order_args);
         });
 </script>
 
-<script>
+<!-- <script>
     var id_course;
     $('.td_subtopics').click((e)=>{
         id_course = e.target.id;
@@ -546,7 +555,7 @@ $orders = wc_get_orders($order_args);
         }
         })
     });
-</script>
+</script> -->
 
 <script type="text/javascript">
     $(".remove_opleidingen").click(function(){

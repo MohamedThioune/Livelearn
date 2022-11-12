@@ -930,7 +930,7 @@ $degrees=[
                 <?php
                     foreach($bangerichts as $bangericht){
                 ?>
-                <a href="sub-topic?subtopic=<?php echo $bangericht->cat_ID ?>" class="TextZorg"><?php echo $bangericht->cat_name ?></a>
+                    <a href="sub-topic?subtopic=<?php echo $bangericht->cat_ID ?>" class="TextZorg"><?php echo $bangericht->cat_name ?></a>
                 <?php
                     }
                 ?>
@@ -1081,6 +1081,8 @@ $degrees=[
 
                         if(!$month)
                             continue;
+                        
+                        //var_dump($data);
 
                         if(isset($data)){
                             $date_now = strtotime(date('Y-m-d'));
@@ -1620,6 +1622,7 @@ $degrees=[
                 </div>
         </div>
     </div>
+
 </div>
 <script src="<?php echo get_stylesheet_directory_uri();?>/mobapiCity.js"></script>
 
