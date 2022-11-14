@@ -555,7 +555,7 @@ if(isset($_GET['message']))
                             //Course Type
                             $course_type = get_field('course_type', $course->ID);
 
-                            if(!empty($data) && $course_type != "Video")
+                            if(!empty($data) && $course_type != "Video" && $course_type != "Artikel")
                                 if($data){
                                     $date_now = strtotime(date('Y-m-d'));
                                     $data = strtotime(str_replace('/', '.', $data));
