@@ -14,6 +14,8 @@
 
     view_user($user->ID, $user_visibility);
 
+    $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
+
     if($user != ' '){
         $name = $user->display_name;
         
@@ -53,7 +55,7 @@
                 continue;
 
             $experts = get_field('experts', $course->ID);
-            $bpx = false; 
+            $box = false; 
             if($course->post_author == $user->ID)
                 $box = true;
             else 
@@ -79,71 +81,83 @@
                     array_push($trainings, $course);
                 else if(get_field('course_type', $course->ID) == "Video")
                     array_push($videos, $course);
-
-               //Check date for agenda
-               $date_bool = false;
-               $date = strtotime(date('Y-m-d'));
-               $data = get_field('dates', $course->ID);
-               $data = $data[0]['date'];
-               if($data){
-                   $data = strtotime(str_replace('/', '.', $data));
-                   if($data >= $date)
-                       $date_bool = true;
-               }
-               else{
-                   $data = get_field('data_locaties', $course->ID);
-                   $data = $data[0]['data'][0]['start_date'];
-                   if($data){
-                       $data = strtotime(str_replace('/', '.', $data));
-                       if($data >= $date)
-                           $date_bool = true;
-                   }
-                   else{
-                       $datas = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
-                       $data = $datas[0];
-                       if($data){
-                           $data = strtotime(str_replace('/', '.', $data));
-                           if($data >= $date)
-                               $date_bool = true;
-                       }
-                   }
-               }
-               if($date_bool)
-                   array_push($agenda, $course);
-
+                
                 /*
                 * Categories
                 */
-                $category = ' ';
-                $category_id = 0;
-                $category_str = 0;
-                if($category == ' '){
-                    $one_category = get_field('categories',  $course->ID);
+                $one_category = ' ';
+                $category = 0;
+                
+                $one_category = get_field('categories',  $course->ID);
+                if(isset($one_category[0]['value']))
+                    $category = intval(explode(',', $one_category[0]['value'])[0]);
+                else{
+                    $one_category = get_field('category_xml',  $course->ID);
                     if(isset($one_category[0]['value']))
-                        $category_str = intval(explode(',', $one_category[0]['value'])[0]);
-                    else{
-                        $one_category = get_field('category_xml',  $course->ID);
-                        if(isset($one_category[0]['value']))
-                            $category_id = intval($one_category[0]['value']);
-                    }
-
+                        $category = intval($one_category[0]['value']);
                 }
 
-                if(!in_array($category, $categories) && $category != '')
+                if(!in_array($category, $categories) && $category)
                     array_push($categories, $category);
+
+                /*
+                *  Date and Location
+                */
+                $datas = get_field('data_locaties', $course->ID);
+
+                if($datas){
+                    $data = $datas[0]['data'][0]['start_date'];
+                    if($data != ""){
+                        $day = explode('/', explode(' ', $data)[0])[0];
+                        $mon = explode('/', explode(' ', $data)[0])[1];
+                        $month = $calendar[$mon];
+                    }
+
+                    $location = $datas[0]['data'][0]['location'];
+                }else{
+                    $datum = get_field('data_locaties_xml', $course->ID);
+
+                    if($datum)
+                        if(isset($datum[0]['value']))
+                            $element = $datum[0]['value'];
+
+                    if(!isset($element))
+                        continue;
+
+                    $datas = explode('-', $element);
+
+                    $data = $datas[0];
+                    $day = explode('/', explode(' ', $data)[0])[0];
+                    $month = explode('/', explode(' ', $data)[0])[1];
+                    $month = $calendar[$month];
+                    $location = $datas[2];
+                }
+
+                //Course Type
+                $course_type = get_field('course_type', $course->ID);
+
+                if(!empty($data) && $course_type != "Video" && $course_type != "Artikel" )
+                    if($data){
+                        $date_now = strtotime(date('Y-m-d'));
+                        $data = strtotime(str_replace('/', '.', $data));
+                        if($data < $date_now)
+                            continue;
+                    }
+                    
+                array_push($agenda, $course);
 
             }
 
             //Number of likes
             $favoured = get_field('favorited', $course->ID);
-            if (is_array($favoured) || is_object($favoured))
-            foreach($favoured as $favour){
-                $favour = $favour['value'];
-                if($user->ID == $favour){
-                    $like++;
-                    break;
+
+            if(!empty($favoured))
+                foreach($favoured as $favour){
+                    if($user->ID == $favour){
+                        $like++;
+                        break;
+                    }
                 }
-            }
             
         } 
         
@@ -187,7 +201,7 @@
         }
     }
 
-    $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
+
 
 ?>
 
@@ -597,40 +611,37 @@
                                 }
 
                                 /*
-                                * Date
+                                *  Date and Location
                                 */
-                                $day = "~";
-                                $month = "~";   
-                                $location = "~";
+                                $datas = get_field('data_locaties', $course->ID);
 
-                                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];    
+                                if($datas){
+                                    $data = $datas[0]['data'][0]['start_date'];
+                                    if($data != ""){
+                                        $day = explode('/', explode(' ', $data)[0])[0];
+                                        $mon = explode('/', explode(' ', $data)[0])[1];
+                                        $month = $calendar[$mon];
+                                    }
 
-                                $dates = get_field('dates', $course->ID);
-                                if($dates){                                    
-                                    $day = explode('-', explode(' ', $dates[0]['date'])[0])[2];
-                                    $month = explode('-', explode(' ', $dates[0]['date'])[0])[1];
-        
-                                    $month = $calendar[$month]; 
-                                
+                                    $location = $datas[0]['data'][0]['location'];
                                 }else{
-                                    $data = get_field('data_locaties', $course->ID);
-                                    if($data){
-                                        $date = $data[0]['data'][0]['start_date'];
+                                    $datum = get_field('data_locaties_xml', $course->ID);
 
-                                        $day = explode('/', explode(' ', $date)[0])[0];
-                                        $month = explode('/', explode(' ', $date)[0])[1];
-                                        $month = $calendar[$month];
-                                        
-                                        $location = $data[0]['data'][0]['location'];
-                                    }
-                                    else{
-                                        $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                                        $date = $data[0];
-                                        $day = explode('/', explode(' ', $date)[0])[0];
-                                        $month = explode('/', explode(' ', $date)[0])[1];
-                                        $month = $calendar[$month];
-                                        $location = $data[2];
-                                    }
+                                    if($datum)
+                                        if(isset($datum[0]['value']))
+                                            $element = $datum[0]['value'];
+
+                                    if(!isset($element))
+                                        continue;
+
+                                    $datas = explode('-', $element);
+
+                                    $data = $datas[0];
+                                    $day = explode('/', explode(' ', $data)[0])[0];
+                                    $month = explode('/', explode(' ', $data)[0])[1];
+                                    $month = $calendar[$month];
+                                    $location = $datas[2];
+                                    
                                 }
                             
                                 /*
@@ -858,7 +869,7 @@
                                                     </div>
                                                     <div class="blockOpein">
                                                         <img class="iconAm1" src="<?php echo get_stylesheet_directory_uri();?>/img/map.png" alt="">
-                                                        <p class="lieuAm">Amsterdam</p>
+                                                        <p class="lieuAm"><?= $location ?></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1044,11 +1055,6 @@
                     </div>
                 </div>
 
-                <!-- <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">..test 1.</div>
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab"> test222222222.</div>
-                </div>  -->
-
             </div>
             <?php
                 }
@@ -1061,7 +1067,7 @@
                     <div class="swiper-container swipeContaineEvens">
                         <div class="swiper-wrapper">
                         <?php
-                            if (is_array($categories) || is_object($categories))
+                            if(!empty($categories))
                             foreach($categories as $category){
                                 $image_category = get_field('image', 'category_'. $category);
                                 $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/placeholder.png';
