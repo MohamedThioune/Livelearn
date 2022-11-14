@@ -698,7 +698,7 @@
                 <?php
                     }
                 ?>
-                
+
                 <?php
                     if(!empty($workshops)){
                 ?>
@@ -1060,35 +1060,6 @@
                                         $category = (String)get_the_category_by_ID($category_str);
                                     else if($category_id != 0)
                                         $category = (String)get_the_category_by_ID($category_id);
-                                }
-
-                                /*
-                                *  Date and Location
-                                */ 
-                                $day = "<i class='fas fa-calendar-week'></i>";
-                                $month = NULL;
-                                $location = ' ';
-
-                                $datas = get_field('data_locaties', $course->ID);
-                                if($datas){
-                                    $data = $datas[0]['data'][0]['start_date'];
-                                    if($data != ""){
-                                        $day = explode('/', explode(' ', $data)[0])[0];
-                                        $mon = explode('/', explode(' ', $data)[0])[1];
-                                        $month = $calendar[$mon];
-                                    }
-
-                                    $location = $datas[0]['data'][0]['location'];
-                                }else{
-                                    $datum = get_field('data_locaties_xml', $course->ID);
-                                    if(isset($datum[0]['value'])){
-                                        $datas = explode('-', $datum[0]['value']);
-                                        $data = $datas[0];
-                                        $day = explode('/', explode(' ', $data)[0])[0];
-                                        $month = explode('/', explode(' ', $data)[0])[1];
-                                        $month = $calendar[$month];
-                                        $location = $datas[2];
-                                    }
                                 }
                                
                                 /*
@@ -1640,9 +1611,12 @@
 
                                 /*
                                 *  Date and Location
-                                */
-                                $datas = get_field('data_locaties', $course->ID);
+                                */ 
+                                $day = "<i class='fas fa-calendar-week'></i>";
+                                $month = NULL;
+                                $location = ' ';
 
+                                $datas = get_field('data_locaties', $course->ID);
                                 if($datas){
                                     $data = $datas[0]['data'][0]['start_date'];
                                     if($data != ""){
@@ -1654,22 +1628,26 @@
                                     $location = $datas[0]['data'][0]['location'];
                                 }else{
                                     $datum = get_field('data_locaties_xml', $course->ID);
-
-                                    if($datum)
-                                        if(isset($datum[0]['value']))
-                                            $element = $datum[0]['value'];
-
-                                    if(!isset($element))
-                                        continue;
-
-                                    $datas = explode('-', $element);
-
-                                    $data = $datas[0];
-                                    $day = explode('/', explode(' ', $data)[0])[0];
-                                    $month = explode('/', explode(' ', $data)[0])[1];
-                                    $month = $calendar[$month];
-                                    $location = $datas[2];
+                                    if(isset($datum[0]['value'])){
+                                        $datas = explode('-', $datum[0]['value']);
+                                        $data = $datas[0];
+                                        $day = explode('/', explode(' ', $data)[0])[0];
+                                        $month = explode('/', explode(' ', $data)[0])[1];
+                                        $month = $calendar[$month];
+                                        $location = $datas[2];
+                                    }
                                 }
+
+                                if(!$month)
+                                    continue;
+
+                                if(isset($data)){
+                                    $date_now = strtotime(date('Y-m-d'));
+                                    $data = strtotime(str_replace('/', '.', $data));
+                                    if($data < $date_now)
+                                        continue;
+                                }
+
 
                                 /*
                                 * Price 
@@ -1694,8 +1672,7 @@
                                 $image_author = get_field('profile_img',  'user_' . $course->post_author);
                                 $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                 
-                                if(!$month)
-                                    continue;
+                        
 
                             ?>
                                 <a href="<?php echo get_permalink($course->ID) ?>" class="col-md-12">
