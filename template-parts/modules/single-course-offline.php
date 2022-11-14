@@ -701,7 +701,7 @@
                                                     </div>
                                                     <?php
                                                 }
-                                                
+
                                         else if(!empty($category_xml))
                                             foreach($category_xml as $item)
                                                 if(!in_array($item['value'],$read_category)){
@@ -721,40 +721,6 @@
                                                 }
                                     ?>
                                 </div>
-
-                                <div class="content-card-skills">
-                                    <div class="card-skills">
-                                        <div class="group">
-                                            <span class="donut-chart has-big-cente">50</span>
-                                        </div>
-                                        <p class="name-course">Workforce management</p>
-                                        <div class="footer-card-skills">
-                                            <button class="btn btnToevoegen">+ Toevoegen</button>
-                                            <button class="btn btn-dote">. . .</button>
-                                        </div>
-                                    </div>
-                                    <div class="card-skills">
-                                        <div class="group">
-                                            <span class="donut-chart has-big-cente">97</span>
-                                        </div>
-                                        <p class="name-course">Workforce management</p>
-                                        <div class="footer-card-skills">
-                                            <button class="btn btnToevoegen">+ Toevoegen</button>
-                                            <button class="btn btn-dote">. . .</button>
-                                        </div>
-                                    </div>
-                                    <div class="card-skills">
-                                        <div class="group">
-                                            <span class="donut-chart has-big-cente">10</span>
-                                        </div>
-                                        <p class="name-course">Workforce management</p>
-                                        <div class="footer-card-skills">
-                                            <button class="btn btnToevoegen">+ Toevoegen</button>
-                                            <button class="btn btn-dote">. . .</button>
-                                        </div>
-                                    </div>
-                                </div>
-
 
                             </div>
 
