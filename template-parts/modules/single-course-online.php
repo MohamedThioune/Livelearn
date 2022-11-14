@@ -774,6 +774,7 @@ extract($_GET);
                                                 </div>
                                                 <div class="modal-body">
                                                     <?php
+                                                    $saves_expert = get_user_meta($user_id, 'expert');
                                                     foreach($experts as $expert){
                                                         $expert = get_users(array('include'=> $expert))[0]->data;
                                                         $company = get_field('company',  'user_' . $expert->ID);
@@ -797,7 +798,9 @@ extract($_GET);
                                                                 <input type="hidden" name="meta_key" value="expert" id="">
                                                                 <div>
                                                                     <?php
-                                                                    if($user_id != 0 && $user_id != $expert->ID)
+                                                                    if(!empty($saves_expert))
+                                                                        echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                                    else if($user_id != 0 && $user_id != $expert->ID)
                                                                     {
                                                                         if (in_array($expert->ID, $saves_expert))
                                                                             echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
