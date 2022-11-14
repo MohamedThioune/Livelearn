@@ -959,13 +959,15 @@
                                 //Other case : youtube
                                 $youtube_videos = get_field('youtube_videos', $course->ID);
 
+    
+
                             ?>
                                 <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiper-slide4">
                                     <div class="cardKraam2">
                                         <div class="headCardKraam">
                                             <div class="blockImgCardCour">
                                             <?php
-                                            if($youtube_videos && $course_type == 'Video')
+                                            if($youtube_videos)
                                                 echo '<iframe width="355" height="170" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
                                             else
                                                 echo '<img src="' . $thumbnail .'" alt="">';
@@ -1611,7 +1613,7 @@
                                         $location = $datas[2];
                                         
                                     }  
-                                    
+
                                 /*
                                 * Price 
                                 */

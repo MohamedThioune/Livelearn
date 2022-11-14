@@ -1707,7 +1707,7 @@ require($page);
                                     <div class="headCardKraam">
                                         <div class="blockImgCardCour">
                                         <?php
-                                        if($youtube_videos && $course_type == 'Video')
+                                        if($youtube_videos)
                                             echo '<iframe width="355" height="170" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
                                         else
                                             echo '<img src="' . $thumbnail .'" alt="">';
