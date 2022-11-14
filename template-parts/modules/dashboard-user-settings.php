@@ -163,6 +163,21 @@ else if(isset($delete_awards)){
     $awards = get_field('awards',  'user_' . $user->ID);
 }
 
+//Skills 
+$topics_external = get_user_meta($user->ID, 'topic');
+$topics_internal = get_user_meta($user->ID, 'topic_affiliate');
+
+$topics = array();
+if(!empty($topics_external))
+    $topics = $topics_external;
+
+if(!empty($topics_internal))
+    foreach($topics_internal as $value)
+        array_push($topics, $value);
+
+//Note
+$skills_note = get_field('skills', 'user_' . $user->ID);
+
 if(!empty($bunch)){
     ?>
         <script>
@@ -637,52 +652,41 @@ if(!empty($bunch)){
                 </button>
 
                 <div class="content-card-skills">
-                    <div class="card-skills">
-                        <div class="group position-relative">
-                            <span class="donut-chart has-big-cente">50</span>
-                        </div>
-                        <p class="name-course">Workforce management</p>
-                        <div class="footer-card-skills">
-                            <button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills">Edit <i class="fa fa-edit"></i></a>
-                                <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a>
+                    <?php
+                    foreach($topics as $key=>$value){
+                        $i = 0;
+                        $topic = get_the_category_by_ID($value);
+                        $note = 0;
+                        if(!$topic)
+                            continue;
+                        if(!empty($skills_note))
+                            foreach($skills_note as $skill)
+                                if($skill['id'] == $value){
+                                    $note = $skill['note'];
+                                    break;
+                                }
+                        $name_topic = (String)$topic;
+                    ?>   
+                        <div class="card-skills">
+                            <div class="group position-relative">
+                                <span class="donut-chart has-big-cente"><?= $note ?></span>
+                            </div>
+                            <p class="name-course"><?= $name_topic ?></p>
+                            <div class="footer-card-skills">
+                                <button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills<?= $key ?>">Edit <i class="fa fa-edit"></i></a>
+                                    <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-skills">
-                        <div class="group">
-                            <span class="donut-chart has-big-cente">97</span>
-                        </div>
-                        <p class="name-course">Workforce management</p>
-                        <div class="footer-card-skills">
-                            <button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills">Edit <i class="fa fa-edit"></i></a>
-                                <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-skills">
-                        <div class="group">
-                            <span class="donut-chart has-big-cente">10</span>
-                        </div>
-                        <p class="name-course">Workforce management</p>
-                        <div class="footer-card-skills">
-                            <button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills">Edit <i class="fa fa-edit"></i></a>
-                                <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a>
-                            </div>
-                        </div>
-                    </div>
 
-                        <!-- Strat add skills-->
-                            <div class="modal modalEdu fade" id="exampleModalAddSkills" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <!-- Start modal edit skills-->
+                        <div class="modal modalEdu fade" id="exampleModalSkills<?= $key ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Beoordeel jouw expertise in "Personeel"</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Edit Skills</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -692,43 +696,47 @@ if(!empty($bunch)){
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12">
                                                     <div class="group-input-settings">
-                                                        <label for="">Name Skills</label>
-                                                        <div class=""></div>
+                                                        <label for="">Name</label>
+                                                        <input name="" type="text" placeholder="<?= $name_topic ?>" disabled>
+                                                        <input name="id" type="hidden" value="<?= $value ?>">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12 col-md-12 skillBar-col">
                                                     <div class="group-input-settings">
                                                         <label for="">Kies uw vaardigheidsniveau in percentage</label>
                                                         <div class="slider-wrapper">
-                                                            <div id="skilsPercentage"></div>
+                                                            <div id="edit"></div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12 col-md-12">
                                                     <div class="group-input-settings">
                                                         <label for="">Uw procentuele vaardigheden</label>
-                                                        <input type="text" id="SkillBar" name="SkillBar" placeholder="">
+                                                        <input name="note" type="text" id="SkillBarEdit" name="note_skill_edit" placeholder="">
                                                     </div>
                                                 </div>
 
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button class="btn btnSaveSetting" type="submit" name="add_education" >Save</button>
+                                            <button class="btn btnSaveSetting" type="submit" name="note_skill_edit">Save</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
-                        <!--  End add edit skills-->
+                        <!--  End modal edit skills-->
+                    <?php
+                        $i++;
+                        }
+                    ?>
 
-
-                    <!-- Strat modal edit skills-->
-                    <div class="modal modalEdu fade" id="exampleModalSkills" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <!-- Start add skills-->
+                    <div class="modal modalEdu fade" id="exampleModalAddSkills" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Edit Skills</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Beoordeel jouw expertise in "Personeel"</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -739,21 +747,21 @@ if(!empty($bunch)){
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="group-input-settings">
                                                     <label for="">Name Skills</label>
-                                                    <input name="school" type="text" placeholder="Management" required>
+                                                    <div class=""></div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-md-12 skillBar-col">
                                                 <div class="group-input-settings">
                                                     <label for="">Kies uw vaardigheidsniveau in percentage</label>
                                                     <div class="slider-wrapper">
-                                                        <div id="edit"></div>
+                                                        <div id="skilsPercentage"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="group-input-settings">
                                                     <label for="">Uw procentuele vaardigheden</label>
-                                                    <input type="text" id="SkillBarEdit" name="SkillBarEdit" placeholder="">
+                                                    <input type="text" id="SkillBar" name="SkillBar" placeholder="">
                                                 </div>
                                             </div>
 
@@ -766,7 +774,7 @@ if(!empty($bunch)){
                             </div>
                         </div>
                     </div>
-                    <!--  End modal edit skills-->
+                    <!--  End add edit skills-->
 
                 </div>
             </div>
@@ -775,15 +783,20 @@ if(!empty($bunch)){
         <div id="badge" class="b-tab contentBlockSetting">
             <label class="label-badge" for="">Badges</label>
             <div class="content-badges">
-                <a href="" class="card">
+                <a href="#" class="card">
                     <div class="block-icons">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/validate-badge.png" alt="">
                     </div>
-                    <p class="title">Complete and verified profile </p>
-                    <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
-                    <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+
+                    <?php 
+                        $strotime_date = strtotime($user->user_registered);
+                        $date_registered = date("d M Y", $strotime_date);
+                    ?>
+                    <p class="title">You created a account sucessfully !</p>
+                    <p class="awarded">Awarded for : <span> <?php echo $user->display_name ?> </span></p>
+                    <p class="date-awarded"><span>Date Awarded : </span><?= $date_registered ?></p>
                 </a>
-                <a href="" class="card">
+                <!-- <a href="" class="card">
                     <div class="block-icons">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_awards.png" alt="">
                     </div>
@@ -825,7 +838,7 @@ if(!empty($bunch)){
                     <p class="title">Complete and verified profile </p>
                     <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
                     <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
-                </a>
+                </a> -->
             </div>
         </div>
 

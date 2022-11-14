@@ -79,14 +79,93 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 
 <?php
-   $args = array(
-    'post_type' => 'course', 
+
+    $args = array(
+    'post_type' => array('course','post','leerpad','assessment'),
     'post_status' => 'publish',
     'posts_per_page' => -1,
     'order' => 'DESC',                          
     );
-
     $courses = get_posts($args);
+
+    extract($_POST);
+
+    if(isset($filter_databank)){
+        ## START WITH THE FILTERS
+        /**
+        * Leervom Group
+        */
+        if(!empty($leervom)){
+            $i = 0;
+            foreach($courses as $datum){ 
+                $coursetype = get_field('course_type', $datum->ID);
+                if(!in_array($coursetype, $leervom)){
+                    unset($courses[$i]);
+                }
+                $i++;
+            }
+        }
+        /**
+        * Price interval 
+        */
+        if(isset($min) || isset($max) || isset($gratis)){
+            if(isset($gratis)){
+                if($gratis){
+                    $prices = array(); 
+                    foreach($courses as $datum){
+                        $price = intval(get_field('price', $datum->ID));
+                        if($price == 0)
+                            array_push($prices,$datum);
+                    }
+                }
+            }else if(isset($min) || isset($max)){
+                if($min || $max){
+                    $prices = array(); 
+                    $tmp = 0;
+                    if($min != null && $max!= null){
+                        if($min > $max) {
+                            $tmp = $min;
+                            $min = $max;
+                            $max = $tmp;
+                        }
+                        //Here we got interval
+                        foreach($courses as $datum){
+                            $price = intval(get_field('price', $datum->ID));
+                            $min = intval($min);
+                            $max = intval($max);
+                            if($price >= $min)
+                                if($price <= $max)
+                                    array_push($prices,$datum);
+                        }
+                    }
+                    else{
+                        //Tested by one value 
+                        foreach($courses as $datum){
+                            $price = intval(get_field('price', $datum->ID));
+                            if($min == null){
+                                $max = intval($max);
+                                if($price <= $max)
+                                    array_push($prices,$datum);
+                            }
+                            else if($max == null){
+                                $min = intval($min);
+                                if($price >= $min)
+                                    array_push($prices,$datum);
+                            }
+                        }
+                    }
+                }
+            }
+            if(isset($prices)){
+                if(!empty($prices)){
+                    $courses = $prices;
+                }
+                else{
+                    $courses = array();
+                }
+            }
+        }
+    } 
 
     $user_in = wp_get_current_user();
 
@@ -156,6 +235,13 @@
         }
     }
 
+    $artikel_single = "Artikel"; 
+    $white_type_array =  ['Lezing', 'Event'];
+    $course_type_array = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'Cursus'];
+    $video_single = "Video";
+    $leerpad_single  = 'Leerpad';
+    $podcast_single = 'Podcast';
+
 ?>
     <div class="contentListeCourse learningDatabankContent">
         <div class="cardOverviewCours">
@@ -172,37 +258,42 @@
                     <p class="fliterElementText">Filter</p>
                     <button class="btn btnIcone8" id="show"><img src="<?php echo get_stylesheet_directory_uri();?>/img/filter.png" alt=""></button>
                 </div>
-                <form action="" class="formFilterDatabank">
+                <form action="" method="POST" >
                     <P class="textFilter">Filter :</P>
                     <button class="btn hideBarFilterBlock"><i class="fa fa-close"></i></button>
-                    <select name="dropdown">
-                        <option value="" disabled selected>Leervoom</option>
-                        <option value="blue">Opleiding</option>
-                        <option value="red">Masterclass</option>
-                        <option value="green">GWorkshop</option>
-                        <option value="green">E-Learning</option>
-                        <option value="green">Event</option>
-                        <option value="green">Video</option>
-                        <option value="green">Training</option>
-                        <option value="green">Artikel</option>
+                    <select name="leervom[]">
+                        <option value="" disabled>Leervoom</option>
+                        <option value="Opleidingen" <?php if(isset($leervom)) if(in_array('Opleidingen', $leervom)) echo "selected" ; else echo ""  ?>>Opleidingen</option>
+                        <option value="Training"    <?php if(isset($leervom)) if(in_array('Training', $leervom)) echo "selected" ; else echo ""  ?> >Training</option>
+                        <option value="Workshop"    <?php if(isset($leervom)) if(in_array('Workshop', $leervom)) echo "selected" ; else echo ""  ?> >Workshop</option>
+                        <option value="E-learning"  <?php if(isset($leervom)) if(in_array('E-learning', $leervom)) echo "selected" ; else echo ""  ?> >E-learning</option>
+                        <option value="Masterclass" <?php if(isset($leervom)) if(in_array('Masterclass', $leervom)) echo "selected" ; else echo ""  ?> >Masterclass</option>
+                        <option value="Video"  <?php if(isset($leervom)) if(in_array('Video', $leervom)) echo "selected" ; else echo ""  ?> >Video</option>
+                        <option value="Assessment"  <?php if(isset($leervom)) if(in_array('Assessment', $leervom)) echo "selected" ; else echo ""  ?> >Assessment</option>
+                        <option value="Lezing" <?php if(isset($leervom)) if(in_array('Lezing', $leervom)) echo "selected" ; else echo ""  ?> >Lezing</option>
+                        <option value="Event"  <?php if(isset($leervom)) if(in_array('Event', $leervom)) echo "selected" ; else echo ""  ?> >Event</option>
+                        <option value="Leerpad"<?php if(isset($leervom)) if(in_array('Leerpad', $leervom)) echo "selected" ; else echo ""  ?> >Leerpad</option>
+                        <option value="Artikel"<?php if(isset($leervom)) if(in_array('Artikel', $leervom)) echo "selected" ; else echo ""  ?> >Artikel</option>
+                        <option value="Podcast"<?php if(isset($leervom)) if(in_array('Podcast', $leervom)) echo "selected" ; else echo ""  ?> >Podcast</option>
+
                     </select>
                    <div class="priceInput">
                        <div class="priceFilter">
-                           <input type="number"  placeholder="min Prijs">
-                           <input type="number"  placeholder="tot Prijs">
+                           <input type="number" name="min" value="<?php if(isset($min)) echo $min ?>" placeholder="min Prijs">
+                           <input type="number" name="max" value="<?php if(isset($max)) echo $max ?>" placeholder="tot Prijs">
                        </div>
                        <div class="input-group">
                            <label for="">Gratis</label>
-                           <input type="checkbox">
+                           <input name="gratis" type="checkbox" <?php if(isset($gratis)) echo 'checked'; else  echo  '' ?> >
                        </div>
                    </div>
-                    <select name="dropdown">
+                    <select name="status">
                         <option value="" disabled selected>Status</option>
-                        <option value="blue">Live </option>
-                        <option value="red">Not live</option>
+                        <option value="Live">Live</option>
+                        <option value="Not Live">Not live</option>
                     </select>
-                    <input type='date' class="form-control date" placeholder="selecteer een datum" />
-                    <button class="btn btnApplyFilter" type="submit">Apply</button>
+                   <!-- <input type='date' class="form-control date" placeholder="selecteer een datum" /> -->
+                    <button class="btn btnApplyFilter" name="filter_databank" type="submit">Apply</button>
                 </form>
             </div>
             <div class="contentCardListeCourse">
@@ -222,22 +313,33 @@
                     <tbody>
                         <?php 
                         foreach($courses as $key => $course){
+                            if(!visibility($course, $visibility_company))
+                                continue;    
 
                             $category = ' ';
 
-                            $tree = get_the_terms($course->ID, 'course_category'); 
-
-                            if($tree)
-                                if(isset($tree[2]))
-                                    $category = $tree[2]->name;
-                                
+                            /*
+                            * Categories
+                            */
+                            $category = ' ';
                             $category_id = 0;
-                            
+                            $category_str = 0;
                             if($category == ' '){
-                                $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                                if($category_id != 0)
+                                $one_category = get_field('categories',  $course->ID);
+                                if(isset($one_category[0]))
+                                    $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                                else{
+                                    $one_category = get_field('category_xml',  $course->ID);
+                                    if(isset($one_category[0]))
+                                        $category_id = intval($one_category[0]['value']);
+                                }
+
+                                if($category_str != 0)
+                                    $category = (String)get_the_category_by_ID($category_str);
+                                else if($category_id != 0)
                                     $category = (String)get_the_category_by_ID($category_id);
                             }
+
                             /*
                             * Price 
                             */
@@ -250,21 +352,27 @@
                             /*
                             *  Date and Location
                             */ 
+                            $day = "<i class='fas fa-calendar-week'></i>";
+                            $month = ' ';
                             $location = ' ';
-
+                        
                             $data = get_field('data_locaties', $course->ID);
-                            if(!empty($data)){
-                                $date = $data[0]['data'];
-                                if(!empty($date)){
-                                    $date = $date[0]['start_date'];
-                                    $day = explode(' ', $date)[0];
-                                }
+                            if($data){
+                                $date = $data[0]['data'][0]['start_date'];
+                                $day = explode(' ', $date)[0];
                             }
                             else{
-                                $day = "~";
-                                $data = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
-                                $date = $data[0];
-                                $day = explode(' ', $date)[0];
+                                $dates = get_field('dates', $course->ID);
+                                if($dates)
+                                    $day = explode(' ', $dates[0]['date']);
+                                else{
+                                    $data = get_field('data_locaties_xml', $course->ID);
+                                    if(isset($data[0]['value'])){
+                                        $data = explode('-', $data[0]['value']);
+                                        $date = $data[0];
+                                        $day = explode(' ', $date)[0];
+                                    }
+                                }
                             }
 
                             $tags = get_field('categories', $course->ID);
@@ -297,6 +405,33 @@
                                     }
                                 update_field('categories', $tags, $course->ID);
                             }
+
+                             // Course type
+                            $course_type = get_field('course_type', $course->ID);
+
+                            $path_edit  = "";
+                            if($course_type == $artikel_single)
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-article&id=" . $course->ID ."&edit";
+                            else if($course_type == $video_single)
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-video&id=" . $course->ID ."&edit";
+                            else if(in_array($course_type,$white_type_array))
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-add-white&id=" . $course->ID ."&edit";
+                            else if(in_array($course_type,$course_type_array))
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-course&id=" . $course->ID ."&edit";
+                            else if($course_type == $leerpad_single)
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-road&id=" . $course->ID ."&edit";
+                            else if($course_type == 'Assessment')
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-assessment&id=" . $course->ID ."&edit";
+                            else if($course_type == 'Podcast')
+                                $path_edit = "/dashboard/teacher/course-selection/?func=add-podcast&id=" . $course->ID ."&edit";
+
+                            $link = "";    
+                            if($course_type == "Leerpad")
+                                $link = '/detail-product-road?id=' . $course->ID ;
+                            else if($course_type == "Assessment")
+                                $link = '/detail-assessment?assessment_id=' . $course->ID;
+                            else
+                                $link = get_permalink($course->ID);
                         
                         ?>
                         <tr>
@@ -321,8 +456,8 @@
                                     
                                 }
                             }
-                        }
-                        else
+                            }
+                            else
                             {
                                 ?>
                                 <td class="textTh ">
@@ -332,17 +467,17 @@
                                         if($course_subtopics!=null){
                                         if (is_array($course_subtopics) || is_object($course_subtopics)){
                                             foreach ($course_subtopics as $key =>  $course_subtopic) {
-                                                   if ($course_subtopic!="" && $course_subtopic!="Array")
-                                                       $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
-                                          }
-                                             $field=substr($field,0,-1);
-                                             echo $field;
+                                                if ($course_subtopic!="" && $course_subtopic!="Array")
+                                                    $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                        }
+                                            $field=substr($field,0,-1);
+                                            echo $field;
                                         
                                     }
                                 }
                             }
 
-                                ?>
+                            ?>
                             </p>             
                         </td>
                             <td class="textTh"><?php echo $day; ?></td>
@@ -350,13 +485,14 @@
                             <td class="textTh">
                                 <div class="dropdown text-white">
                                     <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
-                                        <img  style="width:20px"
+                                        <img style="width:20px"
                                               src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                     </p>
                                     <ul class="dropdown-menu">
-                                        <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
-                                        <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
-                                        <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
+                                        <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?php echo $link; ?>" target="_blank">Bekijk</a></li>
+                                        <li class="my-2"><i class="fa fa-gear px-2"></i><a href="<?= $path_edit ?>" target="_blank">Pas aan</a></li>
+                                        <!-- <li class="my-1"><i class="fa fa-share px-2"></i><input type="button" id="" value="Share"/></li> -->
+                                        <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2 "></i><input type="button" id="" value="Verwijderen"/></li>
                                     </ul>
                                 </div>
                             </td>

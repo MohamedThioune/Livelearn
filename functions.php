@@ -596,6 +596,7 @@ function seperate_tags(){
     ) );
 
     foreach($cats as $category){
+        $category->image = get_field('image', 'category_'. $category->cat_ID);
         array_push($main, $category);
         $cat_id = strval($category->cat_ID);
         $category = intval($cat_id);
@@ -634,6 +635,7 @@ function seperate_tags(){
     $datum['topics'] = $topics;
 
     foreach($topics as $tag){
+        $tag->image = get_field('image', 'category_'. $tag->cat_ID);
         //Topics
         $cats = get_categories( array(
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
@@ -641,8 +643,10 @@ function seperate_tags(){
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
         ));
         if (!empty($cats))
-            foreach($cats as $key => $value)
-                array_push($topics_sub, $value); 
+            foreach($cats as $key => $value){
+                $value->image = get_field('image', 'category_'. $value->cat_ID);
+                array_push($topics_sub, $value);
+            }
     }
 
     $datum['sub'] = $topics_sub;
@@ -917,6 +921,27 @@ function recommended_course(){
         foreach($all_user_views as $key => $view) {
             foreach ($courses as $key => $course) {
                 $points = 0;
+                $course->image = "";
+                $course->author_image = "";
+
+
+                $course_type = get_field('course_type', $course->ID);
+
+                /*
+                * Thumbnails
+                */
+                $course->image = get_field('preview', $course->ID)['url'];
+                if(!$course->image){
+                    $course->image = get_the_post_thumbnail_url($course->ID);
+                    if(!$course->image)
+                        $course->image = get_field('url_image_xml', $course->ID);
+                            if(!$course->image)
+                                $course->image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                }
+                
+                //Image author
+                $course->author_image = get_field('profile_img', 'user_' . $course->post_author);
+                $course->author_image = $course->author_image ?: get_stylesheet_directory_uri() . '/img/user.png';
 
                 //Read category viewed
                 $read_category_view = array();
@@ -966,7 +991,7 @@ function recommended_course(){
                     $points += 1;
                 
                 $percent = abs(($points/$max_points) * 100);
-                if ($percent >= 65)
+                if ($percent >= 50)
                     if(!in_array($course->ID, $random_id)){
                         array_push($random_id, $course->ID);
                         array_push($recommended_courses, $course);
@@ -995,6 +1020,10 @@ function store_comments(WP_REST_Request $request){
     if(!$id || !$stars || !$feedback_content)
         return ['error' => 'Please fill all data required !'];
 
+    $valuable = [1,2,3,4,5];
+    if(!in_array($stars, $valuable))
+        return ['error' => 'The stars must be between 1 till 5!'];
+
     $reviews = get_field('reviews', $id);
     $informations = array();
     $current_user  = get_current_user_id();
@@ -1007,6 +1036,7 @@ function store_comments(WP_REST_Request $request){
 
     $review = array();
     $review['user'] = $current_user;
+    $review['user_image'] = get_field('profile_img', 'user_' . $review['user']);
     $review['rating'] = $stars;
     $review['feedback'] = $feedback_content;
     if(!$reviews)
@@ -1022,11 +1052,53 @@ function store_comments(WP_REST_Request $request){
 
 function comments_course($data){
     $reviews = get_field('reviews', $data['id']);
+    $bunch = array();
+    
+    foreach($reviews as $review){
 
-    if(!empty($reviews))
-        return $reviews;
+        $image = get_field('profile_img',  'user_' .  $review['user']->ID);
+        $review['image'] = $image;
+        array_push($bunch, $review);
+    }
+
+    if(!empty($bunch))
+        return $bunch;
     else
         return ['error' => 'No reviews for this course !'];
+}
+
+function delete_comments(WP_REST_Request $request){
+    $id = $request['course_id'];
+    $user_id = $request['user_id'];
+
+    if(!$id || !$user_id)
+        return ['error' => 'Please fill all data required !'];
+
+    $course = get_post($id);
+    if(empty($course))
+        return ['error' => 'No course found !'];
+    
+    $reviews = get_field('reviews', $id);
+    if(empty($reviews))
+        return ['error' => 'No reviews for this course !'];
+
+    $deleted = false;
+    $bunch = array();
+    foreach($reviews as $review){
+        if($review['user']->ID == $user_id){
+            $deleted = true;
+            continue;
+        }else
+            array_push($bunch,$review);
+    }
+
+    update_field('reviews', $bunch, $id);
+
+    if($deleted)
+        return ['success' => 'Comment deleted succesfully!'];
+    else
+        return ['error' => 'Something went wrong !'];
+
 }
 
 function notification_display(){
@@ -1117,6 +1189,48 @@ function agreement(WP_REST_Request $request){
         return ['error' => 'Something went wrong !'];
 }
 
+function following(){
+    $value = wp_get_current_user();   
+
+    $infos = array();
+
+    //Get Topics
+    $topics_external = get_user_meta($value->data->ID, 'topic');
+    $topics_internal = get_user_meta($value->data->ID, 'topic_affiliate');
+    $topics = array();
+    if(!empty($topics_external))
+        $topics = $topics_external;
+
+    if(!empty($topics_internal))
+        foreach($topics_internal as $item)
+            array_push($topics, $item);
+          
+    if(!empty($topics)){
+        $args = array( 
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'include'  => $topics,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            'include' => $topics
+        );
+        $infos['following_topics'] = get_categories($args);
+    }
+    
+    //Get users
+    $users = get_user_meta($value->data->ID, 'expert');
+
+    if(!empty($users)){
+        $args = array( 
+            'include' => $users,
+        );
+        $infos['following_users'] = get_users($args);
+    }
+
+    if(empty($infos))
+        return ['error' => 'Something went wrong !'];
+    else
+        return $infos;
+}
+
 //Callbacks 
 add_action( 'rest_api_init', function () {
   register_rest_route( 'custom/v1', '/tags', array(
@@ -1164,10 +1278,14 @@ add_action( 'rest_api_init', function () {
     'callback' => 'agreement',
   ) );
 
-} );
-add_filter('admin_email_check_interval', '__return_false');
+  register_rest_route( 'custom/v1', '/comment/delete', array(
+    'methods' => 'POST',
+    'callback' => 'delete_comments',
+  ) );
 
-function wpc_admin_email_check_interval($interval) {
-    return 8 * MONTH_IN_SECONDS;
-}
-add_filter('admin_email_check_interval', 'wpc_admin_email_check_interval');
+  register_rest_route( 'custom/v1', '/following', array(
+    'methods' => 'GET',
+    'callback' => 'following',
+  ) );
+
+} );

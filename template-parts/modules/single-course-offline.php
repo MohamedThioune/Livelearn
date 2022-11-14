@@ -324,10 +324,11 @@
                                                 if(!empty($users_company))
                                                     foreach($users_company as $user){
                                                         $name = get_users(array('include'=> $user))[0]->data->display_name;
-                                                        if(in_array($user, $allocution))
-                                                            echo "<option selected  value='" . $user . "'>" . $name . "</option>";
-                                                        else
-                                                            echo "<option value='" . $user . "'>" . $name . "</option>";
+                                                        if(!empty($allocution))
+                                                            if(in_array($user, $allocution))
+                                                                echo "<option selected  value='" . $user . "'>" . $name . "</option>";
+                                                            else
+                                                                echo "<option value='" . $user . "'>" . $name . "</option>";
                                                     }
                                                 echo "</select></br></br>";
                                                 echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
@@ -465,7 +466,7 @@
                                                                             ?>
                                                                             <div class="blockDateEvens">
                                                                                 <!--                                                                        <p class="numberEvens"><?php /*echo $x+1 */?></p>
--->                                                                                  <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
+                                                                                 <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
                                                                             </div>
                                                                             <?php
                                                                         }
@@ -597,8 +598,8 @@
                                                                     $location = explode('-',$date[2])[1];
                                                                     ?>
                                                                     <div class="blockDateEvens">
-<!--                                                                        <p class="numberEvens"><?php /*echo $x+1 */?></p>
--->                                                                        <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
+
+                                                                        <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
                                                                     </div>
                                                                         <?php
                                                                         $x+=1;
@@ -680,22 +681,43 @@
                                     $category_xml = get_field('category_xml', $post->ID);
 
                                 ?>
-                                <div class="blockSkillsTabs">
+                                <div class="content-card-skills">
                                     <?php
                                         $read_category = array();
                                         if(!empty($category_default))
-                                            foreach($category_default as $item){
+                                            foreach($category_default as $item)
                                                 if(!in_array($item['value'],$read_category)){
                                                     array_push($read_category,$item['value']);
-                                                    echo '<p class="skillsElement">'. (String)get_the_category_by_ID($item['value']) . '</p>';
+                                                    ?>
+                                                    <div class="card-skills">
+                                                        <div class="group">
+                                                            <span class="donut-chart has-big-cente">50</span>
+                                                        </div>
+                                                        <p class="name-course"><?= (String)get_the_category_by_ID($item['value']) ?></p>
+                                                        <!-- <div class="footer-card-skills">
+                                                            <button class="btn btnToevoegen">+ Toevoegen</button>
+                                                            <button class="btn btn-dote">. . .</button>
+                                                        </div> -->
+                                                    </div>
+                                                    <?php
                                                 }
-                                            }
-
+                                                
                                         else if(!empty($category_xml))
                                             foreach($category_xml as $item)
                                                 if(!in_array($item['value'],$read_category)){
                                                     array_push($read_category,$item['value']);
-                                                    echo '<p class="skillsElement">'. (String)get_the_category_by_ID($item['value']) . '</p>';
+                                                    ?>
+                                                    <div class="card-skills">
+                                                        <div class="group">
+                                                            <span class="donut-chart has-big-cente">50</span>
+                                                        </div>
+                                                        <p class="name-course"><?= (String)get_the_category_by_ID($item['value']) ?></p>
+                                                        <!-- <div class="footer-card-skills">
+                                                            <button class="btn btnToevoegen">+ Toevoegen</button>
+                                                            <button class="btn btn-dote">. . .</button>
+                                                        </div> -->
+                                                    </div>
+                                                    <?php
                                                 }
                                     ?>
                                 </div>
