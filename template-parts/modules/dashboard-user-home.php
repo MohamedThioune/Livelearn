@@ -493,6 +493,7 @@ if(isset($_GET['message']))
 
                             $count['limit'] = $count['limit'] + 1;
                             $data = array();
+                            $day = '';
                             $month = '';
                             $location = 'Virtual';
 
