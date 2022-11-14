@@ -1,11 +1,20 @@
 <?php
+    /* Get  seconds by given string time  */
+    function timeToSeconds(string $time): int
+    {
+        $time_array = explode(':', $time);
+        if (count($time_array) === 2 && $time_array[0]!='00') {
+            return  $time_array[0] * 60 + $time_array[1];
+        }
+        return $time_array[1];
+    }
 
     $args = array(  
-            'post_type' => 'assessment',
-            'post_status' => 'publish',
-            'order' => 'ASC', 
-        );
-        $assessments=get_posts($args);
+        'post_type' => 'assessment',
+        'post_status' => 'publish',
+        'order' => 'ASC', 
+    );
+    $assessments = get_posts($args);
     
 ?>
 
@@ -18,27 +27,84 @@
         <div class="contentCardAssessment">
             <?php
                 foreach($assessments as $key => $assessment) {
+                   
+                    $description = get_field('description_assessment',$assessment->ID);
+                    $how_it_works = get_field('how_it_works', $assessment->ID);
+                    $level = get_field('difficulty_assessment', $assessment->ID);
+                    $language = get_field('language_assessment', $assessment->ID);
+
+                    $timer = 0;
+                    $questions = get_field('question',$assessment->ID);
+                    foreach ($questions as $question)
+                    {
+                        $question_time = $question['timer'];
+                        $timer += timeToSeconds($question_time);
+                    }
+                    /* Get minutes by given string seconds  */
+                    $timer = ceil($timer/60);
+
+                    //Image
+                    $image = get_field('image_assessement', $assessment->ID)['url'];
+                    if(!$image){
+                        $image = get_the_post_thumbnail_url($assessment->ID);
+                        if(!$image)
+                            $image = get_field('url_image_xml', $assessment->ID);
+                                if(!$image)
+                                    $image = get_stylesheet_directory_uri() . '/img' . '/backend1.png';
+                    }
+
+                    //Tags !mportant 
+                    $posttags = get_the_tags();
+
+                    if(!$posttags){
+                        $category_default = get_field('categories', $assessment->ID);
+                        $category_xml = get_field('category_xml', $assessment->ID);
+                    }
+
             ?>
-            <div class="cardAssessement" >
-                <div class="bodyCardAssessment">
-                    <div class="contentImgAssessment">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/backend1.png">
-                    </div>
-                    <div>
-                        <p class="textMutliSelect">Multiple Choice Quiz</p>
-                        <p class="categoryCours"><?= $assessment->post_title  ?> </p>
-                        <p class="elementCategory">Algorithms, data structures, databases, HTTP, web frameworks</p>
-                        <div class="d-flex align-items-center">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/mdi_timer-sand.png">
-                            <p class="timeAssessement">25 Minutes</p>
+                    <div class="cardAssessement" >
+                        <div class="bodyCardAssessment">
+                            <div class="contentImgAssessment">
+                                <img src="<?= $image; ?>">
+                            </div>
+                            <div>
+                                <p class="textMutliSelect"><?= $level ?></p>
+                                <p class="categoryCours"><?= $assessment->post_title ?> </p>
+                                <p class="elementCategory">
+                                    <?php
+                                    if(!empty($posttags))
+                                        foreach($posttags as $posttag)
+                                            echo $posttag->name . ',';
+                                    else{
+                                        $read_category = array();
+                                        if(!empty($category_default))
+                                            foreach($category_default as $item)
+                                                if($item)
+                                                    if(!in_array($item['value'],$read_category)){
+                                                        array_push($read_category,$item['value']);
+                                                        echo (String)get_the_category_by_ID($item['value']) . ',';
+                                                    }
+                                        else if(!empty($category_xml))
+                                            foreach($category_xml as $item)
+                                                if($item)
+                                                    if(!in_array($item['value'],$read_category)){
+                                                        array_push($read_category,$item['value']);
+                                                        echo (String)get_the_category_by_ID($item['value']) . ',';
+                                                    }
+                                    }
+                                    ?>
+                                </p>
+                                <div class="d-flex align-items-center">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/mdi_timer-sand.png">
+                                    <p class="timeAssessement"><?= $timer ?> Minutes</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footerCardSkillsssessment">
+                            <a href= <?php echo "/detail-assessment?assessment_id=" . $assessment->ID; ?> class="btn btnDetailsAssessment">Details</a>
+                            <button class="btn btnGetStartAssessment" data-target="#ModalBackEnd" data-toggle="modal" id= <?= $assessment->ID; ?> >Get Started</button>
                         </div>
                     </div>
-                </div>
-                <div class="footerCardSkillsssessment">
-                    <a href= <?= "/detail-assessment?assessment_id=$assessment->ID"; ?> class="btn btnDetailsAssessment">Details</a>
-                    <button class="btn btnGetStartAssessment" data-target="#ModalBackEnd" data-toggle="modal" id= <?= $assessment->ID; ?> >Get Started</button>
-                </div>
-            </div>
             <?php
                 }
             ?>
@@ -49,7 +115,7 @@
 </div>
 
 
-                <!--for backend-->
+<!--for backend-->
 <div id="backend">
     <div class="modal fade modalAssessment" id="ModalBackEnd" tabindex="-1" role="dialog" aria-labelledby="ModalBackEndLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -61,8 +127,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="firstblockAssessments">
-                        <p class="titleCategorieAssessment">Back-End Web Development</p>
-                        <p class="descriptionAssessmentModal">The Back-End Web Quiz assesses basic technical competency in back-end web development.  Topics include programmatic problem solving, APIs, databases, and systems design.  Candidates who do well have demonstrated applicable knowledge in algorithms & data structures, integrating and building APIs, querying relational databases, and understanding of web architecture.</p>
+                        <p class="titleCategorieAssessment">Start w/ your test : title</p>
+                        <p class="descriptionAssessmentModal"><?= $description ?></p>
                         <p class="instructionTitle">Instructions</p>
                         <div class="listInstruction">
                             <ul>
@@ -95,15 +161,15 @@
                         <div class="otherInformation">
                             <div class="elementOtherInformation">
                                 <p class="firstElement">Time</p>
-                                <p class="secondElement">25 minutes</p>
+                                <p class="secondElement"><?= $timer ?> minutes</p>
                             </div>
                             <div class="elementOtherInformation">
-                                <p class="firstElement">Format</p>
-                                <p class="secondElement">Multiple Choice Quiz</p>
+                                <p class="firstElement">Language</p>
+                                <p class="secondElement"><?= $language ?></p>
                             </div>
                             <div class="elementOtherInformation">
                                 <p class="firstElement">Difficulty</p>
-                                <p class="secondElement">Medium</p>
+                                <p class="secondElement"><?= $level ?></p>
                             </div>
                         </div>
                         <button class="btn btnStratModal medium" id="btnStratModal1"  data-dismiss="modal">Start</button>
@@ -116,15 +182,11 @@
     <div id="secondBlockAssessmentsBackend">
         <div class="headSecondBlockAssessment">
             <button class="btn btnBackAssessments mr-2" id="back1"><img src="<?php echo get_stylesheet_directory_uri();?>/img/bi_arrow-left.png"></button>
-            <p class="titleCategorieAssessment">Back-End Web Development</p>
+            <p class="titleCategorieAssessment">Start w/ your test : title</p>
         </div>
         <div class="card cardOverviewAssessment">
             <div id="step1OverviewAssessmentBackend">
                 <p class="overviewAssementTitle">Overview</p>
-                <div class="listDescription">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/VectorPoly.png">
-                    <p class="descriptionlistElement">Make sure you choose at least 3 technologies to start with </p>
-                </div>
                 <div class="listDescription">
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/VectorPoly.png">
                     <p class="descriptionlistElement">Each question is timed</p>
@@ -156,31 +218,30 @@
 
             <div id="step3OverviewAssessmentBackend">
                 <div id="child">
-    
-            <div class="head3OverviewAssessment">
-                    <p class="assessmentNUmber" id="current-index">Question 1 / <?php echo count($question); ?></p>
-                    <p class="assessmentTime" id="backendTime"> </p>
-                </div>
-                <p class="chooseTechnoTitle" id="wording"><span> (Multiple choose posible)</span></p>
-                <div class="listAnswer">
-                    <form id="getAnswer">
-                      <?php
-                        $alphabet = range('A', 'Z');
-                        for ($i=1;$i<=4;$i++) { ?>
-                            <label class="container-checkbox">
-                                <span class="numberAssassment"><?= $alphabet[$i]?> </span>
-                                <span class="assassment  <?php echo 'answer_'.($i);?>"></span>
-                                <input name="<?php echo "answer_".($i); ?>" id=<?php echo "answer_".($i); ?> type="checkbox" value="<?php echo $i; ?>" >
-                                <span class="checkmark"></span>
-                            </label>
+                   <div class="head3OverviewAssessment">
+                        <p class="assessmentNUmber" id="current-index">Question 1 / <?php echo count($question); ?></p>
+                        <p class="assessmentTime" id="backendTime"> </p>
+                    </div>
+                    <p class="chooseTechnoTitle" id="wording"><span> (Multiple choose posible)</span></p>
+                    <div class="listAnswer">
+                        <form id="getAnswer">
                         <?php
-                            } 
-                        ?>
-                    </form>
+                            $alphabet = range('A', 'Z');
+                            for ($i=1;$i<=4;$i++) { ?>
+                                <label class="container-checkbox">
+                                    <span class="numberAssassment"><?= $alphabet[$i]?> </span>
+                                    <span class="assassment  <?php echo 'answer_'.($i);?>"></span>
+                                    <input name="<?php echo "answer_".($i); ?>" id=<?php echo "answer_".($i); ?> type="checkbox" value="<?php echo $i; ?>" >
+                                    <span class="checkmark"></span>
+                                </label>
+                            <?php
+                                } 
+                            ?>
+                        </form>
+                    </div>
                 </div>
+                <button type="button" class="btn btnStratModal" id="btnBackend">Continue</button>
             </div>
-            <button type="button" class="btn btnStratModal" id="btnBackend">Continue</button>
-        </div>
         
     </div>
 </div>

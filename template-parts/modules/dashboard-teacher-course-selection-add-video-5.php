@@ -437,7 +437,7 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                             </form>
                         </div>
 
-                    <form action='/dashboard/teacher/course-selection/?func=add-course&id=<?php echo $_GET['id'] ?>&step=6' method='post'>
+                    <form action='/dashboard/teacher/course-selection/?func=add-video&id=<?php echo $_GET['id'] ?>&step=6' method='post'>
                         <div class='acf-field' id="autocomplete_ajax">
                         </div>
                     </form>

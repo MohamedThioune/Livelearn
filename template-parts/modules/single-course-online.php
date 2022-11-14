@@ -76,16 +76,18 @@ extract($_GET);
                 <div class="blockImgCour">
                     <?php
 
-                    if(!empty($courses) && !empty($youtube_videos) )
+                    if(!empty($courses) && !empty($youtube_videos) && !empty($podcasts) )
                         echo "<img src='" . $thumbnail . "' alt='preview image'>";
                     else{
                         if(!empty($courses)){
-                            // if(isset($topic) && isset($lesson))
-                            //     echo " <video class='blockImgCour' poster='' controls>
-                            //                 <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
-                            //                 <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/webm; codecs='vp8, vorbis'' />
-                            //                 <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
-                            //             </video>";
+                            /*
+                            if(isset($topic) && isset($lesson))
+                                echo " <video class='blockImgCour' poster='' controls>
+                                            <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
+                                            <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/webm; codecs='vp8, vorbis'' />
+                                            <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
+                                        </video>";
+                            */
                             if(isset($topic) && isset($lesson))
                                 echo " <video class='blockImgCour' poster='' controls>
                                             <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
@@ -95,11 +97,25 @@ extract($_GET);
                             else
                                 echo "<img src='" . $thumbnail . "' alt='preview image'>";
                         }
-                        else{
+                        else if(!empty($youtube_videos)){
                             if(isset($lesson))
                                 echo '<iframe width="730" height="433" src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
                             else
                                 echo "<img src='" . $thumbnail . "' alt='preview image'>";
+                        }
+                        else {
+                            if(isset($lesson))
+                                echo '
+                                    <audio controls>
+                                        <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/ogg">
+                                        <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/mpeg">
+                                        <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aac">
+                                        <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/wav">
+                                        <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aiff">
+                                    </audio>';
+                            else
+                                echo "<img src='" . $thumbnail . "' alt='preview image'>";
+
                         }
                     }
 
@@ -239,10 +255,11 @@ extract($_GET);
                                                 if(!empty($users_company))
                                                     foreach($users_company as $user){
                                                         $name = get_users(array('include'=> $user))[0]->data->display_name;
-                                                        if(in_array($user, $allocution))
-                                                            echo "<option class='redE' selected  value='" . $user . "'>" . $name . "</option>";
-                                                        else
-                                                            echo "<option class='redE' value='" . $user . "'>" . $name . "</option>";
+                                                        if(!empty($allocution))
+                                                            if(in_array($user, $allocution))
+                                                                echo "<option class='redE' selected  value='" . $user . "'>" . $name . "</option>";
+                                                            else
+                                                                echo "<option class='redE' value='" . $user . "'>" . $name . "</option>";
                                                     }
                                                 echo "</select>";
                                                 echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
@@ -606,7 +623,7 @@ extract($_GET);
 
                         <div>
                             <?php
-                            if(!empty($courses) && !empty($youtube_videos))
+                            if(!empty($courses) && !empty($youtube_videos) && !empty($podcasts))
                                 echo "<div class='sousBlockCours'>
                                         <span> No lesson as far, soon available </span>
                                      </div>";
@@ -665,7 +682,7 @@ extract($_GET);
                                 </div>
                             <?php       
                             }
-                            else{
+                            else if(!empty($youtube_videos)){
                                 ?>
                                 <div class="sousBlockCours">
                                     <?php
@@ -682,34 +699,41 @@ extract($_GET);
                                             if($lesson == $key)
                                                 $style = "color:#F79403";
                                         echo '  
-                                        <a href="?topic=0&lesson=' . $key . '"  class="d-flex contentListVidoeCourse" data-toggle="modal" data-target="#exampleModalPaywall">
+                                        <a href="?topic=0&lesson=' . $key . '"  class="d-flex contentListVidoeCourse">
                                             <img class="" width="35px" height="20px" src="'. $video['thumbnail_url'] . '" alt="">
                                             <span style="' .$style . '" class="textChapitreCours">' . $video['title'] . '</span>
                                         </a>';
                                     }
                                     ?>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModalPaywall" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLongTitle">Get Acces Now </h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p class="description-text-paywall">Please purchase this course to continue</p>
-                                                    <p class="price-paywall">$150</p>
-                                                    <a class="btn btn-paywall" href="">Buying Now <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/arrowhead.png" alt=""></a>
-                                                    <p class="text-not-sure-which">Not Sure which is right now for you ?
-                                                        <a href="">Discover the benefits of taking this course now</a> </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <?php
+                            }
+                            else if(!empty($podcasts)){
+                            ?>
+                                <div class="sousBlockCours">
+                                    <?php
+                                    if(isset($topic))
+                                        if($topic == $key) {
+                                            echo '<img class="playElement" src="'.  get_stylesheet_directory_uri() . '/img/play.png" alt="">';
+                                        }
+                                    ?>
+                                    <a style="color:#F79403" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo $post->post_title; ?></a>
+                                    <?php
+                                    foreach($podcasts as $key => $podcast){
+                                        $style = "";
+                                        if(isset($lesson))
+                                            if($lesson == $key)
+                                                $style = "color:#F79403";
+                                        echo '  
+                                        <a href="?topic=0&lesson=' . $key . '"  class="d-flex contentListVidoeCourse">
+                                            <img class="" width="35px" height="20px" src="'. $thumbnail .'" alt="">
+                                            <span style="' .$style . '" class="textChapitreCours">' . $podcast['course_podcast_title'] . '</span>
+                                        </a>';
+                                    }
+                                    ?>
+                                </div>
+
+                            <?php
                             }
                             ?>
                             <div class="CardpriceLive">
@@ -750,6 +774,7 @@ extract($_GET);
                                                 </div>
                                                 <div class="modal-body">
                                                     <?php
+                                                    $saves_expert = get_user_meta($user_id, 'expert');
                                                     foreach($experts as $expert){
                                                         $expert = get_users(array('include'=> $expert))[0]->data;
                                                         $company = get_field('company',  'user_' . $expert->ID);
@@ -773,7 +798,9 @@ extract($_GET);
                                                                 <input type="hidden" name="meta_key" value="expert" id="">
                                                                 <div>
                                                                     <?php
-                                                                    if($user_id != 0 && $user_id != $expert->ID)
+                                                                    if(!empty($saves_expert))
+                                                                        echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                                    else if($user_id != 0 && $user_id != $expert->ID)
                                                                     {
                                                                         if (in_array($expert->ID, $saves_expert))
                                                                             echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";

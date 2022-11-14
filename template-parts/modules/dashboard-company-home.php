@@ -53,7 +53,7 @@
                         <img src="<?php echo get_stylesheet_directory_uri() ?>/img/Image32.png" alt="">
                     </div>
                 </a>
-                <a href="statistic" class="cardCoursManager">
+                <a href="/dashboard/company/statistic" class="cardCoursManager">
                     <p class="contentText">Inzicht <br>
                         <b>statistieken</b>
                     </p>

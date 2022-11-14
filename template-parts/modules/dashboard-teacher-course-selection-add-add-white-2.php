@@ -17,7 +17,7 @@
                     acf_form(array(
                     'post_id'=> $_GET['id'],
                     // url field created from custom fields
-                    'fields' => array('link_to'), 
+                    'fields' => array('link_to','long_description'), 
                     'submit_value'  => __('Opslaan & verder'),
                     'return' => '?func=add-add-white&id=%post_id%&step=3'
                     )); 
@@ -27,7 +27,7 @@
                     acf_form(array(
                     'post_id'=> $_GET['id'],
                     // date field already exist on custom fields
-                    'fields' => array('dates'), 
+                    'fields' => array('dates', 'long_description'), 
                     'submit_value'  => __('Opslaan & verder'),
                     'return' => '?func=add-add-white&id=%post_id%&step=3'
                     ));

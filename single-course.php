@@ -15,8 +15,10 @@ view($post,$user_visibility);
 if(!visibility($post, $visibility_company))
     header('location: /');
 
+//Online
 $courses = get_field('data_virtual', $post->ID);
 $youtube_videos = get_field('youtube_videos', $post->ID);
+$podcasts = get_field('podcasts', $post->ID);
 
 $course_type = get_field('course_type', $post->ID);
 $product = wc_get_product( get_field('connected_product', $post->ID) );
@@ -37,7 +39,7 @@ if(!isset($xml_parse)){
                 for($i = 0; $i < count($datum['data']); $i++)
                     array_push($dagdeel, $datum['data'][$i]['start_date']);
 }else{
-    if($data)
+    if($data[0])
         foreach($data as $datum){
             $infos = explode(';', $datum['value']);
             if(!empty($infos))
@@ -47,18 +49,20 @@ if(!isset($xml_parse)){
                     array_push($dagdeel, $date);
                 }
         }
+    else{
+        $data = get_field('dates', $post->ID);
+        $dagdeel = array($data);
     }
+}
 
 $dagdeel = array_count_values($dagdeel);
 $dagdeel = count($dagdeel);
-
 
 /*
 *  Date and Location
 */
 $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
-$data = get_field('data_locaties', $post->ID);
 $price = get_field('price', $post->ID) ?: 'Gratis';
 $prijsvat = get_field('prijsvat', $post->ID);
 $btw = get_field('btw-klasse', $post->ID); 
@@ -153,9 +157,11 @@ else
 /*
 * Likes
 */
-$favoured = count(get_field('favorited', $post->ID));
-if(!$favoured)
+$favour = get_field('favorited', $post->ID);
+if(empty($favour))
     $favoured = 0;
+else 
+    $favoured = count($favour);
 
 /*
 * Image
@@ -186,17 +192,19 @@ foreach ($reviews as $review)
         break;
     }
 
+$link_to = get_field('link_to', $post->ID);
+
 $share_txt = "Hello, i share this course with ya *" . $post->post_title . "* \n Link : " . get_permalink($post->ID) . "\nHope you'll like it.";
 
 $offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
-$online = ['E-learning', 'Video', 'Webinar'];
+$online = ['E-learning', 'Video', 'Webinar', 'Podcast'];
 
 if(in_array($course_type, $offline))
     include_once('template-parts/modules/single-course-offline.php');
 else if(in_array($course_type, $online))
     include_once('template-parts/modules/single-course-online.php');
 
-?> 
+?>  
  
 <?php
 

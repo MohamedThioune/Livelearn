@@ -396,7 +396,7 @@
             <div class="sousProductTest Mobelement pr-4" 
             style="background: #F4F7F6;color: #043356; border-top: none">
                 <form action="/product-search/" method="POST">
-                    <div class="LeerBlock pl-4" >
+                    <div class="LeerBlock pl-4">
                         <div class="leerv">
                             <p class="sousProduct1Title" style="color: #043356">LEERVORM</p>
                             <button type="reset" class="btn btnClose pb-1 p-0 px-1 m-0" id="hide">

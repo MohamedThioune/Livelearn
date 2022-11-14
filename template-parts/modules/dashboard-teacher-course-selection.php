@@ -65,11 +65,9 @@
                         <small>Coming soon!</small>
                     </p>
                 </a>
-                <a href="#" class="cardCours cardCoursInitial" >
+                <a href="?func=add-podcast" class="cardCours cardCoursInitial" >
                     <p class="contentText">
                         <b>Podcast</b><br/>
-                        <small>Coming soon!</small>
-
                     </p>
                 </a>
                 <a href="?func=add-road" class="cardCours cardCoursInitial roadPathBlock" >

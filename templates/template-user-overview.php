@@ -52,8 +52,16 @@
             if(!visibility($course, $visibility_company))
                 continue;
 
-            $experts = get_field('experts', $course->ID);    
-            if($course->post_author == $user->ID || in_array($user->ID, $experts) ){
+            $experts = get_field('experts', $course->ID);
+            $bpx = false; 
+            if($course->post_author == $user->ID)
+                $box = true;
+            else 
+                if(!empty($experts))
+                    if(in_array($user->ID, $experts))
+                        $box = true;
+
+            if($box){
                 array_push($courses, $course);
                 if(get_field('course_type', $course->ID) == "Opleidingen")
                     array_push($opleidingen, $course);
@@ -103,20 +111,24 @@
                if($date_bool)
                    array_push($agenda, $course);
 
-                $tree = get_the_category($course->ID);
+                /*
+                * Categories
+                */
+                $category = ' ';
+                $category_id = 0;
+                $category_str = 0;
+                if($category == ' '){
+                    $one_category = get_field('categories',  $course->ID);
+                    if(isset($one_category[0]['value']))
+                        $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                    else{
+                        $one_category = get_field('category_xml',  $course->ID);
+                        if(isset($one_category[0]['value']))
+                            $category_id = intval($one_category[0]['value']);
+                    }
 
-                if($tree){
-                    if(isset($tree[2]))
-                        $category = $tree[2]->cat_ID;
-                }else{
-                    $category_id = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]); 
-                    $category_xml = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                    if($category_xml != 0)
-                        $category = $category_xml;  
-                    if($category_id != 0)
-                        $category = $category_id; 
-                }                                    
-                
+                }
+
                 if(!in_array($category, $categories) && $category != '')
                     array_push($categories, $category);
 
@@ -174,6 +186,8 @@
                 $volgers++;
         }
     }
+
+    $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
 
 ?>
 
@@ -563,23 +577,23 @@
                                 /*
                                 * Categories
                                 */
-                                $categorie = ' '; 
-
-                                $tree = get_the_terms($course->ID, 'course_category'); 
-
-                                if($tree)
-                                    if(isset($tree[2]))
-                                        $category = $tree[2]->name;
-
+                                $category = ' ';
                                 $category_id = 0;
-                            
-                                if($categorie == ' '){
-                                    $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]); 
-                                    $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
+                                $category_str = 0;
+                                if($category == ' '){
+                                    $one_category = get_field('categories',  $course->ID);
+                                    if(isset($one_category[0]['value']))
+                                        $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                                    else{
+                                        $one_category = get_field('category_xml',  $course->ID);
+                                        if(isset($one_category[0]['value']))
+                                            $category_id = intval($one_category[0]['value']);
+                                    }
+
                                     if($category_str != 0)
-                                        $categorie = (String)get_the_category_by_ID($category_str);
+                                        $category = (String)get_the_category_by_ID($category_str);
                                     else if($category_id != 0)
-                                        $categorie = (String)get_the_category_by_ID($category_id);                                    
+                                        $category = (String)get_the_category_by_ID($category_id);
                                 }
 
                                 /*
@@ -727,47 +741,54 @@
                                 if(!visibility($course, $visibility_company))
                                     continue;
                 
-                                $day = ' ';
-                                $month = '';
+                                /*
+                                * Categories
+                                */
+                                $category = ' ';
+                                $category_id = 0;
+                                $category_str = 0;
+                                if($category == ' '){
+                                    $one_category = get_field('categories',  $course->ID);
+                                    if(isset($one_category[0]['value']))
+                                        $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                                    else{
+                                        $one_category = get_field('category_xml',  $course->ID);
+                                        if(isset($one_category[0]['value']))
+                                            $category_id = intval($one_category[0]['value']);
+                                    }
 
-                                $categorie = ' ';
-                                if($categorie == ' '){
-                                    $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]); 
-                                    $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
                                     if($category_str != 0)
-                                        $categorie = (String)get_the_category_by_ID($category_str);
+                                        $category = (String)get_the_category_by_ID($category_str);
                                     else if($category_id != 0)
-                                        $categorie = (String)get_the_category_by_ID($category_id);                                    
+                                        $category = (String)get_the_category_by_ID($category_id);
                                 }
 
-                                $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
+                                /*
+                                *  Date and Location
+                                */ 
+                                $day = "<i class='fas fa-calendar-week'></i>";
+                                $month = NULL;
+                                $location = ' ';
 
-                                $dates = get_field('dates', $course->ID);
-                                if($dates){
-                                    
-                                    $day = explode('-', explode(' ', $dates[0]['date'])[0])[2];
-                                    $month = explode('-', explode(' ', $dates[0]['date'])[0])[1];
-        
-                                    $month = $calendar[$month]; 
-                                   
-                                }else{
-                                    $data = get_field('data_locaties', $course->ID);
-                                    if($data){
-                                        $date = $data[0]['data'][0]['start_date'];
-
-                                        $day = explode('/', explode(' ', $date)[0])[0];
-                                        $month = explode('/', explode(' ', $date)[0])[1];
-                                        $month = $calendar[$month];
-                                        
-                                        $location = $data[0]['data'][0]['location'];
+                                $datas = get_field('data_locaties', $course->ID);
+                                if($datas){
+                                    $data = $datas[0]['data'][0]['start_date'];
+                                    if($data != ""){
+                                        $day = explode('/', explode(' ', $data)[0])[0];
+                                        $mon = explode('/', explode(' ', $data)[0])[1];
+                                        $month = $calendar[$mon];
                                     }
-                                    else{
-                                        $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                                        $date = $data[0];
-                                        $day = explode('/', explode(' ', $date)[0])[0];
-                                        $month = explode('/', explode(' ', $date)[0])[1];
+
+                                    $location = $datas[0]['data'][0]['location'];
+                                }else{
+                                    $datum = get_field('data_locaties_xml', $course->ID);
+                                    if(isset($datum[0]['value'])){
+                                        $datas = explode('-', $datum[0]['value']);
+                                        $data = $datas[0];
+                                        $day = explode('/', explode(' ', $data)[0])[0];
+                                        $month = explode('/', explode(' ', $data)[0])[1];
                                         $month = $calendar[$month];
-                                        $location = $data[2];
+                                        $location = $datas[2];
                                     }
                                 }
                                

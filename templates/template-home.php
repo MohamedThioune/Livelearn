@@ -7,6 +7,8 @@
 $page = dirname(__FILE__) . '/check_visibility.php';
 require($page);
 
+$calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+
 ?>
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
@@ -14,7 +16,12 @@ require($page);
 <script src="<?php echo get_stylesheet_directory_uri();?>/city.js"></script>
 
 <?php
-
+    $user_visibility = wp_get_current_user();
+    $company_visibility = get_field('company',  'user_' . $user_visibility->ID);
+    
+    if(!empty($company_visibility))
+        $visibility_company = $company_visibility[0]->post_title;
+        
     function RandomString()
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -925,7 +932,7 @@ $degrees=[
                 <?php
                     foreach($bangerichts as $bangericht){
                 ?>
-                <a href="sub-topic?subtopic=<?php echo $bangericht->cat_ID ?>" class="TextZorg"><?php echo $bangericht->cat_name ?></a>
+                    <a href="sub-topic?subtopic=<?php echo $bangericht->cat_ID ?>" class="TextZorg"><?php echo $bangericht->cat_name ?></a>
                 <?php
                     }
                 ?>
@@ -974,8 +981,8 @@ $degrees=[
 </div>
 <div class="blockAl joum">
     <div class="container-fluid">
-        <div class="alJoum theme-banner bg__lightblue">
-            <div class="blockImGDaniel block-img-banner">
+        <div class="alJoum">
+            <div class="blockImGDaniel">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/daniel.png" alt="">
             </div>
             <?php
@@ -1009,25 +1016,29 @@ $degrees=[
             <div class="sousBlockFrontAgenda">
                 <?php
                     $i = 0;
+                    $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+
                     foreach($courses as $course){
-                        if(!visibility($course, $visibility_company))
-                            continue;
+                        if(!empty($company_visibility))
+                            if(!visibility($course, $visibility_company))
+                                continue;
 
                         /*
                         * Categories
                         */
-                        $location = 'Virtual';
-                        $day = "<p><i class='fas fa-calendar-week'></i></p>";
-                        $month = '';
-
                         $category = ' ';
-
                         $category_id = 0;
-                        $category_string = " ";
-
+                        $category_str = 0;
                         if($category == ' '){
-                            $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
-                            $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
+                            $one_category = get_field('categories',  $course->ID);
+                            if(isset($one_category[0]['value']))
+                                $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                            else{
+                                $one_category = get_field('category_xml',  $course->ID);
+                                if(isset($one_category[0]['value']))
+                                    $category_id = intval($one_category[0]['value']);
+                            }
+
                             if($category_str != 0)
                                 $category = (String)get_the_category_by_ID($category_str);
                             else if($category_id != 0)
@@ -1036,8 +1047,10 @@ $degrees=[
 
                         /*
                         *  Date and Location
-                        */
-                        $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+                        */ 
+                        $day = "<i class='fas fa-calendar-week'></i>";
+                        $month = NULL;
+                        $location = ' ';
 
                         $datas = get_field('data_locaties', $course->ID);
                         if($datas){
@@ -1050,12 +1063,15 @@ $degrees=[
 
                             $location = $datas[0]['data'][0]['location'];
                         }else{
-                            $datas = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
-                            $data = $datas[0];
-                            $day = explode('/', explode(' ', $data)[0])[0];
-                            $month = explode('/', explode(' ', $data)[0])[1];
-                            $month = $calendar[$month];
-                            $location = $datas[2];
+                            $datum = get_field('data_locaties_xml', $course->ID);
+                            if(isset($datum[0]['value'])){
+                                $datas = explode('-', $datum[0]['value']);
+                                $data = $datas[0];
+                                $day = explode('/', explode(' ', $data)[0])[0];
+                                $month = explode('/', explode(' ', $data)[0])[1];
+                                $month = $calendar[$month];
+                                $location = $datas[2];
+                            }
                         }
 
                         if(!$month)
@@ -1067,7 +1083,7 @@ $degrees=[
                             if($data < $date_now)
                                 continue;
                         }
-
+                        
                         /*
                         * Price
                         */
@@ -1080,7 +1096,6 @@ $degrees=[
                         /*
                         * Thumbnails
                         */
-                        //Image
                         $thumbnail = get_the_post_thumbnail_url($course->ID);
                         if(!$thumbnail)
                             $thumbnail = get_field('preview', $course->ID)['url'];
@@ -1098,7 +1113,7 @@ $degrees=[
                         $company_id = $company[0]->ID;
                         $company_logo = get_field('company_logo', $company_id);
                     ?>
-                    <a href="<?php echo get_permalink($course->ID) ?>" class="blockCardFront theme-product--horizontal" style="color:#43454D">
+                    <a href="<?php echo get_permalink($course->ID) ?>" class="blockCardFront" style="color:#43454D">
                         <div class="workshopBlock">
                             <img class="" src="<?php echo $thumbnail ?>" alt="">
                             <div class="containWorkshopAgenda">
@@ -1198,43 +1213,58 @@ $degrees=[
                     * Categories
                     */
                     $category = ' ';
-
                     $category_id = 0;
-                    $category_string = " ";
-
+                    $category_str = 0;
                     if($category == ' '){
-                        $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
-                        $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
+                        $one_category = get_field('categories',  $course->ID);
+                        if(isset($one_category[0]['value']))
+                            $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                        else{
+                            $one_category = get_field('category_xml',  $course->ID);
+                            if(isset($one_category[0]['value']))
+                                $category_id = intval($one_category[0]['value']);
+                        }
+
                         if($category_str != 0)
                             $category = (String)get_the_category_by_ID($category_str);
                         else if($category_id != 0)
                             $category = (String)get_the_category_by_ID($category_id);
                     }
+
                     /*
                     *  Date and Location
                     */
                     $location = 'Virtual';
+                    $day = "<p><i class='fas fa-calendar-week'></i></p>";
+                    $month = '';
 
-                    $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];
+                    $datas = get_field('data_locaties', $course->ID);
 
+                    /*
+                    *  Date and Location
+                    */ 
+                    $day = "<i class='fas fa-calendar-week'></i>";
+                    $month = ' ';
+                    $location = ' ';
+                
                     $data = get_field('data_locaties', $course->ID);
                     if($data){
                         $date = $data[0]['data'][0]['start_date'];
-
-                        $day = explode('/', explode(' ', $date)[0])[0];
-                        $month = explode('/', explode(' ', $date)[0])[1];
-                        $month = $calendar[$month];
-
-                        $location = $data[0]['data'][0]['location'];
+                        $day = explode(' ', $date)[0];
                     }
                     else{
-                        $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                        $date = $data[0];
-                        $day = explode('/', explode(' ', $date)[0])[0];
-                        $month = explode('/', explode(' ', $date)[0])[1];
-                        $month = $calendar[$month];
-                        $location = $data[2];
-                    }
+                        $dates = get_field('dates', $course->ID);
+                        if($dates)
+                            $day = explode(' ', $dates[0]['date']);
+                        else{
+                            $data = get_field('data_locaties_xml', $course->ID);
+                            if(isset($data[0]['value'])){
+                                $data = explode('-', $data[0]['value']);
+                                $date = $data[0];
+                                $day = explode(' ', $date)[0];
+                            }
+                        }
+                        }
 
                     /*
                     * Price
@@ -1250,20 +1280,14 @@ $degrees=[
                     */
                     $thumbnail = get_field('preview', $course->ID)['url'];
                     if(!$thumbnail){
-                    $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
+                    $thumbnail = get_field('url_image_xml', $course->ID);
                     if(!$thumbnail)
                         $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
                     }
 
-                    /*
-                    * Companies
-                    */
-                    $company = get_field('company',  'user_' . $course->post_author);
-                    $company_id = $company[0]->ID;
-                    $company_logo = get_field('company_logo', $company_id);
                     ?>
-                    <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiperSlideModife ">
-                        <div class="cardKraam2 theme-product--card">
+                    <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiperSlideModife">
+                        <div class="cardKraam2">
                             <div class="headCardKraam">
                                 <div class="blockImgCardCour">
                                     <img src="<?php echo $thumbnail ?>" alt="">

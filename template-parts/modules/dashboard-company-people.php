@@ -25,7 +25,7 @@
     
     $count = count($members);
 
-if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"; 
+if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"; 
     if( in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) || $grant ) {
 ?>
     <div class="cardPeople">
@@ -55,8 +55,10 @@ if($_GET['message']) echo "<span class='alert alert-success'>" . $_GET['message'
                         $image_user = get_field('profile_img',  'user_' . $user->ID); 
                         if(!$image_user)  
                             $image_user = get_stylesheet_directory_uri(). "/img/placeholder_user.png";
-                        
-                        $you  =  (in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : '';
+
+                        $you  = '';
+                        if(!in_array('administrator', $user->roles))
+                            $you  =  (in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : '';
                         
                         $link = "/dashboard/company/profile/?id=" . $user->ID . '&manager='. $user_connected; 
                     ?>
