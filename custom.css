@@ -11400,11 +11400,13 @@ select {
     background: #E0EFF4;
     text-align: center;
     padding: 25px 20px;
+    max-width: 680px;
+    margin: 0 auto;
 }
 
 .title-paywall {
     color: #023356;
-    font-size: 27px;
+    font-size: 25px;
     font-weight: 500;
     margin-bottom: 15px;
 }
@@ -11421,6 +11423,10 @@ select {
     padding: 8px 15px;
     border-radius: 5px;
     margin-bottom: 30px;
+}
+
+.btn-paywall:hover {
+    color: white !important;
 }
 
 .text-not-sure-which {
@@ -11903,6 +11909,117 @@ select {
 .table-responive-modife {
     display: table;
     width: 100%;
+}
+
+.product-podcat1 {
+    margin-top: 30px;
+}
+
+.product-podcat1 .sound-wave {
+    display: none;
+    height: 320px;
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    overflow: hidden;
+    background: #023356;
+    padding-top: 20px;
+}
+
+.product-podcat1 .hide {
+    display: none;
+}
+
+@keyframes scale1 {
+    0% {
+        transform: scaleY(0.6);
+    }
+    40% {
+        transform: scaleY(1.2);
+    }
+    100% {
+        transform: scaleY(0.6);
+    }
+}
+
+.product-podcat1 .bar-scale1 {
+    animation: scale1 0.6s infinite;
+    transform-origin: center;
+}
+
+@keyframes scale2 {
+    0% {
+        transform: scaleY(0.5);
+    }
+    30% {
+        transform: scaleY(1.6);
+    }
+    100% {
+        transform: scaleY(0.5);
+    }
+}
+
+.product-podcat1 .bar-scale2 {
+    animation: scale2 0.6s infinite;
+    transform-origin: center;
+}
+
+@keyframes scale3 {
+    0% {
+        transform: scaleY(1.5);
+    }
+    70% {
+        transform: scaleY(0.5);
+    }
+    100% {
+        transform: scaleY(1.5);
+    }
+}
+
+.product-podcat1 .bar-scale3 {
+    animation: scale3 0.6s infinite;
+    transform-origin: center;
+}
+
+.product-podcat1 .stop-animation {
+    animation-duration: 0s;
+}
+
+.modal-dialog-centered {
+    min-height: fit-content !important;
+}
+
+.modalpaywallVideo .modal-dialog {
+    text-align: center;
+}
+
+.modalpaywallVideo {
+    padding-right: 17px;
+    display: block;
+    background: #000000a1;
+    padding-top: 120px;
+}
+
+.modalpaywallVideo .title-paywall {
+    color: #023356;
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    margin-top: 20px;
+}
+
+.modalpaywallVideo .price-course {
+    font-weight: 700;
+    font-size: 23px;
+    line-height: 28px;
+    color: #023356;
+    margin-bottom: 28px;
+}
+
+.modalpaywallVideo .sub-title-paywall {
+    font-size: 20px;
+    color: #000000;
+    margin-bottom: 25px;
 }
 
 
