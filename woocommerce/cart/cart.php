@@ -172,19 +172,6 @@ do_action( 'woocommerce_before_cart' ); ?>
 
         <?php do_action( 'woocommerce_before_cart_collaterals' ); ?>
 
-<<<<<<< HEAD
-        <div class="cart-collaterals">
-            <?php
-            /**
-		 * Cart collaterals hook.
-		 *
-		 * @hooked woocommerce_cross_sell_display
-		 * @hooked woocommerce_cart_totals - 10
-		 */
-            do_action( 'woocommerce_cart_collaterals' );
-            ?>
-        </div>
-=======
 
       <div class="cart-checkOut">
           <div class="blockImgCartCourse">
@@ -202,7 +189,6 @@ do_action( 'woocommerce_before_cart' ); ?>
               ?>
           </div>
       </div>
->>>>>>> origin/frontSeydou
     </div>
 </div>
 <?php do_action( 'woocommerce_after_cart' ); ?>
