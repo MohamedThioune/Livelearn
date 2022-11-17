@@ -172,7 +172,7 @@
             'role' => 'teacher'
         );
 
-        $author_id = wp_insert_user(wp_slash($userdata));       
+        //$author_id = wp_insert_user(wp_slash($userdata));       
       }
 
       //Accord the author a company
