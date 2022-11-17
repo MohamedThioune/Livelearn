@@ -557,50 +557,70 @@
             <div class="sousBlockProduct4">
                 <div class="row d-flex justify-content-center">
                     <?php 
+                    $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
+
                     foreach($courses as $key => $course){
                         
-                        if(!visibility($course, $visibility_company))
-                            continue;
+                        if(!empty($company_visibility))
+                            if(!visibility($course, $visibility_company))
+                                continue;
 
                         if($key == 20)
                             break;
 
                         /*
-                        * Categories and Date
-                        */  
-                        $day = '~';
-                        $month = '';  
-                        $tree = get_the_category($course->ID);
-                        if($tree){
-                            if(isset($tree[2])){
-                                $category = $tree[2]->cat_name;
-                                $category =  "<p class='textJan facilityText'>" . $category . "</p>";
+                        * Categories
+                        */
+                        $location = 'Virtual';
+                        $day = "<p><i class='fas fa-calendar-week'></i></p>";
+                        $month = '';
 
-                            }else 
-                                if(isset($tree[1])){
-                                    $category = $tree[1]->cat_name;
-                                    $category =  "<p class='textJan facilityText'>" . $category . "</p>";
-                                }
-                        }else 
-                            $category = '';
+                        $category = ' ';
+                        $category_id = 0;
+                        $category_str = 0;
+                        if($category == ' '){
+                            $one_category = get_field('categories',  $course->ID);
+                            if(isset($one_category[0]['value']))
+                                $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                            else{
+                                $one_category = get_field('category_xml',  $course->ID);
+                                if(isset($one_category[0]['value']))
+                                    $category_id = intval($one_category[0]['value']);
+                            }
 
-                        $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
+                            if($category_str != 0)
+                                $category = "<p class='textJan facilityText'>" . (String)get_the_category_by_ID($category_str) . "</p>";
+                            else if($category_id != 0)
+                                $category = "<p class='textJan facilityText'>" . (String)get_the_category_by_ID($category_id) . "</p>";
+                        }
 
-                        $dates = get_field('dates', $course->ID);
-                        if($dates){
-                            
-                            $day = explode('-', explode(' ', $dates[0]['date'])[0])[2];
-                            $month = explode('-', explode(' ', $dates[0]['date'])[0])[1];
+                        /*
+                        *  Date and Location
+                        */ 
+                        $day = "<i class='fas fa-calendar-week'></i>";
+                        $month = NULL;
+                        $location = ' ';
 
-                            $month = $calendar[$month]; 
+                        $datas = get_field('data_locaties', $course->ID);
+                        if($datas){
+                            $data = $datas[0]['data'][0]['start_date'];
+                            if($data != ""){
+                                $day = explode('/', explode(' ', $data)[0])[0];
+                                $mon = explode('/', explode(' ', $data)[0])[1];
+                                $month = $calendar[$mon];
+                            }
+
+                            $location = $datas[0]['data'][0]['location'];
                         }else{
-                            $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                            $date = $data[0];
-                            $day = explode('/', explode(' ', $date)[0])[0];
-                            $month = explode('/', explode(' ', $date)[0])[1];
-                            $month = $calendar[$month];
-
-                            $location = $data[2];
+                            $datum = get_field('data_locaties_xml', $course->ID);
+                            if(isset($datum[0]['value'])){
+                                $datas = explode('-', $datum[0]['value']);
+                                $data = $datas[0];
+                                $day = explode('/', explode(' ', $data)[0])[0];
+                                $month = explode('/', explode(' ', $data)[0])[1];
+                                $month = $calendar[$month];
+                                $location = $datas[2];
+                            }
                         }
 
                         /*
