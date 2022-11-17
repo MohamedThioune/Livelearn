@@ -42,7 +42,6 @@ $args = array(
 
 
 $bunch_orders = wc_get_orders($args);
-var_dump($bunch_orders);
 
 $orders = array();
 $item_order = array();
