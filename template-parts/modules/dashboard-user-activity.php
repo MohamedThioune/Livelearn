@@ -36,6 +36,7 @@ foreach($raw_saved as $save)
 //Orders - enrolled courses  
 $args = array(
     'customer_id' => $user->ID,
+    'orderby' => 'date',
     'order' => 'DESC',
     'limit' => -1,
 );
@@ -220,6 +221,7 @@ if(!empty($courses))
                 <h2>Laatst opgedane kennis</h2>
                 <?php 
                 if(!empty($enrolled_courses)){
+                    $enrolled_courses = array_reverse($enrolled_courses);
                     foreach($enrolled_courses as $key=>$course) {
                         if($key == 2)
                             break;
