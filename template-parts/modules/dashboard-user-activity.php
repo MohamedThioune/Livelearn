@@ -36,6 +36,7 @@ foreach($raw_saved as $save)
 //Orders - enrolled courses  
 $args = array(
     'customer_id' => $user->ID,
+    'status' => array('wc-processing', 'wc-on-hold'),
     'order' => 'DESC',
     'limit' => -1,
 );
