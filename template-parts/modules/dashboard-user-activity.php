@@ -36,12 +36,14 @@ foreach($raw_saved as $save)
 //Orders - enrolled courses  
 $args = array(
     'customer_id' => $user->ID,
-    'status' => array('wc-processing', 'wc-on-hold'),
     'order' => 'DESC',
     'limit' => -1,
 );
 
+
 $bunch_orders = wc_get_orders($args);
+var_dump($bunch_orders);
+
 $orders = array();
 $item_order = array();
 $enrolled = array();
