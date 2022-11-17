@@ -320,11 +320,11 @@ if(isset($_GET['message']))
                             $category_string = " ";
                             if($category == ' '){
                                 $one_category = get_field('categories',  $course->ID);
-                                if(isset($one_category[0]))
+                                if(isset($one_category[0]['value']))
                                     $category_str = intval(explode(',', $one_category[0]['value'])[0]);
                                 else{
                                     $one_category = get_field('category_xml',  $course->ID);
-                                    if(isset($one_category[0]))
+                                    if(isset($one_category[0]['value']))
                                         $category_id = intval($one_category[0]['value']);
                                 }
 
@@ -493,6 +493,7 @@ if(isset($_GET['message']))
 
                             $count['limit'] = $count['limit'] + 1;
                             $data = array();
+                            $day = '';
                             $month = '';
                             $location = 'Virtual';
 
@@ -555,7 +556,7 @@ if(isset($_GET['message']))
                             //Course Type
                             $course_type = get_field('course_type', $course->ID);
 
-                            if(!empty($data) && $course_type != "Video")
+                            if(!empty($data) && $course_type != "Video" && $course_type != "Artikel")
                                 if($data){
                                     $date_now = strtotime(date('Y-m-d'));
                                     $data = strtotime(str_replace('/', '.', $data));
