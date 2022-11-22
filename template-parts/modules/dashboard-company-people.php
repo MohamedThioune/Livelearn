@@ -56,9 +56,9 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                         if(!$image_user)  
                             $image_user = get_stylesheet_directory_uri(). "/img/placeholder_user.png";
 
-                        $you  = '';
+                        $you = NULL;
                         if(!in_array('administrator', $user->roles))
-                            $you  =  (in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : '';
+                            $you  =  (in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : NULL;
                         
                         $link = "/dashboard/company/profile/?id=" . $user->ID . '&manager='. $user_connected; 
                     ?>
@@ -85,9 +85,9 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                         <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?= $link; ?>" target="_blank">Bekijk</a></li>
                                         <li class="my-2"><i class="fa fa-gear px-2"></i><a href="<?= $link; ?>" target="_blank">Pas aan</a></li>
                                         <li class="my-1 ">
-                                            <div class="<?php if($you != '') echo 'remove' ?>">
+                                            <div class="<?php if($you) echo 'remove' ?>">
                                                 <?php
-                                                if($you != '')
+                                                if($you)
                                                     echo '<img class="removeImg" src="' . get_stylesheet_directory_uri() . '/img/deleteIcone.png" alt="">';
                                                 ?>
                                                 <span>Verwijderen</span>
