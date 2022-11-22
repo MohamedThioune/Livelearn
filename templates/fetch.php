@@ -1,7 +1,7 @@
 <?php /** Template Name: Fetch ajax */ ?>
 
 <?php
-$page = '/check_visibility.php';
+$page = 'check_visibility.php';
 
 require($page); 
 
