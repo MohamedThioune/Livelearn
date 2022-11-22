@@ -7,7 +7,7 @@ global $wpdb;
 * * Pagination
 */
 $pagination = 40;
-var_dump($_GET['id']);
+// var_dump($_GET['id']);
 
 if(isset($_GET['id']))
     $page = intval($_GET['id']);
@@ -48,7 +48,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                    <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
                        &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
-                       &nbsp;&nbsp;<a href="/artikels"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="xml image"></a>
+                       &nbsp;&nbsp;<button id="bouddha" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;">load</button>
                        
                     <div class="col-md-3">
                         
@@ -59,7 +59,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                             <?php } ?>
                         </select>
                     </div>
-                    <div hidden="true" id="loader" style="display:inline-block;" class="spinner-border spinner-border-sm text-primary" role="status">
+                    <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status">
                     </div>
                     </p>
 
@@ -186,6 +186,30 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
 <script type="text/javascript">
 
+    $('#bouddha').click((e)=>{
+        $.ajax({
+                url: '/livelearn/artikels',
+                type: 'GET',
+                
+                beforeSend:function(){
+                    $('#loader').attr('hidden',false);
+                    $('#select_field').attr('hidden',true);
+                    $('bouddha').attr('disabled',true);
+                },
+                error: function(){
+                    alert('Something went wrong!');
+                },
+                complete: function(){$('#loader').addClass('hidden');},
+                success: function(data){
+                    $('#loader').attr('hidden',true);
+                    $('#select_field').attr('hidden',false);
+                    $('#bouddha').attr('disabled',false);
+                    console.log(data);
+                    location.reload();
+                }
+            });
+    });
+
     $('#select_field').change((e)=>
     {
         let website= $('#select_field').val();
@@ -200,6 +224,9 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 beforeSend:function(){
                     $('#loader').attr('hidden',false)
                     $('#select_field').attr('hidden',true)
+                },
+                error: function(){
+                    alert('Something went wrong!');
                 },
                 complete: function(){},
                 success: function(data){
