@@ -1,7 +1,7 @@
 <?php /** Template Name: Fetch ajax */ ?>
 
 <?php
-$page = dirname(__FILE__) . '/check_visibility.php';
+$page = '/check_visibility.php';
 
 require($page); 
 
@@ -35,10 +35,10 @@ foreach($global_courses as $course)
     if(!visibility($course, $visibility_company))
         continue;
 
-    $experts = get_field('experts', $course->ID);    
-    if($course->post_author == $user_id || in_array($user_id, $experts) ){
-        array_push($courses, $course);
-    }
+    $experts = get_field('experts', $course->ID);
+    if(!empty($experts))    
+        if($course->post_author == $user_id || in_array($user_id, $experts) )
+            array_push($courses, $course);
 
 }
 /**
@@ -71,15 +71,15 @@ if(isset($_POST['search_path'])){
             $experts = array_merge($expert, $author);
 
             $experts_strength = ""; 
-
-            foreach($experts as $expert){
-                $image_author = get_field('profile_img',  'user_' . $expert);
-                if(!$image_author)
-                    $image_author = get_stylesheet_directory_uri() ."/img/placeholder_user.png";
-                $experts_strength .= '<img class="euroImg" src="' . $image_author . '" alt="">'; 
-            }
             
-
+            if(!empty($experts))
+                foreach($experts as $expert){
+                    $image_author = get_field('profile_img',  'user_' . $expert);
+                    if(!$image_author)
+                        $image_author = get_stylesheet_directory_uri() ."/img/placeholder_user.png";
+                    $experts_strength .= '<img class="euroImg" src="' . $image_author . '" alt="">'; 
+                }
+            
             /*
             * Thumbnails
             */
