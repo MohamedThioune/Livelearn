@@ -196,8 +196,8 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     $('#select_field').attr('hidden',true);
                     $('bouddha').attr('disabled',true);
                 },
-                error: function(){
-                    alert('Something went wrong!');
+                error: function(error){
+                    alert('Something went wrong!'+ error);
                 },
                 complete: function(){$('#loader').addClass('hidden');},
                 success: function(data){
