@@ -18,39 +18,39 @@ function RandomString(){
         'https://workplaceacademy.nl/',
         // 'https://www.ynno.com/',
         'https://powerplant.nl/',
-        // 'https://www.dezzp.nl/',
-        // 'https://www.aestate.nl/',
-        // 'https://albaconcepts.nl/',
-        // 'https://www.am.nl/',
-        // 'https://limoonworks.nl/',
-        // 'https://breedweer.nl/',
-        // 'https://www.dwa.nl/',
-        // 'https://www.vanspaendonck.nl/',
-        // 'https://ptg-advies.nl/',
-        // 'https://rever.nl/',
-        // 'https://www.reworc.com/',
-        // 'https://www.sweco.nl/',
-        // 'https://www.copilot.nl/',
-        // 'https://agilescrumgroup.nl/',
-        // 'https://horizontraining.nl/',
-        // 'https://www.kennethsmit.com/',
-        // 'https://www.autoblog.nl/',
-        // 'https://www.cryptouniversity.nl/',
-        // // 'https://www.winelife.nl/',
-        // // 'https://perswijn.nl/',
-        // // 'https://www.kokenmetkennis.nl/',
-        // // 'https://minkowski.org/',
-        // // 'https://kitpublishers.nl/',
-        // // 'https://www.betastoelen.nl/',
-        // // 'https://zooi.nl/',
+        'https://www.dezzp.nl/',
+        'https://www.aestate.nl/',
+        'https://albaconcepts.nl/',
+        'https://www.am.nl/',
+        'https://limoonworks.nl/',
+        'https://breedweer.nl/',
+        'https://www.dwa.nl/',
+        'https://www.vanspaendonck.nl/',
+        'https://ptg-advies.nl/',
+        'https://rever.nl/',
+        'https://www.reworc.com/',
+        'https://www.sweco.nl/',
+        'https://www.copilot.nl/',
+        'https://agilescrumgroup.nl/',
+        'https://horizontraining.nl/',
+        'https://www.kennethsmit.com/',
+        'https://www.autoblog.nl/',
+        'https://www.cryptouniversity.nl/',
+        // 'https://www.winelife.nl/',
+        // 'https://perswijn.nl/',
+        // 'https://www.kokenmetkennis.nl/',
+        // 'https://minkowski.org/',
+        // 'https://kitpublishers.nl/',
+        // 'https://www.betastoelen.nl/',
+        // 'https://zooi.nl/',
         'https://www.growthfactory.nl/',
-        // 'https://influid.nl/'
-        // // 'https://mediatest.nl/',
-        // // 'https://memo2.nl/',
-        // // 'https://impact-investor.com/',
-        // // 'https://www.equalture.com/',
-        // // 'https://zorgmasters.nl/',
-        // // 'https://adsysco.nl/'
+        'https://influid.nl/'
+        // 'https://mediatest.nl/',
+        // 'https://memo2.nl/',
+        // 'https://impact-investor.com/',
+        // 'https://www.equalture.com/',
+        // 'https://zorgmasters.nl/',
+        // 'https://adsysco.nl/'
     ];
     $table = $wpdb->prefix.'databank';
     
@@ -173,7 +173,7 @@ function RandomString(){
 
             if(!isset($result_image[0]) && !isset($result_title[0]))
             {
-                var_dump($article['featured_media']);
+                // var_dump($article['featured_media']);
                 
                 $status = 'extern';
                 if ($article['featured_media']!= 0 || $article['feature_media']!=null) {
