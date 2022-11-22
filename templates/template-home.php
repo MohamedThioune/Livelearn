@@ -1014,7 +1014,7 @@ $degrees=[
 
                     foreach($courses as $course){
 
-                        if(!visibility($course, $visibility_company))
+                        if(!visibility($post, $visibility_company))
                             continue;
 
                         /*
