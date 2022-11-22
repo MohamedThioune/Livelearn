@@ -16,12 +16,6 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
 <script src="<?php echo get_stylesheet_directory_uri();?>/city.js"></script>
 
 <?php
-    $user_visibility = wp_get_current_user();
-    $company_visibility = get_field('company',  'user_' . $user_visibility->ID);
-    
-    if(!empty($company_visibility))
-        $visibility_company = $company_visibility[0]->post_title;
-        
     function RandomString()
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -1019,9 +1013,9 @@ $degrees=[
                     $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
                     foreach($courses as $course){
-                        if(!empty($company_visibility))
-                            if(!visibility($course, $visibility_company))
-                                continue;
+
+                        if(!visibility($course, $visibility_company))
+                            continue;
 
                         /*
                         * Categories
