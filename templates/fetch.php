@@ -34,18 +34,12 @@ foreach($global_courses as $course)
 {  
     if(!visibility($course, $visibility_company))
         continue;
-
-    $experts = get_field('experts', $course->ID);
-    if(!empty($experts))    
-        if($course->post_author == $user_id || in_array($user_id, $experts) )
-            array_push($courses, $course);
-
+        
+    array_push($courses, $course);
 }
 /**
  * Bunch of topics ?
- */
-
-
+*/
 
 $output = "";
 $row_opleidingen = "";
