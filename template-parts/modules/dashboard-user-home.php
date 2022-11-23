@@ -720,6 +720,7 @@ if(isset($_GET['message']))
             <?php
             $i = 0;
             $find = false;
+            $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];    
             foreach($courses as $key => $course){
                 if($i == 20)
                     break;
@@ -738,61 +739,66 @@ if(isset($_GET['message']))
                     continue;
 
                 $i++;
-        
-                $month = '';
-                $location = 'Virtual';
 
                 /*
                 * Categories
                 */
-                $category = ' '; 
-
-                $tree = get_the_terms($course->ID, 'course_category'); 
-
-                if($tree)
-                    if(isset($tree[2]))
-                        $category = $tree[2]->name;
-
+                $category = ' ';
                 $category_id = 0;
-            
+                $category_str = 0;
                 if($category == ' '){
-                    $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                    if($category_id != 0)
+                    $one_category = get_field('categories',  $course->ID);
+                    if(isset($one_category[0]['value']))
+                        $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                    else{
+                        $one_category = get_field('category_xml',  $course->ID);
+                        if(isset($one_category[0]['value']))
+                            $category_id = intval($one_category[0]['value']);
+                    }
+
+                    if($category_str != 0)
+                        $category = (String)get_the_category_by_ID($category_str);
+                    else if($category_id != 0)
                         $category = (String)get_the_category_by_ID($category_id);
                 }
 
                 /*
                 *  Date and Location
                 */ 
+                $day = "-";
+                $month = NULL;
+                $location = 'Virtual';
 
-                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];    
-
-                $data = get_field('data_locaties', $course->ID);
-                if($data){
-                    $date = $data[0]['data'][0]['start_date'];
-
-                    $day = explode('/', explode(' ', $date)[0])[0];
-                    $month = explode('/', explode(' ', $date)[0])[1];
-                    $month = $calendar[$month];
-                    
-                    $location = $data[0]['data'][0]['location'];
-                }
-                else{
-                    $dates = get_field('dates', $course->ID);
-                    if($dates){
-                        $day = explode('-', explode(' ', $dates[0]['date'])[0])[2];
-                        $month = explode('-', explode(' ', $dates[0]['date'])[0])[1];
-
-                        $month = $calendar[$month]; 
-                    }else{
-                        $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                        $date = $data[0];
-                        $day = explode('/', explode(' ', $date)[0])[0];
-                        $month = explode('/', explode(' ', $date)[0])[1];
-                        $month = $calendar[$month];
-                        $location = $data[2];
+                $datas = get_field('data_locaties', $course->ID);
+                if($datas){
+                    $data = $datas[0]['data'][0]['start_date'];
+                    if($data != ""){
+                        $day = explode('/', explode(' ', $data)[0])[0];
+                        $mon = explode('/', explode(' ', $data)[0])[1];
+                        $month = $calendar[$mon];
                     }
 
+                    $location = $datas[0]['data'][0]['location'];
+                }else{
+                    $datum = get_field('data_locaties_xml', $course->ID);
+                    if(isset($datum[0]['value'])){
+                        $datas = explode('-', $datum[0]['value']);
+                        $data = $datas[0];
+                        $day = explode('/', explode(' ', $data)[0])[0];
+                        $month = explode('/', explode(' ', $data)[0])[1];
+                        $month = $calendar[$month];
+                        $location = $datas[2];
+                    }
+                }
+
+                if(!$month)
+                    continue;
+
+                if(isset($data)){
+                    $date_now = strtotime(date('Y-m-d'));
+                    $data = strtotime(str_replace('/', '.', $data));
+                    if($data < $date_now)
+                        continue;
                 }
 
                 /*
