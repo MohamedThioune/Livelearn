@@ -12027,8 +12027,158 @@ select {
     margin-bottom: 30px;
 }
 
-
+.note-editable { font-size: 14px; }
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
+.modal-Budget .modal-dialog {
+    max-width: 500px !important;
+    margin-top: 50px !important;
+}
+
+.contentCardAlloccate .modal form input{
+    border-radius: 5px;
+    padding: 15px 20px !important;
+    font-size: 15px !important;
+    color: #3c3c3c !important;
+    background: #e7f8ff;
+    border: 1px solid #c2c2c2;
+    min-height: 40px;
+}
+.modal-Budget label{
+    color: #212529 !important;
+    margin-bottom: 15px;
+}
+.modal-Budget button{
+    background: #023356;
+    color: white;
+    min-width: 88px;
+    padding: 8px 10px 6px;
+    font-size: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+.modal-Budget .manager-name{
+    margin-top: 27px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #070707;
+}
+.modal-Budget h5{
+    width: 300px;
+    margin: 0 auto;
+}
+
+.table td .dropdown img{
+    width: 20px;
+    cursor: pointer;
+}
+.table .img-block-mananger{
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+.table .img-mananger{
+    width: 28px;
+    height: 28px;
+    margin-left: -10px;
+    border-radius: 100%;
+    overflow: hidden;
+    border-width: 0.5px;
+    border-style: solid;
+    border-color: rgb(176, 176, 176);
+}
+.table .img-mananger img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.contentCardAlloccate .table{
+    display: table !important;
+}
+.table .textTh {
+    text-align: center;
+}
+.contentCardGrant thead tr th{
+    text-align: center !important;
+}
+.fa-check:before {
+    color: #00ff60;
+    font-size: 20px;
+}
+.fa-close:before {
+    color: red;
+    font-size: 18px;
+}
+.table th, .table td {
+    text-align: center !important;
+}
+.table .ImgUser{
+    margin: 0px auto;
+}
+.form-group .checbox-element-label{
+    position: relative;
+    top: -15px;
+    left: 8px;
+}
+.block-check-grant{
+    display: flex !important;
+}
+.block-check-grant label {
+    min-width: 25%;
+}
+.contentCardAlloccate .modal-Budget label {
+    margin-bottom: 8px;
+}
+.contentCardAlloccate .modal-Budget .form-group {
+    margin-bottom: 20px;
+}
+.modal-Manager .modal-dialog {
+    max-width: 500px !important;
+    margin-top: 50px !important;
+}
+.modal-Manager  h5 {
+    width: 300px;
+    margin: 0 auto;
+    font-weight: unset;
+}
+
+.modal-Manager  h5 span{
+    color: #043356;
+    font-weight: 500;
+}
+.one-element-list-manager{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.one-element-list-manager .block-img{
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    overflow: hidden;
+}
+.one-element-list-manager .block-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.one-element-list-manager .name-manager{
+    color: #041d2f;
+    font-size: 15px;
+    margin-bottom: 0px;
+    font-weight: 500;
+}
+.one-element-list-manager .email-manager{
+    color: #040d1c;
+    font-size: 14px;
+    margin-bottom: 0px;
+}
+.viewIcone{
+    opacity: 0;
+}
+.one-element-list-manager:hover .viewIcone{
+    opacity: 1;
+}
 
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {

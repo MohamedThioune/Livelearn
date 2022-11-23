@@ -263,10 +263,33 @@ $maandelijke = count($members) * 5;
                                 </p>
                                 <ul class="dropdown-menu">
                                     <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
-                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
+                                    <li class="my-2" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
                                     <li class="my-1"><i class="fa fa-trash px-2"></i><a href="#" class="text-danger">Verwijder</a></li>
                                 </ul>
                             </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade modal-Budget" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title text-center">Give your team a personal learning budget</h5>
+                                        </div>
+                                        <h6 class="manager-name">To: Daniel </h6>
+                                        <div class="modal-body">
+                                            <form action="">
+                                                <div class="form-group">
+                                                    <label for="exampleInputPassword1">Leerbudget</label>
+                                                    <input type="number" class="form-control" placeholder="Amount €">
+                                                </div>
+                                                <button type="button" class="btn btn-add-budget">Add</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                         </td>
                     </tr>
                     <?php

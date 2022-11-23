@@ -270,32 +270,32 @@ $companies = get_posts($args);
 
                    <div class="input-group-course">
                        <label for="">Short description</label>
-                       <textarea name="short_description" id="" cols="30" rows="6"><?= $course->short_description ?>
+                       <textarea  name="short_description" id="" cols="30" rows="6"><?= $course->short_description ?>
                        </textarea>
                    </div>
 
                    <div class="input-group-course">
                        <label for="">Long description</label>
-                       <textarea class="summernote" name="long_description"><?= $course->long_description ?></textarea>
+                       <textarea class="summernote"  name="long_description"><?= $course->long_description ?></textarea>
                    </div>
 
                    <div class="input-group-course">
                        <label for="">For who</label>
-                       <textarea name="for_who" id="" cols="30" rows="6">
+                       <textarea name="for_who" class="summernote">
                        <?= $course->for_who ?> 
                        </textarea>
                    </div>
 
                    <div class="input-group-course">
                        <label for="">Agenda</label>
-                       <textarea name="agenda" id="" cols="30" rows="6">
+                       <textarea name="agenda" class="summernote">
                        <?= $course->agenda ?> 
                        </textarea>
                    </div>
 
                    <div class="input-group-course">
                        <label for="">Results</label>
-                       <textarea name="results" id="" cols="30" rows="6">
+                       <textarea name="results" class="summernote">
                        <?= $course->results ?> 
                        </textarea>
                    </div>
