@@ -35,6 +35,7 @@
 
                     $timer = 0;
                     $questions = get_field('question',$assessment->ID);
+                    $number_question = count($questions);
                     foreach ($questions as $question)
                     {
                         $question_time = $question['timer'];
@@ -218,7 +219,10 @@
 
             <div id="step3OverviewAssessmentBackend">
                 <div id="child">
-                   <div class="head3OverviewAssessment">
+                    <?php
+                    if(!empty($number_question)){
+                    ?>
+                    <div class="head3OverviewAssessment">
                         <p class="assessmentNUmber" id="current-index">Question 1 / <?php echo count($question); ?></p>
                         <p class="assessmentTime" id="backendTime"> </p>
                     </div>
@@ -239,6 +243,11 @@
                             ?>
                         </form>
                     </div>
+                    <?php
+                    }
+                    else
+                        echo "<p class='chooseTechnoTitle'>No question found !</p>"
+                    ?>
                 </div>
                 <button type="button" class="btn btnStratModal" id="btnBackend">Continue</button>
             </div>

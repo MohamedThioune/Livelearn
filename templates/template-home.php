@@ -1013,8 +1013,8 @@ $degrees=[
                     $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
                     foreach($courses as $course){
-                        $bool = false;
-                        $bool = visibility($post, $visibility_company);
+                        $bool = true;
+                        $bool = visibility($course, $visibility_company);
                         if(!$bool)
                             continue;
 
@@ -1108,7 +1108,6 @@ $degrees=[
                         $company_id = $company[0]->ID;
                         $company_logo = get_field('company_logo', $company_id);
 
-                        return $bool;
                     ?>
                     <a href="<?php echo get_permalink($course->ID) ?>" class="blockCardFront" style="color:#43454D">
                         <div class="workshopBlock">
@@ -1168,9 +1167,11 @@ $degrees=[
                     <?php
                         if($i == 7)
                             break;
-
                         $i++;
                     }
+
+                    if(!$i)
+                        echo "<p class='dePaterneText theme-card-description'> <center style='color:#033256'> Stay connected, Something big is coming 😊 </center> </p>";
                     ?>
             </div>
         </div>
@@ -1203,7 +1204,9 @@ $degrees=[
 
                   foreach($courses as $course){
 
-                    if(!visibility($course, $visibility_company))
+                    $bool = true;
+                    $bool = visibility($course, $visibility_company);
+                    if(!$bool)
                         continue;
 
                     /*
