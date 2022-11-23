@@ -227,41 +227,32 @@ if(!empty($courses))
                             break;
 
                         /*
-                        * Location
-                        */
+                        *  Date and Location
+                        */ 
+                        $day = "<i class='fas fa-calendar-week'></i>";
+                        $month = NULL;
                         $location = 'Virtual';
-                        $data = get_field('data_locaties', $course->ID);
-                        if($data){
-                            if($data[0]['data'][0]['location'])
-                                $location = $data[0]['data'][0]['location'];
-                        }
-                        else{         
-                            $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                            if($data[2])
-                                $location = $data[2];
-                        }
 
-                        /*
-                        * Categories
-                        */
-                    
-                        $category = ' ';
-                                    
-                        $category_id = 0;
-                        $category_string = " ";
+                        $datas = get_field('data_locaties', $course->ID);
+                        if($datas){
+                            $data = $datas[0]['data'][0]['start_date'];
+                            if($data != ""){
+                                $day = explode('/', explode(' ', $data)[0])[0];
+                                $mon = explode('/', explode(' ', $data)[0])[1];
+                                $month = $calendar[$mon];
+                            }
 
-                        $tree = get_the_terms($course->ID, 'course_category'); 
-                            if($tree)
-                                if(isset($tree[2]))
-                                    $category = $tree[2]->name;
-                        
-                        if($category == ' '){
-                            $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
-                            $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                            if($category_str != 0)
-                                $category = (String)get_the_category_by_ID($category_str);
-                            else if($category_id != 0)
-                                $category = (String)get_the_category_by_ID($category_id);                                    
+                            $location = $datas[0]['data'][0]['location'];
+                        }else{
+                            $datum = get_field('data_locaties_xml', $course->ID);
+                            if(isset($datum[0]['value'])){
+                                $datas = explode('-', $datum[0]['value']);
+                                $data = $datas[0];
+                                $day = explode('/', explode(' ', $data)[0])[0];
+                                $month = explode('/', explode(' ', $data)[0])[1];
+                                $month = $calendar[$month];
+                                $location = $datas[2];
+                            }
                         }
 
                         /*
@@ -512,41 +503,32 @@ if(!empty($courses))
                     break;
 
                 /*
-                * Location
-                */
+                *  Date and Location
+                */ 
+                $day = "<i class='fas fa-calendar-week'></i>";
+                $month = NULL;
                 $location = 'Virtual';
-                $data = get_field('data_locaties', $course->ID);
-                if($data){
-                    if($data[0]['data'][0]['location'])
-                        $location = $data[0]['data'][0]['location'];
-                }
-                else{         
-                    $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                    if($data[2])
-                        $location = $data[2];
-                }
 
-                /*
-                * Categories
-                */
-               
-                $category = ' ';
-                            
-                $category_id = 0;
-                $category_string = " ";
+                $datas = get_field('data_locaties', $course->ID);
+                if($datas){
+                    $data = $datas[0]['data'][0]['start_date'];
+                    if($data != ""){
+                        $day = explode('/', explode(' ', $data)[0])[0];
+                        $mon = explode('/', explode(' ', $data)[0])[1];
+                        $month = $calendar[$mon];
+                    }
 
-                $tree = get_the_terms($course->ID, 'course_category'); 
-                    if($tree)
-                        if(isset($tree[2]))
-                            $category = $tree[2]->name;
-                
-                if($category == ' '){
-                    $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
-                    $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                    if($category_str != 0)
-                        $category = (String)get_the_category_by_ID($category_str);
-                    else if($category_id != 0)
-                        $category = (String)get_the_category_by_ID($category_id);                                    
+                    $location = $datas[0]['data'][0]['location'];
+                }else{
+                    $datum = get_field('data_locaties_xml', $course->ID);
+                    if(isset($datum[0]['value'])){
+                        $datas = explode('-', $datum[0]['value']);
+                        $data = $datas[0];
+                        $day = explode('/', explode(' ', $data)[0])[0];
+                        $month = explode('/', explode(' ', $data)[0])[1];
+                        $month = $calendar[$month];
+                        $location = $datas[2];
+                    }
                 }
 
                 /*

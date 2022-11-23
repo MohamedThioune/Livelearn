@@ -51,9 +51,10 @@
  
         foreach($global_courses as $course)
         {  
-            if(!empty($company_visibility))
-                if(!visibility($course, $visibility_company))
-                    continue;
+            $bool = true;
+            $bool = visibility($course, $visibility_company);
+            if(!$bool)
+                continue;
 
             $experts = get_field('experts', $course->ID);
             $box = false; 

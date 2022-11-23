@@ -102,9 +102,10 @@
         if(!empty($courses)){
             foreach($courses as $course)
             {
-                if(!empty($company_visibility))
-                    if(!visibility($course, $visibility_company))
-                        continue;
+                $bool = true;
+                $bool = visibility($course, $visibility_company);
+                if(!$bool)
+                    continue;
 
                 if(get_field('course_type', $course->ID) == "Opleidingen")
                     array_push($opleidingen, $course);
