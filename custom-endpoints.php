@@ -86,7 +86,8 @@ function allCourses ($data)
     {
       $courses[$i]->author = array();
       foreach (get_field('experts',$courses[$i]->ID) as $key => $value) {
-        array_push($courses[$i]->author, new Author (get_user_by('id',$value),wp_get_attachment_url(get_user_by('id',$value)->profile_img)));
+        $author = get_user_by('id',$value);
+        array_push($courses[$i]->author, new Author ($author,wp_get_attachment_url(get_field('profile_img',$author->ID))));
       }
       $courses[$i]->long_description = get_field('long_description',$courses[$i]->ID);
       $courses[$i]->short_description = get_field('short_description',$courses[$i]->ID);
@@ -112,7 +113,8 @@ function allAuthors()
 {
   $authors_post = get_users(
     array(
-      'role__in' => ['teacher']
+      'role__in' => ['teacher'],
+      'posts_per_page' => -1,
     )
     );
     if (!$authors_post)
@@ -156,21 +158,21 @@ function allAuthors()
         'orderby'    => 'name',
         'include' => (int)$subtopic,
         'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
+      ) );
 
-  if(!isset($category[0]) && !get_user_by('ID', $subtopic)){
-      $informations['error'] = 'Please fill correctly the value of the metadata !';
-      return $informations;
+      if(!isset($category[0]) && !get_user_by('ID', $subtopic)){
+          $informations['error'] = 'Please fill correctly the value of the metadata !';
+          return $informations;
+      }
+      $meta_data = get_user_meta($user_id, $request['meta_key']);
+      if(!in_array($subtopic, $meta_data))
+      {
+          add_user_meta($user_id, $request['meta_key'], $subtopic);
+          $informations['success'] = 'Subscribed successfully !';
+      }else{
+          delete_user_meta($user_id, $request['meta_key'], $subtopic);
+          $informations['success'] = 'Unsubscribed successfully !';
+      }
   }
-  $meta_data = get_user_meta($user_id, $request['meta_key']);
-  if(!in_array($subtopic, $meta_data))
-  {
-      add_user_meta($user_id, $request['meta_key'], $subtopic);
-      $informations['success'] = 'Subscribed successfully !';
-  }else{
-      delete_user_meta($user_id, $request['meta_key'], $subtopic);
-      $informations['success'] = 'Unsubscribed successfully !';
-  }
-    }
-    return $informations; 
+  return $informations; 
 }
