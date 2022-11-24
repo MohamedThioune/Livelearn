@@ -346,8 +346,10 @@ if(isset($_GET['message']))
                     <?php
                     $find = false;
                     foreach($recommended_courses as $course){
+                        //Course Type
+                        $course_type = get_field('course_type', $course->ID);
 
-                        if(get_field('course_type', $course->ID) == 'Artikel'){
+                        if($course_type == 'Artikel'){
                             $bool = true;
                             $bool = visibility($course, $visibility_company);
                             if(!$bool)
@@ -404,16 +406,13 @@ if(isset($_GET['message']))
                                 if(!$thumbnail)
                                     $thumbnail = get_field('url_image_xml', $course->ID);
                                         if(!$thumbnail)
-                                            $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . $key . '.jpg';
+                                            $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                             }
                             
                             /*
                             * Companies
                             */ 
                             $company = get_field('company',  'user_' . $course->post_author);
-                            
-                            //Course Type
-                            $course_type = get_field('course_type', $course->ID);
 
                             $find = true;
                         ?>
@@ -536,8 +535,9 @@ if(isset($_GET['message']))
                     $find = false;
                     $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
                     foreach($recommended_courses as $course){
+                        $course_type = get_field('course_type', $course->ID);
 
-                        if(get_field('course_type', $course->ID) == $key){
+                        if($course_type == $key){
                             $bool = true;
                             $bool = visibility($course, $visibility_company);
                             if(!$bool)
@@ -624,7 +624,7 @@ if(isset($_GET['message']))
                                 if(!$thumbnail)
                                     $thumbnail = get_field('url_image_xml', $course->ID);
                                         if(!$thumbnail)
-                                            $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . $key . '.jpg';
+                                            $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                             }
                             
                             /*
@@ -839,6 +839,8 @@ if(isset($_GET['message']))
                     $price =  number_format($p, 2, '.', ',');
                 else 
                     $price = 'Gratis';
+                
+                $course_type = get_field('course_type', $course->ID);
 
                 /*
                 * Thumbnails
@@ -849,7 +851,7 @@ if(isset($_GET['message']))
                     if(!$thumbnail)
                         $thumbnail = get_field('url_image_xml', $course->ID);
                             if(!$thumbnail)
-                                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . $key . '.jpg';
+                                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                 }
                 
                 /*
