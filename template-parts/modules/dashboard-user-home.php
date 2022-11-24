@@ -104,8 +104,62 @@ $global_courses = get_posts($args);
 
 foreach ($global_courses as $key => $course) {    
     //Control visibility
-    if(!visibility($course, $visibility_company))
+    $bool = true;
+    $bool = visibility($course, $visibility_company);
+    if(!$bool)
         continue;
+
+    /*
+    *  Date and Location
+    */
+    $data = array();
+    $day = '-';
+    $month = '';
+    $location = 'Virtual';
+
+    $datas = get_field('data_locaties', $course->ID);
+
+    if($datas){
+        $data = $datas[0]['data'][0]['start_date'];
+        if($data != ""){
+            $day = explode('/', explode(' ', $data)[0])[0];
+            $mon = explode('/', explode(' ', $data)[0])[1];
+            $month = $calendar[$mon];
+        }
+
+        $location = $datas[0]['data'][0]['location'];
+    }else{
+        $datum = get_field('data_locaties_xml', $course->ID);
+
+        if($datum)
+            if(isset($datum[0]['value']))
+                $element = $datum[0]['value'];
+
+        if(!isset($element))
+            continue;
+
+        $datas = explode('-', $element);
+
+        $data = $datas[0];
+        $day = explode('/', explode(' ', $data)[0])[0];
+        $month = explode('/', explode(' ', $data)[0])[1];
+        $month = $calendar[$month];
+        $location = $datas[2];
+        
+    }
+
+    //Course Type
+    $course_type = get_field('course_type', $course->ID);
+
+    if(empty($data))
+        null;
+    else if(!empty($data) && $course_type != "Video" && $course_type != "Artikel")
+        if($data){
+            $date_now = strtotime(date('Y-m-d'));
+            $data = strtotime(str_replace('/', '.', $data));
+            if($data < $date_now)
+                continue;
+        }
     
     //Preferences categories
     $category_default = get_field('categories', $course->ID);
@@ -184,10 +238,6 @@ if (!empty($user_post_view))
             
         foreach ($courses as $key => $course) {
             $points = 0;
-            
-            //Control visibility
-            if(!visibility($course, $visibility_company))
-                continue;
 
             //Read category viewed
             $read_category_view = array();
@@ -298,9 +348,10 @@ if(isset($_GET['message']))
                     foreach($recommended_courses as $course){
 
                         if(get_field('course_type', $course->ID) == 'Artikel'){
-                            if(!empty($company_visibility))
-                                if(!visibility($course, $visibility_company))
-                                    continue;
+                            $bool = true;
+                            $bool = visibility($course, $visibility_company);
+                            if(!$bool)
+                                continue;
 
                             $count['limit'] = $count['limit'] + 1;
 
@@ -487,13 +538,14 @@ if(isset($_GET['message']))
                     foreach($recommended_courses as $course){
 
                         if(get_field('course_type', $course->ID) == $key){
-                            if(!empty($company_visibility))
-                                if(!visibility($course, $visibility_company))
-                                    continue;
+                            $bool = true;
+                            $bool = visibility($course, $visibility_company);
+                            if(!$bool)
+                                continue;
 
                             $count['limit'] = $count['limit'] + 1;
                             $data = array();
-                            $day = '';
+                            $day = '-';
                             $month = '';
                             $location = 'Virtual';
 
@@ -552,17 +604,6 @@ if(isset($_GET['message']))
                                 $location = $datas[2];
                                 
                             }
-
-                            //Course Type
-                            $course_type = get_field('course_type', $course->ID);
-
-                            if(!empty($data) && $course_type != "Video" && $course_type != "Artikel")
-                                if($data){
-                                    $date_now = strtotime(date('Y-m-d'));
-                                    $data = strtotime(str_replace('/', '.', $data));
-                                    if($data < $date_now)
-                                        continue;
-                                }
                             
                             /*
                             * Price 
@@ -720,26 +761,24 @@ if(isset($_GET['message']))
             <?php
             $i = 0;
             $find = false;
-            $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];    
+            $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];  
             foreach($courses as $key => $course){
                 if($i == 20)
                     break;
                 
                 //Control visibility
-                if(!visibility($course, $visibility_company))
-                    continue;
-
-                //Check-in
-                if(in_array($course->ID, $random_id))
+                $bool = true;
+                $bool = visibility($course, $visibility_company);
+                if(!$bool)
                     continue;
                            
                 //Trends : Course Type remaining
-                $course_type = get_field('course_type', $course->ID);
-                if(!in_array($course_type, $count_trend_keys))
-                    continue;
+                // $course_type = get_field('course_type', $course->ID);
+                // if(in_array($course_type, $count_trend_keys))
+                //     continue;
 
                 $i++;
-
+                
                 /*
                 * Categories
                 */
@@ -789,16 +828,6 @@ if(isset($_GET['message']))
                         $month = $calendar[$month];
                         $location = $datas[2];
                     }
-                }
-
-                if(!$month)
-                    continue;
-
-                if(isset($data)){
-                    $date_now = strtotime(date('Y-m-d'));
-                    $data = strtotime(str_replace('/', '.', $data));
-                    if($data < $date_now)
-                        continue;
                 }
 
                 /*
@@ -1109,10 +1138,8 @@ if(isset($_GET['message']))
     }
     
     $is_first_login=(get_field('is_first_login','user_' . get_current_user_id()));
-    if (!$is_first_login && get_current_user_id() !=0 )
-        {
-            // delete_user_meta(get_current_user_id(),'topic');
-        
+    if(!$is_first_login && get_current_user_id() != 0 )
+        {        
     ?>    
         <!-- Modal First Connection --> 
         <div class="contentModalFirst">
@@ -1242,7 +1269,7 @@ if(isset($_GET['message']))
             </div>
         </div>
     <?php
-    }  
+        }  
 ?>
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
