@@ -1,6 +1,8 @@
 <?php
 $user = get_user_by('ID', $id_user);
-$number_portfolios = count($portfolios);
+$number_portfolios = 0;
+if (!empty($portfolios))
+    $number_portfolios = count($portfolios);
 ?>
 <div class="contentPassport profilUserP">
     <div class="headPassport">
