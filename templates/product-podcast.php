@@ -111,7 +111,7 @@
                    </div>
                </div>
                <div class="codeless-player-audio  codeless-element">
-                   <audio controls>
+                   <audio controls id="myAudioID">
                        <source src="horse.ogg" type="audio/ogg">
                        <source src="<?php echo get_stylesheet_directory_uri();?>/sounds/firstSounds.mp3" type="audio/mpeg">
                        Your browser does not support the audio element.
@@ -121,7 +121,7 @@
         </div>
     </div>
         <div class="container-fluid">
-            <div class="overElement">
+            <div class="overElement product-podcat1">
                 <div class="blockOneOver">
                     <div class="titleBlock">
                         <div class="roundBlack" >
@@ -133,8 +133,57 @@
 
                     <p class="e-learningTitle">What is the ecosystem?</p>
                     <!-- Image -->
-                    <div class="img-fluid-course">
+                    <div class="img-fluid-course img-podacast">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/ecosystem.jpeg" alt="">
+                    </div>
+                    <div class="sound-wave">
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" preserveAspectRatio="none" viewBox="0 0 1440 560">
+                            <g mask='url("#SvgjsMask1099")' fill="none">
+                            <rect fill="#0e2a47"></rect>
+                            <g transform="translate(0, 0)" stroke-linecap="round" stroke="url(#SvgjsLinearGradient1100)">
+                                <path d="M375 202.15 L375 357.85" stroke-width="17.25" class="bar-scale2 "></path>
+                                <path d="M398 155.33 L398 404.67" stroke-width="17.25" class="bar-scale3"></path>
+                                <path d="M421 196.44 L421 363.56" stroke-width="17.25" class="bar-scale3 "></path>
+                                <path d="M444 259.91 L444 300.09" stroke-width="17.25" class="bar-scale1 "></path>
+                                <path d="M467 208.25 L467 351.75" stroke-width="17.25" class="bar-scale3 "></path>
+                                <path d="M490 184.8 L490 375.2" stroke-width="17.25" class="bar-scale2 "></path>
+                                <path d="M513 249.28 L513 310.72" stroke-width="17.25" class="bar-scale2 "></path>
+                                <path d="M536 220.75 L536 339.25" stroke-width="17.25" class="bar-scale3 "></path>
+                                <path d="M559 254.8 L559 305.2" stroke-width="17.25" class="bar-scale1 "></path>
+                                <path d="M582 186.77 L582 373.23" stroke-width="17.25" class="bar-scale3 "></path>
+                                <path d="M605 210.13 L605 349.87" stroke-width="17.25" class="bar-scale1 "></path>
+                                <path d="M628 234.45 L628 325.55" stroke-width="17.25" class="bar-scale3 "></path>
+                                <path d="M651 241.1 L651 318.89" stroke-width="17.25" class="bar-scale2 "></path>
+                                <path d="M674 202.95 L674 357.05" stroke-width="17.25" class="bar-scale3 "></path>
+                                <path d="M697 165.81 L697 394.19" stroke-width="17.25" class="bar-scale2 "></path>
+                                <path d="M720 224.51 L720 335.49" stroke-width="17.25" class="bar-scale2 "></path>
+                                <path d="M743 157.59 L743 402.4" stroke-width="17.25" class="bar-scale1 "></path>
+                                <path d="M766 164.98 L766 395.02" stroke-width="17.25" class="bar-scale1 "></path>
+                                <path d="M789 158.93 L789 401.07" stroke-width="17.25" class="bar-scale3 "></path>
+                                <path d="M812 224.24 L812 335.76" stroke-width="17.25" class="bar-scale2 "></path>
+                                <path d="M835 171.73 L835 388.27" stroke-width="17.25" class="bar-scale1 "></path>
+                                <path d="M858 264.89 L858 295.11" stroke-width="17.25" class="bar-scale2 "></path>
+                                <path d="M881 175.14 L881 384.86" stroke-width="17.25" class="bar-scale1 "></path>
+                                <path d="M904 248.17 L904 311.83" stroke-width="17.25" class="bar-scale3 "></path>
+                                <path d="M927 185.4 L927 374.6" stroke-width="17.25" class="bar-scale1 "></path>
+                                <path d="M950 234.82 L950 325.18" stroke-width="17.25" class="bar-scale3 "></path>
+                                <path d="M973 229.9 L973 330.1" stroke-width="17.25" class="bar-scale3 "></path>
+                                <path d="M996 194.25 L996 365.75" stroke-width="17.25" class="bar-scale2 "></path>
+                                <path d="M1019 162.47 L1019 397.53" stroke-width="17.25" class="bar-scale1 "></path>
+                                <path d="M1042 205.06 L1042 354.94" stroke-width="17.25" class="bar-scale3 "></path>
+                                <path d="M1065 240.52 L1065 319.48" stroke-width="17.25" class="bar-scale1 "></path>
+                            </g>
+                            </g>
+                            <defs>
+                            <mask id="SvgjsMask1099">
+                                <rect width="1440" height="560" fill="#ffffff"></rect>
+                            </mask>
+                            <linearGradient x1="360" y1="280" x2="1080" y2="280" gradientUnits="userSpaceOnUse" id="SvgjsLinearGradient1100">
+                                <stop stop-color="#3a7cc3" offset="0"></stop>
+                                <stop stop-color="#dd1133" offset="1"></stop>
+                            </linearGradient>
+                            </defs>
+                        </svg>
                     </div>
 
                     <!--------------------------------------- start Text description -------------------------------------- -->
@@ -516,8 +565,6 @@
             </div>
         </div>
         <!-- fin Modal deel -->
-
-
     </div>
 
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
@@ -696,7 +743,27 @@
             });
         }
 
-    </script>
+    </script>   
+    <script>
+
+        $(document).ready(function() {
+            var audio = document.querySelector('audio');
+
+            audio.onplay = function() { 
+                audio.play(0);
+                $(".img-podacast").addClass("hide");
+                $(".sound-wave").show();
+            };
+
+            audio.addEventListener('pause', (event) => {
+                $(".img-podacast").removeClass("hide");
+                $(".sound-wave").hide();
+            });
+                
+
+        } )
+
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
+
