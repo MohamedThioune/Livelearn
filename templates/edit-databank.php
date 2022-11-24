@@ -1,4 +1,4 @@
-<?php /** Template Name: Edit Databank */ ?>
+²<?php /** Template Name: Edit Databank */ ?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
