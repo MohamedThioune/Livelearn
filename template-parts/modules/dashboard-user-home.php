@@ -219,7 +219,7 @@ $user_post_view = get_posts(
         'author' => $user,
         'order' => 'DESC'
     )
-)[0];   
+    )[0];   
 
 $is_view = false;
 
@@ -349,7 +349,7 @@ if(isset($_GET['message']))
                         //Course Type
                         $course_type = get_field('course_type', $course->ID);
 
-                        if($course_type == 'Artikel'){
+                        if(get_field('course_type', $course->ID) == 'Artikel'){
                             $bool = true;
                             $bool = visibility($course, $visibility_company);
                             if(!$bool)
@@ -537,7 +537,7 @@ if(isset($_GET['message']))
                     foreach($recommended_courses as $course){
                         $course_type = get_field('course_type', $course->ID);
 
-                        if($course_type == $key){
+                        if(get_field('course_type', $course->ID) == $key){
                             $bool = true;
                             $bool = visibility($course, $visibility_company);
                             if(!$bool)
