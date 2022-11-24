@@ -196,7 +196,7 @@ if(!empty($notifications))
                                     if ( in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator')
                                         echo '<a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>';
 
-                                if ( in_array( 'hr', $user->roles ) || in_array( 'teacher', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )) 
+                                if ( in_array( 'hr', $user->roles ) || in_array( 'author', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )) 
                                     echo '<a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>';
                             ?>
                         </div>
@@ -225,7 +225,7 @@ if(!empty($notifications))
                             if ( in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') 
                                 echo '<a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>';
    
-                        if ( in_array( 'hr', $user->roles ) || in_array( 'teacher', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )) 
+                        if ( in_array( 'hr', $user->roles ) || in_array( 'author', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )) 
                             echo '<a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>';
                         ?>
                     </div>

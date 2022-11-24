@@ -59,7 +59,7 @@ class Tags
 
 function allCourses ($data)
 {
-    $Courses = array();
+    $outcome_courses = array();
     $tags = array();
     $author = array();
     $args = array(
@@ -70,25 +70,32 @@ function allCourses ($data)
     );
     $courses = get_posts($args);
     if (!$courses)
-    return ['error' => "There is no courses in the database! ","codeStatus" => 400];
+      return ['error' => "There is no courses in the database! ","codeStatus" => 400];
+      
     if (!isset ($data['page']) ) 
       $page = 1;  
     else   
       $page = $data['page'];
+
   $results_per_page = 100;  
   $start = ($page-1) * $results_per_page;
   $end = ($page) * $results_per_page;
-  $number_of_post = count($courses);
-  $number_of_page = ceil ($number_of_post / $results_per_page);
-  if ($number_of_page < $data['page'])
+  if(!empty($courses))
+    $number_of_post = count($courses);
+
+  $number_of_page = ceil($number_of_post / $results_per_page);
+
+  if($number_of_page < $data['page'])
     return ['error' => "Page doesn't exist ! ","codeStatus" => 400];  
-    for ($i=$start; $i < $end ;  $i++) 
-    {
+
+  for($i=$start; $i < $end ;  $i++) {
       $courses[$i]->author = array();
-      foreach (get_field('experts',$courses[$i]->ID) as $key => $value) {
-        $author = get_user_by('id',$value);
-        array_push($courses[$i]->author, new Author ($author,wp_get_attachment_url(get_field('profile_img',$author->ID))));
-      }
+      $experts = get_field('experts',$courses[$i]->ID);
+      if(!empty($experts))
+        foreach (get_field('experts',$courses[$i]->ID) as $key => $value) {
+          $author = get_user_by('ID',$value);
+          array_push($courses[$i]->author, new Author ($author, wp_get_attachment_url(get_field('profile_img',$author->ID))));
+          }
       $courses[$i]->long_description = get_field('long_description',$courses[$i]->ID);
       $courses[$i]->short_description = get_field('short_description',$courses[$i]->ID);
       $courses[$i]->course_type = get_field('course_type',$courses[$i]->ID);
@@ -97,33 +104,37 @@ function allCourses ($data)
       $courses[$i]->youtube_videos = get_field('youtube_videos',$courses[$i]->ID);
       $tags = get_field('categories',$courses[$i]->ID) ?? [];
       $courses[$i]->tags= array();
-        if (count($tags) != 0)
-            foreach ($tags as $key => $category) 
-            {
+      if($tags)
+        if (!empty($tags))
+          foreach ($tags as $key => $category) 
+            if(isset($category['value'])){
               $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
               array_push($courses[$i]->tags,$tag);
             }
+          
       $new_course = new Course($courses[$i]);
-      array_push ($Courses,$new_course);
+      array_push($outcome_courses, $new_course);
     }
-   return ['courses' => $Courses,"codeStatus" => 200];
+   return ['courses' => $outcome_courses, "codeStatus" => 200];
   }
 
 function allAuthors()
 {
   $authors_post = get_users(
     array(
-      'role__in' => ['teacher'],
+      'role__in' => ['author'],
       'posts_per_page' => -1,
-    )
+      )
     );
     if (!$authors_post)
       return ['error' => 'There is no authors in the database',"codeStatus" => 400];
-    $authors=array();
-    foreach ($authors_post as $key => $author_post) {
-      $author = new Author($author_post, wp_get_attachment_url($author_post->profile_img));
-      array_push($authors,$author);
-    }
+  
+    $authors = array();
+    if(!empty($authors_post))
+      foreach ($authors_post as $key => $author_post) {
+        $author = new Author($author_post, wp_get_attachment_url($author_post->profile_img));
+        array_push($authors,$author);
+      }
     return ['authors' => $authors,"codeStatus" => 200];;
 }
 
