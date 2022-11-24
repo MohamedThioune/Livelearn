@@ -1,5 +1,6 @@
 <?php
 $user = get_user_by('ID', $id_user);
+$number_portfolios = count($portfolios);
 ?>
 <div class="contentPassport profilUserP">
     <div class="headPassport">
@@ -141,7 +142,7 @@ $user = get_user_by('ID', $id_user);
                   
                     <div class="contentEducationCandidat">
                         <div class="titleDateEducation">
-                            <p class="projetsText"><span><?php echo count($portfolios); ?></span>Projets</p>
+                            <p class="projetsText"><span><?= $number_portfolios ?></span>Projets</p>
                         </div>
                         <?php
                             if($portfolios)
