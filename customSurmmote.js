@@ -22,16 +22,18 @@ $(document).ready(function summernoteSandbox() {
         },
         toolbar: [
             ['operation', ['undo', 'redo']],
-            ['style', ['bold', 'italic', 'underline']],
-            ['color', ['color']],
-            ['font', ['strikethrough', 'superscript', 'subscript', 'clear']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['insert', ['link','picture', 'hr']],
+            ['para', ['ul', 'ol', 'paragraph','h1']],
+            ['insert', ['picture', 'hr']],
             ['view', ['codeview']],
-        ]
+        ],
+
+
+
     });
 
+
     $('#preview-div').hide();
+
 
     $('#get-data').click(() => {
         // Sample strings for sanitaztion testing
@@ -77,3 +79,4 @@ $(document).ready(function summernoteSandbox() {
         sanitized = null;
     }
 });
+$('.summernote').summernote('fontSize', 22);

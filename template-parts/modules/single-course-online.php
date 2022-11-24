@@ -841,54 +841,52 @@ extract($_GET);
                                 <a href="#bookdates" class="btn btnKoop">Schrijf je in</a>
 <!--                                <a href="#bookdates" class="btn btnKoop">Schrijf je in<?php /*echo $course_type; */?></a>
 -->                            </div>
-                            <div class="col-12 my-5" style="background-color: #E0EFF4">
-                                <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around justify-content-center">
+        <div class="col-12 my-5" style="background-color: #E0EFF4">
+            <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around justify-content-center">
 
-                                    <div class="swiper">
-                                        <div class="swiper-wrapper">
-                                            <?php
-                                            foreach($experts as $expert){
-                                                $expert = get_users(array('include'=> $expert))[0]->data;
-                                                $company = get_field('company',  'user_' . $expert->ID);
-                                                $title = $company[0]->post_title;
-                                                $image = get_field('profile_img', 'user_'. $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                                ?>
-                                                <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
-                                                    <div class="my-2 d-flex flex-column mx-md-0 mx-1">
-                                                        <div class="imgCardPrice" style="height: 50px; width:50px">
-                                                            <img src="<?php echo $image; ?>" alt="teacher photo">
-                                                        </div>
-                                                        <span class="textIconeLearning"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span>
-                                                        <span><?php echo $title; ?></span>
-                                                    </div>
-                                                </a>
-                                            <?php } ?>
-                                        </div>
-
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                        <?php
+                        foreach($experts as $expert){
+                            $expert = get_users(array('include'=> $expert))[0]->data;
+                            $company = get_field('company',  'user_' . $expert->ID);
+                            $title = $company[0]->post_title;
+                            $image = get_field('profile_img', 'user_'. $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                            ?>
+                            <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
+                                <div class="my-2 d-flex flex-column mx-md-0 mx-1">
+                                    <div class="imgCardPrice" style="height: 50px; width:50px">
+                                        <img src="<?php echo $image; ?>" alt="teacher photo">
                                     </div>
-
-                                    <!-- If we need pagination -->
-                                    <!-- <div class="swiper-pagination"></div> -->
-
-                                    <!-- If we need navigation buttons -->
-                                    <div class="swiper-button-prev swiper-moved" style="font-size: 8px !important">
-                                    </div>
-                                    <div class="test">
-                                        <div class="swiper-button-next swiper-moved"></div>
-                                    </div>
-
-                                    <!-- If we need scrollbar -->
-                                    <!-- <div class="swiper-scrollbar"></div> -->
+                                    <span class="textIconeLearning"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span>
+                                    <span><?php echo $title; ?></span>
                                 </div>
-
-                            </div>
-                        </div>
-
-
-
+                            </a>
+                        <?php } ?>
                     </div>
 
                 </div>
+
+                <!-- If we need pagination -->
+                <!-- <div class="swiper-pagination"></div> -->
+
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev swiper-moved" style="font-size: 8px !important">
+                </div>
+                <div class="test">
+                    <div class="swiper-button-next swiper-moved"></div>
+                </div>
+
+                <!-- If we need scrollbar -->
+                <!-- <div class="swiper-scrollbar"></div> -->
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</div>
 
 
                 <!-- <div class="CardpriceLive">
@@ -1001,6 +999,24 @@ extract($_GET);
         </div>
     </div>
     <!-- fin Modal deel -->
+
+    <!-- Modal -->
+
+      <!-- début Modal  -->
+    <div class="modal fade modalpaywallVideo" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+             <h5 class="title-paywall" >Get Acces Now </h5>
+            <div class="modal-body">
+               <p class="sub-title-paywall">Please purchase this course to continue</p>
+               <p class="price-course">$150</p>
+               <a href="" class="btn btn-paywall">Buying Now <img src="<?php echo get_stylesheet_directory_uri();?>/img/arrowhead.png" alt=""></a>
+               <p class="text-not-sure-which">Not Sure which is right now for you ? <a href="">Discover the benefits of taking this course now </a></p>
+            </div>
+            </div>
+        </div>
+    </div>
+
 
 </div>
 
@@ -1179,6 +1195,12 @@ extract($_GET);
         }, '500' );
         e.preventDefault();
 
+    });
+</script>
+
+<script type="text/javascript">
+    $(window).on('load', function() {
+        $('.modalpaywallVideo').modal('show');
     });
 </script>
 

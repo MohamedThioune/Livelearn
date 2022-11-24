@@ -390,6 +390,8 @@
                 </div>
                 <!--------------------------------------- end Text description -------------------------------------- -->
 
+                   
+
                 <div class="customTabs">
                     <div class="tabs">
                         <ul id="tabs-nav">
@@ -809,7 +811,9 @@
                         <!-- END tabs-content -->
                     </div> <!-- END tabs -->
                 </div>
+                
             </div>
+            
 
 
 
@@ -1109,8 +1113,21 @@
                     </div>
             </div>
 
-        </div>
 
+        </div>
+ <!-- Strat paywall -->
+                        <div>
+                            <div class="paywall-block">
+                            <p class="title-paywall">You want to continue reading </p>
+                            <p class="sub-title-paywall">Please purchase this to continue</p>
+                            <a class="btn btn-paywall" href="">Buying Now <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/arrowhead.png" alt=""></a>
+                            <p class="text-not-sure-which">Not Sure which is right now for you ?
+                                <a href="">Discover the benefits of taking this course now</a> </p>
+                            </div>
+                        </div>
+                   
+
+                    <!-- End paywall -->
 
 
 
