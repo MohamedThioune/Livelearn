@@ -61,7 +61,7 @@
       $image = "";
       
       /*
-      Get the url media image 
+      Get the url media image
       */
       foreach($datum->programDescriptions->media as $media)
         if($media->type == "image"){
