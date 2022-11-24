@@ -84,15 +84,20 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                     <ul class="dropdown-menu">
                                         <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?= $link; ?>" target="_blank">Bekijk</a></li>
                                         <li class="my-2"><i class="fa fa-gear px-2"></i><a href="<?= $link; ?>" target="_blank">Pas aan</a></li>
+                                        <?php 
+                                        if($you) {
+                                        ?>
                                         <li class="my-1 ">
-                                            <div class="<?php if($you) echo 'remove' ?>">
+                                            <div class="remove">
                                                 <?php
-                                                if($you)
                                                     echo '<img class="removeImg" src="' . get_stylesheet_directory_uri() . '/img/deleteIcone.png" alt="">';
                                                 ?>
                                                 <span>Verwijderen</span>
                                             </div>
                                         </li>
+                                        <?php
+                                        }
+                                        ?>
                                     </ul>
                                 </div>
                             </td>
