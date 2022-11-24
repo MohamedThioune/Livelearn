@@ -40,7 +40,7 @@
                 <div class="d-flex justify-content-center">
 
                     <div>
-                        <a href="https://wa.me/<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
+                        <a href="https://wa.me/<?= $phone_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                             <i style="font-size: 50px; height: 49px; margin-top: -4px;"
                                 class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>
                         </a>
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div>
-                        <a href="mailto:<?= $email_user ?>" class="mx-3 d-flex flex-column ">
+                        <a href="mailto:<?= $email_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                             <i style="font-size: 25px"
                                 class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
                             <!-- <span class="bd-highlight fw-bold text-primary mt-2">email</span> -->
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                     <div>
-                        <a href="sms:<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
+                        <a href="sms:<?= $phone_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                             <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>
                         </a>
                         <div class="mt-3 text-center">
@@ -68,7 +68,7 @@
                     </div>
 
                     <div>
-                        <a href="tel:<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
+                        <a href="tel:<?= $phone_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                             <i class="bd-highlight bi bi-telephone-x border border-3 border-primary rounded-circle text-primary shadow"
                                 style="font-size: 20px; padding: 6px 11px;"></i>
                             <!-- <span class="bd-highlight fw-bold text-primary mt-2">call</span> -->
@@ -305,7 +305,7 @@
                                     </div>
                                     <?php
 
-                                     if ($user_id==0)
+                                    if ($user_id == 0)
                                        {
                                         echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
                                         wp_login_form([
@@ -316,7 +316,9 @@
                                                 'label_password' => 'Wat is je wachtwoord?'
                                         ]);
                                         echo "</div>";
-                                       }else{
+                                       }
+                                    else{
+                                        var_dump(count($users_company));
                                         echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
                                             echo "<form action='/dashboard/user/' class='formConetentIntern' method='POST'>";
                                                 echo "<label for='member_id'><b>Deel deze cursus met uw team :</b></label>";
@@ -329,6 +331,8 @@
                                                                 echo "<option selected  value='" . $user . "'>" . $name . "</option>";
                                                             else
                                                                 echo "<option value='" . $user . "'>" . $name . "</option>";
+                                                        else
+                                                            echo "<option class='redE' value='" . $user . "'>" . $name . "</option>";
                                                     }
                                                 echo "</select></br></br>";
                                                 echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
