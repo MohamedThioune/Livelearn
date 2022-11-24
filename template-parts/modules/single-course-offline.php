@@ -318,7 +318,6 @@
                                         echo "</div>";
                                        }
                                     else{
-                                        var_dump(count($users_company));
                                         echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
                                             echo "<form action='/dashboard/user/' class='formConetentIntern' method='POST'>";
                                                 echo "<label for='member_id'><b>Deel deze cursus met uw team :</b></label>";
