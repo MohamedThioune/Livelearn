@@ -165,6 +165,7 @@ function RandomString(){
         // var_dump($artikels);
         // echo($url);
         foreach($artikels as $article){
+          if ($article!=null) {
             $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($images['guid']['url'], 'Artikel'));
             $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where titel=%s and type=%s",array($article['title']['rendered'],'Artikel'));
 
@@ -223,7 +224,10 @@ function RandomString(){
                 continue;
             }
             // var_dump($data);
+          }else {
+            console.log("nothing to load!!");
+          }
         }
-        // header('location: /databank');
+        header('location: /databank');
     }
 ?>
