@@ -276,7 +276,7 @@ $companies = get_posts($args);
 
                    <div class="input-group-course">
                        <label for="">Long description</label>
-                       <textarea class="summernote"  name="long_description"><?= strip_tags($course->long_description) ?></textarea>
+                       <textarea class="summernote"  name="long_description"><?= strip_tags($long_description) ?></textarea>
                    </div>
 
                    <div class="input-group-course">
