@@ -1,4 +1,4 @@
-<?php /** Template Name: product podcast template */ ?>
+<?php /** Template Name: product podcast */ ?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
