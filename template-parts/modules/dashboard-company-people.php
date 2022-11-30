@@ -26,7 +26,7 @@
     $count = count($members);
 
 if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"; 
-    if( in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) || $grant ) {
+    if( in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) || in_array('manager', $data_user->roles) || $grant ) {
 ?>
     <div class="cardPeople">
         <div class="headListeCourse">
@@ -56,9 +56,9 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                         if(!$image_user)  
                             $image_user = get_stylesheet_directory_uri(). "/img/placeholder_user.png";
 
-                        $you  = '';
+                        $you = NULL;
                         if(!in_array('administrator', $user->roles))
-                            $you  =  (in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : '';
+                            $you  =  (in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : NULL;
                         
                         $link = "/dashboard/company/profile/?id=" . $user->ID . '&manager='. $user_connected; 
                     ?>
@@ -83,16 +83,21 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                     </p>
                                     <ul class="dropdown-menu">
                                         <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?= $link; ?>" target="_blank">Bekijk</a></li>
-                                        <li class="my-2"><i class="fa fa-gear px-2"></i><a href="<?= $link; ?>" target="_blank">Pas aan</a></li>
-                                        <li class="my-1 ">
-                                            <div class="<?php if($you != '') echo 'remove' ?>">
-                                                <?php
-                                                if($you != '')
-                                                    echo '<img class="removeImg" src="' . get_stylesheet_directory_uri() . '/img/deleteIcone.png" alt="">';
-                                                ?>
-                                                <span>Verwijderen</span>
-                                            </div>
-                                        </li>
+                                        <li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalEdit" href="#">Edit</a></li>
+                                        <?php
+                                        if($you){
+                                        ?>
+                                            <li class="my-1">
+                                                <div class="remove">
+                                                    <?php
+                                                        echo '<img class="removeImg" src="' . get_stylesheet_directory_uri() . '/img/deleteIcone.png" alt="">';
+                                                    ?>
+                                                    <span>Verwijderen</span>
+                                                </div>
+                                            </li>
+                                        <?php
+                                        }
+                                        ?>
                                     </ul>
                                 </div>
                             </td>
@@ -102,10 +107,42 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                     ?>
                 </tbody>
             </table>
+            <!-- Modal optie edit missign information  -->
+            <div class="modal fade modal-Budget" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center">Add missing information</h5>
+                        </div>
+                        <div class="modal-body">
+                            <form action="">
+                                <div class="form-group">
+                                    <label for="telefoonnummer">Telefoonnummer</label>
+                                    <input type="number" class="form-control" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="functie">Functie</label>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="afdeling">Afdeling</label>
+                                    <input type="text" class="form-control" placeholder="">
+                                </div>
+
+                                <button type="button" class="btn btn-add-budget">Add</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 <?php 
     }
+    else
+        echo "<h3>Access denied !<h3>";
+    
 ?>
 </div>
 

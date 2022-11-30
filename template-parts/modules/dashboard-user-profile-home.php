@@ -1,5 +1,8 @@
 <?php
 $user = get_user_by('ID', $id_user);
+$number_portfolios = 0;
+if (!empty($portfolios))
+    $number_portfolios = count($portfolios);
 ?>
 <div class="contentPassport profilUserP">
     <div class="headPassport">
@@ -72,14 +75,11 @@ $user = get_user_by('ID', $id_user);
                                 $note = $skill['note'];
                     $name_topic = (String)$topic;    
                 ?>
-                    <div class="skillBar">
-                        <label for=""><?php echo $name_topic;  ?></label>
-                        <div data-progress="react" data-value="<?= $note ?>"> 
-                            <span class="progress">
-                                <span id="react" class="progress-bar orange"></span>
-                            </span>
-                        </div>
+                <div class="skillbars">
+                    <label class="skillName"><?php echo $name_topic;  ?></label>
+                    <div class="progress" data-fill="<?php echo $note ?>" >
                     </div>
+                </div>
                <?php } ?>
               
             </div>
@@ -141,7 +141,7 @@ $user = get_user_by('ID', $id_user);
                   
                     <div class="contentEducationCandidat">
                         <div class="titleDateEducation">
-                            <p class="projetsText"><span><?php echo count($portfolios); ?></span>Projets</p>
+                            <p class="projetsText"><span><?= $number_portfolios ?></span>Projets</p>
                         </div>
                         <?php
                             if($portfolios)
@@ -279,3 +279,47 @@ $user = get_user_by('ID', $id_user);
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Readmore.js/2.0.2/readmore.js"  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    class ProgressBar{
+        constructor(progressBar, fill, skillName){
+            this.progressBar = progressBar;
+            this.skillName = skillName
+            this.fill = fill;
+            this.speed = 15; //Speed of the fill, increasing it will slow down
+            this.actual = 0;
+            this.filling();
+        }
+        filling(){
+            if( this.actual < this.fill){
+                this.progressBar.style.width = String(this.actual++)+"%";
+                this.progressBar.innerHTML = this.skillName+String(this.actual)+"%";
+                setTimeout(() => this.filling(), this.speed);
+            }
+            else{
+                return;
+            }
+            return;
+        }
+    }
+
+    let options = {
+        threshold: 0 // value from 0 to 1.0, stablishes the porcentage of the bar that need to be displayed before launching the animation
+    }
+
+    var progressBars = document.querySelectorAll('.progress');
+    let observer = new IntersectionObserver((progressBars) => {
+        progressBars.forEach( progressBar => {
+            if(progressBar.isIntersecting ){
+                let fill = progressBar.target.getAttribute('data-fill');
+                let skillName = progressBar.target.innerHTML;
+                new ProgressBar(progressBar.target, fill, skillName);
+                observer.unobserve(progressBar.target);
+            }
+        });
+
+    }, options);
+
+    progressBars.forEach( progressBar => observer.observe(progressBar));
+
+</script>

@@ -10,7 +10,7 @@ require($page);
     <meta name=”robots” content=”noindex,nofollow”>
 </head>
 
-<?
+<?php
 global $post;
 
 global $wp;
