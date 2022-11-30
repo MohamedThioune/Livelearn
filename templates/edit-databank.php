@@ -270,7 +270,7 @@ $companies = get_posts($args);
 
                    <div class="input-group-course">
                        <label for="">Short description</label>
-                       <textarea  name="short_description" id="" cols="30" rows="6"><?= $course->short_description ?>
+                       <textarea  name="short_description" id="" cols="30" rows="6"><?= strip_tags($course->short_description) ?>
                        </textarea>
                    </div>
 
