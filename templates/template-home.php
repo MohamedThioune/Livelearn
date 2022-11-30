@@ -16,12 +16,6 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
 <script src="<?php echo get_stylesheet_directory_uri();?>/city.js"></script>
 
 <?php
-    $user_visibility = wp_get_current_user();
-    $company_visibility = get_field('company',  'user_' . $user_visibility->ID);
-    
-    if(!empty($company_visibility))
-        $visibility_company = $company_visibility[0]->post_title;
-        
     function RandomString()
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -1019,9 +1013,10 @@ $degrees=[
                     $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
                     foreach($courses as $course){
-                        if(!empty($company_visibility))
-                            if(!visibility($course, $visibility_company))
-                                continue;
+                        $bool = true;
+                        $bool = visibility($course, $visibility_company);
+                        if(!$bool)
+                            continue;
 
                         /*
                         * Categories
@@ -1112,6 +1107,7 @@ $degrees=[
                         $company = get_field('company',  'user_' . $course->post_author);
                         $company_id = $company[0]->ID;
                         $company_logo = get_field('company_logo', $company_id);
+
                     ?>
                     <a href="<?php echo get_permalink($course->ID) ?>" class="blockCardFront" style="color:#43454D">
                         <div class="workshopBlock">
@@ -1171,9 +1167,11 @@ $degrees=[
                     <?php
                         if($i == 7)
                             break;
-
                         $i++;
                     }
+
+                    if(!$i)
+                        echo "<p class='dePaterneText theme-card-description'> <center style='color:#033256'> Stay connected, Something big is coming 😊 </center> </p>";
                     ?>
             </div>
         </div>
@@ -1206,7 +1204,9 @@ $degrees=[
 
                   foreach($courses as $course){
 
-                    if(!visibility($course, $visibility_company))
+                    $bool = true;
+                    $bool = visibility($course, $visibility_company);
+                    if(!$bool)
                         continue;
 
                     /*

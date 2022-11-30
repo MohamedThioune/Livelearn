@@ -6,8 +6,7 @@ global $wpdb;
 /*
 * * Pagination
 */
-$pagination = 40;
-var_dump($_GET['id']);
+$pagination = 50;
 
 if(isset($_GET['id']))
     $page = intval($_GET['id']);
@@ -48,7 +47,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                    <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
                        &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
-                       &nbsp;&nbsp;<a href="/artikels"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="xml image"></a>
+                       &nbsp;&nbsp;<button id="bouddha" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="xml image"></button>
                        
                     <div class="col-md-3">
                         
@@ -59,7 +58,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                             <?php } ?>
                         </select>
                     </div>
-                    <div hidden="true" id="loader" style="display:inline-block;" class="spinner-border spinner-border-sm text-primary" role="status">
+                    <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status">
                     </div>
                     </p>
 
@@ -87,31 +86,32 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                         </thead>
                         <tbody>
                         <?php
-                        foreach($courses as $course){
-                            if($course->state)
-                                continue;
+                        if(!empty($courses)){
+                            foreach($courses as $course){
+                                if($course->state)
+                                    continue;
 
-                            //Author Image
-                            $image_author = get_field('profile_img',  'user_' . $course->author_id);
-                            $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+                                //Author Image
+                                $image_author = get_field('profile_img',  'user_' . $course->author_id);
+                                $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
 
-                            //Company
-                            $company = get_field('company',  'user_' . $course->author_id);
-                            
-                            $company_logo = get_stylesheet_directory_uri() . '/img/placeholder.png';
-                            if(!empty($company))
-                                $company_logo = (get_field('company_logo', $company[0]->ID)) ? get_field('company_logo', $company[0]->ID) : get_stylesheet_directory_uri() . '/img/placeholder.png'; 
+                                //Company
+                                $company = get_field('company',  'user_' . $course->author_id);
+                                
+                                $company_logo = get_stylesheet_directory_uri() . '/img/placeholder.png';
+                                if(!empty($company))
+                                    $company_logo = (get_field('company_logo', $company[0]->ID)) ? get_field('company_logo', $company[0]->ID) : get_stylesheet_directory_uri() . '/img/placeholder.png'; 
 
-                            //Thumbnail
-                            $image = $course->image_xml ? $course->image_xml : $company_logo;
+                                //Thumbnail
+                                $image = $course->image_xml ? $course->image_xml : $company_logo;
 
-                            $onderwerpen = array();
-                            //Onderwerpen
-                            if($course->onderwerpen != "")
-                                $onderwerpen = explode(',', $course->onderwerpen);
-                            
-                            $state = $course->course_id ? 'present' : 'missing';
-                            $key = $course->id;
+                                $onderwerpen = array();
+                                //Onderwerpen
+                                if($course->onderwerpen != "")
+                                    $onderwerpen = explode(',', $course->onderwerpen);
+                                
+                                $state = $course->course_id ? 'present' : 'missing';
+                                $key = $course->id;
                             ?>
                             <tr id="<?= $key ?>" class="<?= $state ?>">
                                 <td class="textTh"> <img src="<?= $image; ?>" alt="image course" width="50" height="50"></td>
@@ -132,6 +132,9 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                 <td class="tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a href="/edit-databank?id=<?= $key ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> </td>
                             </tr>
                         <?php
+                        }
+                        }else{
+                            echo("There is nothing to see here");
                         }
                         ?>
                         </tbody>
@@ -186,10 +189,31 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
 <script type="text/javascript">
 
+    $('#bouddha').click((e)=>{
+        $.ajax({
+            url:'/artikels',
+            type:'POST',
+            datatype:'json',
+            async:false,
+            beforeSend:function(){
+                // $('#bouddha').hide(true,2000),
+                $('#select_field').hide(true,2000),
+                $('#loader').attr('hidden',false)
+            },
+            success:function(){
+                alert("done!"),
+                $('#select_field').hide(false,2000),
+                $('#loader').attr('hidden',true)
+            },
+            error:function(){
+                alert("error");
+            }
+        });
+    });
+
     $('#select_field').change((e)=>
     {
         let website= $('#select_field').val();
-        if (website != '')
             $.ajax({
                 url: '/scrapping',
                 type: 'POST',
@@ -200,6 +224,9 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 beforeSend:function(){
                     $('#loader').attr('hidden',false)
                     $('#select_field').attr('hidden',true)
+                },
+                error: function(){
+                    alert('Something went wrong!');
                 },
                 complete: function(){},
                 success: function(data){

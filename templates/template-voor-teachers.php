@@ -6,18 +6,17 @@
 
 
 <body>
- 
+
     <section class=" pt-md-5" style="background: #00A89D">
         <div class="container  py-5">
-
             <div class="row  py-md-5">
                 <div class="col-md-8 text-md-left text-center">
-                    
+
                     <div class="">
                         <h1 class="CreeerText" style="">
                             Word onderdeel van het grootste expert / opleidersnetwerk
                         </h1>
-                        <h5 class="text-white">Deel jouw kennis met rest van Nederland</h5> 
+                        <h5 class="text-white">Deel jouw kennis met rest van Nederland</h5>
                         <a class="btn rounded-pill my-3" href="/overview-organisations-5"
                             style="padding: 7px 20px !important; background: #E0EFF4;">
                             <strong class=" p-3">Meer informatie? </strong>
@@ -39,10 +38,10 @@
                 </div>
             </div>
 
-          
+
         </div>
     </section>
-    
+
 
 </body>
 

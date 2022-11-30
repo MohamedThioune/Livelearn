@@ -7582,11 +7582,12 @@ tbody {
 
 .title-assessment-test {
     color: #333;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 500;
     border-bottom: 3px solid #333;
     width: fit-content;
     padding-right: 16px;
+    margin-top: 30px;
 }
 
 .blockOneOver .btnGetStartAssessment {
@@ -11400,11 +11401,13 @@ select {
     background: #E0EFF4;
     text-align: center;
     padding: 25px 20px;
+    max-width: 680px;
+    margin: 0 auto;
 }
 
 .title-paywall {
     color: #023356;
-    font-size: 27px;
+    font-size: 25px;
     font-weight: 500;
     margin-bottom: 15px;
 }
@@ -11421,6 +11424,10 @@ select {
     padding: 8px 15px;
     border-radius: 5px;
     margin-bottom: 30px;
+}
+
+.btn-paywall:hover {
+    color: white !important;
 }
 
 .text-not-sure-which {
@@ -11905,8 +11912,360 @@ select {
     width: 100%;
 }
 
+.product-podcat1 {
+    margin-top: 30px;
+}
 
+.product-podcat1 .sound-wave {
+    display: none;
+    height: 320px;
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    overflow: hidden;
+    background: #023356;
+    padding-top: 20px;
+}
+
+.product-podcat1 .hide {
+    display: none;
+}
+
+@keyframes scale1 {
+    0% {
+        transform: scaleY(0.6);
+    }
+    40% {
+        transform: scaleY(1.2);
+    }
+    100% {
+        transform: scaleY(0.6);
+    }
+}
+
+.product-podcat1 .bar-scale1 {
+    animation: scale1 0.6s infinite;
+    transform-origin: center;
+}
+
+@keyframes scale2 {
+    0% {
+        transform: scaleY(0.5);
+    }
+    30% {
+        transform: scaleY(1.6);
+    }
+    100% {
+        transform: scaleY(0.5);
+    }
+}
+
+.product-podcat1 .bar-scale2 {
+    animation: scale2 0.6s infinite;
+    transform-origin: center;
+}
+
+@keyframes scale3 {
+    0% {
+        transform: scaleY(1.5);
+    }
+    70% {
+        transform: scaleY(0.5);
+    }
+    100% {
+        transform: scaleY(1.5);
+    }
+}
+
+.product-podcat1 .bar-scale3 {
+    animation: scale3 0.6s infinite;
+    transform-origin: center;
+}
+
+.product-podcat1 .stop-animation {
+    animation-duration: 0s;
+}
+
+.modal-dialog-centered {
+    min-height: fit-content !important;
+}
+
+.modalpaywallVideo .modal-dialog {
+    text-align: center;
+}
+
+.modalpaywallVideo {
+    padding-right: 17px;
+    display: block;
+    background: #000000a1;
+    padding-top: 120px;
+}
+
+.modalpaywallVideo .title-paywall {
+    color: #023356;
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    margin-top: 20px;
+}
+
+.modalpaywallVideo .price-course {
+    font-weight: 700;
+    font-size: 23px;
+    line-height: 28px;
+    color: #023356;
+    margin-bottom: 28px;
+}
+
+.modalpaywallVideo .sub-title-paywall {
+    font-size: 20px;
+    color: #000000;
+    margin-bottom: 25px;
+}
+
+.block-description-block {
+    margin-bottom: 30px;
+}
+
+.note-editable { font-size: 14px; }
 /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
+.modal-Budget .modal-dialog {
+    max-width: 500px !important;
+    margin-top: 50px !important;
+}
+
+.contentCardAlloccate .modal form input{
+    border-radius: 5px;
+    padding: 15px 20px !important;
+    font-size: 15px !important;
+    color: #3c3c3c !important;
+    background: #e7f8ff;
+    border: 1px solid #c2c2c2;
+    min-height: 40px;
+}
+.modal-Budget label{
+    color: #212529 !important;
+    margin-bottom: 15px;
+}
+.modal-Budget button{
+    background: #023356;
+    color: white;
+    min-width: 88px;
+    padding: 8px 10px 6px;
+    font-size: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+.modal-Budget .manager-name{
+    margin-top: 27px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #070707;
+}
+.modal-Budget h5{
+    width: 300px;
+    margin: 0 auto;
+}
+
+.table td .dropdown img{
+    width: 20px;
+    cursor: pointer;
+}
+.table .img-block-mananger{
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+.table .img-mananger{
+    width: 28px;
+    height: 28px;
+    margin-left: -10px;
+    border-radius: 100%;
+    overflow: hidden;
+    border-width: 0.5px;
+    border-style: solid;
+    border-color: rgb(176, 176, 176);
+}
+.table .img-mananger img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.contentCardAlloccate .table{
+    display: table !important;
+}
+.table .textTh {
+    text-align: center;
+}
+.contentCardGrant thead tr th{
+    text-align: center !important;
+}
+.fa-check:before {
+    color: #00ff60;
+    font-size: 20px;
+}
+.fa-close:before {
+    color: red;
+    font-size: 18px;
+}
+.table th, .table td {
+    text-align: center !important;
+}
+.table .ImgUser{
+    margin: 0px auto;
+}
+.form-group .checbox-element-label{
+    position: relative;
+    top: -15px;
+    left: 8px;
+}
+.block-check-grant{
+    display: flex !important;
+}
+.block-check-grant label {
+    min-width: 25%;
+}
+.contentCardAlloccate .modal-Budget label {
+    margin-bottom: 8px;
+}
+.contentCardAlloccate .modal-Budget .form-group {
+    margin-bottom: 20px;
+}
+.modal-Manager .modal-dialog {
+    max-width: 500px !important;
+    margin-top: 50px !important;
+}
+.modal-Manager  h5 {
+    width: 300px;
+    margin: 0 auto;
+    font-weight: unset;
+}
+
+.modal-Manager  h5 span{
+    color: #043356;
+    font-weight: 500;
+}
+.one-element-list-manager{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.one-element-list-manager .block-img{
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    overflow: hidden;
+}
+.one-element-list-manager .block-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.one-element-list-manager .name-manager{
+    color: #041d2f;
+    font-size: 15px;
+    margin-bottom: 0px;
+    font-weight: 500;
+}
+.one-element-list-manager .email-manager{
+    color: #040d1c;
+    font-size: 14px;
+    margin-bottom: 0px;
+}
+.viewIcone{
+    opacity: 0;
+}
+.one-element-list-manager:hover .viewIcone{
+    opacity: 1;
+}
+.blockAfdelingen{
+    display: flex;
+    justify-content: space-between;
+}
+.blockAfdelingen-table {
+    background: white;
+    border-radius: 8px;
+    margin: 0 0px 5px 0px;
+    width: 76%;
+}
+.departement-block{
+    width: 22%;
+    background: white;
+    border-radius: 8px;
+    padding: 15px 10px 0;
+    height: fit-content;
+}
+.btnNewdepartement {
+    color: #FFFFFF !important;
+    background: #023356;
+    font-size: 14px;
+    padding: 4px 20px;
+    font-weight: bold;
+    border-radius: 8px;
+    height: fit-content;
+    margin: 0 auto 15px;
+    width: fit-content;
+    display: flex;
+}
+.departement-block ul li{
+    margin-bottom: 8px;
+    font-weight: 500;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+.modal .btn-add{
+    background: #023356;
+    color: white;
+    min-width: 80px;
+    padding: 8px 10px 6px;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+#modalNewDepartement .modal form input {
+    border-radius: 5px;
+    padding: 15px 20px !important;
+    font-size: 15px !important;
+    color: #3c3c3c !important;
+    background: #e7f8ff;
+    border: 1px solid #c2c2c2;
+    min-height: 40px;
+}
+.btnRemoveDepartement {
+    margin-top: -4px;
+}
+.btnRemoveDepartement i{
+    color: red;
+}
+.contentCardAlloccate .block-check-grant {
+    margin-bottom: 0px !important;
+}
+
+.selectdepartementForm .Functie{
+    border-radius: 5px;
+    padding: 15px 10px !important;
+    font-size: 15px !important;
+    color: #3c3c3c !important;
+    background: #e7f8ff;
+    border: 1px solid #c2c2c2;
+    min-height: 35px;
+}
+.skillbars {
+    margin: 0px 0px 19px 15px;
+}
+.skillbars .progress {
+    font-weight: 900;
+    text-align: right;
+    padding: 1em;
+    width: 0%;
+    color: #fff;
+    border-radius: 10px;
+    position: relative;
+    background: #023356;
+    font-size: 12px;
+}
 
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -14368,6 +14727,27 @@ select {
     .description-cookie {
         font-size: 15px;
         margin-bottom: 25px;
+    }
+    .blockManageTeam {
+        margin-left: 0;
+    }
+    .cardBlockManage {
+        margin: 0 auto 20px;
+        width: 80%;
+    }
+    .blockAfdelingen {
+        flex-wrap: wrap;
+    }
+    .blockAfdelingen-table {
+        background: white;
+        border-radius: 8px;
+        margin: 0 10px 30px;
+        width: 100%;
+        overflow-x: scroll;
+    }
+    .departement-block {
+        width: 80%;
+        margin: 0 auto 30px;
     }
 }
 
