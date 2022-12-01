@@ -51,9 +51,10 @@
  
         foreach($global_courses as $course)
         {  
-            if(!empty($company_visibility))
-                if(!visibility($course, $visibility_company))
-                    continue;
+            $bool = true;
+            $bool = visibility($course, $visibility_company);
+            if(!$bool)
+                continue;
 
             $experts = get_field('experts', $course->ID);
             $box = false; 
@@ -364,7 +365,7 @@
         <p class="liverTilteHead2"><?php echo $name ?></p>
         <div class="mb-2">
             <span class="btn rounded-pill text-dark font-weight-bold pr-0">
-                Werkzaam bij <a class=""> <?php echo "<a style='color:#00A89D' href='/opleider-courses/?companie=". $company_id. "'> " . $company_name. "</a>"; ?>
+                Werkzaam bij <?php echo "<a style='color:#00A89D' href='/opleider-courses/?companie=". $company_id. "'> " . $company_name. "</a>"; ?>
             </span>
         </div> 
 

@@ -105,7 +105,6 @@ $experts = get_user_meta($user->ID, 'expert');
 
 $user_role = get_users(array('include'=> $id_user))[0]->roles;
 
-var_dump($id_user);
 ?>
 <div class="theme-content">
     <div class="theme-side-menu">

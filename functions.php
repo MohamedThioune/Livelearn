@@ -1,6 +1,6 @@
 <?php
 add_action( 'wp_enqueue_scripts', 'enqueue_parent_styles' );
-
+include "custom-endpoints.php";
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
     wp_enqueue_style( 'child-style', get_stylesheet_directory_uri().'/style-main.css' );
@@ -1287,5 +1287,25 @@ add_action( 'rest_api_init', function () {
     'methods' => 'GET',
     'callback' => 'following',
   ) );
+
+  register_rest_route('custom/v1', '/all_courses', array(
+    'methods' => 'GET',
+    'callback' => 'allCourses',
+  ));
+
+  register_rest_route('custom/v1', '/authors', array(
+    'methods' => 'GET',
+    'callback' => 'allAuthors',
+  ));
+
+  register_rest_route( 'custom/v1', '/topics/(?P<id>\d+)/subtopics', array(
+    'methods' => 'GET',
+    'callback' => 'related_topics_subtopics',
+  ));
+
+  register_rest_route( 'custom/v1', '/follow_multiple', array(
+    'methods' => 'GET',
+    'callback' => 'follow_multiple_meta',
+  ));
 
 } );

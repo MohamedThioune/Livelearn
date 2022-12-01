@@ -61,7 +61,7 @@
       $image = "";
       
       /*
-      Get the url media image 
+      Get the url media image
       */
       foreach($datum->programDescriptions->media as $media)
         if($media->type == "image"){
@@ -169,7 +169,7 @@
             'display_name' => strval($datum->programCurriculum->teacher->name),
             'first_name' => $first_name,
             'last_name' => $last_name,
-            'role' => 'teacher'
+            'role' => 'author'
         );
 
         //$author_id = wp_insert_user(wp_slash($userdata));       
