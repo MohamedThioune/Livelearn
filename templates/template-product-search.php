@@ -53,19 +53,17 @@
                 }
         }
         else{ 
-            ## SIDE PRODUCT CATEGORIES 
             if(isset($category)){
+            ## SIDE PRODUCT CATEGORIES 
                 foreach($global_courses as $course)
                 {
+                    $bool = false;
+                    $experts = get_field('experts', $post->ID);
+
                     /*
                     * Categories
                     */ 
-        
-                    $category_id = 0;
-                    $experts = get_field('experts', $post->ID);
-                                
-                    $tree = get_the_terms($course->ID, 'course_category');
-                    $tree = $tree[2]->ID;
+
                     $category_default = get_field('categories', $course->ID);
                     $category_xml = get_field('category_xml', $course->ID);
                     $categories = array();
@@ -73,7 +71,8 @@
                     if(!empty($category_default))
                         foreach($category_default as $item)
                             if($item)
-                                if(!in_array($item['value'], $categories));
+                                if(!in_array($item['value'], $categories))
+                                    array_push($categories,$item['value']);
                                   
                     else if(!empty($category_xml))
                         foreach($category_xml as $item)
@@ -81,9 +80,8 @@
                                 if(!in_array($item['value'], $categories))
                                     array_push($categories,$item['value']);
         
-        
-                    if(in_array($category, $trees) || $categories)
-                        if(in_array($category, $trees) || in_array($category, $categories)){
+                    if(!empty($categories))
+                        if(in_array($category, $categories)){
                             array_push($courses, $course);
                             if(!in_array($course->post_author, $teachers))
                                 array_push($teachers, $course->post_author);
@@ -92,30 +90,38 @@
                                     array_push($teachers, $expert);
                         }
                 }
-            ## SIDE PRODUCT USERS
             }else if(isset($user)){
+            ## SIDE PRODUCT USERS 
                 foreach($global_courses as $course)
                 {
+                    $bool = false;
                     $expert = get_field('experts', $course->ID);
 
-                    if($course->post_author == $user || in_array($user, $expert) ){
+                    if($course->post_author == $user)
+                        $bool = true;
+                    if(!empty($expert))
+                        if(in_array($user, $expert))
+                            $bool = true;
+                
+                    if($bool){
                         array_push($courses, $course);
-                        
-                        $tree = get_the_category($course->ID);
 
-                        if($tree){
-                            if(isset($tree[2]))
-                                $category = $tree[2]->cat_ID;
-                        }else{
-                            $category_id = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]); 
-                            $category_xml = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                            if($category_xml != 0)
-                                $category = $category_xml;  
-                            if($category_id != 0)
-                                $category = $category_id; 
-                        }                                    
+                        /*
+                        * Categories
+                        */
+                        $category = 0;
+                        if($category == ' '){
+                            $one_category = get_field('categories',  $course->ID);
+                            if(isset($one_category[0]['value']))
+                                $category = intval(explode(',', $one_category[0]['value'])[0]);
+                            else{
+                                $one_category = get_field('category_xml',  $course->ID);
+                                if(isset($one_category[0]['value']))
+                                    $category = intval($one_category[0]['value']);
+                            }    
+                        }
                         
-                        if(!in_array($category, $categories) && $category != '')
+                        if(!in_array($category, $categories) && $category)
                             array_push($categories, $category);
                         
                         $experts = get_field('experts', $course->ID);
@@ -128,6 +134,7 @@
                 }            
             }
             else if(isset($companie)) {
+            ## SIDE PRODUCT COMPANIES 
                 $args = array(
                     'post_type' => 'company', 
                     'posts_per_page' => 1,
@@ -162,11 +169,13 @@
 
                 foreach($courses as $course){
                     $experts = get_field('experts', $course->ID);
-                    if(!in_array($course->post_author, $profes))
-                        array_push($profes, $course->post_author);
-                    foreach($experts as $expert)
-                        if(!in_array($expert, $profes))
-                            array_push($profes, $expert);
+                    if(!empty($profes))
+                        if(!in_array($course->post_author, $profes))
+                            array_push($profes, $course->post_author);
+                    if(!empty($experts))
+                        foreach($experts as $expert)
+                            if(!in_array($expert, $profes))
+                                array_push($profes, $expert);
                 }
             }
 
@@ -548,50 +557,70 @@
             <div class="sousBlockProduct4">
                 <div class="row d-flex justify-content-center">
                     <?php 
+                    $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
+
                     foreach($courses as $key => $course){
                         
-                        if(!visibility($course, $visibility_company))
-                            continue;
+                        if(!empty($company_visibility))
+                            if(!visibility($course, $visibility_company))
+                                continue;
 
                         if($key == 20)
                             break;
 
                         /*
-                        * Categories and Date
-                        */  
-                        $day = '~';
-                        $month = '';  
-                        $tree = get_the_category($course->ID);
-                        if($tree){
-                            if(isset($tree[2])){
-                                $category = $tree[2]->cat_name;
-                                $category =  "<p class='textJan facilityText'>" . $category . "</p>";
+                        * Categories
+                        */
+                        $location = 'Virtual';
+                        $day = "<p><i class='fas fa-calendar-week'></i></p>";
+                        $month = '';
 
-                            }else 
-                                if(isset($tree[1])){
-                                    $category = $tree[1]->cat_name;
-                                    $category =  "<p class='textJan facilityText'>" . $category . "</p>";
-                                }
-                        }else 
-                            $category = '';
+                        $category = ' ';
+                        $category_id = 0;
+                        $category_str = 0;
+                        if($category == ' '){
+                            $one_category = get_field('categories',  $course->ID);
+                            if(isset($one_category[0]['value']))
+                                $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                            else{
+                                $one_category = get_field('category_xml',  $course->ID);
+                                if(isset($one_category[0]['value']))
+                                    $category_id = intval($one_category[0]['value']);
+                            }
 
-                        $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
+                            if($category_str != 0)
+                                $category = "<p class='textJan facilityText'>" . (String)get_the_category_by_ID($category_str) . "</p>";
+                            else if($category_id != 0)
+                                $category = "<p class='textJan facilityText'>" . (String)get_the_category_by_ID($category_id) . "</p>";
+                        }
 
-                        $dates = get_field('dates', $course->ID);
-                        if($dates){
-                            
-                            $day = explode('-', explode(' ', $dates[0]['date'])[0])[2];
-                            $month = explode('-', explode(' ', $dates[0]['date'])[0])[1];
+                        /*
+                        *  Date and Location
+                        */ 
+                        $day = "<i class='fas fa-calendar-week'></i>";
+                        $month = NULL;
+                        $location = ' ';
 
-                            $month = $calendar[$month]; 
+                        $datas = get_field('data_locaties', $course->ID);
+                        if($datas){
+                            $data = $datas[0]['data'][0]['start_date'];
+                            if($data != ""){
+                                $day = explode('/', explode(' ', $data)[0])[0];
+                                $mon = explode('/', explode(' ', $data)[0])[1];
+                                $month = $calendar[$mon];
+                            }
+
+                            $location = $datas[0]['data'][0]['location'];
                         }else{
-                            $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                            $date = $data[0];
-                            $day = explode('/', explode(' ', $date)[0])[0];
-                            $month = explode('/', explode(' ', $date)[0])[1];
-                            $month = $calendar[$month];
-
-                            $location = $data[2];
+                            $datum = get_field('data_locaties_xml', $course->ID);
+                            if(isset($datum[0]['value'])){
+                                $datas = explode('-', $datum[0]['value']);
+                                $data = $datas[0];
+                                $day = explode('/', explode(' ', $data)[0])[0];
+                                $month = explode('/', explode(' ', $data)[0])[1];
+                                $month = $calendar[$month];
+                                $location = $datas[2];
+                            }
                         }
 
                         /*

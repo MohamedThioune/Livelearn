@@ -602,6 +602,7 @@ ul.sub-menu li a {
     width: 100%;
     padding: 5px 10px;
     border-radius: 10px;
+    flex-wrap: wrap;
 }
 
 .iconeTextKraa {
@@ -677,7 +678,7 @@ ul.sub-menu li a {
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     height: fit-content;
-    width: 50%;
+    width: 70%;
 }
 
 .group9 {
@@ -716,10 +717,12 @@ ul.sub-menu li a {
     margin-bottom: 10px;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
 }
-
+.swiper-container {
+    margin-left: unset !important;
+}
 .descriptionPlatform {
     color: #42454D;
     font-size: 14px;
@@ -1791,9 +1794,10 @@ input:focus-visible {
     width: auto !important;
     margin-right: 0 !important;
     text-align: center;
-    padding: 20px;
+    padding: 20px 13px;
     box-shadow: unset;
     border: 1px solid #bfbcbc;
+    height: 100%;
 }
 
 .btnSubmit {
@@ -4943,6 +4947,9 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 #gform_submit_button_10 {
     margin: 0px 0 15px !important;
 }
+#gform_submit_button_10:hover{
+    font-weight: bold;
+}
 
 .userBlockNav {
     border: 1px solid #ffffff !important;
@@ -6859,6 +6866,7 @@ button:focus {
 .sousProductTest .checkmark {
     background-color: white !important;
     border: 2px solid #043356 !important;
+    margin-top: -5px;
 }
 
 .container-checkbox:hover input~.checkmark {
@@ -8558,16 +8566,41 @@ ul#tabs-nav li.active a {
     background: #043356;
     color: #FFFFFF;
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 500;
     position: absolute;
     top: 8px;
     right: 116px;
     padding: 3px 25px;
     border-radius: 10px;
+    transition: all 0.5s;
+}
+.btn-Zoek span, .ikWil span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
 }
 
-.btn-Zoek:hover {
+.btn-Zoek span:after, .ikWil span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+}
+.btn-Zoek:hover span, .ikWil:hover span {
+    padding-right: 18px;
+}
+
+.btn-Zoek:hover span:after, .ikWil:hover span:after {
+    opacity: 1;
+    right: 0;
+}
+
+.btn-Zoek:hover, .ikWil:hover {
     color: #FFFFFF !important;
+    padding-right: 18px;
 }
 
 .groupeBtn-Jouw-inloggen {
@@ -8588,6 +8621,7 @@ ul#tabs-nav li.active a {
 
 .jouwn-skills:hover {
     color: white !important;
+    box-shadow: 0px 0px 10px #02335675 !important;
 }
 
 .inloggenbtn {
@@ -8598,6 +8632,19 @@ ul#tabs-nav li.active a {
     color: #043356;
     border-radius: 11px;
     margin: 0 10px;
+
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+.inloggenbtn:hover{
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+    background: #043356;
+    color: #ffffff !important;
 }
 
 .cardBoxSix {
@@ -12252,6 +12299,173 @@ select {
     border: 1px solid #c2c2c2;
     min-height: 35px;
 }
+.watchword-text {
+    color: #023356!important;
+    font-weight: 500;
+}
+.sousProductTest form .LeerBlock .rating-element2 {
+    font-size: 10px;
+    position: relative;
+    left: 0;
+    bottom: 0;
+}
+.d-grid{
+    display: grid !important;
+}
+.LeerBlock .rating > label:before {
+    margin: 5px 5px 0;
+}
+.LeerBlock .rating > label {
+    margin-bottom: 0;
+}
+.head2 {
+    padding: 65px 20px 0;
+}
+.head2 .rounded-pill a{
+    color: #00A89D !important;
+}
+
+.skillbars {
+    margin: 0px 0px 19px 15px;
+}
+.skillbars .progress {
+    font-weight: 900;
+    text-align: right;
+    padding: 1em;
+    width: 10%;
+    color: #fff;
+    border-radius: 10px;
+    position: relative;
+    background: #023356;
+    font-size: 12px;
+}
+
+.rangeslider-wrap {
+    padding-top: 65px;
+}
+.rangeslider {
+    position: relative;
+    height: 15px;
+    border-radius: 2px;
+    width: 100%;
+    background-color: gray;
+}
+.rangeslider__handle {
+    width: 34px;
+    height: 24px;
+    border: 1px solid rgb(217, 217, 217);
+    border-radius: 3px;
+    background: rgb(238, 238, 238);
+    box-shadow: rgb(255 255 255) 0px 0px 1px inset, rgb(235 235 235) 0px 1px 7px inset, rgb(187 187 187) 0px 3px 6px -3px;
+    top: -5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    box-sizing: border-box;
+    display: inline-block;
+    position: absolute;
+    z-index: 3;
+    touch-action: pan-y;
+}
+.rangeslider__handle__value {
+    transition: background-color 0.2s, box-shadow 0.1s, transform 0.1s;
+    box-sizing: border-box;
+    width: 90px;
+    text-align: center;
+    padding: 10px;
+    background-color: #3FB8AF;
+    border-radius: 5px;
+    color: white;
+    left: -35px;
+    top: -55px;
+    position: absolute;
+    white-space: nowrap;
+    border-top: 1px solid #3FB8AF;
+    box-shadow: 0 -4px 1px rgba(0, 0, 0, .07), 0 -5px 20px rgba(0, 0, 0, .3);
+}
+.rangeslider__handle__value:before {
+    transition: border-top-color 0.2s;
+    position: absolute;
+    bottom: -10px;
+    left: calc(50% - 10px);
+    content: "";
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid;
+    border-top-color: #3FB8AF;
+}
+.rangeslider__handle__value:after {
+    content: " %";
+}
+.rangeslider__fill {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    height: 100%;
+    background-color: #3FB8AF;
+    border-radius: 5px;
+}
+.rangeslider__labels {
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+}
+.rangeslider__labels__label {
+    font-size: 14px;
+    position: relative;
+    padding-top: 24px;
+    color: gray;
+}
+.rangeslider__labels__label:before {
+    position: absolute;
+    top: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    content: "";
+    width: 1px;
+    height: 9px;
+    border-radius: 1px;
+    background-color: rgba(128, 128, 128, .5);
+}
+.rangeslider__labels__label:first-child:before, .rangeslider__labels__label:last-child:before {
+    height: 16px;
+    width: 2px;
+}
+.rangeslider__labels__label:first-child:before {
+    background-color: #3FB8AF;
+}
+.rangeslider__labels__label:last-child:before {
+    background-color: gray;
+}
+.rangeslider__labels__label:first-child {
+    transform: translateX(-48%);
+}
+.rangeslider__labels__label:last-child {
+    transform: translateX(48%);
+}
+.rangeslider.rangeslider--active .rangeslider__handle, .rangeslider.rangeslider--active .rangeslider__handle * {
+    background-color: #3FB8AF;
+}
+.rangeslider.rangeslider--active .rangeslider__handle *:before {
+    border-top-color: #3FB8AF;
+}
+.rangeslider.rangeslider--active .rangeslider__handle__value {
+    transform: translateY(-5px);
+    box-shadow: 0 -3px 2px rgba(0, 0, 0, .04), 0 -9px 25px rgba(0, 0, 0, .15);
+}
+
+.customRangeValueInput {
+    box-sizing: border-box;
+    border-radius: 11px;
+    padding: 15px 20px !important;
+    font-size: 15px !important;
+    color: #3c3c3c !important;
+    background: #F0F5F7 !important;
+    border: none;
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
@@ -13132,8 +13346,15 @@ select {
         max-width: 50% !important;
     }
     .swipeContaine1 {
-        padding-left: 20px;
+        padding-left: 20px !important;
         margin-left: 0 !important;
+    }
+    .OfMaanBlock {
+        padding: 0 20px;
+    }
+    .ofWordBlock {
+        margin-bottom: 30px;
+        border-radius: 10px;
     }
     .block-treaning {
         padding: 15px 0px 10px 15px;
@@ -14733,6 +14954,9 @@ select {
     .departement-block {
         width: 80%;
         margin: 0 auto 30px;
+    }
+    .filterBlock {
+        margin: 30px 20px;
     }
 }
 
