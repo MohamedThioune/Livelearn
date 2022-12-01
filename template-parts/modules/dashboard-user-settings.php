@@ -705,17 +705,21 @@ if(!empty($bunch)){
                                                     <div class="group-input-settings">
                                                         <label for="">Kies uw vaardigheidsniveau in percentage</label>
                                                         <div class="slider-wrapper">
-                                                            <div id="edit"></div>
+                                                            <div class="edit"></div>
+                                                        </div>
+                                                        <div class="rangeslider-wrap">
+                                                            <input type="range" min="0" max="100" step="10" labels="0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100"  onChange="rangeSlide(this.value)">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12 col-md-12">
+                                               <!-- <div class="col-lg-12 col-md-12">
                                                     <div class="group-input-settings">
                                                         <label for="">Uw procentuele vaardigheden</label>
-                                                        <input name="note" type="text" id="SkillBarEdit" name="note_skill_edit" placeholder="">
+                                                       <div class="customRangeValueInput">
+                                                           <span id="rangeValue">50 %</span>
+                                                       </div>
                                                     </div>
-                                                </div>
-
+                                                </div>-->
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -883,6 +887,7 @@ if(!empty($bunch)){
 </div>
 
 
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script>
     'use strict';
 
@@ -935,109 +940,157 @@ if(!empty($bunch)){
     });
 </script>
 
-        <script src="<?php echo get_stylesheet_directory_uri();?>/donu-chart.js"></script>
-        <script src="<?php echo get_stylesheet_directory_uri();?>/nouislider.min.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/donu-chart.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/nouislider.min.js"></script>
 
-        <!--  script for add skills-->
-        <script>
-            const SliderSkills = document.querySelector("#skilsPercentage")
-            var labels = { 0: 'Beginner', 10: '10%', 20: '20%', 30: '30%', 40: '40%', 50: '50%', 60: '60%', 70: '70%', 80: '80%', 90: '90%', 100: 'Expert', };
-            noUiSlider.create(skilsPercentage, {
-                start: 10,
-                connect: [true, false],
-                tooltips: {
-                    to: function(value) {
-                        return value > 200 ? '200+' : parseInt(value)
-                    }
-                },
-                range: {
-                    'min': 0,
-                    '10%': 10,
-                    '20%': 20,
-                    '30%': 30,
-                    '40%': 40,
-                    '50%': 50,
-                    '60%': 60,
-                    '70%': 70,
-                    '80%': 80,
-                    '90%': 90,
-                    'max': 100
-                },
-                pips: {
-                    mode: 'steps',
-                    filter: function (value, type) {
-                        return type === 0 ? -1 : 1;
-                    },
-                    format: {
-                        suffix: '%',
-                        to: function (value) {
-                            return labels[value];
-                        }
-
-                    }
+<!--  script for add skills-->
+<script>
+    const SliderSkills = document.querySelector("#skilsPercentage")
+    var labels = { 0: 'Beginner', 10: '10%', 20: '20%', 30: '30%', 40: '40%', 50: '50%', 60: '60%', 70: '70%', 80: '80%', 90: '90%', 100: 'Expert', };
+    noUiSlider.create(skilsPercentage, {
+        start: 10,
+        connect: [true, false],
+        tooltips: {
+            to: function(value) {
+                return value > 200 ? '200+' : parseInt(value)
+            }
+        },
+        range: {
+            'min': 0,
+            '10%': 10,
+            '20%': 20,
+            '30%': 30,
+            '40%': 40,
+            '50%': 50,
+            '60%': 60,
+            '70%': 70,
+            '80%': 80,
+            '90%': 90,
+            'max': 100
+        },
+        pips: {
+            mode: 'steps',
+            filter: function (value, type) {
+                return type === 0 ? -1 : 1;
+            },
+            format: {
+                suffix: '%',
+                to: function (value) {
+                    return labels[value];
                 }
-            });
 
-            var SkillBarInput = document.getElementById('SkillBar');
-            SliderSkills.noUiSlider.on('update', function (values, handle, unencoded) {
-                var SkillBarValue = values[handle];
-                SkillBarInput.value = Math.round(SkillBarValue);
-            });
+            }
+        }
+    });
 
-            SkillBarInput.addEventListener('change', function () {
-                SliderSkills.noUiSlider.set([null, this.value]);
-            });
+    var SkillBarInput = document.getElementById('SkillBar');
+    SliderSkills.noUiSlider.on('update', function (values, handle, unencoded) {
+        var SkillBarValue = values[handle];
+        SkillBarInput.value = Math.round(SkillBarValue);
+    });
 
-        </script>
+    SkillBarInput.addEventListener('change', function () {
+        SliderSkills.noUiSlider.set([null, this.value]);
+    });
 
-        <!--  script For edit skills-->
-        <script>
-            const edit = document.querySelector("#edit")
-            var labels = { 0: 'Beginner', 10: '10%', 20: '20%', 30: '30%', 40: '40%', 50: '50%', 60: '60%', 70: '70%', 80: '80%', 90: '90%', 100: 'Expert', };
-            noUiSlider.create(edit, {
-                start: 10,
-                connect: [true, false],
-                tooltips: {
-                    to: function(value) {
-                        return value > 100 ? '100+' : parseInt(value)
-                    }
-                },
-                range: {
-                    'min': 0,
-                    '10%': 10,
-                    '20%': 20,
-                    '30%': 30,
-                    '40%': 40,
-                    '50%': 50,
-                    '60%': 60,
-                    '70%': 70,
-                    '80%': 80,
-                    '90%': 90,
-                    'max': 100
-                },
-                pips: {
-                    mode: 'steps',
-                    filter: function (value, type) {
-                        return type === 0 ? -1 : 1;
-                    },
-                    format: {
-                        to: function (value) {
-                            return labels[value];
-                        }
-                    }
+</script>
+
+<!--  script For edit skills-->
+<script>
+    const edit = document.querySelector(".edit")
+
+    var labels = { 0: 'Beginner', 10: '10%', 20: '20%', 30: '30%', 40: '40%', 50: '50%', 60: '60%', 70: '70%', 80: '80%', 90: '90%', 100: 'Expert', };
+    noUiSlider.create(edit, {
+        start: 10,
+        connect: [true, false],
+
+        range: {
+            'min': 0,
+            '10%': 10,
+            '20%': 20,
+            '30%': 30,
+            '40%': 40,
+            '50%': 50,
+            '60%': 60,
+            '70%': 70,
+            '80%': 80,
+            '90%': 90,
+            'max': 100
+        },
+        pips: {
+            mode: 'steps',
+            filter: function (value, type) {
+                return type === 0 ? -1 : 1;
+            },
+            format: {
+                to: function (value) {
+                    return labels[value];
                 }
-            });
+            }
 
-            var SkillBarInput2 = document.getElementById('SkillBarEdit');
-            edit.noUiSlider.on('update', function (values, handle, unencoded) {
-                var SkillBarValue2 = values[handle];
-                SkillBarInput2.value = Math.round(SkillBarValue2);
-            });
+        slide: function( event, ui ) {
+            $( ".edit").html(ui.values[ 0 ]);
+    });
 
-            SkillBarInput2.addEventListener('change', function () {
-                edit.noUiSlider.set([null, this.value]);
-            });
-        </script>
+    var SkillBarInput2 = document.getElementById('SkillBarEdit');
+    edit.noUiSlider.on('update', function (values, handle, unencoded) {
+        var SkillBarValue2 = values[handle];
+        SkillBarInput2.value = Math.round(SkillBarValue2);
+    });
+
+    SkillBarInput2.addEventListener('change', function () {
+        edit.noUiSlider.set([null, this.value]);
+    });
+</script>
+
+<script src="https://rawgit.com/andreruffert/rangeslider.js/develop/dist/rangeslider.min.js"></script>
+<script>
+    $('input[type="range"]').rangeslider({
+
+        polyfill: false,
+
+        // Default CSS classes
+        rangeClass: 'rangeslider',
+        disabledClass: 'rangeslider--disabled',
+        horizontalClass: 'rangeslider--horizontal',
+        fillClass: 'rangeslider__fill',
+        handleClass: 'rangeslider__handle',
+
+        // Callback function
+        onInit: function() {
+            $rangeEl = this.$range;
+            // add value label to handle
+            var $handle = $rangeEl.find('.rangeslider__handle');
+            var handleValue = '<div class="rangeslider__handle__value">' + this.value + '</div>';
+            $handle.append(handleValue);
+
+            // get range index labels
+            var rangeLabels = this.$element.attr('labels');
+            rangeLabels = rangeLabels.split(', ');
+
+            // add labels
+            $rangeEl.append('<div class="rangeslider__labels"></div>');
+            $(rangeLabels).each(function(index, value) {
+                $rangeEl.find('.rangeslider__labels').append('<span class="rangeslider__labels__label">' + value + '</span>');
+            })
+        },
+
+        // Callback function
+        onSlide: function(position, value) {
+            var $handle = this.$range.find('.rangeslider__handle__value');
+            $handle.text(this.value);
+        },
+
+        // Callback function
+        onSlideEnd: function(position, value) {}
+
+
+    });
+    function rangeSlide(value) {
+        document.getElementById('rangeValue').innerHTML = this.value + ' %';
+    }
+
+</script>
 
 
 

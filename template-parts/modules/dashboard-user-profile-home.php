@@ -48,7 +48,7 @@ if (!empty($portfolios))
     <div class="detailContentCandidat">
         <div class="fistBlock">
            <div class="categorieDetailCandidat">
-               <h2 class="titleCategorieDetailCandidat">Candidates About</h2>
+               <h2 class="titleCategorieDetailCandidat">About</h2>
                <p class="textDetailCategorie"><?php echo $biographical_info;  ?></p>
            </div>
            <?php if(!empty($topics)){ ?>
@@ -75,12 +75,29 @@ if (!empty($portfolios))
                                 $note = $skill['note'];
                     $name_topic = (String)$topic;    
                 ?>
-                <div class="skillbars">
-                    <label class="skillName"><?php echo $name_topic;  ?></label>
-                    <div class="progress" data-fill="<?php echo $note ?>" >
+                    <div class="skillBar">
+                        <label for=""><?php echo $name_topic;  ?></label>
+                        <div data-progress="react" data-value="<?= $note ?>">
+                            <span class="progress">
+                                <span id="react" class="progress-bar orange"></span>
+                            </span>
+                        </div>
                     </div>
                 </div>
                <?php } ?>
+
+                <div class="skillbars">
+                    <label class="skillName">HTMLLL</label>
+                    <div class="progress" data-fill="15" >
+                    </div>
+                </div>
+                <div class="skillbars">
+                    <label class="skillName">CSS</label>
+                    <div class="progress" data-fill="0" >
+                    </div>
+                </div>
+
+
               
             </div>
            <?php }?>
@@ -279,7 +296,6 @@ if (!empty($portfolios))
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Readmore.js/2.0.2/readmore.js"  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 <script>
     class ProgressBar{
         constructor(progressBar, fill, skillName){
