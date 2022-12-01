@@ -365,7 +365,7 @@
         <p class="liverTilteHead2"><?php echo $name ?></p>
         <div class="mb-2">
             <span class="btn rounded-pill text-dark font-weight-bold pr-0">
-                Werkzaam bij <a class=""> <?php echo "<a style='color:#00A89D' href='/opleider-courses/?companie=". $company_id. "'> " . $company_name. "</a>"; ?>
+                Werkzaam bij <?php echo "<a style='color:#00A89D' href='/opleider-courses/?companie=". $company_id. "'> " . $company_name. "</a>"; ?>
             </span>
         </div> 
 

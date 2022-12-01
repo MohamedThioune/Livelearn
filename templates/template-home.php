@@ -494,7 +494,7 @@ $degrees=[
                 <form action="/product-search" class="position-relative" method="POST">
                     <input id="search" type="search" class="jAuto searchInputHome form-control"
                         placeholder="Zoek opleidingen, experts of onderwerpen" name="search" autocomplete="off">
-                    <button class="btn btn-Zoek elementWeb">Zoek</button>
+                    <button class="btn btn-Zoek elementWeb"><span>Zoek</span></button>
                     <?php
                         if(get_current_user_id()==0){
                     ?>
@@ -992,7 +992,7 @@ $degrees=[
             <p class="ofWordText">Of gebruik LiveLearn Zakelijk</p>
             <p class="krijgText">Een eigen leeromgeving, tot wel 65% korting op opleidingen en andere leervormen, toegang
                 tot exclusieve events en maak gebruik van ons leven lang leren scholingsadvies.</p>
-            <a href="/voor-organisaties" class="ikWil">Ik wil dit</a>
+            <a href="/voor-organisaties" class="ikWil"><span>Ik wil dit</span></a>
         </div>
         <div class="ookBlock">
             <p class="textmaand">€4,95 per maand</p>

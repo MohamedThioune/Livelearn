@@ -492,7 +492,13 @@ require($page);
                                 <input type="checkbox" id="event" name="leervom[]" value="Artikel">
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
-                        </div> 
+                        </div>
+                        <div class="checkFilter">
+                            <label class="contModifeCheck">Expert
+                                <input type="checkbox" id="expert" name="leervom[]" value="expert">
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div>
                         <br>
                     </div>
                     <div class="LeerBlock pl-4" >
@@ -530,6 +536,26 @@ require($page);
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div>
+                    </div>
+
+                    <div class="LeerBlock pl-4 d-grid">
+                        <p class="sousProduct1Title" style="color: #043356;">RATING</p>
+                        <div class="rating-element2 ">
+                            <div class="rating">
+                                <input type="radio" id="star5" class="stars" name="rating" value="5" />
+                                <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                                <input type="radio" id="star4" class="stars" name="rating" value="4" />
+                                <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                                <input type="radio" id="star3" class="stars" name="rating" value="3" />
+                                <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                                <input type="radio" id="star2" class="stars" name="rating" value="2" />
+                                <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                                <input type="radio" id="star1" name="rating" value="1" />
+                                <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
+                            </div>
+                            <span class="rating-counter"></span>
+                        </div>
+
                     </div>
 
                     <div class="LeerBlock pl-4">
