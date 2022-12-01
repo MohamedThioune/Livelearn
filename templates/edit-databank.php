@@ -281,7 +281,7 @@ $companies = get_posts($args);
 
                    <div class="input-group-course">
                        <label for="">For who</label>
-                       <textarea name="for_who" class="summernote">
+                       <textarea name="for_who" class="summernote" id="summernote-long">
                        <?= $course->for_who ?> 
                        </textarea>
                    </div>
@@ -476,6 +476,33 @@ $(document).ready(function () {
     });
 });
 //# sourceURL=pen.js
+</script>
+<script>
+
+    alert('okk');
+    $(document).ready(function() {
+        alert('azert');
+        $('#summernote-long').summernote();
+   
+    });
+    $('#summernote-long').summernote({
+        height: 250,
+        callbacks: {
+            onChange: function (contents) {
+                if ($('#summernote-long').summernote('isEmpty')) {
+                    $(".add .panel-body").html('');
+                } else {
+                    $(".add .panel-body").val(contents);
+                }
+                // $('#summernote-long').val(
+                //     $('#summernote-long').summernote('isEmpty')
+                //         ? null
+                //         : contents
+                // );
+                summernoteValidatorAdd.element($('#summernote-long'));
+            }
+        }
+    });
 </script>
 
 <script src="<?php echo get_stylesheet_directory_uri();?>/customSurmmote.js"></script>
