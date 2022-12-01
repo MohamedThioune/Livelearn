@@ -266,12 +266,12 @@
                   $categorys = array_merge($categorys, $tag);      
               }
           }
-          
+
           foreach($datum->programDescriptions->searchword as $searchword){
             $searchword = strtolower(strval($searchword));
             foreach($categorys as $category){
               $cat_slug = strval($category->slug);
-              $cat_name = explode(strval($category->cat_name));             
+              $cat_name = strval($category->cat_name);             
               if(strpos($searchword, $cat_slug) !== false || in_array($searchword, $cat_name))
                 if(!in_array($category->cat_ID, $tags))
                     array_push($tags, $category->cat_ID);
@@ -289,7 +289,6 @@
 
           //Final value : categorie
           $onderwerpen = join(',' , $tags);
-
         /*
         End *
         */ 
