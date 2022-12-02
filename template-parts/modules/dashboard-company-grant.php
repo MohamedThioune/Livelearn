@@ -10,7 +10,6 @@
                 {
                     $u = new WP_User($grant);
                     // Add role
-                    $u->set_role( 'manager' );
                     $u->add_role( 'teacher' );
                 }
                 update_field('manager', 1, 'user_'.$grant);
@@ -47,7 +46,7 @@
                 ?>
                         <form action="/dashboard/company/grant" method="post">
                             <div class="acf-field">
-                                <label for="locate">Geef een gebruiker de 'rol' manager om een team aan te sturen :</label><br>
+                                <label for="locate">Geef een gebruiker de rol 'teacher' om een team aan te sturen :</label><br>
                                 <div class="form-group">
                                         <?php
                                         //Get users from company
