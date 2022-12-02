@@ -170,7 +170,8 @@ if(!empty($notifications))
                                     ?>
                                             <div>
                                                 <div class="modal-content-body">
-                                                    <p class="feedbackText">Empty until now ...</p>
+                                                    <p class="feedbackText">No new updates ...</p>
+                                                    <a href="/dashboard/user/notification" class="feedbackText">Bekijk alle notificaties</a>
                                                 </div>
                                             </div>
 
@@ -316,14 +317,15 @@ if(!empty($notifications))
                                 <?php
                                         }
                                         echo '<div class="">
-                                                  <a href="/dashboard/user/detail-notification/?todo=6620" class="btn BekijkNotifications">Bekijk alle notificaties</a>
+                                                  <a href="/dashboard/user/notification" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                               </div>';
                                     }
                                     else{
                                 ?>
                                         <div>
                                             <div class="">
-                                                <p class="feedbackText">Empty until now ...</p>
+                                                <p class="feedbackText">No new updates ...</p>
+                                                <a href="/dashboard/user/notification/?" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                             </div>
                                         </div>
                                 <?php
