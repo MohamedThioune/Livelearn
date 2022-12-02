@@ -621,7 +621,8 @@ else if(isset($databank)){
 
         $data_locaties_xml = join('~', $data_locaties);
     }
-    $contributors = join(',', $contributors);
+    $contributors = "";
+    $contributors = join(',', $experts);
     
     if($complete == "all") 
         $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'long_description' => $long_description, 'for_who' => $for_who, 'agenda' => $agenda, 'results' => $results, 'prijs' => $prijs, 'prijs_vat' => $prijs_vat, 'onderwerpen' => $onderwerpen, 'date_multiple' => $data_locaties_xml, 'level' => $level, 'language' => $language, 'author_id' => $author_id, 'company_id' => $company_id, 'contributors' => $contributors ]; // NULL value.

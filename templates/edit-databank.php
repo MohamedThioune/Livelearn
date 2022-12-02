@@ -250,7 +250,7 @@ $companies = get_posts($args);
 
                        <div class="input-group">
                            <label for="">Contributors : </label>
-                           <select class="multipleSelect2" name="contributors[]" id="" multiple>
+                           <select class="multipleSelect2" name="experts[]" id="" multiple>
                               <?php
                                if(!empty($contributors))
                                     foreach($users as $user)
