@@ -12466,6 +12466,9 @@ select {
     background: #F0F5F7 !important;
     border: none;
 }
+.ck-editor__editable {
+    max-height: 300px;
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;

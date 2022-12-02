@@ -260,6 +260,8 @@ extract($_GET);
                                                                 echo "<option class='redE' selected  value='" . $user . "'>" . $name . "</option>";
                                                             else
                                                                 echo "<option class='redE' value='" . $user . "'>" . $name . "</option>";
+                                                        else
+                                                            echo "<option class='redE' value='" . $user . "'>" . $name . "</option>";
                                                     }
                                                 echo "</select>";
                                                 echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
@@ -430,7 +432,7 @@ extract($_GET);
                             <div class="d-flex justify-content-center">
 
                                 <div>
-                                    <a href="https://wa.me/<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
+                                    <a href="https://wa.me/<?= $phone_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                                         <i style="font-size: 50px; height: 49px; margin-top: -4px;"
                                             class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>
                                     </a>
@@ -439,7 +441,7 @@ extract($_GET);
                                     </div>
                                 </div>
                                 <div>
-                                    <a href="mailto:<?= $email_user ?>" class="mx-3 d-flex flex-column ">
+                                    <a href="mailto:<?= $email_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                                         <i style="font-size: 25px"
                                             class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
                                         <!-- <span class="bd-highlight fw-bold text-primary mt-2">email</span> -->
@@ -449,7 +451,7 @@ extract($_GET);
                                     </div>
                                 </div>
                                 <div>
-                                    <a href="sms:<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
+                                    <a href="sms:<?= $phone_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                                         <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>
                                     </a>
                                     <div class="mt-3 text-center">
@@ -458,7 +460,7 @@ extract($_GET);
                                 </div>
 
                                 <div>
-                                    <a href="tel:<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
+                                    <a href="tel:<?= $phone_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                                         <i class="bd-highlight bi bi-telephone-x border border-3 border-primary rounded-circle text-primary shadow"
                                             style="font-size: 20px; padding: 6px 11px;"></i>
                                         <!-- <span class="bd-highlight fw-bold text-primary mt-2">call</span> -->
@@ -508,8 +510,6 @@ extract($_GET);
                 </div>
             </div>
             <!-- -------------------------------------------------- End Modal Direct contact & Voor wie -------------------------------------- -->
-
-
 
 
             <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->

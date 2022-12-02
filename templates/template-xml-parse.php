@@ -68,9 +68,6 @@
           $image = $media->url;
           break;
         }
-      /*
-      ** END
-      */
 
       //Redundance check "Image & Title"
       $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s", strval($image));
@@ -120,7 +117,7 @@
 
       $company = null;
       $users = get_users();
-      $api_name_company = array("WorkPlace Academy");
+
       //Implement author of this course
       foreach($users as $user) {
         $teacher_id = get_field('teacher_id',  'user_' . $user->ID);
@@ -128,11 +125,6 @@
         
         if(strtolower($company_user[0]->post_title) == strval($post['org']) ){
           $author_id = $user->ID;
-
-          if(strpos($teacher_id, strval($post['teacher_id'])) !== false){
-            $author_id = $user->ID;
-            break;
-          } 
 
           $company = $company_user[0];
           $company_id = $company_user[0]->ID;  
@@ -172,7 +164,7 @@
             'role' => 'author'
         );
 
-        //$author_id = wp_insert_user(wp_slash($userdata));       
+        $author_id = wp_insert_user(wp_slash($userdata));       
       }
 
       //Accord the author a company
@@ -274,12 +266,12 @@
                   $categorys = array_merge($categorys, $tag);      
               }
           }
-          
+
           foreach($datum->programDescriptions->searchword as $searchword){
             $searchword = strtolower(strval($searchword));
             foreach($categorys as $category){
               $cat_slug = strval($category->slug);
-              $cat_name = explode(strval($category->cat_name));             
+              $cat_name = strval($category->cat_name);             
               if(strpos($searchword, $cat_slug) !== false || in_array($searchword, $cat_name))
                 if(!in_array($category->cat_ID, $tags))
                     array_push($tags, $category->cat_ID);
@@ -297,7 +289,6 @@
 
           //Final value : categorie
           $onderwerpen = join(',' , $tags);
-
         /*
         End *
         */ 

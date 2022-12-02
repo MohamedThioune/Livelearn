@@ -2177,6 +2177,15 @@
                 url: 'Video URL?',
                 providers: '(YouTube, Vimeo, Vine, Instagram, DailyMotion or Youku)'
             },
+            link: {
+                link: 'Link',
+                insert: 'Insert Link',
+                unlink: 'Unlink',
+                edit: 'Edit',
+                textToDisplay: 'Text to display',
+                url: 'To what URL should this link go?',
+                openInNewWindow: 'Open in new window'
+            },
             table: {
                 table: 'Table',
                 addRowAbove: 'Add row above',
@@ -4912,93 +4921,93 @@
             }
         };
 
-        // /**
-        //  * create link (command)
-        //  *
-        //  * @param {Object} linkInfo
-        //  */
-        // this.createLink = this.wrapCommand(function (linkInfo) {
-        //     var linkUrl = linkInfo.url;
-        //     var linkText = linkInfo.text;
-        //     var isNewWindow = linkInfo.isNewWindow;
-        //     var rng = linkInfo.range || this.createRange();
-        //     var isTextChanged = rng.toString() !== linkText;
+        /**
+         * create link (command)
+         *
+         * @param {Object} linkInfo
+         */
+        this.createLink = this.wrapCommand(function (linkInfo) {
+            var linkUrl = linkInfo.url;
+            var linkText = linkInfo.text;
+            var isNewWindow = linkInfo.isNewWindow;
+            var rng = linkInfo.range || this.createRange();
+            var isTextChanged = rng.toString() !== linkText;
 
-        //     // handle spaced urls from input
-        //     if (typeof linkUrl === 'string') {
-        //         linkUrl = linkUrl.trim();
-        //     }
+            // handle spaced urls from input
+            if (typeof linkUrl === 'string') {
+                linkUrl = linkUrl.trim();
+            }
 
-        //     if (options.onCreateLink) {
-        //         linkUrl = options.onCreateLink(linkUrl);
-        //     } else {
-        //         // if url doesn't match an URL schema, set http:// as default
-        //         linkUrl = /^[A-Za-z][A-Za-z0-9+-.]*\:[\/\/]?/.test(linkUrl) ?
-        //             linkUrl : 'http://' + linkUrl;
-        //     }
+            if (options.onCreateLink) {
+                linkUrl = options.onCreateLink(linkUrl);
+            } else {
+                // if url doesn't match an URL schema, set http:// as default
+                linkUrl = /^[A-Za-z][A-Za-z0-9+-.]*\:[\/\/]?/.test(linkUrl) ?
+                    linkUrl : 'http://' + linkUrl;
+            }
 
-        //     var anchors = [];
-        //     if (isTextChanged) {
-        //         rng = rng.deleteContents();
-        //         var anchor = rng.insertNode($('<A>' + linkText + '</A>')[0]);
-        //         anchors.push(anchor);
-        //     } else {
-        //         anchors = style.styleNodes(rng, {
-        //             nodeName: 'A',
-        //             expandClosestSibling: true,
-        //             onlyPartialContains: true
-        //         });
-        //     }
+            var anchors = [];
+            if (isTextChanged) {
+                rng = rng.deleteContents();
+                var anchor = rng.insertNode($('<A>' + linkText + '</A>')[0]);
+                anchors.push(anchor);
+            } else {
+                anchors = style.styleNodes(rng, {
+                    nodeName: 'A',
+                    expandClosestSibling: true,
+                    onlyPartialContains: true
+                });
+            }
 
-        //     $.each(anchors, function (idx, anchor) {
-        //         $(anchor).attr('href', linkUrl);
-        //         if (isNewWindow) {
-        //             $(anchor).attr('target', '_blank');
-        //         } else {
-        //             $(anchor).removeAttr('target');
-        //         }
-        //     });
+            $.each(anchors, function (idx, anchor) {
+                $(anchor).attr('href', linkUrl);
+                if (isNewWindow) {
+                    $(anchor).attr('target', '_blank');
+                } else {
+                    $(anchor).removeAttr('target');
+                }
+            });
 
-        //     var startRange = range.createFromNodeBefore(list.head(anchors));
-        //     var startPoint = startRange.getStartPoint();
-        //     var endRange = range.createFromNodeAfter(list.last(anchors));
-        //     var endPoint = endRange.getEndPoint();
+            var startRange = range.createFromNodeBefore(list.head(anchors));
+            var startPoint = startRange.getStartPoint();
+            var endRange = range.createFromNodeAfter(list.last(anchors));
+            var endPoint = endRange.getEndPoint();
 
-        //     range.create(
-        //         startPoint.node,
-        //         startPoint.offset,
-        //         endPoint.node,
-        //         endPoint.offset
-        //     ).select();
-        // });
+            range.create(
+                startPoint.node,
+                startPoint.offset,
+                endPoint.node,
+                endPoint.offset
+            ).select();
+        });
 
-        // /**
-        //  * returns link info
-        //  *
-        //  * @return {Object}
-        //  * @return {WrappedRange} return.range
-        //  * @return {String} return.text
-        //  * @return {Boolean} [return.isNewWindow=true]
-        //  * @return {String} [return.url=""]
-        //  */
-        // this.getLinkInfo = function () {
-        //     var rng = this.createRange().expand(dom.isAnchor);
+        /**
+         * returns link info
+         *
+         * @return {Object}
+         * @return {WrappedRange} return.range
+         * @return {String} return.text
+         * @return {Boolean} [return.isNewWindow=true]
+         * @return {String} [return.url=""]
+         */
+        this.getLinkInfo = function () {
+            var rng = this.createRange().expand(dom.isAnchor);
 
-        //     // Get the first anchor on range(for edit).
-        //     var $anchor = $(list.head(rng.nodes(dom.isAnchor)));
-        //     var linkInfo = {
-        //         range: rng,
-        //         text: rng.toString(),
-        //         url: $anchor.length ? $anchor.attr('href') : ''
-        //     };
+            // Get the first anchor on range(for edit).
+            var $anchor = $(list.head(rng.nodes(dom.isAnchor)));
+            var linkInfo = {
+                range: rng,
+                text: rng.toString(),
+                url: $anchor.length ? $anchor.attr('href') : ''
+            };
 
-        //     // Define isNewWindow when anchor exists.
-        //     if ($anchor.length) {
-        //         linkInfo.isNewWindow = $anchor.attr('target') === '_blank';
-        //     }
+            // Define isNewWindow when anchor exists.
+            if ($anchor.length) {
+                linkInfo.isNewWindow = $anchor.attr('target') === '_blank';
+            }
 
-        //     return linkInfo;
-        // };
+            return linkInfo;
+        };
 
         /**
          * setting color

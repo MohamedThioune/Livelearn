@@ -92,7 +92,7 @@ if (!empty($portfolios))
                 </div>
                 <div class="skillbars">
                     <label class="skillName">CSS</label>
-                    <div class="progress" data-fill="0" >
+                    <div class="progress" data-fill="65" >
                     </div>
                 </div>
 
