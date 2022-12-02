@@ -11,11 +11,14 @@ if($id){
 
     $courses = get_posts($args);
 }
+
 $artikel_single = "Artikel";
 $white_type_array =  ['Lezing', 'Event'];
 $course_type_array = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'Cursus'];
 $video_single = "Video";
-$leerpad_single  = 'Leerpad';
+$leerpad_single  = "Leerpad";
+$assessment_single = "Assessment";
+$podcast_single = "Podcast";
 
 ?>
 <div class="contentListeCourse">
@@ -43,36 +46,30 @@ $leerpad_single  = 'Leerpad';
                 <tbody>
                     <?php 
                     foreach($courses as $key => $course){
+                        if(!visibility($course, $visibility_company))
+                            continue;  
 
                         /*
                         * Categories
                         */
                         $category = ' ';
-                        $day = "<p><i class='fas fa-calendar-week'></i></p>";
-
-                        $tree = get_the_terms($course->ID, 'course_category'); 
-
-                        $category = ' ';
-
-                            $tree = get_the_terms($course->ID, 'course_category'); 
-
-                            if($tree)
-                                if(isset($tree[2]))
-                                    $category = $tree[2]->name;
-                                
-                            $category_id = 0;
-                        
-                            $category_string = " ";
-                            
-                            if($category == ' '){
-                                $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]); 
-                                $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                                if($category_str != 0)
-                                    $category = (String)get_the_category_by_ID($category_str);
-                                else if($category_id != 0)
-                                    $category = (String)get_the_category_by_ID($category_id);                                    
+                        $category_id = 0;
+                        $category_str = 0;
+                        if($category == ' '){
+                            $one_category = get_field('categories',  $course->ID);
+                            if(isset($one_category[0]))
+                                $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                            else{
+                                $one_category = get_field('category_xml',  $course->ID);
+                                if(isset($one_category[0]))
+                                    $category_id = intval($one_category[0]['value']);
                             }
 
+                            if($category_str != 0)
+                                $category = (String)get_the_category_by_ID($category_str);
+                            else if($category_id != 0)
+                                $category = (String)get_the_category_by_ID($category_id);
+                        }
 
                         /*
                         * Price 
@@ -86,8 +83,10 @@ $leerpad_single  = 'Leerpad';
                         /*
                         *  Date and Location
                         */ 
+                        $day = "<i class='fas fa-calendar-week'></i>";
+                        $month = ' ';
                         $location = ' ';
-
+                    
                         $data = get_field('data_locaties', $course->ID);
                         if($data){
                             $date = $data[0]['data'][0]['start_date'];
@@ -98,9 +97,12 @@ $leerpad_single  = 'Leerpad';
                             if($dates)
                                 $day = explode(' ', $dates[0]['date']);
                             else{
-                                $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                                $date = $data[0];
-                                $day = explode(' ', $date)[0];
+                                $data = get_field('data_locaties_xml', $course->ID);
+                                if(isset($data[0]['value'])){
+                                    $data = explode('-', $data[0]['value']);
+                                    $date = $data[0];
+                                    $day = explode(' ', $date)[0];
+                                }
                             }
                         }
 
@@ -121,8 +123,18 @@ $leerpad_single  = 'Leerpad';
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-course&id=" . $course->ID ."&edit";
                         else if($course_type == $leerpad_single)
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-road&id=" . $course->ID ."&edit";
+                        else if($course_type == $assessment_single)
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-assessment&id=" . $course->ID ."&edit";
+                        else if($course_type == $podcast_single)
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-podcast&id=" . $course->ID ."&edit";
 
-                        $link = ($course_type == "Leerpad") ? '/detail-product-road?id=' . $course->ID : get_permalink($course->ID);
+                        $link = "";    
+                        if($course_type == "Leerpad")
+                            $link = '/detail-product-road?id=' . $course->ID ;
+                        else if($course_type == "Assessment")
+                            $link = '/detail-assessment?assessment_id=' . $course->ID;
+                        else
+                            $link = get_permalink($course->ID);                        
                         ?>
                         <td scope="row"><?= $key; ?></td>
                         <td class="textTh"><?php if(!empty(get_field('visibility',$course->ID))){echo 'nee';}else{echo 'ja';}?></td>

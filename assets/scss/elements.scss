@@ -1,0 +1,1326 @@
+$primary-color: #023356;
+$bleu-color:#043356;
+$white-color: #ffffff;
+$gray-color: #707070;
+$gray-border-color:#bfbcbc;
+$gray-text-color:#42454D;
+$lightblue-color: #E0EFF4;
+$green-color:#47a99e;
+$shadown-color:#9c9fa2;
+$lightness-color: #ECEDF2;
+$black-text-color: #000000;
+.bg__blue {
+    background: $bleu-color;
+}
+
+.bg__lightblue {
+    background: $lightblue-color;
+}
+
+.bg__green {
+    background: $green-color;
+}
+
+.bg__green {
+    background: $primary-color;
+}
+
+.bg__gray {
+    background: $gray-color;
+}
+
+.bg__lightblue {
+    background: $lightblue-color;
+}
+
+.bg__green-light {
+    background: $green-color;
+}
+
+.bg__lightness {
+    background: $lightness-color;
+}
+
+.swiper-container {
+    overflow-x: hidden !important;
+    .theme-product--card {
+        border: 1px solid $gray-border-color !important;
+        border-radius: 13px;
+        .headCardKraam {
+            border: none !important;
+            min-height: 130px;
+            background: $gray-text-color;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            .blockImgCardCour {
+                height: 170px;
+                overflow: hidden;
+                position: relative;
+                img {
+                    width: 100%;
+                    height: fit-content;
+                }
+            }
+            .blockgroup7 {
+                position: absolute;
+                bottom: 0px;
+                background: #02335685;
+                color: $lightblue-color;
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                padding: 5px 10px;
+                border-radius: 10px;
+                .iconeTextKraa {
+                    display: flex;
+                    .sousiconeTextKraa {
+                        display: flex;
+                        margin-right: 4px;
+                        align-items: center;
+                        img {
+                            width: 13px!important;
+                            height: 13px;
+                            margin-top: 2px;
+                            margin-right: 1px;
+                        }
+                        .kraaText {
+                            font-size: 12px;
+                            font-weight: bold;
+                            margin-left: 2px;
+                            margin-bottom: 0;
+                            margin-right: 3px;
+                            margin-top: 2px;
+                            overflow: hidden;
+                            width: 100px;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                        }
+                    }
+                }
+            }
+        }
+        .contentCardProd {
+            padding: 20px 15px;
+            max-height: 225px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 20px;
+            .group8 {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 5px;
+                .imgTitleCours {
+                    display: flex;
+                    .imgTitleCours {
+                        display: flex;
+                        .imgCoursProd {
+                            width: 25px;
+                            height: 25px;
+                            border-radius: 100%;
+                            margin-top: -4px;
+                            margin-bottom: 15px;
+                            overflow: hidden;
+                            border: 1px solid #b5b5b5;
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                            }
+                        }
+                    }
+                    .nameCoursProd {
+                        color: $gray-text-color;
+                        font-size: 12px;
+                        font-weight: bold;
+                        margin-right: 10px;
+                        margin-bottom: 0;
+                        margin-top: 0px;
+                        margin-left: 5px;
+                        text-overflow: ellipsis;
+                        overflow: hidden;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 1;
+                        -webkit-box-orient: vertical;
+                        height: fit-content;
+                        width: 50%;
+                    }
+                }
+                .group9 {
+                    display: flex;
+                    .blockOpein {
+                        display: flex;
+                        img {
+                            height: 11px;
+                            margin-right: 3px;
+                            margin-top: 3px;
+                        }
+                        .lieuAm {
+                            font-size: 12px;
+                            font-weight: bold;
+                            margin-right: 10px;
+                            margin-bottom: 0;
+                            color: $gray-text-color;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            display: -webkit-box;
+                            -webkit-line-clamp: 1;
+                            -webkit-box-orient: vertical;
+                            height: fit-content;
+                        }
+                    }
+                }
+            }
+            .werkText {
+                color: $gray-text-color;
+                font-weight: bold;
+                font-size: 14px;
+                margin-bottom: 10px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+            .descriptionPlatform {
+                color: $gray-text-color;
+                font-size: 14px;
+                margin-bottom: 15px;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 4;
+                -webkit-box-orient: vertical;
+            }
+        }
+    }
+}
+
+.theme-btn--tag {
+    background: $lightblue-color !important;
+    min-width: 250px;
+    color: $white-color;
+}
+
+.verkop {
+    font-weight: bold;
+    color: $gray-text-color;
+    margin-bottom: 8px;
+}
+
+.theme-card--profile {
+    width: auto !important;
+    margin-right: 0 !important;
+    text-align: center;
+    padding: 20px;
+    box-shadow: unset;
+    border: 1px solid $gray-border-color;
+    .imgBlockCardonder {
+        width: 75px;
+        height: 75px;
+        border-radius: 100%;
+        background: $gray-color;
+        margin: 0 auto 10px;
+        text-align: center;
+        overflow: hidden;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    .theme-btn-bleu {
+        padding: 2px 30px !important;
+        color: white !important;
+        background: $primary-color;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+}
+
+.theme-card--opleiders {
+    height: auto !important;
+    padding: 20px 11px 5px !important;
+    box-shadow: 0px 0px 2px $shadown-color;
+    text-align: center;
+    border-radius: 10px;
+    position: relative;
+    width: 15%;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    .imgBlockCardonder {
+        width: 75px;
+        height: 75px;
+        border-radius: 100%;
+        background: $gray-text-color;
+        margin: 0 auto 10px;
+        text-align: center;
+        overflow: hidden;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
+
+.theme-card--list {
+    padding: 25px 30px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0px 0px 3px $shadown-color !important;
+    margin-bottom: 30px;
+    background: $white-color;
+    .titleCardPPricing {
+        color: $bleu-color;
+        font-size: 25px;
+        line-height: 25px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .sousTitlePricing {
+        color: $bleu-color;
+        text-align: center;
+        border: 2px solid $bleu-color;
+        width: fit-content;
+        margin: 0 auto 20px;
+        padding: 3px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 12px;
+    }
+    .blockCardPricing {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        .circleSpanEigen {
+            width: 30px;
+            height: 30px;
+            background: $bleu-color;
+            border-radius: 100%;
+            text-align: center;
+            i {
+                color: $white-color;
+                margin-top: 10px;
+                font-size: 12px;
+            }
+        }
+        p {
+            color: $bleu-color;
+            margin-bottom: 0;
+            font-size: 14px;
+            margin-left: 15px;
+        }
+    }
+    .footerCardSkills {
+        display: flex;
+        position: relative;
+        .footerFlecheImg {
+            height: 115px;
+            p {
+                position: absolute;
+                color: $bleu-color;
+                font-weight: 400;
+                left: 50px;
+            }
+        }
+        #footerFooterImg1 {
+            height: 162px;
+            margin-left: 45px;
+        }
+    }
+}
+
+.textJan {
+    font-size: 13px;
+    margin-bottom: 2px;
+    color: $gray-color;
+    margin-left: 4px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.theme-product--horizontal {
+    width: 100%;
+    background: $white-color;
+    box-shadow: 2px 1px 13px rgb(0 0 0 / 10%);
+    padding: 10px 15px;
+    display: flex;
+    margin-top: 15px;
+    justify-content: space-around;
+    .searchContentBlock {
+        width: 67%;
+        position: relative;
+        .deToekomstText {
+            color: $gray-color;
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+        .platformText {
+            font-size: 13px;
+            color: $gray-color;
+            margin-bottom: 6px;
+        }
+        .detaiElementAgendaModife {
+            width: 100%;
+            justify-content: space-between;
+            .janBlock {
+                display: flex;
+                margin-right: 10px;
+                .colorFront {
+                    width: 15px;
+                    height: 15px;
+                    background: $gray-color;
+                    border-radius: 100%;
+                    margin-top: 1px;
+                }
+            }
+            .euroBlock {
+                display: flex;
+                margin-right: 10px;
+                .euroImg {
+                    height: 13px;
+                    margin-top: 3px;
+                }
+            }
+            .zwoleBlock {
+                display: flex;
+                margin-right: 10px;
+            }
+            .facilityBlock {
+                display: flex;
+            }
+        }
+    }
+    .searchBlockImg {
+        position: relative;
+        width: 28%;
+        height: 168px;
+    }
+}
+
+.theme-note {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+    border: 1px solid $lightness-color;
+    box-shadow: 0px 6px 15px rgb(64 79 104 / 5%);
+    border-radius: 8px;
+    margin-bottom: 40px;
+    .bleu {
+        background: $lightblue-color;
+        text-align: center;
+    }
+    .blockImgCardActivity {
+        border-radius: 8px;
+        width: 55px;
+        height: 55px;
+        img {
+            width: 30px;
+            height: 30px;
+            margin: 13px auto 0;
+        }
+    }
+    .numberActivity {
+        font-weight: 500;
+        font-size: 27px;
+        line-height: 0;
+        text-align: right;
+        margin-bottom: 21px;
+        margin-top: 10px;
+    }
+    .nameCardActivity {
+        margin-bottom: 0;
+        text-align: right;
+        color: #202124;
+    }
+    .headCardNotification {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        margin-top: -1px;
+        .btnOnderwerp2 {
+            color: $white-color!important;
+            border-radius: 12px!important;
+            font-size: 14px!important;
+            min-width: 90px;
+            margin-left: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            padding: 7px 15px!important;
+        }
+    }
+    .circleNotification {
+        width: 35px;
+        height: 35px;
+        background: #d9302533;
+        border-radius: 100%;
+        text-align: center;
+        img {
+            width: 14px;
+            height: 14px;
+            margin-top: 10px;
+        }
+    }
+    .feddBackNotification {
+        font-weight: normal;
+        font-size: 15px;
+        margin: 0 0px 0 8px;
+        color: #202124;
+    }
+    h2 {
+        font-weight: 500;
+        font-size: 17px;
+        line-height: 21px;
+        color: #202124;
+        width: 100%;
+        margin-bottom: 26px;
+    }
+    .content-badges {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        .content-badge-notifications .card {
+            width: 48%;
+            margin: 0 5px 20px;
+            padding: 25px 20px;
+            border: 1px solid #ebecff;
+            position: relative;
+            box-shadow: 0px 1px 3px 0px rgb(10 30 38 / 8%);
+            min-height: 240px;
+            text-align: center;
+            flex-direction: column;
+            border-radius: 15px;
+            .block-icons {
+                width: 70px;
+                height: 70px;
+                margin: 0 auto 20px;
+                border: 2px dashed $black-text-color;
+                border-radius: 100%;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: scale-down;
+                }
+            }
+            .title {
+                font-size: 17px;
+                margin-bottom: 5px;
+                line-height: 29px;
+                text-align: center;
+                color: $black-text-color;
+                font-weight: 500;
+            }
+            .awarded {
+                font-weight: 500;
+                line-height: 22px;
+                color: $black-text-color;
+                font-size: 15px;
+                margin-bottom: 6px;
+                span {
+                    color: $bleu-color;
+                }
+            }
+            .date-awarded {
+                margin-bottom: 0px;
+                font-weight: 500;
+                font-size: 15px;
+                line-height: 22px;
+            }
+            .btn-see {
+                background: #00aa9e;
+                width: 230px;
+                color: white;
+                padding: 8px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: fit-content;
+                margin: auto;
+            }
+            .theme-wrapper--rounded {
+                width: 49%;
+                border: 1px solid $lightness-color;
+                box-sizing: border-box;
+                border-radius: 8px;
+                padding: 15px 10px 1px;
+                margin-bottom: 22px;
+                .imgBlockCoursElement {
+                    width: 93px;
+                    height: 93px;
+                    border-radius: 9px;
+                    margin-right: 15px;
+                    overflow: hidden;
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                }
+                .detailTwoCoursElement {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 75%;
+                    .nameCours {
+                        font-weight: 500;
+                        font-size: 18px;
+                        margin-bottom: 3px;
+                        color: #202124;
+                    }
+                    .d-flex img {
+                        height: 15px;
+                        margin-top: 3px;
+                        margin-right: 5px;
+                    }
+                    .mapLocalisation {
+                        font-size: 14px;
+                        margin-bottom: 2px;
+                        color: #696969;
+                    }
+                    .tagElementBlock {
+                        display: flex;
+                        p {
+                            background: #F0F5F7;
+                            border-radius: 30px;
+                            margin-right: 12px;
+                            font-size: 13px;
+                            color: #696969;
+                            padding: 5px 15px;
+                        }
+                    }
+                    .btnViewCours {
+                        background: #464b8b14;
+                        text-align: center;
+                        height: fit-content;
+                        margin-right: 10px;
+                        padding: 6px 5px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.theme-card--option {
+    width: 24%;
+    background: #FFF;
+    padding: 43px 20px 30px;
+    height: 135px;
+    border-radius: 7px;
+    margin-bottom: 20px;
+    margin-right: 0px;
+    text-align: center;
+    display: block;
+    position: relative;
+    .contentText {
+        color: $primary-color;
+        line-height: 18px;
+        margin-top: 12px;
+    }
+}
+
+.contentOne {
+    .boxOne3 {
+        height: 425px;
+        background: url("./img/bg1.png") no-repeat;
+        color: white;
+        position: relative;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        .voorBlock {
+            margin-bottom: 130px;
+            margin-top: 5px;
+            .wordDeBestText2 {
+                font-size: 34px;
+                line-height: 42px;
+                margin: 0px auto 10px;
+            }
+            .altijdText2 {
+                width: 613px;
+                margin: 0 auto 15px;
+                font-size: 18px;
+                padding: 0;
+            }
+            form {
+                .searchInputHome {
+                    color: $gray-color;
+                    border: none;
+                    padding: 16px;
+                    width: 910px;
+                    border-radius: 13px;
+                    margin: 0 auto 25px;
+                    min-height: 51px;
+                }
+                .btn-Zoek {
+                    background: $bleu-color;
+                    color: $white-color;
+                    font-size: 18px;
+                    font-weight: bold;
+                    position: absolute;
+                    top: 8px;
+                    right: 116px;
+                    padding: 3px 25px;
+                    border-radius: 10px;
+                }
+                .groupeBtn-Jouw-inloggen {
+                    display: flex;
+                    margin: 0 auto;
+                    width: fit-content;
+                    align-items: center;
+                }
+                .dropdown-menuSearch {
+                    position: absolute;
+                    left: 100px;
+                    background: white;
+                    color: $bleu-color;
+                    width: 30%;
+                    text-align: left;
+                    padding: 20px 0px;
+                    z-index: 99;
+                    top: 52px;
+                    border-radius: 15px;
+                    font-size: 16px;
+                }
+                .jouwn-skills {
+                    padding: 8px 50px;
+                    border-radius: 10px;
+                    color: white;
+                    font-weight: 700;
+                    margin: 0 10px;
+                }
+                .elementMobile {
+                    display: none;
+                }
+                .inloggenbtn {
+                    padding: 6px 39px;
+                    background: white;
+                    border: 2px solid $bleu-color;
+                    font-weight: 600;
+                    color: $bleu-color;
+                    border-radius: 11px;
+                    margin: 0 10px;
+                }
+            }
+        }
+    }
+}
+
+.boxCard3 {
+    padding: 0 115px;
+    display: flex;
+    justify-content: space-between;
+    .card3 {
+        width: 24%;
+        text-align: center;
+        padding: 20px 72px;
+        border-radius: 10px;
+        border: 3px solid $white-color;
+        z-index: 11;
+        position: relative;
+        .box1Img {
+            width: 90px;
+            height: 66px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 13px;
+            img {
+                width: 100%;
+            }
+            #imgBoxx1 {
+                width: 54px;
+            }
+        }
+        .textCard3 {
+            color: $primary-color;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+    }
+}
+
+.DaaromText {
+    color: $gray-text-color;
+    margin-bottom: 8px;
+}
+
+.contentSponsortBlock {
+    display: flex;
+    margin-bottom: 50px;
+    justify-content: center;
+    .sponsortBlock {
+        width: 110px !important;
+        height: 55px !important;
+        display: block;
+        padding: unset;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+}
+
+.blockWinDeWar {
+    background: #dfeef3;
+    height: 122px;
+    margin-bottom: 45px;
+    .elementWinWar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .imgWInWar {
+            width: 210px;
+            height: 100%;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        .btnLessHoe {
+            color: $bleu-color;
+            border: 1.5px solid $bleu-color;
+            padding: 10px 45px;
+            border-radius: 24px;
+            margin-left: 25px;
+            font-weight: 700;
+        }
+    }
+}
+
+.cardVoor {
+    margin-bottom: 60px;
+    .titleGroupText {
+        color: $primary-color;
+        font-size: 18px;
+        margin-bottom: 20px;
+        font-family: "Ubuntu";
+        font-weight: 400;
+    }
+    .paddingElement7 {
+        padding: 7px 50px;
+        margin-right: -40px;
+        a {
+            .theme-card {
+                height: 420px;
+                position: relative;
+                border: none !important;
+                box-shadow: 0px 0px 3px $shadown-color !important;
+                padding: 30px 20px 2px !important;
+                max-width: 350px;
+                border-radius: 20px;
+                &:hover {
+                    box-shadow: 0px 0px 10px $shadown-color !important;
+                }
+                .theme-card-img {
+                    width: 190px;
+                    height: 184px;
+                    margin-left: auto;
+                    margin-right: auto;
+                    position: relative;
+                    img {
+                        width: 100%;
+                    }
+                }
+                .theme-card-category {
+                    position: absolute;
+                    top: -2px;
+                    right: -13px;
+                    color: $white-color;
+                    background: #F69405;
+                    border-radius: 14px;
+                    border: 2px solid $white-color;
+                    font-size: 12px;
+                    font-weight: bold;
+                    padding: 3px 20px;
+                }
+                .theme-card-body {
+                    margin: 0 -20px;
+                    padding: 20px;
+                    border-top: 1px solid $gray-color;
+                    .theme-card-title {
+                        text-align: center;
+                        font-weight: bold;
+                        margin-bottom: 10px;
+                        color: $primary-color;
+                    }
+                    .theme-card-description {
+                        margin-bottom: 10px;
+                        color: $primary-color;
+                        font-size: 16px;
+                        text-align: center;
+                    }
+                    .theme-card-button {
+                        margin-bottom: 3px;
+                        color: $primary-color;
+                        font-size: 14px;
+                        font-weight: bold;
+                        position: absolute;
+                        bottom: 23px;
+                        left: 0;
+                        right: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.block9 {
+    .blockGroupText {
+        margin-bottom: 20px;
+        .titleGroupText {
+            color: $primary-color;
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-family: "Ubuntu";
+            font-weight: 400;
+        }
+        .sousBlockGroupText {
+            justify-content: unset !important;
+            .TextZorg {
+                min-width: 25%;
+            }
+        }
+    }
+}
+
+.theme-banner {
+    padding: 30px 20px 25px;
+    display: flex;
+    border-radius: 15px;
+    margin-top: 75px;
+    margin-bottom: 60px;
+    .block-img-banner {
+        width: 130px;
+        margin-right: 30px;
+        margin-top: 11px;
+        img {
+            width: 100%;
+        }
+    }
+    .gf_browser_chrome {
+        width: 100%;
+        form {
+            text-align: left;
+            max-width: 100%;
+            margin: 0 auto;
+            justify-content: center;
+            width: 100%;
+            display: flex;
+            border: none !important;
+            .gform_body {
+                width: 100%;
+                ul,
+                #gform_fields_10 {
+                    flex-wrap: wrap;
+                    display: flex;
+                    width: 100%;
+                    padding: 0;
+                    margin: 0 !important;
+                    list-style-type: none;
+                    li.gfield {
+                        padding-right: 16px;
+                        margin-top: 0 !important;
+                        padding-top: 0;
+                        .textDirect {
+                            padding-left: 103px;
+                            margin-bottom: 25px;
+                            border: none !important;
+                            position: relative;
+                            font-size: 22px;
+                            color: $primary-color;
+                            text-align: center;
+                        }
+                    }
+                    .inputDirect {
+                        width: 50% !important;
+                        border: none !important;
+                        height: 40px;
+                        border-radius: 8px;
+                        padding: 0 20px;
+                        color: $gray-color;
+                        margin-top: 0 !important;
+                        legend.gfield_label,
+                        legend.gfield_labe {
+                            font-size: 1em !important;
+                            letter-spacing: .5pt;
+                            white-space: nowrap;
+                            font-weight: normal !important;
+                            margin-top: 10px !important;
+                            margin-bottom: 6px !important;
+                        }
+                        .ginput_container {
+                            margin-top: 0 !important;
+                            input {
+                                border: none !important;
+                                height: 40px;
+                                border-radius: 8px;
+                                padding: 0 20px;
+                                color: $gray-color;
+                            }
+                        }
+                    }
+                }
+            }
+            .gform_footer {
+                width: 29% !important;
+                position: relative;
+                margin: 0px 0 -18px !important;
+                border: none !important;
+                padding: 16px 0 10px 0;
+                input {
+                    position: absolute;
+                    bottom: 3px;
+                    border-radius: 8px !important;
+                    color: white !important;
+                    font-size: 15px;
+                    padding: 10px 15px;
+                    left: 0;
+                }
+            }
+        }
+    }
+}
+
+.OfMaanBlock {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    .ofWordBlock {
+        width: 48%;
+        padding: 45px 40px 25px;
+        .ofWordText {
+            margin-bottom: 2px;
+            font-size: 28px;
+            color: $primary-color;
+            font-family: "Ubuntu";
+            font-weight: 700;
+        }
+        .krijgText {
+            font-size: 17px;
+        }
+        .ikWil {
+            color: $white-color !important;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-family: "Ubuntu";
+        }
+    }
+    .ookBlock {
+        background: url("./img/libay.png") no-repeat;
+        background-size: cover;
+        position: relative;
+        width: 48%;
+        .textmaand {
+            width: fit-content;
+            padding: 15px 20px;
+            color: white;
+            position: absolute;
+            top: 38px;
+            font-size: 20px;
+            border-bottom-right-radius: 10px;
+            border-top-right-radius: 10px;
+            font-family: "Ubuntu";
+            font-weight: 500;
+        }
+        .textOok {
+            width: 275px;
+            right: 0;
+            position: absolute;
+            bottom: 25px;
+            background: white;
+            padding: 18px 20px;
+            line-height: 18px;
+            font-size: 20px;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+            font-family: "Ubuntu";
+            font-weight: 500;
+        }
+    }
+}
+
+.blockAgenda {
+    margin-bottom: 70px;
+    display: block;
+    .blockText8 {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 491px;
+        text-align: center;
+        margin-bottom: 20px;
+        .titleAgenda {
+            font-size: 30px;
+            color: $primary-color;
+            font-weight: bold;
+            margin-bottom: 1px;
+        }
+        .dePaterneText {
+            margin-bottom: 10px;
+            color: $primary-color;
+            font-size: 16px;
+            text-align: center;
+        }
+    }
+    .sousBlockFrontAgenda {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        .theme-product--horizontal {
+            width: 49%;
+            background: white;
+            box-shadow: 2px 1px 13px rgb(0 0 0 / 10%);
+            padding: 10px 15px;
+            display: flex;
+            margin-top: 15px;
+            .workshopBlock {
+                width: 125px;
+                margin-right: 20px;
+                height: 100px;
+                position: relative;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 10%;
+                }
+            }
+            .deToekomstBlock {
+                width: 75%;
+                position: relative;
+                padding-bottom: 30px;
+                .deToekomstText {
+                    font-size: 14px;
+                    margin-bottom: 5px;
+                    font-weight: bold;
+                    margin-top: 6px;
+                }
+                .platformText {
+                    font-size: 13px;
+                    color: $gray-color;
+                    margin-bottom: 6px;
+                }
+                .detaiElementAgenda {
+                    display: flex;
+                    width: 100%;
+                    justify-content: space-between;
+                    position: absolute;
+                    bottom: 0px;
+                    .janBlock {
+                        display: flex;
+                        margin-right: 10px;
+                        .colorFront {
+                            overflow: hidden;
+                        }
+                        .textJan {
+                            font-size: 13px;
+                            margin-bottom: 2px;
+                            color: $gray-color;
+                            margin-left: 4px;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            display: -webkit-box;
+                            -webkit-line-clamp: 1;
+                            -webkit-box-orient: vertical;
+                        }
+                    }
+                    .euroBlock {
+                        display: flex;
+                        margin-right: 10px;
+                        .euroImg {
+                            height: 13px;
+                            margin-top: 3px;
+                        }
+                        .textJan {
+                            font-size: 13px;
+                            margin-bottom: 2px;
+                            color: $gray-color;
+                            margin-left: 4px;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            display: -webkit-box;
+                            -webkit-line-clamp: 1;
+                            -webkit-box-orient: vertical;
+                        }
+                    }
+                    .zwoleBlock {
+                        display: flex;
+                        margin-right: 10px;
+                        .ss {
+                            height: 15px;
+                            margin-top: 2px;
+                        }
+                        .textJan {
+                            font-size: 13px;
+                            margin-bottom: 2px;
+                            color: $gray-color;
+                            margin-left: 4px;
+                            text-overflow: ellipsis;
+                            overflow: hidden;
+                            display: -webkit-box;
+                            -webkit-line-clamp: 1;
+                            -webkit-box-orient: vertical;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.productBlock3 {
+    .TitleWat {
+        font-size: 23px;
+        font-family: "Ubuntu";
+        margin-bottom: 15px;
+        color: $primary-color;
+    }
+}
+
+.blockDeBeste {
+    margin-bottom: 63px;
+    .sousBlockDebeste {
+        display: flex;
+        justify-content: space-between;
+        .deBesteElement {
+            width: 22%;
+            align-self: center;
+            top: 10px;
+            position: relative;
+            .deBesteText {
+                font-size: 23px;
+                font-weight: bold;
+                margin-bottom: 2px;
+                color: $primary-color;
+            }
+            .enZorgenText {
+                color: $primary-color;
+            }
+        }
+        .ensembleCard {
+            width: 72%;
+            display: flex;
+            justify-content: space-between;
+            .cardModife4 {
+                padding: 30px 20px 4px !important;
+                border: 1px solid #FFEBEB;
+                box-shadow: 0px 0px 15px $shadown-color;
+                text-align: left;
+                width: 282px;
+                margin-right: 10px;
+                border-radius: 10px;
+                .imgCard4 {
+                    width: 191px;
+                    height: 157px;
+                    margin-left: auto;
+                    margin-right: auto;
+                    img {
+                        width: 100%;
+                    }
+                }
+                .ontdexText {
+                    color: $primary-color;
+                    width: 100%;
+                    text-align: center;
+                    font-weight: bold;
+                    font-size: 15px;
+                }
+            }
+        }
+    }
+}
+
+.blockTopBanen {
+    margin-top: 30px;
+    .titleTopBanen {
+        color: $primary-color;
+        font-size: 25px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+    .swiper-container {
+        overflow-x: hidden !important;
+        .swiper-wrapper {
+            height: auto !important;
+            .swiper-slide2 {
+                max-width: 162px;
+                .cardTop {
+                    height: 200px;
+                    padding: 10px !important;
+                    border: 1px solid #e0e0e0;
+                    box-shadow: 0px 6px 2px #e8e8e82b;
+                    text-align: center;
+                    border-radius: 10px;
+                    position: relative;
+                    width: auto;
+                    .contentImg {
+                        height: 124px;
+                        width: 100%;
+                        margin-bottom: 15px;
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            border-radius: 6px;
+                        }
+                    }
+                    .bleuT {
+                        color: $white-color !important;
+                    }
+                    .bekijText {
+                        color: $gray-color;
+                        font-size: 13px;
+                        font-weight: bold;
+                    }
+                }
+                .bleu {
+                    background: $primary-color;
+                }
+            }
+        }
+    }
+}
+
+.blockCardBleu3 {
+    .contentSix {
+        display: flex;
+        justify-content: space-between;
+        .cardBoxSix {
+            text-align: center;
+            .imgCategoryCard:first-child {
+                width: 50px;
+            }
+            .imgCategoryCard {
+                width: 45px;
+                margin: 0 auto 4px;
+            }
+            .textAlloOP {
+                font-size: 20px;
+                color: $primary-color;
+                font-weight: bold;
+            }
+            .imgPolygone {
+                width: 12px;
+                float: right;
+                margin-top: 30px;
+                margin-right: -15px;
+            }
+            .imgPolygone {
+                margin-top: 0 !important;
+            }
+        }
+    }
+}

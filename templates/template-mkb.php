@@ -5,6 +5,41 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
+<?php
+
+$users = get_users();
+$authors = array();
+
+foreach ($users as $key => $value) {
+    $company_user = get_field('company',  'user_' . $value->ID );
+    if($company_user[0]->post_title == 'MKB Servicedesk')
+        array_push($authors, $value->ID);
+}
+
+$args = array(
+    'post_type' => 'post',
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'author__in' => $authors,
+    'order' => 'DESC',
+    );
+
+$blogs = get_posts($args);
+
+/*
+** Leerpaden  owned *
+*/
+
+$args = array(
+    'post_type' => 'learnpath',
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'author__in' => $authors
+);
+
+$leerpaden = get_posts($args);
+
+?>
 
 <body>
 
@@ -173,6 +208,203 @@
 
         </div>
     </section>
+
+    <section>
+        <div class="container-fluid my-5">
+            <p class="krijgText2 ">
+               Populaire groeipaden
+            </p>
+            <div class="row my-4 cards_slide" style="height: 350px">
+                <?php 
+                foreach($blogs as $course){
+                    /*
+                    * Categories
+                    */
+                    $category = ' '; 
+                    $tree = get_the_terms($course->ID, 'course_category'); 
+                    if($tree)
+                        if(isset($tree[2]))
+                            $category = $tree[2]->name;
+                    $category_id = 0;
+                    if($category == ' '){
+                        $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
+                        if($category_id != 0)
+                            $category = (String)get_the_category_by_ID($category_id);
+                    } 
+
+                    /*
+                    * Price 
+                    */
+                    $p = " ";
+                    $p = get_field('price', $course->ID);
+                    if($p != "0")
+                        $price =  number_format($p, 2, '.', ',');
+                    else 
+                        $price = 'Gratis';
+
+                    /*
+                    * Thumbnails
+                    */ 
+                    $thumbnail = get_field('preview', $course->ID)['url'];
+                    if(!$thumbnail){
+                        $thumbnail = get_field('url_image_xml', $course->ID);
+                        if(!$thumbnail)
+                            $thumbnail = get_field('image', 'category_'. $category_id);
+                            if(!$thumbnail)
+                                $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                    }
+                    
+                    /*
+                    * Companies
+                    */ 
+                    $company = get_field('company',  'user_' . $course->post_author);
+                    $company_logo = get_field('company_logo', $company[0]->ID);
+                ?>
+                    <div class="col-md-4 p-md-2 p-2">
+                        <a href="<?= get_permalink($course->ID) ?>" class="swiper-slide swiperSlideModife swiper-slide-active" role="group" aria-label="1 / 5" style="width: 313.333px; margin-right: 20px;">
+                            <div class="cardKraam2">
+                                <div class="headCardKraam">
+                                   <div class="blockImgCardCour">
+                                        <img src="<?= $thumbnail; ?>" alt="">
+                                    </div>
+                                    
+                                    <div class="blockgroup7">
+                                        <div class="iconeTextKraa">
+                                            <?php if($category != " ") { ?>
+                                            <div class="sousiconeTextKraa">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/kraam.png" class="icon7" alt="">
+                                                <p class="kraaText"><?php echo $category ?></p>
+                                            </div>
+                                            <?php } ?>
+
+
+                                            <?php if(get_field('degree', $course->ID)) { ?>
+                                            <div class="sousiconeTextKraa">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" class="icon7" alt="">
+                                                <p class="kraaText"> <?php echo get_field('degree', $course->ID);?></p>
+                                            </div>
+                                            <?php } ?>
+
+                                        </div>
+                                        <div class="iconeTextKraa">
+                                            <!-- 
+                                            <div class="sousiconeTextKraa">
+                                                <img src="<?php echo get_stylesheet_directory_uri() . '/img/calend.png' ; ?>" class="icon7" alt="">
+                                                <p class="kraaText"> </p>
+                                            </div> -->
+                                            <div class="sousiconeTextKraa">
+                                                <img src="<?php echo get_stylesheet_directory_uri() . '/img/euro1.png'; ?>" class="icon7" alt="">
+                                                <p class="kraaText"><?= $price; ?>&nbsp;&nbsp;</p>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                   
+                                </div>
+                                <div class="contentCardProd">
+                                    <div class="group8">
+                                        <div class="imgTitleCours">
+                                            <div class="imgCoursProd">
+                                                <img src="<?= $company_logo; ?>" width="25" alt="">
+                                            </div>
+                                            <p class="nameCoursProd"><?= $company[0]->post_title; ?></p>
+                                            </div>
+                                        <div class="group9">
+                                            <div class="blockOpein">
+                                                <!-- <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt=""> -->
+                                                <p class="lieuAm">Artikelen voor ZZPers</p>
+                                            </div>
+                                            <div class="blockOpein">
+                                                <!-- <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt=""> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="werkText"><?= $course->post_title ?></p>
+                                    <p class="descriptionPlatform">
+                                        <?php echo get_field('short_description', $course->ID) ?>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <?php
+                }
+                ?>
+            </div>
+        </div>
+    </section>
+
+    <section class="blockRoadTest">
+        <div class="container-fluid">
+        <?php 
+        if(!empty($leerpaden)){
+        ?>
+            <p class="krijgText2">Leerpaden</p>
+            <div class="swiper-container swiper-container-3">
+                <div class="swiper-wrapper">
+                    <?php
+                    foreach($leerpaden as $value){
+                        $road_path_title = $value->post_title;
+                        $road_path_expert = $value->post_author;
+                        $road_path_topic = get_field('topic_road_path', $value->ID);
+                        if($road_path_topic)
+                            $road_path_topic = (String)get_the_category_by_ID($road_path_topic);
+
+                        $preview = get_field('preview', $value->ID)['url'];
+                        if(!$preview){
+                            $preview = get_field('url_image_xml', $value->ID);
+                            if(!$preview)
+                                $preview = get_stylesheet_directory_uri() . "/img/libay.png";
+                        }
+
+                        $profile_picture = get_field('profile_img',  'user_' . $road_path_expert);
+                        if(!$profile_picture)
+                            $profile_picture = get_stylesheet_directory_uri() ."/img/placeholder_user.png";
+                        $name = get_userdata($road_path_expert)->data->display_name;
+                    ?>
+                    <div class="swiper-slide swiperSlideModife">
+                        <div class="cardRoadPath">
+                            <div class="headRoadPath">
+                                <p class="titleRoadPath "><?= $road_path_title; ?></p>
+                            </div>
+                            <?php
+                            if($road_path_topic){
+                            ?>
+                            <div class="categoriesRoadPath">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/op-seach.png" alt="">
+                                <p class=""><?= $road_path_topic; ?></p>
+                            </div>
+                            <?php
+                            }
+                            ?>
+                            <div class="footer-road-path">
+                                <!-- <button type="" class="btn btnRemoveRoadPath remove">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashRemove.png" alt="">
+                                    <span>Remove</span>
+                                </button> -->
+                                <a href="/detail-product-road?id=<?= $value->ID; ?>" class="seeRoadPath">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/oeil.png" alt="">
+                                    <span>see</span>
+                                </a>
+                                <!-- <a href="/detail-product-road?id=<?= $value->ID; ?>" class="seeRoadPath">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/overviewD.png" alt="">
+                                    <span>Overview</span>
+                                </a> -->
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                    }
+                    ?>
+                </div>
+            </div>
+        <?php 
+        }
+        else
+            echo '<p class="krijgText2">No roadpath yet !</p>';
+        ?>
+        </div>
+    </section>
+    
     <section class="mb-5" style="background: #023356">
          <div class="container-fluid">
              <div class="row py-md-0 py-4 d-flex justify-content-center">

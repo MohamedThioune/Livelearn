@@ -41,10 +41,10 @@ if(!empty($notifications))
         <meta name='keywords' content="fluidify">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/custom.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/rating.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/header.css" />
+        <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/swiper.css" />
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css'>
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css'>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -170,7 +170,8 @@ if(!empty($notifications))
                                     ?>
                                             <div>
                                                 <div class="modal-content-body">
-                                                    <p class="feedbackText">Empty until now ...</p>
+                                                    <p class="feedbackText">No new updates ...</p>
+                                                    <a href="/dashboard/user/notification" class="feedbackText">Bekijk alle notificaties</a>
                                                 </div>
                                             </div>
 
@@ -196,7 +197,7 @@ if(!empty($notifications))
                                     if ( in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator')
                                         echo '<a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>';
 
-                                if ( in_array( 'hr', $user->roles ) || in_array( 'teacher', $user->roles ) || in_array( 'author', $user->roles ) || in_array( 'administrator', $user->roles )) 
+                                if ( in_array( 'hr', $user->roles ) || in_array( 'author', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )) 
                                     echo '<a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>';
                             ?>
                         </div>
@@ -225,7 +226,7 @@ if(!empty($notifications))
                             if ( in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') 
                                 echo '<a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>';
    
-                        if ( in_array( 'hr', $user->roles ) || in_array( 'teacher', $user->roles ) || in_array( 'author', $user->roles ) || in_array( 'administrator', $user->roles )) 
+                        if ( in_array( 'hr', $user->roles ) || in_array( 'author', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )) 
                             echo '<a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>';
                         ?>
                     </div>
@@ -316,14 +317,15 @@ if(!empty($notifications))
                                 <?php
                                         }
                                         echo '<div class="">
-                                                  <a href="/dashboard/user/detail-notification/?todo=6620" class="btn BekijkNotifications">Bekijk alle notificaties</a>
+                                                  <a href="/dashboard/user/notification" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                               </div>';
                                     }
                                     else{
                                 ?>
                                         <div>
                                             <div class="">
-                                                <p class="feedbackText">Empty until now ...</p>
+                                                <p class="feedbackText">No new updates ...</p>
+                                                <a href="/dashboard/user/notification/?" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                             </div>
                                         </div>
                                 <?php

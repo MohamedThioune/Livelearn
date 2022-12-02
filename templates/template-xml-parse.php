@@ -34,7 +34,7 @@
   //Get all users
   $users = get_users(); 
 
-  $website_urls = ['bureau-vris-20221021.1902.xml', 'cm-partners-20221023.0222.xml', 'de-baak-20221023.0140.xml', 'faculty-of-skills-20221021.1901.xml', 'frankwatching-20221023.0221.xml'];
+  $website_urls = ['agile-scrum-group-20221021.1902.xml', 'anker-kompas-20221021.1902.xml', 'bhv.nl-20221023.0221.xml', 'bit-academy-20221021.1901.xml'];
 
   //Start inserting course 
   echo "<h1 class='titleGroupText' style='font-weight:bold'>SCRIPT XML PARSING</h1>";
@@ -68,9 +68,6 @@
           $image = $media->url;
           break;
         }
-      /*
-      ** END
-      */
 
       //Redundance check "Image & Title"
       $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s", strval($image));
@@ -119,6 +116,8 @@
       */ 
 
       $company = null;
+      $users = get_users();
+
       //Implement author of this course
       foreach($users as $user) {
         $teacher_id = get_field('teacher_id',  'user_' . $user->ID);
@@ -126,11 +125,6 @@
         
         if(strtolower($company_user[0]->post_title) == strval($post['org']) ){
           $author_id = $user->ID;
-
-          if(strpos($teacher_id, strval($post['teacher_id'])) !== false){
-            $author_id = $user->ID;
-            break;
-          } 
 
           $company = $company_user[0];
           $company_id = $company_user[0]->ID;  
@@ -157,17 +151,17 @@
         $random = RandomString();
         $email = "author_" . strval($datum->programClassification->orgUnitId) . $random . "@expertise.nl";
         $first_name = explode(' ', strval($datum->programCurriculum->teacher->name))[0];
-        $last_name = explode(' ', strval($datum->programCurriculum->teacher->name))[1];
+        //$last_name = explode(' ', strval($datum->programCurriculum->teacher->name))[1];
 
         $userdata = array(
             'user_pass' => $password,
-            'user_login' => $login,
+            'user _login' => $login,
             'user_email' => $email,
             'user_url' => 'https://livelearn.nl/inloggen/',
             'display_name' => strval($datum->programCurriculum->teacher->name),
             'first_name' => $first_name,
             'last_name' => $last_name,
-            'role' => 'teacher'
+            'role' => 'author'
         );
 
         $author_id = wp_insert_user(wp_slash($userdata));       
@@ -272,14 +266,15 @@
                   $categorys = array_merge($categorys, $tag);      
               }
           }
-          
+
           foreach($datum->programDescriptions->searchword as $searchword){
             $searchword = strtolower(strval($searchword));
             foreach($categorys as $category){
               $cat_slug = strval($category->slug);
-              $cat_name = explode(strval($category->cat_name));             
+              $cat_name = strval($category->cat_name);             
               if(strpos($searchword, $cat_slug) !== false || in_array($searchword, $cat_name))
-                array_push($tags, $category->cat_ID);
+                if(!in_array($category->cat_ID, $tags))
+                    array_push($tags, $category->cat_ID);
             }
           }
 
@@ -288,12 +283,12 @@
             arsort($occurrence);
             foreach($categorys as $value)
               if($occurrence[strtolower($value->cat_name)] >= 1)
-                array_push($tags, $value->cat_ID);
+                if(!in_array($value->cat_ID, $tags))
+                  array_push($tags, $value->cat_ID);
           }
 
           //Final value : categorie
           $onderwerpen = join(',' , $tags);
-
         /*
         End *
         */ 
@@ -314,39 +309,44 @@
         */
       
         $data_locaties_xml = array();
-        $data_locaties = "";
+        $data_locaties = null;
         /*
         Modify the dates
         */ 
-        foreach($datum->programSchedule->programRun as $program){
-          $info = array();
-          $infos = "";
-          $row = "";
-          foreach($program->courseDay as $key => $courseDay){
-            $dates = explode('-',strval($courseDay->date));
-            //format date 
-            $date = $dates[2] . "/" .  $dates[1] . "/" . $dates[0];
-            
-            $info['start_date'] = $date . " ". strval($courseDay->startTime);
-            $info['end_date'] = $date . " ". strval($courseDay->endTime);
-            $info['location'] = strval($courseDay->location->city);
-            $info['adress'] = strval($courseDay->location->address);
-        
-            $row = $info['start_date']. '-' . $info['end_date'] . '-' . $info['location'] . '-' . $info['adress'] ;
-
-            $infos .= $row ; 
-
-            $infos .= ';' ; 
+        if(!empty($datum->programSchedule->programRun)){
+          foreach($datum->programSchedule->programRun as $program){
+            $info = array();
+            $infos = "";
+            $row = "";
+            foreach($program->courseDay as $key => $courseDay){
+              $dates = explode('-',strval($courseDay->date));
+              //format date 
+              $date = $dates[2] . "/" .  $dates[1] . "/" . $dates[0];
               
+              $info['start_date'] = $date . " ". strval($courseDay->startTime);
+              $info['end_date'] = $date . " ". strval($courseDay->endTime);
+              $info['location'] = strval($courseDay->location->city);
+              $info['adress'] = strval($courseDay->location->address);
+          
+              $row = $info['start_date']. '-' . $info['end_date'] . '-' . $info['location'] . '-' . $info['adress'] ;
+
+              $infos .= $row ; 
+
+              $infos .= ';' ; 
+                
+            }
+
+            if(substr($infos, -1) == ';')
+              $infos = rtrim($infos, ';');
+
+            array_push($data_locaties_xml, $infos);  
+            $data_locaties_xml = array();          
           }
 
-          if(substr($infos, -1) == ';')
-            $infos = rtrim($infos, ';');
-
-          array_push($data_locaties_xml, $infos);
-          
+          $data_locaties = join('~', $data_locaties_xml);
         }
-        $data_locaties = join('~', $data_locaties_xml);
+
+        var_dump($data_locaties);
         
       /*  
       * * END
@@ -378,6 +378,9 @@
         'status' => $status
       );
 
+      $where = [ 'titel' => strval($datum->programDescriptions->programName) ];
+      $updated = $wpdb->update( $table, $post, $where );
+
       if( !isset($check_image[0]) && !isset($check_title[0]) ){ 
 
         $wpdb->insert($table, $post);
@@ -396,7 +399,7 @@
         }
         else{
         
-          $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
+          $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE titel = %s", $post['titel']);
 
           $course = $wpdb->get_results( $sql )[0];
       

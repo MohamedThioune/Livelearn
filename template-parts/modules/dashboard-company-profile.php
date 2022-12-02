@@ -4,10 +4,12 @@ if(isset($_GET['manager'])){
     if(isset($_GET['id']))
         $id_user = $_GET['id'];
     
-    if(isset($id_user))
+    if(isset($id_user)){
         $managed = get_field('managed',  'user_' . get_current_user_id());
-        if(in_array($id_user, $managed))
-            $superior = get_users(array('include'=> $_GET['manager']))[0]->data;
+        if(!empty($managed))
+            if(in_array($id_user, $managed))
+                $superior = get_users(array('include'=> $_GET['manager']))[0]->data;
+    }
 }else{ 
     if(isset($_GET['id']))
         $id = intval($_GET['id']);
@@ -84,15 +86,25 @@ $todos = get_posts($args);
 if(!empty($company))
     $company = $company[0]->post_title;
 
-/*
-* * Get interests topics and experts
-*/
+//Skills 
+$topics_external = get_user_meta($user->ID, 'topic');
+$topics_internal = get_user_meta($user->ID, 'topic_affiliate');
 
-$topics_internal = get_user_meta($user->ID,'topic_affiliate');
-$topics_external = get_user_meta($user->ID,'topic');
-$topics = array_merge($topics_internal, $topics_external); 
+$topics = array();
+if(!empty($topics_external))
+    $topics = $topics_external;
+
+if(!empty($topics_internal))
+    foreach($topics_internal as $value)
+        array_push($topics, $value);
+
+//Note
+$skills_note = get_field('skills', 'user_' . $user->ID);
 
 $experts = get_user_meta($user->ID, 'expert');
+
+$user_role = get_users(array('include'=> $id_user))[0]->roles;
+
 ?>
 <div class="theme-content">
     <div class="theme-side-menu">
@@ -110,11 +122,14 @@ $experts = get_user_meta($user->ID, 'expert');
     <div class="theme-learning">
         <?php 
             if(isset($_GET['manager']))
-                if(isset($superior) || in_array('hr', $user_connected->roles) || in_array('administrator', $user_connected->roles) ){
+                if(in_array('administrator', $user_role))
+                    include_once('dashboard-user-profile-home.php');
+                else if(isset($superior) || in_array('hr', $user_connected->roles) || in_array('administrator', $user_connected->roles) ){
                     if(!isset($superior))
                         $superior = get_users(array('include'=> get_current_user_id()))[0]->data;
                     include_once('dashboard-company-profile-home.php');
-                }else
+                }
+                else
                     include_once('dashboard-user-profile-home.php');
             else
                 include_once('dashboard-user-profile-home.php');

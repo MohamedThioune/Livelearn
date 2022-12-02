@@ -58,11 +58,11 @@ $url = home_url( $wp->request );
         <meta name='keywords' content="fluidify">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/custom.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/header.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/main.css" />
         <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/rating.css" />
+        <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/swiper.css" />
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.min.css'>
         <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css'>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -229,8 +229,7 @@ $url = home_url( $wp->request );
                             ]);
                             ?>
                             <div class="text-center">
-                                <p>Nog geen account?  <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                         data-toggle="modal" data-target="#exampleModalCenter">Meld je aan</a></p>
+                                <a href="/dashboard/user/overview/lost-password/" class="watchword-text">Wachtwoord vergeten </a>
                             </div>
                         </div>
                     </div>
@@ -451,7 +450,7 @@ $url = home_url( $wp->request );
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
                                             </div>
                                             <div>
-                                                <p class="titleSousElementHeader">Skills paspoort</p>
+                                                <p class="titleSousElementHeader"><b>Skills paspoort</b></p>
                                             </div>
                                         </a>
                                     </li>
@@ -461,7 +460,7 @@ $url = home_url( $wp->request );
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-80.png" alt="">
                                             </div>
                                             <div>
-                                                <p class="titleSousElementHeader">Groeipaden</p>
+                                                <p class="titleSousElementHeader"><b>Groeipaden</b></p>
                                             </div>
                                         </a>
                                     </li>
@@ -471,7 +470,7 @@ $url = home_url( $wp->request );
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-81.png" alt="">
                                             </div>
                                             <div>
-                                                <p class="titleSousElementHeader">Communities</p>
+                                                <p class="titleSousElementHeader"><b>Communities</b></p>
                                             </div>
                                         </a>
                                     </li>
@@ -481,7 +480,7 @@ $url = home_url( $wp->request );
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
                                             </div>
                                             <div>
-                                                <p class="titleSousElementHeader">Persoonlijke begeleiding</p>
+                                                <p class="titleSousElementHeader"><b>Persoonlijke begeleiding</b></p>
                                             </div>
                                         </a>
                                     </li>
@@ -638,7 +637,7 @@ $url = home_url( $wp->request );
                                 <a class="nav-link" href="/inloggen/"><b>Inloggen</b></a>
                             </li>
                             <li class="">
-                                <a href="#" data-toggle="modal" data-target="#exampleModalCenter"  aria-label="Close" data-dismiss="modal" class="nav-link worden">Lid worden</a>
+                                <a href="/registreren" class="nav-link worden">Lid worden</a>
                             </li>
                         </ul>
 

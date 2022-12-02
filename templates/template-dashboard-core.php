@@ -621,7 +621,9 @@ else if(isset($databank)){
 
         $data_locaties_xml = join('~', $data_locaties);
     }
-    $contributors = join(',', $contributors);
+    $contributors = "";
+    if(!empty($experts))
+        $contributors = join(',', $experts);
     
     if($complete == "all") 
         $data = [ 'titel' => $titel, 'type' => $type, 'short_description' => $short_description, 'long_description' => $long_description, 'for_who' => $for_who, 'agenda' => $agenda, 'results' => $results, 'prijs' => $prijs, 'prijs_vat' => $prijs_vat, 'onderwerpen' => $onderwerpen, 'date_multiple' => $data_locaties_xml, 'level' => $level, 'language' => $language, 'author_id' => $author_id, 'company_id' => $company_id, 'contributors' => $contributors ]; // NULL value.
@@ -757,6 +759,40 @@ else if(isset($define_budget)){
 
     header("Location: ". $message);
 }
+
+else if(isset($note_skill_edit)){
+    $user_id = get_current_user_id();
+    $skills = get_field('skills', 'user_' . $user_id);
+    $skill = array();
+    $skill['id'] = $id;
+    $skill['note'] = $note;
+    $bool = false;
+    $bunch = array();
+
+    if(empty($skills))
+        $skills = array();
+    else
+        foreach($skills as $item){
+            if($item['id'] == $id){
+                $item['note'] = $note;
+                $bool = true;
+            }
+            array_push($bunch, $item);
+        }
+
+    if(!$bool)
+        array_push($skills, $skill);
+    else
+        $skills = $bunch;
+
+    var_dump($skills);
+    update_field('skills', $skills, 'user_' . $user_id);
+    $message = '/dashboard/user/settings/?message=Note updated sucessfully'; 
+
+    header("Location: ". $message);
+}
+
+
 ?>
 <?php wp_head(); ?>
 
