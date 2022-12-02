@@ -16,20 +16,20 @@ class Author
 
 class Course
 {
-  public   $id;
-  public   $date;
-  public   $title;
-  public   $pathImage;
-  public   $shortDescription;
-  public   $longDescription;
-  public      $price;
-  public   $tags;
-  public   $courseType;
-  public   $data_locaties_xml;
-  public   $youtubeVideos;
-  public $author;
-  public $visibility;
-  public $podcasts;
+  public  $id;
+  public  $date;
+  public  $title;
+  public  $pathImage;
+  public  $shortDescription;
+  public  $longDescription;
+  public  $price;
+  public  $tags;
+  public  $courseType;
+  public  $data_locaties_xml;
+  public  $youtubeVideos;
+  public  $author;
+  public  $visibility;
+  public  $podcasts;
 
   public $connectedProduct;
 
@@ -105,7 +105,7 @@ function allCourses ($data)
           $expert = get_user_by( 'ID', $expert );
           $author_img = wp_get_attachment_url(get_field('profile_img',(int)$expert)); //? wp_get_attachment_url(get_field('profile_img',$author->ID)) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
           array_push($courses[$i]->author, new Author ($expert,$author_img));
-          }
+        }
       $courses[$i]->longDescription = get_field('long_description',$courses[$i]->ID);
       $courses[$i]->shortDescription = get_field('short_description',$courses[$i]->ID);
       $courses[$i]->courseType = get_field('course_type',$courses[$i]->ID);
