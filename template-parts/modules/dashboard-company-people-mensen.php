@@ -36,12 +36,22 @@ if(isset($single_add_people)){
         if(is_wp_error($user_id)){
             $danger = $user_id->get_error_message();
             ?>
-                <script>
+            <script>
                 window.location.replace("/dashboard/company/people/?message=Er is een fout opgetreden, probeer het opnieuw.");
             </script>
             <?php
             echo ("<span class='alert alert-info'>" .  $danger . "</span>");   
-        }else
+        }
+        else if(strlen($first_name) < 3){
+            $danger = "Gebruiker aangemaakt maar we raden u aan een voornaam van meer dan 2 karakters te plaatsen";
+            ?>
+            <script>
+                window.location.replace("/dashboard/company/people/?message=Er is een fout opgetreden, probeer het opnieuw.");
+            </script>
+            <?php
+            echo ("<span class='alert alert-info'>" .  $danger . "</span>"); 
+        }
+        else
             {
                 update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
                 $subject = 'Je LiveLearn inschrijving is binnen! ✨';
@@ -103,7 +113,8 @@ else if(isset($multiple_add_people)){
                     $indicator = "Een fout bij het aanmaken van de e-mails, zorg ervoor dat alle e-mails niet al bestaan.";
                     $error = false;
                     continue;
-                }else{
+                }
+                else{
 
                     update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
                     update_field('company', $company[0], 'user_'.$user_id);
