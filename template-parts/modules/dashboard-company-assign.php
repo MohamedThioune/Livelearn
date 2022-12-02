@@ -48,10 +48,7 @@ if(isset($_GET['course_id']) && isset($_GET['payment_id']) && isset($_GET['daten
     
 </style>
 
-<div class="">
-    <div class="row">
-        <div class="col-md-6 col-12">
-            <div class="contentListeCourse">
+<div class="contentListeCourse">
                 <div class="cardOverviewCours">
 
                     <?php if(isset($_GET['payment_id']) && isset($_GET['course_id'])){?>
@@ -60,7 +57,7 @@ if(isset($_GET['course_id']) && isset($_GET['payment_id']) && isset($_GET['daten
                     </div>
 
                     <div class="contentCardListeCourse">
-                        <table class="table table-responsive">
+                        <table class="table table-responsive table-responive-modife">
                             <!-- <thead>
                                 <tr>
                                     <th scope="col">Naam</th>
@@ -156,10 +153,10 @@ if(isset($_GET['course_id']) && isset($_GET['payment_id']) && isset($_GET['daten
                     <div class="headListeCourse">
                         <p class="JouwOpleid">Bestellingen</p>
                     </div>
-                    <div class="contentCardListeCourse">
+                    <div class="contentCardListeCourse ">
                         <?php 
                         if(isset($_GET['payment_id']) && !isset($_GET['course_id'])){?>
-                            <table class="table table-responsive">
+                            <table class="table table-responsive table-responive-modife">
                                 <thead>
                                     <tr>
                                         <th scope="col">Actie</th>
@@ -216,7 +213,7 @@ if(isset($_GET['course_id']) && isset($_GET['payment_id']) && isset($_GET['daten
                         }
                         else{ 
                             ?>
-                            <table class="table table-responsive">
+                            <table class="table table-responsive table-responive-modife">
                                 <thead>
                                     <tr>
                                         <th scope="col">Aangekocht</th>
@@ -245,9 +242,6 @@ if(isset($_GET['course_id']) && isset($_GET['payment_id']) && isset($_GET['daten
                     <?php }?>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
 
 <!-- <div class="contentListeCourse">
     <div class="cardOverviewCours">

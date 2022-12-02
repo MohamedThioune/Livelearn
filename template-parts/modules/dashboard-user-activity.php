@@ -36,11 +36,14 @@ foreach($raw_saved as $save)
 //Orders - enrolled courses  
 $args = array(
     'customer_id' => $user->ID,
+    'orderby' => 'date',
     'order' => 'DESC',
     'limit' => -1,
 );
 
+
 $bunch_orders = wc_get_orders($args);
+
 $orders = array();
 $item_order = array();
 $enrolled = array();
@@ -82,8 +85,6 @@ if(isset($_GET['opgedane'])){
     $saved_number = ($_GET['page2'] - 1) * $max_opgedane;
     $enrolled = array_slice($enrolled, $saved_number, $max_opgedane);
 }
-
-
 
 /*
 * * Get courses
@@ -153,9 +154,12 @@ $user_post_view = get_posts(
         'order' => 'DESC'
     )
 )[0];   
+$views_user = get_field('views_user', $user_post_view->ID);
+if(!empty($views_user))
+    $views_user_count = count($views_user);
 
-$views_user_count = count(get_field('views_user', $user_post_view->ID));
-
+if(!empty($courses))
+    $count_courses = count($courses);
 ?>
 
 <div class="contentActivity">
@@ -172,7 +176,7 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_welcome-learn-more.png" alt="">
                 </div>
                 <div class="detailCardActivity">
-                    <p class="numberActivity"><?php echo count($courses); ?></p>
+                    <p class="numberActivity"><?= $count_courses ?></p>
                     <p class="nameCardActivity">course sessions</p>
                 </div>
             </div>
@@ -217,46 +221,38 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
                 <h2>Laatst opgedane kennis</h2>
                 <?php 
                 if(!empty($enrolled_courses)){
+                    $enrolled_courses = array_reverse($enrolled_courses);
                     foreach($enrolled_courses as $key=>$course) {
                         if($key == 2)
                             break;
 
                         /*
-                        * Location
-                        */
+                        *  Date and Location
+                        */ 
+                        $day = "<i class='fas fa-calendar-week'></i>";
+                        $month = NULL;
                         $location = 'Virtual';
-                        $data = get_field('data_locaties', $course->ID);
-                        if($data){
-                            if($data[0]['data'][0]['location'])
-                                $location = $data[0]['data'][0]['location'];
-                        }
-                        else{         
-                            $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                            if($data[2])
-                                $location = $data[2];
-                        }
 
-                        /*
-                        * Categories
-                        */
-                    
-                        $category = ' ';
-                                    
-                        $category_id = 0;
-                        $category_string = " ";
+                        $datas = get_field('data_locaties', $course->ID);
+                        if($datas){
+                            $data = $datas[0]['data'][0]['start_date'];
+                            if($data != ""){
+                                $day = explode('/', explode(' ', $data)[0])[0];
+                                $mon = explode('/', explode(' ', $data)[0])[1];
+                                $month = $calendar[$mon];
+                            }
 
-                        $tree = get_the_terms($course->ID, 'course_category'); 
-                            if($tree)
-                                if(isset($tree[2]))
-                                    $category = $tree[2]->name;
-                        
-                        if($category == ' '){
-                            $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
-                            $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                            if($category_str != 0)
-                                $category = (String)get_the_category_by_ID($category_str);
-                            else if($category_id != 0)
-                                $category = (String)get_the_category_by_ID($category_id);                                    
+                            $location = $datas[0]['data'][0]['location'];
+                        }else{
+                            $datum = get_field('data_locaties_xml', $course->ID);
+                            if(isset($datum[0]['value'])){
+                                $datas = explode('-', $datum[0]['value']);
+                                $data = $datas[0];
+                                $day = explode('/', explode(' ', $data)[0])[0];
+                                $month = explode('/', explode(' ', $data)[0])[1];
+                                $month = $calendar[$month];
+                                $location = $datas[2];
+                            }
                         }
 
                         /*
@@ -334,7 +330,6 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
                 
             </div>
         </div>
-      
         <div class="col-lg-5">
             <div class="cardNotification"> 
                 <div class="headCardNotification">
@@ -386,6 +381,116 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="cardNotification card-badge-notifications">
+                <h2>The badges you have unlocked</h2>
+                <div class="content-badges content-badge-notifications">
+                    <a href="#" class="card">
+                        <div class="block-icons">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/validate-badge.png" alt="">
+                        </div>
+                    <?php 
+                        $strotime_date = strtotime($user->user_registered);
+                        $date_registered = date("d M Y", $strotime_date);
+                    ?>
+                    <p class="title">You created a account sucessfully !</p>
+                    <p class="awarded">Awarded for : <span> <?php echo $user->display_name ?> </span></p>
+                    <p class="date-awarded"><span>Date Awarded : </span><?= $date_registered ?></p>
+                    </a>
+                    <!-- <a href="" class="card">
+                        <div class="block-icons">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_awards.png" alt="">
+                        </div>
+                        <p class="title">Complete and verified profile </p>
+                        <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                        <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                    </a>
+                    <a href="" class="card">
+                        <div class="block-icons">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/gg_awards.png" alt="">
+                        </div>
+                        <p class="title">Complete and verified profile </p>
+                        <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                        <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                    </a>
+                    <a href="" class="card ">
+                        <div class="card-lock">
+                            <img class="img-card-lock" src="<?php echo get_stylesheet_directory_uri();?>/img/lock-2.png" alt="">
+                        </div>
+                        <div class="block-icons">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/validate-badge.png" alt="">
+                        </div>
+                        <p class="title">Complete and verified profile </p>
+                        <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
+                        <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
+                    </a> -->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <?php 
+                if(!empty($courses)){
+                    $company = get_field('company',  'user_' . $user->ID);
+                    $company_id = $company[0]->ID;
+                    $company_logo = (get_field('company_logo', $company_id)) ? get_field('company_logo', $company_id) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+                    ?>
+                <div class="cardNotification card-badge-notifications">
+                    <h2 class="text-title-certifications">Click on the button to see your certifications</h2>
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-see" data-toggle="modal" data-target="#ModalCertificate">
+                        See
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="ModalCertificate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <!-- <button class="btn btn-primary" class="html2PdfConverter" onclick="createPDF()">html to PDF </button> -->
+                                <div class="modal-body" id="element-to-print">
+                                    <div >
+                                        <div class="Certificate">
+                                            <div class="logo">
+                                                <img src="<?= $company_logo ?>" alt="">
+                                            </div>
+                                            <p class="name-certifica">LIVELEARN AGENCY CORP</p>
+                                            <p class="certificate-of-completion">Certificate of Expertise author
+                                            <p class="trainees-name"><?= $user->display_name ?></p>
+                                            <p class="description-certificate"> Congratulations !
+                                            <br><span class="date-certificate">Your first published course is worthy of an expert level.</span>
+                                            </p>
+                                            <p class="topic-description">The subject is to create a course publicly accessible to all students with all the requirements of the platform</p>
+                                            <p class="topic-details">Expert - Course</p>
+                                            <div class="footer-certificate">
+                                                <div>
+                                                    <p class="title">Accredited by</p>
+                                                    <img class="logo-company-certificate" src="<?php echo get_stylesheet_directory_uri();?>/img/Image49.png" alt="">
+                                                </div>
+                                                <div>
+                                                    <p class="title">Signed by</p>
+                                                    <p class="sub-title">Daniel Van Der Kolk</p>
+                                                </div>
+                                                <!-- <div>
+                                                    <p class="title">Date</p>
+                                                    <p class="sub-title">04 / 05 / 2022</p>
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            <?php 
+                }
+            ?>
+        </div>
+    </div>
     <div class="cardFavoriteCourses">
         <div class="d-flex aligncenter justify-content-between">
             <h2>Favoriete kennisproducten</h2>
@@ -398,41 +503,32 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
                     break;
 
                 /*
-                * Location
-                */
+                *  Date and Location
+                */ 
+                $day = "<i class='fas fa-calendar-week'></i>";
+                $month = NULL;
                 $location = 'Virtual';
-                $data = get_field('data_locaties', $course->ID);
-                if($data){
-                    if($data[0]['data'][0]['location'])
-                        $location = $data[0]['data'][0]['location'];
-                }
-                else{         
-                    $data = explode('-', get_field('field_619f82d58ab9d', $course->ID)[0]['value']);
-                    if($data[2])
-                        $location = $data[2];
-                }
 
-                /*
-                * Categories
-                */
-               
-                $category = ' ';
-                            
-                $category_id = 0;
-                $category_string = " ";
+                $datas = get_field('data_locaties', $course->ID);
+                if($datas){
+                    $data = $datas[0]['data'][0]['start_date'];
+                    if($data != ""){
+                        $day = explode('/', explode(' ', $data)[0])[0];
+                        $mon = explode('/', explode(' ', $data)[0])[1];
+                        $month = $calendar[$mon];
+                    }
 
-                $tree = get_the_terms($course->ID, 'course_category'); 
-                    if($tree)
-                        if(isset($tree[2]))
-                            $category = $tree[2]->name;
-                
-                if($category == ' '){
-                    $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
-                    $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                    if($category_str != 0)
-                        $category = (String)get_the_category_by_ID($category_str);
-                    else if($category_id != 0)
-                        $category = (String)get_the_category_by_ID($category_id);                                    
+                    $location = $datas[0]['data'][0]['location'];
+                }else{
+                    $datum = get_field('data_locaties_xml', $course->ID);
+                    if(isset($datum[0]['value'])){
+                        $datas = explode('-', $datum[0]['value']);
+                        $data = $datas[0];
+                        $day = explode('/', explode(' ', $data)[0])[0];
+                        $month = explode('/', explode(' ', $data)[0])[1];
+                        $month = $calendar[$month];
+                        $location = $datas[2];
+                    }
                 }
 
                 /*
@@ -518,6 +614,9 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/html2pdf.js/0.9.1/html2pdf.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.1/html2pdf.bundle.min.js"></script>
+
 <script>
 
     $('#search_txt_course').keyup(function(){
@@ -539,3 +638,20 @@ $views_user_count = count(get_field('views_user', $user_post_view->ID));
 
     });
 </script>
+
+<script>
+         function createPDF() {
+            var element = document.getElementById('element-to-print');
+            html2pdf(element, {
+                margin:1,
+                padding:0,
+                filename: 'certificat.pdf',
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 1 },
+                jsPDF: { unit: 'in', format: 'A4', orientation: 'P' ,'UTF-8', array(0, 0, 0, 0)},
+                class: createPDF
+            });
+        };
+    </script>
+
+

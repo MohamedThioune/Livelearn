@@ -1,7 +1,6 @@
 
 <?php
-    $user = wp_get_current_user();
-    /*
+   /*
     * * Feedbacks
     */
     $args = array(
@@ -25,13 +24,13 @@
             if(!$image)
                 $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 
-            $manager = get_user_by('ID', $manager_id);
+            $manager = get_user_by('id', $manager_id);
             $manager_display = ($manager->first_name) ?: $manager->display_name;
 
-            $manager_id = get_field('manager_feedback', $value->ID);
-            if($manager_id)
-                $manager_display = ($manager->first_name) ?: $manager->display_name;
-            else
+            if($manager){
+                $manager = get_user_by('ID', $manager_id);
+                $manager_display = $manager->display_name;
+            }else
                 $manager_display = 'A manager';
             
         
@@ -120,7 +119,8 @@
                                     $hoe_bereiken = get_field('je_dit_bereike', $value->ID);
                                     $hulp_nodig = get_field('hulp_nodig', $value->ID);
                                     $opmerkingen = get_field('opmerkingen', $value->ID);
-
+                                    $hulp_nodig_ja = ($hulp_nodig == 'JA') ? 'checked' : ''; 
+                                    $hulp_nodig_nee = ($hulp_nodig == 'NEE') ? 'checked' : ''; 
                                     echo "<div class='inputGroein'>";
                                         foreach($onderwerp_feedback as $onderwerp)
                                         {
@@ -134,15 +134,15 @@
                                     echo '<br> <b>Hoe ga je dit bereiken ?</b>';
                                     echo  $hoe_bereiken;
                                     echo '<br> <b>Heb je hierbij hulp nodig ?</b>';
-                                    echo  '<div class="group-input-settings">
+                                    echo '<div class="group-input-settings">
                                                 <label for="">Heb je hierbij hulp nodig ?</label>
                                                 <div class="d-flex">
                                                     <div class="mr-3">
-                                                        <input type="radio" id="JA" name="hulp_radio_JA" value="JA" '. ($hulp_nodig == 'JA') ? 'checked' : ''  .' disabled>
+                                                        <input type="radio" id="JA" name="hulp_radio_JA" value="JA" '. $hulp_nodig_ja  .' disabled>
                                                         <label for="JA">JA</label>
                                                     </div>
                                                     <div>
-                                                        <input type="radio" id="NEE" name="hulp_radio_JA" value="NEE" '. ($hulp_nodig == 'NEE') ? 'checked' : ''  .' disabled>
+                                                        <input type="radio" id="NEE" name="hulp_radio_JA" value="NEE" '. $hulp_nodig_nee  .' disabled>
                                                         <label for="NEE">NEE</label>
                                                     </div>
                                                 </div>
@@ -195,7 +195,7 @@
                             $image = get_field('profile_img',  'user_' . $manager->ID);
                             $manager_display = $manager->display_name;
                         }else{
-                            $manager_display = 'A manager';
+                            $manager_display = 'Anonymous';
                             $image = 0;
                         }
 

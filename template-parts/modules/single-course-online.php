@@ -76,16 +76,18 @@ extract($_GET);
                 <div class="blockImgCour">
                     <?php
 
-                    if(!empty($courses) && !empty($youtube_videos) )
+                    if(!empty($courses) && !empty($youtube_videos) && !empty($podcasts) )
                         echo "<img src='" . $thumbnail . "' alt='preview image'>";
                     else{
                         if(!empty($courses)){
-                            // if(isset($topic) && isset($lesson))
-                            //     echo " <video class='blockImgCour' poster='' controls>
-                            //                 <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
-                            //                 <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/webm; codecs='vp8, vorbis'' />
-                            //                 <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
-                            //             </video>";
+                            /*
+                            if(isset($topic) && isset($lesson))
+                                echo " <video class='blockImgCour' poster='' controls>
+                                            <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
+                                            <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/webm; codecs='vp8, vorbis'' />
+                                            <source src='" . $courses[$topic]['course_topic']['course_topic_lessons'][$lesson]['course_lesson']['course_lesson_data'] . "' type='video/ogg; codecs='theora, vorbis'' />
+                                        </video>";
+                            */
                             if(isset($topic) && isset($lesson))
                                 echo " <video class='blockImgCour' poster='' controls>
                                             <source src='" . $courses[$lesson]['course_lesson_data'] . "' type='video/mp4;charset=UTF-8' />
@@ -95,11 +97,25 @@ extract($_GET);
                             else
                                 echo "<img src='" . $thumbnail . "' alt='preview image'>";
                         }
-                        else{
+                        else if(!empty($youtube_videos)){
                             if(isset($lesson))
                                 echo '<iframe width="730" height="433" src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
                             else
                                 echo "<img src='" . $thumbnail . "' alt='preview image'>";
+                        }
+                        else {
+                            if(isset($lesson))
+                                echo '
+                                    <audio controls>
+                                        <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/ogg">
+                                        <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/mpeg">
+                                        <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aac">
+                                        <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/wav">
+                                        <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aiff">
+                                    </audio>';
+                            else
+                                echo "<img src='" . $thumbnail . "' alt='preview image'>";
+
                         }
                     }
 
@@ -239,8 +255,11 @@ extract($_GET);
                                                 if(!empty($users_company))
                                                     foreach($users_company as $user){
                                                         $name = get_users(array('include'=> $user))[0]->data->display_name;
-                                                        if(in_array($user, $allocution))
-                                                            echo "<option class='redE' selected  value='" . $user . "'>" . $name . "</option>";
+                                                        if(!empty($allocution))
+                                                            if(in_array($user, $allocution))
+                                                                echo "<option class='redE' selected  value='" . $user . "'>" . $name . "</option>";
+                                                            else
+                                                                echo "<option class='redE' value='" . $user . "'>" . $name . "</option>";
                                                         else
                                                             echo "<option class='redE' value='" . $user . "'>" . $name . "</option>";
                                                     }
@@ -413,7 +432,7 @@ extract($_GET);
                             <div class="d-flex justify-content-center">
 
                                 <div>
-                                    <a href="https://wa.me/<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
+                                    <a href="https://wa.me/<?= $phone_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                                         <i style="font-size: 50px; height: 49px; margin-top: -4px;"
                                             class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>
                                     </a>
@@ -422,7 +441,7 @@ extract($_GET);
                                     </div>
                                 </div>
                                 <div>
-                                    <a href="mailto:<?= $email_user ?>" class="mx-3 d-flex flex-column ">
+                                    <a href="mailto:<?= $email_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                                         <i style="font-size: 25px"
                                             class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
                                         <!-- <span class="bd-highlight fw-bold text-primary mt-2">email</span> -->
@@ -432,7 +451,7 @@ extract($_GET);
                                     </div>
                                 </div>
                                 <div>
-                                    <a href="sms:<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
+                                    <a href="sms:<?= $phone_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                                         <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>
                                     </a>
                                     <div class="mt-3 text-center">
@@ -441,7 +460,7 @@ extract($_GET);
                                 </div>
 
                                 <div>
-                                    <a href="tel:<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
+                                    <a href="tel:<?= $phone_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                                         <i class="bd-highlight bi bi-telephone-x border border-3 border-primary rounded-circle text-primary shadow"
                                             style="font-size: 20px; padding: 6px 11px;"></i>
                                         <!-- <span class="bd-highlight fw-bold text-primary mt-2">call</span> -->
@@ -491,8 +510,6 @@ extract($_GET);
                 </div>
             </div>
             <!-- -------------------------------------------------- End Modal Direct contact & Voor wie -------------------------------------- -->
-
-
 
 
             <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
@@ -606,7 +623,7 @@ extract($_GET);
 
                         <div>
                             <?php
-                            if(!empty($courses) && !empty($youtube_videos))
+                            if(!empty($courses) && !empty($youtube_videos) && !empty($podcasts))
                                 echo "<div class='sousBlockCours'>
                                         <span> No lesson as far, soon available </span>
                                      </div>";
@@ -665,7 +682,7 @@ extract($_GET);
                                 </div>
                             <?php       
                             }
-                            else{
+                            else if(!empty($youtube_videos)){
                                 ?>
                                 <div class="sousBlockCours">
                                     <?php
@@ -682,34 +699,41 @@ extract($_GET);
                                             if($lesson == $key)
                                                 $style = "color:#F79403";
                                         echo '  
-                                        <a href="?topic=0&lesson=' . $key . '"  class="d-flex contentListVidoeCourse" data-toggle="modal" data-target="#exampleModalPaywall">
+                                        <a href="?topic=0&lesson=' . $key . '"  class="d-flex contentListVidoeCourse">
                                             <img class="" width="35px" height="20px" src="'. $video['thumbnail_url'] . '" alt="">
                                             <span style="' .$style . '" class="textChapitreCours">' . $video['title'] . '</span>
                                         </a>';
                                     }
                                     ?>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="exampleModalPaywall" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLongTitle">Get Acces Now </h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <p class="description-text-paywall">Please purchase this course to continue</p>
-                                                    <p class="price-paywall">$150</p>
-                                                    <a class="btn btn-paywall" href="">Buying Now <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/arrowhead.png" alt=""></a>
-                                                    <p class="text-not-sure-which">Not Sure which is right now for you ?
-                                                        <a href="">Discover the benefits of taking this course now</a> </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <?php
+                            }
+                            else if(!empty($podcasts)){
+                            ?>
+                                <div class="sousBlockCours">
+                                    <?php
+                                    if(isset($topic))
+                                        if($topic == $key) {
+                                            echo '<img class="playElement" src="'.  get_stylesheet_directory_uri() . '/img/play.png" alt="">';
+                                        }
+                                    ?>
+                                    <a style="color:#F79403" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo $post->post_title; ?></a>
+                                    <?php
+                                    foreach($podcasts as $key => $podcast){
+                                        $style = "";
+                                        if(isset($lesson))
+                                            if($lesson == $key)
+                                                $style = "color:#F79403";
+                                        echo '  
+                                        <a href="?topic=0&lesson=' . $key . '"  class="d-flex contentListVidoeCourse">
+                                            <img class="" width="35px" height="20px" src="'. $thumbnail .'" alt="">
+                                            <span style="' .$style . '" class="textChapitreCours">' . $podcast['course_podcast_title'] . '</span>
+                                        </a>';
+                                    }
+                                    ?>
+                                </div>
+
+                            <?php
                             }
                             ?>
                             <div class="CardpriceLive">
@@ -750,6 +774,7 @@ extract($_GET);
                                                 </div>
                                                 <div class="modal-body">
                                                     <?php
+                                                    $saves_expert = get_user_meta($user_id, 'expert');
                                                     foreach($experts as $expert){
                                                         $expert = get_users(array('include'=> $expert))[0]->data;
                                                         $company = get_field('company',  'user_' . $expert->ID);
@@ -773,7 +798,9 @@ extract($_GET);
                                                                 <input type="hidden" name="meta_key" value="expert" id="">
                                                                 <div>
                                                                     <?php
-                                                                    if($user_id != 0 && $user_id != $expert->ID)
+                                                                    if(!empty($saves_expert))
+                                                                        echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                                    else if($user_id != 0 && $user_id != $expert->ID)
                                                                     {
                                                                         if (in_array($expert->ID, $saves_expert))
                                                                             echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
@@ -814,54 +841,52 @@ extract($_GET);
                                 <a href="#bookdates" class="btn btnKoop">Schrijf je in</a>
 <!--                                <a href="#bookdates" class="btn btnKoop">Schrijf je in<?php /*echo $course_type; */?></a>
 -->                            </div>
-                            <div class="col-12 my-5" style="background-color: #E0EFF4">
-                                <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around justify-content-center">
+        <div class="col-12 my-5" style="background-color: #E0EFF4">
+            <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around justify-content-center">
 
-                                    <div class="swiper">
-                                        <div class="swiper-wrapper">
-                                            <?php
-                                            foreach($experts as $expert){
-                                                $expert = get_users(array('include'=> $expert))[0]->data;
-                                                $company = get_field('company',  'user_' . $expert->ID);
-                                                $title = $company[0]->post_title;
-                                                $image = get_field('profile_img', 'user_'. $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                                ?>
-                                                <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
-                                                    <div class="my-2 d-flex flex-column mx-md-0 mx-1">
-                                                        <div class="imgCardPrice" style="height: 50px; width:50px">
-                                                            <img src="<?php echo $image; ?>" alt="teacher photo">
-                                                        </div>
-                                                        <span class="textIconeLearning"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span>
-                                                        <span><?php echo $title; ?></span>
-                                                    </div>
-                                                </a>
-                                            <?php } ?>
-                                        </div>
-
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                        <?php
+                        foreach($experts as $expert){
+                            $expert = get_users(array('include'=> $expert))[0]->data;
+                            $company = get_field('company',  'user_' . $expert->ID);
+                            $title = $company[0]->post_title;
+                            $image = get_field('profile_img', 'user_'. $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                            ?>
+                            <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
+                                <div class="my-2 d-flex flex-column mx-md-0 mx-1">
+                                    <div class="imgCardPrice" style="height: 50px; width:50px">
+                                        <img src="<?php echo $image; ?>" alt="teacher photo">
                                     </div>
-
-                                    <!-- If we need pagination -->
-                                    <!-- <div class="swiper-pagination"></div> -->
-
-                                    <!-- If we need navigation buttons -->
-                                    <div class="swiper-button-prev swiper-moved" style="font-size: 8px !important">
-                                    </div>
-                                    <div class="test">
-                                        <div class="swiper-button-next swiper-moved"></div>
-                                    </div>
-
-                                    <!-- If we need scrollbar -->
-                                    <!-- <div class="swiper-scrollbar"></div> -->
+                                    <span class="textIconeLearning"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span>
+                                    <span><?php echo $title; ?></span>
                                 </div>
-
-                            </div>
-                        </div>
-
-
-
+                            </a>
+                        <?php } ?>
                     </div>
 
                 </div>
+
+                <!-- If we need pagination -->
+                <!-- <div class="swiper-pagination"></div> -->
+
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev swiper-moved" style="font-size: 8px !important">
+                </div>
+                <div class="test">
+                    <div class="swiper-button-next swiper-moved"></div>
+                </div>
+
+                <!-- If we need scrollbar -->
+                <!-- <div class="swiper-scrollbar"></div> -->
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</div>
 
 
                 <!-- <div class="CardpriceLive">
@@ -974,6 +999,24 @@ extract($_GET);
         </div>
     </div>
     <!-- fin Modal deel -->
+
+    <!-- Modal -->
+
+      <!-- début Modal  -->
+    <div class="modal fade modalpaywallVideo" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+             <h5 class="title-paywall" >Get Acces Now </h5>
+            <div class="modal-body">
+               <p class="sub-title-paywall">Please purchase this course to continue</p>
+               <p class="price-course">$150</p>
+               <a href="" class="btn btn-paywall">Buying Now <img src="<?php echo get_stylesheet_directory_uri();?>/img/arrowhead.png" alt=""></a>
+               <p class="text-not-sure-which">Not Sure which is right now for you ? <a href="">Discover the benefits of taking this course now </a></p>
+            </div>
+            </div>
+        </div>
+    </div>
+
 
 </div>
 
@@ -1152,6 +1195,12 @@ extract($_GET);
         }, '500' );
         e.preventDefault();
 
+    });
+</script>
+
+<script type="text/javascript">
+    $(window).on('load', function() {
+        $('.modalpaywallVideo').modal('show');
     });
 </script>
 

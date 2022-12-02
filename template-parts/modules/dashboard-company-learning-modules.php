@@ -2,7 +2,9 @@
 $user_connected = get_current_user_id();
 $company_connected = get_field('company',  'user_' . $user_connected);
 $users_companie = array();
-$course = get_field('categories', $_POST['id_course']);
+if(isset($_POST['id_course']))
+    $course = get_field('categories', $_POST['id_course']);
+
 $users = get_users();
 
 foreach($users as $user) {
@@ -13,7 +15,7 @@ foreach($users as $user) {
 }
 
 $args = array(
-    'post_type' => array('course','post','leerpad'),
+    'post_type' => array('course','post','leerpad','assessment'),
     'posts_per_page' => -1,
     'author__in' => $users_companie,  
 );
@@ -79,12 +81,12 @@ $orders = wc_get_orders($order_args);
         }
     }
 
-    $artikel_single = "Artikel";
+    $artikel_single = "Artikel"; 
     $white_type_array =  ['Lezing', 'Event'];
     $course_type_array = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'Cursus'];
     $video_single = "Video";
     $leerpad_single  = 'Leerpad';
-    
+    $podcast_single = 'Podcast';
 
 ?>
 
@@ -254,7 +256,7 @@ $orders = wc_get_orders($order_args);
             <div class="modal-header mx-4">
                 <h5 class="modal-title" id="exampleModalLabel">Experts  </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="document.getElementById('myModal').style.display='none'" >
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">x</span>
                 </button>
             </div>
             <div class="row d-flex text-center justify-content-center align-items-center h-50">
@@ -277,7 +279,7 @@ $orders = wc_get_orders($order_args);
         </div>
         
 
-    </div> 
+    </div>  
 		
     <div class="cardOverviewCours">
         <div class="headListeCourse">
@@ -306,42 +308,53 @@ $orders = wc_get_orders($order_args);
                     foreach($courses as $key => $course){
                         if(!visibility($course, $visibility_company))
                             continue;                
-                        
+                            
                         /*
                         * Categories
                         */
-                        $day = "<p><i class='fas fa-calendar-week'></i></p>";
-                        $month = ' ';
-
                         $category = ' ';
-
-                        $tree = get_the_terms($course->ID, 'course_category'); 
-
-                        if($tree)
-                            if(isset($tree[2]))
-                                $category = $tree[2]->name;
-
                         $category_id = 0;
-
+                        $category_str = 0;
                         if($category == ' '){
-                            $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
-                            if($category_id != 0)
+                            $one_category = get_field('categories',  $course->ID);
+                            if(isset($one_category[0]))
+                                $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                            else{
+                                $one_category = get_field('category_xml',  $course->ID);
+                                if(isset($one_category[0]))
+                                    $category_id = intval($one_category[0]['value']);
+                            }
+
+                            if($category_str != 0)
+                                $category = (String)get_the_category_by_ID($category_str);
+                            else if($category_id != 0)
                                 $category = (String)get_the_category_by_ID($category_id);
                         }
 
+                        /*
+                        *  Date and Location
+                        */ 
+                        $day = "<i class='fas fa-calendar-week'></i>";
+                        $month = ' ';
                         $location = ' ';
-
+                    
                         $data = get_field('data_locaties', $course->ID);
                         if($data){
                             $date = $data[0]['data'][0]['start_date'];
-                            if($date != ""){
-                                $day = explode(' ', $date)[0];
-                            }
-                        }else{
-                            $day = "~";
-                            $data = explode('-', get_field('data_locaties_xml', $course->ID)[0]['value']);
-                            $date = $data[0];
                             $day = explode(' ', $date)[0];
+                        }
+                        else{
+                            $dates = get_field('dates', $course->ID);
+                            if($dates)
+                                $day = explode(' ', $dates[0]['date']);
+                            else{
+                                $data = get_field('data_locaties_xml', $course->ID);
+                                if(isset($data[0]['value'])){
+                                    $data = explode('-', $data[0]['value']);
+                                    $date = $data[0];
+                                    $day = explode(' ', $date)[0];
+                                }
+                            }
                         }
 
                         /*
@@ -367,9 +380,18 @@ $orders = wc_get_orders($order_args);
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-course&id=" . $course->ID ."&edit";
                         else if($course_type == $leerpad_single)
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-road&id=" . $course->ID ."&edit";
+                        else if($course_type == 'Assessment')
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-assessment&id=" . $course->ID ."&edit";
+                        else if($course_type == 'Podcast')
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-podcast&id=" . $course->ID ."&edit";
 
-                        $link = ($course_type == "Leerpad") ? '/detail-product-road?id=' . $course->ID : get_permalink($course->ID);
-                        //Assessment
+                        $link = "";    
+                        if($course_type == "Leerpad")
+                            $link = '/detail-product-road?id=' . $course->ID ;
+                        else if($course_type == "Assessment")
+                            $link = '/detail-assessment?assessment_id=' . $course->ID;
+                        else
+                            $link = get_permalink($course->ID);
                     ?>
                     <tr id="<?php echo $course->ID; ?>">
                         <td scope="row"><?= $key; ?></td>
@@ -467,7 +489,7 @@ $orders = wc_get_orders($order_args);
         });
 </script>
 
-<script>
+<!-- <script>
     var id_course;
     $('.td_subtopics').click((e)=>{
         id_course = e.target.id;
@@ -533,7 +555,7 @@ $orders = wc_get_orders($order_args);
         }
         })
     });
-</script>
+</script> -->
 
 <script type="text/javascript">
     $(".remove_opleidingen").click(function(){

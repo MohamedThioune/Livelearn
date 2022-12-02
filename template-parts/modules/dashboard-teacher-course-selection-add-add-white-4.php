@@ -1,16 +1,17 @@
 <?php
     $users = get_users();
-
+  
     $members = array();
-
+    
     $post = get_post($_GET['id']);
     $author = array($post->post_author);
     $expert = get_field('experts', $post->ID);    
 
-    foreach($users as $user)
-    if(in_array('author', $user->roles) || in_array('teacher', $user->roles))
-        array_push($members, $user);   
+    $experts = array_merge($author, $expert);
 
+    foreach($users as $user)
+        if(in_array('author', $user->roles) || in_array('teacher', $user->roles))
+            array_push($members, $user);   
 ?>
     <div class="row">
         <div class="col-md-5 col-lg-8">
@@ -23,9 +24,6 @@
                         <div class="acf-field">
                             <label for="locate">Wijs andere experts uit uw team aan voor deze cursus :</label><br>
                             <div class="form-group formModifeChoose" >
-                                <input type="search" name="search_expert" id="search_expert" class="form-control">
-                                <br>
-
                                 <div class="form-group formModifeChoose">
 
                                     <select name="experts[]" id="autocomplete" class="multipleSelect2" multiple="true">
@@ -81,7 +79,6 @@
                 </div>
             </div>
         </div>
-        
     </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

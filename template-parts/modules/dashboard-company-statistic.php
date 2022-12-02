@@ -17,6 +17,7 @@ $stats_by_user = array();
 
 foreach ($users as $user ) {
     $company = get_field('company',  'user_' . $user->ID);
+    if(!empty($company))
     if($company[0]->post_title == $company_connected)
     {
         $topic_by_user = array();
@@ -33,13 +34,17 @@ foreach ($users as $user ) {
             'author' => $user->ID,
         );
         $views_stat_user = get_posts($args);
-        $stat_id = $views_stat_user[0]->ID;
+        $stat_id = 0;
+        if(!empty($views_stat_user))
+            $stat_id = $views_stat_user[0]->ID;
         $view_topic = get_field('views_topic', $stat_id);
         array_push($topic_views, $view_topic);
 
         $view_user = get_field('views_user', $stat_id);
         $number_count['id'] = $user->ID; 
-        $number_count['digit'] = count($view_user); 
+        $number_count['digit'] = 0;
+        if(!empty($view_user))
+            $number_count['digit'] = count($view_user); 
         array_push($numbers_count, $number_count);
 
         $view_course = get_field('views', $stat_id);
@@ -57,7 +62,10 @@ foreach ($users as $user ) {
 
     }
 }
-$topic_views_id = array_column($topic_views[5], 'view_id');
+$topic_views_sorting = $topic_views[5];
+if(!$topic_views_sorting)
+    $topic_views_sorting = array();
+$topic_views_id = array_column($topic_views_sorting, 'view_id');
 $keys = array_column($numbers_count, 'digit');
 array_multisort($keys, SORT_DESC, $numbers_count);
 

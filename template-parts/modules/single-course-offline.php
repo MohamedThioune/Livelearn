@@ -40,7 +40,7 @@
                 <div class="d-flex justify-content-center">
 
                     <div>
-                        <a href="https://wa.me/<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
+                        <a href="https://wa.me/<?= $phone_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                             <i style="font-size: 50px; height: 49px; margin-top: -4px;"
                                 class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>
                         </a>
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                     <div>
-                        <a href="mailto:<?= $email_user ?>" class="mx-3 d-flex flex-column ">
+                        <a href="mailto:<?= $email_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                             <i style="font-size: 25px"
                                 class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
                             <!-- <span class="bd-highlight fw-bold text-primary mt-2">email</span> -->
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                     <div>
-                        <a href="sms:<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
+                        <a href="sms:<?= $phone_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                             <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>
                         </a>
                         <div class="mt-3 text-center">
@@ -68,7 +68,7 @@
                     </div>
 
                     <div>
-                        <a href="tel:<?= $phone_user ?>" class="mx-3 d-flex flex-column ">
+                        <a href="tel:<?= $phone_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                             <i class="bd-highlight bi bi-telephone-x border border-3 border-primary rounded-circle text-primary shadow"
                                 style="font-size: 20px; padding: 6px 11px;"></i>
                             <!-- <span class="bd-highlight fw-bold text-primary mt-2">call</span> -->
@@ -305,7 +305,7 @@
                                     </div>
                                     <?php
 
-                                     if ($user_id==0)
+                                    if ($user_id == 0)
                                        {
                                         echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
                                         wp_login_form([
@@ -316,7 +316,8 @@
                                                 'label_password' => 'Wat is je wachtwoord?'
                                         ]);
                                         echo "</div>";
-                                       }else{
+                                       }
+                                    else{
                                         echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
                                             echo "<form action='/dashboard/user/' class='formConetentIntern' method='POST'>";
                                                 echo "<label for='member_id'><b>Deel deze cursus met uw team :</b></label>";
@@ -324,10 +325,13 @@
                                                 if(!empty($users_company))
                                                     foreach($users_company as $user){
                                                         $name = get_users(array('include'=> $user))[0]->data->display_name;
-                                                        if(in_array($user, $allocution))
-                                                            echo "<option selected  value='" . $user . "'>" . $name . "</option>";
+                                                        if(!empty($allocution))
+                                                            if(in_array($user, $allocution))
+                                                                echo "<option selected  value='" . $user . "'>" . $name . "</option>";
+                                                            else
+                                                                echo "<option value='" . $user . "'>" . $name . "</option>";
                                                         else
-                                                            echo "<option value='" . $user . "'>" . $name . "</option>";
+                                                            echo "<option class='redE' value='" . $user . "'>" . $name . "</option>";
                                                     }
                                                 echo "</select></br></br>";
                                                 echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
@@ -385,6 +389,8 @@
                     ?>
                 </div>
                 <!--------------------------------------- end Text description -------------------------------------- -->
+
+                   
 
                 <div class="customTabs">
                     <div class="tabs">
@@ -465,7 +471,7 @@
                                                                             ?>
                                                                             <div class="blockDateEvens">
                                                                                 <!--                                                                        <p class="numberEvens"><?php /*echo $x+1 */?></p>
--->                                                                                  <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
+                                                                                 <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
                                                                             </div>
                                                                             <?php
                                                                         }
@@ -597,8 +603,8 @@
                                                                     $location = explode('-',$date[2])[1];
                                                                     ?>
                                                                     <div class="blockDateEvens">
-<!--                                                                        <p class="numberEvens"><?php /*echo $x+1 */?></p>
--->                                                                        <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
+
+                                                                        <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
                                                                     </div>
                                                                         <?php
                                                                         $x+=1;
@@ -680,59 +686,46 @@
                                     $category_xml = get_field('category_xml', $post->ID);
 
                                 ?>
-                                <div class="blockSkillsTabs">
+                                <div class="content-card-skills">
                                     <?php
                                         $read_category = array();
                                         if(!empty($category_default))
-                                            foreach($category_default as $item){
+                                            foreach($category_default as $item)
                                                 if(!in_array($item['value'],$read_category)){
                                                     array_push($read_category,$item['value']);
-                                                    echo '<p class="skillsElement">'. (String)get_the_category_by_ID($item['value']) . '</p>';
+                                                    ?>
+                                                    <div class="card-skills">
+                                                        <div class="group">
+                                                            <span class="donut-chart has-big-cente">50</span>
+                                                        </div>
+                                                        <p class="name-course"><?= (String)get_the_category_by_ID($item['value']) ?></p>
+                                                        <!-- <div class="footer-card-skills">
+                                                            <button class="btn btnToevoegen">+ Toevoegen</button>
+                                                            <button class="btn btn-dote">. . .</button>
+                                                        </div> -->
+                                                    </div>
+                                                    <?php
                                                 }
-                                            }
 
                                         else if(!empty($category_xml))
                                             foreach($category_xml as $item)
                                                 if(!in_array($item['value'],$read_category)){
                                                     array_push($read_category,$item['value']);
-                                                    echo '<p class="skillsElement">'. (String)get_the_category_by_ID($item['value']) . '</p>';
+                                                    ?>
+                                                    <div class="card-skills">
+                                                        <div class="group">
+                                                            <span class="donut-chart has-big-cente">50</span>
+                                                        </div>
+                                                        <p class="name-course"><?= (String)get_the_category_by_ID($item['value']) ?></p>
+                                                        <!-- <div class="footer-card-skills">
+                                                            <button class="btn btnToevoegen">+ Toevoegen</button>
+                                                            <button class="btn btn-dote">. . .</button>
+                                                        </div> -->
+                                                    </div>
+                                                    <?php
                                                 }
                                     ?>
                                 </div>
-
-                                <div class="content-card-skills">
-                                    <div class="card-skills">
-                                        <div class="group">
-                                            <span class="donut-chart has-big-cente">50</span>
-                                        </div>
-                                        <p class="name-course">Workforce management</p>
-                                        <div class="footer-card-skills">
-                                            <button class="btn btnToevoegen">+ Toevoegen</button>
-                                            <button class="btn btn-dote">. . .</button>
-                                        </div>
-                                    </div>
-                                    <div class="card-skills">
-                                        <div class="group">
-                                            <span class="donut-chart has-big-cente">97</span>
-                                        </div>
-                                        <p class="name-course">Workforce management</p>
-                                        <div class="footer-card-skills">
-                                            <button class="btn btnToevoegen">+ Toevoegen</button>
-                                            <button class="btn btn-dote">. . .</button>
-                                        </div>
-                                    </div>
-                                    <div class="card-skills">
-                                        <div class="group">
-                                            <span class="donut-chart has-big-cente">10</span>
-                                        </div>
-                                        <p class="name-course">Workforce management</p>
-                                        <div class="footer-card-skills">
-                                            <button class="btn btnToevoegen">+ Toevoegen</button>
-                                            <button class="btn btn-dote">. . .</button>
-                                        </div>
-                                    </div>
-                                </div>
-
 
                             </div>
 
@@ -818,7 +811,9 @@
                         <!-- END tabs-content -->
                     </div> <!-- END tabs -->
                 </div>
+                
             </div>
+            
 
 
 
@@ -1118,8 +1113,21 @@
                     </div>
             </div>
 
-        </div>
 
+        </div>
+ <!-- Strat paywall -->
+                        <div>
+                            <div class="paywall-block">
+                            <p class="title-paywall">You want to continue reading </p>
+                            <p class="sub-title-paywall">Please purchase this to continue</p>
+                            <a class="btn btn-paywall" href="">Buying Now <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/arrowhead.png" alt=""></a>
+                            <p class="text-not-sure-which">Not Sure which is right now for you ?
+                                <a href="">Discover the benefits of taking this course now</a> </p>
+                            </div>
+                        </div>
+                   
+
+                    <!-- End paywall -->
 
 
 
