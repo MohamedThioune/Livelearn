@@ -276,26 +276,26 @@ $companies = get_posts($args);
 
                    <div class="input-group-course">
                        <label for="">Long description</label>
-                       <textarea class="summernote"  name="long_description"><?= strip_tags($long_description) ?></textarea>
+                       <textarea class="editor" id="summernote-long" name="long_description"><?= strip_tags($long_description) ?></textarea>
                    </div>
 
                    <div class="input-group-course">
                        <label for="">For who</label>
-                       <textarea name="for_who" class="summernote">
+                       <textarea name="for_who" class="editor" >
                        <?= $course->for_who ?> 
                        </textarea>
                    </div>
 
                    <div class="input-group-course">
                        <label for="">Agenda</label>
-                       <textarea name="agenda" class="summernote">
+                       <textarea name="agenda" class="editor">
                        <?= $course->agenda ?> 
                        </textarea>
                    </div>
 
                    <div class="input-group-course">
                        <label for="">Results</label>
-                       <textarea name="results" class="summernote">
+                       <textarea name="results" class="editor">
                        <?= $course->results ?> 
                        </textarea>
                    </div>
@@ -443,7 +443,9 @@ $companies = get_posts($args);
    </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/summernote.js"></script>
+<script src='https://unpkg.com/@ckeditor/ckeditor5-build-classic@12.2.0/build/ckeditor.js'></script>
+
+
 <script src='https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.8/purify.min.js'></script>
 <script type="text/javascript" src="<?php echo get_stylesheet_directory_uri();?>/bootstrap-datepicker.js"></script>
 
@@ -477,7 +479,17 @@ $(document).ready(function () {
 });
 //# sourceURL=pen.js
 </script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '.editor' ) )
+        .then( editor => {
+            console.log( editor );
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
 
+</script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/customSurmmote.js"></script>
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
