@@ -1852,6 +1852,7 @@ require($page);
 
                 <div class="row mr-md-2 mr-1">
                     <?php
+                        $bool = false;
                         foreach($agenda as $key => $course){
                             if($key == 6)
                                 break;
@@ -1941,6 +1942,8 @@ require($page);
 
                             //Image author of this post 
                             $image_author = get_field('profile_img',  'user_' . $course->post_author);
+
+                            $bool = true;
                     ?>
                     <a href="<?php echo get_permalink($course->ID) ?>" class="col-md-12">
                         <div class="blockCardFront">
@@ -1981,7 +1984,9 @@ require($page);
                         </div>
                     </a>
                     <?php
-                    }            
+                    } 
+                    if(!$bool)
+                        echo "<p class='dePaterneText theme-card-description'> <center style='color:#033256'> Stay connected, Something big is coming 😊 </center> </p>";
                     ?>
                 </div>
             </div>
