@@ -117,6 +117,9 @@ style="overflow-x: hidden !important;">
             
             if(!empty($experts))
                 foreach($experts as $expert){
+                    if(!$expert)
+                        continue;
+                        
                     $name = get_userdata($expert)->data->display_name;
                     $image_author = get_field('profile_img',  'user_' . $expert);
                     $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/iconeExpert.png';

@@ -533,6 +533,9 @@
 
                         <?php
                             foreach($experties as $profe){
+                                if(!$profe)
+                                    continue;
+                                    
                                 $name = get_userdata($profe)->data->display_name;
                         ?>
                         <div class="checkFilter">
