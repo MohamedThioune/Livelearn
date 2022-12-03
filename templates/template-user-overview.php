@@ -179,11 +179,18 @@
 
 
         //Activitien
-        $activitiens = count($courses);
+        if(!empty($courses))
+            $activitiens = count($courses);
 
         //Volgend
-        $topics_volgers = count(get_user_meta($user->ID, 'topic'));
-        $experts_volgers = count(get_user_meta($user->ID, 'expert'));
+        $volger_topics = get_user_meta($user->ID, 'topic');
+        if(!empty($volger_topics))
+            $topics_volgers = count($volger_topics);
+
+        $volger_experts = get_user_meta($user->ID, 'expert');
+        if(!empty($volger_experts))
+            $experts_volgers = count($volger_experts);
+
         $volgend = $topics_volgers + $experts_volgers;
 
         //Number of feedbacks 
