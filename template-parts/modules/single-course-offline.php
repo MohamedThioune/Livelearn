@@ -996,14 +996,15 @@
                                                     <input type="hidden" name="meta_key" value="expert" id="">
                                                     <div>
                                                         <?php
-                                                        if($user_id != 0 && $user_id != $expert->ID)
+                                                        if(empty($saves_expert))
+                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                        else if($user_id != 0 && $user_id != $expert->ID)
                                                         {
                                                             if (in_array($expert->ID, $saves_expert))
                                                                 echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
                                                             else
-                                                                echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
+                                                                echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
                                                         }
-
                                                         ?>
                                                     </div>
                                                 </form>
@@ -1083,8 +1084,10 @@
                                                     <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
                                                     <input type="hidden" name="meta_key" value="expert" id="">
                                                     <div>
-                                                        <?php
-                                                        if($user_id != 0 && $user_id != $expert->ID)
+                                                        <?php  
+                                                        if(empty($saves_expert))
+                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                        else if($user_id != 0 && $user_id != $expert->ID)
                                                         {
                                                             if (in_array($expert->ID, $saves_expert))
                                                                 echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
