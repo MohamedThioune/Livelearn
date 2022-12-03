@@ -580,7 +580,7 @@
                         * Categories
                         */
                         $location = 'Virtual';
-                        $day = "<p><i class='fas fa-calendar-week'></i></p>";
+                        $day = "-";
                         $month = '';
 
                         $category = ' ';
@@ -605,7 +605,7 @@
                         /*
                         *  Date and Location
                         */ 
-                        $day = "<i class='fas fa-calendar-week'></i>";
+                        $day = "-";
                         $month = NULL;
                         $location = ' ';
 
