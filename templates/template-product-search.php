@@ -340,11 +340,13 @@
                     $teachers = array();
                     foreach($courses as $datum){
                         $authors = array();
+                        $expertss = array();
                         array_push($authors, $datum->post_author);
 
                         $experts = get_field('experts', $datum->ID);
 
-                        $expertss = array_merge($authors, $experts);
+                        if(!empty($experts))
+                            $expertss = array_merge($authors, $experts);
                         foreach($experties as $expertie)
                             if(in_array($expertie,$expertss) ){
                                 array_push($teachers, $datum);
