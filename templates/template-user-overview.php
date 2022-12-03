@@ -17,7 +17,7 @@
     $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
 
     if($user != ' '){
-        $name = $user->display_name;
+        $name = $user->display_name ?: $user->first_name;
         
         $args = array(
             'post_type' => array('post', 'course'), 
