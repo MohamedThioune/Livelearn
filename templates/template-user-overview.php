@@ -2037,7 +2037,15 @@
                                 <?php } ?>
                             </div>    
                             <?php 
+                            }else{
+                                echo '
+                                    <div class="skills-side">
+                                    <span class="text-dark h5 p-1 mt-2">No skill found </span>
+                                        <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" alt="Skill no-content" >
+                                    </div>
+                                    ';
                             }
+
                             if(!empty($educations)){ 
                             ?>
                             <div class="education">

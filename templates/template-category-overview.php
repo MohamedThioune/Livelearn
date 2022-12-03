@@ -1847,7 +1847,7 @@ require($page);
                     <div class="elementIconeRight">
                         <img class="imgIconeShowMore" src="<?php echo get_stylesheet_directory_uri();?>/img/IconShowMore.png" alt="">
                     </div>
-                    <a href="/newFilesHtml/agenda.html" class="showAllLink">Show all</a>
+                    <!-- <a href="/newFilesHtml/agenda.html" class="showAllLink">Show all</a> -->
                 </div>
 
                 <div class="row mr-md-2 mr-1">
