@@ -974,6 +974,9 @@
                                         <?php
                                         $saves_expert = get_user_meta($user_id, 'expert');
                                         foreach($experts as $value){
+                                            if(!$value)
+                                                continue;
+                                                
                                             $expert = get_users(array('include'=> $value))[0]->data;
                                             $company = get_field('company',  'user_' . $expert->ID);
                                             $title = $company[0]->post_title;
