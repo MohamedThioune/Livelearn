@@ -2040,8 +2040,8 @@
                             }else{
                                 echo '
                                     <div class="skills-side">
-                                    <span class="text-dark h5 p-1 mt-2">No skill found </span>
                                         <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" alt="Skill no-content" >
+                                        <br><center><span class="text-dark h5" style="color:#033256">No skill found </span><center>
                                     </div>
                                     ';
                             }
