@@ -537,7 +537,7 @@
                         ?>
                         <div class="checkFilter">
                             <label class="contModifeCheck"><?php echo $name ?>
-                                <input type="checkbox" id="sales" name="expert[]" value="<?php echo $profe; ?>" <?php if(!empty($expert)) if(in_array($profe, $expert)) echo "checked" ; else echo ""  ?> >
+                                <input type="checkbox" id="sales" name="experties[]" value="<?php echo $profe; ?>" <?php if(!empty($expert)) if(in_array($profe, $expert)) echo "checked" ; else echo ""  ?> >
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div>
