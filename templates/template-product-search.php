@@ -187,7 +187,17 @@
                             if(!in_array($expert, $profes))
                                 array_push($profes, $expert);
                 }
-                $topic = "free-search";
+                if(empty($experties)){
+                    $args = array(
+                            'role__in' => ['author'],
+                            'posts_per_page' => -1,
+                    );
+                    $expertiess = get_users($args);
+                    foreach($expertiess as $value)
+                        array_push($experties, $value->ID);
+
+                }
+                
             }      
             ## START WITH THE FILTERS
             /**
@@ -521,13 +531,6 @@
                         <p class="sousProduct1Title" style="color: #043356;">EXPERT</p>
 
                         <?php
-                            if(empty($experties) && $topic == "free-search")
-                                $experties = get_users(
-                                    array(
-                                      'role__in' => ['author'],
-                                      'posts_per_page' => -1,
-                                      )
-                                    );
                             foreach($experties as $profe){
                                 $name = get_userdata($profe)->data->display_name;
                         ?>
