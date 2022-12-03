@@ -2040,8 +2040,7 @@
                             }else{
                                 echo '
                                     <div class="skills-side">
-                                        <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" alt="Skill no-content" >
-                                        <br><center><span class="text-dark h5" style="color:#033256">No skill found </span><center>
+                                        <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" width="90" height="100" alt="Skill no-content" >
                                     </div>
                                     ';
                             }
