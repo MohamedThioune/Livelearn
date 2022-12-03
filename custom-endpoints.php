@@ -16,17 +16,17 @@ class Author
 
 class Course
 {
-  public   $id;
-  public   $date;
-  public   $title;
-  public   $pathImage;
-  public   $shortDescription;
-  public   $longDescription;
-  public      $price;
-  public   $tags;
-  public   $course_type;
-  public   $data_locaties_xml;
-  public   $youtubeVideos;
+  public $id;
+  public $date;
+  public $title;
+  public $pathImage;
+  public $shortDescription;
+  public $longDescription;
+  public $price;
+  public $tags;
+  public $course_type;
+  public $data_locaties_xml;
+  public $youtubeVideos;
   public $author;
 
   function __construct($course) {

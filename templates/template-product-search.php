@@ -18,7 +18,7 @@
         $teachers = array();
         $categories = array();
         $profes = array();
-
+        $topic = "";
 
         $args = array(
             'post_type' => array('post','course'), 
@@ -38,6 +38,7 @@
         */
         $course_categories = array();
         $course_users = array();
+
 
         if(isset($search)){
             $courses = array();
@@ -172,7 +173,7 @@
                 $args = array(
                     'post_type' => array('post','course'), 
                     'post_status' => 'publish',
-                    'posts_per_page' => -1,
+                    'posts_per_page' => 500,
                 );
                 $courses = get_posts($args);
 
@@ -186,6 +187,7 @@
                             if(!in_array($expert, $profes))
                                 array_push($profes, $expert);
                 }
+                $topic = "free-search";
             }      
             ## START WITH THE FILTERS
             /**
@@ -519,21 +521,22 @@
                         <p class="sousProduct1Title" style="color: #043356;">EXPERT</p>
 
                         <?php
-                        if(isset($_POST['category'])){
+                            if(empty($experties) && $topic == "free-search")
+                                $experties = get_users(
+                                    array(
+                                      'role__in' => ['author'],
+                                      'posts_per_page' => -1,
+                                      )
+                                    );
+                            foreach($experties as $profe){
+                                $name = get_userdata($profe)->data->display_name;
                         ?>
-                            <?php
-                                foreach($experties as $profe){
-                                    $name = get_userdata($profe)->data->display_name;
-                            ?>
-                            <div class="checkFilter">
-                                <label class="contModifeCheck"><?php echo $name ?>
-                                    <input type="checkbox" id="sales" name="expert[]" value="<?php echo $profe; ?>" <?php if(!empty($expert)) if(in_array($profe, $expert)) echo "checked" ; else echo ""  ?> >
-                                    <span class="checkmark checkmarkUpdated"></span>
-                                </label>
-                            </div>
-                            <?php
-                                }
-                            ?>
+                        <div class="checkFilter">
+                            <label class="contModifeCheck"><?php echo $name ?>
+                                <input type="checkbox" id="sales" name="expert[]" value="<?php echo $profe; ?>" <?php if(!empty($expert)) if(in_array($profe, $expert)) echo "checked" ; else echo ""  ?> >
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div>
                         <?php
                             }
                         ?>
