@@ -188,6 +188,7 @@
                                 array_push($profes, $expert);
                 }
                 if(empty($experties)){
+                    $experties = array();
                     $args = array(
                             'role__in' => ['author'],
                             'posts_per_page' => -1,
