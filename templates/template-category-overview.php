@@ -493,12 +493,6 @@ require($page);
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div>
-                        <div class="checkFilter">
-                            <label class="contModifeCheck">Expert
-                                <input type="checkbox" id="expert" name="leervom[]" value="expert">
-                                <span class="checkmark checkmarkUpdated"></span>
-                            </label>
-                        </div>
                         <br>
                     </div>
                     <div class="LeerBlock pl-4" >

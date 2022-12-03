@@ -345,8 +345,10 @@
 
                         $experts = get_field('experts', $datum->ID);
 
-                        if(!empty($experts))
+                        if($experts)
                             $expertss = array_merge($authors, $experts);
+                        else 
+                            $expertss = $authors;
                         foreach($experties as $expertie)
                             if(in_array($expertie,$expertss) ){
                                 array_push($teachers, $datum);
