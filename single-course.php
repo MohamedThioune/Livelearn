@@ -72,16 +72,10 @@ if(!$prijsvat)
 $agenda = get_field('agenda', $post->ID);
 $who = get_field('for_who', $post->ID);
 $results = get_field('results', $post->ID);
+
 $category = " ";
-$tree = get_the_terms($post->ID, 'course_category');
-if($tree)
-    if(isset($tree[2])){
-        $category = $tree[2]->name;
-        $id_category = $tree[2]->ID;
-    }
-
 $category_id = 0;
-
+$id_category = 0;
 if($category == ' '){
     $category_id = intval(explode(',', get_field('categories',  $post->ID)[0]['value'])[0]);
     $category_xml = intval(get_field('category_xml', $post->ID)[0]['value']);

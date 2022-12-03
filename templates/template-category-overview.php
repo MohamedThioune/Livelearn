@@ -561,19 +561,21 @@ require($page);
                     <div class="LeerBlock pl-4">
                         <p class="sousProduct1Title" style="color: #043356;">EXPERTS</p>
                         <?php
-                       if (is_object( $arg ) || is_array( $arg ))
                             foreach($teachers as $teacher){
+                                if(!$teacher)
+                                    continue; 
+
                                 if($teacher != $user_id)
                                     $name_author = get_userdata($teacher)->data->display_name;
                                 else
                                     $name_author = "Ikzelf";                                
                         ?>
-                        <div class="checkFilter">
-                            <label class="contModifeCheck"><?php echo $name_author ?>
-                                <input type="checkbox" id="sales" name="experties[]" value="<?php echo $teacher; ?>">
-                                <span class="checkmark checkmarkUpdated"></span>
-                            </label>
-                        </div>
+                                <div class="checkFilter">
+                                    <label class="contModifeCheck"><?php echo $name_author ?>
+                                        <input type="checkbox" id="sales" name="experties[]" value="<?php echo $teacher; ?>">
+                                        <span class="checkmark checkmarkUpdated"></span>
+                                    </label>
+                                </div>
                         <?php
                             }
                         ?>
@@ -1807,6 +1809,9 @@ require($page);
                         <div class="swiper-wrapper">
                             <?php
                             foreach($teachers as $teacher){
+                                if(!$teacher)
+                                    continue;
+
                                 $image = get_field('profile_img',  'user_' . $teacher);
                                 $path = "../user-overview?id=" . $teacher;
                                 if(!$image)

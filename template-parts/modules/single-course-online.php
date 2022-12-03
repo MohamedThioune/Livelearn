@@ -66,9 +66,12 @@ extract($_GET);
                     <?php
                         }
                     ?>
-                    <a href="category-overview?category=<?php echo $id_category ?>"class="bd-highlight ">
-                            <button class="btn py-0 btnPhilo"> <span class="text-white"><?php echo $category; ?></span></button>
-                    </a>
+                    <?php
+                    if($id_category)
+                        echo '<a href="category-overview?category=' . $id_category . '" class="bd-highlight ">
+                                <button class="btn py-0 btnPhilo"> <span class="text-white">' . $category . '</span></button>
+                            </a>';
+                    ?>
                  </div>
                  <!-- ------------------------------ End Title livelearn ---------------------------------- -->
 
