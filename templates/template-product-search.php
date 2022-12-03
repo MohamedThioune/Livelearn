@@ -513,9 +513,7 @@
                         <p class="sousProduct1Title" style="color: #043356;">EXPERT</p>
 
                         <?php
-                        if(isset($_POST['category']))
-
-                            if(!isset($user)){
+                        if(isset($_POST['category'])){
                         ?>
                             <?php
                                 foreach($profes as $profe){
