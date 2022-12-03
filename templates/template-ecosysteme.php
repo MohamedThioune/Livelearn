@@ -96,15 +96,17 @@ foreach($global_blogs as $blog)
     */
     if(!empty($category_default))
     foreach($category_default as $item)
-        if($item['value'])
-            if(!in_array($item['value'], $categories))
-                array_push($categories,$item['value']);
-            
-    else if(!empty($category_xml))
-        foreach($category_xml as $item)
+        if($item)
             if($item['value'])
                 if(!in_array($item['value'], $categories))
                     array_push($categories,$item['value']);
+            
+    else if(!empty($category_xml))
+        foreach($category_xml as $item)
+            if($item)
+                if($item['value'])
+                    if(!in_array($item['value'], $categories))
+                        array_push($categories,$item['value']);
 
     $born = false;
     foreach($categoriees as $categoriee){

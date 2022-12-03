@@ -182,9 +182,12 @@
                     <?php
                         }
                     ?>
-                    <a href="category-overview?category=<?php echo $id_category ?>" class="bd-highlight ">
-                            <button class="btn py-0 btnPhilo"> <span class="text-white"><?php echo $category; ?></span></button>
-                    </a>
+                    <?php
+                    if($id_category)
+                        echo '<a href="category-overview?category=' . $id_category . '" class="bd-highlight ">
+                                <button class="btn py-0 btnPhilo"> <span class="text-white">' . $category . '</span></button>
+                            </a>';
+                    ?>
                 </div>
                 <!-- ------------------------------ End Title livelearn ---------------------------------- -->
 
@@ -1115,28 +1118,22 @@
 
 
         </div>
- <!-- Strat paywall -->
-                        <div>
-                            <div class="paywall-block">
-                            <p class="title-paywall">You want to continue reading </p>
-                            <p class="sub-title-paywall">Please purchase this to continue</p>
-                            <a class="btn btn-paywall" href="">Buying Now <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/arrowhead.png" alt=""></a>
-                            <p class="text-not-sure-which">Not Sure which is right now for you ?
-                                <a href="">Discover the benefits of taking this course now</a> </p>
-                            </div>
-                        </div>
-                   
-
-                    <!-- End paywall -->
-
-
-
-
+        <!-- start paywall
+            <div>
+                <div class="paywall-block">
+                <p class="title-paywall">You want to continue reading </p>
+                <p class="sub-title-paywall">Please purchase this to continue</p>
+                <a class="btn btn-paywall" href="">Buying Now <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/arrowhead.png" alt=""></a>
+                <p class="text-not-sure-which">Not Sure which is right now for you ?
+                    <a href="">Discover the benefits of taking this course now</a> </p>
+                </div>
+            </div>
+        End paywall -->
     </div>
 
 
-        <!-- début Modal deel -->
-        <div class="modal" id="modal1" data-animation="fadeIn">
+    <!-- start Modal deel -->
+    <div class="modal" id="modal1" data-animation="fadeIn">
         <div class="modal-dialog modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
             <div class="modal-content">
                 <div class="tab">
@@ -1299,7 +1296,6 @@
 </script>
 
 <script>
-
     const swiper = new Swiper('.swiper', {
         // Optional parameters
         // direction: 'vertical',
@@ -1321,8 +1317,6 @@
             el: '.swiper-scrollbar',
         },
     });
-
-
 </script>
 
 <script>
