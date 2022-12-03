@@ -89,6 +89,15 @@
                                 if(!in_array($expert, $teachers))
                                     array_push($teachers, $expert);
                         }
+
+                    $experts = get_field('experts', $course->ID);
+                    if(!empty($profes))
+                        if(!in_array($course->post_author, $profes))
+                            array_push($profes, $course->post_author);
+                    if(!empty($experts))
+                        foreach($experts as $expert)
+                            if(!in_array($expert, $profes))
+                                array_push($profes, $expert);
                 }
             }else if(isset($user)){
             ## SIDE PRODUCT USERS 
