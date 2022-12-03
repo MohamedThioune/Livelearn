@@ -186,10 +186,7 @@
                             if(!in_array($expert, $profes))
                                 array_push($profes, $expert);
                 }
-            }
-
-           
-
+            }      
             ## START WITH THE FILTERS
             /**
             * Leervom Group
