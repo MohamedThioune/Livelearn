@@ -29,8 +29,8 @@ $topics_external = get_user_meta($user->ID,'topic');
 $experts = get_user_meta($user->ID, 'expert');
 
 $user_name_display = "";
-if(isset($user->first_name) && isset($user->last_name)) 
-    $user_name_display = $user->first_name . '' . $user->last_name; 
+if(isset($user->first_name)) 
+    $user_name_display = $user->first_name; 
 else 
     $user_name_display = $user->display_name;
 
