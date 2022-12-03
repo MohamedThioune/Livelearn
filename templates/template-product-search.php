@@ -516,7 +516,7 @@
                         if(isset($_POST['category'])){
                         ?>
                             <?php
-                                foreach($profes as $profe){
+                                foreach($experties as $profe){
                                     $name = get_userdata($profe)->data->display_name;
                             ?>
                             <div class="checkFilter">
