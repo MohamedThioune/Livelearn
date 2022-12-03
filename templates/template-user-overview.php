@@ -2041,8 +2041,8 @@
                                 echo '
                                     <div class="skills-side">
                                         <center>
-                                        <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" width="170" height="180" alt="Skill no-content" >
-                                        <br><span class="text-dark h5  p-1 mt-2" style="color:#033256">No skill found </span>
+                                        <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" width="140" height="150" alt="Skill no-content" >
+                                        <br><span class="text-dark h5 p-1 mt-2" style="color:#033256">No skill found </span>
                                         <center>
                                     </div>
                                     ';
