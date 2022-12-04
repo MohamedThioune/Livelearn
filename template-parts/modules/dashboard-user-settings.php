@@ -190,7 +190,7 @@ if(!empty($bunch)){
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/nouislider.min.css">
 
 <div class="content-settings">
-    <a href="/profile" class="goBackProfil">
+    <a href="/dashboard/company/profile" class="goBackProfil">
         <img src="<?php echo get_stylesheet_directory_uri();?>/img/bi_arrow-left.png" alt="">
     </a>
     <h1 class="titleSetting">Profiel Informatie</h1>
@@ -878,8 +878,6 @@ if(!empty($bunch)){
     </div>
 </div>
 
-
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script>
     'use strict';
 
