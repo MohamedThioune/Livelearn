@@ -30,7 +30,6 @@ if(isset($manager_employee))
     }
 
 $users = get_users();
-var_dump($allocate_basic);
 ?>
 <div class="blockManageTeam">
     <form action="/dashboard/company/allocate" method="post">
