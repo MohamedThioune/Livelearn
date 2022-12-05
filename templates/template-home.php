@@ -151,7 +151,7 @@ $degrees=[
         $input_generaties.= '<input type="radio" name="choiceGeneratie" value='.$value.' id="generatie'.$key.'"><label for="generatie'.$key.'">'.$key.'</label>';
     }
 
-    $course_type=['Opleidingen','E-learnings','Lezingen','Trainingen','Videos','Events','Workshop','Artikelen','Webinars','Masterclasses','Assessments','Podcasts'];
+    $course_type = ['Opleidingen','E-learnings','Lezingen','Trainingen','Videos','Events','Workshop','Artikelen','Webinars','Masterclasses','Assessments','Podcasts'];
     foreach ($course_type as $key => $value) {
          $input_course_type.= '
          <div class="blockInputCheck">
@@ -494,7 +494,7 @@ $degrees=[
                 <form action="/product-search" class="position-relative" method="POST">
                     <input id="search" type="search" class="jAuto searchInputHome form-control"
                         placeholder="Zoek opleidingen, experts of onderwerpen" name="search" autocomplete="off">
-                    <button class="btn btn-Zoek elementWeb">Zoek</button>
+                    <button class="btn btn-Zoek elementWeb"><span>Zoek</span></button>
                     <?php
                         if(get_current_user_id()==0){
                     ?>
@@ -992,7 +992,7 @@ $degrees=[
             <p class="ofWordText">Of gebruik LiveLearn Zakelijk</p>
             <p class="krijgText">Een eigen leeromgeving, tot wel 65% korting op opleidingen en andere leervormen, toegang
                 tot exclusieve events en maak gebruik van ons leven lang leren scholingsadvies.</p>
-            <a href="/voor-organisaties" class="ikWil">Ik wil dit</a>
+            <a href="/voor-organisaties" class="ikWil"><span>Ik wil dit</span></a>
         </div>
         <div class="ookBlock">
             <p class="textmaand">€4,95 per maand</p>
@@ -1043,9 +1043,10 @@ $degrees=[
                         /*
                         *  Date and Location
                         */ 
+                        $data = array();
                         $day = "<i class='fas fa-calendar-week'></i>";
-                        $month = NULL;
-                        $location = ' ';
+                        $month = 0;
+                        $location = 'Virtual';
 
                         $datas = get_field('data_locaties', $course->ID);
                         if($datas){
@@ -1072,7 +1073,9 @@ $degrees=[
                         if(!$month)
                             continue;
 
-                        if(isset($data)){
+                        if(empty($data))
+                            null;
+                        else if(!empty($data)){
                             $date_now = strtotime(date('Y-m-d'));
                             $data = strtotime(str_replace('/', '.', $data));
                             if($data < $date_now)

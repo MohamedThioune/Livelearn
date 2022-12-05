@@ -191,22 +191,25 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
     $('#bouddha').click((e)=>{
         $.ajax({
-            url:'/artikels',
+            url:'/livelearn/artikels',
             type:'POST',
             datatype:'json',
-            async:false,
+            // cache:false,
             beforeSend:function(){
-                // $('#bouddha').hide(true,2000),
-                $('#select_field').hide(true,2000),
-                $('#loader').attr('hidden',false)
+                $('#select_field').hide(true,2000);
+                $('#loader').attr('hidden',false);
             },
             success:function(){
-                alert("done!"),
-                $('#select_field').hide(false,2000),
-                $('#loader').attr('hidden',true)
+                location.reload();
+                // window.location.href = "/livelearn/artikels";
             },
-            error:function(){
-                alert("error");
+            complete:function(){
+                $('#select_field').hide(false,2000);
+                $('#loader').attr('hidden',true);
+                // window.location.href = "/livelearn/artikels";
+            },
+            error:function(error){
+                alert("error"+error);
             }
         });
     });

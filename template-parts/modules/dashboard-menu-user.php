@@ -29,8 +29,8 @@ $topics_external = get_user_meta($user->ID,'topic');
 $experts = get_user_meta($user->ID, 'expert');
 
 $user_name_display = "";
-if(isset($user->first_name) && isset($user->last_name)) 
-    $user_name_display = $user->first_name . '' . $user->last_name; 
+if(isset($user->first_name)) 
+    $user_name_display = $user->first_name; 
 else 
     $user_name_display = $user->display_name;
 
@@ -117,7 +117,12 @@ style="overflow-x: hidden !important;">
             
             if(!empty($experts))
                 foreach($experts as $expert){
-                    $name = get_userdata($expert)->data->display_name;
+                    if(!$expert)
+                        continue;
+                        
+                    $name = get_userdata($expert)->data->display_name ?: get_userdata($expert)->data->first_name;
+                    if(!$name)
+                        continue;
                     $image_author = get_field('profile_img',  'user_' . $expert);
                     $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/iconeExpert.png';
                     echo "
