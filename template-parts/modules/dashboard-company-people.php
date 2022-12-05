@@ -39,11 +39,6 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
     if( in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) || in_array('manager', $data_user->roles) || $grant ) {
 ?>
     <div class="cardPeople">
-        <?php
-          if(isset($_GET['message']))
-            if($_GET['message'])
-                echo "<span alert='alert alert-success'>" . $_GET['message'] . "</span> <br><br>"; 
-        ?>
         <div class="headListeCourse">
             <p class="JouwOpleid">Werknemers (<?= $count; ?>)</p>
             <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
@@ -101,7 +96,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                         <?php
                                         if($you){
                                         ?>                            
-                                            <li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalEdit" href="#">Edit</a></li>
+                                            <li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalEdit<?= $key ?>" href="#">Edit</a></li>
                                             <li class="my-1">
                                                 <div class="remove">
                                                     <?php
@@ -117,40 +112,39 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                 </div>
                             </td>
                         </tr>
+                        <!-- Modal optie edit missign information  -->
+                        <div class="modal fade modal-Budget" id="modalEdit<?= $key ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center">Add missing information</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="" method="POST">
+                                            <div class="form-group">
+                                                <label for="telefoonnummer">Telefoonnummer</label>
+                                                <input type="number" name="telnr" value="<?php echo get_field('telnr', 'user_'.$user->ID);?>" class="form-control" placeholder="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="functie">Functie</label>
+                                                <input type="text" name="role_user" value="<?php echo get_field('role', 'user_'.$user->ID);?>" class="form-control" placeholder="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="afdeling">Afdeling</label>
+                                                <input type="text" name="department" value="<?php echo get_field('department', 'user_'.$user->ID);?>" class="form-control" placeholder="">
+                                            </div>
+
+                                            <button type="submit" name="missing_details_user" class="btn btn-add-budget">Add</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     <?php
                     } 
                     ?>
                 </tbody>
             </table>
-            <!-- Modal optie edit missign information  -->
-            <div class="modal fade modal-Budget" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title text-center">Add missing information</h5>
-                        </div>
-                        <div class="modal-body">
-                            <form action="" method="POST">
-                                <div class="form-group">
-                                    <label for="telefoonnummer">Telefoonnummer</label>
-                                    <input type="number" name="telnr" class="form-control" placeholder="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="functie">Functie</label>
-                                    <input type="text" name="role_user" class="form-control" placeholder="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="afdeling">Afdeling</label>
-                                    <input type="text" name="department" class="form-control" placeholder="">
-                                </div>
-
-                                <button type="submit" name="missing_details_user" class="btn btn-add-budget">Add</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 <?php 
