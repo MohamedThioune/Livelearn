@@ -99,8 +99,8 @@
 
 <div class="cardPeople">
     <div class="headListeCourse">
-        <p class="JouwOpleid">Werknemers (4)</p>
-        <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
+        <p class="JouwOpleid">Werknemers</p>
+        <!-- <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" > -->
         <a href="../people-mensen" class="btnNewCourse">Persoon toevoegen</a>
     </div>
     <div class="contentCardAlloccate contentCardGrant">
