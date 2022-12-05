@@ -107,7 +107,7 @@
             </thead>
             <tbody id="autocomplete_company_people">
                 <?php
-                foreach($users as $used){
+                foreach($users as $key => $used){
 
                     if(in_array('administrator', $used->roles) || in_array('hr', $used->roles))
                         continue;
@@ -125,7 +125,7 @@
                             $is_author = (in_array('author', $used->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
                 ?>
                         <tr id="" >
-                            <td scope="row">1</td>
+                            <td scope="row"><?= $key ?></td>
                             <td class="textTh thModife">
                                 <div class="ImgUser">
                                     <a href="" >
