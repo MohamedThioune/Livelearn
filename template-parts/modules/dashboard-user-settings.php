@@ -723,7 +723,7 @@ if(!empty($bunch)){
                                 <button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills<?= $key ?>">Edit <i class="fa fa-edit"></i></a>
-                                    <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a>
+                                    <!-- <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a> -->
                                 </div>
                             </div>
                         </div>
