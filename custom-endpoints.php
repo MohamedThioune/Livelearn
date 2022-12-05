@@ -91,7 +91,6 @@ function allCourses ($data)
   $results_per_page = 100;
   $start = ($page-1) * $results_per_page ;
   $end = ( ($page) * $results_per_page ) > $number_of_post ? $number_of_post : ($page) * $results_per_page   ;
-  
 
   $number_of_page = ceil($number_of_post / $results_per_page);
 
@@ -104,9 +103,8 @@ function allCourses ($data)
       if(!empty($experts))
         foreach ($experts as $key => $expert) {
           $expert = get_user_by( 'ID', $expert );
-           return $expert;
-          $author_img = wp_get_attachment_url(get_field('profile_img',(int)$expert)); //? wp_get_attachment_url(get_field('profile_img',$author->ID)) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-          array_push($courses[$i]->author, new Author ($author,$author_img));
+          $author_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          array_push($courses[$i]->author, new Author ($expert,$author_img));
           }
       $courses[$i]->longDescription = get_field('long_description',$courses[$i]->ID);
       $courses[$i]->shortDescription = get_field('short_description',$courses[$i]->ID);
@@ -147,7 +145,7 @@ function allAuthors()
     $authors = array();
     if(!empty($authors_post))
       foreach ($authors_post as $key => $author_post) {
-        $author_img = wp_get_attachment_url(get_field('profile_img',$author_post->ID)) ? wp_get_attachment_url(get_field('profile_img',$author_post->ID)) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $author_img = get_field('profile_img','user_'.$author_post->ID) ? get_field('profile_img','user_'.$author_post->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
         $author = new Author($author_post, $author_img);
         array_push($authors,$author);
       }
@@ -204,4 +202,96 @@ function allAuthors()
         }
   }
   return $informations; 
+}
+
+function get_expert_courses ($data) {
+  $expert_id = $data['id'] ?? null;
+  if (!isset($expert_id))
+    return ['error' => "You have to fill the id of the expert" ];
+  $expert = get_user_by('ID', $expert_id );
+  $courses = get_posts(array(
+        'post_type' => array('course'), 
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+        // 'meta_key'         => 'course_type',
+        // 'meta_value'       => $course_type,
+  ));
+  $expert_courses = array();
+    foreach ($courses as $key => $course) {
+      $course_experts = get_field('experts',$course->ID);
+      if (in_array($expert_id,$course_experts));{
+        $course->longDescription = get_field('long_description',$course->ID);
+        $course->shortDescription = get_field('short_description',$course->ID);
+        $course->courseType = get_field('course_type',$course->ID);
+        $course->pathImage = get_field('url_image_xml',$course->ID);
+        $course->price = get_field('price',$course->ID);
+        $course->youtubeVideos = get_field('youtube_videos',$course->ID) ? get_field('youtube_videos',$course->ID) : []  ;
+        $course->podcasts = get_field('podcasts',$course->ID) ? get_field('podcasts',$course->ID) : [];
+        $course->visibility = get_field('visibility',$course->ID);
+        $course->connectedProduct = get_field('connected_product',$course->ID);
+        $tags = get_field('categories',$course->ID) ?? [];
+        $course->tags= array();
+        if($tags)
+          if (!empty($tags))
+            foreach ($tags as $key => $category) 
+              if(isset($category['value'])){
+                $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+                array_push($course->tags,$tag);
+              }
+        array_push($expert_courses,new Course($course));
+      }
+    }
+    return $expert_courses;
+}
+
+function get_total_followers ($data) {
+  $expert = $data['id'] != null  ?  get_user_by('ID', $data['id']) : false;
+  if (!$expert)
+    return ['error' => 'You have to fill the id of the expert'];
+  $users = get_users();
+  $count = 0;
+  foreach ($users as $key => $user) {
+    $expert_followed_by_the_user = get_user_meta($user->ID, 'expert');
+      if (in_array($expert -> ID,$expert_followed_by_the_user))
+        $count++;
+  }
+  return ['followers_count' => $count]; 
+  // $saved_course = get_user_meta('saved',9);
+  // return get_posts(
+  //     $args = array(
+  //       'post_type' => 'course',
+  //       'post__in' => [2070],
+  //   ));
+}
+
+function get_total_followed_experts ()
+{
+  $current_user = wp_get_current_user();
+  $count = 0;
+  $experts_followed = get_user_meta( $current_user -> ID,'expert');
+  return $experts_followed;
+}
+
+function get_saved_course()
+{
+  $current_user = wp_get_current_user();
+  $courses = get_posts(
+    array(
+        'post_type' => array('course'), 
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+    )) ?? [];
+    if (!empty($courses)){
+      $count = 0;
+      foreach ($courses as $key => $course) {
+        $course_likers = get_user_meta($course-> ID, 'course') ?? false ;
+        if (!$course_likers)
+          if (in_array($current_user -> ID, $course_likers))
+            $count++;
+      }
+      return ['count' => $count];
+    }
+    return ['error' => 'No courses in the database'];
 }
