@@ -1308,4 +1308,24 @@ add_action( 'rest_api_init', function () {
     'callback' => 'follow_multiple_meta',
   ));
 
+  register_rest_route('custom/v1', '/expert/(?P<id>\d+)/courses', array(
+    'methods' => 'GET',
+    'callback' => 'get_expert_courses',
+  ));
+
+  register_rest_route('custom/v1', '/expert/(?P<id>\d+)/followers/count', array(
+    'methods' => 'GET',
+    'callback' => 'get_total_followers',
+  ));
+
+  register_rest_route('custom/v1', '/followed/experts', array(
+    'methods' => 'GET',
+    'callback' => 'get_total_followed_experts',
+  ));
+
+  register_rest_route('custom/v1', '/courses/saved', array(
+    'methods' => 'GET',
+    'callback' => 'get_saved_course',
+  ));
+
 } );
