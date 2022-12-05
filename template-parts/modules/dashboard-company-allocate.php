@@ -43,8 +43,9 @@ $users = get_users();
                         if(in_array('administrator', $used->roles) || in_array('hr', $used->roles) || in_array('manager', $used->roles))
                             continue;
                         
-                        if(in_array($allocate_basic, $used->ID))
-                            continue;
+                        if(!empty($allocate_basic))    
+                            if(in_array($used->ID, $allocate_basic))
+                                continue;
 
                         $companies = get_field('company',  'user_' . $used->ID);
                         if(!empty($company) && $user_id != $used->ID ){
