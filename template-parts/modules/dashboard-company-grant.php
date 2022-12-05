@@ -10,11 +10,11 @@
                 {
                     $u = new WP_User($grant);
                     // Add role
-                    $u->add_role( 'teacher' );
+                    $u->add_role( 'author' );
                 }            
             $success = true;
             $message = "Werknemer(s) met succes toegekend als een teacher";
-            header('Location: /dashboard/company/allocate/?message=' . $message);
+            header('Location: /dashboard/company/grant/?message=' . $message);
         }
     if(isset($granted_push_manager))
         if($rol_manager){
@@ -28,7 +28,7 @@
             update_field('amount_budget', $amount_budget, 'user_'.$grant);
             $success = true;
             $message = "Werknemer(s) met succes toegekend als een manager";
-            header('Location: /dashboard/company/allocate/?message=' . $message);
+            header('Location: /dashboard/company/grant/?message=' . $message);
         }
 ?>
 <?php 
@@ -83,7 +83,6 @@
                                         }
                                     ?>
                                 </div>
-                                <input type="hidden" name="manager_id" value="<?php echo $user_id; ?>">
                                 <button type="submit" name="granted_push_teacher" class="btn btn-info">Activeer</button>
                             </div>
                         </form>
