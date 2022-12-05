@@ -792,6 +792,54 @@ else if(isset($note_skill_edit)){
     header("Location: ". $message);
 }
 
+else if (isset($note_skill_new)){
+    $user_id = get_current_user_id();
+
+    //Get Topics 
+    $topics_external = get_user_meta($user_id, 'topic');
+    $topics_internal = get_user_meta($user_id, 'topic_affiliate');
+    $topics = array();
+    if(!empty($topics_external))
+        $topics = $topics_external;
+    if(!empty($topics_internal))
+        foreach($topics_internal as $value)
+            array_push($topics, $value);
+
+    //Add topic
+    if(!in_array($id, $topics))
+        add_user_meta($user_id,'topic',$id);
+    
+    //Add note
+    $skills = get_field('skills', 'user_' . $user_id);
+    $skill = array();
+    $skill['id'] = $id;
+    $skill['note'] = $note;
+    $bool = false;
+    $bunch = array();
+
+    if(empty($skills))
+        $skills = array();
+    else
+        foreach($skills as $item){
+            if($item['id'] == $id){
+                $item['note'] = $note;
+                $bool = true;
+            }
+            array_push($bunch, $item);
+        }
+
+    if(!$bool)
+        array_push($skills, $skill);
+    else
+        $skills = $bunch;
+
+    var_dump($skills);
+    update_field('skills', $skills, 'user_' . $user_id);
+    $message = '/dashboard/user/settings/?message=Note updated sucessfully'; 
+    
+    header("Location: ". $message);
+}
+
 
 ?>
 <?php wp_head(); ?>

@@ -151,7 +151,7 @@ $degrees=[
         $input_generaties.= '<input type="radio" name="choiceGeneratie" value='.$value.' id="generatie'.$key.'"><label for="generatie'.$key.'">'.$key.'</label>';
     }
 
-    $course_type=['Opleidingen','E-learnings','Lezingen','Trainingen','Videos','Events','Workshop','Artikelen','Webinars','Masterclasses','Assessments','Podcasts'];
+    $course_type = ['Opleidingen','E-learnings','Lezingen','Trainingen','Videos','Events','Workshop','Artikelen','Webinars','Masterclasses','Assessments','Podcasts'];
     foreach ($course_type as $key => $value) {
          $input_course_type.= '
          <div class="blockInputCheck">
