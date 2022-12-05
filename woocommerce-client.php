@@ -5,11 +5,11 @@
 <?php get_header(); ?>
 
 <?php
+
 require_once __DIR__ . '/vendor/automattic/woocommerce/src/WooCommerce/Client.php';
+require __DIR__ . '/vendor/autoload.php';
 
-use Client;
-
-$woocommerce = new Client(
+$woocommerce = new \vendor\automattic\woocommerce\src\WooCommerce\Client(
     'http://livelearn.nl',
     'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
     'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
