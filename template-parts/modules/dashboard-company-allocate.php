@@ -1,6 +1,11 @@
 <?php
 $user_id = get_current_user_id();
 $user = wp_get_current_user();
+$company = get_field('company',  'user_' . $user_id );
+$company_connected = $company[0]->post_title;
+
+if ( !in_array('administrator', $user->roles) && !in_array('manager', $user->roles) && !in_array('hr', $user->roles))
+    header('Location: /dashboard/company/');
 
 $allocate_basic = get_field('managed', 'user_'.$user_id);
 if(!$allocate_basic)
@@ -22,25 +27,43 @@ if(isset($allocate_push))
         $success = true;
         $message = "Successfully assigning employees as their manager";
     }
+
+$users = get_users();
+
 ?>
 <div class="blockManageTeam">
-    <a href="/dashboard/company/allocate/" class="btn cardBlockManage">
-        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Mijn_mensen.png" alt="">
-        <span>Jij managed deze medewerkers</span>
-    </a>
-    <?php
-    if(in_array('administrator', $user->roles) || in_array('hr', $user->roles)){
-        ?>
-        <a href="/dashboard/company/grant" class="btn cardBlockManage">
-            <img src="<?php echo get_stylesheet_directory_uri();?>/img/hierarchical.png" alt="">
-            <span>Beheer de managers in je organisatie</span>
-        </a>
-        <?php
-    }
-    ?>
-    <a href="#" class="btn cardBlockManage">
-        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image_69.png" alt="">
-        <span>Afdelingen</span>
-    </a>
+    <form action="/dashboard/company/grant" method="post">
+        <div class="acf-field">
+            <label for="locate">Selecteer de mensen die u wilt beheren :</label><br>
+            <div class="form-group">
+                    <?php
+                    //Get users from company
+                    foreach($users as $used){
+
+                        if(in_array('administrator', $used->roles) || in_array('hr', $used->roles) || in_array('manager', $used->roles))
+                            continue;
+                        
+                        if(in_array($allocate_basic, $used->ID))
+                            continue;
+
+                        $companies = get_field('company',  'user_' . $used->ID);
+                        if(!empty($company) && $user_id != $used->ID ){
+                            $companie = $companies[0]->post_title;
+                            if($companie == $company_connected){
+                                $display = ($used->first_name) ?  $used->first_name . ' ' . $used->last_name : $used->user_email ;
+                                echo "<div class='form-check'>
+                                        <input class='form-check-input' name='allocate_normal[]' type='checkbox' value='" . $used->ID . "' id='flexCheckDefault'>
+                                        <label class='form-check-label' for='flexCheckDefault'>"
+                                        . $display . "
+                                        </label>
+                                    </div>";
+                            } 
+                        }
+                    }
+                ?>
+            </div>
+            <button type="submit" name="allocate_push" class="btn btn-info">Activeer</button>
+        </div>
+    </form>
 </div>
 

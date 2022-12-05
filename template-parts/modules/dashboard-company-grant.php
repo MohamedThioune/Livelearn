@@ -4,20 +4,30 @@
 
     extract($_POST);
     
-    if(isset($granted_push))
+    if(isset($granted_push_teacher))
         if(!empty($granted)){
             foreach($granted as $grant)
                 {
                     $u = new WP_User($grant);
                     // Add role
                     $u->add_role( 'teacher' );
-                }
-                //update_field('manager', 1, 'user_'.$grant);
-            
+                }            
             $success = true;
             $message = "Werknemer(s) met succes toegekend als een teacher";
         }
-
+    if(isset($granted_push_manager))
+        if($granted){
+            foreach($granted as $grant)
+                {
+                    $u = new WP_User($grant);
+                    // Add role
+                    $u->add_role( 'manager' );
+                }
+                update_field('manager', 1, 'user_'.$grant);
+            
+            $success = true;
+            $message = "Werknemer(s) met succes toegekend als een manager";
+        }
 ?>
 <?php 
     if(!in_array('administrator', $user->roles) && !in_array('hr', $user->roles))
@@ -107,7 +117,8 @@
             </thead>
             <tbody id="autocomplete_company_people">
                 <?php
-                foreach($users as $key => $used){
+                $i = 0;
+                foreach($users as $used){
 
                     if(in_array('administrator', $used->roles) || in_array('hr', $used->roles))
                         continue;
@@ -115,6 +126,7 @@
                     if(!empty($company) && $user_id != $used->ID ){
                         $companie = $companies[0]->post_title;
                         if($companie == $company_connected){
+                            $i++;
                             $display = ($used->first_name) ?  $used->first_name . ' ' . $used->last_name : $used->user_email ;
 
                             $image_user = get_field('profile_img',  'user_' . $used->ID); 
@@ -125,7 +137,7 @@
                             $is_author = (in_array('author', $used->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
                 ?>
                         <tr id="" >
-                            <td scope="row"><?= $key ?></td>
+                            <td scope="row"><?= $i ?></td>
                             <td class="textTh thModife">
                                 <div class="ImgUser">
                                     <a href="" >
