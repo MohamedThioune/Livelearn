@@ -121,7 +121,7 @@
                 $i = 0;
                 foreach($users as $used){
 
-                    if(in_array('administrator', $used->roles) || in_array('hr', $used->roles))
+                    if(!in_array('manager', $used->roles) && !in_array('author', $used->roles) )
                         continue;
                     $companies = get_field('company',  'user_' . $used->ID);
                     if(!empty($company) && $user_id != $used->ID ){
