@@ -28,9 +28,10 @@
     extract($_POST);
 
     if(isset($missing_details_user)){
-        update_field('telnr', $telnr, 'user_'.$user_connected);
-        update_field('role', $role_user, 'user_'.$user_connected);
-        update_field('department', $department, 'user_'.$user_connected);
+
+        update_field('telnr', $telnr, 'user_'.$id_user);
+        update_field('role', $role_user, 'user_'.$id_user);
+        update_field('department', $department, 'user_'.$id_user);
         $message = "Informations updated";
         header('Location: /dashboard/company/people/?message=' . $message);
     }
@@ -121,6 +122,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                     </div>
                                     <div class="modal-body">
                                         <form action="" method="POST">
+                                            <input type="hidden" name="id_user" value=<?= $user->ID ?>>
                                             <div class="form-group">
                                                 <label for="telefoonnummer">Telefoonnummer</label>
                                                 <input type="number" name="telnr" value="<?php echo get_field('telnr', 'user_'.$user->ID);?>" class="form-control" placeholder="">
