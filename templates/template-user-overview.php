@@ -2035,27 +2035,16 @@
                             <div class="skills-side">
                                 <span class="text-dark h5 p-1 mt-2">My skills</span>
                                 
-                                <?php foreach($topics as $value){ 
-                                        $topic = get_the_category_by_ID($value);
-                                        $note = 0;
-                                        if(!$topic)
-                                            continue;
-                                        if(!empty($skills_note))
-                                            foreach($skills_note as $skill)
-                                                if($skill['id'] == $value)
-                                                    $note = $skill['note'];
-                                        $name_topic = (String)$topic;    
+                                <?php foreach($topics as $topic){ 
+                                        $name = (String)get_the_category_by_ID($topic); 
+                                        $rand = intval(rand(5, 100));   
                                     ?>
-                                        <div class="skillBar">
-                                            <label for=""><?php echo $name_topic;  ?></label>
-                                            <div data-progress="react" data-value="<?= $note ?>">
-                                                <span class="progress">
-                                                    <span id="react" class="progress-bar orange"></span>
-                                                </span>
-                                            </div>
+                                    <div class="skillbars">
+                                        <label class="skillName"><?php echo $name_topic;  ?></label>
+                                        <div class="progress" data-fill="<?= $note ?>" >
                                         </div>
+                                    </div>
                                 <?php } ?>
-                                
                             </div>    
                             <?php 
                             }else{
