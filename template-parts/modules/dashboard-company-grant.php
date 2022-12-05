@@ -116,6 +116,8 @@
                         $companie = $companies[0]->post_title;
                         if($companie == $company_connected){
                             $display = ($used->first_name) ?  $used->first_name . ' ' . $used->last_name : $used->user_email ;
+                            $is_manager = (in_array('manager', $used->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
+                            $is_author = (in_array('author', $used->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
                 ?>
                         <tr id="" >
                             <td scope="row">1</td>
@@ -127,8 +129,8 @@
                                 </div>
                             </td>
                             <td class="textTh"> <a href="" style="text-decoration:none;"><?= $display ?></a> </td>
-                            <td class="textTh"><i class="fa fa-check"></i></td>
-                            <td class="textTh"><i class="fa fa-close"></i></td>
+                            <td class="textTh"><?= $is_manager ?></td>
+                            <td class="textTh"><?= $is_author ?></i></td>
                             <td class="textTh ">€ 0</td>
                             <td class="textTh">
                                 <div class="dropdown text-white">
