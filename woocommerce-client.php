@@ -5,7 +5,9 @@
 <?php get_header(); ?>
 
 <?php
-require_once './vendor/automattic/woocommerce/src/WooCommerce/Client.php';
+require_once __DIR__ . '/vendor/automattic/woocommerce/src/WooCommerce/Client.php';
+
+use Client;
 
 $woocommerce = new Client(
     'http://livelearn.nl',
