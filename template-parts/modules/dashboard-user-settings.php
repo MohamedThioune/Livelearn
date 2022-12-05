@@ -185,6 +185,53 @@ if(!empty($bunch)){
         </script>
     <?php
 }
+?>
+
+<?php
+
+    /*
+    ** Categories - all  *
+    */
+
+    $categories = array();
+
+    $cats = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'orderby'    => 'name',
+        'exclude' => 'Uncategorized',
+        'parent'     => 0,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    foreach($cats as $category){
+        $cat_id = strval($category->cat_ID);
+        $category = intval($cat_id);
+        array_push($categories, $category);
+    }
+
+    $tags = array();
+    foreach($categories as $categ){
+        //Topics
+        $topicss = get_categories(
+            array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $categ,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            )
+        );
+
+        foreach ($topicss as  $value) {
+            $subtopic = get_categories(
+                 array(
+                 'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                 'parent'  => $value->cat_ID,
+                 'hide_empty' => 0,
+                  //  change to 1 to hide categores not having a single post
+                )
+            );
+            $tags = array_merge($tags, $subtopic);
+        }
+    }
 
 ?>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/nouislider.min.css">
@@ -743,7 +790,18 @@ if(!empty($bunch)){
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="group-input-settings">
                                                     <label for="">Name Skills</label>
-                                                    <div class=""></div>
+                                                    <div class="form-group formModifeChoose">
+                                                        <select name="id" id="autocomplete" class="form-control multipleSelect2">
+                                                            <?php 
+                                                                foreach($tags as $tag) {
+                                                                    if(in_array($tag->cat_ID, $topics))
+                                                                        continue;
+                                                                         
+                                                                    echo "<option value='" . $tag->cat_ID  ."'>" . $tag->cat_name . "</option>";
+                                                                }
+                                                            ?>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-md-12 skillBar-col">
@@ -756,15 +814,15 @@ if(!empty($bunch)){
                                             </div>
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="group-input-settings">
-                                                    <label for="">Uw procentuele vaardigheden</label>
-                                                    <input type="text" id="SkillBar" name="SkillBar" placeholder="">
+                                                    <!-- <label for="">Uw procentuele vaardigheden</label> -->
+                                                    <input type="hidden" id="SkillBar" name="note" placeholder="">
                                                 </div>
                                             </div>
 
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button class="btn btnSaveSetting" type="submit" name="add_education" >Save</button>
+                                        <button class="btn btnSaveSetting" type="submit" name="note_skill_new" >Save</button>
                                     </div>
                                 </form>
                             </div>
