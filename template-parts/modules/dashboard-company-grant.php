@@ -16,20 +16,18 @@
             $message = "Werknemer(s) met succes toegekend als een teacher";
             header('Location: /dashboard/company/grant/?message=' . $message);
         }
-    if(isset($granted_push_manager))
+    if(isset($granted_push_manager)){
         if($rol_manager){
-            foreach($granted as $grant)
-                {
-                    $u = new WP_User($grant);
-                    // Add role
-                    $u->add_role( 'manager' );
-                }
-                update_field('manager', 1, 'user_'.$grant);
-            update_field('amount_budget', $amount_budget, 'user_'.$grant);
-            $success = true;
-            $message = "Werknemer(s) met succes toegekend als een manager";
-            header('Location: /dashboard/company/grant/?message=' . $message);
+            $u = new WP_User($rol_manager);
+            // Add role
+            $u->add_role( 'manager' );
         }
+        update_field('manager', 1, 'user_'.$rol_manager);
+        update_field('amount_budget', $amount_budget, 'user_'.$rol_manager);
+        $success = true;
+        $message = "Werknemer(s) met succes toegekend als een manager";
+        header('Location: /dashboard/company/grant/?message=' . $message);
+    }
 ?>
 <?php 
     if(!in_array('administrator', $user->roles) && !in_array('hr', $user->roles))
@@ -158,7 +156,7 @@
                                         <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                     </p>
                                     <ul class="dropdown-menu">
-                                        <li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalGrant" href="#" target="_blank">Edit</a></li>
+                                        <li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalGrant<?= $i ?>" href="#" target="_blank">Edit</a></li>
                                         <!-- <li class="my-2"><i class="fa fa-trash px-2"></i><a href="" target="_blank">Remove</a></li> -->
                                     </ul>
                                 </div>
@@ -167,7 +165,7 @@
                 <?php
                 ?>
                    <!-- Modal -->
-                    <div class="modal fade modal-Budget" id="modalGrant" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal fade modal-Budget" id="modalGrant<?= $i ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -179,7 +177,7 @@
 
                                         <div class="form-group block-check-grant">
                                             <label>
-                                                <input type="checkbox" name="rol_manager" value="1"><span class="checbox-element-label">Manager</span>
+                                                <input type="checkbox" name="rol_manager" value="<?= $used->id?>"><span class="checbox-element-label">Manager</span>
                                             </label>
                                         </div>
 
