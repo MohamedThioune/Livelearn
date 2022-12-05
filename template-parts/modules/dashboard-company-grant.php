@@ -116,6 +116,11 @@
                         $companie = $companies[0]->post_title;
                         if($companie == $company_connected){
                             $display = ($used->first_name) ?  $used->first_name . ' ' . $used->last_name : $used->user_email ;
+
+                            $image_user = get_field('profile_img',  'user_' . $used->ID); 
+                            if(!$image_user)  
+                                $image_user = get_stylesheet_directory_uri(). "/img/placeholder_user.png";
+
                             $is_manager = (in_array('manager', $used->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
                             $is_author = (in_array('author', $used->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
                 ?>
@@ -135,7 +140,7 @@
                             <td class="textTh">
                                 <div class="dropdown text-white">
                                     <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
-                                        <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                        <img style="width:20px" src="<?= $image_user ?>" alt="" >
                                     </p>
                                     <ul class="dropdown-menu">
                                         <li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalGrant" href="#" target="_blank">Edit</a></li>
