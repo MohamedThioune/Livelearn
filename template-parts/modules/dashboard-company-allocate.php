@@ -13,7 +13,7 @@ if(!$allocate_basic)
 
 extract($_POST);
 
-if(isset($allocate_push))
+if(isset($manager_employee))
     if($allocate){
         //Employee precision
         foreach($allocate as $locate){
@@ -33,7 +33,7 @@ $users = get_users();
 
 ?>
 <div class="blockManageTeam">
-    <form action="/dashboard/company/grant" method="post">
+    <form action="/dashboard/company/allocate" method="post">
         <div class="acf-field">
             <label for="locate">Selecteer de mensen die u wilt beheren :</label><br>
             <div class="form-group">
@@ -64,7 +64,7 @@ $users = get_users();
                     }
                 ?>
             </div>
-            <button type="submit" name="allocate_push" class="btn btn-info">Activeer</button>
+            <button type="submit" name="manager_employee" class="btn btn-info">Activeer</button>
         </div>
     </form>
 </div>
