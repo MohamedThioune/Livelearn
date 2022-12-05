@@ -18,12 +18,12 @@
         }
     if(isset($granted_push_manager)){
         if($rol_manager){
-            $u = new WP_User($rol_manager);
+            $u = new WP_User($id_user);
             // Add role
             $u->add_role( 'manager' );
         }
-        update_field('manager', 1, 'user_'.$rol_manager);
-        update_field('amount_budget', $amount_budget, 'user_'.$rol_manager);
+        update_field('manager', 1, 'user_'.$id_user);
+        update_field('amount_budget', $amount_budget, 'user_'.$id_user);
         $success = true;
         $message = "Werknemer(s) met succes toegekend als een manager";
         header('Location: /dashboard/company/grant/?message=' . $message);
@@ -174,10 +174,10 @@
                                 <h6 class="manager-name">To: <?= $display ?> </h6>
                                 <div class="modal-body">
                                     <form action="" method="POST">
-
+                                        <input type="hidden" name="id_user" value="<?= $used->ID?>">
                                         <div class="form-group block-check-grant">
                                             <label>
-                                                <input type="checkbox" name="rol_manager" value="<?= $used->id?>"><span class="checbox-element-label">Manager</span>
+                                                <input type="checkbox" name="rol_manager" value="1"><span class="checbox-element-label">Manager</span>
                                             </label>
                                         </div>
 
