@@ -25,10 +25,25 @@
     
     $count = count($members);
 
+    extract($_POST);
+
+    if(isset($missing_details_user)){
+        update_field('telnr', $telnr, 'user_'.$user_connected);
+        update_field('role', $role_user, 'user_'.$user_connected);
+        update_field('department', $department, 'user_'.$user_connected);
+        $message = "Informations updated";
+        header('Location: /dashboard/company/people/?message=' . $message);
+    }
+
 if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"; 
     if( in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) || in_array('manager', $data_user->roles) || $grant ) {
 ?>
     <div class="cardPeople">
+        <?php
+          if(isset($_GET['message']))
+            if($_GET['message'])
+                echo "<span alert='alert alert-success'>" . $_GET['message'] . "</span> <br><br>"; 
+        ?>
         <div class="headListeCourse">
             <p class="JouwOpleid">Werknemers (<?= $count; ?>)</p>
             <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
@@ -83,10 +98,10 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                     </p>
                                     <ul class="dropdown-menu">
                                         <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?= $link; ?>" target="_blank">Bekijk</a></li>
-                                        <li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalEdit" href="#">Edit</a></li>
                                         <?php
                                         if($you){
-                                        ?>
+                                        ?>                            
+                                            <li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalEdit" href="#">Edit</a></li>
                                             <li class="my-1">
                                                 <div class="remove">
                                                     <?php
@@ -115,21 +130,21 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                             <h5 class="modal-title text-center">Add missing information</h5>
                         </div>
                         <div class="modal-body">
-                            <form action="">
+                            <form action="" method="POST">
                                 <div class="form-group">
                                     <label for="telefoonnummer">Telefoonnummer</label>
-                                    <input type="number" class="form-control" placeholder="">
+                                    <input type="number" name="telnr" class="form-control" placeholder="">
                                 </div>
                                 <div class="form-group">
                                     <label for="functie">Functie</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" name="role_user" class="form-control" placeholder="">
                                 </div>
                                 <div class="form-group">
                                     <label for="afdeling">Afdeling</label>
-                                    <input type="text" class="form-control" placeholder="">
+                                    <input type="text" name="department" class="form-control" placeholder="">
                                 </div>
 
-                                <button type="button" class="btn btn-add-budget">Add</button>
+                                <button type="button" name="missing_details_user" class="btn btn-add-budget">Add</button>
                             </form>
                         </div>
                     </div>
