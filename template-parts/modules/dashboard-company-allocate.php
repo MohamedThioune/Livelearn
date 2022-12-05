@@ -4,7 +4,7 @@ $user = wp_get_current_user();
 $company = get_field('company',  'user_' . $user_id );
 $company_connected = $company[0]->post_title;
 
-$ismanaged = get_field('managed',  'user_' . $user_connected); 
+$ismanaged = get_field('managed',  'user_' . $user_id); 
 
 if ( !in_array('administrator', $user->roles) && !in_array('manager', $user->roles) && !in_array('hr', $user->roles))
     header('Location: /dashboard/company/');
@@ -42,8 +42,11 @@ $users = get_users();
                     //Get users from company
                     foreach($users as $used){
 
-                        if(in_array('administrator', $used->roles) || in_array('hr', $used->roles) || in_array('manager', $used->roles) || in_array($used->ID, $ismanaged))
+                        if(in_array('administrator', $used->roles) || in_array('hr', $used->roles) || in_array('manager', $used->roles))
                             continue;
+                        if(!empty($ismanaged))
+                            if(in_array($used->ID, $ismanaged))
+                                continue;
                         
                         if(!empty($allocate_basic))    
                             if(in_array($used->ID, $allocate_basic))
