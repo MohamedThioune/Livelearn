@@ -75,7 +75,6 @@
                                                             . $display . "
                                                             </label>
                                                         </div>";
-                                                
                                                 } 
                                             }
                                         }
