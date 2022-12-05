@@ -28,6 +28,7 @@ if(isset($allocate_push))
 
         $success = true;
         $message = "Successfully assigning employees as their manager";
+        header('Location: /dashboard/company/people');
     }
 
 $users = get_users();
