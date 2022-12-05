@@ -4,7 +4,7 @@ $(document).ready(function summernoteSandbox() {
     var enteredText, decoded, sanitized = null;
 
     $editor.summernote({
-        disableResizeEditor: false,
+        disableResizeEditor: true,
         codeviewFilter: true,
         codeviewIframeFilter: true,
         height: 200,
@@ -29,9 +29,7 @@ $(document).ready(function summernoteSandbox() {
 
 
 
-    });
-
-
+    })
     $('#preview-div').hide();
 
 
@@ -79,4 +77,5 @@ $(document).ready(function summernoteSandbox() {
         sanitized = null;
     }
 });
-$('.summernote').summernote('fontSize', 22);
+$('.summernote').summernote('fontSize', 22)
+

@@ -329,6 +329,9 @@
                         <p class="sousProduct1Title" style="color: #043356;">EXPERTS</p>
                         <?php
                             foreach($teachers as $teacher){
+                                if(!$teacher)
+                                    continue;
+                                    
                                 if($teacher != $user_id)
                                     $name = get_userdata($teacher)->data->display_name;
                                 else

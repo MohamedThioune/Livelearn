@@ -17,7 +17,7 @@
     $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
 
     if($user != ' '){
-        $name = $user->display_name;
+        $name = $user->display_name ?: $user->first_name;
         
         $args = array(
             'post_type' => array('post', 'course'), 
@@ -179,11 +179,18 @@
 
 
         //Activitien
-        $activitiens = count($courses);
+        if(!empty($courses))
+            $activitiens = count($courses);
 
         //Volgend
-        $topics_volgers = count(get_user_meta($user->ID, 'topic'));
-        $experts_volgers = count(get_user_meta($user->ID, 'expert'));
+        $volger_topics = get_user_meta($user->ID, 'topic');
+        if(!empty($volger_topics))
+            $topics_volgers = count($volger_topics);
+
+        $volger_experts = get_user_meta($user->ID, 'expert');
+        if(!empty($volger_experts))
+            $experts_volgers = count($volger_experts);
+
         $volgend = $topics_volgers + $experts_volgers;
 
         //Number of feedbacks 
@@ -201,6 +208,10 @@
             if(in_array($user->ID, $topics_volgers))
                 $volgers++;
         }
+
+        //Note
+        $skills_note = get_field('skills', 'user_' . $user->ID);
+
     }
 
 
@@ -365,7 +376,7 @@
         <p class="liverTilteHead2"><?php echo $name ?></p>
         <div class="mb-2">
             <span class="btn rounded-pill text-dark font-weight-bold pr-0">
-                Werkzaam bij <a class=""> <?php echo "<a style='color:#00A89D' href='/opleider-courses/?companie=". $company_id. "'> " . $company_name. "</a>"; ?>
+                Werkzaam bij <?php echo "<a style='color:#00A89D' href='/opleider-courses/?companie=". $company_id. "'> " . $company_name. "</a>"; ?>
             </span>
         </div> 
 
@@ -2024,20 +2035,36 @@
                             <div class="skills-side">
                                 <span class="text-dark h5 p-1 mt-2">My skills</span>
                                 
-                                <?php foreach($topics as $topic){ 
-                                        $name = (String)get_the_category_by_ID($topic); 
-                                        $rand = intval(rand(5, 100));   
+                                <?php foreach($topics as $value){ 
+                                        $topic = get_the_category_by_ID($value);
+                                        $note = 0;
+                                        if(!$topic)
+                                            continue;
+                                        if(!empty($skills_note))
+                                            foreach($skills_note as $skill)
+                                                if($skill['id'] == $value)
+                                                    $note = $skill['note'];
+                                        $name_topic = (String)$topic;    
                                     ?>
-                                    <div class="my-3">
-                                        <span class="mx-md-3 mx-2 my-2 skill-text"><?php echo $name ?></span>
-                                        <div class="progress  mx-md-3 mx-2 my-1" style="height: 10px; ">
-                                            <div class="progress-bar" style="width: <?php echo $rand; ?>%; height: 10px; background-color: #023356"><?php echo $rand; ?>%</div>
+                                        <div class="skillbars">
+                                            <label class="skillName"><?php echo $name_topic;  ?></label>
+                                            <div class="progress" data-fill="<?= $note ?>" >
+                                            </div>
                                         </div>
-                                    </div>
                                 <?php } ?>
                             </div>    
                             <?php 
+                            }else{
+                                echo '
+                                    <div class="skills-side">
+                                        <center>
+                                        <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" width="140" height="150" alt="Skill no-content" >
+                                        <br><span class="text-dark h5 p-1 mt-2" style="color:#033256">No skill found </span>
+                                        <center>
+                                    </div>
+                                    ';
                             }
+
                             if(!empty($educations)){ 
                             ?>
                             <div class="education">

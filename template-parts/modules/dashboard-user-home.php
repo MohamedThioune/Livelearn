@@ -1,5 +1,5 @@
 <?php
-$like_src = get_stylesheet_directory_uri()."/img/coeur1.png";
+$like_src = get_stylesheet_directory_uri()."/img/heart-like.png";
 $dislike_src = get_stylesheet_directory_uri()."/img/heart-dislike.png";
 
 extract($_POST);
@@ -428,7 +428,7 @@ if(isset($_GET['message']))
                                     }
                                     else{
                                 ?>
-                                    <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                    <img class="btn_favourite a" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
                                 <?php
                                     }
                                 ?>
