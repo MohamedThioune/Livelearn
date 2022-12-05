@@ -137,8 +137,7 @@
                             $is_manager = (in_array('manager', $used->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
                             $is_author = (in_array('author', $used->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
 
-                            $amount_budget = 0;
-                            $amount_budget = get_field('amount_budget',  'user_' . $used->ID);
+                            $amount_budget = get_field('amount_budget',  'user_' . $used->ID) ?: 0 ;
                 ?>
                         <tr id="" >
                             <td scope="row"><?= $i ?></td>
@@ -160,7 +159,7 @@
                                     </p>
                                     <ul class="dropdown-menu">
                                         <li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalGrant" href="#" target="_blank">Edit</a></li>
-                                        <li class="my-2"><i class="fa fa-trash px-2"></i><a href="" target="_blank">Remove</a></li>
+                                        <!-- <li class="my-2"><i class="fa fa-trash px-2"></i><a href="" target="_blank">Remove</a></li> -->
                                     </ul>
                                 </div>
                             </td>
