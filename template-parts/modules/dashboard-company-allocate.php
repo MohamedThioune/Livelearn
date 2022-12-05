@@ -17,7 +17,7 @@ if(isset($manager_employee))
     if($allocate){
         //Employee precision
         foreach($allocate as $locate){
-            if(!in_array($locate, $allocate_normal))
+            if(!in_array($locate, $allocate_basic))
                 array_push($allocate_basic, $locate);
             update_field('ismanaged', $user_id, 'user_'.$locate);
         }
@@ -30,7 +30,7 @@ if(isset($manager_employee))
     }
 
 $users = get_users();
-
+var_dump($allocate_basic);
 ?>
 <div class="blockManageTeam">
     <form action="/dashboard/company/allocate" method="post">
@@ -54,7 +54,7 @@ $users = get_users();
                             if($companie == $company_connected){
                                 $display = ($used->first_name) ?  $used->first_name . ' ' . $used->last_name : $used->user_email ;
                                 echo "<div class='form-check'>
-                                        <input class='form-check-input' name='allocate_normal[]' type='checkbox' value='" . $used->ID . "' id='flexCheckDefault'>
+                                        <input class='form-check-input' name='allocate[]' type='checkbox' value='" . $used->ID . "' id='flexCheckDefault'>
                                         <label class='form-check-label' for='flexCheckDefault'>"
                                         . $display . "
                                         </label>
