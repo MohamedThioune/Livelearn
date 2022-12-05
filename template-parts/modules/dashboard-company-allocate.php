@@ -26,12 +26,17 @@ if(isset($manager_employee))
 
         $success = true;
         $message = "Successfully assigning employees as their manager";
-        header('Location: /dashboard/company/people');
+        header('Location: /dashboard/company/people/?message=' . $message);
     }
 
 $users = get_users();
 ?>
 <div class="blockManageTeam">
+    <?php
+        if(isset($_GET['message']))
+            if($_GET['message'])
+                echo "<span alert='alert alert-success'>" . $_GET['message'] . "</span> <br><br>"; 
+    ?>
     <form action="/dashboard/company/allocate" method="post">
         <div class="acf-field">
             <label for="locate">Selecteer de mensen die u wilt beheren :</label><br>
