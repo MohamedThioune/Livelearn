@@ -208,6 +208,10 @@
             if(in_array($user->ID, $topics_volgers))
                 $volgers++;
         }
+
+        //Note
+        $skills_note = get_field('skills', 'user_' . $user->ID);
+
     }
 
 
@@ -2031,17 +2035,27 @@
                             <div class="skills-side">
                                 <span class="text-dark h5 p-1 mt-2">My skills</span>
                                 
-                                <?php foreach($topics as $topic){ 
-                                        $name = (String)get_the_category_by_ID($topic); 
-                                        $rand = intval(rand(5, 100));   
+                                <?php foreach($topics as $value){ 
+                                        $topic = get_the_category_by_ID($value);
+                                        $note = 0;
+                                        if(!$topic)
+                                            continue;
+                                        if(!empty($skills_note))
+                                            foreach($skills_note as $skill)
+                                                if($skill['id'] == $value)
+                                                    $note = $skill['note'];
+                                        $name_topic = (String)$topic;    
                                     ?>
-                                    <div class="my-3">
-                                        <span class="mx-md-3 mx-2 my-2 skill-text"><?php echo $name ?></span>
-                                        <div class="progress  mx-md-3 mx-2 my-1" style="height: 10px; ">
-                                            <div class="progress-bar" style="width: <?php echo $rand; ?>%; height: 10px; background-color: #023356"><?php echo $rand; ?>%</div>
+                                        <div class="skillBar">
+                                            <label for=""><?php echo $name_topic;  ?></label>
+                                            <div data-progress="react" data-value="<?= $note ?>">
+                                                <span class="progress">
+                                                    <span id="react" class="progress-bar orange"></span>
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
                                 <?php } ?>
+                                
                             </div>    
                             <?php 
                             }else{

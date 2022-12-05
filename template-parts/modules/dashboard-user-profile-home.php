@@ -75,9 +75,12 @@ if (!empty($portfolios))
                                 $note = $skill['note'];
                     $name_topic = (String)$topic;    
                 ?>
-                    <div class="skillbars">
-                        <label class="skillName"><?= $name_topic ?></label>
-                        <div class="progress" data-fill="<?= $note ?>" >
+                    <div class="skillBar">
+                        <label for=""><?php echo $name_topic;  ?></label>
+                        <div data-progress="react" data-value="<?= $note ?>">
+                            <span class="progress">
+                                <span id="react" class="progress-bar orange"></span>
+                            </span>
                         </div>
                     </div>
                <?php } ?>
