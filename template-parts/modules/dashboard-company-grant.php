@@ -12,10 +12,10 @@
                     // Add role
                     $u->add_role( 'teacher' );
                 }
-                update_field('manager', 1, 'user_'.$grant);
+                //update_field('manager', 1, 'user_'.$grant);
             
             $success = true;
-            $message = "Werknemer(s) met succes toegekend als een manager";
+            $message = "Werknemer(s) met succes toegekend als een teacher";
         }
 
 ?>
@@ -51,7 +51,8 @@
                                         <?php
                                         //Get users from company
                                         foreach($users as $used){
-                                            if(in_array('administrator', $used->roles) || in_array('hr', $used->roles) || in_array('manager', $used->roles))
+
+                                            if(in_array('administrator', $used->roles) || in_array('hr', $used->roles) || in_array('manager', $used->roles) || in_array('author', $used->roles))
                                                 continue;
                                             $companies = get_field('company',  'user_' . $used->ID);
                                             if(!empty($company) && $user_id != $used->ID ){
@@ -75,7 +76,6 @@
                             </div>
                         </form>
                 <?php
-                                
                     }
                 }else
                     echo '<h3>Je hebt niet de rol manager binnen de organisatie, neem contact op met beheerder van jullie zakelijke omgeving</h3>';
@@ -106,106 +106,48 @@
             </tr>
             </thead>
             <tbody id="autocomplete_company_people">
-            <tr id="" >
-                <td scope="row">1</td>
-                <td class="textTh thModife">
-                    <div class="ImgUser">
-                        <a href="" >
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/placeholder_user.png" alt="">
-                        </a>
-                    </div>
-                </td>
-                <td class="textTh"> <a href="" style="text-decoration:none;">Mamadou</a> </td>
-                <td class="textTh"><i class="fa fa-check"></i></td>
-                <td class="textTh"><i class="fa fa-close"></i></td>
-                <td class="textTh ">€ 10 000</td>
-                <td class="textTh">
-                    <div class="dropdown text-white">
-                        <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
-                            <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                        </p>
-                        <ul class="dropdown-menu">
-                            <li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalGrant" href="#" target="_blank">Edit</a></li>
-                            <li class="my-2"><i class="fa fa-trash px-2"></i><a href="" target="_blank">Remove</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr id="" >
-                <td scope="row">1</td>
-                <td class="textTh thModife">
-                    <div class="ImgUser">
-                        <a href="" >
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/placeholder_user.png" alt="">
-                        </a>
-                    </div>
-                </td>
-                <td class="textTh"> <a href="" style="text-decoration:none;">Mamadou</a> </td>
-                <td class="textTh"><i class="fa fa-check"></i></td>
-                <td class="textTh"><i class="fa fa-close"></i></td>
-                <td class="textTh ">€ 10 000</td>
-                <td class="textTh">
-                    <div class="dropdown text-white">
-                        <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
-                            <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                        </p>
-                        <ul class="dropdown-menu">
-                            <li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalGrant" href="#" target="_blank">Edit</a></li>
-                            <li class="my-2"><i class="fa fa-trash px-2"></i><a href="" target="_blank">Remove</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr id="" >
-                <td scope="row">1</td>
-                <td class="textTh thModife">
-                    <div class="ImgUser">
-                        <a href="" >
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/placeholder_user.png" alt="">
-                        </a>
-                    </div>
-                </td>
-                <td class="textTh"> <a href="" style="text-decoration:none;">Mamadou</a> </td>
-                <td class="textTh"><i class="fa fa-check"></i></td>
-                <td class="textTh"><i class="fa fa-close"></i></td>
-                <td class="textTh ">€ 10 000</td>
-                <td class="textTh">
-                    <div class="dropdown text-white">
-                        <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
-                            <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                        </p>
-                        <ul class="dropdown-menu">
-                            <li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalGrant" href="#" target="_blank">Edit</a></li>
-                            <li class="my-2"><i class="fa fa-trash px-2"></i><a href="" target="_blank">Remove</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr id="" >
-                <td scope="row">1</td>
-                <td class="textTh thModife">
-                    <div class="ImgUser">
-                        <a href="" >
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/placeholder_user.png" alt="">
-                        </a>
-                    </div>
-                </td>
-                <td class="textTh"> <a href="" style="text-decoration:none;">Mamadou</a> </td>
-                <td class="textTh"><i class="fa fa-check"></i></td>
-                <td class="textTh"><i class="fa fa-close"></i></td>
-                <td class="textTh ">€ 10 000</td>
-                <td class="textTh">
-                    <div class="dropdown text-white">
-                        <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
-                            <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                        </p>
-                        <ul class="dropdown-menu">
-                            <li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalGrant" href="#" target="_blank">Edit</a></li>
-                            <li class="my-2"><i class="fa fa-trash px-2"></i><a href="" target="_blank">Remove</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
+                <?php
+                foreach($users as $used){
+
+                    if(in_array('administrator', $used->roles) || in_array('hr', $used->roles))
+                        continue;
+                    $companies = get_field('company',  'user_' . $used->ID);
+                    if(!empty($company) && $user_id != $used->ID ){
+                        $companie = $companies[0]->post_title;
+                        if($companie == $company_connected){
+                            $display = ($used->first_name) ?  $used->first_name . ' ' . $used->last_name : $used->user_email ;
+                ?>
+                        <tr id="" >
+                            <td scope="row">1</td>
+                            <td class="textTh thModife">
+                                <div class="ImgUser">
+                                    <a href="" >
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/placeholder_user.png" alt="">
+                                    </a>
+                                </div>
+                            </td>
+                            <td class="textTh"> <a href="" style="text-decoration:none;"><?= $display ?></a> </td>
+                            <td class="textTh"><i class="fa fa-check"></i></td>
+                            <td class="textTh"><i class="fa fa-close"></i></td>
+                            <td class="textTh ">€ 0</td>
+                            <td class="textTh">
+                                <div class="dropdown text-white">
+                                    <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
+                                        <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                                    </p>
+                                    <ul class="dropdown-menu">
+                                        <li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalGrant" href="#" target="_blank">Edit</a></li>
+                                        <li class="my-2"><i class="fa fa-trash px-2"></i><a href="" target="_blank">Remove</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                <?php
+                        }
+                    }
+                }
+
+                ?>
             </tbody>
         </table>
 
