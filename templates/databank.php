@@ -194,7 +194,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         $('#select_field').attr('hidden',true);
         $('#loader').attr('hidden',false);
         $.ajax({
-            url:'/livelearn/artikels',
+            url:'/artikels',
             type:'POST',
             datatype:'json',
             // cache:false,
