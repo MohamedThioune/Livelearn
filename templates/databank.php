@@ -191,6 +191,8 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 <script type="text/javascript">
 
     $('#bouddha').click((e)=>{
+        $('#select_field').attr('hidden',true);
+        $('#loader').attr('hidden',false);
         $.ajax({
             url:'/livelearn/artikels',
             type:'POST',
