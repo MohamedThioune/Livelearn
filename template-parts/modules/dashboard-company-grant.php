@@ -129,7 +129,7 @@
                             <td class="textTh thModife">
                                 <div class="ImgUser">
                                     <a href="" >
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/placeholder_user.png" alt="">
+                                        <img src="<?= $image_user ?>" alt="">
                                     </a>
                                 </div>
                             </td>
@@ -140,7 +140,7 @@
                             <td class="textTh">
                                 <div class="dropdown text-white">
                                     <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
-                                        <img style="width:20px" src="<?= $image_user ?>" alt="" >
+                                        <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                     </p>
                                     <ul class="dropdown-menu">
                                         <li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalGrant" href="#" target="_blank">Edit</a></li>
