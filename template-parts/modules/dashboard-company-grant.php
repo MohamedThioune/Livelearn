@@ -185,7 +185,7 @@
                                             <label for="exampleInputPassword1">Leerbudget</label>
                                             <input type="number" name="amount_budget" value="<?= $amount_budget ;?>" class="form-control" placeholder="Amount €">
                                         </div>
-                                        <button type="submit" class="btn btn-add-budget">Add</button>
+                                        <button type="submit" name="granted_push_manager" class="btn btn-add-budget">Add</button>
                                     </form>
                                 </div>
                             </div>
