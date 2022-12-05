@@ -144,7 +144,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                     <input type="text" name="department" class="form-control" placeholder="">
                                 </div>
 
-                                <button type="button" name="missing_details_user" class="btn btn-add-budget">Add</button>
+                                <button type="submit" name="missing_details_user" class="btn btn-add-budget">Add</button>
                             </form>
                         </div>
                     </div>
