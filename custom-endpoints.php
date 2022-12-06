@@ -283,7 +283,7 @@ function get_total_followed_experts ()
 function get_saved_course()
 {
   $current_user = wp_get_current_user();
-  $course_saved = get_user_meta(3, 'course') ?? false ;
+  $course_saved = get_user_meta($current_user -> ID, 'course') ?? false ;
   if (!empty($course_saved))
   {
     $courses = get_posts(
