@@ -6,9 +6,10 @@
 
 <?php
 
-require __DIR__ . '/vendor/autoload.php';
+require 'vendor/autoload.php';
+use Goutte\Client;
 
-use Automattic\WooCommerce\Client;
+//use Automattic\WooCommerce\Client;
 
 $woocommerce = new Client(
     'http://livelearn.nl',
