@@ -58,11 +58,12 @@ if(isset($starter)){
         "content-type:application/json;charset=utf-8"
     ));
     curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $datas);
-    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
 
     // get response
     $response = curl_exec( $ch );
+    //var_dump($response);
 
     if (curl_errno($ch)) {
         echo curl_error($ch);
@@ -123,8 +124,6 @@ if(isset($starter)){
                     <?php
 
                         if(!empty($company)) {
-                            $company = $company[0];
-
                             acf_form([
                                 'id' => 'edit-company-data-form',
                                 'post_id' => $company->ID,
