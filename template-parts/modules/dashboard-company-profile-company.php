@@ -1,4 +1,77 @@
+<?php
+$current_user = wp_get_current_user();
+$company = get_field('company', 'user_' . $current_user->ID);
+if( !empty($company) ) 
+    $company = $company[0];
 
+$telnr = get_field('telnr', 'user_' . $current_user->ID);
+
+extract($_POST);
+if(isset($starter)){
+    // endpoint for facebook login dialog
+    $endpoint = 'livelearn.nl';
+
+    $params = array( // login url params required to direct user to facebook and promt them with a login dialog
+        'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
+        'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
+    );
+    
+    $data =  [
+        'email' => $current_user->user_email,
+        'first_name' => $current_user->first_name,
+        'last_name' => $current_user->last_name,
+        'username' => $current_user->display_name,
+        'billing' => [
+            'first_name' =>  $current_user->first_name,
+            'last_name' =>  $current_user->last_name,
+            'company' =>  $company->post_title,
+            'address_1' => $factuur_address,
+            'address_2' => '',
+            'city' => 'San Francisco',
+            'state' => 'CA',
+            'postcode' => '94103',
+            'country' => 'US',
+            'email' => $current_user->user_email,
+            'phone' => $telnr
+        ],
+        'shipping' => [
+            'first_name' =>  $current_user->first_name,
+            'last_name' =>  $current_user->last_name,
+            'company' =>  $company->post_title,
+            'address_1' => $factuur_address,
+            'address_2' => '',
+            'city' => 'San Francisco',
+            'state' => 'CA',
+            'postcode' => '94103',
+            'country' => 'US'
+        ]
+    ];
+
+    return $data;
+    
+    // set other curl options
+    curl_setopt($ch, CURLOPT_URL, $endpoint);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        "Cache-Control: no-cache",
+        "content-type:application/json;charset=utf-8"
+    ));
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $datas);
+    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+
+    // get response
+    $response = curl_exec( $ch );
+
+    if (curl_errno($ch)) {
+        return curl_error($ch);
+    }
+
+    // close curl
+    curl_close( $ch );
+
+    return json_decode( $response, true );
+}
+?>
 <style>
     .nav-tabs .nav-link.active {
         background: #023356 !important;
@@ -46,8 +119,6 @@
             <div class="tabContentCompany">
                 <div class="tab-pane show"  id="tab1Content" class="tab">
                     <?php
-                        $current_user = wp_get_current_user();
-                        $company = get_field('company', 'user_'.$current_user->ID);
 
                         if(is_array($company) && !empty($company) && $company[0] instanceof WP_Post) {
                             $company = $company[0];
@@ -71,7 +142,7 @@
 
                         <form method="POST" action="" class="">
 
-                            <div class="form-group py-4">
+                            <!-- <div class="form-group py-4">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label for="inputPassword" class="col-sm-2 col-form-label">
@@ -82,7 +153,7 @@
                                         style="background: #E0EFF4">
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <div class="form-group">
                                 <div class="row">
@@ -91,7 +162,7 @@
                                             <strong class="h5">Factuuradres</strong></label>
                                     </div>
                                     <div class="col-md-8 pt-2">
-                                        <input type="text" class="form-control border-0" id="inputPassword" 
+                                        <input type="text" name="factuur_address" class="form-control border-0" id="inputPassword" 
                                             placeholder="" style="background: #E0EFF4">
                                     </div>
                                 </div>
@@ -101,23 +172,10 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label for="inputPassword" class="col-sm-2 col-form-label">
-                                            <strong class="h5">Contactpersoon</strong></label>
+                                            <strong class="h5">Credicardgegevents</strong></label>
                                     </div>
                                     <div class="col-md-8 pt-2">
-                                        <input type="text" class="form-control border-0" id="inputPassword" 
-                                            placeholder="" style="background: #E0EFF4">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <label for="inputPassword" class="col-sm-2 col-form-label">
-                                            <strong class="h5">Credicardgegevents   </strong></label>
-                                    </div>
-                                    <div class="col-md-8 pt-2">
-                                        <input type="text" class="form-control border-0" id="inputPassword" 
+                                        <input type="text" name="credit_card" class="form-control border-0" id="inputPassword" 
                                             placeholder="" style="background: #E0EFF4">
                                     </div>
                                 </div>
@@ -125,7 +183,7 @@
 
                             <div class="row d-flex justify-content-center">
                                     <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-                                    <button class="btn text-white" style="background: #00A89D"><strong>Naar bedrijfsniveau</strong></button>
+                                    <button class="btn text-white" name="starter" style="background: #00A89D"><strong>Naar bedrijfsniveau</strong></button>
                             </div>
 
                         </form>
@@ -134,8 +192,6 @@
                 </div>
             </div>
             <!-- Tabs content -->
-
-
 
             <!-- <div class="blockgeneralPersoo">
                 <div class="blockPersoo2">
