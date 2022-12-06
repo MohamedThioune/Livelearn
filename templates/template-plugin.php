@@ -12,11 +12,11 @@ function RandomString(){
   }
   return $randstring;
 }
-    error_reporting(E_WARNING);
+    // error_reporting(E_WARNING);
     // $url="https://www.winelife.nl/";
     $websites=[
         'https://workplaceacademy.nl/',
-        // 'https://www.ynno.com/',
+        'https://www.ynno.com/',
         'https://powerplant.nl/',
         'https://www.dezzp.nl/',
         'https://www.aestate.nl/',
@@ -57,7 +57,7 @@ function RandomString(){
     $company = null;
     $api_company_name = [
       'WorkPlace Academy',
-      // 'Ynno',
+      'Ynno',
       'PowerPlant',
       'DeZZP',
       'Aestate',
