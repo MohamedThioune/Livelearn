@@ -204,7 +204,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             },
             success:function(){
                 location.reload();
-                // window.location.href = "/livelearn/artikels";
+                // window.location.href = "/artikels";
             },
             complete:function(){
                 $('#select_field').hide(false,2000);
