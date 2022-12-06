@@ -1,14 +1,14 @@
 <?php
 
-class Author
+class Expert
 {
  public  $id;
  public   $name;
  public  $profilImg;
 
- function __construct($author,$profilImg) {
-    $this->id=(int)$author->ID;
-    $this->name=$author->display_name;
+ function __construct($expert,$profilImg) {
+    $this->id=(int)$expert->ID;
+    $this->name=$expert->display_name;
     $this->profilImg =$profilImg;
   }
 
@@ -27,9 +27,11 @@ class Course
   public   $courseType;
   public   $data_locaties_xml;
   public   $youtubeVideos;
-  public $author;
+  public $experts;
   public $visibility;
   public $podcasts;
+
+  public $author;
 
   public $connectedProduct;
 
@@ -45,11 +47,12 @@ class Course
      $this->courseType = $course->courseType;
      $this->data_locaties_xml = $course->data_locaties_xml;
      $this->youtubeVideos = $course->youtubeVideos;
-     $this->author = $course->author;
+     $this->experts = $course->experts;
      $this->visibility = $course->visibility;
      $this->podcasts = $course->podcasts;
      $this->connectedProduct = $course->connectedProduct;
-  }
+     $this->author = $course->author;
+    }
 }
 
 class Tags
@@ -69,7 +72,7 @@ function allCourses ($data)
     $course_type = $_GET['course_type'];
     $outcome_courses = array();
     $tags = array();
-    $author = array();
+    $experts = array();
     $args = array(
         'post_type' => array('course'), 
         'post_status' => 'publish',
@@ -98,14 +101,18 @@ function allCourses ($data)
     return ['error' => "Page doesn't exist ! ","codeStatus" => 400];  
   
   for($i=$start; $i < $end ;  $i++) {
-      $courses[$i]->author = array();
+   // return get_user_by('ID',9);  
+      $courses[$i]->experts = array();
       $experts = get_field('experts',$courses[$i]->ID);
       if(!empty($experts))
         foreach ($experts as $key => $expert) {
           $expert = get_user_by( 'ID', $expert );
-          $author_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-          array_push($courses[$i]->author, new Author ($expert,$author_img));
+          $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          array_push($courses[$i]->experts, new Expert ($expert,$experts_img));
           }
+      $author = get_user_by( 'ID', $courses[$i] -> post_author  );
+      $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+      $courses[$i]-> author = new Expert ($author , $author_img);
       $courses[$i]->longDescription = get_field('long_description',$courses[$i]->ID);
       $courses[$i]->shortDescription = get_field('short_description',$courses[$i]->ID);
       $courses[$i]->courseType = get_field('course_type',$courses[$i]->ID);
@@ -144,10 +151,10 @@ function allAuthors()
   
     $authors = array();
     if(!empty($authors_post))
-      foreach ($authors_post as $key => $author_post) {
-        $author_img = get_field('profile_img','user_'.$author_post->ID) ? get_field('profile_img','user_'.$author_post->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-        $author = new Author($author_post, $author_img);
-        array_push($authors,$author);
+      foreach ($authors_post as $key => $experts_post) {
+        $experts_img = get_field('profile_img','user_'.$experts_post->ID) ? get_field('profile_img','user_'.$experts_post->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $experts = new Expert($experts_post, $experts_img);
+        array_push($authors,$experts);
       }
     return ['authors' => $authors,"codeStatus" => 200];;
 }
@@ -276,22 +283,51 @@ function get_total_followed_experts ()
 function get_saved_course()
 {
   $current_user = wp_get_current_user();
-  $courses = get_posts(
-    array(
-        'post_type' => array('course'), 
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'order' => 'DESC',
-    )) ?? [];
-    if (!empty($courses)){
-      $count = 0;
-      foreach ($courses as $key => $course) {
-        $course_likers = get_user_meta($course-> ID, 'course') ?? false ;
-        if (!$course_likers)
-          if (in_array($current_user -> ID, $course_likers))
-            $count++;
-      }
-      return ['count' => $count];
-    }
-    return ['error' => 'No courses in the database'];
+  $course_saved = get_user_meta(3, 'course') ?? false ;
+  if (!empty($course_saved))
+  {
+    $courses = get_posts(
+        array(
+            'post_type' => array('course'), 
+            'post_status' => 'publish',
+            'posts_per_page' => -1,
+            'order' => 'DESC',
+            'include' => $course_saved
+        ));
+    $outcome_courses = array();
+
+        foreach ($courses as $key => $course) {
+          $course->experts = array();
+          $experts = get_field('experts',$course->ID);
+          if(!empty($experts))
+            foreach ($experts as $key => $expert) {
+              $expert = get_user_by( 'ID', $expert );
+              $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+              array_push($course->experts, new Expert ($expert,$experts_img));
+              }
+          $course->longDescription = get_field('long_description',$course->ID);
+          $course->shortDescription = get_field('short_description',$course->ID);
+          $course->courseType = get_field('course_type',$course->ID);
+          $course->pathImage = get_field('url_image_xml',$course->ID);
+          $course->price = get_field('price',$course->ID);
+          $course->youtubeVideos = get_field('youtube_videos',$course->ID) ? get_field('youtube_videos',$course->ID) : []  ;
+          $course->podcasts = get_field('podcasts',$course->ID) ? get_field('podcasts',$course->ID) : [];
+          $course->visibility = get_field('visibility',$course->ID);
+          $course->connectedProduct = get_field('connected_product',$course->ID);
+          $tags = get_field('categories',$course->ID) ?? [];
+          $course->tags= array();
+          if($tags)
+            if (!empty($tags))
+              foreach ($tags as $key => $category) 
+                if(isset($category['value'])){
+                  $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+                  array_push($course->tags,$tag);
+                }
+              
+          $new_course = new Course($course);
+          array_push($outcome_courses, $new_course);
+        }
+        return ['saved_courses' => $outcome_courses,"codeStatus" => 200];
+  }
+  return [];
 }
