@@ -15,6 +15,9 @@ if(isset($starter)){
         'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
         'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
     );
+
+    //create endpoint with params
+	$api_endpoint = $endpoint . '?' . http_build_query( $params );
     
     $data =  [
         'email' => $current_user->user_email,
@@ -52,11 +55,11 @@ if(isset($starter)){
 	$ch = curl_init();
     
     // set other curl options
-    curl_setopt($ch, CURLOPT_URL, $endpoint);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-        "Cache-Control: no-cache",
-        "content-type:application/json;charset=utf-8"
-    ));
+    curl_setopt($ch, CURLOPT_URL, $api_endpoint);
+    // curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    //     "Cache-Control: no-cache",
+    //     "content-type:application/json;charset=utf-8"
+    // ));
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
