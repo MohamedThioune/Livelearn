@@ -66,16 +66,14 @@ if(isset($starter)){
 
     // get response
     $response = curl_exec( $ch );
-    //var_dump($response);
+    var_dump($ch);
 
     if (curl_errno($ch)) {
         echo curl_error($ch);
     }
-
+    var_dump(json_decode( $response, true ));
     // close curl
     curl_close( $ch );
-
-    var_dump(json_decode( $response, true ));
 }
 ?>
 <style>
