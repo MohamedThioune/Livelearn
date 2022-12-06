@@ -9,7 +9,7 @@ $telnr = get_field('telnr', 'user_' . $current_user->ID);
 extract($_POST);
 if(isset($starter)){
     // endpoint for facebook login dialog
-    $endpoint = 'livelearn.nl';
+    $endpoint = 'livelearn.nl/wp-json/wc/v3/customers';
 
     $params = array( // login url params required to direct user to facebook and promt them with a login dialog
         'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
@@ -127,7 +127,7 @@ if(isset($starter)){
                             acf_form([
                                 'id' => 'edit-company-data-form',
                                 'post_id' => $company->ID,
-                                'field_groups' => array('group_617a8f52267b4'),
+                                'fields' => array('company_logo', 'company_address', 'company_place', 'company_country'),
                                 'new_post' => false,
                             ]);
                         }
