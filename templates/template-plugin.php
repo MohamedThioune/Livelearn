@@ -102,7 +102,6 @@ function RandomString(){
       // var_dump($company_name);
       foreach($users as $user) {
         $company_user = get_field('company',  'user_' . $user->ID);
-
         if(strtolower($company_user[0]->post_title) == strtolower($company_name) ){
           $author_id = $user->ID;
           $company = $company_user[0];
@@ -173,12 +172,12 @@ function RandomString(){
             $images=json_decode(file_get_contents($span2),true);
             $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($images['guid']['url'], 'Artikel'));
             $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where titel=%s and type=%s",array($article['title']['rendered'],'Artikel'));
-            $sql_author = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where author_id=%s and type=%s",array($author_id,'Artikel'));
+            // $sql_author = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where author_id=%s and type=%s",array($author_id,'Artikel'));
 
             $result_image = $wpdb->get_results($sql_image);
             $result_title = $wpdb->get_results($sql_title);
             $result_author = $wpdb->get_results($sql_author);
-            if(!isset($result_image[0]) && !isset($result_title[0]) && $result_author==$article['author_id'])
+            if(!isset($result_image[0]) && !isset($result_title[0]))
             {
               if ($article['featured_media']!= 0 || $article['feature_media']!=null) {
                   $title = explode(' ', $article['title']['rendered']);
@@ -314,13 +313,13 @@ function RandomString(){
                     'status' => $status
                   );
                 }
-                // var_dump($data);
+                // // var_dump($data);
                 $wpdb->insert($table,$data);
                 $id_post = $wpdb->insert_id;
             // var_dump($data);
-          }else {
-            echo("nothing to load!!");
-          }
+          }//else {
+          //   continue;
+          // }
         }
       }
     //     // header('location: /databank');
