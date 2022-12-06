@@ -1,7 +1,7 @@
 <?php
 $current_user = wp_get_current_user();
 $company = get_field('company', 'user_' . $current_user->ID);
-if( !empty($company) ) 
+if(!empty($company) ) 
     $company = $company[0];
 
 $telnr = get_field('telnr', 'user_' . $current_user->ID);
@@ -47,7 +47,7 @@ if(isset($starter)){
         ]
     ];
 
-    return $data;
+    var_dump($data);
     
     // set other curl options
     curl_setopt($ch, CURLOPT_URL, $endpoint);
@@ -120,7 +120,7 @@ if(isset($starter)){
                 <div class="tab-pane show"  id="tab1Content" class="tab">
                     <?php
 
-                        if(is_array($company) && !empty($company) && $company[0] instanceof WP_Post) {
+                        if(!empty($company)) {
                             $company = $company[0];
 
                             acf_form([
