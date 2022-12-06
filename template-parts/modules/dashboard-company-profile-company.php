@@ -47,7 +47,7 @@ if(isset($starter)){
         ]
     ];
 
-    var_dump($data);
+    //var_dump($data);
     // initialize curl
 	$ch = curl_init();
     
@@ -65,13 +65,13 @@ if(isset($starter)){
     $response = curl_exec( $ch );
 
     if (curl_errno($ch)) {
-        return curl_error($ch);
+        echo curl_error($ch);
     }
 
     // close curl
     curl_close( $ch );
 
-    return json_decode( $response, true );
+    var_dump(json_decode( $response, true ));
 }
 ?>
 <style>
