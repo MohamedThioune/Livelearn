@@ -48,6 +48,8 @@ if(isset($starter)){
     ];
 
     var_dump($data);
+    // initialize curl
+	$ch = curl_init();
     
     // set other curl options
     curl_setopt($ch, CURLOPT_URL, $endpoint);
