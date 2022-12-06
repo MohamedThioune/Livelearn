@@ -1,5 +1,5 @@
 <?php
-
+$GLOBALS['user_id'] = get_current_user_id();
 class Expert
 {
  public  $id;
@@ -74,7 +74,7 @@ function allCourses ($data)
     $tags = array();
     $experts = array();
     $args = array(
-        'post_type' => array('course'), 
+        'post_type' => array('course'),
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'order' => 'DESC',
@@ -175,7 +175,7 @@ function allAuthors()
 
   function follow_multiple_meta( WP_REST_Request $request)
   {
-    $user_id = get_current_user_id();
+    $user_id = $GLOBALS['user_id'];
     $informations = array();
     $metakey = "topic";
     if($request['meta_value'] == null){
@@ -226,8 +226,11 @@ function get_expert_courses ($data) {
   ));
   $expert_courses = array();
     foreach ($courses as $key => $course) {
-      $course_experts = get_field('experts',$course->ID);
-      if (in_array($expert_id,$course_experts));{
+      $course_experts = get_field('experts',$course->ID) ?? [];
+      if (in_array($expert_id,$course_experts) || $expert_id == $course->post_author){
+        $author = get_user_by( 'ID', $course -> post_author  );
+        $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $course-> author = new Expert ($author , $author_img);
         $course->longDescription = get_field('long_description',$course->ID);
         $course->shortDescription = get_field('short_description',$course->ID);
         $course->courseType = get_field('course_type',$course->ID);
@@ -272,19 +275,29 @@ function get_total_followers ($data) {
   //   ));
 }
 
-function get_total_followed_experts ()
+function get_total_followed_experts()
 {
-  $current_user = wp_get_current_user();
+  
+  $current_user = $GLOBALS['user_id'];
   $count = 0;
-  $experts_followed = get_user_meta( $current_user -> ID,'expert');
-  return $experts_followed;
+  $experts_followed = get_user_meta($current_user, 'expert') != false ? get_user_meta($current_user, 'expert') : [];
+  if (!empty($experts_followed)) {
+    $experts = new stdClass;
+    $experts -> experts = [];
+    foreach ($experts_followed as $key => $expert_followed) {
+        $expert_img = get_field('profile_img','user_'.$expert_followed) ? get_field('profile_img','user_'.$expert_followed) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        array_push ($experts -> experts, new Expert(get_user_by( 'ID', $expert_followed ), $expert_img));
+    }
+    return $experts;
+  }
+  return [];
 }
 
 function get_saved_course()
 {
-  $current_user = wp_get_current_user();
-  $course_saved = get_user_meta($current_user -> ID, 'course') ?? false ;
-  if (!empty($course_saved))
+  $current_user = $GLOBALS['user_id'];
+  $course_saved = get_user_meta($current_user, 'course') ?? false ;
+  if (!empty($course_saved) || $course_saved)
   {
     $courses = get_posts(
         array(
