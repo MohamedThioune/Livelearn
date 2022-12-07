@@ -187,7 +187,8 @@ extract($_GET);
                                 <span class="textIconeLearning mt-1">Deel</span>
                             </button>
                         </div>
-                        <!-- début Modal deel -->
+                        
+                        <!-- Debut Modal deel -->
                         <div class="modal" id="modal1" data-animation="fadeIn">
                             <div class="modal-dialog modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
                                 <div class="modal-content">
@@ -603,8 +604,6 @@ extract($_GET);
                 </div>
             </div>
             <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
-
-
 
 
             <!-- ---------------------------------- Start Right Side Dashboard -------------------------------- -->
