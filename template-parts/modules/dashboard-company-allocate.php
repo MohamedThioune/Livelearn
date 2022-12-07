@@ -1,6 +1,11 @@
 <?php
 $user_id = get_current_user_id();
 $user = wp_get_current_user();
+$company = get_field('company',  'user_' . $user_id );
+$company_connected = $company[0]->post_title;
+
+if ( !in_array('administrator', $user->roles) && !in_array('manager', $user->roles) && !in_array('hr', $user->roles))
+    header('Location: /dashboard/company/');
 
 $allocate_basic = get_field('managed', 'user_'.$user_id);
 if(!$allocate_basic)
@@ -8,11 +13,11 @@ if(!$allocate_basic)
 
 extract($_POST);
 
-if(isset($allocate_push))
+if(isset($manager_employee))
     if($allocate){
         //Employee precision
         foreach($allocate as $locate){
-            if(!in_array($locate, $allocate_normal))
+            if(!in_array($locate, $allocate_basic))
                 array_push($allocate_basic, $locate);
             update_field('ismanaged', $user_id, 'user_'.$locate);
         }
@@ -21,26 +26,50 @@ if(isset($allocate_push))
 
         $success = true;
         $message = "Successfully assigning employees as their manager";
+        header('Location: /dashboard/company/people/?message=' . $message);
     }
+
+$users = get_users();
 ?>
 <div class="blockManageTeam">
-    <a href="/dashboard/company/allocate/" class="btn cardBlockManage">
-        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Mijn_mensen.png" alt="">
-        <span>Jij managed deze medewerkers</span>
-    </a>
     <?php
-    if(in_array('administrator', $user->roles) || in_array('hr', $user->roles)){
-        ?>
-        <a href="/dashboard/company/grant" class="btn cardBlockManage">
-            <img src="<?php echo get_stylesheet_directory_uri();?>/img/hierarchical.png" alt="">
-            <span>Beheer de managers in je organisatie</span>
-        </a>
-        <?php
-    }
+        if(isset($_GET['message']))
+            if($_GET['message'])
+                echo "<span alert='alert alert-success'>" . $_GET['message'] . "</span> <br><br>"; 
     ?>
-    <a href="#" class="btn cardBlockManage">
-        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image_69.png" alt="">
-        <span>Afdelingen</span>
-    </a>
+    <form action="/dashboard/company/allocate" method="post">
+        <div class="acf-field">
+            <label for="locate">Selecteer de mensen die u wilt beheren :</label><br>
+            <div class="form-group">
+                    <?php
+                    //Get users from company
+                    foreach($users as $used){
+
+                        if(in_array('administrator', $used->roles) || in_array('hr', $used->roles) || in_array('manager', $used->roles))
+                            continue;
+                        
+                        if(!empty($allocate_basic))    
+                            if(in_array($used->ID, $allocate_basic))
+                                continue;
+
+                        $companies = get_field('company',  'user_' . $used->ID);
+                        if(!empty($company) && $user_id != $used->ID ){
+                            $companie = $companies[0]->post_title;
+                            if($companie == $company_connected){
+                                $display = ($used->first_name) ?  $used->first_name . ' ' . $used->last_name : $used->user_email ;
+                                echo "<div class='form-check'>
+                                        <input class='form-check-input' name='allocate[]' type='checkbox' value='" . $used->ID . "' id='flexCheckDefault'>
+                                        <label class='form-check-label' for='flexCheckDefault'>"
+                                        . $display . "
+                                        </label>
+                                    </div>";
+                            } 
+                        }
+                    }
+                ?>
+            </div>
+            <button type="submit" name="manager_employee" class="btn btn-info">Activeer</button>
+        </div>
+    </form>
 </div>
 

@@ -230,12 +230,9 @@
                                                 $note = $skill['note'];
                                     $name_topic = (String)$topic;
                                     ?>
-                                    <div class="skillBar">
-                                        <label for=""><?php echo $name_topic;  ?></label>
-                                        <div data-progress="react" data-value="<?= $note ?>">
-                                            <span class="progress">
-                                                <span id="react" class="progress-bar orange"></span>
-                                            </span>
+                                    <div class="skillbars">
+                                        <label class="skillName"><?php echo $name_topic;  ?></label>
+                                        <div class="progress" data-fill="<?= $note ?>" >
                                         </div>
                                     </div>
                                 <?php }
@@ -402,10 +399,10 @@
                                                 <img width="25" src="<?php echo $image ?>" alt="">
                                                 <div class="contentRecentActivite">
                                                     <div class="titleActivite"><?=$todo->post_title;?> by <span style="font-weight:bold">
-                                <?php
-                                if(isset($manager->first_name)) echo $manager->first_name ; else echo $manager->display_name;
-                                ?>
-                                </span>
+                                                    <?php
+                                                    if(isset($manager->first_name)) echo $manager->first_name ; else echo $manager->display_name;
+                                                    ?>
+                                                    </span>
                                                     </div>
                                                     <p class="activiteRecentText"><?php if($beschrijving_feedback) echo $beschrijving_feedback; else echo ""; ?></p>
                                                 </div>&nbsp;&nbsp;&nbsp;&nbsp;

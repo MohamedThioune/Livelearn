@@ -493,12 +493,6 @@ require($page);
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div>
-                        <div class="checkFilter">
-                            <label class="contModifeCheck">Expert
-                                <input type="checkbox" id="expert" name="leervom[]" value="expert">
-                                <span class="checkmark checkmarkUpdated"></span>
-                            </label>
-                        </div>
                         <br>
                     </div>
                     <div class="LeerBlock pl-4" >
@@ -561,19 +555,21 @@ require($page);
                     <div class="LeerBlock pl-4">
                         <p class="sousProduct1Title" style="color: #043356;">EXPERTS</p>
                         <?php
-                       if (is_object( $arg ) || is_array( $arg ))
                             foreach($teachers as $teacher){
+                                if(!$teacher)
+                                    continue; 
+
                                 if($teacher != $user_id)
                                     $name_author = get_userdata($teacher)->data->display_name;
                                 else
                                     $name_author = "Ikzelf";                                
                         ?>
-                        <div class="checkFilter">
-                            <label class="contModifeCheck"><?php echo $name_author ?>
-                                <input type="checkbox" id="sales" name="experties[]" value="<?php echo $teacher; ?>">
-                                <span class="checkmark checkmarkUpdated"></span>
-                            </label>
-                        </div>
+                                <div class="checkFilter">
+                                    <label class="contModifeCheck"><?php echo $name_author ?>
+                                        <input type="checkbox" id="sales" name="experties[]" value="<?php echo $teacher; ?>">
+                                        <span class="checkmark checkmarkUpdated"></span>
+                                    </label>
+                                </div>
                         <?php
                             }
                         ?>
@@ -1807,6 +1803,9 @@ require($page);
                         <div class="swiper-wrapper">
                             <?php
                             foreach($teachers as $teacher){
+                                if(!$teacher)
+                                    continue;
+
                                 $image = get_field('profile_img',  'user_' . $teacher);
                                 $path = "../user-overview?id=" . $teacher;
                                 if(!$image)
@@ -1842,11 +1841,12 @@ require($page);
                     <div class="elementIconeRight">
                         <img class="imgIconeShowMore" src="<?php echo get_stylesheet_directory_uri();?>/img/IconShowMore.png" alt="">
                     </div>
-                    <a href="/newFilesHtml/agenda.html" class="showAllLink">Show all</a>
+                    <!-- <a href="/newFilesHtml/agenda.html" class="showAllLink">Show all</a> -->
                 </div>
 
                 <div class="row mr-md-2 mr-1">
                     <?php
+                        $bool = false;
                         foreach($agenda as $key => $course){
                             if($key == 6)
                                 break;
@@ -1936,6 +1936,8 @@ require($page);
 
                             //Image author of this post 
                             $image_author = get_field('profile_img',  'user_' . $course->post_author);
+
+                            $bool = true;
                     ?>
                     <a href="<?php echo get_permalink($course->ID) ?>" class="col-md-12">
                         <div class="blockCardFront">
@@ -1976,7 +1978,9 @@ require($page);
                         </div>
                     </a>
                     <?php
-                    }            
+                    } 
+                    if(!$bool)
+                        echo "<p class='dePaterneText theme-card-description'> <center style='color:#033256'> Stay connected, Something big is coming 😊 </center> </p>";
                     ?>
                 </div>
             </div>
