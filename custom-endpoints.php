@@ -74,12 +74,12 @@ function allCourses ($data)
     $tags = array();
     $experts = array();
     $args = array(
-        'post_type' => array('course'),
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'order' => 'DESC',
-         'meta_key'         => 'course_type',
-         'meta_value'       => $course_type,
+      'post_type' => array('course', 'post'),
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+      'order' => 'DESC',
+      'meta_key'         => 'course_type',
+      'meta_value'       => $course_type,
     );
     $courses = get_posts($args);
     if (!$courses)
@@ -217,7 +217,7 @@ function get_expert_courses ($data) {
     return ['error' => "You have to fill the id of the expert" ];
   $expert = get_user_by('ID', $expert_id );
   $courses = get_posts(array(
-        'post_type' => array('course'), 
+        'post_type' => array('course', 'post'), 
         'post_status' => 'publish',
         'posts_per_page' => -1,
         'order' => 'DESC',
@@ -301,7 +301,7 @@ function get_saved_course()
   {
     $courses = get_posts(
         array(
-            'post_type' => array('course'), 
+            'post_type' => array('course', 'post'), 
             'post_status' => 'publish',
             'posts_per_page' => -1,
             'order' => 'DESC',
