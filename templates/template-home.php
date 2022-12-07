@@ -151,7 +151,7 @@ $degrees=[
         $input_generaties.= '<input type="radio" name="choiceGeneratie" value='.$value.' id="generatie'.$key.'"><label for="generatie'.$key.'">'.$key.'</label>';
     }
 
-    $course_type=['Opleidingen','E-learnings','Lezingen','Trainingen','Videos','Events','Workshop','Artikelen','Webinars','Masterclasses','Assessments','Podcasts'];
+    $course_type = ['Opleidingen','E-learnings','Lezingen','Trainingen','Videos','Events','Workshop','Artikelen','Webinars','Masterclasses','Assessments','Podcasts'];
     foreach ($course_type as $key => $value) {
          $input_course_type.= '
          <div class="blockInputCheck">
@@ -1043,9 +1043,10 @@ $degrees=[
                         /*
                         *  Date and Location
                         */ 
+                        $data = array();
                         $day = "<i class='fas fa-calendar-week'></i>";
-                        $month = NULL;
-                        $location = ' ';
+                        $month = 0;
+                        $location = 'Virtual';
 
                         $datas = get_field('data_locaties', $course->ID);
                         if($datas){
@@ -1072,7 +1073,9 @@ $degrees=[
                         if(!$month)
                             continue;
 
-                        if(isset($data)){
+                        if(empty($data))
+                            null;
+                        else if(!empty($data)){
                             $date_now = strtotime(date('Y-m-d'));
                             $data = strtotime(str_replace('/', '.', $data));
                             if($data < $date_now)
