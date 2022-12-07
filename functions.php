@@ -1328,4 +1328,14 @@ add_action( 'rest_api_init', function () {
     'callback' => 'get_saved_course',
   ));
 
+  register_rest_route('custom/v1', '/course/(?P<id>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'get_course_by_id',
+  ));
+
+  register_rest_route('custom/v1', '/liked/courses', array(
+    'methods' => 'GET',
+    'callback' => 'get_liked_courses',
+  ));
+
 } );

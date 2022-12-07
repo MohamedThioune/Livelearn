@@ -344,3 +344,51 @@ function get_saved_course()
   }
   return [];
 }
+
+function get_course_by_id($data){
+  if (isset ($data['id']) && !empty ($data['id']))
+  {
+    $course_id = $data['id'];
+    $course = get_post($course_id) ?? false;
+    if ($course)
+    {
+      $course->experts = array();
+          $experts = get_field('experts',$course->ID);
+          if(!empty($experts))
+            foreach ($experts as $key => $expert) {
+              $expert = get_user_by( 'ID', $expert );
+              $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+              array_push($course->experts, new Expert ($expert,$experts_img));
+              }
+          $course->longDescription = get_field('long_description',$course->ID);
+          $course->shortDescription = get_field('short_description',$course->ID);
+          $course->courseType = get_field('course_type',$course->ID);
+          $course->pathImage = get_field('url_image_xml',$course->ID);
+          $course->price = get_field('price',$course->ID);
+          $course->youtubeVideos = get_field('youtube_videos',$course->ID) ? get_field('youtube_videos',$course->ID) : []  ;
+          $course->podcasts = get_field('podcasts',$course->ID) ? get_field('podcasts',$course->ID) : [];
+          $course->visibility = get_field('visibility',$course->ID);
+          $course->connectedProduct = get_field('connected_product',$course->ID);
+          $tags = get_field('categories',$course->ID) ?? [];
+          $course->tags= array();
+          if($tags)
+            if (!empty($tags))
+              foreach ($tags as $key => $category) 
+                if(isset($category['value'])){
+                  $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+                  array_push($course->tags,$tag);
+                }
+              
+          return new Course($course);
+    }
+    return ['error' => 'This course doesn\'t exist in this database'];
+     
+  }
+  return ['error' => 'You have to fill the id of the course'];
+}
+
+function get_liked_courses()
+{
+  $user_id = $GLOBALS['user_id'];
+  return $user_id;
+}
