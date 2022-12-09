@@ -234,6 +234,7 @@ if(isset($starter)){
     // close curl
     curl_close( $ch );
 }
+
 ?>
 <style>
     .nav-tabs .nav-link.active {

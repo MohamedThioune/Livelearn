@@ -83,7 +83,7 @@
     $args = array(
     'post_type' => array('course','post','leerpad','assessment'),
     'post_status' => 'publish',
-    'posts_per_page' => -1,
+    'posts_per_page' => 500,
     'order' => 'DESC',                          
     );
     $courses = get_posts($args);
@@ -247,9 +247,9 @@
         <div class="cardOverviewCours">
             <div class="headListeCourse">
                 <p class="JouwOpleid">Alle opleidingen</p>
-                <input id="search_txt_company" class="form-control inputSearchZoek" type="search" placeholder="Zoek opleidingen, experts of ondervwerpen" aria-label="Search" >
+                <input id="search_txt_course" class="form-control inputSearchZoek" type="search" placeholder="Zoek opleidingen, experts of ondervwerpen" aria-label="Search" >
                 <?php 
-                if ( in_array( 'hr', $user_in->roles ) || in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
+                if ( in_array( 'author', $user_in->roles ) || in_array( 'manager', $user_in->roles ) || in_array( 'hr', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
                     echo '<a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>';
                 ?>
             </div>
@@ -268,9 +268,9 @@
                         <option value="Workshop"    <?php if(isset($leervom)) if(in_array('Workshop', $leervom)) echo "selected" ; else echo ""  ?> >Workshop</option>
                         <option value="E-learning"  <?php if(isset($leervom)) if(in_array('E-learning', $leervom)) echo "selected" ; else echo ""  ?> >E-learning</option>
                         <option value="Masterclass" <?php if(isset($leervom)) if(in_array('Masterclass', $leervom)) echo "selected" ; else echo ""  ?> >Masterclass</option>
-                        <option value="Video"  <?php if(isset($leervom)) if(in_array('Video', $leervom)) echo "selected" ; else echo ""  ?> >Video</option>
+                        <option value="Video"       <?php if(isset($leervom)) if(in_array('Video', $leervom)) echo "selected" ; else echo ""  ?> >Video</option>
                         <option value="Assessment"  <?php if(isset($leervom)) if(in_array('Assessment', $leervom)) echo "selected" ; else echo ""  ?> >Assessment</option>
-                        <option value="Lezing" <?php if(isset($leervom)) if(in_array('Lezing', $leervom)) echo "selected" ; else echo ""  ?> >Lezing</option>
+                        <option value="Lezing"      <?php if(isset($leervom)) if(in_array('Lezing', $leervom)) echo "selected" ; else echo ""  ?> >Lezing</option>
                         <option value="Event"  <?php if(isset($leervom)) if(in_array('Event', $leervom)) echo "selected" ; else echo ""  ?> >Event</option>
                         <option value="Leerpad"<?php if(isset($leervom)) if(in_array('Leerpad', $leervom)) echo "selected" ; else echo ""  ?> >Leerpad</option>
                         <option value="Artikel"<?php if(isset($leervom)) if(in_array('Artikel', $leervom)) echo "selected" ; else echo ""  ?> >Artikel</option>
@@ -310,7 +310,7 @@
                         <th scope="col">Optie</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="autocomplete_company_databank">
                         <?php 
                         foreach($courses as $key => $course){
                             if(!visibility($course, $visibility_company))
@@ -444,16 +444,16 @@
                             <td id= <?php echo $course->ID; ?> class="textTh td_subtopics">
                                 <?php
                                     $course_subtopics = get_field('categories', $course->ID);
-                                    $field='';
-                                    if($course_subtopics!=null){
-                                    if (is_array($course_subtopics) || is_object($course_subtopics)){
-                                        foreach ($course_subtopics as $key =>  $course_subtopic) {
-                                               if ($course_subtopic!="" && $course_subtopic!="Array")
-                                                   $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
-                                      }
-                                         $field=substr($field,0,-1);
-                                         echo $field;
-                                    
+                                    $field = '';
+                                    if($course_subtopics != null){
+                                        if (!empty($course_subtopics)){
+                                            foreach($course_subtopics as $key => $course_subtopic) {
+                                                if ($course_subtopic != "")
+                                                    $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                        }
+                                            $field = substr($field,0,-1);
+                                            echo $field;
+                                        
                                 }
                             }
                             }
@@ -463,23 +463,23 @@
                                 <td class="textTh ">
                                     <?php
                                         $course_subtopics = get_field('categories', $course->ID);
-                                        $field='';
-                                        if($course_subtopics!=null){
-                                        if (is_array($course_subtopics) || is_object($course_subtopics)){
-                                            foreach ($course_subtopics as $key =>  $course_subtopic) {
-                                                if ($course_subtopic!="" && $course_subtopic!="Array")
-                                                    $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
-                                        }
-                                            $field=substr($field,0,-1);
-                                            echo $field;
-                                        
+                                        $field = '';
+                                        if($course_subtopics != null){
+                                            if (!empty($course_subtopics)){
+                                                foreach($course_subtopics as $key => $course_subtopic) {
+                                                    if ($course_subtopic != "")
+                                                        $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                            }
+                                                $field = substr($field,0,-1);
+                                                echo $field;
+                                            
                                     }
                                 }
                             }
 
                             ?>
                             </p>             
-                        </td>
+                            </td>
                             <td class="textTh"><?php echo $day; ?></td>
                             <td class="textTh">Live</td>
                             <td class="textTh">
@@ -610,5 +610,28 @@
   }
   })
 });
+</script>
+
+
+<script>
+
+     $('#search_txt_course').keyup(function(){
+        var txt = $(this).val();
+
+        $.ajax({
+
+            url:"/fetch-databank-course",
+            method:"post",
+            data:{
+                search_txt_course : txt,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete_company_databank').html(data);
+            }
+        });
+
+    });
 </script>
 

@@ -392,6 +392,9 @@ $orders = wc_get_orders($order_args);
                             $link = '/detail-assessment?assessment_id=' . $course->ID;
                         else
                             $link = get_permalink($course->ID);
+
+                        if(!$course_type)
+                            $course_type = 'Artikel';
                     ?>
                     <tr id="<?php echo $course->ID; ?>">
                         <td scope="row"><?= $key; ?></td>
