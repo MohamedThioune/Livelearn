@@ -79,6 +79,7 @@ if (!empty($portfolios))
                         <label class="skillName"><?php echo $name_topic;  ?></label>
                         <div class="progress" data-fill="<?= $note ?>" >
                         </div>
+                        <div class="bg-gris-Skills"></div>
                     </div>
                <?php } ?>
               
