@@ -244,12 +244,12 @@
 <script src="<?php echo get_stylesheet_directory_uri();?>/swiper.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
 
-<!-- <script type="text/javascript">
+<!--<script type="text/javascript">
       $(window).on('load', function() {
-
-        $('#cookieModal').modal('show');
+        $('#myFirstModal').modal('show');
+          alert('ok');
     });
-</script> -->
+</script>-->
 <!--<script>
     const buttons = document.querySelectorAll('.button');
 

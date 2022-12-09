@@ -284,6 +284,7 @@ $orders = wc_get_orders($order_args);
     <div class="cardOverviewCours">
         <div class="headListeCourse">
             <p class="JouwOpleid">Jouw opleidingen</p>
+            <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" >
             <?php 
                 if ( in_array( 'hr', $user_in->roles ) || in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
                     echo '<a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>';
@@ -398,7 +399,7 @@ $orders = wc_get_orders($order_args);
                     ?>
                     <tr id="<?php echo $course->ID; ?>">
                         <td scope="row"><?= $key; ?></td>
-                        <td class="textTh"><a style="color:#212529;" href="<?php echo $link; ?>"><?php echo $course->post_title; ?></a></td>
+                        <td class="textTh text-left"><a style="color:#212529;" href="<?php echo $link; ?>"><?php echo $course->post_title; ?></a></td>
                         <td class="textTh"><?php echo $course_type; ?></td>
                         <td class="textTh"><?php echo $price; ?></td>
                         <td id= "<?php echo $course->ID; ?>" class="textTh td_subtopics" >

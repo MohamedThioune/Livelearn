@@ -34,7 +34,47 @@ jQuery(function($) {
     $(".hideBarFilterBlock").click(function() {
         $(".formFilterDatabank, .hideBarFilterBlock").hide();
     });
+// for flow button
+    $('.btnFollowSubTopic').click(function() {
 
+        $(this).text(function(_, text) {
+            return text === "Follow" ? "Unfollow" : "Follow";
+        });
+        if($(this).text() == "Follow") {
+            $(this).removeClass('unfollow');
+        } else if($(this).text() == "Unfollow") {
+            $(this).addClass('unfollow');
+        }
+    });
+    // for all select
+    $('#all').change(function(e) {
+        if (e.currentTarget.checked) {
+            $('.rows').find('input[type="checkbox"]').prop('checked', true);
+        } else {
+            $('.rows').find('input[type="checkbox"]').prop('checked', false);
+        }
+    });
+    $('#allExpert').change(function(e) {
+        if (e.currentTarget.checked) {
+            $('.rows2').find('input[type="checkbox"]').prop('checked', true);
+        } else {
+            $('.rows2').find('input[type="checkbox"]').prop('checked', false);
+        }
+    });
+
+    $(".btnNext").click(function() {
+        $(".content-topics").hide();
+        $(".content-subTopics").show();
+    });
+    $("#backTopics").click(function() {
+        $(".content-topics").show();
+        $(".content-subTopics").hide();
+    });
+
+
+    $(document).on('hidden.bs.modal', '#bedrijfsprofiel_modal',function () {
+        $('#bedrijfsprofiel_modal').css('overflowY','auto')
+    });
 
 
     $(".bntNotification").click(function() {
@@ -190,6 +230,10 @@ jQuery(function($) {
     // end code for print or doawnload certificat
 
 
+
+    $("#modalClose").click(function () {
+        $("#theModal").modal("hide");
+    });
 
     //close login popup
     $('.modal button.close').on('click', function(e) {
@@ -446,17 +490,17 @@ jQuery(function($) {
         $(".cb_topics_personal_" + cl).attr('hidden', !hidden);
     });
 
-    $("#nextblockBaangerichte").click(function() {
+    $("#nextblockBaangerichte, #btnSkipTopics1").click(function() {
         $(".blockfunctiegericht").show();
         $(".blockBaangerichte").hide();
     });
 
-    $("#nextFunctiegericht").click(function() {
+    $("#nextFunctiegericht, #btnSkipTopics2").click(function() {
         $(".blockSkills").show();
         $(".blockfunctiegericht").hide();
     });
 
-    $("#nextSkills").click(function() {
+    $("#nextSkills, ##btnSkipTopics3").click(function() {
         $(".blockPersonal").show();
         $(".blockSkills").hide();
     });
