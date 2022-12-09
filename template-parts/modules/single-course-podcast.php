@@ -1,33 +1,36 @@
 <?php /** Template Name: product podcast */ ?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
+<?php extract($_GET); ?>
 
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
-    <!-- ---------------------------------------- Start modals ---------------------------------------------- -->
-    <div class="modal fade" id="direct-contact" tabindex="-1" aria-labelledby="direct-contactModalLabel" aria-hidden="true">
+    <!-- -----------------------------------Start Modal Direct contact & Voor wie ----------------------------------------------- -->
+    <div class="modal fade" id="direct-contact" tabindex="-1" role="dialog" aria-labelledby="direct-contactModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-course">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="direct-contactModalLongTitle">Direct contact</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="d-flex justify-content-center">
 
                         <div>
-                            <a href="#" class="mx-3 d-flex flex-column ">
+                            <a href="https://wa.me/<?= $phone_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                                 <i style="font-size: 50px; height: 49px; margin-top: -4px;"
-                                   class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>
+                                    class="fab fa-whatsapp text-success shadow rounded-circle border border-3 border-white "></i>
                             </a>
                             <div class="mt-3 text-center">
                                 <span class="bd-highlight fw-bold text-success mt-2">whatsapp</span>
                             </div>
                         </div>
                         <div>
-                            <a href="#" class="mx-3 d-flex flex-column ">
+                            <a href="mailto:<?= $email_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                                 <i style="font-size: 25px"
-                                   class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
+                                    class="fa fa-envelope bg-danger border border-3 border-danger rounded-circle p-2 text-white shadow"></i>
                                 <!-- <span class="bd-highlight fw-bold text-primary mt-2">email</span> -->
                             </a>
                             <div class="mt-3 text-center">
@@ -35,7 +38,7 @@
                             </div>
                         </div>
                         <div>
-                            <a href="#" class="mx-3 d-flex flex-column ">
+                            <a href="sms:<?= $phone_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                                 <i style="font-size: 25px" class="fa fa-comment text-secondary shadow p-2 rounded-circle border border-3 border-secondary"></i>
                             </a>
                             <div class="mt-3 text-center">
@@ -44,9 +47,9 @@
                         </div>
 
                         <div>
-                            <a href="#" class="mx-3 d-flex flex-column ">
+                            <a href="tel:<?= $phone_user ?>" target="_blank" class="mx-3 d-flex flex-column ">
                                 <i class="bd-highlight bi bi-telephone-x border border-3 border-primary rounded-circle text-primary shadow"
-                                   style="font-size: 20px; padding: 6px 11px;"></i>
+                                    style="font-size: 20px; padding: 6px 11px;"></i>
                                 <!-- <span class="bd-highlight fw-bold text-primary mt-2">call</span> -->
                             </a>
                             <div class="mt-3 text-center">
@@ -64,77 +67,199 @@
         </div>
     </div>
 
-    <div class="modal fade" id="voor-wie" tabindex="-1" aria-labelledby="voor-wieModalLabel" aria-hidden="true">
+    <div class="modal fade" id="voor-wie" tabindex="-1" role="dialog" aria-labelledby="voor-wieModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-course">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="voor-wieModalLongTitle"></h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <div class="">
                         <!-- <img alt="course design_undrawn"
-                     src="<?php echo get_stylesheet_directory_uri(); ?>/img/voorwie.png"> -->
+                        src="<?php echo get_stylesheet_directory_uri(); ?>/img/voorwie.png"> -->
 
                         <?php
-                        $author = get_user_by('id', $post->post_author);
+                            $author = get_user_by('id', $post->post_author);
                         ?>
                         <div class="content-text p-4 pb-0">
                             <h4 class="text-dark">Voor wie ?</h4>
-                            <p class="m-0"><strong>This course is followed up by <?php if(isset($author->first_name) && isset($author->last_name)) echo $author->first_name . '' . $author->last_name; else echo $author->display_name; ?> </strong></p>
-                            <p><em>This line rendered as italicized text.</em></p>
+                            <p class="m-0">
+                                <?= $for_who ?>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- ------------------------------------------ End modals ---------------------------------------------- -->
+    <!-- -------------------------------------------------- End Modal Direct contact & Voor wie -------------------------------------- -->
+
+    <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
+    <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+                style="position: absolute;height: 150% !important; overflow-y:hidden !important;">
+        <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+
+            <div class="modal-content">
+
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body  px-md-4 px-0">
+                    <div class="mb-4">
+                        <div class="text-center">
+                            <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                        </div>
+                        <h3 class="text-center my-2">Sign Up</h3>
+                        <div class="text-center">
+                            <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                            data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign in</a></p>
+                        </div>
+                    </div>
 
 
-    <div class="">
-    <div class="audioBar">
-        <div class="container-fluid">
-           <div class="d-flex align-items-center text-center">
-               <button class="codeless-player-toggle">
-                   <img id="down-chevron" src="<?php echo get_stylesheet_directory_uri();?>/img/down-chevron.svg" alt="">
-                   <img id="up-chevron" src="<?php echo get_stylesheet_directory_uri();?>/img/up-chevron.png" alt="">
-               </button>
-               <div class="codeless-player-info codeless-element">
-                   <div class="codeless-player-nav">
-                       <button class="previous round livecast-play">&#8249;</button>
-                       <button class="next round livecast-play">&#8250;</button>
-                   </div>
-                   <div class="codeless-player-content">
-                       <h4>What is the ecosystem?</h4>
-                       <p class="categorie">World</p>
-                   </div>
-               </div>
-               <div class="codeless-player-audio  codeless-element">
-                   <audio controls id="myAudioID">
-                       <source src="horse.ogg" type="audio/ogg">
-                       <source src="<?php echo get_stylesheet_directory_uri();?>/sounds/firstSounds.mp3" type="audio/mpeg">
-                       Your browser does not support the audio element.
-                   </audio>
-               </div>
-           </div>
+                    <?php
+                        echo (do_shortcode('[user_registration_form id="59"]'));
+                    ?>
+
+                    <div class="text-center">
+                        <p>Al een account? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                                data-toggle="modal" data-target="#exampleModalCenter">Log-in</a></p>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
     </div>
+    <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
+
+    <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
+    <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="position: absolute;overflow-y:hidden !important;height: 110%; ">
+        <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body  px-md-5 px-4">
+                    <div class="mb-4">
+                        <div class="text-center">
+                            <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                        </div>
+                        <h3 class="text-center my-2">Sign In</h3>
+                        <div class="text-center">
+                            <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                            data-toggle="modal" data-target="#SignInWithEmail">&nbsp; Sign Up</a></p>
+                        </div>
+                    </div>
+
+                    <?php
+                    wp_login_form([
+                        'redirect' => $url,
+                        'remember' => false,
+                        'label_username' => 'Wat is je e-mailadres?',
+                        'placeholder_email' => 'E-mailadress',
+                        'label_password' => 'Wat is je wachtwoord?'
+                    ]);
+                    ?>
+                    <div class="text-center">
+                        <p>Nog geen account?  <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                            data-toggle="modal" data-target="#SignInWithEmail">Meld je aan</a></p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
+
+    <div class="">
+        <?php
+        if(isset($lesson)){
+        ?>
+            <div class="audioBar">
+                <div class="container-fluid">
+                <div class="d-flex align-items-center text-center">
+                    <button class="codeless-player-toggle">
+                        <img id="down-chevron" src="<?php echo get_stylesheet_directory_uri();?>/img/down-chevron.svg" alt="">
+                        <img id="up-chevron" src="<?php echo get_stylesheet_directory_uri();?>/img/up-chevron.png" alt="">
+                    </button>
+                    <div class="codeless-player-info codeless-element">
+                        <div class="codeless-player-nav">
+                            <button class="previous round livecast-play">&#8249;</button>
+                            <button class="next round livecast-play">&#8250;</button>
+                        </div>
+                        <div class="codeless-player-content">
+                            <h4><?php echo $podcasts[$lesson]['course_podcast_title']; ?> </h4>
+                            <?php
+                                if($id_category)
+                                    echo '<a href="category-overview?category=' . $id_category . '" class="categorie">
+                                            ' . $category . '
+                                        </a>';
+                                ?>
+                        </div>
+                    </div>
+                    <?php 
+                        if(!empty($podcasts)){
+                        echo '<div class="codeless-player-audio  codeless-element">';
+                        if(isset($lesson))
+                            echo '
+                                <audio controls id="myAudioID">
+                                    <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/ogg">
+                                    <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/mpeg">
+                                    <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aac">
+                                    <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/wav">
+                                    <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aiff">
+                                    Your browser does not support the audio element.
+                                </audio>';
+                            else
+                                echo "<img src='" . $thumbnail . "' alt='preview image'>";
+                        echo '</div>';
+                        }
+                    ?>
+                </div>
+                </div>
+            </div>
+        <?php 
+        } 
+        ?>
         <div class="container-fluid">
             <div class="overElement product-podcat1">
                 <div class="blockOneOver">
                     <div class="titleBlock">
-                        <div class="roundBlack" >
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/logoMobil.png" alt="company logo">
-                        </div>
-                        <p class="livelearnText2 text-uppercase">Livelean</p>
+                        <?php
+                            if(!empty($company)){
+                                $company_id = $company[0]->ID;
+                                $company_title = $company[0]->post_title;
+                                $company_logo = get_field('company_logo', $company_id);
+                        ?>
+                        <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="roundBlack">
+                            <img width="28" src="<?php echo $company_logo ?>" alt="company logo">
+                        </a>
+                        <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="livelearnText2 text-uppercase"><?php echo $company_title; ?></a>
+                        <?php
+                            }
+                        ?>
                     </div>
 
 
-                    <p class="e-learningTitle">What is the ecosystem?</p>
+                    <p class="e-learningTitle"><?= $post->post_title ?></p>
                     <!-- Image -->
                     <div class="img-fluid-course img-podacast">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/ecosystem.jpeg" alt="">
+                        <?php echo "<img src='" . $thumbnail . "' alt='preview image'>"; ?>                
                     </div>
                     <div class="sound-wave">
                         <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" preserveAspectRatio="none" viewBox="0 0 1440 560">
@@ -187,236 +312,112 @@
                     </div>
 
                     <!--------------------------------------- start Text description -------------------------------------- -->
-                    <p class="description-assessment-test">Ecosystem, the complex of living organisms, their physical environment, and all their interrelationships in a particular unit of space.
-                        A brief treatment of ecosystems follows. For full treatment, see biosphere.</p>
-                    <p class="title-assessment-test">Episode Timeline</p>
-                    <ul class="ulpodcast">
-                        <li><a href="" class=""><span class="time">00:35</span>Introduction</a></li>
-                        <li><a href="" class=""><span class="time">00:35</span>Exploring the topic</a></li>
-                        <li><a href="" class=""><span class="time">00:35</span>A word from our guest</a></li>
-                        <li><a href="" class=""><span class="time">00:35</span>Closing remarks</a></li>
-                        <li><a href="" class=""><span class="time">00:35</span>Ecofarm</a></li>
-                    </ul>
+                    <p class="description-assessment-test"><?php echo $short_description; ?></p>
+                    <?php
+                    if(!empty($podcasts)){
+                        echo '<p class="title-assessment-test">Episodes</p>
+                        <ul class="ulpodcast">';
+                            foreach($podcasts as $key => $podcast){
+                                $style = "";
+                                if(isset($lesson))
+                                    if($lesson == $key)
+                                        $style = "color:#F79403";
+                                echo '  
+                                <li><a style="' .$style . '" href="?topic=0&lesson=' . $key . '" class=""><span class="time"></span>' . $podcast['course_podcast_title'] . '</a></li>
+                                ';
+                            }
+                        echo '</ul>';
+                    }
+                    ?>
 
                     <div class="customTabs">
                         <div class="tabs">
                             <ul id="tabs-nav">
                                 <li><a href="#tab2">Reviews</a></li>
-                                <li><a href="#tab3">Add Reviews</a></li>
+                                <?php if(!$my_review_bool) echo '<li><a href="#tab3">Add Reviews</a></li>'; ?>
                             </ul> <!-- END tabs-nav -->
                             <div id="tabs-content">
                                 <div id="tab2" class="tab-content">
-                                    <h2>Reviews</h2>
-                                    <div class="review-info-card">
-                                        <div class="review-user-mini-profile">
-                                            <div class="user-photo">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
-                                            </div>
-                                            <div class="user-name">
-                                                <p>Daniel</p>
-                                                <div class="rating-element">
-                                                    <div class="rating-stats">
-                                                        <div id="rating-container-custom">
-                                                            <ul class="list-show">
-                                                                <li class="selected"></li>
-                                                                <li class="selected"></li>
-                                                                <li class="selected"></li>
-                                                                <li class="disabled"></li>
-                                                                <li class="disabled"></li>
-                                                            </ul>
+                                    <?php
+                                    if(!empty($reviews)){
+                                        foreach($reviews as $review){
+                                            $user = $review['user'];
+                                            $image_author = get_field('profile_img',  'user_' . $user->ID);
+                                            $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+                                            $rating = $review['rating'];
+                                        ?>
+                                        <div class="review-info-card">
+                                            <div class="review-user-mini-profile">
+                                                <div class="user-photo">
+                                                    <img src="<?= $image_author; ?>" alt="">
+                                                </div>
+                                                <div class="user-name">
+                                                    <p><?= $user->display_name; ?></p>
+                                                    <div class="rating-element">
+                                                        <div class="rating">
+                                                        <?php
+                                                            for($i = $rating; $i >= 1; $i--){
+                                                                if($i == $rating)
+                                                                    echo '<input type="radio" name="rating" value="' . $i . ' " checked disabled/>
+                                                                    <label class="star" title="" aria-hidden="true"></label>';
+                                                                else
+                                                                    echo '<input type="radio" name="rating" value="' . $i . ' " disabled/>
+                                                                        <label class="star" title="" aria-hidden="true"></label>';
+                                                            }
+                                                        ?>
                                                         </div>
-                                                        <p class="hours-element">18 hours ago</p>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <p class="reviewsText">Half the lanes don't work! But it's decent for the price. Waited over 30 minutes for our drinks!!!! But yes I recommend it. It's not great but it's OK I guess</p>
+                                            <p class="reviewsText"><?= $review['feedback']; ?></p>
 
-                                    </div>
-                                    <div class="review-info-card">
-                                        <div class="review-user-mini-profile">
-                                            <div class="user-photo">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
-                                            </div>
-                                            <div class="user-name">
-                                                <p>Daniel</p>
-                                                <div class="rating-element">
-                                                    <div class="rating-stats">
-                                                        <div id="rating-container">
-                                                            <ul class="list-show">
-                                                                <li class="selected"></li>
-                                                                <li class="selected"></li>
-                                                                <li class="selected"></li>
-                                                                <li class="disabled"></li>
-                                                                <li class="disabled"></li>
-                                                            </ul>
-                                                        </div>
-                                                        <p class="hours-element">18 hours ago</p>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
-                                        <p class="reviewsText">Half the lanes don't work! But it's decent for the price. Waited over 30 minutes for our drinks!!!! But yes I recommend it. It's not great but it's OK I guess</p>
-
-                                    </div>
-                                    <div class="review-info-card">
-                                        <div class="review-user-mini-profile">
-                                            <div class="user-photo">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
-                                            </div>
-                                            <div class="user-name">
-                                                <p>Daniel</p>
-                                                <div class="rating-element">
-                                                    <div class="rating-stats">
-                                                        <div id="rating-container">
-                                                            <ul class="list-show">
-                                                                <li class="selected"></li>
-                                                                <li class="selected"></li>
-                                                                <li class="selected"></li>
-                                                                <li class="disabled"></li>
-                                                                <li class="disabled"></li>
-                                                            </ul>
-                                                        </div>
-                                                        <p class="hours-element">18 hours ago</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="reviewsText">Half the lanes don't work! But it's decent for the price. Waited over 30 minutes for our drinks!!!! But yes I recommend it. It's not great but it's OK I guess</p>
-
-                                    </div>
+                                    <?php
+                                        }
+                                    }
+                                    else
+                                        echo "<h6>No reviews for this course ...</h6>";
+                                    ?>
                                 </div>
                                 <div id="tab3" class="tab-content">
-                                    <h2>Add review</h2>
-                                    <form>
-                                        <div class="row">
-                                            <div class="form-group col-6">
-                                                <label for="exampleInputEmail1">Name</label>
-                                                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Name">
-                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                    <?php
+                                    if($user_id != 0 && !$my_review_bool){
+                                    ?>
+                                    <div class="formSingleCoourseReview">
+                                        <label>Rating</label>
+                                        <div class="rating-element2">
+                                            <div class="rating">
+                                                <input type="radio" id="star5" class="stars" name="rating" value="5" />
+                                                <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                                                <input type="radio" id="star4" class="stars" name="rating" value="4" />
+                                                <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                                                <input type="radio" id="star3" class="stars" name="rating" value="3" />
+                                                <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                                                <input type="radio" id="star2" class="stars" name="rating" value="2" />
+                                                <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                                                <input type="radio" id="star1" name="rating" value="1" />
+                                                <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
                                             </div>
-                                            <div class="form- col-6">
-                                                <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                                            </div>
+                                            <span class="rating-counter"></span>
                                         </div>
+
                                         <div class="form-group">
-                                            <label for="rating-container-custom">Rating</label>
-                                            <div id="rating-container-custom">
-                                                <ul class="list">
-                                                    <li></li>
-                                                    <li></li>
-                                                    <li></li>
-                                                    <li></li>
-                                                    <li></li>
-                                                </ul>
-                                            </div>
+                                            <label for="">Feedback</label>
+                                            <textarea name="feedback_content" id="feedback" rows="10"></textarea>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputPassword1">Feedback</label>
-                                            <textarea name="" id=""  rows="10"></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-sendRating">Send</button>
-                                    </form>
+                                        <input type="button" class='btn btn-sendRating' id='btn_review' name='review_post' value='Send'>
+                                    </div>
+                                    <?php
+                                    }
+                                    else
+                                        echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> You must sign-in for review </button>";
+                                    ?>
                                 </div>
                             </div> <!-- END tabs-content -->
                         </div> <!-- END tabs -->
                     </div>
                     <!--------------------------------------- end Text description -------------------------------------- -->
                 </div>
-
-                
-
-                <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
-                <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-                    style="position: absolute;height: 150% !important; overflow-y:hidden !important;">
-                    <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
-                        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
-
-                        <div class="modal-content">
-
-                            <div class="modal-header border-bottom-0">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-
-                            <div class="modal-body  px-md-4 px-0">
-                                <div class="mb-4">
-                                    <div class="text-center">
-                                        <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
-                                    </div>  
-                                    <h3 class="text-center my-2">Sign Up</h3>
-                                    <div class="text-center">
-                                        <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                        data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign in</a></p>
-                                    </div>
-                                </div>  
-
-
-                                <?php
-                                    echo (do_shortcode('[user_registration_form id="59"]'));
-                                ?>
-
-                                <div class="text-center">
-                                    <p>Al een account? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                            data-toggle="modal" data-target="#exampleModalCenter">Log-in</a></p>
-                                </div>
-
-                            </div>
-                        </div>
-                    
-                    </div>
-                </div>
-                <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
-
-                <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
-                <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-                    style="position: absolute;overflow-y:hidden !important;height: 110%; ">
-                    <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
-                    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
-
-                        <div class="modal-content">
-                            <div class="modal-header border-bottom-0">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-
-                            <div class="modal-body  px-md-5 px-4">
-                                <div class="mb-4">
-                                    <div class="text-center">
-                                        <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
-                                    </div>
-                                    <h3 class="text-center my-2">Sign In</h3>
-                                    <div class="text-center">
-                                        <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                        data-toggle="modal" data-target="#SignInWithEmail">&nbsp; Sign Up</a></p>
-                                    </div>
-                                </div>
-
-                                <?php
-                                wp_login_form([
-                                    'redirect' => $url,
-                                    'remember' => false,
-                                    'label_username' => 'Wat is je e-mailadres?',
-                                    'placeholder_email' => 'E-mailadress',
-                                    'label_password' => 'Wat is je wachtwoord?'
-                                ]);
-                                ?>
-                                <div class="text-center">
-                                    <p>Nog geen account?  <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                        data-toggle="modal" data-target="#SignInWithEmail">Meld je aan</a></p>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-                <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
-
 
 
                 <!-- ----------------------------------- Right side: small dashboard ------------------------------------- -->
@@ -489,28 +490,21 @@
             </div>
 
 
-        <!-- début Modal deel -->
-        <div class="modal" id="modal1" data-animation="fadeIn">
+            <!-- Debut Modal deel -->
+            <div class="modal" id="modal1" data-animation="fadeIn">
             <div class="modal-dialog modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
                 <div class="modal-content">
                     <div class="tab">
                         <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
                         <hr class="hrModifeDeel">
-                        <?php
-                        if ($user_id==0)
-                        {
-                            ?>
-                            <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
-                            <?php
-                        }
-                        ?>
+                        <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
                     </div>
                     <div id="Extern" class="tabcontent">
                         <div class="contentElementPartage">
-                            <button id="whatsapp"  class="btn contentIcone">
+                            <a href="https://wa.me/?text=<?= $share_txt ?>" target="_blank" id="whatsapp"  class="btn contentIcone">
                                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/whatsapp.png" alt="">
-                            </button>
-                            <p class="titleIcone">WhatsAppp</p>
+                            </a>
+                            <p class="titleIcone">WhatsApp</p>
                         </div>
                         <div class="contentElementPartage">
                             <button class="btn contentIcone">
@@ -531,44 +525,67 @@
                             <p class="titleIcone">Linkedin</p>
                         </div>
                         <div class="contentElementPartage">
-                            <button id="sms" class="btn contentIcone">
+                            <a href="sms:?&body=<?= $share_txt ?>" target="_blank" id="sms" class="btn contentIcone">
                                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/sms.png" alt="">
-                            </button>
+                            </a>
                             <p class="titleIcone">Sms</p>
                         </div>
                         <div>
                             <p class="klikText">Klik om link te kopieren</p>
                             <div class="input-group input-group-copy formCopyLink">
-                                <input id="test1" type="text" class="linkTextCopy form-control" value="https://g.co/kgs/K1k9oA" readonly>
+                                <input id="test1" type="text" class="linkTextCopy form-control" value="<?php echo get_permalink($post->ID) ?>" readonly>
                                 <span class="input-group-btn">
-                            <button class="btn btn-default btnCopy">Copy</button>
-                            </span>
+                                <button class="btn btn-default btnCopy">Copy</button>
+                                </span>
                                 <span class="linkCopied">link copied</span>
                             </div>
                         </div>
                     </div>
                     <?php
-                    if ($user_id==0)
-                    {
-                        ?>
-                        <div id="Intern" class="tabcontent">
-                            <form action="" class="formShare">
-                                <input type="text" placeholder="Gebruikersnaam">
-                                <input type="text" placeholder="Wachtwoord">
-                                <button class="btn btnLoginModife">Log-in</button>
-                            </form>
-                        </div>
-                        <?php
-                    }
+                        if ($user_id==0)
+                        {
+                        echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
+                        wp_login_form([
+                                'redirect' => $url,
+                                'remember' => false,
+                                'label_username' => 'Wat is je e-mailadres?',
+                                'placeholder_email' => 'E-mailadress',
+                                'label_password' => 'Wat is je wachtwoord?'
+                        ]);
+                        echo "</div>";
+                        }else{
+                        echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
+                            echo "<form action='/dashboard/user/' class='formConetentIntern' method='POST'>";
+                                echo "<label for='member_id'><b>Deel deze cursus met uw team :</b></label>";
+                                echo "<select class='multipleSelect2' id='member_id' name='selected_members[]' multiple='true'>";
+                                if(!empty($users_company))
+                                    foreach($users_company as $user){
+                                        $name = get_users(array('include'=> $user))[0]->data->display_name;
+                                        if(!empty($allocution))
+                                            if(in_array($user, $allocution))
+                                                echo "<option class='redE' selected  value='" . $user . "'>" . $name . "</option>";
+                                            else
+                                                echo "<option class='redE' value='" . $user . "'>" . $name . "</option>";
+                                        else
+                                            echo "<option class='redE' value='" . $user . "'>" . $name . "</option>";
+                                    }
+                                echo "</select>";
+                                echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
+                                echo "<input type='hidden' name='path' value='course' />";
+                                echo "<input type='submit' class='btn btn-info' name='referee_employee' value='Apply' >";
+                            echo "</form>";
+                        echo "</div>";
+                        }
                     ?>
                 </div>
             </div>
         </div>
-        <!-- fin Modal deel -->
     </div>
 
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <script>
         $("#btn_favorite").click((e)=>
         {
@@ -592,6 +609,7 @@
             });
         })
     </script>
+
     <script>
         // Rating
         const list = document.querySelector('.list')
@@ -629,7 +647,6 @@
     </script>
 
     <script>
-
         const swiper = new Swiper('.swiper', {
             // Optional parameters
             // direction: 'vertical',
@@ -742,10 +759,9 @@
                 }
             });
         }
-
     </script>   
-    <script>
 
+    <script>
         $(document).ready(function() {
             var audio = document.querySelector('audio');
 
@@ -762,7 +778,60 @@
                 
 
         } )
+    </script>
 
+    <script>
+        $("#btn_favorite").click((e)=>
+        {
+            $(e.preventDefault());
+            var user_id =$("#user_id").val();
+            var id =$("#course_id").val();
+
+            $.ajax({
+
+                url:"/like",
+                method:"post",
+                data:{
+                    id:id,
+                    user_id:user_id,
+                },
+                dataType:"text",
+                success: function(data){
+                    console.log(data);
+                    $('#autocomplete_favoured').html(data);
+                }
+            });
+        })
+    </script>
+
+    <script>
+        $("#btn_review").click((e)=>
+        {
+            $(e.preventDefault());
+            var user_id = $("#user_id").val();
+            var id = $("#course_id").val();
+            var feedback = $("#feedback").val();
+            var stars = $('input[name=rating]:checked').val()
+
+            $.ajax({
+
+                url:"/review",
+                method:"post",
+                data:{
+                    id:id,
+                    user_id:user_id,
+                    feedback:feedback,
+                    stars:stars,
+                },
+                dataType:"text",
+                success: function(data){
+                    console.log(data);
+                    $('#tab2').html(data);
+                    alert('Review successfully sent');
+                }
+            });
+        })
+    </script>
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>

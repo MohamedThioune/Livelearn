@@ -190,14 +190,15 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 <script type="text/javascript">
 
     $('#bouddha').click((e)=>{
+        $('#select_field').hide(true,2000);
+        $('#loader').attr('hidden',false);
         $.ajax({
-            url:'/livelearn/artikels',
+            url:'/artikels',
             type:'POST',
             datatype:'json',
             // cache:false,
             beforeSend:function(){
-                $('#select_field').hide(true,2000);
-                $('#loader').attr('hidden',false);
+                
             },
             success:function(){
                 location.reload();
@@ -211,7 +212,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             error:function(error){
                 alert("error"+error);
             }
-        });
+        }); 
     });
 
     $('#select_field').change((e)=>

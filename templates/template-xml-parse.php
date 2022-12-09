@@ -57,7 +57,7 @@
       //   break;
 
       $status = 'extern';
-      $course_type = "";
+      $course_type = "Opleidingen";
       $image = "";
       
       /*
@@ -178,17 +178,19 @@
       $description_html = explode(' ', strval($datum->programDescriptions->programSummaryHtml));    
       $keywords = array_merge($title, $description, $description_html);
 
-      // Value : course type
-      if(in_array('masterclass:', $keywords) || in_array('Masterclass', $keywords) || in_array('masterclass', $keywords))
-        $course_type = "Masterclass";
-      else if(in_array('(training)', $keywords) || in_array('training', $keywords) || in_array('Training', $keywords))
-        $course_type = "Training";
-      else if(in_array('live', $keywords) && in_array('seminar', $keywords))
-        $course_type = "Webinar";
-      else if(in_array('Live', $keywords) || in_array('Online', $keywords) || in_array('E-learning', $keywords) )
-        $course_type = "E-learning";
-      else
-        $course_type = "Opleidingen"; 
+      if(!empty($keywords)){
+        // Value : course type
+        if(in_array('masterclass:', $keywords) || in_array('Masterclass', $keywords) || in_array('masterclass', $keywords))
+          $course_type = "Masterclass";
+        else if(in_array('(training)', $keywords) || in_array('training', $keywords) || in_array('Training', $keywords))
+          $course_type = "Training";
+        else if(in_array('live', $keywords) && in_array('seminar', $keywords))
+          $course_type = "Webinar";
+        else if(in_array('Live', $keywords) || in_array('Online', $keywords) || in_array('E-learning', $keywords) )
+          $course_type = "E-learning";
+        else
+          $course_type = "Opleidingen";
+      }
       
       // Value : description    
       if($datum->programDescriptions->programDescriptionHtml)
@@ -272,7 +274,7 @@
             foreach($categorys as $category){
               $cat_slug = strval($category->slug);
               $cat_name = strval($category->cat_name);             
-              if(strpos($searchword, $cat_slug) !== false || in_array($searchword, $cat_name))
+              if(strpos($searchword, $cat_slug) !== false)
                 if(!in_array($category->cat_ID, $tags))
                     array_push($tags, $category->cat_ID);
             }

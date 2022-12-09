@@ -182,9 +182,12 @@
                     <?php
                         }
                     ?>
-                    <a href="category-overview?category=<?php echo $id_category ?>" class="bd-highlight ">
-                            <button class="btn py-0 btnPhilo"> <span class="text-white"><?php echo $category; ?></span></button>
-                    </a>
+                    <?php
+                    if($id_category)
+                        echo '<a href="category-overview?category=' . $id_category . '" class="bd-highlight ">
+                                <button class="btn py-0 btnPhilo"> <span class="text-white">' . $category . '</span></button>
+                            </a>';
+                    ?>
                 </div>
                 <!-- ------------------------------ End Title livelearn ---------------------------------- -->
 
@@ -971,6 +974,9 @@
                                         <?php
                                         $saves_expert = get_user_meta($user_id, 'expert');
                                         foreach($experts as $value){
+                                            if(!$value)
+                                                continue;
+                                                
                                             $expert = get_users(array('include'=> $value))[0]->data;
                                             $company = get_field('company',  'user_' . $expert->ID);
                                             $title = $company[0]->post_title;
@@ -993,14 +999,15 @@
                                                     <input type="hidden" name="meta_key" value="expert" id="">
                                                     <div>
                                                         <?php
-                                                        if($user_id != 0 && $user_id != $expert->ID)
+                                                        if(empty($saves_expert))
+                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                        else if($user_id != 0 && $user_id != $expert->ID)
                                                         {
                                                             if (in_array($expert->ID, $saves_expert))
                                                                 echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
                                                             else
-                                                                echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
+                                                                echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
                                                         }
-
                                                         ?>
                                                     </div>
                                                 </form>
@@ -1050,7 +1057,7 @@
 
                 <div class="col-12 my-5" style="background-color: #E0EFF4">
                     <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around
-                    justify-content-center">
+                        justify-content-center">
 
                         <!-- --------------------------------------- Swiper ------------------------------------ -->
                         <!-- Slider main container -->
@@ -1059,37 +1066,42 @@
                                 <?php
                                     $saves_expert = get_user_meta($user_id, 'expert');
                                     foreach($experts as $value){
+                                        if(!$value)
+                                            continue;
+
                                         $expert = get_users(array('include'=> $value))[0]->data;
                                         $company = get_field('company',  'user_' . $expert->ID);
                                         $title = $company[0]->post_title;
                                         $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                     ?>
-                                    <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
-                                        <div class="my-2 d-flex flex-column mx-md-0 mx-1">
-                                            <div class="imgCardPrice" style="height: 50px; width:50px">
-                                                <img src="<?php echo $image; ?>" alt="teacher photo">
-                                            </div>
-                                            <span class="textIconeLearning"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span>
-                                            <span><?php echo $title; ?></span>
-                                            <form action="/dashboard/user/" method="POST">
-                                                <input type="hidden" name="artikel" value="<?= $post->ID; ?>" id="">
-                                                <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
-                                                <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
-                                                <input type="hidden" name="meta_key" value="expert" id="">
-                                                <div>
-                                                    <?php
-                                                    if($user_id != 0 && $user_id != $expert->ID)
-                                                    {
-                                                        if (in_array($expert->ID, $saves_expert))
-                                                            echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
-                                                        else
-                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
-                                                    }
-                                                    ?>
+                                        <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
+                                            <div class="my-2 d-flex flex-column mx-md-0 mx-1">
+                                                <div class="imgCardPrice" style="height: 50px; width:50px">
+                                                    <img src="<?php echo $image; ?>" alt="teacher photo">
                                                 </div>
-                                            </form>
-                                        </div>
-                                    </a>
+                                                <span class="textIconeLearning"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span>
+                                                <span><?php echo $title; ?></span>
+                                                <form action="/dashboard/user/" method="POST">
+                                                    <input type="hidden" name="artikel" value="<?= $post->ID; ?>" id="">
+                                                    <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
+                                                    <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
+                                                    <input type="hidden" name="meta_key" value="expert" id="">
+                                                    <div>
+                                                        <?php  
+                                                        if(empty($saves_expert))
+                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                        else if($user_id != 0 && $user_id != $expert->ID)
+                                                        {
+                                                            if (in_array($expert->ID, $saves_expert))
+                                                                echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
+                                                            else
+                                                                echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </a>
                                  <?php } ?>
 
                                 </div>
@@ -1111,32 +1123,14 @@
                         </div>
 
                     </div>
-            </div>
-
-
+                </div>
         </div>
- <!-- Strat paywall -->
-                        <div>
-                            <div class="paywall-block">
-                            <p class="title-paywall">You want to continue reading </p>
-                            <p class="sub-title-paywall">Please purchase this to continue</p>
-                            <a class="btn btn-paywall" href="">Buying Now <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/arrowhead.png" alt=""></a>
-                            <p class="text-not-sure-which">Not Sure which is right now for you ?
-                                <a href="">Discover the benefits of taking this course now</a> </p>
-                            </div>
-                        </div>
-                   
-
-                    <!-- End paywall -->
-
-
-
-
+       
     </div>
 
 
-        <!-- début Modal deel -->
-        <div class="modal" id="modal1" data-animation="fadeIn">
+    <!-- start Modal deel -->
+    <div class="modal" id="modal1" data-animation="fadeIn">
         <div class="modal-dialog modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
             <div class="modal-content">
                 <div class="tab">
@@ -1299,7 +1293,6 @@
 </script>
 
 <script>
-
     const swiper = new Swiper('.swiper', {
         // Optional parameters
         // direction: 'vertical',
@@ -1321,8 +1314,6 @@
             el: '.swiper-scrollbar',
         },
     });
-
-
 </script>
 
 <script>

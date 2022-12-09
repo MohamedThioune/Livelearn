@@ -18,7 +18,6 @@ $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $i
 
 $course = $wpdb->get_results( $sql )[0];
 
-
 /*
 * * Tags *
 */ 
@@ -250,7 +249,7 @@ $companies = get_posts($args);
 
                        <div class="input-group">
                            <label for="">Contributors : </label>
-                           <select class="multipleSelect2" name="contributors[]" id="" multiple>
+                           <select class="multipleSelect2" name="experts[]" id="" multiple>
                               <?php
                                if(!empty($contributors))
                                     foreach($users as $user)

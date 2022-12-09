@@ -18,7 +18,7 @@
         $teachers = array();
         $categories = array();
         $profes = array();
-
+        $topic = "";
 
         $args = array(
             'post_type' => array('post','course'), 
@@ -38,6 +38,7 @@
         */
         $course_categories = array();
         $course_users = array();
+
 
         if(isset($search)){
             $courses = array();
@@ -89,6 +90,15 @@
                                 if(!in_array($expert, $teachers))
                                     array_push($teachers, $expert);
                         }
+
+                    $experts = get_field('experts', $course->ID);
+                    if(!empty($profes))
+                        if(!in_array($course->post_author, $profes))
+                            array_push($profes, $course->post_author);
+                    if(!empty($experts))
+                        foreach($experts as $expert)
+                            if(!in_array($expert, $profes))
+                                array_push($profes, $expert);
                 }
             }else if(isset($user)){
             ## SIDE PRODUCT USERS 
@@ -163,7 +173,7 @@
                 $args = array(
                     'post_type' => array('post','course'), 
                     'post_status' => 'publish',
-                    'posts_per_page' => -1,
+                    'posts_per_page' => 500,
                 );
                 $courses = get_posts($args);
 
@@ -177,10 +187,19 @@
                             if(!in_array($expert, $profes))
                                 array_push($profes, $expert);
                 }
-            }
+                if(empty($experties)){
+                    $experties = array();
+                    $args = array(
+                            'role__in' => ['author'],
+                            'posts_per_page' => -1,
+                    );
+                    $expertiess = get_users($args);
+                    foreach($expertiess as $value)
+                        array_push($experties, $value->ID);
 
-           
-
+                }
+                
+            }      
             ## START WITH THE FILTERS
             /**
             * Leervom Group
@@ -340,11 +359,15 @@
                     $teachers = array();
                     foreach($courses as $datum){
                         $authors = array();
+                        $expertss = array();
                         array_push($authors, $datum->post_author);
 
                         $experts = get_field('experts', $datum->ID);
 
-                        $expertss = array_merge($authors, $experts);
+                        if($experts)
+                            $expertss = array_merge($authors, $experts);
+                        else 
+                            $expertss = $authors;
                         foreach($experties as $expertie)
                             if(in_array($expertie,$expertss) ){
                                 array_push($teachers, $datum);
@@ -509,23 +532,18 @@
                         <p class="sousProduct1Title" style="color: #043356;">EXPERT</p>
 
                         <?php
-                        if(isset($_POST['category']))
-
-                            if(!isset($user)){
+                            foreach($experties as $profe){
+                                if(!$profe)
+                                    continue;
+                                    
+                                $name = get_userdata($profe)->data->display_name;
                         ?>
-                            <?php
-                                foreach($profes as $profe){
-                                    $name = get_userdata($profe)->data->display_name;
-                            ?>
-                            <div class="checkFilter">
-                                <label class="contModifeCheck"><?php echo $name ?>
-                                    <input type="checkbox" id="sales" name="expert[]" value="<?php echo $profe; ?>" <?php if(!empty($expert)) if(in_array($profe, $expert)) echo "checked" ; else echo ""  ?> >
-                                    <span class="checkmark checkmarkUpdated"></span>
-                                </label>
-                            </div>
-                            <?php
-                                }
-                            ?>
+                        <div class="checkFilter">
+                            <label class="contModifeCheck"><?php echo $name ?>
+                                <input type="checkbox" id="sales" name="experties[]" value="<?php echo $profe; ?>" <?php if(!empty($expert)) if(in_array($profe, $expert)) echo "checked" ; else echo ""  ?> >
+                                <span class="checkmark checkmarkUpdated"></span>
+                            </label>
+                        </div>
                         <?php
                             }
                         ?>
@@ -572,7 +590,7 @@
                         * Categories
                         */
                         $location = 'Virtual';
-                        $day = "<p><i class='fas fa-calendar-week'></i></p>";
+                        $day = "-";
                         $month = '';
 
                         $category = ' ';
@@ -597,7 +615,7 @@
                         /*
                         *  Date and Location
                         */ 
-                        $day = "<i class='fas fa-calendar-week'></i>";
+                        $day = "-";
                         $month = NULL;
                         $location = ' ';
 

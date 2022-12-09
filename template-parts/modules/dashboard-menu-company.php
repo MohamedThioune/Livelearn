@@ -97,12 +97,12 @@
                         </a>
                     </li>
                     <li class="elementTextDashboard">
-                        <a href="/dashboard/company/allocate/" class="d-flex">
+                        <a href="/dashboard/company/de-organisatie/" class="d-flex">
                            <div class="elementImgSidebar imgSide2" >
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Manage-Organisatie.png" >
                             </div>
                             <?php
-                            if($option_menu[2] == 'allocate') echo '<span><b>De organisatie</b></span>'; else echo '<span>De organisatie</span>';
+                            if($option_menu[2] == 'de-organisatie') echo '<span><b>De organisatie</b></span>'; else echo '<span>De organisatie</span>';
                             ?>
                         </a>
                     </li>
