@@ -1,21 +1,22 @@
 <?php
 $current_user = wp_get_current_user();
 $company = get_field('company', 'user_' . $current_user->ID);
-if(!empty($company) ) 
+if(!empty($company) ){
     $company = $company[0];
-    
+    $company_connected = $company->post_title;
+}
+
 $users = get_users();
 $members = array();
-foreach($users as $user)
-    $company = get_field('company',  'user_' . $user->ID);
-    if(!empty($company)){
-        $company = $company[0]->post_title;
-        if($company == $company_connected)
+foreach($users as $user){
+    $company_value = get_field('company',  'user_' . $user->ID);
+    if(!empty($company_value)){
+        $company_value_title = $company_value[0]->post_title;
+        if($company_value_title == $company_connected)
             array_push($members, $user);
     }
-    
+}
 $team = count($members);
-    
 $telnr = get_field('telnr', 'user_' . $current_user->ID);
 
 extract($_POST);
@@ -235,6 +236,7 @@ if(isset($starter)){
     curl_close( $ch );
 }
 
+//Fields
 ?>
 <style>
     .nav-tabs .nav-link.active {
@@ -283,12 +285,11 @@ if(isset($starter)){
             <div class="tabContentCompany">
                 <div class="tab-pane show"  id="tab1Content" class="tab">
                     <?php
-
                         if(!empty($company)) {
                             acf_form([
                                 'id' => 'edit-company-data-form',
                                 'post_id' => $company->ID,
-                                'fields' => array('company_logo', 'company_address', 'company_place', 'company_country'),
+                                'fields' => array('company_logo', 'company_address', 'company_place', 'company_country',),
                                 'new_post' => false,
                             ]);
                         }
@@ -344,8 +345,7 @@ if(isset($starter)){
                             </div>  
 
                             <div class="row d-flex justify-content-center">
-                                    <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-                                    <button class="btn text-white" name="starter" style="background: #00A89D"><strong>Naar bedrijfsniveau</strong></button>
+                                <button class="btn text-white" type="submit" name="starter" style="background: #00A89D"><strong>Een abonnement aanmaken</strong></button>
                             </div>
 
                         </form>
