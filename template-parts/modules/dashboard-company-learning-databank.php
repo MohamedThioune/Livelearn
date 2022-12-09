@@ -247,8 +247,7 @@
         <div class="cardOverviewCours">
             <div class="headListeCourse">
                 <p class="JouwOpleid">Alle opleidingen</p>
-                <input id="search_txt_company" class="form-control inputSearchZoek" type="search" placeholder="Zoek opleidingen, experts of ondervwerpen" aria-label="Search" >
-                <?php 
+                <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" >                <?php
                 if ( in_array( 'hr', $user_in->roles ) || in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
                     echo '<a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>';
                 ?>
@@ -436,8 +435,8 @@
                         ?>
                         <tr>
                             <td scope="row"><?= $key; ?></td>
-                            <td class="textTh "><a style="color:#212529;font-weight:bold" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
-                            <td class="textTh"><?php echo $price; ?></td>
+                            <td class="textTh text-left"><a style="color:#212529;font-weight:bold" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
+                                <td class="textTh"><?php echo $price; ?></td>
                             <?php
                             if (in_array('administrator', $user_in->roles ) ) {
                             ?>

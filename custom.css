@@ -12,7 +12,20 @@ body {
     background: #FFFFFF;
     width: 80%;
 }
-
+.nav-link {
+    color: #ffffff !important;
+    margin: 0 10px !important;
+    font-weight: 500;
+    font-size: 15px !important;
+}
+.worden{
+    padding-right: 4px !important;
+    padding-left: 4px !important;
+    background: #00A89D;
+    font-weight: bold;
+    border-radius: 30px;
+    margin: 0 0px !important;
+}
 #ccnSearchOverlayWrap {
     display: none;
 }
@@ -510,18 +523,6 @@ ul.sub-menu li a {
     color: #023356;
     margin-top: 20px;
     margin-bottom: 15px;
-}
-
-.textOnder span {
-    color: #707070;
-    font-weight: normal;
-    font-size: 12px;
-    background: #dfeef3;
-    padding: 8px 15px;
-    border-radius: 18px;
-    margin-left: 8px;
-    position: relative;
-    top: -2px;
 }
 
 .faPLusModife {
@@ -8424,7 +8425,10 @@ ul#tabs-nav li.active a {
 .img-head-ecosysteme {
     height: 310px;
 }
-
+.startTextBtn{
+    margin-top: unset;
+    margin-bottom: 20px;
+}
 .startTextBtn:hover {
     color: #FFFFFF;
 }
@@ -11382,7 +11386,11 @@ select {
     min-width: 300px;
     margin-top: 6px;
 }
-
+.inputSearch {
+    min-width: 345px !important;
+    padding-left: 15px !important;
+    font-size: 14px;
+}
 .blockImgMost {
     width: 125px;
     height: 70px;
@@ -12468,6 +12476,211 @@ select {
 }
 .ck-editor__editable {
     max-height: 300px;
+}
+.btnVoegToe{
+    color: #707070;
+    font-weight: normal;
+    font-size: 12px;
+    background: #dfeef3;
+    padding: 6px 15px;
+    border-radius: 18px;
+    margin-left: 8px;
+    height: fit-content;
+    margin-top: 15px;
+}
+.modalAddTopicsAnd .modal-dialog, .modalAddExpert .modal-dialog {
+    max-width: 670px;
+}
+.styled-checkbox {
+    position: absolute;
+    opacity: 0;
+}
+.styled-checkbox + label {
+    position: relative;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 0;
+}
+.styled-checkbox + label:before {
+    content: '';
+    margin-right: 8px;
+    display: inline-block;
+    vertical-align: text-top;
+    width: 15px;
+    height: 15px;
+    background: none;
+    border-radius: 100%;
+    overflow: hidden;
+    border: 1.3px solid #242424;
+    margin-top: 1px;
+}
+.styled-checkbox:hover + label:before {
+    background: #ffffff;
+    border: 1.3px solid #ffffff;
+}
+.styled-checkbox:focus + label:before {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+}
+.styled-checkbox:checked + label:before {
+    background: #47a99e;
+    border-color: #47a99e;
+}
+.styled-checkbox:disabled + label {
+    color: #b8b8b8;
+    cursor: auto;
+}
+.styled-checkbox:disabled + label:before {
+    box-shadow: none;
+    background: #ddd;
+}
+.styled-checkbox:checked + label:after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 10px;
+    background: white;
+    width: 2px;
+    height: 2px;
+    box-shadow: 1px 0 0 white, 3px 0 0 white, 3px -2px 0 white, 3px -3px 0 white, 3px -5px 0 white, 3px -7px 0 white;
+    transform: rotate(45deg);
+}
+.modalAddTopicsAnd .content-topics ul {
+    display: flex;
+    flex-wrap: wrap;
+}
+.modalAddTopicsAnd .content-topics ul li{
+    width: fit-content;
+    border: 1px solid;
+    border-radius: 20px;
+    padding: 6px 15px;
+    margin: 0px 6px 15px;
+}
+.modalAddTopicsAnd .content-topics ul {
+    margin-left: -13px;
+}
+
+.modalAddTopicsAnd .content-topics ul li:hover, .styled-checkbox:checked li{
+    background: #043356;
+    color: white;
+}
+.modalAddTopicsAnd .btnNext {
+    margin-bottom: 12px;
+    margin-left: 10px;
+    font-size: 14px;
+}
+.modal-topics-expert .styled-checkbox + label:before {
+    border-radius: 20% !important;
+}
+.modal-topics-expert .styled-checkbox:hover + label:before {
+    border: 1.3px solid #000000;
+}
+
+.searchSubTopics {
+    border: 1px solid #cbcbcb94;
+    min-height: 35px;
+    min-width: 265px;
+    padding: 5px 15px;
+    border-radius: 10px;
+    background: #F0F5F7;
+}
+.subtTopics-element, .expert-element{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #c3c3c3;
+    margin-left: -30px;
+    margin-right: -30px;
+    padding: 0 30px 15px;
+}
+
+.subtTopics-element:last-child, .expert-element:last-child{
+    margin-bottom: 10px;
+    border-bottom: 0px solid #c3c3c3;
+}
+.subtTopics-element .img, .expert-element .img {
+    width: 45px;
+    height: 45px;
+    overflow: hidden;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+.subtTopics-element .img img, .expert-element img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.subtTopics-element .subTitleText , .expert-element .subTitleText{
+    margin-bottom: 0;
+    font-size: 16px;
+}
+.searchImg {
+    position: absolute;
+    right: 8px;
+    width: 15px;
+    top: 10px;
+}
+.btnFollowSubTopic{
+    background: #043356;
+    color: white;
+    font-size: 14px;
+    margin-left: 15px;
+}
+.btnFollowSubTopic:hover{
+    color:white !important;
+}
+.subtTopics-element .styled-checkbox + label {
+    margin-right: 10px;
+}
+.subtTopics-element .styled-checkbox:checked + label:before {
+    background: #043356;
+    border-color: 043356;
+}
+.styled-checkbox:checked + label:after {
+    top: 8px;
+}
+ul .selectAll .styled-checkbox:checked + label:after {
+    top: 9px;
+}
+.content-subTopics{
+    display:none;
+}
+.modalAddExpert .head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+.modalAddExpert .head select{
+    margin-bottom: 0px !important;
+}
+.modalAddTopicsAnd .content-topics .styled-checkbox + label:before {
+    border-radius: 50% !important;
+}
+.modalAddTopicsAnd .content-topics .styled-checkbox:checked + label:after {
+    top: 10px;
+}
+.content-expert .styled-checkbox:checked + label:before {
+    background: #043356;
+    border-color: 043356;
+}
+.btnSkipTopics {
+    float: right;
+    font-size: 15px;
+    font-weight: 500;
+}
+#bedrijfsprofiel_modal .gform_wrapper.gravity-theme .gfield input.large, #bedrijfsprofiel_modal .gform_wrapper.gravity-theme .gfield select.large {
+    padding: 10px 20px !important;
+    font-size: 15px !important;
+    color: #3c3c3c !important;
+    background: #F0F5F7;
+    border-radius: 10px;
+    margin-top: 3px;
+    margin-bottom: 2px;
+}
+.text-left{
+    text-align:left !important;
 }
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -14961,6 +15174,28 @@ select {
     .filterBlock {
         margin: 30px 20px;
     }
+    .modal-topics-expert .head {
+        flex-wrap: wrap;
+    }
+    .modal-topics-expert .head ul {
+        width: fit-content;
+        margin-right: 15px;
+    }
+    .modal-topics-expert .head .position-relative {
+        width: 100%;
+    }
+   #bedrijfsprofiel_modal .nav-pills{
+        height: 34px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    #bedrijfsprofiel_modal .nav-pills li{
+        width: 100% !important;
+        margin-bottom: 20px;
+    }
+    #bedrijfsprofiel_modal .pills-tabContent{
+        margin-top: 70px;
+    }
 }
 
 .radius-custom {
@@ -14998,6 +15233,8 @@ select {
     margin-bottom: 0;
     padding: 7px 15px!important;
 }
+
+
 
 @media all and (max-width: 640px) {
     #field_5_3 {

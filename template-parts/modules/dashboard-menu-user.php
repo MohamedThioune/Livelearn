@@ -77,10 +77,14 @@ style="overflow-x: hidden !important;">
                 ?>
             </a>
         </li>
-        <p class="textOnder">ONDERWERPEN <span> <a href="/onderwer"> Voeg toe </a></span></p>
+        <div class="d-flex align-content-center">
+            <p class="textOnder">ONDERWERPEN </p>
+            <button type="button" class="btn btnVoegToe" data-toggle="modal" data-target="#exampleModal">
+                Voeg toe
+            </button>
+        </div>
         <li class="elementTextDashboard">
             <?php
-           
             if(!empty($topics_external))
                 foreach($topics_external as $topic){
                     $name = (String)get_the_category_by_ID($topic);
@@ -110,8 +114,12 @@ style="overflow-x: hidden !important;">
             ?>
 
         </li>
-        <p class="textOnder">EXPERTS / OPLEIDERS <span> <a href="/opleiders"> Voeg toe </a></span></p>
-
+        <div class="d-flex align-content-center">
+            <p class="textOnder">EXPERTS / OPLEIDERS</p>
+            <button type="button" class="btn btnVoegToe" data-toggle="modal" data-target="#modalExpert">
+                Voeg toe
+            </button>
+        </div>
         <li class="elementTextDashboard">    
             <?php
             
@@ -131,5 +139,267 @@ style="overflow-x: hidden !important;">
                 }
             ?>
         </li>
+
     </ul>
 </section>
+
+
+
+
+<!-- Modal add topics and subtopics -->
+<div class="modal fade modalAddTopicsAnd modal-topics-expert" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Select your Topics and subtopics</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="content-topics">
+                    <ul class="unstyled centered">
+                        <li>
+                            <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" value="value1">
+                            <label for="styled-checkbox-1">(Detail) Handel</label>
+                        </li>
+                        <li>
+                            <input class="styled-checkbox" id="Handel" type="checkbox" value="Handel">
+                            <label for="Handel">(Detail) Handel</label>
+                        </li>
+                        <li>
+                            <input class="styled-checkbox" id="Groen" type="checkbox" value="Groen">
+                            <label for="Groen">Agrarisch / Groen</label>
+                        </li>
+                        <li>
+                            <input class="styled-checkbox" id="Bouw" type="checkbox" value="Bouw">
+                            <label for="Bouw">Bouw</label>
+                        </li>
+                        <li>
+                            <input class="styled-checkbox" id="Cultureel" type="checkbox" value="Cultureel">
+                            <label for="Cultureel">Cultureel</label>
+                        </li>
+                        <li>
+                            <input class="styled-checkbox" id="Human-resources" type="checkbox" value="Human-resources">
+                            <label for="Human-resources">Human resources</label>
+                        </li>
+                        <li>
+                            <input class="styled-checkbox" id="Informatie-management" type="checkbox" value="Informatie-management">
+                            <label for="Informatie-management">Informatie management</label>
+                        </li>
+                    </ul>
+                    <div class="mt-2">
+                        <button type="button" class="btn btnNext">Next</button>
+                    </div>
+                </div>
+                <div class="content-subTopics">
+                  <div class="d-flex justify-content-between align-items-center mb-4">
+                      <ul>
+                          <li class="selectAll">
+                              <input class="styled-checkbox" id="all" type="checkbox" value="all">
+                              <label for="all">Select All</label>
+                          </li>
+                      </ul>
+                      <div class="position-relative">
+                          <input type="search" placeholder="Search for your favorite Subtopics" class="searchSubTopics">
+                          <img class="searchImg" src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png" alt="">
+                      </div>
+                  </div>
+                  <div class="subtTopics-element">
+                    <div class="d-flex align-items-center">
+                        <div class="checkbox rows">
+                            <input class="styled-checkbox" id="Audicien" type="checkbox" value="Audicien">
+                            <label for="Audicien"></label>
+                        </div>
+                        <div class="img">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/detail-handel.jpeg" alt="">
+                        </div>
+                        <p class="subTitleText">Audicien</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <a href="">See</a>
+                        <button class="btn btnFollowSubTopic">Follow</button>
+                    </div>
+                  </div>
+                  <div class="subtTopics-element">
+                    <div class="d-flex align-items-center">
+                        <div class="checkbox rows">
+                            <input class="styled-checkbox" id="Bakker" type="checkbox" value="Bakker">
+                            <label for="Bakker"></label>
+                        </div>
+                        <div class="img">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/detail-handel.jpeg" alt="">
+                        </div>
+                        <p class="subTitleText">Bakker</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <a href="">See</a>
+                        <button class="btn btnFollowSubTopic">Follow</button>
+                    </div>
+                  </div>
+                  <div class="subtTopics-element">
+                    <div class="d-flex align-items-center">
+                        <div class="checkbox rows">
+                            <input class="styled-checkbox" id="Bloemist" type="checkbox" value="Bloemist">
+                            <label for="Bloemist"></label>
+                        </div>
+                        <div class="img">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/detail-handel.jpeg" alt="">
+                        </div>
+                        <p class="subTitleText">Bloemist</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <a href="">See</a>
+                        <button class="btn btnFollowSubTopic">Follow</button>
+                    </div>
+                  </div>
+                  <div class="subtTopics-element">
+                    <div class="d-flex align-items-center">
+                        <div class="checkbox rows">
+                            <input class="styled-checkbox" id="Caissiere" type="checkbox" value="Caissiere">
+                            <label for="Caissiere"></label>
+                        </div>
+                        <div class="img">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/detail-handel.jpeg" alt="">
+                        </div>
+                        <p class="subTitleText">Caissiere</p>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <a href="">See</a>
+                        <button class="btn btnFollowSubTopic">Follow</button>
+                    </div>
+                  </div>
+                    <div class="mt-3 mb-0">
+                        <button type="button" id="backTopics" class="btn bg-dark btnNext mr-3 mb-0">Back</button>
+                        <button type="button" class="btn btnNext mb-0" data-dismiss="modal">Save</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal add Expert -->
+<div class="modal fade modalAddExpert modal-topics-expert" id="modalExpert" tabindex="-1" role="dialog" aria-labelledby="modalExpertLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Select your Experts / Opleiders</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="head">
+                    <ul>
+                        <li class="selectAll">
+                            <input class="styled-checkbox" id="allExpert" type="checkbox" value="allExpert">
+                            <label for="allExpert">Select All</label>
+                        </li>
+                    </ul>
+                    <div class="blockFilter">
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Filter by category</option>
+                            <option value="1">Trending</option>
+                            <option value="2">Companies</option>
+                            <option value="3">Construction</option>
+                            <option value="3">HR</option>
+                            <option value="3">Food</option>
+                        </select>
+                    </div>
+                    <div class="blockSearch position-relative">
+                        <input type="search" placeholder="Search your expert" class="searchSubTopics">
+                        <img class="searchImg" src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png" alt="">
+                    </div>
+                </div>
+                <div class="content-expert">
+                    <div class="expert-element rows2">
+                        <div class="d-flex align-items-center">
+                            <div class="checkB">
+                                <input class="styled-checkbox" id="Crypto-university" type="checkbox" value="Crypto university">
+                                <label for="Crypto-university"></label>
+                            </div>
+                            <div class="img">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Crypto-university.png" alt="">
+                            </div>
+                            <p class="subTitleText nameExpert">Crypto university</p>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a href="">See</a>
+                            <button class="btn btnFollowSubTopic">Follow</button>
+                        </div>
+                    </div>
+                    <div class="expert-element">
+                        <div class="d-flex align-items-center">
+                            <div class="checkbox rows2">
+                                <input class="styled-checkbox" id="Autoblog" type="checkbox" value="Autoblog">
+                                <label for="Autoblog"></label>
+                            </div>
+                            <div class="img">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Autoblog.jpeg" alt="">
+                            </div>
+                            <p class="subTitleText nameExpert">Autoblog</p>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a href="">See</a>
+                            <button class="btn btnFollowSubTopic">Follow</button>
+                        </div>
+                    </div>
+                    <div class="expert-element">
+                        <div class="d-flex align-items-center">
+                            <div class="checkbox rows2">
+                                <input class="styled-checkbox" id="Co-pilot" type="checkbox" value="Co-pilot">
+                                <label for="Co-pilot"></label>
+                            </div>
+                            <div class="img">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Co-pilot.jpeg" alt="">
+                            </div>
+                            <p class="subTitleText nameExpert">Co-pilot</p>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a href="">See</a>
+                            <button class="btn btnFollowSubTopic">Follow</button>
+                        </div>
+                    </div>
+                    <div class="expert-element rows">
+                        <div class="d-flex align-items-center">
+                            <div class="checkbox rows2">
+                                <input class="styled-checkbox" id="Sweco" type="checkbox" value="Sweco">
+                                <label for="Sweco"></label>
+                            </div>
+                            <div class="img">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Sweco.jpeg" alt="">
+                            </div>
+                            <p class="subTitleText nameExpert">Sweco</p>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a href="">See</a>
+                            <button class="btn btnFollowSubTopic">Follow</button>
+                        </div>
+                    </div>
+                    <div class="expert-element">
+                        <div class="d-flex align-items-center">
+                            <div class="checkbox rows2">
+                                <input class="styled-checkbox" id="Reworc" type="checkbox" value="Reworc">
+                                <label for="Reworc"></label>
+                            </div>
+                            <div class="img">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Reworc.jpeg" alt="">
+                            </div>
+                            <p class="subTitleText nameExpert">Reworc</p>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a href="">See</a>
+                            <button class="btn btnFollowSubTopic">Follow</button>
+                        </div>
+                    </div>
+                    <div class="mt-3 mb-0">
+                        <button type="button" class="btn btnNext mb-0" data-dismiss="modal">Save</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
