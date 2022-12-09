@@ -66,9 +66,12 @@ extract($_GET);
                     <?php
                         }
                     ?>
-                    <a href="category-overview?category=<?php echo $id_category ?>"class="bd-highlight ">
-                            <button class="btn py-0 btnPhilo"> <span class="text-white"><?php echo $category; ?></span></button>
-                    </a>
+                    <?php
+                    if($id_category)
+                        echo '<a href="category-overview?category=' . $id_category . '" class="bd-highlight ">
+                                <button class="btn py-0 btnPhilo"> <span class="text-white">' . $category . '</span></button>
+                            </a>';
+                    ?>
                  </div>
                  <!-- ------------------------------ End Title livelearn ---------------------------------- -->
 
@@ -124,10 +127,10 @@ extract($_GET);
                 </div>
 
                 <?php
-                    if($course_price != "Gratis")
-                        echo '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="startTextBtn btn">Start nu voor ' . $course_price . '</a>';
+                    if($price != "Gratis")
+                        echo '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="startTextBtn btn">Start nu voor ' . $price . '</a>';
                     else
-                        echo '<a href="?topic=0&lesson=0" class="startTextBtn btn">Start nu voor ' . $course_price . '</a>';
+                        echo '<a href="?topic=0&lesson=0" class="startTextBtn btn">Start nu voor ' . $price . '</a>';
                 ?>
 
                 <!-- -------------------------------------- Start Icons row ------------------------------------->
@@ -184,7 +187,8 @@ extract($_GET);
                                 <span class="textIconeLearning mt-1">Deel</span>
                             </button>
                         </div>
-                        <!-- début Modal deel -->
+                        
+                        <!-- Debut Modal deel -->
                         <div class="modal" id="modal1" data-animation="fadeIn">
                             <div class="modal-dialog modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
                                 <div class="modal-content">
@@ -602,8 +606,6 @@ extract($_GET);
             <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
 
 
-
-
             <!-- ---------------------------------- Start Right Side Dashboard -------------------------------- -->
             <div class="blockTwoOver">
                 <div class="btnGrou10">
@@ -798,7 +800,7 @@ extract($_GET);
                                                                 <input type="hidden" name="meta_key" value="expert" id="">
                                                                 <div>
                                                                     <?php
-                                                                    if(!empty($saves_expert))
+                                                                    if(empty($saves_expert))
                                                                         echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
                                                                     else if($user_id != 0 && $user_id != $expert->ID)
                                                                     {
@@ -838,55 +840,84 @@ extract($_GET);
                                 <p class="opeleidingText"><?php echo $course_type; ?> : € <?php echo $price ?></p>
                                 <p class="btwText">BTW: € <?php $prijsvat ?></p>
 
-                                <a href="#bookdates" class="btn btnKoop">Schrijf je in</a>
-<!--                                <a href="#bookdates" class="btn btnKoop">Schrijf je in<?php /*echo $course_type; */?></a>
--->                            </div>
-        <div class="col-12 my-5" style="background-color: #E0EFF4">
-            <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around justify-content-center">
+                                <a href="#startTextBtn" class="btn btnKoop">Schrijf je in</a>
+                            </div>
 
-                <div class="swiper">
-                    <div class="swiper-wrapper">
-                        <?php
-                        foreach($experts as $expert){
-                            $expert = get_users(array('include'=> $expert))[0]->data;
-                            $company = get_field('company',  'user_' . $expert->ID);
-                            $title = $company[0]->post_title;
-                            $image = get_field('profile_img', 'user_'. $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                            ?>
-                            <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
-                                <div class="my-2 d-flex flex-column mx-md-0 mx-1">
-                                    <div class="imgCardPrice" style="height: 50px; width:50px">
-                                        <img src="<?php echo $image; ?>" alt="teacher photo">
+                            <div class="col-12 my-5" style="background-color: #E0EFF4">
+                                <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around
+                                    justify-content-center">
+
+                                    <!-- --------------------------------------- Swiper ------------------------------------ -->
+                                    <!-- Slider main container -->
+                                    <div class="swiper">
+                                        <div class="swiper-wrapper">
+                                            <?php
+                                                $saves_expert = get_user_meta($user_id, 'expert');
+                                                foreach($experts as $value){
+                                                    if(!$value)
+                                                        continue;
+
+                                                    $expert = get_users(array('include'=> $value))[0]->data;
+                                                    $company = get_field('company',  'user_' . $expert->ID);
+                                                    $title = $company[0]->post_title;
+                                                    $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                                ?>
+                                                    <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
+                                                        <div class="my-2 d-flex flex-column mx-md-0 mx-1">
+                                                            <div class="imgCardPrice" style="height: 50px; width:50px">
+                                                                <img src="<?php echo $image; ?>" alt="teacher photo">
+                                                            </div>
+                                                            <span class="textIconeLearning"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span>
+                                                            <span><?php echo $title; ?></span>
+                                                            <form action="/dashboard/user/" method="POST">
+                                                                <input type="hidden" name="artikel" value="<?= $post->ID; ?>" id="">
+                                                                <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
+                                                                <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
+                                                                <input type="hidden" name="meta_key" value="expert" id="">
+                                                                <div>
+                                                                    <?php
+                                                                    if(empty($saves_expert))
+                                                                        echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                                    else if($user_id != 0 && $user_id != $expert->ID)
+                                                                    {
+                                                                        if (in_array($expert->ID, $saves_expert))
+                                                                            echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
+                                                                        else
+                                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
+                                                                    }
+                                                                    ?>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </a>
+                                            <?php } ?>
+
+                                            </div>
+
+                                        </div>
+
+                                        <!-- If we need pagination -->
+                                        <!-- <div class="swiper-pagination"></div> -->
+
+                                        <!-- If we need navigation buttons -->
+                                        <div class="swiper-button-prev swiper-moved" style="font-size: 8px !important">
+                                        </div>
+                                        <div class="test">
+                                            <div class="swiper-button-next swiper-moved"></div>
+                                        </div>
+
+                                        <!-- If we need scrollbar -->
+                                        <!-- <div class="swiper-scrollbar"></div> -->
                                     </div>
-                                    <span class="textIconeLearning"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span>
-                                    <span><?php echo $title; ?></span>
+
                                 </div>
-                            </a>
-                        <?php } ?>
+                            </div>
+
+                        </div>
+
                     </div>
 
                 </div>
-
-                <!-- If we need pagination -->
-                <!-- <div class="swiper-pagination"></div> -->
-
-                <!-- If we need navigation buttons -->
-                <div class="swiper-button-prev swiper-moved" style="font-size: 8px !important">
-                </div>
-                <div class="test">
-                    <div class="swiper-button-next swiper-moved"></div>
-                </div>
-
-                <!-- If we need scrollbar -->
-                <!-- <div class="swiper-scrollbar"></div> -->
-            </div>
-
-        </div>
-    </div>
-
-</div>
-
-</div>
 
 
                 <!-- <div class="CardpriceLive">
@@ -1002,20 +1033,30 @@ extract($_GET);
 
     <!-- Modal -->
 
-      <!-- début Modal  -->
+    <!-- Start Modal  -->
+    <?php
+    if($price !== 'Gratis'){
+    ?>
     <div class="modal fade modalpaywallVideo" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
              <h5 class="title-paywall" >Get Acces Now </h5>
             <div class="modal-body">
                <p class="sub-title-paywall">Please purchase this course to continue</p>
-               <p class="price-course">$150</p>
+               <p class="price-course"><?= $price ?></p>
+               <?php
+               echo '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-paywall">Buying Now <img src="<?php echo get_stylesheet_directory_uri();?>/img/arrowhead.png" alt=""></a>';
+               ?>
                <a href="" class="btn btn-paywall">Buying Now <img src="<?php echo get_stylesheet_directory_uri();?>/img/arrowhead.png" alt=""></a>
                <p class="text-not-sure-which">Not Sure which is right now for you ? <a href="">Discover the benefits of taking this course now </a></p>
             </div>
             </div>
         </div>
     </div>
+    <?php
+    }
+    ?>
+    <!-- -->
 
 
 </div>

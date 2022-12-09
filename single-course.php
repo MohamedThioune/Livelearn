@@ -23,6 +23,7 @@ $podcasts = get_field('podcasts', $post->ID);
 $course_type = get_field('course_type', $post->ID);
 $product = wc_get_product( get_field('connected_product', $post->ID) );
 $long_description = get_field('long_description', $post->ID);
+$short_description = get_field('short_description', $post->ID);
 $for_who = get_field('for_who', $post->ID) ?: "No content !";
 
 $dagdeel = array();
@@ -72,16 +73,10 @@ if(!$prijsvat)
 $agenda = get_field('agenda', $post->ID);
 $who = get_field('for_who', $post->ID);
 $results = get_field('results', $post->ID);
+
 $category = " ";
-$tree = get_the_terms($post->ID, 'course_category');
-if($tree)
-    if(isset($tree[2])){
-        $category = $tree[2]->name;
-        $id_category = $tree[2]->ID;
-    }
-
 $category_id = 0;
-
+$id_category = 0;
 if($category == ' '){
     $category_id = intval(explode(',', get_field('categories',  $post->ID)[0]['value'])[0]);
     $category_xml = intval(get_field('category_xml', $post->ID)[0]['value']);
@@ -197,12 +192,14 @@ $link_to = get_field('link_to', $post->ID);
 $share_txt = "Hello, i share this course with ya *" . $post->post_title . "* \n Link : " . get_permalink($post->ID) . "\nHope you'll like it.";
 
 $offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
-$online = ['E-learning', 'Video', 'Webinar', 'Podcast'];
+$online = ['E-learning', 'Video', 'Webinar'];
 
 if(in_array($course_type, $offline))
     include_once('template-parts/modules/single-course-offline.php');
 else if(in_array($course_type, $online))
     include_once('template-parts/modules/single-course-online.php');
+else if($course_type == 'Podcast')
+    include_once('template-parts/modules/single-course-podcast.php');
 
 ?>  
  

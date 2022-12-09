@@ -86,9 +86,6 @@ foreach($global_blogs as $blog)
 
     $category_id = 0;
     $experts = get_field('experts', $blog->ID);
-    
-    $trees = get_the_terms($blog->ID, 'course_category');
-    $trees = $trees[2]->ID;
 
     $category_default = get_field('categories',  $blog->ID);
     $categories_xml = get_field('category_xml',  $blog->ID);
@@ -100,19 +97,21 @@ foreach($global_blogs as $blog)
     if(!empty($category_default))
     foreach($category_default as $item)
         if($item)
-            if(!in_array($item['value'], $categories))
-                array_push($categories,$item['value']);
+            if($item['value'])
+                if(!in_array($item['value'], $categories))
+                    array_push($categories,$item['value']);
             
     else if(!empty($category_xml))
         foreach($category_xml as $item)
             if($item)
-                if(!in_array($item['value'], $categories))
-                    array_push($categories,$item['value']);
+                if($item['value'])
+                    if(!in_array($item['value'], $categories))
+                        array_push($categories,$item['value']);
 
     $born = false;
     foreach($categoriees as $categoriee){
-        if(in_array($categoriee, $trees) || $categories)
-            if(in_array($categoriee, $trees) || in_array($categoriee, $categories)){
+        if($categories)
+            if(in_array($categoriee, $categories)){
                 array_push($blogs, $blog);
                 array_push($blogs_id, $blog->ID);
 
@@ -546,18 +545,12 @@ $saved = get_user_meta($user_id, 'course');
                                     </div>
                                     <div>
                                         <button class="btn btnImgCoeurEcosysteme">
-                                            <?php                                
-                                                if (in_array($blog->ID, $saved))
-                                                {
-                                            ?>
-                                                <img class="btn_favourite" id="<?php echo $user_id."_".$blog->ID."_course" ?>"  src="<?php echo $like_src;?>" alt=""> 
                                             <?php
-                                                }
-                                                else{
-                                            ?>
-                                                <img class="btn_favourite" id="<?php echo $user_id."_".$blog->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                            <?php
-                                                }
+                                                if(!empty($saved))                                
+                                                    if(in_array($blog->ID, $saved))
+                                                        echo '<img class="btn_favourite" id="' . $user_id . '_' . $blog->ID . '_course"  src=".' . $like_src . '" alt="">' ;
+                                                    else
+                                                        echo '<img class="btn_favourite" id="' . $user_id . '_' . $blog->ID . '_course"  src=".' . $dislike_src . '" alt="">' ;
                                             ?>
                                         </button>
                                     </div>
@@ -688,19 +681,13 @@ $saved = get_user_meta($user_id, 'course');
                                         <img src="<?php echo $image; ?>" alt="">
                                     </div>
                                     <button class="btn btnImgCoeurEcosysteme">
-                                        <?php                                
-                                            if (in_array($blog->ID, $saved))
-                                            {
-                                        ?>
-                                            <img class="btn_favourite" id="<?php echo $user_id."_".$blog->ID."_course" ?>"  src="<?php echo $like_src;?>" alt=""> 
                                         <?php
-                                            }
-                                            else{
-                                        ?>
-                                            <img class="btn_favourite" id="<?php echo $user_id."_".$blog->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                        <?php
-                                            }
-                                        ?>                                    
+                                            if(!empty($saved))                                
+                                                if(in_array($blog->ID, $saved))
+                                                    echo '<img class="btn_favourite" id="' . $user_id . '_' . $blog->ID . '_course"  src=".' . $like_src . '" alt="">' ;
+                                                else
+                                                    echo '<img class="btn_favourite" id="' . $user_id . '_' . $blog->ID . '_course"  src=".' . $dislike_src . '" alt="">' ;
+                                        ?>                                 
                                     </button>
                                     <div class="contentCardProd">
                                         <div class="group8">

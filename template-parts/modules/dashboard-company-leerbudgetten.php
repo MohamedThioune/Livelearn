@@ -246,11 +246,13 @@ $maandelijke = count($members) * 5;
                 <tbody>
                 <?php
                 foreach($members as $key=>$member){
+                    $amount_budget = get_field('amount_budget', 'user_' . $member->ID) ? : 0;
+                    $amount_budget += 5; 
                     ?>
                     <tr>
                         <th scope="row"><?= $key; ?></th>
                         <td><?= $member->data->display_name; ?></td>
-                        <td>5</td> <!-- cost by this user 'const' -->
+                        <td><?= $amount_budget ?></td> <!-- cost by this user 'const' -->
                         <td>€ <?= $member->expenses ?></td> <!-- expense by this user 'var' -->
                         <td>€ <?= $member->incomes ?></td> <!-- income by this user 'var' -->
                         <td>€ <?= $zelfstand_max ?> </td> <!-- personal budget by this user 'var' -->
