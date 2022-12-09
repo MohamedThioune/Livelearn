@@ -5,8 +5,10 @@
     
     $post = get_post($_GET['id']);
     $author = array($post->post_author);
-    $expert = get_field('experts', $post->ID);    
-
+    $experts = $author;
+    if(!empty($expert))
+        $experts = array_merge($expert);
+        
     $experts = array_merge($author, $expert);
 
     foreach($users as $user)

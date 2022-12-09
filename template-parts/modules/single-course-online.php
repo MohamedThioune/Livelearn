@@ -631,35 +631,6 @@ extract($_GET);
                                      </div>";
                             else if(!empty($courses)){
                                 ?>
-                                <!--
-                                    foreach($courses as $key => $course){
-                                        <div class="sousBlockCours">
-                                        <?php
-                                        if(isset($topic))
-                                        {
-                                            $style = "";
-                                            if($topic == $key)
-                                                $style = "color:#F79403";
-                                        }
-                                        ?>
-                                        <a style="<?= $style; ?>" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo ($course['course_topic']['course_topic_title']);?></a><br>
-                                        <?php
-                                        if(!empty($course['course_topic']['course_topic_lessons']))
-                                            foreach($course['course_topic']['course_topic_lessons'] as $sand => $value){                                                ?>
-                                                <div class="d-flex contentListVidoeCourse">
-                                                <?php
-                                                if(isset($lesson))
-                                                if($lesson == $sand)
-                                                    echo '<img class="playElement mr-3" style="width:22px;" src="' . get_stylesheet_directory_uri() . '/img/play.png" alt="">';
-                                                ?>
-                                                    <a href="?topic=<?php echo (int)$key; ?>&lesson=<?php echo (int)$sand; ?>" class="textChapitreCours textChapitreCours2 liveTextCadPrice" style="color:red">&nbsp;&nbsp;<?php echo ($value['course_lesson']['course_lesson_title']);?></a>
-                                                </div>
-                                            <?php
-                                            }
-                                        ?>
-                                        </div> 
-                                    }
-                                -->
                                 <div class="sousBlockCours">
                                     <?php
                                     if(isset($topic))
