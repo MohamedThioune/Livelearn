@@ -235,8 +235,6 @@ if(isset($starter)){
     // close curl
     curl_close( $ch );
 }
-
-//Fields
 ?>
 <style>
     .nav-tabs .nav-link.active {
@@ -289,7 +287,7 @@ if(isset($starter)){
                             acf_form([
                                 'id' => 'edit-company-data-form',
                                 'post_id' => $company->ID,
-                                'fields' => array('company_logo', 'company_address', 'company_place', 'company_country',),
+                                'fields' => array('company_logo', 'company_address', 'company_place', 'company_country'),
                                 'new_post' => false,
                             ]);
                         }

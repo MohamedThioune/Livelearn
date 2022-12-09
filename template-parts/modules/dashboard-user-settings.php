@@ -755,7 +755,7 @@ if(!empty($bunch)){
                                                             <div class="edit"></div>
                                                         </div>
                                                         <div class="rangeslider-wrap">
-                                                            <input name="note" type="range" value="<?= $note ?>" min="0" max="100" step="10" labels="0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100"  onChange="rangeSlide(this.value)">
+                                                            <input name="note" type="range" min="0" max="100" step="10" labels="0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100" value="<?= $note ?>" onChange="rangeSlide(this.value)">
                                                         </div>
                                                     </div>
                                                 </div>

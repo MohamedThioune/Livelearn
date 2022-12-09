@@ -352,7 +352,7 @@ $degrees=[
 
     ?>
     <!-- Modal First Connection -->
-    <div class="contentModalFirst">
+    <div class="contentModalFirst"²>
         <div class="modal" id="myFirstModal" tabindex="-1" role="dialog" aria-labelledby="myFirstModalScrollableTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -388,6 +388,7 @@ $degrees=[
                                 </div>
                                 <button type="button" class="btn btnNext" id="nextblockBaangerichte">Next</button>
                             </div>
+                            <button type="button" class="btn btnSkipTopics" id="btnSkipTopics1">Skip</button>
                         </div>
 
                         <div class="blockfunctiegericht">
@@ -414,6 +415,7 @@ $degrees=[
                                 </div>
                                 <button type="button" class="btn btnNext" id="nextFunctiegericht">Next</button>
                             </div>
+                            <button type="button" class="btn btnSkipTopics" id="btnSkipTopics2">Skip</button>
                         </div>
 
                         <div class="blockSkills">

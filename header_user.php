@@ -1,5 +1,5 @@
 <?php
-global $wp; 
+global $wp;
 
 $user = wp_get_current_user();
 
@@ -8,7 +8,7 @@ $user = wp_get_current_user();
 */
 
 $args = array(
-    'post_type' => 'feedback', 
+    'post_type' => 'feedback',
     'author' => $user->ID,
     'orderby' => 'post_date',
     'order' => 'DESC',
@@ -20,7 +20,7 @@ $todos = array();
 
 $url = home_url( $wp->request );
 
-$link = (!empty($user)) ? '/dashboard/user' : '/'; 
+$link = (!empty($user)) ? '/dashboard/user' : '/';
 
 if(!empty($notifications))
     foreach($notifications as $todo){
@@ -58,7 +58,28 @@ if(!empty($notifications))
             .nav-pills .nav-link.active {
                 background: #023356 !important;
                 color: white !important;
+
             }
+            #bedrijfsprofiel_modal {
+                overflow-y: auto !important;
+                background: #0000009e;
+                max-height: 100%;
+                display: none;
+            }
+            #bedrijfsprofiel_modal .tab-pane{
+                display: none;
+            }
+            #bedrijfsprofiel_modal .pills-tabContent .show{
+                display: block;
+            }
+            #bedrijfsprofiel_modal .gfield_label{
+                position: relative !important;
+                -webkit-clip-path: unset !important;
+                height: unset !important;
+                width: fit-content !important;
+
+            }
+
         </style>
 
         <title><?php bloginfo('name'); ?></title>
@@ -67,61 +88,61 @@ if(!empty($notifications))
     <body class="header-user canhas">
 
 
-        <!-- Modal -->
-        <div class="modal fade mt-5" id="bedrijfsprofiel_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="width:98%; overflow-y: hidden !important">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content px-md-5 px-1">
-                    <div class="modal-header border-0">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+    <!-- Modal -->
+    <div class="modal fade  modal-dialog-scrollable" id="bedrijfsprofiel_modal" tabindex="-1" role="dialog" aria-labelledby="bedrijfsprofiel_modalModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-0">
+                    <div class="text-center mb-4">
+                        <p class="JouwOpleid" style="font-size: 20px !important">
+                            Creëer een bedrijfsprofiel of unlock de voordelen van jouw organisatie
+                        </p>
                     </div>
-                    <div class="modal-body pt-0">
-                        <div class="text-center mb-4">
-                            <p class="JouwOpleid" style="font-size: 20px !important">
-                                Creëer een bedrijfsprofiel of unlock de voordelen van jouw organisatie
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="height: 34px">
+                        <li class="nav-item w-50 text-center">
+                            <a class="nav-link text-dark active rounded rounded-pill h-100" id="pills-home-tab" data-toggle="pill"
+                               href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"
+                               style="padding-top: 5px !important; background: #E6E6E6">Word onderdeel van een bedrijf</a>
+                        </li>
+                        <li class="nav-item w-50 text-center">
+                            <a class="nav-link text-dark rounded rounded-pill h-100" id="pills-profile-tab" data-toggle="pill"
+                               href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"
+                               style="padding-top: 5px !important;background: #E6E6E6">Maak een bedrijfsprofiel</a>
+                        </li>
+                    </ul>
+
+                    <div class="pills-tabContent" >
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                            <?php echo do_shortcode("[gravityform id='14' title='false' description='false' ajax='true']"); ?>
+                            <p class="description pt-2 text-center">
+                                Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je
+                                direct toegang tot je bedrijfs leeromgeving
                             </p>
                         </div>
-                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="height: 34px">
-                            <li class="nav-item w-50 text-center">
-                                <a class="nav-link text-dark active rounded rounded-pill h-100" id="pills-home-tab" data-toggle="pill"
-                                 href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"
-                                 style="padding-top: 5px !important; background: #E6E6E6">Word onderdeel van een bedrijf</a>
-                            </li>
-                            <li class="nav-item w-50 text-center">
-                                <a class="nav-link text-dark rounded rounded-pill h-100" id="pills-profile-tab" data-toggle="pill" 
-                                href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"
-                                style="padding-top: 5px !important;background: #E6E6E6">Maak een bedrijfsprofiel</a>
-                            </li>
-                        </ul>
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            <?php echo do_shortcode("[gravityform id='15' title='false' description='false' ajax='true']"); ?>
+                            <p class="description pt-2 text-center">
+                                Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je
+                                direct toegang tot je bedrijfs leeromgeving
+                            </p>
 
-                        <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                                <?php echo do_shortcode("[gravityform id='14' title='false' description='false' ajax='true']"); ?>                                
-                                <p class="description pt-2 text-center">
-                                    Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je 
-                                    direct toegang tot je bedrijfs leeromgeving
-                                </p>
-                            </div>
-                            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                            <?php echo do_shortcode("[gravityform id='15' title='false' description='false' ajax='true']"); ?>                                
-                                <p class="description pt-2 text-center">
-                                    Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je 
-                                    direct toegang tot je bedrijfs leeromgeving
-                                </p>
-
-                                <p class="JouwOpleid pt-3 text-center">
-                                    Eerst le zen wat we doen? <a href="">Click hier!</a>
-                                </p>
-                            </div>
+                            <p class="JouwOpleid pt-3 text-center">
+                                Eerst le zen wat we doen? <a href="">Click hier!</a>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
         <nav class="navbar navbar-expand-lg navbar-dark headerdashboard">
-            
             <div class="blockIconeWidth">
                 <button id="burger-web" class="largeElement btn">
                     <i class="fa fa-bars text-white" style="font-size: 25px"></i>
@@ -159,7 +180,7 @@ if(!empty($notifications))
 
                                                 $type = get_field('type_feedback', $todo->ID);
                                                 $manager = get_field('manager_feedback', $todo->ID);
-                                        ?> 
+                                        ?>
                                             <a href="/dashboard/user/detail-notification/?todo=<?=$todo->ID;?>" class="modal-content-body">
                                                 <p class="feedbackText"><?=$type;?> : <span><?=$todo->post_title;?></span></p>
                                                 <p class="feedbackText">By: <span> <?php if(!empty($manager->first_name)){echo $manager->first_name;}else{echo $manager->display_name;}?> </span></p>
@@ -197,7 +218,7 @@ if(!empty($notifications))
                                     if ( in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator')
                                         echo '<a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>';
 
-                                if ( in_array( 'hr', $user->roles ) || in_array( 'author', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )) 
+                                if ( in_array( 'hr', $user->roles ) || in_array( 'author', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles ))
                                     echo '<a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>';
                             ?>
                         </div>
@@ -223,10 +244,10 @@ if(!empty($notifications))
                             echo '<a class="dropdown-item" href="/dashboard/user">Eigen leeromgeving</a>';
 
                         if(!empty($company))
-                            if ( in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') 
+                            if ( in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator')
                                 echo '<a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>';
-   
-                        if ( in_array( 'hr', $user->roles ) || in_array( 'author', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )) 
+
+                        if ( in_array( 'hr', $user->roles ) || in_array( 'author', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles ))
                             echo '<a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>';
                         ?>
                     </div>
@@ -241,12 +262,12 @@ if(!empty($notifications))
                             </div>
                         </div>
                     </form>
-                    
+
 
                     <ul class="elementHeaderUser ">
                         <li class="nav-item dropdown addButtonLink">
                             <a href="#" class="nav-link navModife4 btn dropdown-toggle" type="button" id="dropdownNavButtonAdd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/addition.png" alt="addition" 
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/addition.png" alt="addition"
                                 style="width: 36px !important; height: 36px !important">
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonAdd">
@@ -263,13 +284,13 @@ if(!empty($notifications))
 
                         ?>
                         <li class="nav-link companyButton">
-                        <?php 
+                        <?php
                             if($company_id)
                                 if(in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array('administrator', $user->roles) )
                                     $ref_company = "/dashboard/company";
                                 else
                                     $ref_company = "#";
- 
+
                         ?>
                             <a <?php if(isset($ref_company)) echo'href ="' .$ref_company. '"'; else echo 'data-toggle="modal" data-target="#bedrijfsprofiel_modal"'; ?> >
                                 <div class="userBlockNav">
@@ -278,7 +299,7 @@ if(!empty($notifications))
                             </a>
 
                         </li>
-                       
+
                       <!--  <div class="second-element-mobile" id="burgerAndbelief">
                             <button id="burger" class=" btn burgerElement boxSousNav3-2">
                                 <i class="fa fa-bars text-white" style="font-size: 25px"></i>
@@ -309,7 +330,7 @@ if(!empty($notifications))
                                             $type = get_field('type_feedback', $todo->ID);
                                             $manager = get_field('manager_feedback', $todo->ID);
 
-                                    ?> 
+                                    ?>
                                         <a href="/dashboard/user/detail-notification/?todo=<?=$todo->ID;?>" class="">
                                             <p class="feedbackText"><?=$type;?> : <span><?=$todo->post_title;?></span></p>
                                             <p class="feedbackText">By: <span> <?php if(!empty($manager->first_name)){echo $manager->first_name;}else{echo $manager->display_name;}?> </span></p>
@@ -334,7 +355,7 @@ if(!empty($notifications))
                             </div>
                         </li>
                         <?php
-                        $user_image_account = (get_field('profile_img',  'user_' . $user->ID)) ? get_field('profile_img',  'user_' . $user->ID) :  get_stylesheet_directory_uri() . '/img/placeholder_user.png';  
+                        $user_image_account = (get_field('profile_img',  'user_' . $user->ID)) ? get_field('profile_img',  'user_' . $user->ID) :  get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                         ?>
 
                         <li class="nav-item item4 dropdown" id="profilDropdown">
