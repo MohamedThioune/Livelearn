@@ -743,7 +743,7 @@ if(!empty($bunch)){
                                             <div class="row">
                                                 <div class="col-lg-12 col-md-12">
                                                     <div class="group-input-settings">
-                                                        <label for="">Name</label>
+                                                        <label for="">Name</label>  
                                                         <input name="" type="text" placeholder="<?= $name_topic ?>" disabled>
                                                         <input name="id" type="hidden" value="<?= $value ?>">
                                                     </div>
@@ -755,7 +755,7 @@ if(!empty($bunch)){
                                                             <div class="edit"></div>
                                                         </div>
                                                         <div class="rangeslider-wrap">
-                                                            <input type="range" min="0" max="100" step="10" labels="0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100" value="<?= $note ?>" onChange="rangeSlide(this.value)">
+                                                            <input name="note" type="range" min="0" max="100" step="10" labels="0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100" value="<?= $note ?>" onChange="rangeSlide(this.value)">
                                                         </div>
                                                     </div>
                                                 </div>
