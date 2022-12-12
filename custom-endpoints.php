@@ -1,4 +1,6 @@
 <?php
+
+
 $GLOBALS['user_id'] = get_current_user_id();
 class Expert
 {
@@ -65,6 +67,22 @@ class Tags
     $this->name = $name;
   }
 }
+
+// function visibility($course, $visibility_company){
+//   $bool = true;
+
+//   $invisibility = get_field('visibility', $course->ID);
+
+//   $company = get_field('company',  'user_' . $course->post_author);
+//   if(!empty($company))
+//       $company_title = $company[0]->post_title;
+
+//   if($invisibility && $visibility_company != $company_title )
+//       $bool = false;
+
+//   return $bool;
+// }
+
 /** **************** Api Custom Endpoints **************** */
 
 function allCourses ($data)
@@ -160,7 +178,7 @@ function allAuthors()
 }
 
 
-  function related_topics_subtopics ($data)
+function related_topics_subtopics ($data)
   {
     $id_topics = $data['id'];
     $subtopics = get_categories( array(
@@ -391,4 +409,327 @@ function get_liked_courses()
 {
   $user_id = $GLOBALS['user_id'];
   return $user_id;
+}
+
+function recommended_course(){
+
+  //The user
+  $user = $GLOBALS['user_id'];
+  
+  $company_visibility = get_field('company',  'user_' . $user);
+
+  if(!empty($company_visibility))
+      $visibility_company = $company_visibility[0]->post_title;
+  
+  $i = 0;
+
+  $courses = array();
+  $course_id = array();
+  $random_id = array(); 
+  $categories = array();
+
+  //Categories
+  $cats = get_categories( array(
+      'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+      'orderby'    => 'name',
+      'exclude' => 'Uncategorized',
+      'parent'     => 0,
+      'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  ) );
+
+  foreach($cats as $category){
+      $cat_id = strval($category->cat_ID);
+      $category = intval($cat_id);
+      array_push($categories, $category);
+  }
+
+  /*
+  ** Categories
+  */
+  $bangerichts = get_categories( array(
+      'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+      'parent'  => $categories[1],
+      'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  ) );
+  $functies = get_categories( array(
+      'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+      'parent'  => $categories[0],
+      'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  ) );
+  $skills = get_categories( array(
+      'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+      'parent'  => $categories[3],
+      'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  ) );
+  $interesses = get_categories( array(
+      'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+      'parent'  => $categories[2],
+      'hide_empty' => 0, // change to 1 to hide categores not having a single post
+  ) );
+  $subtopics = array(); 
+  foreach($categories as $categ){
+      //Topics
+      $topicss = get_categories(
+          array(
+          'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+          'parent'  => $categ,
+          'hide_empty' => 0, // change to 1 to hide categores not having a single post
+          ) 
+      );
+
+      foreach ($topicss as  $value) {
+          $subtopic = get_categories( 
+              array(
+              'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+              'parent'  => $value->cat_ID,
+              'hide_empty' => 0,
+              //  change to 1 to hide categores not having a single post
+              ) 
+          );
+          $subtopics = array_merge($subtopics, $subtopic);      
+      }
+  }
+
+  // Get interests courses
+  $topics_external = get_user_meta($user, 'topic');
+  $topics_internal = get_user_meta($user, 'topic_affiliate');
+
+  $topics = array();
+  if(!empty($topics_external))
+      $topics = $topics_external;
+
+  if(!empty($topics_internal))
+      foreach($topics_internal as $value)
+          array_push($topics, $value);
+  
+  $experts = get_user_meta($user, 'expert');
+  $args = array(
+      'post_type' => array('course', 'post'), 
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+      'order' => 'DESC'
+  );
+  $global_courses = get_posts($args);
+  
+  foreach ($global_courses as $key => $course) {    
+      //visibility
+
+      /*
+      *  Date and Location
+      */
+      $data = array();
+      $day = '-';
+      $month = '';
+      $location = 'Virtual';
+
+      $datas = get_field('data_locaties', $course->ID);
+
+      if($datas){
+          $data = $datas[0]['data'][0]['start_date'];
+          if($data != ""){
+              $day = explode('/', explode(' ', $data)[0])[0];
+              $mon = explode('/', explode(' ', $data)[0])[1];
+              $month = $calendar[$mon];
+          }   
+      }else{
+          $datum = get_field('data_locaties_xml', $course->ID);
+
+          if($datum)
+              if(isset($datum[0]['value']))
+                  $element = $datum[0]['value'];
+
+          if(!isset($element))
+              continue;
+
+          $datas = explode('-', $element);
+
+          $data = $datas[0];
+          $day = explode('/', explode(' ', $data)[0])[0];
+          $month = explode('/', explode(' ', $data)[0])[1];
+          $month = $calendar[$month];
+          $location = $datas[2];
+      }
+
+      //Course Type
+      $course_type = get_field('course_type', $course->ID);
+      if(empty($data))
+          null;
+      else if(!empty($data) && $course_type != "Video" && $course_type != "Artikel")
+          if($data){
+              $date_now = strtotime(date('Y-m-d'));
+              $data = strtotime(str_replace('/', '.', $data));
+              if($data < $date_now)
+                  continue;
+          }
+      /*
+      * End
+      */
+
+      //Preferences categories
+      $category_default = get_field('categories', $course->ID);
+      $category_xml = get_field('category_xml', $course->ID);
+      $read_category = array();
+      if(!empty($category_default))
+          foreach($category_default as $item)
+              if($item)
+                  if(!in_array($item['value'],$read_category))
+                      array_push($read_category,$item['value']);
+
+      else if(!empty($category_xml))
+          foreach($category_xml as $item)
+              if($item)
+                  if(!in_array($item['value'],$read_category))
+                      array_push($read_category,$item['value']);
+
+      foreach($topics as $topic_value){
+          if($read_category)
+              if(in_array($topic_value, $read_category) ){
+                  if(!in_array($course->ID, $course_id)){
+                      array_push($course_id, $course->ID);
+                      array_push($courses, $course);  
+                      break;
+                  }
+          }
+      }
+
+      //Preference author
+      if($experts)
+          if(in_array($course->post_author, $experts))
+              if(!in_array($course->ID, $course_id)){
+                  array_push($course_id, $course->ID);
+                  array_push($courses, $course);
+              }
+      
+
+      //Preference expert
+      $experties = get_field('experts', $course->ID);
+      if($experties && $experts)
+          foreach($experties as $topic_expert){
+              if(in_array($topic_expert, $experts)){
+                  if(!in_array($course->ID, $course_id)){
+                      array_push($course_id, $course->ID);
+                      array_push($courses, $course);
+                      break;
+                  }
+              }
+          }
+
+  }
+  return $courses;
+  $courses = array_slice($courses, 0, 150);
+
+  //Views
+  $user_post_view = get_posts(
+      array(
+          'post_type' => 'view',
+          'post_status' => 'publish',
+          'author' => $user,
+          'order' => 'DESC'
+      )
+  )[0];   
+  $is_view = false;
+
+  if (!empty($user_post_view))
+  {
+      $courses_id = array();
+      $is_view = true;
+  
+      $all_user_views = (get_field('views', $user_post_view->ID));
+      $max_points = 10;
+      $recommended_courses = array();
+
+      foreach($all_user_views as $key => $view) {
+          if(!$view['course'])
+              continue;
+
+          foreach ($courses as $key => $course) {
+              $points = 0;
+              $course->image = "";
+              $course->author_image = "";
+
+              $course_type = get_field('course_type', $course->ID);
+
+              /*
+              * Thumbnails
+              */
+              $course->image = get_field('preview', $course->ID)['url'];
+              if(!$course->image){
+                  $course->image = get_the_post_thumbnail_url($course->ID);
+                  if(!$course->image)
+                      $course->image = get_field('url_image_xml', $course->ID);
+                          if(!$course->image)
+                              $course->image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+              }
+              
+              //Image author
+              $course->author_image = get_field('profile_img', 'user_' . $course->post_author);
+              $course->author_image = $course->author_image ?: get_stylesheet_directory_uri() . '/img/user.png';
+
+              //Read category viewed
+              $read_category_view = array();
+              $category_default = get_field('categories', $view['course']->ID);
+              $category_xml = get_field('category_xml', $view['course']->ID);        
+              if(!empty($category_default))
+                  foreach($category_default as $item)
+                      if($item)
+                          if(!in_array($item['value'],$read_category_view))
+                              array_push($read_category_view, $item['value']);
+                          
+              else if(!empty($category_xml))
+                  foreach($category_xml as $item)
+                      if($item)
+                          if(!in_array($item['value'],$read_category_view))
+                              array_push($read_category_view, $item['value']);
+                          
+              
+              //Read category course
+              $read_category_course = array();
+              $category_default = get_field('categories', $view['course']->ID);
+              $category_xml = get_field('category_xml', $view['course']->ID);        
+              if(!empty($category_default))
+                  foreach($category_default as $item)
+                      if($item)
+                          if(!in_array($item['value'],$read_category_course))
+                              array_push($read_category_course, $item['value']);
+                          
+              else if(!empty($category_xml))
+                  foreach($category_xml as $item)
+                      if($item)
+                          if(!in_array($item['value'],$read_category_course))
+                              array_push($read_category_course, $item['value']);
+              
+              //Price view
+              $view_prijs = get_field('price', $view['course']->ID);
+
+              foreach($read_category_view as $value){
+                  if($points == 6)
+                      break;
+                  if(in_array($value, $read_category_course))
+                      $points += 3;
+              }
+              if ($view['course']->post_author == $course->post_author) 
+                  $points += 3;
+              if ($view_prijs <= $course->price)
+                  $points += 1;
+              
+              $percent = abs(($points/$max_points) * 100);
+              if ($percent >= 50)
+                  if(!in_array($course->ID, $random_id)){
+                      array_push($random_id, $course->ID);
+                      array_push($recommended_courses, $course);
+                  }
+          }
+      }
+  }
+
+  $recommended_courses = array_slice($recommended_courses, 0, 20); 
+
+  if (empty($recommended_courses))
+      $recommended_courses = $courses;
+
+  shuffle($recommended_courses);
+  if (!empty($recommended_courses))
+      return $recommended_courses;
+  else 
+      return ["error" => "Nothing to show, don't ask me why 😅 !"];
 }
