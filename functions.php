@@ -37,7 +37,7 @@ function cpt_taxonomies() {
         'hierarchical'      => true,
         'labels'            => $labels,
         'show_ui'           => true,
-        'show_in_rest'        => true,
+        'show_in_rest'      => true,
         'show_admin_column' => true,
         'query_var'         => true,
         'rewrite'           => array( 'slug' => 'course_category' ),
@@ -551,21 +551,21 @@ function set_assign_data( $entry, $form ) {
 
 }
 
-add_filter( 'rest_authentication_errors', function( $result ) {
-    if ( true === $result || is_wp_error( $result ) ) {
-        return $result;
-    }
+// add_filter( 'rest_authentication_errors', function( $result ) {
+//     if ( true === $result || is_wp_error( $result ) ) {
+//         return $result;
+//     }
 
-    if ( ! is_user_logged_in() ) {
-        return new WP_Error(
-            'rest_not_logged_in',
-            __( 'You are not currently logged in.' ),
-            array( 'status' => 401 )
-        );
-    }
+//     if ( ! is_user_logged_in() ) {
+//         return new WP_Error(
+//             'rest_not_logged_in',
+//             __( 'You are not currently logged in.' ),
+//             array( 'status' => 401 )
+//         );
+//     }
 
-    return $result;
-});
+//     return $result;
+// });
 
 function filter_woocommerce_api_product_response( $product_data, $product, $fields, $this_server ) { 
     $product_data['vendor_id'] = get_post_field( 'post_author', $product->id);
