@@ -75,7 +75,7 @@ $telnr = get_field('telnr', 'user_' . $current_user->ID);
                             <div><i class="fa fa-gear fa-2x pt-1"></i></div>
                         </div>
 
-                        <form method="POST" action="" class="">
+                        <form method="POST" action="/dashboard/company/profile-company/" class="">
 
                             <div class="form-group py-4">
                                 <div class="row">
@@ -141,7 +141,7 @@ $telnr = get_field('telnr', 'user_' . $current_user->ID);
                                     </div>
                                     <div class="col-md-8 pt-2">
                                         <input type="text" name="factuur_address" class="form-control border-0" id="inputPassword" 
-                                            placeholder="" style="background: #E0EFF4" required>
+                                            placeholder="" style="background: #E0EFF4">
                                     </div>
                                 </div>
                             </div>

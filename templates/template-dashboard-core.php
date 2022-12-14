@@ -1057,9 +1057,8 @@ else if(isset($starter)){
     }
     // close curl
     curl_close( $ch );
-
-    $path = '/dashboard/company/profile-company/?message=' . $message; 
-    header('Location: ' .$path);
+    $path_redirection = '/dashboard/company/profile-company/?message=' . $message; 
+    header('Location: ' . $path_redirection);
 }
 
 
