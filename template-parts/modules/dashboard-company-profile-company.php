@@ -36,7 +36,8 @@ $telnr = get_field('telnr', 'user_' . $current_user->ID);
     </div>
     <div class="row ">
         <div class="col-md-12">
-          
+            <?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>" ; ?>
+
             <!-- Tabs navs -->
             <ul class="headTabsCompany" role="tablist">
                 <li class="nav-item" role="presentation">
