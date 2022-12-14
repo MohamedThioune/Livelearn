@@ -1107,7 +1107,7 @@ $degrees=[
                             $thumbnail = get_stylesheet_directory_uri() . '/img/placeholder.png';
 
                         /*
-                            * Companies
+                        * Companies
                         */
                         $company = get_field('company',  'user_' . $course->post_author);
                         $company_id = $company[0]->ID;
