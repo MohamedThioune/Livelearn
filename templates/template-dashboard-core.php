@@ -1055,12 +1055,11 @@ else if(isset($starter)){
         // $data_response = json_decode( $response, true );
         // var_dump($data_response);
     }
-    $path = '/dashboard/company/profile-company/?message=' . $message; 
-
-    header('Location: ' . $path);
-
     // close curl
     curl_close( $ch );
+
+    $path = '/dashboard/company/profile-company/?message=' . $message; 
+    header('Location: ' .$path);
 }
 
 
