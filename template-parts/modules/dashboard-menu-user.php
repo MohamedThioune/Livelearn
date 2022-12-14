@@ -151,7 +151,7 @@ style="overflow-x: hidden !important;">
 
 
 
-<!-- Modal add topics and subtopics -->
+<!-- Modal add topics and subtopics 
 <div class="modal fade modalAddTopicsAnd modal-topics-expert" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -284,8 +284,9 @@ style="overflow-x: hidden !important;">
         </div>
     </div>
 </div>
+-->
 
-<!-- Modal add Expert -->
+<!-- Modal add Expert 
 <div class="modal fade modalAddExpert modal-topics-expert" id="modalExpert" tabindex="-1" role="dialog" aria-labelledby="modalExpertLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -408,3 +409,4 @@ style="overflow-x: hidden !important;">
         </div>
     </div>
 </div>
+-->
