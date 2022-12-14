@@ -832,7 +832,6 @@ else if (isset($note_skill_new)){
     else
         $skills = $bunch;
 
-    var_dump($skills);
     update_field('skills', $skills, 'user_' . $user_id);
     $message = '/dashboard/user/settings/?message=Note updated sucessfully'; 
     
@@ -936,8 +935,7 @@ else if(isset($starter)){
     // get responses
     //$response_customer = curl_exec($ch);
     $response_product = curl_exec($chp);
-    $response_product = 1;
-    if ($response_product === false) {
+    if($response_product === false) {
         $response_customer = curl_error($ch);
         $response_product = curl_error($ch);
         $error = true;
@@ -950,7 +948,7 @@ else if(isset($starter)){
 
         // get product_id
         $data_response_product = json_decode( $response_product, true );
-        $product_id = $response_product['id'];
+        $product_id = $data_response_product['id'];
 
         /*
         ** Create subscription
