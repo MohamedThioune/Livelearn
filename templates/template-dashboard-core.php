@@ -542,31 +542,34 @@ else if(isset($referee_employee)){
     
     if(!empty($selected_members))
         foreach($selected_members as $expert)
-            if(!in_array($expert, $allocution)){
-                array_push($allocution, $expert);
-                $posts = get_field('kennis_video', 'user_' . $expert);
-               
-                //Data to create the feedback
-                $post_data = array(
-                    'post_title' => $title_feedback,
-                    'post_author' => $expert,
-                    'post_type' => 'feedback',
-                    'post_status' => 'publish'
-                    );
+            if(empty($allocution))
+                if(in_array($expert, $allocution))
+                    continue;
 
-                //Create
-                $post_id = wp_insert_post($post_data);
-                //Add further informations for feedback
-                update_field('onderwerp_feedback', $onderwerp_feedback, $post_id);
-                update_field('manager_feedback', $manager->ID, $post_id);
-                update_field('type_feedback', $type, $post_id);
-                update_field('beschrijving_feedback', nl2br($beschrijving_feedback), $post_id);
+            array_push($allocution, $expert);
+            $posts = get_field('kennis_video', 'user_' . $expert);
+        
+            //Data to create the feedback
+            $post_data = array(
+                'post_title' => $title_feedback,
+                'post_author' => $expert,
+                'post_type' => 'feedback',
+                'post_status' => 'publish'
+                );
 
-                if(!empty($posts))
-                    array_push($posts, get_post($course_id));
+            //Create
+            $post_id = wp_insert_post($post_data);
+            //Add further informations for feedback
+            update_field('onderwerp_feedback', $onderwerp_feedback, $post_id);
+            update_field('manager_feedback', $manager->ID, $post_id);
+            update_field('type_feedback', $type, $post_id);
+            update_field('beschrijving_feedback', nl2br($beschrijving_feedback), $post_id);
 
-                update_field('kennis_video', $posts, 'user_' . $expert);
-            }
+            if(!empty($posts))
+                array_push($posts, get_post($course_id));
+
+            update_field('kennis_video', $posts, 'user_' . $expert);
+       
 
     //Adding new subtopics on course
     update_field('allocation', $allocution, $course_id);
