@@ -545,6 +545,8 @@ else if(isset($referee_employee)){
             if(!empty($allocution))
                 if(in_array($expert, $allocution))
                     continue;
+            else
+                $allocution = array();
 
             array_push($allocution, $expert);
             $posts = get_field('kennis_video', 'user_' . $expert);
