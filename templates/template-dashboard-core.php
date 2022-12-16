@@ -542,7 +542,7 @@ else if(isset($referee_employee)){
     
     if(!empty($selected_members))
         foreach($selected_members as $expert)
-            if(empty($allocution))
+            if(!empty($allocution))
                 if(in_array($expert, $allocution))
                     continue;
 
