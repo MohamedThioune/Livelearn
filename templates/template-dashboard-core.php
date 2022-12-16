@@ -548,6 +548,8 @@ else if(isset($referee_employee)){
             else
                 $allocution = array();
 
+            var_dump($allocution);
+
             array_push($allocution, $expert);
             $posts = get_field('kennis_video', 'user_' . $expert);
         
@@ -559,6 +561,7 @@ else if(isset($referee_employee)){
                 'post_status' => 'publish'
                 );
 
+            
             //Create
             $post_id = wp_insert_post($post_data);
             //Add further informations for feedback
@@ -581,7 +584,7 @@ else if(isset($referee_employee)){
     else if($path == "course")
         $message = get_permalink($course_id) . '/?message=Allocution successfully'; 
 
-    header("Location: ". $message);
+    //header("Location: ". $message);
 }
 
 else if(isset($databank)){
