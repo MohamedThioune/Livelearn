@@ -1004,11 +1004,6 @@ else if(isset($starter)){
                     'product_id' => $product_id,
                     'quantity'   => $team
                 ],
-                [
-                    'product_id'   => $product_id,
-                    'variation_id' => 0,
-                    'quantity'     => $team
-                ]
             ],
             'shipping_lines' => [
                 [
@@ -1057,7 +1052,7 @@ else if(isset($starter)){
     }
     // close curl
     //curl_close( $ch );
-    
+    var_dump($message);
     $path_redirection = '/dashboard/company/profile-company/?message=' . $message; 
     header('Location: ' . $path_redirection);
 }
