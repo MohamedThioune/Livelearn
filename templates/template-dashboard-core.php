@@ -504,6 +504,9 @@ else if(isset($change_password)){
 }
 else if(isset($referee_employee)){    
     $allocution = get_field('allocation', $course_id);
+    if(!$allocution)
+        $allocution = array();
+
     $user_id = get_current_user_id();
 
     $posts = get_post($course_id);
@@ -541,14 +544,10 @@ else if(isset($referee_employee)){
 
     
     if(!empty($selected_members))
-        foreach($selected_members as $expert)
+        foreach($selected_members as $expert){
             if(!empty($allocution))
                 if(in_array($expert, $allocution))
                     continue;
-            else
-                $allocution = array();
-
-            var_dump($allocution);
 
             array_push($allocution, $expert);
             $posts = get_field('kennis_video', 'user_' . $expert);
@@ -574,7 +573,7 @@ else if(isset($referee_employee)){
                 array_push($posts, get_post($course_id));
 
             update_field('kennis_video', $posts, 'user_' . $expert);
-       
+        }
 
     //Adding new subtopics on course
     update_field('allocation', $allocution, $course_id);
