@@ -95,10 +95,10 @@ function allCourses ($data)
       'post_type' => array('course', 'post'),
       'post_status' => 'publish',
       'posts_per_page' => -1,
-      'order' => 'DESC',
+      'ordevalue'       => $course_type,
+      'order' => 'DESC' ,
       'meta_key'         => 'course_type',
-      'meta_value'       => $course_type,
-    );
+      'meta_value' => $course_type);
     $courses = get_posts($args);
     if (!$courses)
       return ['error' => "There is no courses related to this course type in the database! ","codeStatus" => 400];
@@ -135,7 +135,7 @@ function allCourses ($data)
       $courses[$i]->shortDescription = get_field('short_description',$courses[$i]->ID);
       $courses[$i]->courseType = get_field('course_type',$courses[$i]->ID);
       $courses[$i]->pathImage = get_field('url_image_xml',$courses[$i]->ID);
-      $courses[$i]->price = get_field('price',$courses[$i]->ID);
+      $courses[$i]->price = get_field('price',$courses[$i]->ID) ?? 0;
       $courses[$i]->youtubeVideos = get_field('youtube_videos',$courses[$i]->ID) ? get_field('youtube_videos',$courses[$i]->ID) : []  ;
       $courses[$i]->podcasts = get_field('podcasts',$courses[$i]->ID) ? get_field('podcasts',$courses[$i]->ID) : [];
       $courses[$i]->visibility = get_field('visibility',$courses[$i]->ID);
@@ -330,17 +330,23 @@ function get_saved_course()
         foreach ($courses as $key => $course) {
           $course->experts = array();
           $experts = get_field('experts',$course->ID);
-          if(!empty($experts))
-            foreach ($experts as $key => $expert) {
-              $expert = get_user_by( 'ID', $expert );
-              $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-              array_push($course->experts, new Expert ($expert,$experts_img));
-              }
+      if (!empty($experts))
+        foreach ($experts as $key => $expert) 
+        {
+          $expert = get_user_by('ID', $expert);
+          if (!empty ($expert) || $expert) {
+            $experts_img = get_field('profile_img', 'user_' . $expert->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            array_push($course->experts, new Expert($expert, $experts_img));
+          }
+        }
+          $author = get_user_by( 'ID', $course -> post_author  );
+          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $course-> author = new Expert ($author , $author_img);
           $course->longDescription = get_field('long_description',$course->ID);
           $course->shortDescription = get_field('short_description',$course->ID);
           $course->courseType = get_field('course_type',$course->ID);
           $course->pathImage = get_field('url_image_xml',$course->ID);
-          $course->price = get_field('price',$course->ID);
+          $course->price = get_field('price',$course->ID) ?? 0;
           $course->youtubeVideos = get_field('youtube_videos',$course->ID) ? get_field('youtube_videos',$course->ID) : []  ;
           $course->podcasts = get_field('podcasts',$course->ID) ? get_field('podcasts',$course->ID) : [];
           $course->visibility = get_field('visibility',$course->ID);
@@ -363,6 +369,30 @@ function get_saved_course()
   return [];
 }
 
+function save_course(WP_REST_Request $request)
+{
+  $current_user = $GLOBALS['user_id'];
+  $course_id = $request['course_id']!= null && !empty (get_post($request['course_id'])) ? $request['course_id'] : false ;
+  if (!$course_id)
+  {
+    $meta_key = 'course';
+    $course_saved = get_user_meta($current_user, $meta_key) ?? [] ;
+    //return $course_saved;
+    if (in_array($course_id, $course_saved)) {
+      add_user_meta($current_user, $meta_key, $course_id);
+      $message = 'Course saved with success';
+    }
+    else
+    {
+      delete_user_meta($current_user, $meta_key, $course_id);
+      $message = 'Course removed with success';
+    }
+    
+    return ['success' => $message];
+  }
+  return ['error' => 'This id course doesn\'t exist' ];
+}
+
 function get_course_by_id($data){
   if (isset ($data['id']) && !empty ($data['id']))
   {
@@ -373,16 +403,17 @@ function get_course_by_id($data){
       $course->experts = array();
           $experts = get_field('experts',$course->ID);
           if(!empty($experts))
-            foreach ($experts as $key => $expert) {
+            foreach ($experts as $key => $expert) 
+            {
               $expert = get_user_by( 'ID', $expert );
               $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
               array_push($course->experts, new Expert ($expert,$experts_img));
-              }
+            }
           $course->longDescription = get_field('long_description',$course->ID);
           $course->shortDescription = get_field('short_description',$course->ID);
           $course->courseType = get_field('course_type',$course->ID);
           $course->pathImage = get_field('url_image_xml',$course->ID);
-          $course->price = get_field('price',$course->ID);
+          $course->price = get_field('price',$course->ID) ?? 0;
           $course->youtubeVideos = get_field('youtube_videos',$course->ID) ? get_field('youtube_videos',$course->ID) : []  ;
           $course->podcasts = get_field('podcasts',$course->ID) ? get_field('podcasts',$course->ID) : [];
           $course->visibility = get_field('visibility',$course->ID);
@@ -408,10 +439,14 @@ function get_course_by_id($data){
 function get_liked_courses()
 {
   $user_id = $GLOBALS['user_id'];
+  //$args = 
+  // $courses = get_posts()
+  // get_field('favorited', $post->ID);
   return $user_id;
 }
 
-function recommended_course(){
+function recommended_course()
+{
 
   //The user
   $user = $GLOBALS['user_id'];
@@ -581,7 +616,7 @@ function recommended_course(){
                   if(!in_array($item['value'],$read_category))
                       array_push($read_category,$item['value']);
 
-      foreach($topics as $topic_value){
+      foreach($topics as $topic_value) {
           if($read_category)
               if(in_array($topic_value, $read_category) ){
                   if(!in_array($course->ID, $course_id)){
@@ -732,4 +767,28 @@ function recommended_course(){
       return $recommended_courses;
   else 
       return ["error" => "Nothing to show, don't ask me why 😅 !"];
+}
+
+function like_course ( WP_REST_Request $request) {
+  $current_user = $GLOBALS['user_id'];
+  $course = $request['course_id'] != null  ?  get_post($request['course_id']) : false;
+  if (!$course)
+    return ['error' => 'You have to fill the id of the course'];
+  $favorite = get_field('favorited', $course->ID) ?? [];
+  //return $favorite;
+  if (!in_array($current_user,$favorite))
+  {
+    array_push($favorite, $current_user);
+    update_field('favorited',$favorite,$course->ID);
+    return ['success' => 'Course liked with success'];
+  }
+  foreach ($favorite as $key => $user_id) {
+    if ($user_id == $current_user){
+      unset($favorite[$key]);
+      break;
+    }
+  }
+  update_field('favorited', $favorite , $course->ID);
+  return ['success' => 'Course disliked with success'];
+  
 }
