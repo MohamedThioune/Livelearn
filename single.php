@@ -349,7 +349,7 @@ $price = get_field('price', $post->ID) ?: 'Gratis';
                     </div>
 
                     <!-- Strat paywall -->      
-                    <?php
+                    <!-- php
                     if($price != 'Gratis')
                         echo '
                             <div class="paywall-block">
@@ -359,8 +359,7 @@ $price = get_field('price', $post->ID) ?: 'Gratis';
                                 <p class="text-not-sure-which">Not Sure which is right now for you ?
                                     <a href="">Discover the benefits of taking this course now</a> </p>
                             </div>';
-                    ?>
-
+                    ?> -->
                     <!-- End paywall -->
 
                 </div>

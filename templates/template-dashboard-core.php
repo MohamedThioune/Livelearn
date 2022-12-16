@@ -136,7 +136,6 @@ else if(isset($_POST['edit_education'])){
 
 }
 
-
 /*
 * * Push saved  
 */
@@ -505,6 +504,9 @@ else if(isset($change_password)){
 }
 else if(isset($referee_employee)){    
     $allocution = get_field('allocation', $course_id);
+    if(!$allocution)
+        $allocution = array();
+
     $user_id = get_current_user_id();
 
     $posts = get_post($course_id);
@@ -542,32 +544,36 @@ else if(isset($referee_employee)){
 
     
     if(!empty($selected_members))
-        foreach($selected_members as $expert)
-            if(!in_array($expert, $allocution)){
-                array_push($allocution, $expert);
-                $posts = get_field('kennis_video', 'user_' . $expert);
-               
-                //Data to create the feedback
-                $post_data = array(
-                    'post_title' => $title_feedback,
-                    'post_author' => $expert,
-                    'post_type' => 'feedback',
-                    'post_status' => 'publish'
-                    );
+        foreach($selected_members as $expert){
+            if(!empty($allocution))
+                if(in_array($expert, $allocution))
+                    continue;
 
-                //Create
-                $post_id = wp_insert_post($post_data);
-                //Add further informations for feedback
-                update_field('onderwerp_feedback', $onderwerp_feedback, $post_id);
-                update_field('manager_feedback', $manager->ID, $post_id);
-                update_field('type_feedback', $type, $post_id);
-                update_field('beschrijving_feedback', nl2br($beschrijving_feedback), $post_id);
+            array_push($allocution, $expert);
+            $posts = get_field('kennis_video', 'user_' . $expert);
+        
+            //Data to create the feedback
+            $post_data = array(
+                'post_title' => $title_feedback,
+                'post_author' => $expert,
+                'post_type' => 'feedback',
+                'post_status' => 'publish'
+                );
 
-                if(!empty($posts))
-                    array_push($posts, get_post($course_id));
+            
+            //Create
+            $post_id = wp_insert_post($post_data);
+            //Add further informations for feedback
+            update_field('onderwerp_feedback', $onderwerp_feedback, $post_id);
+            update_field('manager_feedback', $manager->ID, $post_id);
+            update_field('type_feedback', $type, $post_id);
+            update_field('beschrijving_feedback', nl2br($beschrijving_feedback), $post_id);
 
-                update_field('kennis_video', $posts, 'user_' . $expert);
-            }
+            if(!empty($posts))
+                array_push($posts, get_post($course_id));
+
+            update_field('kennis_video', $posts, 'user_' . $expert);
+        }
 
     //Adding new subtopics on course
     update_field('allocation', $allocution, $course_id);
@@ -577,7 +583,7 @@ else if(isset($referee_employee)){
     else if($path == "course")
         $message = get_permalink($course_id) . '/?message=Allocution successfully'; 
 
-    header("Location: ". $message);
+    //header("Location: ". $message);
 }
 
 else if(isset($databank)){
@@ -833,11 +839,229 @@ else if (isset($note_skill_new)){
     else
         $skills = $bunch;
 
-    var_dump($skills);
     update_field('skills', $skills, 'user_' . $user_id);
     $message = '/dashboard/user/settings/?message=Note updated sucessfully'; 
     
     header("Location: ". $message);
+}
+
+else if(isset($starter)){    
+    //Team members
+    $users = get_users();
+    $members = array();
+    foreach($users as $user){
+        $company_value = get_field('company',  'user_' . $user->ID);
+        if(!empty($company_value)){
+            $company_value_title = $company_value[0]->post_title;
+            if($company_value_title == $bedrjifsnaam)
+                array_push($members, $user);
+        }
+    }
+    $team = count($members);
+
+    //endpoint for product & customer 
+    $endpoint_customer = 'https://livelearn.nl/wp-json/wc/v3/customers';
+    $endpoint_product = 'https://livelearn.nl/wp-json/wc/v3/products';
+
+    $params = array( // login url params required to direct user to facebook and promt them with a login dialog
+        'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
+        'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
+    );
+
+    //create endpoint with params
+    $api_endpoint_customer = $endpoint_customer . '?' . http_build_query( $params );
+    $api_endpoint_product = $endpoint_product . '?' . http_build_query( $params );
+    $billing = (object) array(
+        'first_name' => $first_name,
+        'last_name' => $last_name,
+        'company' =>  $bedrjifsnaam,
+        'address_1' => $factuur_address,
+        'address_2' => '',
+        'city' => 'San Francisco',
+        'state' => 'CA',
+        'postcode' => '94103',
+        'country' => 'US',
+        'email' => $email,
+        'phone' => "(31) 6 27 00 39 62"
+    );
+
+    $shipping = (object) array(
+        'first_name' => $first_name,
+        'last_name' => $last_name,
+        'company' =>  $bedrjifsnaam,
+        'address_1' => $factuur_address,
+        'address_2' => '',
+        'city' => 'San Francisco',
+        'state' => 'CA',
+        'postcode' => '94103',
+        'country' => 'US'
+    );
+
+    $data =  [
+        'email' => 'daniel@livelearn.nl',
+        'first_name' => 'Daniel',
+        'last_name' => 'Van Der Kolk',
+        'username' => 'Daniel.Van',
+        'billing' => $billing,
+        'shipping' => $shipping,
+    ];
+
+    $data_product = [
+        'name' => $bedrjifsnaam ." subscription",
+        'type' => 'simple',
+        'regular_price' => '5.00',
+        'description' => 'No short description',
+        'short_description' => 'No long description',
+        'categories' => [],
+        'images' => []
+    ];
+
+    // initialize curl
+    $ch = curl_init();
+    $chp = curl_init();
+    
+    // set other curl options customer
+    curl_setopt($ch, CURLOPT_URL, $api_endpoint_customer);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
+
+    // set other curl options customer
+    curl_setopt($chp, CURLOPT_URL, $api_endpoint_product);
+    curl_setopt($chp, CURLOPT_POST, true);
+    curl_setopt($chp, CURLOPT_POSTFIELDS, http_build_query($data_product));
+    curl_setopt($chp, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($chp, CURLOPT_FOLLOWLOCATION, TRUE);
+    curl_setopt($chp, CURLOPT_RETURNTRANSFER, true );
+
+    $httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
+    $httpCodeP = curl_getinfo($chp , CURLINFO_HTTP_CODE); // this results 0 every time
+
+    // get responses
+    //$response_customer = curl_exec($ch);
+    $response_product = curl_exec($chp);
+    if($response_product === false) {
+        $response_customer = curl_error($ch);
+        $response_product = curl_error($ch);
+        $error = true;
+        $message = "Something went wrong !";
+    }
+    else{
+        // get customer_id
+        $data_response = json_decode( $response_customer, true );
+        $customer_id = 77;
+
+        // get product_id
+        $data_response_product = json_decode( $response_product, true );
+        $product_id = $data_response_product['id'];
+
+        /*
+        ** Create subscription
+        */ 
+        $endpoint = 'https://livelearn.nl/wp-json/wc/v3/subscriptions';
+
+        $params = array( // login url params required to direct user to facebook and promt them with a login dialog
+            'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
+            'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
+        );
+
+        //create endpoint with params
+        $api_endpoint = $endpoint . '?' . http_build_query( $params );
+        $date_now = date('Y-m-d H:i:s');
+        $date_now_timestamp = strtotime($date_now);
+        $next_payment_date = date("Y-m-d H:i:s", strtotime("+1 month", $date_now_timestamp));
+
+        $data = [
+            'customer_id'       => $customer_id,
+            'status'            => 'active',
+            'billing_period'    => 'month',
+            'billing_interval'  =>  1,
+            'start_date'        =>  $date_now,
+            'next_payment_date' => $next_payment_date,
+            'payment_method'    => 'ideal',
+            
+            'billing' => [
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'company' =>  $company_connected,
+                'address_1' => $factuur_address,
+                'address_2' => '',
+                'city' => 'San Francisco',
+                'state' => 'CA',
+                'postcode' => '94103',
+                'country' => 'US',
+                'email' => $email,
+                'phone' => $phone,
+            ],
+            'shipping' => [
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'company' =>  $company_connected,
+                'address_1' => $factuur_address,
+                'address_2' => '',
+                'city' => 'San Francisco',
+                'state' => 'CA',
+                'postcode' => '94103',
+                'country' => 'US'
+            ],
+            'line_items' => [
+                [
+                    'product_id' => $product_id,
+                    'quantity'   => $team
+                ],
+            ],
+            'shipping_lines' => [
+                [
+                    'method_id'    => 'flat_rate',
+                    'method_title' => 'Flat Rate',
+                    'total'        => '10'
+                ]
+            ],
+            'meta_data' => [
+                [
+                    'key'   => '_custom_subscription_meta',
+                    'value' => 'custom meta'
+                ]
+            ]
+        ];
+
+        // close curl
+        curl_close( $ch );
+
+        // initialize curl
+        $ch = curl_init();
+        
+        // set other curl options customer
+        curl_setopt($ch, CURLOPT_URL, $api_endpoint);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
+
+        $httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
+
+        // get responses
+        $response = curl_exec($ch);
+        if ($response === false) {
+            $response = curl_error($ch);
+            $error = true;
+            $message = "Something went wrong !";
+            echo stripslashes($response);
+        }
+        else
+            $message = "Subscription applied succesfully !";
+
+        // $data_response = json_decode( $response, true );
+        // var_dump($data_response);
+    }
+    // close curl
+    //curl_close( $ch );
+    var_dump($message);
+    $path_redirection = '/dashboard/company/profile-company/?message=' . $message; 
+    header('Location: ' . $path_redirection);
 }
 
 
