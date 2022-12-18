@@ -8,6 +8,8 @@ if(!empty($company) ){
 
 $telnr = get_field('telnr', 'user_' . $current_user->ID);
 
+if(isset($_POST['first_name']))
+    header('Location: /dashboard/company/profile-company/?message=' . $message);
 ?>
 <style>
     .nav-tabs .nav-link.active {
@@ -36,7 +38,7 @@ $telnr = get_field('telnr', 'user_' . $current_user->ID);
     </div>
     <div class="row ">
         <div class="col-md-12">
-            <?php if(isset($message)) echo "<span class='alert alert-success'>" . $message . "</span><br><br>" ; ?>
+            <?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>" ; ?>
 
             <!-- Tabs navs -->
             <ul class="headTabsCompany" role="tablist">
