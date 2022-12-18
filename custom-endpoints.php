@@ -18,17 +18,17 @@ class Expert
 
 class Course
 {
-  public   $id;
-  public   $date;
-  public   $title;
-  public   $pathImage;
-  public   $shortDescription;
-  public   $longDescription;
-  public      $price;
-  public   $tags;
-  public   $courseType;
-  public   $data_locaties_xml;
-  public   $youtubeVideos;
+  public $id;
+  public $date;
+  public $title;
+  public $pathImage;
+  public $shortDescription;
+  public $longDescription;
+  public $price;
+  public $tags;
+  public $courseType;
+  public $data_locaties_xml;
+  public $youtubeVideos;
   public $experts;
   public $visibility;
   public $podcasts;
@@ -512,7 +512,6 @@ function recommended_course(){
   $global_courses = get_posts($args);
   
   foreach ($global_courses as $key => $course) {    
-      //visibility
 
       /*
       *  Date and Location
@@ -552,6 +551,7 @@ function recommended_course(){
 
       //Course Type
       $course_type = get_field('course_type', $course->ID);
+      
       if(empty($data))
           null;
       else if(!empty($data) && $course_type != "Video" && $course_type != "Artikel")
@@ -613,9 +613,24 @@ function recommended_course(){
                   }
               }
           }
-
+      
+      /*
+      * Thumbnails
+      */
+      $course->image = get_field('preview', $course->ID)['url'];
+      if(!$course->image){
+          $course->image = get_the_post_thumbnail_url($course->ID);
+          if(!$course->image)
+              $course->image = get_field('url_image_xml', $course->ID);
+                  if(!$course->image)
+                      $course->image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+      }
+      
+      //Image author
+      $course->author_image = get_field('profile_img', 'user_' . $course->post_author);
+      $course->author_image = $course->author_image ?: get_stylesheet_directory_uri() . '/img/user.png';
   }
-  return $courses;
+
   $courses = array_slice($courses, 0, 150);
 
   //Views
@@ -646,24 +661,6 @@ function recommended_course(){
               $points = 0;
               $course->image = "";
               $course->author_image = "";
-
-              $course_type = get_field('course_type', $course->ID);
-
-              /*
-              * Thumbnails
-              */
-              $course->image = get_field('preview', $course->ID)['url'];
-              if(!$course->image){
-                  $course->image = get_the_post_thumbnail_url($course->ID);
-                  if(!$course->image)
-                      $course->image = get_field('url_image_xml', $course->ID);
-                          if(!$course->image)
-                              $course->image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-              }
-              
-              //Image author
-              $course->author_image = get_field('profile_img', 'user_' . $course->post_author);
-              $course->author_image = $course->author_image ?: get_stylesheet_directory_uri() . '/img/user.png';
 
               //Read category viewed
               $read_category_view = array();
