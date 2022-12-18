@@ -551,7 +551,7 @@ function recommended_course(){
 
       //Course Type
       $course_type = get_field('course_type', $course->ID);
-      
+
       if(empty($data))
           null;
       else if(!empty($data) && $course_type != "Video" && $course_type != "Artikel")
@@ -564,6 +564,22 @@ function recommended_course(){
       /*
       * End
       */
+
+      /*
+      * Thumbnails
+      */
+      $course->image = get_field('preview', $course->ID)['url'];
+      if(!$course->image){
+          $course->image = get_the_post_thumbnail_url($course->ID);
+          if(!$course->image)
+              $course->image = get_field('url_image_xml', $course->ID);
+                  if(!$course->image)
+                      $course->image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+      }
+      
+      //Image author
+      $course->author_image = get_field('profile_img', 'user_' . $course->post_author);
+      $course->author_image = $course->author_image ?: get_stylesheet_directory_uri() . '/img/user.png';
 
       //Preferences categories
       $category_default = get_field('categories', $course->ID);
@@ -613,22 +629,6 @@ function recommended_course(){
                   }
               }
           }
-      
-      /*
-      * Thumbnails
-      */
-      $course->image = get_field('preview', $course->ID)['url'];
-      if(!$course->image){
-          $course->image = get_the_post_thumbnail_url($course->ID);
-          if(!$course->image)
-              $course->image = get_field('url_image_xml', $course->ID);
-                  if(!$course->image)
-                      $course->image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-      }
-      
-      //Image author
-      $course->author_image = get_field('profile_img', 'user_' . $course->post_author);
-      $course->author_image = $course->author_image ?: get_stylesheet_directory_uri() . '/img/user.png';
   }
 
   $courses = array_slice($courses, 0, 150);
