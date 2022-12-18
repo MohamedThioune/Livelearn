@@ -583,7 +583,7 @@ else if(isset($referee_employee)){
     else if($path == "course")
         $message = get_permalink($course_id) . '/?message=Allocution successfully'; 
 
-    //header("Location: ". $message);
+    header("Location: ". $message);
 }
 
 else if(isset($databank)){
@@ -971,7 +971,8 @@ else if(isset($starter)){
         $api_endpoint = $endpoint . '?' . http_build_query( $params );
         $date_now = date('Y-m-d H:i:s');
         $date_now_timestamp = strtotime($date_now);
-        $next_payment_date = date("Y-m-d H:i:s", strtotime("+1 month", $date_now_timestamp));
+        $trial_end_date = date("Y-m-d H:i:s", strtotime("+3 month", $date_now_timestamp));
+        $next_payment_date = date($trial_end_date, strtotime("+1 day", strtotime($trial_end_date)));
 
         $data = [
             'customer_id'       => $customer_id,
@@ -979,13 +980,14 @@ else if(isset($starter)){
             'billing_period'    => 'month',
             'billing_interval'  =>  1,
             'start_date'        =>  $date_now,
+            'trial_end_date' => $trial_end_date,
             'next_payment_date' => $next_payment_date,
             'payment_method'    => 'ideal',
             
             'billing' => [
                 'first_name' => $first_name,
                 'last_name' => $last_name,
-                'company' =>  $company_connected,
+                'company' =>  $bedrjifsnaam,
                 'address_1' => $factuur_address,
                 'address_2' => '',
                 'city' => 'San Francisco',
@@ -998,7 +1000,7 @@ else if(isset($starter)){
             'shipping' => [
                 'first_name' => $first_name,
                 'last_name' => $last_name,
-                'company' =>  $company_connected,
+                'company' =>  $bedrjifsnaam,
                 'address_1' => $factuur_address,
                 'address_2' => '',
                 'city' => 'San Francisco',
@@ -1012,13 +1014,7 @@ else if(isset($starter)){
                     'quantity'   => $team
                 ],
             ],
-            'shipping_lines' => [
-                [
-                    'method_id'    => 'flat_rate',
-                    'method_title' => 'Flat Rate',
-                    'total'        => '10'
-                ]
-            ],
+            'shipping_lines' => [],
             'meta_data' => [
                 [
                     'key'   => '_custom_subscription_meta',
@@ -1054,14 +1050,11 @@ else if(isset($starter)){
         else
             $message = "Subscription applied succesfully !";
 
-        // $data_response = json_decode( $response, true );
-        // var_dump($data_response);
     }
+    
     // close curl
-    //curl_close( $ch );
-    var_dump($message);
-    $path_redirection = '/dashboard/company/profile-company/?message=' . $message; 
-    header('Location: ' . $path_redirection);
+    curl_close( $ch );
+
 }
 
 
