@@ -662,6 +662,22 @@ function recommended_course(){
               $course->image = "";
               $course->author_image = "";
 
+              /*
+              * Thumbnails
+              */
+              $course->image = get_field('preview', $course->ID)['url'];
+              if(!$course->image){
+                  $course->image = get_the_post_thumbnail_url($course->ID);
+                  if(!$course->image)
+                      $course->image = get_field('url_image_xml', $course->ID);
+                          if(!$course->image)
+                              $course->image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+              }
+              
+              //Image author
+              $course->author_image = get_field('profile_img', 'user_' . $course->post_author);
+              $course->author_image = $course->author_image ?: get_stylesheet_directory_uri() . '/img/user.png';
+
               //Read category viewed
               $read_category_view = array();
               $category_default = get_field('categories', $view['course']->ID);
