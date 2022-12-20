@@ -15,6 +15,7 @@
         $company_connected = $company->post_title;
     }
 
+    var_dump($company_connected);
     /*
     ** List subscriptions
     */ 
@@ -45,18 +46,20 @@
     if ($response === false) {
         $response = curl_error($ch);
         $error = true;
-        echo stripslashes($response);
+        //echo stripslashes($response);
+        $access_granted = false;
     }
     else{
         $data_response = json_decode( $response, true );
         if(!empty($data_response))
             foreach($data_response as $subscription)
-                if($subscription['billing']['company'] == $company_connected && $subscription['status'] == 'active'){
+                if( strval($subscription['billing']['company']) == $company_connected && $subscription['status'] == "active"){
                     $access_granted = true;
                     break;
                 }                    
     }
 
+    var_dump($access_granted);
     if ( !in_array( 'hr', $user->roles ) && !in_array( 'manager', $user->roles ) && !in_array( 'administrator', $user->roles ) && $user->roles != 'administrator') 
         header('Location: /dashboard/user');
 
@@ -66,6 +69,8 @@
 
     if (!$access_granted)
         header('Location: /dashboard/company/profile-company');
+
+    
 
 ?>
 <section id="sectionDashboard1" class="sidBarDashboard sidBarDashboardIndividual" name="section1"
