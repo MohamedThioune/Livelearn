@@ -845,7 +845,10 @@ else if (isset($note_skill_new)){
     header("Location: ". $message);
 }
 
-else if(isset($starter)){    
+else if(isset($starter)){
+    //Current user
+    $user_id = get_current_user_id();
+
     //Team members
     $users = get_users();
     $members = array();
@@ -859,54 +862,18 @@ else if(isset($starter)){
     }
     $team = count($members);
 
-    //endpoint for product & customer 
-    $endpoint_customer = 'https://livelearn.nl/wp-json/wc/v3/customers';
+    //endpoint for product 
     $endpoint_product = 'https://livelearn.nl/wp-json/wc/v3/products';
 
-    $params = array( // login url params required to direct user to facebook and promt them with a login dialog
+    $params = array( 
         'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
         'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
     );
 
     //create endpoint with params
-    $api_endpoint_customer = $endpoint_customer . '?' . http_build_query( $params );
-    $api_endpoint_product = $endpoint_product . '?' . http_build_query( $params );
-    $billing = (object) array(
-        'first_name' => $first_name,
-        'last_name' => $last_name,
-        'company' =>  $bedrjifsnaam,
-        'address_1' => $factuur_address,
-        'address_2' => '',
-        'city' => 'San Francisco',
-        'state' => 'CA',
-        'postcode' => '94103',
-        'country' => 'US',
-        'email' => $email,
-        'phone' => "(31) 6 27 00 39 62"
-    );
+    $api_endpoint = $endpoint_product . '?' . http_build_query( $params );
 
-    $shipping = (object) array(
-        'first_name' => $first_name,
-        'last_name' => $last_name,
-        'company' =>  $bedrjifsnaam,
-        'address_1' => $factuur_address,
-        'address_2' => '',
-        'city' => 'San Francisco',
-        'state' => 'CA',
-        'postcode' => '94103',
-        'country' => 'US'
-    );
-
-    $data =  [
-        'email' => 'daniel@livelearn.nl',
-        'first_name' => 'Daniel',
-        'last_name' => 'Van Der Kolk',
-        'username' => 'Daniel.Van',
-        'billing' => $billing,
-        'shipping' => $shipping,
-    ];
-
-    $data_product = [
+    $data = [
         'name' => $bedrjifsnaam ." subscription",
         'type' => 'simple',
         'regular_price' => '5.00',
@@ -917,42 +884,26 @@ else if(isset($starter)){
     ];
 
     // initialize curl
-    $ch = curl_init();
     $chp = curl_init();
-    
-    // set other curl options customer
-    curl_setopt($ch, CURLOPT_URL, $api_endpoint_customer);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
 
-    // set other curl options customer
-    curl_setopt($chp, CURLOPT_URL, $api_endpoint_product);
+    // set other curl options product
+    curl_setopt($chp, CURLOPT_URL, $api_endpoint);
     curl_setopt($chp, CURLOPT_POST, true);
-    curl_setopt($chp, CURLOPT_POSTFIELDS, http_build_query($data_product));
+    curl_setopt($chp, CURLOPT_POSTFIELDS, http_build_query($data));
     curl_setopt($chp, CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($chp, CURLOPT_FOLLOWLOCATION, TRUE);
     curl_setopt($chp, CURLOPT_RETURNTRANSFER, true );
 
-    $httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
-    $httpCodeP = curl_getinfo($chp , CURLINFO_HTTP_CODE); // this results 0 every time
+    $httpCode = curl_getinfo($chp , CURLINFO_HTTP_CODE); // this results 0 every time
 
     // get responses
-    //$response_customer = curl_exec($ch);
     $response_product = curl_exec($chp);
     if($response_product === false) {
-        $response_customer = curl_error($ch);
-        $response_product = curl_error($ch);
+        $response_product = curl_error($chp);
         $error = true;
         $message = "Something went wrong !";
     }
     else{
-        // get customer_id
-        $data_response = json_decode( $response_customer, true );
-        $customer_id = 77;
-
         // get product_id
         $data_response_product = json_decode( $response_product, true );
         $product_id = $data_response_product['id'];
@@ -971,42 +922,42 @@ else if(isset($starter)){
         $api_endpoint = $endpoint . '?' . http_build_query( $params );
         $date_now = date('Y-m-d H:i:s');
         $date_now_timestamp = strtotime($date_now);
-        $trial_end_date = date("Y-m-d H:i:s", strtotime("+3 month", $date_now_timestamp));
-        $next_payment_date = date($trial_end_date, strtotime("+1 day", strtotime($trial_end_date)));
+        $trial_end_date = date("Y-m-d H:i:s", strtotime("+14 day", $date_now_timestamp));
+        $next_payment_date = date($trial_end_date, strtotime("+1 month", strtotime($trial_end_date)));
 
         $data = [
-            'customer_id'       => $customer_id,
+            'customer_id'       => $user,
             'status'            => 'active',
             'billing_period'    => 'month',
             'billing_interval'  =>  1,
-            'start_date'        =>  $date_now,
-            'trial_end_date' => $trial_end_date,
+            'start_date'        => $date_now,
+            'trial_end_date'    => $trial_end_date,
             'next_payment_date' => $next_payment_date,
             'payment_method'    => 'ideal',
             
             'billing' => [
                 'first_name' => $first_name,
-                'last_name' => $last_name,
-                'company' =>  $bedrjifsnaam,
-                'address_1' => $factuur_address,
-                'address_2' => '',
-                'city' => 'San Francisco',
-                'state' => 'CA',
-                'postcode' => '94103',
-                'country' => 'US',
-                'email' => $email,
-                'phone' => $phone,
+                'last_name'  => $last_name,
+                'company'    =>  $bedrjifsnaam,
+                'address_1'  => $factuur_address,
+                'address_2'  => '',
+                'city'     => '', //place
+                'state'    => 'NL-DR',
+                'postcode' => '1011',
+                'country'  => 'NL',
+                'email'    => $email,
+                'phone'    => $phone,
             ],
             'shipping' => [
                 'first_name' => $first_name,
-                'last_name' => $last_name,
-                'company' =>  $bedrjifsnaam,
-                'address_1' => $factuur_address,
-                'address_2' => '',
-                'city' => 'San Francisco',
-                'state' => 'CA',
-                'postcode' => '94103',
-                'country' => 'US'
+                'last_name'  => $last_name,
+                'company'    =>  $bedrjifsnaam,
+                'address_1'  => $factuur_address,
+                'address_2'  => '',
+                'city'     => '', //place
+                'state'    => 'NL-DR',
+                'postcode' => '1011',
+                'country'  => 'NL'
             ],
             'line_items' => [
                 [
