@@ -37,6 +37,9 @@ else
 /*
 * * End  
 */
+
+echo "<input type='hidden' id='user_id' value='" . $user->ID . "'>";
+
 ?>
 <section id="sectionDashboard1" class="sidBarDashboard sidBarDashboardIndividual" name="section1"
 style="overflow-x: hidden !important;">
@@ -134,29 +137,57 @@ style="overflow-x: hidden !important;">
                     $image_author = get_field('profile_img',  'user_' . $expert);
                     $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/iconeExpert.png';
                     echo "
-                    <a href='/user-overview/?id=". $expert ."' class='d-flex'>
-                        <div class='iconeElement'>
-                            <img src='". $image_author ."' alt='image utilisateur'>
-                        </div>
-                        <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
-                    </a><br>";
+                        <a href='/user-overview/?id=". $expert ."' class='d-flex'>
+                            <div class='iconeElement'>
+                                <img src='". $image_author ."' alt='image utilisateur'>
+                            </div>
+                            <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
+                        </a><br>";
                     
                 }
             ?>
         </li>
-
     </ul>
 </section>
 
 
 
+<?php
+    $categories = array();
 
-<!-- Modal add topics and subtopics 
+    $cats = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'orderby'    => 'name',
+        'exclude' => 'Uncategorized',
+        'parent'     => 0,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    foreach($cats as $category){
+        $cat_id = strval($category->cat_ID);
+        $category = intval($cat_id);
+        array_push($categories, $category);
+    }
+
+    //Topics
+    $topics = array();
+    foreach ($categories as $value){
+        $merged = get_categories( array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $value,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ) );
+
+        if(!empty($merged))
+            $topics = array_merge($topics, $merged); 
+    }
+?>
+<!-- Modal add topics and subtopics -->
 <div class="modal fade modalAddTopicsAnd modal-topics-expert" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Select your Topics and subtopics</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Maak en keuze :</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -164,127 +195,28 @@ style="overflow-x: hidden !important;">
             <div class="modal-body">
                 <div class="content-topics">
                     <ul class="unstyled centered">
-                        <li>
-                            <input class="styled-checkbox" id="styled-checkbox-1" type="checkbox" value="value1">
-                            <label for="styled-checkbox-1">(Detail) Handel</label>
-                        </li>
-                        <li>
-                            <input class="styled-checkbox" id="Handel" type="checkbox" value="Handel">
-                            <label for="Handel">(Detail) Handel</label>
-                        </li>
-                        <li>
-                            <input class="styled-checkbox" id="Groen" type="checkbox" value="Groen">
-                            <label for="Groen">Agrarisch / Groen</label>
-                        </li>
-                        <li>
-                            <input class="styled-checkbox" id="Bouw" type="checkbox" value="Bouw">
-                            <label for="Bouw">Bouw</label>
-                        </li>
-                        <li>
-                            <input class="styled-checkbox" id="Cultureel" type="checkbox" value="Cultureel">
-                            <label for="Cultureel">Cultureel</label>
-                        </li>
-                        <li>
-                            <input class="styled-checkbox" id="Human-resources" type="checkbox" value="Human-resources">
-                            <label for="Human-resources">Human resources</label>
-                        </li>
-                        <li>
-                            <input class="styled-checkbox" id="Informatie-management" type="checkbox" value="Informatie-management">
-                            <label for="Informatie-management">Informatie management</label>
-                        </li>
+                        <?php
+                            foreach($topics as $key => $topic)
+                                echo '<li>
+                                        <input class="styled-checkbox topics" id="styled-checkbox-'. $key .'" type="checkbox" value="' . $topic->cat_ID . '">
+                                        <label for="styled-checkbox-'. $key .'">' . $topic->cat_name . '</label>
+                                      </li>';
+                        ?>
                     </ul>
                     <div class="mt-2">
-                        <button type="button" class="btn btnNext">Next</button>
+                        <button type="button" id="btn-topics" class="btn btnNext">Next</button>
                     </div>
                 </div>
                 <div class="content-subTopics">
-                  <div class="d-flex justify-content-between align-items-center mb-4">
-                      <ul>
-                          <li class="selectAll">
-                              <input class="styled-checkbox" id="all" type="checkbox" value="all">
-                              <label for="all">Select All</label>
-                          </li>
-                      </ul>
-                      <div class="position-relative">
-                          <input type="search" placeholder="Search for your favorite Subtopics" class="searchSubTopics">
-                          <img class="searchImg" src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png" alt="">
-                      </div>
-                  </div>
-                  <div class="subtTopics-element">
-                    <div class="d-flex align-items-center">
-                        <div class="checkbox rows">
-                            <input class="styled-checkbox" id="Audicien" type="checkbox" value="Audicien">
-                            <label for="Audicien"></label>
-                        </div>
-                        <div class="img">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/detail-handel.jpeg" alt="">
-                        </div>
-                        <p class="subTitleText">Audicien</p>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <a href="">See</a>
-                        <button class="btn btnFollowSubTopic">Follow</button>
-                    </div>
-                  </div>
-                  <div class="subtTopics-element">
-                    <div class="d-flex align-items-center">
-                        <div class="checkbox rows">
-                            <input class="styled-checkbox" id="Bakker" type="checkbox" value="Bakker">
-                            <label for="Bakker"></label>
-                        </div>
-                        <div class="img">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/detail-handel.jpeg" alt="">
-                        </div>
-                        <p class="subTitleText">Bakker</p>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <a href="">See</a>
-                        <button class="btn btnFollowSubTopic">Follow</button>
-                    </div>
-                  </div>
-                  <div class="subtTopics-element">
-                    <div class="d-flex align-items-center">
-                        <div class="checkbox rows">
-                            <input class="styled-checkbox" id="Bloemist" type="checkbox" value="Bloemist">
-                            <label for="Bloemist"></label>
-                        </div>
-                        <div class="img">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/detail-handel.jpeg" alt="">
-                        </div>
-                        <p class="subTitleText">Bloemist</p>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <a href="">See</a>
-                        <button class="btn btnFollowSubTopic">Follow</button>
-                    </div>
-                  </div>
-                  <div class="subtTopics-element">
-                    <div class="d-flex align-items-center">
-                        <div class="checkbox rows">
-                            <input class="styled-checkbox" id="Caissiere" type="checkbox" value="Caissiere">
-                            <label for="Caissiere"></label>
-                        </div>
-                        <div class="img">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/detail-handel.jpeg" alt="">
-                        </div>
-                        <p class="subTitleText">Caissiere</p>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <a href="">See</a>
-                        <button class="btn btnFollowSubTopic">Follow</button>
-                    </div>
-                  </div>
-                    <div class="mt-3 mb-0">
-                        <button type="button" id="backTopics" class="btn bg-dark btnNext mr-3 mb-0">Back</button>
-                        <button type="button" class="btn btnNext mb-0" data-dismiss="modal">Save</button>
-                    </div>
+                    <form action="" method="post" id="autocomplete_tags">
+                    </form>
                 </div>
             </div>
 
         </div>
     </div>
 </div>
--->
+
 
 <!-- Modal add Expert 
 <div class="modal fade modalAddExpert modal-topics-expert" id="modalExpert" tabindex="-1" role="dialog" aria-labelledby="modalExpertLabel" aria-hidden="true">

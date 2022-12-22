@@ -972,37 +972,69 @@ if(isset($_GET['message']))
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 
 <script>
-        $(".btn_favourite").click((e)=>
-        {
-            btn_id = e.target.id;
-            meta_key = btn_id.split("_")[2];
-            id = btn_id.split("_")[1];
-            user_id = btn_id.split("_")[0];
+    $(".btn_favourite").click((e)=>
+    {
+        btn_id = e.target.id;
+        meta_key = btn_id.split("_")[2];
+        id = btn_id.split("_")[1];
+        user_id = btn_id.split("_")[0];
 
-            console.log(e.target)
-            $.ajax({
-                url:"/like",
-                method:"post",
-                data:{
-                    meta_key : meta_key,
-                    id : id,
-                    user_id : user_id,
-                },
-                dataType:"text",
-                success: function(data){
-                    console.log(data);
-                    let src=$("#"+btn_id).attr("src");
-                    if(src=="<?php echo $like_src; ?>")
-                    {
-                        $("#"+btn_id).attr("src","<?php echo $dislike_src; ?>");
-                    }
-                    else
-                    {
-                        $("#"+btn_id).attr("src","<?php echo $like_src; ?>");
-                    }
+        console.log(e.target)
+        $.ajax({
+            url:"/like",
+            method:"post",
+            data:{
+                meta_key : meta_key,
+                id : id,
+                user_id : user_id,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                let src=$("#"+btn_id).attr("src");
+                if(src=="<?php echo $like_src; ?>")
+                {
+                    $("#"+btn_id).attr("src","<?php echo $dislike_src; ?>");
                 }
-            });
-        })
-    </script>
+                else
+                {
+                    $("#"+btn_id).attr("src","<?php echo $like_src; ?>");
+                }
+            }
+        });
+    })
+</script>
+
+<script>
+    var topics_selected = [];
+    $(".topics").click((e)=>{
+        let tags_id = e.target.value;
+        let if_exist = topics_selected.indexOf(tags_id);
+        if (if_exist > 0)
+            topics_selected.splice(if_exist, 1)
+        else 
+            topics_selected.push(tags_id);        
+    });
+
+    $("#btn-topics").click((e)=>
+    {
+        $(e.preventDefault())
+        var user_id = $("#user_id").val();
+
+        $.ajax({
+            url:"/topic-ajax-quick",
+            method:"post",
+            data:{
+                id : user_id,
+                topics : topics_selected
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete_tags').html(data);
+            }
+        });
+    })
+</script>
 
 

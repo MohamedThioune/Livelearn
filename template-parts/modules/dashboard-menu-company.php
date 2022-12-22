@@ -59,7 +59,6 @@
                 }                    
     }
 
-    var_dump($access_granted);
     if ( !in_array( 'hr', $user->roles ) && !in_array( 'manager', $user->roles ) && !in_array( 'administrator', $user->roles ) && $user->roles != 'administrator') 
         header('Location: /dashboard/user');
 
@@ -67,7 +66,7 @@
         if($option_menu[2] == 'profile-company')
             $access_granted = true;
 
-    if (!$access_granted)
+    if (!$access_granted && !in_array( 'administrator', $user->roles ))
         header('Location: /dashboard/company/profile-company');
 
     

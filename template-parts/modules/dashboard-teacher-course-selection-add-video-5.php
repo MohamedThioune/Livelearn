@@ -5,16 +5,10 @@
 */
 if (isset($_GET['edit']))
 {
-    
     $already_linked_tags = array();
-    if (get_field('categories',$_GET['id'])!=null)
-    {
+    if (get_field('categories',$_GET['id']) != null)
         foreach (get_field('categories',$_GET['id']) as $key => $value) 
-        {
             array_push($already_linked_tags,$value['value']);
-        } 
-    }
-    
 }
 
     /*
@@ -505,14 +499,14 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
 
 <script>
 
-var selected_subtopics_id=[];
+    var selected_subtopics_id=[];
     $(".selected").click((e)=>{
         let tags_id = e.target.value;
         let if_exist = selected_subtopics_id.indexOf(tags_id);
         if (if_exist > 0)
             selected_subtopics_id.splice(if_exist, 1)
         else 
-        selected_subtopics_id.push(tags_id);
+            selected_subtopics_id.push(tags_id);
         
     })
     
