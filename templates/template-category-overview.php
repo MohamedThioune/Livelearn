@@ -213,7 +213,6 @@ require($page);
         $image_category = get_field('image', 'category_'. $category);
         $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/placeholder.png';
 
-        //$logo_livelearn = get_stylesheet_directory_uri() . '/img/logoMobil.png';
         $logo_livelearn = get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
 
 
