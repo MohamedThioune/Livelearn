@@ -38,6 +38,20 @@ else
 * * End  
 */
 
+/*
+* * Get all experts
+*/
+$see_experts = get_users(
+    array(
+    'role__in' => ['author'],
+    'posts_per_page' => -1,
+    )
+);
+
+/*
+* * End  
+*/
+
 echo "<input type='hidden' id='user_id' value='" . $user->ID . "'>";
 
 ?>
@@ -218,24 +232,26 @@ style="overflow-x: hidden !important;">
 </div>
 
 
-<!-- Modal add Expert 
+<!-- Modal add Expert -->
 <div class="modal fade modalAddExpert modal-topics-expert" id="modalExpert" tabindex="-1" role="dialog" aria-labelledby="modalExpertLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Select your Experts / Opleiders</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Select your Experts</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="head">
+                    <!-- 
                     <ul>
                         <li class="selectAll">
                             <input class="styled-checkbox" id="allExpert" type="checkbox" value="allExpert">
                             <label for="allExpert">Select All</label>
                         </li>
                     </ul>
+
                     <div class="blockFilter">
                         <select class="form-select" aria-label="Default select example">
                             <option selected>Filter by category</option>
@@ -245,93 +261,61 @@ style="overflow-x: hidden !important;">
                             <option value="3">HR</option>
                             <option value="3">Food</option>
                         </select>
-                    </div>
+                    </div> 
+                    -->
                     <div class="blockSearch position-relative">
                         <input type="search" placeholder="Search your expert" class="searchSubTopics">
                         <img class="searchImg" src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png" alt="">
                     </div>
                 </div>
                 <div class="content-expert">
-                    <div class="expert-element rows2">
-                        <div class="d-flex align-items-center">
-                            <div class="checkB">
-                                <input class="styled-checkbox" id="Crypto-university" type="checkbox" value="Crypto university">
-                                <label for="Crypto-university"></label>
+                    <?php
+                    $saves_experts = get_user_meta($user_id, 'expert');
+                    foreach($see_experts as $key => $expert){
+                        if($key ==  20)
+                            continue;
+
+                        if($user->ID == $expert->ID)
+                            continue;
+
+                        $image_author = get_field('profile_img',  'user_' . $expert->ID);
+                        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                
+                    ?>
+                        <div class="expert-element rows2">
+                            <div class="d-flex align-items-center">
+                                <div class="checkB">
+                                    <input class="styled-checkbox" id="<?= $expert->display_name ?>" type="checkbox" value="<?= $expert->ID ?>">
+                                    <label for="<?= $expert->display_name ?>"></label>
+                                </div>
+                                <div class="img">
+                                    <img src="<?= $image_author ?>" alt="">
+                                </div>
+                                <p class="subTitleText nameExpert"><?= $expert->display_name; ?></p>
                             </div>
-                            <div class="img">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Crypto-university.png" alt="">
+                            <div class="d-flex align-items-center">
+                                <a href="/user-overview?id=<?= $expert->ID ?>">See</a>
+                                <form action="/dashboard/user/" method="POST">
+                                    <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
+                                    <input type="hidden" name="user_id" value="<?= $user->ID ?>" id="">
+                                    <input type="hidden" name="meta_key" value="expert" id="">
+                                    <div>
+                                        <?php
+                                        if(empty($saves_experts))
+                                            echo "<button type='submit' class='btn btnFollowSubTopic' name='interest_push'>Follow</button>"; 
+                                        else
+                                            if (in_array($expert->ID, $saves_experts))
+                                                echo "<button type='submit' style='background: red' class='btn btnFollowSubTopic' name='delete'>Unfollow</button>";
+                                            else
+                                                echo "<button type='submit' class='btn btnFollowSubTopic' name='interest_push'>Follow</button>"; 
+                                        ?>
+                                    </div>
+                                </form>
                             </div>
-                            <p class="subTitleText nameExpert">Crypto university</p>
                         </div>
-                        <div class="d-flex align-items-center">
-                            <a href="">See</a>
-                            <button class="btn btnFollowSubTopic">Follow</button>
-                        </div>
-                    </div>
-                    <div class="expert-element">
-                        <div class="d-flex align-items-center">
-                            <div class="checkbox rows2">
-                                <input class="styled-checkbox" id="Autoblog" type="checkbox" value="Autoblog">
-                                <label for="Autoblog"></label>
-                            </div>
-                            <div class="img">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Autoblog.jpeg" alt="">
-                            </div>
-                            <p class="subTitleText nameExpert">Autoblog</p>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <a href="">See</a>
-                            <button class="btn btnFollowSubTopic">Follow</button>
-                        </div>
-                    </div>
-                    <div class="expert-element">
-                        <div class="d-flex align-items-center">
-                            <div class="checkbox rows2">
-                                <input class="styled-checkbox" id="Co-pilot" type="checkbox" value="Co-pilot">
-                                <label for="Co-pilot"></label>
-                            </div>
-                            <div class="img">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Co-pilot.jpeg" alt="">
-                            </div>
-                            <p class="subTitleText nameExpert">Co-pilot</p>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <a href="">See</a>
-                            <button class="btn btnFollowSubTopic">Follow</button>
-                        </div>
-                    </div>
-                    <div class="expert-element rows">
-                        <div class="d-flex align-items-center">
-                            <div class="checkbox rows2">
-                                <input class="styled-checkbox" id="Sweco" type="checkbox" value="Sweco">
-                                <label for="Sweco"></label>
-                            </div>
-                            <div class="img">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Sweco.jpeg" alt="">
-                            </div>
-                            <p class="subTitleText nameExpert">Sweco</p>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <a href="">See</a>
-                            <button class="btn btnFollowSubTopic">Follow</button>
-                        </div>
-                    </div>
-                    <div class="expert-element">
-                        <div class="d-flex align-items-center">
-                            <div class="checkbox rows2">
-                                <input class="styled-checkbox" id="Reworc" type="checkbox" value="Reworc">
-                                <label for="Reworc"></label>
-                            </div>
-                            <div class="img">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Reworc.jpeg" alt="">
-                            </div>
-                            <p class="subTitleText nameExpert">Reworc</p>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <a href="">See</a>
-                            <button class="btn btnFollowSubTopic">Follow</button>
-                        </div>
-                    </div>
+                    <?php
+                    }
+                    ?>
                     <div class="mt-3 mb-0">
                         <button type="button" class="btn btnNext mb-0" data-dismiss="modal">Save</button>
                     </div>
@@ -341,4 +325,4 @@ style="overflow-x: hidden !important;">
         </div>
     </div>
 </div>
--->
+
