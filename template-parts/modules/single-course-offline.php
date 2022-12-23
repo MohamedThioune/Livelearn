@@ -3,12 +3,6 @@
         text-decoration: none !important;
         color: black !important;
     }
-    body{
-        padding-top: 0 !important;
-    }
-    .canhas .liveOverBlock {
-        padding-top: 100px;
-    }
     .bi-x-lg::before {
         top: -5px;
         position: relative;
@@ -20,6 +14,12 @@
     }
     #loginform input {
         background: #E0EFF4 !important;
+    }
+    .swiper {
+        width: 600px;
+    }
+    .canhas{
+        padding-top: 100px;
     }
 
 </style>
@@ -393,7 +393,7 @@
                 </div>
                 <!--------------------------------------- end Text description -------------------------------------- -->
 
-                   
+
 
                 <div class="customTabs">
                     <div class="tabs">
@@ -814,9 +814,9 @@
                         <!-- END tabs-content -->
                     </div> <!-- END tabs -->
                 </div>
-                
+
             </div>
-            
+
 
 
 
@@ -976,7 +976,7 @@
                                         foreach($experts as $value){
                                             if(!$value)
                                                 continue;
-                                                
+
                                             $expert = get_users(array('include'=> $value))[0]->data;
                                             $company = get_field('company',  'user_' . $expert->ID);
                                             $title = $company[0]->post_title;
@@ -1000,13 +1000,13 @@
                                                     <div>
                                                         <?php
                                                         if(empty($saves_expert))
-                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
                                                         else if($user_id != 0 && $user_id != $expert->ID)
                                                         {
                                                             if (in_array($expert->ID, $saves_expert))
                                                                 echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
                                                             else
-                                                                echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                                echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
                                                         }
                                                         ?>
                                                     </div>
@@ -1087,9 +1087,9 @@
                                                     <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
                                                     <input type="hidden" name="meta_key" value="expert" id="">
                                                     <div>
-                                                        <?php  
+                                                        <?php
                                                         if(empty($saves_expert))
-                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
                                                         else if($user_id != 0 && $user_id != $expert->ID)
                                                         {
                                                             if (in_array($expert->ID, $saves_expert))
@@ -1123,9 +1123,11 @@
                         </div>
 
                     </div>
+
+
                 </div>
         </div>
-       
+
     </div>
 
 
@@ -1411,3 +1413,7 @@
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
+ </div>
+         </div>
+    </div>
+</div>
