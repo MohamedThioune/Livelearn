@@ -156,6 +156,7 @@ if(!empty($notifications))
                     <div class="nav-item" href="#">
                         <button class="btn bntNotification" data-toggle="modal" data-target="#ModalNotification">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
+                            <i class="fas fa-bell"></i>
                             <span style="color:white" class="alertNotification"><?=count($todos);?></span>
                         </button>
 
@@ -191,8 +192,7 @@ if(!empty($notifications))
                                     ?>
                                             <div>
                                                 <div class="modal-content-body">
-                                                    <p class="feedbackText">No new updates ...</p>
-                                                    <a href="/dashboard/user/notification" class="feedbackText">Bekijk alle notificaties</a>
+                                                    <p class="feedbackText">Empty until now ...</p>
                                                 </div>
                                             </div>
 
@@ -206,6 +206,7 @@ if(!empty($notifications))
                     <div class="nav-item item4 dropdown">
                         <a href="#" class="nav-link navModife4 btn dropdown-toggle " type="button" id="dropdownNavButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img class="imgArrowDropDown" src="<?php echo get_stylesheet_directory_uri();?>/img/three-stars.png" alt="">
+                            <i class="fas fa-angle-down-bleu fa-angle-down"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-dashboard" aria-labelledby="dropdownMenuButton1">
                             <?php
@@ -228,6 +229,7 @@ if(!empty($notifications))
                 <a href="<?= $link; ?>" class="navbar-brand navBrand" >
                     <div class="logoModife logoWeb logoDashboard">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_white.png" alt="">
+                        <img class="imgLogoBleu" src="<?php echo get_stylesheet_directory_uri();?>/img/LiveLearn_logo.png" alt="">
                     </div>
                     <a href="<?= $link; ?>" class="logoMobile">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn_white.png" alt="LogoMobile" >
@@ -236,6 +238,7 @@ if(!empty($notifications))
                 <div class="elementWeb dashboardsElement">
                     <a href="#" class="nav-link navModife4 btn dropdown-toggle " type="button" id="dropdownNavButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Dashboards <img class="imgArrowDropDown" src="<?php echo get_stylesheet_directory_uri();?>/img/down-chevron.svg" alt="">
+                        <i class="fas fa-angle-down-bleu fa-angle-down"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-dashboard" aria-labelledby="dropdownMenuButton1">
                         <?php
@@ -267,8 +270,11 @@ if(!empty($notifications))
                     <ul class="elementHeaderUser ">
                         <li class="nav-item dropdown addButtonLink">
                             <a href="#" class="nav-link navModife4 btn dropdown-toggle" type="button" id="dropdownNavButtonAdd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/addition.png" alt="addition"
+                                <img class="additionImg" src="<?php echo get_stylesheet_directory_uri();?>/img/addition.png" alt="addition"
                                 style="width: 36px !important; height: 36px !important">
+                                <div class="additionBlock">
+                                    <i class="fas fa-plus" aria-hidden="true"></i>
+                                </div>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonAdd">
                                 <a class="dropdown-item" href="/onderwer/">Onderwerpen</a>
@@ -313,6 +319,7 @@ if(!empty($notifications))
                         <li class="position-relative dropdown dropdownNotificationToggle">
                             <button class="btn bntNotification elementWeb dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
+                                <i class="fas fa-bell"></i>
                                 <?php if(!empty($todos)){ ?> <span style="color:white" class="alertNotification"><?=count($todos);?></span> <?php } ?>
                             </button>
                             <div class="dropdown-menu dropdownNotificationWeb" aria-labelledby="dropdownMenuButton" id="ModalNotification">
@@ -338,15 +345,14 @@ if(!empty($notifications))
                                 <?php
                                         }
                                         echo '<div class="">
-                                                  <a href="/dashboard/user/notification" class="btn BekijkNotifications">Bekijk alle notificaties</a>
+                                                  <a href="/dashboard/user/detail-notification/?todo=6620" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                               </div>';
                                     }
                                     else{
                                 ?>
                                         <div>
                                             <div class="">
-                                                <p class="feedbackText">No new updates ...</p>
-                                                <a href="/dashboard/user/notification/?" class="btn BekijkNotifications">Bekijk alle notificaties</a>
+                                                <p class="feedbackText">Empty until now ...</p>
                                             </div>
                                         </div>
                                 <?php

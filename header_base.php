@@ -248,6 +248,7 @@ $url = home_url( $wp->request );
                     <a class="navbar-brand navBrand" href="/">
                         <div class="logoModife">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_white.png" alt="">
+                            <img class="imgLogoBleu" src="<?php echo get_stylesheet_directory_uri();?>/img/LiveLearn_logo.png" alt="">
                         </div>
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
