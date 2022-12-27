@@ -14,11 +14,12 @@ if(!isset($_GET['id']))
 $image = get_field('profile_img',  'user_' . $user->ID);
 if(!$image)
    $image = get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
 $company = get_field('company',  'user_' . $user->ID);
 $biographical_info = get_field('biographical_info',  'user_' . $user->ID);
 
 if(!empty($company))
-    $company = $company[0]->post_title;
+    $company_name = $company[0]->post_title;
 
 /*
 * * Get interests topics and experts

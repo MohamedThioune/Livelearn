@@ -84,7 +84,7 @@ $args = array(
 $todos = get_posts($args);
 
 if(!empty($company))
-    $company = $company[0]->post_title;
+    $company_name = $company[0]->post_title;
 
 //Skills 
 $topics_external = get_user_meta($user->ID, 'topic');
