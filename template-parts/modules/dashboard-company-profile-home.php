@@ -90,7 +90,7 @@
                         </div>
                         <div class="overviewTreeBlock">
                             <p class="titleOvervien">Manager : <span><?php if(isset($superior->first_name) && isset($superior->last_name)) echo $superior->first_name . '' . $superior->last_name; else echo $superior->display_name; ?></span></p>
-                            <p class="titleOvervien">Company : <span><?php echo $company; ?></span></p>
+                            <p class="titleOvervien">Company : <span><?php echo $company_name; ?></span></p>
                         </div>
                         <br>
                         <div class="overviewFourBlock">
