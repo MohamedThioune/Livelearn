@@ -224,6 +224,16 @@
             }
         });
     });
+``
+    $('.datepicker').datepicker();
+
+</script>
+
+<script>
+    $(function () {
+        alert('ok');
+        $(".datepicker").datepicker();
+    });
 </script>
 
 

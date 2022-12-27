@@ -25,6 +25,7 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
     <div class="cardOverviewCours">
         <div class="headListeCourse">
             <p class="JouwOpleid">Mijn leermodules</p>
+            <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" >
             <a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe</a>
         </div>
         <div class="contentCardListeCourse">
@@ -138,7 +139,7 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
                         <td class="textTh">
                             <a href="/dashboard/teacher/signups/?parse=<?php echo $course->ID;?>"><i class="fas fa-globe-africa"></i></a>
                         </td>
-                        <td class="textTh elementOnder"><a style="color:#212529;font-weight:bold" href="<?php echo $link ?>"><?php echo $course->post_title; ?></a></td>
+                        <td class="textTh elementOnder text-left"><a style="color:#212529;font-weight:bold" href="<?php echo $link ?>"><?php echo $course->post_title; ?></a></td>
                         <td class="textTh"><?php echo $price; ?></td>
                         <td class="textTh "><?php echo $category; ?></td>
                         <td class="textTh"><?php echo $day; ?></td>

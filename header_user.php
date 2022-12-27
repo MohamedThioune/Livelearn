@@ -32,6 +32,20 @@ if(!empty($notifications))
         array_push($todos,$todo);
     }
 
+/*
+* * Get all experts
+*/
+$see_experts = get_users(
+    array(
+        'role__in' => ['author'],
+        'posts_per_page' => -1,
+    )
+);
+
+/*
+* * End
+*/
+
 ?>
 
 <!DOCTYPE html>
@@ -277,8 +291,12 @@ if(!empty($notifications))
                                 </div>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonAdd">
-                                <a class="dropdown-item" href="/onderwer/">Onderwerpen</a>
-                                <a class="dropdown-item" href="/opleiders/">Experts</a>
+                                <button type="button" class="btn showModalAdd" data-toggle="modal" data-target="#exampleModal">
+                                    Onderwerpen
+                                </button>
+                                <button type="button" class="btn showModalAdd" data-toggle="modal" data-target="#modalExpert">
+                                    Experts
+                                </button>
                             </div>
                         </li>
                         <?php
@@ -379,3 +397,166 @@ if(!empty($notifications))
             </div>
         </nav>
      <!-- </body> -->
+
+
+    <?php
+    $categories = array();
+
+    $cats = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'orderby'    => 'name',
+        'exclude' => 'Uncategorized',
+        'parent'     => 0,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    foreach($cats as $category){
+        $cat_id = strval($category->cat_ID);
+        $category = intval($cat_id);
+        array_push($categories, $category);
+    }
+
+    //Topics
+    $topics = array();
+    foreach ($categories as $value){
+        $merged = get_categories( array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $value,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ) );
+
+        if(!empty($merged))
+            $topics = array_merge($topics, $merged);
+    }
+    ?>
+    <!-- Modal add topics and subtopics -->
+    <div class="modal fade modalAddTopicsAnd modal-topics-expert" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Maak en keuze :</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="content-topics">
+                        <ul class="unstyled centered">
+                            <?php
+                            foreach($topics as $key => $topic)
+                                echo '<li>
+                                        <input class="styled-checkbox topics" id="styled-checkbox-'. $key .'" type="checkbox" value="' . $topic->cat_ID . '">
+                                        <label for="styled-checkbox-'. $key .'">' . $topic->cat_name . '</label>
+                                      </li>';
+                            ?>
+                        </ul>
+                        <div class="mt-2">
+                            <button type="button" id="btn-topics" class="btn btnNext">Next</button>
+                        </div>
+                    </div>
+                    <div class="content-subTopics">
+                        <form action="" method="post" id="autocomplete_tags">
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal add Expert -->
+    <div class="modal fade modalAddExpert modal-topics-expert" id="modalExpert" tabindex="-1" role="dialog" aria-labelledby="modalExpertLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Select your Experts</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="head">
+                        <!--
+                        <ul>
+                            <li class="selectAll">
+                                <input class="styled-checkbox" id="allExpert" type="checkbox" value="allExpert">
+                                <label for="allExpert">Select All</label>
+                            </li>
+                        </ul>
+
+                        <div class="blockFilter">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Filter by category</option>
+                                <option value="1">Trending</option>
+                                <option value="2">Companies</option>
+                                <option value="3">Construction</option>
+                                <option value="3">HR</option>
+                                <option value="3">Food</option>
+                            </select>
+                        </div>
+                        -->
+                        <div class="blockSearch position-relative">
+                            <input type="search" placeholder="Search your expert" class="searchSubTopics">
+                            <img class="searchImg" src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png" alt="">
+                        </div>
+                    </div>
+                    <div class="content-expert">
+                        <?php
+                        $saves_experts = get_user_meta($user_id, 'expert');
+                        foreach($see_experts as $key => $expert){
+                            if($key ==  20)
+                                continue;
+
+                            if($user->ID == $expert->ID)
+                                continue;
+
+                            $image_author = get_field('profile_img',  'user_' . $expert->ID);
+                            $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
+                            ?>
+                            <div class="expert-element rows2">
+                                <div class="d-flex align-items-center">
+                                    <div class="checkB">
+                                        <input class="styled-checkbox" id="<?= $expert->display_name ?>" type="checkbox" value="<?= $expert->ID ?>">
+                                        <label for="<?= $expert->display_name ?>"></label>
+                                    </div>
+                                    <div class="img">
+                                        <img src="<?= $image_author ?>" alt="">
+                                    </div>
+                                    <p class="subTitleText nameExpert"><?= $expert->display_name; ?></p>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <a href="/user-overview?id=<?= $expert->ID ?>">See</a>
+                                    <form action="/dashboard/user/" method="POST">
+                                        <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
+                                        <input type="hidden" name="user_id" value="<?= $user->ID ?>" id="">
+                                        <input type="hidden" name="meta_key" value="expert" id="">
+                                        <div>
+                                            <?php
+                                            if(empty($saves_experts))
+                                                echo "<button type='submit' class='btn btnFollowSubTopic' name='interest_push'>Follow</button>";
+                                            else
+                                                if (in_array($expert->ID, $saves_experts))
+                                                    echo "<button type='submit' style='background: red' class='btn btnFollowSubTopic' name='delete'>Unfollow</button>";
+                                                else
+                                                    echo "<button type='submit' class='btn btnFollowSubTopic' name='interest_push'>Follow</button>";
+                                            ?>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                        <div class="mt-3 mb-0">
+                            <button type="button" class="btn btnNext mb-0" data-dismiss="modal">Save</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
