@@ -24,6 +24,8 @@ defined( 'ABSPATH' ) || exit;
  */
 
 ?>
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+
 <div class="section padded">
     <div class="container">
         <?php 
