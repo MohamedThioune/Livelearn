@@ -133,7 +133,6 @@ else if(isset($_POST['edit_education'])){
     }
     update_field('education', $bunch, 'user_'. $user->ID);
     $educations = get_field('education',  'user_' . $user->ID);
-
 }
 
 /*
@@ -1006,6 +1005,46 @@ else if(isset($starter)){
     // close curl
     curl_close( $ch );
 
+}
+
+else if(isset($departement_add)){
+    $user_id = get_current_user_id();
+    $company = get_field('company',  'user_' . $user_id);
+    $departments = get_field('departments', $company[0]->ID);
+
+    $department = array();
+    $department['name'] = $name_department;
+
+    if(!$departments)
+        $departments = array();
+
+    array_push($departments, $department);
+
+    update_field('departments', $departments, $company[0]->ID);
+    $message = '/dashboard/company/afdelingen/?message=Department added successfully !'; 
+    header("Location: ". $message);
+}
+
+else if(isset($departement_delete)){
+    $user_id = get_current_user_id();
+    $company = get_field('company',  'user_' . $user_id);
+    $departments = get_field('departments', $company[0]->ID);
+    $bunch = array();
+    foreach($departments as $key => $value)
+        if($key == $id)
+            continue;
+        else
+            array_push($bunch,$value);
+    
+    update_field('departments', $bunch, $company[0]->ID);
+    $message = '/dashboard/company/afdelingen/?message=Department deleted successfully !'; 
+    header("Location: ". $message);
+}
+if(isset($details_user_departement)){
+    update_field('role', $role_user, 'user_'.$id_user);
+    update_field('department', $department, 'user_'.$id_user);
+    $message = '/dashboard/company/afdelingen/?message=Informations updated successfully !'; 
+    header("Location: ". $message);
 }
 
 

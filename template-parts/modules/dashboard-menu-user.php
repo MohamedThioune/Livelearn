@@ -273,7 +273,7 @@ style="overflow-x: hidden !important;">
                     <?php
                     $saves_experts = get_user_meta($user_id, 'expert');
                     foreach($see_experts as $key => $expert){
-                        if($key ==  20)
+                        if($key == 50)
                             continue;
 
                         if($user->ID == $expert->ID)
@@ -285,10 +285,12 @@ style="overflow-x: hidden !important;">
                     ?>
                         <div class="expert-element rows2">
                             <div class="d-flex align-items-center">
+                                <!-- 
                                 <div class="checkB">
                                     <input class="styled-checkbox" id="<?= $expert->display_name ?>" type="checkbox" value="<?= $expert->ID ?>">
                                     <label for="<?= $expert->display_name ?>"></label>
-                                </div>
+                                </div> 
+                                -->
                                 <div class="img">
                                     <img src="<?= $image_author ?>" alt="">
                                 </div>
@@ -317,9 +319,11 @@ style="overflow-x: hidden !important;">
                     <?php
                     }
                     ?>
+                    <!-- 
                     <div class="mt-3 mb-0">
                         <button type="button" class="btn btnNext mb-0" data-dismiss="modal">Save</button>
-                    </div>
+                    </div> 
+                    -->
                 </div>
             </div>
 

@@ -1,5 +1,10 @@
 <?php
+
 $current_user = wp_get_current_user();
+
+if(!in_array('administrator', $current_user->roles) && !in_array('hr', $current_user->roles)) 
+    header('Location: /dashboard/company/');
+
 $company = get_field('company', 'user_' . $current_user->ID);
 if(!empty($company) ){
     $company = $company[0];
@@ -165,7 +170,6 @@ if(isset($starter)){
         }
         else
             $message = "Subscription applied succesfully !";
-
     }
     
     // close curl
