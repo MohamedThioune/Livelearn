@@ -490,9 +490,11 @@
                                     </p>
                                     <ul class="dropdown-menu">
                                         <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?php echo $link; ?>" target="_blank">Bekijk</a></li>
+                                        <!--
                                         <li class="my-2"><i class="fa fa-gear px-2"></i><a href="<?= $path_edit ?>" target="_blank">Pas aan</a></li>
-                                        <!-- <li class="my-1"><i class="fa fa-share px-2"></i><input type="button" id="" value="Share"/></li> -->
-                                        <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2 "></i><input type="button" id="" value="Verwijderen"/></li>
+                                        <li class="my-1"><i class="fa fa-share px-2"></i><input type="button" id="" value="Share"/></li>
+                                        <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2 "></i><input type="button" id="" value="Verwijderen"/></li> 
+                                        -->
                                     </ul>
                                 </div>
                             </td>

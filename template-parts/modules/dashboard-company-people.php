@@ -3,14 +3,15 @@
     $data_user = wp_get_current_user();
     $user_connected = $data_user->data->ID;
     $company = get_field('company',  'user_' . $user_connected);
+
+    //Departments 
+    $departments = get_field('departments', $company[0]->ID);
     
     if(!empty($company))
         $company_connected = $company[0]->post_title;
 
     $grant = get_field('manager',  'user_' . $user_connected);
     $ismanaged = get_field('managed',  'user_' . $user_connected); 
-
-    $user = get_users(array('include'=> 1))[0]->data;
 
     $members = array();
     foreach($users as $user)
@@ -28,7 +29,6 @@
     extract($_POST);
 
     if(isset($missing_details_user)){
-
         update_field('telnr', $telnr, 'user_'.$id_user);
         update_field('role', $role_user, 'user_'.$id_user);
         update_field('department', $department, 'user_'.$id_user);
@@ -95,9 +95,12 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                     <ul class="dropdown-menu">
                                         <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?= $link; ?>" target="_blank">Bekijk</a></li>
                                         <?php
-                                        if($you){
-                                        ?>                            
-                                            <li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalEdit<?= $key ?>" href="#">Edit</a></li>
+                                        if($you)
+                                            echo '<li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalEdit' . $key . '" href="#">Edit</a></li>';
+
+                                        if(in_array('administrator', $data_user->roles))
+                                        if(!in_array('administrator', $user->roles) && !in_array('hr', $user->roles)){
+                                        ?>
                                             <li class="my-1">
                                                 <div class="remove">
                                                     <?php
@@ -132,8 +135,22 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                                 <input type="text" name="role_user" value="<?php echo get_field('role', 'user_'.$user->ID);?>" class="form-control" placeholder="">
                                             </div>
                                             <div class="form-group">
-                                                <label for="afdeling">Afdeling</label>
-                                                <input type="text" name="department" value="<?php echo get_field('department', 'user_'.$user->ID);?>" class="form-control" placeholder="">
+                                                <label for="telefoonnummer">Departement</label>
+                                                <div class="formModifeChoose" >
+                                                    <div class="formModifeChoose">
+
+                                                        <select placeholder="Choose skills" class="multipleSelect2 selectdepartement" name="department">
+                                                            <?php 
+                                                             foreach($departments as $department)
+                                                                if($department['name'] == get_field('department', 'user_'.$user->ID) )
+                                                                    echo '<option value="' . $department['name'] .'" selected>' . $department['name'] . '</option>';
+                                                                else
+                                                                    echo '<option value="' . $department['name'] .'" >' . $department['name'] . '</option>';
+                                                            ?>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <button type="submit" name="missing_details_user" class="btn btn-add-budget">Add</button>

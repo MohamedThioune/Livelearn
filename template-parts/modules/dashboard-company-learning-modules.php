@@ -428,9 +428,12 @@ $orders = wc_get_orders($order_args);
                                 </p>
                                 <ul class="dropdown-menu">
                                     <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?php echo $link; ?>" target="_blank">Bekijk</a></li>
-                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="<?= $path_edit ?>" target="_blank">Pas aan</a></li>
-                                    <!-- <li class="my-1"><i class="fa fa-share px-2"></i><input type="button" id="" value="Share"/></li> -->
-                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2 "></i><input type="button" id="" value="Verwijderen"/></li>
+                                    <?php
+                                    if($course->post_author == $user_in->ID || in_array('hr', $user_in->roles) || in_array('administrator', $user_in->roles) ){
+                                        echo '<li class="my-2"><i class="fa fa-gear px-2"></i><a href="' . $path_edit . '" target="_blank">Pas aan</a></li>';
+                                        echo '<li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2 "></i><input type="button" id="" value="Verwijderen"/></li>';
+                                    }
+                                    ?>
                                 </ul>
                             </div>
                         </td>
