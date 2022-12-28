@@ -470,7 +470,8 @@
                                                 $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
                                     
                                         $field = substr($field,0,-1);
-                                        echo $field;                                        }
+                                        echo $field;                                        
+                                    }
                                 }
                             }
                             ?>
