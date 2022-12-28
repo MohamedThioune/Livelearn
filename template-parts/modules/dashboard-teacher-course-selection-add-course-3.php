@@ -225,15 +225,8 @@
         });
     });
 ``
-    $('.datepicker').datepicker();
+    $('.calendar').datepicker();
 
-</script>
-
-<script>
-    $(function () {
-        alert('ok');
-        $(".datepicker").datepicker();
-    });
 </script>
 
 

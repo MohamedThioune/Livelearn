@@ -105,7 +105,7 @@ $maandelijke = count($members) * 5;
                 <div class="card-body">
                     <p class="card-text text-center"><strong>Maandelijkse kosten</strong> </p>
                     <h5 class="card-title text-center"> <strong>€ <?= $maandelijke ?></strong> </h5>
-                    <p class="card-text text-right h6">
+                    <p class="card-text text-center h6">
                         <small class="text-muted">
                             <strong>Last updated 0 mins ago</strong>
                         </small>
@@ -134,7 +134,7 @@ $maandelijke = count($members) * 5;
                 <div class="card-body">
                     <p class="card-text text-center"> <strong>Budget resterend</strong> <!-- Remaining courses --> </p>
                     <h5 class="card-title text-center"><strong>€ <?= $budget_resterend; ?></strong></h5>
-                    <p class="card-text text-right h6">
+                    <p class="card-text text-center h6">
                         <small class="text-muted">
                             <strong>Last updated 0 min ago</strong>
                         </small>

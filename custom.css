@@ -11393,7 +11393,7 @@ select {
 }
 .blockImgMost {
     width: 125px;
-    height: 70px;
+    height: 75px;
     margin-right: 15px;
     border-radius: 10px;
     overflow: hidden;
@@ -13298,6 +13298,15 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .contentCardListeCourse .text-left{
     text-align: left !important;
 }
+.contentStatsMostPopular .block-text{
+    width: 90%;
+}
+.td_subtopics{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
@@ -15182,7 +15191,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
         justify-content: space-between;
         margin-right: 0;
         margin-left: 8px;
-        padding-top: 16px;
+        margin-top: -5px;
     }
     .detail-product-assesment .title-description {
         font-size: 21px;
@@ -15847,7 +15856,148 @@ ul .selectAll .styled-checkbox:checked + label:after {
         margin-bottom: 25px;
         margin-top: 40px;
     }
-
+    #burger {
+        margin-top: 2px;
+    }
+    .second-element-mobile {
+        width: 28px !important;
+    }
+    #searchIcone {
+        margin-top: 0px !important;
+        width: 22px;
+    }
+    #searchIcone img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    .croie {
+        width: 24px;
+        padding: 0 !important;
+        margin-top: -4px !important;
+    }
+    .croie img {
+        margin-top: 0 !important;
+    }
+    .sousMenuNavMobil {
+        padding-top: 30px !important;
+    }
+    .block-sous-nav-mobile {
+        border-bottom: 1px solid #02335680;
+        margin-bottom: 18px;
+        padding: 5px 13px 20px;
+    }
+    .block-sous-nav-mobile:last-child {
+        border-bottom: 0px solid #023356;
+        margin-bottom: 0px;
+    }
+    .element-navMobile {
+        margin-bottom: 13px;
+        font-size: 15px;
+        font-weight: 500;
+    }
+    .element-navMobile img{
+        height: 19px;
+        margin-right: 13px;
+    }
+    .blockShowApp{
+        background: linear-gradient(90deg, hsla(205, 95%, 17%, 1) 30%, hsla(176, 100%, 33%, 1) 100%);
+        display: block;
+        width: 100%;
+        padding: 10px 15px;
+        color: white;
+        margin-bottom: 16px;
+    }
+    .blockShowApp .logo-livelearn{
+        width: 37px;
+        height: 37px;
+        background: white;
+        padding: 5px;
+        border-radius: 10px;
+    }
+    .blockShowApp .close-block{
+        height: fit-content;
+        margin-right: 13px;
+        padding: 0;
+        color: white;
+        font-size: 22px;
+    }
+    .blockShowApp .logo-livelearn img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+   .text-Probeer {
+        margin-bottom: 0;
+        font-size: 12px;
+    }
+    .col-2 {
+        padding: 0 !important;
+    }
+    .star-app-img{
+        width: 13px;
+        margin: 5px 3px 0 0;
+    }
+    .elements-blockShowApp{
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
+    }
+    .blockShowApp .btn-Openen{
+        background: #deeef3;
+        color: #023356 !important;
+        font-size: 13px;
+        width: fit-content;
+        padding: 7px 15px;
+        border-radius: 10px;
+    }
+    .blockShowApp .secondBlock{
+        margin: 0 5px;
+    }
+    .body-custom{
+        padding-top: 132px !important;
+    }
+    .sousMenuNavMobil .accordion {
+        background-color: #dfeff4;
+        color: unset;
+        cursor: pointer;
+        border-bottom: unset;
+        padding: 0;
+    }
+    .sousMenuNavMobil .accordion .card-header {
+        padding: unset;
+        margin-bottom: 0;
+        background-color: unset;
+        border-bottom: unset;
+    }
+    .sousMenuNavMobil .accordion .card-header .element-navMobile {
+        margin-bottom: 4px;
+        font-weight: 500;
+        color: #013255;
+    }
+    .sousMenuNavMobil .collapse ul{
+        margin-left: 48px;
+    }
+    .sousMenuNavMobil .collapse ul li{
+        font-size: 15px;
+        margin-bottom: 10px;
+    }
+    .sousMenuNavMobil .accordion .element-nav-accordion {
+        border-bottom: 1px solid #02335680;
+        margin-bottom: 18px;
+        padding: 0px 0px 14px;
+    }
+    .element-nav-accordion .element-navMobile span {
+        font-size: 13px;
+        background: white;
+        padding: 5px 15px;
+        border-radius: 10px;
+        margin-left: 20px;
+        font-weight: 400;
+        position: relative;
+        top: -1px;
+    }
 
 }
 

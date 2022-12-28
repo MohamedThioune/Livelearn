@@ -15,6 +15,17 @@ jQuery(function($) {
         });
     });
 
+    //pour mobile
+    $('.close-block').click(function (){
+        $('.blockShowApp').hide();
+        $('.navMobile').removeClass('navMobile-custom')
+        $('body').removeClass('body-custom')
+    });
+    if ($('.navMobile').hasClass('navMobile-custom')) {
+        // Ajoute la classe
+        $('body').addClass('body-custom');
+    }
+
     //header on scroll fix
     var height = ($('nav.navbar').css('height'));
     $('body').css('padding-top', height)

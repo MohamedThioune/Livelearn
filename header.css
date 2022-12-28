@@ -304,11 +304,17 @@ form {
         padding: 15px 15px 8px !important;
         height: auto !important;
     }
+    .navMobile-custom{
+        padding: 0px 0 8px !important;
+    }
     .ProfilGraduatioBlock {
         align-items: center;
         margin-top: -7px;
         display: flex;
         justify-content: space-between;
+    }
+    .navMobile-custom .ProfilGraduatioBlock {
+        padding: 0px 15px!important;
     }
     .sousNav1 {
         display: flex;
@@ -382,6 +388,9 @@ form {
         min-height: 100vh;
         overflow-y: scroll;
     }
+    .body-custom .sousMenuNavMobil{
+        top: 126px !important;
+    }
     .elementGroupGroeien {
         margin-bottom: 20px;
     }
@@ -399,6 +408,10 @@ form {
     .btnElementSousMenu img{
         width: 11px;
         float: right;
+    }
+    .sousMenuNavMobil .accordion .element-nav-accordion:last-child {
+        border-bottom: 0px solid #02335680;
+        margin-bottom: 20px;
     }
 
 }
@@ -471,4 +484,8 @@ form {
         margin-bottom: 7px;
         text-transform: none !important;
     }
+    .navMobile-custom{
+        top: 126px !important;
+    }
+
 }

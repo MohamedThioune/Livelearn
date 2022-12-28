@@ -279,7 +279,7 @@ arsort($topic_followed);
                                 <div class="blockImgMost">
                                     <img src="<?= $thumbnail ?>">
                                 </div>
-                                <div class="">
+                                <div class="block-text">
                                     <p class="nameCoursSales "><?= $course->post_title ?></p>
                                     <p class="categoriesNameCours"><?= $category ?></p>
                                     <p class="priceHistory"><?= $price ?> $</p>
