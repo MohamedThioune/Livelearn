@@ -346,7 +346,7 @@ if(!empty($bunch)){
                                                                 </div>
                                                                 <div class="col-lg-12 col-md-12">
                                                                     <div class="group-input-settings">
-                                                                        <label for="">start Date</label>
+                                                                        <label for="">Start Date</label>
                                                                         <input name="start_date" type="date" placeholder="" value="<?php echo $value[2] ?>" required>
                                                                     </div>
                                                                 </div>
@@ -358,7 +358,7 @@ if(!empty($bunch)){
                                                                 </div>
                                                                 <div class="col-lg-12 col-md-12">
                                                                     <div class="group-input-settings">
-                                                                        <label for="">Commentary</label>
+                                                                        <label for="">Comment</label>
                                                                         <textarea name="commentary" id="" rows="4"><?php echo $value[4] ?></textarea>
                                                                     </div>
                                                                 </div>
@@ -406,7 +406,7 @@ if(!empty($bunch)){
                                             </div>
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="group-input-settings">
-                                                    <label for="">start Date</label>
+                                                    <label for="">Start Date</label>
                                                     <input name="start_date" type="date" placeholder="" required>
                                                 </div>
                                             </div>
@@ -418,7 +418,7 @@ if(!empty($bunch)){
                                             </div>
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="group-input-settings">
-                                                    <label for="">Commentary</label>
+                                                    <label for="">Comment</label>
                                                     <textarea name="commentary" id="" rows="4"></textarea>
                                                 </div>
                                             </div>
@@ -498,7 +498,7 @@ if(!empty($bunch)){
                                                             </div>
                                                             <div class="col-lg-12 col-md-12">
                                                                 <div class="group-input-settings">
-                                                                    <label for="">start Date</label>
+                                                                    <label for="">Start Date</label>
                                                                     <input name="start_date" type="date" value="<?php echo $value[2] ?>"  placeholder="">
                                                                 </div>
                                                             </div>
@@ -510,7 +510,7 @@ if(!empty($bunch)){
                                                             </div>
                                                             <div class="col-lg-12 col-md-12">
                                                                 <div class="group-input-settings">
-                                                                    <label for="">Commentary</label>
+                                                                    <label for="">Comment</label>
                                                                     <textarea name="commentary" id="" rows="4"> <?php echo $value[4] ?> </textarea>
                                                                 </div>
                                                             </div>
@@ -554,7 +554,7 @@ if(!empty($bunch)){
                                             </div>
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="group-input-settings">
-                                                    <label for="">start Date</label>
+                                                    <label for="">Start Date</label>
                                                     <input name="start_date" type="date" placeholder="">
                                                 </div>
                                             </div>
@@ -566,7 +566,7 @@ if(!empty($bunch)){
                                             </div>
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="group-input-settings">
-                                                    <label for="">Commentary</label>
+                                                    <label for="">Comment</label>
                                                     <textarea name="commentary" id="" rows="4"></textarea>
                                                 </div>
                                             </div>
@@ -779,7 +779,7 @@ if(!empty($bunch)){
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Beoordeel jouw expertise in "Personeel"</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Beoordeel jouw skills</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -789,7 +789,7 @@ if(!empty($bunch)){
                                         <div class="row">
                                             <div class="col-lg-12 col-md-12">
                                                 <div class="group-input-settings">
-                                                    <label for="">Name Skills</label>
+                                                    <label for="">Name Skill</label>
                                                     <div class="form-group formModifeChoose">
                                                         <select name="id" id="autocomplete" class="form-control multipleSelect2">
                                                             <?php 
@@ -846,9 +846,9 @@ if(!empty($bunch)){
                         $strotime_date = strtotime($user->user_registered);
                         $date_registered = date("d M Y", $strotime_date);
                     ?>
-                    <p class="title">You created a account sucessfully !</p>
-                    <p class="awarded">Awarded for : <span> <?php echo $user->display_name ?> </span></p>
-                    <p class="date-awarded"><span>Date Awarded : </span><?= $date_registered ?></p>
+                    <p class="title">You created an account sucessfully !</p>
+                    <p class="awarded">Award for : <span> <?php echo $user->display_name ?> </span></p>
+                    <p class="date-awarded"><span>Date Award : </span><?= $date_registered ?></p>
                 </a>
                 <!-- <a href="" class="card">
                     <div class="block-icons">
@@ -915,15 +915,15 @@ if(!empty($bunch)){
                     <form action="" method="POST">
                         <div class="group-input-settings">
                             <div class="input-group-user">
-                                <label for="">Enter your actual password :</label>
+                                <label for="">Enter your current password :</label>
                                 <input name="old_password" type="password" required>
                             </div>
                             <div class="input-group-user">
-                                <label for="">Define your new pasword :</label>
+                                <label for="">Define your new password :</label>
                                 <input name="password" type="password" required>
                             </div>
                             <div class="input-group-user">
-                                <label for="">Confirm the pasword :</label>
+                                <label for="">Confirm the new password :</label>
                                 <input name="password_confirmation" type="password" required>
                             </div>
                         </div>
@@ -937,7 +937,6 @@ if(!empty($bunch)){
 </div>
 
 
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script>
     'use strict';
 

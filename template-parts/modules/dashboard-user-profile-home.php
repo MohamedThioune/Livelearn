@@ -64,7 +64,8 @@ if (!empty($portfolios))
                         </button>
                     </div>
                 </div>
-                <?php foreach($topics as $value){ 
+                <?php 
+                foreach($topics_user as $value){ 
                     $topic = get_the_category_by_ID($value);
                     $note = 0;
                     if(!$topic)
