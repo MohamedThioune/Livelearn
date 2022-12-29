@@ -96,14 +96,14 @@ $telnr = get_field('telnr', 'user_' . $current_user->ID);
 
             <div class="form-group">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="is_trial" checked>
+                    <input class="form-check-input" value="Essayer" type="checkbox" id="is_trial">
                     <label class="form-check-label" for="is_trial">
                         Trial (14 days)
                     </label>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" name="starter" class="btn btn-sendSubscrip">Start</button>
+                <button type="submit" name="starter" id="starter" class="btn btn-sendSubscrip">Start</button>
             </div>
         </form>
     </div>
@@ -260,3 +260,25 @@ $telnr = get_field('telnr', 'user_' . $current_user->ID);
     </div> -->
 
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+
+    function show1(){
+        document.getElementById('payementCard').style.display ='none';
+    }
+    function show2(){
+        document.getElementById('payementCard').style.display = 'block';
+    }
+
+    $(document).ready(function(){
+        $("#is_trial").change(function() {
+            if(this.checked) {
+                $("#starter").text("Start Trial");
+            } else {
+                $("#starter").text("Start")
+            }
+        });
+    });
+
+
+</script>
