@@ -5,8 +5,7 @@
 $users = get_users();
 
 $user_connected = wp_get_current_user();
-if(!in_array('administrator', $user_connected->roles) && !in_array('hr', $user_connected->roles) && !in_array('manager', $user_connected->roles)) 
-    header('Location: /dashboard/company/');
+header('Location: /dashboard/company/');
 
 $user_id = $user_connected->ID;
 
@@ -108,11 +107,7 @@ $maandelijke = count($members) * 5;
                 <div class="card-body">
                     <p class="card-text text-center"><strong>Maandelijkse kosten</strong> </p>
                     <h5 class="card-title text-center"> <strong>€ <?= $maandelijke ?></strong> </h5>
-                    <p class="card-text text-center h6">
-                        <small class="text-muted">
-                            <strong>Last updated 0 mins ago</strong>
-                        </small>
-                    </p>
+                    
                 </div>
             </div>
         </div>
@@ -137,11 +132,6 @@ $maandelijke = count($members) * 5;
                 <div class="card-body">
                     <p class="card-text text-center"> <strong>Budget resterend</strong> <!-- Remaining courses --> </p>
                     <h5 class="card-title text-center"><strong>€ <?= $budget_resterend; ?></strong></h5>
-                    <p class="card-text text-center h6">
-                        <small class="text-muted">
-                            <strong>Last updated 0 min ago</strong>
-                        </small>
-                    </p>
                 </div>
             </div>
         </div>

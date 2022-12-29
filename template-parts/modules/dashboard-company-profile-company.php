@@ -98,7 +98,7 @@ $telnr = get_field('telnr', 'user_' . $current_user->ID);
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" id="is_trial" checked>
                     <label class="form-check-label" for="is_trial">
-                        Trial
+                        Trial (14 days)
                     </label>
                 </div>
             </div>

@@ -140,7 +140,6 @@
                             $is_author = (in_array('author', $used->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
 
                             $amount_budget = get_field('amount_budget', 'user_' . $used->ID) ? : 0;
-                            $amount_budget += 5;                 
                     ?>
                         <tr id="" >
                             <td scope="row"><?= $i ?></td>
