@@ -628,17 +628,17 @@ $url = home_url( $wp->request );
 
                         <ul class="navbar-nav nav-right">
                             <li class="nav-item active">
-                                <a class="nav-link" id="Over" href="/static-education-individual/">Aan de slag</a>
+                                <a class="nav-link" id="Over" href="/static-education-individual/">Over ons</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link nav-linModife dropdown-toggle" id="Opleidingen" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#Opleidingen"  role="button"  href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opleidingen</a>
+                                <a class="nav-link nav-linModife dropdown-toggle" id="Opleidingen" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#Opleidingen"  role="button"  href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Upskilling</a>
 
                             </li>
                             <li class="nav-item" >
                                 <a class="nav-link" href="/inloggen/"><b>Inloggen</b></a>
                             </li>
                             <li class="">
-                                <a href="/registreren" class="nav-link worden">Lid worden</a>
+                                <a href="/registreren" class="nav-link worden">Altijd Gratis</a>
                             </li>
                         </ul>
 
