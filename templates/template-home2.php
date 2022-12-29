@@ -18,10 +18,15 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
     .headerdashboard,.navModife {
         background: #deeef3;
         color: #ffffff !important;
-        border-bottom: 1px solid #deeef3;
+        border-bottom: 0px solid #000000;
+        background: linear-gradient(165deg, hsla(195, 48%, 92%, 1) 49%, hsla(200, 18%, 97%, 1) 100%);
+        box-shadow: none;
     }
     .nav-link {
         color: #043356 !important;
+    }
+    .nav-link .containerModife{
+        border: none;
     }
     .worden {
         color: white !important;
@@ -134,6 +139,7 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
         .content-home2 .wordDeBestText2 {
             font-size: 25px;
             line-height: 32px;
+            padding: 0 15px;
         }
         .content-home2 .voorBlock {
             padding-top: 50px;
@@ -213,6 +219,24 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
             right: 0px;
             width: 82px;
             bottom: 0;
+        }
+        .content-home2 .boxOne3 {
+            height: 95vh;
+        }
+        .alJoum {
+            margin-left: 0px;
+            margin-right: 0px;
+            padding: 25px 0px 20px;
+        }
+        .block9 .container-fluid {
+            padding-right: 15px !important;
+            padding-left: 15px !important;
+        }
+        .contentSix {
+            padding: 0 0px;
+        }
+        .productBlock3 {
+            padding: 0 0 0 0px !important;
         }
 
 
