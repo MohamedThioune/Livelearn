@@ -34,7 +34,6 @@ $orders = wc_get_orders($order_args);
     /*
     ** Categories - all  * 
     */
-
     $categories = array();
 
     $cats = get_categories( 
@@ -347,7 +346,7 @@ $orders = wc_get_orders($order_args);
                         else{
                             $dates = get_field('dates', $course->ID);
                             if($dates)
-                                $day = explode(' ', $dates[0]['date']);
+                                $day = explode(' ', $dates[0]['date'])[0];
                             else{
                                 $data = get_field('data_locaties_xml', $course->ID);
                                 if(isset($data[0]['value'])){
@@ -406,11 +405,14 @@ $orders = wc_get_orders($order_args);
                             <?php
                                 $course_subtopics = get_field('categories', $course->ID);
                                 $field='';
-                                if($course_subtopics!=null){
+                                $read_topis = array();
+                                if($course_subtopics != null){
                                     if (is_array($course_subtopics) || is_object($course_subtopics)){
-                                        foreach ($course_subtopics as $key =>  $course_subtopic) {
-                                            if ($course_subtopic!="" && $course_subtopic!="Array")
+                                        foreach ($course_subtopics as $key => $course_subtopic) {
+                                            if ($course_subtopic != "" && $course_subtopic != "Array" && !in_array(intval($course_subtopic['value']), $read_topis)){
                                                 $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                                array_push($read_topis, intval($course_subtopic['value']));
+                                            }
                                         }
                                         $field = substr($field,0,-1);
                                         echo $field;
@@ -419,7 +421,7 @@ $orders = wc_get_orders($order_args);
                             ?>
                             </p>             
                         </td>
-                        <td class="textTh"><?php echo $day; ?></td>
+                        <td class="textTh"><?php echo($day); ?></td>
                         <td class="textTh">
                             <div class="dropdown text-white">
                                 <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">

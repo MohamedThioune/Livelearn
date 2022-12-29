@@ -132,12 +132,15 @@
                         </a>
                     </li>
                     <li class="elementTextDashboard">
-                        <a href="#" class="d-flex">
-                           <div class="elementImgSidebar" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Berichten.png" >
+                        <button href="#" class="d-flex berichtenBtn">
+                            <div class="d-flex">
+                                <div class="elementImgSidebar" >
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Berichten.png" >
+                                </div>
+                                Berichten
                             </div>
-                            <span>Berichten</span>
-                        </a>
+                            <span>Coming Soon</span>
+                        </button>
                     </li>
                     <li class="elementTextDashboard">
                         <a href="/dashboard/company/statistic" class="d-flex">
