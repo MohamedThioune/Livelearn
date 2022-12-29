@@ -2243,7 +2243,7 @@ input:focus-visible {
     padding-right: unset !important;
 }
 
-.elementImgSidebar span {
+.elementImgSidebar .comming-soon {
     font-size: 15px;
     color: #000000 !important;
     font-weight: 500 !important;
@@ -7055,7 +7055,7 @@ tbody {
     margin-bottom: 25px;
 }
 
-.extensive .sidBarDashboard .elementTextDashboard a span {
+.extensive .sidBarDashboard .elementTextDashboard a span, .extensive .sidBarDashboard .elementTextDashboard span{
     display: none;
 }
 
@@ -13276,10 +13276,10 @@ ul .selectAll .styled-checkbox:checked + label:after {
     justify-content: space-between;
     cursor: wait !important;
 }
-.berichtenBtn span {
+.berichtenBtn .comming-soon {
     font-size: 12px;
     margin-right: 15px;
-    margin-top: 2px;
+    margin-top: 4px;
 }
 .expert-element .d-flex form {
     position: relative;

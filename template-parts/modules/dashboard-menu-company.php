@@ -137,9 +137,9 @@
                                 <div class="elementImgSidebar" >
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/Berichten.png" >
                                 </div>
-                                Berichten
+                                <span>Berichten</span>
                             </div>
-                            <span>Comming Soon</span>
+                            <span class="comming-soon">Comming Soon</span>
                         </button>
                     </li>
                     <li class="elementTextDashboard">

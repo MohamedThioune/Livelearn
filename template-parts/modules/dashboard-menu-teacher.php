@@ -122,9 +122,9 @@
                     <div class="elementImgSidebar" >
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/Berichten.png" >
                     </div>
-                    Berichten
+                   <span>Berichten</span>
                 </div>
-                <span>Comming Soon</span>
+                <span class="comming-soon">Comming Soon</span>
             </button>
         </li>
         <li class="elementTextDashboard">
@@ -133,9 +133,9 @@
                     <div class="elementImgSidebar" >
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/Financien.png" >
                     </div>
-                    Financien
+                   <span>Financien</span>
                 </div>
-                <span>Comming Soon</span>
+                <span class="comming-soon">Comming Soon</span>
             </button>
         </li>
         <li class="elementTextDashboard">
@@ -144,9 +144,9 @@
                     <div class="elementImgSidebar" >
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/Statistieken.png" >
                     </div>
-                    Statistieken
+                   <span>Statistieken</span>
                 </div>
-                <span>Comming Soon</span>
+                <span class="comming-soon">Comming Soon</span>
             </button>
         </li>
         <li class="elementTextDashboard">
@@ -155,9 +155,9 @@
                     <div class="elementImgSidebar" >
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/Instellingen.png" >
                     </div>
-                    Instellingen
+                   <span>Instellingen</span>
                 </div>
-                <span>Comming Soon</span>
+                <span class="comming-soon">Comming Soon</span>
             </button>
         </li>
     </ul>
