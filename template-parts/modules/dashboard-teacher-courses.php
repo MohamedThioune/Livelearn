@@ -94,7 +94,7 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
                         else{
                             $dates = get_field('dates', $course->ID);
                             if($dates)
-                                $day = explode(' ', $dates[0]['date']);
+                                $day = explode(' ', $dates[0]['date'])[0];
                             else{
                                 $data = get_field('data_locaties_xml', $course->ID);
                                 if(isset($data[0]['value'])){

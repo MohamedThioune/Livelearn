@@ -12,7 +12,7 @@ $function = get_field('role',  'user_' . $user->ID);
 $biographical_info = get_field('biographical_info',  'user_' . $user->ID);
 
 if(!empty($company))
-    $company = $company[0]->post_title;
+    $company_name = $company[0]->post_title;
 
 /*
 * * Get interests topics and experts

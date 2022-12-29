@@ -133,7 +133,6 @@ else if(isset($_POST['edit_education'])){
     }
     update_field('education', $bunch, 'user_'. $user->ID);
     $educations = get_field('education',  'user_' . $user->ID);
-
 }
 
 /*
@@ -861,7 +860,7 @@ else if(isset($starter)){
         }
     }
     $team = count($members);
-
+    
     //endpoint for product 
     $endpoint_product = 'https://livelearn.nl/wp-json/wc/v3/products';
 
@@ -896,12 +895,16 @@ else if(isset($starter)){
 
     $httpCode = curl_getinfo($chp , CURLINFO_HTTP_CODE); // this results 0 every time
 
+    // close curl
+    curl_close( $chp );
+
     // get responses
     $response_product = curl_exec($chp);
     if($response_product === false) {
         $response_product = curl_error($chp);
         $error = true;
         $message = "Something went wrong !";
+        var_dump("Hello !");
     }
     else{
         // get product_id
@@ -922,27 +925,27 @@ else if(isset($starter)){
         $api_endpoint = $endpoint . '?' . http_build_query( $params );
         $date_now = date('Y-m-d H:i:s');
         $date_now_timestamp = strtotime($date_now);
-        $trial_end_date = date("Y-m-d H:i:s", strtotime("+14 day", $date_now_timestamp));
-        $next_payment_date = date($trial_end_date, strtotime("+1 month", strtotime($trial_end_date)));
-
+        $trial_end_date = date("Y-m-d H:i:s", strtotime("+ 14 days" , $date_now_timestamp));
+        $next_payment_date = date("Y-m-d H:i:s", strtotime("+1 month" , strtotime($trial_end_date)));
+     
         $data = [
-            'customer_id'       => $user,
+            'customer_id'       => $user_id,
             'status'            => 'active',
             'billing_period'    => 'month',
             'billing_interval'  =>  1,
             'start_date'        => $date_now,
             'trial_end_date'    => $trial_end_date,
             'next_payment_date' => $next_payment_date,
-            'payment_method'    => 'ideal',
+            'payment_method'    => '',
             
             'billing' => [
                 'first_name' => $first_name,
                 'last_name'  => $last_name,
-                'company'    =>  $bedrjifsnaam,
+                'company'    => $bedrjifsnaam,
                 'address_1'  => $factuur_address,
                 'address_2'  => '',
                 'city'     => '', //place
-                'state'    => 'NL-DR',
+                'state'    => 'DR-NL',
                 'postcode' => '1011',
                 'country'  => 'NL',
                 'email'    => $email,
@@ -955,7 +958,7 @@ else if(isset($starter)){
                 'address_1'  => $factuur_address,
                 'address_2'  => '',
                 'city'     => '', //place
-                'state'    => 'NL-DR',
+                'state'    => 'DR-NL',
                 'postcode' => '1011',
                 'country'  => 'NL'
             ],
@@ -973,9 +976,6 @@ else if(isset($starter)){
                 ]
             ]
         ];
-
-        // close curl
-        curl_close( $ch );
 
         // initialize curl
         $ch = curl_init();
@@ -1001,11 +1001,52 @@ else if(isset($starter)){
         else
             $message = "Subscription applied succesfully !";
 
+        header("Location: /dashboard/company/profile-company/?message=" . $message);
     }
     
     // close curl
     curl_close( $ch );
 
+}
+
+else if(isset($departement_add)){
+    $user_id = get_current_user_id();
+    $company = get_field('company',  'user_' . $user_id);
+    $departments = get_field('departments', $company[0]->ID);
+
+    $department = array();
+    $department['name'] = $name_department;
+
+    if(!$departments)
+        $departments = array();
+
+    array_push($departments, $department);
+
+    update_field('departments', $departments, $company[0]->ID);
+    $message = '/dashboard/company/afdelingen/?message=Department added successfully !'; 
+    header("Location: ". $message);
+}
+
+else if(isset($departement_delete)){
+    $user_id = get_current_user_id();
+    $company = get_field('company',  'user_' . $user_id);
+    $departments = get_field('departments', $company[0]->ID);
+    $bunch = array();
+    foreach($departments as $key => $value)
+        if($key == $id)
+            continue;
+        else
+            array_push($bunch,$value);
+    
+    update_field('departments', $bunch, $company[0]->ID);
+    $message = '/dashboard/company/afdelingen/?message=Department deleted successfully !'; 
+    header("Location: ". $message);
+}
+if(isset($details_user_departement)){
+    update_field('role', $role_user, 'user_'.$id_user);
+    update_field('department', $department, 'user_'.$id_user);
+    $message = '/dashboard/company/afdelingen/?message=Informations updated successfully !'; 
+    header("Location: ". $message);
 }
 
 

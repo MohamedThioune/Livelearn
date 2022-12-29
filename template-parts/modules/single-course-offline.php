@@ -616,11 +616,13 @@
                                                                 </div>
                                                                 <div class="Course-chechkout">
                                                                     <h3>Boek training</h3>
+                                                                    <!-- 
                                                                     <select class="Course-people" name="" id="">
                                                                         <option value="1"> 1 persoon </option>
                                                                         <option value="2"> 2 persoon </option>
                                                                         <option value="3"> 3 persoon </option>
-                                                                    </select>
+                                                                    </select> 
+                                                                    -->
                                                                     <table class="tablePrice">
                                                                         <tbody>
                                                                             <tr>
@@ -676,6 +678,134 @@
                                                 $it++;
                                                 if($it == 4)
                                                     break;
+                                            }
+                                        }
+                                        else{
+                                            $data = get_field('dates', $post->ID);
+                                            if($data){
+                                                $number = count($data) - 1;
+                                                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];
+                                                $date_start = explode(' ', $data[0]['date']);
+                                                $date_end = explode(' ', $data[$number]['date']);
+                                                $d_start = explode('-', $date_start[0]);
+                                                $d_end = explode('-', $date_end[0]);
+
+                                                $timer_s = explode(':', $date_start[1]);
+                                                $h_start = $timer_s[0] . ':' . $timer_s[1];
+
+                                                $timer_e = explode(':', $date_end[1]);
+                                                $h_end =  $timer_e[0] . ':' . $timer_e[1];
+
+                                                $agenda_start = $d_start[2] . ' ' . $calendar[$d_start[1]];
+                                                $agenda_end = $d_end[2] . ' ' . $calendar[$d_end[1]];
+
+                                                if($data){
+                                                    $day = explode(' ', $dates[0]['date']);
+                                            ?>
+                                                <a id="bookdates" name="bookdates"></a>
+                                                <div class="block2evens block2evensTabs">
+                                                    <section>
+                                                        <details>
+                                                            <summary class="dateText1">
+
+                                                                <div class="headTabsAccordion">
+                                                                    <p class="Date__inner">
+                                                                        <?php
+                                                                        echo $agenda_start;
+                                                                        if($date_start != $date_end)
+                                                                        {
+                                                                            echo ' - ';
+                                                                            echo $agenda_end;
+                                                                        }
+                                                                        ?>
+                                                                    </p>
+                                                                    <p class="location"><?php echo $location_start  ?></p>
+                                                                    <p class="prixEvens">€ <?php echo $price; ?></p>
+                                                                </div>
+
+                                                            </summary>
+                                                            <div class="detailSummary">
+                                                                <div class="Course-info">
+                                                                    <h3>Cursus</h3>
+                                                                    <?php
+                                                                    if(!empty($data))
+                                                                        $x = 0;
+
+                                                                    foreach($data as $key => $datum) {
+                                                                    $date = explode(' ', $datum['date']);
+                                                                    $d = explode('-', $date[0]);
+                                                                    $day = $d[2] . ' ' . $calendar[$d[1]];
+                                                                    $hour = explode(':', explode('-', $date[1])[0])[0] .':'. explode(':', explode('-', $date[1])[0])[1];
+                                                                    ?>
+                                                                    <div class="blockDateEvens">
+
+                                                                        <p class="dateEvens"><?php echo $day . ', ' . $hour ?></p>
+                                                                    </div>
+                                                                        <?php
+                                                                        $x+=1;
+                                                                    }
+                                                                    ?>
+                                                                </div>
+                                                                <div class="Course-chechkout">
+                                                                    <h3>Boek training</h3>
+                                                                    <!-- <select class="Course-people" name="" id="">
+                                                                        <option value="1"> 1 persoon </option>
+                                                                        <option value="2"> 2 persoon </option>
+                                                                        <option value="3"> 3 persoon </option>
+                                                                    </select> -->
+                                                                    <table class="tablePrice">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <th>1x reguliere trainingsprijs</th>
+                                                                                <td><p class="prix">€ <?php echo $price; ?></p></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        <tfoot>
+                                                                            <tr>
+                                                                                <td colspan="2"><div class="price"><p>€ <?php echo $price; ?></p></div></td>
+                                                                            </tr>
+                                                                        </tfoot>
+                                                                    </table>
+                                                                    <div class="contentBtnCardProduct">
+                                                                        <?php
+                                                                        $dateNameStart = $agenda_start . ', ' . $h_start . ', ' . $location_start;
+                                                                        //Reserveren action
+                                                                        echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
+
+                                                                        do_action( 'woocommerce_before_add_to_cart_form' );
+                                                                        ?>
+                                                                        <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
+                                                                            <?php
+                                                                            do_action( 'woocommerce_before_add_to_cart_button' );
+                                                                            do_action( 'woocommerce_before_add_to_cart_quantity' );
+
+                                                                            woocommerce_quantity_input(
+                                                                                array(
+                                                                                    'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
+                                                                                    'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
+                                                                                    'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
+                                                                                )
+                                                                            );
+
+                                                                            do_action( 'woocommerce_after_add_to_cart_quantity' );
+
+                                                                            if($user_id != 0 && $user_id != $post->post_author)
+                                                                                echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';
+
+                                                                            do_action( 'woocommerce_after_add_to_cart_button' ); ?>
+                                                                        </form>
+                                                                        <?php
+                                                                        if($user_id == 0)
+                                                                            echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
+                                                                        do_action( 'woocommerce_after_add_to_cart_form' ); ?>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </details>
+                                                    </section>
+                                                </div> 
+                                            <?php 
+                                                }
                                             }
                                         }
                                     }

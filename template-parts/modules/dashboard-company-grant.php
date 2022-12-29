@@ -17,11 +17,14 @@
             header('Location: /dashboard/company/grant/?message=' . $message);
         }
     if(isset($granted_push_manager)){
-        if($rol_manager){
-            $u = new WP_User($id_user);
-            // Add role
+        $u = new WP_User($id_user);
+        // Add role
+        if($rol_manager)
             $u->add_role( 'manager' );
-        }
+        //Remove role
+        else
+            $u->remove_role( 'manager' );
+
         update_field('manager', 1, 'user_'.$id_user);
         update_field('amount_budget', $amount_budget, 'user_'.$id_user);
         $success = true;
@@ -121,6 +124,7 @@
 
                     if(!in_array('manager', $used->roles) && !in_array('author', $used->roles) )
                         continue;
+
                     $companies = get_field('company',  'user_' . $used->ID);
                     if(!empty($company) && $user_id != $used->ID ){
                         $companie = $companies[0]->post_title;
@@ -135,8 +139,9 @@
                             $is_manager = (in_array('manager', $used->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
                             $is_author = (in_array('author', $used->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
 
-                            $amount_budget = get_field('amount_budget',  'user_' . $used->ID) ?: 0 ;
-                ?>
+                            $amount_budget = get_field('amount_budget', 'user_' . $used->ID) ? : 0;
+                            $amount_budget += 5;                 
+                    ?>
                         <tr id="" >
                             <td scope="row"><?= $i ?></td>
                             <td class="textTh thModife">
@@ -177,7 +182,7 @@
                                         <input type="hidden" name="id_user" value="<?= $used->ID?>">
                                         <div class="form-group block-check-grant">
                                             <label>
-                                                <input type="checkbox" name="rol_manager" value="1"><span class="checbox-element-label">Manager</span>
+                                                <input type="checkbox" name="rol_manager" value="1" <?php echo ((in_array('manager', $used->roles)) ? 'checked' : '') ?>><span class="checbox-element-label">Manager</span>
                                             </label>
                                         </div>
 
@@ -185,7 +190,7 @@
                                             <label for="exampleInputPassword1">Leerbudget</label>
                                             <input type="number" name="amount_budget" value="<?= $amount_budget ;?>" class="form-control" placeholder="Amount €">
                                         </div>
-                                        <button type="submit" name="granted_push_manager" class="btn btn-add-budget">Add</button>
+                                        <button type="submit" name="granted_push_manager" class="btn btn-add-budget">Save</button>
                                     </form>
                                 </div>
                             </div>
