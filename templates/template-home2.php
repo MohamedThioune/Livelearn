@@ -23,6 +23,9 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
     .nav-link {
         color: #043356 !important;
     }
+    .worden {
+        color: white !important;
+    }
     .navbar-collapse .inputSearch{
         background: #C3DCE5;
     }
@@ -111,7 +114,13 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
     .titleGroupText {
         font-weight: 500;
     }
-
+    .nav-item .dropdown-toggle::after {
+        margin-left: 8px;
+        margin-top: 10px;
+    }
+    #modalVideo .modal-dialog {
+        width: 50% !important;
+    }
     @media (min-width: 300px) and (max-width: 767px){
         .titleSubscription {
             margin-top: 30px;
@@ -792,19 +801,7 @@ $saved = get_user_meta($user_id, 'course');
                     <input id="search" type="search" class="jAuto searchInputHome form-control"
                         placeholder="Zoek op naam, experts of onderwerpen " name="search" autocomplete="off">
                     <button class="btn btn-Zoek elementWeb"><span>Zoek</span></button>
-                    <?php
-                        if(get_current_user_id()==0){
-                    ?>
 
-                        <div class="groupeBtn-Jouw-inloggen">
-                            <button type="button" class="btn jouwn-skills elementWeb" data-toggle="modal" data-target="#SkillsModal" >Jouw skills paspoort in 6 stappen</button>
-                            <button type="button" class="jouwn-skills elementMobile" data-toggle="modal" data-target="#SkillsModal" >Skills Paspoort</button>
-                            <a href="#" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal"  class="inloggenbtn">Inloggen</a>
-                        </div>
-
-                    <?php
-                        }
-                    ?>
                     <div class="dropdown-menuSearch" id="list">
                         <div class="list-autocomplete" id="autocomplete">
                         <center> <i class='hasNoResults'>No matching results ... </i> </center>
@@ -1592,178 +1589,6 @@ $saved = get_user_meta($user_id, 'course');
 
         </div>
     </div>
-</div>
-
-<div class="blockTopBanen">
-    <div class="container-fluid">
-        <div class="d-flex align-center align-item-center">
-            <p class="titleTopBanen">Banen om naar te scholen</p>
-        </div>
-
-        <div class="swiper-container swipeContaine2">
-            <div class="swiper-wrapper">
-                    <a href="/baangerichte" class="swiper-slide swiper-slide2">
-                        <div class="cardTop bleu">
-                            <?php
-                                $image_principal = get_field('image', 'category_'. $categories[1]);
-                                $image_principal = $image_principal ? $image_principal : get_stylesheet_directory_uri() . '/img/maternite.jpg';
-                            ?>
-                            <div class="contentImg">
-                                <img src="<?php echo $image_principal; ?>" alt="">
-                            </div>
-                            <p class="bekijText bleuT">Bekijk alles</p>
-                        </div>
-                    </a>
-                    <?php
-                        foreach ($bangerichts as $value) {
-                            $image_category = get_field('image', 'category_'. $value->cat_ID);
-                            $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/maternite.jpg';
-                    ?>
-                    <a href="sub-topic?subtopic=<?php echo $value->cat_ID; ?>" class="swiper-slide swiper-slide2">
-                        <div class="cardTop ">
-                            <div class="contentImg">
-                                <img src="<?php echo $image_category; ?>" alt="">
-                            </div>
-                            <p class="bekijText"><?php echo $value->cat_name; ?></p>
-                        </div>
-                    </a>
-                    <?php
-
-                        }
-                    ?>
-                </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="blockTopBanen">
-    <div class="container-fluid">
-        <div class="d-flex align-center align-item-center">
-            <p class="titleTopBanen">Top Functies</p>
-        </div>
-
-        <div class="swiper-container swipeContaine2">
-            <div class="swiper-wrapper">
-                    <a href="/functiegerichte/" class="swiper-slide swiper-slide2">
-                        <div class="cardTop bleu">
-                            <?php
-                                $image_principal = get_field('image', 'category_'. $categories[0]);
-                                $image_principal = $image_principal ? $image_principal : get_stylesheet_directory_uri() . '/img/maternite.jpg';
-                            ?>
-                            <div class="contentImg">
-                                <img src="<?php echo $image_principal; ?>" alt="">
-                            </div>
-                            <p class="bekijText bleuT">Bekijk alles</p>
-                        </div>
-                    </a>
-                    <?php
-                        foreach ($functies as $value) {
-                            $image_category = get_field('image', 'category_'. $value->cat_ID);
-                            $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/maternite.jpg';
-                    ?>
-                    <a href="sub-topic?subtopic=<?php echo $value->cat_ID; ?>" class="swiper-slide swiper-slide2">
-                        <div class="cardTop ">
-                            <div class="contentImg">
-                                <img src="<?php echo $image_category; ?>"  alt="">
-                            </div>
-                            <p class="bekijText"><?php echo $value->cat_name; ?></p>
-
-                        </div>
-                    </a>
-                    <?php
-
-                        }
-                    ?>
-                </div>
-        </div>
-    </div>
-</div>
-
-<div class="blockTopBanen">
-    <div class="container-fluid">
-        <div class="d-flex align-center align-item-center">
-            <p class="titleTopBanen">Skills om te ontwikkelen</p>
-        </div>
-
-        <div class="swiper-container swipeContaine2">
-            <div class="swiper-wrapper">
-                    <a href="/skill/" class="swiper-slide swiper-slide2">
-                        <div class="cardTop bleu">
-                            <?php
-                                $image_principal = get_field('image', 'category_'. $categories[3]);
-                                $image_principal = $image_principal ? $image_principal : get_stylesheet_directory_uri() . '/img/maternite.jpg';
-                            ?>
-                            <div class="contentImg">
-                                <img src="<?php echo $image_principal; ?>" alt="">
-                            </div>
-                            <p class="bekijText bleuT">Bekijk alles</p>
-                        </div>
-                    </a>
-                    <?php
-                        foreach ($skills as $value) {
-                            $image_category = get_field('image', 'category_'. $value->cat_ID);
-                            $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/maternite.jpg';
-                    ?>
-                    <a href="sub-topic?subtopic=<?php echo $value->cat_ID; ?>" class="swiper-slide swiper-slide2">
-                        <div class="cardTop ">
-                            <div class="contentImg">
-                                <img src="<?php echo $image_category; ?>" alt="">
-                            </div>
-                            <p class="bekijText"><?php echo $value->cat_name; ?></p>
-                        </div>
-                    </a>
-                    <?php
-
-                        }
-                    ?>
-                </div>
-        </div>
-    </div>
-</div>
-
-<div class="blockTopBanen">
-    <div class="container-fluid">
-        <div class="d-flex align-center align-item-center">
-            <p class="titleTopBanen">Persoonlijke interesses om te verbeteren</p>
-        </div>
-
-        <div class="swiper-container swipeContaine2">
-            <div class="swiper-wrapper">
-                    <a href="/persoonlijke/" class="swiper-slide swiper-slide2">
-                        <div class="cardTop bleu">
-                            <?php
-                                $image_principal = get_field('image', 'category_'. $categories[2]);
-                                $image_principal = $image_principal ? $image_principal : get_stylesheet_directory_uri() . '/img/maternite.jpg';
-                            ?>
-                            <div class="contentImg">
-                                <img src="<?php echo $image_principal; ?>" alt="">
-                            </div>
-                            <p class="bekijText bleuT">Bekijk alles</p>
-                        </div>
-                    </a>
-                    <?php
-                        foreach ($interesses as $value) {
-                            $image_category = get_field('image', 'category_'. $value->cat_ID);
-                            $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/maternite.jpg';
-                    ?>
-                        <a href="sub-topic?subtopic=<?php echo $value->cat_ID; ?>" class="swiper-slide swiper-slide2">
-                            <div class="cardTop ">
-                                <div class="contentImg">
-                                    <img src="<?php echo $image_category; ?>" alt="">
-                                </div>
-                                <p class="bekijText"><?php echo $value->cat_name; ?></p>
-
-                            </div>
-                        </a>
-                        <?php
-
-                        }
-                    ?>
-                </div>
-        </div>
-    </div>
-
 </div>
 
 <div class="container-fluid">
