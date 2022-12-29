@@ -16005,6 +16005,22 @@ ul .selectAll .styled-checkbox:checked + label:after {
         position: relative;
         top: -1px;
     }
+    .woocommerce-checkout .wrapper-woocommerce {
+        width: 90%;
+    }
+    .woocommerce .theme-cart-row.cart_item {
+        padding: 20px 15px 25px !important;
+    }
+    .woocommerce .wrapper .container .cart-checkOut {
+        width: 100%;
+    }
+    .woocommerce .woocommerce-checkout .wrapper-woocommerce .cart-checkOut {
+        width: 100%;
+    }
+    .cart-checkOut .container {
+        padding: 20px 10px;
+        margin: 0 0px !important;
+    }
 
 }
 
