@@ -93,6 +93,9 @@ $see_experts = get_users(
                 width: fit-content !important;
 
             }
+            .content-home2 form .selectSearchHome {
+                height: unset !important;
+            }
 
         </style>
 

@@ -93,9 +93,7 @@ $orders = wc_get_orders($order_args);
 
 <!-- modal-style -->
 <style>
-    body {
-        padding-top: 0px !important;
-    }
+
 
     /* modal on dashboard-learning-modules */
     @media (max-width: 991.98px) {
@@ -173,7 +171,7 @@ $orders = wc_get_orders($order_args);
 
 
 
-<div class="contentListeCourse">
+<div class="contentListeCourse contentLeaning">
     <!-- 
     <div class="cardOverviewCours">
         <div class="headListeCourse">
