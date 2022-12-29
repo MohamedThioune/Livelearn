@@ -1,5 +1,24 @@
 jQuery(function($) {
 
+    // for menu large
+    $("#burger-web").click(function() {
+        $(".theme-side-menu").addClass("extensive");
+    });
+    // for menu large
+    $("#burgerCroie-web").click(function() {
+        $(".theme-side-menu").removeClass("extensive");
+    });
+
+    $("#burger-web").click(function() {
+        $("#burgerCroie-web").show();
+        $("#burger-web").hide();
+    });
+
+    $("#burgerCroie-web").click(function() {
+        $("#burgerCroie-web").hide();
+        $("#burger-web").show();
+    });
+
     //variable for offline courses date input
     $('.block2evens').each(function() {
         console.log('enting for reservations done');
@@ -296,16 +315,6 @@ jQuery(function($) {
         $(".croie").toggle();
     });
 
-    $("#burger-web").click(function() {
-        $("#burgerCroie-web").show();
-        $("#burger-web").hide();
-    });
-
-    $("#burgerCroie-web").click(function() {
-        $("#burgerCroie-web").hide();
-        $("#burger-web").show();
-    });
-
     $(".croie").click(function() {
         $(".headSousMobilePrincipale").hide();
         $(".burgerElement").show();
@@ -532,16 +541,6 @@ jQuery(function($) {
     $("#btnStart3").click(function() {
         $("#step2OverviewAssessmentBackend").hide();
         $("#step3OverviewAssessmentBackend").show();
-    });
-
-
-    // for menu large
-    $("#burger-web").click(function() {
-        $(".theme-side-menu").addClass("extensive");
-    });
-    // for menu large
-    $("#burgerCroie-web").click(function() {
-        $(".theme-side-menu").removeClass("extensive");
     });
 
     // for road path

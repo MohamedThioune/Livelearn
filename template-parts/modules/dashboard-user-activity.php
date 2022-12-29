@@ -315,18 +315,20 @@ if(!empty($courses))
                     echo "empty until now";
                 ?>
                 <br>
-                <?php
-                    if($save_enrolls)
-                        foreach (range(1, $save_enrolls) as $number){
-                            if(isset($_GET['page2']))
-                                if($_GET['page2'] == $number)
-                                    echo '<a href="?opgedane&page2=' .$number. '" style="color: #DB372C" class="textLiDashboard">'. $number .'&nbsp;</a>';
-                                else
-                                    echo '<a href="?opgedane&page2=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
-                            else
-                                echo '<a href="?opgedane&page2=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
-                        }
-                ?>
+               <div style="text-align: center; width: 100%;">
+                   <?php
+                   if($save_enrolls)
+                       foreach (range(1, $save_enrolls) as $number){
+                           if(isset($_GET['page2']))
+                               if($_GET['page2'] == $number)
+                                   echo '<a href="?opgedane&page2=' .$number. '" style="color: #DB372C" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                               else
+                                   echo '<a href="?opgedane&page2=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                           else
+                               echo '<a href="?opgedane&page2=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                       }
+                   ?>
+               </div>
                 
             </div>
         </div>
