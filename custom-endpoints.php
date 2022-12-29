@@ -9,11 +9,14 @@ class Expert
  public  $profilImg;
  public $company;
 
+  public $role;
+
  function __construct($expert,$profilImg) {
     $this->id=(int)$expert->ID;
     $this->name=$expert->display_name;
     $this->profilImg =$profilImg;
     $this->company = get_field('company', 'user_' . (int)$expert->ID)[0] ?? null;
+    $this->role = get_field('role', 'user_' . (int)$expert->ID) ?? '';
     // if(!empty($company) ){
     //     $company = $company[0];
     //     $company_connected = $company->post_title;
@@ -40,7 +43,10 @@ class Course
   public $visibility;
   public $podcasts;
 
+  public $likes;
+
   public $author;
+  public $articleItself;
 
   public $connectedProduct;
 
@@ -61,6 +67,8 @@ class Course
      $this->podcasts = $course->podcasts;
      $this->connectedProduct = $course->connectedProduct;
      $this->author = $course->author;
+     $this->articleItself = get_field('article_itself', $course->ID) ?? '';
+     $this->likes = is_array(get_field('favorited', $course->ID)) ? count(get_field('favorited', $course->ID)) : 0 ; //?? [];
     }
 }
 
@@ -379,12 +387,11 @@ function save_course(WP_REST_Request $request)
 {
   $current_user = $GLOBALS['user_id'];
   $course_id = $request['course_id']!= null && !empty (get_post($request['course_id'])) ? $request['course_id'] : false ;
-  if (!$course_id)
+  if (!empty($course_id))
   {
     $meta_key = 'course';
-    $course_saved = get_user_meta($current_user, $meta_key) ?? [] ;
-    //return $course_saved;
-    if (in_array($course_id, $course_saved)) {
+    $course_saved = get_user_meta($current_user, $meta_key) ?? false;
+    if (!in_array($course_id, $course_saved)) {
       add_user_meta($current_user, $meta_key, $course_id);
       $message = 'Course saved with success';
     }
@@ -393,7 +400,6 @@ function save_course(WP_REST_Request $request)
       delete_user_meta($current_user, $meta_key, $course_id);
       $message = 'Course removed with success';
     }
-    
     return ['success' => $message];
   }
   return ['error' => 'This id course doesn\'t exist' ];
@@ -495,6 +501,10 @@ function get_liked_courses()
       }
   }
   return $liked_courses;
+}
+
+function get_count_courses_likes ($data){
+
 }
 
 function recommended_course()
@@ -834,9 +844,9 @@ function recommended_course()
       return ["error" => "Nothing to show, don't ask me why 😅 !"];
 }
 
-function like_course ( WP_REST_Request $request) {
+function like_course ($data) {
   $current_user = $GLOBALS['user_id'];
-  $course = $request['course_id'] != null  ?  get_post($request['course_id']) : false;
+  $course = $data['id'] != null  ?  get_post($data['id']) : false;
   if (!$course)
     return ['error' => 'You have to fill the id of the course'];
   $favorite = get_field('favorited', $course->ID) ?? [];
@@ -953,3 +963,33 @@ function get_courses_of_subtopics($data)
   }
   return $courses_related_subtopic;
 }
+
+function filter_course ($data)
+{
+  $tags = $request['tags'] ?? [];
+  $authors = $request['authors'] ?? [];
+  $company = $request['company'] ?? [];
+  $date = $request['date'] ?? null;
+  $min_price = $request['min_price'] ?? null;
+  $max_price = $request['max_price'] ?? null;
+  $global_courses = get_posts(
+    array(
+      'post_type' => array('course', 'post'),
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+      'order' => 'DESC',
+      'meta_key'         => 'categories',
+      'meta_value' => ['216'])
+    );
+  return $global_courses;
+  foreach ($global_courses as $course) {
+    
+  }
+}
+  function filter_by_value($array,$element,$value) {
+  if (isset($element, $array))
+    if ($element == $value)
+      return true;
+    return FALSE;
+  }
+
