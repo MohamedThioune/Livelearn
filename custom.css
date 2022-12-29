@@ -13169,6 +13169,9 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .fa-angle-down-bleu{
     display: none;
 }
+.contentLeaning{
+    margin-top: 20px;
+}
 
 .contentFormSubscription {
     background-color: #fff!important;
