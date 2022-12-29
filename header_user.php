@@ -370,7 +370,8 @@ $see_experts = get_users(
                                 ?>
                                         <div>
                                             <div class="">
-                                                <p class="feedbackText">Empty until now ...</p>
+                                                <p class="feedbackText">No new updates ...</p>
+                                                <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                             </div>
                                         </div>
                                 <?php

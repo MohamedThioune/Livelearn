@@ -74,7 +74,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                         $link = "/dashboard/company/profile/?id=" . $user->ID . '&manager='. $user_connected; 
                     ?>
                         <tr id="<?php echo $user->ID; ?>" >
-                            <td scope="row"><?= $key; ?></td>
+                            <td scope="row"><?= $key + 1; ?></td>
                             <td class="textTh thModife">
                                 <div class="ImgUser">
                                 <a href="<?= $link; ?>" > <img src="<?php echo $image_user ?>" alt=""> </a>
