@@ -5,6 +5,9 @@
 $users = get_users();
 
 $user_connected = wp_get_current_user();
+if(!in_array('administrator', $user_connected->roles) && !in_array('hr', $user_connected->roles) && !in_array('manager', $user_connected->roles)) 
+    header('Location: /dashboard/company/');
+
 $user_id = $user_connected->ID;
 
 $company = get_field('company',  'user_' . $user_id );

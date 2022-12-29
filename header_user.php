@@ -206,7 +206,8 @@ $see_experts = get_users(
                                     ?>
                                             <div>
                                                 <div class="modal-content-body">
-                                                    <p class="feedbackText">Empty until now ...</p>
+                                                    <p class="feedbackText">No new updates ...</p>
+                                                    <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                                 </div>
                                             </div>
 

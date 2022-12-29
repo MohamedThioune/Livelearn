@@ -364,7 +364,7 @@
                             else{
                                 $dates = get_field('dates', $course->ID);
                                 if($dates)
-                                    $day = explode(' ', $dates[0]['date']);
+                                    $day = explode(' ', $dates[0]['date'])[0];
                                 else{
                                     $data = get_field('data_locaties_xml', $course->ID);
                                     if(isset($data[0]['value'])){
@@ -442,41 +442,44 @@
                             if (in_array('administrator', $user_in->roles ) ) {
                             ?>
                             <td id= <?php echo $course->ID; ?> class="textTh td_subtopics">
-                                <?php
-                                    $course_subtopics = get_field('categories', $course->ID);
-                                    $field = '';
-                                    if($course_subtopics != null){
-                                        if (!empty($course_subtopics)){
-                                            foreach($course_subtopics as $key => $course_subtopic) {
-                                                if ($course_subtopic != "")
-                                                    $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
-                                        }
-                                            $field = substr($field,0,-1);
-                                            echo $field;
-                                        
-                                }
-                            }
-                            }
-                            else
-                            {
-                                ?>
-                                <td class="textTh ">
-                                    <?php
-                                        $course_subtopics = get_field('categories', $course->ID);
-                                        $field = '';
-                                        if($course_subtopics != null){
-                                            if (!empty($course_subtopics)){
-                                                foreach($course_subtopics as $key => $course_subtopic) {
-                                                    if ($course_subtopic != "")
-                                                        $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                            <?php
+                                $course_subtopics = get_field('categories', $course->ID);
+                                $field='';
+                                $read_topis = array();
+                                if($course_subtopics != null){
+                                    if (is_array($course_subtopics) || is_object($course_subtopics)){
+                                        foreach ($course_subtopics as $key => $course_subtopic) {
+                                            if ($course_subtopic != "" && $course_subtopic != "Array" && !in_array(intval($course_subtopic['value']), $read_topis)){
+                                                $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                                array_push($read_topis, intval($course_subtopic['value']));
                                             }
-                                                $field = substr($field,0,-1);
-                                                echo $field;
-                                            
+                                        }
+                                        $field = substr($field,0,-1);
+                                        echo $field;
                                     }
                                 }
                             }
-
+                            else
+                            {
+                            ?>
+                            <td class="textTh ">
+                                <?php
+                                $course_subtopics = get_field('categories', $course->ID);
+                                $field='';
+                                $read_topis = array();
+                                if($course_subtopics != null){
+                                    if (is_array($course_subtopics) || is_object($course_subtopics)){
+                                        foreach ($course_subtopics as $key => $course_subtopic) {
+                                            if ($course_subtopic != "" && $course_subtopic != "Array" && !in_array(intval($course_subtopic['value']), $read_topis)){
+                                                $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                                array_push($read_topis, intval($course_subtopic['value']));
+                                            }
+                                        }
+                                        $field = substr($field,0,-1);
+                                        echo $field;
+                                    }
+                                }
+                            }
                             ?>
                             </p>             
                             </td>
@@ -489,10 +492,7 @@
                                               src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                     </p>
                                     <ul class="dropdown-menu">
-                                        <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?php echo $link; ?>" target="_blank">Bekijk</a></li>
-                                        <li class="my-2"><i class="fa fa-gear px-2"></i><a href="<?= $path_edit ?>" target="_blank">Pas aan</a></li>
-                                        <!-- <li class="my-1"><i class="fa fa-share px-2"></i><input type="button" id="" value="Share"/></li> -->
-                                        <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2 "></i><input type="button" id="" value="Verwijderen"/></li>
+                                        <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?php echo $link; ?>" target="_blank">Bekijk</a></li>    
                                     </ul>
                                 </div>
                             </td>

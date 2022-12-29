@@ -23,7 +23,7 @@
                             <div class="blockImgCarLogin">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Groupe8.png" alt="">
                             </div>
-                            <p class="textNog"> Voor organisties</p>
+                            <p class="textNog"> Voor organisaties</p>
                         </a>
                         <a href="/voor-teachers" class="boxLOginCardOne">
                             <div class="blockImgCarLogin">
