@@ -90,13 +90,13 @@ if(!empty($company))
 $topics_external = get_user_meta($user->ID, 'topic');
 $topics_internal = get_user_meta($user->ID, 'topic_affiliate');
 
-$topics = array();
+$topics_user = array();
 if(!empty($topics_external))
-    $topics = $topics_external;
+    $topics_user = $topics_external;
 
 if(!empty($topics_internal))
     foreach($topics_internal as $value)
-        array_push($topics, $value);
+        array_push($topics_user, $value);
 
 //Note
 $skills_note = get_field('skills', 'user_' . $user->ID);

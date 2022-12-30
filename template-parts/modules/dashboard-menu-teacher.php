@@ -18,7 +18,7 @@
     //User informations
     $user = wp_get_current_user();
     $company = get_field('company', 'user_' . $user->ID);
-    if(!empty($company) ){
+    if(empty($company) ){
         $company = $company[0];
         $company_connected = $company->post_title;
     }
@@ -117,36 +117,48 @@
             </a>
         </li>
         <li class="elementTextDashboard">
-            <a href="#" class="d-flex">
-                <div class="elementImgSidebar" >
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Berichten.png" >
+            <button href="#" class="d-flex berichtenBtn">
+                <div class="d-flex">
+                    <div class="elementImgSidebar" >
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Berichten.png" >
+                    </div>
+                   <span>Berichten</span>
                 </div>
-                <span > Berichten</span>
-            </a>
+                <span class="comming-soon">Comming Soon</span>
+            </button>
         </li>
         <li class="elementTextDashboard">
-            <a href="#" class="d-flex">
-                <div class="elementImgSidebar" >
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Financien.png" >
+            <button href="#" class="d-flex berichtenBtn">
+                <div class="d-flex">
+                    <div class="elementImgSidebar" >
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Financien.png" >
+                    </div>
+                   <span>Financien</span>
                 </div>
-                <span > Financien</span>
-            </a>
+                <span class="comming-soon">Comming Soon</span>
+            </button>
         </li>
         <li class="elementTextDashboard">
-            <a href="#" class="d-flex">
-                <div class="elementImgSidebar" >
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Statistieken.png" >
+            <button href="#" class="d-flex berichtenBtn">
+                <div class="d-flex">
+                    <div class="elementImgSidebar" >
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Statistieken.png" >
+                    </div>
+                   <span>Statistieken</span>
                 </div>
-                <span > Statistieken</span>
-            </a>
+                <span class="comming-soon">Comming Soon</span>
+            </button>
         </li>
         <li class="elementTextDashboard">
-            <a href="#" class="d-flex">
-                <div class="elementImgSidebar" >
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Instellingen.png" >
+            <button href="#" class="d-flex berichtenBtn">
+                <div class="d-flex">
+                    <div class="elementImgSidebar" >
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Instellingen.png" >
+                    </div>
+                   <span>Instellingen</span>
                 </div>
-                <span > Instellingen</span>
-            </a>
+                <span class="comming-soon">Comming Soon</span>
+            </button>
         </li>
     </ul>
 </section>

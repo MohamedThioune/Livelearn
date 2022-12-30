@@ -4,5 +4,9 @@ custom.css
 main-user.js
 main.css
 main.js
+<<<<<<< HEAD
 
 /vendor/
+=======
+api.http
+>>>>>>> origin/main

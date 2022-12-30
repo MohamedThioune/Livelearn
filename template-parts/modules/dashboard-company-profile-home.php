@@ -218,8 +218,8 @@
                     <div id="Skills" class="b-tab contentBlockSetting">
                         <div class="content">
                             <?php
-                            if(!empty($topics)){
-                                foreach($topics as $value){
+                            if(!empty($topics_user)){
+                                foreach($topics_user as $value){
                                     $topic = get_the_category_by_ID($value);
                                     $note = 0;
                                     if(!$topic)

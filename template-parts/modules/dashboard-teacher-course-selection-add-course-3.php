@@ -224,6 +224,9 @@
             }
         });
     });
+``
+    $('.calendar').datepicker();
+
 </script>
 
 

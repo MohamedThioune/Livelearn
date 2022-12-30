@@ -313,8 +313,10 @@
                     <tbody id="autocomplete_company_databank">
                         <?php 
                         foreach($courses as $key => $course){
-                            if(!visibility($course, $visibility_company))
-                                continue;    
+                            $bool = true;
+                            $bool = visibility($course, $visibility_company);
+                            if(!$bool)
+                                continue;   
 
                             $category = ' ';
 
@@ -364,7 +366,7 @@
                             else{
                                 $dates = get_field('dates', $course->ID);
                                 if($dates)
-                                    $day = explode(' ', $dates[0]['date']);
+                                    $day = explode(' ', $dates[0]['date'])[0];
                                 else{
                                     $data = get_field('data_locaties_xml', $course->ID);
                                     if(isset($data[0]['value'])){
@@ -442,19 +444,22 @@
                             if (in_array('administrator', $user_in->roles ) ) {
                             ?>
                             <td id= <?php echo $course->ID; ?> class="textTh td_subtopics">
-                                <?php
-                                    $course_subtopics = get_field('categories', $course->ID);
-                                    $field = '';
-                                    if($course_subtopics != null){
-                                        if (!empty($course_subtopics)){
-                                            foreach($course_subtopics as $key => $course_subtopic) {
-                                                if ($course_subtopic != "")
-                                                    $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                            <?php
+                                $course_subtopics = get_field('categories', $course->ID);
+                                $field='';
+                                $read_topis = array();
+                                if($course_subtopics != null){
+                                    if (is_array($course_subtopics) || is_object($course_subtopics)){
+                                        foreach ($course_subtopics as $key => $course_subtopic) {
+                                            if ($course_subtopic != "" && $course_subtopic != "Array" && !in_array(intval($course_subtopic['value']), $read_topis)){
+                                                $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                                array_push($read_topis, intval($course_subtopic['value']));
+                                            }
                                         }
-                                            $field = substr($field,0,-1);
-                                            echo $field;
+                                        $field = substr($field,0,-1);
+                                        echo $field;
+                                    }
                                 }
-                            }
                             }
                             else
                             {
@@ -462,15 +467,18 @@
                             <td class="textTh ">
                                 <?php
                                 $course_subtopics = get_field('categories', $course->ID);
-                                $field = '';
+                                $field='';
+                                $read_topis = array();
                                 if($course_subtopics != null){
-                                    if (!empty($course_subtopics)){
-                                        foreach($course_subtopics as $key => $course_subtopic) 
-                                            if ($course_subtopic != "")
+                                    if (is_array($course_subtopics) || is_object($course_subtopics)){
+                                        foreach ($course_subtopics as $key => $course_subtopic) {
+                                            if ($course_subtopic != "" && $course_subtopic != "Array" && !in_array(intval($course_subtopic['value']), $read_topis)){
                                                 $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
-                                    
+                                                array_push($read_topis, intval($course_subtopic['value']));
+                                            }
+                                        }
                                         $field = substr($field,0,-1);
-                                        echo $field;                                        
+                                        echo $field;
                                     }
                                 }
                             }

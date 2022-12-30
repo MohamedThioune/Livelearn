@@ -24,12 +24,14 @@
 ?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+
 
 <div class="theme-empty-cart">
     <div class="row h-100">
         <div class="container align-self-center">
             <div class="contentCart">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/ImageCart.png" alt="">
+                <img id="emptyImgCart" src="<?php echo get_stylesheet_directory_uri();?>/img/ImageCart.png" alt="">
                 <p>Je hebt nog niets geselecteerd om in door te leren</p>
                 <a href="/product-search/" class="btn btnBekijkCart">Bekijk alles om te leren</a>
             </div>

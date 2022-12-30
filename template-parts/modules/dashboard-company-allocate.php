@@ -39,7 +39,7 @@ $users = get_users();
     ?>
     <form action="/dashboard/company/allocate" method="post">
         <div class="acf-field">
-            <label for="locate">Selecteer de mensen die u wilt beheren :</label><br>
+            <label for="locate">Selecteer de mensen die u wilt managen :</label><br>
             <div class="form-group">
                     <?php
                     //Get users from company

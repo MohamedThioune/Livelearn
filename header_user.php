@@ -32,6 +32,20 @@ if(!empty($notifications))
         array_push($todos,$todo);
     }
 
+/*
+* * Get all experts
+*/
+$see_experts = get_users(
+    array(
+        'role__in' => ['author'],
+        'posts_per_page' => -1,
+    )
+);
+
+/*
+* * End
+*/
+
 ?>
 
 <!DOCTYPE html>
@@ -78,6 +92,9 @@ if(!empty($notifications))
                 height: unset !important;
                 width: fit-content !important;
 
+            }
+            .content-home2 form .selectSearchHome {
+                height: unset !important;
             }
 
         </style>
@@ -156,6 +173,7 @@ if(!empty($notifications))
                     <div class="nav-item" href="#">
                         <button class="btn bntNotification" data-toggle="modal" data-target="#ModalNotification">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
+                            <i class="fas fa-bell"></i>
                             <span style="color:white" class="alertNotification"><?=count($todos);?></span>
                         </button>
 
@@ -192,7 +210,7 @@ if(!empty($notifications))
                                             <div>
                                                 <div class="modal-content-body">
                                                     <p class="feedbackText">No new updates ...</p>
-                                                    <a href="/dashboard/user/notification" class="feedbackText">Bekijk alle notificaties</a>
+                                                    <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                                 </div>
                                             </div>
 
@@ -228,6 +246,7 @@ if(!empty($notifications))
                 <a href="<?= $link; ?>" class="navbar-brand navBrand" >
                     <div class="logoModife logoWeb logoDashboard">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_white.png" alt="">
+                        <img class="imgLogoBleu" src="<?php echo get_stylesheet_directory_uri();?>/img/LiveLearn_logo.png" alt="">
                     </div>
                     <a href="<?= $link; ?>" class="logoMobile">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn_white.png" alt="LogoMobile" >
@@ -236,6 +255,7 @@ if(!empty($notifications))
                 <div class="elementWeb dashboardsElement">
                     <a href="#" class="nav-link navModife4 btn dropdown-toggle " type="button" id="dropdownNavButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Dashboards <img class="imgArrowDropDown" src="<?php echo get_stylesheet_directory_uri();?>/img/down-chevron.svg" alt="">
+                        <i class="fas fa-angle-down-bleu fa-angle-down"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-dashboard" aria-labelledby="dropdownMenuButton1">
                         <?php
@@ -267,12 +287,19 @@ if(!empty($notifications))
                     <ul class="elementHeaderUser ">
                         <li class="nav-item dropdown addButtonLink">
                             <a href="#" class="nav-link navModife4 btn dropdown-toggle" type="button" id="dropdownNavButtonAdd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/addition.png" alt="addition"
+                                <img class="additionImg" src="<?php echo get_stylesheet_directory_uri();?>/img/addition.png" alt="addition"
                                 style="width: 36px !important; height: 36px !important">
+                                <div class="additionBlock">
+                                    <i class="fas fa-plus" aria-hidden="true"></i>
+                                </div>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonAdd">
-                                <a class="dropdown-item" href="/onderwer/">Onderwerpen</a>
-                                <a class="dropdown-item" href="/opleiders/">Experts</a>
+                                <button type="button" class="btn showModalAdd" data-toggle="modal" data-target="#exampleModal">
+                                    Onderwerpen
+                                </button>
+                                <button type="button" class="btn showModalAdd" data-toggle="modal" data-target="#modalExpert">
+                                    Experts
+                                </button>
                             </div>
                         </li>
                         <?php
@@ -313,6 +340,7 @@ if(!empty($notifications))
                         <li class="position-relative dropdown dropdownNotificationToggle">
                             <button class="btn bntNotification elementWeb dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
+                                <i class="fas fa-bell"></i>
                                 <?php if(!empty($todos)){ ?> <span style="color:white" class="alertNotification"><?=count($todos);?></span> <?php } ?>
                             </button>
                             <div class="dropdown-menu dropdownNotificationWeb" aria-labelledby="dropdownMenuButton" id="ModalNotification">
@@ -338,7 +366,7 @@ if(!empty($notifications))
                                 <?php
                                         }
                                         echo '<div class="">
-                                                  <a href="/dashboard/user/notification" class="btn BekijkNotifications">Bekijk alle notificaties</a>
+                                                  <a href="/dashboard/user/detail-notification/?todo=6620" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                               </div>';
                                     }
                                     else{
@@ -346,7 +374,7 @@ if(!empty($notifications))
                                         <div>
                                             <div class="">
                                                 <p class="feedbackText">No new updates ...</p>
-                                                <a href="/dashboard/user/notification/?" class="btn BekijkNotifications">Bekijk alle notificaties</a>
+                                                <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                             </div>
                                         </div>
                                 <?php
@@ -373,3 +401,166 @@ if(!empty($notifications))
             </div>
         </nav>
      <!-- </body> -->
+
+
+    <?php
+    $categories = array();
+
+    $cats = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'orderby'    => 'name',
+        'exclude' => 'Uncategorized',
+        'parent'     => 0,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    foreach($cats as $category){
+        $cat_id = strval($category->cat_ID);
+        $category = intval($cat_id);
+        array_push($categories, $category);
+    }
+
+    //Topics
+    $topics = array();
+    foreach ($categories as $value){
+        $merged = get_categories( array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $value,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ) );
+
+        if(!empty($merged))
+            $topics = array_merge($topics, $merged);
+    }
+    ?>
+    <!-- Modal add topics and subtopics -->
+    <div class="modal fade modalAddTopicsAnd modal-topics-expert" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Maak en keuze :</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="content-topics">
+                        <ul class="unstyled centered">
+                            <?php
+                            foreach($topics as $key => $topic)
+                                echo '<li>
+                                        <input class="styled-checkbox topics" id="styled-checkbox-'. $key .'" type="checkbox" value="' . $topic->cat_ID . '">
+                                        <label for="styled-checkbox-'. $key .'">' . $topic->cat_name . '</label>
+                                      </li>';
+                            ?>
+                        </ul>
+                        <div class="mt-2">
+                            <button type="button" id="btn-topics" class="btn btnNext">Next</button>
+                        </div>
+                    </div>
+                    <div class="content-subTopics">
+                        <form action="" method="post" id="autocomplete_tags">
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal add Expert -->
+    <div class="modal fade modalAddExpert modal-topics-expert" id="modalExpert" tabindex="-1" role="dialog" aria-labelledby="modalExpertLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Select your Experts</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="head">
+                        <!--
+                        <ul>
+                            <li class="selectAll">
+                                <input class="styled-checkbox" id="allExpert" type="checkbox" value="allExpert">
+                                <label for="allExpert">Select All</label>
+                            </li>
+                        </ul>
+
+                        <div class="blockFilter">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Filter by category</option>
+                                <option value="1">Trending</option>
+                                <option value="2">Companies</option>
+                                <option value="3">Construction</option>
+                                <option value="3">HR</option>
+                                <option value="3">Food</option>
+                            </select>
+                        </div>
+                        -->
+                        <div class="blockSearch position-relative">
+                            <input type="search" placeholder="Search your expert" class="searchSubTopics">
+                            <img class="searchImg" src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png" alt="">
+                        </div>
+                    </div>
+                    <div class="content-expert">
+                        <?php
+                        $saves_experts = get_user_meta($user_id, 'expert');
+                        foreach($see_experts as $key => $expert){
+                            if($key ==  20)
+                                continue;
+
+                            if($user->ID == $expert->ID)
+                                continue;
+
+                            $image_author = get_field('profile_img',  'user_' . $expert->ID);
+                            $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
+                            ?>
+                            <div class="expert-element rows2">
+                                <div class="d-flex align-items-center">
+                                    <div class="checkB">
+                                        <input class="styled-checkbox" id="<?= $expert->display_name ?>" type="checkbox" value="<?= $expert->ID ?>">
+                                        <label for="<?= $expert->display_name ?>"></label>
+                                    </div>
+                                    <div class="img">
+                                        <img src="<?= $image_author ?>" alt="">
+                                    </div>
+                                    <p class="subTitleText nameExpert"><?= $expert->display_name; ?></p>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <a href="/user-overview?id=<?= $expert->ID ?>">See</a>
+                                    <form action="/dashboard/user/" method="POST">
+                                        <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
+                                        <input type="hidden" name="user_id" value="<?= $user->ID ?>" id="">
+                                        <input type="hidden" name="meta_key" value="expert" id="">
+                                        <div>
+                                            <?php
+                                            if(empty($saves_experts))
+                                                echo "<button type='submit' class='btn btnFollowSubTopic' name='interest_push'>Follow</button>";
+                                            else
+                                                if (in_array($expert->ID, $saves_experts))
+                                                    echo "<button type='submit' style='background: red' class='btn btnFollowSubTopic' name='delete'>Unfollow</button>";
+                                                else
+                                                    echo "<button type='submit' class='btn btnFollowSubTopic' name='interest_push'>Follow</button>";
+                                            ?>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                        <div class="mt-3 mb-0">
+                            <button type="button" class="btn btnNext mb-0" data-dismiss="modal">Save</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+

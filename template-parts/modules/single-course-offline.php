@@ -3,12 +3,6 @@
         text-decoration: none !important;
         color: black !important;
     }
-    body{
-        padding-top: 0 !important;
-    }
-    .canhas .liveOverBlock {
-        padding-top: 100px;
-    }
     .bi-x-lg::before {
         top: -5px;
         position: relative;
@@ -20,6 +14,12 @@
     }
     #loginform input {
         background: #E0EFF4 !important;
+    }
+    .swiper {
+        width: 600px;
+    }
+    .canhas{
+        padding-top: 100px;
     }
 
 </style>
@@ -393,7 +393,7 @@
                 </div>
                 <!--------------------------------------- end Text description -------------------------------------- -->
 
-                   
+
 
                 <div class="customTabs">
                     <div class="tabs">
@@ -473,7 +473,6 @@
 
                                                                             ?>
                                                                             <div class="blockDateEvens">
-                                                                                <!--                                                                        <p class="numberEvens"><?php /*echo $x+1 */?></p>
                                                                                  <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
                                                                             </div>
                                                                             <?php
@@ -504,7 +503,7 @@
                                                                         <div class="contentBtnCardProduct">
                                                                             <?php
                                                                             $dateNameStart = $agenda_start . ', ' . $hour_start . ', ' . $location_start;
-                                                                            //Reserveren action
+
                                                                             echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
 
                                                                             do_action( 'woocommerce_before_add_to_cart_form' );
@@ -540,7 +539,6 @@
                                                         </section>
                                                     </div>
 
-                                                    <!-------------------------------------------- End cards on bottom --------------------------- -->
 
                                                     <?php
                                                 }
@@ -616,11 +614,13 @@
                                                                 </div>
                                                                 <div class="Course-chechkout">
                                                                     <h3>Boek training</h3>
+                                                                    <!-- 
                                                                     <select class="Course-people" name="" id="">
                                                                         <option value="1"> 1 persoon </option>
                                                                         <option value="2"> 2 persoon </option>
                                                                         <option value="3"> 3 persoon </option>
-                                                                    </select>
+                                                                    </select> 
+                                                                    -->
                                                                     <table class="tablePrice">
                                                                         <tbody>
                                                                             <tr>
@@ -676,6 +676,134 @@
                                                 $it++;
                                                 if($it == 4)
                                                     break;
+                                            }
+                                        }
+                                        else{
+                                            $data = get_field('dates', $post->ID);
+                                            if($data){
+                                                $number = count($data) - 1;
+                                                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];
+                                                $date_start = explode(' ', $data[0]['date']);
+                                                $date_end = explode(' ', $data[$number]['date']);
+                                                $d_start = explode('-', $date_start[0]);
+                                                $d_end = explode('-', $date_end[0]);
+
+                                                $timer_s = explode(':', $date_start[1]);
+                                                $h_start = $timer_s[0] . ':' . $timer_s[1];
+
+                                                $timer_e = explode(':', $date_end[1]);
+                                                $h_end =  $timer_e[0] . ':' . $timer_e[1];
+
+                                                $agenda_start = $d_start[2] . ' ' . $calendar[$d_start[1]];
+                                                $agenda_end = $d_end[2] . ' ' . $calendar[$d_end[1]];
+
+                                                if($data){
+                                                    $day = explode(' ', $dates[0]['date']);
+                                            ?>
+                                                <a id="bookdates" name="bookdates"></a>
+                                                <div class="block2evens block2evensTabs">
+                                                    <section>
+                                                        <details>
+                                                            <summary class="dateText1">
+
+                                                                <div class="headTabsAccordion">
+                                                                    <p class="Date__inner">
+                                                                        <?php
+                                                                        echo $agenda_start;
+                                                                        if($date_start != $date_end)
+                                                                        {
+                                                                            echo ' - ';
+                                                                            echo $agenda_end;
+                                                                        }
+                                                                        ?>
+                                                                    </p>
+                                                                    <p class="location"><?php echo $location_start  ?></p>
+                                                                    <p class="prixEvens">€ <?php echo $price; ?></p>
+                                                                </div>
+
+                                                            </summary>
+                                                            <div class="detailSummary">
+                                                                <div class="Course-info">
+                                                                    <h3>Cursus</h3>
+                                                                    <?php
+                                                                    if(!empty($data))
+                                                                        $x = 0;
+
+                                                                    foreach($data as $key => $datum) {
+                                                                    $date = explode(' ', $datum['date']);
+                                                                    $d = explode('-', $date[0]);
+                                                                    $day = $d[2] . ' ' . $calendar[$d[1]];
+                                                                    $hour = explode(':', explode('-', $date[1])[0])[0] .':'. explode(':', explode('-', $date[1])[0])[1];
+                                                                    ?>
+                                                                    <div class="blockDateEvens">
+
+                                                                        <p class="dateEvens"><?php echo $day . ', ' . $hour ?></p>
+                                                                    </div>
+                                                                        <?php
+                                                                        $x+=1;
+                                                                    }
+                                                                    ?>
+                                                                </div>
+                                                                <div class="Course-chechkout">
+                                                                    <h3>Boek training</h3>
+                                                                    <!-- <select class="Course-people" name="" id="">
+                                                                        <option value="1"> 1 persoon </option>
+                                                                        <option value="2"> 2 persoon </option>
+                                                                        <option value="3"> 3 persoon </option>
+                                                                    </select> -->
+                                                                    <table class="tablePrice">
+                                                                        <tbody>
+                                                                            <tr>
+                                                                                <th>1x reguliere trainingsprijs</th>
+                                                                                <td><p class="prix">€ <?php echo $price; ?></p></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                        <tfoot>
+                                                                            <tr>
+                                                                                <td colspan="2"><div class="price"><p>€ <?php echo $price; ?></p></div></td>
+                                                                            </tr>
+                                                                        </tfoot>
+                                                                    </table>
+                                                                    <div class="contentBtnCardProduct">
+                                                                        <?php
+                                                                        $dateNameStart = $agenda_start . ', ' . $h_start . ', ' . $location_start;
+                                                                        //Reserveren action
+                                                                        echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
+
+                                                                        do_action( 'woocommerce_before_add_to_cart_form' );
+                                                                        ?>
+                                                                        <form class="cart" action="<?php echo esc_url( apply_filters( 'woocommerce_add_to_cart_form_action', $product->get_permalink() ) ); ?>" method="post" enctype='multipart/form-data'>
+                                                                            <?php
+                                                                            do_action( 'woocommerce_before_add_to_cart_button' );
+                                                                            do_action( 'woocommerce_before_add_to_cart_quantity' );
+
+                                                                            woocommerce_quantity_input(
+                                                                                array(
+                                                                                    'min_value'   => apply_filters( 'woocommerce_quantity_input_min', $product->get_min_purchase_quantity(), $product ),
+                                                                                    'max_value'   => apply_filters( 'woocommerce_quantity_input_max', $product->get_max_purchase_quantity(), $product ),
+                                                                                    'input_value' => isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : $product->get_min_purchase_quantity(), // WPCS: CSRF ok, input var ok.
+                                                                                )
+                                                                            );
+
+                                                                            do_action( 'woocommerce_after_add_to_cart_quantity' );
+
+                                                                            if($user_id != 0 && $user_id != $post->post_author)
+                                                                                echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';
+
+                                                                            do_action( 'woocommerce_after_add_to_cart_button' ); ?>
+                                                                        </form>
+                                                                        <?php
+                                                                        if($user_id == 0)
+                                                                            echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
+                                                                        do_action( 'woocommerce_after_add_to_cart_form' ); ?>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </details>
+                                                    </section>
+                                                </div> 
+                                            <?php 
+                                                }
                                             }
                                         }
                                     }
@@ -814,11 +942,226 @@
                         <!-- END tabs-content -->
                     </div> <!-- END tabs -->
                 </div>
-                
+
             </div>
-            
 
 
+            <div class="blockTwoOver">
+                <div class="btnGrou10">
+                    <button type="button" class="btnContact" data-toggle="modal" data-target="#direct-contact">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
+                        Direct contact
+                    </button>
+                    <button type="button" class="btnContact" data-toggle="modal" data-target="#incompany">
+                        <i class="fas fa-house-damage px-2" style="font-size: 20px"></i>
+                        Incompany
+                    </button>
+                    <button type="button" class="btnContact" data-toggle="modal" data-target="#offerte">
+                        <i class="fab fa-buffer px-2" style="font-size: 20px"></i>
+                        Brochure
+                    </button>
+                    <button type="button" class="btnContact" data-toggle="modal" data-target="#voor-wie">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/question.png" alt="">
+                        Voor wie
+                    </button>
+                </div>
+
+                <div class="CardpriceLive">
+                    <?php
+                    if(!empty($company))
+                    {
+                        $company_id = $company[0]->ID;
+                        $company_title = $company[0]->post_title;
+                        $company_logo = get_field('company_logo', $company_id);
+                        ?>
+                        <div href="/opleider-courses?companie=<?php echo $company_id ; ?>"  class="imgCardPrice">
+                            <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" ><img src="<?php echo $company_logo; ?>" alt="company logo"></a>
+                        </div>
+                        <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="liveTextCadPrice h5"><?php echo $company_title; ?></a>
+
+                        <?php
+                    }
+                    ?>
+                    <form action="/dashboard/user/" method="POST">
+                        <input type="hidden" name="meta_value" value="<?php echo $post->post_author ?>" id="">
+                        <input type="hidden" name="user_id" value="<?php echo $user_id ?>" id="">
+                        <input type="hidden" name="meta_key" value="expert" id="">
+                        <?php
+                        if($user_id != 0 )
+                            echo " <button type=\"button\" class=\"btn btnLeerom\" data-toggle=\"modal\" data-target=\"#ModalFollowExpert\">
+                                     + Leeromgeving
+                                    </button>";
+                        ?>
+
+                        <!-- Modal follow expert -->
+                        <div class="modal fade" id="ModalFollowExpert" tabindex="-1" role="dialog" aria-labelledby="ModalFollowExpertLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Follow Expert</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <?php
+                                        $saves_expert = get_user_meta($user_id, 'expert');
+                                        foreach($experts as $value){
+                                            if(!$value)
+                                                continue;
+
+                                            $expert = get_users(array('include'=> $value))[0]->data;
+                                            $company = get_field('company',  'user_' . $expert->ID);
+                                            $title = $company[0]->post_title;
+                                            $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                            ?>
+                                            <div class="blockExpertFollown">
+                                                <div class="d-flex">
+                                                    <div class="blockImageExpertFollow">
+                                                        <img alt="Expert Image" src="<?php echo $image; ?>" alt="teacher photo">
+                                                    </div>
+                                                    <div>
+                                                        <p class="nameExpert"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></p>
+                                                        <p class="titleExpert"><?php echo $title; ?></p>
+                                                    </div>
+                                                </div>
+                                                <form action="/dashboard/user/" method="POST">
+                                                    <input type="hidden" name="artikel" value="<?= $post->ID; ?>" id="">
+                                                    <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
+                                                    <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
+                                                    <input type="hidden" name="meta_key" value="expert" id="">
+                                                    <div>
+                                                        <?php
+                                                        if(empty($saves_expert))
+                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
+                                                        else if($user_id != 0 && $user_id != $expert->ID)
+                                                        {
+                                                            if (in_array($expert->ID, $saves_expert))
+                                                                echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
+                                                            else
+                                                                echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                </form>
+                                                <?php
+                                                if($user_id == 0)
+                                                    echo "                                
+                                                        <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='btn btnFollowExpert'> 
+                                                            Follow                                            
+                                                        </button>";
+                                                ?>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                    <?php
+                    if($user_id == 0 )
+                        echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> + Leeromgeving </button>";
+                    ?>
+
+                    <?php
+                    $data = get_field('data_locaties', $post->ID);
+                    if($data)
+                        $location = $data[0]['data'][0]['location'];
+                    else{
+                        $data = explode('-', get_field('field_619f82d58ab9d', $post->ID)[0]['value']);
+                        $location = $data[2];
+                    }
+                    ?>
+
+                    <p class="PrisText">Locaties</p>
+                    <p class="opeleidingText"><?php echo $location; ?></p>
+
+                    <p class="PrisText">Prijs vanaf</p>
+                    <p class="opeleidingText"><?= $course_type?>: € <?php echo $price ?></p>
+                    <p class="btwText">BTW: € <?php echo $prijsvat ?></p>
+
+
+                    <button href="#bookdates" class="btn btnKoop btnScroolEvent text-white PrisText" style="background: #043356">Schrijf je in <?php echo $course_type; ?></button>
+                </div>
+
+                <div class="col-12 my-5" style="background-color: #E0EFF4">
+                    <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around
+                        justify-content-center">
+
+                        <!-- --------------------------------------- Swiper ------------------------------------ -->
+                        <!-- Slider main container -->
+                        <div class="swiper">
+                            <div class="swiper-wrapper">
+                                <?php
+                                $saves_expert = get_user_meta($user_id, 'expert');
+                                foreach($experts as $value){
+                                    if(!$value)
+                                        continue;
+
+                                    $expert = get_users(array('include'=> $value))[0]->data;
+                                    $company = get_field('company',  'user_' . $expert->ID);
+                                    $title = $company[0]->post_title;
+                                    $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                    ?>
+                                    <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
+                                        <div class="my-2 d-flex flex-column mx-md-0 mx-1">
+                                            <div class="imgCardPrice" style="height: 50px; width:50px">
+                                                <img src="<?php echo $image; ?>" alt="teacher photo">
+                                            </div>
+                                            <span class="textIconeLearning"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span>
+                                            <span><?php echo $title; ?></span>
+                                            <form action="/dashboard/user/" method="POST">
+                                                <input type="hidden" name="artikel" value="<?= $post->ID; ?>" id="">
+                                                <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
+                                                <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
+                                                <input type="hidden" name="meta_key" value="expert" id="">
+                                                <div>
+                                                    <?php
+                                                    if(empty($saves_expert))
+                                                        echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
+                                                    else if($user_id != 0 && $user_id != $expert->ID)
+                                                    {
+                                                        if (in_array($expert->ID, $saves_expert))
+                                                            echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
+                                                        else
+                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </a>
+                                <?php } ?>
+
+                            </div>
+
+                        </div>
+
+                        <!-- If we need pagination -->
+                        <!-- <div class="swiper-pagination"></div> -->
+
+                        <!-- If we need navigation buttons -->
+                        <div class="swiper-button-prev swiper-moved" style="font-size: 8px !important">
+                        </div>
+                        <div class="test">
+                            <div class="swiper-button-next swiper-moved"></div>
+                        </div>
+
+                        <!-- If we need scrollbar -->
+                        <!-- <div class="swiper-scrollbar"></div> -->
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
 
 
             <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
@@ -912,299 +1255,82 @@
 
 
 
-            <!-- ----------------------------------- Right side: small dashboard ------------------------------------- -->
-            <div class="blockTwoOver">
-                <div class="btnGrou10">
-                    <button type="button" class="btnContact" data-toggle="modal" data-target="#direct-contact">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/phone.png" alt="">
-                        Direct contact
-                    </button>
-                    <button type="button" class="btnContact" data-toggle="modal" data-target="#incompany">
-                        <i class="fas fa-house-damage px-2" style="font-size: 20px"></i>
-                        Incompany
-                    </button>
-                    <button type="button" class="btnContact" data-toggle="modal" data-target="#offerte">
-                        <i class="fab fa-buffer px-2" style="font-size: 20px"></i>
-                        Brochure
-                    </button>
-                    <button type="button" class="btnContact" data-toggle="modal" data-target="#voor-wie">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/question.png" alt="">
-                        Voor wie
-                    </button>
-                </div>
-
-                <div class="CardpriceLive">
-                    <?php
-                        if(!empty($company))
-                        {
-                            $company_id = $company[0]->ID;
-                            $company_title = $company[0]->post_title;
-                            $company_logo = get_field('company_logo', $company_id);
-                    ?>
-                        <div href="/opleider-courses?companie=<?php echo $company_id ; ?>"  class="imgCardPrice">
-                        <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" ><img src="<?php echo $company_logo; ?>" alt="company logo"></a>
+            <!-- start Modal deel -->
+            <div class="modal" id="modal1" data-animation="fadeIn">
+                <div class="modal-dialog modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
+                    <div class="modal-content">
+                        <div class="tab">
+                            <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
+                            <hr class="hrModifeDeel">
+                            <?php
+                            if ($user_id != 0)
+                            {
+                            ?>
+                                <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
+                            <?php
+                            }
+                            ?>
                         </div>
-                        <a href="/opleider-courses?companie=<?php echo $company_id ; ?>" class="liveTextCadPrice h5"><?php echo $company_title; ?></a>
-
-                    <?php
-                        }
-                    ?>
-                    <form action="/dashboard/user/" method="POST">
-                        <input type="hidden" name="meta_value" value="<?php echo $post->post_author ?>" id="">
-                        <input type="hidden" name="user_id" value="<?php echo $user_id ?>" id="">
-                        <input type="hidden" name="meta_key" value="expert" id="">
+                        <div id="Extern" class="tabcontent">
+                        <div class="contentElementPartage">
+                            <a href="https://wa.me/?text=<?= $share_txt ?>" target="_blank" id="whatsapp"  class="btn contentIcone">
+                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/whatsapp.png" alt="">
+                                <p class="titleIcone">WhatsAppp</p>
+                            </a>
+                        </div>
+                        <div class="contentElementPartage">
+                            <button class="btn contentIcone">
+                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/facebook.png" alt="">
+                            </button>
+                            <p class="titleIcone">Facebook</p>
+                        </div>
+                        <div class="contentElementPartage">
+                            <button class="btn contentIcone">
+                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/insta.png" alt="">
+                            </button>
+                            <p class="titleIcone">Instagram</p>
+                        </div>
+                        <div class="contentElementPartage">
+                            <button id="linkedin" class="btn contentIcone">
+                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/linkedin.png" alt="">
+                            </button>
+                            <p class="titleIcone">Linkedin</p>
+                        </div>
+                        <div class="contentElementPartage">
+                            <a href="sms:?&body=<?= $share_txt ?>" target="_blank" id="" class="btn contentIcone">
+                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/sms.png" alt="">
+                            </a>
+                            <p class="titleIcone">Sms</p>
+                        </div>
+                            <div>
+                                <p class="klikText">Klik om link te kopieren</p>
+                                <div class="input-group input-group-copy formCopyLink">
+                                    <input id="test1" type="text" class="linkTextCopy form-control" value="https://g.co/kgs/K1k9oA" readonly>
+                                    <span class="input-group-btn">
+                                    <button class="btn btn-default btnCopy">Copy</button>
+                                    </span>
+                                    <span class="linkCopied">link copied</span>
+                                </div>
+                            </div>
+                        </div>
                         <?php
-                        if($user_id != 0 )
-                            echo " <button type=\"button\" class=\"btn btnLeerom\" data-toggle=\"modal\" data-target=\"#ModalFollowExpert\">
-                                     + Leeromgeving
-                                    </button>";
+                            if ($user_id==0)
+                            {
                         ?>
-
-                        <!-- Modal follow expert -->
-                        <div class="modal fade" id="ModalFollowExpert" tabindex="-1" role="dialog" aria-labelledby="ModalFollowExpertLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Follow Expert</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <?php
-                                        $saves_expert = get_user_meta($user_id, 'expert');
-                                        foreach($experts as $value){
-                                            if(!$value)
-                                                continue;
-                                                
-                                            $expert = get_users(array('include'=> $value))[0]->data;
-                                            $company = get_field('company',  'user_' . $expert->ID);
-                                            $title = $company[0]->post_title;
-                                            $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                            ?>
-                                            <div class="blockExpertFollown">
-                                                <div class="d-flex">
-                                                    <div class="blockImageExpertFollow">
-                                                        <img alt="Expert Image" src="<?php echo $image; ?>" alt="teacher photo">
-                                                    </div>
-                                                    <div>
-                                                        <p class="nameExpert"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></p>
-                                                        <p class="titleExpert"><?php echo $title; ?></p>
-                                                    </div>
-                                                </div>
-                                                <form action="/dashboard/user/" method="POST">
-                                                    <input type="hidden" name="artikel" value="<?= $post->ID; ?>" id="">
-                                                    <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
-                                                    <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
-                                                    <input type="hidden" name="meta_key" value="expert" id="">
-                                                    <div>
-                                                        <?php
-                                                        if(empty($saves_expert))
-                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
-                                                        else if($user_id != 0 && $user_id != $expert->ID)
-                                                        {
-                                                            if (in_array($expert->ID, $saves_expert))
-                                                                echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
-                                                            else
-                                                                echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
-                                                        }
-                                                        ?>
-                                                    </div>
-                                                </form>
-                                                <?php
-                                                    if($user_id == 0)
-                                                        echo "                                
-                                                        <button data-toggle='modal' data-target='#SignInWithEmail'  aria-label='Close' data-dismiss='modal' type='submit' class='btn btnFollowExpert'> 
-                                                            Follow                                            
-                                                        </button>";
-                                                ?>
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
+                            <div id="Intern" class="tabcontent">
+                                <form action="" class="formShare">
+                                    <input type="text" placeholder="Gebruikersnaam">
+                                    <input type="text" placeholder="Wachtwoord">
+                                    <button class="btn btnLoginModife">Log-in</button>
+                                </form>
                             </div>
-                        </div>
-
-                    </form>
-                    <?php
-                    if($user_id == 0 )
-                        echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> + Leeromgeving </button>";
-                    ?>
-
-                    <?php
-                        $data = get_field('data_locaties', $post->ID);
-                        if($data)
-                            $location = $data[0]['data'][0]['location'];
-                        else{
-                            $data = explode('-', get_field('field_619f82d58ab9d', $post->ID)[0]['value']);
-                            $location = $data[2];
-                        }
-                    ?>
-
-                    <p class="PrisText">Locaties</p>
-                    <p class="opeleidingText"><?php echo $location; ?></p>
-
-                    <p class="PrisText">Prijs vanaf</p>
-                    <p class="opeleidingText"><?= $course_type?>: € <?php echo $price ?></p>
-                    <p class="btwText">BTW: € <?php echo $prijsvat ?></p>
-
-
-                    <button href="#bookdates" class="btn btnKoop btnScroolEvent text-white PrisText" style="background: #043356">Schrijf je in <?php echo $course_type; ?></button>
-                </div>
-
-                <div class="col-12 my-5" style="background-color: #E0EFF4">
-                    <div class="btn-icon rounded-2 p-3 text-center d-flex justify-content-md-around
-                        justify-content-center">
-
-                        <!-- --------------------------------------- Swiper ------------------------------------ -->
-                        <!-- Slider main container -->
-                        <div class="swiper">
-                            <div class="swiper-wrapper">
-                                <?php
-                                    $saves_expert = get_user_meta($user_id, 'expert');
-                                    foreach($experts as $value){
-                                        if(!$value)
-                                            continue;
-
-                                        $expert = get_users(array('include'=> $value))[0]->data;
-                                        $company = get_field('company',  'user_' . $expert->ID);
-                                        $title = $company[0]->post_title;
-                                        $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                    ?>
-                                        <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
-                                            <div class="my-2 d-flex flex-column mx-md-0 mx-1">
-                                                <div class="imgCardPrice" style="height: 50px; width:50px">
-                                                    <img src="<?php echo $image; ?>" alt="teacher photo">
-                                                </div>
-                                                <span class="textIconeLearning"><?php if(isset($expert->first_name) && isset($expert->last_name)) echo $expert->first_name . '' . $expert->last_name; else echo $expert->display_name; ?></span>
-                                                <span><?php echo $title; ?></span>
-                                                <form action="/dashboard/user/" method="POST">
-                                                    <input type="hidden" name="artikel" value="<?= $post->ID; ?>" id="">
-                                                    <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
-                                                    <input type="hidden" name="user_id" value="<?= $user_id ?>" id="">
-                                                    <input type="hidden" name="meta_key" value="expert" id="">
-                                                    <div>
-                                                        <?php  
-                                                        if(empty($saves_expert))
-                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
-                                                        else if($user_id != 0 && $user_id != $expert->ID)
-                                                        {
-                                                            if (in_array($expert->ID, $saves_expert))
-                                                                echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
-                                                            else
-                                                                echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
-                                                        }
-                                                        ?>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </a>
-                                 <?php } ?>
-
-                                </div>
-
-                            </div>
-
-                            <!-- If we need pagination -->
-                            <!-- <div class="swiper-pagination"></div> -->
-
-                            <!-- If we need navigation buttons -->
-                            <div class="swiper-button-prev swiper-moved" style="font-size: 8px !important">
-                            </div>
-                            <div class="test">
-                                <div class="swiper-button-next swiper-moved"></div>
-                            </div>
-
-                            <!-- If we need scrollbar -->
-                            <!-- <div class="swiper-scrollbar"></div> -->
-                        </div>
-
+                        <?php
+                            }
+                        ?>
                     </div>
                 </div>
-        </div>
-       
-    </div>
-
-
-    <!-- start Modal deel -->
-    <div class="modal" id="modal1" data-animation="fadeIn">
-        <div class="modal-dialog modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
-            <div class="modal-content">
-                <div class="tab">
-                    <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
-                    <hr class="hrModifeDeel">
-                    <?php
-                    if ($user_id != 0)
-                    {
-                    ?>
-                        <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
-                    <?php
-                    }
-                    ?>
-                </div>
-                <div id="Extern" class="tabcontent">
-                <div class="contentElementPartage">
-                    <a href="https://wa.me/?text=<?= $share_txt ?>" target="_blank" id="whatsapp"  class="btn contentIcone">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/whatsapp.png" alt="">
-                        <p class="titleIcone">WhatsAppp</p>
-                    </a>
-                </div>
-                <div class="contentElementPartage">
-                    <button class="btn contentIcone">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/facebook.png" alt="">
-                    </button>
-                    <p class="titleIcone">Facebook</p>
-                </div>
-                <div class="contentElementPartage">
-                    <button class="btn contentIcone">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/insta.png" alt="">
-                    </button>
-                    <p class="titleIcone">Instagram</p>
-                </div>
-                <div class="contentElementPartage">
-                    <button id="linkedin" class="btn contentIcone">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/linkedin.png" alt="">
-                    </button>
-                    <p class="titleIcone">Linkedin</p>
-                </div>
-                <div class="contentElementPartage">
-                    <a href="sms:?&body=<?= $share_txt ?>" target="_blank" id="" class="btn contentIcone">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/sms.png" alt="">
-                    </a>
-                    <p class="titleIcone">Sms</p>
-                </div>
-                    <div>
-                        <p class="klikText">Klik om link te kopieren</p>
-                        <div class="input-group input-group-copy formCopyLink">
-                            <input id="test1" type="text" class="linkTextCopy form-control" value="https://g.co/kgs/K1k9oA" readonly>
-                            <span class="input-group-btn">
-                            <button class="btn btn-default btnCopy">Copy</button>
-                            </span>
-                            <span class="linkCopied">link copied</span>
-                        </div>
-                    </div>
-                </div>
-                <?php
-                    if ($user_id==0)
-                    {
-                ?>
-                    <div id="Intern" class="tabcontent">
-                        <form action="" class="formShare">
-                            <input type="text" placeholder="Gebruikersnaam">
-                            <input type="text" placeholder="Wachtwoord">
-                            <button class="btn btnLoginModife">Log-in</button>
-                        </form>
-                    </div>
-                <?php
-                    }
-                ?>
             </div>
-        </div>
-    </div>
-    <!-- fin Modal deel -->
+            <!-- fin Modal deel -->
 
 
 </div>
@@ -1411,3 +1537,5 @@
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
+ </div>
+

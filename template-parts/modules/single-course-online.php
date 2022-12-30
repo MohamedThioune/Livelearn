@@ -1,5 +1,5 @@
 <?php
-extract($_GET); 
+extract($_GET);
 ?>
 <style>
     .swiper {
@@ -8,12 +8,6 @@ extract($_GET);
     .swiper-moved{
         color: #023356 !important;
         font-size: 12px;
-    }
-    body{
-        padding-top: 0 !important;
-    }
-    .canhas .liveOverBlock {
-        padding-top: 100px;
     }
      /* ------------------- Show more Text -------------- */
     .text-limit p,.text-limit .moreText{
@@ -38,6 +32,10 @@ extract($_GET);
         font-size: 22px;
         top: -5px;
         position: relative;
+    }
+
+    .canhas{
+        padding-top: 100px;
     }
 </style>
 
@@ -187,7 +185,7 @@ extract($_GET);
                                 <span class="textIconeLearning mt-1">Deel</span>
                             </button>
                         </div>
-                        
+
                         <!-- Debut Modal deel -->
                         <div class="modal" id="modal1" data-animation="fadeIn">
                             <div class="modal-dialog modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
@@ -314,10 +312,10 @@ extract($_GET);
                         </div>
                         <br>
                    </div>
-                   <?php 
-                        if($agenda || $who || $results ) 
+                   <?php
+                        if($agenda || $who || $results )
                             echo '<button type="button" class="btn btn-lg lees_alles mb-5 mt-3 w-md-25 px-4 border border-3 border-dark read-more-btn">Lees alles</button>';
-                        else 
+                        else
                             echo '<h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Leeg tot nu toe ...</b></h6>';
                     ?>
 
@@ -653,7 +651,7 @@ extract($_GET);
                                     }
                                     ?>
                                 </div>
-                            <?php       
+                            <?php
                             }
                             else if(!empty($youtube_videos)){
                                 ?>
@@ -772,18 +770,18 @@ extract($_GET);
                                                                 <div>
                                                                     <?php
                                                                     if(empty($saves_expert))
-                                                                        echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                                        echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
                                                                     else if($user_id != 0 && $user_id != $expert->ID)
                                                                     {
                                                                         if (in_array($expert->ID, $saves_expert))
                                                                             echo "<button type='submit' class='btn btnFollowExpert' name='delete'>Unfollow</button>";
                                                                         else
-                                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                                            echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
                                                                     }
-                                                                    
+
                                                                     ?>
                                                                 </div>
-                                                            </form>  
+                                                            </form>
                                                         </div>
                                                     <?php } ?>
                                                 </div>
@@ -848,7 +846,7 @@ extract($_GET);
                                                                 <div>
                                                                     <?php
                                                                     if(empty($saves_expert))
-                                                                        echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>"; 
+                                                                        echo "<button type='submit' class='btn btnFollowExpert' name='interest_push'>Follow</button>";
                                                                     else if($user_id != 0 && $user_id != $expert->ID)
                                                                     {
                                                                         if (in_array($expert->ID, $saves_expert))
@@ -903,33 +901,35 @@ extract($_GET);
         </div>
 
 
-        <div class="bloxkWorldMembre formDirect ">
-            <!-- <p class="wordnuText">Word nu <b>LIFT Member</b> en ontvang persoonlijke korting</p>
-            <a href="" class="btn btnPlan">Planeen 15min afspraak in</a> -->
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-2">
-                    <img class="imgDanForm" src="<?php echo $photo_daniel; ?>" alt="photo daniel" srcset="">
-                </div>
-                <div class="col-md-9 mt-3">
-                    <p class="h4">Direct <span class="font-weight-bolder h3">vrijblijvend</span> een 15 minuten scholingsconsult</p>
-                    <div class="d-flex flex-md-row flex-column ">
-                        <div class="p-2 w-md-50 w-sm-50 w-100">
-                            <div class="input-group">
-                                <input type="text" class="form-control text-center border-0"
-                                       placeholder="E-mailadres" aria-label="E-mailadress" aria-describedby="basic-addon1">
+        <div class="container-fluid">
+            <div class="bloxkWorldMembre formDirect ">
+                <!-- <p class="wordnuText">Word nu <b>LIFT Member</b> en ontvang persoonlijke korting</p>
+                <a href="" class="btn btnPlan">Planeen 15min afspraak in</a> -->
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-2">
+                        <img class="imgDanForm" src="<?php echo $photo_daniel; ?>" alt="photo daniel" srcset="">
+                    </div>
+                    <div class="col-md-9 mt-3">
+                        <p class="h4">Direct <span class="font-weight-bolder h3">vrijblijvend</span> een 15 minuten scholingsconsult</p>
+                        <div class="d-flex flex-md-row flex-column ">
+                            <div class="p-2 w-md-50 w-sm-50 w-100">
+                                <div class="input-group">
+                                    <input type="text" class="form-control text-center border-0"
+                                           placeholder="E-mailadres" aria-label="E-mailadress" aria-describedby="basic-addon1">
+                                </div>
                             </div>
-                        </div>
-                        <div class="p-2 w-md-50 w-100">
-                            <div class="input-group">
-                                <input type="text" class="form-control text-center border-0"
-                                       placeholder="Telefoonnummer" aria-label="Username" aria-describedby="basic-addon1">
+                            <div class="p-2 w-md-50 w-100">
+                                <div class="input-group">
+                                    <input type="text" class="form-control text-center border-0"
+                                           placeholder="Telefoonnummer" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
                             </div>
-                        </div>
-                        <div class="p-2" >
-                            <button type="button" class="btn" style="background-color: #00A89D !important;
+                            <div class="p-2" >
+                                <button type="button" class="btn" style="background-color: #00A89D !important;
                             width: 160px">
-                                <span class="text-white" style="font-size: 17px">Neem contact op</span>
-                            </button>
+                                    <span class="text-white" style="font-size: 17px">Neem contact op</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
