@@ -263,11 +263,11 @@ style="overflow-x: hidden !important;">
                             <option value="3">Food</option>
                         </select>
                     </div> 
-                    -->
                     <div class="blockSearch position-relative">
                         <input type="search" placeholder="Search your expert" class="searchSubTopics">
                         <img class="searchImg" src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png" alt="">
                     </div>
+                    -->
                 </div>
                 <div class="content-expert">
                     <?php

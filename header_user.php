@@ -285,6 +285,7 @@ $see_experts = get_users(
 
 
                     <ul class="elementHeaderUser ">
+                        <!-- 
                         <li class="nav-item dropdown addButtonLink">
                             <a href="#" class="nav-link navModife4 btn dropdown-toggle" type="button" id="dropdownNavButtonAdd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="additionImg" src="<?php echo get_stylesheet_directory_uri();?>/img/addition.png" alt="addition"
@@ -301,7 +302,8 @@ $see_experts = get_users(
                                     Experts
                                 </button>
                             </div>
-                        </li>
+                        </li> 
+                        -->
                         <?php
                         $company_id = 0;
                         if(!empty($company))
