@@ -122,22 +122,26 @@
                         </a>
                     </li>
                     <li class="elementTextDashboard">
-                        <a href="/dashboard/company/leerbudgetten/" class="d-flex">
-                            <div class="elementImgSidebar" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Financien.png" >
+                        <button href="#" class="d-flex berichtenBtn">
+                            <div class="d-flex">
+                                <div class="elementImgSidebar" >
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Berichten.png" >
+                                </div>
+                                <span>Leerbudgetten</span>
                             </div>
-                            <?php
-                            if($option_menu[2] == 'leerbudgetten') echo '<span><b>Leerbudgetten</b></span>'; else echo '<span>Leerbudgetten</span>';
-                            ?>
-                        </a>
+                            <span class="comming-soon">Coming Soon</span>
+                        </button>
                     </li>
                     <li class="elementTextDashboard">
-                        <a href="#" class="d-flex">
-                           <div class="elementImgSidebar" >
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Berichten.png" >
+                        <button href="#" class="d-flex berichtenBtn">
+                            <div class="d-flex">
+                                <div class="elementImgSidebar" >
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Berichten.png" >
+                                </div>
+                                <span>Berichten</span>
                             </div>
-                            <span>Berichten</span>
-                        </a>
+                            <span class="comming-soon">Coming Soon</span>
+                        </button>
                     </li>
                     <li class="elementTextDashboard">
                         <a href="/dashboard/company/statistic" class="d-flex">
@@ -155,7 +159,7 @@
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Instellingen.png" >
                             </div>
                             <?php
-                            if($option_menu[2] == 'profile-company') echo '<span><b>Instellingen</b></span>'; else echo '<span>Instellingen</span>';
+                            if($option_menu[2] == 'profile-company') echo '<span><b>Subscription</b></span>'; else echo '<span>Subscription</span>';
                             ?>
                         </a>
                     </li>

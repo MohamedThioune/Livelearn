@@ -172,7 +172,7 @@ else if(isset($multiple_add_people)){
                         <ul>
                             <li> <input type="text" name="first_name" placeholder="Voornaam" required>       </li>
                             <li> <input type="text" name="last_name" placeholder="Achternaam" required>      </li>
-                            <li> <input type="email" name="email" placeholder="ZaKelijk mailadres" required> </li>
+                            <li> <input type="email" name="email" placeholder="Zakelijk mailadres" required> </li>
                         </ul>
                         <br><br>
                         <button type="submit" name="single_add_people" class="btn btnMensenToevoegen">Werknemer toevoegen</button>
@@ -184,9 +184,9 @@ else if(isset($multiple_add_people)){
             <form action="/dashboard/company/people-mensen/" method="POST">
                 <div class="bodyBlockOverviewMensen" >
                     <ul>
-                        <li><input type="email" name="emails[]" class="" placeholder="ZaKelijk mailadres"></li>
-                        <li><input type="email" name="emails[]" class="" placeholder="ZaKelijk mailadres"></li>
-                        <li id="item_details"><input name="emails[]" type="email"  id="item_name" class="input_text" placeholder="ZaKelijk mailadres" /></li>
+                        <li><input type="email" name="emails[]" class="" placeholder="Zakelijk mailadres"></li>
+                        <li><input type="email" name="emails[]" class="" placeholder="Zakelijk mailadres"></li>
+                        <li id="item_details"><input name="emails[]" type="email"  id="item_name" class="input_text" placeholder="Zakelijk mailadres" /></li>
                     </ul>
                     <ul id="new_item_details" class="new_item_details"></ul>
                     <div class="groupBtnMesen">
@@ -198,7 +198,7 @@ else if(isset($multiple_add_people)){
                         </div>
                     </div>
 
-                    <button type="submit" name="multiple_add_people" class="btn btnMensenToevoegen">Werknemer toevoegen</button>
+                    <button type="submit" name="multiple_add_people" class="btn btnMensenToevoegen">Werknemers toevoegen</button>
                 </div>
             </form>
         </div>

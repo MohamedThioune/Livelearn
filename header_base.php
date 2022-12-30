@@ -248,6 +248,7 @@ $url = home_url( $wp->request );
                     <a class="navbar-brand navBrand" href="/">
                         <div class="logoModife">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_white.png" alt="">
+                            <img class="imgLogoBleu" src="<?php echo get_stylesheet_directory_uri();?>/img/LiveLearn_logo.png" alt="">
                         </div>
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -627,17 +628,17 @@ $url = home_url( $wp->request );
 
                         <ul class="navbar-nav nav-right">
                             <li class="nav-item active">
-                                <a class="nav-link" id="Over" href="/static-education-individual/">Aan de slag</a>
+                                <a class="nav-link" id="Over" href="/static-education-individual/">Over ons</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link nav-linModife dropdown-toggle" id="Opleidingen" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#Opleidingen"  role="button"  href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opleidingen</a>
+                                <a class="nav-link nav-linModife dropdown-toggle" id="Opleidingen" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#Opleidingen"  role="button"  href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Upskilling</a>
 
                             </li>
                             <li class="nav-item" >
                                 <a class="nav-link" href="/inloggen/"><b>Inloggen</b></a>
                             </li>
                             <li class="">
-                                <a href="/registreren" class="nav-link worden">Lid worden</a>
+                                <a href="/registreren" class="nav-link worden">Altijd Gratis</a>
                             </li>
                         </ul>
 
@@ -670,7 +671,32 @@ $url = home_url( $wp->request );
             <!-- </div> -->
 
             <!-- ------------------------------------------- Mobile Responsive navbar ------------------------- -->
-            <nav class="navMobile ">
+            <nav class="navMobile navMobile-custom">
+                <div class="blockShowApp">
+                    <div class="container-fluid">
+                        <div class="elements-blockShowApp">
+                            <div class="d-flex align-items-center frist-block">
+                                <button type="button" class="btn close-block">
+                                    x
+                                </button>
+                                <div class="logo-livelearn">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="search">
+                                </div>
+                            </div>
+                            <div class="secondBlock">
+                                <p class="text-Probeer"><b>Probeer onze gratis leer-app</b></p>
+                                <p class="text-Probeer">En start meteen met jezelf te ontwikkelen</p>
+                                <div class="d-flex">
+                                    <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/ios-star.png" alt="search">
+                                    <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/ios-star.png" alt="search">
+                                    <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/ios-star.png" alt="search">
+                                    <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/ios-star.png" alt="search">
+                                </div>
+                            </div>
+                            <a href="" class="btn btn-Openen">Openen</a>
+                        </div>
+                    </div>
+                </div>
                 <div class="ProfilGraduatioBlock">
                     <div class="sousNav1">
                         <!-- <button id="croieProfil" class="btn">
@@ -710,18 +736,18 @@ $url = home_url( $wp->request );
                         <div class="d-flex align-items-center">
                             <div class="second-element-mobile">
                                 <div id="searchIcone">
-                                    <i class="bi bi-search text-white" style="font-size: 22px"></i>
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/search-white.png" alt="search">
                                 </div>
                                 <div id="croieSearch" class="btn">
-                                    <i class="bi bi-x-lg text-white" style="font-size: 25px"></i>
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/X-blanc.png" alt="close">
                                 </div>
                             </div>
                             <div class="second-element-mobile">
                                 <button id="burger" class=" btn burgerElement boxSousNav3-2">
-                                    <i class="fa fa-bars text-white" style="font-size: 25px"></i>
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/hamburger.png" alt="burger">
                                 </button>
                                 <button id="burgerCroie" class="btn croie">
-                                    <i class="bi bi-x-lg text-white" style="font-size: 25px"></i>
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/X-blanc.png" alt="close">
                                 </button>
                             </div>
 
@@ -739,26 +765,26 @@ $url = home_url( $wp->request );
                 </form>
             </nav>
             <div class="sousMenuNavMobil headSousMobilePrincipale" id="headOne">
-                <div class="elementGroupGroeien">
+               <!-- <div class="elementGroupGroeien">
                     <div class="firstContentHeadSousMobile">
                         <button id="richting-bineen" class="btn btnElementSousMenu">
                             Groeien richting een baan
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/fleG2.png" alt="">
+                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/fleG2.png" alt="">
                         </button>
 
                         <button id="Groeien-binnen" class="btn btnElementSousMenu">
                             Groeien binnen je functie
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/fleG2.png" alt="">
+                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/fleG2.png" alt="">
                         </button>
 
                         <button id="Ontwikkel-specifieke" class="btn btnElementSousMenu">
                             Ontwikkel specifieke skills
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/fleG2.png" alt="">
+                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/fleG2.png" alt="">
                         </button>
 
                         <button id="Ontwikkel-persoonlijke" class="btn btnElementSousMenu">
                             Ontwikkel persoonlijke interesses
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/fleG2.png" alt="">
+                            <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/fleG2.png" alt="">
                         </button>
                         <div class="block1">
                             <a href="/onderwer" class="elementsousMenuNav">Onderwerpen</a>
@@ -779,63 +805,165 @@ $url = home_url( $wp->request );
                         <div class="block sousMenuBlock1">
                             <div class="sousElementGroeien-binnen-block">
                                 <button id="upBlock1" class="btn imgBlockG1">
-                                    <img class="fleG1" src="<?php echo get_stylesheet_directory_uri();?>/img/fleG1.png" alt="">
+                                    <img class="fleG1" src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/fleG1.png" alt="">
                                 </button>
                                 <?php
-                                foreach($bangerichts as $bangericht){
-                                ?>
-                                <a href="sub-topic?subtopic=<?php echo $bangericht->cat_ID ?>" class="TextZorg"><?php echo $bangericht->cat_name ?></a>
+/*                                foreach($bangerichts as $bangericht){
+                                */?>
+                                <a href="sub-topic?subtopic=<?php /*echo $bangericht->cat_ID */?>" class="TextZorg"><?php /*echo $bangericht->cat_name */?></a>
                                 <?php
-                                }
-                                ?>
+/*                                }
+                                */?>
 
                             </div>
                         </div>
                         <div class="block sousMenuBlock2">
                             <div class="sousElementGroeien-binnen-block">
                                 <button id="upBlock2" class="btn btnUp imgBlockG1">
-                                    <img  class="fleG1" src="<?php echo get_stylesheet_directory_uri();?>/img/fleG1.png" alt="">
+                                    <img  class="fleG1" src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/fleG1.png" alt="">
                                 </button>
                                 <?php
-                                foreach($functies as $functie){
-                                ?>
-                                <a href="sub-topic?subtopic=<?php echo $functie->cat_ID ?>" class="TextZorg"><?php echo $functie->cat_name ?></a>
+/*                                foreach($functies as $functie){
+                                */?>
+                                <a href="sub-topic?subtopic=<?php /*echo $functie->cat_ID */?>" class="TextZorg"><?php /*echo $functie->cat_name */?></a>
                                 <?php
-                                }
-                                ?>
+/*                                }
+                                */?>
 
                             </div>
                         </div>
                         <div class="block sousMenuBlock3">
                             <div class="binnen-block sousElementGroeien-binnen-block">
                                 <button id="upBlock3" class="btn btnUp imgBlockG1">
-                                    <img  class="fleG1" src="<?php echo get_stylesheet_directory_uri();?>/img/fleG1.png" alt="">
+                                    <img  class="fleG1" src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/fleG1.png" alt="">
                                 </button>
                                 <?php
-                                foreach($skills as $skill){
-                                ?>
-                                <a href="sub-topic?subtopic=<?php echo $skill->cat_ID ?>" class="TextZorg"><?php echo $skill->cat_name ?></a>
+/*                                foreach($skills as $skill){
+                                */?>
+                                <a href="sub-topic?subtopic=<?php /*echo $skill->cat_ID */?>" class="TextZorg"><?php /*echo $skill->cat_name */?></a>
                                 <?php
-                                }
-                                ?>
+/*                                }
+                                */?>
                             </div>
                         </div>
                         <div class="block sousMenuBlock4">
                             <div class="sousElementGroeien-binnen-block">
                                 <button id="upBlock4" class="btn btnUp imgBlockG1">
-                                    <img class="fleG1 " src="<?php echo get_stylesheet_directory_uri();?>/img/fleG1.png" alt="">
+                                    <img class="fleG1 " src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/fleG1.png" alt="">
                                 </button>
                                 <?php
-                                foreach($interesses as $interesse){
-                                ?>
-                                <a href="sub-topic?subtopic=<?php echo $interesse->cat_ID ?>" class="TextZorg"><?php echo $interesse->cat_name ?></a>
+/*                                foreach($interesses as $interesse){
+                                */?>
+                                <a href="sub-topic?subtopic=<?php /*echo $interesse->cat_ID */?>" class="TextZorg"><?php /*echo $interesse->cat_name */?></a>
                                 <?php
-                                }
-                                ?>
+/*                                }
+                                */?>
                             </div>
                         </div>
                     </div>
+                </div>-->
+                <div class="block-sous-nav-mobile d-grid">
+                    <a href="/inloggen/" class="element-navMobile">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/lock-open.png" alt="search">
+                        Inloggen
+                    </a>
+                    <a href="/registreren/" class="element-navMobile mb-0">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-signature.png" alt="search">
+                        Registreren
+                    </a>
                 </div>
+
+                <div class="accordion" id="accordionExample2">
+                    <div class="element-nav-accordion">
+                        <div class="card-header" id="headingNavOne">
+                            <h2 class="mb-0">
+                                <button class="btn element-navMobile " type="button" data-toggle="collapse" data-target="#collapseNavOne" aria-expanded="true" aria-controls="collapseNavOne">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/rocket.png" alt="search">
+                                    Mijzelf ontwikkelen
+                                    <span>Gratis</span>
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="collapseNavOne" class="collapse show" aria-labelledby="headingNavOne" data-parent="#accordionExample2">
+                            <ul>
+                                <li><a class="linkElementNav" href="/zzpers/">Je eigen leeromgeving</a></li>
+                                <li> <a class="linkElementNav" href="/mkb/">Wat voor content / onderwerpen?</a></li>
+                                <li> <a class="linkElementNav" href="/mkb/">Het is gratis</a></li>
+                                <li> <a class="linkElementNav" href="/pricing/">Koppelen aan bedrijf</a></li>
+                                <li> <a class="linkElementNav" href="voor-organisaties/">Voor wie?</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="element-nav-accordion">
+                        <div class="card-header" id="headingNavTwo">
+                            <h2 class="mb-0">
+                                <button class="btn element-navMobile  collapsed" type="button" data-toggle="collapse" data-target="#collapseNavTwo" aria-expanded="false" aria-controls="collapseNavTwo">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-building.png" alt="search">
+                                    Ontwikkel team / organisatie
+                                    <span>Gratis</span>
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseNavTwo" class="collapse" aria-labelledby="headingNavTwo" data-parent="#accordionExample2">
+                            <ul>
+                                <li><a  class="linkElementNav" href="">Onze leeromgeving</a></li>
+                                <li> <a class="linkElementNav" href="">Functionaliteiten</a></li>
+                                <li> <a class="linkElementNav" href="/pricing/">Pricing</a></li>
+                                <li> <a class="linkElementNav" href="">Voor ZZPers</a></li>
+                                <li> <a class="linkElementNav" href="">Voor het MKB</a></li>
+                                <li> <a class="linkElementNav" href="">Voor Corporates</a></li>
+                                <li> <a class="linkElementNav" href="">Integraties</a></li>
+                                <li> <a class="linkElementNav" href="">Klantverhalen</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="element-nav-accordion">
+                        <div class="card-header" id="headingNavThree">
+                            <h2 class="mb-0">
+                                <button class="btn element-navMobile  collapsed" type="button" data-toggle="collapse" data-target="#collapseNavThree" aria-expanded="false" aria-controls="collapseNavThree">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/metro-fire.png" alt="search">
+                                    Expert / opleider worden
+                                    <span>Va. €4,95</span>
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseNavThree" class="collapse" aria-labelledby="headingNavThree" data-parent="#accordionExample2">
+                            <ul>
+                                <li><a  class="linkElementNav" href="">De expert ranking per sector</a></li>
+                                <li> <a class="linkElementNav" href="">Kennis verkopen</a></li>
+                                <li> <a class="linkElementNav" href="">Content creëren</a></li>
+                                <li> <a class="linkElementNav" href="">Uitleggen van producten / services</a></li>
+                                <li> <a class="linkElementNav" href="">Alle opleiders</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="element-nav-accordion">
+                        <div class="card-header" id="headingNavFour">
+                            <h2 class="mb-0">
+                                <button class="btn element-navMobile collapsed" type="button" data-toggle="collapse" data-target="#collapseNavFour" aria-expanded="false" aria-controls="collapseNavFour">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/information-circle.png" alt="search">
+                                    Informatie
+                                    <span>No cure no pay</span>
+                                </button>
+                            </h2>
+                        </div>
+                        <div id="collapseNavFour" class="collapse" aria-labelledby="headingNavFour" data-parent="#accordionExample2">
+                            <ul>
+                                <li><a  class="linkElementNav" href="">Hoe werkt het?</a></li>
+                                <li> <a class="linkElementNav" href="">Contact</a></li>
+                                <li> <a class="linkElementNav" href="">Wie zijn wij</a></li>
+                                <li> <a class="linkElementNav" href="">Onze visie</a></li>
+                                <li> <a class="linkElementNav" href=""></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
 
             <div class="sousMenuNavMobil headSousMobileProfile" id="headTwo">

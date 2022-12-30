@@ -95,7 +95,7 @@ $podcast_single = "Podcast";
                         else{
                             $dates = get_field('dates', $course->ID);
                             if($dates)
-                                $day = explode(' ', $dates[0]['date']);
+                                $day = explode(' ', $dates[0]['date'])[0];
                             else{
                                 $data = get_field('data_locaties_xml', $course->ID);
                                 if(isset($data[0]['value'])){
