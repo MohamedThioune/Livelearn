@@ -96,6 +96,9 @@ $see_experts = get_users(
             .content-home2 form .selectSearchHome {
                 height: unset !important;
             }
+            .fa-angle-down-bleu{
+                display: none;
+            }
 
         </style>
 
@@ -255,7 +258,7 @@ $see_experts = get_users(
                 <div class="elementWeb dashboardsElement">
                     <a href="#" class="nav-link navModife4 btn dropdown-toggle " type="button" id="dropdownNavButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Dashboards <img class="imgArrowDropDown" src="<?php echo get_stylesheet_directory_uri();?>/img/down-chevron.svg" alt="">
-                        <i class="fas fa-angle-down-bleu fa-angle-down"></i>
+                        
                     </a>
                     <div class="dropdown-menu dropdown-menu-dashboard" aria-labelledby="dropdownMenuButton1">
                         <?php
