@@ -124,7 +124,7 @@
                     </div>
                    <span>Berichten</span>
                 </div>
-                <span class="comming-soon">Comming Soon</span>
+                <span class="comming-soon">Coming Soon</span>
             </button>
         </li>
         <li class="elementTextDashboard">
@@ -135,7 +135,7 @@
                     </div>
                    <span>Financien</span>
                 </div>
-                <span class="comming-soon">Comming Soon</span>
+                <span class="comming-soon">Coming Soon</span>
             </button>
         </li>
         <li class="elementTextDashboard">
@@ -146,7 +146,7 @@
                     </div>
                    <span>Statistieken</span>
                 </div>
-                <span class="comming-soon">Comming Soon</span>
+                <span class="comming-soon">Coming Soon</span>
             </button>
         </li>
         <li class="elementTextDashboard">
@@ -157,7 +157,7 @@
                     </div>
                    <span>Instellingen</span>
                 </div>
-                <span class="comming-soon">Comming Soon</span>
+                <span class="comming-soon">Coming Soon</span>
             </button>
         </li>
     </ul>

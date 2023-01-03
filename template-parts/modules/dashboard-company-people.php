@@ -69,8 +69,11 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
 
                         $you = NULL;
                         if(!in_array('administrator', $user->roles))
-                            $you  =  (in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : NULL;
+                            $you = (in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : NULL;
                         
+                        $manager = get_field('ismanaged', 'user_' . $user->ID);
+                        $manager_image = get_field('profile_img',  'user_' . $manager); 
+
                         $link = "/dashboard/company/profile/?id=" . $user->ID . '&manager='. $user_connected; 
                     ?>
                         <tr id="<?php echo $user->ID; ?>" >
@@ -85,7 +88,17 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                             <td class="textTh"><?php echo get_field('telnr', 'user_'.$user->ID);?></td>
                             <td class="textTh elementOnder"><?php echo get_field('role', 'user_'.$user->ID);?></td>
                             <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
-                            <td class="textTh"><?= $you ?></td>
+                            <td class="textTh thModife">
+                                <?php 
+                                if($manager_image){
+                                ?>
+                                <div class="ImgUser">
+                                    <img src="<?= $manager_image ?>" alt="">
+                                </div>
+                                <?php
+                                    }
+                                ?>
+                            </td>
                             <td class="textTh">
                                 <div class="dropdown text-white">
                                     <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
@@ -99,17 +112,17 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                             echo '<li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalEdit' . $key . '" href="#">Edit</a></li>';
 
                                         if(in_array('administrator', $data_user->roles))
-                                        if(!in_array('administrator', $user->roles) && !in_array('hr', $user->roles)){
-                                        ?>
-                                            <li class="my-1">
-                                                <div class="remove">
-                                                    <?php
-                                                        echo '<img class="removeImg" src="' . get_stylesheet_directory_uri() . '/img/deleteIcone.png" alt="">';
-                                                    ?>
-                                                    <span>Verwijderen</span>
-                                                </div>
-                                            </li>
-                                        <?php
+                                            if(!in_array('administrator', $user->roles) && !in_array('hr', $user->roles)){
+                                            ?>
+                                                <li class="my-1">
+                                                    <div class="remove">
+                                                        <?php
+                                                            echo '<img class="removeImg" src="' . get_stylesheet_directory_uri() . '/img/deleteIcone.png" alt="">';
+                                                        ?>
+                                                        <span>Verwijderen</span>
+                                                    </div>
+                                                </li>
+                                            <?php
                                         }
                                         ?>
                                     </ul>

@@ -348,20 +348,6 @@ $price = get_field('price', $post->ID) ?: 'Gratis';
                         </div>
                     </div>
 
-                    <!-- Strat paywall -->      
-                    <!-- php
-                    if($price != 'Gratis')
-                        echo '
-                            <div class="paywall-block">
-                                <p class="title-paywall">You want to continue reading </p>
-                                <p class="sub-title-paywall">Please purchase this to continue</p>
-                                <a class="btn btn-paywall" href="">Buying Now <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/arrowhead.png" alt=""></a>
-                                <p class="text-not-sure-which">Not Sure which is right now for you ?
-                                    <a href="">Discover the benefits of taking this course now</a> </p>
-                            </div>';
-                    ?> -->
-                    <!-- End paywall -->
-
                 </div>
                 <div class="col-lg-4">
                     <div class="sidebar-wrap">
