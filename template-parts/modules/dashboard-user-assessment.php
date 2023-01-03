@@ -15,8 +15,13 @@
         'order' => 'ASC', 
     );
     $assessments = get_posts($args);
+   
+    //Page not accessible 
+    header('Location: /dashboard/user/');
     
 ?>
+
+
 
 <div class="content-assessment">
     <div class="contentAsessment">

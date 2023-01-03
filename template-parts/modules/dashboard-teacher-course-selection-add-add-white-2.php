@@ -8,28 +8,28 @@
                     <h2>2.Online or location</h2>
                 </div>
             <?php 
-                $offline = ['reading','event'];
+                $offline = ['reading', 'event'];
                 if(in_array($_GET['type'], $offline))
                     update_field('course_type', $_GET['type'], $_GET['id']);
 
                 // If user choose online (radio button value)
                 if (get_field('online_location', $_GET['id']) == "online"){
                     acf_form(array(
-                    'post_id'=> $_GET['id'],
-                    // url field created from custom fields
-                    'fields' => array('link_to','long_description'), 
-                    'submit_value'  => __('Opslaan & verder'),
-                    'return' => '?func=add-add-white&id=%post_id%&step=3'
+                        'post_id'=> $_GET['id'],
+                        // url field created from custom fields
+                        'fields' => array('link_to', 'long_description'), 
+                        'submit_value'  => __('Opslaan & verder'),
+                        'return' => '?func=add-add-white&id=%post_id%&step=3'
                     )); 
                 }
                 // If user choose location (radio button value)
                 else if(get_field('online_location', $_GET['id']) == "location"){
                     acf_form(array(
-                    'post_id'=> $_GET['id'],
-                    // date field already exist on custom fields
-                    'fields' => array('dates', 'long_description'), 
-                    'submit_value'  => __('Opslaan & verder'),
-                    'return' => '?func=add-add-white&id=%post_id%&step=3'
+                        'post_id'=> $_GET['id'],
+                        // date field already exist on custom fields
+                        'fields' => array('dates', 'long_description'), 
+                        'submit_value'  => __('Opslaan & verder'),
+                        'return' => '?func=add-add-white&id=%post_id%&step=3'
                     ));
                 }
             ?>

@@ -7,6 +7,11 @@
 $page = 'check_visibility.php';
 require($page);
 
+$user_connected = get_current_user_id();
+
+if($user_connected)
+    header('Location: /dashboard/user/');
+
 $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
 ?>
