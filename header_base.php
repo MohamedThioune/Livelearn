@@ -922,7 +922,8 @@ $url = home_url( $wp->request );
                                 <button class="btn element-navMobile  collapsed" type="button" data-toggle="collapse" data-target="#collapseNavTwo" aria-expanded="false" aria-controls="collapseNavTwo">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-building.png" alt="search">
                                     Ontwikkel team / organisatie
-                                    <span>Gratis</span>
+                                    <span>Va. €4,95</span>
+
                                 </button>
                             </h2>
                         </div>
@@ -946,7 +947,7 @@ $url = home_url( $wp->request );
                                 <button class="btn element-navMobile  collapsed" type="button" data-toggle="collapse" data-target="#collapseNavThree" aria-expanded="false" aria-controls="collapseNavThree">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/metro-fire.png" alt="search">
                                     Expert / opleider worden
-                                    <span>Va. €4,95</span>
+                                    <span>No cure no pay</span>
                                 </button>
                             </h2>
                         </div>
@@ -967,7 +968,6 @@ $url = home_url( $wp->request );
                                 <button class="btn element-navMobile collapsed" type="button" data-toggle="collapse" data-target="#collapseNavFour" aria-expanded="false" aria-controls="collapseNavFour">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/information-circle.png" alt="search">
                                     Informatie
-                                    <span>No cure no pay</span>
                                 </button>
                             </h2>
                         </div>
