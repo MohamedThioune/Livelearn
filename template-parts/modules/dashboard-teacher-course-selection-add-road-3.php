@@ -1,5 +1,42 @@
 <?php
 
+/** 
+ *  Handling adding tags to courses v2
+*/
+if (isset($_GET['edit']))
+{
+    
+    $already_linked_tags = array();
+    if (get_field('categories',$_GET['id'])!=null)
+    {
+        foreach (get_field('categories',$_GET['id']) as $key => $value) 
+        {
+            array_push($already_linked_tags,$value['value']);
+        } 
+    }
+    
+}
+
+if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
+    {
+        $already_linked_tags = array();
+        if (get_field('categories',$_GET['id'])!=null)
+        {
+            foreach (get_field('categories',$_GET['id']) as $key => $value) 
+            {
+                array_push($already_linked_tags,$value['value']);
+            } 
+        }
+        extract($_POST);
+        $new_categories = $already_linked_tags ?? array();
+        foreach ($tags as $key => $tag) {
+            array_push($new_categories,$tag);
+        }
+        $new_categories = array_merge($new_categories,$already_linked_tags);
+        update_field('categories', $new_categories, $id);
+    }
+
+
 
     /*
     ** Categories - all  * 
@@ -57,8 +94,106 @@
         else
             array_merge($choosen_categories, explode(',', $choosen['value']));
     }
-    
+
+    foreach($bangerichts as $key1=>$tag){
+        
+        //Topics
+        $cats_bangerichts = get_categories( array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent' => $tag->cat_ID,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ));
+        if (count($cats_bangerichts)!=0)
+        {
+            $row_bangrichts.='<div hidden=true class="cb_topics_bangricht_'.($key1+1).'" '.($key1+1).'">';
+            foreach($cats_bangerichts as $key => $value)
+            {
+                $selected = '';
+                if(!empty($already_linked_tags))
+                    $selected = in_array($value->cat_ID,$already_linked_tags) ? 'checked' : '' ;   
+                
+                $row_bangrichts .= '
+                <input '.$selected.' class="selected" type="checkbox" name="choice_bangrichts_'.$value->cat_ID.'" value= '.$value->cat_ID .' id=subtopics_bangricht_'.$value->cat_ID.' /><label class="labelChoose" for=subtopics_bangricht_'.$value->cat_ID.'>'. $value->cat_name .'</label>';
+            }
+            $row_bangrichts.= '</div>';
+        }
+      
+    }
+
+    foreach($functies as $key1 =>$tag)
+    {
+        
+        //Topics
+        $cats_functies = get_categories(
+            array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent' => $tag->cat_ID,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ));
+        if (count($cats_functies)!=0)
+        {
+            $row_functies.='<div hidden=true class="cb_topics_funct_'.($key1+1).'" '.($key1+1).'">';
+            foreach($cats_functies as $key => $value)
+            {
+                foreach ($already_linked_tags as $key => $selected_tags) { 
+                    $selected =  $selected_tags['value'] == $value->cat_ID ? true : false ; 
+                }
+                $row_functies .= '
+                <input selected='.$selected.' class="selected" type="checkbox" name="choice_functies_'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_funct_'.($value->cat_ID).'" /><label class="labelChoose" for="cb_funct_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
+            }
+            $row_functies.= '</div>';
+        }
+    }
+
+    foreach($skills as $key1=>$tag){
+        //Topics
+        $cats_skills = get_categories( array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent' => $tag->cat_ID,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ));
+        if (count($cats_skills)!=0)
+        {
+            
+            $row_skills.='<div hidden=true class="cb_topics_skills_'.($key1+1).'" '.($key1+1).'">';
+            foreach($cats_skills as $key => $value)
+            {
+                foreach ($already_linked_tags as $key => $selected_tags) { 
+                    $selected =  $selected_tags['value'] == $value->cat_ID ? false : true ; 
+                }
+                    $row_skills .= '
+                    <input selected='.$selected.' class="selected" type="checkbox" name="choice_skills'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_skills_'.($value->cat_ID).'" /><label class="labelChoose"  for="cb_skills_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
+            }
+            $row_skills.= '</div>';
+        }
+      
+    }
+
+    foreach($interesses as $key1=>$tag) {
+        //Topics
+            $cats_interesses = get_categories( array(
+                'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+                'parent' => $tag->cat_ID,
+                'hide_empty' => 0, // change to 1 to hide categores not having a single post
+            ));
+            if (count($cats_interesses)!=0)
+        {
+            $row_interesses.='<div hidden=true class="cb_topics_personal_'.($key1+1).'" '.($key1+1).'">';
+            foreach($cats_interesses as $key => $value)
+            {
+                foreach ($already_linked_tags as $key => $selected_tags) { 
+                    $selected =  $selected_tags['value'] == $value->cat_ID ? false : true ; 
+                }
+                $row_interesses .= '
+                <input selected='.$selected.' class="selected" type="checkbox" name="choice_interesses_'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_interesses_'.($value->cat_ID).'" /><label class="labelChoose"  for="cb_interesses_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
+            }
+            $row_interesses.= '</div>';
+        }
+      
+    }
+
 ?>
+
 
     <div class="row">
         <div class="col-md-5 col-lg-8">
@@ -322,13 +457,13 @@
                         <div class="circleIndicator passEtape2">
                             <i class="fa fa-tag" aria-hidden="true"></i>
                         </div>
-                        <p class="textOpleidRight ">Tags</p>
+                        <p class="textOpleidRight ">Onderwerpen</p>
                     </a>
                     <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-road&id=' . $_GET['id'] . '&step=4&edit'; else echo "?func=add-white&message=Please finish this step before"; ?>" class="contentBlockCourse">
                         <div class="circleIndicator">
                         <i class="fa fa-user" aria-hidden="true"></i>
                         </div>
-                        <p class="textOpleidRight">Expert</p>
+                        <p class="textOpleidRight">Experts</p>
                     </a>
                 </div>
             </div>
