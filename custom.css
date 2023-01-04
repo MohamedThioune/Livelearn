@@ -15950,6 +15950,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     }
     .sousMenuNavMobil {
         padding-top: 30px !important;
+        z-index: 99 !important;
     }
     .block-sous-nav-mobile {
         border-bottom: 1px solid #02335680;
