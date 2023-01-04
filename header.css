@@ -111,6 +111,8 @@
     width: 70%;
     margin: 0 auto;
     top: 63px;
+    z-index: 99999;
+    height: auto;
 }
 #OpleidingenModal .blockdropdownnHeader .secondUlModal li {
     width: 27%;

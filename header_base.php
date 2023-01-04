@@ -51,6 +51,13 @@ $url = home_url( $wp->request );
         }
         .tabletsearch{display: none !important;}   
     }
+    @media (min-width: 300px) and (max-width: 767px){
+        .navMobile-custom {
+            padding: 0px 0 8px !important;
+        }
+    }
+
+
 </style>
 <html>
     <head>

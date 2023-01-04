@@ -10493,6 +10493,7 @@ select {
     font-size: 15px;
     margin-bottom: 0;
     font-weight: 400;
+    display: block;
 }
 
 #tabs-content .btnactive {
@@ -13365,6 +13366,9 @@ ul .selectAll .styled-checkbox:checked + label:after {
     font-size: 15px;
     font-weight: 500;
 }
+.woocommerce-message::before {
+    color: #00a89d !important;
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
@@ -16072,6 +16076,9 @@ ul .selectAll .styled-checkbox:checked + label:after {
         padding: 20px 10px;
         margin: 0 0px !important;
     }
+    .navMobile-custom {
+        padding: 0px 0 8px !important;
+    }
 
 }
 
@@ -16133,6 +16140,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
         border-radius: 100%;
         border: 1px solid #0000002b;
         padding: 3px;
+        overflow: hidden;
     }
     .blockAuthorMobile .imgAuthorBlock img {
         width: 100%;
