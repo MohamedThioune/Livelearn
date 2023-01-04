@@ -47,20 +47,26 @@
                     <p class="textOpleidRight">Basis informatie</p>
                 </a>
                 <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-add-white&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=2&edit'; else echo "?message=Please finish this step before"; ?>" class="contentBlockCourse">
-                    <div class="circleIndicator passEtape">
+                    <div class="circleIndicator passEtape2">
                         <i class="fa fa-globe"></i>
                     </div>
                     <p class="textOpleidRight">Online or location</p>
                 </a>
-                <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-add-white&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=3&edit'; else echo "?message=Please finish this step before"; ?>"class="contentBlockCourse">
-                    <div class="circleIndicator passEtape2">
+                <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-add-white&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=3&edit'; else echo "?func=add-white&message=Please finish this step before"; ?>" class="contentBlockCourse">
+                    <div class="circleIndicator ">
+                        <i class="fa fa-paste" aria-hidden="true"></i>
+                    </div>
+                    <p class="textOpleidRight">Settings</p>
+                </a>
+                <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-add-white&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=4&edit'; else echo "?message=Please finish this step before"; ?>"class="contentBlockCourse">
+                    <div class="circleIndicator">
                         <i class="fa fa-tag" aria-hidden="true"></i>
                     </div>
-                    <p class="textOpleidRight ">Tags</p>
+                    <p class="textOpleidRight ">Onderwerpen</p>
                 </a>
-                <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-add-white&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=4&edit';?>" class="contentBlockCourse">
+                <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-add-white&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=5&edit';?>" class="contentBlockCourse">
                     <div class="circleIndicator"></div>
-                    <p class="textOpleidRight">Expert</p>
+                    <p class="textOpleidRight">Experts</p>
                 </a>
             </div>
         </div>
