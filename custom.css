@@ -16044,6 +16044,9 @@ ul .selectAll .styled-checkbox:checked + label:after {
         margin-bottom: 4px;
         font-weight: 500;
         color: #013255;
+        display: flex;
+        flex-wrap: wrap;
+        line-height: 30px;
     }
     .sousMenuNavMobil .collapse ul{
         margin-left: 48px;
@@ -16065,7 +16068,8 @@ ul .selectAll .styled-checkbox:checked + label:after {
         margin-left: 20px;
         font-weight: 400;
         position: relative;
-        top: -1px;
+        height: fit-content;
+        line-height: initial;
     }
     .woocommerce-checkout .wrapper-woocommerce {
         width: 90%;
