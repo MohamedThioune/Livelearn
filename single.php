@@ -81,6 +81,8 @@ $price = get_field('price', $post->ID) ?: 'Gratis';
         border-bottom: 4px solid rgb(4 51 86);
     }
 </style>
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+
 <div class="main-wrapper ">
    
 

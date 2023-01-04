@@ -415,6 +415,9 @@ form {
         border-bottom: 0px solid #02335680;
         margin-bottom: 20px;
     }
+    .navMobile-custom {
+        padding: 0px 0 8px !important;
+    }
 
 }
 
