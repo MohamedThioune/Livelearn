@@ -80,6 +80,9 @@ $price = get_field('price', $post->ID) ?: 'Gratis';
     .selected {
         border-bottom: 4px solid rgb(4 51 86);
     }
+    .navMobile-custom {
+        padding: 0px 0 8px !important;
+    }
 </style>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
