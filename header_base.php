@@ -21,6 +21,9 @@ $url = home_url( $wp->request );
     .navModife .activeModalHeader .modal{
         height: auto !important;
     }
+    #voorOpleidersModal {
+        height: auto;
+    }
     @media all and (min-width: 1330px) {
         #searchIconeTablet, #croieSearchTablet, .tabletsearch{
             display: none !important;
