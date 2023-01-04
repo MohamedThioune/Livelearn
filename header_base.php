@@ -18,6 +18,9 @@ $url = home_url( $wp->request );
     #croieProfil {
         margin: 4px 0px -3px -6px !important;
     }
+    .navModife .activeModalHeader .modal{
+        height: auto !important;
+    }
     @media all and (min-width: 1330px) {
         #searchIconeTablet, #croieSearchTablet, .tabletsearch{
             display: none !important;
