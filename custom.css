@@ -13373,6 +13373,10 @@ ul .selectAll .styled-checkbox:checked + label:after {
     display: table !important;
     width: 100%;
 }
+
+.navModife .activeModalHeader .modal{
+    height: auto;
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
