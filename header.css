@@ -381,7 +381,15 @@ form {
         padding: 0 !important;
     }
     #burgerCroie {
-        margin-top: 0;
+        height: 35px;
+        width: 21px;
+        padding: 0 !important;
+        margin-top: 0px !important;
+    }
+    #burgerCroie img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
     }
     .searchInputHedear {
         margin-top: 0px !important;
@@ -399,7 +407,7 @@ form {
         overflow-y: scroll;
     }
     .body-custom .sousMenuNavMobil{
-        top: 126px !important;
+        top: 131px !important;
     }
     .elementGroupGroeien {
         margin-bottom: 20px;
