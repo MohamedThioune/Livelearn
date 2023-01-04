@@ -13374,7 +13374,10 @@ ul .selectAll .styled-checkbox:checked + label:after {
     width: 100%;
 }
 .navModife .activeModalHeader .modal{
-    height: auto;
+    height: auto !important;
+}
+#voorOpleidersModal{
+    height: auto !important;
 }
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
