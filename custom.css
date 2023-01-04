@@ -15925,7 +15925,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
         width: 28px !important;
     }
     #searchIcone {
-        margin-top: 0px !important;
+        margin-top: -5px !important;
         width: 22px;
     }
     #searchIcone img{
@@ -16076,9 +16076,6 @@ ul .selectAll .styled-checkbox:checked + label:after {
         padding: 20px 10px;
         margin: 0 0px !important;
     }
-    .navMobile-custom {
-        padding: 0px 0 8px !important;
-    }
 
 }
 
@@ -16161,6 +16158,9 @@ ul .selectAll .styled-checkbox:checked + label:after {
         padding: 5px 20px;
         height: fit-content;
         border-radius: 5px;
+    }
+    .navMobile-custom {
+        padding: 0px 0 8px !important;
     }
 }
 
