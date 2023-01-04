@@ -88,11 +88,12 @@ style="overflow-x: hidden !important;">
             </a>
         </li>
         <li class="elementTextDashboard">
-            <a href="/dashboard/user/assessment" class="d-flex">
+            <a href="#" class="d-flex">
                 <div class="iconeElement"><img class="iconAssesment1" src="<?php echo get_stylesheet_directory_uri();?>/img/assessment.png" alt=""></div>
                 <?php
                 if($option_menu[2] == 'assessment') echo '<p class="textLiDashboard"><b>Assessments</b></p>'; else echo  '<p class="textLiDashboard">Assessments</p>';
                 ?>
+                <small class="comming-soon">&nbsp;&nbsp; <b>Coming Soon</b> </small>
             </a>
         </li>
         <div class="d-flex align-content-center">
@@ -263,11 +264,11 @@ style="overflow-x: hidden !important;">
                             <option value="3">Food</option>
                         </select>
                     </div> 
-                    -->
                     <div class="blockSearch position-relative">
                         <input type="search" placeholder="Search your expert" class="searchSubTopics">
                         <img class="searchImg" src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png" alt="">
                     </div>
+                    -->
                 </div>
                 <div class="content-expert">
                     <?php

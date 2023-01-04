@@ -1008,7 +1008,7 @@ extract($_GET);
     <?php
     if($price !== 'Gratis'){
     ?>
-    <div class="modal fade modalpaywallVideo" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- <div class="modal fade modalpaywallVideo" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
              <h5 class="title-paywall" >Get Acces Now </h5>
@@ -1022,7 +1022,7 @@ extract($_GET);
             </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <?php
     }
     ?>

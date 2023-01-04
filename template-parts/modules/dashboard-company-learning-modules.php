@@ -293,6 +293,7 @@ $orders = wc_get_orders($order_args);
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Verkoop</th>
                         <th scope="col">Titel</th>
                         <th scope="col">Leervorm</th>
                         <th scope="col">Prijs</th>
@@ -395,14 +396,15 @@ $orders = wc_get_orders($order_args);
                             $course_type = 'Artikel';
                     ?>
                     <tr id="<?php echo $course->ID; ?>">
-                        <td scope="row"><?= $key; ?></td>
+                        <td scope="row"><?= $key; ?></td>                        
+                        <td class="textTh"><?php if(!empty(get_field('visibility',$course->ID))) echo 'nee'; else echo 'ja'; ?></td>
                         <td class="textTh text-left"><a style="color:#212529;" href="<?php echo $link; ?>"><?php echo $course->post_title; ?></a></td>
                         <td class="textTh"><?php echo $course_type; ?></td>
                         <td class="textTh"><?php echo $price; ?></td>
                         <td id= "<?php echo $course->ID; ?>" class="textTh td_subtopics" >
                             <?php
                                 $course_subtopics = get_field('categories', $course->ID);
-                                $field='';
+                                $field = '';
                                 $read_topis = array();
                                 if($course_subtopics != null){
                                     if (is_array($course_subtopics) || is_object($course_subtopics)){
