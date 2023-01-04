@@ -49,7 +49,7 @@ if(!$image){
 }
     
 //Author
-$user_picture = get_field('profile_img', $post->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+$user_picture = get_field('profile_img', 'user_' . $post->post_author) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
 $biographical = get_field('biographical_info',  'user_' . $post->post_author);
 

@@ -5,6 +5,7 @@
 
     $post = get_post($_GET['id']);
     $author = array($post->post_author);
+    $expert = get_field('experts', $post->ID);    
     $experts = $author;
     if(!empty($expert))
         $experts = array_merge($expert);
@@ -41,7 +42,7 @@
 
                                 </div>
                             </div>
-                            <button type="submit" name="expert_add_artikel" class="btn btn-info">Finish</button> 
+                            <button type="submit" name="expert_add" class="btn btn-info">Finish</button> 
                         </div>
                     </form>
 
@@ -70,7 +71,7 @@
                         <div class="circleIndicator passEtape">
                             <i class="fa fa-tag" aria-hidden="true"></i>
                         </div>
-                        <p class="textOpleidRight">Tags</p>
+                        <p class="textOpleidRight">Onderwerpen</p>
                     </a>
                     <a href="/dashboard/teacher/course-selection/?func=add-add-article&id=<?php echo $_GET['id'];?>&step=4&edit" class="contentBlockCourse">
                         <div class="circleIndicator passEtape">

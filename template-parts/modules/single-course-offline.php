@@ -679,26 +679,19 @@
                                             }
                                         }
                                         else{
-                                            $data = get_field('dates', $post->ID);
-                                            if($data){
+                                        $data = get_field('dates', $post->ID);
+                                        if(!empty($data)){
+                                            foreach($data as $key => $datum){ 
                                                 $number = count($data) - 1;
                                                 $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];
-                                                $date_start = explode(' ', $data[0]['date']);
-                                                $date_end = explode(' ', $data[$number]['date']);
+                                                $date_start = explode(' ', $datum['date']);
                                                 $d_start = explode('-', $date_start[0]);
-                                                $d_end = explode('-', $date_end[0]);
 
                                                 $timer_s = explode(':', $date_start[1]);
                                                 $h_start = $timer_s[0] . ':' . $timer_s[1];
 
-                                                $timer_e = explode(':', $date_end[1]);
-                                                $h_end =  $timer_e[0] . ':' . $timer_e[1];
-
                                                 $agenda_start = $d_start[2] . ' ' . $calendar[$d_start[1]];
-                                                $agenda_end = $d_end[2] . ' ' . $calendar[$d_end[1]];
-
-                                                if($data){
-                                                    $day = explode(' ', $dates[0]['date']);
+                                                $location_start = 'Virtual';
                                             ?>
                                                 <a id="bookdates" name="bookdates"></a>
                                                 <div class="block2evens block2evensTabs">
@@ -708,16 +701,9 @@
 
                                                                 <div class="headTabsAccordion">
                                                                     <p class="Date__inner">
-                                                                        <?php
-                                                                        echo $agenda_start;
-                                                                        if($date_start != $date_end)
-                                                                        {
-                                                                            echo ' - ';
-                                                                            echo $agenda_end;
-                                                                        }
-                                                                        ?>
+                                                                        <?= $agenda_start; ?>
                                                                     </p>
-                                                                    <p class="location"><?php echo $location_start  ?></p>
+                                                                    <p class="location"></p>
                                                                     <p class="prixEvens">€ <?php echo $price; ?></p>
                                                                 </div>
 
@@ -725,24 +711,9 @@
                                                             <div class="detailSummary">
                                                                 <div class="Course-info">
                                                                     <h3>Cursus</h3>
-                                                                    <?php
-                                                                    if(!empty($data))
-                                                                        $x = 0;
-
-                                                                    foreach($data as $key => $datum) {
-                                                                    $date = explode(' ', $datum['date']);
-                                                                    $d = explode('-', $date[0]);
-                                                                    $day = $d[2] . ' ' . $calendar[$d[1]];
-                                                                    $hour = explode(':', explode('-', $date[1])[0])[0] .':'. explode(':', explode('-', $date[1])[0])[1];
-                                                                    ?>
                                                                     <div class="blockDateEvens">
-
-                                                                        <p class="dateEvens"><?php echo $day . ', ' . $hour ?></p>
+                                                                        <p class="dateEvens"><?php echo $agenda_start . ', ' . $h_start ?></p>
                                                                     </div>
-                                                                        <?php
-                                                                        $x+=1;
-                                                                    }
-                                                                    ?>
                                                                 </div>
                                                                 <div class="Course-chechkout">
                                                                     <h3>Boek training</h3>
@@ -807,6 +778,7 @@
                                             }
                                         }
                                     }
+                                    
                                 ?>
                             </div>
 
@@ -1105,7 +1077,7 @@
                                     $expert = get_users(array('include'=> $value))[0]->data;
                                     $company = get_field('company',  'user_' . $expert->ID);
                                     $title = $company[0]->post_title;
-                                    $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                    $image = get_field('profile_img','user_' . $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                     ?>
                                     <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
                                         <div class="my-2 d-flex flex-column mx-md-0 mx-1">

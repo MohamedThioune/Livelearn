@@ -11980,7 +11980,7 @@ select {
 }
 
 .product-podcat1 {
-    margin-top: 70px;
+    margin-top: 40px;
 }
 
 .product-podcat1 .sound-wave {
@@ -13368,6 +13368,10 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 .woocommerce-message::before {
     color: #00a89d !important;
+}
+.table-responsive {
+    display: table !important;
+    width: 100%;
 }
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
