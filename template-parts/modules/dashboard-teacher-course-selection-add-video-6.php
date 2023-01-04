@@ -87,7 +87,7 @@
                         <div class="circleIndicator passEtape">
                             <i class="fa fa-tag" aria-hidden="true"></i>
                         </div>
-                        <p class="textOpleidRight">Tags</p>
+                        <p class="textOpleidRight">Onderwerpen</p>
                     </a>
                     <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=6&edit'; ?>"  class="contentBlockCourse">
                         <div class="circleIndicator passEtape2">

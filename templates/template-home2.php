@@ -14,6 +14,9 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/mobapiCity.js" />
 <script src="<?php echo get_stylesheet_directory_uri();?>/city.js"></script>
+<!-- Calendly link widget begin -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 <style>
     .headerdashboard,.navModife {
         background: #deeef3;
@@ -197,6 +200,7 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
         }
         .block-logo-parteners2 {
             margin-bottom: 40px;
+            padding: 0 10px;
         }
         .titleblockOnze {
             font-size: 26px;
@@ -229,8 +233,8 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
             padding: 25px 0px 20px;
         }
         .block9 .container-fluid {
-            padding-right: 15px !important;
-            padding-left: 15px !important;
+            padding-right: 20px !important;
+            padding-left: 20px !important;
         }
         .contentSix {
             padding: 0 0px;
@@ -865,8 +869,8 @@ $saved = get_user_meta($user_id, 'course');
                         sign up with Google
                     </button>
                     <button class="btn btn-signup">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/gitubIcone.png" class="" alt="">
-                        sign up with GitHub
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/linkedin-icon.png" class="" alt="">
+                        sign up with Linkedin
                     </button>
                     <button class="btn btn-signup-email">
                         sign up with email
@@ -1141,12 +1145,23 @@ $saved = get_user_meta($user_id, 'course');
                                <div class="circleImgCollection">
                                    <img src="<?php echo $image_user ?>" alt="">
                                </div>
-                               <div class="secondBlockElementCollection ">
+                               <div class="secondBlockElementCollection">
                                    <p class="nameListeCollection"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . '' . $user->last_name; else echo $user->display_name; ?></p>
-                                   <div class="iconeTextListCollection">
-                                       <img src="<?php echo get_stylesheet_directory_uri();?>/img/ethereum.png" alt="">
-                                       <p><?php echo number_format(rand(0,100000), 2, '.', ','); ?></p>
+                                  <!-- <div class="iconeTextListCollection">
+                                       <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/ethereum.png" alt="">
+                                       <p><?php /*echo number_format(rand(0,100000), 2, '.', ','); */?></p>
+                                   </div>-->
+                                   <div class="blockDetailCollection">
+                                       <div class="iconeTextListCollection">
+                                           <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                                           <p>LiveLearn</p>
+                                       </div>
+                                       <div class="iconeTextListCollection">
+                                           <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-brain.png" alt="">
+                                           <p><?php echo number_format(rand(0,100000), 2, '.', ',');?></p>
+                                       </div>
                                    </div>
+
                                </div>
                                <p class="pourcentageCollection"><?php echo number_format(rand(0,100), 2, '.', ','); ?>%</p>
                            </div>
@@ -1391,17 +1406,15 @@ $saved = get_user_meta($user_id, 'course');
         </div>
     </div>
 </div>
-<div class="blockAl joum">
+<div class="block-cotact-calendy text-center">
     <div class="container-fluid">
-        <div class="alJoum">
-            <div class="blockImGDaniel">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/daniel.png" alt="">
-            </div>
-            <?php
-                echo do_shortcode("[gravityform id='10' title='false' description='false' ajax='true']");
-            ?>
-
+        <div class="d-flex justify-content-center">
+            <img class="img-Direct-een" id="firstImg-direct-contact" src="<?php echo get_stylesheet_directory_uri();?>/img/Direct-een.png" alt="">
+            <img class="img-Direct-een" id="secondImg-direct-contact" src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der-Kolk.png" alt="">
         </div>
+        <h3 class="title-Direct-een"><strong>Direct een afspraak inplannen?</strong><br> Hulp nodig of heb je vragen over LiveLearn? Wij zijn er om je te helpen.</h3>
+        <button class="btn btn-kies" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/livelearn/overleg-pilot'});return false;">Kies een datum</button>
+
     </div>
 </div>
 <div class="blockCardBleu3">

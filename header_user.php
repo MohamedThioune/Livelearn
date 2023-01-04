@@ -96,6 +96,9 @@ $see_experts = get_users(
             .content-home2 form .selectSearchHome {
                 height: unset !important;
             }
+            .fa-angle-down-bleu{
+                display: none;
+            }
 
         </style>
 
@@ -255,7 +258,7 @@ $see_experts = get_users(
                 <div class="elementWeb dashboardsElement">
                     <a href="#" class="nav-link navModife4 btn dropdown-toggle " type="button" id="dropdownNavButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Dashboards <img class="imgArrowDropDown" src="<?php echo get_stylesheet_directory_uri();?>/img/down-chevron.svg" alt="">
-                        <i class="fas fa-angle-down-bleu fa-angle-down"></i>
+                        
                     </a>
                     <div class="dropdown-menu dropdown-menu-dashboard" aria-labelledby="dropdownMenuButton1">
                         <?php
@@ -285,7 +288,6 @@ $see_experts = get_users(
 
 
                     <ul class="elementHeaderUser ">
-                        <!-- 
                         <li class="nav-item dropdown addButtonLink">
                             <a href="#" class="nav-link navModife4 btn dropdown-toggle" type="button" id="dropdownNavButtonAdd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="additionImg" src="<?php echo get_stylesheet_directory_uri();?>/img/addition.png" alt="addition"
@@ -303,7 +305,6 @@ $see_experts = get_users(
                                 </button>
                             </div>
                         </li> 
-                        -->
                         <?php
                         $company_id = 0;
                         if(!empty($company))
@@ -477,7 +478,7 @@ $see_experts = get_users(
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Select your Experts</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Select your experts</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -502,15 +503,17 @@ $see_experts = get_users(
                                 <option value="3">Food</option>
                             </select>
                         </div>
-                        -->
+                       
                         <div class="blockSearch position-relative">
                             <input type="search" placeholder="Search your expert" class="searchSubTopics">
                             <img class="searchImg" src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png" alt="">
                         </div>
+
+                         -->
                     </div>
                     <div class="content-expert">
                         <?php
-                        $saves_experts = get_user_meta($user_id, 'expert');
+                        $saves_experts = get_user_meta($user->ID, 'expert');
                         foreach($see_experts as $key => $expert){
                             if($key ==  20)
                                 continue;
@@ -524,10 +527,10 @@ $see_experts = get_users(
                             ?>
                             <div class="expert-element rows2">
                                 <div class="d-flex align-items-center">
-                                    <div class="checkB">
+                                    <!-- <div class="checkB">
                                         <input class="styled-checkbox" id="<?= $expert->display_name ?>" type="checkbox" value="<?= $expert->ID ?>">
                                         <label for="<?= $expert->display_name ?>"></label>
-                                    </div>
+                                    </div> -->
                                     <div class="img">
                                         <img src="<?= $image_author ?>" alt="">
                                     </div>
@@ -537,7 +540,7 @@ $see_experts = get_users(
                                     <a href="/user-overview?id=<?= $expert->ID ?>">See</a>
                                     <form action="/dashboard/user/" method="POST">
                                         <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
-                                        <input type="hidden" name="user_id" value="<?= $user->ID ?>" id="">
+                                        <input type="hidden" id="user_id" name="user_id" value="<?= $user->ID ?>" id="">
                                         <input type="hidden" name="meta_key" value="expert" id="">
                                         <div>
                                             <?php
@@ -556,9 +559,9 @@ $see_experts = get_users(
                             <?php
                         }
                         ?>
-                        <div class="mt-3 mb-0">
+                        <!-- <div class="mt-3 mb-0">
                             <button type="button" class="btn btnNext mb-0" data-dismiss="modal">Save</button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 

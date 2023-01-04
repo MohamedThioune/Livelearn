@@ -1245,7 +1245,7 @@ $degrees=[
                     *  Date and Location
                     */
                     $location = 'Virtual';
-                    $day = "<p><i class='fas fa-calendar-week'></i></p>";
+                    $day = "-";
                     $month = '';
 
                     $datas = get_field('data_locaties', $course->ID);
@@ -1253,7 +1253,7 @@ $degrees=[
                     /*
                     *  Date and Location
                     */ 
-                    $day = "<i class='fas fa-calendar-week'></i>";
+                    $day = "-";
                     $month = ' ';
                     $location = ' ';
                 
@@ -1265,7 +1265,7 @@ $degrees=[
                     else{
                         $dates = get_field('dates', $course->ID);
                         if($dates)
-                            $day = explode(' ', $dates[0]['date']);
+                            $day = explode(' ', $dates[0]['date'])[0];
                         else{
                             $data = get_field('data_locaties_xml', $course->ID);
                             if(isset($data[0]['value'])){
