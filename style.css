@@ -5393,7 +5393,7 @@ form {
         background: #E0EFF4;
         padding: 25px 20px;
         position: fixed;
-        z-index: 999999999;
+        z-index: 99;
         top: 45px;
         right: 0;
         min-height: 100vh;
