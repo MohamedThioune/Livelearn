@@ -362,11 +362,18 @@ form {
     }
     .second-element-mobile {
         width: 25px;
-        height: 27px;
         display: block;
     }
     #searchIcone {
-        margin-top: 2px;
+        margin-top: 0px !important;
+        width: 22px !important;
+        padding: 0 !important;
+        height: 22px;
+    }
+    #searchIcone img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
     }
     .boxSousNav3-2 {
         width: 28px;
@@ -452,7 +459,6 @@ form {
     .second-element-mobile {
         display: block;
         width: 25px;
-        height: 27px;
     }
     .second-element-mobile .croie {
         margin-top: 0;

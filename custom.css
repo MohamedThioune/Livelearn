@@ -15919,19 +15919,16 @@ ul .selectAll .styled-checkbox:checked + label:after {
         margin-top: 40px;
     }
     #burger {
-        margin-top: 2px;
+        height: 27px;
+        width: 30px;
     }
-    .second-element-mobile {
-        width: 28px !important;
-    }
-    #searchIcone {
-        margin-top: -5px !important;
-        width: 22px;
-    }
-    #searchIcone img{
+    .boxSousNav3-2 img {
         width: 100%;
         height: 100%;
         object-fit: contain;
+    }
+    .second-element-mobile {
+        width: 28px !important;
     }
     .croie {
         width: 24px;
