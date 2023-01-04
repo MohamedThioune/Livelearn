@@ -18,9 +18,6 @@ $url = home_url( $wp->request );
     #croieProfil {
         margin: 4px 0px -3px -6px !important;
     }
-    .navMobile-custom {
-        padding: 0px 0 8px !important;
-    }
     @media all and (min-width: 1330px) {
         #searchIconeTablet, #croieSearchTablet, .tabletsearch{
             display: none !important;
@@ -57,6 +54,12 @@ $url = home_url( $wp->request );
     @media (min-width: 300px) and (max-width: 767px){
         .navMobile-custom {
             padding: 0px 0 8px !important;
+        }
+        .sousNav3 {
+            width: 30%;
+            display: flex;
+            justify-content: flex-end;
+            margin-top: -1px;
         }
     }
 
