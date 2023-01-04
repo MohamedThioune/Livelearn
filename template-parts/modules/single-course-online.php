@@ -914,8 +914,7 @@ extract($_GET);
                         <div class="d-flex flex-md-row flex-column ">
                             <div class="p-2 w-md-50 w-sm-50 w-100">
                                 <div class="input-group">
-                                    <input type="text" class="form-control text-center border-0"
-                                           placeholder="E-mailadres" aria-label="E-mailadress" aria-describedby="basic-addon1">
+                                    <input type="text" class="form-control text-center border-0" placeholder="E-mailadres" aria-label="E-mailadress" aria-describedby="basic-addon1">
                                 </div>
                             </div>
                             <div class="p-2 w-md-50 w-100">
