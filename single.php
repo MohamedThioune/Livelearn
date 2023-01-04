@@ -1,9 +1,9 @@
-<?php
+<?php 
 get_header();
 
 $page = dirname(__FILE__) . '/templates/check_visibility.php';
-
-require($page);
+ 
+require($page); 
 
 ?>
 <head>
@@ -16,7 +16,7 @@ global $post;
 global $wp;
 
 if(!visibility($post, $visibility_company))
-    header('location: /');
+    header('location: /'); 
 
 $url = home_url( $wp->request );
 
@@ -47,7 +47,7 @@ if(!$image){
             if(!$image)
                 $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
 }
-
+    
 //Author
 $user_picture = get_field('profile_img', $post->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
@@ -61,7 +61,7 @@ if($tag = ''){
     if($tagS != 0)
         $tag = (String)get_the_category_by_ID($tagS);
     else if($tagI != 0)
-        $tag = (String)get_the_category_by_ID($tagI);
+        $tag = (String)get_the_category_by_ID($tagI);                                    
 }
 
 $content = get_field('article_itself',  $post->ID);
@@ -80,13 +80,9 @@ $price = get_field('price', $post->ID) ?: 'Gratis';
     .selected {
         border-bottom: 4px solid rgb(4 51 86);
     }
-    .navMobile-custom {
-        padding: 0px 0 8px !important;
-    }
 </style>
-<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
-
 <div class="main-wrapper ">
+   
 
     <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
     <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
@@ -105,14 +101,14 @@ $price = get_field('price', $post->ID) ?: 'Gratis';
                 <div class="modal-body  px-md-4 px-0">
                     <div class="mb-4">
                         <div class="text-center">
-                            <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
-                        </div>
+                            <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                        </div>  
                         <h3 class="text-center my-2">Sign Up</h3>
                         <div class="text-center">
                             <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
                             data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign in</a></p>
                         </div>
-                    </div>
+                    </div>  
 
 
                     <?php
@@ -126,7 +122,7 @@ $price = get_field('price', $post->ID) ?: 'Gratis';
 
                 </div>
             </div>
-
+        
         </div>
     </div>
     <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
@@ -147,7 +143,7 @@ $price = get_field('price', $post->ID) ?: 'Gratis';
                 <div class="modal-body  px-md-5 px-4">
                     <div class="mb-4">
                         <div class="text-center">
-                            <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                            <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
                         </div>
                         <h3 class="text-center my-2">Sign In</h3>
                         <div class="text-center">
@@ -183,7 +179,7 @@ $price = get_field('price', $post->ID) ?: 'Gratis';
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-8">
-                   <!--
+                   <!-- 
                     <div class="head-single">
                         <div class="imgProfilAuthor">
                             <img src="<?php /*echo $author; */?>" alt="" class="img-fluid">
@@ -233,9 +229,9 @@ $price = get_field('price', $post->ID) ?: 'Gratis';
                                     if (in_array($post->post_author, $saves_experts))
                                         echo "<button type='submit' class='btn FollowButton' name='delete'>Unfollow</button>";
                                     else
-                                        echo "<button type='submit' class='btn FollowButton' name='interest_push'>Follow</button>";
+                                        echo "<button type='submit' class='btn FollowButton' name='interest_push'>Follow</button>"; 
                                 }
-
+                                
                                 ?>
                             </div>
                         </form>
@@ -352,20 +348,6 @@ $price = get_field('price', $post->ID) ?: 'Gratis';
                         </div>
                     </div>
 
-                    <!-- Strat paywall -->
-                    <!-- php
-                    if($price != 'Gratis')
-                        echo '
-                            <div class="paywall-block">
-                                <p class="title-paywall">You want to continue reading </p>
-                                <p class="sub-title-paywall">Please purchase this to continue</p>
-                                <a class="btn btn-paywall" href="">Buying Now <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/arrowhead.png" alt=""></a>
-                                <p class="text-not-sure-which">Not Sure which is right now for you ?
-                                    <a href="">Discover the benefits of taking this course now</a> </p>
-                            </div>';
-                    ?> -->
-                    <!-- End paywall -->
-
                 </div>
                 <div class="col-lg-4">
                     <div class="sidebar-wrap">
@@ -392,9 +374,9 @@ $price = get_field('price', $post->ID) ?: 'Gratis';
                                             if (in_array($post->post_author, $experts))
                                                 echo "<button type='submit' class='btn btnFollow' name='delete'>Unfollow</button>";
                                             else
-                                                echo "<button type='submit' class='btn btnFollow' name='interest_push'>Follow</button>";
+                                                echo "<button type='submit' class='btn btnFollow' name='interest_push'>Follow</button>"; 
                                         }
-
+                                       
                                         ?>
                                     </div>
                                 </form>
@@ -409,7 +391,7 @@ $price = get_field('price', $post->ID) ?: 'Gratis';
                                 <p><?php echo $biographical; ?></p>
 
                                 <ul class="list-inline author-socials">
-                                    <?php
+                                    <?php 
                                     if($facebook){
                                     ?>
                                     <li class="list-inline-item mr-3">
@@ -452,13 +434,13 @@ $price = get_field('price', $post->ID) ?: 'Gratis';
 
                         <div class="sidebar-widget latest-post card border-0 p-4 mb-3">
                             <h5>Andere artikelen</h5>
-
+                            
                             <?php
                             $latests = wp_get_recent_posts(array('numberposts' => 3));
-
+                            
                             foreach($latests as $latest){
                             ?>
-
+                            
                             <div class="media border-bottom py-3">
                                 <a href="<?php echo get_the_permalink($latest['ID']);?>"><img class="mr-4" src="<?= get_stylesheet_directory_uri(); ?>/img/blog/bt-3.jpg" alt="">
                                     <div class="media-body">
@@ -476,7 +458,7 @@ $price = get_field('price', $post->ID) ?: 'Gratis';
                             <?php
                             if ($posttags)
                                 foreach($posttags as $tag)
-                                    echo '<a href=#">'.$tag->name . '</a>';
+                                    echo '<a href=#">'.$tag->name . '</a>'; 
                             else{
                                 $read_category = array();
                                 if(!empty($category_default))
@@ -498,7 +480,7 @@ $price = get_field('price', $post->ID) ?: 'Gratis';
                             ?>
                         </div>
                     </div>
-                </div>
+                </div>   
             </div>
         </div>
     </section>

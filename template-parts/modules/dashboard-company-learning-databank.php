@@ -313,8 +313,10 @@
                     <tbody id="autocomplete_company_databank">
                         <?php 
                         foreach($courses as $key => $course){
-                            if(!visibility($course, $visibility_company))
-                                continue;    
+                            $bool = true;
+                            $bool = visibility($course, $visibility_company);
+                            if(!$bool)
+                                continue;   
 
                             $category = ' ';
 

@@ -380,12 +380,13 @@
                                     <span > <?php echo $results; ?> </span>
                                     <?php
                                 }
+
                             ?>
                         </div>
                        <br>
                    </div>
                     <?php
-                        if($agenda || $who || $results )
+                        if($agenda || $who || $results || $long_description)
                             echo '<button type="button" class="btn btn-lg lees_alles my-4 w-md-25 px-4 border border-1 border-dark read-more-btn">Lees alles</button>';
                         else
                             echo '<h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Leeg tot nu toe ...</b></h6>';
@@ -523,14 +524,14 @@
 
                                                                                 do_action( 'woocommerce_after_add_to_cart_quantity' );
 
-                                                                                if($user_id != 0 && $user_id != $post->post_author)
+                                                                                if($user_id != $post->post_author)
                                                                                     echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';
 
                                                                                 do_action( 'woocommerce_after_add_to_cart_button' ); ?>
                                                                             </form>
                                                                             <?php
-                                                                            if($user_id == 0)
-                                                                                echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
+                                                                            // if($user_id == 0)
+                                                                            //     echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
                                                                             do_action( 'woocommerce_after_add_to_cart_form' ); ?>
                                                                         </div>
                                                                     </div>
@@ -657,14 +658,13 @@
 
                                                                             do_action( 'woocommerce_after_add_to_cart_quantity' );
 
-                                                                            if($user_id != 0 && $user_id != $post->post_author)
+                                                                            if($user_id != $post->post_author)
                                                                                 echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';
 
                                                                             do_action( 'woocommerce_after_add_to_cart_button' ); ?>
                                                                         </form>
                                                                         <?php
-                                                                        if($user_id == 0)
-                                                                            echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
+                                                                       
                                                                         do_action( 'woocommerce_after_add_to_cart_form' ); ?>
                                                                     </div>
                                                                 </div>
@@ -787,14 +787,14 @@
 
                                                                             do_action( 'woocommerce_after_add_to_cart_quantity' );
 
-                                                                            if($user_id != 0 && $user_id != $post->post_author)
+                                                                            if($user_id != $post->post_author)
                                                                                 echo '<button type="submit" name="add-to-cart" value="'. esc_attr( $product->get_id() ) . '" class="single_add_to_cart_button button alt">Reserveren</button>';
 
                                                                             do_action( 'woocommerce_after_add_to_cart_button' ); ?>
                                                                         </form>
                                                                         <?php
-                                                                        if($user_id == 0)
-                                                                            echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
+                                                                        // if($user_id == 0)
+                                                                        //     echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
                                                                         do_action( 'woocommerce_after_add_to_cart_form' ); ?>
                                                                     </div>
                                                                 </div>
