@@ -186,12 +186,14 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
         }
         .first-block-binnen {
             width: 100%;
-            padding-left: 15px;
+            padding-left: 17px;
+            padding-right: 17px;
         }
         .second-block-binnen {
-            width: 75%;
-            margin: 43px auto 0;
+            width: 100%;
+            padding: 0px 50px;
             border-radius: 20px;
+            margin: 40px 15px 19px;
         }
         .block-logo-parteners2 .logo-element {
             width: 28%;
