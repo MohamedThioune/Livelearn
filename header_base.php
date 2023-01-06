@@ -707,10 +707,7 @@ $url = home_url( $wp->request );
                                 <p class="text-Probeer"><b>Probeer onze gratis leer-app</b></p>
                                 <p class="text-Probeer">En start meteen met jezelf te ontwikkelen</p>
                                 <div class="d-flex">
-                                    <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/ios-star.png" alt="search">
-                                    <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/ios-star.png" alt="search">
-                                    <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/ios-star.png" alt="search">
-                                    <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/ios-star.png" alt="search">
+                                    <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/Group_301.png" alt="search">
                                 </div>
                             </div>
                             <a href="" class="btn btn-Openen">Openen</a>
@@ -764,7 +761,7 @@ $url = home_url( $wp->request );
                             </div>
                             <div class="second-element-mobile">
                                 <button id="burger" class=" btn burgerElement boxSousNav3-2">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/hamburger.png" alt="burger">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/burger-2.png" alt="burger">
                                 </button>
                                 <button id="burgerCroie" class="btn croie">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/X-blanc.png" alt="close">

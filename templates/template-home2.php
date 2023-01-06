@@ -196,7 +196,7 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
             margin: 40px 15px 19px;
         }
         .block-logo-parteners2 .logo-element {
-            width: 28%;
+            width: 27.5%;
             margin: 0 10px 15px;
             height: 70px;
         }
@@ -1181,8 +1181,8 @@ $saved = get_user_meta($user_id, 'course');
         <p class="titleblockOnze">Wie zijn dan onze gebruikers?</p>
         <div class="zelf-block">
             <p>Lees alles wat wij doen ?</p>
-            <a href="">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-long-arrow-alt-right.png" alt="">
+            <a href="" class="all-expert">
+                <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
             </a>
         </div>
         <div class="row paddingElement7">
@@ -1350,8 +1350,8 @@ $saved = get_user_meta($user_id, 'course');
         <p class="titleblockOnze">De onderwerpen waarin wij jouw kunnen helpen</p>
         <div class="zelf-block">
             <p>Bekijk alle onderwerp</p>
-            <a href="">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-long-arrow-alt-right.png" alt="">
+            <a href="" class="all-expert">
+                <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
             </a>
         </div>
         <div class="blockGroupText">
@@ -1411,8 +1411,12 @@ $saved = get_user_meta($user_id, 'course');
 <div class="block-cotact-calendy text-center">
     <div class="container-fluid">
         <div class="d-flex justify-content-center">
-            <img class="img-Direct-een" id="firstImg-direct-contact" src="<?php echo get_stylesheet_directory_uri();?>/img/Direct-een.png" alt="">
-            <img class="img-Direct-een" id="secondImg-direct-contact" src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der-Kolk.png" alt="">
+            <div class="img-Direct-een">
+                <img id="firstImg-direct-contact" src="<?php echo get_stylesheet_directory_uri();?>/img/Direct-een.png" alt="">
+            </div>
+            <div class="img-Direct-een">
+                <img id="secondImg-direct-contact" src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der-Kolk.png" alt="">
+            </div>
         </div>
         <h3 class="title-Direct-een"><strong>Direct een afspraak inplannen?</strong><br> Hulp nodig of heb je vragen over LiveLearn? Wij zijn er om je te helpen.</h3>
         <button class="btn btn-kies" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/livelearn/overleg-pilot'});return false;">Kies een datum</button>

@@ -7972,6 +7972,12 @@ tbody {
             width: 30px !important;
             height: 30px !important;
         }
+        .block-cotact-calendy img{
+            height: intrinsic !important;
+        }
+        .block-cotact-calendy #secondImg-direct-contact {
+            height: 50px;
+        }
     }
 }
 
@@ -13050,11 +13056,14 @@ ul .selectAll .styled-checkbox:checked + label:after {
     color: #023356;
     margin-bottom: 0;
 }
+.zelf-block p:hover{
+    font-weight: bold;
+}
 .titleblockOnze{
     text-align: center;
     color: #023356;
     font-size: 28px;
-    font-weight: 500;
+    font-weight: bold;
     width: 440px;
     margin: 0 auto;
 }
@@ -13071,7 +13080,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .first-block-binnen h3{
     color: #023356;
     font-size: 30px;
-    font-weight: 500;
+    font-weight: bold;
     margin-bottom: 18px;
 }
 .first-block-binnen h3 span{
@@ -13157,7 +13166,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     border-right: 10px;
 }
 .doawnloadBlockHome h3{
-    font-weight: 500;
+    font-weight: bold;
     font-size: 27px;
     margin: 0 auto 10px;
     width: 626px;
@@ -13350,13 +13359,24 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 .block-cotact-calendy #firstImg-direct-contact{
     width: 120px;
-    height: fit-content;
+    height: 82px;
 }
+.block-cotact-calendy #firstImg-direct-contact img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
 .block-cotact-calendy #secondImg-direct-contact{
     width: 50px;
-    height: fit-content;
     margin-top: 40px;
     margin-left: -40px;
+    height: 50px;
+}
+.block-cotact-calendy #secondImg-direct-contact img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 .title-Direct-een{
     color: #023356;
@@ -13367,13 +13387,14 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 .title-Direct-een strong{
     font-size: 27px;
+    font-weight: bold;
 }
 .btn-kies{
     background: #023356;
     padding: 12px 35px;
     color: white;
     font-size: 15px;
-    font-weight: 500;
+    font-weight: bold;
 }
 .woocommerce-message::before {
     color: #00a89d !important;
@@ -13422,6 +13443,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .content-home2 .contentSix {
     margin-bottom: 60px;
 }
+
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
@@ -14909,7 +14931,6 @@ ul .selectAll .styled-checkbox:checked + label:after {
     }
     .headCollections p {
         font-size: 16px;
-        width: 100%;
     }
     .btn-collection {
         color: #007dda;
@@ -16025,12 +16046,13 @@ ul .selectAll .styled-checkbox:checked + label:after {
         width: 37px;
         height: 37px;
         background: white;
-        padding: 5px;
+        padding: 4px;
         border-radius: 10px;
+        margin-right: 5px;
     }
     .blockShowApp .close-block{
         height: fit-content;
-        margin-right: 13px;
+        margin-right: 6px;
         padding: 0;
         color: white;
         font-size: 22px;
@@ -16048,7 +16070,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
         padding: 0 !important;
     }
     .star-app-img{
-        width: 13px;
+        width: 50px;
         margin: 5px 3px 0 0;
     }
     .elements-blockShowApp{
@@ -16091,6 +16113,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
         display: flex;
         flex-wrap: wrap;
         line-height: 30px;
+        align-items: center;
     }
     .sousMenuNavMobil .collapse ul{
         margin-left: 48px;
@@ -16105,15 +16128,16 @@ ul .selectAll .styled-checkbox:checked + label:after {
         padding: 0px 0px 14px;
     }
     .element-nav-accordion .element-navMobile span {
-        font-size: 13px;
+        font-size: 12px;
         background: white;
-        padding: 5px 15px;
+        padding: 5px 11px;
         border-radius: 10px;
-        margin-left: 20px;
+        margin-left: 15px;
         font-weight: 400;
         position: relative;
         height: fit-content;
         line-height: initial;
+        margin-top: 4px;
     }
     .woocommerce-checkout .wrapper-woocommerce {
         width: 90%;
@@ -16156,6 +16180,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     .GespecialiseerdText {
         display: none;
     }
+
 }
 
 .radius-custom {
