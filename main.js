@@ -520,7 +520,12 @@ jQuery(function($) {
         $(".blockfunctiegericht").hide();
     });
 
-    $("#nextSkills, ##btnSkipTopics3").click(function() {
+    $("#nextSkills").click(function() {
+        $(".blockPersonal").show();
+        $(".blockSkills").hide();
+    });
+
+    $("#btnSkipTopics3").click(function() {
         $(".blockPersonal").show();
         $(".blockSkills").hide();
     });

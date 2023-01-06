@@ -23,6 +23,8 @@
         $args = array(
             'post_type' => array('post','course'), 
             'post_status' => 'publish',
+            'orderby' => 'date',
+            'order'   => 'DESC',
             'posts_per_page' => -1,
         );
         $global_courses = get_posts($args);
@@ -45,6 +47,8 @@
             $args = array(
                 'post_type' => array('post','course'), 
                 'post_status' => 'publish',
+                'orderby' => 'date',
+                'order'   => 'DESC',
                 'posts_per_page' => -1,
             );
             $posts = get_posts($args);
@@ -165,6 +169,8 @@
                 $args = array(
                     'post_type' => array('post','course'), 
                     'posts_per_page' => -1,
+                    'orderby' => 'date',
+                    'order'   => 'DESC',
                     'author__in' => $users_companie,  
                 );
         
@@ -173,6 +179,8 @@
                 $args = array(
                     'post_type' => array('post','course'), 
                     'post_status' => 'publish',
+                    'orderby' => 'date',
+                    'order'   => 'DESC',
                     'posts_per_page' => 500,
                 );
                 $courses = get_posts($args);

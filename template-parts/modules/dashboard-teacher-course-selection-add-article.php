@@ -57,7 +57,7 @@
                     <div class="circleIndicator">
                         <i class="fa fa-tag" aria-hidden="true"></i>
                     </div>
-                    <p class="textOpleidRight">Tags</p>
+                    <p class="textOpleidRight">Onderwerpen</p>
                 </a>
                 <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-add-article&id=' . $_GET['id'] . '&step=4&edit'; echo '?func=add-article&message=Please finish this step before'?>" class="contentBlockCourse">
                     <div class="circleIndicator">

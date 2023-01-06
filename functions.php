@@ -1055,8 +1055,8 @@ add_action( 'rest_api_init', function () {
     'callback' => 'get_saved_course',
   ));
 
-  register_rest_route('custom/v1', '/save/course/', array(
-    'methods' => 'PUT',
+  register_rest_route('custom/v1', '/save/course/(?P<id>\d+)', array(
+    'methods' => 'GET',
     'callback' => 'save_course',
   ));
 
@@ -1075,8 +1075,8 @@ add_action( 'rest_api_init', function () {
     'callback' => 'get_count_courses_likes',
   ));
 
-  register_rest_route('custom/v1', '/like/course/', array(
-    'methods' => 'PUT',
+  register_rest_route('custom/v1', '/like/course/(?P<id>\d+)', array(
+    'methods' => 'GET',
     'callback' => 'like_course',
   ));
 

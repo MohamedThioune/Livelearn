@@ -17,9 +17,6 @@
   </div>
 </div>
 
-
-
-
 <footer class="footer-area footerLive">
     <div class="footer-big">
         <!-- start .container -->
@@ -238,6 +235,38 @@
                 }
         });
     });
+</script>
+
+<script>
+    var topics_selected = [];
+    $(".topics").click((e)=>{
+        let tags_id = e.target.value;
+        let if_exist = topics_selected.indexOf(tags_id);
+        if (if_exist > 0)
+            topics_selected.splice(if_exist, 1)
+        else 
+            topics_selected.push(tags_id);        
+    });
+
+    $("#btn-topics").click((e)=>
+    {
+        $(e.preventDefault())
+        var user_id = $("#user_id").val();
+
+        $.ajax({
+            url:"/topic-ajax-quick",
+            method:"post",
+            data:{
+                id : user_id,
+                topics : topics_selected
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete_tags').html(data);
+            }
+        });
+    })
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>

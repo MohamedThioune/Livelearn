@@ -4427,7 +4427,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 
 .boxCollections {
     display: flex;
-    width: 95%;
+    width: 100%;
     border-bottom: 1px solid #cdcdcd;
     padding-bottom: 15px;
     margin-bottom: 18px;
@@ -4450,8 +4450,8 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 }
 
 .circleImgCollection {
-    width: 50px;
-    height: 50px;
+    width: 53px;
+    height: 53px;
     object-fit: cover;
     margin-right: 15px;
     border: 1px solid #7b7b7b6b;
@@ -4466,7 +4466,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 }
 
 .secondBlockElementCollection {
-    width: 55%;
+    width: 65%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -4474,18 +4474,23 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 
 .nameListeCollection {
     font-weight: bold;
-    margin-bottom: 5px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: 16px;
+    margin-bottom: 10px;
 }
 
 .iconeTextListCollection {
     display: flex;
+    align-items: center;
+    margin-right: 15px;
 }
 
 .iconeTextListCollection img {
-    width: 15px;
+    width: 22px;
+    height: 22px;
+    margin-right: 8px;
 }
 
 .iconeTextListCollection p {
@@ -6589,6 +6594,9 @@ button:focus {
     width: 32%;
     margin-right: 10px;
     margin-bottom: 20px;
+    min-height: 196px;
+    position: relative;
+    height: 100%;
 }
 
 .bodyCardAssessment {
@@ -7560,6 +7568,9 @@ tbody {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: absolute;
+    bottom: 25px;
+    width: 92%;
 }
 
 .btnDetailsAssessment {
@@ -10608,7 +10619,7 @@ select {
 }
 
 .liveOverBlock {
-    padding-top: 100px;
+    padding-top: 40px;
 }
 
 .canhas .liveOverBlock {
@@ -11968,7 +11979,7 @@ select {
 }
 
 .product-podcat1 {
-    margin-top: 70px;
+    margin-top: 40px;
 }
 
 .product-podcat1 .sound-wave {
@@ -12933,7 +12944,6 @@ ul .selectAll .styled-checkbox:checked + label:after {
     width: fit-content;
     left: 0px;
     top: 6px;
-    height: 36%;
     padding: 12px 5px 13px 10px !important;
     box-shadow: none;
     min-width: 70px;
@@ -12941,6 +12951,9 @@ ul .selectAll .styled-checkbox:checked + label:after {
     border-radius: 0;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
+}
+.content-home2 form .selectSearchHome:focus-visible {
+    outline: 0px !important;
 }
 .content-home2 form .searchInputHome {
     padding-left: 90px;
@@ -13166,9 +13179,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     color: #023356;
     font-size: 23px;
 }
-.fa-angle-down-bleu{
-    display: none;
-}
+
 .contentLeaning{
     margin-top: 20px;
 }
@@ -13298,7 +13309,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .showModalAdd:last-child{
     border-bottom: 0;
 }
-.sousiconeTextKraa{
+.sousiconeTextKraa p{
     margin-bottom: 0 !important;
 }
 .contentCardListeCourse .text-left{
@@ -13313,7 +13324,47 @@ ul .selectAll .styled-checkbox:checked + label:after {
     text-overflow: ellipsis;
     max-width: 200px;
 }
-
+.blockTwoOver .swiper-horizontal{
+    overflow: hidden !important;
+}
+.sousiconeTextKraa p{
+    margin-bottom: 0 !important;
+}
+.blockDetailCollection{
+    display: flex;
+}
+.block-cotact-calendy{
+    background: #023356;
+    padding: 48px 0 70px;
+    margin: 95px 0;
+}
+.block-cotact-calendy #firstImg-direct-contact{
+    width: 120px;
+    height: fit-content;
+}
+.block-cotact-calendy #secondImg-direct-contact{
+    width: 50px;
+    height: fit-content;
+    margin-top: 40px;
+    margin-left: -40px;
+}
+.title-Direct-een{
+    color: white;
+    font-size: 17px;
+    font-weight: 300;
+    margin: 23px auto 30px;
+    line-height: 36px;
+}
+.title-Direct-een strong{
+    font-size: 27px;
+}
+.btn-kies{
+    background: #E0EFF4;
+    padding: 12px 35px;
+    color: #023356;
+    font-size: 15px;
+    font-weight: 500;
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;

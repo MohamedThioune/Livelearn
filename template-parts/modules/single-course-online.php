@@ -313,7 +313,7 @@ extract($_GET);
                         <br>
                    </div>
                    <?php
-                        if($agenda || $who || $results )
+                        if($agenda || $who || $results || $long_description)
                             echo '<button type="button" class="btn btn-lg lees_alles mb-5 mt-3 w-md-25 px-4 border border-3 border-dark read-more-btn">Lees alles</button>';
                         else
                             echo '<h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Leeg tot nu toe ...</b></h6>';
@@ -636,7 +636,6 @@ extract($_GET);
                                             echo '<img class="playElement" src="'.  get_stylesheet_directory_uri() . '/img/play.png" alt="">';
                                         }
                                     ?>
-                                    <a style="color:#F79403" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo $post->post_title; ?></a>
                                     <?php
                                     foreach($courses as $key => $video){
                                         $style = "";
@@ -750,7 +749,7 @@ extract($_GET);
                                                         $expert = get_users(array('include'=> $expert))[0]->data;
                                                         $company = get_field('company',  'user_' . $expert->ID);
                                                         $title = $company[0]->post_title;
-                                                        $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                                        $image = get_field('profile_img',  'user_' . $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                                         ?>
                                                         <div class="blockExpertFollown">
                                                             <div class="d-flex">
@@ -829,7 +828,7 @@ extract($_GET);
                                                     $expert = get_users(array('include'=> $value))[0]->data;
                                                     $company = get_field('company',  'user_' . $expert->ID);
                                                     $title = $company[0]->post_title;
-                                                    $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                                    $image = get_field('profile_img', 'user_' . $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                                 ?>
                                                     <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
                                                         <div class="my-2 d-flex flex-column mx-md-0 mx-1">
@@ -907,7 +906,7 @@ extract($_GET);
                 <a href="" class="btn btnPlan">Planeen 15min afspraak in</a> -->
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-2">
-                        <img class="imgDanForm" src="<?php echo $photo_daniel; ?>" alt="photo daniel" srcset="">
+                        <img class="imgDanForm" src="<?php echo get_stylesheet_directory_uri(); ?>/img/daniel.png" alt="">                   
                     </div>
                     <div class="col-md-9 mt-3">
                         <p class="h4">Direct <span class="font-weight-bolder h3">vrijblijvend</span> een 15 minuten scholingsconsult</p>
@@ -1008,7 +1007,7 @@ extract($_GET);
     <?php
     if($price !== 'Gratis'){
     ?>
-    <div class="modal fade modalpaywallVideo" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <!-- <div class="modal fade modalpaywallVideo" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
              <h5 class="title-paywall" >Get Acces Now </h5>
@@ -1018,12 +1017,11 @@ extract($_GET);
                <?php
                echo '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-paywall">Buying Now <img src="<?php echo get_stylesheet_directory_uri();?>/img/arrowhead.png" alt=""></a>';
                ?>
-               <a href="" class="btn btn-paywall">Buying Now <img src="<?php echo get_stylesheet_directory_uri();?>/img/arrowhead.png" alt=""></a>
                <p class="text-not-sure-which">Not Sure which is right now for you ? <a href="">Discover the benefits of taking this course now </a></p>
             </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <?php
     }
     ?>
