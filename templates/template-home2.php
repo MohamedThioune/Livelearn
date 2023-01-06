@@ -1123,8 +1123,8 @@ $saved = get_user_meta($user_id, 'course');
                </div>
                <div class="zelf-block">
                    <p>Zelf ook een expert? </p>
-                   <a href="">
-                       <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-long-arrow-alt-right.png" alt="">
+                   <a href="" class="all-expert">
+                       <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
                    </a>
                </div>
            </div>
