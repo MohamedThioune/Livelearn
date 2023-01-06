@@ -49,7 +49,8 @@ class Course
   public $articleItself;
 
   public $connectedProduct;
-
+  public $for_who;
+  public $data_locaties;
   function __construct($course) {
      $this->id = $course->ID;
      $this->date = $course->post_date;
@@ -69,6 +70,8 @@ class Course
      $this->author = $course->author;
      $this->articleItself = get_field('article_itself', $course->ID) ?? '';
      $this->likes = is_array(get_field('favorited', $course->ID)) ? count(get_field('favorited', $course->ID)) : 0 ; //?? [];
+     $this->data_locaties = is_array(get_field('data_locaties', $course->ID)) ? (get_field('data_locaties', $course->ID)) : [] ;
+     $this->for_who = get_field('for_who', $course->ID) ? (get_field('for_who', $course->ID)) : "" ;
     }
 }
 
@@ -383,10 +386,10 @@ function get_saved_course()
   return [];
 }
 
-function save_course(WP_REST_Request $request)
+function save_course($data)
 {
   $current_user = $GLOBALS['user_id'];
-  $course_id = $request['course_id']!= null && !empty (get_post($request['course_id'])) ? $request['course_id'] : false ;
+  $course_id = $data['id']!= null && !empty (get_post($data['id'])) ? $data['id'] : false ;
   if (!empty($course_id))
   {
     $meta_key = 'course'; 
@@ -504,9 +507,6 @@ function get_liked_courses()
   return $liked_courses;
 }
 
-function get_count_courses_likes ($data){
-
-}
 
 function recommended_course()
 {
