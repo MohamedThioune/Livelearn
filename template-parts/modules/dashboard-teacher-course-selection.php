@@ -12,7 +12,7 @@
                 </a>
                 <a href="?func=add-course&type=training" class="cardCours cardCoursInitial" >
                     <p class="contentText">
-                        <b>Training</b><br />
+                        <b>Training</b>
                     </p>
                 </a>
                 <a href="?func=add-course&type=workshop" class="cardCours cardCoursInitial" >
@@ -39,24 +39,22 @@
                 <a href="?func=add-article" class="cardCours cardCoursInitial" >
                     <p class="contentText">
                         <b>Artikel</b>
-                        <small></small>
                     </p>
                 </a>
-                <a href="?func=add-assessment" class="cardCours cardCoursInitial" >
+                <a href="#" class="cardCours cardCoursInitial" >
                     <p class="contentText">
                         <b>Assessment</b>
+                        <small>Coming soon !</small>
                     </p>
                 </a>
                 <a href="?func=add-white&type=reading" class="cardCours cardCoursInitial" >
                     <p class="contentText">
-                        <b>Lezing</b><br />
-                        <small></small>
+                        <b>Lezing</b>
                     </p>
                 </a>
                 <a href="?func=add-white&type=event" class="cardCours cardCoursInitial" >
                     <p class="contentText">
-                        <b>Event</b><br />
-                        <small></small>
+                        <b>Event</b>
                     </p>
                 </a>
                 <a href="#" class="cardCours cardCoursInitial" >
