@@ -21,8 +21,12 @@ if(isset($_GET['parse'])){
 $data = get_field('data_locaties', $post->ID);
 if(!$data){
     $data = get_field('data_locaties_xml', $post->ID);
-    $xml_parse = true;
+    if($data)
+        $xml_parse = true;
+    else
+        $data = get_field('dates', $post->ID);
 }   
+
 
 $price = get_field('price', $post->ID);
 
@@ -40,12 +44,14 @@ foreach($bunch_orders as $order){
     $item_order['id'] = $order->data['customer_id'];
     $item_order['first_name'] = $order->data['billing']['first_name'];
     $item_order['last_name'] = $order->data['billing']['last_name'];
+    $item_order['last_name'] = $order->data['billing']['last_name'];
+    $item_order['email'] = $order->data['billing']['email'];
+    $item_order['company'] = $order->data['billing']['company'];
     foreach ($order->get_items() as $item_id => $item ) {
         $course_id = intval($item->get_product_id()) - 1;
         if($course_id == $_GET['parse']){
             $item_order['name']= $item->get_name();
             $item_order['datenr'] = $item->get_meta_data('Option')[0]->value;
-            $item_order['companie_title'] = get_field('company',  'user_' . $customer_id)[0]->post_title;
             $item_order['function']  = get_field('role',  'user_' . $customer_id);
             array_push($orders, $item_order);  
         }
@@ -98,6 +104,24 @@ $inkomsten = count($orders) * $price;
                                 $agenda_end = $d_end[0] . ' ' . $calendar[$d_end[1]];
                                 $location = explode('-', $date_start[2])[1];
                             }
+                            else{
+                                $data = get_field('dates', $post->ID);
+                                $number = count($data) - 1;
+                                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];
+                                $date_start = explode(' ', $data[0]['date']);
+                                $date_end = explode(' ', $data[$number]['date']);
+                                $d_start = explode('-', $date_start[0]);
+                                $d_end = explode('-', $date_end[0]);
+
+                                $timer_s = explode(':', $date_start[1]);
+                                $h_start = $timer_s[0] . ':' . $timer_s[1];
+
+                                $timer_e = explode(':', $date_end[1]);
+                                $h_end =  $timer_e[0] . ':' . $timer_e[1];
+
+                                $agenda_start = $d_start[2] . ' ' . $calendar[$d_start[1]];
+                                $agenda_end = $d_end[2] . ' ' . $calendar[$d_end[1]];
+                            }
                         ?>
                     <h2><?php echo $post->post_title ?></h2>
                     </div>
@@ -108,16 +132,18 @@ $inkomsten = count($orders) * $price;
                         </div>
                         <div class="cardAcqureren">
                             <p class="titleCardAcqureren">Inkomsten</p>
-                            <p class="numberCardAcqureren"><?php echo $inkomsten ?></p>
+                            <p class="numberCardAcqureren"><?php echo $inkomsten ?> € </p>
                         </div>
                         <div class="cardAcqureren">
                             <p class="titleCardAcqureren">Startdatum</p>
                             <p class="numberCardAcqureren"><?php echo $agenda_start?></p>
                         </div>
-                        <div class="cardAcqureren">
-                            <p class="titleCardAcqureren">Locatie</p>
-                            <p class="numberCardAcqureren"><?php if(isset($location)) echo $location; ?></p>
-                        </div>
+                        <?php if(isset($location)) { ?>
+                            <div class="cardAcqureren">
+                                <p class="titleCardAcqureren">Locatie</p>
+                                <p class="numberCardAcqureren"><?php echo $location; ?></p>
+                            </div>
+                        <?php } ?>
                     </div>
                     <div class="tableListeView">
                         <div class="headListeCourse">
@@ -137,11 +163,11 @@ $inkomsten = count($orders) * $price;
                                     <th scope="col">#</th>
                                     <th scope="col">Naam</th>
                                     <th scope="col">Achternaam</th>
+                                    <th scope="col">E-mail</th>
                                     <th scope="col">Bedrijf</th>
                                     <th scope="col">Functie</th>
                                     <th scope="col">Prijs</th>
                                     <th scope="col">Betaaid</th>
-                                    <th scope="col">Optie</th>
                                 </tr>
                                 </thead>
                                 <tbody id="autocomplete_signups">
@@ -150,29 +176,14 @@ $inkomsten = count($orders) * $price;
                                     foreach($orders as $key =>  $order){
                                     ?>
                                         <tr>
-                                            <td scope="row"><?= $key; ?></td>
-                                            <td class="textTh pl-3 thModife">
-                                                <input type="checkbox">
-                                            </td>
+                                            <td scope="row"><?= $key + 1; ?></td>
                                             <td class="textTh"><?= $order['first_name']; ?></td>
                                             <td class="textTh"><?= $order['last_name']; ?></td>
-                                            <td class="textTh"><?= $order['companie_title'];?></td>
+                                            <td class="textTh"><?= $order['email']; ?></td>
+                                            <td class="textTh"><?= $order['company'];?></td>
                                             <td class="textTh"><?= $order['function'];; ?></td>
                                             <td class="textTh">€ <?php echo $price ?></td>
                                             <td class="textTh">Prive</td>
-                                            <td class="textTh">
-                                                <div class="dropdown text-white">
-                                                    <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
-                                                        <img  style="width:20px"
-                                                              src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                                                    </p>
-                                                    <ul class="dropdown-menu">
-                                                        <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
-                                                        <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
-                                                        <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
-                                                    </ul>
-                                                </div>
-                                            </td>
                                         </tr>
                                     <?php 
                                     }

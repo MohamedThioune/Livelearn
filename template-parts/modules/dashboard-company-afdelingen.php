@@ -63,7 +63,7 @@ foreach($users as $user)
                         $department_user = get_field('department', 'user_'.$user->ID)
                     ?>
                         <tr id="" >
-                            <td scope="row"><?= $key ?></td>
+                            <td scope="row"><?= $key + 1 ?></td>
                             <td class="textTh thModife">
                                 <div class="ImgUser">
                                     <a href="<?= $link ?>" >

@@ -481,7 +481,7 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                         <div class="circleIndicator passEtape2">
                             <i class="fa fa-tag" aria-hidden="true"></i>
                         </div>
-                        <p class="textOpleidRight">Tags</p>
+                        <p class="textOpleidRight">Onderwerpen</p>
                     </a>
                     <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=6&edit'; ?>"  class="contentBlockCourse">
                         <div class="circleIndicator">

@@ -2,7 +2,6 @@
     <?php if($_GET['message']) echo "<span class='alert alert-error'>" . $_GET['message'] . "</span><br><br>"; ?>
     <div class="col-md-5 col-lg-8">
         <div class="cardCoursGlocal">
-       <?php if($_GET['message']) echo "<span class='alert alert-error'>" . $_GET['message'] . "</span><br><br>"; ?>
             <div id="basis" class="w-100">
                 <div class="titleOpleidingstype">
                     <h2>2.Article Itself</h2>
@@ -44,7 +43,7 @@
                     <div class="circleIndicator">
                         <i class="fa fa-tag" aria-hidden="true"></i>
                     </div>
-                    <p class="textOpleidRight">Tags</p>
+                    <p class="textOpleidRight">Onderwerpen</p>
                 </a>
                 <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-add-article&id=' . $_GET['id'] . '&step=4&edit'; ?>" class="contentBlockCourse">
                     <div class="circleIndicator">

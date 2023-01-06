@@ -21,14 +21,17 @@
         // Add role
         if($rol_manager)
             $u->add_role( 'manager' );
-        //Remove role
+        // Remove role
         else
             $u->remove_role( 'manager' );
-
-        update_field('manager', 1, 'user_'.$id_user);
-        update_field('amount_budget', $amount_budget, 'user_'.$id_user);
+        
+        // Optional remove teacher
+        if(!$rol_teacher)
+            $u->remove_role( 'author' );
+        
+        update_field('amount_budget', $amount_budget, 'user_' . $id_user);
         $success = true;
-        $message = "Werknemer(s) met succes toegekend als een manager";
+        $message = "Werknemer(s) met succes toegekend";
         header('Location: /dashboard/company/grant/?message=' . $message);
     }
 ?>
@@ -140,7 +143,6 @@
                             $is_author = (in_array('author', $used->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
 
                             $amount_budget = get_field('amount_budget', 'user_' . $used->ID) ? : 0;
-                            $amount_budget += 5;                 
                     ?>
                         <tr id="" >
                             <td scope="row"><?= $i ?></td>
@@ -184,6 +186,16 @@
                                             <label>
                                                 <input type="checkbox" name="rol_manager" value="1" <?php echo ((in_array('manager', $used->roles)) ? 'checked' : '') ?>><span class="checbox-element-label">Manager</span>
                                             </label>
+
+                                            <?php
+                                            if(in_array('author', $used->roles)){
+                                            ?>
+                                            <label>
+                                                <input type="checkbox" name="rol_teacher" value="1" checked><span class="checbox-element-label">Teacher</span>
+                                            </label>
+                                            <?php
+                                            }
+                                            ?>
                                         </div>
 
                                         <div class="form-group">
