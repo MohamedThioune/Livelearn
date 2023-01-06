@@ -389,9 +389,10 @@ function save_course(WP_REST_Request $request)
   $course_id = $request['course_id']!= null && !empty (get_post($request['course_id'])) ? $request['course_id'] : false ;
   if (!empty($course_id))
   {
-    $meta_key = 'course';
+    $meta_key = 'course'; 
     $course_saved = get_user_meta($current_user, $meta_key) ?? false;
     if (!in_array($course_id, $course_saved)) {
+
       add_user_meta($current_user, $meta_key, $course_id);
       $message = 'Course saved with success';
     }
