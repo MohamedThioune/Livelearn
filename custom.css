@@ -16153,6 +16153,9 @@ ul .selectAll .styled-checkbox:checked + label:after {
         font-size: 16px;
         width: fit-content !important;
     }
+    .GespecialiseerdText {
+        display: none;
+    }
 }
 
 .radius-custom {
