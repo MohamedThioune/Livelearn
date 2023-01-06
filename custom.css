@@ -12926,14 +12926,14 @@ ul .selectAll .styled-checkbox:checked + label:after {
     width: 670px;
     margin: 15px auto 30px;
     font-size: 17px;
-    color: #707070;
+    color: #043356;
     font-weight: 400;
 }
 .content-home2 .wordDeBestText2 {
     font-size: 36px;
     line-height: 42px;
     margin: 0px auto 10px;
-    font-weight: 500;
+    font-weight: bold;
     max-width: 560px;
 }
 .content-home2 .voorBlock form {
@@ -12948,10 +12948,19 @@ ul .selectAll .styled-checkbox:checked + label:after {
     padding: 12px 5px 13px 10px !important;
     box-shadow: none;
     min-width: 70px;
-    border-right: 2px solid #101010;
     border-radius: 0;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
+}
+.content-home2 form:before {
+    content: "";
+    width: 2px;
+    height: 40px;
+    background-color: #b4b4b4;
+    left: 79px;
+    position: absolute;
+    display: block;
+    top: 6px;
 }
 .content-home2 form .selectSearchHome:focus-visible {
     outline: 0px !important;
@@ -13144,7 +13153,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     text-align: center;
     padding: 40px 30px;
     position: relative;
-    margin: 75px 0;
+    margin: 100px 0;
     border-right: 10px;
 }
 .doawnloadBlockHome h3{
@@ -13335,7 +13344,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     display: flex;
 }
 .block-cotact-calendy{
-    background: #023356;
+    background: #dfeff4;
     padding: 48px 0 70px;
     margin: 95px 0;
 }
@@ -13350,7 +13359,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     margin-left: -40px;
 }
 .title-Direct-een{
-    color: white;
+    color: #023356;
     font-size: 17px;
     font-weight: 300;
     margin: 23px auto 30px;
@@ -13360,9 +13369,9 @@ ul .selectAll .styled-checkbox:checked + label:after {
     font-size: 27px;
 }
 .btn-kies{
-    background: #E0EFF4;
+    background: #023356;
     padding: 12px 35px;
-    color: #023356;
+    color: white;
     font-size: 15px;
     font-weight: 500;
 }
@@ -13378,6 +13387,40 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 #voorOpleidersModal{
     height: auto !important;
+}
+.content-voor-2{
+    padding-top: 150px;
+    background: #E0EFF4;
+}
+.content-detail-voor-organisation {
+    padding-right: 200px;
+}
+.content-detail-voor-organisation p{
+    color: #023356;
+    font-size: 19px;
+    margin-bottom: 25px;
+}
+.zelf-block .all-expert{
+    width: 35px;
+    height: 35px;
+    margin-top: 3px;
+}
+.zelf-block .all-expert img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.zelf-block:hover{
+    font-weight: bold !important;
+}
+.content-home2 .cardVoor {
+    margin-bottom: 170px;
+}
+.content-home2 .block-logo-parteners2 {
+    margin-bottom: 75px;
+}
+.content-home2 .contentSix {
+    margin-bottom: 60px;
 }
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -16088,7 +16131,28 @@ ul .selectAll .styled-checkbox:checked + label:after {
         padding: 20px 10px;
         margin: 0 0px !important;
     }
-
+    .boxCollections {
+        padding: 13px 5px;
+    }
+    .circleImgCollection {
+        margin-right: 0;
+    }
+    .nameListeCollection {
+        margin-left: 12px;
+    }
+    .iconeTextListCollection img {
+        width: 18px;
+        height: 18px;
+        margin-right: 5px;
+    }
+    .content-home2 .zelf-block {
+        margin-bottom: 24px;
+        justify-content: center;
+    }
+    .content-home2 .zelf-block p {
+        font-size: 16px;
+        width: fit-content !important;
+    }
 }
 
 .radius-custom {
