@@ -7,6 +7,11 @@
 $page = 'check_visibility.php';
 require($page);
 
+$user_connected = get_current_user_id();
+
+if($user_connected)
+    header('Location: /dashboard/user/');
+
 $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
 ?>
@@ -1240,7 +1245,7 @@ $degrees=[
                     *  Date and Location
                     */
                     $location = 'Virtual';
-                    $day = "<p><i class='fas fa-calendar-week'></i></p>";
+                    $day = "-";
                     $month = '';
 
                     $datas = get_field('data_locaties', $course->ID);
@@ -1248,7 +1253,7 @@ $degrees=[
                     /*
                     *  Date and Location
                     */ 
-                    $day = "<i class='fas fa-calendar-week'></i>";
+                    $day = "-";
                     $month = ' ';
                     $location = ' ';
                 
@@ -1260,7 +1265,7 @@ $degrees=[
                     else{
                         $dates = get_field('dates', $course->ID);
                         if($dates)
-                            $day = explode(' ', $dates[0]['date']);
+                            $day = explode(' ', $dates[0]['date'])[0];
                         else{
                             $data = get_field('data_locaties_xml', $course->ID);
                             if(isset($data[0]['value'])){

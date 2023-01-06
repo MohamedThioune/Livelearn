@@ -258,7 +258,7 @@
 
                     <p class="e-learningTitle"><?= $post->post_title ?></p>
                     <!-- Image -->
-                    <div class="img-fluid-course img-podacast">
+                    <div class="img-fluid-course img-podacast imgPadcastCourse">
                         <?php echo "<img src='" . $thumbnail . "' alt='preview image'>"; ?>                
                     </div>
                     <div class="sound-wave">
@@ -313,22 +313,7 @@
 
                     <!--------------------------------------- start Text description -------------------------------------- -->
                     <p class="description-assessment-test"><?php echo $short_description; ?></p>
-                    <?php
-                    if(!empty($podcasts)){
-                        echo '<p class="title-assessment-test">Episodes</p>
-                        <ul class="ulpodcast">';
-                            foreach($podcasts as $key => $podcast){
-                                $style = "";
-                                if(isset($lesson))
-                                    if($lesson == $key)
-                                        $style = "color:#F79403";
-                                echo '  
-                                <li><a style="' .$style . '" href="?topic=0&lesson=' . $key . '" class=""><span class="time"></span>' . $podcast['course_podcast_title'] . '</a></li>
-                                ';
-                            }
-                        echo '</ul>';
-                    }
-                    ?>
+
 
                     <div class="customTabs">
                         <div class="tabs">
@@ -432,7 +417,22 @@
                             Voor wie
                         </a>
                     </div>
-
+                    <?php
+                    if(!empty($podcasts)){
+                        echo '<p class="title-assessment-test">Afleveringen</p>
+                        <ul class="ulpodcast">';
+                        foreach($podcasts as $key => $podcast){
+                            $style = "";
+                            if(isset($lesson))
+                                if($lesson == $key)
+                                    $style = "color:#F79403";
+                            echo '  
+                                <li><a style="' .$style . '" href="?topic=0&lesson=' . $key . '" class=""><span class="time"></span>' . $podcast['course_podcast_title'] . '</a></li>
+                                ';
+                        }
+                        echo '</ul>';
+                    }
+                    ?>
                     <div class="CardpriceLive">
                         <?php
                         if(!empty($company))

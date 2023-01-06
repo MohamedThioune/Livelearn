@@ -348,6 +348,9 @@ if(isset($_GET['message']))
                     foreach($recommended_courses as $course){
                         //Course Type
                         $course_type = get_field('course_type', $course->ID);
+                        $location = 'Virtual';
+                        $day = "-";
+                        $month = '';
 
                         if(get_field('course_type', $course->ID) == 'Artikel'){
                             $bool = true;
@@ -357,17 +360,9 @@ if(isset($_GET['message']))
 
                             $count['limit'] = $count['limit'] + 1;
 
-                            $month = '';
-                            $location = 'Virtual';
-                            $day = '';
-
                             /*
                             * Categories
                             */
-                            $location = 'Virtual';
-                            $day = "<p><i class='fas fa-calendar-week'></i></p>";
-                            $month = '';
-
                             $category = ' ';
                             $category_id = 0;
                             $category_string = " ";
@@ -444,7 +439,7 @@ if(isset($_GET['message']))
                                         <div class="blockgroup7">
                                             <div class="iconeTextKraa">
                                                 <div class="sousiconeTextKraa">
-                                                    <?php if($category != " ") { ?>
+                                                    <?php if($category != ' ') { ?>
                                                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/kraam.png" class="icon7" alt="">
                                                         <p class="kraaText"><?php echo $category ?></p>
                                                     <?php } ?>
@@ -458,7 +453,7 @@ if(isset($_GET['message']))
                                             </div>
                                             <div class="iconeTextKraa">
                                                 <div class="sousiconeTextKraa">
-                                                    <?php if($day) { ?>
+                                                    <?php if($day != '-') { ?>
                                                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/calend.png" class="icon7" alt="">
                                                         <p class="kraaText"> <?php echo $day . " " . $month ?></p>
                                                     <?php } ?>
@@ -536,18 +531,24 @@ if(isset($_GET['message']))
                     $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
                     foreach($recommended_courses as $course){
                         $course_type = get_field('course_type', $course->ID);
+                        $data = array();
+                        $day = '-';
+                        $month = NULL;
+                        $location = 'Virtual';
 
                         if(get_field('course_type', $course->ID) == $key){
+                        
+                            $data = array();
+                            $day = '-';
+                            $month = NULL;
+                            $location = 'Virtual';
+                            
                             $bool = true;
                             $bool = visibility($course, $visibility_company);
                             if(!$bool)
                                 continue;
 
                             $count['limit'] = $count['limit'] + 1;
-                            $data = array();
-                            $day = '-';
-                            $month = '';
-                            $location = 'Virtual';
 
                             /*
                             * Categories
@@ -589,8 +590,25 @@ if(isset($_GET['message']))
                                 $datum = get_field('data_locaties_xml', $course->ID);
 
                                 if($datum)
-                                    if(isset($datum[0]['value']))
+                                    if(isset($datum[0]['value'])){
                                         $element = $datum[0]['value'];
+                                        $datas = explode('-', $element);
+                                        $data = $datas[0];
+                                        $day = explode('/', explode(' ', $data)[0])[0];
+                                        $month = explode('/', explode(' ', $data)[0])[1];
+                                        $month = $calendar[$month];
+                                        $location = $datas[2];
+                                    }
+                                else{
+                                    $data = get_field('dates', $course->ID);
+                                    if($data){
+                                        $datum = explode(' ', $data[0]['date']);
+                                        $datetime = explode('-', $datum[0]);
+                                        $day = $datetime[2];
+                                        $month = $calendar[$datetime[1]];
+                                        $location = 'Virtual';
+                                    }
+                                }
 
                                 if(!isset($element))
                                     continue;
@@ -685,7 +703,7 @@ if(isset($_GET['message']))
                                             </div>
                                             <div class="iconeTextKraa">
                                                 <div class="sousiconeTextKraa">
-                                                    <?php if($day) { ?>
+                                                    <?php if($day != '-') { ?>
                                                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/calend.png" class="icon7" alt="">
                                                         <p class="kraaText"> <?php echo $day . " " . $month ?></p>
                                                     <?php } ?>
@@ -966,9 +984,6 @@ if(isset($_GET['message']))
     </div>
 
 
-
-
-
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 
 <script>
@@ -1005,36 +1020,5 @@ if(isset($_GET['message']))
     })
 </script>
 
-<script>
-    var topics_selected = [];
-    $(".topics").click((e)=>{
-        let tags_id = e.target.value;
-        let if_exist = topics_selected.indexOf(tags_id);
-        if (if_exist > 0)
-            topics_selected.splice(if_exist, 1)
-        else 
-            topics_selected.push(tags_id);        
-    });
-
-    $("#btn-topics").click((e)=>
-    {
-        $(e.preventDefault())
-        var user_id = $("#user_id").val();
-
-        $.ajax({
-            url:"/topic-ajax-quick",
-            method:"post",
-            data:{
-                id : user_id,
-                topics : topics_selected
-            },
-            dataType:"text",
-            success: function(data){
-                console.log(data);
-                $('#autocomplete_tags').html(data);
-            }
-        });
-    })
-</script>
 
 

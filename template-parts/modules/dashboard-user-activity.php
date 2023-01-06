@@ -222,7 +222,7 @@ if(!empty($courses))
                 <?php 
                 if(!empty($enrolled_courses)){
                     $enrolled_courses = array_reverse($enrolled_courses);
-                    foreach($enrolled_courses as $key=>$course) {
+                    foreach($enrolled_courses as $key => $course) {
                         if($key == 2)
                             break;
 
@@ -254,6 +254,29 @@ if(!empty($courses))
                                 $location = $datas[2];
                             }
                         }
+
+                        /*
+                        * Categories
+                        */
+                        $category = ' ';
+                        $category_id = 0;
+                        $category_str = 0;
+                        if($category == ' '){
+                            $one_category = get_field('categories',  $course->ID);
+                            if(isset($one_category[0]['value']))
+                                $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                            else{
+                                $one_category = get_field('category_xml',  $course->ID);
+                                if(isset($one_category[0]['value']))
+                                    $category_id = intval($one_category[0]['value']);
+                            }
+
+                            if($category_str != 0)
+                                $category = (String)get_the_category_by_ID($category_str);
+                            else if($category_id != 0)
+                                $category = (String)get_the_category_by_ID($category_id);
+                        }
+
 
                         /*
                         * Price
@@ -315,18 +338,20 @@ if(!empty($courses))
                     echo "empty until now";
                 ?>
                 <br>
-                <?php
-                    if($save_enrolls)
-                        foreach (range(1, $save_enrolls) as $number){
-                            if(isset($_GET['page2']))
-                                if($_GET['page2'] == $number)
-                                    echo '<a href="?opgedane&page2=' .$number. '" style="color: #DB372C" class="textLiDashboard">'. $number .'&nbsp;</a>';
-                                else
-                                    echo '<a href="?opgedane&page2=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
-                            else
-                                echo '<a href="?opgedane&page2=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
-                        }
-                ?>
+               <div style="text-align: center; width: 100%;">
+                   <?php
+                   if($save_enrolls)
+                       foreach (range(1, $save_enrolls) as $number){
+                           if(isset($_GET['page2']))
+                               if($_GET['page2'] == $number)
+                                   echo '<a href="?opgedane&page2=' .$number. '" style="color: #DB372C" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                               else
+                                   echo '<a href="?opgedane&page2=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                           else
+                               echo '<a href="?opgedane&page2=' .$number. '" class="textLiDashboard">'. $number .'&nbsp;</a>';
+                       }
+                   ?>
+               </div>
                 
             </div>
         </div>
@@ -394,9 +419,9 @@ if(!empty($courses))
                         $strotime_date = strtotime($user->user_registered);
                         $date_registered = date("d M Y", $strotime_date);
                     ?>
-                    <p class="title">You created a account sucessfully !</p>
-                    <p class="awarded">Awarded for : <span> <?php echo $user->display_name ?> </span></p>
-                    <p class="date-awarded"><span>Date Awarded : </span><?= $date_registered ?></p>
+                    <p class="title">You created an account sucessfully !</p>
+                    <p class="awarded">Award for : <span> <?php echo $user->display_name ?> </span></p>
+                    <p class="date-awarded"><span>Date Award : </span><?= $date_registered ?></p>
                     </a>
                     <!-- <a href="" class="card">
                         <div class="block-icons">
@@ -529,6 +554,28 @@ if(!empty($courses))
                         $month = $calendar[$month];
                         $location = $datas[2];
                     }
+                }
+
+                /*
+                * Categories
+                */
+                $category = ' ';
+                $category_id = 0;
+                $category_str = 0;
+                if($category == ' '){
+                    $one_category = get_field('categories',  $course->ID);
+                    if(isset($one_category[0]['value']))
+                        $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                    else{
+                        $one_category = get_field('category_xml',  $course->ID);
+                        if(isset($one_category[0]['value']))
+                            $category_id = intval($one_category[0]['value']);
+                    }
+
+                    if($category_str != 0)
+                        $category = (String)get_the_category_by_ID($category_str);
+                    else if($category_id != 0)
+                        $category = (String)get_the_category_by_ID($category_id);
                 }
 
                 /*

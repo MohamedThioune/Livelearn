@@ -1,5 +1,24 @@
 jQuery(function($) {
 
+    // for menu large
+    $("#burger-web").click(function() {
+        $(".theme-side-menu").addClass("extensive");
+    });
+    // for menu large
+    $("#burgerCroie-web").click(function() {
+        $(".theme-side-menu").removeClass("extensive");
+    });
+
+    $("#burger-web").click(function() {
+        $("#burgerCroie-web").show();
+        $("#burger-web").hide();
+    });
+
+    $("#burgerCroie-web").click(function() {
+        $("#burgerCroie-web").hide();
+        $("#burger-web").show();
+    });
+
     //variable for offline courses date input
     $('.block2evens').each(function() {
         console.log('enting for reservations done');
@@ -14,6 +33,17 @@ jQuery(function($) {
             return false;
         });
     });
+
+    //pour mobile
+    $('.close-block').click(function (){
+        $('.blockShowApp').hide();
+        $('.navMobile').removeClass('navMobile-custom')
+        $('body').removeClass('body-custom')
+    });
+    if ($('.navMobile').hasClass('navMobile-custom')) {
+        // Ajoute la classe
+        $('body').addClass('body-custom');
+    }
 
     //header on scroll fix
     var height = ($('nav.navbar').css('height'));
@@ -285,16 +315,6 @@ jQuery(function($) {
         $(".croie").toggle();
     });
 
-    $("#burger-web").click(function() {
-        $("#burgerCroie-web").show();
-        $("#burger-web").hide();
-    });
-
-    $("#burgerCroie-web").click(function() {
-        $("#burgerCroie-web").hide();
-        $("#burger-web").show();
-    });
-
     $(".croie").click(function() {
         $(".headSousMobilePrincipale").hide();
         $(".burgerElement").show();
@@ -500,7 +520,12 @@ jQuery(function($) {
         $(".blockfunctiegericht").hide();
     });
 
-    $("#nextSkills, ##btnSkipTopics3").click(function() {
+    $("#nextSkills").click(function() {
+        $(".blockPersonal").show();
+        $(".blockSkills").hide();
+    });
+
+    $("#btnSkipTopics3").click(function() {
         $(".blockPersonal").show();
         $(".blockSkills").hide();
     });
@@ -521,16 +546,6 @@ jQuery(function($) {
     $("#btnStart3").click(function() {
         $("#step2OverviewAssessmentBackend").hide();
         $("#step3OverviewAssessmentBackend").show();
-    });
-
-
-    // for menu large
-    $("#burger-web").click(function() {
-        $(".theme-side-menu").addClass("extensive");
-    });
-    // for menu large
-    $("#burgerCroie-web").click(function() {
-        $(".theme-side-menu").removeClass("extensive");
     });
 
     // for road path
