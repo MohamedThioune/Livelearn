@@ -64,7 +64,9 @@ class Course
      $this->data_locaties_xml = $course->data_locaties_xml;
      $this->youtubeVideos = $course->youtubeVideos;
      $this->experts = $course->experts;
-     $this->visibility = $course->visibility;
+     $this->visibility = $course->visibility ?? null;
+    //  $this->visibility = get_field('company',  'user_' . $course->post_author)[0] != null ?
+    //  visibility($course, get_field('company',  'user_' . $course->post_author)[0]) : false;
      $this->podcasts = $course->podcasts;
      $this->connectedProduct = $course->connectedProduct;
      $this->author = $course->author;
@@ -72,6 +74,7 @@ class Course
      $this->likes = is_array(get_field('favorited', $course->ID)) ? count(get_field('favorited', $course->ID)) : 0 ; //?? [];
      $this->data_locaties = is_array(get_field('data_locaties', $course->ID)) ? (get_field('data_locaties', $course->ID)) : [] ;
      $this->for_who = get_field('for_who', $course->ID) ? (get_field('for_who', $course->ID)) : "" ;
+    
     }
 }
 
@@ -86,20 +89,20 @@ class Tags
   }
 }
 
-// function visibility($course, $visibility_company){
-//   $bool = true;
+//  function visibility($course, $visibility_company){
+//    $bool = true;
 
-//   $invisibility = get_field('visibility', $course->ID);
+//    $invisibility = get_field('visibility', $course->ID);
 
-//   $company = get_field('company',  'user_' . $course->post_author);
-//   if(!empty($company))
-//       $company_title = $company[0]->post_title;
+//    $company = get_field('company',  'user_' . $course->post_author);
+//    if(!empty($company))
+//        $company_title = $company[0]->post_title;
 
-//   if($invisibility && $visibility_company != $company_title )
-//       $bool = false;
+//    if($invisibility && $visibility_company != $company_title )
+//        $bool = false;
 
-//   return $bool;
-// }
+//    return $bool;
+//  }
 
 /** **************** Api Custom Endpoints **************** */
 
@@ -196,19 +199,26 @@ function allAuthors()
 }
 
 
-function related_topics_subtopics ($data)
+function related_topics_subtopics(WP_REST_Request $request)
+{
+  $id_topics = $request['meta_value'] ?? [];
+  if ($id_topics != []) 
   {
-    $id_topics = $data['id'];
-    $subtopics = get_categories( array(
-      'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-      'parent' => (int)$id_topics,
-      'hide_empty' => 0, // change to 1 to hide categores not having a single post
-  ));
-    if (!$subtopics)
-      return ['error' => 'Either the given id does not match any topic, or the topic is not linked to any subtopic'];
-   return ['subtopics' => $subtopics,"codeStatus" => 200];;
+    $all_subtopics = array();
+    foreach ($id_topics as $key => $id_topic) {
+      $subtopics = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent' => (int)$id_topic,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    )) ?? false;
+      if ($subtopics != false)
+        $all_subtopics = array_merge($all_subtopics,$subtopics);
+    }
+    return ['subtopics' => $all_subtopics, "codeStatus" => 200];
   }
+  return (['error' => 'You have to fill the values of the metadata !']);
 
+}
   function follow_multiple_meta( WP_REST_Request $request)
   {
     $user_id = $GLOBALS['user_id'];
@@ -970,21 +980,53 @@ function filter_course ($data)
   $authors = $request['authors'] ?? [];
   $company = $request['company'] ?? [];
   $date = $request['date'] ?? null;
-  $min_price = $request['min_price'] ?? null;
+  $min_price = $request['min_price'] ?? 0;
   $max_price = $request['max_price'] ?? null;
-  $global_courses = get_posts(
+  $courses = get_posts(
     array(
       'post_type' => array('course', 'post'),
       'post_status' => 'publish',
       'posts_per_page' => -1,
       'order' => 'DESC',
-      'meta_key'         => 'categories',
-      'meta_value' => ['216'])
-    );
-  return $global_courses;
-  foreach ($global_courses as $course) {
-    
-  }
+    )
+  );
+  $global_courses = array();
+  foreach ($courses as $key => $course) { 
+       $course->experts = array();
+       $experts = get_field('experts',$course->ID);
+       if(!empty($experts))
+         foreach ($experts as $key => $expert) {
+           $expert = get_user_by( 'ID', $expert );
+           $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+           array_push($course->experts, new Expert ($expert,$experts_img));
+           }
+       $author = get_user_by( 'ID', $course -> post_author  );
+       $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+       $course-> author = new Expert ($author , $author_img);
+       $course->longDescription = get_field('long_description',$course->ID);
+       $course->shortDescription = get_field('short_description',$course->ID);
+       $course->courseType = get_field('course_type',$course->ID);
+       $course->pathImage = get_field('url_image_xml',$course->ID);
+       $course->price = get_field('price',$course->ID) ?? 0;
+       $course->youtubeVideos = get_field('youtube_videos',$course->ID) ? get_field('youtube_videos',$course->ID) : []  ;
+       $course->podcasts = get_field('podcasts',$course->ID) ? get_field('podcasts',$course->ID) : [];
+       $course->visibility = get_field('visibility',$course->ID);
+       $course->connectedProduct = get_field('connected_product',$course->ID);
+       $tags = get_field('categories',$course->ID) ?? [];
+       $course->tags= array();
+       if($tags)
+         if (!empty($tags))
+           foreach ($tags as $key => $category) 
+             if(isset($category['value'])){
+               $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+               array_push($course->tags,$tag);
+             }
+           
+       $new_course = new Course($course);
+       array_push($global_courses, $new_course);
+     }
+     
+  
 }
   function filter_by_value($array,$element,$value) {
   if (isset($element, $array))
@@ -993,3 +1035,4 @@ function filter_course ($data)
     return FALSE;
   }
 
+  
