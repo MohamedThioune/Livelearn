@@ -13430,7 +13430,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     height: auto !important;
 }
 .firstSection{
-    padding-top: 150px;
+    padding-top: 120px;
     background: linear-gradient(180deg, hsla(195, 48%, 92%, 1) 50%, hsla(205, 95%, 17%, 1) 100%);
 }
 .content-detail-voor-organisation {
@@ -13493,7 +13493,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 .content-voor-2 .blockForm2 {
     width: 100%;
-    margin-top: -20px;
+    margin-top: -70px;
 }
 .content-voor-2 .btnMeerInformation {
     background: #043356 !important;
@@ -13502,7 +13502,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .content-voor-2 .img-block{
     width: 100%;
     height: 258px;
-    border-radius: 10px;
+    border-radius: 10%;
     overflow: hidden;
 }
 .content-voor-2 .img-block img{
@@ -13595,12 +13595,43 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .content-voor-teacher-2 .firstSection .blockForm2 {
     background: #E0EFF4;
     color: #043356;
+    margin-top: -40px;
 }
 .content-voor-teacher-2 .blockForm2 p {
     text-align: center;
     font-size: 20px;
     margin-bottom: 30px;
 }
+.content-voor-teacher-2 .logo-element{
+    padding: 11px 10px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.btn-kies:hover{
+    color: #FFFFFF !important;
+}
+.content-voor-2 .block-logo{
+    background: #e1eff4;
+    text-align: center;
+    padding-top: 20px;
+}
+.content-voor-teacher-2 .block-logo{
+    background: #00a89d;
+    text-align: center;
+    padding-top: 20px;
+}
+.content-voor-2 .block-logo a img{
+    height: 45px;
+    max-width: 307px;
+    margin: 0 auto;
+}
+.block-logo-parteners2 .img2 img{
+    width: 70%;
+    object-fit: cover;
+}
+
+
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
@@ -16345,6 +16376,17 @@ ul .selectAll .styled-checkbox:checked + label:after {
     .content-voor-2 .block-logo-parteners2 {
         margin-bottom: 40px;
         padding: 0;
+        justify-content: center;
+    }
+    .block-contact-teams {
+        background: #023356;
+        padding: 35px 0 60px;
+        text-align: center;
+    }
+    .content-voor-2 .block-logo a img {
+        height: 40px;
+        max-width: 307px;
+        margin: 0 auto;
     }
     .content-voor-2 .firstSection {
         padding: 60px 20px 20px;
@@ -16367,6 +16409,14 @@ ul .selectAll .styled-checkbox:checked + label:after {
     }
     .block-hr-strat {
         margin: 70px 0 50px;
+    }
+    .content-voor-teacher-2 .firstSection .content-detail-voor-organisation h1 {
+        color: #FFFFFF;
+        font-size: 22px;
+        line-height: 38px;
+    }
+    .content-voor-teacher-2 .firstSection .content-detail-voor-organisation {
+        padding-right: 0px;
     }
 
 }

@@ -1,12 +1,24 @@
 <?php /** Template Name: Voor teacher2 */ ?>
 
 <?php wp_head(); ?>
-<?php get_header(); ?>
+<meta name="description" content="Fluidify">
+<meta name='keywords' content="fluidify">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<meta property="og:image" content="<?php echo get_stylesheet_directory_uri() . '/img/logo_livelearn.png' ?>">
+
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/custom.css" />
-
+<!-- Calendly link widget begin -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 
 <div class="content-voor-2 content-voor-teacher-2">
+    <div class="block-logo">
+        <a href="/">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/livelearn-logo-blanc.png" class="" alt="">
+        </a>
+    </div>
     <section class="firstSection">
         <div class="container-fluid">
             <div class="row">
@@ -58,25 +70,25 @@
             <h2 class="title-zij">Zij gebruiken al LiveLearn</h2>
             <div class="block-logo-parteners2">
                 <div class="logo-element">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/vanSpaendockLogo.png" alt="">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/voor-partenar-1.png" alt="">
                 </div>
                 <div class="logo-element">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/orangeLogo.png" alt="">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/voor-partenar-2.png" alt="">
                 </div>
                 <div class="logo-element">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/manpowerLogo.png" alt="">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/voor-partenar-3.png" alt="">
                 </div>
                 <div class="logo-element">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/openclassroomLogo.png" alt="">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/voor-partenar-4.png" alt="">
                 </div>
-                <div class="logo-element">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/zelfstanLogo.png" alt="">
+                <div class="logo-element img2">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/voor-partenar-5.png" alt="">
                 </div>
-                <div class="logo-element">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/uwvLogo.png" alt="">
+                <div class="logo-element img2">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/voor-partenar-6.png" alt="">
                 </div>
-                <div class="logo-element">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Deloitte.png" alt="">
+                <div class="logo-element img2">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/voor-partenar-7.png" alt="">
                 </div>
             </div>
         </div>
@@ -84,7 +96,7 @@
     <section class="block-contact-teams">
         <div class="container-fluid">
             <h3>Direct iemand spreken van ons team?</h3>
-            <a href="" class="btn btn-plan">Plan een afspraak</a>
+            <button onclick="Calendly.initPopupWidget({url: 'https://calendly.com/livelearn/overleg-pilot'});return false;" class="btn btn-plan">Plan een afspraak</button>
         </div>
     </section>
 </div>
