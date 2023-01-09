@@ -36,6 +36,7 @@ $data = [
     'regular_price' => '5.00',
     'description' => 'No short description',
     'short_description' => 'No long description',
+    'virtual' => true,
     'categories' => [],
     'images' => []
 ];
@@ -155,13 +156,13 @@ else{
         $error = true;
         //$message = "Something went wrong !";
         //echo stripslashes($response);
-        echo "<center><br><a class='btn btnOnderwerp2' style='background: #E10F51; color:white' href='#'>Something went wrong, please try later !</a></center>";
+        echo "<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Something went wrong, please try later !</a></center>";
     }
     else{
         //$message = "Subscription applied succesfully !";
         $data_response = json_decode( $response, true );
         $abonnement_id = $data_response['id'];    
-        echo "<center><br><a class='btn btnOnderwerp2' style='background: #5EBA7D; color:white' href='/dashboard/user/overview/view-subscription/" . $abonnement_id . "'>Wil je het proces voortzetten ...</a></center>";
+        echo "<center><br><a class='btn btn-success' style='background : #5EBA7D; color : white' href='/dashboard/user/overview/view-subscription/" . $abonnement_id . "'>Wil je het proces voortzetten ...</a></center>";
     }
 }
 
