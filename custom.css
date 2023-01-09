@@ -4968,6 +4968,26 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     }
 }
 
+/* (Safari + MobileSafari >= 14.6) or (All MobileSafari versions) */
+@supports  (selector(:nth-child(1 of x))) or (-webkit-touch-callout: none) {
+    .btnStore img, .btnPlayGoogle img {
+        height: auto !important;
+        object-fit: contain;
+    }
+    .btnStore {
+        width: 145px !important;
+        margin-top: 10px;
+        height: 60px;
+    }
+    .btnPlayGoogle {
+        width: 187px;
+        height: 75px;
+    }
+    .second-block-binnen img {
+        height: auto;
+    }
+}
+
 .firstBlock {
     overflow-x: unset;
 }
@@ -13409,18 +13429,46 @@ ul .selectAll .styled-checkbox:checked + label:after {
 #voorOpleidersModal{
     height: auto !important;
 }
-.content-voor-2{
+.firstSection{
     padding-top: 150px;
-    background: #E0EFF4;
+    background: linear-gradient(180deg, hsla(195, 48%, 92%, 1) 50%, hsla(205, 95%, 17%, 1) 100%);
 }
 .content-detail-voor-organisation {
-    padding-right: 200px;
+    padding-right: 160px;
+}
+.content-voor-teacher-2 .firstSection .content-detail-voor-organisation {
+    padding-right: 90px;
+}
+.content-voor-teacher-2 .firstSection .content-detail-voor-organisation h1{
+    color: #FFFFFF;
+    font-size: 34px;
+    line-height: 48px;
+}
+.content-voor-teacher-2 .content-detail-voor-organisation p {
+    color: #ffffff;
+}
+.content-voor-2 h1 {
+    color: #023356;
+    font-weight: bold;
+    margin-bottom: 32px;
 }
 .content-detail-voor-organisation p{
     color: #023356;
     font-size: 19px;
     margin-bottom: 25px;
 }
+
+.form-Voor-teacher2 .input-group {
+    display: grid;
+    margin-bottom: 15px;
+}
+.form-Voor-teacher2 .input-group input {
+    padding: 9px 15px;
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 6px;
+}
+
 .zelf-block .all-expert{
     width: 35px;
     height: 35px;
@@ -13443,7 +13491,116 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .content-home2 .contentSix {
     margin-bottom: 60px;
 }
-
+.content-voor-2 .blockForm2 {
+    width: 100%;
+    margin-top: -20px;
+}
+.content-voor-2 .btnMeerInformation {
+    background: #043356 !important;
+    margin-bottom: 50px;
+}
+.content-voor-2 .img-block{
+    width: 100%;
+    height: 258px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.content-voor-2 .img-block img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.content-voor-2 .gform_wrapper.gravity-theme .gfield textarea.large {
+    height: 140px;
+}
+.content-voor-2 #gform_fields_5 .gfield input {
+    padding: 7px 20px !important;
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+.content-voor-2 #gform_fields_5 .gfield_label {
+    font-size: 14px !important;
+    margin-top: 0 !important;
+}
+.content-voor-2 .gform_footer input{
+    margin-bottom: 8px;
+    width: 100%;
+    background: #00a89d;
+    padding: 14px 10px;
+    font-weight: bold;
+    font-size: 15px;
+}
+.content-voor-2 .block-start {
+    margin: 0 20px;
+}
+.content-voor-2 .block-start p{
+    color: white;
+}
+.content-voor-2 hr {
+    margin-top: 1rem;
+    margin-bottom: 15px;
+    border: 0;
+    border-top: 1px solid rgb(40 40 40 / 10%);
+    background: white;
+    width: 48%;
+}
+.content-voor-2 .ginput_complex span {
+    margin-bottom: 0px !important;
+}
+.content-voor-2 .title-zij{
+    text-align: center;
+    color: white;
+    margin-bottom: 35px;
+    font-size: 25px;
+}
+.content-voor-2 .block-logo-parteners2{
+    margin-bottom: 0;
+}
+.block-contact-teams{
+    background: #023356;
+    padding: 80px 0;
+    text-align: center;
+}
+.block-contact-teams h3{
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 35px;
+}
+.content-voor-2 .block-contact-teams .btn-plan{
+    color: white !important;
+    background: #00a89d;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 40px;
+}
+.block-hr-strat{
+    margin: 95px 0 50px;
+}
+.content-voor-2 .block-logo-parteners2 .logo-element {
+    background: white;
+    border-radius: 7px;
+}
+.btn-omgeving{
+    background: #00A89D;
+    color: #FFFFFF;
+    width: 100%;
+    font-weight: bold;
+    padding: 11px 10px;
+    margin-top: 20px;
+}
+.btn-omgeving:hover{
+    color: #FFFFFF !important;
+}
+.content-voor-teacher-2 .firstSection .blockForm2 {
+    background: #E0EFF4;
+    color: #043356;
+}
+.content-voor-teacher-2 .blockForm2 p {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 30px;
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
@@ -16180,6 +16337,37 @@ ul .selectAll .styled-checkbox:checked + label:after {
     .GespecialiseerdText {
         display: none;
     }
+    .content-voor-2 .block-logo-parteners2 .logo-element {
+        width: 27.5%;
+        margin: 0 10px 15px;
+        height: 70px;
+    }
+    .content-voor-2 .block-logo-parteners2 {
+        margin-bottom: 40px;
+        padding: 0;
+    }
+    .content-voor-2 .firstSection {
+        padding: 60px 20px 20px;
+        background: linear-gradient(180deg, hsla(195, 48%, 92%, 1) 50%, hsla(205, 95%, 17%, 1) 100%);
+    }
+    .content-detail-voor-organisation {
+        padding-right: 0;
+    }
+    .content-voor-2 h1 {
+        font-size: 23px;
+    }
+    .content-voor-2 .btnMeerInformation {
+        margin-bottom: 40px;
+    }
+    .content-voor-2 .blockForm2 {
+        margin-top: 45px;
+    }
+    .content-voor-2 .ginput_complex span {
+        margin-bottom: 40px !important;
+    }
+    .block-hr-strat {
+        margin: 70px 0 50px;
+    }
 
 }
 
@@ -16218,7 +16406,9 @@ ul .selectAll .styled-checkbox:checked + label:after {
     margin-bottom: 0;
     padding: 7px 15px!important;
 }
-
+.content-voor-teacher-2 .firstSection{
+    background: linear-gradient(180deg, hsla(176, 100%, 33%, 1) 60%, hsla(205, 95%, 17%, 1) 100%);
+}
 
 
 @media all and (max-width: 640px) {
