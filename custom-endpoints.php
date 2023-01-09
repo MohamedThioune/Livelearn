@@ -402,9 +402,10 @@ function save_course($data)
   $course_id = $data['id']!= null && !empty (get_post($data['id'])) ? $data['id'] : false ;
   if (!empty($course_id))
   {
-    $meta_key = 'course';
+    $meta_key = 'course'; 
     $course_saved = get_user_meta($current_user, $meta_key) ?? false;
     if (!in_array($course_id, $course_saved)) {
+
       add_user_meta($current_user, $meta_key, $course_id);
       $message = 'Course saved with success';
     }
