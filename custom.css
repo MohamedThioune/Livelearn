@@ -13630,8 +13630,75 @@ ul .selectAll .styled-checkbox:checked + label:after {
     width: 70%;
     object-fit: cover;
 }
+.content-inloggen .firstSection {
+    background: #023356;
+}
+.content-inloggen h1 {
+    color: #ffffff;
+}
+.content-inloggen p {
+    color: #ffffff;
+    font-size: 18px;
+    margin-bottom: 25px;
+    line-height: 36px;
+}
+.content-inloggen .content-detail-voor-organisation {
+    padding-right: 70px;
+}
+.content-inloggen .btnStore {
+    width: 145px;
+    padding: 0;
+    margin-left: -7px;
+    margin-right: 15px;
+    margin-top: 20px;
+}
+.content-inloggen .btnPlayGoogle {
+    width: 187px;
+    padding: 0;
+    margin-left: 10px;
+    margin-right: 15px;
+    margin-top: 20px;
+}
+.content-inloggen .blockForm2 {
+    background: #E0EFF4;
+    color: #023356;
+}
+.content-inloggen .blockForm2  p {
+    color: #023356;
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 36px;
+}
 
-
+.content-inloggen .blockForm2 form p  {
+    text-align: left;
+    font-size: 16px;
+    margin-bottom: 10px;
+    line-height: 36px;
+}
+.content-inloggen .blockForm2 form p  label{
+    font-weight: 500;
+}
+.content-inloggen #loginform input {
+    padding: 2px 21px !important;
+    margin-bottom: 5px;
+}
+.content-inloggen input::placeholder {
+    color: #0a0a0a;
+}
+.content-inloggen #loginform #wp-submit {
+    background: #00a89d !important;
+    color: white !important;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 5px 10px !important;
+    margin-top: 20px;
+}
+.content-inloggen .block-logo {
+    background: #023356;
+    text-align: center;
+    padding-top: 20px;
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
@@ -16417,6 +16484,12 @@ ul .selectAll .styled-checkbox:checked + label:after {
     }
     .content-voor-teacher-2 .firstSection .content-detail-voor-organisation {
         padding-right: 0px;
+    }
+    .content-voor-2 .content-inloggen {
+        background: #023356;
+    }
+    .content-voor-2  {
+        padding-bottom: 100px;
     }
 
 }
