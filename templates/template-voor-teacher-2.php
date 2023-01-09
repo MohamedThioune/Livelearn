@@ -1,4 +1,4 @@
-<?php /** Template Name: Voor organisaties2 */ ?>
+<?php /** Template Name: Voor teacher2 */ ?>
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
@@ -6,26 +6,44 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/custom.css" />
 
 
-<div class="content-voor-2">
+<div class="content-voor-2 content-voor-teacher-2">
     <section class="firstSection">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-7">
                     <div class="content-detail-voor-organisation">
-                        <h1>Creëer een constant lerende organisatie en trek talent aan</h1>
-                        <p>Stimuleer de in- en doorstroom van jouw (flexibele) werknemers, zodat zij jouw bedrijf naar het volgende niveau kunnen tillen. </p>
+                        <h1>Word onderdeel van het grootste expert & opleidersnetwerk</h1>
+                        <p>Deel jouw kennis met de rest van de wereld.</p>
                         <a href="" class="btn btnMeerInformation">Meer informatie ?</a>
                     </div>
                     <div class="img-block">
-                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/voor-oraganisatie-2.png" class="" alt="">
+                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Informatiesessie-LiveLearn.png" class="" alt="">
                     </div>
                 </div>
                 <div class="col-md-5">
                     <div class="blockForm2">
-                        <p><b>Activeer zakelijke Leeromgeving</b> <br>het is gratis </p>
-                        <?php
-                        echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true']");
-                        ?>
+                        <p><b>Aanmelden expert of opleider</b></p>
+                        <form action="" class="form-Voor-teacher2">
+                            <div class="input-group">
+                                <input type="text" placeholder="Voornaam*">
+                            </div>
+                            <div class="input-group">
+                                <input type="text" placeholder="Achternaam*">
+                            </div>
+                            <div class="input-group">
+                                <input type="text" placeholder="Bedrijf*">
+                            </div>
+                            <div class="input-group">
+                                <input type="text" placeholder="E-mailadres*">
+                            </div>
+                            <div class="input-group">
+                                <input type="text" placeholder="Telefoonnummer*">
+                            </div>
+                            <div class="input-group">
+                                <input type="text" placeholder="Functie*">
+                            </div>
+                            <button type="submit" class="btn btn-omgeving">Creëer je omgeving</button>
+                        </form>
                     </div>
                 </div>
             </div>
