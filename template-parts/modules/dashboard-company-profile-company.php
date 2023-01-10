@@ -182,7 +182,7 @@ $telnr = get_field('telnr', 'user_' . $current_user->ID);
             });
         }
         else
-            $('#required').html("<b><small style='color: #E10F51'>*Please fill all fields</small><b><br>");
+            $('#required').html("<b><small style='color: #E10F51'>*Please fill all fields correctly</small><b><br>");
     });
 
 </script>
