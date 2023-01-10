@@ -1025,8 +1025,8 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allAuthors',
   ));
 
-  register_rest_route( 'custom/v1', '/topics/(?P<id>\d+)/subtopics', array(
-    'methods' => 'GET',
+  register_rest_route( 'custom/v1', '/topics/subtopics', array(
+    'methods' => 'POST',
     'callback' => 'related_topics_subtopics',
   ));
 
@@ -1086,7 +1086,7 @@ add_action( 'rest_api_init', function () {
   ));
 
   register_rest_route('custom/v1', '/filter/courses', array(
-    'methods' => 'GET',
+    'methods' => 'POST',
     'callback' => 'filter_course',
   ));
 
