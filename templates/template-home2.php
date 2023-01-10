@@ -1408,7 +1408,7 @@ $saved = get_user_meta($user_id, 'course');
         </div>
     </div>
 </div>
-<div class="block-cotact-calendy text-center">
+<div class="block-contact-calendy text-center">
     <div class="container-fluid">
         <div class="d-flex justify-content-center">
             <div class="img-Direct-een">
