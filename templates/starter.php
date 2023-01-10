@@ -103,24 +103,14 @@ else{
             'company'    => $bedrjifsnaam,
             'address_1'  => $factuur_address,
             'address_2'  => '',
-            'city'     => '', //place
+            'city'     => 'Netherlands', //place
             'state'    => 'DR-NL',
             'postcode' => '1011',
             'country'  => 'NL',
             'email'    => $email,
             'phone'    => $phone,
         ],
-        'shipping' => [
-            'first_name' => $first_name,
-            'last_name'  => $last_name,
-            'company'    =>  $bedrjifsnaam,
-            'address_1'  => $factuur_address,
-            'address_2'  => '',
-            'city'     => '', //place
-            'state'    => 'DR-NL',
-            'postcode' => '1011',
-            'country'  => 'NL'
-        ],
+        'shipping' => [],
         'line_items' => [
             [
                 'product_id' => $product_id,
@@ -128,12 +118,7 @@ else{
             ],
         ],
         'shipping_lines' => [],
-        'meta_data' => [
-            [
-                'key'   => '_custom_subscription_meta',
-                'value' => 'custom meta'
-            ]
-        ]
+        'meta_data' => [],
     ];
 
     // initialize curl
