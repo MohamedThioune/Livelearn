@@ -13631,7 +13631,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     object-fit: cover;
 }
 .content-inloggen .firstSection {
-    background: #023356;
+    background: #023356 !important;
 }
 .content-inloggen h1 {
     color: #ffffff;
@@ -16490,6 +16490,18 @@ ul .selectAll .styled-checkbox:checked + label:after {
     }
     .content-voor-2  {
         padding-bottom: 100px;
+    }
+    .content-voor-teacher-2 .firstSection .blockForm2 {
+        margin-top: 40px;
+    }
+    .content-voor-2 .block-contact-teams h3 {
+        font-size: 23px;
+        margin-bottom: 35px;
+        padding: 0 10px;
+        line-height: 35px;
+    }
+    .content-inloggen .content-detail-voor-organisation {
+        padding-right: 0px;
     }
 
 }
