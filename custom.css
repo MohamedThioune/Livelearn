@@ -13785,6 +13785,23 @@ ul .selectAll .styled-checkbox:checked + label:after {
     font-size: 16px;
     font-weight: bold;
 }
+.extensive span{
+    display: none;
+}
+.btnVoegToe i{
+    display: none;
+}
+.extensive .btnVoegToe i{
+    display: block;
+}
+.extensive .btnVoegToe {
+    margin-left: -11px;
+    margin-bottom: 15px;
+    color: #023356;
+}
+.extensive .elementTextDashboard a small{
+    display: none;
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
