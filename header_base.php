@@ -18,6 +18,13 @@ $url = home_url( $wp->request );
     #croieProfil {
         margin: 4px 0px -3px -6px !important;
     }
+    .navModife .activeModalHeader .modal{
+        height: auto !important;
+    }
+    #voorOpleidersModal, #OpleidingenModal{
+        height: auto;
+    }
+
     @media all and (min-width: 1330px) {
         #searchIconeTablet, #croieSearchTablet, .tabletsearch{
             display: none !important;
@@ -51,6 +58,19 @@ $url = home_url( $wp->request );
         }
         .tabletsearch{display: none !important;}   
     }
+    @media (min-width: 300px) and (max-width: 767px){
+        .navMobile-custom {
+            padding: 0px 0 8px !important;
+        }
+        .sousNav3 {
+            width: 30%;
+            display: flex;
+            justify-content: flex-end;
+            margin-top: -1px;
+        }
+    }
+
+
 </style>
 <html>
     <head>
@@ -687,10 +707,7 @@ $url = home_url( $wp->request );
                                 <p class="text-Probeer"><b>Probeer onze gratis leer-app</b></p>
                                 <p class="text-Probeer">En start meteen met jezelf te ontwikkelen</p>
                                 <div class="d-flex">
-                                    <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/ios-star.png" alt="search">
-                                    <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/ios-star.png" alt="search">
-                                    <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/ios-star.png" alt="search">
-                                    <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/ios-star.png" alt="search">
+                                    <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/Group_301.png" alt="search">
                                 </div>
                             </div>
                             <a href="" class="btn btn-Openen">Openen</a>
@@ -744,7 +761,7 @@ $url = home_url( $wp->request );
                             </div>
                             <div class="second-element-mobile">
                                 <button id="burger" class=" btn burgerElement boxSousNav3-2">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/hamburger.png" alt="burger">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/burger-2.png" alt="burger">
                                 </button>
                                 <button id="burgerCroie" class="btn croie">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/X-blanc.png" alt="close">
@@ -902,7 +919,8 @@ $url = home_url( $wp->request );
                                 <button class="btn element-navMobile  collapsed" type="button" data-toggle="collapse" data-target="#collapseNavTwo" aria-expanded="false" aria-controls="collapseNavTwo">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-building.png" alt="search">
                                     Ontwikkel team / organisatie
-                                    <span>Gratis</span>
+                                    <span>Va. €4,95</span>
+
                                 </button>
                             </h2>
                         </div>
@@ -926,7 +944,7 @@ $url = home_url( $wp->request );
                                 <button class="btn element-navMobile  collapsed" type="button" data-toggle="collapse" data-target="#collapseNavThree" aria-expanded="false" aria-controls="collapseNavThree">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/metro-fire.png" alt="search">
                                     Expert / opleider worden
-                                    <span>Va. €4,95</span>
+                                    <span>No cure no pay</span>
                                 </button>
                             </h2>
                         </div>
@@ -947,7 +965,6 @@ $url = home_url( $wp->request );
                                 <button class="btn element-navMobile collapsed" type="button" data-toggle="collapse" data-target="#collapseNavFour" aria-expanded="false" aria-controls="collapseNavFour">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/information-circle.png" alt="search">
                                     Informatie
-                                    <span>No cure no pay</span>
                                 </button>
                             </h2>
                         </div>
