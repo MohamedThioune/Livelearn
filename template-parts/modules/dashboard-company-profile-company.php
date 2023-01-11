@@ -12,6 +12,19 @@ if(!empty($company) ){
 }
 
 $telnr = get_field('telnr', 'user_' . $current_user->ID);
+
+//Team members
+$users = get_users();
+$members = array();
+foreach($users as $user){
+    $company_value = get_field('company',  'user_' . $user->ID);
+    if(!empty($company_value)){
+        $company_value_title = $company_value[0]->post_title;
+        if($company_value_title == $company_connected)
+            array_push($members, $user);
+    }
+}
+$team = count($members)
 ?>
 
 <div class="contentProfil ">
@@ -19,10 +32,11 @@ $telnr = get_field('telnr', 'user_' . $current_user->ID);
     <h1 class="titleSubscription">Abonnement</h1>
     <center><?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"?></center>
     <div class="contentFormSubscription">
+       <h4> Team : <?= $team . ' X ' . '5' ?> = <?= $team * 5 ?>.00 € </h4><br>
         <div id="required">
         
         </div>
-        <form action="" method="POST">
+        <!-- <form action="" method="POST"> -->
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="first_name">First name</label>
@@ -64,43 +78,31 @@ $telnr = get_field('telnr', 'user_' . $current_user->ID);
             </div>
 
             <div class="form-group">
-                <!-- <div class="checkSubs">
+                <div class="checkSubs">
                     <div class="form-check">
-                        <input class="form-check-input credit-card" type="radio" name="payement" id="creditcard" onclick="show2();">
+                        <input class="form-check-input credit-card" type="radio" name="payement" id="method_payment" value="credit_card" onclick="show2();" checked>
                         <label class="form-check-label" for="creditcard">
                             Credit card
                         </label>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="payement" id="invoice" onclick="show1();" checked>
+                    <!-- <div class="form-check">
+                        <input class="form-check-input" type="radio" name="payement" id="method_payment" value="invoice" onclick="show1();" >
                         <label class="form-check-label" for="invoice">
                             Invoice
                         </label>
-                    </div>
-                </div> -->
-                <div class="creditCardBlock" id="payementCard">
-                    <div class="payment_box">
-                        <div class="form-group">
-                            <label for="Card-number ">Card number <span>*</span></label>
-                            <input type="text" class="form-control" id="Card-number" placeholder="1234 1234 1234 1234" name="Card-number">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="expiration-date">Expiration date <span>*</span></label>
-                                <input type="date" class="form-control" id="email" placeholder="MM / AA" name="expiration-date">
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="Visual-cryptogram">Visual cryptogram <span>*</span></label>
-                                <input type="number" class="form-control" id="Visual-cryptogram" placeholder="CVC" name="Visual-cryptogram">
-                            </div>
-                        </div>
-                    </div>
+                    </div> -->
                 </div>
+                <div id="payementCard">
+                    <form id="payment_card">
+                        <div id="card"></div>
+                    <form>
+                </div>
+               
             </div>
 
             <div class="form-group">
                 <div class="form-check">
-                    <input class="form-check-input" value="Essayer" type="checkbox" id="is_trial">
+                    <input class="form-check-input" type="radio" id="is_trial" >
                     <label class="form-check-label" for="is_trial">
                         Trial (14 days)
                     </label>
@@ -109,7 +111,7 @@ $telnr = get_field('telnr', 'user_' . $current_user->ID);
             <div class="modal-footer">
                 <button type="button" name="starter" id="starter" class="btn btn-sendSubscrip">Start</button>
             </div>
-        </form>
+        <!-- </form> -->
         <div id="output">
     
         </div>
@@ -117,6 +119,8 @@ $telnr = get_field('telnr', 'user_' . $current_user->ID);
 
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://js.mollie.com/v1/mollie.js"></script>
+
 <script>
 
     function show1(){
@@ -139,9 +143,35 @@ $telnr = get_field('telnr', 'user_' . $current_user->ID);
 </script>
 
 <script>
+    
+    var profile_id = "pfl_isthqVmvGb";
 
-    $("#starter").click((e)=>{
+    var mollie = Mollie( profile_id, { locale: 'nl_NL', testmode: true });
+    var options = {
+        styles : {
+            base: {
+                backgroundColor: '#eee',
+                color: 'black',
+                fontSize: '10px',
+                '::placeholder' : {
+                    color: 'rgba(68, 68, 68, 0.2)',
+                }
+            },
+            valid: {
+                color: '#033256',
+            },
+            invalid: {
+                color: '#E11654',
+            }
+        }
+    };
+    var cardComponent = mollie.createComponent('card', options);
+    cardComponent.mount('#card');
+    var form = document.getElementById('payment_card');
+    var button = document.getElementById('starter');
+    button.addEventListener('click', async e => {
         $(e.preventDefault());
+        var pass = 0;
 
         var first_name = $('#first_name').val();
         var last_name = $('#last_name').val();
@@ -150,9 +180,13 @@ $telnr = get_field('telnr', 'user_' . $current_user->ID);
         var email = $('#email').val();
         var phone = $('#phone').val();
         var factuur_address = $('#factuur_address').val();
+        var method_payment = $('#method_payment').val();
+        var is_trial_state = document.getElementById('is_trial').checked;
+        var is_trial = 0;
 
-        var pass = 0;
-
+        if(is_trial_state)
+            is_trial = 1;
+        
         if(first_name && last_name && bedrjifsnaam && email && phone )
             pass = 1;
 
@@ -161,6 +195,20 @@ $telnr = get_field('telnr', 'user_' . $current_user->ID);
 
             $('#starter').hide();
 
+            e.preventDefault();
+
+            var { token, error } = await mollie.createToken();
+
+            if (error) {
+                token = 0;
+                console.log(error);
+                // Something wrong happened while creating the token. Handle this situation gracefully.
+                return error;
+                $('#required').html("<b><small style='color: #E10F51'>Something went wrong !</small><b><br>");
+            }
+            else
+                var token = 0;
+        
             $.ajax({
 
                 url:"/starter-abonnement",
@@ -172,7 +220,10 @@ $telnr = get_field('telnr', 'user_' . $current_user->ID);
                     city : city,
                     email : email,
                     phone : phone,
-                    factuur_address : factuur_address
+                    factuur_address : factuur_address,
+                    is_trial : is_trial,
+                    method_payment : method_payment,
+                    card_token : token
                 },
                 dataType:"text",
                 success: function(data){
@@ -182,7 +233,7 @@ $telnr = get_field('telnr', 'user_' . $current_user->ID);
             });
         }
         else
-            $('#required').html("<b><small style='color: #E10F51'>*Please fill all fields</small><b><br>");
+            $('#required').html("<b><small style='color: #E10F51'>*Please fill all fields correctly</small><b><br>");
     });
 
 </script>

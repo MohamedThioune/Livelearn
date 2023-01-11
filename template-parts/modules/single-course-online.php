@@ -906,15 +906,14 @@ extract($_GET);
                 <a href="" class="btn btnPlan">Planeen 15min afspraak in</a> -->
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-2">
-                        <img class="imgDanForm" src="<?php echo get_stylesheet_directory_uri(); ?>/img/daniel.png" alt="">                   
+                        <img class="imgDanForm" src="<?php echo get_stylesheet_directory_uri(); ?>/img/daniel.png" alt="">
                     </div>
                     <div class="col-md-9 mt-3">
                         <p class="h4">Direct <span class="font-weight-bolder h3">vrijblijvend</span> een 15 minuten scholingsconsult</p>
                         <div class="d-flex flex-md-row flex-column ">
                             <div class="p-2 w-md-50 w-sm-50 w-100">
                                 <div class="input-group">
-                                    <input type="text" class="form-control text-center border-0"
-                                           placeholder="E-mailadres" aria-label="E-mailadress" aria-describedby="basic-addon1">
+                                    <input type="text" class="form-control text-center border-0" placeholder="E-mailadres" aria-label="E-mailadress" aria-describedby="basic-addon1">
                                 </div>
                             </div>
                             <div class="p-2 w-md-50 w-100">
