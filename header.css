@@ -88,6 +88,7 @@
     width: fit-content;
     min-width: 585px;
     top: 63px;
+    height: auto;
 }
 #voorOpleidersModal .blockdropdownnHeader {
     justify-content: center;
@@ -111,6 +112,8 @@
     width: 70%;
     margin: 0 auto;
     top: 63px;
+    z-index: 99999;
+    height: auto;
 }
 #OpleidingenModal .blockdropdownnHeader .secondUlModal li {
     width: 27%;
@@ -360,18 +363,33 @@ form {
     }
     .second-element-mobile {
         width: 25px;
-        height: 27px;
         display: block;
     }
     #searchIcone {
-        margin-top: 2px;
+        margin-top: 0px !important;
+        width: 22px !important;
+        padding: 0 !important;
+        height: 22px;
+    }
+    #searchIcone img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
     }
     .boxSousNav3-2 {
         width: 28px;
         padding: 0 !important;
     }
     #burgerCroie {
-        margin-top: 0;
+        height: 35px;
+        width: 21px;
+        padding: 0 !important;
+        margin-top: 0px !important;
+    }
+    #burgerCroie img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
     }
     .searchInputHedear {
         margin-top: 0px !important;
@@ -389,7 +407,7 @@ form {
         overflow-y: scroll;
     }
     .body-custom .sousMenuNavMobil{
-        top: 126px !important;
+        top: 131px !important;
     }
     .elementGroupGroeien {
         margin-bottom: 20px;
@@ -412,6 +430,9 @@ form {
     .sousMenuNavMobil .accordion .element-nav-accordion:last-child {
         border-bottom: 0px solid #02335680;
         margin-bottom: 20px;
+    }
+    .navMobile-custom {
+        padding: 0px 0 8px !important;
     }
 
 }
@@ -447,7 +468,6 @@ form {
     .second-element-mobile {
         display: block;
         width: 25px;
-        height: 27px;
     }
     .second-element-mobile .croie {
         margin-top: 0;

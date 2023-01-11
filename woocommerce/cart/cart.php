@@ -18,7 +18,18 @@
 defined( 'ABSPATH' ) || exit;
 
 do_action( 'woocommerce_before_cart' ); ?>
+<style>
+    @media (min-width: 300px) and (max-width: 767px){
+        #burger {
+            margin-top: 0 !important;
+            position: relative;
+            top: -2px;
+        }
+    }
+
+</style>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+
 
 <div class="wrapper mt-4 mb-4">
     <div class="container">
