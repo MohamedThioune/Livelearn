@@ -188,7 +188,7 @@ $team = count($members)
         if(is_trial_state)
             is_trial = 1;
         
-        if(first_name  && last_name && bedrjifsnaam && email && phone )
+        if(Boolean(first_name) && Boolean(last_name) && Boolean(bedrjifsnaam) && Boolean(email) && Boolean(phone) )
             pass = 1;
 
         if(pass == 1){
