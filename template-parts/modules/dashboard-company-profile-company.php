@@ -184,10 +184,11 @@ $team = count($members)
         var is_trial_state = document.getElementById('is_trial').checked;
         var is_trial = 0;
 
+        alert(phone);
         if(is_trial_state)
             is_trial = 1;
         
-        if(first_name && last_name && bedrjifsnaam && email && phone )
+        if(first_name  && last_name && bedrjifsnaam && email && phone )
             pass = 1;
 
         if(pass == 1){
