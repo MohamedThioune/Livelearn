@@ -195,8 +195,6 @@ $team = count($members)
 
             $('#starter').hide();
 
-            e.preventDefault();
-
             var { token, error } = await mollie.createToken();
 
             if (error) {
