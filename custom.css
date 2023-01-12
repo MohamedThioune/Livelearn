@@ -13163,9 +13163,12 @@ ul .selectAll .styled-checkbox:checked + label:after {
     width: 12%;
     margin: 0 14px 15px;
     height: 70px;
-    box-shadow: 0 0 2px #707070;
+    box-shadow: 0px 0px 2px #9c9fa2 !important;
     text-align: center;
     padding-top: 4px;
+}
+.block-logo-parteners2 .logo-element:hover{
+    box-shadow: 0px 0px 4px #9c9fa2 !important;
 }
 .block-logo-parteners2 .logo-element img{
     width: 90%;
@@ -13247,7 +13250,6 @@ ul .selectAll .styled-checkbox:checked + label:after {
     top: 46px;
     left: 15px;
     font-size: 15px;
-    z-index: 99;
     color: #47a99e;
 }
 .contentFormSubscription .form-group {
@@ -13430,7 +13432,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     height: auto !important;
 }
 .firstSection{
-    padding-top: 120px;
+    padding-top: 75px;
     background: linear-gradient(180deg, hsla(195, 48%, 92%, 1) 50%, hsla(205, 95%, 17%, 1) 100%);
 }
 .content-detail-voor-organisation {
@@ -13493,7 +13495,6 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 .content-voor-2 .blockForm2 {
     width: 100%;
-    margin-top: -70px;
 }
 .content-voor-2 .btnMeerInformation {
     background: #043356 !important;
@@ -13595,7 +13596,6 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .content-voor-teacher-2 .firstSection .blockForm2 {
     background: #E0EFF4;
     color: #043356;
-    margin-top: -40px;
 }
 .content-voor-teacher-2 .blockForm2 p {
     text-align: center;
@@ -13801,6 +13801,80 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 .extensive .elementTextDashboard a small{
     display: none;
+}
+.head-content-subscription .detail{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.contentFormSubscription h2{
+    color: #000;
+    font-size: 25px;
+    margin-bottom: 35px;
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: center;
+}
+.contentFormSubscription .subtitel-detail {
+    color: #000000;
+    margin-bottom: 5px;
+    font-weight: 400;
+    font-size: 18px;
+    text-align: center;
+}
+.contentFormSubscription .product-detail {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgb(0 0 0 / 74%);
+    text-align: center;
+}
+
+.head-content-subscription .detail-cart {
+    padding: 0 30px;
+}
+.head-content-subscription .element-detail-cart{
+   display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.head-content-subscription .element-detail-cart .item{
+    color: #000000;
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 18px;
+}
+.head-content-subscription .element-detail-cart .price-subscription{
+    color: #043356;
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 18px;
+}
+.head-content-subscription .element-detail-cart .item-total{
+    color: #043356;
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 24px;
+}
+.contentFormSubscription .btn-continue{
+    background: #47a99e !important;
+    color: white !important;
+    font-size: 17px;
+    padding: 9px 20px;
+    border-radius: 8px;
+    position: relative;
+    width: fit-content;
+}
+.footer-subscription{
+    margin: 22px -35px 0;
+    padding: 32px 35px 5px;
+    border-top: 1px solid #c7c7c74f;
+}
+.gif-subscription{
+    width: 120px;
+    margin: -15px auto 25px;
+    text-align: center;
 }
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -16538,6 +16612,9 @@ ul .selectAll .styled-checkbox:checked + label:after {
     .GespecialiseerdText {
         display: none;
     }
+    .block-logo-parteners2 {
+        justify-content: center;
+    }
     .content-voor-2 .block-logo-parteners2 .logo-element {
         width: 27.5%;
         margin: 0 10px 15px;
@@ -16570,9 +16647,6 @@ ul .selectAll .styled-checkbox:checked + label:after {
     }
     .content-voor-2 .btnMeerInformation {
         margin-bottom: 40px;
-    }
-    .content-voor-2 .blockForm2 {
-        margin-top: 45px;
     }
     .content-voor-2 .ginput_complex span {
         margin-bottom: 40px !important;
@@ -16618,6 +16692,9 @@ ul .selectAll .styled-checkbox:checked + label:after {
     .title-Direct-een strong {
         font-size: 27px;
         line-height: 45px;
+    }
+    .head-content-subscription .detail-cart {
+        padding: 0 15px;
     }
 
 }
