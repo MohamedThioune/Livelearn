@@ -146,7 +146,7 @@ $team = count($members)
     
     var profile_id = "pfl_isthqVmvGb";
 
-    var mollie = Mollie( profile_id, { locale: 'nl_NL', testmode: true });
+    var mollie = Mollie( profile_id, { locale: 'nl_NL', testmode: false });
     var options = {
         styles : {
             base: {
@@ -187,15 +187,13 @@ $team = count($members)
         if(is_trial_state)
             is_trial = 1;
         
-        if(first_name && last_name && bedrjifsnaam && email && phone )
+        if(Boolean(first_name) && Boolean(last_name) && Boolean(bedrjifsnaam) && Boolean(email) && Boolean(phone) )
             pass = 1;
 
         if(pass == 1){
             $('#required').html("");
 
             $('#starter').hide();
-
-            e.preventDefault();
 
             var { token, error } = await mollie.createToken();
 
