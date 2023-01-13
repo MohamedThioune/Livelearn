@@ -122,10 +122,11 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                 <td class="textTh tdCenter"><?= $course->prijs; ?></td>
                                 <td class="textTh courseOnderwerpen">
                                     <?php
-                                    if(!empty($onderwerpen))
+                                    if(!empty($onderwerpen)){
                                         foreach($onderwerpen as $value)
                                             if($value)
-                                                echo (String)get_the_category_by_ID($value) . ','; 
+                                                echo (string)get_the_category_by_ID($value) . ',';
+                                    }//else{continue;} 
                                     ?>
                                 </td>
                                 <td class="textTh tdCenter"><?= $course->status; ?></td>
@@ -223,7 +224,8 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             datatype:'json',
             // cache:false,
             beforeSend:function(){
-                
+                $('#select_field').attr('hidden',true);
+                $('#loader').attr('hidden',false);
             },
             success:function(){
                 location.reload();
