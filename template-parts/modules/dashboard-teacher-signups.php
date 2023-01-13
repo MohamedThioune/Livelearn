@@ -138,12 +138,10 @@ $inkomsten = count($orders) * $price;
                             <p class="titleCardAcqureren">Startdatum</p>
                             <p class="numberCardAcqureren"><?php echo $agenda_start?></p>
                         </div>
-                        <?php if(isset($location)) { ?>
-                            <div class="cardAcqureren">
-                                <p class="titleCardAcqureren">Locatie</p>
-                                <p class="numberCardAcqureren"><?php echo $location; ?></p>
-                            </div>
-                        <?php } ?>
+                        <div class="cardAcqureren">
+                            <p class="titleCardAcqureren">Locatie</p>
+                            <p class="numberCardAcqureren"><?php echo $location; ?></p>
+                        </div>
                     </div>
                     <div class="tableListeView">
                         <div class="headListeCourse">
