@@ -1,4 +1,3 @@
-<?php /** Template Name: Get & Save Artikles*/?>
 
 <?php
 global $wpdb;
@@ -249,7 +248,7 @@ function RandomString(){
         
         $result_image = $wpdb->get_results($sql_image);
         $result_title = $wpdb->get_results($sql_title);
-        if(!isset($result_image[0]) || !isset($result_title[0]))
+        if(!isset($result_image[0]) && !isset($result_title[0]))
         {
           if ($article['featured_media']!= 0 || $article['feature_media']!=null) {
             
