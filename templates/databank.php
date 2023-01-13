@@ -73,6 +73,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     <table class="table table-responsive">
                         <thead>
                         <tr>
+                            <th scope="col"><input type="checkbox" id="checkAll" onclick='checkUncheck(this);'></th>
                             <th scope="col">Image</th>
                             <th scope="col">Titel</th>
                             <th scope="col">Type</th>
@@ -81,7 +82,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                             <th scope="col">Status</th>
                             <th scope="col">Author</th>
                             <th scope="col">Company</th>
-                            <th scope="col" class="tdCenter">Optie</th>
+                            <th class="tdCenter textThBorder"> <input type="button" class="optieAll btn-default" id="acceptAll" style="background:white; border: DEE2E6" value="✔️" />&nbsp;<input type="button" class="optieAll btn-default" id="declineAll" style="background:white" value="❌" /></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -114,6 +115,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                 $key = $course->id;
                             ?>
                             <tr id="<?= $key ?>" class="<?= $state ?>">
+                                <td class="textTh"><input type="checkbox" name="checkOne" id="chkBox" onclick='update(this)'></td>
                                 <td class="textTh"> <img src="<?= $image; ?>" alt="image course" width="50" height="50"></td>
                                 <td class="textTh courseDataBank" style="color:#212529;font-weight:bold"><?php echo $course->titel; ?></td>
                                 <td class="textTh tdCenter"><?= $course->type; ?></td>
@@ -189,11 +191,26 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
 <script type="text/javascript">
 
+    function checkUncheck(checkBox) {
+        get = document.getElementsByName('checkOne');
+        for(var i=0; i<get.length; i++) {
+            get[i].checked = checkBox.checked;
+        }
+    }
+
+    // function update(checkBox){
+    //     check=document.getElementById('chkBox');
+    //     call=document.getElementById('checkAll');
+    //     if(check.checked==false){
+    //         call.checked=false;
+    //     }
+    // }
+
     $('#bouddha').click((e)=>{
         $('#select_field').hide(true,2000);
         $('#loader').attr('hidden',false);
         $.ajax({
-            url:'/artikels',
+            url:'/livelearn/artikels',
             type:'POST',
             datatype:'json',
             // cache:false,
@@ -240,7 +257,42 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     location.reload();
                 }
             });
-    });        
+    });
+
+    $('.optieAll').click((e)=>{
+        var tr_element = e.target.parentElement.closest("tr");
+        let ids=[];
+        ids.push(tr_element.id);
+        var classs=[];
+        classs.push(tr_element.className);
+
+        var optie = e.target.id;
+
+        if(confirm('Are you sure you want to apply this record ?'))
+        {
+            $.ajax({
+               url: '/livelearn/optieAll',
+               type: 'POST',
+               data: {
+                   id: ids,
+                   optie: optie,
+                   class: classs,
+                },
+               error: function() {
+                  alert('Something is wrong');
+               },
+               success: function(data) {
+                    for(var i=0;i=ids.length;i++){
+                        $("#"+ids[i]).remove();
+                        console.log(data);
+                    }
+                    alert("Record applied successfully");
+                    window.location.href = "/livelearn/optieAll";
+               }
+            });
+        }
+        
+    });
 
     $('.optie').click((e)=>{
         var tr_element = e.target.parentElement.closest("tr");

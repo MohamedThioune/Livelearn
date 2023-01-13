@@ -12,8 +12,8 @@ function RandomString(){
   }
   return $randstring;
 }
-  error_reporting(E_WARNING);
-  $url="https://www.winelife.nl/";
+  // error_reporting(E_WARNING);
+  // $url="https://www.winelife.nl/";
   $websites=[
       'https://workplaceacademy.nl/',
       'https://www.ynno.com/',
@@ -181,6 +181,7 @@ function RandomString(){
     $users = get_users();
     $company_name= $api_company_name[$key];
     
+    
     foreach($users as $user) {
       $company_user = get_field('company',  'user_' . $user->ID);
       if(strtolower($company_user[0]->post_title) == strtolower($company_name) ){
@@ -204,7 +205,7 @@ function RandomString(){
     
     if(!$author_id)
     {
-      if(strtolower($key->post_title) == $websites[$i]){
+      if(strtolower($key->post_title) == $websites[$key]){
         // var_dump($websites[$i]);
         $company = $key;
         $company_id = $value->ID;      
@@ -231,13 +232,14 @@ function RandomString(){
       $author_id = wp_insert_user(wp_slash($userdata));       
     }
 
-
+    
     //Accord the author a company
     if(!is_wp_error($author_id))
       update_field('company', $company, 'user_' . $author_id);
     $span  = $url."wp-json/wp/v2/posts/";
     $artikels= json_decode(file_get_contents($span),true);
     
+    $onderwerpen='';
     foreach($artikels as $article){
       if ($article!=null) {
         $span2 = $url."wp-json/wp/v2/media/".$article['featured_media'];
@@ -290,6 +292,7 @@ function RandomString(){
               'status' => $status
             );
           }
+          // var_dump($data);
           $wpdb->insert($table,$data);
           $id_post = $wpdb->insert_id;
         }
