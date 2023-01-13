@@ -1025,8 +1025,8 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allAuthors',
   ));
 
-  register_rest_route( 'custom/v1', '/topics/(?P<id>\d+)/subtopics', array(
-    'methods' => 'GET',
+  register_rest_route( 'custom/v1', '/topics/subtopics', array(
+    'methods' => 'POST',
     'callback' => 'related_topics_subtopics',
   ));
 
@@ -1055,8 +1055,8 @@ add_action( 'rest_api_init', function () {
     'callback' => 'get_saved_course',
   ));
 
-  register_rest_route('custom/v1', '/save/course/', array(
-    'methods' => 'PUT',
+  register_rest_route('custom/v1', '/save/course/(?P<id>\d+)', array(
+    'methods' => 'GET',
     'callback' => 'save_course',
   ));
 
@@ -1075,8 +1075,8 @@ add_action( 'rest_api_init', function () {
     'callback' => 'get_count_courses_likes',
   ));
 
-  register_rest_route('custom/v1', '/like/course/', array(
-    'methods' => 'PUT',
+  register_rest_route('custom/v1', '/like/course/(?P<id>\d+)', array(
+    'methods' => 'GET',
     'callback' => 'like_course',
   ));
 
@@ -1086,7 +1086,7 @@ add_action( 'rest_api_init', function () {
   ));
 
   register_rest_route('custom/v1', '/filter/courses', array(
-    'methods' => 'GET',
+    'methods' => 'POST',
     'callback' => 'filter_course',
   ));
 

@@ -313,7 +313,7 @@ extract($_GET);
                         <br>
                    </div>
                    <?php
-                        if($agenda || $who || $results )
+                        if($agenda || $who || $results || $long_description)
                             echo '<button type="button" class="btn btn-lg lees_alles mb-5 mt-3 w-md-25 px-4 border border-3 border-dark read-more-btn">Lees alles</button>';
                         else
                             echo '<h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Leeg tot nu toe ...</b></h6>';
@@ -636,7 +636,6 @@ extract($_GET);
                                             echo '<img class="playElement" src="'.  get_stylesheet_directory_uri() . '/img/play.png" alt="">';
                                         }
                                     ?>
-                                    <a style="color:#F79403" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo $post->post_title; ?></a>
                                     <?php
                                     foreach($courses as $key => $video){
                                         $style = "";
@@ -750,7 +749,7 @@ extract($_GET);
                                                         $expert = get_users(array('include'=> $expert))[0]->data;
                                                         $company = get_field('company',  'user_' . $expert->ID);
                                                         $title = $company[0]->post_title;
-                                                        $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                                        $image = get_field('profile_img',  'user_' . $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                                         ?>
                                                         <div class="blockExpertFollown">
                                                             <div class="d-flex">
@@ -829,7 +828,7 @@ extract($_GET);
                                                     $expert = get_users(array('include'=> $value))[0]->data;
                                                     $company = get_field('company',  'user_' . $expert->ID);
                                                     $title = $company[0]->post_title;
-                                                    $image = get_field('profile_img', $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                                    $image = get_field('profile_img', 'user_' . $expert->ID) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                                 ?>
                                                     <a href="user-overview?id=<?php echo $expert->ID; ?>" class="swiper-slide">
                                                         <div class="my-2 d-flex flex-column mx-md-0 mx-1">
