@@ -190,6 +190,14 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 
 <script type="text/javascript">
+    function uncheckAll() {
+        let checkboxes = document.querySelectorAll('input[type=checkbox]');
+        for (let i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = false;
+        }
+    }
+
+    window.onload = uncheckAll;
 
     function checkUncheck(checkBox) {
         get = document.getElementsByName('checkOne');
@@ -281,7 +289,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-               url: '/livelearn/optieAll',
+               url: '/optieAll',
                type: 'POST',
                data: {
                    id: ids,
@@ -315,7 +323,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-               url: '/livelearn/optie-bank',
+               url: '/optie-bank',
                type: 'POST',
                data: {
                    id: ids,
