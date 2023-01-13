@@ -21,6 +21,7 @@
                     <p class="nameTextProfil"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . '' . $user->last_name; else echo $user->display_name; ?></p>
                     <p class="oprichter"><?php echo $biographical_info ?></p>
                 </div>
+                <!-- <div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quo assumenda laborum quod.</div> -->
                 <!--
                     <div class="globalCertificationBlock">
                         <div class="BlockCertifiation">
