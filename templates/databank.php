@@ -235,7 +235,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 // window.location.href = "/livelearn/artikels";
             },
             error:function(error){
-                alert("error"+error);
+                location.reload();
             }
         }); 
     });
