@@ -54,8 +54,8 @@
             if ($class[$key] == 'missing')
                 null;
             else if ($class[$key] == 'present' )
-                var_dump($artikel->course_id);
-                // wp_trash_post($artikel->course_id);
+                // var_dump($artikel->course_id);
+                wp_trash_post($artikel->course_id);
         }
         $data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
 

@@ -115,7 +115,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                 $key = $course->id;
                             ?>
                             <tr id="<?= $key ?>" class="<?= $state ?>">
-                                <td class="textTh"><input type="checkbox" name="checkOne" id="chkBox" onclick='update(this)'></td>
+                                <td class="textTh"><input type="checkbox" class="checkOne" name="checkOne" id="chkBox" value="<?= $course->id ?>"></td>
                                 <td class="textTh"> <img src="<?= $image; ?>" alt="image course" width="50" height="50"></td>
                                 <td class="textTh courseDataBank" style="color:#212529;font-weight:bold"><?php echo $course->titel; ?></td>
                                 <td class="textTh tdCenter"><?= $course->type; ?></td>
@@ -210,7 +210,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         $('#select_field').hide(true,2000);
         $('#loader').attr('hidden',false);
         $.ajax({
-            url:'/livelearn/artikels',
+            url:'/artikels',
             type:'POST',
             datatype:'json',
             // cache:false,
@@ -258,13 +258,23 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 }
             });
     });
+    var ids=[];
+    $(".checkOne").click((e)=>{
+        let tags_id = e.target.value;
+        let if_exist = ids.indexOf(tags_id);
+        if (if_exist > 0)
+            ids.splice(if_exist, 1)
+        else 
+            ids.push(tags_id);
+        console.log(ids);
+    });
 
     $('.optieAll').click((e)=>{
         var tr_element = e.target.parentElement.closest("tr");
-        let ids=[];
-        ids.push(tr_element.id);
-        var classs=[];
-        classs.push(tr_element.className);
+        var get = document.getElementsByName('checkOne');
+        var classs = tr_element.className;
+
+        console.log(ids);
 
         var optie = e.target.id;
 
@@ -276,18 +286,19 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                data: {
                    id: ids,
                    optie: optie,
-                   class: classs,
+                   class:classs
                 },
                error: function() {
                   alert('Something is wrong');
                },
                success: function(data) {
-                    for(var i=0;i=ids.length;i++){
+                    for(var i=0;i<ids.length;i++){
                         $("#"+ids[i]).remove();
-                        console.log(data);
+                        console.log(ids[i]);
                     }
                     alert("Record applied successfully");
-                    window.location.href = "/livelearn/optieAll";
+                    location.reload();
+                    // window.location.href = "/livelearn/optieAll";
                }
             });
         }
@@ -304,7 +315,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-               url: '/optie-bank',
+               url: '/livelearn/optie-bank',
                type: 'POST',
                data: {
                    id: ids,
