@@ -193,7 +193,7 @@ $team = count($members)
         if(pass == 1){
             $('#required').html("");
 
-            $('#starter').hide();
+            //$('#starter').hide();
 
             var { token, error } = await mollie.createToken();
 
