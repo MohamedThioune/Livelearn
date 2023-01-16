@@ -158,10 +158,10 @@ $team = count($members)
                 }
             },
             valid: {
-                color: '#033256',
+                color: '#45B0A1',
             },
             invalid: {
-                color: '#E11654',
+                color: '#023356',
             }
         }
     };
@@ -205,7 +205,7 @@ $team = count($members)
                 return error;
             }
             alert(token);
-            
+
             $.ajax({
 
                 url:"/starter-abonnement",
