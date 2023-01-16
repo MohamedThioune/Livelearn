@@ -1,3 +1,4 @@
+<?php /** Template Name: Get & Save Artikles*/?>
 
 <?php
 global $wpdb;
@@ -180,7 +181,6 @@ function RandomString(){
     $users = get_users();
     $company_name= $api_company_name[$key];
     
-    
     foreach($users as $user) {
       $company_user = get_field('company',  'user_' . $user->ID);
       if(strtolower($company_user[0]->post_title) == strtolower($company_name) ){
@@ -204,12 +204,12 @@ function RandomString(){
     
     if(!$author_id)
     {
-      if(strtolower($key->post_title) == $websites[$key]){
+      if(strtolower($key->post_title) == $websites[$i]){
         // var_dump($websites[$i]);
         $company = $key;
         $company_id = $value->ID;      
       }
- 
+
       $login = RandomString();
       $password = RandomString();
       $random = RandomString();
@@ -248,7 +248,7 @@ function RandomString(){
         
         $result_image = $wpdb->get_results($sql_image);
         $result_title = $wpdb->get_results($sql_title);
-        if(!isset($result_image[0]) && !isset($result_title[0]))
+        if(!isset($result_image[0]) || !isset($result_title[0]))
         {
           if ($article['featured_media']!= 0 || $article['feature_media']!=null) {
             
