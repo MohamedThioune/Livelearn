@@ -204,7 +204,8 @@ $team = count($members)
                 $('#required').html("<b><small style='color: #E10F51'>Something went wrong !</small><b><br>");
                 return error;
             }
-        
+            alert(token);
+            
             $.ajax({
 
                 url:"/starter-abonnement",
