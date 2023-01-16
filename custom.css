@@ -13876,6 +13876,32 @@ ul .selectAll .styled-checkbox:checked + label:after {
     margin: -15px auto 25px;
     text-align: center;
 }
+#new_date input{
+    cursor: pointer;
+    margin-top: 13px;
+    margin-bottom: 6px;
+    width: 152px;
+    margin-right: 15px;
+}
+#new_date input:last-child{
+    margin-right: 0px;
+}
+.input-group-course .btn-more-date {
+    background: none;
+    padding: 0 !important;
+    margin-top: 15px;
+    font-weight: 500;
+    color: #023356 !important;
+}
+.input-group-course .btn-remove-date {
+    background: none;
+    padding: 0 !important;
+    margin-top: 10px;
+    font-weight: 500;
+    color: red !important;
+    width: fit-content;
+    font-size: 13px !important;
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
