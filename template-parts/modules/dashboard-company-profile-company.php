@@ -201,11 +201,9 @@ $team = count($members)
                 token = 0;
                 console.log(error);
                 // Something wrong happened while creating the token. Handle this situation gracefully.
-                return error;
                 $('#required').html("<b><small style='color: #E10F51'>Something went wrong !</small><b><br>");
+                return error;
             }
-            else
-                var token = 0;
         
             $.ajax({
 
