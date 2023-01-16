@@ -163,6 +163,8 @@ else{
         $httpCode = curl_getinfo($chpay , CURLINFO_HTTP_CODE);
         $response_pay = curl_exec($chpay);
         $data_response_pay = json_decode( $response_pay, true );
+        $response_pay = curl_exec($chpay);
+        var_dump( $response_pay );
         if(isset($data_response_pay['id']))
             $pass_payment = true;            
     }
