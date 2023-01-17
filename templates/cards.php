@@ -13,7 +13,7 @@ $form = '
         <input type="hidden" value="' . $phone . '" name="phone" >
         <input type="hidden" value="' . $factuur_address . '" name="factuur_address" >
         <input type="hidden" value="' . $is_trial . '" name="is_trial" >
-        <center><br><button type="submit" class="btn btn-sendSubscrip" >Voer de creditcardgegevens in </button></center>"
+        <center><br><button type="submit" class="btn btn-sendSubscrip" >Voer de creditcardgegevens in </button></center>
     </form>
 ';
 
