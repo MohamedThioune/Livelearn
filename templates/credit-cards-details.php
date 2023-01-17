@@ -40,7 +40,7 @@
 <script> 
     var profile_id = "pfl_8SUjU2jSrq";
 
-    var mollie = Mollie( profile_id, { locale: 'nl_NL', testmode: false });
+    var mollie = Mollie( profile_id, { locale: 'nl_NL', testmode: true });
     var options = {
         styles : {
             base: {
