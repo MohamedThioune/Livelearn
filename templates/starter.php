@@ -164,10 +164,10 @@ else{
         $response_pay = curl_exec($chpay);
         $data_response_pay = json_decode( $response_pay, true );
         $response_pay = curl_exec($chpay);
-        var_dump( $response_pay );
+        // var_dump( $response_pay );
         if(isset($data_response_pay['id']))
             $pass_payment = true;      
-         // close curl
+        // close curl
         curl_close( $chpay );      
     }
     else
