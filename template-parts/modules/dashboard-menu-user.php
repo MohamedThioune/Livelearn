@@ -99,7 +99,8 @@ style="overflow-x: hidden !important;">
         <div class="d-flex align-content-center">
             <p class="textOnder">ONDERWERPEN </p>
             <button type="button" class="btn btnVoegToe" data-toggle="modal" data-target="#exampleModal">
-                Voeg toe
+                <span>Voeg toe</span>
+                <i class="fa fa-plus" aria-hidden="true"></i>
             </button>
         </div>
         <li class="elementTextDashboard">
@@ -136,7 +137,8 @@ style="overflow-x: hidden !important;">
         <div class="d-flex align-content-center">
             <p class="textOnder">EXPERTS / OPLEIDERS</p>
             <button type="button" class="btn btnVoegToe" data-toggle="modal" data-target="#modalExpert">
-                Voeg toe
+              <span>Voeg toe</span>
+                <i class="fa fa-plus" aria-hidden="true"></i>
             </button>
         </div>
         <li class="elementTextDashboard">    
