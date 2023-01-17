@@ -137,7 +137,7 @@ else{
         $amount_pay = 5 * $team;
         $amount_pay = number_format($amount_pay, 2, '.', ',');
         $endpoint_pay = "https://api.mollie.com/v2/payments";
-        $api_key = "Bearer live_WE2HNrAfs8Atd5fjAjawqx5dTdcuhy";
+        $api_key = "Bearer test_c5nwVnj42cyscR8TkKp3CWJFd5pHk3";
         $data_payment = [
             'method' => 'creditcard',
             'amount' => [
