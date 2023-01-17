@@ -78,6 +78,8 @@
 
         if( Boolean(first_name) && Boolean(last_name) && Boolean(bedrjifsnaam) && Boolean(email) && Boolean(phone) )
             pass = 1;
+        
+        $('#starter').hide();
 
         // if(pass == 1){
         //     $('#required').html("");
