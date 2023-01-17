@@ -167,7 +167,7 @@ $team = count($members)
         if(pass == 1){
             $('#required').html("");
 
-            //$('#starter').hide();
+            $('#starter').hide();
 
             if(method_payment == 'credit_card'){
                 $.ajax({

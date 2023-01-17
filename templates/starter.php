@@ -166,13 +166,12 @@ else{
         $response_pay = curl_exec($chpay);
         var_dump( $response_pay );
         if(isset($data_response_pay['id']))
-            $pass_payment = true;            
+            $pass_payment = true;      
+         // close curl
+        curl_close( $chpay );      
     }
     else
         $pass_payment = true;
-
-    // close curl
-    curl_close( $chpay );
     /*
     ** 
     */
