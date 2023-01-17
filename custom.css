@@ -4968,6 +4968,26 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     }
 }
 
+/* (Safari + MobileSafari >= 14.6) or (All MobileSafari versions) */
+@supports  (selector(:nth-child(1 of x))) or (-webkit-touch-callout: none) {
+    .btnStore img, .btnPlayGoogle img {
+        height: auto !important;
+        object-fit: contain;
+    }
+    .btnStore {
+        width: 145px !important;
+        margin-top: 10px;
+        height: 60px;
+    }
+    .btnPlayGoogle {
+        width: 187px;
+        height: 75px;
+    }
+    .second-block-binnen img {
+        height: auto;
+    }
+}
+
 .firstBlock {
     overflow-x: unset;
 }
@@ -7972,6 +7992,12 @@ tbody {
             width: 30px !important;
             height: 30px !important;
         }
+        .block-cotact-calendy img{
+            height: intrinsic !important;
+        }
+        .block-cotact-calendy #secondImg-direct-contact {
+            height: 50px;
+        }
     }
 }
 
@@ -10493,6 +10519,7 @@ select {
     font-size: 15px;
     margin-bottom: 0;
     font-weight: 400;
+    display: block;
 }
 
 #tabs-content .btnactive {
@@ -12925,14 +12952,14 @@ ul .selectAll .styled-checkbox:checked + label:after {
     width: 670px;
     margin: 15px auto 30px;
     font-size: 17px;
-    color: #707070;
+    color: #043356;
     font-weight: 400;
 }
 .content-home2 .wordDeBestText2 {
     font-size: 36px;
     line-height: 42px;
     margin: 0px auto 10px;
-    font-weight: 500;
+    font-weight: bold;
     max-width: 560px;
 }
 .content-home2 .voorBlock form {
@@ -12947,10 +12974,19 @@ ul .selectAll .styled-checkbox:checked + label:after {
     padding: 12px 5px 13px 10px !important;
     box-shadow: none;
     min-width: 70px;
-    border-right: 2px solid #101010;
     border-radius: 0;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
+}
+.content-home2 form:before {
+    content: "";
+    width: 2px;
+    height: 40px;
+    background-color: #b4b4b4;
+    left: 79px;
+    position: absolute;
+    display: block;
+    top: 6px;
 }
 .content-home2 form .selectSearchHome:focus-visible {
     outline: 0px !important;
@@ -13040,11 +13076,14 @@ ul .selectAll .styled-checkbox:checked + label:after {
     color: #023356;
     margin-bottom: 0;
 }
+.zelf-block p:hover{
+    font-weight: bold;
+}
 .titleblockOnze{
     text-align: center;
     color: #023356;
     font-size: 28px;
-    font-weight: 500;
+    font-weight: bold;
     width: 440px;
     margin: 0 auto;
 }
@@ -13061,7 +13100,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .first-block-binnen h3{
     color: #023356;
     font-size: 30px;
-    font-weight: 500;
+    font-weight: bold;
     margin-bottom: 18px;
 }
 .first-block-binnen h3 span{
@@ -13143,11 +13182,11 @@ ul .selectAll .styled-checkbox:checked + label:after {
     text-align: center;
     padding: 40px 30px;
     position: relative;
-    margin: 75px 0;
+    margin: 100px 0;
     border-right: 10px;
 }
 .doawnloadBlockHome h3{
-    font-weight: 500;
+    font-weight: bold;
     font-size: 27px;
     margin: 0 auto 10px;
     width: 626px;
@@ -13334,22 +13373,33 @@ ul .selectAll .styled-checkbox:checked + label:after {
     display: flex;
 }
 .block-cotact-calendy{
-    background: #023356;
+    background: #dfeff4;
     padding: 48px 0 70px;
     margin: 95px 0;
 }
 .block-cotact-calendy #firstImg-direct-contact{
     width: 120px;
-    height: fit-content;
+    height: 82px;
 }
+.block-cotact-calendy #firstImg-direct-contact img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
 .block-cotact-calendy #secondImg-direct-contact{
     width: 50px;
-    height: fit-content;
     margin-top: 40px;
     margin-left: -40px;
+    height: 50px;
+}
+.block-cotact-calendy #secondImg-direct-contact img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 .title-Direct-een{
-    color: white;
+    color: #023356;
     font-size: 17px;
     font-weight: 300;
     margin: 23px auto 30px;
@@ -13357,13 +13407,297 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 .title-Direct-een strong{
     font-size: 27px;
+    font-weight: bold;
 }
 .btn-kies{
-    background: #E0EFF4;
+    background: #023356;
     padding: 12px 35px;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+}
+.woocommerce-message::before {
+    color: #00a89d !important;
+}
+.table-responsive {
+    display: table !important;
+    width: 100%;
+}
+.navModife .activeModalHeader .modal{
+    height: auto !important;
+}
+#voorOpleidersModal{
+    height: auto !important;
+}
+.firstSection{
+    padding-top: 120px;
+    background: linear-gradient(180deg, hsla(195, 48%, 92%, 1) 50%, hsla(205, 95%, 17%, 1) 100%);
+}
+.content-detail-voor-organisation {
+    padding-right: 160px;
+}
+.content-voor-teacher-2 .firstSection .content-detail-voor-organisation {
+    padding-right: 90px;
+}
+.content-voor-teacher-2 .firstSection .content-detail-voor-organisation h1{
+    color: #FFFFFF;
+    font-size: 34px;
+    line-height: 48px;
+}
+.content-voor-teacher-2 .content-detail-voor-organisation p {
+    color: #ffffff;
+}
+.content-voor-2 h1 {
     color: #023356;
+    font-weight: bold;
+    margin-bottom: 32px;
+}
+.content-detail-voor-organisation p{
+    color: #023356;
+    font-size: 19px;
+    margin-bottom: 25px;
+}
+
+.form-Voor-teacher2 .input-group {
+    display: grid;
+    margin-bottom: 15px;
+}
+.form-Voor-teacher2 .input-group input {
+    padding: 9px 15px;
+    border-radius: 10px;
+    border: 2px solid white;
+    margin-bottom: 6px;
+}
+
+.zelf-block .all-expert{
+    width: 35px;
+    height: 35px;
+    margin-top: 3px;
+}
+.zelf-block .all-expert img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.zelf-block:hover{
+    font-weight: bold !important;
+}
+.content-home2 .cardVoor {
+    margin-bottom: 170px;
+}
+.content-home2 .block-logo-parteners2 {
+    margin-bottom: 75px;
+}
+.content-home2 .contentSix {
+    margin-bottom: 60px;
+}
+.content-voor-2 .blockForm2 {
+    width: 100%;
+    margin-top: -70px;
+}
+.content-voor-2 .btnMeerInformation {
+    background: #043356 !important;
+    margin-bottom: 50px;
+}
+.content-voor-2 .img-block{
+    width: 100%;
+    height: 258px;
+    border-radius: 10%;
+    overflow: hidden;
+}
+.content-voor-2 .img-block img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.content-voor-2 .gform_wrapper.gravity-theme .gfield textarea.large {
+    height: 140px;
+}
+.content-voor-2 #gform_fields_5 .gfield input {
+    padding: 7px 20px !important;
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+.content-voor-2 #gform_fields_5 .gfield_label {
+    font-size: 14px !important;
+    margin-top: 0 !important;
+}
+.content-voor-2 .gform_footer input{
+    margin-bottom: 8px;
+    width: 100%;
+    background: #00a89d;
+    padding: 14px 10px;
+    font-weight: bold;
+    font-size: 15px;
+}
+.content-voor-2 .block-start {
+    margin: 0 20px;
+}
+.content-voor-2 .block-start p{
+    color: white;
+}
+.content-voor-2 hr {
+    margin-top: 1rem;
+    margin-bottom: 15px;
+    border: 0;
+    border-top: 1px solid rgb(40 40 40 / 10%);
+    background: white;
+    width: 48%;
+}
+.content-voor-2 .ginput_complex span {
+    margin-bottom: 0px !important;
+}
+.content-voor-2 .title-zij{
+    text-align: center;
+    color: white;
+    margin-bottom: 35px;
+    font-size: 25px;
+}
+.content-voor-2 .block-logo-parteners2{
+    margin-bottom: 0;
+}
+.block-contact-teams{
+    background: #023356;
+    padding: 80px 0;
+    text-align: center;
+}
+.block-contact-teams h3{
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 35px;
+}
+.content-voor-2 .block-contact-teams .btn-plan{
+    color: white !important;
+    background: #00a89d;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 40px;
+}
+.block-hr-strat{
+    margin: 95px 0 50px;
+}
+.content-voor-2 .block-logo-parteners2 .logo-element {
+    background: white;
+    border-radius: 7px;
+}
+.btn-omgeving{
+    background: #00A89D;
+    color: #FFFFFF;
+    width: 100%;
+    font-weight: bold;
+    padding: 11px 10px;
+    margin-top: 20px;
+}
+.btn-omgeving:hover{
+    color: #FFFFFF !important;
+}
+.content-voor-teacher-2 .firstSection .blockForm2 {
+    background: #E0EFF4;
+    color: #043356;
+    margin-top: -40px;
+}
+.content-voor-teacher-2 .blockForm2 p {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+.content-voor-teacher-2 .logo-element{
+    padding: 11px 10px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.btn-kies:hover{
+    color: #FFFFFF !important;
+}
+.content-voor-2 .block-logo{
+    background: #e1eff4;
+    text-align: center;
+    padding-top: 20px;
+}
+.content-voor-teacher-2 .block-logo{
+    background: #00a89d;
+    text-align: center;
+    padding-top: 20px;
+}
+.content-voor-2 .block-logo a img{
+    height: 45px;
+    max-width: 307px;
+    margin: 0 auto;
+}
+.block-logo-parteners2 .img2 img{
+    width: 70%;
+    object-fit: cover;
+}
+.content-inloggen .firstSection {
+    background: #023356;
+}
+.content-inloggen h1 {
+    color: #ffffff;
+}
+.content-inloggen p {
+    color: #ffffff;
+    font-size: 18px;
+    margin-bottom: 25px;
+    line-height: 36px;
+}
+.content-inloggen .content-detail-voor-organisation {
+    padding-right: 70px;
+}
+.content-inloggen .btnStore {
+    width: 145px;
+    padding: 0;
+    margin-left: -7px;
+    margin-right: 15px;
+    margin-top: 20px;
+}
+.content-inloggen .btnPlayGoogle {
+    width: 187px;
+    padding: 0;
+    margin-left: 10px;
+    margin-right: 15px;
+    margin-top: 20px;
+}
+.content-inloggen .blockForm2 {
+    background: #E0EFF4;
+    color: #023356;
+}
+.content-inloggen .blockForm2  p {
+    color: #023356;
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 36px;
+}
+
+.content-inloggen .blockForm2 form p  {
+    text-align: left;
+    font-size: 16px;
+    margin-bottom: 10px;
+    line-height: 36px;
+}
+.content-inloggen .blockForm2 form p  label{
+    font-weight: 500;
+}
+.content-inloggen #loginform input {
+    padding: 2px 21px !important;
+    margin-bottom: 5px;
+}
+.content-inloggen input::placeholder {
+    color: #0a0a0a;
+}
+.content-inloggen #loginform #wp-submit {
+    background: #00a89d !important;
+    color: white !important;
     font-size: 15px;
     font-weight: 500;
+    padding: 5px 10px !important;
+    margin-top: 20px;
+}
+.content-inloggen .block-logo {
+    background: #023356;
+    text-align: center;
+    padding-top: 20px;
 }
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -14852,7 +15186,6 @@ ul .selectAll .styled-checkbox:checked + label:after {
     }
     .headCollections p {
         font-size: 16px;
-        width: 100%;
     }
     .btn-collection {
         color: #007dda;
@@ -15915,19 +16248,16 @@ ul .selectAll .styled-checkbox:checked + label:after {
         margin-top: 40px;
     }
     #burger {
-        margin-top: 2px;
+        height: 27px;
+        width: 30px;
     }
-    .second-element-mobile {
-        width: 28px !important;
-    }
-    #searchIcone {
-        margin-top: 0px !important;
-        width: 22px;
-    }
-    #searchIcone img{
+    .boxSousNav3-2 img {
         width: 100%;
         height: 100%;
         object-fit: contain;
+    }
+    .second-element-mobile {
+        width: 28px !important;
     }
     .croie {
         width: 24px;
@@ -15939,6 +16269,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     }
     .sousMenuNavMobil {
         padding-top: 30px !important;
+        z-index: 99 !important;
     }
     .block-sous-nav-mobile {
         border-bottom: 1px solid #02335680;
@@ -15970,12 +16301,13 @@ ul .selectAll .styled-checkbox:checked + label:after {
         width: 37px;
         height: 37px;
         background: white;
-        padding: 5px;
+        padding: 4px;
         border-radius: 10px;
+        margin-right: 5px;
     }
     .blockShowApp .close-block{
         height: fit-content;
-        margin-right: 13px;
+        margin-right: 6px;
         padding: 0;
         color: white;
         font-size: 22px;
@@ -15993,7 +16325,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
         padding: 0 !important;
     }
     .star-app-img{
-        width: 13px;
+        width: 50px;
         margin: 5px 3px 0 0;
     }
     .elements-blockShowApp{
@@ -16033,6 +16365,10 @@ ul .selectAll .styled-checkbox:checked + label:after {
         margin-bottom: 4px;
         font-weight: 500;
         color: #013255;
+        display: flex;
+        flex-wrap: wrap;
+        line-height: 30px;
+        align-items: center;
     }
     .sousMenuNavMobil .collapse ul{
         margin-left: 48px;
@@ -16047,14 +16383,16 @@ ul .selectAll .styled-checkbox:checked + label:after {
         padding: 0px 0px 14px;
     }
     .element-nav-accordion .element-navMobile span {
-        font-size: 13px;
+        font-size: 12px;
         background: white;
-        padding: 5px 15px;
+        padding: 5px 11px;
         border-radius: 10px;
-        margin-left: 20px;
+        margin-left: 15px;
         font-weight: 400;
         position: relative;
-        top: -1px;
+        height: fit-content;
+        line-height: initial;
+        margin-top: 4px;
     }
     .woocommerce-checkout .wrapper-woocommerce {
         width: 90%;
@@ -16071,6 +16409,87 @@ ul .selectAll .styled-checkbox:checked + label:after {
     .cart-checkOut .container {
         padding: 20px 10px;
         margin: 0 0px !important;
+    }
+    .boxCollections {
+        padding: 13px 5px;
+    }
+    .circleImgCollection {
+        margin-right: 0;
+    }
+    .nameListeCollection {
+        margin-left: 12px;
+    }
+    .iconeTextListCollection img {
+        width: 18px;
+        height: 18px;
+        margin-right: 5px;
+    }
+    .content-home2 .zelf-block {
+        margin-bottom: 24px;
+        justify-content: center;
+    }
+    .content-home2 .zelf-block p {
+        font-size: 16px;
+        width: fit-content !important;
+    }
+    .GespecialiseerdText {
+        display: none;
+    }
+    .content-voor-2 .block-logo-parteners2 .logo-element {
+        width: 27.5%;
+        margin: 0 10px 15px;
+        height: 70px;
+    }
+    .content-voor-2 .block-logo-parteners2 {
+        margin-bottom: 40px;
+        padding: 0;
+        justify-content: center;
+    }
+    .block-contact-teams {
+        background: #023356;
+        padding: 35px 0 60px;
+        text-align: center;
+    }
+    .content-voor-2 .block-logo a img {
+        height: 40px;
+        max-width: 307px;
+        margin: 0 auto;
+    }
+    .content-voor-2 .firstSection {
+        padding: 60px 20px 20px;
+        background: linear-gradient(180deg, hsla(195, 48%, 92%, 1) 50%, hsla(205, 95%, 17%, 1) 100%);
+    }
+    .content-detail-voor-organisation {
+        padding-right: 0;
+    }
+    .content-voor-2 h1 {
+        font-size: 23px;
+    }
+    .content-voor-2 .btnMeerInformation {
+        margin-bottom: 40px;
+    }
+    .content-voor-2 .blockForm2 {
+        margin-top: 45px;
+    }
+    .content-voor-2 .ginput_complex span {
+        margin-bottom: 40px !important;
+    }
+    .block-hr-strat {
+        margin: 70px 0 50px;
+    }
+    .content-voor-teacher-2 .firstSection .content-detail-voor-organisation h1 {
+        color: #FFFFFF;
+        font-size: 22px;
+        line-height: 38px;
+    }
+    .content-voor-teacher-2 .firstSection .content-detail-voor-organisation {
+        padding-right: 0px;
+    }
+    .content-voor-2 .content-inloggen {
+        background: #023356;
+    }
+    .content-voor-2  {
+        padding-bottom: 100px;
     }
 
 }
@@ -16110,7 +16529,9 @@ ul .selectAll .styled-checkbox:checked + label:after {
     margin-bottom: 0;
     padding: 7px 15px!important;
 }
-
+.content-voor-teacher-2 .firstSection{
+    background: linear-gradient(180deg, hsla(176, 100%, 33%, 1) 60%, hsla(205, 95%, 17%, 1) 100%);
+}
 
 
 @media all and (max-width: 640px) {
@@ -16133,6 +16554,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
         border-radius: 100%;
         border: 1px solid #0000002b;
         padding: 3px;
+        overflow: hidden;
     }
     .blockAuthorMobile .imgAuthorBlock img {
         width: 100%;
@@ -16153,6 +16575,9 @@ ul .selectAll .styled-checkbox:checked + label:after {
         padding: 5px 20px;
         height: fit-content;
         border-radius: 5px;
+    }
+    .navMobile-custom {
+        padding: 0px 0 8px !important;
     }
 }
 
