@@ -80,24 +80,18 @@ $team = count($members)
             <div class="form-group">
                 <div class="checkSubs">
                     <div class="form-check">
-                        <input class="form-check-input credit-card" type="radio" name="payement" id="method_payment" value="credit_card" onclick="show2();" checked>
+                        <input class="form-check-input credit-card" type="radio" name="payement" id="method_payment" value="credit_card" >
                         <label class="form-check-label" for="creditcard">
-                            Credit card
+                            Processs with credit card 
                         </label>
                     </div>
-                    <!-- <div class="form-check">
-                        <input class="form-check-input" type="radio" name="payement" id="method_payment" value="invoice" onclick="show1();" >
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="payement" id="method_payment" value="invoice" checked>
                         <label class="form-check-label" for="invoice">
                             Invoice
                         </label>
-                    </div> -->
+                    </div>
                 </div>
-                <div id="payementCard">
-                    <form id="payment_card">
-                        <div id="card"></div>
-                    <form>
-                </div>
-               
             </div>
 
             <div class="form-group">
@@ -144,32 +138,8 @@ $team = count($members)
 
 <script>
     
-    var profile_id = "pfl_8SUjU2jSrq";
-
-    var mollie = Mollie( profile_id, { locale: 'nl_NL', testmode: false });
-    var options = {
-        styles : {
-            base: {
-                backgroundColor: '#eee',
-                color: 'black',
-                fontSize: '10px',
-                '::placeholder' : {
-                    color: 'rgba(68, 68, 68, 0.2)',
-                }
-            },
-            valid: {
-                color: '#45B0A1',
-            },
-            invalid: {
-                color: '#023356',
-            }
-        }
-    };
-    var cardComponent = mollie.createComponent('card', options);
-    cardComponent.mount('#card');
-    var form = document.getElementById('payment_card');
     var button = document.getElementById('starter');
-    button.addEventListener('click', async e => {
+    button.addEventListener('click', function(e) {
         $(e.preventDefault());
         var pass = 0;
 
@@ -180,14 +150,18 @@ $team = count($members)
         var email = $('#email').val();
         var phone = $('#phone').val();
         var factuur_address = $('#factuur_address').val();
-        var method_payment = $('#method_payment').val();
+        var method_payment_state = document.getElementById('method_payment').checked;
         var is_trial_state = document.getElementById('is_trial').checked;
         var is_trial = 0;
+        var method_payment = "invoice";
+
+        if(method_payment_state)
+            method_payment = "credit_card";
 
         if(is_trial_state)
             is_trial = 1;
         
-        if(Boolean(first_name) && Boolean(last_name) && Boolean(bedrjifsnaam) && Boolean(email) && Boolean(phone) )
+        if( Boolean(first_name) && Boolean(last_name) && Boolean(bedrjifsnaam) && Boolean(email) && Boolean(phone) )
             pass = 1;
 
         if(pass == 1){
@@ -195,39 +169,50 @@ $team = count($members)
 
             //$('#starter').hide();
 
-            var { token, error } = await mollie.createToken();
-
-            if (error) {
-                token = 0;
-                console.log(error);
-                // Something wrong happened while creating the token. Handle this situation gracefully.
-                $('#required').html("<b><small style='color: #E10F51'>Something went wrong !</small><b><br>");
-                return error;
+            if(method_payment == 'credit_card'){
+                $.ajax({
+                    url:"/cards-payment",
+                    method:"post",
+                    data:{
+                        first_name : first_name,
+                        last_name : last_name,
+                        bedrjifsnaam : bedrjifsnaam,
+                        city : city,
+                        email : email,
+                        phone : phone,
+                        factuur_address : factuur_address,
+                        is_trial : is_trial,
+                        method_payment : method_payment,
+                    },
+                    dataType:"text",
+                    success: function(data){
+                        console.log(data);
+                        $('#output').html(data);
+                    }
+                });
             }
-            alert(token);
-
-            $.ajax({
-
-                url:"/starter-abonnement",
-                method:"post",
-                data:{
-                    first_name : first_name,
-                    last_name : last_name,
-                    bedrjifsnaam : bedrjifsnaam,
-                    city : city,
-                    email : email,
-                    phone : phone,
-                    factuur_address : factuur_address,
-                    is_trial : is_trial,
-                    method_payment : method_payment,
-                    card_token : token
-                },
-                dataType:"text",
-                success: function(data){
-                    console.log(data);
-                    $('#output').html(data);
-                }
-            });
+            else{
+                $.ajax({
+                    url:"/starter",
+                    method:"post",
+                    data:{
+                        first_name : first_name,
+                        last_name : last_name,
+                        bedrjifsnaam : bedrjifsnaam,
+                        city : city,
+                        email : email,
+                        phone : phone,
+                        factuur_address : factuur_address,
+                        is_trial : is_trial,
+                        method_payment : method_payment,
+                    },
+                    dataType:"text",
+                    success: function(data){
+                        console.log(data);
+                        $('#output').html(data);
+                    }
+                });
+            }
         }
         else
             $('#required').html("<b><small style='color: #E10F51'>*Please fill all fields correctly</small><b><br>");
