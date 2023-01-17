@@ -24,9 +24,60 @@ foreach($users as $user){
             array_push($members, $user);
     }
 }
-$team = count($members)
+$team = count($members);
+
+if ( !in_array( 'hr', $current_user->roles ) && !in_array( 'manager', $current_user->roles ) && !in_array( 'administrator', $current_user->roles ) && !in_array( 'author', $current_user->roles ) ) 
+    header('Location: /dashboard/user');
+
+/*
+** List subscriptions
+*/ 
+$endpoint = 'https://livelearn.nl/wp-json/wc/v3/subscriptions';
+
+$params = array(
+    // login url params required to direct user to facebook and promt them with a login dialog
+    'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
+    'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
+);
+
+// create endpoint with params
+$api_endpoint = $endpoint . '?' . http_build_query( $params );
+
+// initialize curl
+$ch = curl_init();
+
+// set other curl options customer
+curl_setopt($ch, CURLOPT_URL, $api_endpoint);
+curl_setopt($ch, CURLOPT_POST, false);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
+
+$httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
+$access_granted = false;
+$abonnement = array();
+// get responses
+$response = curl_exec($ch);
+if ($response === false) {
+    $response = curl_error($ch);
+    $error = true;
+    echo stripslashes($response);
+}
+else{
+    $data_response = json_decode( $response, true );
+    if(!empty($data_response))
+        foreach($data_response as $row)
+            if($row['billing']['company'] == $company_connected && $row['status'] == 'active'){
+                $access_granted = true;
+                $abonnement = $row;
+                break;
+            }                    
+}
 ?>
 
+<?php
+if ( !$access_granted ){
+?>
 <div class="contentProfil ">
 
     <h1 class="titleSubscription">Abonnement</h1>
@@ -112,6 +163,11 @@ $team = count($members)
     </div>
 
 </div>
+<?php
+}
+else
+    include_once('dashboard-company-confirmation.php');
+?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://js.mollie.com/v1/mollie.js"></script>
 

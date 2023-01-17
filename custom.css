@@ -7992,10 +7992,10 @@ tbody {
             width: 30px !important;
             height: 30px !important;
         }
-        .block-cotact-calendy img{
+        .block-contact-calendy img{
             height: intrinsic !important;
         }
-        .block-cotact-calendy #secondImg-direct-contact {
+        .block-contact-calendy #secondImg-direct-contact {
             height: 50px;
         }
     }
@@ -13163,9 +13163,12 @@ ul .selectAll .styled-checkbox:checked + label:after {
     width: 12%;
     margin: 0 14px 15px;
     height: 70px;
-    box-shadow: 0 0 2px #707070;
+    box-shadow: 0px 0px 2px #9c9fa2 !important;
     text-align: center;
     padding-top: 4px;
+}
+.block-logo-parteners2 .logo-element:hover{
+    box-shadow: 0px 0px 4px #9c9fa2 !important;
 }
 .block-logo-parteners2 .logo-element img{
     width: 90%;
@@ -13247,7 +13250,6 @@ ul .selectAll .styled-checkbox:checked + label:after {
     top: 46px;
     left: 15px;
     font-size: 15px;
-    z-index: 99;
     color: #47a99e;
 }
 .contentFormSubscription .form-group {
@@ -13372,28 +13374,28 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .blockDetailCollection{
     display: flex;
 }
-.block-cotact-calendy{
+.block-contact-calendy{
     background: #dfeff4;
     padding: 48px 0 70px;
     margin: 95px 0;
 }
-.block-cotact-calendy #firstImg-direct-contact{
+.block-contact-calendy #firstImg-direct-contact{
     width: 120px;
     height: 82px;
 }
-.block-cotact-calendy #firstImg-direct-contact img{
+.block-contact-calendy #firstImg-direct-contact img{
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-.block-cotact-calendy #secondImg-direct-contact{
+.block-contact-calendy #secondImg-direct-contact{
     width: 50px;
     margin-top: 40px;
     margin-left: -40px;
     height: 50px;
 }
-.block-cotact-calendy #secondImg-direct-contact img{
+.block-contact-calendy #secondImg-direct-contact img{
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -13430,7 +13432,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     height: auto !important;
 }
 .firstSection{
-    padding-top: 120px;
+    padding-top: 75px;
     background: linear-gradient(180deg, hsla(195, 48%, 92%, 1) 50%, hsla(205, 95%, 17%, 1) 100%);
 }
 .content-detail-voor-organisation {
@@ -13493,7 +13495,6 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 .content-voor-2 .blockForm2 {
     width: 100%;
-    margin-top: -70px;
 }
 .content-voor-2 .btnMeerInformation {
     background: #043356 !important;
@@ -13595,7 +13596,6 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .content-voor-teacher-2 .firstSection .blockForm2 {
     background: #E0EFF4;
     color: #043356;
-    margin-top: -40px;
 }
 .content-voor-teacher-2 .blockForm2 p {
     text-align: center;
@@ -13631,7 +13631,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     object-fit: cover;
 }
 .content-inloggen .firstSection {
-    background: #023356;
+    background: #023356 !important;
 }
 .content-inloggen h1 {
     color: #ffffff;
@@ -13698,6 +13698,209 @@ ul .selectAll .styled-checkbox:checked + label:after {
     background: #023356;
     text-align: center;
     padding-top: 20px;
+}
+.first-section-contact{
+    background: #E0EFF4;
+    padding: 80px 35px 100px;
+}
+.first-section-contact h1{
+    font-size: 35px;
+    font-weight: bold;
+    color: #023356;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+.first-section-contact .description{
+    font-size: 18px;
+    color: #023356;
+    margin-left: 20px;
+    margin-bottom: 45px;
+}
+.containe-block-contact{
+    display: flex;
+    flex-wrap: wrap;
+}
+.first-section-contact .card-contact{
+    background: #FFFFFF;
+    padding: 25px 30px;
+    position: relative;
+    min-height: 305px;
+    margin: 0 15px;
+    border-radius: 12px;
+    border: 2px solid white;
+    min-width: 30%;
+    margin-bottom: 30px;
+}
+.first-section-contact .card-contact .title-card-contact{
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 9px;
+    color: #023356;
+}
+.first-section-contact .card-contact .description-card-contact {
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-right: 30px;
+    color: #023356;
+}
+.first-section-contact .card-contact .btn-info-contact{
+    background: #043356;
+    padding: 10px 20px;
+    color: white !important;
+    font-size: 15px;
+    border-radius: 8px;
+    position: absolute;
+    bottom: 25px;
+}
+.content-Krijg-hulp{
+    width: 49%;
+}
+.first-section-contact .card-contact .block-img-contact{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+.first-section-contact .card-contact .block-img-contact img{
+    width: 80px;
+    height: 80px;
+}
+.first-section-contact .content-contact{
+    width: 30%;
+}
+.content-Probeer {
+    width: 44%;
+}
+.content-contact .block-contact-calendy {
+    background: #043356;
+    padding: 48px 0 70px;
+    margin: 0px 0;
+}
+.content-contact .block-contact-calendy .title-Direct-een {
+    color: #ffffff;
+}
+.content-contact .block-contact-calendy .btn-kies {
+    background: #E0EFF4;
+    padding: 12px 35px;
+    color: #043356;
+    font-size: 16px;
+    font-weight: bold;
+}
+.extensive span{
+    display: none;
+}
+.btnVoegToe i{
+    display: none;
+}
+.extensive .btnVoegToe i{
+    display: block;
+}
+.extensive .btnVoegToe {
+    margin-left: -11px;
+    margin-bottom: 15px;
+    color: #023356;
+}
+.extensive .elementTextDashboard a small{
+    display: none;
+}
+.head-content-subscription .detail{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.contentFormSubscription h2{
+    color: #000;
+    font-size: 25px;
+    margin-bottom: 35px;
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: center;
+}
+.contentFormSubscription .subtitel-detail {
+    color: #000000;
+    margin-bottom: 5px;
+    font-weight: 400;
+    font-size: 18px;
+    text-align: center;
+}
+.contentFormSubscription .product-detail {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgb(0 0 0 / 74%);
+    text-align: center;
+}
+
+.head-content-subscription .detail-cart {
+    padding: 0 30px;
+}
+.head-content-subscription .element-detail-cart{
+   display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.head-content-subscription .element-detail-cart .item{
+    color: #000000;
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 18px;
+}
+.head-content-subscription .element-detail-cart .price-subscription{
+    color: #043356;
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 18px;
+}
+.head-content-subscription .element-detail-cart .item-total{
+    color: #043356;
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 24px;
+}
+.contentFormSubscription .btn-continue{
+    background: #47a99e !important;
+    color: white !important;
+    font-size: 17px;
+    padding: 9px 20px;
+    border-radius: 8px;
+    position: relative;
+    width: fit-content;
+}
+.footer-subscription{
+    margin: 22px -35px 0;
+    padding: 32px 35px 5px;
+    border-top: 1px solid #c7c7c74f;
+}
+.gif-subscription{
+    width: 120px;
+    margin: -15px auto 25px;
+    text-align: center;
+}
+#new_date input{
+    cursor: pointer;
+    margin-top: 13px;
+    margin-bottom: 6px;
+    width: 152px;
+    margin-right: 15px;
+}
+#new_date input:last-child{
+    margin-right: 0px;
+}
+.input-group-course .btn-more-date {
+    background: none;
+    padding: 0 !important;
+    margin-top: 15px;
+    font-weight: 500;
+    color: #023356 !important;
+}
+.input-group-course .btn-remove-date {
+    background: none;
+    padding: 0 !important;
+    margin-top: 10px;
+    font-weight: 500;
+    color: red !important;
+    width: fit-content;
+    font-size: 13px !important;
 }
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -16435,6 +16638,9 @@ ul .selectAll .styled-checkbox:checked + label:after {
     .GespecialiseerdText {
         display: none;
     }
+    .block-logo-parteners2 {
+        justify-content: center;
+    }
     .content-voor-2 .block-logo-parteners2 .logo-element {
         width: 27.5%;
         margin: 0 10px 15px;
@@ -16468,9 +16674,6 @@ ul .selectAll .styled-checkbox:checked + label:after {
     .content-voor-2 .btnMeerInformation {
         margin-bottom: 40px;
     }
-    .content-voor-2 .blockForm2 {
-        margin-top: 45px;
-    }
     .content-voor-2 .ginput_complex span {
         margin-bottom: 40px !important;
     }
@@ -16490,6 +16693,34 @@ ul .selectAll .styled-checkbox:checked + label:after {
     }
     .content-voor-2  {
         padding-bottom: 100px;
+    }
+    .content-voor-teacher-2 .firstSection .blockForm2 {
+        margin-top: 40px;
+    }
+    .content-voor-2 .block-contact-teams h3 {
+        font-size: 23px;
+        margin-bottom: 35px;
+        padding: 0 10px;
+        line-height: 35px;
+    }
+    .content-inloggen .content-detail-voor-organisation {
+        padding-right: 0px;
+    }
+    .first-section-contact {
+        padding: 50px 0px 50px;
+    }
+    .first-section-contact .card-contact{
+        width: 100%;
+    }
+    .content-contact .block-contact-calendy {
+        padding: 48px 20px 70px;
+    }
+    .title-Direct-een strong {
+        font-size: 27px;
+        line-height: 45px;
+    }
+    .head-content-subscription .detail-cart {
+        padding: 0 15px;
     }
 
 }
