@@ -183,6 +183,7 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
         }
         .talent-binnen-block {
             margin: 40px 0 70px;
+            flex-direction: column-reverse;
         }
         .first-block-binnen {
             width: 100%;
@@ -190,10 +191,16 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
             padding-right: 17px;
         }
         .second-block-binnen {
-            width: 100%;
+            width: 90%;
             padding: 0px 50px;
             border-radius: 20px;
-            margin: 40px 15px 19px;
+            margin: 15px 15px 40px;
+        }
+        #modalVideo .modal-dialog {
+            width: 100% !important;
+        }
+        #modalVideo .modal-dialog iframe {
+            width: 100%;
         }
         .block-logo-parteners2 .logo-element {
             width: 27.5%;
@@ -1197,7 +1204,7 @@ $saved = get_user_meta($user_id, 'course');
                             <p class="voorText2 theme-card-title">Voor Individuen</p>
                             <p class="dePaterneText theme-card-description">Direct en gratis je persoonlijke skill paspoort. Blijf groeien gedurende je carrière of vind een
                                 nieuwe uitdaging</p>
-                            <p class="merrText text-center theme-card-button">Meer Informatie</p>
+                            <a href="/inloggen-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                         </div>
                     </div>
                 </a>
@@ -1213,7 +1220,7 @@ $saved = get_user_meta($user_id, 'course');
                             <p class="voorText2 theme-card-title">Voor opleiders / experts</p>
                             <p class="dePaterneText theme-card-description">Word partner van LiveLearn. Bied je training, cursus of e-learning eenvoudig aan en bereik
                                 nieuwe klanten.</p>
-                            <p class="merrText text-center theme-card-button">Meer Informatie</p>
+                            <a href="/voor-teacher-2-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                         </div>
                     </div>
                 </a>
@@ -1229,7 +1236,7 @@ $saved = get_user_meta($user_id, 'course');
                             <p class="voorText2 theme-card-title">Voor organisaties</p>
                             <p class="dePaterneText theme-card-description">Een lerende organisatie binnen een paar klikken. LiveLearn is jouw beste partner voor een
                                 future-proof organisatie.</p>
-                            <p class="merrText text-center theme-card-button">Meer Informatie</p>
+                            <a href="/voor-organisatie-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                         </div>
                     </div>
                 </a>
