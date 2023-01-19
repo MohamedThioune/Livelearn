@@ -12,8 +12,8 @@ function RandomString(){
   }
   return $randstring;
 }
-  error_reporting(E_WARNING);
-  $url="https://www.winelife.nl/";
+  // error_reporting(E_WARNING);
+  // $url="https://www.winelife.nl/";
   $websites=[
       'https://workplaceacademy.nl/',
       'https://www.ynno.com/',
@@ -231,13 +231,14 @@ function RandomString(){
       $author_id = wp_insert_user(wp_slash($userdata));       
     }
 
-
+    
     //Accord the author a company
     if(!is_wp_error($author_id))
       update_field('company', $company, 'user_' . $author_id);
     $span  = $url."wp-json/wp/v2/posts/";
     $artikels= json_decode(file_get_contents($span),true);
     
+    $onderwerpen='';
     foreach($artikels as $article){
       if ($article!=null) {
         $span2 = $url."wp-json/wp/v2/media/".$article['featured_media'];
@@ -290,6 +291,7 @@ function RandomString(){
               'status' => $status
             );
           }
+          // var_dump($data);
           $wpdb->insert($table,$data);
           $id_post = $wpdb->insert_id;
         }

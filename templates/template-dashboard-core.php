@@ -877,14 +877,17 @@ else if(isset($departement_delete)){
     $message = '/dashboard/company/afdelingen/?message=Department deleted successfully !'; 
     header("Location: ". $message);
 }
-if(isset($details_user_departement)){
+
+else if(isset($details_user_departement)){
     update_field('role', $role_user, 'user_'.$id_user);
     update_field('department', $department, 'user_'.$id_user);
     $message = '/dashboard/company/afdelingen/?message=Informations updated successfully !'; 
     header("Location: ". $message);
 }
 
-
+else if(isset($payment_card))
+    $message = "Payment";
+    
 ?>
 <?php wp_head(); ?>
 
