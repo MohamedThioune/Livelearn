@@ -1132,7 +1132,7 @@ $saved = get_user_meta($user_id, 'course');
                </div>
                <div class="zelf-block">
                    <p>Zelf ook een expert? </p>
-                   <a href="" class="all-expert">
+                   <a href="/voor-teacher-2-2/" class="all-expert">
                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
                    </a>
                </div>
@@ -1258,7 +1258,7 @@ $saved = get_user_meta($user_id, 'course');
                                 <p class="voorText2 theme-card-title">Voor Individuen</p>
                                 <p class="dePaterneText theme-card-description">Direct en gratis je persoonlijke skill paspoort. Blijf groeien gedurende je carrière of vind een
                                     nieuwe uitdaging</p>
-                                <p class="merrText text-center theme-card-button">Meer Informatie</p>
+                                <a href="/inloggen-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                             </div>
                         </div>
                     </a>
@@ -1274,7 +1274,7 @@ $saved = get_user_meta($user_id, 'course');
                                 <p class="voorText2 theme-card-title">Voor opleiders / experts</p>
                                 <p class="dePaterneText theme-card-description">Word partner van LiveLearn. Bied je training, cursus of e-learning eenvoudig aan en bereik
                                     nieuwe klanten.</p>
-                                <p class="merrText text-center theme-card-button">Meer Informatie</p>
+                                <a href="/voor-teacher-2-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                             </div>
                         </div>
                     </a>
@@ -1290,7 +1290,7 @@ $saved = get_user_meta($user_id, 'course');
                                 <p class="voorText2 theme-card-title">Voor organisaties</p>
                                 <p class="dePaterneText theme-card-description">Een lerende organisatie binnen een paar klikken. LiveLearn is jouw beste partner voor een
                                     future-proof organisatie.</p>
-                                <p class="merrText text-center theme-card-button">Meer Informatie</p>
+                                <a href="/voor-organisatie-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                             </div>
                         </div>
                     </a>
