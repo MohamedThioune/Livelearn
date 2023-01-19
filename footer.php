@@ -247,7 +247,7 @@
         else 
             topics_selected.push(tags_id);        
     });
-
+ 
     $("#btn-topics").click((e)=>
     {
         $(e.preventDefault())

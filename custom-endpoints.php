@@ -74,7 +74,6 @@ class Course
      $this->likes = is_array(get_field('favorited', $course->ID)) ? count(get_field('favorited', $course->ID)) : 0 ; //?? [];
      $this->data_locaties = is_array(get_field('data_locaties', $course->ID)) ? (get_field('data_locaties', $course->ID)) : [] ;
      $this->for_who = get_field('for_who', $course->ID) ? (get_field('for_who', $course->ID)) : "" ;
-    
     }
 }
 
@@ -975,14 +974,15 @@ function get_courses_of_subtopics($data)
   return $courses_related_subtopic;
 }
 
-function filter_course ($data)
+function filter_course (WP_REST_Request $request)
 {
-  $tags = $request['tags'] ?? [];
+  //return $data['page'];
+  $tags_parameter = $request['tags'] ?? [];
   $authors = $request['authors'] ?? [];
-  $company = $request['company'] ?? [];
+  $companies = $request['companies'] ?? [];
   $date = $request['date'] ?? null;
   $min_price = $request['min_price'] ?? 0;
-  $max_price = $request['max_price'] ?? null;
+  $max_price = $request['max_price'] ?? 0;
   $courses = get_posts(
     array(
       'post_type' => array('course', 'post'),
@@ -1026,7 +1026,63 @@ function filter_course ($data)
        $new_course = new Course($course);
        array_push($global_courses, $new_course);
      }
-     
+     $filtered_courses = array();
+     foreach ($global_courses as $key => $course) {
+              /** Filter by tags */
+    if ($course->tags != [])
+      foreach ($course->tags as $key => $tag) {
+        if (in_array($tag->id, $tags_parameter))
+          if (!in_array($course, $filtered_courses)) {
+            array_push($filtered_courses, $course);
+        
+          }
+      }
+              /** Filter by author */
+    if ($authors != [])
+      foreach ($authors as $key => $autor) {
+        if ($autor == $course->author->id)
+          if (!in_array($course, $filtered_courses)) {
+            array_push($filtered_courses, $course);
+          }
+      }
+      if ($authors != [])
+            /** Filter by experts */
+        foreach ($authors as $key => $autor) {
+          foreach ($course->experts as $key => $expert) {
+            if ($autor == $expert->id)
+              if (!in_array($course, $filtered_courses)) 
+              {
+                array_push($filtered_courses, $course);
+                
+              } 
+          }
+          
+        }
+
+              /** Filter by minimum price */
+              if ($min_price != 0)
+                 if ($course->price >= $min_price)
+                  if (!in_array($course, $filtered_courses)) {
+                    array_push($filtered_courses, $course);
+                  
+                  }
+            /** Filter by maximum price */
+            if ($max_price != 0)
+              if ($max_price >= $course->price )
+                if (!in_array($course, $filtered_courses)) {
+                  array_push($filtered_courses, $course);
+                  
+              }
+      
+
+        //     /** Filter by company */
+        // foreach($companies as $key => $company) {
+        //   if (in_array($->id,$authors))
+        //     if (!in_array($course,$filtered_courses))
+        //       array_push($filtered_courses, $course);
+        // }
+     }
+  return $filtered_courses;
   
 }
   function filter_by_value($array,$element,$value) {

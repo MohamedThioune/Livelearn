@@ -73,6 +73,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     <table class="table table-responsive">
                         <thead>
                         <tr>
+                            <th scope="col"><input type="checkbox" id="checkAll" onclick='checkUncheck(this);'></th>
                             <th scope="col">Image</th>
                             <th scope="col">Titel</th>
                             <th scope="col">Type</th>
@@ -81,7 +82,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                             <th scope="col">Status</th>
                             <th scope="col">Author</th>
                             <th scope="col">Company</th>
-                            <th scope="col" class="tdCenter">Optie</th>
+                            <th class="tdCenter textThBorder"> <input type="button" class="optieAll btn-default" id="acceptAll" style="background:white; border: DEE2E6" value="✔️" />&nbsp;<input type="button" class="optieAll btn-default" id="declineAll" style="background:white" value="❌" /></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -114,6 +115,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                 $key = $course->id;
                             ?>
                             <tr id="<?= $key ?>" class="<?= $state ?>">
+                                <td class="textTh"><input type="checkbox" class="checkOne" name="checkOne" id="chkBox" value="<?= $course->id ?>"></td>
                                 <td class="textTh"> <img src="<?= $image; ?>" alt="image course" width="50" height="50"></td>
                                 <td class="textTh courseDataBank" style="color:#212529;font-weight:bold"><?php echo $course->titel; ?></td>
                                 <td class="textTh tdCenter"><?= $course->type; ?></td>
@@ -188,6 +190,29 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 
 <script type="text/javascript">
+    function uncheckAll() {
+        let checkboxes = document.querySelectorAll('input[type=checkbox]');
+        for (let i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = false;
+        }
+    }
+
+    window.onload = uncheckAll;
+
+    function checkUncheck(checkBox) {
+        get = document.getElementsByName('checkOne');
+        for(var i=0; i<get.length; i++) {
+            get[i].checked = checkBox.checked;
+        }
+    }
+
+    // function update(checkBox){
+    //     check=document.getElementById('chkBox');
+    //     call=document.getElementById('checkAll');
+    //     if(check.checked==false){
+    //         call.checked=false;
+    //     }
+    // }
 
     $('#bouddha').click((e)=>{
         $('#select_field').hide(true,2000);
@@ -198,7 +223,6 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             datatype:'json',
             // cache:false,
             beforeSend:function(){
-                
             },
             success:function(){
                 location.reload();
@@ -240,7 +264,53 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     location.reload();
                 }
             });
-    });        
+    });
+    var ids=[];
+    $(".checkOne").click((e)=>{
+        let tags_id = e.target.value;
+        let if_exist = ids.indexOf(tags_id);
+        if (if_exist > 0)
+            ids.splice(if_exist, 1)
+        else 
+            ids.push(tags_id);
+        console.log(ids);
+    });
+
+    $('.optieAll').click((e)=>{
+        var tr_element = e.target.parentElement.closest("tr");
+        var get = document.getElementsByName('checkOne');
+        var classs = tr_element.className;
+
+        console.log(ids);
+
+        var optie = e.target.id;
+
+        if(confirm('Are you sure you want to apply this record ?'))
+        {
+            $.ajax({
+               url: '/optieAll',
+               type: 'POST',
+               data: {
+                   id: ids,
+                   optie: optie,
+                   class:classs
+                },
+               error: function() {
+                  alert('Something is wrong');
+               },
+               success: function(data) {
+                    for(var i=0;i<ids.length;i++){
+                        $("#"+ids[i]).remove();
+                        console.log(ids[i]);
+                    }
+                    alert("Record applied successfully");
+                    location.reload();
+                    // window.location.href = "/livelearn/optieAll";
+               }
+            });
+        }
+        
+    });
 
     $('.optie').click((e)=>{
         var tr_element = e.target.parentElement.closest("tr");

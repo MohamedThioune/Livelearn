@@ -24,9 +24,60 @@ foreach($users as $user){
             array_push($members, $user);
     }
 }
-$team = count($members)
+$team = count($members);
+
+if ( !in_array( 'hr', $current_user->roles ) && !in_array( 'manager', $current_user->roles ) && !in_array( 'administrator', $current_user->roles ) && !in_array( 'author', $current_user->roles ) ) 
+    header('Location: /dashboard/user');
+
+/*
+** List subscriptions
+*/ 
+$endpoint = 'https://livelearn.nl/wp-json/wc/v3/subscriptions';
+
+$params = array(
+    // login url params required to direct user to facebook and promt them with a login dialog
+    'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
+    'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
+);
+
+// create endpoint with params
+$api_endpoint = $endpoint . '?' . http_build_query( $params );
+
+// initialize curl
+$ch = curl_init();
+
+// set other curl options customer
+curl_setopt($ch, CURLOPT_URL, $api_endpoint);
+curl_setopt($ch, CURLOPT_POST, false);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
+
+$httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
+$access_granted = false;
+$abonnement = array();
+// get responses
+$response = curl_exec($ch);
+if ($response === false) {
+    $response = curl_error($ch);
+    $error = true;
+    echo stripslashes($response);
+}
+else{
+    $data_response = json_decode( $response, true );
+    if(!empty($data_response))
+        foreach($data_response as $row)
+            if($row['billing']['company'] == $company_connected && $row['status'] == 'active'){
+                $access_granted = true;
+                $abonnement = $row;
+                break;
+            }                    
+}
 ?>
 
+<?php
+if ( !$access_granted ){
+?>
 <div class="contentProfil ">
 
     <h1 class="titleSubscription">Abonnement</h1>
@@ -80,24 +131,18 @@ $team = count($members)
             <div class="form-group">
                 <div class="checkSubs">
                     <div class="form-check">
-                        <input class="form-check-input credit-card" type="radio" name="payement" id="method_payment" value="credit_card" onclick="show2();" checked>
+                        <input class="form-check-input credit-card" type="radio" name="payement" id="method_payment" value="credit_card" >
                         <label class="form-check-label" for="creditcard">
-                            Credit card
+                            Processs with credit card 
                         </label>
                     </div>
-                    <!-- <div class="form-check">
-                        <input class="form-check-input" type="radio" name="payement" id="method_payment" value="invoice" onclick="show1();" >
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="payement" id="method_payment" value="invoice" checked>
                         <label class="form-check-label" for="invoice">
                             Invoice
                         </label>
-                    </div> -->
+                    </div>
                 </div>
-                <div id="payementCard">
-                    <form id="payment_card">
-                        <div id="card"></div>
-                    <form>
-                </div>
-               
             </div>
 
             <div class="form-group">
@@ -118,6 +163,11 @@ $team = count($members)
     </div>
 
 </div>
+<?php
+}
+else
+    include_once('dashboard-company-confirmation.php');
+?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://js.mollie.com/v1/mollie.js"></script>
 
@@ -144,32 +194,8 @@ $team = count($members)
 
 <script>
     
-    var profile_id = "pfl_isthqVmvGb";
-
-    var mollie = Mollie( profile_id, { locale: 'nl_NL', testmode: false });
-    var options = {
-        styles : {
-            base: {
-                backgroundColor: '#eee',
-                color: 'black',
-                fontSize: '10px',
-                '::placeholder' : {
-                    color: 'rgba(68, 68, 68, 0.2)',
-                }
-            },
-            valid: {
-                color: '#033256',
-            },
-            invalid: {
-                color: '#E11654',
-            }
-        }
-    };
-    var cardComponent = mollie.createComponent('card', options);
-    cardComponent.mount('#card');
-    var form = document.getElementById('payment_card');
     var button = document.getElementById('starter');
-    button.addEventListener('click', async e => {
+    button.addEventListener('click', function(e) {
         $(e.preventDefault());
         var pass = 0;
 
@@ -180,14 +206,18 @@ $team = count($members)
         var email = $('#email').val();
         var phone = $('#phone').val();
         var factuur_address = $('#factuur_address').val();
-        var method_payment = $('#method_payment').val();
+        var method_payment_state = document.getElementById('method_payment').checked;
         var is_trial_state = document.getElementById('is_trial').checked;
         var is_trial = 0;
+        var method_payment = "invoice";
+
+        if(method_payment_state)
+            method_payment = "credit_card";
 
         if(is_trial_state)
             is_trial = 1;
         
-        if(Boolean(first_name) && Boolean(last_name) && Boolean(bedrjifsnaam) && Boolean(email) && Boolean(phone) )
+        if( Boolean(first_name) && Boolean(last_name) && Boolean(bedrjifsnaam) && Boolean(email) && Boolean(phone) )
             pass = 1;
 
         if(pass == 1){
@@ -195,40 +225,50 @@ $team = count($members)
 
             $('#starter').hide();
 
-            var { token, error } = await mollie.createToken();
-
-            if (error) {
-                token = 0;
-                console.log(error);
-                // Something wrong happened while creating the token. Handle this situation gracefully.
-                return error;
-                $('#required').html("<b><small style='color: #E10F51'>Something went wrong !</small><b><br>");
+            if(method_payment == 'credit_card'){
+                $.ajax({
+                    url:"/cards-payment",
+                    method:"post",
+                    data:{
+                        first_name : first_name,
+                        last_name : last_name,
+                        bedrjifsnaam : bedrjifsnaam,
+                        city : city,
+                        email : email,
+                        phone : phone,
+                        factuur_address : factuur_address,
+                        is_trial : is_trial,
+                        method_payment : method_payment,
+                    },
+                    dataType:"text",
+                    success: function(data){
+                        console.log(data);
+                        $('#output').html(data);
+                    }
+                });
             }
-            else
-                var token = 0;
-        
-            $.ajax({
-
-                url:"/starter-abonnement",
-                method:"post",
-                data:{
-                    first_name : first_name,
-                    last_name : last_name,
-                    bedrjifsnaam : bedrjifsnaam,
-                    city : city,
-                    email : email,
-                    phone : phone,
-                    factuur_address : factuur_address,
-                    is_trial : is_trial,
-                    method_payment : method_payment,
-                    card_token : token
-                },
-                dataType:"text",
-                success: function(data){
-                    console.log(data);
-                    $('#output').html(data);
-                }
-            });
+            else{
+                $.ajax({
+                    url:"/starter",
+                    method:"post",
+                    data:{
+                        first_name : first_name,
+                        last_name : last_name,
+                        bedrjifsnaam : bedrjifsnaam,
+                        city : city,
+                        email : email,
+                        phone : phone,
+                        factuur_address : factuur_address,
+                        is_trial : is_trial,
+                        method_payment : method_payment,
+                    },
+                    dataType:"text",
+                    success: function(data){
+                        console.log(data);
+                        $('#output').html(data);
+                    }
+                });
+            }
         }
         else
             $('#required').html("<b><small style='color: #E10F51'>*Please fill all fields correctly</small><b><br>");
