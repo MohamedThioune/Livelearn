@@ -407,7 +407,11 @@ form {
         overflow-y: scroll;
     }
     .body-custom .sousMenuNavMobil{
-        top: 131px !important;
+        top: 120px !important;
+        overflow-y: scroll;
+        position: fixed;
+        height: 90%;
+        min-height: unset;
     }
     .elementGroupGroeien {
         margin-bottom: 20px;
