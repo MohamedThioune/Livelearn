@@ -4987,8 +4987,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
         height: auto;
     }
     .card-community-overview .head-card .eye-block img {
-        height: 20px;
-        object-fit: contain;
+        height: 20px !important;
     }
     @media all and (min-width: 300px) and (max-width: 767px){
         .second-block-binnen img {
@@ -13244,6 +13243,21 @@ ul .selectAll .styled-checkbox:checked + label:after {
     width: 90%;
     margin: 0 auto;
 }
+.content-list-amount {
+    background-color: #fff!important;
+    padding: 25px 0;
+    border-radius: 15px;
+    width: 90%;
+    margin: 65px auto 50px;
+}
+.content-list-amount h2{
+    font-size: 25px;
+    margin-bottom: 0;
+}
+.content-list-amount .head-block{
+    padding: 0 25px;
+    margin-bottom: 20px;
+}
 .titleSubscription{
     text-align: center;
     color: #023356;
@@ -13272,6 +13286,24 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .contentFormSubscription .modal-footer{
     border: none;
     padding: 0;
+}
+.content-list-amount td span{
+    padding: 5px 20px 6px;
+    border-radius: 18px;
+    font-size: 14px;
+}
+.content-list-amount td .done{
+    background: #d0ffd0;
+}
+.content-list-amount td .hold{
+    background: #ffdddd;
+}
+.content-list-amount .table td, .table th {
+    padding: 20px 10px !important;
+}
+.content-list-amount td .dropdown-menu {
+    min-width: 5rem !important;
+    padding: 0.5rem 10px !important;
 }
 .btn-sendSubscrip {
     background: #043356;
