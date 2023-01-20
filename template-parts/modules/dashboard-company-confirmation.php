@@ -45,6 +45,8 @@
                     <p class="item-total"><b>Total</b></p>
                     <p class="item-total"><b><?= $total ?> euros</b></p>
                 </div>
+
+
             </div>
             <!-- 
             <div class="footer-subscription">
@@ -52,6 +54,96 @@
             </div> 
             -->
         </div>
+    </div>
+
+    <div class="content-list-amount">
+        <div class="d-flex justify-content-between align-items-center head-block">
+            <h2>List Amount</h2>
+            <input class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" >
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Instrument/Account</th>
+                <th scope="col">Type</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Situation</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>10/12/22</td>
+                <td>GNB 384502</td>
+                <td>Debit</td>
+                <td>800 €</td>
+                <td><span class="done">Done</span></td>
+                <td>
+                    <div class="dropdown text-white">
+                        <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
+                            <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                        </p>
+                        <ul class="dropdown-menu">
+                            <li class="my-1"><i class="fa fa-money px-2"></i><a href="" target="_blank">Pay</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>10/11/22</td>
+                <td>GNB 384502</td>
+                <td>Credit</td>
+                <td>800 €</td>
+                <td><span class="hold">On hold</span></td>
+                <td>
+                    <div class="dropdown text-white">
+                        <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
+                            <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                        </p>
+                        <ul class="dropdown-menu">
+                            <li class="my-1"><i class="fa fa-money px-2"></i><a href="" target="_blank">Pay</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>10/12/22</td>
+                <td>GNB 384502</td>
+                <td>Debit</td>
+                <td>800 €</td>
+                <td><span class="done">Done</span></td>
+                <td>
+                    <div class="dropdown text-white">
+                        <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
+                            <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                        </p>
+                        <ul class="dropdown-menu">
+                            <li class="my-1"><i class="fa fa-money px-2"></i><a href="" target="_blank">Pay</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>10/11/22</td>
+                <td>GNB 384502</td>
+                <td>Credit</td>
+                <td>800 €</td>
+                <td><span class="hold">On hold</span></td>
+                <td>
+                    <div class="dropdown text-white">
+                        <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
+                            <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                        </p>
+                        <ul class="dropdown-menu">
+                            <li class="my-1"><i class="fa fa-money px-2"></i><a href="" target="_blank">Pay</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
     </div>
 
 
