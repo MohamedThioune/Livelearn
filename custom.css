@@ -16,7 +16,7 @@ body {
     color: #ffffff !important;
     margin: 0 10px !important;
     font-weight: 500;
-    font-size: 15px !important;
+    font-size: 14px !important;
 }
 .worden{
     padding-right: 4px !important;
@@ -16374,6 +16374,7 @@ background: #FFFFFF !important;
     }
     .groupeBtn-Jouw-inloggen {
         display: flex;
+        padding: 0 20px;
     }
     .jouwn-skills {
         padding: 8px 26px;

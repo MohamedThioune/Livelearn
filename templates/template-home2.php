@@ -197,7 +197,7 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
             margin: 15px 15px 40px;
         }
         #modalVideo .modal-dialog {
-            width: 100% !important;
+            width: 96% !important;
         }
         #modalVideo .modal-dialog iframe {
             width: 100%;
