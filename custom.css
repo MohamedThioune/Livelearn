@@ -4986,6 +4986,10 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     .second-block-binnen img {
         height: auto;
     }
+    .card-community-overview .head-card .eye-block img {
+        height: 20px;
+        object-fit: contain;
+    }
     @media all and (min-width: 300px) and (max-width: 767px){
         .second-block-binnen img {
             height: 190px !important;
@@ -17260,7 +17264,10 @@ background: #FFFFFF !important;
         padding-top: 50px;
     }
     .second-section-community .cours-block .card-course-community {
-        width: 45%;
+        width: 100%;
+    }
+    .second-section-community .cours-block {
+        padding: 0 10px;
     }
     .card-course-community .content .title {
         font-size: 14px;
