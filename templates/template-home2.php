@@ -1266,7 +1266,7 @@ $saved = get_user_meta($user_id, 'course');
                                    <img src="<?php echo $image_user ?>" alt="">
                                </div>
                                <div class="secondBlockElementCollection">
-                                   <p class="nameListeCollection"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . ' ' . $user->last_name; else echo $user->display_name; ?></p>
+                                   <p class="nameListeCollection"><?= $display_name ?></p>
                                   <!-- <div class="iconeTextListCollection">
                                        <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/ethereum.png" alt="">
                                        <p><?php /*echo number_format(rand(0,100000), 2, '.', ','); */?></p>
