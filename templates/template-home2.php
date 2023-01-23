@@ -1250,11 +1250,10 @@ $saved = get_user_meta($user_id, 'course');
                        $company_title = $company[0]->post_title;
                        $company_logo = get_field('company_logo', $company[0]->ID);
 
-                        $display_name = "";
-                        if(isset($user->first_name) && isset($user->last_name)) 
+                        if(isset($user->first_name) || isset($user->last_name)) 
                             $display_name = $user->first_name . ' ' . $user->last_name; 
                         else 
-                            $display_name =  $user->display_name;
+                            $display_name = $user->display_name;
 
                         if(!$display_name)
                             $display_name = "Anonym";
