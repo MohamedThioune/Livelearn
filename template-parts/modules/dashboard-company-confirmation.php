@@ -27,7 +27,7 @@
                     <p class="product-detail">xxxx</p>
                 </div>
             </div>
-            <?php 
+            <?php
                 $sub_total = $team * 5;
                 $tva = $sub_total * (20/100);
                 $total = $sub_total + $tva;
@@ -48,10 +48,10 @@
 
 
             </div>
-            <!-- 
+            <!--
             <div class="footer-subscription">
                 <a href="" class="btn btn-continue">Continue</a>
-            </div> 
+            </div>
             -->
         </div>
     </div>
@@ -145,8 +145,5 @@
             </tbody>
         </table>
     </div>
-
-
-
 
 </div>
