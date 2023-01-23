@@ -7,7 +7,101 @@
 $page = 'check_visibility.php';
 require($page);
 
-$calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+/*
+* Check statistic by user *
+*/
+
+$users = get_users();
+$numbers = array();
+$members = array();
+$numbers_count = array();
+$topic_views = array();
+$topic_followed = array();
+$stats_by_user = array();
+
+foreach ($users as $user) {
+    $topic_by_user = array();
+    $course_by_user = array();
+
+    //Object & ID member
+    array_push($numbers, $user->ID);
+    array_push($members, $user);
+    
+    //Views topic
+    $args = array(
+        'post_type' => 'view', 
+        'post_status' => 'publish',
+        'author' => $user->ID,
+    );
+    $views_stat_user = get_posts($args);
+    $stat_id = 0;
+    if(!empty($views_stat_user))
+        $stat_id = $views_stat_user[0]->ID;
+    $view_topic = get_field('views_topic', $stat_id);
+    if($view_topic)
+        array_push($topic_views, $view_topic);
+
+    $view_user = get_field('views_user', $stat_id);
+    $number_count['id'] = $user->ID; 
+    $number_count['digit'] = 0;
+    if(!empty($view_user))
+        $number_count['digit'] = count($view_user); 
+    if($number_count)
+        array_push($numbers_count, $number_count);
+
+    $view_course = get_field('views', $stat_id);
+
+    //Followed topic
+    $topics_internal = get_user_meta($user->ID, 'topic_affiliate');
+    $topics_external = get_user_meta($user->ID, 'topic');
+    $topic_followed  = array_merge($topics_internal, $topics_external, $topic_followed);
+
+    //Stats engagement
+    $stat_by_user['user'] = $view_user;
+    $stat_by_user['topic'] = $view_topic;
+    $stat_by_user['course'] = $view_course;
+    array_push($stats_by_user, $stat_by_user);
+}
+
+$topic_views_sorting = $topic_views[5];
+if(!$topic_views_sorting)
+    $topic_views_sorting = array();
+$topic_views_id = array_column($topic_views_sorting, 'view_id');
+$keys = array_column($numbers_count, 'digit');
+array_multisort($keys, SORT_DESC, $numbers_count);
+
+$most_active_members = array();
+$i = 0;
+if(!empty($numbers_count))
+    foreach ($numbers_count as $element) {
+        $i++;
+        if($i >= 13)
+            break;
+        $value = get_user_by('ID', $element['id']);        
+        $value->image_author = get_field('profile_img',  'user_' . $value->ID);
+        $value->image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        array_push($most_active_members, $value);
+    }
+
+//Alles coursetype
+
+$type_course = array(
+    "Alles",
+    "Opleidingen",
+    "Training",
+    "Workshop",
+    "Masterclass",
+    "E-learning",
+    "Video",
+    "Artikel",
+    "Assessment",
+    "Cursus",
+    "Lezing",
+    "Event",
+    "Webinar",
+    "Leerpad",
+    "Podcast"
+);
 
 ?>
 
@@ -376,6 +470,7 @@ $degrees=[
     'hbo' => 'HBO',
     'university' => 'Universiteit',
 ];
+
   foreach ($degrees as $key => $value) {
     $input_degrees= '<input type="radio" name="choiceDegrees" value='.$key.' id="level'.$key.'"><label for="level'.$key.'">'.$value.'</label>';
   }
@@ -719,8 +814,7 @@ $degrees=[
     }
 
 
-    // for onze exoert block
-
+// for onze exoert block
 $global_blogs = get_posts($args);
 
 $blogs = array();
@@ -822,11 +916,11 @@ $saved = get_user_meta($user_id, 'course');
                 <h1 class="wordDeBestText2" >Hét leer- en upskilling platform van- én voor de toekomst</h1>
                 <p class="altijdText2">Onhandig als medewerkers niet optimaal functioneren. LiveLearn zorgt dat jouw workforce altijd op de hoogte is van de laatste kennis en vaardigheden.</p>
                 <form action="/product-search" class="position-relative" method="POST">
-                    <select class="form-select selectSearchHome" aria-label="search home page">
-                        <option value="Alles">Alles</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select class="form-select selectSearchHome" aria-label="search home page" name="search_type" id="course_type">
+                        <?php
+                            foreach($type_course as $type)
+                                echo '<option value="' . $type . '">' . $type . '</option>';
+                        ?>
                     </select>
                     <input id="search" type="search" class="jAuto searchInputHome form-control"
                         placeholder="Zoek op naam, experts of onderwerpen " name="search" autocomplete="off">
@@ -866,17 +960,17 @@ $saved = get_user_meta($user_id, 'course');
                     <hr>
                 </div>
                 <div class="groupeBtn-Jouw-inloggen groupBtnConnecte">
-                    <button class="btn btn-signup">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/googleImg.png" class=" " alt="">
-                        sign up with Google
-                    </button>
-                    <button class="btn btn-signup">
+                    <a href="http://localhost:8888/local/login/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/googleImg.png" alt="" />
+                        Sign up with Google
+                    </a>
+                    <!-- <button class="btn btn-signup">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/linkedin-icon.png" class="" alt="">
                         sign up with Linkedin
-                    </button>
-                    <button class="btn btn-signup-email">
-                        sign up with email
-                    </button>
+                    </button> -->
+                    <a href="/inloggen" class="btn btn-signup-email">
+                        <span style="color:white">Sign up with E-mail</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1106,7 +1200,7 @@ $saved = get_user_meta($user_id, 'course');
                    </a>
                    <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownHuman">
                        <?php
-                       foreach($categories_topic as $category){
+                       foreach($subtopics as $category){
                            echo '<a class="dropdown-item" href="category-overview?category=' . $category->cat_ID . '">' . $category->cat_name .'</a>';
                        }
                        ?>
@@ -1125,7 +1219,7 @@ $saved = get_user_meta($user_id, 'course');
                </div>
                <div class="zelf-block">
                    <p>Zelf ook een expert? </p>
-                   <a href="" class="all-expert">
+                   <a href="/opleiders" class="all-expert">
                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
                    </a>
                </div>
@@ -1133,30 +1227,31 @@ $saved = get_user_meta($user_id, 'course');
            <div class="row">
                <?php
                $num = 1;
-               if($topic == 0)
-                   $teachers = $teachers_all;
-               if(!empty($teachers)){
-                   foreach($teachers as $teacher) {
-                       $user = get_users(array('include'=> $teacher))[0]->data;
+               if(!empty($most_active_members)){
+                   foreach($most_active_members as $user) {
                        $image_user = get_field('profile_img',  'user_' . $user->ID);
                        $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
+                       $company = get_field('company',  'user_' . $user->ID);
+                       $company_title = $company[0]->post_title;
+                       $company_logo = get_field('company_logo', $company[0]->ID);
                        ?>
-                       <a href="/dashboard/user-overview/?id=<?php echo $user->ID; ?>" class="col-md-4">
+                       <a href="/dashboard/user-overview/?id=<?php echo $user->ID; ?>" target="_blank" class="col-md-4">
                            <div class="boxCollections">
                                <p class="numberList"><?php echo $num++ ; ?></p>
                                <div class="circleImgCollection">
                                    <img src="<?php echo $image_user ?>" alt="">
                                </div>
                                <div class="secondBlockElementCollection">
-                                   <p class="nameListeCollection"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . '' . $user->last_name; else echo $user->display_name; ?></p>
+                                   <p class="nameListeCollection"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . ' ' . $user->last_name; else echo $user->display_name; ?></p>
                                   <!-- <div class="iconeTextListCollection">
                                        <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/ethereum.png" alt="">
                                        <p><?php /*echo number_format(rand(0,100000), 2, '.', ','); */?></p>
                                    </div>-->
                                    <div class="blockDetailCollection">
                                        <div class="iconeTextListCollection">
-                                           <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
-                                           <p>LiveLearn</p>
+                                           <img src="<?= $company_logo ?>" alt="">
+                                           <p><?= $company_title; ?></p>
                                        </div>
                                        <div class="iconeTextListCollection">
                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-brain.png" alt="">
@@ -1457,8 +1552,6 @@ $saved = get_user_meta($user_id, 'course');
             <div class="swiper-wrapper">
                 <?php
                   $author_id = 0;
-                  $users = get_users();
-
                   foreach($users as $user){
                       $name_user = strtolower($user->data->display_name);
                       if($name_user == "Livelean" || $name_user == "livelean"){
@@ -1680,7 +1773,7 @@ $saved = get_user_meta($user_id, 'course');
 
      $('#search').keyup(function(){
         var txt = $(this).val();
-
+        var typo = $("#course_type option:selected").val();
         event.stopPropagation();
 
         $("#list").fadeIn("fast");
@@ -1694,10 +1787,11 @@ $saved = get_user_meta($user_id, 'course');
         if(txt){
             $.ajax({
 
-                url:"fetch-ajax",
+                url:"/fetch-ajax",
                 method:"post",
                 data:{
                     search:txt,
+                    typo: typo,
                 },
                 dataType:"text",
                 success: function(data){
