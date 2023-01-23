@@ -314,7 +314,7 @@
             if(txt){
                 $.ajax({
 
-                    url:"fetch-ajax",
+                    url:"/fetch-ajax",
                     method:"post",
                     data:{
                         search:txt,

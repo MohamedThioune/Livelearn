@@ -16,7 +16,7 @@ body {
     color: #ffffff !important;
     margin: 0 10px !important;
     font-weight: 500;
-    font-size: 15px !important;
+    font-size: 14px !important;
 }
 .worden{
     padding-right: 4px !important;
@@ -4986,7 +4986,16 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     .second-block-binnen img {
         height: auto;
     }
-}
+    .card-community-overview .head-card .eye-block img {
+        height: 20px !important;
+    }
+    @media all and (min-width: 300px) and (max-width: 767px){
+        .second-block-binnen img {
+            height: 190px !important;
+        }
+    }
+    }
+
 
 .firstBlock {
     overflow-x: unset;
@@ -7992,10 +8001,10 @@ tbody {
             width: 30px !important;
             height: 30px !important;
         }
-        .block-cotact-calendy img{
+        .block-contact-calendy img{
             height: intrinsic !important;
         }
-        .block-cotact-calendy #secondImg-direct-contact {
+        .block-contact-calendy #secondImg-direct-contact {
             height: 50px;
         }
     }
@@ -12377,7 +12386,8 @@ select {
 }
 .skillbars .progress {
     font-weight: 900;
-    text-align: right;
+    text-align: center;
+    justify-content: center;
     padding: 1em;
     width: 10%;
     color: #fff;
@@ -12992,7 +13002,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     outline: 0px !important;
 }
 .content-home2 form .searchInputHome {
-    padding-left: 90px;
+    padding-left: 120px;
 }
 .content-home2 .btn-Zoek{
     right: 15px;
@@ -13163,9 +13173,12 @@ ul .selectAll .styled-checkbox:checked + label:after {
     width: 12%;
     margin: 0 14px 15px;
     height: 70px;
-    box-shadow: 0 0 2px #707070;
+    box-shadow: 0px 0px 2px #9c9fa2 !important;
     text-align: center;
     padding-top: 4px;
+}
+.block-logo-parteners2 .logo-element:hover{
+    box-shadow: 0px 0px 4px #9c9fa2 !important;
 }
 .block-logo-parteners2 .logo-element img{
     width: 90%;
@@ -13230,6 +13243,21 @@ ul .selectAll .styled-checkbox:checked + label:after {
     width: 90%;
     margin: 0 auto;
 }
+.content-list-amount {
+    background-color: #fff!important;
+    padding: 25px 0;
+    border-radius: 15px;
+    width: 90%;
+    margin: 65px auto 50px;
+}
+.content-list-amount h2{
+    font-size: 25px;
+    margin-bottom: 0;
+}
+.content-list-amount .head-block{
+    padding: 0 25px;
+    margin-bottom: 20px;
+}
 .titleSubscription{
     text-align: center;
     color: #023356;
@@ -13247,7 +13275,6 @@ ul .selectAll .styled-checkbox:checked + label:after {
     top: 46px;
     left: 15px;
     font-size: 15px;
-    z-index: 99;
     color: #47a99e;
 }
 .contentFormSubscription .form-group {
@@ -13259,6 +13286,24 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .contentFormSubscription .modal-footer{
     border: none;
     padding: 0;
+}
+.content-list-amount td span{
+    padding: 5px 20px 6px;
+    border-radius: 18px;
+    font-size: 14px;
+}
+.content-list-amount td .done{
+    background: #d0ffd0;
+}
+.content-list-amount td .hold{
+    background: #ffdddd;
+}
+.content-list-amount .table td, .table th {
+    padding: 20px 10px !important;
+}
+.content-list-amount td .dropdown-menu {
+    min-width: 5rem !important;
+    padding: 0.5rem 10px !important;
 }
 .btn-sendSubscrip {
     background: #043356;
@@ -13372,28 +13417,28 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .blockDetailCollection{
     display: flex;
 }
-.block-cotact-calendy{
+.block-contact-calendy{
     background: #dfeff4;
     padding: 48px 0 70px;
     margin: 95px 0;
 }
-.block-cotact-calendy #firstImg-direct-contact{
+.block-contact-calendy #firstImg-direct-contact{
     width: 120px;
     height: 82px;
 }
-.block-cotact-calendy #firstImg-direct-contact img{
+.block-contact-calendy #firstImg-direct-contact img{
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-.block-cotact-calendy #secondImg-direct-contact{
+.block-contact-calendy #secondImg-direct-contact{
     width: 50px;
     margin-top: 40px;
     margin-left: -40px;
     height: 50px;
 }
-.block-cotact-calendy #secondImg-direct-contact img{
+.block-contact-calendy #secondImg-direct-contact img{
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -13430,7 +13475,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     height: auto !important;
 }
 .firstSection{
-    padding-top: 120px;
+    padding-top: 75px;
     background: linear-gradient(180deg, hsla(195, 48%, 92%, 1) 50%, hsla(205, 95%, 17%, 1) 100%);
 }
 .content-detail-voor-organisation {
@@ -13493,7 +13538,6 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 .content-voor-2 .blockForm2 {
     width: 100%;
-    margin-top: -70px;
 }
 .content-voor-2 .btnMeerInformation {
     background: #043356 !important;
@@ -13595,7 +13639,6 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .content-voor-teacher-2 .firstSection .blockForm2 {
     background: #E0EFF4;
     color: #043356;
-    margin-top: -40px;
 }
 .content-voor-teacher-2 .blockForm2 p {
     text-align: center;
@@ -13631,7 +13674,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     object-fit: cover;
 }
 .content-inloggen .firstSection {
-    background: #023356;
+    background: #023356 !important;
 }
 .content-inloggen h1 {
     color: #ffffff;
@@ -13698,6 +13741,650 @@ ul .selectAll .styled-checkbox:checked + label:after {
     background: #023356;
     text-align: center;
     padding-top: 20px;
+}
+.first-section-contact{
+    background: #E0EFF4;
+    padding: 80px 35px 100px;
+}
+.first-section-contact h1{
+    font-size: 35px;
+    font-weight: bold;
+    color: #023356;
+    margin-bottom: 10px;
+    margin-left: 20px;
+}
+.first-section-contact .description{
+    font-size: 18px;
+    color: #023356;
+    margin-left: 20px;
+    margin-bottom: 45px;
+}
+.containe-block-contact{
+    display: flex;
+    flex-wrap: wrap;
+}
+.first-section-contact .card-contact{
+    background: #FFFFFF;
+    padding: 25px 30px;
+    position: relative;
+    min-height: 305px;
+    margin: 0 15px;
+    border-radius: 12px;
+    border: 2px solid white;
+    min-width: 30%;
+    margin-bottom: 30px;
+}
+.first-section-contact .card-contact .title-card-contact{
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 9px;
+    color: #023356;
+}
+.first-section-contact .card-contact .description-card-contact {
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-right: 30px;
+    color: #023356;
+}
+.first-section-contact .card-contact .btn-info-contact{
+    background: #043356;
+    padding: 10px 20px;
+    color: white !important;
+    font-size: 15px;
+    border-radius: 8px;
+    position: absolute;
+    bottom: 25px;
+}
+.content-Krijg-hulp{
+    width: 49%;
+}
+.first-section-contact .card-contact .block-img-contact{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+.first-section-contact .card-contact .block-img-contact img{
+    width: 80px;
+    height: 80px;
+}
+.first-section-contact .content-contact{
+    width: 30%;
+}
+.content-Probeer {
+    width: 44%;
+}
+.content-contact .block-contact-calendy {
+    background: #043356;
+    padding: 48px 0 70px;
+    margin: 0px 0;
+}
+.content-contact .block-contact-calendy .title-Direct-een {
+    color: #ffffff;
+}
+.content-contact .block-contact-calendy .btn-kies {
+    background: #E0EFF4;
+    padding: 12px 35px;
+    color: #043356;
+    font-size: 16px;
+    font-weight: bold;
+}
+.extensive span{
+    display: none;
+}
+.btnVoegToe i{
+    display: none;
+}
+.extensive .btnVoegToe i{
+    display: block;
+}
+.extensive .btnVoegToe {
+    margin-left: -11px;
+    margin-bottom: 15px;
+    color: #023356;
+}
+.extensive .elementTextDashboard a small{
+    display: none;
+}
+.head-content-subscription .detail{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.contentFormSubscription h2{
+    color: #000;
+    font-size: 25px;
+    margin-bottom: 35px;
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: center;
+}
+.contentFormSubscription .subtitel-detail {
+    color: #000000;
+    margin-bottom: 5px;
+    font-weight: 400;
+    font-size: 18px;
+    text-align: center;
+}
+.contentFormSubscription .product-detail {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgb(0 0 0 / 74%);
+    text-align: center;
+}
+
+.head-content-subscription .detail-cart {
+    padding: 0 30px;
+}
+.head-content-subscription .element-detail-cart{
+   display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.head-content-subscription .element-detail-cart .item{
+    color: #000000;
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 18px;
+}
+.head-content-subscription .element-detail-cart .price-subscription{
+    color: #043356;
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 18px;
+}
+.head-content-subscription .element-detail-cart .item-total{
+    color: #043356;
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 24px;
+}
+.contentFormSubscription .btn-continue{
+    background: #47a99e !important;
+    color: white !important;
+    font-size: 17px;
+    padding: 9px 20px;
+    border-radius: 8px;
+    position: relative;
+    width: fit-content;
+}
+.footer-subscription{
+    margin: 22px -35px 0;
+    padding: 32px 35px 5px;
+    border-top: 1px solid #c7c7c74f;
+}
+.gif-subscription{
+    width: 120px;
+    margin: -15px auto 25px;
+    text-align: center;
+}
+#new_date input{
+    cursor: pointer;
+    margin-top: 13px;
+    margin-bottom: 6px;
+    width: 152px;
+    margin-right: 15px;
+}
+#new_date input:last-child{
+    margin-right: 0px;
+}
+.input-group-course .btn-more-date {
+    background: none;
+    padding: 0 !important;
+    margin-top: 15px;
+    font-weight: 500;
+    color: #023356 !important;
+}
+.input-group-course .btn-remove-date {
+    background: none;
+    padding: 0 !important;
+    margin-top: 10px;
+    font-weight: 500;
+    color: red !important;
+    width: fit-content;
+    font-size: 13px !important;
+}
+.content-community-overview h1{
+    font-size: 38px;
+}
+.content-community-overview .boxOne3-1 {
+    height: 250px;
+}
+.block-card-community {
+    padding: 45px 0;
+}
+.card-community-overview{
+    box-shadow: 0px 0px 16px rgb(0 0 0 / 10%);
+    border-radius: 10px;
+    border-bottom: 2px solid rgb(0 0 0 / 10%);
+    height: auto !important;
+    background: white;
+    padding: 24px 26px 30px;
+    margin-bottom: 30px;
+}
+.card-community-overview .head-card{
+    display: flex;
+}
+.card-community-overview .head-card .block-img{
+    position: relative;
+    width: 110px;
+    height: 110px;
+    padding: 15px;
+    border-radius: 100%;
+    overflow: hidden;
+    background: #F69405;
+    margin-right: 20px;
+}
+.card-community-overview .head-card .block-img .img-card-community{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.card-community-overview .head-card .second-img-card-community{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    overflow: hidden;
+    left: 80px;
+    top: 0;
+    z-index: 9;
+}
+.card-community-overview .head-card .title-card{
+    color: #707070;
+    font-size: 17px;
+    margin-bottom: 11px;
+}
+.card-community-overview .head-card .block-rating .rating {
+    margin: -9px 0 0px;
+}
+.card-community-overview .head-card .block-rating .rating-element2 {
+    color: #dedede;
+    font-size: 8px;
+    margin-right: 5px;
+    position: relative;
+    bottom: unset;
+}
+.card-community-overview .head-card .block-rating .rating > label:before {
+    margin: 2px;
+    margin-bottom: 6px;
+}
+.userBlock img{
+    width: 28px;
+    height: 28px;
+    border-radius: 100%;
+    margin-left: -10px;
+}
+.card-community-overview .head-card .block-rating .numberRating{
+    margin-bottom: 0;
+    margin-top: -23px;
+    margin-left: 3px;
+    color: #707070;
+}
+.card-community-overview .head-card .eye-block {
+    width: 25px;
+    margin-right: 20px;
+}
+.card-community-overview .head-card .eye-block img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.card-community-overview .head-card .numberUser {
+    margin-bottom: 2px;
+    color: #707070;
+    margin-left: 10px;
+    font-size: 15px;
+    font-weight: 400;
+}
+.card-community-overview .content-card {
+    margin-top: 20px;
+}
+.card-community-overview .content-card .title{
+    color: #023356;
+    font-weight: bold;
+    font-size: 27px;
+    margin-bottom: 20px;
+}
+.card-community-overview .content-card .title:first-child{
+    padding-right: 39px;
+    line-height: 38px;
+    margin-bottom: 14px;
+}
+.card-community-overview .description{
+    color: #023356;
+    font-size: 19px;
+    font-weight: 400;
+    margin-bottom: 28px;
+}
+.card-community-overview .footer-card{
+    display: flex;
+    align-items: center;
+}
+.card-community-overview .footer-card .btn-Bekijk{
+    background: #023356;
+    color: white !important;
+    font-size: 17px;
+    min-width: 125px;
+    padding: 9px 10px;
+    margin-right: 20px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.card-community-overview .footer-card .tag{
+    margin-bottom: 0;
+    color: #707070;
+    min-width: 80px;
+    text-align: center;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+.card-community-overview .green{
+    background: #C0FDE1;
+}
+.card-community-overview .yellow{
+    background: #FCEBA5;
+}
+.card-community-overview .red{
+    background: #F09A84;
+}
+.card-community-overview .bg-white{
+    border: 1px solid #e30813ba;
+}
+.card-community-overview .green-2{
+    background: #597D73 !important;
+}
+.first-section-community{
+    padding-top: 85px;
+    background: url("img/bg-community-detailm.png") no-repeat;
+    padding-bottom: 1px;
+    background-position: 25% 69%;
+}
+.first-section-community .block-first-selection{
+    display: flex;
+    align-items: center;
+}
+.first-section-community .block-first-selection .first-col{
+   width: 45%;
+   margin: 0 auto;
+}
+.first-section-community .block-first-selection .second-col{
+   width: 33%;
+   margin: 0 auto;
+}
+.first-section-community .card-detail-element{
+    box-shadow: rgb(0 0 0 / 10%) 0px 1px 3px 0px, rgb(0 0 0 / 6%) 0px 1px 2px 0px;
+    padding: 23px 25px 0;
+    background: #FFFFFF;
+    width: 85%;
+    margin: 0 auto;
+}
+.first-section-community .card-detail-element .head{
+    display: flex;
+    justify-content: center;
+}
+.first-section-community .card-detail-element .number{
+    text-align: center;
+    color: #023356;
+    font-size: 38px;
+    font-weight: 500;
+    margin-bottom: -2px;
+}
+.first-section-community .card-detail-element .element{
+    text-align: center;
+    color: #023356;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 0px;
+    margin-top: -4px;
+}
+.first-section-community .card-detail-element .Deelnemers-element{
+    padding: 0px 28px;
+    border-left: 2px solid #043356;
+    border-right: 2px solid #043356;
+    margin: 0 28px;
+}
+.first-section-community .card-detail-element .img-detail-community{
+    height: 345px;
+}
+.first-section-community .card-detail-element .img-detail-community img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.title-community-detail {
+    color: #043356;
+    font-size: 37px;
+    font-weight: bold;
+}
+.sub-title-community-detail {
+    color: #707070;
+    font-size: 17px;
+}
+.logo-nationale-nederlander{
+    width: 55px;
+    margin-right: 6px;
+}
+.Nationale-Nederlanden-text{
+    margin-bottom: 0;
+    font-size: 15px;
+    width: 100px;
+    font-weight: bold;
+    line-height: 16px;
+    color: #707070;
+}
+.easy-tag, .gratis-tag {
+    margin-bottom: 0;
+    color: #707070;
+    background: #C0FDE1;
+    padding: 4px 25px;
+    border-radius: 35px;
+    margin-right: 15px;
+}
+.gratis-tag{
+    background: #E0EFF4;
+}
+.content-detail-community .btn-volg {
+    background: #043356;
+    color: white !important;
+    padding: 7px 10px;
+    min-width: 155px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    margin-right: 30px;
+}
+.block-btn-image{
+    margin-top: 35px;
+}
+.block-btn-image .userBlock img {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    margin-left: -10px;
+}
+.block-btn-image .numberUser {
+    margin-bottom: 0;
+    margin-left: 15px;
+    font-size: 16px;
+}
+.skills-mesure .bg-gris-Skills{
+background: #FFFFFF !important;
+}
+.skills-mesure .skillbars .progress {
+    background: #00A89D;
+}
+.content-detail-community .second-section-community{
+    background: #E0EFF4;
+    border-top: 1px solid white;
+    padding-top: 60px;
+}
+.second-section-community .cours-block{
+    display: flex;
+    flex-wrap: wrap;
+}
+.second-section-community .cours-block .card-course-community{
+    width: 31%;
+    margin: 0 9px;
+    background: white;
+    box-shadow: 0px 0px 16px rgb(0 0 0 / 10%);
+    border-radius: 10px;
+    border-bottom: 1px solid rgb(0 0 0 / 10%);
+    margin-bottom: 25px;
+}
+.cours-block .card-course-community .img-block-course{
+    height: 120px;
+    background: #42454D;
+    overflow: hidden;
+    border-radius: 10px;
+    position: relative;
+}
+.cours-block .card-course-community .img-block-course img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.cours-block .card-course-community .done-block{
+    position: absolute;
+    right: 10px;
+    top: 3px;
+}
+.cours-block .card-course-community .done-block img{
+    width: 40px;
+    margin-bottom: 3px;
+}
+.cours-block .card-course-community .done-block p{
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 0;
+    color: white;
+}
+.cours-block .card-course-community .content{
+    padding: 20px 15px 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 20px;
+}
+.card-course-community .content .tag-category{
+    background: #F2CB93;
+    font-weight: 500;
+    padding: 4px 20px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+    width: fit-content;
+    font-size: 13px;
+}
+.card-course-community .content .title{
+    color: #023356;
+    font-size: 19px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    line-height: 28px;
+}
+.card-course-community .content .content-description{
+    color: #42454D;
+    font-size: 14px;
+    margin-bottom: 9px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    line-height: 24px;
+}
+.skills-mesure{
+    padding: 75px 5px 35px;
+}
+.second-section-community .block-agenda h3{
+    color: #707070;
+    font-size: 20px;
+    font-weight: bold;
+    padding-left: 18px;
+    margin-bottom: 18px;
+}
+.second-section-community .block-agenda {
+    background: white;
+    box-shadow: rgb(0 0 0 / 16%) 0px 1px 4px;
+    padding-top: 18px;
+}
+.second-section-community .block-agenda .card-agenda{
+    border-top: 1px solid #707070;
+    border-bottom: 1px solid #707070;
+    padding: 14px 10px 3px;
+    display: flex;
+    justify-content: space-between;
+}
+.second-section-community .block-agenda .card-agenda .first-block .icone-agenda{
+    width: 18px;
+    margin: 0 auto 5px;
+}
+.second-section-community .block-agenda .card-agenda .price {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 0;
+    background: unset;
+    border-radius: 5px;
+    padding: unset;
+    color: #42454D;
+}
+.second-section-community .block-agenda .card-agenda .first-block{
+    text-align: center;
+    margin-right: 10px;
+    margin-top: 4px;
+}
+.second-section-community .block-agenda .card-agenda .detail-description .date {
+    color: #42454D;
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+.second-section-community .block-agenda .card-agenda .detail-description .description{
+    color: #707070;
+    font-size: 14px;
+    margin-bottom: 9px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 20px;
+}
+.second-section-community .block-agenda .card-agenda .detail-description{
+    margin-right: 10px;
+}
+.second-section-community .block-agenda .card-agenda .user-calendar-img .userBlock{
+    display: flex;
+}
+.block-agenda .card-agenda .userBlock img {
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+    margin-left: -10px;
+}
+.block-agenda .card-agenda .number{
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+    overflow: hidden;
+    background: #043356;
+    text-align: center;
+    padding-top: 3px;
+}
+.block-agenda .card-agenda .number p{
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+}
+.block-agenda .footer-card-agenda{
+    padding: 20px 10px 10px;
+    text-align: center;
+}
+.block-agenda .footer-card-agenda p{
+    color: #707070;
+    font-size: 20px;
+    font-weight: bold;
 }
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -15723,6 +16410,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     }
     .groupeBtn-Jouw-inloggen {
         display: flex;
+        padding: 0 20px;
     }
     .jouwn-skills {
         padding: 8px 26px;
@@ -16435,8 +17123,11 @@ ul .selectAll .styled-checkbox:checked + label:after {
     .GespecialiseerdText {
         display: none;
     }
+    .block-logo-parteners2 {
+        justify-content: center;
+    }
     .content-voor-2 .block-logo-parteners2 .logo-element {
-        width: 27.5%;
+        width: 25.5%;
         margin: 0 10px 15px;
         height: 70px;
     }
@@ -16468,9 +17159,6 @@ ul .selectAll .styled-checkbox:checked + label:after {
     .content-voor-2 .btnMeerInformation {
         margin-bottom: 40px;
     }
-    .content-voor-2 .blockForm2 {
-        margin-top: 45px;
-    }
     .content-voor-2 .ginput_complex span {
         margin-bottom: 40px !important;
     }
@@ -16491,7 +17179,149 @@ ul .selectAll .styled-checkbox:checked + label:after {
     .content-voor-2  {
         padding-bottom: 100px;
     }
-
+    .content-voor-teacher-2 .firstSection .blockForm2 {
+        margin-top: 40px;
+    }
+    .content-voor-2 .block-contact-teams h3 {
+        font-size: 23px;
+        margin-bottom: 35px;
+        padding: 0 10px;
+        line-height: 35px;
+    }
+    .content-inloggen .content-detail-voor-organisation {
+        padding-right: 0px;
+    }
+    .first-section-contact {
+        padding: 50px 0px 50px;
+    }
+    .first-section-contact .card-contact{
+        width: 100%;
+    }
+    .content-contact .block-contact-calendy {
+        padding: 48px 20px 70px;
+    }
+    .title-Direct-een strong {
+        font-size: 27px;
+        line-height: 45px;
+    }
+    .head-content-subscription .detail-cart {
+        padding: 0 15px;
+    }
+    .content-community-overview .boxOne3-1 {
+        height: 26vh !important;
+        padding-bottom: 28px;
+    }
+    .block-card-community {
+        padding: 20px 20px 40px;
+    }
+    .card-community-overview .head-card .block-img {
+        width: 90px;
+        height: 90px;
+        padding: 10px;
+    }
+    .card-community-overview .head-card .second-img-card-community {
+        width: 30px;
+        height: 30px;
+        left: 68px;
+    }
+    .userBlock img {
+        width: 25px;
+        height: 25px;
+    }
+    .card-community-overview .content-card .title {
+        color: #023356;
+        font-weight: bold;
+        font-size: 25px;
+        margin-bottom: 20px;
+    }
+    .card-community-overview .description {
+        font-size: 17px;
+    }
+    .card-community-overview .footer-card .btn-Bekijk {
+        font-size: 16px;
+        min-width: 110px;
+        padding: 9px 10px;
+    }
+    .first-section-community .block-first-selection {
+        display: block;
+    }
+    .first-section-community {
+        padding-top: 0px;
+        padding-bottom: 1px;
+        background-position: 10% 0%;
+    }
+    .first-section-community .block-first-selection .first-col {
+        width: 100%;
+        margin: 0 auto;
+        padding-top: 50px;
+    }
+    .first-section-community .card-detail-element .number {
+        font-size: 28px;
+    }
+    .first-section-community .card-detail-element .element {
+        font-size: 15px;
+    }
+    .first-section-community .card-detail-element .Deelnemers-element {
+        padding: 0px 17px;
+        border-left: 1px solid #043356;
+        border-right: 1px solid #043356;
+        margin: 0px 17px;
+    }
+    .first-section-community .card-detail-element .img-detail-community {
+        height: 225px;
+        margin-bottom: 35px;
+    }
+    .first-section-community .block-first-selection .second-col {
+        width: 90%;
+        margin: 0 auto;
+    }
+    .first-section-community .card-detail-element {
+        width: 90%;
+    }
+    .title-community-detail {
+        font-size: 30px;
+        margin-bottom: 15px;
+    }
+    .content-detail-community .btn-volg {
+        min-width: 120px;
+        font-size: 16px;
+    }
+    .skills-mesure {
+        padding: 50px 5px 35px;
+    }
+    .skillbars {
+        margin: 0px 20px 19px 15px;
+    }
+    .content-detail-community .second-section-community {
+        padding-top: 50px;
+    }
+    .second-section-community .cours-block .card-course-community {
+        width: 100%;
+    }
+    .second-section-community .cours-block {
+        padding: 0 10px;
+    }
+    .card-course-community .content .title {
+        font-size: 14px;
+        margin-bottom: 6px;
+        line-height: 22px;
+    }
+    .card-course-community .content .content-description {
+        font-size: 13px;
+        margin-bottom: 0px;
+        line-height: 20px;
+    }
+    .cours-block .card-course-community .content {
+        padding: 15px 10px 15px;
+        line-height: 20px;
+    }
+    .cours-block .card-course-community .img-block-course {
+        height: 105px;
+    }
+    .second-section-community .block-agenda {
+        padding-top: 18px;
+        margin: 25px 20px 60px;
+    }
 }
 
 .radius-custom {
@@ -17079,6 +17909,27 @@ ul .selectAll .styled-checkbox:checked + label:after {
         height: 100%;
         object-fit: cover;
         width: 100%;
+    }
+    .first-section-community .block-first-selection {
+        display: block;
+    }
+    .first-section-community .block-first-selection .first-col {
+        width: 75%;
+        margin: 0 auto 50px;
+    }
+    .content-detail-community .second-section-community .col-md-8 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .content-detail-community .second-section-community .col-md-4 {
+        flex: 100%;
+        max-width: 100%;
+    }
+    .second-section-community .cours-block .card-course-community {
+        width: 47%;
+    }
+    .first-section-community .block-first-selection .second-col {
+        width: 80%;
     }
 }
 
