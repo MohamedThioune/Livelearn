@@ -75,6 +75,7 @@ $number_comments = !empty($reviews) ? count($reviews) : '0';
 $price = get_field('price', $post->ID) ?: 'Gratis';
 
 ?>
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
 <style>
     .selected {
