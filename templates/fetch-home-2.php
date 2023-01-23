@@ -1,4 +1,4 @@
-<?php /** Template Name: Fetch company people */ ?>
+<?php /** Template Name: Fetch ajax home2 */ ?>
 
 <?php
 
@@ -78,10 +78,9 @@ if(!empty($numbers_count))
             break;
         $value = get_user_by('ID', $element['id']);        
         $value->image_author = get_field('profile_img',  'user_' . $value->ID);
-        $value->image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $value->image_author = $value->image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
         array_push($most_active_members, $value);
     }
-
 
 if(isset($topic_search)){
 
@@ -169,12 +168,13 @@ if(isset($topic_search)){
 
     $num = 0;
     $bool = false;
-    $output = '';
+    $data = array();
     $block = '';
     foreach($most_active_members as $user) {
         if(!in_array($user->ID, $teachers))
             continue;
-            
+        
+        $bool = true;
         $image_user = get_field('profile_img',  'user_' . $user->ID);
         $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
@@ -188,7 +188,7 @@ if(isset($topic_search)){
         else 
             $display_name =  $user->display_name;
 
-        $block = '
+        $block .= '
             <a href="/dashboard/user-overview/?id="' . $user->ID .'" target="_blank" class="col-md-4">
                 <div class="boxCollections">
                     <p class="numberList">' . ++$num . '</p>
@@ -215,7 +215,11 @@ if(isset($topic_search)){
             </a>';
     }
 
-    if(!empty($most_active_members) || !$bool) 
-        echo '<center><p class="verkop"> Geen deskundigen beschikbaar </p></center>';
+    $data['content'] = $block;
+    $data['name'] = ($topic_search != 0) ? (String)get_the_category_by_ID($topic_search) : '';
 
+    if(empty($most_active_members) || !$bool) 
+        $data['content'] = '<center><p class="verkop"> Geen deskundigen beschikbaar </p></center>';
+
+    echo $data['content'];
 }

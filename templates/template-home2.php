@@ -7,6 +7,8 @@
 $page = 'check_visibility.php';
 require($page);
 
+if(!isset($visibility_company))
+    $visibility_company = "";
 /*
 * Check statistic by user *
 */
@@ -79,7 +81,7 @@ if(!empty($numbers_count))
             break;
         $value = get_user_by('ID', $element['id']);        
         $value->image_author = get_field('profile_img',  'user_' . $value->ID);
-        $value->image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $value->image_author = $value->image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
         array_push($most_active_members, $value);
     }
 
@@ -356,23 +358,23 @@ $type_course = array(
 </style>
 <?php
 $topic = (isset($_GET['topic'])) ? $_GET['topic'] : 0;
-$name_topic =  ($topic != 0) ? (String)get_the_category_by_ID($topic) : '';
-    function RandomString()
-    {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $randstring = '';
-        for ($i = 0; $i < 10; $i++) {
-            $rand = $characters[rand(0, strlen($characters))];
-            $randstring .= $rand;
-        }
-        return $randstring;
+
+function RandomString()
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randstring = '';
+    for ($i = 0; $i < 10; $i++) {
+        $rand = $characters[rand(0, strlen($characters))];
+        $randstring .= $rand;
     }
+    return $randstring;
+}
 
-    if (isset($_POST))
-    {
+if (isset($_POST))
+{
 
-    extract($_POST);
-    if(isset($email)){
+extract($_POST);
+if(isset($email)){
 
         if($email != null)
         {
@@ -495,8 +497,8 @@ $degrees=[
 
     $course_type = ['Opleidingen','E-learnings','Lezingen','Trainingen','Videos','Events','Workshop','Artikelen','Webinars','Masterclasses','Assessments','Podcasts'];
     foreach ($course_type as $key => $value) {
-         $input_course_type= '
-         <div class="blockInputCheck">
+        $input_course_type = '
+        <div class="blockInputCheck">
              <input type="checkbox" name="choiceCourseType[]" value='.$value.' id="courseType'.$key.'"/><label class="labelChoose btnBaangerichte" for="courseType'.$key.'">'.$value.'</label>
         </div>';
 
@@ -1208,14 +1210,15 @@ $saved = get_user_meta($user_id, 'course');
            <div class="headCollections">
                <div class="dropdown show">
                    <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownHuman" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                       Onze top experts binnen <b>Alle categorieën</b> <b><?= $name_topic; ?></b>
+                       Onze top experts binnen <b>Alle categorieën</b> <b id="name_topic"><?= $name_topic; ?></b>
                    </a>
                    <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownHuman">
-                       <?php
-                       foreach($topics as $category){
-                           echo '<a class="dropdown-item" id="topic_search" href="category-overview?category=' . $category->cat_ID . '">' . $category->cat_name .'</a>';
-                       }
-                       ?>
+                        <select class="form-select selectSearchHome" name="search_type" id="topic_search" multiple="true">
+                            <?php
+                                foreach($topics as $category)
+                                    echo '<option value="' . $category->cat_ID . '">' . $category->cat_name . '</option>';
+                            ?>
+                        </select>
                    </div>
                </div>
                <!-- 
@@ -1255,7 +1258,7 @@ $saved = get_user_meta($user_id, 'course');
                         else 
                             $display_name = $user->display_name;
 
-                        if(!$display_name || $display_name == "")
+                        if(!$display_name || $display_name == " ")
                             $display_name = "Anonym";
                        ?>
                        <a href="/dashboard/user-overview/?id=<?php echo $user->ID; ?>" target="_blank" class="col-md-4">
@@ -1869,17 +1872,15 @@ $saved = get_user_meta($user_id, 'course');
 </script>
 
 <script>
-    $('#topic_search').keyup(function(){
+    $('#topic_search').change(function(){
         var topic_search = $("#topic_search option:selected").val();
-
         $.ajax({
-
             url:"/fetch-ajax-home2",
             method:"post",
             data:{
                 topic_search: topic_search,
             },
-            dataType:"text",
+            dataType: "text",
             success: function(data){
                 console.log(data);
                 $('#autocomplete_categorieen').html(data);
