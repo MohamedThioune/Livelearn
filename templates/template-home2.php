@@ -970,7 +970,7 @@ $saved = get_user_meta($user_id, 'course');
                     <hr>
                 </div>
                 <div class="groupeBtn-Jouw-inloggen groupBtnConnecte">
-                    <a href="http://localhost:8888/local/login/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
+                    <a href="http://wp12.influid.nl/login/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/googleImg.png" alt="" />
                         Sign up with Google
                     </a>
