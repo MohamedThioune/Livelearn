@@ -103,6 +103,7 @@ $type_course = array(
     "Podcast"
 );
 
+
 ?>
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
@@ -277,6 +278,7 @@ $type_course = array(
         }
         .talent-binnen-block {
             margin: 40px 0 70px;
+            flex-direction: column-reverse;
         }
         .first-block-binnen {
             width: 100%;
@@ -284,10 +286,16 @@ $type_course = array(
             padding-right: 17px;
         }
         .second-block-binnen {
-            width: 100%;
+            width: 90%;
             padding: 0px 50px;
             border-radius: 20px;
-            margin: 40px 15px 19px;
+            margin: 15px 15px 40px;
+        }
+        #modalVideo .modal-dialog {
+            width: 96% !important;
+        }
+        #modalVideo .modal-dialog iframe {
+            width: 100%;
         }
         .block-logo-parteners2 .logo-element {
             width: 27.5%;
@@ -555,6 +563,7 @@ $degrees=[
 
 
     $subtopics = array();
+    $topics = array();
     foreach($categories as $categ){
         //Topics
         $topicss = get_categories(
@@ -564,6 +573,7 @@ $degrees=[
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
             )
         );
+        $topics = array_merge($topics, $topicss);
 
         foreach ($topicss as  $value) {
             $subtopic = get_categories(
@@ -1200,13 +1210,14 @@ $saved = get_user_meta($user_id, 'course');
                    </a>
                    <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownHuman">
                        <?php
-                       foreach($subtopics as $category){
-                           echo '<a class="dropdown-item" href="category-overview?category=' . $category->cat_ID . '">' . $category->cat_name .'</a>';
+                       foreach($topics as $category){
+                           echo '<a class="dropdown-item" id="topic_search" href="category-overview?category=' . $category->cat_ID . '">' . $category->cat_name .'</a>';
                        }
                        ?>
                    </div>
                </div>
-               <div class="dropdown show">
+               <!-- 
+                <div class="dropdown show">
                    <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                        Over de <b>laatste 7 dagen</b>
                    </a>
@@ -1216,15 +1227,16 @@ $saved = get_user_meta($user_id, 'course');
                        <a class="dropdown-item" href="#">Last 1 year</a>
                        <a class="dropdown-item" href="#">All time</a>
                    </div>
-               </div>
+                </div> 
+                -->
                <div class="zelf-block">
                    <p>Zelf ook een expert? </p>
-                   <a href="/opleiders" class="all-expert">
+                   <a href="/voor-teacher-2-2/" class="all-expert">
                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
                    </a>
                </div>
            </div>
-           <div class="row">
+           <div class="row" id="autocomplete_categorieen">
                <?php
                $num = 1;
                if(!empty($most_active_members)){
@@ -1292,7 +1304,7 @@ $saved = get_user_meta($user_id, 'course');
                             <p class="voorText2 theme-card-title">Voor Individuen</p>
                             <p class="dePaterneText theme-card-description">Direct en gratis je persoonlijke skill paspoort. Blijf groeien gedurende je carrière of vind een
                                 nieuwe uitdaging</p>
-                            <p class="merrText text-center theme-card-button">Meer Informatie</p>
+                            <a href="/inloggen-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                         </div>
                     </div>
                 </a>
@@ -1308,7 +1320,7 @@ $saved = get_user_meta($user_id, 'course');
                             <p class="voorText2 theme-card-title">Voor opleiders / experts</p>
                             <p class="dePaterneText theme-card-description">Word partner van LiveLearn. Bied je training, cursus of e-learning eenvoudig aan en bereik
                                 nieuwe klanten.</p>
-                            <p class="merrText text-center theme-card-button">Meer Informatie</p>
+                            <a href="/voor-teacher-2-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                         </div>
                     </div>
                 </a>
@@ -1324,7 +1336,7 @@ $saved = get_user_meta($user_id, 'course');
                             <p class="voorText2 theme-card-title">Voor organisaties</p>
                             <p class="dePaterneText theme-card-description">Een lerende organisatie binnen een paar klikken. LiveLearn is jouw beste partner voor een
                                 future-proof organisatie.</p>
-                            <p class="merrText text-center theme-card-button">Meer Informatie</p>
+                            <a href="/voor-organisatie-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                         </div>
                     </div>
                 </a>
@@ -1346,7 +1358,7 @@ $saved = get_user_meta($user_id, 'course');
                                 <p class="voorText2 theme-card-title">Voor Individuen</p>
                                 <p class="dePaterneText theme-card-description">Direct en gratis je persoonlijke skill paspoort. Blijf groeien gedurende je carrière of vind een
                                     nieuwe uitdaging</p>
-                                <p class="merrText text-center theme-card-button">Meer Informatie</p>
+                                <a href="/inloggen-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                             </div>
                         </div>
                     </a>
@@ -1362,7 +1374,7 @@ $saved = get_user_meta($user_id, 'course');
                                 <p class="voorText2 theme-card-title">Voor opleiders / experts</p>
                                 <p class="dePaterneText theme-card-description">Word partner van LiveLearn. Bied je training, cursus of e-learning eenvoudig aan en bereik
                                     nieuwe klanten.</p>
-                                <p class="merrText text-center theme-card-button">Meer Informatie</p>
+                                <a href="/voor-teacher-2-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                             </div>
                         </div>
                     </a>
@@ -1378,7 +1390,7 @@ $saved = get_user_meta($user_id, 'course');
                                 <p class="voorText2 theme-card-title">Voor organisaties</p>
                                 <p class="dePaterneText theme-card-description">Een lerende organisatie binnen een paar klikken. LiveLearn is jouw beste partner voor een
                                     future-proof organisatie.</p>
-                                <p class="merrText text-center theme-card-button">Meer Informatie</p>
+                                <a href="/voor-organisatie-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                             </div>
                         </div>
                     </a>
@@ -1445,7 +1457,7 @@ $saved = get_user_meta($user_id, 'course');
         <p class="titleblockOnze">De onderwerpen waarin wij jouw kunnen helpen</p>
         <div class="zelf-block">
             <p>Bekijk alle onderwerp</p>
-            <a href="" class="all-expert">
+            <a href="/onderwer" class="all-expert">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
             </a>
         </div>
@@ -1771,7 +1783,7 @@ $saved = get_user_meta($user_id, 'course');
         alert('bangricht');
     });
 
-     $('#search').keyup(function(){
+    $('#search').keyup(function(){
         var txt = $(this).val();
         var typo = $("#course_type option:selected").val();
         event.stopPropagation();
@@ -1842,6 +1854,26 @@ $saved = get_user_meta($user_id, 'course');
                     }
 
                 }
+        });
+    });
+</script>
+
+<script>
+    $('#topic_search').keyup(function(){
+        var topic_search = $("#topic_search option:selected").val();
+
+        $.ajax({
+
+            url:"/fetch-ajax-home2",
+            method:"post",
+            data:{
+                topic_search: topic_search,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete_categorieen').html(data);
+            }
         });
     });
 </script>
