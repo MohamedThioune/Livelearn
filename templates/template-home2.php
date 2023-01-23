@@ -1676,6 +1676,9 @@ $saved = get_user_meta($user_id, 'course');
                         $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
                     }
 
+                    //Company
+                    $company = get_field('company',  'user_' . $course->post_author);
+
                     ?>
                     <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiperSlideModife">
                         <div class="cardKraam2">
