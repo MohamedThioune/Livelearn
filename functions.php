@@ -1086,7 +1086,7 @@ add_action( 'rest_api_init', function () {
   ));
 
   register_rest_route('custom/v1', '/filter/courses', array(
-    'methods' => 'POST',
+    'methods' => 'GET',
     'callback' => 'filter_course',
   ));
 
