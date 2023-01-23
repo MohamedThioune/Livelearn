@@ -177,16 +177,21 @@ form {
 }
 .dropdown-menuSearch {
     position: absolute;
-    left: 100px;
+    left: 30px;
     background: white;
     color: #043356;
-    width: 30%;
+    width: 91%;
     text-align: left;
     padding: 20px 0px;
     z-index: 99;
-    top: 52px;
+    top: 36px;
     border-radius: 15px;
     font-size: 16px;
+}
+.voorBlock .dropdown-menuSearch {
+    width: 40%;
+    left: 115px;
+    top: 52px;
 }
 .hasNoResults{
     margin-left: 30px;
