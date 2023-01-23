@@ -1255,7 +1255,7 @@ $saved = get_user_meta($user_id, 'course');
                         else 
                             $display_name = $user->display_name;
 
-                        if(!$display_name)
+                        if(!$display_name || $display_name == "")
                             $display_name = "Anonym";
                        ?>
                        <a href="/dashboard/user-overview/?id=<?php echo $user->ID; ?>" target="_blank" class="col-md-4">
