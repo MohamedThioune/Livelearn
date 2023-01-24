@@ -1432,7 +1432,7 @@ $saved = get_user_meta($user_id, 'course');
                 <p class="text-description-jij">Een mobiele app</p>
             </div>
             <div class="d-flex align-items-center mt-4">
-                <a href="" class="btn btnStratAlVoor">Start al voor €4,95</a>
+                <a href="/voor-organisatie-2/" class="btn btnStratAlVoor">Start al voor €4,95</a>
                 <p class="GespecialiseerdText">Gespecialiseerd in het MKB</p>
             </div>
         </div>
