@@ -14427,6 +14427,9 @@ background: #FFFFFF !important;
 .content-community-overview .frist-block-about .block-img-about{
     width: 30%;
 }
+.blockDescriptionBlog ol li{
+    list-style: auto;
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
