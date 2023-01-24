@@ -76,7 +76,7 @@ else{
 ?>
 
 <?php
-if ( !$access_granted ){
+if ( $access_granted ){
 ?>
 <div class="contentProfil ">
 
@@ -223,11 +223,11 @@ else
         if(pass == 1){
             $('#required').html("");
 
-            $('#starter').hide();
+            // $('#starter').hide();
 
             if(method_payment == 'credit_card'){
                 $.ajax({
-                    url:"/cards-payment",
+                    url:"/credit-card-details",
                     method:"post",
                     data:{
                         first_name : first_name,
@@ -243,7 +243,8 @@ else
                     dataType:"text",
                     success: function(data){
                         console.log(data);
-                        $('#output').html(data);
+                        window.location.href = data;
+                        // $('#output').html(data);
                     }
                 });
             }
