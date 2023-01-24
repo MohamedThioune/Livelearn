@@ -50,7 +50,7 @@
     echo "<h3>".$data_xml[0]->programClassification->orgUnitId." running <i class='fas fa-spinner fa-pulse'></i></h3><br><br>";
 
     //Retrieve courses
-    //$i = 0;
+    // $i = 0;
     foreach($data_xml as $key => $datum){
       // $i++;
       // if($i == 2)
@@ -120,12 +120,10 @@
 
       //Implement author of this course
       foreach($users as $user) {
-        $teacher_id = get_field('teacher_id',  'user_' . $user->ID);
         $company_user = get_field('company',  'user_' . $user->ID);
         
-        if(strtolower($company_user[0]->post_title) == strval($post['org']) ){
+        if(strtolower($company_user[0]->post_title) == strtolower(strval($post['org'])) ){
           $author_id = $user->ID;
-
           $company = $company_user[0];
           $company_id = $company_user[0]->ID;  
         }
@@ -150,15 +148,16 @@
         $password = RandomString();
         $random = RandomString();
         $email = "author_" . strval($datum->programClassification->orgUnitId) . $random . "@expertise.nl";
-        $first_name = explode(' ', strval($datum->programCurriculum->teacher->name))[0];
-        //$last_name = explode(' ', strval($datum->programCurriculum->teacher->name))[1];
+        $first_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[0]) ?? RandomString();;
+        $last_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[1]) ?? RandomString();
+        $display_name = ($first_name ) ?? RandomString();
 
         $userdata = array(
             'user_pass' => $password,
-            'user _login' => $login,
+            'user_login' => $login,
             'user_email' => $email,
             'user_url' => 'https://livelearn.nl/inloggen/',
-            'display_name' => strval($datum->programCurriculum->teacher->name),
+            'display_name' => $display_name,
             'first_name' => $first_name,
             'last_name' => $last_name,
             'role' => 'author'
@@ -342,7 +341,6 @@
               $infos = rtrim($infos, ';');
 
             array_push($data_locaties_xml, $infos);  
-            $data_locaties_xml = array();          
           }
 
           $data_locaties = join('~', $data_locaties_xml);
@@ -379,7 +377,6 @@
         'company_id' => $company_id,
         'status' => $status
       );
-
       $where = [ 'titel' => strval($datum->programDescriptions->programName) ];
       $updated = $wpdb->update( $table, $post, $where );
 
@@ -387,6 +384,7 @@
 
         $wpdb->insert($table, $post);
         $post_id = $wpdb->insert_id;
+        // $post_id = 1;
 
         echo $wpdb->last_error;
 

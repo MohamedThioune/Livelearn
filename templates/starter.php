@@ -137,7 +137,7 @@ else{
         $amount_pay = 5 * $team;
         $amount_pay = number_format($amount_pay, 2, '.', ',');
         $endpoint_pay = "https://api.mollie.com/v2/payments";
-        $api_key = "Bearer live_WE2HNrAfs8Atd5fjAjawqx5dTdcuhy";
+        $api_key = "Bearer test_c5nwVnj42cyscR8TkKp3CWJFd5pHk3";
         $data_payment = [
             'method' => 'creditcard',
             'amount' => [
@@ -164,15 +164,14 @@ else{
         $response_pay = curl_exec($chpay);
         $data_response_pay = json_decode( $response_pay, true );
         $response_pay = curl_exec($chpay);
-        var_dump( $response_pay );
+        // var_dump( $response_pay );
         if(isset($data_response_pay['id']))
-            $pass_payment = true;            
+            $pass_payment = true;      
+        // close curl
+        curl_close( $chpay );      
     }
     else
         $pass_payment = true;
-
-    // close curl
-    curl_close( $chpay );
     /*
     ** 
     */
