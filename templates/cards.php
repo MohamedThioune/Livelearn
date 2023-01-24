@@ -31,7 +31,7 @@ $data_payment = [
         'currency' => 'EUR',
         'value' => $amount_pay,
     ],
-    'description' => 'Quaterly payment ° ' . mt_rand(1000000000, 9999999999),
+    'description' => 'Quaterly payment °' . mt_rand(1000000000, 9999999999),
     'webhookUrl' => 'https://webshop.example.org/payments/webhook/',
     'interval' => '1 day',
     'mandateId' => "mdt_fmK5yJqzG7",
@@ -53,8 +53,7 @@ $response_pay = curl_exec($chpay);
 $data_response_pay = json_decode( $response_pay, true );
 $response_pay = curl_exec($chpay);
 var_dump( $response_pay );
-if(isset($data_response_pay['id']))
-    $pass_payment = true; 
+header("Location: /dashboard/company/profile-company/?message=Transaction applied successfully !" );    
          
 // close curl
 curl_close( $chpay );
