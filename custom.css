@@ -13080,9 +13080,8 @@ ul .selectAll .styled-checkbox:checked + label:after {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    margin-top: 20px;
-    margin-bottom: 15px;
+    width: fit-content;
+    margin: 20px auto 15px;
 }
 .zelf-block p{
     font-weight: 400;
