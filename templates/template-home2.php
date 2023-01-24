@@ -1234,12 +1234,12 @@ $saved = get_user_meta($user_id, 'course');
                    </div>
                 </div> 
                 -->
-               <div class="zelf-block">
-                   <p>Zelf ook een expert? </p>
-                   <a href="/voor-teacher-2-2/" class="all-expert">
+               <a href="/voor-teacher-2-2/" class="zelf-block">
+                   <p class="mr-2">Zelf ook een expert? </p>
+                   <div class="all-expert">
                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
-                   </a>
-               </div>
+                   </div>
+               </a>
            </div>
            <div class="row" id="autocomplete_categorieen">
                <?php
@@ -1299,12 +1299,12 @@ $saved = get_user_meta($user_id, 'course');
 <div class="cardVoor">
     <div class="container-fluid web">
         <p class="titleblockOnze">Wie zijn dan onze gebruikers?</p>
-        <div class="zelf-block">
+        <div href="" class="zelf-block">
             <p>Lees alles wat wij doen ?</p>
-            <a href="" class="all-expert">
+            <div class="all-expert">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
-            </a>
-        </div>
+            </div>
+        </a>
         <div class="row paddingElement7">
             <div class="col-lg-4  col-md-6">
                 <a href="/static-education-individual">
@@ -1432,7 +1432,7 @@ $saved = get_user_meta($user_id, 'course');
                 <p class="text-description-jij">Een mobiele app</p>
             </div>
             <div class="d-flex align-items-center mt-4">
-                <a href="" class="btn btnStratAlVoor">Start al voor €4,95</a>
+                <a href="/voor-organisatie-2/" class="btn btnStratAlVoor">Start al voor €4,95</a>
                 <p class="GespecialiseerdText">Gespecialiseerd in het MKB</p>
             </div>
         </div>
