@@ -884,7 +884,7 @@ $url = home_url( $wp->request );
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/lock-open.png" alt="search">
                         Inloggen
                     </a>
-                    <a href="/registreren/" class="element-navMobile mb-0">
+                    <a href="registreren/" class="element-navMobile mb-0">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-signature.png" alt="search">
                         Registreren
                     </a>
@@ -904,11 +904,11 @@ $url = home_url( $wp->request );
 
                         <div id="collapseNavOne" class="collapse show" aria-labelledby="headingNavOne" data-parent="#accordionExample2">
                             <ul>
-                                <li><a class="linkElementNav" href="/zzpers/">Je eigen leeromgeving</a></li>
-                                <li> <a class="linkElementNav" href="/mkb/">Wat voor content / onderwerpen?</a></li>
-                                <li> <a class="linkElementNav" href="/mkb/">Het is gratis</a></li>
-                                <li> <a class="linkElementNav" href="/pricing/">Koppelen aan bedrijf</a></li>
-                                <li> <a class="linkElementNav" href="voor-organisaties/">Voor wie?</a></li>
+                                <li><a class="linkElementNav" href="/inloggen-2/">Je eigen leeromgeving</a></li>
+                                <li> <a class="linkElementNav" href="/onderwer/">Wat voor content / onderwerpen?</a></li>
+                                <li> <a class="linkElementNav" href="/pricing/">Het is gratis</a></li>
+                                <li> <a class="linkElementNav" href="/">Koppelen aan bedrijf</a></li>
+                                <li> <a class="linkElementNav" href="/voor-organisatie-2/">Voor wie?</a></li>
                             </ul>
                         </div>
                     </div>
@@ -926,12 +926,12 @@ $url = home_url( $wp->request );
                         </div>
                         <div id="collapseNavTwo" class="collapse" aria-labelledby="headingNavTwo" data-parent="#accordionExample2">
                             <ul>
-                                <li><a  class="linkElementNav" href="">Onze leeromgeving</a></li>
+                                <li><a  class="linkElementNav" href="/voor-organisatie-2/">Onze leeromgeving</a></li>
                                 <li> <a class="linkElementNav" href="">Functionaliteiten</a></li>
                                 <li> <a class="linkElementNav" href="/pricing/">Pricing</a></li>
-                                <li> <a class="linkElementNav" href="">Voor ZZPers</a></li>
-                                <li> <a class="linkElementNav" href="">Voor het MKB</a></li>
-                                <li> <a class="linkElementNav" href="">Voor Corporates</a></li>
+                                <li> <a class="linkElementNav" href="/zzpers/">Voor ZZPers</a></li>
+                                <li> <a class="linkElementNav" href="/mkb/">Voor het MKB</a></li>
+                                <li> <a class="linkElementNav" href="/grootbedrijf/">Voor Corporates</a></li>
                                 <li> <a class="linkElementNav" href="">Integraties</a></li>
                                 <li> <a class="linkElementNav" href="">Klantverhalen</a></li>
                             </ul>
@@ -950,11 +950,11 @@ $url = home_url( $wp->request );
                         </div>
                         <div id="collapseNavThree" class="collapse" aria-labelledby="headingNavThree" data-parent="#accordionExample2">
                             <ul>
-                                <li><a  class="linkElementNav" href="">De expert ranking per sector</a></li>
-                                <li> <a class="linkElementNav" href="">Kennis verkopen</a></li>
-                                <li> <a class="linkElementNav" href="">Content creëren</a></li>
-                                <li> <a class="linkElementNav" href="">Uitleggen van producten / services</a></li>
-                                <li> <a class="linkElementNav" href="">Alle opleiders</a></li>
+                                <li><a  class="linkElementNav" href="/voor-teacher-2-2/">De expert ranking per sector</a></li>
+                                <li> <a class="linkElementNav" href="/verkopen/">Kennis verkopen</a></li>
+                                <li> <a class="linkElementNav" href="/creeren/">Content creëren</a></li>
+                                <li> <a class="linkElementNav" href="/uitleggen/">Uitleggen van producten / services</a></li>
+                                <li> <a class="linkElementNav" href="/opleiders/">Alle opleiders</a></li>
                             </ul>
                         </div>
                     </div>
@@ -971,10 +971,9 @@ $url = home_url( $wp->request );
                         <div id="collapseNavFour" class="collapse" aria-labelledby="headingNavFour" data-parent="#accordionExample2">
                             <ul>
                                 <li><a  class="linkElementNav" href="">Hoe werkt het?</a></li>
-                                <li> <a class="linkElementNav" href="">Contact</a></li>
+                                <li> <a class="linkElementNav" href="/contact/">Contact</a></li>
                                 <li> <a class="linkElementNav" href="">Wie zijn wij</a></li>
                                 <li> <a class="linkElementNav" href="">Onze visie</a></li>
-                                <li> <a class="linkElementNav" href=""></a></li>
                             </ul>
                         </div>
                     </div>
