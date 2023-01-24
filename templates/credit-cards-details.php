@@ -6,7 +6,7 @@
 $customer_id = "cst_SvDbwwQ4rK";
 $endpoint_pay = "https://api.mollie.com/v2/payments";
 $api_key = "Bearer test_c5nwVnj42cyscR8TkKp3CWJFd5pHk3";
-$base_url = "http://localhost:8888/local/";
+$base_url = "http://wp12.influid.nl";
 
 $data_payment = [
     'method' => 'creditcard',
@@ -40,8 +40,8 @@ $data_response_pay = json_decode( $response_pay, true );
 
 echo $data_response_pay['_links']['checkout']['href'];
 
-// if(isset($data_response_pay['id']))
-//     $pass_payment = true;      
 // close curl
-curl_close( $chpay );      
+curl_close( $chpay );  
+
+
 ?>

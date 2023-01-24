@@ -128,10 +128,7 @@ else{
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
     $httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
-    $pass_payment = false;
-
-    if(!$pass_payment)
-        $data['status'] = 'on-hold';
+    
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
 
     // get responses
@@ -147,7 +144,7 @@ else{
     else{
         //$message = "Subscription applied succesfully !";
         //$abonnement_id = $data_response['id']; 
-        echo "<center><br><a class='btn btndoawnloadCv' href='#'>Zie het overzicht van mijn abonnementen </a></center>";   
+        echo "<center><br><a class='btn btndoawnloadCv' href=''>Abonnementen succesvol gedaan !</a></center>";   
     }
 }
 
