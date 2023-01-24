@@ -58,7 +58,7 @@
 
     <div class="content-list-amount">
         <div class="d-flex justify-content-between align-items-center head-block">
-            <h2>List Amount</h2>
+            <h2></h2>
             <input class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" >
         </div>
         <table class="table">

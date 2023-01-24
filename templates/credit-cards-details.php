@@ -2,25 +2,36 @@
 <?php wp_head(); ?>
 <?php get_header(); ?>
 <?php extract($_POST); ?>
-
-<div class="contentProfil ">
+<div class="content-cards-credit-details">
 
     <center><?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"?></center>
     <div class="contentFormSubscription">
         <h4 class="titleSubscription"> Credit card </h4>
 
         <div id="required">
-        
         </div>
 
-        <input type="hidden" value="<?= $first_name ?>" name="first_name" id="first_name">
-        <input type="hidden" value="<?= $last_name ?>" name="last_name" id="last_name">
-        <input type="hidden" value="<?= $bedrjifsnaam ?>" name="bedrjifsnaam" id="bedrjifsnaam">
-        <input type="hidden" value="<?= $city ?>" name="city" id="city">
-        <input type="hidden" value="<?= $email ?>" name="email" id="email">
-        <input type="hidden" value="<?= $phone ?>" name="phone" id="phone">
-        <input type="hidden" value="<?= $factuur_address ?>" name="factuur_address" id="factuur_address">
-        <input type="hidden" value="<?= $is_trial ?>" name="is_trial" id="is_trial">
+        <div>
+            <input type="hidden" value="<?= $first_name ?>" name="first_name" id="first_name">
+        </div>
+        <div>
+            <input type="hidden" value="<?= $last_name ?>" name="last_name" id="last_name">
+        </div>
+        <div>
+            <input type="hidden" value="<?= $bedrjifsnaam ?>" name="bedrjifsnaam" id="bedrjifsnaam">
+        </div>
+        <div>
+            <input type="hidden" value="<?= $city ?>" name="city" id="city">
+        </div>
+        <div>
+            <input type="hidden" value="<?= $email ?>" name="email" id="email">
+        </div>
+        <div>
+            <input type="hidden" value="<?= $phone ?>" name="phone" id="phone">
+        </div>
+        <div>
+            <input type="hidden" value="<?= $factuur_address ?>" name="factuur_address" id="factuur_address">
+        </div>
         <form id="payment_card">
             <div id="card"></div>
         <form>
