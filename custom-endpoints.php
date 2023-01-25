@@ -107,6 +107,8 @@ class Tags
 
 function allCourses ($data)
 {
+    $current_user_id = $GLOBALS['user_id'];
+    $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
     $course_type = $_GET['course_type'];
     $outcome_courses = array();
     $tags = array();
@@ -138,40 +140,45 @@ function allCourses ($data)
   if($number_of_page < $data['page'])
     return ['error' => "Page doesn't exist ! ","codeStatus" => 400];  
   
-  for($i=$start; $i < $end ;  $i++) {
-   // return get_user_by('ID',9);  
-      $courses[$i]->experts = array();
-      $experts = get_field('experts',$courses[$i]->ID);
-      if(!empty($experts))
-        foreach ($experts as $key => $expert) {
-          $expert = get_user_by( 'ID', $expert );
-          $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-          array_push($courses[$i]->experts, new Expert ($expert,$experts_img));
-          }
+  for($i=$start; $i < $end ;  $i++) 
+  {
+      $courses[$i]->visibility = get_field('visibility',$courses[$i]->ID) ?? [];
       $author = get_user_by( 'ID', $courses[$i] -> post_author  );
-      $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-      $courses[$i]-> author = new Expert ($author , $author_img);
-      $courses[$i]->longDescription = get_field('long_description',$courses[$i]->ID);
-      $courses[$i]->shortDescription = get_field('short_description',$courses[$i]->ID);
-      $courses[$i]->courseType = get_field('course_type',$courses[$i]->ID);
-      $courses[$i]->pathImage = get_field('url_image_xml',$courses[$i]->ID);
-      $courses[$i]->price = get_field('price',$courses[$i]->ID) ?? 0;
-      $courses[$i]->youtubeVideos = get_field('youtube_videos',$courses[$i]->ID) ? get_field('youtube_videos',$courses[$i]->ID) : []  ;
-      $courses[$i]->podcasts = get_field('podcasts',$courses[$i]->ID) ? get_field('podcasts',$courses[$i]->ID) : [];
-      $courses[$i]->visibility = get_field('visibility',$courses[$i]->ID);
-      $courses[$i]->connectedProduct = get_field('connected_product',$courses[$i]->ID);
-      $tags = get_field('categories',$courses[$i]->ID) ?? [];
-      $courses[$i]->tags= array();
-      if($tags)
-        if (!empty($tags))
-          foreach ($tags as $key => $category) 
-            if(isset($category['value'])){
-              $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
-              array_push($courses[$i]->tags,$tag);
-            }
+      $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
+      if ($courses[$i]->visibility != []) 
+        if ($author_company != $current_user_company)
+          continue;
+          $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $courses[$i]->experts = array();
+          $experts = get_field('experts',$courses[$i]->ID);
+          if(!empty($experts))
+            foreach ($experts as $key => $expert) {
+              $expert = get_user_by( 'ID', $expert );
+              $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+              array_push($courses[$i]->experts, new Expert ($expert,$experts_img));
+              }
+          $courses[$i]-> author = new Expert ($author , $author_img);
+          $courses[$i]->longDescription = get_field('long_description',$courses[$i]->ID);
+          $courses[$i]->shortDescription = get_field('short_description',$courses[$i]->ID);
+          $courses[$i]->courseType = get_field('course_type',$courses[$i]->ID);
+          $courses[$i]->pathImage = get_field('url_image_xml',$courses[$i]->ID);
+          $courses[$i]->price = get_field('price',$courses[$i]->ID) ?? 0;
+          $courses[$i]->youtubeVideos = get_field('youtube_videos',$courses[$i]->ID) ? get_field('youtube_videos',$courses[$i]->ID) : []  ;
+          $courses[$i]->podcasts = get_field('podcasts',$courses[$i]->ID) ? get_field('podcasts',$courses[$i]->ID) : [];
           
-      $new_course = new Course($courses[$i]);
-      array_push($outcome_courses, $new_course);
+          $courses[$i]->connectedProduct = get_field('connected_product',$courses[$i]->ID);
+          $tags = get_field('categories',$courses[$i]->ID) ?? [];
+          $courses[$i]->tags= array();
+          if($tags)
+            if (!empty($tags))
+              foreach ($tags as $key => $category) 
+                if(isset($category['value'])){
+                  $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+                  array_push($courses[$i]->tags,$tag);
+                }
+              
+          $new_course = new Course($courses[$i]);
+          array_push($outcome_courses, $new_course);
     }
    return ['courses' => $outcome_courses, "codeStatus" => 200];
   }
@@ -257,6 +264,8 @@ function related_topics_subtopics(WP_REST_Request $request)
 }
 
 function get_expert_courses ($data) {
+  $current_user_id = $GLOBALS['user_id'];
+  $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
   $expert_id = $data['id'] ?? null;
   if (!isset($expert_id))
     return ['error' => "You have to fill the id of the expert" ];
@@ -271,6 +280,12 @@ function get_expert_courses ($data) {
   ));
   $expert_courses = array();
     foreach ($courses as $key => $course) {
+      $course->visibility = get_field('visibility',$course->ID) ?? [];
+      $author = get_user_by( 'ID', $course -> post_author  );
+      $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
+      if ($course->visibility != []) 
+        if ($author_company != $current_user_company)
+          continue;
       $course_experts = get_field('experts',$course->ID) ?? [];
       if (in_array($expert_id,$course_experts) || $expert_id == $course->post_author){
         $author = get_user_by( 'ID', $course -> post_author  );
@@ -342,6 +357,7 @@ function get_saved_course()
 {
   $current_user = $GLOBALS['user_id'];
   $course_saved = get_user_meta($current_user, 'course') ?? false ;
+  
   if (!empty($course_saved) || $course_saved)
   {
     $courses = get_posts(
@@ -519,7 +535,6 @@ function get_liked_courses()
 
 function recommended_course()
 {
-
   //The user
   $user = $GLOBALS['user_id'];
   
@@ -879,6 +894,8 @@ function like_course ($data) {
 
 function get_courses_of_subtopics($data)
 {
+  $current_user_id = $GLOBALS['user_id'];
+  $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
   $subtopic = get_the_category_by_ID($data['id']) ?? false;
   if (!$subtopic)
     return ['error' => 'This subtopic doesn\'t exist'];
@@ -892,6 +909,12 @@ function get_courses_of_subtopics($data)
   );
   $courses_related_subtopic = array();
   foreach ($global_courses as $course) {
+    $course->visibility = get_field('visibility',$course->ID) ?? [];
+    $author = get_user_by( 'ID', $course -> post_author  );
+    $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
+    if ($course->visibility != []) 
+        if ($author_company != $current_user_company)
+          continue;
     $category_default = get_field('categories', $course->ID);
     $category_xml = get_field('category_xml', $course->ID);
     if (!empty($category_default))
@@ -976,7 +999,8 @@ function get_courses_of_subtopics($data)
 
 function filter_course (WP_REST_Request $request)
 {
-  //return $data['page'];
+  $current_user_id = $GLOBALS['user_id'];
+  $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
   $tags_parameter = $request['tags'] ?? [];
   $authors = $request['authors'] ?? [];
   $companies = $request['companies'] ?? [];
@@ -992,7 +1016,13 @@ function filter_course (WP_REST_Request $request)
     )
   );
   $global_courses = array();
-  foreach ($courses as $key => $course) { 
+  foreach ($courses as $key => $course) {
+       $course->visibility = get_field('visibility',$course->ID) ?? [];
+       $author = get_user_by( 'ID', $course -> post_author  );
+       $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
+       if ($course->visibility != []) 
+        if ($author_company != $current_user_company)
+          continue;
        $course->experts = array();
        $experts = get_field('experts',$course->ID);
        if(!empty($experts))
@@ -1053,7 +1083,6 @@ function filter_course (WP_REST_Request $request)
               if (!in_array($course, $filtered_courses)) 
               {
                 array_push($filtered_courses, $course);
-                
               } 
           }
           
@@ -1064,7 +1093,6 @@ function filter_course (WP_REST_Request $request)
                  if ($course->price >= $min_price)
                   if (!in_array($course, $filtered_courses)) {
                     array_push($filtered_courses, $course);
-                  
                   }
             /** Filter by maximum price */
             if ($max_price != 0)
