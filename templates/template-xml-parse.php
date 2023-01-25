@@ -377,7 +377,6 @@
         'company_id' => $company_id,
         'status' => $status
       );
-      var_dump($post);
       $where = [ 'titel' => strval($datum->programDescriptions->programName) ];
       $updated = $wpdb->update( $table, $post, $where );
 

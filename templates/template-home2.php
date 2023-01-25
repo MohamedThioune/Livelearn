@@ -6,7 +6,104 @@
 $page = 'check_visibility.php';
 require($page);
 
-$calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+if(!isset($visibility_company))
+    $visibility_company = "";
+/*
+* Check statistic by user *
+*/
+
+$users = get_users();
+$numbers = array();
+$members = array();
+$numbers_count = array();
+$topic_views = array();
+$topic_followed = array();
+$stats_by_user = array();
+
+foreach ($users as $user) {
+    $topic_by_user = array();
+    $course_by_user = array();
+
+    //Object & ID member
+    array_push($numbers, $user->ID);
+    array_push($members, $user);
+    
+    //Views topic
+    $args = array(
+        'post_type' => 'view', 
+        'post_status' => 'publish',
+        'author' => $user->ID,
+    );
+    $views_stat_user = get_posts($args);
+    $stat_id = 0;
+    if(!empty($views_stat_user))
+        $stat_id = $views_stat_user[0]->ID;
+    $view_topic = get_field('views_topic', $stat_id);
+    if($view_topic)
+        array_push($topic_views, $view_topic);
+
+    $view_user = get_field('views_user', $stat_id);
+    $number_count['id'] = $user->ID; 
+    $number_count['digit'] = 0;
+    if(!empty($view_user))
+        $number_count['digit'] = count($view_user); 
+    if($number_count)
+        array_push($numbers_count, $number_count);
+
+    $view_course = get_field('views', $stat_id);
+
+    //Followed topic
+    $topics_internal = get_user_meta($user->ID, 'topic_affiliate');
+    $topics_external = get_user_meta($user->ID, 'topic');
+    $topic_followed  = array_merge($topics_internal, $topics_external, $topic_followed);
+
+    //Stats engagement
+    $stat_by_user['user'] = $view_user;
+    $stat_by_user['topic'] = $view_topic;
+    $stat_by_user['course'] = $view_course;
+    array_push($stats_by_user, $stat_by_user);
+}
+
+$topic_views_sorting = $topic_views[5];
+if(!$topic_views_sorting)
+    $topic_views_sorting = array();
+$topic_views_id = array_column($topic_views_sorting, 'view_id');
+$keys = array_column($numbers_count, 'digit');
+array_multisort($keys, SORT_DESC, $numbers_count);
+
+$most_active_members = array();
+$i = 0;
+if(!empty($numbers_count))
+    foreach ($numbers_count as $element) {
+        $i++;
+        if($i >= 13)
+            break;
+        $value = get_user_by('ID', $element['id']);        
+        $value->image_author = get_field('profile_img',  'user_' . $value->ID);
+        $value->image_author = $value->image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        array_push($most_active_members, $value);
+    }
+
+//Alles coursetype
+
+$type_course = array(
+    "Alles",
+    "Opleidingen",
+    "Training",
+    "Workshop",
+    "Masterclass",
+    "E-learning",
+    "Video",
+    "Artikel",
+    "Assessment",
+    "Cursus",
+    "Lezing",
+    "Event",
+    "Webinar",
+    "Leerpad",
+    "Podcast"
+);
+
 
 ?>
 
@@ -182,6 +279,7 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
         }
         .talent-binnen-block {
             margin: 40px 0 70px;
+            flex-direction: column-reverse;
         }
         .first-block-binnen {
             width: 100%;
@@ -189,10 +287,16 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
             padding-right: 17px;
         }
         .second-block-binnen {
-            width: 100%;
+            width: 90%;
             padding: 0px 50px;
             border-radius: 20px;
-            margin: 40px 15px 19px;
+            margin: 15px 15px 40px;
+        }
+        #modalVideo .modal-dialog {
+            width: 96% !important;
+        }
+        #modalVideo .modal-dialog iframe {
+            width: 100%;
         }
         .block-logo-parteners2 .logo-element {
             width: 27.5%;
@@ -253,23 +357,23 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
 </style>
 <?php
 $topic = (isset($_GET['topic'])) ? $_GET['topic'] : 0;
-$name_topic =  ($topic != 0) ? (String)get_the_category_by_ID($topic) : '';
-    function RandomString()
-    {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $randstring = '';
-        for ($i = 0; $i < 10; $i++) {
-            $rand = $characters[rand(0, strlen($characters))];
-            $randstring .= $rand;
-        }
-        return $randstring;
+
+function RandomString()
+{
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randstring = '';
+    for ($i = 0; $i < 10; $i++) {
+        $rand = $characters[rand(0, strlen($characters))];
+        $randstring .= $rand;
     }
+    return $randstring;
+}
 
-    if (isset($_POST))
-    {
+if (isset($_POST))
+{
 
-    extract($_POST);
-    if(isset($email)){
+extract($_POST);
+if(isset($email)){
 
         if($email != null)
         {
@@ -375,6 +479,7 @@ $degrees=[
     'hbo' => 'HBO',
     'university' => 'Universiteit',
 ];
+
   foreach ($degrees as $key => $value) {
     $input_degrees= '<input type="radio" name="choiceDegrees" value='.$key.' id="level'.$key.'"><label for="level'.$key.'">'.$value.'</label>';
   }
@@ -391,8 +496,8 @@ $degrees=[
 
     $course_type = ['Opleidingen','E-learnings','Lezingen','Trainingen','Videos','Events','Workshop','Artikelen','Webinars','Masterclasses','Assessments','Podcasts'];
     foreach ($course_type as $key => $value) {
-         $input_course_type= '
-         <div class="blockInputCheck">
+        $input_course_type = '
+        <div class="blockInputCheck">
              <input type="checkbox" name="choiceCourseType[]" value='.$value.' id="courseType'.$key.'"/><label class="labelChoose btnBaangerichte" for="courseType'.$key.'">'.$value.'</label>
         </div>';
 
@@ -459,6 +564,7 @@ $degrees=[
 
 
     $subtopics = array();
+    $topics = array();
     foreach($categories as $categ){
         //Topics
         $topicss = get_categories(
@@ -468,6 +574,7 @@ $degrees=[
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
             )
         );
+        $topics = array_merge($topics, $topicss);
 
         foreach ($topicss as  $value) {
             $subtopic = get_categories(
@@ -718,8 +825,7 @@ $degrees=[
     }
 
 
-    // for onze exoert block
-
+// for onze exoert block
 $global_blogs = get_posts($args);
 
 $blogs = array();
@@ -821,11 +927,11 @@ $saved = get_user_meta($user_id, 'course');
                 <h1 class="wordDeBestText2" >Hét leer- en upskilling platform van- én voor de toekomst</h1>
                 <p class="altijdText2">Onhandig als medewerkers niet optimaal functioneren. LiveLearn zorgt dat jouw workforce altijd op de hoogte is van de laatste kennis en vaardigheden.</p>
                 <form action="/product-search" class="position-relative" method="POST">
-                    <select class="form-select selectSearchHome" aria-label="search home page">
-                        <option value="Alles">Alles</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select class="form-select selectSearchHome" aria-label="search home page" name="search_type" id="course_type">
+                        <?php
+                            foreach($type_course as $type)
+                                echo '<option value="' . $type . '">' . $type . '</option>';
+                        ?>
                     </select>
                     <input id="search" type="search" class="jAuto searchInputHome form-control"
                         placeholder="Zoek op naam, experts of onderwerpen " name="search" autocomplete="off">
@@ -864,19 +970,21 @@ $saved = get_user_meta($user_id, 'course');
                     </div>
                     <hr>
                 </div>
+                <?php if(!$user_id) { ?>
                 <div class="groupeBtn-Jouw-inloggen groupBtnConnecte">
-                    <button class="btn btn-signup">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/googleImg.png" class=" " alt="">
-                        sign up with Google
-                    </button>
-                    <button class="btn btn-signup">
+                    <a href="http://wp12.influid.nl/login/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/googleImg.png" alt="" />
+                        Sign up with Google
+                    </a>
+                    <!-- <button class="btn btn-signup">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/linkedin-icon.png" class="" alt="">
                         sign up with Linkedin
-                    </button>
-                    <button class="btn btn-signup-email">
-                        sign up with email
-                    </button>
+                    </button> -->
+                    <a href="/inloggen" class="btn btn-signup-email">
+                        <span style="color:white">Sign up with E-mail</span>
+                    </a>
                 </div>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -1101,17 +1209,19 @@ $saved = get_user_meta($user_id, 'course');
            <div class="headCollections">
                <div class="dropdown show">
                    <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownHuman" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                       Onze top experts binnen <b>Alle categorieën</b> <b><?= $name_topic; ?></b>
+                       Onze top experts binnen <b>Alle categorieën</b> <b id="name_topic"><?= $name_topic; ?></b>
                    </a>
                    <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownHuman">
-                       <?php
-                       foreach($categories_topic as $category){
-                           echo '<a class="dropdown-item" href="category-overview?category=' . $category->cat_ID . '">' . $category->cat_name .'</a>';
-                       }
-                       ?>
+                        <select class="form-select selectSearchHome" name="search_type" id="topic_search" multiple="true">
+                            <?php
+                                foreach($topics as $category)
+                                    echo '<option value="' . $category->cat_ID . '">' . $category->cat_name . '</option>';
+                            ?>
+                        </select>
                    </div>
                </div>
-               <div class="dropdown show">
+               <!-- 
+                <div class="dropdown show">
                    <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                        Over de <b>laatste 7 dagen</b>
                    </a>
@@ -1121,41 +1231,51 @@ $saved = get_user_meta($user_id, 'course');
                        <a class="dropdown-item" href="#">Last 1 year</a>
                        <a class="dropdown-item" href="#">All time</a>
                    </div>
-               </div>
-               <div class="zelf-block">
-                   <p>Zelf ook een expert? </p>
-                   <a href="" class="all-expert">
+                </div> 
+                -->
+               <a href="/voor-teacher-2-2/" class="zelf-block">
+                   <p class="mr-2">Zelf ook een expert? </p>
+                   <div class="all-expert">
                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
-                   </a>
-               </div>
+                   </div>
+               </a>
            </div>
-           <div class="row">
+           <div class="row" id="autocomplete_categorieen">
                <?php
                $num = 1;
-               if($topic == 0)
-                   $teachers = $teachers_all;
-               if(!empty($teachers)){
-                   foreach($teachers as $teacher) {
-                       $user = get_users(array('include'=> $teacher))[0]->data;
+               if(!empty($most_active_members)){
+                   foreach($most_active_members as $user) {
                        $image_user = get_field('profile_img',  'user_' . $user->ID);
                        $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
+                       $company = get_field('company',  'user_' . $user->ID);
+                       $company_title = $company[0]->post_title;
+                       $company_logo = get_field('company_logo', $company[0]->ID);
+
+                        if(isset($user->first_name) || isset($user->last_name)) 
+                            $display_name = $user->first_name . ' ' . $user->last_name; 
+                        else 
+                            $display_name = $user->display_name;
+
+                        if(!$display_name || $display_name == " ")
+                            $display_name = "Anonym";
                        ?>
-                       <a href="/dashboard/user-overview/?id=<?php echo $user->ID; ?>" class="col-md-4">
+                       <a href="/dashboard/user-overview/?id=<?php echo $user->ID; ?>" target="_blank" class="col-md-4">
                            <div class="boxCollections">
                                <p class="numberList"><?php echo $num++ ; ?></p>
                                <div class="circleImgCollection">
                                    <img src="<?php echo $image_user ?>" alt="">
                                </div>
                                <div class="secondBlockElementCollection">
-                                   <p class="nameListeCollection"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . '' . $user->last_name; else echo $user->display_name; ?></p>
+                                   <p class="nameListeCollection"><?= $display_name ?></p>
                                   <!-- <div class="iconeTextListCollection">
                                        <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/ethereum.png" alt="">
                                        <p><?php /*echo number_format(rand(0,100000), 2, '.', ','); */?></p>
                                    </div>-->
                                    <div class="blockDetailCollection">
                                        <div class="iconeTextListCollection">
-                                           <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
-                                           <p>LiveLearn</p>
+                                           <img src="<?= $company_logo ?>" alt="">
+                                           <p><?= $company_title; ?></p>
                                        </div>
                                        <div class="iconeTextListCollection">
                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-brain.png" alt="">
@@ -1178,12 +1298,12 @@ $saved = get_user_meta($user_id, 'course');
 <div class="cardVoor">
     <div class="container-fluid web">
         <p class="titleblockOnze">Wie zijn dan onze gebruikers?</p>
-        <div class="zelf-block">
+        <div href="" class="zelf-block">
             <p>Lees alles wat wij doen ?</p>
-            <a href="" class="all-expert">
+            <div class="all-expert">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
-            </a>
-        </div>
+            </div>
+        </a>
         <div class="row paddingElement7">
             <div class="col-lg-4  col-md-6">
                 <a href="/static-education-individual">
@@ -1196,7 +1316,7 @@ $saved = get_user_meta($user_id, 'course');
                             <p class="voorText2 theme-card-title">Voor Individuen</p>
                             <p class="dePaterneText theme-card-description">Direct en gratis je persoonlijke skill paspoort. Blijf groeien gedurende je carrière of vind een
                                 nieuwe uitdaging</p>
-                            <p class="merrText text-center theme-card-button">Meer Informatie</p>
+                            <a href="/inloggen-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                         </div>
                     </div>
                 </a>
@@ -1212,7 +1332,7 @@ $saved = get_user_meta($user_id, 'course');
                             <p class="voorText2 theme-card-title">Voor opleiders / experts</p>
                             <p class="dePaterneText theme-card-description">Word partner van LiveLearn. Bied je training, cursus of e-learning eenvoudig aan en bereik
                                 nieuwe klanten.</p>
-                            <p class="merrText text-center theme-card-button">Meer Informatie</p>
+                            <a href="/voor-teacher-2-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                         </div>
                     </div>
                 </a>
@@ -1228,7 +1348,7 @@ $saved = get_user_meta($user_id, 'course');
                             <p class="voorText2 theme-card-title">Voor organisaties</p>
                             <p class="dePaterneText theme-card-description">Een lerende organisatie binnen een paar klikken. LiveLearn is jouw beste partner voor een
                                 future-proof organisatie.</p>
-                            <p class="merrText text-center theme-card-button">Meer Informatie</p>
+                            <a href="/voor-organisatie-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                         </div>
                     </div>
                 </a>
@@ -1250,7 +1370,7 @@ $saved = get_user_meta($user_id, 'course');
                                 <p class="voorText2 theme-card-title">Voor Individuen</p>
                                 <p class="dePaterneText theme-card-description">Direct en gratis je persoonlijke skill paspoort. Blijf groeien gedurende je carrière of vind een
                                     nieuwe uitdaging</p>
-                                <p class="merrText text-center theme-card-button">Meer Informatie</p>
+                                <a href="/inloggen-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                             </div>
                         </div>
                     </a>
@@ -1266,7 +1386,7 @@ $saved = get_user_meta($user_id, 'course');
                                 <p class="voorText2 theme-card-title">Voor opleiders / experts</p>
                                 <p class="dePaterneText theme-card-description">Word partner van LiveLearn. Bied je training, cursus of e-learning eenvoudig aan en bereik
                                     nieuwe klanten.</p>
-                                <p class="merrText text-center theme-card-button">Meer Informatie</p>
+                                <a href="/voor-teacher-2-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                             </div>
                         </div>
                     </a>
@@ -1282,7 +1402,7 @@ $saved = get_user_meta($user_id, 'course');
                                 <p class="voorText2 theme-card-title">Voor organisaties</p>
                                 <p class="dePaterneText theme-card-description">Een lerende organisatie binnen een paar klikken. LiveLearn is jouw beste partner voor een
                                     future-proof organisatie.</p>
-                                <p class="merrText text-center theme-card-button">Meer Informatie</p>
+                                <a href="/voor-organisatie-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                             </div>
                         </div>
                     </a>
@@ -1311,7 +1431,7 @@ $saved = get_user_meta($user_id, 'course');
                 <p class="text-description-jij">Een mobiele app</p>
             </div>
             <div class="d-flex align-items-center mt-4">
-                <a href="" class="btn btnStratAlVoor">Start al voor €4,95</a>
+                <a href="/voor-organisatie-2/" class="btn btnStratAlVoor">Start al voor €4,95</a>
                 <p class="GespecialiseerdText">Gespecialiseerd in het MKB</p>
             </div>
         </div>
@@ -1349,7 +1469,7 @@ $saved = get_user_meta($user_id, 'course');
         <p class="titleblockOnze">De onderwerpen waarin wij jouw kunnen helpen</p>
         <div class="zelf-block">
             <p>Bekijk alle onderwerp</p>
-            <a href="" class="all-expert">
+            <a href="/onderwer" class="all-expert">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
             </a>
         </div>
@@ -1456,8 +1576,6 @@ $saved = get_user_meta($user_id, 'course');
             <div class="swiper-wrapper">
                 <?php
                   $author_id = 0;
-                  $users = get_users();
-
                   foreach($users as $user){
                       $name_user = strtolower($user->data->display_name);
                       if($name_user == "Livelean" || $name_user == "livelean"){
@@ -1484,10 +1602,10 @@ $saved = get_user_meta($user_id, 'course');
                     /*
                     * Categories
                     */
-                    $category = ' ';
+                    $category = '';
                     $category_id = 0;
                     $category_str = 0;
-                    if($category == ' '){
+                    if($category == ''){
                         $one_category = get_field('categories',  $course->ID);
                         if(isset($one_category[0]['value']))
                             $category_str = intval(explode(',', $one_category[0]['value'])[0]);
@@ -1506,17 +1624,8 @@ $saved = get_user_meta($user_id, 'course');
                     /*
                     *  Date and Location
                     */
-                    $location = 'Virtual';
-                    $day = "<p><i class='fas fa-calendar-week'></i></p>";
-                    $month = '';
-
-                    $datas = get_field('data_locaties', $course->ID);
-
-                    /*
-                    *  Date and Location
-                    */
-                    $day = "<i class='fas fa-calendar-week'></i>";
-                    $month = ' ';
+                    $day = "-";
+                    $month = 'Virtual';
                     $location = ' ';
 
                     $data = get_field('data_locaties', $course->ID);
@@ -1527,7 +1636,7 @@ $saved = get_user_meta($user_id, 'course');
                     else{
                         $dates = get_field('dates', $course->ID);
                         if($dates)
-                            $day = explode(' ', $dates[0]['date']);
+                            $day = explode(' ', $dates[0]['date'])[0];
                         else{
                             $data = get_field('data_locaties_xml', $course->ID);
                             if(isset($data[0]['value'])){
@@ -1557,6 +1666,9 @@ $saved = get_user_meta($user_id, 'course');
                         $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
                     }
 
+                    //Company
+                    $company = get_field('company',  'user_' . $course->post_author);
+
                     ?>
                     <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiperSlideModife">
                         <div class="cardKraam2">
@@ -1566,20 +1678,30 @@ $saved = get_user_meta($user_id, 'course');
                                 </div>
                                 <div class="blockgroup7">
                                     <div class="iconeTextKraa">
+                                        <?php 
+                                        if($category != '') { ?>
                                         <div class="sousiconeTextKraa">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/kraam.png" class="icon7" alt="">
                                             <p class="kraaText"><?php echo $category ?></p>
                                         </div>
+                                        <?php } 
+                                        if(get_field('degree', $course->ID)) { 
+                                        ?>
                                         <div class="sousiconeTextKraa">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" class="icon7" alt="">
                                             <p class="kraaText"><?php echo get_field('degree', $course->ID);?></p>
                                         </div>
+                                        <?php } 
+                                        ?>
                                     </div>
                                     <div class="iconeTextKraa">
+                                        <?php 
+                                        if($day != '-') { ?>
                                         <div class="sousiconeTextKraa">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/calend.png" class="icon7" alt="">
                                             <p class="kraaText"><?php echo $day . ' ' . $month ?></p>
                                         </div>
+                                        <?php } ?>
                                         <div class="sousiconeTextKraa">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/euro1.png" class="icon7" alt="">
                                             <p class="kraaText"><?php echo $price; ?> &nbsp;&nbsp;</p>
@@ -1677,9 +1799,9 @@ $saved = get_user_meta($user_id, 'course');
         alert('bangricht');
     });
 
-     $('#search').keyup(function(){
+    $('#search').keyup(function(){
         var txt = $(this).val();
-
+        var typo = $("#course_type option:selected").val();
         event.stopPropagation();
 
         $("#list").fadeIn("fast");
@@ -1693,10 +1815,11 @@ $saved = get_user_meta($user_id, 'course');
         if(txt){
             $.ajax({
 
-                url:"fetch-ajax",
+                url:"/fetch-ajax",
                 method:"post",
                 data:{
                     search:txt,
+                    typo: typo,
                 },
                 dataType:"text",
                 success: function(data){
@@ -1747,6 +1870,24 @@ $saved = get_user_meta($user_id, 'course');
                     }
 
                 }
+        });
+    });
+</script>
+
+<script>
+    $('#topic_search').change(function(){
+        var topic_search = $("#topic_search option:selected").val();
+        $.ajax({
+            url:"/fetch-ajax-home2",
+            method:"post",
+            data:{
+                topic_search: topic_search,
+            },
+            dataType: "text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete_categorieen').html(data);
+            }
         });
     });
 </script>
