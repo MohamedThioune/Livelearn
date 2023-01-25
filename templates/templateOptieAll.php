@@ -17,7 +17,7 @@
                 $type = 'Artikel';
 
                  //Insert Artikel
-                if (strval($artikel->type) == "Artikel"){
+                if ($artikel->type == "Artikel"){
                     $args = array(
                         'post_type'   => 'post',
                         'post_author' => $artikel->author_id,
@@ -28,7 +28,7 @@
                     $id_post = wp_insert_post($args);
 
                     //Custom
-                    update_field('course_type', 'article', $id_post);
+                    update_field('course_type', 'Article', $id_post);
                     update_field('article_itself', nl2br($artikel->long_description), $id_post);
                 }
                 $onderwerpen = explode(',', $artikel->onderwerpen);
