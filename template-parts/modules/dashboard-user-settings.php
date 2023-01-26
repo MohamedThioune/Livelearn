@@ -1,3 +1,4 @@
+<html lang="en">
 <?php
 
 if(get_current_user_id())
@@ -235,7 +236,7 @@ if(!empty($bunch)){
 
 ?>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/nouislider.min.css">
-
+<body>
 <div class="content-settings">
     <a href="/dashboard/company/profile" class="goBackProfil">
         <img src="<?php echo get_stylesheet_directory_uri();?>/img/bi_arrow-left.png" alt="">
@@ -937,6 +938,9 @@ if(!empty($bunch)){
 </div></div></div>
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+
 <script>
     'use strict';
 
@@ -988,6 +992,8 @@ if(!empty($bunch)){
         });
     });
 </script>
+
+<script src="https://rawgit.com/andreruffert/rangeslider.js/develop/dist/rangeslider.min.js"></script>
 
 <script src="<?php echo get_stylesheet_directory_uri();?>/donu-chart.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/nouislider.min.js"></script>
@@ -1092,7 +1098,6 @@ if(!empty($bunch)){
     });
 </script>
 
-<script src="https://rawgit.com/andreruffert/rangeslider.js/develop/dist/rangeslider.min.js"></script>
 <script>
     $('input[type="range"]').rangeslider({
 
@@ -1141,6 +1146,6 @@ if(!empty($bunch)){
 
 </script>
 
-
-
+</body>
+</html>
 

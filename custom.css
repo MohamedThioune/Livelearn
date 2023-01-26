@@ -13089,7 +13089,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .zelf-block p{
     font-weight: 400;
     margin-right: 15px;
-    font-size: 14px;
+    font-size: 19px;
     color: #023356;
     margin-bottom: 0;
 }
@@ -17305,7 +17305,7 @@ background: #FFFFFF !important;
         justify-content: center;
     }
     .content-home2 .zelf-block p {
-        font-size: 14px;
+        font-size: 16px;
         width: fit-content !important;
     }
     .GespecialiseerdText {
