@@ -1,4 +1,4 @@
-<?php /** Template Name: Optie All*/?>
+ <?php /** Template Name: Optie All*/?>
 <?php
     global $wpdb;
 
