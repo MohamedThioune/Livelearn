@@ -316,9 +316,9 @@ function RandomString(){
             );
           }else{continue;}
         }
-        // var_dump($data);
-        $wpdb->insert($table,$data);
-        $id_post = $wpdb->insert_id;
+        var_dump($data);
+        // $wpdb->insert($table,$data);
+        // $id_post = $wpdb->insert_id;
       }
     }
   }
