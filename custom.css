@@ -4496,8 +4496,11 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 .iconeTextListCollection p {
     font-weight: bold;
     color: #ababab;
-    font-size: 14px;
+    font-size: 12px;
     margin-bottom: 0;
+}
+.iconeTextListCollection .number-brain {
+    font-weight: normal;
 }
 
 .pourcentageCollection {
@@ -13086,7 +13089,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .zelf-block p{
     font-weight: 400;
     margin-right: 15px;
-    font-size: 19px;
+    font-size: 14px;
     color: #023356;
     margin-bottom: 0;
 }
@@ -14556,6 +14559,20 @@ background: #FFFFFF !important;
 }
 .btn-scroll-down img{
     height: 48px;
+}
+.onze-expert-block .headCollections .dropdown-menu select {
+    color: #023356 !important;
+    font-size: 15px;
+    min-height: 120px;
+    padding: 10px 20px !important;
+    background: #FFFFFF !important;
+    border-radius: unset;
+    border: none;
+    margin-bottom: 0 !important;
+    box-shadow: none !important;
+}
+.onze-expert-block .headCollections .dropdown-menu select option {
+    margin-bottom: 6px;
 }
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -17288,7 +17305,7 @@ background: #FFFFFF !important;
         justify-content: center;
     }
     .content-home2 .zelf-block p {
-        font-size: 16px;
+        font-size: 14px;
         width: fit-content !important;
     }
     .GespecialiseerdText {

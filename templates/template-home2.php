@@ -1280,7 +1280,7 @@ $saved = get_user_meta($user_id, 'course');
                                        </div>
                                        <div class="iconeTextListCollection">
                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-brain.png" alt="">
-                                           <p><?php echo number_format(rand(0,100000), 2, '.', ',');?></p>
+                                           <p class="number-brain"><?php echo number_format(rand(0,100000), 2, '.', ',');?></p>
                                        </div>
                                    </div>
 
