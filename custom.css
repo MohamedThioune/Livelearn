@@ -13817,15 +13817,15 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .content-Probeer {
     width: 44%;
 }
-.content-contact .block-contact-calendy {
+.content-contact .block-contact-calendy, .content-community-overview .block-contact-calendy{
     background: #043356;
     padding: 48px 0 70px;
     margin: 0px 0;
 }
-.content-contact .block-contact-calendy .title-Direct-een {
+.content-contact .block-contact-calendy .title-Direct-een, .content-community-overview .block-contact-calendy .title-Direct-een{
     color: #ffffff;
 }
-.content-contact .block-contact-calendy .btn-kies {
+.content-contact .block-contact-calendy .btn-kies, .content-community-overview .block-contact-calendy .btn-kies{
     background: #E0EFF4;
     padding: 12px 35px;
     color: #043356;
@@ -14419,15 +14419,143 @@ background: #FFFFFF !important;
 .content-community-overview .frist-block-about{
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 .content-community-overview .frist-block-about .Ons-verhaal-block{
     width: 57%;
 }
 .content-community-overview .frist-block-about .block-img-about{
-    width: 30%;
+    width: 35%;
+}
+.block-img-about img{
+    width: 100%;
 }
 .blockDescriptionBlog ol li{
     list-style: auto;
+}
+.subTitle-about {
+    font-size: 33px;
+    color: #023356;
+    margin-bottom: 20px;
+}
+.description-about {
+    font-size: 17px;
+    color: #023356;
+    margin-bottom: 10px;
+    line-height: 32px;
+}
+.block-about {
+    margin-bottom: 50px;
+}
+.section-category .group-icon-category{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 60px auto 75px;
+}
+.group-icon-category .element-category {
+    width: 17%;
+    text-align: center;
+}
+.group-icon-category .element-category img{
+    width: 90px;
+    height: 90px;
+}
+.group-icon-category .element-category .name-category{
+    margin-bottom: 0;
+    margin-top: 10px;
+    color: #023356;
+    font-size: 16px;
+}
+.data-gedreven-block{
+    background: #E0EFF4;
+    display: flex;
+    justify-content: center;
+    padding: 8px 0;
+    border-radius: 10px;
+    align-items: center;
+    margin-bottom: 80px;
+}
+.data-gedreven-block img{
+    width: 31px;
+    margin-right: 10px;
+}
+.data-gedreven-block .description{
+    margin-bottom: 0px;
+    color: #023356;
+    font-size: 16px;
+}
+.team-section{
+    margin-top: 70px;
+    margin-bottom: 65px;
+}
+.team-section h2{
+    font-size: 34px;
+    color: #023356;
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+.team-section .team-block{
+    display: flex;
+    flex-wrap: wrap;
+}
+.team-section .team-block .one-element{
+    background: #023356;
+    text-align: center;
+    padding: 15px 17px 5px;
+    margin: 0 11px 20px;
+    border-radius: 10px;
+    width: 18%;
+}
+.team-section .team-block .one-element img{
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+}
+.team-section .team-block .one-element .name {
+    color: white;
+    font-weight: 100;
+    font-style: italic;
+    font-size: 19px;
+    margin-bottom: 11px;
+}
+.uiteindelijke-section{
+    text-align: center;
+}
+.uiteindelijke-section h3{
+    font-size: 34px;
+    color: #023356;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+.uiteindelijke-section .description{
+    color: #033356;
+    font-size: 17px;
+    margin-bottom: 30px;
+}
+.uiteindelijke-section .uiteindelijke-block{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 35px;
+}
+.uiteindelijke-section .uiteindelijke-block .number-uiteindelijke{
+    background: #E0EFF4;
+    text-align: center;
+    padding: 0 18px;
+    margin: 0 8px;
+    border-radius: 7px;
+}
+.uiteindelijke-section .uiteindelijke-block .number-uiteindelijke p{
+    font-weight: bold;
+    font-size: 35px;
+    color: #023356;
+    margin-bottom: 0;
+}
+.uiteindelijke-section .btn-scroll-down{
+    margin: -15px auto 35px;
+}
+.btn-scroll-down img{
+    height: 48px;
 }
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -17240,7 +17368,7 @@ background: #FFFFFF !important;
     .first-section-contact .card-contact{
         width: 100%;
     }
-    .content-contact .block-contact-calendy {
+    .content-contact .block-contact-calendy,.content-community-overview .block-contact-calendy {
         padding: 48px 20px 70px;
     }
     .title-Direct-een strong {
@@ -17365,6 +17493,126 @@ background: #FFFFFF !important;
         padding-top: 18px;
         margin: 25px 20px 60px;
     }
+    .content-community-overview .BaangerichteBlock .img-head-about {
+        width: 50px;
+        height: 50px;
+        margin-top: 35px;
+        margin-bottom: 0px;
+    }
+    .content-community-overview .content-community-overview .boxOne3-1 {
+        height: 35vh !important;
+        padding-bottom: 28px;
+    }
+    .content-community-overview h1 {
+        font-size: 35px;
+    }
+    .content-community-overview .frist-block-about {
+        padding: 0px 5px;
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+    }
+    .content-community-overview .frist-block-about .Ons-verhaal-block {
+        width: 100%;
+        padding: 0 18px;
+    }
+    .content-community-overview .frist-block-about .block-img-about {
+        width: 100%;
+        margin-bottom: 25px;
+    }
+    .subTitle-about {
+        font-size: 30px;
+        margin-bottom: 15px;
+    }
+    .section-category {
+        padding: 0 21px;
+    }
+    .description-about {
+        font-size: 16px;
+        margin-bottom: 10px;
+        line-height: 29px;
+    }
+    .section-category .group-icon-category {
+        margin: 55px auto 45px;
+        flex-wrap: wrap;
+    }
+    .group-icon-category .element-category {
+        width: 33%;
+        margin-bottom: 20px;
+    }
+    .group-icon-category .element-category img {
+        width: 65px;
+        height: 65px;
+    }
+    .group-icon-category .element-category .name-category {
+        margin-top: 12px;
+        font-size: 14px;
+    }
+    .data-gedreven-block .description {
+        margin-bottom: 0px;
+        color: #023356;
+        font-size: 15px;
+    }
+    .data-gedreven-block {
+        padding: 8px 25px;
+        margin-bottom: 75px;
+    }
+    .content-community-overview .section-category .frist-block-about {
+        padding: 0px 0px;
+    }
+    .content-community-overview .section-category .frist-block-about .Ons-verhaal-block {
+        padding: 0 0px;
+    }
+    .content-community-overview .section-category .frist-block-about .block-img-about {
+        width: 105%;
+        margin-bottom: 25px;
+        margin-left: -14px;
+    }
+    .team-section {
+        margin-top: 50px;
+        margin-bottom: 50px;
+        padding: 0 21px;
+    }
+    .team-section h2 {
+        font-size: 30px;
+        margin-bottom: 28px;
+    }
+    .team-section .team-block {
+        margin-left: -5px;
+        width: 104%;
+    }
+    .team-section .team-block .one-element {
+        padding: 13px 13px 5px;
+        margin: 0 5px 15px;
+        width: 30%;
+    }
+    .team-section .team-block .one-element .name {
+        font-size: 16px;
+    }
+    .uiteindelijke-section {
+        padding: 0 20px;
+    }
+    .uiteindelijke-section h3 {
+        font-size: 31px;
+        margin-bottom: 10px;
+    }
+    .uiteindelijke-section .description {
+        font-size: 15px;
+    }
+    .uiteindelijke-section .uiteindelijke-block {
+        flex-wrap: wrap;
+    }
+    .uiteindelijke-section .uiteindelijke-block .number-uiteindelijke {
+        padding: 0 8px;
+        margin: 0 2px;
+    }
+    .uiteindelijke-section .uiteindelijke-block .number-uiteindelijke p {
+        font-size: 20px;
+    }
+    .uiteindelijke-block img {
+        height: 30px;
+    }
+
+
 }
 
 .radius-custom {
