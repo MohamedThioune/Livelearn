@@ -1,130 +1,47 @@
 <?php /** Template Name: cards credit details payment */ ?>
-<?php wp_head(); ?>
-<?php get_header(); ?>
+
 <?php extract($_POST); ?>
 
-<div class="contentProfil ">
+<?php
+$customer_id = "cst_SvDbwwQ4rK";
+$endpoint_pay = "https://api.mollie.com/v2/payments";
+$api_key = "Bearer test_c5nwVnj42cyscR8TkKp3CWJFd5pHk3";
+$base_url = "http://wp12.influid.nl";
 
-    <center><?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"?></center>
-    <div class="contentFormSubscription">
-        <h4 class="titleSubscription"> Credit card </h4>
+$data_payment = [
+    'method' => 'creditcard',
+    'amount' => [
+        'currency' => 'EUR',
+        'value' => "0.01",
+    ],
+    'description' => 'First payment - ' . $first_name,
+    'customerId' => $customer_id,
+    'sequenceType' => 'first',
+    'redirectUrl' => $base_url . '/cards-payment',
+    'webhookUrl' => 'https://webshop.example.org/payments/webhook/',
+    'metadata' => [
+        'product_id' => $customer_id,
+    ]
+];
 
-        <div id="required">
-        
-        </div>
+// initialize curl
+$chpay = curl_init();
+// set other curl options customer
+curl_setopt($chpay, CURLOPT_HTTPHEADER, ['Authorization: ' . $api_key]);
+curl_setopt($chpay, CURLOPT_URL, $endpoint_pay);
+curl_setopt($chpay, CURLOPT_POST, true);
+curl_setopt($chpay, CURLOPT_POSTFIELDS, http_build_query($data_payment));
+curl_setopt($chpay, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($chpay, CURLOPT_FOLLOWLOCATION, TRUE);
+curl_setopt($chpay, CURLOPT_RETURNTRANSFER, true );
+$httpCode = curl_getinfo($chpay , CURLINFO_HTTP_CODE);
+$response_pay = curl_exec($chpay);
+$data_response_pay = json_decode( $response_pay, true );
 
-        <input type="hidden" value="<?= $first_name ?>" name="first_name" id="first_name">
-        <input type="hidden" value="<?= $last_name ?>" name="last_name" id="last_name">
-        <input type="hidden" value="<?= $bedrjifsnaam ?>" name="bedrjifsnaam" id="bedrjifsnaam">
-        <input type="hidden" value="<?= $city ?>" name="city" id="city">
-        <input type="hidden" value="<?= $email ?>" name="email" id="email">
-        <input type="hidden" value="<?= $phone ?>" name="phone" id="phone">
-        <input type="hidden" value="<?= $factuur_address ?>" name="factuur_address" id="factuur_address">
-        <input type="hidden" value="<?= $is_trial ?>" name="is_trial" id="is_trial">
-        <form id="payment_card">
-            <div id="card"></div>
-        <form>
-        <div class="modal-footer">
-            <button type="button" name="starter" id="starter" class="btn btn-sendSubscrip">Start</button>
-        </div>
+echo $data_response_pay['_links']['checkout']['href'];
 
-        <div id="output">
-    
-        </div>
-    </div>
+// close curl
+curl_close( $chpay );  
 
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://js.mollie.com/v1/mollie.js"></script>
 
-<script> 
-    var profile_id = "pfl_8SUjU2jSrq";
-
-    var mollie = Mollie( profile_id, { locale: 'nl_NL', testmode: true });
-    var options = {
-        styles : {
-            base: {
-                backgroundColor: '#eee',
-                color: 'black',
-                fontSize: '10px',
-                '::placeholder' : {
-                    color: 'rgba(68, 68, 68, 0.2)',
-                }
-            },
-            valid: {
-                color: '#45B0A1',
-            },
-            invalid: {
-                color: '#023356',
-            }
-        }
-    };
-    var cardComponent = mollie.createComponent('card', options);
-    cardComponent.mount('#card');
-    var form = document.getElementById('payment_card');
-    var button = document.getElementById('starter');
-    button.addEventListener('click', async e => {
-        $(e.preventDefault());
-        var pass = 0;
-
-        var first_name = $('#first_name').val();
-        var last_name = $('#last_name').val();
-        var bedrjifsnaam = $('#bedrjifsnaam').val();
-        var city = $('#city').val();
-        var email = $('#email').val();
-        var phone = $('#phone').val();
-        var factuur_address = $('#factuur_address').val();
-        var is_trial = $('#is_trial').val();
-
-        if( Boolean(first_name) && Boolean(last_name) && Boolean(bedrjifsnaam) && Boolean(email) && Boolean(phone) )
-            pass = 1;
-        
-        $('#starter').hide();
-
-        // if(pass == 1){
-        //     $('#required').html("");
-        // }
-        // else{
-        //     $('#required').html("<b><small style='color: #E10F51'>Something went wrong !</small><b><br><br>");
-        //     return 0;
-        // }
-
-        var { token, error } = await mollie.createToken();
-
-        if (error) {
-            token = 0;
-            console.log(error);
-            // Something wrong happened while creating the token. Handle this situation gracefully.
-            $('#required').html("<b><small style='color: #E10F51'>Something went wrong !</small><b><br>");
-            // return error;
-        }
-
-        $.ajax({
-            
-            url:"/starter",
-            method:"post",
-            data:{
-                first_name : first_name,
-                last_name : last_name,
-                bedrjifsnaam : bedrjifsnaam,
-                city : city,
-                email : email,
-                phone : phone,
-                factuur_address : factuur_address,
-                is_trial : is_trial,
-                method_payment : "credit_card",
-                card_token : token
-            },
-            dataType:"text",
-            success: function(data){
-                console.log(data);
-                $('#output').html(data);
-            }
-        });
-      
-    });
-
-</script>
-
-<?php get_footer(); ?>
-<?php wp_footer(); ?>
+?>

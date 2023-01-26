@@ -1234,12 +1234,12 @@ $saved = get_user_meta($user_id, 'course');
                    </div>
                 </div> 
                 -->
-               <div class="zelf-block">
-                   <p>Zelf ook een expert? </p>
-                   <a href="/voor-teacher-2-2/" class="all-expert">
+               <a href="/voor-teacher-2-2/" class="zelf-block">
+                   <p class="mr-2">Zelf ook een expert? </p>
+                   <div class="all-expert">
                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
-                   </a>
-               </div>
+                   </div>
+               </a>
            </div>
            <div class="row" id="autocomplete_categorieen">
                <?php
@@ -1299,12 +1299,12 @@ $saved = get_user_meta($user_id, 'course');
 <div class="cardVoor">
     <div class="container-fluid web">
         <p class="titleblockOnze">Wie zijn dan onze gebruikers?</p>
-        <div class="zelf-block">
+        <div href="" class="zelf-block">
             <p>Lees alles wat wij doen ?</p>
-            <a href="" class="all-expert">
+            <div class="all-expert">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
-            </a>
-        </div>
+            </div>
+        </a>
         <div class="row paddingElement7">
             <div class="col-lg-4  col-md-6">
                 <a href="/static-education-individual">
@@ -1432,7 +1432,7 @@ $saved = get_user_meta($user_id, 'course');
                 <p class="text-description-jij">Een mobiele app</p>
             </div>
             <div class="d-flex align-items-center mt-4">
-                <a href="" class="btn btnStratAlVoor">Start al voor €4,95</a>
+                <a href="/voor-organisatie-2/" class="btn btnStratAlVoor">Start al voor €4,95</a>
                 <p class="GespecialiseerdText">Gespecialiseerd in het MKB</p>
             </div>
         </div>
@@ -1603,10 +1603,10 @@ $saved = get_user_meta($user_id, 'course');
                     /*
                     * Categories
                     */
-                    $category = ' ';
+                    $category = '';
                     $category_id = 0;
                     $category_str = 0;
-                    if($category == ' '){
+                    if($category == ''){
                         $one_category = get_field('categories',  $course->ID);
                         if(isset($one_category[0]['value']))
                             $category_str = intval(explode(',', $one_category[0]['value'])[0]);
@@ -1625,17 +1625,8 @@ $saved = get_user_meta($user_id, 'course');
                     /*
                     *  Date and Location
                     */
-                    $location = 'Virtual';
-                    $day = "<p><i class='fas fa-calendar-week'></i></p>";
-                    $month = '';
-
-                    $datas = get_field('data_locaties', $course->ID);
-
-                    /*
-                    *  Date and Location
-                    */
-                    $day = "<i class='fas fa-calendar-week'></i>";
-                    $month = ' ';
+                    $day = "-";
+                    $month = 'Virtual';
                     $location = ' ';
 
                     $data = get_field('data_locaties', $course->ID);
@@ -1646,7 +1637,7 @@ $saved = get_user_meta($user_id, 'course');
                     else{
                         $dates = get_field('dates', $course->ID);
                         if($dates)
-                            $day = explode(' ', $dates[0]['date']);
+                            $day = explode(' ', $dates[0]['date'])[0];
                         else{
                             $data = get_field('data_locaties_xml', $course->ID);
                             if(isset($data[0]['value'])){
@@ -1688,20 +1679,30 @@ $saved = get_user_meta($user_id, 'course');
                                 </div>
                                 <div class="blockgroup7">
                                     <div class="iconeTextKraa">
+                                        <?php 
+                                        if($category != '') { ?>
                                         <div class="sousiconeTextKraa">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/kraam.png" class="icon7" alt="">
                                             <p class="kraaText"><?php echo $category ?></p>
                                         </div>
+                                        <?php } 
+                                        if(get_field('degree', $course->ID)) { 
+                                        ?>
                                         <div class="sousiconeTextKraa">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" class="icon7" alt="">
                                             <p class="kraaText"><?php echo get_field('degree', $course->ID);?></p>
                                         </div>
+                                        <?php } 
+                                        ?>
                                     </div>
                                     <div class="iconeTextKraa">
+                                        <?php 
+                                        if($day != '-') { ?>
                                         <div class="sousiconeTextKraa">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/calend.png" class="icon7" alt="">
                                             <p class="kraaText"><?php echo $day . ' ' . $month ?></p>
                                         </div>
+                                        <?php } ?>
                                         <div class="sousiconeTextKraa">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/euro1.png" class="icon7" alt="">
                                             <p class="kraaText"><?php echo $price; ?> &nbsp;&nbsp;</p>

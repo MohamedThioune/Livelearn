@@ -76,7 +76,7 @@ else{
 ?>
 
 <?php
-if ( !$access_granted ){
+if ($access_granted ){
 ?>
 <div class="contentProfil ">
 
@@ -227,7 +227,7 @@ else
 
             if(method_payment == 'credit_card'){
                 $.ajax({
-                    url:"/cards-payment",
+                    url:"/credit-card-details",
                     method:"post",
                     data:{
                         first_name : first_name,
@@ -243,7 +243,8 @@ else
                     dataType:"text",
                     success: function(data){
                         console.log(data);
-                        $('#output').html(data);
+                        window.location.href = data;
+                        // $('#output').html(data);
                     }
                 });
             }
@@ -264,8 +265,9 @@ else
                     },
                     dataType:"text",
                     success: function(data){
+                        window.location.href = "http://wp12.influid.nl/dashboard/company/profile-company/";
                         console.log(data);
-                        $('#output').html(data);
+                        // $('#output').html(data);
                     }
                 });
             }
