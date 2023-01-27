@@ -278,8 +278,8 @@ $mail_register_body =
                                 <a href="https://livelearn.nl/inloggen/"
                                   style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;">
                                   <span
-                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Active
-                                    My Account</span></p>
+                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">
+                                    Connect to your account</span></p>
                               </td>
                             </tr>
                           </tbody>
