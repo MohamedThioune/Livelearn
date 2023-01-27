@@ -242,7 +242,7 @@ $mail_register_body =
 
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
                               style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> 
-                              Je LOGIN-ID is <b style="color:blue">' . $email . '</b> en je wachtwoord <b>'. $password .'</b><br>
+                              Je LOGIN-ID is <b style="color:blue">' . $email . '</b> en je wachtwoord <b>'. $your_password .'</b><br>
                               U hebt een cursus toegewezen gekregen en zult die zien zodra de beheerders ze hebben aanvaard.<br>
                               </span>
                           </p>
