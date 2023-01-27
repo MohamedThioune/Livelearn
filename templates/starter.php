@@ -128,56 +128,7 @@ else{
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
     $httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
-    $pass_payment = false;
-    /*
-    ** Pass payment
-    */
-    if($method_payment == 'credit_card')
-    {
-        $amount_pay = 5 * $team;
-        $amount_pay = number_format($amount_pay, 2, '.', ',');
-        $endpoint_pay = "https://api.mollie.com/v2/payments";
-        $api_key = "Bearer test_c5nwVnj42cyscR8TkKp3CWJFd5pHk3";
-        $data_payment = [
-            'method' => 'creditcard',
-            'amount' => [
-                'currency' => 'EUR',
-                'value' => $amount_pay,
-            ],
-            'description' => 'Product #' . $product_id,
-            'redirectUrl' => 'https://webshop.example.org/order/12345/',
-            'webhookUrl' => 'https://webshop.example.org/payments/webhook/',
-            'cardToken' => $card_token
-        ];
-
-        // initialize curl
-        $chpay = curl_init();
-        // set other curl options customer
-        curl_setopt($chpay, CURLOPT_HTTPHEADER, ['Authorization: ' . $api_key]);
-        curl_setopt($chpay, CURLOPT_URL, $endpoint_pay);
-        curl_setopt($chpay, CURLOPT_POST, true);
-        curl_setopt($chpay, CURLOPT_POSTFIELDS, http_build_query($data_payment));
-        curl_setopt($chpay, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($chpay, CURLOPT_FOLLOWLOCATION, TRUE);
-        curl_setopt($chpay, CURLOPT_RETURNTRANSFER, true );
-        $httpCode = curl_getinfo($chpay , CURLINFO_HTTP_CODE);
-        $response_pay = curl_exec($chpay);
-        $data_response_pay = json_decode( $response_pay, true );
-        $response_pay = curl_exec($chpay);
-        // var_dump( $response_pay );
-        if(isset($data_response_pay['id']))
-            $pass_payment = true;      
-        // close curl
-        curl_close( $chpay );      
-    }
-    else
-        $pass_payment = true;
-    /*
-    ** 
-    */
-
-    if(!$pass_payment)
-        $data['status'] = 'on-hold';
+    
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
 
     // get responses
@@ -193,7 +144,7 @@ else{
     else{
         //$message = "Subscription applied succesfully !";
         //$abonnement_id = $data_response['id']; 
-        echo "<center><br><a class='btn btndoawnloadCv' href='#'>Zie het overzicht van mijn abonnementen </a></center>";   
+        echo "<center><br><a class='btn btndoawnloadCv' href=''>Abonnementen succesvol gedaan !</a></center>";   
     }
 }
 
