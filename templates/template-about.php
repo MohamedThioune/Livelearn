@@ -131,8 +131,8 @@
             <div class="frist-block-about">
                 <div class="Ons-verhaal-block">
                     <h2 class="subTitle-about">Ons verhaal</h2>
-                    <p class="description-about">LiveLearn is opgericht in 2019 door Daniel van der Kolk met als doel om leren en ontwikkelen beschikbaar te maken voor iedereen. Dit omdat organisaties en vooral het midden-klein-bedrijf het lastig vond om talent aan te trekken en vast te houden, maar ook omdat organisaties niet in staat waren hun personeel voldoende op te leiden, zodat zij de gewenste kwaliteit konden leveren.</p>
-                    <p class="description-about">Nu hoor LiveLearn bij één van de meest innovatieve partners voor organisaties om hun personeel op te leiden.</p>
+                    <p class="description-about">LiveLearn is opgericht in 2019 door Daniel van der Kolk met als doel om leren en ontwikkelen toegankelijk te maken voor iedereen. Dit omdat organisaties en vooral het midden-klein-bedrijf een uitdaging heeft om talent aan te trekken en vast te houden, maar ook omdat organisaties vaak moeite hebben om hun personeel voldoende op te leiden.</p>
+                    <p class="description-about">Door het individu centraal te stellen en managers inzicht te geven in de ontwikkeling van hun team(s) wordt talent-ontwikkeling voor elke organisatie mogelijk.  LiveLearn hoort bij één van de meest innovatieve partners voor organisaties om hun personeel op te leiden.  </p>
                 </div>
                 <div class="block-img-about">
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/For-individuals.png" class="img-head-about" alt="">
@@ -141,8 +141,8 @@
         </section>
         <section class="section-category">
             <h2 class="subTitle-about">Onze aanpak</h2>
-            <p class="description-about">LiveLearn is opgericht in 2019 door Daniel van der Kolk met als doel om leren en ontwikkelen beschikbaar te stellen voor iedereen. Dit omdat organisaties en vooral het midden-klein-bedrijf het lastig vond om talent aan te trekken en vast te houden, maar ook omdat organisaties niet in staat waren hun personeel voldoende op te leiden, zodat zij de gewenste kwaliteit konden leveren.</p>
-            <p class="description-about">Nu hoor LiveLearn bij één van de meest innovatieve partners voor organisaties om hun personeel op te leiden.</p>
+            <p class="description-about">De LiveLearn methode is net anders dan de traditionele learning & development partijen. Bij LiveLearn combineren we persoonlijke begeleiding en technologie om onze partners de beste ervaring te bieden. Wij begrijpen ook dat het ontwikkelen van talent niet altijd op de eerste plaats staat binnen een organisatie. Daarom maken wij onze software zo eenvoudig mogelijk, zodat er geen tijd verloren gaat. </p>
+            <p class="description-about">Wat doen wij dan als LiveLearn? Wij werken altijd datagedrevene en beredeneren ontwikkeling vanuit de individuele werknemer. Dit klinkt als een klein verschil, maar heeft op organisatie niveau enorme impact. Wij koppelen namelijk alle wensen en doelen van de individuele medewerker en bieden hen een persoonlijk, datagedreven, leeromgeving. Zo kunnen zij persoonlijk groeien. Alle data wordt geanonimiseerd en teruggekoppeld naar de manager, zodat deze vanuit real-time informatie beslissingen kan nemen. </p>
             <div class="group-icon-category">
                 <div class="element-category">
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/icon-Leerdoelen.png" class="" alt="icon-Leerdoelen">
@@ -172,8 +172,8 @@
             <div class="frist-block-about">
                 <div class="Ons-verhaal-block">
                     <h2 class="subTitle-about">MVO en opleiden talent</h2>
-                    <p class="description-about">LiveLearn is opgericht in 2019 door Daniel van der Kolk met als doel om leren en ontwikkelen beschikbaar te stellen voor iedereen. Dit omdat organisaties en vooral het midden-klein-bedrijf het lastig vond om talent aan te trekken en vast te houden, maar ook omdat organisaties niet in staat waren hun personeel voldoende op te leiden, zodat zij de gewenste kwaliteit konden leveren.</p>
-                    <p class="description-about">Nu hoor LiveLearn bij één van de meest innovatieve partners voor organisaties om hun personeel op te leiden.</p>
+                    <p class="description-about">Het LiveLearn team is gevestigd in Nederland en heeft een deel van haar IT capaciteiten gevestigd in Senegal, West-Afrika. Wij geloven dat het niet uit maakt waar talent gevestigd is en door hen de juiste handvatten te geven een wereldwijde workforce gerealiseerd kan worden. </p>
+                    <p class="description-about">Onze samenwerking met Orange maakt het mogelijk om een grote pool van talent aan te trekken en verder op te leiden. Zo implementeren wij onze filosofie ook binnen de eigen organisatie. </p>
                 </div>
                 <div class="block-img-about">
                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/teams.png" class="img-head-about" alt="">
