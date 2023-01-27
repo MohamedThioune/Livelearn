@@ -1279,7 +1279,7 @@ $saved = get_user_meta($user_id, 'course');
                                        </div>
                                        <div class="iconeTextListCollection">
                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-brain.png" alt="">
-                                           <p><?php echo number_format(rand(0,100000), 2, '.', ',');?></p>
+                                           <p class="number-brain"><?php echo number_format(rand(0,100000), 2, '.', ',');?></p>
                                        </div>
                                    </div>
 
@@ -1298,7 +1298,7 @@ $saved = get_user_meta($user_id, 'course');
 <div class="cardVoor">
     <div class="container-fluid web">
         <p class="titleblockOnze">Wie zijn dan onze gebruikers?</p>
-        <div href="" class="zelf-block">
+        <a href="/about/" class="zelf-block">
             <p>Lees alles wat wij doen ?</p>
             <div class="all-expert">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
@@ -1354,7 +1354,7 @@ $saved = get_user_meta($user_id, 'course');
                 </a>
             </div>
         </div>
-    </div>
+    </a>
     <div class="Mob">
         <p class="onzeText">Onze gebruikers</p>
         <div class="swiper-container swipeContaine1">
@@ -1467,12 +1467,12 @@ $saved = get_user_meta($user_id, 'course');
 <div class="block9">
     <div class="container-fluid">
         <p class="titleblockOnze">De onderwerpen waarin wij jouw kunnen helpen</p>
-        <div class="zelf-block">
+        <a href="/onderwer" class="zelf-block">
             <p>Bekijk alle onderwerp</p>
-            <a href="/onderwer" class="all-expert">
+            <div  class="all-expert">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
-            </a>
-        </div>
+            </div>
+        </a>
         <div class="blockGroupText">
             <p class="titleGroupText">Opleiden richting een baan </p>
 
