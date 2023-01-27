@@ -242,7 +242,7 @@ $mail_register_body =
 
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
                               style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> 
-                              Je LOGIN-ID is <b style="color:blue">' . $email . '</b> en je wachtwoord <b>'. $password .'</b><br>
+                              Je LOGIN-ID is <b style="color:blue">' . $email . '</b> en je wachtwoord <b>'. $your_password .'</b><br>
                               U hebt een cursus toegewezen gekregen en zult die zien zodra de beheerders ze hebben aanvaard.<br>
                               </span>
                           </p>
@@ -278,8 +278,8 @@ $mail_register_body =
                                 <a href="https://livelearn.nl/inloggen/"
                                   style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;">
                                   <span
-                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Active
-                                    My Account</span></p>
+                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">
+                                    Connect to your account</span></p>
                               </td>
                             </tr>
                           </tbody>
