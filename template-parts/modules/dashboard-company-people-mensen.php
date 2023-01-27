@@ -54,7 +54,7 @@ if(isset($single_add_people)){
                 ";
             
                 $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
-                wp_mail($email, $subject, $body, $headers, array( '' )) ; 
+                wp_mail($email, $subject, $mail_register_body, $headers, array( '' )) ; 
     
                 update_field('company', $company[0], 'user_'.$user_id);
 
