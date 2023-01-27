@@ -23,6 +23,7 @@ if(isset($single_add_people)){
 
         $login = RandomString();
         $password = RandomString();
+        $your_password = $password;
 
         $userdata = array(
             'user_pass' => $password,
@@ -44,25 +45,17 @@ if(isset($single_add_people)){
         else
             {
                 update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
+                update_field('company', $company[0], 'user_'.$user_id);
+
                 $subject = 'Je LiveLearn inschrijving is binnen! ✨';
-                $body = "
-                Bedankt voor je inschrijving<br>
-                <h1>Hello " . $first_name  . "</h1>,<br> 
-                Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br><br>
-                <h4>Inloggen:</h4><br>
-                <h6><a href='https://livelearn.nl/inloggen/'> Connexion </a></h6>
-                ";
-            
                 $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
                 wp_mail($email, $subject, $mail_register_body, $headers, array( '' )) ; 
-    
-                update_field('company', $company[0], 'user_'.$user_id);
 
                 header("Location: /dashboard/company/people/?message=U heeft met succes een nieuwe werknemer aangemaakt ✔️ ");
             }
-        }
-        else
-            header("Location: /dashboard/company/people-mensen/?message=Vul de e-mail in, alsjeblieft");
+    }
+    else
+        header("Location: /dashboard/company/people-mensen/?message=Vul de e-mail in, alsjeblieft");
 
 }
 else if(isset($multiple_add_people)){
@@ -73,6 +66,7 @@ else if(isset($multiple_add_people)){
             {
                 $login = RandomString();
                 $password = RandomString();
+                $your_password = $password;
                 $first_name = RandomString();
                 $last_name = RandomString();
     
@@ -94,19 +88,10 @@ else if(isset($multiple_add_people)){
                     continue;
                 }
                 else{
-
                     update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
                     update_field('company', $company[0], 'user_'.$user_id);
 
                     $subject = 'Je LiveLearn inschrijving is binnen! ✨';
-                    $body = "
-                        Bedankt voor je inschrijving<br>
-                        <h1>Hello and welcome to livelearn</h1>,<br> 
-                        Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br><br>
-                        <h4>Inloggen:</h4><br>
-                        <h6><a href='https://livelearn.nl/inloggen/'> Connexion </a></h6>
-                    ";
-                
                     $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
                     wp_mail($email, $subject, $mail_register_body, $headers, array( '' )) ;
                 }
