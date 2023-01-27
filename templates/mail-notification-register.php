@@ -230,8 +230,8 @@ $mail_register_body =
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content" data-testid="S_MPaSnC0uI"
                             style="margin: 10px 0; margin-top: 10px;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi ' . $first_name  . '
-                              name&gt;,</span></p>
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi <b>' . $first_name  . '
+                              </b></span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
                               style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"></span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
@@ -242,7 +242,7 @@ $mail_register_body =
 
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
                               style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> 
-                              Je LOGIN-ID is <b style="color:blue">' . $login . '</b> en je wachtwoord <b>'. $password .'</b><br>
+                              Je LOGIN-ID is <b style="color:blue">' . $email . '</b> en je wachtwoord <b>'. $password .'</b><br>
                               U hebt een cursus toegewezen gekregen en zult die zien zodra de beheerders ze hebben aanvaard.<br>
                               </span>
                           </p>
