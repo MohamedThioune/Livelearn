@@ -97,9 +97,13 @@ style="overflow-x: hidden !important;">
             </a>
         </li>
         <li class="elementTextDashboard">
-            <a href="/community-overview/" class="d-flex">
+            <!-- /community-overview/ -->
+            <a href="#" class="d-flex">
                 <div class="iconeElement"><img src="<?php echo get_stylesheet_directory_uri();?>/img/Statistieken.png"></div>
-                <p class="textLiDashboard">Communities</p>
+                <?php
+                if($option_menu[1] == 'community-overview') echo '<p class="textLiDashboard"><b>Communities</b></p>'; else echo  '<p class="textLiDashboard">Communities</p>';
+                ?>
+                <small class="comming-soon">&nbsp;&nbsp; <b>Coming Soon</b> </small>
             </a>
         </li>
         <div class="d-flex align-content-center">
