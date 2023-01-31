@@ -122,29 +122,6 @@ foreach ($users as $key => $value) {
         array_push($authors_dezzp, $value->ID);
 }
 
-$args = array(
-    'post_type' => array('post','course'),
-    'post_status' => 'publish',
-    'posts_per_page' => -1,
-    'author__in' => $authors_dezzp,
-    'order' => 'DESC',
-    );
-
-$course = get_posts($args);
-
-/*
-** Leerpaden  owned *
-*/
-
-$args = array(
-    'post_type' => 'learnpath',
-    'post_status' => 'publish',
-    'posts_per_page' => -1,
-    'author__in' => $authors_dezzp
-);
-
-$leerpaden = get_posts($args);
-
 ?>
 
 <div class="content-community-overview">
@@ -275,10 +252,10 @@ $leerpaden = get_posts($args);
                        <div>
                            <div class="content-card">
                                <p class="title">De energietransitie voor Zelfstandigen.</p>
-                               <p class="description"> ... </p>
+                               <p class="description">Ben jij 45+ en wil jij meer weten hoe je met pensioen kan gaan? Volg dit groeipad.</p>
                            </div>
                            <div class="footer-card">
-                               <a href="" class="btn btn-Bekijk">Bekijk</a>
+                               <a href="/community-detail/?com=DeZZP" class="btn btn-Bekijk">Bekijk</a>
                                <p class="tag yellow">Medium</p>
                            </div>
                        </div>
