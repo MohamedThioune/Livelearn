@@ -3,8 +3,8 @@
 <?php
 extract($_POST);
 
-//Current user
-$user_id = get_current_user_id();
+//Current company
+$company_title = get_field('company',  'user_' . $user_id)[0]->post_title;
 
 //Team members
 $users = get_users();
@@ -13,12 +13,12 @@ foreach($users as $user){
     $company_value = get_field('company',  'user_' . $user->ID);
     if(!empty($company_value)){
         $company_value_title = $company_value[0]->post_title;
-        if($company_value_title == $bedrjifsnaam)
+        if($company_value_title == $company_title)
             array_push($members, $user);
     }
 }
 $team = count($members);
-
+ 
 //endpoint for product 
 $endpoint_product = 'https://livelearn.nl/wp-json/wc/v3/products';
 $params = array( 
@@ -28,7 +28,7 @@ $params = array(
 //create endpoint with params
 $api_endpoint = $endpoint_product . '?' . http_build_query( $params );
 $data = [
-    'name' => $bedrjifsnaam ."~subscription",
+    'name' => $company_title ."~subscription",
     'type' => 'simple',
     'regular_price' => '5.00',
     'description' => 'No short description',
@@ -99,7 +99,7 @@ else{
         'billing' => [
             'first_name' => $first_name,
             'last_name'  => $last_name,
-            'company'    => $bedrjifsnaam,
+            'company'    => $company_title,
             'address_1'  => $factuur_address,
             'address_2'  => '',
             'city'     => '', //place
@@ -139,6 +139,7 @@ else{
         //$error = true;
         //$message = "Something went wrong !";
         //echo stripslashes($response);
+        http_response_code(401);
         echo "<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Something went wrong, please try later !</a></center>";
     }
     else{
