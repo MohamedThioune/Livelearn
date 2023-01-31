@@ -101,8 +101,47 @@
         margin-top: 10px;
     }
 
-    }
 </style>
+
+<?php
+
+$users = get_users();
+$authors = array();
+$company_id = 0;
+
+$community = "";
+if(isset($_GET['com']))
+    $community = $_GET['com'];
+
+foreach ($users as $key => $value) {
+    $company_user = get_field('company',  'user_' . $value->ID );
+    if($company_user[0]->post_title == $community){
+        $company_id = $company_user[0]->ID;
+        array_push($authors, $value->ID);
+    }
+}
+
+$args = array(
+    'post_type' => array('post','course', 'learnpath'),
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'author__in' => $authors,
+    'order' => 'DESC',
+);
+
+$courses = get_posts($args);
+
+$max_user = 0;
+if(!empty($authors))
+    $max_user = count($authors);
+
+$max_course = 0;
+if(!empty($courses))
+    $max_course = count($courses);
+
+$company_logo = (get_field('company_logo', $company_id)) ? get_field('company_logo', $company_id) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+
+?>
 
 <div class="content-detail-community">
     <section class="first-section-community">
@@ -112,15 +151,15 @@
                     <div class="card-detail-element">
                         <div class="head">
                             <div class="expert-element-detail-community">
-                                <p class="number">14</p>
+                                <p class="number"><?= $max_user ?></p>
                                 <p class="element">Experts</p>
                             </div>
                             <div class="expert-element-detail-community Deelnemers-element">
-                                <p class="number">1,8k</p>
+                                <p class="number">0</p>
                                 <p class="element">Deelnemers</p>
                             </div>
                             <div class="expert-element-detail-community">
-                                <p class="number">8</p>
+                                <p class="number"><?= $max_course ?></p>
                                 <p class="element">Courses</p>
                             </div>
                         </div>
@@ -130,7 +169,7 @@
                     </div>
                 </div>
                 <div class="second-col">
-                    <h1 class="title-community-detail">Zorgeloos met Pensioen</h1>
+                    <h1 class="title-community-detail"><?= $community ?></h1>
                     <p class="sub-title-community-detail">Ben jij 45+ en wil jij meer weten over hoe je met pensioen kan gaan? Volg deze community.</p>
                     <div class="d-flex align-items-center">
                         <div class="d-flex align-items-center">
@@ -143,12 +182,27 @@
                     <div class="d-flex align-items-center block-btn-image">
                         <a href="" class="btn btn-volg">Volg</a>
                         <div class="userBlock">
-                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
-                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Maurice_Veraa_.jpeg" alt="">
-                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/1.jpg" alt="">
-                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Ellipse17.png" alt="">
+                            <?php
+                                foreach ($authors as $key => $author){
+                                    if($key == 4)
+                                        break;
+                                    $portrait_image = get_field('profile_img',  'user_' . $author);
+                                    if (!$portrait_image)
+                                        $portrait_image = get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                    echo '<img src="' . $portrait_image . '"  alt="">';
+                                }
+                            ?>
                         </div>
-                        <p class="numberUser">+342</p>
+                        <p class="numberUser">
+                        <?php
+                            $plus_user = 0;
+                            $max_user = count($authors);
+                            if($max_user > 4){
+                                $plus_user = $max_user - 4;
+                                echo '+' . $plus_user;
+                            }
+                        ?>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -166,7 +220,73 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="cours-block">
+                        <?php
+                        foreach($courses as $course){
+                            /*
+                            * Categories
+                            */
+                            $category = ' ';
+                            $tree = get_the_terms($course->ID, 'course_category');
+                            if($tree)
+                                if(isset($tree[2]))
+                                    $category = $tree[2]->name;
+                            $category_id = 0;
+                            if($category == ' '){
+                                $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
+                                if($category_id != 0)
+                                    $category = (String)get_the_category_by_ID($category_id);
+                            }
+    
+                            /*
+                            * Price
+                            */
+                            $p = " ";
+                            $p = get_field('price', $course->ID);
+                            if($p != "0")
+                                $price =  number_format($p, 2, '.', ',');
+                            else
+                                $price = 'Gratis';
+    
+                            /*
+                            * Thumbnails
+                            */
+                            $thumbnail = get_field('preview', $course->ID)['url'];
+                            if(!$thumbnail){
+                                $thumbnail = get_field('url_image_xml', $course->ID);
+                                if(!$thumbnail)
+                                    $thumbnail = get_field('image', 'category_'. $category_id);
+                                if(!$thumbnail)
+                                    $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                            }
+
+                            //course-type
+                            $course_type = get_field('course_type',  $course->ID);
+
+                            //short-description
+                            $short_description = get_field('short_description',  $course->ID);
+                        ?>
                         <div class="card-course-community">
+                            <div class="position-relative">
+                                <div class="img-block-course">
+                                    <img src="<?= $thumbnail ?>" class="second-img-card-community" alt="">
+                                </div>
+                                <div class="done-block">
+                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/work-in-progress-.png" class="second-img-card-community" alt="">
+                                    <p>00%</p>
+                                </div>
+                            </div>
+                            <div class="content">
+                                <p class="tag-category"><?= $course_type ?></p>
+                                <p class="title"><?= $course->post_title ?></p>
+                                <p class="content-description">
+                                    <?= $short_description ?>
+                                </p>
+                            </div>
+                        </div>
+                        <?php
+                        }
+                        ?>
+                        <!-- <div class="card-course-community">
                             <div class="position-relative">
                                 <div class="img-block-course">
                                     <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Pensioen.png" class="second-img-card-community" alt="">
@@ -179,22 +299,6 @@
                             <div class="content">
                                 <p class="tag-category">E-learning</p>
                                 <p class="title">Wat is pensioen?</p>
-                                <p class="content-description">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English.</p>
-                            </div>
-                        </div>
-                        <div class="card-course-community">
-                            <div class="position-relative">
-                                <div class="img-block-course">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/PensienArtikel.png" class="second-img-card-community" alt="">
-                                </div>
-                                <div class="done-block">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/work-in-progress-.png" class="second-img-card-community" alt="">
-                                    <p>40%</p>
-                                </div>
-                            </div>
-                            <div class="content">
-                                <p class="tag-category">Artikel</p>
-                                <p class="title">Sparen doe je zo!</p>
                                 <p class="content-description">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English.</p>
                             </div>
                         </div>
@@ -257,7 +361,7 @@
                                 <p class="title">De mogelijkheden van online sparen.</p>
                                 <p class="content-description">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English.</p>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="col-md-4">
