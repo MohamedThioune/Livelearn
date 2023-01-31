@@ -434,7 +434,7 @@ if(isset($_GET['message']))
                                 <div class="cardKraam">
                                     <div class="headCardKraam">
                                         <div class="blockImgCardCour">
-                                            <img src="<?php echo $thumbnail; ?>" alt="">
+                                            <img class="lazy img-fluid" src="<?php echo get_stylesheet_directory_uri();?>/img/loader.gif" data-original="<?php echo $thumbnail; ?>" alt="">
                                         </div>
                                         <div class="blockgroup7">
                                             <div class="iconeTextKraa">
@@ -681,7 +681,7 @@ if(isset($_GET['message']))
                                         <div class="blockImgCardCour">
                                             <?php
                                             if($youtube_videos && $course_type == 'Video')
-                                                echo '<iframe width="355" height="170" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen></iframe>';
+                                                echo '<iframe width="355" height="170" class="lazy img-fluid" src="<?php echo get_stylesheet_directory_uri();?>/img/loader.gif" data-original="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen></iframe>';
                                             else
                                                 echo '<img src="' . $thumbnail .'" alt="">';
                                             ?>
@@ -903,7 +903,7 @@ if(isset($_GET['message']))
                         <div class="cardKraam">
                             <div class="headCardKraam">
                                 <div class="blockImgCardCour">
-                                    <img src="<?php echo $thumbnail; ?>" alt="">
+                                    <img class="lazy img-fluid" src="<?php echo get_stylesheet_directory_uri();?>/img/loader.gif" data-original="<?php echo $thumbnail; ?>" alt="">
                                 </div>
                                 <div class="blockgroup7">
                                     <div class="iconeTextKraa">
@@ -985,6 +985,13 @@ if(isset($_GET['message']))
 
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+<script>
+    $(function () {
+        $("img.lazy").lazyload();
+    });
+</script>
 
 <script>
     $(".btn_favourite").click((e)=>
