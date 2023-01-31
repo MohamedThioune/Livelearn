@@ -111,6 +111,42 @@
 
 </style>
 
+<?php
+
+$users = get_users();
+$authors_dezzp = array();
+
+foreach ($users as $key => $value) {
+    $company_user = get_field('company',  'user_' . $value->ID );
+    if($company_user[0]->post_title == 'DeZZP')
+        array_push($authors_dezzp, $value->ID);
+}
+
+$args = array(
+    'post_type' => array('post','course'),
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'author__in' => $authors_dezzp,
+    'order' => 'DESC',
+    );
+
+$course = get_posts($args);
+
+/*
+** Leerpaden  owned *
+*/
+
+$args = array(
+    'post_type' => 'learnpath',
+    'post_status' => 'publish',
+    'posts_per_page' => -1,
+    'author__in' => $authors_dezzp
+);
+
+$leerpaden = get_posts($args);
+
+?>
+
 <div class="content-community-overview">
     <section class="boxOne3-1">
         <div class="container">
@@ -154,13 +190,15 @@
                                    <div class="eye-block">
                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/awesome-eye.png" class="" alt="">
                                    </div>
-                                   <div class="userBlock">
+                                   <!-- <div class="userBlock">
                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg"  alt="">
                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Maurice_Veraa_.jpeg"  alt="">
                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/1.jpg"  alt="">
                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Ellipse17.png"  alt="">
-                                   </div>
-                                   <p class="numberUser">+342</p>
+                                   </div> -->
+                                   <p class="numberUser">
+                                    <!-- +342 -->
+                                    </p>
                                </div>
                            </div>
 
@@ -209,12 +247,27 @@
                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/awesome-eye.png" class="" alt="">
                                    </div>
                                    <div class="userBlock">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg"  alt="">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Maurice_Veraa_.jpeg"  alt="">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/1.jpg"  alt="">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Ellipse17.png"  alt="">
-                                   </div>
-                                   <p class="numberUser">+35</p>
+                                        <?php
+                                            foreach ($authors_dezzp as $key => $author){
+                                                if($key == 4)
+                                                    break;
+                                                $portrait_image = get_field('profile_img',  'user_' . $author);
+                                                if (!$portrait_image)
+                                                    $portrait_image = get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                                echo '<img src="' . $portrait_image . '"  alt="">';
+                                            }
+                                        ?>
+                                    </div>
+                                   <p class="numberUser">
+                                    <?php
+                                        $plus_user = 0;
+                                        $max_user = count($authors_dezzp);
+                                        if($max_user > 4){
+                                            $plus_user = $max_user - 4;
+                                            echo '+' . $plus_user;
+                                        }
+                                    ?>
+                                    </p>
                                </div>
                            </div>
 
@@ -222,7 +275,7 @@
                        <div>
                            <div class="content-card">
                                <p class="title">De energietransitie voor Zelfstandigen.</p>
-                               <p class="description">Ben jij 45+ en wil jij meer weten hoe je met pensioen kan gaan? Volg dit groeipad.</p>
+                               <p class="description"> ... </p>
                            </div>
                            <div class="footer-card">
                                <a href="" class="btn btn-Bekijk">Bekijk</a>
@@ -262,13 +315,15 @@
                                    <div class="eye-block">
                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/awesome-eye.png" class="" alt="">
                                    </div>
-                                   <div class="userBlock">
+                                      <!-- <div class="userBlock">
                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg"  alt="">
                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Maurice_Veraa_.jpeg"  alt="">
                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/1.jpg"  alt="">
                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Ellipse17.png"  alt="">
-                                   </div>
-                                   <p class="numberUser">+123</p>
+                                   </div> -->
+                                   <p class="numberUser">
+                                    <!-- +342 -->
+                                    </p>
                                </div>
                            </div>
 
