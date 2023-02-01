@@ -1,4 +1,4 @@
-<?php /** Template Name: community detail */ ?>
+<?php /** Template Name: community detail old */ ?>
 
 <body>
 <?php wp_head(); ?>
@@ -122,7 +122,7 @@ foreach ($users as $key => $value) {
 }
 
 $args = array(
-    'post_type' => array('post','course', 'learnpath'),
+    'post_type' => array('post','course','learnpath'),
     'post_status' => 'publish',
     'posts_per_page' => -1,
     'author__in' => $authors,
