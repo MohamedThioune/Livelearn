@@ -907,8 +907,6 @@ $url = home_url( $wp->request );
                                 <li><a class="linkElementNav" href="/inloggen-2/">Je eigen leeromgeving</a></li>
                                 <li> <a class="linkElementNav" href="/onderwer/">Wat voor content / onderwerpen?</a></li>
                                 <li> <a class="linkElementNav" href="/pricing/">Het is gratis</a></li>
-                                <li> <a class="linkElementNav" href="/">Koppelen aan bedrijf</a></li>
-                                <li> <a class="linkElementNav" href="/voor-organisatie-2/">Voor wie?</a></li>
                             </ul>
                         </div>
                     </div>
@@ -932,8 +930,6 @@ $url = home_url( $wp->request );
                                 <li> <a class="linkElementNav" href="/zzpers/">Voor ZZPers</a></li>
                                 <li> <a class="linkElementNav" href="/mkb/">Voor het MKB</a></li>
                                 <li> <a class="linkElementNav" href="/grootbedrijf/">Voor Corporates</a></li>
-                                <li> <a class="linkElementNav" href="">Integraties</a></li>
-                                <li> <a class="linkElementNav" href="">Klantverhalen</a></li>
                             </ul>
                         </div>
                     </div>
@@ -970,10 +966,9 @@ $url = home_url( $wp->request );
                         </div>
                         <div id="collapseNavFour" class="collapse" aria-labelledby="headingNavFour" data-parent="#accordionExample2">
                             <ul>
-                                <li><a  class="linkElementNav" href="">Hoe werkt het?</a></li>
                                 <li> <a class="linkElementNav" href="/contact/">Contact</a></li>
-                                <li> <a class="linkElementNav" href="">Wie zijn wij</a></li>
-                                <li> <a class="linkElementNav" href="">Onze visie</a></li>
+                                <li> <a class="linkElementNav" href="/about">Wie zijn wij</a></li>
+
                             </ul>
                         </div>
                     </div>
