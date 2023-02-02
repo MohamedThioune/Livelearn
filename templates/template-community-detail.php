@@ -222,7 +222,7 @@ if($community){
                 </div>
                 <div class="skills-mesure">
                     <div class="skillbars">
-                        <div class="progress" data-fill="25" >
+                        <div class="progress" data-fill="<?= rand(0,100); ?>" >
                         </div>
                         <div class="bg-gris-Skills"></div>
                     </div>
