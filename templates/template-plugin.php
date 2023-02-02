@@ -23,28 +23,28 @@ function RandomString(){
       'https://www.aestate.nl/',
       'https://albaconcepts.nl/',
       'https://www.am.nl/',
-      'https://limoonworks.nl/'//,
-      // 'https://www.dwa.nl/',
-      // 'https://www.vanspaendonck.nl/',
-      // 'https://ptg-advies.nl/',
-      // 'https://rever.nl/',
-      // 'https://www.reworc.com/',
-      // 'https://www.sweco.nl/',
-      // 'https://www.copilot.nl/',
-      // 'https://agilescrumgroup.nl/',
-      // 'https://horizontraining.nl/',
-      // 'https://www.kennethsmit.com/',
-      // 'https://www.autoblog.nl/',
-      // 'https://www.cryptouniversity.nl/',
-      // 'https://www.winelife.nl/',
-      // 'https://perswijn.nl/',
-      // 'https://www.kokenmetkennis.nl/',
-      // 'https://minkowski.org/',
-      // 'https://kitpublishers.nl/',
+      'https://limoonworks.nl/',
+      'https://www.dwa.nl/',
+      'https://www.vanspaendonck.nl/',
+      'https://ptg-advies.nl/',
+      'https://rever.nl/',
+      'https://www.reworc.com/',
+      'https://www.sweco.nl/',
+      'https://www.copilot.nl/',
+      'https://agilescrumgroup.nl/',
+      'https://horizontraining.nl/',
+      'https://www.kennethsmit.com/',
+      'https://www.autoblog.nl/',
+      'https://www.cryptouniversity.nl/',
+      'https://www.winelife.nl/',
+      'https://perswijn.nl/',
+      'https://www.kokenmetkennis.nl/',
+      'https://minkowski.org/',
+      'https://kitpublishers.nl/',
       // 'https://www.betastoelen.nl/',
       // 'https://zooi.nl/',
       // 'https://www.growthfactory.nl/',
-      // 'https://influid.nl/',
+      'https://influid.nl/',
       // 'https://mediatest.nl/',
       // 'https://memo2.nl/',
       // 'https://impact-investor.com/',
@@ -54,9 +54,9 @@ function RandomString(){
       // 'https://www.tln.nl/',
       // 'https://www.financieelfit.nl/',
       // 'https://www.businessinsider.nl/',
-      // 'https://www.frankwatching.com/',
+      'https://www.frankwatching.com/'
       // 'https://martech.org/',
-      // 'https://www.searchenginejournal.com/',
+      // 'https://www.searchenginejournal.com/'//,
       // 'https://www.entrepreneur.com/',
       // 'https://searchengineland.com/',
       // 'https://techcrunch.com/',
@@ -92,9 +92,8 @@ function RandomString(){
       // 'https://www.housingwire.com/',
       // 'https://aftersalesmagazine.nl/',
       // 'https://crsconsultants.nl/'
-  ];
+  ];  
   $table = $wpdb->prefix.'databank';
-  
   $company = null;
   $api_company_name = [
     'WorkPlace Academy',
@@ -104,40 +103,40 @@ function RandomString(){
     'Aestate',
     'Alba Concepts',
     'AM',
-    'Limoonworks'//,
-    // 'DWA',
-    // 'Van Spaendonck',
-    // 'PTG-advies',
-    // 'Rever',
-    // 'Reworc',
-    // 'Sweco',
-    // 'Co-pilot',
-    // 'Agile Scrum Group',
-    // 'Horizon',
-    // 'Kenneth Smit',
-    // 'Autoblog',
-    // 'Crypto university',
-    // 'WineLife',
-    // 'Perswijn',
-    // 'Koken met Kennis',
-    // 'Minkowski',
-    // 'KIT publishers',
+    'Limoonworks',
+    'DWA',
+    'Van Spaendonck',
+    'PTG-advies',
+    'Rever',
+    'Reworc',
+    'Sweco',
+    'Co-pilot',
+    'Agile Scrum Group',
+    'Horizon',
+    'Kenneth Smit',
+    'Autoblog',
+    'Crypto university',
+    'WineLife',
+    'Perswijn',
+    'Koken met Kennis',
+    'Minkowski',
+    'KIT publishers',
     // 'Be by Beta', 
     // 'Zooi',
     // 'Growth Factory',
-    // 'Influid',
+    'Influid',
     // 'MediaTest',
     // 'MeMo2',
-    // 'Equalture',
     // 'Impact Investor',
+    // 'Equalture',
     // 'Zorgmasters',
     // 'AdSysco',
     // 'Transport en logistiek Nederland',
     // 'Financieel Fit',
     // 'Business Insider',
-    // 'Frankwatching',
+    'Frankwatching'
     // 'Martech',
-    // 'Search Engine Journal',
+    // 'Search Engine Journal'//,
     // 'Entrepreneur Media',
     // 'Search Engine Land',
     // 'TechCrunch',
@@ -174,45 +173,38 @@ function RandomString(){
     // 'AfterSales',
     // 'CRS Consulting'
   ];
-  foreach($websites as $key=>$url){
-    $users = get_users();
-    $company_name= $api_company_name[$key];
-    $author_id=null;
+  $users = get_users();
+  $args = array(
+      'post_type' => 'company', 
+      'posts_per_page' => -1,
+  );
+  $companies = get_posts($args);
+  var_dump($companies);
+  foreach($websites as $key => $url){
+    $company_name = $api_company_name[$key];
+    $author_id = null;
+
+    foreach($companies as $companie) 
+      if($companie->post_title ==  $api_company_name[$key])
+        $company = $companie;
+
     foreach($users as $user) {
       $company_user = get_field('company',  'user_' . $user->ID);
-      if ($company_user!=null || isset($company_user[0]->post_title)) {
+
+      if(isset($company_user[0]->post_title)) 
         if(strtolower($company_user[0]->post_title) == strtolower($company_name) ){
           $author_id = $user->ID;
           $company = $company_user[0];
           $company_id = $company_user[0]->ID;
         }
-
-        if(!$author_id)
-        {
-          if(strtolower($company_user[0]->post_title) == $url){
-            // var_dump($url);
-            $company = $key;
-            $company_id = $company_user[0]->ID;
-            break;
-          }
-        }
-      }else{
-        continue;
-      }
     }
     
     if(!$author_id)
     {
-      if(strtolower($company_user[0]->post_title) == $url){
-        // var_dump($websites[$i]);
-        $company = $key;
-        $company_id = $company_user[0]->ID;      
-      }
-
       $login = RandomString();
       $password = RandomString();
       $random = RandomString();
-      $email = "author_" . $api_company_name[$key] . $random . "@expertise.nl";
+      $email = "author_" . $random . "@" . $api_company_name[$key] . ".nl";
       $first_name = explode(' ', $api_company_name[$key])[0];
       $last_name = isset(explode(' ', $api_company_name[$key])[1])?explode(' ', $api_company_name[$key])[1]:'';
 
@@ -224,17 +216,17 @@ function RandomString(){
         'display_name' => $first_name,
         'first_name' => $first_name,
         'last_name' => $last_name,
-        'role' => 'teacher'
+        'role' => 'author'
       );
-      // var_dump($userdata);
+
       $author_id = wp_insert_user(wp_slash($userdata));       
     }
-
 
     //Accord the author a company
     if(!is_wp_error($author_id))
       update_field('company', $company, 'user_' . $author_id);
-    $span  = $url."wp-json/wp/v2/posts/";
+
+    $span  = $url . "wp-json/wp/v2/posts/";
     $artikels= json_decode(file_get_contents($span),true);
     $onderwerpen='';
     foreach($artikels as $article){
@@ -323,3 +315,4 @@ function RandomString(){
     }
   }
 ?>   
+
