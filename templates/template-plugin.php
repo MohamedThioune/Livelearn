@@ -179,7 +179,6 @@ function RandomString(){
       'posts_per_page' => -1,
   );
   $companies = get_posts($args);
-  var_dump($companies);
   foreach($websites as $key => $url){
     $company_name = $api_company_name[$key];
     $author_id = null;
@@ -218,15 +217,14 @@ function RandomString(){
         'last_name' => $last_name,
         'role' => 'author'
       );
-
+      // var_dump($userdata);
       $author_id = wp_insert_user(wp_slash($userdata));       
     }
 
     //Accord the author a company
     if(!is_wp_error($author_id))
       update_field('company', $company, 'user_' . $author_id);
-
-    $span  = $url . "wp-json/wp/v2/posts/";
+    $span  = $url."wp-json/wp/v2/posts/";
     $artikels= json_decode(file_get_contents($span),true);
     $onderwerpen='';
     foreach($artikels as $article){

@@ -301,6 +301,8 @@ function custom_post_type() {
 
     register_post_type( 'assign', $assign_args );
 
+    //Views
+
     $view = array(
         'name'                => _x( 'Views', 'Views', 'view' ),
         'singular_name'       => _x( 'View', 'View', 'view' ),
@@ -342,14 +344,16 @@ function custom_post_type() {
 
     register_post_type( 'view', $view_args );
 
+    //Companies
+
     $company = array(
         'name'                => _x( 'Companies', 'Companies', 'company' ),
         'singular_name'       => _x( 'Companies', 'Company', 'company' ),
         'menu_name'           => __( 'Companies', 'company' ),
         //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
-        'all_items'           => __( 'All companies', 'course' ),
-        'view_item'           => __( 'View company', 'view_course' ),
-        'add_new_item'        => __( 'New company', 'add_new_course' ),
+        'all_items'           => __( 'All companies', 'company' ),
+        'view_item'           => __( 'View company', 'view_company' ),
+        'add_new_item'        => __( 'New company', 'add_new_company' ),
         'add_new'             => __( 'New company', 'text_domain' ),
         'edit_item'           => __( 'Edit Item', 'text_domain' ),
         'update_item'         => __( 'Update Item', 'text_domain' ),
@@ -382,8 +386,53 @@ function custom_post_type() {
 
     );
 
-
     register_post_type( 'company', $company_args );
+
+    //Communities
+
+    $community = array(
+        'name'                => _x( 'Communities', 'Communities', 'community' ),
+        'singular_name'       => _x( 'Communities', 'Community', 'community' ),
+        'menu_name'           => __( 'Communities', 'community' ),
+        //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
+        'all_items'           => __( 'All companies', 'community' ),
+        'view_item'           => __( 'View community', 'view_community' ),
+        'add_new_item'        => __( 'New community', 'add_new_community' ),
+        'add_new'             => __( 'New community', 'text_domain' ),
+        'edit_item'           => __( 'Edit Item', 'text_domain' ),
+        'update_item'         => __( 'Update Item', 'text_domain' ),
+        'search_items'        => __( 'Search Item', 'text_domain' ),
+        'not_found'           => __( 'Not found', 'text_domain' ),
+        'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
+    );
+
+    $community_args = array(
+        'label'               => __( 'community', 'text_domain' ),
+        'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
+        'labels'              => $community,
+        'supports'            => array('title', 'editor', 'author', 'custom-fields', 'excerpt'),
+        //'taxonomies'          => array('sales-person', 'sales-margin', 'location' ),
+        'hierarchical'        => false,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_rest'        => false,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => true,
+        'show_in_admin_bar'   => true,
+        'menu_position'       => 5,
+        'menu_icon'           => '',
+        'can_export'          => true,
+        'rewrite'             => array('slug' => 'community'),
+        'has_archive'         => true,
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'capability_type'     => 'page',
+
+    );
+
+
+    register_post_type( 'community', $community_args );
+
 }
 add_action( 'init', 'custom_post_type', 0 );
 
