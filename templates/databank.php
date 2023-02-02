@@ -220,7 +220,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         $('#select_field').hide(true,2000);
         $('#loader').attr('hidden',false);
         $.ajax({
-            url:'/livelearn/artikels',
+            url:'/artikels',
             type:'POST',
             datatype:'json',
             // cache:false,
@@ -290,7 +290,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-               url: '/livelearn/optieAll',
+               url: '/optieAll',
                type: 'POST',
                data: {
                    id: ids,
@@ -324,7 +324,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-               url: '/livelearn/optie-bank',
+               url: '/optie-bank',
                type: 'POST',
                data: {
                    id: ids,

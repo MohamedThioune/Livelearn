@@ -54,9 +54,9 @@ function RandomString(){
       // 'https://www.tln.nl/',
       // 'https://www.financieelfit.nl/',
       // 'https://www.businessinsider.nl/',
-      // 'https://www.frankwatching.com/'
+      // 'https://www.frankwatching.com/',
       // 'https://martech.org/',
-      // 'https://www.searchenginejournal.com/'//,
+      // 'https://www.searchenginejournal.com/',
       // 'https://www.entrepreneur.com/',
       // 'https://searchengineland.com/',
       // 'https://techcrunch.com/',
@@ -92,8 +92,9 @@ function RandomString(){
       // 'https://www.housingwire.com/',
       // 'https://aftersalesmagazine.nl/',
       // 'https://crsconsultants.nl/'
-  ];  
+  ];
   $table = $wpdb->prefix.'databank';
+  
   $company = null;
   $api_company_name = [
     'WorkPlace Academy',
@@ -127,16 +128,16 @@ function RandomString(){
     // 'Influid',
     // 'MediaTest',
     // 'MeMo2',
-    // 'Impact Investor',
     // 'Equalture',
+    // 'Impact Investor',
     // 'Zorgmasters',
     // 'AdSysco',
     // 'Transport en logistiek Nederland',
     // 'Financieel Fit',
     // 'Business Insider',
-    // 'Frankwatching'
+    // 'Frankwatching',
     // 'Martech',
-    // 'Search Engine Journal'//,
+    // 'Search Engine Journal',
     // 'Entrepreneur Media',
     // 'Search Engine Land',
     // 'TechCrunch',
@@ -179,12 +180,13 @@ function RandomString(){
       'posts_per_page' => -1,
   );
   $companies = get_posts($args);
+
   foreach($websites as $key => $url){
     $company_name = $api_company_name[$key];
     $author_id = null;
 
     foreach($companies as $companie) 
-      if($companie->post_title ==  $api_company_name[$key])
+      if($companie->post_title == $company_name)
         $company = $companie;
 
     foreach($users as $user) {
@@ -217,14 +219,15 @@ function RandomString(){
         'last_name' => $last_name,
         'role' => 'author'
       );
-      // var_dump($userdata);
+
       $author_id = wp_insert_user(wp_slash($userdata));       
     }
 
     //Accord the author a company
     if(!is_wp_error($author_id))
       update_field('company', $company, 'user_' . $author_id);
-    $span  = $url."wp-json/wp/v2/posts/";
+
+    $span  = $url . "wp-json/wp/v2/posts/";
     $artikels= json_decode(file_get_contents($span),true);
     $onderwerpen='';
     foreach($artikels as $article){
@@ -313,4 +316,3 @@ function RandomString(){
     }
   }
 ?>   
-
