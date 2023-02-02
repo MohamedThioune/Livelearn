@@ -71,7 +71,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 </div>
                 <div class="contentCardListeCourse">
                     <table class="table table-responsive">
-                        <form action="" method="post">
+                        <form action="">
                             <thead>
                             <tr>
                                 <th scope="col"><input type="checkbox" id="checkAll" onclick='checkUncheck(this);'></th>
@@ -83,7 +83,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                 <th scope="col">Status</th>
                                 <th scope="col">Author</th>
                                 <th scope="col">Company</th>
-                                <th class="tdCenter textThBorder"> <input type="submit" class="optieAll btn-default" name="acceptAll" style="background:white; border: DEE2E6" value="✔️" />&nbsp;<input type="submit" class="optieAll btn-default" id="declineAll" style="background:white" value="❌" /></th>
+                                <th class="tdCenter textThBorder"> <input type="button" class="optieAll btn-default" id="acceptAll" style="background:white; border: DEE2E6" value="✔️" />&nbsp;<input type="button" class="optieAll btn-default" id="declineAll" style="background:white" value="❌" /></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -116,7 +116,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     $key = $course->id;
                                 ?>
                                 <tr id="<?= $key ?>" class="<?= $state ?>">
-                                    <td class="textTh"><input type="checkbox" class="checkOne" name="checkOne[]" id="chkBox" value="<?= $course->id ?>"></td>
+                                    <td class="textTh"><input type="checkbox" class="checkOne" name="checkOne" id="chkBox" value="<?= $course->id ?>"></td>
                                     <td class="textTh"> <img src="<?= $image; ?>" alt="image course" width="50" height="50"></td>
                                     <td class="textTh courseDataBank" style="color:#212529;font-weight:bold"><?php echo $course->titel; ?></td>
                                     <td class="textTh tdCenter"><?= $course->type; ?></td>
@@ -132,7 +132,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     <td class="textTh tdCenter"><?= $course->status; ?></td>
                                     <td class="textTh tdCenter <?php if($course->author_id) echo ''; else echo 'author';  ?>"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo '<b>No author</b>'; ?></td>
                                     <td class="textTh tdCenter <?php if(!empty($company)) echo ''; else echo 'company';  ?>"> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo '<b>No company</b>'; ?> </td>
-                                    <td class="tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a href="/edit-databank?id=<?= $key ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> </td>
+                                    <td class="tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a href="/livelearn/edit-databank?id=<?= $key ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> </td>
                                 </tr>
                             <?php
                             }
@@ -202,7 +202,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     window.onload = uncheckAll;
 
     function checkUncheck(checkBox) {
-        get = document.getElementsByName('checkOne');
+        get = document.querySelectorAll('input[type=checkbox]');
         for(var i=0; i<get.length; i++) {
             get[i].checked = checkBox.checked;
         }
@@ -220,7 +220,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         $('#select_field').hide(true,2000);
         $('#loader').attr('hidden',false);
         $.ajax({
-            url:'/artikels',
+            url:'/livelearn/artikels',
             type:'POST',
             datatype:'json',
             // cache:false,
@@ -290,13 +290,13 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-               url: '/optieAll',
+               url: '/livelearn/optieAll',
                type: 'POST',
-            //    data: {
-            //        id: ids,
-            //        optie: optie,
-            //        class:classs
-            //     },
+               data: {
+                   id: ids,
+                   optie: optie,
+                   class:classs
+                },
                error: function() {
                   alert('Something is wrong');
                },
@@ -324,7 +324,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-               url: '/optie-bank',
+               url: '/livelearn/optie-bank',
                type: 'POST',
                data: {
                    id: ids,
