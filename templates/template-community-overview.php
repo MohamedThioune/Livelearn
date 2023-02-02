@@ -111,6 +111,18 @@
 
 </style>
 
+<?php
+
+$users = get_users();
+$args = array(
+    'post_type' => 'community',
+    'post_status' => 'publish',
+    'posts_per_page' => -1);
+
+$communities = get_posts($args);
+
+?>
+
 <div class="content-community-overview">
     <section class="boxOne3-1">
         <div class="container">
@@ -123,168 +135,92 @@
     <section class="block-card-community">
        <div class="container-fluid">
            <div class="row">
-               <div class="col-md-4">
-                   <div class="card-community-overview">
-                       <div class="head-card position-relative">
-                           <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Nationale-Nederlanden.png" class="second-img-card-community" alt="">
-                           <div class="block-img">
-                               <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Zorgeloos.png" class="img-card-community" alt="">
-                           </div>
-                           <div>
-                               <p class="title-card">Nationale Nederlanden</p>
-                               <div class="block-rating d-flex align-items-center">
-                                   <div class="rating-element2">
-                                       <div class="rating">
-                                           <input type="radio" id="star5" class="stars" name="rating" value="5" />
-                                           <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                                           <input type="radio" id="star4" class="stars" name="rating" value="4" />
-                                           <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                                           <input type="radio" id="star3" class="stars" name="rating" value="3" />
-                                           <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                                           <input type="radio" id="star2" class="stars" name="rating" value="2" />
-                                           <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                                           <input type="radio" id="star1" name="rating" value="1" />
-                                           <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
-                                       </div>
-                                       <span class="rating-counter"></span>
-                                   </div>
-                                   <p class="numberRating">(17)</p>
-                               </div>
-                               <div class="d-flex align-items-center">
-                                   <div class="eye-block">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/awesome-eye.png" class="" alt="">
-                                   </div>
-                                   <div class="userBlock">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg"  alt="">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Maurice_Veraa_.jpeg"  alt="">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/1.jpg"  alt="">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Ellipse17.png"  alt="">
-                                   </div>
-                                   <p class="numberUser">+342</p>
-                               </div>
-                           </div>
+            <?php
+            foreach($communities as $community){
+                $company = get_field('company_author', $community->ID)[0];
+                $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
 
-                       </div>
-                       <div>
-                           <div class="content-card">
-                               <p class="title">Zorgeloos met pensioen.</p>
-                               <p class="description">Ben jij 45+ en wil jij meer weten hoe je met pensioen kan gaan? Volg dit groeipad.</p>
-                           </div>
-                           <div class="footer-card">
-                               <a href="" class="btn btn-Bekijk">Bekijk</a>
-                               <p class="tag green">Easy</p>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-               <div class="col-md-4">
-                   <div class="card-community-overview">
-                       <div class="head-card position-relative">
-                           <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/DeZZP.png" class="second-img-card-community" alt="">
-                           <div class="block-img bg-white">
-                               <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/DeZZP.png" class="img-card-community" alt="">
-                           </div>
-                           <div>
-                               <p class="title-card">DeZZPer</p>
-                               <div class="block-rating d-flex align-items-center">
-                                   <div class="rating-element2">
-                                       <div class="rating">
-                                           <input type="radio" id="star5" class="stars" name="rating" value="5" />
-                                           <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                                           <input type="radio" id="star4" class="stars" name="rating" value="4" />
-                                           <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                                           <input type="radio" id="star3" class="stars" name="rating" value="3" />
-                                           <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                                           <input type="radio" id="star2" class="stars" name="rating" value="2" />
-                                           <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                                           <input type="radio" id="star1" name="rating" value="1" />
-                                           <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
-                                       </div>
-                                       <span class="rating-counter"></span>
-                                   </div>
-                                   <p class="numberRating">(6)</p>
-                               </div>
-                               <div class="d-flex align-items-center">
-                                   <div class="eye-block">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/awesome-eye.png" class="" alt="">
-                                   </div>
-                                   <div class="userBlock">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg"  alt="">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Maurice_Veraa_.jpeg"  alt="">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/1.jpg"  alt="">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Ellipse17.png"  alt="">
-                                   </div>
-                                   <p class="numberUser">+35</p>
-                               </div>
-                           </div>
+                $level = get_field('range', $community->ID);
+            ?>
+                <div class="col-md-4">
+                    <div class="card-community-overview">
+                        <div class="head-card position-relative">
+                            <img src="<?= $company_image; ?>" class="second-img-card-community" alt="">
+                            <div class="block-img bg-white">
+                                <img src="<?= $company_image; ?>" class="img-card-community" alt="">
+                            </div>
+                            <div>
+                                <p class="title-card"><?= $company->post_title; ?></p>
+                                <div class="block-rating d-flex align-items-center">
+                                    <div class="rating-element2">
+                                        <div class="rating">
+                                            <input type="radio" id="star5" class="stars" name="rating" value="5" />
+                                            <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                                            <input type="radio" id="star4" class="stars" name="rating" value="4" />
+                                            <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                                            <input type="radio" id="star3" class="stars" name="rating" value="3" />
+                                            <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                                            <input type="radio" id="star2" class="stars" name="rating" value="2" />
+                                            <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                                            <input type="radio" id="star1" name="rating" value="1" />
+                                            <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
+                                        </div>
+                                        <span class="rating-counter"></span>
+                                    </div>
+                                    <p class="numberRating">(0)</p>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="eye-block">
+                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/awesome-eye.png" class="" alt="">
+                                    </div>
+                                    <div class="userBlock">
+                                        <?php
+                                            $i = 0;
+                                            $max_user = 0;
+                                            // Get experts from compan
+                                            foreach ($users as $key => $value) {
+                                                $company_user = get_field('company',  'user_' . $value->ID );
+                                                if($company_user[0]->ID == $company->ID){
+                                                    $i++;
+                                                    if($i == 4)
+                                                        continue;
+                                                        $portrait_image = get_field('profile_img',  'user_' . $author);
+                                                        if (!$portrait_image)
+                                                            $portrait_image = $company_image;
+                                                        echo '<img src="' . $portrait_image . '"  alt="">';
+                                                }
+                                            }
+                                        ?>
+                                    </div>
+                                    <p class="numberUser">
+                                        <?php
+                                            $plus_user = 0;
+                                            $max_user = $i;
+                                            if($max_user > 4){
+                                                $plus_user = $max_user - 4;
+                                                echo '+' . $plus_user;
+                                            }
+                                        ?>
+                                        </p>
+                                </div>
+                            </div>
 
-                       </div>
-                       <div>
-                           <div class="content-card">
-                               <p class="title">De energietransitie voor Zelfstandigen.</p>
-                               <p class="description">Ben jij 45+ en wil jij meer weten hoe je met pensioen kan gaan? Volg dit groeipad.</p>
-                           </div>
-                           <div class="footer-card">
-                               <a href="" class="btn btn-Bekijk">Bekijk</a>
-                               <p class="tag yellow">Medium</p>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-               <div class="col-md-4">
-                   <div class="card-community-overview">
-                       <div class="head-card position-relative">
-                           <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Chabrol.png" class="second-img-card-community" alt="">
-                           <div class="block-img green-2">
-                               <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Chabrol.png" class="img-card-community" alt="">
-                           </div>
-                           <div>
-                               <p class="title-card">Chabrol</p>
-                               <div class="block-rating d-flex align-items-center">
-                                   <div class="rating-element2">
-                                       <div class="rating">
-                                           <input type="radio" id="star5" class="stars" name="rating" value="5" />
-                                           <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
-                                           <input type="radio" id="star4" class="stars" name="rating" value="4" />
-                                           <label class="star" for="star4" title="Great" aria-hidden="true"></label>
-                                           <input type="radio" id="star3" class="stars" name="rating" value="3" />
-                                           <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
-                                           <input type="radio" id="star2" class="stars" name="rating" value="2" />
-                                           <label class="star" for="star2" title="Good" aria-hidden="true"></label>
-                                           <input type="radio" id="star1" name="rating" value="1" />
-                                           <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
-                                       </div>
-                                       <span class="rating-counter"></span>
-                                   </div>
-                                   <p class="numberRating">623</p>
-                               </div>
-                               <div class="d-flex align-items-center">
-                                   <div class="eye-block">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/awesome-eye.png" class="" alt="">
-                                   </div>
-                                   <div class="userBlock">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg"  alt="">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Maurice_Veraa_.jpeg"  alt="">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/1.jpg"  alt="">
-                                       <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Ellipse17.png"  alt="">
-                                   </div>
-                                   <p class="numberUser">+123</p>
-                               </div>
-                           </div>
-
-                       </div>
-                       <div>
-                           <div class="content-card">
-                               <p class="title">Wijnexpert in Nederland.</p>
-                               <p class="description">Ben jij 45+ en wil jij meer weten hoe je met pensioen kan gaan? Volg dit groeipad.</p>
-                           </div>
-                           <div class="footer-card">
-                               <a href="" class="btn btn-Bekijk">Bekijk</a>
-                               <p class="tag red">Hard</p>
-                           </div>
-                       </div>
-                   </div>
-               </div>
+                        </div>
+                        <div>
+                            <div class="content-card">
+                                <p class="title"><?= $community->post_title; ?></p>
+                                <p class="description"><?= $community->post_excerpt; ?></p>
+                            </div>
+                            <div class="footer-card">
+                                <a href="/community-detail/?mu=<?= $community->ID ?>" class="btn btn-Bekijk">Bekijk</a>
+                                <p class="tag yellow"><?= $level ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php
+            }
+            ?>
            </div>
        </div>
     </section>
