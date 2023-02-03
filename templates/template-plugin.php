@@ -174,45 +174,38 @@ function RandomString(){
     // 'AfterSales',
     // 'CRS Consulting'
   ];
-  foreach($websites as $key=>$url){
-    $users = get_users();
-    $company_name= $api_company_name[$key];
-    $author_id=null;
+  $users = get_users();
+  $args = array(
+      'post_type' => 'company', 
+      'posts_per_page' => -1,
+  );
+  $companies = get_posts($args);
+
+  foreach($websites as $key => $url){
+    $company_name = $api_company_name[$key];
+    $author_id = null;
+
+    foreach($companies as $companie) 
+      if($companie->post_title == $company_name)
+        $company = $companie;
+
     foreach($users as $user) {
       $company_user = get_field('company',  'user_' . $user->ID);
-      if ($company_user!=null || isset($company_user[0]->post_title)) {
+
+      if(isset($company_user[0]->post_title)) 
         if(strtolower($company_user[0]->post_title) == strtolower($company_name) ){
           $author_id = $user->ID;
           $company = $company_user[0];
           $company_id = $company_user[0]->ID;
         }
-
-        if(!$author_id)
-        {
-          if(strtolower($company_user[0]->post_title) == $url){
-            // var_dump($url);
-            $company = $key;
-            $company_id = $company_user[0]->ID;
-            break;
-          }
-        }
-      }else{
-        continue;
-      }
     }
     
     if(!$author_id)
     {
-      if(strtolower($company_user[0]->post_title) == $url){
-        // var_dump($websites[$i]);
-        $company = $key;
-        $company_id = $company_user[0]->ID;      
-      }
-
       $login = RandomString();
       $password = RandomString();
       $random = RandomString();
-      $email = "author_" . $api_company_name[$key] . $random . "@expertise.nl";
+      $email = "author_" . $random . "@" . $api_company_name[$key] . ".nl";
       $first_name = explode(' ', $api_company_name[$key])[0];
       $last_name = isset(explode(' ', $api_company_name[$key])[1])?explode(' ', $api_company_name[$key])[1]:'';
 
@@ -224,17 +217,17 @@ function RandomString(){
         'display_name' => $first_name,
         'first_name' => $first_name,
         'last_name' => $last_name,
-        'role' => 'teacher'
+        'role' => 'author'
       );
-      // var_dump($userdata);
+
       $author_id = wp_insert_user(wp_slash($userdata));       
     }
-
 
     //Accord the author a company
     if(!is_wp_error($author_id))
       update_field('company', $company, 'user_' . $author_id);
-    $span  = $url."wp-json/wp/v2/posts/";
+
+    $span  = $url . "wp-json/wp/v2/posts/";
     $artikels= json_decode(file_get_contents($span),true);
     $onderwerpen='';
     foreach($artikels as $article){

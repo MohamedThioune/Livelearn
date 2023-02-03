@@ -1,9 +1,13 @@
 <?php /** Template Name: community detail */ ?>
-
-<body>
 <?php wp_head(); ?>
 <?php get_header(); ?>
-<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+
+<header>
+    <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+</header>
+
+<body>
+
 <style>
     .headerdashboard,.navModife {
         background: #deeef3;
@@ -104,275 +108,315 @@
     }
 </style>
 
-<div class="content-detail-community">
-    <section class="first-section-community">
-        <div class="container-fluid">
-            <div class="block-first-selection">
-                <div class="first-col">
-                    <div class="card-detail-element">
-                        <div class="head">
-                            <div class="expert-element-detail-community">
-                                <p class="number">14</p>
-                                <p class="element">Experts</p>
+<?php
+
+$no_content =  '
+                <center>
+                    <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" width="140" height="150" alt="Skill no-content" >
+                    <br><span class="text-dark h5 p-1 mt-2" style="color:#033256"> No content found !</span>
+                <center>
+                ';
+$users = get_users();
+$authors = array();
+
+$community = "";
+if(isset($_GET['mu']))
+    $community = get_post($_GET['mu']);
+
+if($community){
+
+    $company = get_field('company_author', $community->ID)[0];
+    $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+
+    foreach ($users as $value) {
+        $company_user = get_field('company',  'user_' . $value->ID );
+        if($company_user[0]->post_title == $company->post_title)
+            array_push($authors, $value->ID);
+    }
+
+    $args = array(
+        'post_type' => array('post','course','learnpath'),
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'author__in' => $authors,
+        'order' => 'DESC',
+    );
+    $courses = get_posts($args);
+    // courses comin through custom field 
+    // $courses = get_field('course_community', $community->ID);
+
+    $max_user = 0;
+    if(!empty($authors))
+        $max_user = count($authors);
+
+    $max_course = 0;
+    if(!empty($courses))
+        $max_course = count($courses);
+    
+    $level = get_field('range', $community->ID);
+
+?>
+
+    <div class="content-detail-community">
+        <section class="first-section-community">
+            <div class="container-fluid">
+                <div class="block-first-selection">
+                    <div class="first-col">
+                        <div class="card-detail-element">
+                            <div class="head">
+                                <div class="expert-element-detail-community">
+                                    <p class="number"><?= $max_user ?></p>
+                                    <p class="element">Experts</p>
+                                </div>
+                                <div class="expert-element-detail-community Deelnemers-element">
+                                    <p class="number">0</p>
+                                    <p class="element">Deelnemers</p>
+                                </div>
+                                <div class="expert-element-detail-community">
+                                    <p class="number"><?= $max_course ?></p>
+                                    <p class="element">Courses</p>
+                                </div>
                             </div>
-                            <div class="expert-element-detail-community Deelnemers-element">
-                                <p class="number">1,8k</p>
-                                <p class="element">Deelnemers</p>
+                            <div class="img-detail-community">
+                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Zorgeloos-2.png" class="second-img-card-community" alt="">
                             </div>
-                            <div class="expert-element-detail-community">
-                                <p class="number">8</p>
-                                <p class="element">Courses</p>
-                            </div>
-                        </div>
-                        <div class="img-detail-community">
-                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Zorgeloos-2.png" class="second-img-card-community" alt="">
                         </div>
                     </div>
-                </div>
-                <div class="second-col">
-                    <h1 class="title-community-detail">Zorgeloos met Pensioen</h1>
-                    <p class="sub-title-community-detail">Ben jij 45+ en wil jij meer weten over hoe je met pensioen kan gaan? Volg deze community.</p>
-                    <div class="d-flex align-items-center">
+                    <div class="second-col">
+                        <h1 class="title-community-detail"><?= $community->post_title; ?></h1>
+                        <p class="sub-title-community-detail"><?= $community->post_excerpt; ?></p>
                         <div class="d-flex align-items-center">
-                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Nationale-Nederlanden.png" class="logo-nationale-nederlander" alt="">
-                            <p class="Nationale-Nederlanden-text">nationale nederlander</p>
+                            <div class="d-flex align-items-center">
+                                <img src="<?= $company_image ?>" class="logo-nationale-nederlander" alt="">
+                                <p class="Nationale-Nederlanden-text"><?= $company->post_title; ?></p>
+                            </div>
+                            <p class="easy-tag"><?= $level ?></p>
+                            <p class="gratis-tag">Gratis</p>
                         </div>
-                        <p class="easy-tag">Easy</p>
-                        <p class="gratis-tag">Gratis</p>
+                        <div class="d-flex align-items-center block-btn-image">
+                            <a href="" class="btn btn-volg">Volg</a>
+                            <div class="userBlock">
+                                <?php
+                                    foreach ($authors as $key => $author){
+                                        if($key == 4)
+                                            break;
+                                        $portrait_image = get_field('profile_img',  'user_' . $author);
+                                        if (!$portrait_image)
+                                            $portrait_image = $company_image;
+                                        echo '<img src="' . $portrait_image . '"  alt="">';
+                                    }
+                                ?>
+                            </div>
+                            <p class="numberUser">
+                            <?php
+                                $plus_user = 0;
+                                $max_user = count($authors);
+                                if($max_user > 4){
+                                    $plus_user = $max_user - 4;
+                                    echo '+' . $plus_user;
+                                }
+                            ?>
+                            </p>
+                        </div>
                     </div>
-                    <div class="d-flex align-items-center block-btn-image">
-                        <a href="" class="btn btn-volg">Volg</a>
-                        <div class="userBlock">
-                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
-                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Maurice_Veraa_.jpeg" alt="">
-                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/1.jpg" alt="">
-                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Ellipse17.png" alt="">
+                </div>
+                <div class="skills-mesure">
+                    <div class="skillbars">
+                        <div class="progress" data-fill="<?= rand(0,100); ?>" >
                         </div>
-                        <p class="numberUser">+342</p>
+                        <div class="bg-gris-Skills"></div>
                     </div>
                 </div>
             </div>
-            <div class="skills-mesure">
-                <div class="skillbars">
-                    <div class="progress" data-fill="25" >
-                    </div>
-                    <div class="bg-gris-Skills"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="second-section-community">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="cours-block">
-                        <div class="card-course-community">
-                            <div class="position-relative">
-                                <div class="img-block-course">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Pensioen.png" class="second-img-card-community" alt="">
-                                </div>
-                                <div class="done-block">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/sign.png" class="second-img-card-community" alt="">
-                                    <p>Done</p>
-                                </div>
-                            </div>
-                            <div class="content">
-                                <p class="tag-category">E-learning</p>
-                                <p class="title">Wat is pensioen?</p>
-                                <p class="content-description">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English.</p>
-                            </div>
-                        </div>
-                        <div class="card-course-community">
-                            <div class="position-relative">
-                                <div class="img-block-course">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/PensienArtikel.png" class="second-img-card-community" alt="">
-                                </div>
-                                <div class="done-block">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/work-in-progress-.png" class="second-img-card-community" alt="">
-                                    <p>40%</p>
-                                </div>
-                            </div>
-                            <div class="content">
-                                <p class="tag-category">Artikel</p>
-                                <p class="title">Sparen doe je zo!</p>
-                                <p class="content-description">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English.</p>
-                            </div>
-                        </div>
-                        <div class="card-course-community">
-                            <div class="position-relative">
-                                <div class="img-block-course">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/PensioenArtikel2.png" class="second-img-card-community" alt="">
-                                </div>
-                                <div class="done-block">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/podcastIcone.png" class="second-img-card-community" alt="">
-                                </div>
-                            </div>
-                            <div class="content">
-                                <p class="tag-category">Podcast</p>
-                                <p class="title">Financiële onafhankelijkheid</p>
-                                <p class="content-description">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English.</p>
-                            </div>
-                        </div>
-                        <div class="card-course-community">
-                            <div class="position-relative">
-                                <div class="img-block-course">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/event.png" class="second-img-card-community" alt="">
-                                </div>
-                                <div class="done-block">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/event-calendar.png" class="second-img-card-community" alt="">
-                                </div>
-                            </div>
-                            <div class="content">
-                                <p class="tag-category">Event</p>
-                                <p class="title">Maak kennis met de financiële mogelijkheden.</p>
-                                <p class="content-description">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English.</p>
-                            </div>
-                        </div>
-                        <div class="card-course-community">
-                            <div class="position-relative">
-                                <div class="img-block-course">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/PensienArtikel.png" class="second-img-card-community" alt="">
-                                </div>
-                                <div class="done-block">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/leerpad-icon.png" class="second-img-card-community" alt="">
-                                </div>
-                            </div>
-                            <div class="content">
-                                <p class="tag-category">Leerpad</p>
-                                <p class="title">Leerpad omgaan met financiële tegenvallers</p>
-                                <p class="content-description">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English.</p>
-                            </div>
-                        </div>
-                        <div class="card-course-community">
-                            <div class="position-relative">
-                                <div class="img-block-course">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/video-community.png" class="second-img-card-community" alt="">
-                                </div>
-                                <div class="done-block">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/video-icon.png" class="second-img-card-community" alt="">
-                                </div>
-                            </div>
-                            <div class="content">
-                                <p class="tag-category">Video</p>
-                                <p class="title">De mogelijkheden van online sparen.</p>
-                                <p class="content-description">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English.</p>
-                            </div>
+        </section>
+        <section class="second-section-community">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="cours-block">
+                        <?php
+                        $events = array();
+                        $i = 0;
+                        if(!empty($courses))
+                            foreach($courses as $key => $course){
+                                // course-type
+                                $course_type = get_field('course_type', $course->ID);
+                                if($course_type == 'Event'){
+                                    array_push($events, $course);
+                                    continue;
+                                }
+                                $i++;
+
+                                if($i == 9)
+                                    continue;
+                                
+                                // image
+                                $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                if(!$thumbnail)
+                                    $thumbnail = get_field('url_image_xml', $course->ID);
+                                if(!$thumbnail)
+                                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                            
+                                $exposition = '';
+                                switch ($course_type) {
+                                    case 'E-learning':
+                                        $exposition = '<div class="img-block-course">
+                                                            <img src="' . $thumbnail . '" class="second-img-card-community" alt="">
+                                                        </div>
+                                                        <div class="done-block">
+                                                            <img src="' . get_stylesheet_directory_uri() . '/img/sign.png" class="second-img-card-community" alt="">
+                                                            <p>Done</p>
+                                                        </div>';
+                                        break;
+                                    case 'Artikel':
+                                        $exposition = '<div class="img-block-course">
+                                                            <img src="' . $thumbnail . '" class="second-img-card-community" alt="">
+                                                        </div>
+                                                        <div class="done-block">
+                                                            <img src="' . get_stylesheet_directory_uri() . '/img/work-in-progress-.png" class="second-img-card-community" alt="">
+                                                        </div>';
+                                        break;
+                                    case 'Podcast':
+                                        $exposition = '<div class="img-block-course">
+                                                            <img src="' . $thumbnail . '" class="second-img-card-community" alt="">
+                                                        </div>
+                                                        <div class="done-block">
+                                                            <img src="' . get_stylesheet_directory_uri() . '/img/podcastIcone.png" class="second-img-card-community" alt="">
+                                                        </div>';
+                                        break; 
+                                    case 'Leerpad':
+                                        $exposition = '<div class="img-block-course">
+                                                            <img src="' . $thumbnail . '" class="second-img-card-community" alt="">
+                                                        </div>
+                                                        <div class="done-block">
+                                                            <img src="' . get_stylesheet_directory_uri() . '/img/leerpad-icon.png"" class="second-img-card-community" alt="">
+                                                        </div>';
+                                        break;
+                                    case 'Video':
+                                        $exposition = '<div class="img-block-course">
+                                                            <img src="' . $thumbnail . '" class="second-img-card-community" alt="">
+                                                        </div>
+                                                        <div class="done-block">
+                                                            <img src="' . get_stylesheet_directory_uri() . '/img/video-icon.png" class="second-img-card-community" alt="">
+                                                        </div>';
+                                        break;
+                                    default :
+                                        $exposition = '<div class="img-block-course">
+                                                            <img src="' . $thumbnail . '" class="second-img-card-community" alt="">
+                                                        </div>
+                                                        <div class="done-block">
+                                                            <img src="' . get_stylesheet_directory_uri() . '/img/sign.png" class="second-img-card-community" alt="">
+                                                        </div>';
+                                        break;
+                                }
+                                
+                                //short-description
+                                $short_description = get_field('short_description',  $course->ID);
+                            ?>
+                                <a href="<?php echo get_permalink($course->ID); ?>" class="card-course-community">
+                                    <div class="position-relative">
+                                    <?php 
+                                        echo $exposition;
+                                    ?>
+                                    </div>
+                                    <div class="content">
+                                        <p class="tag-category"><?= $course_type; ?></p>
+                                        <p class="title"><?= $course->post_title; ?></p>
+                                        <p class="content-description"><?= $short_description; ?></p>
+                                    </div>
+                                </a>
+                            <?php
+                            }
+                        else
+                            echo $no_content;
+                        ?>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="block-agenda">
-                        <h3>Upcoming events</h3>
-                        <div class="card-agenda">
-                            <div class="first-block">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/ionic-md-calendar.png" class="icone-agenda" alt="">
-                                <p class="price">Free</p>
-                            </div>
-                            <div class="detail-description">
-                                <p class="date">15 Aug - 10h30 | <span>online</span></p>
-                                <p class="description">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English.</p>
-                            </div>
-                            <div class="user-calendar-img">
-                                <div class="userBlock">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Maurice_Veraa_.jpeg" alt="">
-                                    <div class="number">
-                                        <p>15</p>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="col-md-4">
+                        <div class="block-agenda">
+                            <h3>Upcoming events</h3>
+                            <?php
+                                $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+                                if(!empty($events)){
+                                foreach($events as $key => $course){
+                                    if($key == 8)
+                                        break;
 
-                        </div>
-                        <div class="card-agenda">
-                            <div class="first-block">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/ionic-md-calendar.png" class="icone-agenda" alt="">
-                                <p class="price">Free</p>
-                            </div>
-                            <div class="detail-description">
-                                <p class="date">15 Aug - 10h30 | <span>online</span></p>
-                                <p class="description">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English.</p>
-                            </div>
-                            <div class="user-calendar-img">
-                                <div class="userBlock">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Maurice_Veraa_.jpeg" alt="">
-                                    <div class="number">
-                                        <p>15</p>
+                                    $price = get_field('price', $course->ID) ?: 'Free';
+                                    $day = "00";
+                                    $month = "00";
+                                    $hours = "";
+                                    $dates = get_field('dates', $course->ID);
+                                    if($dates){
+                                        $date = $dates[0]['date'];
+                                        $days = explode(' ', $date)[0];
+                                        $day = explode('-', $days)[2];
+                                        $month = $calendar[explode('-', $date)[1]];
+                                        $time = explode(' ', $date)[1];
+                                        $hours = explode(':', $time)[0] . 'h' . explode(':', $time)[1];
+                                    }
+                                    $author_course = $course->post_author;
+                                    $experts = array();
+                                    $expert = get_field('experts', $course->ID);
+                                    $authors = array($author_course);
+                                    if(isset($expert[0]))
+                                        $experts = array_merge($expert, $author);
+                                    else
+                                        $experts = $authors;
+                            ?>
+                                <div class="card-agenda">
+                                    <div class="first-block">
+                                        <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/ionic-md-calendar.png" class="icone-agenda" alt="">
+                                        <p class="price"><?= $price ?></p>
+                                    </div>
+                                    <div class="detail-description">
+                                        <p class="date"><?php echo($day . ' ' . $month . ' - ' . $hours) ?> | <span>online</span></p>
+                                        <p class="description"></p>
+                                    </div>
+                                    <div class="user-calendar-img">
+                                        <div class="userBlock">
+                                            <?php
+                                                foreach ($experts as $key => $author){
+                                                    if($key == 2)
+                                                        break;
+                                                    $portrait_image = get_field('profile_img',  'user_' . $author);
+                                                    if (!$portrait_image)
+                                                        $portrait_image = $company_image;
+                                                    echo '<img src="' . $portrait_image . '"  alt="">';
+                                                }
+                                                $plus_user = 0;
+                                                $max_user = count($experts);
+                                                if($max_user > 2){
+                                                    $plus_user = $max_user - 2;
+                                                    echo '<div class="number">
+                                                            <p>+' . $plus_user . '</p>
+                                                          </div>';
+                                                }
+                                            ?>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-                        </div>
-                        <div class="card-agenda">
-                            <div class="first-block">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/ionic-md-calendar.png" class="icone-agenda" alt="">
-                                <p class="price">Free</p>
-                            </div>
-                            <div class="detail-description">
-                                <p class="date">15 Aug - 10h30 | <span>online</span></p>
-                                <p class="description">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English.</p>
-                            </div>
-                            <div class="user-calendar-img">
-                                <div class="userBlock">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Maurice_Veraa_.jpeg" alt="">
-                                    <div class="number">
-                                        <p>15</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="card-agenda">
-                            <div class="first-block">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/ionic-md-calendar.png" class="icone-agenda" alt="">
-                                <p class="price">Free</p>
-                            </div>
-                            <div class="detail-description">
-                                <p class="date">15 Aug - 10h30 | <span>online</span></p>
-                                <p class="description">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English.</p>
-                            </div>
-                            <div class="user-calendar-img">
-                                <div class="userBlock">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Maurice_Veraa_.jpeg" alt="">
-                                    <div class="number">
-                                        <p>15</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="card-agenda">
-                            <div class="first-block">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/ionic-md-calendar.png" class="icone-agenda" alt="">
-                                <p class="price">Free</p>
-                            </div>
-                            <div class="detail-description">
-                                <p class="date">15 Aug - 10h30 | <span>online</span></p>
-                                <p class="description">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here, content here’, making it look like readable English.</p>
-                            </div>
-                            <div class="user-calendar-img">
-                                <div class="userBlock">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/dan.jpg" alt="">
-                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Maurice_Veraa_.jpeg" alt="">
-                                    <div class="number">
-                                        <p>15</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="footer-card-agenda">
-                            <p>Bekijk alles</p>
+                            <?php
+                                }
+                                }
+                                else 
+                                    echo $no_content;
+                            ?> 
+                            <!-- <div class="footer-card-agenda">
+                                <p>Bekijk alles</p>
+                            </div> -->
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-</div>
+        </section>
+    </div>
 
-
+<?php
+}
+else
+    echo $no_content;
+?>
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
