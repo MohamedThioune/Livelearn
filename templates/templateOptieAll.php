@@ -53,7 +53,7 @@
         }else if($optie=="declineAll"){
             if ($class[$key] == 'missing')
                 null;
-            else if ($class[$key] == 'present' ){}
+            else if ($class[$key] == 'present' )
                 // var_dump($artikel->course_id);
                 wp_trash_post($artikel->course_id);
         }
