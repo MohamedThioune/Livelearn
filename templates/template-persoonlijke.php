@@ -8,9 +8,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 
 
-
 <?php   
-    
     $categories = array();
 
     $cats = get_categories( array(
@@ -43,7 +41,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="my-5" style="height: 38px !important;">
     <div class="row logo_slide">       
@@ -117,7 +114,6 @@
         </div>
     </div>
 <?php
-  
     } 
 ?>
 
@@ -134,14 +130,11 @@
 
 <!-- jQuery CDN -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
 
-
 <script>
-
-     // partners slides
-     $('.logo_slide').slick({
+    // partners slides
+    $('.logo_slide').slick({
         centerMode: false,
         centerPadding: '130px',
         dots: false,
@@ -170,7 +163,6 @@
         ]
     });
     
-
     var swiper = new Swiper('.swiper-container', {
         slidesPerView: 'auto',
         spaceBetween: 30,
@@ -180,6 +172,7 @@
         },
     });
 </script>
+
 <script>
     var swiper = new Swiper('.swipeContaine2', {
         slidesPerView: 7,
@@ -207,5 +200,6 @@
         },
     });
 </script>
+
 </body>
 </html>
