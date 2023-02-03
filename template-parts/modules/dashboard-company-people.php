@@ -80,7 +80,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                             <td scope="row"><?= $key + 1; ?></td>
                             <td class="textTh thModife">
                                 <div class="ImgUser">
-                                <a href="<?= $link; ?>" > <img src="<?php echo $image_user ?>" alt=""> </a>
+                                    <a href="<?= $link; ?>" > <img src="<?php echo $image_user ?>" alt=""> </a>
                                 </div>
                             </td>
                             <td class="textTh"> <a href="<?= $link; ?>" style="text-decoration:none;"><?php if(!empty($user->first_name)){echo $user->first_name;}else{echo $user->display_name;}?></a> </td>
@@ -92,10 +92,90 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                 <?php 
                                 if($manager_image){
                                 ?>
-                                <div class="ImgUser">
-                                    <img src="<?= $manager_image ?>" alt="">
-                                </div>
-                                <?php
+                                <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="#userModal">
+                                    <div class="ImgUser">
+                                        <img src="<?= $manager_image ?>" alt="">
+                                    </div>
+                                    <div class="ImgUser">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
+                                    </div>
+                                    <div class="ImgUser">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
+                                    </div>
+                                </button>
+                                    <!-- Modal -->
+                                    <div class="modal modalAllManager fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="userModalLabel">List of Manager</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table class="table table-all-manager">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col">Name</th>
+                                                            <th scope="col">Photo</th>
+                                                            <th scope="col">Company</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>Daniel</td>
+                                                            <td>
+                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
+                                                            </td>
+                                                            <td>Livelearn</td>
+                                                            <td><a href="">See</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Daniel</td>
+                                                            <td>
+                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Fadel.png" alt="">
+                                                            </td>
+                                                            <td>Livelearn</td>
+                                                            <td><a href="">See</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Daniel</td>
+                                                            <td>
+                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
+                                                            </td>
+                                                            <td>Livelearn</td>
+                                                            <td><a href="">See</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Daniel</td>
+                                                            <td>
+                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
+                                                            </td>
+                                                            <td>Livelearn</td>
+                                                            <td><a href="">See</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Daniel</td>
+                                                            <td>
+                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
+                                                            </td>
+                                                            <td>Livelearn</td>
+                                                            <td><a href="">See</a></td>
+                                                        </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <?php
                                     }
                                 ?>
                             </td>
@@ -189,6 +269,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 
 <script type="text/javascript">
     $(".remove").click(function(){

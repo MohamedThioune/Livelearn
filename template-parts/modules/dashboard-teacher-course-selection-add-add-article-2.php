@@ -1,6 +1,6 @@
 <div class="row">
-    <?php if($_GET['message']) echo "<span class='alert alert-error'>" . $_GET['message'] . "</span><br><br>"; ?>
     <div class="col-md-5 col-lg-8">
+        <?php if($_GET['message']) echo "<span class='alert alert-error'>" . $_GET['message'] . "</span><br><br>"; ?>
         <div class="cardCoursGlocal">
             <div id="basis" class="w-100">
                 <div class="titleOpleidingstype">
