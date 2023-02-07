@@ -520,7 +520,6 @@ if($community){
                                 }
                                 }
                                 else
-                                    // header("Location: /community-overview");
                                     echo $no_content;
                             ?> 
                             <!-- <div class="footer-card-agenda">
