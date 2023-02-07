@@ -885,8 +885,24 @@ else if(isset($details_user_departement)){
     header("Location: ". $message);
 }
 
-else if(isset($payment_card))
-    $message = "Payment";
+else if(isset($follow_community)){
+    $user = wp_get_current_user();
+    $followers = get_field('follower_community', $community_id);
+    if(!$followers)
+        $followers = array();
+    array_push($followers, $user);
+
+    update_field('follower_community', $followers, $community_id);
+
+    $path = "/community-detail/?mu=" . $community_id . "&message=Successfully subscribed to this community !";
+    header("Location: ". $path);
+}
+
+else if(isset($unfollow_community)){
+    
+    $path = "/community-detail/?mu=" . $community_id . "&message=Successfully unsubscribed to this community !";
+    header("Location: ". $path);
+}
     
 ?>
 <?php wp_head(); ?>
