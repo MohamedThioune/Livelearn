@@ -177,11 +177,12 @@ $communities = get_posts($args);
                                     <div class="userBlock">
                                         <?php
                                             // Get followers from company
-                                            $followers = get_field('follower_community', $community_id);
-                                            foreach ($followers as $key => $value) {
+                                            $followers = get_field('follower_community', $community->ID);
+                                            if(!empty($followers))
+                                            foreach($followers as $key => $value) {
                                                 if($key == 4)
                                                     break;
-                                                $portrait_image = get_field('profile_img',  'user_' . $value);
+                                                $portrait_image = get_field('profile_img',  'user_' . $value->ID);
                                                 if (!$portrait_image)
                                                     $portrait_image = $company_image;
                                                 echo '<img src="' . $portrait_image . '"  alt="">';
@@ -191,7 +192,9 @@ $communities = get_posts($args);
                                     <p class="numberUser">
                                         <?php
                                             $plus_user = 0;
-                                            $max_user = count($followers);
+                                            $max_user = 0;
+                                            if(!empty($followers))
+                                                $max_user = count($followers);
                                             if($max_user > 4){
                                                 $plus_user = $max_user - 4;
                                                 echo '+' . $plus_user;
