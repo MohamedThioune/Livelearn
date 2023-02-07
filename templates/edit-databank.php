@@ -18,6 +18,16 @@ $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $i
 
 $course = $wpdb->get_results( $sql )[0];
 
+/**
+ * Strip Tags
+ */
+
+ function strip_html_tags($text) {
+    $allowed_tags = ['h1', 'h2', 'br','h3','h4','b','h5','h6','strong','em','blockquote','ul','ol','li','a'];
+    $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
+    return preg_replace($pattern, '', $text);
+}
+
 /*
 * * Tags *
 */ 
@@ -269,13 +279,13 @@ $companies = get_posts($args);
 
                    <div class="input-group-course">
                        <label for="">Short description</label>
-                       <textarea  name="short_description" id="" cols="30" rows="6"><?= strip_tags($course->short_description) ?>
+                       <textarea  name="short_description" id="" cols="30" rows="6"><?= strip_html_tags($course->short_description) ?>
                        </textarea>
                    </div>
 
                    <div class="input-group-course">
                        <label for="">Long description</label>
-                       <textarea class="editor" id="summernote-long" name="long_description"><?= strip_tags($long_description) ?></textarea>
+                       <textarea class="editor" id="summernote-long" name="long_description"><?= strip_html_tags($long_description) ?></textarea>
                    </div>
 
                    <div class="input-group-course">
