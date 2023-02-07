@@ -109,6 +109,12 @@
 </style>
 
 <?php
+global $wp;
+
+$via_url = get_site_url() . "/community-overview";
+
+//current user
+$user_id = get_current_user_id();
 
 $no_content =  '
                 <center>
@@ -127,23 +133,16 @@ if($community){
 
     $company = get_field('company_author', $community->ID)[0];
     $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+    $community_image = get_field('image_community', $community->ID) ?: $company_image;
 
     foreach ($users as $value) {
-        $company_user = get_field('company',  'user_' . $value->ID );
-        if($company_user[0]->post_title == $company->post_title)
+        $company_user = get_field('company',  'user_' . $value->ID )[0];
+        if($company_user->post_title == $company->post_title)
             array_push($authors, $value->ID);
     }
 
-    $args = array(
-        'post_type' => array('post','course','learnpath'),
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'author__in' => $authors,
-        'order' => 'DESC',
-    );
-    $courses = get_posts($args);
     // courses comin through custom field 
-    // $courses = get_field('course_community', $community->ID);
+    $courses = get_field('course_community', $community->ID);
 
     $max_user = 0;
     if(!empty($authors))
@@ -152,10 +151,104 @@ if($community){
     $max_course = 0;
     if(!empty($courses))
         $max_course = count($courses);
+
+    $max_follower = 0;
+    $followers = get_field('follower_community', $community->ID);
+    if(!empty($followers))
+        $max_follower = count($followers);
     
     $level = get_field('range', $community->ID);
 
 ?>
+    <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
+    <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="position: absolute;height: 106% !important; overflow-y:hidden !important;">
+        <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+
+            <div class="modal-content">
+
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body  px-md-4 px-0">
+                    <div class="mb-4">
+                        <div class="text-center">
+                            <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                        </div>  
+                        <h3 class="text-center my-2">Sign Up</h3>
+                        <div class="text-center">
+                            <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                            data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign in</a></p>
+                        </div>
+                    </div>  
+
+
+                    <?php
+                        echo (do_shortcode('[user_registration_form id="59"]'));
+                    ?>
+
+                    <div class="text-center">
+                        <p>Al een account? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                                data-toggle="modal" data-target="#exampleModalCenter">Log-in</a></p>
+                    </div>
+
+                </div>
+            </div>
+        
+        </div>
+    </div>
+    <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
+
+    <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
+    <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        style="position: absolute;overflow-y:hidden !important;height: 95%; ">
+        <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body  px-md-5 px-4">
+                    <div class="mb-4">
+                        <div class="text-center">
+                            <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                        </div>
+                        <h3 class="text-center my-2">Sign In</h3>
+                        <div class="text-center">
+                            <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                            data-toggle="modal" data-target="#SignInWithEmail">&nbsp; Sign Up</a></p>
+                        </div>
+                    </div>
+
+                    <?php
+                    wp_login_form([
+                        'redirect' => $via_url,
+                        'remember' => false,
+                        'label_username' => 'Wat is je e-mailadres?',
+                        'placeholder_email' => 'E-mailadress',
+                        'label_password' => 'Wat is je wachtwoord?'
+                    ]);
+                    ?>
+                    <div class="text-center">
+                        <p>Nog geen account?  <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                            data-toggle="modal" data-target="#SignInWithEmail">Meld je aan</a></p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
+
 
     <div class="content-detail-community">
         <section class="first-section-community">
@@ -169,7 +262,7 @@ if($community){
                                     <p class="element">Experts</p>
                                 </div>
                                 <div class="expert-element-detail-community Deelnemers-element">
-                                    <p class="number">0</p>
+                                    <p class="number"><?= $max_follower ?></p>
                                     <p class="element">Deelnemers</p>
                                 </div>
                                 <div class="expert-element-detail-community">
@@ -178,7 +271,7 @@ if($community){
                                 </div>
                             </div>
                             <div class="img-detail-community">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Zorgeloos-2.png" class="second-img-card-community" alt="">
+                                <img src="<?= $community_image; ?>" class="second-img-card-community" alt="">
                             </div>
                         </div>
                     </div>
@@ -194,13 +287,38 @@ if($community){
                             <p class="gratis-tag">Gratis</p>
                         </div>
                         <div class="d-flex align-items-center block-btn-image">
-                            <a href="" class="btn btn-volg">Volg</a>
+                            <?php
+                                $bool = false;
+                                if(!$user_id)
+                                    echo '<a href="#" data-dismiss="modal" aria-label="Close" class="btn btn-volg"
+                                            data-toggle="modal" data-target="#SignInWithEmail">Volg</a>';
+                                else{
+                                    if(!empty($followers))
+                                    foreach ($followers as $key => $value)
+                                        if($value->ID == $user_id){
+                                            $bool = true;
+                                            break;
+                                        }
+
+                                    if(!$bool)
+                                        echo "<form action='/dashboard/user/' method='POST'>
+                                                    <input type='hidden' name='community_id' value='" . $community->ID . "' >
+                                                    <input type='submit' class='btn btn-volg' name='follow_community' value='Volg' >
+                                              </form>";
+                                    else
+                                        echo " <button type='button' class='btn btn-volg' disabled>Volg</button>";
+
+                                }
+                            ?>
+
                             <div class="userBlock">
                                 <?php
-                                    foreach ($authors as $key => $author){
+                                    // Get followers from company
+                                    if(!empty($followers))
+                                    foreach ($followers as $key => $value) {
                                         if($key == 4)
                                             break;
-                                        $portrait_image = get_field('profile_img',  'user_' . $author);
+                                        $portrait_image = get_field('profile_img',  'user_' . $value->ID);
                                         if (!$portrait_image)
                                             $portrait_image = $company_image;
                                         echo '<img src="' . $portrait_image . '"  alt="">';
@@ -210,7 +328,9 @@ if($community){
                             <p class="numberUser">
                             <?php
                                 $plus_user = 0;
-                                $max_user = count($authors);
+                                $max_user = 0;
+                                if(!empty($followers))
+                                    $max_user = count($followers);
                                 if($max_user > 4){
                                     $plus_user = $max_user - 4;
                                     echo '+' . $plus_user;
@@ -360,7 +480,7 @@ if($community){
                                     $expert = get_field('experts', $course->ID);
                                     $authors = array($author_course);
                                     if(isset($expert[0]))
-                                        $experts = array_merge($expert, $author);
+                                        $experts = array_merge($expert, $authors);
                                     else
                                         $experts = $authors;
                             ?>
@@ -399,7 +519,7 @@ if($community){
                             <?php
                                 }
                                 }
-                                else 
+                                else
                                     echo $no_content;
                             ?> 
                             <!-- <div class="footer-card-agenda">
@@ -415,7 +535,7 @@ if($community){
 <?php
 }
 else
-    echo $no_content;
+    header("Location: /community-overview");
 ?>
 
 <?php get_footer(); ?>
