@@ -92,16 +92,16 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                 <?php 
                                 if($manager_image){
                                 ?>
-                                <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="#userModal">
+                                <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="">
                                     <div class="ImgUser">
                                         <img src="<?= $manager_image ?>" alt="">
                                     </div>
-                                    <div class="ImgUser">
+                                    <!-- <div class="ImgUser">
                                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
                                     </div>
                                     <div class="ImgUser">
                                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
-                                    </div>
+                                    </div> -->
                                 </button>
                                     <!-- Modal -->
                                     <div class="modal modalAllManager fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
