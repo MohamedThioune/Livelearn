@@ -139,6 +139,7 @@ $communities = get_posts($args);
             foreach($communities as $community){
                 $company = get_field('company_author', $community->ID)[0];
                 $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+                $community_image = get_field('image_community', $community->ID) ?: $company_image;
 
                 $level = get_field('range', $community->ID);
             ?>
@@ -147,7 +148,7 @@ $communities = get_posts($args);
                         <div class="head-card position-relative">
                             <img src="<?= $company_image; ?>" class="second-img-card-community" alt="">
                             <div class="block-img bg-white">
-                                <img src="<?= $company_image; ?>" class="img-card-community" alt="">
+                                <img src="<?= $community_image; ?>" class="img-card-community" alt="">
                             </div>
                             <div>
                                 <p class="title-card"><?= $company->post_title; ?></p>
@@ -175,27 +176,25 @@ $communities = get_posts($args);
                                     </div>
                                     <div class="userBlock">
                                         <?php
-                                            $i = 0;
-                                            $max_user = 0;
-                                            // Get experts from compan
-                                            foreach ($users as $key => $value) {
-                                                $company_user = get_field('company',  'user_' . $value->ID );
-                                                if($company_user[0]->ID == $company->ID){
-                                                    $i++;
-                                                    if($i == 4)
-                                                        continue;
-                                                        $portrait_image = get_field('profile_img',  'user_' . $author);
-                                                        if (!$portrait_image)
-                                                            $portrait_image = $company_image;
-                                                        echo '<img src="' . $portrait_image . '"  alt="">';
-                                                }
+                                            // Get followers from company
+                                            $followers = get_field('follower_community', $community->ID);
+                                            if(!empty($followers))
+                                            foreach($followers as $key => $value) {
+                                                if($key == 4)
+                                                    break;
+                                                $portrait_image = get_field('profile_img',  'user_' . $value->ID);
+                                                if (!$portrait_image)
+                                                    $portrait_image = $company_image;
+                                                echo '<img src="' . $portrait_image . '"  alt="">';
                                             }
                                         ?>
                                     </div>
                                     <p class="numberUser">
                                         <?php
                                             $plus_user = 0;
-                                            $max_user = $i;
+                                            $max_user = 0;
+                                            if(!empty($followers))
+                                                $max_user = count($followers);
                                             if($max_user > 4){
                                                 $plus_user = $max_user - 4;
                                                 echo '+' . $plus_user;
