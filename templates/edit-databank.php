@@ -25,6 +25,7 @@ $course = $wpdb->get_results( $sql )[0];
  function strip_html_tags($text) {
     $allowed_tags = ['h1', 'h2', 'br','h3','h4','b','h5','h6','strong','em','blockquote','ul','ol','li','a'];
     $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
+    $text = str_replace(["\r\n", "\r", "\n\n","\n"], "<br>", $text);
     return preg_replace($pattern, '', $text);
 }
 
