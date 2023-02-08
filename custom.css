@@ -4496,7 +4496,6 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 }
 
 .iconeTextListCollection p {
-    font-weight: bold;
     color: #ababab;
     font-size: 12px;
     margin-bottom: 0;
@@ -4975,35 +4974,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 
 /* (Safari + MobileSafari >= 14.6) or (All MobileSafari versions) */
 @supports  (selector(:nth-child(1 of x))) or (-webkit-touch-callout: none) {
-    .btnStore img, .btnPlayGoogle img {
-        height: auto !important;
-        object-fit: contain;
-    }
-    .btnStore {
-        width: 145px !important;
-        margin-top: 10px;
-        height: 60px;
-    }
-    .btnPlayGoogle {
-        width: 187px;
-        height: 75px;
-    }
-    .second-block-binnen img {
-        height: auto;
-    }
-    .card-community-overview .head-card .eye-block img {
-        height: 20px !important;
-    }
-    .swiper-slide4 {
-        box-shadow: none !important;
-        border-bottom: 0 !important;
-    }
 
-    @media all and (min-width: 300px) and (max-width: 767px){
-        .second-block-binnen img {
-            height: 190px !important;
-        }
-    }
     }
 
 
@@ -8016,6 +7987,58 @@ tbody {
         }
         .block-contact-calendy #secondImg-direct-contact {
             height: 50px;
+        }
+        .btnStore img, .btnPlayGoogle img {
+            height: auto !important;
+            object-fit: contain;
+        }
+        .btnStore {
+            width: 145px !important;
+            margin-top: 10px;
+            height: 60px;
+        }
+        .btnPlayGoogle {
+            width: 187px;
+            height: 75px;
+        }
+        .second-block-binnen img {
+            height: auto;
+        }
+        .card-community-overview .head-card .eye-block img {
+            height: 20px !important;
+        }
+        .swiper-slide4 {
+            box-shadow: none !important;
+            border-bottom: 0 !important;
+        }
+        .new-card-course .title-favorite button img {
+            margin-top: 0px !important;
+            position: relative;
+            top: -4px !important;
+        }
+        [type=button], [type=reset], [type=submit], button {
+            -webkit-appearance: unset !important;
+        }
+        .content-home2 form .selectSearchHome {
+            left: 0px;
+            top: 1px !important;
+            padding: 12px 5px 13px 10px !important;
+            box-shadow: none;
+            min-width: 70px;
+            border-radius: 0;
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+            height: 95% !important;
+            background: white !important;
+        }
+        .content-home2 form .selectSearchHome {
+            height: 95% !important;
+        }
+
+        @media all and (min-width: 300px) and (max-width: 767px){
+            .second-block-binnen img {
+                height: 190px !important;
+            }
         }
     }
 }
@@ -12988,25 +13011,32 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 .content-home2 form .selectSearchHome{
     position: absolute;
-    width: fit-content;
     left: 0px;
-    top: 6px;
+    top: 1px !important;
     padding: 12px 5px 13px 10px !important;
     box-shadow: none;
-    min-width: 70px;
+    min-width: 115px;
     border-radius: 0;
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
+    height: 95% !important;
+    background: white !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: fit-content;
+    background: url("data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+") no-repeat 95% 50% !important;
 }
 .content-home2 form:before {
     content: "";
     width: 2px;
     height: 40px;
     background-color: #b4b4b4;
-    left: 79px;
+    left: 114px;
+    top: 6px;
+    z-index: 99;
     position: absolute;
     display: block;
-    top: 6px;
 }
 .content-home2 form .selectSearchHome:focus-visible {
     outline: 0px !important;
@@ -14605,6 +14635,342 @@ background: #FFFFFF !important;
 .owl-carousel-card-course .cardKraam {
     height: 100%;
 }
+.content-new-user .first-section-dashboard{
+    width: 65%;
+    margin-right: 35px;
+}
+.content-new-user .second-section-dashboard{
+    width: 30%;
+}
+.content-new-user .category-block-course{
+    width: 32%;
+    padding: 15px 20px;
+    border-radius: 8px;
+}
+.content-new-user .bg-green{
+    background: #4CBC9A;
+}
+.content-new-user .bg-yellow{
+    background: #FEC64F;
+}
+.content-new-user .bg-bleu-luzien{
+    background: #374557;
+}
+.icone-course {
+    width: 30px;
+    height: 30px;
+    background: white;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    margin: 15px 0 11px;
+}
+.content-new-user .category-block-course .icone-course img{
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+.content-new-user .category-block-course .number-course{
+    color: white;
+    font-size: 33px;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+.content-new-user .category-block-course .description {
+    font-size: 16px;
+    color: white;
+    font-weight: 300;
+    line-height: 21px;
+    margin-bottom: 0;
+}
+.content-new-user .category-block-course .img-bg-categories-course {
+    height: 170px;
+    margin-right: -20px;
+}
+.mb-50{
+    margin-bottom: 50px;
+}
+.search-filter input{
+    padding: 22px 15px !important;
+    width: fit-content !important;
+    min-width: 320px;
+}
+.search-filter .input-group {
+    width: fit-content !important;
+    min-width: 90px;
+}
+.search-filter .custom-select {
+    min-height: 46px;
+    padding: 0 5px 0px 0px !important;
+    border: none !important;
+    box-shadow: none;
+}
+.search-filter .input-group-text {
+    background: white;
+    border: none;
+    padding: 0 5px 0px 10px !important;
+}
+.tabs-courses .tab-content{
+    display: block !important;
+}
+.tabs-courses .tabs .filters {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+    justify-content: space-between;
+}
+.search-filter {
+    margin-bottom: 40px;
+}
+.tabs-courses .tabs .tab {
+    display: none;
+}
+.tabs-courses .tabs .tab.active {
+    display: block;
+}
+.tabs-courses .tabs .item {
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 19px;
+    color: #3D4D59;
+    margin: 0 5px;
+}
+.tabs-courses .tabs .item.active {
+    pointer-events: none;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 19px;
+    color: #6F6F6F;
+    background: #FFFFFF;
+    border-radius: 5px;
+    padding: 10px 25px;
+}
+.block-new-card-course{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.block-new-card-course .new-card-course{
+    width: 48.5%;
+}
+.new-card-course{
+    background: white;
+    padding: 10px 13px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+.new-card-course .head{
+    height: 165px;
+    width: 100%;
+    margin-bottom: 25px;
+}
+.new-card-course .head img{
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+    border-radius: 8px;
+}
+.new-card-course .title-favorite .title-course{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 19px;
+    color: #043356;
+    margin-bottom: 0;
+}
+.new-card-course .autor{
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 19px;
+    color: #999999;
+    margin-bottom: 0;
+}
+.new-card-course .autor b{
+    color: #043356;
+}
+.new-card-course .price{
+    color: #47A99E;
+    background: none;
+    padding: 0;
+    font-size: 17px;
+    margin-bottom: 0;
+}
+.new-card-course .title-favorite, .new-card-course .autor-price-block {
+    margin-bottom: 20px;
+}
+.new-card-course .title-favorite button{
+    padding: 0;
+    background: none;
+    border: none;
+}
+.new-card-course .title-favorite button img{
+    height: 20px;
+    position: relative;
+    top: -4px;
+    margin-right: 3px;
+}
+.footer-card-course .hours-course{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 19px;
+    color: #043356;
+    margin-bottom: 0;
+    padding-left: 8px;
+}
+.footer-card-course a{
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    color: #47A99E !important;
+}
+.footer-card-course {
+    margin: 24px 0 15px;
+}
+.second-section-dashboard h2{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+    color: #043356;
+    margin-bottom: 28px;
+}
+.card-Upcoming{
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 13px 15px;
+    border-left: 10px solid #374557;
+    margin-bottom: 16px;
+}
+.card-Upcoming .title{
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 20px;
+    color: #000000;
+    margin-bottom: 10px;
+}
+.card-Upcoming .calendarImg {
+    height: 17px;
+    width: 17px;
+    margin-right: 6px;
+}
+.card-Upcoming .date, .card-Upcoming .time {
+    margin-bottom: 0;
+    color: #848587;
+    font-weight: 400;
+    font-size: 15px;
+}
+.card-Upcoming hr{
+    border-top: 0;
+    margin-bottom: 0;
+    margin-top: 0;
+    border-left: 1px solid #848587;
+    height: 21px;
+}
+.card-Upcoming .imgAutor{
+    width: 27px;
+    height: 27px;
+    margin-right: 6px;
+}
+.card-Upcoming  .nameAutor{
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 16px;
+    color: #848587;
+    margin-bottom: 0;
+}
+.card-Upcoming .price{
+    color: #47A99E;
+    background: none;
+    padding: 0;
+    font-size: 15px;
+    margin-bottom: 0;
+    font-weight: 500;
+}
+.footer-card-upcoming{
+    margin: 13px 0 2px;
+}
+.btn-more-events{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    color: #043356 !important;
+    border: 1px solid #043356;
+    border-radius: 20px;
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+}
+.Upcoming-block, .user-community-block{
+    margin-bottom: 40px;
+}
+.card-Community{
+    background: #FFFFFF;
+    border-radius: 7px;
+    padding: 15px 10px;
+    margin-bottom: 15px;
+}
+.card-Community .imgCommunity{
+    width: 49px;
+    height: 49px;
+    border-radius: 5px;
+    margin-right: 10px;
+    overflow: hidden;
+}
+.card-Community .imgCommunity img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.card-Community .title{
+    font-weight: 500;
+    font-size: 16px;
+    color: #043356;
+    margin-bottom: 5px;
+}
+.card-Community .number-members{
+    font-weight: 500;
+    font-size: 14px;
+    color: #464646;
+    margin-bottom: 0px;
+}
+.card-user-expert {
+    margin-bottom: 20px;
+}
+.card-user-expert .imgAutor{
+    width: 51px;
+    height: 51px;
+    border-radius: 100%;
+    overflow: hidden;
+    margin-right: 13px;
+}
+.card-user-expert .imgAutor img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.card-user-expert .name-autor{
+    font-weight: 500;
+    font-size: 16px;
+    color: #043356;
+    margin-bottom: 5px;
+}
+.card-user-expert .iconeCompany{
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}
+.card-user-expert .nameCompany{
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 0;
+    color: #464646;
+}
+
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
@@ -16630,6 +16996,7 @@ background: #FFFFFF !important;
     .groupeBtn-Jouw-inloggen {
         display: flex;
         padding: 0 20px;
+        width: 100%;
     }
     .jouwn-skills {
         padding: 8px 26px;
@@ -17276,6 +17643,7 @@ background: #FFFFFF !important;
         flex-wrap: wrap;
         line-height: 30px;
         align-items: center;
+        padding: 0 7px;
     }
     .sousMenuNavMobil .collapse ul{
         margin-left: 48px;
@@ -17330,6 +17698,8 @@ background: #FFFFFF !important;
         width: 18px;
         height: 18px;
         margin-right: 5px;
+        border-radius: 100%;
+        overflow: hidden;
     }
     .content-home2 .zelf-block {
         margin-bottom: 24px;
@@ -17659,6 +18029,126 @@ background: #FFFFFF !important;
     .uiteindelijke-block img {
         height: 30px;
     }
+    .content-new-user{
+        flex-wrap: wrap;
+    }
+    .content-new-user .first-section-dashboard, .content-new-user .second-section-dashboard {
+        width: 100%;
+        margin-right: 0px;
+        padding: 0 15px;
+    }
+    .head-block {
+        flex-wrap: wrap;
+        padding-top: 55px;
+    }
+    .content-new-user .category-block-course {
+        width: 48%;
+        margin-bottom: 15px;
+    }
+    .content-new-user .category-block-course:last-child {
+        width: 100%;
+        margin-bottom: 0px;
+    }
+    .icone-course {
+        width: 20px;
+        height: 20px;
+        margin: 15px 0 8px;
+    }
+    .content-new-user .category-block-course .number-course {
+        font-size: 23px;
+        margin-bottom: 3px;
+    }
+    .content-new-user .category-block-course .description {
+        font-size: 14px;
+    }
+    .content-new-user .category-block-course .img-bg-categories-course {
+        height: 100px;
+        margin-right: -25px;
+    }
+    .search-filter input {
+        min-width: 233px;
+    }
+    .search-filter .input-group {
+        min-width: 78px;
+    }
+    .tabs-courses .tabs .filters {
+        width: 100%;
+        overflow-x: scroll;
+        padding-bottom: 13px;
+    }
+    .tabs-courses .tabs .item.active {
+        font-size: 15px;
+        border-radius: 5px;
+        padding: 10px 20px;
+        min-width: 115px;
+    }
+    .tabs-courses .tabs .item {
+        font-size: 15px;
+        min-width: 72px;
+        text-align: center;
+    }
+    .block-new-card-course .new-card-course {
+        width: 100%;
+    }
+    .new-card-course .title-favorite .title-course {
+        font-size: 16px;
+    }
+    .new-card-course .autor {
+        font-size: 14px;
+    }
+    .new-card-course .price {
+        font-size: 15px;
+    }
+    .footer-card-course .hours-course {
+        font-size: 16px;
+    }
+    .footer-card-course a {
+        font-size: 14px;
+    }
+    .second-section-dashboard h2 {
+        font-size: 22px;
+    }
+    .card-Upcoming .title {
+        font-size: 15px;
+    }
+    .card-Upcoming .date, .card-Upcoming .time {
+        font-size: 14px;
+    }
+    .card-Upcoming .calendarImg {
+        height: 13px;
+        width: 13px;
+        margin-right: 6px;
+    }
+    .card-Upcoming .imgAutor {
+        width: 21px;
+        height: 21px;
+        margin-right: 6px;
+    }
+    .card-Upcoming .nameAutor {
+        font-size: 14px;
+    }
+    .card-Upcoming .price {
+        font-size: 14px;
+    }
+    .btn-more-events {
+        font-size: 14px;
+        padding: 14px;
+        margin-top: 15px;
+    }
+    .card-Community .title {
+        font-size: 15px;
+    }
+    .card-Community .number-members {
+        font-size: 13px;
+    }
+    .user-expert-block{
+        margin-bottom: 50px;
+    }
+
+
+
+
+
 
 
 }
@@ -18270,6 +18760,35 @@ background: #FFFFFF !important;
     .first-section-community .block-first-selection .second-col {
         width: 80%;
     }
+    .content-new-user .category-block-course .number-course {
+        font-size: 26px;
+    }
+    .content-new-user .category-block-course .description {
+        font-size: 14px;
+    }
+    .content-new-user .first-section-dashboard,  .content-new-user .second-section-dashboard{
+        width: 100%;
+        margin-right: 0px;
+    }
+    .content-new-user {
+        flex-wrap: wrap;
+    }
+    .content-new-user .second-section-dashboard {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .content-new-user .Upcoming-block{
+        width: 48%;
+        margin-right: 20px;
+    }
+    .content-new-user .user-community-block {
+        width: 49%;
+        margin-top: 1px;
+    }
+    .content-new-user .user-expert-block{
+        width: 50%;
+    }
+
 }
 
 @media screen and (max-width: 1079px) and (min-width: 1023px) {
