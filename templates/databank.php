@@ -143,7 +143,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                             ?>
                             </tbody>
                         </form>
-                    </table>
+                    </table> 
                     <center>
                     <?php
                         foreach (range(1, $pagination_number) as $number){
