@@ -1166,6 +1166,7 @@ function filter_course (WP_REST_Request $request)
         $infos['message'] = "No community found !";
         return $infos;
       }
+      
       $mu = array();
       $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
       $community->image = get_field('image_community', $community->ID) ?: $company_image;
