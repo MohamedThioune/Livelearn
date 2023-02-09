@@ -1139,7 +1139,7 @@ function filter_course (WP_REST_Request $request)
     $companies = get_posts($args);
 
     foreach($companies as $value)
-      if(strtolower($value->post_title) == strtolower($data['community']) )
+      if( $value->post_name == $data['community'] )
         $company = $value;
     
     if(!isset($company)){
@@ -1152,9 +1152,6 @@ function filter_course (WP_REST_Request $request)
         'post_status' => 'publish',
         'posts_per_page' => -1);
     $mus = get_posts($args);
-
-    return $mus;
-
 
     foreach($mus as $community){
       
@@ -1169,8 +1166,6 @@ function filter_course (WP_REST_Request $request)
         $infos['message'] = "No community found !";
         return $infos;
       }
-
-      return $community;
 
       $mu = array();
       $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
