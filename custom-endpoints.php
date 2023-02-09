@@ -1149,7 +1149,7 @@ function filter_course (WP_REST_Request $request)
 
     $args = array(
         'post_type' => 'community',
-        'post_status' => 'publish',
+        'post_status' => 'any',
         'posts_per_page' => -1);
     $mus = get_posts($args);
 
@@ -1174,7 +1174,7 @@ function filter_course (WP_REST_Request $request)
       // courses comin through custom field 
       $community->courses = get_field('course_community', $community->ID);
 
-      $demand_community =  (object)[
+      $demand_community = (object)[
         'title' => $community->post_title,
         'description' => $community->post_excerpt,
         'picture' => $community->image,
