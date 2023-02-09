@@ -14970,6 +14970,19 @@ background: #FFFFFF !important;
     margin-bottom: 0;
     color: #464646;
 }
+.content-communities .head-community{
+    background: url("img/communities-head.png") no-repeat;
+    margin: -28px;
+    padding: 35px 25px;
+    height: 190px;
+}
+.content-communities .head-community h1{
+    font-weight: 700;
+    font-size: 35px;
+    color: #FFFFFF;
+    margin-top: 25px;
+}
+
 
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
