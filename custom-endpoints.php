@@ -1124,6 +1124,7 @@ function filter_course (WP_REST_Request $request)
   function community_share($data){
     $bool = false;
     $communities = array();
+    $company = array();
     $infos = array();
     $infos['success'] = false;
     $infos['message'] = "Please fill the company !";
@@ -1157,15 +1158,13 @@ function filter_course (WP_REST_Request $request)
       
       $company_community = get_field('company_author', $community->ID);
       foreach($company_community as $value)
-        if( $value->post_title == $company->post_title ){
+        if( $value->post_name == $company->post_name ){
           $bool = true;
           break;
         }
-
-      if(!$bool){
-        $infos['message'] = "No community found !";
-        return $infos;
-      }
+      
+      if(!$bool)
+          continue;
 
       $mu = array();
       $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
@@ -1185,6 +1184,12 @@ function filter_course (WP_REST_Request $request)
       array_push($communities, $demand_community);
 
     }
+
+    if(!$bool){
+      $infos['message'] = "No community found !";
+      return $infos;
+    } 
+
     $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
 
     $demand_company = (object)[
