@@ -1153,6 +1153,9 @@ function filter_course (WP_REST_Request $request)
         'posts_per_page' => -1);
     $mus = get_posts($args);
 
+    return $mus;
+
+
     foreach($mus as $community){
       
       $company_community = get_field('company_author', $community->ID);
