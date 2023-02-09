@@ -1155,12 +1155,17 @@ function filter_course (WP_REST_Request $request)
 
     foreach($mus as $community){
       
-      $company_community = get_field('company_author', $community->ID)[0];
-      if( $company_community->post_title != $company->post_title )
-        break;
+      $company_community = get_field('company_author', $community->ID);
+      foreach($company_community as $value)
+        if( $value->post_title == $company->post_title ){
+          $bool = true;
+          break;
+        }
 
-      $bool = true;
-
+      if(!$bool){
+        $infos['message'] = "No community found !";
+        return $infos;
+      }
       $mu = array();
       $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
       $community->image = get_field('image_community', $community->ID) ?: $company_image;
