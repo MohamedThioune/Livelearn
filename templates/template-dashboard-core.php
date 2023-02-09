@@ -790,7 +790,6 @@ else if(isset($note_skill_edit)){
     else
         $skills = $bunch;
 
-    var_dump($skills);
     update_field('skills', $skills, 'user_' . $user_id);
     $message = '/dashboard/user/settings/?message=Note updated sucessfully'; 
 
@@ -902,6 +901,33 @@ else if(isset($unfollow_community)){
     
     $path = "/community-detail/?mu=" . $community_id . "&message=Successfully unsubscribed to this community !";
     header("Location: ". $path);
+}
+
+else if(isset($interest_multiple_push)){
+    foreach($data as $meta_value)        
+        if($meta_value){
+            if($meta_key == 'topic'){
+                $meta_data_extern = get_user_meta($user_id, $meta_key);
+                $meta_data_intern = get_user_meta($user_id, 'topic_affiliate');
+                if(!in_array($meta_value, $meta_data_extern) && !in_array($meta_value, $meta_data_intern) )
+                    add_user_meta($user_id, $meta_key, $meta_value);
+                else
+                    if(in_array($meta_value, $meta_data_extern))
+                        delete_user_meta($user_id, $meta_key, $meta_value);
+                    else
+                        delete_user_meta($user_id, "topic_affiliate", $meta_value);
+            }
+            else{
+                $meta_data = get_user_meta($user_id, $meta_key);
+                if(!in_array($meta_value, $meta_data))
+                    add_user_meta($user_id, $meta_key, $meta_value);
+                else
+                    delete_user_meta($user_id, $meta_key, $meta_value);  
+            }                  
+        }
+        
+    $message = "News interests applied !";
+    header("location: ../../dashboard/user/?message=" . $message);
 }
     
 ?>
