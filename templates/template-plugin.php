@@ -6,13 +6,14 @@ global $wpdb;
 function RandomString(){
   $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   $randstring = '';
+  $rand='';
   for ($i = 0; $i < 10; $i++) {
       $rand = $characters[rand(0, strlen($characters))];
       $randstring .= $rand;  
   }
   return $randstring;
 }
-  // error_reporting(E_WARNING);
+  error_reporting(E_WARNING);
   // $url="https://www.winelife.nl/";
   $websites=[
       'https://workplaceacademy.nl/',
@@ -23,7 +24,6 @@ function RandomString(){
       'https://albaconcepts.nl/',
       'https://www.am.nl/',
       'https://limoonworks.nl/',
-      'https://breedweer.nl/',
       'https://www.dwa.nl/',
       'https://www.vanspaendonck.nl/',
       'https://ptg-advies.nl/',
@@ -55,7 +55,6 @@ function RandomString(){
       'https://www.financieelfit.nl/',
       'https://www.businessinsider.nl/',
       'https://www.frankwatching.com/',
-      'https://www.adweek.com/',
       'https://martech.org/',
       'https://www.searchenginejournal.com/',
       'https://www.entrepreneur.com/',
@@ -106,7 +105,6 @@ function RandomString(){
     'Alba Concepts',
     'AM',
     'Limoonworks',
-    'Breedweer',
     'DWA',
     'Van Spaendonck',
     'PTG-advies',
@@ -124,22 +122,21 @@ function RandomString(){
     'Koken met Kennis',
     'Minkowski',
     'KIT publishers',
-    'Be by Beta', 
+    'BeByBeta',
     'Zooi',
     'Growth Factory',
     'Influid',
     'MediaTest',
     'MeMo2',
-    'Equalture',
     'Impact Investor',
+    'Equalture',
     'Zorgmasters',
     'AdSysco',
-    'Transport en logistiek Nederland',
+    'Transport en Logistiek Nederland',
     'Financieel Fit',
     'Business Insider',
     'Frankwatching',
-    'Adweek',
-    'Martech',
+    'MarTech',
     'Search Engine Journal',
     'Entrepreneur Media',
     'Search Engine Land',
@@ -165,7 +162,7 @@ function RandomString(){
     'Pure Luxe',
     'WatchTime',
     'Monochrome',
-    'literair Nederland',
+    'Literair Nederland',
     'Tzum',
     'Developer',
     'SD Times',
@@ -177,88 +174,83 @@ function RandomString(){
     'AfterSales',
     'CRS Consulting'
   ];
-  foreach($websites as $key=>$url){
-    $users = get_users();
-    $company_name= $api_company_name[$key];
-    
+  $users = get_users();
+  $args = array(
+      'post_type' => 'company', 
+      'posts_per_page' => -1,
+  );
+  $companies = get_posts($args);
+
+  foreach($websites as $key => $url){
+    $company_name = $api_company_name[$key];
+    $author_id = null;
+
+    foreach($companies as $companie) 
+      if($companie->post_title == $company_name)
+        $company = $companie;
+
     foreach($users as $user) {
       $company_user = get_field('company',  'user_' . $user->ID);
-      if(strtolower($company_user[0]->post_title) == strtolower($company_name) ){
-        $author_id = $user->ID;
-        $company = $company_user[0];
-        $company_id = $company_user[0]->ID;
-      }
 
-        if(!$author_id)
-        {
-          $i=0;
-          if(strtolower($key->post_title) == $websites[$i]){
-            var_dump($websites[$i]);
-            $company = $key;
-            $company_id = $value->ID;
-            $i++;
-            break;
-          }
+      if(isset($company_user[0]->post_title)) 
+        if(strtolower($company_user[0]->post_title) == strtolower($company_name) ){
+          $author_id = $user->ID;
+          $company = $company_user[0];
+          $company_id = $company_user[0]->ID;
         }
     }
     
     if(!$author_id)
     {
-      if(strtolower($key->post_title) == $websites[$i]){
-        // var_dump($websites[$i]);
-        $company = $key;
-        $company_id = $value->ID;      
-      }
-
       $login = RandomString();
       $password = RandomString();
       $random = RandomString();
-      $email = "author_" . $api_company_name[$i] . $random . "@expertise.nl";
-      $first_name = explode(' ', $api_company_name[$i])[0];
-      $last_name = explode(' ', $api_company_name[$i])[1];
+      $email = "author_" . $random . "@" . $api_company_name[$key] . ".nl";
+      $first_name = explode(' ', $api_company_name[$key])[0];
+      $last_name = isset(explode(' ', $api_company_name[$key])[1])?explode(' ', $api_company_name[$key])[1]:'';
 
       $userdata = array(
-          'user_pass' => $password,
-          'user_login' => $login,
-          'user_email' => $email,
-          'user_url' => 'https://livelearn.nl/inloggen/',
-          'display_name' => $first_name,
-          'first_name' => $first_name,
-          'last_name' => $last_name,
-          'role' => 'teacher'
+        'user_pass' => $password,
+        'user_login' => $login,
+        'user_email' => $email,
+        'user_url' => 'https://livelearn.nl/inloggen/',
+        'display_name' => $first_name,
+        'first_name' => $first_name,
+        'last_name' => $last_name,
+        'role' => 'author'
       );
-      // var_dump($userdata);
+
       $author_id = wp_insert_user(wp_slash($userdata));       
     }
 
-    
     //Accord the author a company
     if(!is_wp_error($author_id))
       update_field('company', $company, 'user_' . $author_id);
-    $span  = $url."wp-json/wp/v2/posts/";
+
+    $span  = $url . "wp-json/wp/v2/posts/";
     $artikels= json_decode(file_get_contents($span),true);
-    
     $onderwerpen='';
     foreach($artikels as $article){
       if ($article!=null) {
-        $span2 = $url."wp-json/wp/v2/media/".$article['featured_media'];
-        $images=json_decode(file_get_contents($span2),true);
-        $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($images['guid']['url'], 'Artikel'));
         $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where titel=%s and type=%s",array($article['title']['rendered'],'Artikel'));
-        
-        $result_image = $wpdb->get_results($sql_image);
         $result_title = $wpdb->get_results($sql_title);
-        if(!isset($result_image[0]) || !isset($result_title[0]))
-        {
-          if ($article['featured_media']!= 0 || $article['feature_media']!=null) {
-            
-            $status = 'extern';
-            $data = array(
-                'titel' => strip_tags($article['title']['rendered']),
+        $span2 = $url."wp-json/wp/v2/media/".$article['featured_media'];
+        if($article['featured_media']!=0){
+          
+          $images=json_decode(file_get_contents($span2),true);
+          $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($images['guid']['rendered'], 'Artikel'));
+          
+          $result_image = $wpdb->get_results($sql_image);
+          if(!isset($result_image[0]) && !isset($result_title[0]))
+          {
+            if (!isset($images['data']['status']) && $images['data']['status']!=404 && $images['data']['status']!=401) {
+              $status = 'extern';
+              $data = array(
+                'titel' => $article['title']['rendered'],
                 'type' => 'Artikel',
                 'videos' => NULL, 
-                'short_description' => trim(strip_tags($article['excerpt']['rendered'])),
-                'long_description' => trim(strip_tags($article['content']['rendered'])),
+                'short_description' => $article['excerpt']['rendered'],
+                'long_description' => $article['content']['rendered'],
                 'duration' => NULL, 
                 'prijs' => 0, 
                 'prijs_vat' => 0,
@@ -270,32 +262,57 @@ function RandomString(){
                 'company_id' =>  $company_id,
                 'contributors' => null, 
                 'status' => $status
-            );
-          }else{
+              );
+            }else {
+              $status = 'extern';
+              $data = array(
+                'titel' => $article['title']['rendered'],
+                'type' => 'Artikel',
+                'videos' => NULL, 
+                'short_description' => $article['excerpt']['rendered'],
+                'long_description' => $article['content']['rendered'],
+                'duration' => NULL, 
+                'prijs' => 0, 
+                'prijs_vat' => 0,
+                'image_xml' => null, 
+                'onderwerpen' => $onderwerpen, 
+                'date_multiple' =>  NULL, 
+                'course_id' => null,
+                'author_id' => $author_id,
+                'company_id' =>  $company_id,
+                'contributors' => null, 
+                'status' => $status
+              );
+            }
+          }else{continue;}
+        }else{
+          if(!isset($result_title[0]) )
+          {
+            $status = 'extern';
             $data = array(
-              'titel' => strip_tags($article['title']['rendered']),
+              'titel' => $article['title']['rendered'],
               'type' => 'Artikel',
               'videos' => NULL, 
-              'short_description' => trim(strip_tags($article['excerpt']['rendered'])),
-              'long_description' => trim(strip_tags($article['content']['rendered'])),
-              'duration' => NULL, 
-              'prijs' => 0, 
+              'short_description' => $article['excerpt']['rendered'],
+              'long_description' => $article['content']['rendered'],
+              'duration' => NULL,
+              'prijs' => 0,
               'prijs_vat' => 0,
-              'image_xml' => null, 
-              'onderwerpen' => $onderwerpen, 
-              'date_multiple' =>  NULL, 
+              'image_xml' => null,
+              'onderwerpen' => $onderwerpen,
+              'date_multiple' =>  NULL,
               'course_id' => null,
               'author_id' => $author_id,
               'company_id' =>  $company_id,
-              'contributors' => null, 
+              'contributors' => null,
               'status' => $status
             );
-          }
-          // var_dump($data);
-          $wpdb->insert($table,$data);
-          $id_post = $wpdb->insert_id;
+          }else{continue;}
         }
+        // var_dump($data);
+        $wpdb->insert($table,$data);
+        $id_post = $wpdb->insert_id;
       }
     }
   }
-?>
+?>   

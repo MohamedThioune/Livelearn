@@ -76,18 +76,20 @@ else{
 ?>
 
 <?php
-if ( !$access_granted ){
+if (!$access_granted ){
 ?>
 <div class="contentProfil ">
 
     <h1 class="titleSubscription">Abonnement</h1>
-    <center><?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"?></center>
+    <center><?php if(isset($_GET['message'])) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>"?></center>
     <div class="contentFormSubscription">
        <h4> Team : <?= $team . ' X ' . '5' ?> = <?= $team * 5 ?>.00 € </h4><br>
         <div id="required">
         
         </div>
         <!-- <form action="" method="POST"> -->
+            <input type="hidden" id="user_id" value="<?= $current_user->ID ?>" >
+
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="first_name">First name</label>
@@ -133,7 +135,7 @@ if ( !$access_granted ){
                     <div class="form-check">
                         <input class="form-check-input credit-card" type="radio" name="payement" id="method_payment" value="credit_card" >
                         <label class="form-check-label" for="creditcard">
-                            Processs with credit card 
+                            Credit card 
                         </label>
                     </div>
                     <div class="form-check">
@@ -199,6 +201,7 @@ else
         $(e.preventDefault());
         var pass = 0;
 
+        var user_id = $('#user_id').val();
         var first_name = $('#first_name').val();
         var last_name = $('#last_name').val();
         var bedrjifsnaam = $('#bedrjifsnaam').val();
@@ -227,9 +230,10 @@ else
 
             if(method_payment == 'credit_card'){
                 $.ajax({
-                    url:"/cards-payment",
+                    url:"/credit-card-details",
                     method:"post",
                     data:{
+                        user_id : user_id,
                         first_name : first_name,
                         last_name : last_name,
                         bedrjifsnaam : bedrjifsnaam,
@@ -243,7 +247,16 @@ else
                     dataType:"text",
                     success: function(data){
                         console.log(data);
-                        $('#output').html(data);
+                        window.location.href = data;
+                        // $('#output').html(data);
+                    },
+                    error: function (jqXHR, exception) {
+                        if (jqXHR.status == 500) {
+                            $('#output').html("<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Internal error, please try later !</a></center>");
+                        } else {
+                            $('#output').html("<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Something went wrong, please try later !</a></center>");
+                        }
+                        // Your error handling logic here..
                     }
                 });
             }
@@ -252,6 +265,7 @@ else
                     url:"/starter",
                     method:"post",
                     data:{
+                        user_id : user_id,
                         first_name : first_name,
                         last_name : last_name,
                         bedrjifsnaam : bedrjifsnaam,
@@ -264,8 +278,16 @@ else
                     },
                     dataType:"text",
                     success: function(data){
-                        console.log(data);
-                        $('#output').html(data);
+                        location.reload();
+                        // console.log(data);
+                    },
+                    error: function (jqXHR, exception) {
+                        if (jqXHR.status == 500) {
+                            $('#output').html("<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Internal error, please try later !</a></center>");
+                        } else {
+                            $('#output').html("<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Something went wrong, please try later !</a></center>");
+                        }
+                        // Your error handling logic here..
                     }
                 });
             }
@@ -275,5 +297,3 @@ else
     });
 
 </script>
-
-

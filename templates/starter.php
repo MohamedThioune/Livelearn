@@ -3,8 +3,8 @@
 <?php
 extract($_POST);
 
-//Current user
-$user_id = get_current_user_id();
+//Current company
+$company_title = get_field('company',  'user_' . $user_id)[0]->post_title;
 
 //Team members
 $users = get_users();
@@ -13,12 +13,12 @@ foreach($users as $user){
     $company_value = get_field('company',  'user_' . $user->ID);
     if(!empty($company_value)){
         $company_value_title = $company_value[0]->post_title;
-        if($company_value_title == $bedrjifsnaam)
+        if($company_value_title == $company_title)
             array_push($members, $user);
     }
 }
 $team = count($members);
-
+ 
 //endpoint for product 
 $endpoint_product = 'https://livelearn.nl/wp-json/wc/v3/products';
 $params = array( 
@@ -28,7 +28,7 @@ $params = array(
 //create endpoint with params
 $api_endpoint = $endpoint_product . '?' . http_build_query( $params );
 $data = [
-    'name' => $bedrjifsnaam ."~subscription",
+    'name' => $company_title ."~subscription",
     'type' => 'simple',
     'regular_price' => '5.00',
     'description' => 'No short description',
@@ -99,7 +99,7 @@ else{
         'billing' => [
             'first_name' => $first_name,
             'last_name'  => $last_name,
-            'company'    => $bedrjifsnaam,
+            'company'    => $company_title,
             'address_1'  => $factuur_address,
             'address_2'  => '',
             'city'     => '', //place
@@ -128,56 +128,7 @@ else{
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
     $httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
-    $pass_payment = false;
-    /*
-    ** Pass payment
-    */
-    if($method_payment == 'credit_card')
-    {
-        $amount_pay = 5 * $team;
-        $amount_pay = number_format($amount_pay, 2, '.', ',');
-        $endpoint_pay = "https://api.mollie.com/v2/payments";
-        $api_key = "Bearer test_c5nwVnj42cyscR8TkKp3CWJFd5pHk3";
-        $data_payment = [
-            'method' => 'creditcard',
-            'amount' => [
-                'currency' => 'EUR',
-                'value' => $amount_pay,
-            ],
-            'description' => 'Product #' . $product_id,
-            'redirectUrl' => 'https://webshop.example.org/order/12345/',
-            'webhookUrl' => 'https://webshop.example.org/payments/webhook/',
-            'cardToken' => $card_token
-        ];
-
-        // initialize curl
-        $chpay = curl_init();
-        // set other curl options customer
-        curl_setopt($chpay, CURLOPT_HTTPHEADER, ['Authorization: ' . $api_key]);
-        curl_setopt($chpay, CURLOPT_URL, $endpoint_pay);
-        curl_setopt($chpay, CURLOPT_POST, true);
-        curl_setopt($chpay, CURLOPT_POSTFIELDS, http_build_query($data_payment));
-        curl_setopt($chpay, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($chpay, CURLOPT_FOLLOWLOCATION, TRUE);
-        curl_setopt($chpay, CURLOPT_RETURNTRANSFER, true );
-        $httpCode = curl_getinfo($chpay , CURLINFO_HTTP_CODE);
-        $response_pay = curl_exec($chpay);
-        $data_response_pay = json_decode( $response_pay, true );
-        $response_pay = curl_exec($chpay);
-        // var_dump( $response_pay );
-        if(isset($data_response_pay['id']))
-            $pass_payment = true;      
-        // close curl
-        curl_close( $chpay );      
-    }
-    else
-        $pass_payment = true;
-    /*
-    ** 
-    */
-
-    if(!$pass_payment)
-        $data['status'] = 'on-hold';
+    
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
 
     // get responses
@@ -188,12 +139,13 @@ else{
         //$error = true;
         //$message = "Something went wrong !";
         //echo stripslashes($response);
+        http_response_code(401);
         echo "<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Something went wrong, please try later !</a></center>";
     }
     else{
         //$message = "Subscription applied succesfully !";
         //$abonnement_id = $data_response['id']; 
-        echo "<center><br><a class='btn btndoawnloadCv' href='#'>Zie het overzicht van mijn abonnementen </a></center>";   
+        echo "<center><br><a class='btn btndoawnloadCv' href=''>Abonnementen succesvol gedaan !</a></center>";   
     }
 }
 

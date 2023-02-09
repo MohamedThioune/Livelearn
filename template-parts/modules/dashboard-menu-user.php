@@ -96,6 +96,15 @@ style="overflow-x: hidden !important;">
                 <small class="comming-soon">&nbsp;&nbsp; <b>Coming Soon</b> </small>
             </a>
         </li>
+        <li class="elementTextDashboard">
+            <!-- /community-overview/ -->
+            <a href="/community-overview" class="d-flex">
+                <div class="iconeElement"><img src="<?php echo get_stylesheet_directory_uri();?>/img/Statistieken.png"></div>
+                <?php
+                if($option_menu[1] == 'community-overview') echo '<p class="textLiDashboard"><b>Communities</b></p>'; else echo  '<p class="textLiDashboard">Communities</p>';
+                ?>
+            </a>
+        </li>
         <div class="d-flex align-content-center">
             <p class="textOnder">ONDERWERPEN </p>
             <button type="button" class="btn btnVoegToe" data-toggle="modal" data-target="#exampleModal">

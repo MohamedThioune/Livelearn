@@ -47,7 +47,8 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                    <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
                        &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
-                       &nbsp;&nbsp;<button id="bouddha" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="xml image"></button>
+                       &nbsp;&nbsp;<button id="bouddha" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="load articles"></button>
+                       &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" disabled><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/artikel.jpg" alt="load subtopics"></button>
                        
                     <div class="col-md-3">
                         
@@ -71,76 +72,78 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 </div>
                 <div class="contentCardListeCourse">
                     <table class="table table-responsive">
-                        <thead>
-                        <tr>
-                            <th scope="col"><input type="checkbox" id="checkAll" onclick='checkUncheck(this);'></th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Titel</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Prijs</th>
-                            <th scope="col">Onderwerp(en)</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Author</th>
-                            <th scope="col">Company</th>
-                            <th class="tdCenter textThBorder"> <input type="button" class="optieAll btn-default" id="acceptAll" style="background:white; border: DEE2E6" value="✔️" />&nbsp;<input type="button" class="optieAll btn-default" id="declineAll" style="background:white" value="❌" /></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <?php
-                        if(!empty($courses)){
-                            foreach($courses as $course){
-                                if($course->state)
-                                    continue;
-
-                                //Author Image
-                                $image_author = get_field('profile_img',  'user_' . $course->author_id);
-                                $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
-
-                                //Company
-                                $company = get_field('company',  'user_' . $course->author_id);
-                                
-                                $company_logo = get_stylesheet_directory_uri() . '/img/placeholder.png';
-                                if(!empty($company))
-                                    $company_logo = (get_field('company_logo', $company[0]->ID)) ? get_field('company_logo', $company[0]->ID) : get_stylesheet_directory_uri() . '/img/placeholder.png'; 
-
-                                //Thumbnail
-                                $image = $course->image_xml ? $course->image_xml : $company_logo;
-
-                                $onderwerpen = array();
-                                //Onderwerpen
-                                if($course->onderwerpen != "")
-                                    $onderwerpen = explode(',', $course->onderwerpen);
-                                
-                                $state = $course->course_id ? 'present' : 'missing';
-                                $key = $course->id;
-                            ?>
-                            <tr id="<?= $key ?>" class="<?= $state ?>">
-                                <td class="textTh"><input type="checkbox" class="checkOne" name="checkOne" id="chkBox" value="<?= $course->id ?>"></td>
-                                <td class="textTh"> <img src="<?= $image; ?>" alt="image course" width="50" height="50"></td>
-                                <td class="textTh courseDataBank" style="color:#212529;font-weight:bold"><?php echo $course->titel; ?></td>
-                                <td class="textTh tdCenter"><?= $course->type; ?></td>
-                                <td class="textTh tdCenter"><?= $course->prijs; ?></td>
-                                <td class="textTh courseOnderwerpen">
-                                    <?php
-                                    if(!empty($onderwerpen))
-                                        foreach($onderwerpen as $value)
-                                            if($value)
-                                                echo (String)get_the_category_by_ID($value) . ','; 
-                                    ?>
-                                </td>
-                                <td class="textTh tdCenter"><?= $course->status; ?></td>
-                                <td class="textTh tdCenter <?php if($course->author_id) echo ''; else echo 'author';  ?>"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo '<b>No author</b>'; ?></td>
-                                <td class="textTh tdCenter <?php if(!empty($company)) echo ''; else echo 'company';  ?>"> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo '<b>No company</b>'; ?> </td>
-                                <td class="tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a href="/edit-databank?id=<?= $key ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> </td>
+                        <form action="">
+                            <thead>
+                            <tr>
+                                <th scope="col"><input type="checkbox" id="checkAll" onclick='checkUncheck(this);'></th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Titel</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Prijs</th>
+                                <th scope="col">Onderwerp(en)</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Author</th>
+                                <th scope="col">Company</th>
+                                <th class="tdCenter textThBorder"> <input type="button" class="optieAll btn-default" id="acceptAll" style="background:white; border: DEE2E6" value="✔️" />&nbsp;<input type="button" class="optieAll btn-default" id="declineAll" style="background:white" value="❌" /></th>
                             </tr>
-                        <?php
-                        }
-                        }else{
-                            echo("There is nothing to see here");
-                        }
-                        ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            <?php
+                            if(!empty($courses)){
+                                foreach($courses as $course){
+                                    if($course->state)
+                                        continue;
+
+                                    //Author Image
+                                    $image_author = get_field('profile_img',  'user_' . $course->author_id);
+                                    $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+
+                                    //Company
+                                    $company = get_field('company',  'user_' . $course->author_id);
+                                    
+                                    $company_logo = get_stylesheet_directory_uri() . '/img/placeholder.png';
+                                    if(!empty($company))
+                                        $company_logo = (get_field('company_logo', $company[0]->ID)) ? get_field('company_logo', $company[0]->ID) : get_stylesheet_directory_uri() . '/img/placeholder.png'; 
+
+                                    //Thumbnail
+                                    $image = $course->image_xml ? $course->image_xml : $company_logo;
+
+                                    $onderwerpen = array();
+                                    //Onderwerpen
+                                    if($course->onderwerpen != "")
+                                        $onderwerpen = explode(',', $course->onderwerpen);
+                                    
+                                    $state = $course->course_id ? 'present' : 'missing';
+                                    $key = $course->id;
+                                ?>
+                                <tr id="<?= $key ?>" class="<?= $state ?>">
+                                    <td class="textTh"><input type="checkbox" class="checkOne" name="checkOne" id="chkBox" value="<?= $course->id ?>"></td>
+                                    <td class="textTh"> <img src="<?= $image; ?>" alt="image course" width="50" height="50"></td>
+                                    <td class="textTh courseDataBank" style="color:#212529;font-weight:bold"><?php echo $course->titel; ?></td>
+                                    <td class="textTh tdCenter"><?= $course->type; ?></td>
+                                    <td class="textTh tdCenter"><?= $course->prijs; ?></td>
+                                    <td class="textTh courseOnderwerpen">
+                                        <?php
+                                        if(!empty($onderwerpen))
+                                            foreach($onderwerpen as $value)
+                                                if($value)
+                                                    echo (String)get_the_category_by_ID($value) . ','; 
+                                        ?>
+                                    </td>
+                                    <td class="textTh tdCenter"><?= $course->status; ?></td>
+                                    <td class="textTh tdCenter <?php if($course->author_id) echo ''; else echo 'author';  ?>"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo '<b>No author</b>'; ?></td>
+                                    <td class="textTh tdCenter <?php if(!empty($company)) echo ''; else echo 'company';  ?>"> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo '<b>No company</b>'; ?> </td>
+                                    <td class="tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a href="/edit-databank?id=<?= $key ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> </td>
+                                </tr>
+                            <?php
+                            }
+                            }else{
+                                echo("There is nothing to see here");
+                            }
+                            ?>
+                            </tbody>
+                        </form>
+                    </table> 
                     <center>
                     <?php
                         foreach (range(1, $pagination_number) as $number){
@@ -200,7 +203,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     window.onload = uncheckAll;
 
     function checkUncheck(checkBox) {
-        get = document.getElementsByName('checkOne');
+        get = document.querySelectorAll('input[type=checkbox]');
         for(var i=0; i<get.length; i++) {
             get[i].checked = checkBox.checked;
         }
@@ -274,6 +277,19 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         else 
             ids.push(tags_id);
         console.log(ids);
+    });
+
+    $('#subtopics').click((e)=>
+    {
+        if($ids==null){alert("Please, select some articles!!");}else{
+            $.ajax({
+                url: '/subtopics',
+                type: 'POST',
+                data: {
+                    ids: $ids,
+                },
+            });
+        }
     });
 
     $('.optieAll').click((e)=>{

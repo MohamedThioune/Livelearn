@@ -1278,4 +1278,87 @@ function filter_course(WP_REST_Request $request)
 }
 
 
-  
+  function community_share($data){
+    $bool = false;
+    $communities = array();
+    $company = array();
+    $infos = array();
+    $infos['success'] = false;
+    $infos['message'] = "Please fill the company !";
+        
+    if(!$data['community'])
+     return $infos;
+
+    $args = array(
+        'post_type' => 'company',
+        'post_status' => 'publish',
+        'posts_per_page' => -1
+      );
+    $companies = get_posts($args);
+
+    foreach($companies as $value)
+      if( $value->post_name == $data['community'] )
+        $company = $value;
+    
+    if(!isset($company)){
+      $infos['message'] = "No company found !";
+      return $infos;
+    }
+
+    $args = array(
+        'post_type' => 'community',
+        'post_status' => 'any',
+        'posts_per_page' => -1);
+    $mus = get_posts($args);
+
+    foreach($mus as $community){
+      
+      $company_community = get_field('company_author', $community->ID);
+      foreach($company_community as $value)
+        if( $value->post_name == $company->post_name ){
+          $bool = true;
+          break;
+        }
+      
+      if(!$bool)
+          continue;
+
+      $mu = array();
+      $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+      $community->image = get_field('image_community', $community->ID) ?: $company_image;
+      
+      // courses comin through custom field 
+      $community->courses = get_field('course_community', $community->ID);
+
+      $demand_community = (object)[
+        'title' => $community->post_title,
+        'description' => $community->post_excerpt,
+        'picture' => $community->image,
+        'created_at' => $community->post_date,
+        'courses' => $community->courses
+        
+      ];
+      array_push($communities, $demand_community);
+
+    }
+
+    if(!$bool){
+      $infos['message'] = "No community found !";
+      return $infos;
+    } 
+
+    $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+
+    $demand_company = (object)[
+      'title' => $company->post_title,
+      'picture' => $company_image,
+      'created_at' => $company->post_date
+    ];
+
+    $infos['success'] = true;
+    $infos['communities'] = $communities;
+    $infos['company '] = $demand_company;
+    $infos['message'] = "List of communities according to companies";
+
+    return [$infos];
+  }
