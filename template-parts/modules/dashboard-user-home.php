@@ -267,7 +267,7 @@ if (!$is_first_login && get_current_user_id() !=0 )
                                     echo $row_skills;
                                 ?>
                             </div>
-                            <button type="button" class="btn btnSkipTopics" id="btnSkipTopics2">Skip</button>
+                            <button type="button" class="btn btnSkipTopics" id="btnSkipTopics3">Skip</button>
                             <button type="button" class="btn btnNext" id="nextSkills">Next</button>
                         </div>
                     </div>
