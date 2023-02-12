@@ -177,7 +177,7 @@ if (isset($_POST["subtopics_first_login"])){
         }
     }
     update_field('is_first_login', true, 'user_'.get_current_user_id());
-    $message = "/dashboard/user/home/?message=Uw favoriete onderwerpen zijn succesvol opgeslagen !"; 
+    $message = "/dashboard/user/?message=Uw favoriete onderwerpen zijn succesvol opgeslagen !"; 
     header("Location: ". $message);
 }
 
