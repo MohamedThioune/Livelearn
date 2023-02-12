@@ -294,6 +294,8 @@ if (!$is_first_login && get_current_user_id() !=0 )
                             </div>
                             <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Save</button>
                         </div>
+                        <button type="button" class="btn btnSkipTopics" id="btnSkipTopics4">Skip</button>
+
                     </div>
                 </form>
                 </div>
