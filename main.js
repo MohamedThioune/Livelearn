@@ -521,7 +521,7 @@ jQuery(function($) {
         $(".blockfunctiegericht").hide();
     });
 
-    $("#nextSkills").click(function() {
+    $("#nextSkills, #btnSkipTopics3").click(function() {
         $(".blockPersonal").show();
         $(".blockSkills").hide();
     });
