@@ -526,9 +526,8 @@ jQuery(function($) {
         $(".blockSkills").hide();
     });
 
-    $("#btnSkipTopics3").click(function() {
-        $(".blockPersonal").show();
-        $(".blockSkills").hide();
+    $("#btnSkipTopics4").click(function() {
+        $(".blockPersonal").hide();
     });
 
 
