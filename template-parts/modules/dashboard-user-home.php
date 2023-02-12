@@ -243,7 +243,7 @@ if (!$is_first_login && get_current_user_id() !=0 )
                             </div>
                             <button type="button" class="btn btnNext" id="nextFunctiegericht">Next</button>
                         </div>
-                        <button type="button" class="btn btnSkipTopics" id="btnSkipTopics3">Skip</button>
+                        <button type="button" class="btn btnSkipTopics" id="btnSkipTopics2">Skip</button>
                     </div>
 
                     <div class="blockSkills">
