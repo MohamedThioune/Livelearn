@@ -203,13 +203,9 @@ if (!$is_first_login && get_current_user_id() !=0 )
                             <div>
                                 <?php
                                 foreach($bangerichts as $key => $value)
-                                {
-                                    //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
                                     echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_bangricht'.($key+1).'" /><label class="labelChoose btnBaangerichte subtopics_bangricht_'.($key+1).' '.($key+1).'" for="cb_topics_bangricht'.($key+1).'">'. $value->cat_name .'</label>';
-                                }
+                                
                                 ?>
-                                <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnBaangerichte" for="cb1">Choice A</label> -->
-
                             </div>
                         </div>
                         <div class="subtopicBaangerichte">
@@ -233,10 +229,7 @@ if (!$is_first_login && get_current_user_id() !=0 )
                                 <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnFunctiegericht" for="cb1">Choice A</label> -->
                                 <?php
                                 foreach($functies as $key => $value)
-                                {
-                                    //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
                                     echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_funct'.($key+1).'" /><label class="labelChoose btnFunctiegericht subtopics_funct_'.($key+1).' '.($key+1).'"  for="cb_topics_funct'.($key+1).'">'. $value->cat_name .'</label>';
-                                }
                                 ?>
                             </div>
                         </div>
@@ -261,10 +254,7 @@ if (!$is_first_login && get_current_user_id() !=0 )
 
                                 <?php
                                 foreach($skills as $key => $value)
-                                {
-                                    //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
                                     echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_skills'.($key+1).'" /><label class="labelChoose btnSkills subtopics_skills_'.($key+1).' '.($key+1).'" for=cb_skills'.($key+1).'>'. $value->cat_name .'</label>';
-                                }
                                 ?>
 
                             </div>
@@ -289,10 +279,7 @@ if (!$is_first_login && get_current_user_id() !=0 )
 
                                 <?php
                                 foreach($interesses as $key => $value)
-                                {
-                                    //echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
                                     echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_personal'.($key+1).'" /><label class="labelChoose btnPersonal subtopics_personal_'.($key+1).' '.($key+1).'" for="cb_topics_personal'.($key+1).'">'. $value->cat_name .'</label>';
-                                }
                                 ?>
 
                             </div>
@@ -300,7 +287,6 @@ if (!$is_first_login && get_current_user_id() !=0 )
                         <div class="subtopicPersonal">
                             <div class="hiddenCB">
                                 <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
-                                <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
                                 <?php
                                     echo $row_interesses;
                                 ?>
