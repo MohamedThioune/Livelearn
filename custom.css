@@ -14982,8 +14982,287 @@ background: #FFFFFF !important;
     color: #FFFFFF;
     margin-top: 25px;
 }
+.tabs-search-block .head{
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 70px;
+    padding: 20px 20px;
+    margin-bottom: 40px;
+}
+.tabs-search-block .head .search{
+    padding: 24px 20px;
+    background: #F4F7FC;
+    border-radius: 5px;
+    width: 33%;
+}
+.tabs-search-block .tabs-courses .tabs .filters {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0px;
+    justify-content: space-between;
+}
+.tabs-search-block .tabs-courses .tabs .item {
+    color: #727272;
+}
+.tabs-search-block .tabs-courses .tabs .item.active {
+    font-size: 19px;
+    color: #000000;
+    padding: 0 10px;
+    font-weight: 700;
+}
+.card-communities{
+    background: white;
+    width: 32%;
+    margin-right: 14px;
+    margin-bottom: 20px;
+}
+.card-communities .head-card-communities{
+    height: 100px;
+}
+.card-communities .head-card-communities img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.block-img-title .imgCommunity{
+    width: 85px;
+    height: 85px;
+    margin-top: -40px;
+    margin-right: 15px;
+}
+.block-img-title .imgCommunity img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.block-img-title .name-community{
+    font-weight: 600;
+    font-size: 17px;
+    color: #000000;
+    margin-bottom: 5px;
+    margin-top: 12px;
+}
+.block-img-title .statut-community{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #6B7C8F;
+    text-align: left;
+}
+.card-communities .number-element{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+    margin-bottom: 6px;
+}
+.card-communities .description{
+    font-weight: 400;
+    font-size: 14px;
+    color: #6B7C8F;
+    margin-bottom: 0;
+}
+.card-communities .body-card-community {
+    padding: 0 15px;
+}
+.card-communities .body-card-community .block-detail{
+    padding: 0 15px;
+    border-left: 1px solid #70707040;
+    border-right: 1px solid #70707040;
+    margin: 0 20px;
+}
+.card-communities .body-card-community .group-detail {
+    margin: 18px 0;
+}
+.card-communities .body-card-community .btn-join-group{
+    background: #F4F7FC;
+    border: 1px solid #D9DFE6;
+    border-radius: 5px;
+    padding: 10px 30px;
+    margin: 14px auto 32px;
+}
+.content-detail-community .head-detail-community{
+    display: flex;
+    background: url("img/bgcomminity.png") no-repeat;
+    margin: -30px -25px 30px;
+    padding: 50px 25px 15px;
+    align-items: center;
+}
+.content-detail-community .head-detail-community .block-detail-community{
+    width: 410px;
+}
+.content-detail-community .head-detail-community .imgCommunities{
+    width: 155px;
+    height: 155px;
+    box-shadow: 0px 0px 25px rgb(0 0 0 / 15%);
+    margin-right: 20px;
+    border-radius: 14px;
+    overflow: hidden;
+}
+.content-detail-community .head-detail-community .imgCommunities img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.content-detail-community .head-detail-community .name-community{
+    font-weight: 700;
+    font-size: 24px;
+    color: #FFFFFF;
+}
+.content-detail-community .head-detail-community .number-members{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #FFFFFF;
+}
+.content-detail-community .head-detail-community .statut{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: #FFFFFF;
+}
+.description-community{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 26px;
+    color: #FFFFFF;
+    margin-bottom: 0;
+}
+.content-detail-community .tabs-courses .tabs .filters {
+    margin-bottom: 40px;
+    justify-content: unset;
+    background: white;
+    padding: 18px 13px 23px;
+}
+.content-detail-community .tabs-courses .tabs .item.active {
+    font-size: 18px;
+    color: #47A99E;
+    background: #FFFFFF;
+    border-radius: 5px;
+    padding: 0;
+    font-weight: 600;
+}
+.content-detail-community .tabs-courses .tabs .item {
+    cursor: pointer;
+    margin: 0 10px;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 23px;
+    color: #48465B;
+}
+.content-detail-community .item span{
+    background: #47A99E;
+    position: absolute;
+    bottom: -36px;
+    right: 0;
+    padding: 2px 8px;
+    color: white;
+    font-size: 10px;
+    left: 0;
+    width: fit-content;
+    margin: 0 auto;
+}
+.element-like-and-comment{
+    display: flex;
+    align-items: center;
+}
+.element-like-and-comment .sub-text{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: #9A9FBF;
+    margin-bottom: 0;
+}
+.element-like-and-comment img{
+    width: 24px;
+    height: 24px;
+    margin-right: 3px;
+}
+.like-and-comment{
+    border-top: 1px solid #E6ECF5;
+    padding-top: 10px;
+    margin-top: 20px;
+}
+.like-and-comment .comment-element-block {
+    text-align: left;
+    display: flex;
+}
+.like-and-comment .comment-element-block .imgUserComment{
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+    border-radius: 100%;
+    overflow: hidden;
+}
+.like-and-comment .comment-element-block .imgUserComment img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.like-and-comment .comment-element-block .name-user-comment{
+    font-weight: 500;
+    font-size: 15px;
+    color: #000000;
+    margin-bottom: 4px;
+}
+.like-and-comment .comment-element-block .date-time-comment{
+    font-weight: 400;
+    font-size: 13px;
+    color: #6B7C8F;
+    margin-bottom: 8px;
+}
+.like-and-comment .comment-element-block .text-comment{
+    font-weight: 400;
+    font-size: 14px;
+    color: #6B7C8F;
+    line-height: 20px;
+}
+.like-and-comment .first-element{
+    margin-top: 10px;
+}
+.btnmoreComment{
+    color: #023356;
+    margin-bottom: 14px;
+}
+.comment-element-block input{
+    width: 100%;
+    background: #F4F7FC;
+    border: 1px solid #F4F7FC;
+    border-radius: 4px;
+    padding: 13px 15px;
+}
+.group-course-activity{
+    display: flex;
+}
+.group-course-activity .new-card-course {
+    margin-right: 10px;
+}
+.advertissement-block{
+    border-radius: 7px;
+    background: center/cover url("img/dashboardAdvert.png") no-repeat;
 
-
+}
+.advertissement-block .name-ad{
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
+    color: #FFFFFF;
+}
+.advertissement-block .description-ad{
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 28px;
+    color: #FFFFFF;
+}
+.advertissement-block .btn-discover{
+    background: #043356;
+    border-radius: 6px;
+    font-size: 15px;
+    line-height: 17px;
+    color: #FFFFFF;
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
@@ -18157,6 +18436,30 @@ background: #FFFFFF !important;
     .user-expert-block{
         margin-bottom: 50px;
     }
+    .tabs-search-block .head{
+        padding: 20px 20px;
+        flex-wrap: wrap;
+    }
+    .tabs-search-block .head .search {
+        width: 100%;
+        margin-top: 10px;
+    }
+    .tabs-search-block .head {
+        margin-bottom: 30px;
+    }
+    .group-card-communities {
+        padding: 0 15px;
+    }
+    .card-communities {
+        background: white;
+        width: 100%;
+        margin-right: 14px;
+        margin-bottom: 20px;
+    }
+    .content-communities .head-community h1 {
+        margin-top: 38px;
+        padding-left: 15px;
+    }
 
 
 
@@ -18800,6 +19103,15 @@ background: #FFFFFF !important;
     }
     .content-new-user .user-expert-block{
         width: 50%;
+    }
+    .card-communities {
+        background: white;
+        width: 48%;
+        margin-right: 14px;
+        margin-bottom: 20px;
+    }
+    .tabs-search-block .head {
+        margin-bottom: 20px;
     }
 
 }
