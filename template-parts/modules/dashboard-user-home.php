@@ -292,7 +292,7 @@ if (!$is_first_login && get_current_user_id() !=0 )
                                     echo $row_interesses;
                                 ?>
                             </div>
-                            <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Save</button>
+                            <!-- <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Save</button> -->
                         </div>
                         <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Save</button>
                         <!-- <button type="button" class="btn btnSkipTopics" id="btnSkipTopics4">Skip</button> -->
