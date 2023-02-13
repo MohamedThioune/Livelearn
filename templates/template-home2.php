@@ -1411,6 +1411,8 @@ $saved = get_user_meta($user_id, 'course');
             </div>
         </div>
     </a>
+
+</div>
     <div class="Mob">
         <p class="onzeText">Onze gebruikers</p>
         <div class="swiper-container swipeContaine1">
@@ -1466,7 +1468,6 @@ $saved = get_user_meta($user_id, 'course');
             </div>
         </div>
     </div>
-</div>
 <div class="container-fluid">
     <div class="talent-binnen-block">
         <div class="first-block-binnen">
