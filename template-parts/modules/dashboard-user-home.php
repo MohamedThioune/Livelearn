@@ -78,6 +78,236 @@ foreach($categories as $categ){
     }
 }
 
+/** Modal subtopics after first login*/
+
+foreach($bangerichts as $key1=>$tag){
+
+    //Topics
+    $cats_bangerichts = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent' => $tag->cat_ID,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ));
+    if (count($cats_bangerichts)!=0)
+    {
+        $row_bangrichts.='<div hidden=true class="cb_topics_bangricht_'.($key1+1).'" '.($key1+1).'">';
+        foreach($cats_bangerichts as $key => $value)
+        {
+            $row_bangrichts .= '
+            <input type="checkbox" name="choice_bangrichts_'.$value->cat_ID.'" value= '.$value->cat_ID .' id=subtopics_bangricht_'.$value->cat_ID.' /><label class="labelChoose" for=subtopics_bangricht_'.$value->cat_ID.'>'. $value->cat_name .'</label>';
+        }
+        $row_bangrichts.= '</div>';
+    }
+
+}
+
+foreach($functies as $key1 =>$tag)
+{
+
+    //Topics
+    $cats_functies = get_categories(
+        array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent' => $tag->cat_ID,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ));
+    if (count($cats_functies)!=0)
+    {
+        $row_functies.='<div hidden=true class="cb_topics_funct_'.($key1+1).'" '.($key1+1).'">';
+        foreach($cats_functies as $key => $value)
+        {
+        $row_functies .= '
+        <input type="checkbox" name="choice_functies_'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_funct_'.($value->cat_ID).'" /><label class="labelChoose" for="cb_funct_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
+        }
+        $row_functies.= '</div>';
+    }
+}
+
+foreach($skills as $key1=>$tag){
+    //Topics
+    $cats_skills = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'parent' => $tag->cat_ID,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ));
+    if (count($cats_skills)!=0)
+    {
+        $row_skills.='<div hidden=true class="cb_topics_skills_'.($key1+1).'" '.($key1+1).'">';
+        foreach($cats_skills as $key => $value)
+        {
+                $row_skills .= '
+                <input type="checkbox" name="choice_skills'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_skills_'.($value->cat_ID).'" /><label class="labelChoose"  for="cb_skills_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
+        }
+        $row_skills.= '</div>';
+    }
+
+}
+
+foreach($interesses as $key1=>$tag){
+    //Topics
+        $cats_interesses = get_categories( array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent' => $tag->cat_ID,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ));
+        if (count($cats_interesses)!=0)
+    {
+        $row_interesses.='<div hidden=true class="cb_topics_personal_'.($key1+1).'" '.($key1+1).'">';
+        foreach($cats_interesses as $key => $value)
+        {
+        $row_interesses .= '
+        <input type="checkbox" name="choice_interesses_'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_interesses_'.($value->cat_ID).'" /><label class="labelChoose"  for="cb_interesses_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
+        }
+        $row_interesses.= '</div>';
+    }
+
+}
+
+if (isset($_POST["subtopics_first_login"])){
+    unset($_POST["subtopics_first_login"]);
+    $subtopics_already_selected = get_user_meta(get_current_user_id(),'topic');
+    foreach ($_POST as $key => $subtopics) {
+        if (isset($_POST[$key]))
+        {
+            if (!(in_array($_POST[$key], $subtopics_already_selected)))
+            {
+                add_user_meta(get_current_user_id(),'topic',$_POST[$key]);
+            }
+
+        }
+    }
+    update_field('is_first_login', true, 'user_'.get_current_user_id());
+    $message = "/dashboard/user/?message=Uw favoriete onderwerpen zijn succesvol opgeslagen !"; 
+    header("Location: ". $message);
+}
+
+$is_first_login = (get_field('is_first_login','user_' . get_current_user_id()));
+if (!$is_first_login && get_current_user_id() !=0 )
+{
+
+?>
+<!-- Modal First Connection -->
+<div class="contentModalFirst"²>
+    <div class="modal" id="myFirstModal" tabindex="-1" role="dialog" aria-labelledby="myFirstModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modalHeader">
+                    <h5 class="modal-title text-center" id="exampleModalLabel">Welcome to livelearn</h5>
+                    <p class="pickText">Pick your favorite topics to set up your feeds</p>
+                </div>
+                <div class="modal-body">
+                  <form method="post" name="first_login_form">
+                    <div class="blockBaangerichte">
+                        <h1 class="titleSubTopic">Baangerichte</h1>
+                        <div class="hiddenCB">
+                            <div>
+                                <?php
+                                foreach($bangerichts as $key => $value)
+                                    echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_bangricht'.($key+1).'" /><label class="labelChoose btnBaangerichte subtopics_bangricht_'.($key+1).' '.($key+1).'" for="cb_topics_bangricht'.($key+1).'">'. $value->cat_name .'</label>';
+                                
+                                ?>
+                            </div>
+                        </div>
+                        <div class="subtopicBaangerichte">
+
+                            <div class="hiddenCB">
+                                <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
+                                <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
+                                <?php
+                                echo $row_bangrichts;
+                                ?>
+                            </div>
+                            <button type="button" class="btn btnNext" id="nextblockBaangerichte">Next</button>
+                        </div>
+                        <button type="button" class="btn btnSkipTopics" id="btnSkipTopics1">Skip</button>
+                    </div>
+
+                    <div class="blockfunctiegericht">
+                        <h1 class="titleSubTopic">functiegericht</h1>
+                        <div class="hiddenCB">
+                            <div>
+                                <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnFunctiegericht" for="cb1">Choice A</label> -->
+                                <?php
+                                foreach($functies as $key => $value)
+                                    echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_funct'.($key+1).'" /><label class="labelChoose btnFunctiegericht subtopics_funct_'.($key+1).' '.($key+1).'"  for="cb_topics_funct'.($key+1).'">'. $value->cat_name .'</label>';
+                                ?>
+                            </div>
+                        </div>
+                        <div class="subtopicFunctiegericht">
+                            <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
+                            <div class="hiddenCB">
+                                <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
+                                <?php
+                                    echo $row_functies;
+                                ?>
+                            </div>
+                            <button type="button" class="btn btnNext" id="nextFunctiegericht">Next</button>
+                        </div>
+                        <button type="button" class="btn btnSkipTopics" id="btnSkipTopics2">Skip</button>
+                    </div>
+
+                    <div class="blockSkills">
+                        <h1 class="titleSubTopic">Skills</h1>
+                        <div class="hiddenCB">
+                            <div>
+                                <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnSkills" for="cb1">Choice A</label> -->
+
+                                <?php
+                                foreach($skills as $key => $value)
+                                    echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_skills'.($key+1).'" /><label class="labelChoose btnSkills subtopics_skills_'.($key+1).' '.($key+1).'" for=cb_skills'.($key+1).'>'. $value->cat_name .'</label>';
+                                ?>
+
+                            </div>
+                        </div>
+                        <div class="subtopicSkills">
+                            <div class="hiddenCB">
+                                <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
+                                <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose" for="cb1">Choice A</label> -->
+                                <?php
+                                    echo $row_skills;
+                                ?>
+                            </div>
+                            <button type="button" class="btn btnNext" id="nextSkills">Next</button>
+                        </div>
+                        <button type="button" class="btn btnSkipTopics" id="btnSkipTopics3">Skip</button>
+                    </div>
+
+                    <div class="blockPersonal">
+                        <h1 class="titleSubTopic">Personal interest </h1>
+                        <div class="hiddenCB">
+                            <div>
+                                <!-- <input type="checkbox" name="choice" id="cb1" /><label class="labelChoose btnPersonal" for="cb1">Choice A</label> -->
+
+                                <?php
+                                foreach($interesses as $key => $value)
+                                    echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_personal'.($key+1).'" /><label class="labelChoose btnPersonal subtopics_personal_'.($key+1).' '.($key+1).'" for="cb_topics_personal'.($key+1).'">'. $value->cat_name .'</label>';
+                                ?>
+
+                            </div>
+                        </div>
+                        <div class="subtopicPersonal">
+                            <div class="hiddenCB">
+                                <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
+                                <?php
+                                    echo $row_interesses;
+                                ?>
+                            </div>
+                            <!-- <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Save</button> -->
+                        </div>
+                        <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Save</button>
+                        <!-- <button type="button" class="btn btnSkipTopics" id="btnSkipTopics4">Skip</button> -->
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+}
+
+/** Modal Subtopics after first login */
+
 // Saved courses
 $saved = get_user_meta($user, 'course');
 

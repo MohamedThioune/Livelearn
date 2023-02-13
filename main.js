@@ -482,6 +482,7 @@ jQuery(function($) {
 
     // Pour first modal after login
     $(".btnBaangerichte").click(function() {
+        alert('Bonjour')
         $(".subtopicBaangerichte").show();
         let cl = $(this).attr('class').split(' ')[3];
         hidden = ($(".cb_topics_bangricht_" + cl).attr('hidden'));
@@ -520,14 +521,13 @@ jQuery(function($) {
         $(".blockfunctiegericht").hide();
     });
 
-    $("#nextSkills").click(function() {
+    $("#nextSkills, #btnSkipTopics3").click(function() {
         $(".blockPersonal").show();
         $(".blockSkills").hide();
     });
 
-    $("#btnSkipTopics3").click(function() {
-        $(".blockPersonal").show();
-        $(".blockSkills").hide();
+    $("#btnSkipTopics4").click(function() {
+        $(".blockPersonal").hide();
     });
 
 
