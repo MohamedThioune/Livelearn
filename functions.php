@@ -1139,4 +1139,18 @@ add_action( 'rest_api_init', function () {
     'callback' => 'filter_course',
   ));
 
+
+  register_rest_route('custom/v1', '/filter/courses/saved', array(
+    'methods' => 'GET',
+    'callback' => 'filter_saved_courses',
+  ));
+
+
+
+  register_rest_route('custom/v1', '/company/(?P<community>[-\w]+)', array(
+    'methods' => 'GET',
+    'callback' => 'community_share',
+  ));
+
+
 });

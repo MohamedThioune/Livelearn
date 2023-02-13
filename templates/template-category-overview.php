@@ -4,10 +4,9 @@
 global $wp;
 
 $page = 'check_visibility.php';
+require($page);
 
 $url = home_url( $wp->request );
-
-require($page);
 
 ?>
 <style>
@@ -234,8 +233,8 @@ require($page);
 <div class="contentOne">
 </div>
 
-     <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
-     <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
+    <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
         style="position: absolute;height: 106% !important; overflow-y:hidden !important;">
         <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
             box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
