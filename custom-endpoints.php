@@ -51,6 +51,7 @@ class Course
   public $connectedProduct;
   public $for_who;
   public $data_locaties;
+  public $links;
   function __construct($course) {
      $this->id = $course->ID;
      $this->date = $course->post_date;
@@ -65,6 +66,7 @@ class Course
      $this->youtubeVideos = $course->youtubeVideos;
      $this->experts = $course->experts;
      $this->visibility = $course->visibility ?? null;
+     $this->links = $course->guid;
     //  $this->visibility = get_field('company',  'user_' . $course->post_author)[0] != null ?
     //  visibility($course, get_field('company',  'user_' . $course->post_author)[0]) : false;
      $this->podcasts = $course->podcasts;
@@ -107,6 +109,7 @@ class Tags
 
 function allCourses ($data)
 {
+    
     $current_user_id = $GLOBALS['user_id'];
     $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
     $course_type = $_GET['course_type'];
@@ -142,6 +145,7 @@ function allCourses ($data)
   
   for($i=$start; $i < $end ;  $i++) 
   {
+      //$courses[$i]->links = $courses[$i]-> guid ?? null;
       $courses[$i]->visibility = get_field('visibility',$courses[$i]->ID) ?? [];
       $author = get_user_by( 'ID', $courses[$i] -> post_author  );
       $author_company = get_field('company', 'user_' . (int) $author -> ID)[0];
@@ -157,6 +161,7 @@ function allCourses ($data)
               $experts_img = get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
               array_push($courses[$i]->experts, new Expert ($expert,$experts_img));
               }
+        
           $courses[$i]-> author = new Expert ($author , $author_img);
           $courses[$i]->longDescription = get_field('long_description',$courses[$i]->ID);
           $courses[$i]->shortDescription = get_field('short_description',$courses[$i]->ID);

@@ -1135,17 +1135,15 @@ add_action( 'rest_api_init', function () {
   ));
 
   register_rest_route('custom/v1', '/filter/courses', array(
-    'methods' => 'GET',
+    'methods' => 'POST',
     'callback' => 'filter_course',
   ));
 
 
   register_rest_route('custom/v1', '/filter/courses/saved', array(
-    'methods' => 'GET',
+    'methods' => 'POST',
     'callback' => 'filter_saved_courses',
   ));
-
-
 
   register_rest_route('custom/v1', '/company/(?P<community>[-\w]+)', array(
     'methods' => 'GET',
