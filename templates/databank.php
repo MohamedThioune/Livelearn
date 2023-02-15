@@ -304,7 +304,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-               url: '/livelearn/optieAll',
+               url: '/optieAll',
                type: 'POST',
                data: {
             //        id: ids,
