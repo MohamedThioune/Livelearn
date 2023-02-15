@@ -902,7 +902,7 @@ $url = home_url( $wp->request );
                             </h2>
                         </div>
 
-                        <div id="collapseNavOne" class="collapse show" aria-labelledby="headingNavOne" data-parent="#accordionExample2">
+                        <div id="collapseNavOne" class="collapse" aria-labelledby="headingNavOne" data-parent="#accordionExample2">
                             <ul>
                                 <li><a class="linkElementNav" href="/inloggen-2/">Je eigen leeromgeving</a></li>
                                 <li> <a class="linkElementNav" href="/onderwer/">Wat voor content / onderwerpen?</a></li>
