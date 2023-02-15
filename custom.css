@@ -2494,7 +2494,7 @@ input:focus-visible {
 }
 
 .tab .active {
-    border-bottom: 2px solid #F69405;
+    border-bottom: 2px solid #043356;
 }
 
 .hrModifeDeel {
@@ -14638,9 +14638,12 @@ background: #FFFFFF !important;
 .content-new-user .first-section-dashboard{
     width: 65%;
     margin-right: 35px;
+    flex-wrap: wrap;
+    align-content: flex-start;
 }
 .content-new-user .second-section-dashboard{
     width: 30%;
+    text-align: left;
 }
 .content-new-user .category-block-course{
     width: 32%;
@@ -15163,6 +15166,8 @@ background: #FFFFFF !important;
     left: 0;
     width: fit-content;
     margin: 0 auto;
+    min-width: 27px;
+    text-align: center;
 }
 .element-like-and-comment{
     display: flex;
@@ -15221,6 +15226,7 @@ background: #FFFFFF !important;
 }
 .like-and-comment .first-element{
     margin-top: 10px;
+    display: none;
 }
 .btnmoreComment{
     color: #023356;
@@ -15238,11 +15244,16 @@ background: #FFFFFF !important;
 }
 .group-course-activity .new-card-course {
     margin-right: 10px;
+    height: fit-content;
+    width: 48%;
 }
 .advertissement-block{
     border-radius: 7px;
     background: center/cover url("img/dashboardAdvert.png") no-repeat;
-
+    padding: 44px 20px;
+    overflow: hidden;
+    text-align: left;
+    margin-bottom: 44px;
 }
 .advertissement-block .name-ad{
     font-weight: 700;
@@ -15255,13 +15266,159 @@ background: #FFFFFF !important;
     font-size: 15px;
     line-height: 28px;
     color: #FFFFFF;
+    padding-right: 67px;
 }
 .advertissement-block .btn-discover{
     background: #043356;
     border-radius: 6px;
     font-size: 15px;
     line-height: 17px;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
+    padding: 11px 20px;
+}
+.group-members-community{
+    display: flex;
+    flex-wrap: wrap;
+}
+.group-members-community .card-members{
+    width: 23.5%;
+    margin-right: 15px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 13px;
+}
+.group-members-community .card-members .head-card-members{
+    height: 116px;
+}
+.group-members-community .card-members img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.group-members-community .card-members .img-user-block{
+    width: 85px;
+    height: 85px;
+    border: 4px solid #ffffff;
+    margin: -46px auto -6px;
+    border-radius: 100%;
+    overflow: hidden;
+    z-index: 9;
+    position: relative;
+}
+.group-members-community .card-members .img-user-block img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.group-members-community .card-members .name-members{
+    font-size: 15px;
+    line-height: 25px;
+    color: #515365;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+.group-members-community .card-members .city{
+    font-weight: 400;
+    font-size: 12.992px;
+    line-height: 21px;
+    color: #888DA8;
+}
+.group-members-community .card-members .description{
+    font-size: 14px;
+    line-height: 20px;
+    color: #888DA8;
+    padding: 0px 10px;
+    margin-bottom: 20px;
+}
+.group-members-community .card-members .friend-members{
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 21px;
+    color: #888DA8;
+    margin-bottom: 3px;
+}
+.group-members-community .card-members .date-since{
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    color: #043356;
+}
+.card-files{
+    cursor: pointer;
+    background: white;
+    text-align: center;
+    padding: 20px;
+    width: 15%;
+    margin-right: 15px;
+    box-shadow: 1px 1px 7px rgb(154 154 204 / 10%);
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+.card-files img{
+    height: 70px;
+    margin-bottom: 15px;
+}
+.card-files .name{
+    font-size: 15px;
+    margin-bottom: 13px;
+    color: #4A4A69;
+}
+.card-files .number{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #7987A1;
+    margin-bottom: 7px;
+}
+.group-files-members .box:not(.a) {
+    display:block;
+}
+.group-files-members .group-files{
+    display: flex;
+    flex-wrap: wrap;
+}
+#parent {
+    margin-top: 36px;
+}
+.group-course-activity .question-block{
+    width: 97%;
+    background: white;
+    display: flex;
+    padding: 20px 20px;
+    border: 1px solid rgba(132, 133, 135, 0.21);
+    border-radius: 10px;
+    cursor: pointer;
+    align-items: center;
+    height: fit-content;
+    margin-bottom: 45px;
+}
+.group-course-activity .imgUser{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    overflow: hidden;
+    margin-left: 0;
+}
+.group-course-activity .imgUser img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.group-course-activity .text-question{
+    font-size: 16px;
+    margin-bottom: 0;
+    color: #848587;
+    margin-left: 14px;
+}
+#modalQuestion .btn-send{
+    background: #023356;
+    color: white !important;
+}
+.ck-editor__editable {
+    min-height: 200px;
+    text-align: left;
 }
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -18328,6 +18485,7 @@ background: #FFFFFF !important;
         width: 100%;
         margin-right: 0px;
         padding: 0 15px;
+
     }
     .head-block {
         flex-wrap: wrap;
@@ -18460,11 +18618,57 @@ background: #FFFFFF !important;
         margin-top: 38px;
         padding-left: 15px;
     }
-
-
-
-
-
+    .content-detail-community .tabs-courses .tabs .filters {
+        overflow: unset !important;
+    }
+    .group-course-activity .new-card-course {
+        width: 100%;
+    }
+    .content-detail-community .head-detail-community .imgCommunities {
+        display: none;
+    }
+    .content-detail-community .head-detail-community {
+        padding: 65px 45px 30px;
+    }
+    .content-detail-community .head-detail-community .name-community {
+        font-size: 20px;
+    }
+    .content-detail-community .head-detail-community .number-members {
+        font-size: 14px;
+    }
+    .content-detail-community .head-detail-community .statut {
+        font-size: 14px;
+    }
+    .description-community {
+        font-size: 13px;
+    }
+    .group-members-community .card-members {
+        width: 100%;
+        margin-right: 15px;
+        margin-bottom: 17px;
+        margin-left: 15px;
+    }
+    .card-files {
+        width: 47%;
+        margin-right: 10px;
+    }
+    .group-card-head {
+        overflow: scroll;
+        padding-left: 15px;
+    }
+    .group-card-head .card-files {
+        min-width: 43% !important;
+        margin-left: auto;
+    }
+    .group-files-members .group-files {
+        padding-left: 15px;
+    }
+    .card-files .name {
+        font-size: 14px;
+    }
+    .card-files .number {
+        font-size: 13px;
+    }
 
 
 }
@@ -19112,6 +19316,12 @@ background: #FFFFFF !important;
     }
     .tabs-search-block .head {
         margin-bottom: 20px;
+    }
+    .card-files {
+        width: 22%;
+    }
+    .group-members-community .card-members {
+        width: 31%;
     }
 
 }
