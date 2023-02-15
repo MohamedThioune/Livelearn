@@ -275,8 +275,30 @@ $type_course = array(
             border: none;
             padding: 10px 15px;
         }
+        .headCollections .dropdown{
+            text-align: center;
+        }
         .onze-expert-block .btn-collection {
+            font-size: 19px;
+            width: 70%;
+            white-space: unset;
+            margin: 0 auto;
+        }
+        .numberList {
             font-size: 17px;
+            margin-right: 8px;
+            margin-bottom: 0;
+        }
+        .nameListeCollection {
+            margin-left: 2px;
+        }
+        .circleImgCollection {
+            width: 45px;
+            height: 44px;
+            margin-right: 5px !important;
+        }
+        .zelf-block {
+            margin: 5px auto 0px !important;
         }
         .talent-binnen-block {
             margin: 40px 0 70px;
@@ -300,7 +322,7 @@ $type_course = array(
             width: 100%;
         }
         .block-logo-parteners2 .logo-element {
-            width: 27.5%;
+            width: 26.5%;
             margin: 0 10px 15px;
             height: 70px;
         }
@@ -331,7 +353,8 @@ $type_course = array(
             bottom: 0;
         }
         .content-home2 .boxOne3 {
-            height: 95vh;
+            height: fit-content;
+            padding-bottom: 30px;
         }
         .alJoum {
             margin-left: 0px;
@@ -352,6 +375,38 @@ $type_course = array(
 
 
 
+    }
+
+    @media not all and (min-resolution:.001dpcm) {
+        @supports (-webkit-appearance: none) and (stroke-color: transparent) {
+            .content-home2 form .selectSearchHome {
+                left: 0px;
+                top: 1px !important;
+                padding: 12px 5px 13px 10px !important;
+                box-shadow: none;
+                min-width: 115px;
+                border-radius: 0;
+                border-top-left-radius: 15px;
+                border-bottom-left-radius: 15px;
+                height: 95% !important;
+                background: white !important;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                background: url("data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+") no-repeat 95% 50% !important;
+            }
+            .content-home2 form .selectSearchHome {
+                height: 95% !important;
+            }
+            .content-home2 form:before {
+                left: 114px;
+                top: 6px;
+                z-index: 99;
+            }
+
+            @media all and (min-width: 300px) and (max-width: 767px){
+            }
+        }
     }
 
 
@@ -1356,6 +1411,8 @@ $saved = get_user_meta($user_id, 'course');
             </div>
         </div>
     </a>
+
+</div>
     <div class="Mob">
         <p class="onzeText">Onze gebruikers</p>
         <div class="swiper-container swipeContaine1">
@@ -1411,7 +1468,6 @@ $saved = get_user_meta($user_id, 'course');
             </div>
         </div>
     </div>
-</div>
 <div class="container-fluid">
     <div class="talent-binnen-block">
         <div class="first-block-binnen">
@@ -1467,7 +1523,7 @@ $saved = get_user_meta($user_id, 'course');
 <div class="block9">
 <div class="block9">
     <div class="container-fluid">
-        <p class="titleblockOnze">De onderwerpen waarin wij jouw kunnen helpen</p>
+        <p class="titleblockOnze">De onderwerpen waarin wij jou kunnen helpen</p>
         <a href="/onderwer" class="zelf-block">
             <p>Bekijk alle onderwerp</p>
             <div  class="all-expert">
