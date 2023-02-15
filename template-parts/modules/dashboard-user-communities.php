@@ -165,7 +165,7 @@ $other_communities = array();
                                                     <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
                                               </form>";
                                     else
-                                        // echo " <button type='button' class='btn btn-join-group' disabled>Join Group</button>";
+                                        echo " <button type='button' class='btn btn-join-group' disabled>Join Group</button>";
                                     ?>
                                 </div>
                             </div>
@@ -226,13 +226,10 @@ $other_communities = array();
                                         </div>
                                     </div>
                                     <?php
-                                    if(!$bool)
                                         echo "<form action='/dashboard/user/' method='POST'>
                                                     <input type='hidden' name='community_id' value='" . $community->ID . "' >
                                                     <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
                                               </form>";
-                                    else
-                                        // echo " <button type='button' class='btn btn-join-group' disabled>Join Group</button>";
                                     ?>
                                 </div>
                             </div>
