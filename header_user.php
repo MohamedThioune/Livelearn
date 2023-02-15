@@ -489,14 +489,14 @@ $see_experts = get_users(
                 </div>
                 <div class="modal-body">
                     <div class="head">
-                        
+                        <!--
+
                         <ul>
                             <li class="selectAll">
                                 <input class="styled-checkbox" id="allExpert" type="checkbox" value="allExpert">
                                 <label for="allExpert">Select All</label>
                             </li>
                         </ul>
-                        <!--
 
                         <div class="blockFilter">
                             <select class="form-select" aria-label="Default select example">
@@ -535,10 +535,12 @@ $see_experts = get_users(
                                 <input type="hidden" name="meta_key" form="multiple_form" value="expert" id="">
                                 <div class="expert-element rows2">
                                     <div class="d-flex align-items-center">
-                                        <div class="checkB">
-                                            <input class="styled-checkbox" name="data[]" id="<?= $expert->ID ?>" form="multiple_form" type="checkbox" value="<?= $expert->ID ?>">
-                                            <label for="<?= $expert->ID ?>"></label>
-                                        </div>
+                                        <!-- 
+                                            <div class="checkB">
+                                                <input class="styled-checkbox" name="data[]" id="<?= $expert->ID ?>" form="multiple_form" type="checkbox" value="<?= $expert->ID ?>">
+                                                <label for="<?= $expert->ID ?>"></label>
+                                            </div> 
+                                        -->
                                         <div class="img">
                                             <img src="<?= $image_author ?>" alt="">
                                         </div>
@@ -568,9 +570,11 @@ $see_experts = get_users(
                             <?php
                         }
                         ?>
+                        <!--
                         <div class="mt-3 mb-0">
                             <button type="submit" form="multiple_form" class="btn btnNext mb-0" name="interest_multiple_push">Follow / Unfollow</button>
-                        </div>
+                        </div> 
+                        -->
                     </div>
                 </div>
 
