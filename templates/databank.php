@@ -72,7 +72,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 </div>
                 <div class="contentCardListeCourse">
                     <table class="table table-responsive">
-                        <form action="">
+                        <form action="/livelearn/optieAll" method="POST">
                             <thead>
                             <tr>
                                 <th scope="col"><input type="checkbox" id="checkAll" onclick='checkUncheck(this);'></th>
@@ -84,7 +84,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                 <th scope="col">Status</th>
                                 <th scope="col">Author</th>
                                 <th scope="col">Company</th>
-                                <th class="tdCenter textThBorder"> <input type="button" class="optieAll btn-default" id="acceptAll" style="background:white; border: DEE2E6" value="✔️" />&nbsp;<input type="button" class="optieAll btn-default" id="declineAll" style="background:white" value="❌" /></th>
+                                <th class="tdCenter textThBorder"> <input type="submit" class="optieAll btn-default" id="acceptAll" name="submit" style="background:white; border: DEE2E6" value="✔️" />&nbsp;<input type="submit" class="optieAll btn-default" id="declineAll" name="submit" style="background:white" value="❌" /></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -117,7 +117,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     $key = $course->id;
                                 ?>
                                 <tr id="<?= $key ?>" class="<?= $state ?>">
-                                    <td class="textTh"><input type="checkbox" class="checkOne" name="checkOne" id="chkBox" value="<?= $course->id ?>"></td>
+                                    <td class="textTh"><input type="checkbox" class="checkOne" name="checkOne[]" id="chkBox" value="<?= $course->id ?>"></td>
                                     <td class="textTh"> <img src="<?= $image; ?>" alt="image course" width="50" height="50"></td>
                                     <td class="textTh courseDataBank" style="color:#212529;font-weight:bold"><?php echo $course->titel; ?></td>
                                     <td class="textTh tdCenter"><?= $course->type; ?></td>
@@ -143,7 +143,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                             ?>
                             </tbody>
                         </form>
-                    </table> 
+                    </table>  
                     <center>
                     <?php
                         foreach (range(1, $pagination_number) as $number){
@@ -293,22 +293,22 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     });
 
     $('.optieAll').click((e)=>{
-        var tr_element = e.target.parentElement.closest("tr");
-        var get = document.getElementsByName('checkOne');
+        // var tr_element = e.target.parentElement.closest("tr");
+        // var get = document.getElementsByName('checkOne');
         var classs = tr_element.className;
 
         console.log(ids);
 
-        var optie = e.target.id;
+        // var optie = e.target.id;
 
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-               url: '/optieAll',
+               url: '/livelearn/optieAll',
                type: 'POST',
                data: {
-                   id: ids,
-                   optie: optie,
+            //        id: ids,
+            //        optie: optie,
                    class:classs
                 },
                error: function() {
