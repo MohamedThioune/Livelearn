@@ -41,10 +41,9 @@
                         <b>Artikel</b>
                     </p>
                 </a>
-                <a href="#" class="cardCours cardCoursInitial" >
+                <a href="?func=add-assessment" class="cardCours cardCoursInitial" >
                     <p class="contentText">
                         <b>Assessment</b>
-                        <small>Coming soon !</small>
                     </p>
                 </a>
                 <a href="?func=add-white&type=reading" class="cardCours cardCoursInitial" >

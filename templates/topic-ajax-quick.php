@@ -51,13 +51,13 @@ if(!empty($topics_internal))
     foreach($tags as $tag){
       if(in_array($tag->cat_ID, $topics_internal))
         $topic_content = '<input type="hidden" name="meta_key" value="topic_affiliate" id="">
-                          <a href="#" type="button" class="btn btnFollowSubTopic">Internal</a>';
+                          <a href="#" type="button" form="by_one_form" class="btn btnFollowSubTopic">Internal</a>';
       else if (in_array($tag->cat_ID, $topics_external))
         $topic_content = '<input type="hidden" name="meta_key" value="topic" id="">
-                          <button type="submit" name="delete" style="background:red;" class="btn btnFollowSubTopic">Unfollow</button>';
+                          <button type="submit" form="by_one_form" name="delete" style="background:red;" class="btn btnFollowSubTopic">Unfollow</button>';
       else
         $topic_content = '<input type="hidden" name="meta_key" value="topic" id="">
-                          <button type="submit" name="interest_push" class="btn btnFollowSubTopic">Follow</button>';   
+                          <button type="submit" form="by_one_form" name="interest_push" class="btn btnFollowSubTopic">Follow</button>';   
      
       $image_category = get_field('image', 'category_'. $tag->cat_ID);
       $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/placeholder.png';
@@ -75,7 +75,7 @@ if(!empty($topics_internal))
                     </div>
                     <div class="d-flex align-items-center">
                         <a href="/category-overview?category=' . $tag->cat_ID . '" target="_blank">See</a>
-                        <form action="/dashboard/user/" method="POST">
+                        <form id="by_one_form" action="/dashboard/user/" method="POST">
                           <input type="hidden" name="meta_value" value="' . $tag->cat_ID . '" id="">
                           <input type="hidden" name="user_id" value="' . $id . '" id="">
                             ' . $topic_content . '
