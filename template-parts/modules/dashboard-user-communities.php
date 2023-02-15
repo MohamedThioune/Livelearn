@@ -50,7 +50,8 @@ $other_communities = array();
                                 break;
                             }
 
-                            //Courses
+                            //Courses comin through custom field 
+                            $courses = get_field('course_community', $community->ID);
                             $max_course = 0;
                             if(!empty($courses))
                                 $max_course = count($courses);
@@ -87,10 +88,10 @@ $other_communities = array();
                                     if(!$bool)
                                         echo "<form action='/dashboard/user/' method='POST'>
                                                     <input type='hidden' name='community_id' value='" . $community->ID . "' >
-                                                    <input type='submit' class='btn btn-join-group' name='follow_community' value='Volg' >
+                                                    <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
                                               </form>";
                                     else
-                                        echo " <button type='button' class='btn btn-join-group' disabled>Join Group</button>";
+                                        // echo " <button type='button' class='btn btn-join-group' disabled>Join Group</button>";
                                     ?>
                                 </div>
                             </div>
