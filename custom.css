@@ -4972,11 +4972,6 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     }
 }
 
-/* (Safari + MobileSafari >= 14.6) or (All MobileSafari versions) */
-@supports  (selector(:nth-child(1 of x))) or (-webkit-touch-callout: none) {
-
-    }
-
 
 .firstBlock {
     overflow-x: unset;
@@ -7972,7 +7967,7 @@ tbody {
 .blockCardOpleidingen {
     margin-bottom: 30px;
 }
-
+/*safarie*/
 @media not all and (min-resolution:.001dpcm) {
     @supports (-webkit-appearance: none) and (stroke-color: transparent) {
         .cardKraam2 {
@@ -8000,6 +7995,9 @@ tbody {
         .btnPlayGoogle {
             width: 187px;
             height: 75px;
+        }
+        .swiper-slide {
+            height: fit-content !important;
         }
         .second-block-binnen img {
             height: auto;
@@ -15419,6 +15417,32 @@ background: #FFFFFF !important;
 .ck-editor__editable {
     min-height: 200px;
     text-align: left;
+}
+.new-assessment-form .form-group {
+    padding: 15px 20px 20px !important;
+    background: white;
+    width: 100%;
+    border-radius: 10px;
+}
+.new-assessment-form .form-group label{
+    font-weight: 500 !important;
+    color: #212529 !important;
+    margin-bottom: 11px;
+}
+.new-assessment-form .form-group input{
+    padding: 24px 16px !important;
+    font-size: 14px !important;
+    color: #3c3c3c !important;
+    background: #F0F5F7;
+    border: none;
+    border-radius: 10px;
+}
+.new-assessment-form .form-group .group-input-assement {
+    display: flex;
+    margin-bottom: 15px;
+}
+.new-assessment-form .form-group .group-input-assement input {
+    margin-right: 15px;
 }
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
