@@ -100,15 +100,6 @@
         margin-left: 8px;
         margin-top: 10px;
     }
-
-
-
-
-
-
-    }
-
-
 </style>
 
 <?php
