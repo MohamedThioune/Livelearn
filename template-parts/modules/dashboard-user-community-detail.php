@@ -1,6 +1,14 @@
 <?php
     global $wp;
 
+
+    $args = array(
+        'post_type' => 'community',
+        'post_status' => 'publish',
+        'posts_per_page' => -1);
+    
+    $communities = get_posts($args);
+
     $via_url = get_site_url() . "/community-overview";
 
     //current user
@@ -20,35 +28,35 @@
     if(isset($_GET['mu']))
         $community = get_post($_GET['mu']);
 
-    if($community){
+if($community){
 
-        $company = get_field('company_author', $community->ID)[0];
-        $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
-        $community_image = get_field('image_community', $community->ID) ?: $company_image;
+    $company = get_field('company_author', $community->ID)[0];
+    $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+    $community_image = get_field('image_community', $community->ID) ?: $company_image;
 
-        foreach ($users as $value) {
-            $company_user = get_field('company',  'user_' . $value->ID )[0];
-            if($company_user->post_title == $company->post_title)
-                array_push($authors, $value->ID);
-        }
+    foreach ($users as $value) {
+        $company_user = get_field('company',  'user_' . $value->ID )[0];
+        if($company_user->post_title == $company->post_title)
+            array_push($authors, $value->ID);
+    }
 
-        // courses comin through custom field 
-        $courses = get_field('course_community', $community->ID);
+    // courses comin through custom field 
+    $courses = get_field('course_community', $community->ID);
 
-        $max_user = 0;
-        if(!empty($authors))
-            $max_user = count($authors);
+    $max_user = 0;
+    if(!empty($authors))
+        $max_user = count($authors);
 
-        $max_course = 0;
-        if(!empty($courses))
-            $max_course = count($courses);
+    $max_course = 0;
+    if(!empty($courses))
+        $max_course = count($courses);
 
-        $max_follower = 0;
-        $followers = get_field('follower_community', $community->ID);
-        if(!empty($followers))
-            $max_follower = count($followers);
-        
-        $level = get_field('range', $community->ID);
+    $max_follower = 0;
+    $followers = get_field('follower_community', $community->ID);
+    if(!empty($followers))
+        $max_follower = count($followers);
+    
+    $level = get_field('range', $community->ID);
 
 ?>
 
@@ -75,8 +83,8 @@
                 <div class="head">
                     <ul class="filters">
                         <li class="item active">Activity</li>
-                        <li class="item position-relative">Members <span>52</span></li>
-                        <li class="item position-relative">Files <span>52</span></li>
+                        <li class="item position-relative">Members <span><?= $max_follower ?></span></li>
+                        <li class="item position-relative">Courses <span><?= $max_course ?></span></li>
                     </ul>
                 </div>
                 <div class="">
@@ -138,6 +146,11 @@
                                             
                                             //short-description
                                             $short_description = get_field('short_description',  $course->ID);
+
+                                            //author
+                                            $author_object = get_user_by('ID', $course->post_author);        
+                                            $author_image = get_field('profile_img',  'user_' . $author_object->ID);
+                                            $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                         ?>
                                     <div class="new-card-course">
                                         <div class="head">
@@ -151,7 +164,7 @@
                                             </button>
                                         </div>
                                         <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                            <p class="autor"><b>By</b>: </p>
+                                            <p class="autor"><b>By</b>: <?= $author_object->display_name; ?></p>
                                         </div>
                                         <div class="footer-card-course d-flex justify-content-between align-items-center">
                                             <!-- 
@@ -166,12 +179,12 @@
                                             <div class="d-flex justify-content-between align-items-center ">
                                                 <div class="element-like-and-comment">
                                                     <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/heart-outline.png" alt="">
-                                                    <p class="sub-text">44</p>
+                                                    <p class="sub-text">0</p>
                                                 </div>
                                                 <div class="d-flex">
                                                     <button type="button" data-target="comment1" class="btn element-like-and-comment mr-2">
                                                         <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/comment-alt-lines.png" alt="">
-                                                        <p class="sub-text">16</p>
+                                                        <p class="sub-text">0</p>
                                                     </button>
                                                     <!-- 
                                                     <button type="button" class="btn element-like-and-comment">
@@ -225,55 +238,64 @@
                                 <div class="second-section-dashboard">
                                     <div class="Upcoming-block">
                                         <h2>Upcoming Schedule</h2>
+                                        <?php
+                                            $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+                                            if(!empty($events)){
+                                            foreach($events as $key => $course){
+                                                if($key == 8)
+                                                    break;
+
+                                                $price = get_field('price', $course->ID) ?: 'Free';
+                                                $day = "00";
+                                                $month = "00";
+                                                $hours = "";
+                                                $dates = get_field('dates', $course->ID);
+                                                if($dates){
+                                                    $date = $dates[0]['date'];
+                                                    $days = explode(' ', $date)[0];
+                                                    $day = explode('-', $days)[2];
+                                                    $month = $calendar[explode('-', $date)[1]];
+                                                    $year = explode('-', $days)[3];
+                                                    $time = explode(' ', $date)[1];
+                                                    $hours = explode(':', $time)[0] . 'h' . explode(':', $time)[1];
+                                                }
+                                                $author_course = $course->post_author;
+
+                                                $author_object = get_user_by('ID', $course->post_author);        
+                                                $author_image = get_field('profile_img',  'user_' . $author_object->ID);
+                                                $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                        
+                                                $experts = array();
+                                                $expert = get_field('experts', $course->ID);
+                                                $authors = array($author_course);
+                                                if(isset($expert[0]))
+                                                    $experts = array_merge($expert, $authors);
+                                                else
+                                                    $experts = $authors;
+                                        ?>
                                         <div class="card-Upcoming">
-                                            <p class="title">Web design</p>
+                                            <p class="title"><?= $course->post_title; ?></p>
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/bi_calendar-event-fill.png" alt="">
-                                                <p class="date">January 31, 2023</p>
+                                                <p class="date"><?php echo($month . ' ' . $day . ', ' . $year) ?></p>
                                                 <hr>
-                                                <p class="time">10 AM - Online</p>
+                                                <p class="time"><?= $hours ?> - Online</p>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between footer-card-upcoming">
                                                 <div class="d-flex align-items-center">
                                                     <img class="imgAutor" src="<?php echo get_stylesheet_directory_uri();?>/img/autor1.png" alt="">
-                                                    <p class="nameAutor">Samanthan wiliams</p>
+                                                    <p class="nameAutor">x</p>
                                                 </div>
                                                 <p class="price">Free</p>
                                             </div>
                                         </div>
-                                        <div class="card-Upcoming">
-                                            <p class="title">Web design</p>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/bi_calendar-event-fill.png" alt="">
-                                                <p class="date">January 31, 2023</p>
-                                                <hr>
-                                                <p class="time">10 AM - Online</p>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-between footer-card-upcoming">
-                                                <div class="d-flex align-items-center">
-                                                    <img class="imgAutor" src="<?php echo get_stylesheet_directory_uri();?>/img/autor1.png" alt="">
-                                                    <p class="nameAutor">Samanthan wiliams</p>
-                                                </div>
-                                                <p class="price">Free</p>
-                                            </div>
-                                        </div>
-                                        <div class="card-Upcoming">
-                                            <p class="title">Web design</p>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/bi_calendar-event-fill.png" alt="">
-                                                <p class="date">January 31, 2023</p>
-                                                <hr>
-                                                <p class="time">10 AM - Online</p>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-between footer-card-upcoming">
-                                                <div class="d-flex align-items-center">
-                                                    <img class="imgAutor" src="<?php echo get_stylesheet_directory_uri();?>/img/autor1.png" alt="">
-                                                    <p class="nameAutor">Samanthan wiliams</p>
-                                                </div>
-                                                <p class="price">Free</p>
-                                            </div>
-                                        </div>
-                                        <a href="/" class="btn btn-more-events">More Events</a>
+                                        <?php
+                                                }
+                                            }
+                                            else
+                                                echo $no_content;
+                                        ?> 
+                                        <!-- <a href="#" class="btn btn-more-events">More Events</a> -->
                                     </div>
                                     <div class="advertissement-block">
                                         <p class="name-ad">Learning Plateform</p>
@@ -309,7 +331,7 @@
                                                 <p class="number-members">112K Members</p>
                                             </div>
                                         </div>
-                                        <a href="/" class="btn btn-more-events">More</a>
+                                        <a href="/dashboard/user/comunities" class="btn btn-more-events">More</a>
                                     </div>
                                 </div>
                             </div>
