@@ -73,7 +73,9 @@ $other_communities = array();
                                             <img class="" src="<?= $company_image; ?>" alt="">
                                         </div>
                                         <div>
-                                            <a href="/dashboard/user/community-detail/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a>
+                                            <!-- <a href="/dashboard/user/community-detail/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a> -->
+                                            <a href="#" class="name-community"><?= $community->post_title; ?></a>
+
                                             <p class="statut-community">Private Groups</p>
                                         </div>
                                     </div>
@@ -140,7 +142,9 @@ $other_communities = array();
                                             <img class="" src="<?= $company_image; ?>" alt="">
                                         </div>
                                         <div>
-                                            <a href="/dashboard/user/community-detail/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a>
+                                            <!-- <a href="/dashboard/user/community-detail/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a> -->
+                                            <a href="#" class="name-community"><?= $community->post_title; ?></a>
+
                                             <p class="statut-community">Private Groups</p>
                                         </div>
                                     </div>
@@ -207,7 +211,9 @@ $other_communities = array();
                                             <img class="" src="<?= $company_image; ?>" alt="">
                                         </div>
                                         <div>
-                                        <a href="/dashboard/user/community-detail/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a>
+                                            <!-- <a href="/dashboard/user/community-detail/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a> -->
+                                            <a href="#" class="name-community"><?= $community->post_title; ?></a>
+
                                             <p class="statut-community">Private Groups</p>
                                         </div>
                                     </div>
