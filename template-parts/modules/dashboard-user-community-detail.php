@@ -14,13 +14,19 @@
     //current user
     $user_id = get_current_user_id();
 
-    $no_content =  '
+    $no_content_ =  '
     <center>
         <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" width="140" height="150" alt="Skill no-content" >
         <br><span class="text-dark h5 p-1 mt-2" style="color:#033256"> No content found !</span>
     <center>
     ';
 
+    $no_content_event =  '
+    <center>
+        <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" width="140" height="150" alt="Skill no-content" >
+        <br><span class="text-dark h5 p-1 mt-2" style="color:#033256"> No content found !</span>
+    <center>
+    ';
     $users = get_users();
     $authors = array();
 
@@ -304,33 +310,42 @@ if($community){
                                     </div>
                                     <div class="user-community-block">
                                         <h2>Other Communities</h2>
+                                        <?php
+
+                                        foreach($other_communities as $value){
+
+                                            if ($community->ID == $value->ID)
+                                                continue;
+                                                
+                                            $company = get_field('company_author', $value->ID)[0];
+                                            $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+                                            $community_image = get_field('image_community', $value->ID) ?: $company_image;
+
+                                            //Courses comin through custom field 
+                                            $courses = get_field('course_community', $value->ID);
+                                            $max_course = 0;
+                                            if(!empty($courses))
+                                                $max_course = count($courses);
+
+                                            //Followers
+                                            $max_follower = 0;
+                                            $followers = get_field('follower_community', $value->ID);
+                                            if(!empty($followers))
+                                                $max_follower = count($followers);
+                                        ?>
                                         <div class="card-Community d-flex align-items-center">
                                             <div class="imgCommunity">
-                                                <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/Community-1.png" alt="">
+                                                <img class="calendarImg" src="<?= $community_image ?>" alt="">
                                             </div>
                                             <div>
-                                                <p class="title">Designer community, Dakar</p>
-                                                <p class="number-members">112K Members</p>
+                                                <p class="title"><?= $value->post_title ?>, Netherlands</p>
+                                                <p class="number-members"><?= $max_follower ?> Members</p>
                                             </div>
                                         </div>
-                                        <div class="card-Community d-flex align-items-center">
-                                            <div class="imgCommunity">
-                                                <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/Community-1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="title">Designer community, Dakar</p>
-                                                <p class="number-members">112K Members</p>
-                                            </div>
-                                        </div>
-                                        <div class="card-Community d-flex align-items-center">
-                                            <div class="imgCommunity">
-                                                <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/Community-1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="title">Designer community, Dakar</p>
-                                                <p class="number-members">112K Members</p>
-                                            </div>
-                                        </div>
+                                        <?php
+                                        }
+                                        ?>
+                                       
                                         <a href="/dashboard/user/comunities" class="btn btn-more-events">More</a>
                                     </div>
                                 </div>
