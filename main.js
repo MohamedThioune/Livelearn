@@ -142,6 +142,16 @@ jQuery(function($) {
     });
 
 
+    // hover
+    $("#voorOrganisati").hover(function() {
+        var isHovered = $(this).is(":hover");
+        if (isHovered) {
+            alert('ok');
+            $("#voorOrganisatiBlock").show();
+        } else {
+            $("#voorOrganisatiBlock").hide();
+        }
+    });
 
 
 

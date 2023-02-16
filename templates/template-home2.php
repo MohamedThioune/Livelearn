@@ -1362,7 +1362,7 @@ $saved = get_user_meta($user_id, 'course');
         </a>
         <div class="row paddingElement7">
             <div class="col-lg-4  col-md-6">
-                <a href="/static-education-individual">
+                <a href="/inloggen-2/">
                     <div class="cardModife3 theme-card">
                         <div class="boxImgCard3 theme-card-img">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/phoneHomme.png" alt="">
@@ -1378,7 +1378,7 @@ $saved = get_user_meta($user_id, 'course');
                 </a>
             </div>
             <div class="col-lg-4  col-md-6">
-                <a href="/voor-teachers">
+                <a href="/voor-teacher-2-2/">
                     <div class="cardModife3 theme-card ">
                         <div class="boxImgCard3 theme-card-img">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/hmTableau.png" alt="">
@@ -1394,7 +1394,7 @@ $saved = get_user_meta($user_id, 'course');
                 </a>
             </div>
             <div class="col-lg-4  col-md-6">
-                <a href="/voor-organisaties">
+                <a href="/voor-organisatie-2/">
                     <div class="cardModife3 theme-card ">
                         <div class="boxImgCard3 theme-card-img">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/sta.png" alt="">
@@ -1418,7 +1418,7 @@ $saved = get_user_meta($user_id, 'course');
         <div class="swiper-container swipeContaine1">
             <div class="swiper-wrapper">
                 <div class="swiper-slide swiper-slide3">
-                    <a href="/static-education-individual">
+                    <a href="/inloggen-2/">
                         <div class="cardModife3 theme-card ">
                             <div class="boxImgCard3 theme-card-img">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/phoneHomme.png" alt="">
@@ -1434,7 +1434,7 @@ $saved = get_user_meta($user_id, 'course');
                     </a>
                 </div>
                 <div class="swiper-slide swiper-slide3">
-                    <a href="/voor-teachers">
+                    <a href="/voor-teacher-2-2/">
                         <div class="cardModife3 theme-card ">
                             <div class="boxImgCard3 theme-card-img">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/hmTableau.png" alt="">
@@ -1450,7 +1450,7 @@ $saved = get_user_meta($user_id, 'course');
                     </a>
                 </div>
                 <div class="swiper-slide swiper-slide3">
-                    <a href="/voor-organisaties">
+                    <a href="/voor-organisatie-2/">
                         <div class="cardModife3 theme-card ">
                             <div class="boxImgCard3 theme-card-img">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/sta.png" alt="">
