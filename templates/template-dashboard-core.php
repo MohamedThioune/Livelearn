@@ -893,13 +893,13 @@ else if(isset($follow_community)){
 
     update_field('follower_community', $followers, $community_id);
 
-    $path = "/community-detail/?mu=" . $community_id . "&message=Successfully subscribed to this community !";
+    $path = "/dashboard/user/communities/?mu=" . $community_id . "&message=Successfully subscribed to this community !";
     header("Location: ". $path);
 }
 
 else if(isset($unfollow_community)){
     
-    $path = "/community-detail/?mu=" . $community_id . "&message=Successfully unsubscribed to this community !";
+    $path = "/dashboard/user/communities/?mu=" . $community_id . "&message=Successfully unsubscribed to this community !";
     header("Location: ". $path);
 }
 
