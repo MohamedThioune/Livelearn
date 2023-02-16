@@ -8032,10 +8032,25 @@ tbody {
         .content-home2 form .selectSearchHome {
             height: 95% !important;
         }
+        .groupeBtn-Jouw-inloggen .btn-signup img {
+            height: 27px;
+        }
+        .content-inloggen .btnPlayGoogle, .content-inloggen .btnStore {
+             margin-top: 0px !important;
+        }
+        .cardKraam2 {
+            height: fit-content !important;
+        }
 
         @media all and (min-width: 300px) and (max-width: 767px){
             .second-block-binnen img {
                 height: 190px !important;
+            }
+            .second-block-binnen img {
+                max-height: 480px !important;
+            }
+            .btnStore img, .btnPlayGoogle img {
+                max-height: 46px !important;
             }
         }
     }
@@ -15444,6 +15459,7 @@ background: #FFFFFF !important;
 .new-assessment-form .form-group .group-input-assement input {
     margin-right: 15px;
 }
+
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
@@ -18692,6 +18708,12 @@ background: #FFFFFF !important;
     }
     .card-files .number {
         font-size: 13px;
+    }
+    .groupeBtn-Jouw-inloggen .btn-signup img {
+        height: 27px;
+    }
+    .cardKraam2 {
+        height: fit-content !important;
     }
 
 

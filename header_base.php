@@ -289,7 +289,7 @@ $url = home_url( $wp->request );
                     </div>
 
                     <!-- modal dropdown Voor organisaties -->
-                    <div class="activeModalHeader">
+                    <div class="activeModalHeader" id="voorOrganisatiBlock">
                         <div class="modal  dropdown-menu-custom" id="voorOrganisatiModal" tabindex="-1" role="dialog" aria-labelledby="voorOrganisatiLabel" aria-hidden="true">
                             <div class="souselementHeader">
                                 <div class="blockdropdownnHeader">
