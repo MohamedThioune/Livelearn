@@ -67,7 +67,8 @@
             if($updated === false)
                 echo 'error';
             else 
-                header("location:/databank");
+                echo 'succeed';
         }
     }
+    header('location: /livelearn/databank');
 ?>
