@@ -105,59 +105,58 @@
         margin-top: 10px;
     }
 
-    }
 </style>
 
 <?php
-global $wp;
+    global $wp;
 
-$via_url = get_site_url() . "/community-overview";
+    $via_url = get_site_url() . "/community-overview";
 
-//current user
-$user_id = get_current_user_id();
+    //current user
+    $user_id = get_current_user_id();
 
-$no_content =  '
-                <center>
-                    <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" width="140" height="150" alt="Skill no-content" >
-                    <br><span class="text-dark h5 p-1 mt-2" style="color:#033256"> No content found !</span>
-                <center>
-                ';
-$users = get_users();
-$authors = array();
+    $no_content =  '
+                    <center>
+                        <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" width="140" height="150" alt="Skill no-content" >
+                        <br><span class="text-dark h5 p-1 mt-2" style="color:#033256"> No content found !</span>
+                    <center>
+                    ';
+    $users = get_users();
+    $authors = array();
 
-$community = "";
-if(isset($_GET['mu']))
-    $community = get_post($_GET['mu']);
+    $community = "";
+    if(isset($_GET['mu']))
+        $community = get_post($_GET['mu']);
 
-if($community){
+    if($community){
 
-    $company = get_field('company_author', $community->ID)[0];
-    $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
-    $community_image = get_field('image_community', $community->ID) ?: $company_image;
+        $company = get_field('company_author', $community->ID)[0];
+        $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+        $community_image = get_field('image_community', $community->ID) ?: $company_image;
 
-    foreach ($users as $value) {
-        $company_user = get_field('company',  'user_' . $value->ID )[0];
-        if($company_user->post_title == $company->post_title)
-            array_push($authors, $value->ID);
-    }
+        foreach ($users as $value) {
+            $company_user = get_field('company',  'user_' . $value->ID )[0];
+            if($company_user->post_title == $company->post_title)
+                array_push($authors, $value->ID);
+        }
 
-    // courses comin through custom field 
-    $courses = get_field('course_community', $community->ID);
+        // courses comin through custom field 
+        $courses = get_field('course_community', $community->ID);
 
-    $max_user = 0;
-    if(!empty($authors))
-        $max_user = count($authors);
+        $max_user = 0;
+        if(!empty($authors))
+            $max_user = count($authors);
 
-    $max_course = 0;
-    if(!empty($courses))
-        $max_course = count($courses);
+        $max_course = 0;
+        if(!empty($courses))
+            $max_course = count($courses);
 
-    $max_follower = 0;
-    $followers = get_field('follower_community', $community->ID);
-    if(!empty($followers))
-        $max_follower = count($followers);
-    
-    $level = get_field('range', $community->ID);
+        $max_follower = 0;
+        $followers = get_field('follower_community', $community->ID);
+        if(!empty($followers))
+            $max_follower = count($followers);
+        
+        $level = get_field('range', $community->ID);
 
 ?>
     <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
