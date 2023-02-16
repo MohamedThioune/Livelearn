@@ -64,16 +64,16 @@ $other_communities = array();
                             
                         ?>
                             <div class="card-communities">
-                                <a href="/dashboard/user/communities/?mu=<?= $community->ID ?>" class="head-card-communities">
+                                <div class="head-card-communities">
                                     <img class="" src="<?= $community_image; ?>" alt="">
-                                </a>
+                                </div>
                                 <div class="body-card-community">
                                     <div class="block-img-title d-flex align-items-center">
                                         <div class="imgCommunity">
                                             <img class="" src="<?= $company_image; ?>" alt="">
                                         </div>
                                         <div>
-                                            <a href="/dashboard/user/communities/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a>
+                                            <a href="/dashboard/user/community-detail/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a>
                                             <p class="statut-community">Private Groups</p>
                                         </div>
                                     </div>
@@ -131,16 +131,16 @@ $other_communities = array();
                                 $max_follower = count($followers);
                         ?>
                             <div class="card-communities">
-                                <a href="/dashboard/user/communities/?mu=<?= $community->ID ?>" class="head-card-communities">
+                                <div class="head-card-communities">
                                     <img class="" src="<?= $community_image; ?>" alt="">
-                                </a>
+                                </div>
                                 <div class="body-card-community">
                                     <div class="block-img-title d-flex align-items-center">
                                         <div class="imgCommunity">
                                             <img class="" src="<?= $company_image; ?>" alt="">
                                         </div>
                                         <div>
-                                            <a href="/dashboard/user/communities/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a>
+                                            <a href="/dashboard/user/community-detail/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a>
                                             <p class="statut-community">Private Groups</p>
                                         </div>
                                     </div>
@@ -198,16 +198,16 @@ $other_communities = array();
                                 $max_follower = count($followers);
                         ?>
                             <div class="card-communities">
-                                <a href="/dashboard/user/communities/?mu=<?= $community->ID ?>" class="head-card-communities">
+                                <div class="head-card-communities">
                                     <img class="" src="<?= $community_image; ?>" alt="">
-                                </a>
+                                </div>
                                 <div class="body-card-community">
                                     <div class="block-img-title d-flex align-items-center">
                                         <div class="imgCommunity">
                                             <img class="" src="<?= $company_image; ?>" alt="">
                                         </div>
                                         <div>
-                                            <a href="/dashboard/user/communities/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a>
+                                        <a href="/dashboard/user/community-detail/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a>
                                             <p class="statut-community">Private Groups</p>
                                         </div>
                                     </div>
