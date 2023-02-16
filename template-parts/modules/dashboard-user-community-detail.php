@@ -154,11 +154,13 @@
                                             <p class="autor"><b>By</b>: </p>
                                         </div>
                                         <div class="footer-card-course d-flex justify-content-between align-items-center">
+                                            <!-- 
                                             <div class="d-flex align-items-center">
                                                 <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
                                                 <p class="hours-course">4h</p>
-                                            </div>
-                                            <a href="">View Details</a>
+                                            </div> 
+                                            -->
+                                            <a href="<?= get_permalink($course->ID); ?>">View Details</a>
                                         </div>
                                         <div class="like-and-comment">
                                             <div class="d-flex justify-content-between align-items-center ">
