@@ -24,14 +24,14 @@ if(!empty($topics_internal))
 
     if($key==0)
       $topic = ' 
-      <div class="d-flex justify-content-between align-items-center mb-4">.'
-        // <ul>
-        //     <li class="selectAll">
-        //         <input class="styled-checkbox" id="all" type="checkbox" value="all">
-        //         <label for="all">Select All</label>
-        //     </li>
-        // </ul>
-        .'
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <ul>
+            <li class="selectAll">
+                <input class="styled-checkbox" id="all" type="checkbox" value="all">
+                <label for="all">Select All</label>
+            </li>
+        </ul>
+        
         <div class="position-relative">'
             // <input type="search" placeholder="Search for your favorite Subtopics" class="searchSubTopics">
             // <img class="searchImg" src="' . get_stylesheet_directory_uri() . '/img/searchM.png" alt=""> 
@@ -51,45 +51,22 @@ if(!empty($topics_internal))
     foreach($tags as $tag){
       if(in_array($tag->cat_ID, $topics_internal))
         $topic_content = '<input type="hidden" name="meta_key" value="topic_affiliate" id="">
-                          <a href="#" type="button" class="btn btnFollowSubTopic">Internal</a>';
+                          <a href="#" type="button" form="by_one_form" class="btn btnFollowSubTopic">Internal</a>';
       else if (in_array($tag->cat_ID, $topics_external))
         $topic_content = '<input type="hidden" name="meta_key" value="topic" id="">
-                          <button type="submit" name="delete" style="background:red;" class="btn btnFollowSubTopic">Unfollow</button>';
+                          <button type="submit" form="by_one_form" name="delete" style="background:red;" class="btn btnFollowSubTopic">Unfollow</button>';
       else
         $topic_content = '<input type="hidden" name="meta_key" value="topic" id="">
-                          <button type="submit" name="interest_push" class="btn btnFollowSubTopic">Follow</button>';   
+                          <button type="submit" form="by_one_form" name="interest_push" class="btn btnFollowSubTopic">Follow</button>';   
      
       $image_category = get_field('image', 'category_'. $tag->cat_ID);
       $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/placeholder.png';
       
-      if(in_array($tag->cat_ID, $topics_selected )){
-        $row .= ' <div class="subtTopics-element">
-                      <div class="d-flex align-items-center">
-                          <div class="checkbox rows">.'
-                              // <input class="styled-checkbox" id="'. $tag->cat_name .'" type="checkbox" value="'. $tag->cat_ID .'" checked>
-                              .'<label for="'. $tag->cat_name .'"></label>
-                          </div>
-                          <div class="img">
-                              <img src="' . $image_category . '" alt="">
-                          </div>
-                          <p class="subTitleText">'. $tag->cat_name .'</p>
-                      </div>
-                      <div class="d-flex align-items-center">
-                          <a href="/category-overview?category=' . $tag->cat_ID . '" target="_blank">See</a>
-                          <form action="/dashboard/user/" method="POST">
-                            <input type="hidden" name="meta_value" value="' . $tag->cat_ID . '" id="">
-                            <input type="hidden" name="user_id" value="' . $id . '" id="">
-                              ' . $topic_content . '
-                          </form>
-                      </div>
-                  </div>';
-        continue;
-      }
       $row .= ' <div class="subtTopics-element">
                     <div class="d-flex align-items-center">
-                        <div class="checkbox rows">.'
-                            // <input class="styled-checkbox" id="'. $tag->cat_name .'" type="checkbox" value="'. $tag->cat_ID .'">
-                            .'<label for="'. $tag->cat_name .'"></label>
+                        <div class="checkbox rows">
+                            <input class="styled-checkbox" name="data[]" form="multiple_form_tags" id="'. $tag->cat_ID .'" type="checkbox" value="'. $tag->cat_ID .'">
+                            <label for="'. $tag->cat_ID .'"></label>
                         </div>
                         <div class="img">
                             <img src="' . $image_category . '" alt="">
@@ -98,7 +75,7 @@ if(!empty($topics_internal))
                     </div>
                     <div class="d-flex align-items-center">
                         <a href="/category-overview?category=' . $tag->cat_ID . '" target="_blank">See</a>
-                        <form action="/dashboard/user/" method="POST">
+                        <form id="by_one_form" action="/dashboard/user/" method="POST">
                           <input type="hidden" name="meta_value" value="' . $tag->cat_ID . '" id="">
                           <input type="hidden" name="user_id" value="' . $id . '" id="">
                             ' . $topic_content . '
@@ -115,7 +92,7 @@ if(!empty($topics_internal))
 
   $output =  $topic . '
             <div class="mt-3 mb-0">
-              <button type="button" id="backTopics" class="btn bg-dark btnNext mr-3 mb-0">Back</button>
+              <button type="submit" form="multiple_form_tags" class="btn btnNext mb-0" name="interest_multiple_push">Follow / Unfollow</button>
             </div>';
 
   echo $output;

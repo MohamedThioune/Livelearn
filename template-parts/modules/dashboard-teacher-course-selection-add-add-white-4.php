@@ -548,11 +548,9 @@ var selected_subtopics_id=[];
                 $('#autocomplete_ajax').html(data);
             },
             error: (()=>{
-<<<<<<< HEAD
-                alert ('bonjour')
-=======
+
                 
->>>>>>> origin/frontSeydou
+
             })
         });
     })

@@ -111,6 +111,45 @@ jQuery(function($) {
         $(".alertNotification").hide();
     });
 
+
+    // show comment
+
+
+
+  /*  const elements = document.querySelectorAll('.like-and-comment .element-like-and-comment');
+    const blockComments = document.querySelectorAll('.like-and-comment .first-element');
+
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].addEventListener('click', function() {
+            for (let j = 0; j < blockComments.length; j++) {
+                if (blockComments[j].classList.contains('show-comments')) {
+                    blockComments[j].classList.remove('show-comments');
+                }
+            }
+            blockComments[i].classList.toggle('show-comments');
+        });
+    }*/
+
+    // Select all the buttons and content blocks
+    var buttons = document.querySelectorAll('.element-like-and-comment');
+    var contents = document.querySelectorAll('.first-element');
+
+    $(document).ready(function() {
+        $(buttons).click(function() {
+            var target = $(this).data('target');
+            $('#' + target).toggle();
+        });
+    });
+
+
+
+
+
+
+
+
+
+
     // for modal skills passport home page
     $("#btnStep1SkillsPasspoort").click(function() {
         $(".step1SkillsPasspoort").hide();
@@ -482,6 +521,7 @@ jQuery(function($) {
 
     // Pour first modal after login
     $(".btnBaangerichte").click(function() {
+        
         $(".subtopicBaangerichte").show();
         let cl = $(this).attr('class').split(' ')[3];
         hidden = ($(".cb_topics_bangricht_" + cl).attr('hidden'));
@@ -520,14 +560,13 @@ jQuery(function($) {
         $(".blockfunctiegericht").hide();
     });
 
-    $("#nextSkills").click(function() {
+    $("#nextSkills, #btnSkipTopics3").click(function() {
         $(".blockPersonal").show();
         $(".blockSkills").hide();
     });
 
-    $("#btnSkipTopics3").click(function() {
-        $(".blockPersonal").show();
-        $(".blockSkills").hide();
+    $("#btnSkipTopics4").click(function() {
+        $(".blockPersonal").hide();
     });
 
 

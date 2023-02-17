@@ -16,6 +16,36 @@
                     )); 
                 ?>
             </div>
+            <div class="new-assessment-form w-100">
+                <div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Title</label>
+                        <input type="text" class="form-control" placeholder="Title of your queestion">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Answer</label>
+                        <div class="group-input-assement">
+                            <input type="text" class="form-control" placeholder="answer 1">
+                            <input type="checkbox" id="avnswer1" name="answerQuestion1">
+                        </div>
+                        <div class="group-input-assement">
+                            <input type="text" class="form-control" placeholder="answer 2">
+                            <input type="checkbox" id="avnswer1" name="answerQuestion1">
+                        </div>
+                        <div class="group-input-assement">
+                            <input type="text" class="form-control" placeholder="answer 3">
+                            <input type="checkbox" id="avnswer1" name="answerQuestion1">
+                        </div>
+                        <div class="group-input-assement">
+                            <input type="text" class="form-control" placeholder="answer 4">
+                            <input type="checkbox" id="avnswer1" name="answerQuestion1">
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5">
+                    <button type="button" class="add btn-newDate"> + Extra startdatum</button>
+                </div>
+            </div>
         </div>
     </div>
 
