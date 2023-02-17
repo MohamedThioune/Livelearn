@@ -462,8 +462,12 @@ $see_experts = get_users(
                         </div>
                     </div>
                     <div class="content-subTopics">
-                        <form action="" method="post" id="autocomplete_tags">
+                        <form id="multiple_form_tags" method="POST" action="">
+                            <input type="hidden" id="user_id" name="user_id" form="multiple_form_tags" value="<?= $user->ID ?>" id="">
+                            <input type="hidden" name="meta_key" form="multiple_form_tags" value="topic" id="">
                         </form>
+                        <div id="autocomplete_tags">
+                        </div>
                     </div>
                 </div>
 
@@ -478,7 +482,7 @@ $see_experts = get_users(
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Select your experts</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Select your experts </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -486,6 +490,7 @@ $see_experts = get_users(
                 <div class="modal-body">
                     <div class="head">
                         <!--
+
                         <ul>
                             <li class="selectAll">
                                 <input class="styled-checkbox" id="allExpert" type="checkbox" value="allExpert">
@@ -525,43 +530,51 @@ $see_experts = get_users(
                             $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
                             ?>
-                            <div class="expert-element rows2">
-                                <div class="d-flex align-items-center">
-                                    <!-- <div class="checkB">
-                                        <input class="styled-checkbox" id="<?= $expert->display_name ?>" type="checkbox" value="<?= $expert->ID ?>">
-                                        <label for="<?= $expert->display_name ?>"></label>
-                                    </div> -->
-                                    <div class="img">
-                                        <img src="<?= $image_author ?>" alt="">
+                            <form id="multiple_form" method="POST" action="">
+                                <input type="hidden" id="user_id" name="user_id" form="multiple_form" value="<?= $user->ID ?>" id="">
+                                <input type="hidden" name="meta_key" form="multiple_form" value="expert" id="">
+                                <div class="expert-element rows2">
+                                    <div class="d-flex align-items-center">
+                                        <!-- 
+                                            <div class="checkB">
+                                                <input class="styled-checkbox" name="data[]" id="<?= $expert->ID ?>" form="multiple_form" type="checkbox" value="<?= $expert->ID ?>">
+                                                <label for="<?= $expert->ID ?>"></label>
+                                            </div> 
+                                        -->
+                                        <div class="img">
+                                            <img src="<?= $image_author ?>" alt="">
+                                        </div>
+                                        <p class="subTitleText nameExpert"><?= $expert->display_name; ?></p>
                                     </div>
-                                    <p class="subTitleText nameExpert"><?= $expert->display_name; ?></p>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <a href="/user-overview?id=<?= $expert->ID ?>">See</a>
-                                    <form action="/dashboard/user/" method="POST">
-                                        <input type="hidden" name="meta_value" value="<?= $expert->ID; ?>" id="">
-                                        <input type="hidden" id="user_id" name="user_id" value="<?= $user->ID ?>" id="">
-                                        <input type="hidden" name="meta_key" value="expert" id="">
+                                    <div class="d-flex align-items-center">
+                                        <a href="/user-overview?id=<?= $expert->ID ?>">See</a>
+                                        <form id="by_one_form" action="/dashboard/user/" method="POST">
+                                            <input type="hidden" name="meta_value" form='by_one_form' value="<?= $expert->ID; ?>" id="">
+                                            <input type="hidden" id="user_id" form='by_one_form' name="user_id" value="<?= $user->ID ?>" id="">
+                                            <input type="hidden" name="meta_key" form='by_one_form' value="expert" id="">
+                                        </form>
                                         <div>
                                             <?php
                                             if(empty($saves_experts))
-                                                echo "<button type='submit' class='btn btnFollowSubTopic' name='interest_push'>Follow</button>";
+                                                echo "<button type='submit' class='btn btnFollowSubTopic' form='by_one_form' name='interest_push'>Follow</button>";
                                             else
                                                 if (in_array($expert->ID, $saves_experts))
-                                                    echo "<button type='submit' style='background: red' class='btn btnFollowSubTopic' name='delete'>Unfollow</button>";
+                                                    echo "<button type='submit' style='background: red' class='btn btnFollowSubTopic' form='by_one_form' name='delete'>Unfollow</button>";
                                                 else
-                                                    echo "<button type='submit' class='btn btnFollowSubTopic' name='interest_push'>Follow</button>";
+                                                    echo "<button type='submit' class='btn btnFollowSubTopic' form='by_one_form' name='interest_push'>Follow</button>";
                                             ?>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                             <?php
                         }
                         ?>
-                        <!-- <div class="mt-3 mb-0">
-                            <button type="button" class="btn btnNext mb-0" data-dismiss="modal">Save</button>
-                        </div> -->
+                        <!--
+                        <div class="mt-3 mb-0">
+                            <button type="submit" form="multiple_form" class="btn btnNext mb-0" name="interest_multiple_push">Follow / Unfollow</button>
+                        </div> 
+                        -->
                     </div>
                 </div>
 
