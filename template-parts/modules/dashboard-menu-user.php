@@ -98,10 +98,10 @@ style="overflow-x: hidden !important;">
         </li>
         <li class="elementTextDashboard">
             <!-- /community-overview/ -->
-            <a href="/community-overview" class="d-flex">
+            <a href="/dashboard/user/communities" class="d-flex">
                 <div class="iconeElement"><img src="<?php echo get_stylesheet_directory_uri();?>/img/Statistieken.png"></div>
                 <?php
-                if($option_menu[1] == 'community-overview') echo '<p class="textLiDashboard"><b>Communities</b></p>'; else echo  '<p class="textLiDashboard">Communities</p>';
+                if($option_menu[2] == 'communities') echo '<p class="textLiDashboard"><b>Communities</b></p>'; else echo  '<p class="textLiDashboard">Communities</p>';
                 ?>
             </a>
         </li>
