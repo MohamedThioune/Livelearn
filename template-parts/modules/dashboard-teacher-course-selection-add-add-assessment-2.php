@@ -1,4 +1,15 @@
 
+<?php 
+
+if (isset ($_POST) && !empty ($_POST))
+{
+    
+    extract ($_POST);
+
+    echo $titles[0];
+}
+var_dump($_POST);
+?>
 <div class="row">
     <div class="col-md-5 col-lg-8">
         <div class="cardCoursGlocal">
@@ -16,34 +27,48 @@
                     )); 
                 ?>
             </div>
-            <div class="new-assessment-form w-100">
-                <div>
+            <div class="new-assessment-form w-100 assessment-container">
+                <div class = "container-question-field" >
+                
                     <div class="form-group">
                         <label for="exampleInputEmail1">Title</label>
-                        <input type="text" class="form-control" placeholder="Title of your queestion">
+                        <input type="text" id="title" class="form-control" placeholder="Title of your queestion">
                     </div>
+
                     <div class="form-group">
-                        <label for="">Answer</label>
-                        <div class="group-input-assement">
-                            <input type="text" class="form-control" placeholder="answer 1">
-                            <input type="checkbox" id="avnswer1" name="answerQuestion1">
-                        </div>
-                        <div class="group-input-assement">
-                            <input type="text" class="form-control" placeholder="answer 2">
-                            <input type="checkbox" id="avnswer1" name="answerQuestion1">
-                        </div>
-                        <div class="group-input-assement">
-                            <input type="text" class="form-control" placeholder="answer 3">
-                            <input type="checkbox" id="avnswer1" name="answerQuestion1">
-                        </div>
-                        <div class="group-input-assement">
-                            <input type="text" class="form-control" placeholder="answer 4">
-                            <input type="checkbox" id="avnswer1" name="answerQuestion1">
-                        </div>
+                        <label for="exampleInputEmail1">Timer</label>
+                        <input value="00:45" id="timer" type="time" class="form-control">
                     </div>
+
+                    <div class="form-group">
+                        <label for="">Fill in the responses and check who 's true </label>
+                        <div class="group-input-assement">
+                            <input type="text" class="form-control" placeholder="answer 1" id="responseField">
+                            <input type="checkbox" value=false id="responseState" name="answerQuestion1">
+                        </div>
+                        <div class="group-input-assement">
+                            <input type="text" class="form-control" placeholder="answer 2" id="responseField">
+                            <input type="checkbox" id="responseState" name="answerQuestion1">
+                        </div>
+                        <div class="group-input-assement">
+                            <input type="text" class="form-control" placeholder="answer 3" id="responseField">
+                            <input type="checkbox" id="responseState" name="answerQuestion1">
+                        </div>
+                        <div class="group-input-assement">
+                            <input type="text" class="form-control" placeholder="answer 4" id="responseField">
+                            <input type="checkbox" id="responseState" name="answerQuestion1">
+                        </div>
+
+                        
+                    </div>
+                
+                </div>
+                <div class="append"></div>
+                <div class="mt-5">
+                    <button type="button" id="addQuestion" class="add btn-newDate"> + Add question</button>
                 </div>
                 <div class="mt-5">
-                    <button type="button" class="add btn-newDate"> + Extra startdatum</button>
+                    <button type="button" id="save" class="add btn-newDate"> Save</button>
                 </div>
             </div>
         </div>
@@ -93,6 +118,48 @@
         </div>
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+    var questionsCount=1;
+    var questionary = $(".container-question-field").html()
+    $("#addQuestion").click(() => {
+        
+        $(".append").append(questionary)
+        questionsCount++
+    })
+
+    $("#save").click(() => {
+    var  titles =[] ,responsesFields = [] ,responseStates = [] ,timers = []  ;
+    document.querySelectorAll("#title").forEach((element) => {titles.push(element.value)})
+    document.querySelectorAll("#responseField").forEach((element) => {responsesFields.push(element.value)}),
+    document.querySelectorAll("#responseState").forEach((element) => {responseStates.push(element.value)})
+    document.querySelectorAll("#timer").forEach((element) => {timers.push(element.value)})
+    $.ajax(
+        {
+            
+            type: 'post',
+            dataType: 'text',
+            data:{
+                titles : titles,
+                responsesFields: responsesFields,
+                responseStates : responseStates,
+                timers : timers
+            },
+            success: (result) => {
+                console.log(result)
+            }
+
+        }
+    )
+        })
+
+})
+
+</script>
+
 
 
 
