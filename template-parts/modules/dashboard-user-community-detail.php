@@ -1,18 +1,86 @@
+<?php
+    global $wp;
+
+
+    $args = array(
+        'post_type' => 'community',
+        'post_status' => 'publish',
+        'posts_per_page' => -1);
+    
+    $communities = get_posts($args);
+
+    $via_url = get_site_url() . "/community-overview";
+
+    //current user
+    $user_id = get_current_user_id();
+
+    $no_content_ =  '
+    <center>
+        <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" width="140" height="150" alt="Skill no-content" >
+        <br><span class="text-dark h5 p-1 mt-2" style="color:#033256"> No content found !</span>
+    <center>
+    ';
+
+    $no_content_event =  '
+    <center>
+        <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" width="140" height="150" alt="Skill no-content" >
+        <br><span class="text-dark h5 p-1 mt-2" style="color:#033256"> No content found !</span>
+    <center>
+    ';
+    $users = get_users();
+    $authors = array();
+
+    $community = "";
+    if(isset($_GET['mu']))
+        $community = get_post($_GET['mu']);
+
+if($community){
+
+    $company = get_field('company_author', $community->ID)[0];
+    $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+    $community_image = get_field('image_community', $community->ID) ?: $company_image;
+
+    foreach ($users as $value) {
+        $company_user = get_field('company',  'user_' . $value->ID )[0];
+        if($company_user->post_title == $company->post_title)
+            array_push($authors, $value->ID);
+    }
+
+    // courses comin through custom field 
+    $courses = get_field('course_community', $community->ID);
+
+    $max_user = 0;
+    if(!empty($authors))
+        $max_user = count($authors);
+
+    $max_course = 0;
+    if(!empty($courses))
+        $max_course = count($courses);
+
+    $max_follower = 0;
+    $followers = get_field('follower_community', $community->ID);
+    if(!empty($followers))
+        $max_follower = count($followers);
+    
+    $level = get_field('range', $community->ID);
+
+?>
+
 <script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/classic/ckeditor.js"></script>
 
 <div class="content-detail-community content-new-user">
     <div class="head-detail-community">
         <div class="imgCommunities">
-            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/pexels.jpg" alt="">
+            <img class="" src="<?= $community_image ?>" alt="">
         </div>
         <div class="block-detail-community">
-            <p class="name-community">Graphic Design</p>
+            <p class="name-community"><?= $community->post_title; ?></p>
             <div class="d-flex justify-content-between">
-                <p class="number-members">52 members</p>
-                <p class="statut">Public Group</p>
-                <p class="statut">4 days ago</p>
+                <p class="number-members"><?= $max_follower ?> members</p>
+                <p class="statut">Private Group</p>
+                <p class="statut">0 days ago</p>
             </div>
-            <p class="description-community">Curabitur vestibulum aliquam leo. Nulla sit amet est. Aenean viverra rhoncus pede. Phasellus nec sem in justo pellentesque facilisis. Morbi ac felis.</p>
+            <p class="description-community"><?= $community->post_excerpt; ?></p>
         </div>
     </div>
     <div class="body--detail-community">
@@ -21,8 +89,8 @@
                 <div class="head">
                     <ul class="filters">
                         <li class="item active">Activity</li>
-                        <li class="item position-relative">Members <span>52</span></li>
-                        <li class="item position-relative">Files <span>52</span></li>
+                        <li class="item position-relative">Members <span><?= $max_follower ?></span></li>
+                        <li class="item position-relative">Courses <span><?= $max_course ?></span></li>
                     </ul>
                 </div>
                 <div class="">
@@ -59,44 +127,77 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <?php
+                                    $events = array();
+                                    $i = 0;
+                                    if(!empty($courses))
+                                        foreach($courses as $key => $course){
+                                            // course-type
+                                            $course_type = get_field('course_type', $course->ID);
+                                            if($course_type == 'Event'){
+                                                array_push($events, $course);
+                                                continue;
+                                            }
+                                            $i++;
 
+                                            if($i == 9)
+                                                continue;
+                                            
+                                            //image
+                                            $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                            if(!$thumbnail)
+                                                $thumbnail = get_field('url_image_xml', $course->ID);
+                                            if(!$thumbnail)
+                                                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                                            
+                                            //short-description
+                                            $short_description = get_field('short_description',  $course->ID);
+
+                                            //author
+                                            $author_object = get_user_by('ID', $course->post_author);        
+                                            $author_image = get_field('profile_img',  'user_' . $author_object->ID);
+                                            $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                        ?>
                                     <div class="new-card-course">
                                         <div class="head">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Rectangle-21.png" class="" alt="">
+                                            <img src="<?= $thumbnail ?>" class="" alt="">
                                         </div>
                                         <div class="title-favorite d-flex justify-content-between align-items-center">
-                                            <p class="title-course">UI design</p>
+                                            <p class="title-course"><?= $course->post_title; ?></p>
                                             <button>
                                                 <img class="btn_favourite"  src="<?php echo get_stylesheet_directory_uri();?>/img/love.png" alt="">
                                                 <img class="btn_favourite d-none"  src="<?php echo get_stylesheet_directory_uri();?>/img/heart-like.png" alt="">
                                             </button>
                                         </div>
                                         <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                            <p class="autor"><b>By</b>: Samanthan wiliams</p>
-                                            <p class="price">$ 400</p>
+                                            <p class="autor"><b>By</b>: <?= $author_object->display_name; ?></p>
                                         </div>
                                         <div class="footer-card-course d-flex justify-content-between align-items-center">
+                                            <!-- 
                                             <div class="d-flex align-items-center">
                                                 <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
                                                 <p class="hours-course">4h</p>
-                                            </div>
-                                            <a href="">View Details</a>
+                                            </div> 
+                                            -->
+                                            <a href="<?= get_permalink($course->ID); ?>">View Details</a>
                                         </div>
                                         <div class="like-and-comment">
                                             <div class="d-flex justify-content-between align-items-center ">
                                                 <div class="element-like-and-comment">
                                                     <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/heart-outline.png" alt="">
-                                                    <p class="sub-text">44</p>
+                                                    <p class="sub-text">0</p>
                                                 </div>
                                                 <div class="d-flex">
                                                     <button type="button" data-target="comment1" class="btn element-like-and-comment mr-2">
                                                         <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/comment-alt-lines.png" alt="">
-                                                        <p class="sub-text">16</p>
+                                                        <p class="sub-text">0</p>
                                                     </button>
+                                                    <!-- 
                                                     <button type="button" class="btn element-like-and-comment">
                                                         <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/fluent_share.png" alt="">
                                                         <p class="sub-text">16</p>
-                                                    </button>
+                                                    </button> 
+                                                    -->
                                                 </div>
                                             </div>
                                             <div class="first-element" id="comment1" >
@@ -134,133 +235,73 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="new-card-course">
-                                        <div class="head">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Rectangle-21.png" class="" alt="">
-                                        </div>
-                                        <div class="title-favorite d-flex justify-content-between align-items-center">
-                                            <p class="title-course">UI design</p>
-                                            <button>
-                                                <img class="btn_favourite"  src="<?php echo get_stylesheet_directory_uri();?>/img/love.png" alt="">
-                                                <img class="btn_favourite d-none"  src="<?php echo get_stylesheet_directory_uri();?>/img/heart-like.png" alt="">
-                                            </button>
-                                        </div>
-                                        <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                            <p class="autor"><b>By</b>: Samanthan wiliams</p>
-                                            <p class="price">$ 400</p>
-                                        </div>
-                                        <div class="footer-card-course d-flex justify-content-between align-items-center">
-                                            <div class="d-flex align-items-center">
-                                                <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
-                                                <p class="hours-course">4h</p>
-                                            </div>
-                                            <a href="">View Details</a>
-                                        </div>
-                                        <div class="like-and-comment">
-                                            <div class="d-flex justify-content-between align-items-center ">
-                                                <div class="element-like-and-comment">
-                                                    <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/heart-outline.png" alt="">
-                                                    <p class="sub-text">44</p>
-                                                </div>
-                                                <div class="d-flex">
-                                                    <button type="button" data-target="comment2"  class="btn element-like-and-comment mr-2">
-                                                        <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/comment-alt-lines.png" alt="">
-                                                        <p class="sub-text">16</p>
-                                                    </button>
-                                                    <button type="button" class="btn element-like-and-comment">
-                                                        <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/fluent_share.png" alt="">
-                                                        <p class="sub-text">16</p>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="first-element" id="comment2">
-                                                <div class="comment-element-block">
-                                                    <div class="imgUserComment">
-                                                        <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
-                                                    </div>
-                                                    <div style="width: 93%;">
-                                                        <p class="name-user-comment">David Moore</p>
-                                                        <p class="date-time-comment">5 Mins Ago</p>
-                                                        <p class="text-comment">Donec rutrum congue leo eget malesuada nulla quis lorem ut libero malesuada feugiat donec rutrum congue leo eget malesuada donec rutrum congue leo eget malesuada.</p>
-                                                    </div>
-                                                </div>
-                                                <div class="comment-element-block">
-                                                    <div class="imgUserComment">
-                                                        <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
-                                                    </div>
-                                                    <div style="width: 93%;">
-                                                        <p class="name-user-comment">David Moore</p>
-                                                        <p class="date-time-comment">5 Mins Ago</p>
-                                                        <p class="text-comment">Donec rutrum congue leo eget malesuada nulla quis lorem ut libero malesuada feugiat donec rutrum congue leo eget malesuada donec rutrum congue leo eget malesuada.</p>
-                                                    </div>
-                                                </div>
-                                                <button class="btn btnmoreComment">
-                                                    More Comments+
-                                                </button>
-                                                <div class="comment-element-block">
-                                                    <div class="imgUserComment">
-                                                        <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
-                                                    </div>
-                                                    <div style="width: 93%;">
-                                                        <input type="text" placeholder="Your comment">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <?php
+                                        }
+                                    else
+                                        echo $no_content;
+                                    ?>
                                 </div>
                                 <div class="second-section-dashboard">
                                     <div class="Upcoming-block">
                                         <h2>Upcoming Schedule</h2>
+                                        <?php
+                                            $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+                                            if(!empty($events)){
+                                            foreach($events as $key => $course){
+                                                if($key == 8)
+                                                    break;
+
+                                                $price = get_field('price', $course->ID) ?: 'Free';
+                                                $day = "00";
+                                                $month = "00";
+                                                $hours = "";
+                                                $dates = get_field('dates', $course->ID);
+                                                if($dates){
+                                                    $date = $dates[0]['date'];
+                                                    $days = explode(' ', $date)[0];
+                                                    $day = explode('-', $days)[2];
+                                                    $month = $calendar[explode('-', $date)[1]];
+                                                    $year = explode('-', $days)[3];
+                                                    $time = explode(' ', $date)[1];
+                                                    $hours = explode(':', $time)[0] . 'h' . explode(':', $time)[1];
+                                                }
+                                                $author_course = $course->post_author;
+
+                                                $author_object = get_user_by('ID', $course->post_author);        
+                                                $author_image = get_field('profile_img',  'user_' . $author_object->ID);
+                                                $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                        
+                                                $experts = array();
+                                                $expert = get_field('experts', $course->ID);
+                                                $authors = array($author_course);
+                                                if(isset($expert[0]))
+                                                    $experts = array_merge($expert, $authors);
+                                                else
+                                                    $experts = $authors;
+                                        ?>
                                         <div class="card-Upcoming">
-                                            <p class="title">Web design</p>
+                                            <p class="title"><?= $course->post_title; ?></p>
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/bi_calendar-event-fill.png" alt="">
-                                                <p class="date">January 31, 2023</p>
+                                                <p class="date"><?php echo($month . ' ' . $day . ', ' . $year) ?></p>
                                                 <hr>
-                                                <p class="time">10 AM - Online</p>
+                                                <p class="time"><?= $hours ?> - Online</p>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between footer-card-upcoming">
                                                 <div class="d-flex align-items-center">
                                                     <img class="imgAutor" src="<?php echo get_stylesheet_directory_uri();?>/img/autor1.png" alt="">
-                                                    <p class="nameAutor">Samanthan wiliams</p>
+                                                    <p class="nameAutor">x</p>
                                                 </div>
                                                 <p class="price">Free</p>
                                             </div>
                                         </div>
-                                        <div class="card-Upcoming">
-                                            <p class="title">Web design</p>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/bi_calendar-event-fill.png" alt="">
-                                                <p class="date">January 31, 2023</p>
-                                                <hr>
-                                                <p class="time">10 AM - Online</p>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-between footer-card-upcoming">
-                                                <div class="d-flex align-items-center">
-                                                    <img class="imgAutor" src="<?php echo get_stylesheet_directory_uri();?>/img/autor1.png" alt="">
-                                                    <p class="nameAutor">Samanthan wiliams</p>
-                                                </div>
-                                                <p class="price">Free</p>
-                                            </div>
-                                        </div>
-                                        <div class="card-Upcoming">
-                                            <p class="title">Web design</p>
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/bi_calendar-event-fill.png" alt="">
-                                                <p class="date">January 31, 2023</p>
-                                                <hr>
-                                                <p class="time">10 AM - Online</p>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-between footer-card-upcoming">
-                                                <div class="d-flex align-items-center">
-                                                    <img class="imgAutor" src="<?php echo get_stylesheet_directory_uri();?>/img/autor1.png" alt="">
-                                                    <p class="nameAutor">Samanthan wiliams</p>
-                                                </div>
-                                                <p class="price">Free</p>
-                                            </div>
-                                        </div>
-                                        <a href="/" class="btn btn-more-events">More Events</a>
+                                        <?php
+                                                }
+                                            }
+                                            else
+                                                echo $no_content;
+                                        ?> 
+                                        <!-- <a href="#" class="btn btn-more-events">More Events</a> -->
                                     </div>
                                     <div class="advertissement-block">
                                         <p class="name-ad">Learning Plateform</p>
@@ -269,34 +310,43 @@
                                     </div>
                                     <div class="user-community-block">
                                         <h2>Other Communities</h2>
+                                        <?php
+
+                                        foreach($other_communities as $value){
+
+                                            if ($community->ID == $value->ID)
+                                                continue;
+                                                
+                                            $company = get_field('company_author', $value->ID)[0];
+                                            $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+                                            $community_image = get_field('image_community', $value->ID) ?: $company_image;
+
+                                            //Courses comin through custom field 
+                                            $courses = get_field('course_community', $value->ID);
+                                            $max_course = 0;
+                                            if(!empty($courses))
+                                                $max_course = count($courses);
+
+                                            //Followers
+                                            $max_follower = 0;
+                                            $followers = get_field('follower_community', $value->ID);
+                                            if(!empty($followers))
+                                                $max_follower = count($followers);
+                                        ?>
                                         <div class="card-Community d-flex align-items-center">
                                             <div class="imgCommunity">
-                                                <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/Community-1.png" alt="">
+                                                <img class="calendarImg" src="<?= $community_image ?>" alt="">
                                             </div>
                                             <div>
-                                                <p class="title">Designer community, Dakar</p>
-                                                <p class="number-members">112K Members</p>
+                                                <p class="title"><?= $value->post_title ?>, Netherlands</p>
+                                                <p class="number-members"><?= $max_follower ?> Members</p>
                                             </div>
                                         </div>
-                                        <div class="card-Community d-flex align-items-center">
-                                            <div class="imgCommunity">
-                                                <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/Community-1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="title">Designer community, Dakar</p>
-                                                <p class="number-members">112K Members</p>
-                                            </div>
-                                        </div>
-                                        <div class="card-Community d-flex align-items-center">
-                                            <div class="imgCommunity">
-                                                <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/Community-1.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="title">Designer community, Dakar</p>
-                                                <p class="number-members">112K Members</p>
-                                            </div>
-                                        </div>
-                                        <a href="/" class="btn btn-more-events">More</a>
+                                        <?php
+                                        }
+                                        ?>
+                                       
+                                        <a href="/dashboard/user/comunities" class="btn btn-more-events">More</a>
                                     </div>
                                 </div>
                             </div>
@@ -527,7 +577,11 @@
     </div>
 </div>
 
-
+<?php
+}
+else
+    header("Location: /dashboard/user/communities/");
+?>
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

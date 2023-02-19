@@ -1016,7 +1016,7 @@ $saved = get_user_meta($user_id, 'course');
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/hII5KLDvhIU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <iframe width="560" height="315" src="<?php echo get_stylesheet_directory_uri();?>/video/livelearn-home.mp4" title="livelearn video presentation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
