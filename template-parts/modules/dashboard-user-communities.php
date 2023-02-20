@@ -39,6 +39,11 @@ $other_communities = array();
 
                             $level = get_field('range', $community->ID);
 
+                            //Since year
+                            $date = $community->post_date;
+                            $days = explode(' ', $date)[0];
+                            $year = explode('-', $days)[0];
+
                             //Courses comin through custom field 
                             $courses = get_field('course_community', $community->ID);
                             $max_course = 0;
@@ -87,13 +92,13 @@ $other_communities = array();
                                             <p class="description">Members</p>
                                         </div>
                                         <div>
-                                            <p class="number-element">0000</p>
+                                            <p class="number-element"><?= $year; ?> </p>
                                             <p class="description">Since</p>
                                         </div>
                                     </div>
                                     <?php
                                     if(!$bool)
-                                        echo "<form action='/dashboard/user/' method='POST'>
+                                        echo "<form action='' method='POST'>
                                                     <input type='hidden' name='community_id' value='" . $community->ID . "' >
                                                     <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
                                               </form>";
@@ -118,6 +123,12 @@ $other_communities = array();
 
                             $level = get_field('range', $community->ID);
 
+                            //Since year
+                            $date = "";
+                            $date = $community->post_date;
+                            $days = explode(' ', $date)[0];
+                            $year = explode('-', $days)[0];
+
                             //Courses comin through custom field 
                             $courses = get_field('course_community', $community->ID);
                             $max_course = 0;
@@ -129,6 +140,7 @@ $other_communities = array();
                             $followers = get_field('follower_community', $community->ID);
                             if(!empty($followers))
                                 $max_follower = count($followers);
+                            
                         ?>
                             <div class="card-communities">
                                 <div class="head-card-communities">
@@ -154,13 +166,13 @@ $other_communities = array();
                                             <p class="description">Members</p>
                                         </div>
                                         <div>
-                                            <p class="number-element">0000</p>
+                                            <p class="number-element"><?= $year ?></p>
                                             <p class="description">Since</p>
                                         </div>
                                     </div>
                                     <?php
                                     if(!$bool)
-                                        echo "<form action='/dashboard/user/' method='POST'>
+                                        echo "<form action='' method='POST'>
                                                     <input type='hidden' name='community_id' value='" . $community->ID . "' >
                                                     <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
                                               </form>";
@@ -185,6 +197,12 @@ $other_communities = array();
 
                             $level = get_field('range', $community->ID);
 
+                            //Since year
+                            $date = "";
+                            $date = $community->post_date;
+                            $days = explode(' ', $date)[0];
+                            $year = explode('-', $days)[0];
+
                             //Courses comin through custom field 
                             $courses = get_field('course_community', $community->ID);
                             $max_course = 0;
@@ -196,6 +214,7 @@ $other_communities = array();
                             $followers = get_field('follower_community', $community->ID);
                             if(!empty($followers))
                                 $max_follower = count($followers);
+
                         ?>
                             <div class="card-communities">
                                 <div class="head-card-communities">
@@ -207,7 +226,7 @@ $other_communities = array();
                                             <img class="" src="<?= $company_image; ?>" alt="">
                                         </div>
                                         <div>
-                                        <a href="/dashboard/user/community-detail/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a>
+                                            <a href="/dashboard/user/community-detail/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a>
                                             <p class="statut-community">Private Groups</p>
                                         </div>
                                     </div>
@@ -221,12 +240,12 @@ $other_communities = array();
                                             <p class="description">Members</p>
                                         </div>
                                         <div>
-                                            <p class="number-element">0000</p>
+                                            <p class="number-element"><?= $year ?></p>
                                             <p class="description">Since</p>
                                         </div>
                                     </div>
                                     <?php
-                                        echo "<form action='/dashboard/user/' method='POST'>
+                                        echo "<form action='' method='POST'>
                                                     <input type='hidden' name='community_id' value='" . $community->ID . "' >
                                                     <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
                                               </form>";
