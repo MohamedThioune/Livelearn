@@ -896,6 +896,7 @@ else if(isset($follow_community)){
     if(!$followers)
         $followers = array();
     array_push($followers, $user);
+    var_dump($followers);
 
     update_field('follower_community', $followers, $community_id);
 
