@@ -478,10 +478,16 @@ else if(isset($review_post)){
         array_push($reviews,$review);
 
         update_field('reviews',$reviews, $course_id);
-        $message = get_permalink($course_id) . '/?message=Your review added successfully'; 
+        if($post_type != 'community')
+            $message = "/dashboard/user/communities/?mu=" . $course_id . "&message=Question saved successfully !";
+        else 
+            $message = get_permalink($course_id) . '/?message=Your review added successfully'; 
     }
-    else 
-        $message = get_permalink($course_id) . '/?message=User not find...';        
+    else
+        if($post_type != 'community')
+            $message = "/dashboard/user/communities/?mu=" . $course_id . "&message=Question saved successfully !";
+        else 
+            $message = get_permalink($course_id) . '/?message=User not find ...';        
 
     header("Location: ". $message);
 }
@@ -898,7 +904,6 @@ else if(isset($follow_community)){
 }
 
 else if(isset($unfollow_community)){
-    
     $path = "/dashboard/user/communities/?mu=" . $community_id . "&message=Successfully unsubscribed to this community !";
     header("Location: ". $path);
 }
@@ -928,6 +933,28 @@ else if(isset($interest_multiple_push)){
         
     $message = "News interests applied !";
     header("location: ../../dashboard/user/?message=" . $message);
+}
+
+else if(isset($question_community)){
+    $question_community = array();
+    $question = array();
+
+    $user = wp_get_current_user();
+    $question_community = get_field('question_community', $community_id);
+    $question = [
+        'user_question' => $user,
+        'user_question' => $text_question
+    ];
+
+    if(empty($question_community))
+        $question_community = array($question);
+    else
+        array_push($question_community, $question);
+    
+    update_field('question_community', $question_community, $community_id);
+
+    $path = "/dashboard/user/communities/?mu=" . $community_id . "&message=Question saved successfully !";
+    header("Location: ". $path);
 }
     
 ?>
