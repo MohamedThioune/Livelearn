@@ -285,17 +285,18 @@ if($community){
                                                     <?php
                                                 }
                                                 ?>
+                                                    <!-- 
                                                     <div class="imgUserComment">
                                                         <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
                                                     </div>
                                                     <div style="width: 93%;">
                                                         <input form="comment_community" name="feedback_content" type="text" placeholder="Your comment">
                                                     </div>
-                                                   <!-- 
                                                     <br><br> 
                                                     <div class="">
                                                         <button type="submit" form="comment_community" name="review_post" class="btn btnSendComment">Send</button>
-                                                    </div> -->
+                                                    </div> 
+                                                    -->
                                                 </div>
                                             </div>
                                         </div>
