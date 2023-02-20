@@ -424,6 +424,7 @@ jQuery(function($) {
         $("#OpleidingenModal").toggle();
     });
 
+
     $(".activeModalHeader").click(function() {
         $("#voorOrganisatiModal").hide();
         $("#voorOpleidersModal").hide();
