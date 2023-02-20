@@ -3,12 +3,41 @@
 
 if (isset ($_POST) && !empty ($_POST))
 {
-    
     extract ($_POST);
-
-    echo $titles[0];
+    $questions = array();   
+    for ($i = 0; $i < $questionsCount ; $i++)
+    {
+        if (isset($titles[$i]) && !empty($titles[$i]))
+        {
+            $questions[$i]['wording'] = $titles[$i];
+            if (isset($timers[$i]) && !empty($timers[$i]))
+            {
+                $questions[$i]['timer'] = $timers[$i];
+                if (isset($responsesFields) && !empty($responsesFields))
+                {
+                    $questions[$i]['responses'] = array();
+                    for ($j = 0; $j < 4; $j++)
+                    {
+                        array_push($questions[$i]['responses'],$responsesFields[$j]);
+                    }
+                    array_splice($responsesFields , 0 , 4);
+                    if (isset($responseStates) && !empty($responseStates))
+                    {
+                        $questions[$i]['correct_response'] = array();
+                        for ($k = 0; $k < 4; $k++){
+                            if ($responseStates[$k] == "true") 
+                                array_push($questions[$i]['correct_response'],$k+1);
+                        }
+                        array_splice($responseStates , 0 , 4);
+                    }
+                }
+            }
+        }
+    }
+    update_field('course_type', 'assessment', $_GET['id']);
+    update_field('question',$questions, $_GET['id']);
 }
-var_dump($_POST);
+
 ?>
 <div class="row">
     <div class="col-md-5 col-lg-8">
@@ -18,13 +47,13 @@ var_dump($_POST);
                     <h2>2.Vragen</h2>
                 </div>
                 <?php 
-                    update_field('course_type', 'assessment', $_GET['id']);
-                    acf_form(array(
-                    'post_id' => $_GET['id'],
-                    'fields' => array('question'),
-                    'submit_value'  => __('Opslaan & verder'),
-                    'return' => '?func=add-add-assessment&id=%post_id%&step=3'
-                    )); 
+                     
+                    // acf_form(array(
+                    // 'post_id' => $_GET['id'],
+                    // 'fields' => array('question'),
+                    // 'submit_value'  => __('Opslaan & verder'),
+                    // 'return' => '?func=add-add-assessment&id=%post_id%&step=3'
+                    // )); 
                 ?>
             </div>
             <div class="new-assessment-form w-100 assessment-container">
@@ -32,34 +61,31 @@ var_dump($_POST);
                 
                     <div class="form-group">
                         <label for="exampleInputEmail1">Title</label>
-                        <input type="text" id="title" class="form-control" placeholder="Title of your queestion">
+                        <input required type="text" id="title" class="form-control" placeholder="Title of your queestion">
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Timer</label>
-                        <input value="00:45" id="timer" type="time" class="form-control">
+                        <label for="exampleInputEmail1">Timer ( m : s )</label>
+                        <input required value="00:01:00" id="timer" type="time" class="form-control">
                     </div>
 
                     <div class="form-group">
                         <label for="">Fill in the responses and check who 's true </label>
-                        <div class="group-input-assement">
-                            <input type="text" class="form-control" placeholder="answer 1" id="responseField">
-                            <input type="checkbox" value=false id="responseState" name="answerQuestion1">
-                        </div>
-                        <div class="group-input-assement">
-                            <input type="text" class="form-control" placeholder="answer 2" id="responseField">
-                            <input type="checkbox" id="responseState" name="answerQuestion1">
-                        </div>
-                        <div class="group-input-assement">
-                            <input type="text" class="form-control" placeholder="answer 3" id="responseField">
-                            <input type="checkbox" id="responseState" name="answerQuestion1">
-                        </div>
-                        <div class="group-input-assement">
-                            <input type="text" class="form-control" placeholder="answer 4" id="responseField">
-                            <input type="checkbox" id="responseState" name="answerQuestion1">
-                        </div>
+                        <?php
+                            /** Display possible answers fields for each question  */
 
+                            for($i = 1; $i <= 4; $i++)
+                            {
+                        ?>
+                                <div class="group-input-assement">
+                                    <input required type="text" class="form-control" placeholder= "<?php echo 'Answer ' .$i; ?>" id="responseField">
+                                    <input required type="checkbox"  id="responseState">
+                                </div>
+                        <?php
+                            }
+                        ?>
                         
+                            
                     </div>
                 
                 </div>
@@ -68,7 +94,7 @@ var_dump($_POST);
                     <button type="button" id="addQuestion" class="add btn-newDate"> + Add question</button>
                 </div>
                 <div class="mt-5">
-                    <button type="button" id="save" class="add btn-newDate"> Save</button>
+                    <button type="button" id="createAssessment" class="add btn-newDate"> Next </button>
                 </div>
             </div>
         </div>
@@ -122,34 +148,41 @@ var_dump($_POST);
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 <script>
+
+    // $(".append").click((e) => {
+    // $(e.target).remove()
+    // })
+
     $(document).ready(function() {
     var questionsCount=1;
     var questionary = $(".container-question-field").html()
     $("#addQuestion").click(() => {
-        
         $(".append").append(questionary)
         questionsCount++
     })
 
-    $("#save").click(() => {
+    $("#createAssessment").click(() => {
     var  titles =[] ,responsesFields = [] ,responseStates = [] ,timers = []  ;
     document.querySelectorAll("#title").forEach((element) => {titles.push(element.value)})
     document.querySelectorAll("#responseField").forEach((element) => {responsesFields.push(element.value)}),
-    document.querySelectorAll("#responseState").forEach((element) => {responseStates.push(element.value)})
+    document.querySelectorAll("#responseState").forEach((element) => {responseStates.push(element.checked)})
     document.querySelectorAll("#timer").forEach((element) => {timers.push(element.value)})
     $.ajax(
         {
-            
             type: 'post',
             dataType: 'text',
-            data:{
+            data:
+            {
                 titles : titles,
                 responsesFields: responsesFields,
                 responseStates : responseStates,
-                timers : timers
+                timers : timers,
+                questionsCount: questionsCount
             },
             success: (result) => {
-                console.log(result)
+                
+                let id_post = <?php echo $_GET['id'] ?>;
+                window.location.href = "?func=add-add-assessment&id="+id_post+"&step=3"
             }
 
         }
