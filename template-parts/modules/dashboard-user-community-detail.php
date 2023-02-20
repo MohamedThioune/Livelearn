@@ -289,7 +289,7 @@ if($community){
                                                         <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/addUser.jpeg" alt="">
                                                     </div>
                                                     <div style="width: 93%;">
-                                                        <input form="comment_community" type="text" placeholder="Your comment">
+                                                        <input form="comment_community" name="feedback_content" type="text" placeholder="Your comment">
                                                     </div>
                                                    <br><br> 
                                                     <div class="">

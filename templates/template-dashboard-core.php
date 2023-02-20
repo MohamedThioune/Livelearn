@@ -478,13 +478,13 @@ else if(isset($review_post)){
         array_push($reviews,$review);
 
         update_field('reviews',$reviews, $course_id);
-        if($post_type != 'community')
+        if($post_type == 'community')
             $message = "/dashboard/user/communities/?mu=" . $course_id . "&message=Question saved successfully !";
         else 
             $message = get_permalink($course_id) . '/?message=Your review added successfully'; 
     }
     else
-        if($post_type != 'community')
+        if($post_type == 'community')
             $message = "/dashboard/user/communities/?mu=" . $course_id . "&message=Question saved successfully !";
         else 
             $message = get_permalink($course_id) . '/?message=User not find ...';        

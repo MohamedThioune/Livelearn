@@ -166,7 +166,7 @@ $other_communities = array();
                                             <p class="description">Members</p>
                                         </div>
                                         <div>
-                                            <p class="number-element"><? $year ?></p>
+                                            <p class="number-element"><?= $year ?></p>
                                             <p class="description">Since</p>
                                         </div>
                                     </div>
@@ -240,7 +240,7 @@ $other_communities = array();
                                             <p class="description">Members</p>
                                         </div>
                                         <div>
-                                            <p class="number-element"><? $year ?></p>
+                                            <p class="number-element"><?= $year ?></p>
                                             <p class="description">Since</p>
                                         </div>
                                     </div>
