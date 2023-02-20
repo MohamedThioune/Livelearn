@@ -123,6 +123,12 @@ $other_communities = array();
 
                             $level = get_field('range', $community->ID);
 
+                            //Since year
+                            $date = "";
+                            $date = $community->post_date;
+                            $days = explode(' ', $date)[0];
+                            $year = explode('-', $days)[0];
+
                             //Courses comin through custom field 
                             $courses = get_field('course_community', $community->ID);
                             $max_course = 0;
@@ -135,10 +141,6 @@ $other_communities = array();
                             if(!empty($followers))
                                 $max_follower = count($followers);
                             
-                            //Since year
-                            $date = $community->post_date;
-                            $days = explode(' ', $date)[0];
-                            $year = explode('-', $days)[0];
                         ?>
                             <div class="card-communities">
                                 <div class="head-card-communities">
@@ -195,6 +197,12 @@ $other_communities = array();
 
                             $level = get_field('range', $community->ID);
 
+                            //Since year
+                            $date = "";
+                            $date = $community->post_date;
+                            $days = explode(' ', $date)[0];
+                            $year = explode('-', $days)[0];
+
                             //Courses comin through custom field 
                             $courses = get_field('course_community', $community->ID);
                             $max_course = 0;
@@ -207,10 +215,6 @@ $other_communities = array();
                             if(!empty($followers))
                                 $max_follower = count($followers);
 
-                            //Since year
-                            $date = $community->post_date;
-                            $days = explode(' ', $date)[0];
-                            $year = explode('-', $days)[0];
                         ?>
                             <div class="card-communities">
                                 <div class="head-card-communities">
