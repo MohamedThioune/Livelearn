@@ -134,7 +134,7 @@ if($community){
                                                     </button>
                                                 </div>
                                                 <div class="modal-body text-left">
-                                                    <form action="/dashboard/user/" method="POST" id="question_community">
+                                                    <form action="" method="POST" id="question_community">
                                                         <input type='hidden' form="question_community" name='community_id' value='<?= $community->ID ?>' >
                                                         <textarea form="question_community" name="text_question" id="editor">Write your question......</textarea>
                                                     </form>
@@ -277,7 +277,7 @@ if($community){
                                                     $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
 
                                                     ?>
-                                                    <form id="comment_community" action="/dashboard/user" method="POST">
+                                                    <form id="comment_community" action="" method="POST">
                                                         <input type="hidden" form="comment_community" name="user_id" value="<?= $user_id; ?>">
                                                         <input type="hidden" form="comment_community" name="course_id" value="<?= $community->ID; ?>">
                                                         <input type="hidden" form="comment_community" name="post_type" value="community">

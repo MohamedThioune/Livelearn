@@ -92,7 +92,7 @@ $other_communities = array();
                                             <p class="description">Members</p>
                                         </div>
                                         <div>
-                                            <p class="number-element"><?= $year; ?></p>
+                                            <p class="number-element"><?= $year; ?> </p>
                                             <p class="description">Since</p>
                                         </div>
                                     </div>
@@ -134,6 +134,11 @@ $other_communities = array();
                             $followers = get_field('follower_community', $community->ID);
                             if(!empty($followers))
                                 $max_follower = count($followers);
+                            
+                            //Since year
+                            $date = $community->post_date;
+                            $days = explode(' ', $date)[0];
+                            $year = explode('-', $days)[0];
                         ?>
                             <div class="card-communities">
                                 <div class="head-card-communities">
@@ -159,7 +164,7 @@ $other_communities = array();
                                             <p class="description">Members</p>
                                         </div>
                                         <div>
-                                            <p class="number-element">0000</p>
+                                            <p class="number-element"><? $year ?></p>
                                             <p class="description">Since</p>
                                         </div>
                                     </div>
@@ -201,6 +206,11 @@ $other_communities = array();
                             $followers = get_field('follower_community', $community->ID);
                             if(!empty($followers))
                                 $max_follower = count($followers);
+
+                            //Since year
+                            $date = $community->post_date;
+                            $days = explode(' ', $date)[0];
+                            $year = explode('-', $days)[0];
                         ?>
                             <div class="card-communities">
                                 <div class="head-card-communities">
@@ -226,7 +236,7 @@ $other_communities = array();
                                             <p class="description">Members</p>
                                         </div>
                                         <div>
-                                            <p class="number-element">0000</p>
+                                            <p class="number-element"><? $year ?></p>
                                             <p class="description">Since</p>
                                         </div>
                                     </div>
