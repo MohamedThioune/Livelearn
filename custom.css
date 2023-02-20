@@ -15459,7 +15459,9 @@ background: #FFFFFF !important;
 .new-assessment-form .form-group .group-input-assement input {
     margin-right: 15px;
 }
-
+#voorOrganisati:hover + #voorOrganisatiBlock{
+    display: block !important;
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
