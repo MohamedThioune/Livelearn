@@ -320,6 +320,7 @@ $type_course = array(
         }
         #modalVideo .modal-dialog iframe {
             width: 100%;
+            height: fit-content;
         }
         .block-logo-parteners2 .logo-element {
             width: 26.5%;
@@ -402,6 +403,10 @@ $type_course = array(
                 left: 114px;
                 top: 6px;
                 z-index: 99;
+            }
+            iframe video{
+                width: 100% !important;
+                height: 100% !important;
             }
 
             @media all and (min-width: 300px) and (max-width: 767px){
@@ -1016,7 +1021,7 @@ $saved = get_user_meta($user_id, 'course');
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <iframe width="560" height="315" src="<?php echo get_stylesheet_directory_uri();?>/video/livelearn-home.mp4" title="livelearn video presentation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <video width="560" height="315" src="<?php echo get_stylesheet_directory_uri();?>/video/livelearn-home.mp4" title="livelearn video presentation"  allow="playsinline; fullscreen; allowfullscreen"></video>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
