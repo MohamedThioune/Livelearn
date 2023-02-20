@@ -165,7 +165,7 @@ $other_communities = array();
                                     </div>
                                     <?php
                                     if(!$bool)
-                                        echo "<form action='/dashboard/user/' method='POST'>
+                                        echo "<form action='' method='POST'>
                                                     <input type='hidden' name='community_id' value='" . $community->ID . "' >
                                                     <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
                                               </form>";
@@ -231,7 +231,7 @@ $other_communities = array();
                                         </div>
                                     </div>
                                     <?php
-                                        echo "<form action='/dashboard/user/' method='POST'>
+                                        echo "<form action='' method='POST'>
                                                     <input type='hidden' name='community_id' value='" . $community->ID . "' >
                                                     <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
                                               </form>";
