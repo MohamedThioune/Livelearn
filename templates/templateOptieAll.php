@@ -70,5 +70,5 @@
                 echo 'succeed';
         }
     }
-    header('location: /livelearn/databank');
+    header('location: /databank');
 ?>
