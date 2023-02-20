@@ -463,6 +463,7 @@ $logo_livelearn = get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
             </div>
 
 
+
             <!-- modal dropdown Opleidingen -->
             <div class="activeModalHeader" id="OpleidingenBlock">
                 <div class="modal  dropdown-menu-custom" id="OpleidingenModal" tabindex="-1" role="dialog" aria-labelledby="OpleidingenLabel" aria-hidden="true">

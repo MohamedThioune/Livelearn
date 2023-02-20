@@ -13541,6 +13541,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     font-size: 34px;
     line-height: 48px;
 }
+
 .content-voor-teacher-2 .content-detail-voor-organisation p {
     color: #ffffff;
 }
