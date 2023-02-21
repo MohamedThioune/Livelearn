@@ -305,24 +305,26 @@ if (!$is_first_login && get_current_user_id() !=0 )
 </div>
 <?php
 }
-
 /** Modal Subtopics after first login */
 
 // Saved courses
 $saved = get_user_meta($user, 'course');
 
-// Get interests courses
+/*
+* Get interests courses
+*/
+
+//Topics
 $topics_external = get_user_meta($user, 'topic');
 $topics_internal = get_user_meta($user, 'topic_affiliate');
-
 $topics = array();
 if(!empty($topics_external))
     $topics = $topics_external;
-
 if(!empty($topics_internal))
     foreach($topics_internal as $value)
         array_push($topics, $value);
 
+//Experts
 $experts = get_user_meta($user, 'expert');
 $args = array(
     'post_type' => array('course', 'post'),
@@ -330,6 +332,7 @@ $args = array(
     'posts_per_page' => -1,
     'order' => 'DESC'
 );
+
 $global_courses = get_posts($args);
 
 foreach ($global_courses as $key => $course) {
@@ -1019,11 +1022,6 @@ if(isset($_GET['message']))
                 $bool = visibility($course, $visibility_company);
                 if(!$bool)
                     continue;
-
-                //Trends : Course Type remaining
-                // $course_type = get_field('course_type', $course->ID);
-                // if(in_array($course_type, $count_trend_keys))
-                //     continue;
 
                 $i++;
 
