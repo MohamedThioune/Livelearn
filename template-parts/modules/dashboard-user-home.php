@@ -575,9 +575,6 @@ if(isset($_GET['message']))
     if($_GET['message'])
         echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>";
 
-
-var_dump($count);
-
 ?>
 
 <div class="content-new-user d-flex">
