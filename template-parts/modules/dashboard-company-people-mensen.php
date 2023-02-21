@@ -5,8 +5,8 @@ $user = get_users(array('include'=> get_current_user_id()))[0]->data;
 $image = get_field('profile_img',  'user_' . $user->ID);
 $company = get_field('company',  'user_' . $user->ID);
 
-$mail_notification_register = '/../../templates/mail-notification-register.php';
-require(__DIR__ . $mail_notification_register); 
+$mail_notification_invitation = '/../../templates/mail-notification-invitation.php';
+require(__DIR__ . $mail_notification_invitation); 
 
 extract($_POST);
 
@@ -22,8 +22,7 @@ if(isset($single_add_people)){
     
 
         $login = RandomString();
-        $password = RandomString();
-        $your_password = $password;
+        $password = "Livelearn2023";
 
         $userdata = array(
             'user_pass' => $password,
@@ -44,12 +43,14 @@ if(isset($single_add_people)){
         }
         else
             {
+                $guest = wp_get_current_user();
+                $company = get_field('company',  'user_' . $guest->ID);
                 update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
                 update_field('company', $company[0], 'user_'.$user_id);
 
                 $subject = 'Je LiveLearn inschrijving is binnen! ✨';
                 $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
-                wp_mail($email, $subject, $mail_register_body, $headers, array( '' )) ; 
+                wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )) ; 
 
                 header("Location: /dashboard/company/people/?message=U heeft met succes een nieuwe werknemer aangemaakt ✔️ ");
             }
@@ -88,12 +89,14 @@ else if(isset($multiple_add_people)){
                     continue;
                 }
                 else{
+                    $guest = wp_get_current_user();
+                    $company = get_field('company',  'user_' . $guest->ID);    
                     update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
                     update_field('company', $company[0], 'user_'.$user_id);
 
                     $subject = 'Je LiveLearn inschrijving is binnen! ✨';
                     $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
-                    wp_mail($email, $subject, $mail_register_body, $headers, array( '' )) ;
+                    wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )) ;
                 }
             }
         }

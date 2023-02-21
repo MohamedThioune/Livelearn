@@ -72,7 +72,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 </div>
                 <div class="contentCardListeCourse">
                     <table class="table table-responsive">
-                        <form action="/livelearn/optieAll" method="POST">
+                        <form action="/optieAll" method="POST">
                             <thead>
                             <tr>
                                 <th scope="col"><input type="checkbox" id="checkAll" onclick='checkUncheck(this);'></th>
