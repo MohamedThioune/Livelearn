@@ -1392,5 +1392,5 @@ function filter_course(WP_REST_Request $request)
     $infos['company '] = $demand_company;
     $infos['message'] = "List of communities according to companies";
 
-    return [$infos];
+    // return [$infos];
   }
