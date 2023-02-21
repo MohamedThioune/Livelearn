@@ -1361,13 +1361,14 @@ function filter_course(WP_REST_Request $request)
 
         array_push($community_courses, $demand_course);
       }
+      $community->courses = $community_courses;
 
       $demand_community = (object)[
         'title' => $community->post_title,
         'description' => $community->post_excerpt,
         'picture' => $community->image,
         'created_at' => $community->post_date,
-        'courses' => $community_courses
+        'courses' => $community->courses
         
       ];
       array_push($communities, $demand_community);
@@ -1392,5 +1393,5 @@ function filter_course(WP_REST_Request $request)
     $infos['company '] = $demand_company;
     $infos['message'] = "List of communities according to companies";
 
-    // return [$infos];
+    return [$infos];
   }
