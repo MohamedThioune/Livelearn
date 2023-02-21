@@ -1466,7 +1466,7 @@ if(isset($_GET['message']))
             }
 
             if(!empty($communities))
-                echo '<a href="/dashboard/user/comunities" class="btn btn-more-events">More</a>';
+                echo '<a href="/dashboard/user/communities" class="btn btn-more-events">More</a>';
             ?>
         </div>
         <div class="user-expert-block">
