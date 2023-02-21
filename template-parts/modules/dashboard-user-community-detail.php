@@ -372,7 +372,7 @@ if($community){
                                     <div class="advertissement-block">
                                         <p class="name-ad">Learning Platform</p>
                                         <p class="description-ad">Whether you are a beginner or an experienced student, we have courses tailored to your level and interests !</p>
-                                        <a href="/dashboard/user/home" class="btn btn-discover">Discover</a>
+                                        <a href="/dashboard/user/" class="btn btn-discover">Discover</a>
                                     </div>
                                     <div class="user-community-block">
                                         <?php
