@@ -15654,6 +15654,14 @@ background: #FFFFFF !important;
     color: red;
     font-size: 22px;
 }
+#dashboard-min {
+    width: 19px !important;
+    margin-top: 1px;
+}
+#community-icon{
+    width: 26px !important;
+    margin-left: -3px;
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
