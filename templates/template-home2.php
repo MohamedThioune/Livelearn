@@ -318,9 +318,9 @@ $type_course = array(
         #modalVideo .modal-dialog {
             width: 96% !important;
         }
-        #modalVideo .modal-dialog iframe {
-            width: 100%;
-            height: fit-content;
+        #modalVideo .modal-dialog video{
+            width: 100% !important;
+            height: 100% !important;
         }
         .block-logo-parteners2 .logo-element {
             width: 26.5%;
