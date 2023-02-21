@@ -13541,6 +13541,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     font-size: 34px;
     line-height: 48px;
 }
+
 .content-voor-teacher-2 .content-detail-voor-organisation p {
     color: #ffffff;
 }
@@ -15459,7 +15460,6 @@ background: #FFFFFF !important;
 .new-assessment-form .form-group .group-input-assement input {
     margin-right: 15px;
 }
-
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
