@@ -1478,6 +1478,9 @@ var_dump($count);
                 echo '<h2>Expert</h2>';
 
             foreach ($teachers as $key => $id){
+                if(!$id)
+                    continue;
+
                 if($key == 5)
                     break;
 
