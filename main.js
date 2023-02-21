@@ -116,19 +116,19 @@ jQuery(function($) {
 
 
 
-  /*  const elements = document.querySelectorAll('.like-and-comment .element-like-and-comment');
-    const blockComments = document.querySelectorAll('.like-and-comment .first-element');
+    /*  const elements = document.querySelectorAll('.like-and-comment .element-like-and-comment');
+      const blockComments = document.querySelectorAll('.like-and-comment .first-element');
 
-    for (let i = 0; i < elements.length; i++) {
-        elements[i].addEventListener('click', function() {
-            for (let j = 0; j < blockComments.length; j++) {
-                if (blockComments[j].classList.contains('show-comments')) {
-                    blockComments[j].classList.remove('show-comments');
-                }
-            }
-            blockComments[i].classList.toggle('show-comments');
-        });
-    }*/
+      for (let i = 0; i < elements.length; i++) {
+          elements[i].addEventListener('click', function() {
+              for (let j = 0; j < blockComments.length; j++) {
+                  if (blockComments[j].classList.contains('show-comments')) {
+                      blockComments[j].classList.remove('show-comments');
+                  }
+              }
+              blockComments[i].classList.toggle('show-comments');
+          });
+      }*/
 
     // Select all the buttons and content blocks
     var buttons = document.querySelectorAll('.element-like-and-comment');
@@ -404,26 +404,26 @@ jQuery(function($) {
         $(".btnUp").hide();
     });
 
+// strat for nav
     $("#voorOrganisati").click(function() {
-        $("#voorOrganisatiModal").toggle();
-        $(".activeModalHeader").show();
+        $("#voorOrganisatiModal , #voorOrganisatiBlock").toggle();
         $("#voorOpleidersModal").hide();
         $("#OpleidingenModal").hide();
     });
 
     $("#opleiders").click(function() {
         $("#voorOrganisatiModal").hide();
-        $(".activeModalHeader").show();
-        $("#voorOpleidersModal").toggle();
+        $("#voorOpleidingenBlock, #voorOpleidersModal").toggle();
         $("#OpleidingenModal").hide();
     });
 
     $("#Opleidingen").click(function() {
         $("#voorOrganisatiModal").hide();
-        $(".activeModalHeader").show();
+        $("#OpleidingenBlock, OpleidingenModal").toggle();
         $("#voorOpleidersModal").hide();
         $("#OpleidingenModal").toggle();
     });
+
 
     $(".activeModalHeader").click(function() {
         $("#voorOrganisatiModal").hide();
@@ -431,6 +431,43 @@ jQuery(function($) {
         $("#OpleidingenModal").hide();
         $(".activeModalHeader").hide();
     });
+
+
+    // hover
+
+        $("#voorOrganisati").hover(function() {
+            var isHovered = $(this).is(":hover");
+            if (isHovered) {
+
+            }
+            else{
+                $("#voorOrganisatiModal , #voorOrganisatiBlock").toggle();
+                $("#voorOpleidersModal").hide();
+                $("#OpleidingenModal").hide();
+            }
+        });
+        $("#opleiders").hover(function() {
+            var isHovered = $(this).is(":hover");
+            if (isHovered) {
+                $("#voorOrganisatiModal").hide();
+                $("#voorOpleidingenBlock, #voorOpleidersModal").toggle();
+                $("#OpleidingenModal").hide();
+            }
+        });
+        $("#Opleidingen").hover(function() {
+            var isHovered = $(this).is(":hover");
+            if (isHovered) {
+                $("#voorOrganisatiModal").hide();
+                $("#voorOpleidersModal").hide();
+                $("#OpleidingenBlock, #OpleidingenModal").toggle();
+            }
+        });
+
+
+
+// end for nav
+
+
 
     //Filter bar on category page
     $(".filterBlockMobil").click(function() {
@@ -521,7 +558,7 @@ jQuery(function($) {
 
     // Pour first modal after login
     $(".btnBaangerichte").click(function() {
-        
+
         $(".subtopicBaangerichte").show();
         let cl = $(this).attr('class').split(' ')[3];
         hidden = ($(".cb_topics_bangricht_" + cl).attr('hidden'));
@@ -898,9 +935,6 @@ jQuery(function($) {
     function myFunction() {
         document.getElementById("autocomplete").classList.toggle("show");
     }
-
-
-
 
     $('#test').click(function() {
         //   if (!$(this.target).is('#popUpForm')) {
