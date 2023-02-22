@@ -7,6 +7,11 @@
 $page = 'check_visibility.php';
 require($page);
 
+$user_connected = get_current_user_id();
+
+if($user_connected)
+    header('Location: /dashboard/user/');
+
 if(!isset($visibility_company))
     $visibility_company = "";
 /*
