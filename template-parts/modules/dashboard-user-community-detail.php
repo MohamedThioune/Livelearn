@@ -441,7 +441,7 @@ if($community){
                                 ?>
                                 <div class="card-members">
                                     <div class="head-card-members">
-                                        <img class="" src="<?= $community_image ?>" alt="">
+                                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/bgcomminity.png" alt="">                                    
                                     </div>
                                     <div class="img-user-block">
                                         <img class="" src="<?= $image_author ?>" alt="">

@@ -1315,6 +1315,11 @@ if(isset($_GET['message']))
             <?php
 
             foreach($global_courses as $course){
+            $bool = true;
+            $bool = visibility($course, $visibility_company);
+            if(!$bool)
+                continue;
+
             /*
             *  Date and Location
             */ 
@@ -1418,7 +1423,7 @@ if(isset($_GET['message']))
             }
 
             if(!$i)
-                echo "<p class='dePaterneText theme-card-description'> <center style='color:#033256'> Stay connected, Something big is coming 😊 </center> </p>";
+                echo "<p class='dePaterneText theme-card-description'> <span style='color:#033256'> Stay connected, Something big is coming 😊 </span> </p>";
             ?>
             <!-- <a href="/" class="btn btn-more-events">More Events</a> -->
         </div>
