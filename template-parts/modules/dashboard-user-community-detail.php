@@ -1,22 +1,14 @@
 <?php
     global $wp;
 
-    //courses
-    // $args = array(
-    //     'post_type' => array('course', 'post'),
-    //     'post_status' => 'publish',
-    //     'posts_per_page' => -1,
-    //     'order' => 'DESC'
-    // );
-    // $global_courses = get_posts($args);
 
-    //communities
     $args = array(
         'post_type' => 'community',
         'post_status' => 'publish',
         'order' => 'DESC',
         'posts_per_page' => -1
     );
+    
     $communities = get_posts($args);
     $other_communities = array();
     foreach($communities as $key => $value){
@@ -373,9 +365,10 @@ if($community){
                                                 }
                                             }
                                             else
-                                                echo "<p class='dePaterneText theme-card-description'> <span style='color:#033256'> Stay connected, Something big is coming 😊 </span> </p>";
+                                                echo $no_content;
                                         ?> 
-
+                                        <!-- <a href="#" class="btn btn-more-events">More Events</a> -->
+                                    </div>
                                     <div class="advertissement-block">
                                         <p class="name-ad">Learning Platform</p>
                                         <p class="description-ad">Whether you are a beginner or an experienced student, we have courses tailored to your level and interests !</p>
@@ -448,7 +441,7 @@ if($community){
                                 ?>
                                 <div class="card-members">
                                     <div class="head-card-members">
-                                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/bgcomminity.png" alt="">
+                                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/bgcomminity.png" alt="">                                    
                                     </div>
                                     <div class="img-user-block">
                                         <img class="" src="<?= $image_author ?>" alt="">
