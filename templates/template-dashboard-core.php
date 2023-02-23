@@ -4,6 +4,9 @@
 $page = 'check_visibility.php';
 require($page); 
 
+// $mail_notification_invitation = 'mail-notification-invitation.php';
+// require(__DIR__ . $mail_notification_invitation); 
+
 global $wpdb;
 
 $table = $wpdb->prefix . 'databank'; 
@@ -670,6 +673,10 @@ else if(isset($databank)){
             header("Location: ". $danger);
         }
         else{ 
+            $became_a_expert = 'mail-became-a-expert.php';
+            require(__DIR__ . $became_a_expert); 
+
+            //Mail - sign up
             $subject = 'Je LiveLearn inschrijving is binnen! ✨';
             $body = "
             Bedankt voor je inschrijving<br>
@@ -680,9 +687,12 @@ else if(isset($databank)){
             <h4>Inloggen:</h4><br>
             <h6><a href='https://livelearn.nl/inloggen/'> Connexion </a></h6>
             ";
-        
             $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
             wp_mail($email, $subject, $body, $headers, array( '' )) ; 
+
+            //Mail - became a expert
+            $subject = 'Je hebt de rol expert !';
+            wp_mail($email, $subject, $mail_became_expert_body, $headers, array( '' )) ; 
         }
 
         $data = [ 'author_id' => $user_id ]; // NULL value.
