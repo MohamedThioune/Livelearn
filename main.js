@@ -944,4 +944,16 @@ jQuery(function($) {
         alert("testing close");
     });
 
+    /**
+     * Adding assessment
+     */
+
+    $("body").click(function() {
+        alert('Bonjour')
+    })
+
+    /**
+     * Adding assessment
+     */
+
 });
