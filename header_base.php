@@ -18,6 +18,9 @@ $url = home_url( $wp->request );
     #croieProfil {
         margin: 4px 0px -3px -6px !important;
     }
+    .navbar-collapse .inputSearch {
+        border: none !important;
+    }
     .navModife .activeModalHeader .modal{
         height: auto !important;
     }
@@ -296,8 +299,8 @@ $logo_livelearn = get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
                             <ul>
                                 <li>
                                     <a href="zzpers">
-                                        <div class="blockImg">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
+                                        <div class="blockImg" style="background: #033356;  padding: 6px;">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/zzper-icone.png" alt="">
                                         </div>
                                         <div>
                                             <p class="titleSousElementHeader"><b>ZZP'ers</b></p>
@@ -307,8 +310,8 @@ $logo_livelearn = get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
                                 </li>
                                 <li>
                                     <a href="mkb">
-                                        <div class="blockImg">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-80.png" alt="">
+                                        <div class="blockImg" style="background: #033356;  padding: 6px;">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/mkb-icon.png" alt="">
                                         </div>
                                         <div>
                                             <p class="titleSousElementHeader"><b>MKB</b></p>
@@ -318,8 +321,8 @@ $logo_livelearn = get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
                                 </li>
                                 <li>
                                     <a href="/grootbedrijf">
-                                        <div class="blockImg">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-81.png" alt="">
+                                        <div class="blockImg" style="background: #033356;  padding: 6px;">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Grootbedrijf-icon.png" alt="">
                                         </div>
                                         <div>
                                             <p class="titleSousElementHeader"><b>Grootbedrijf</b></p>
@@ -329,8 +332,8 @@ $logo_livelearn = get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
                                 </li>
                                 <li>
                                     <a href="pricing">
-                                        <div class="blockImg">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
+                                        <div class="blockImg" style="background: #033356;  padding: 6px;">
+                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/pricing-icon.png" alt="">
                                         </div>
                                         <div>
                                             <p class="titleSousElementHeader"><b>Pricing</b></p>
@@ -405,7 +408,7 @@ $logo_livelearn = get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
                                 </li>
                                 <li>
                                     <a href="/pricing">
-                                        <div class="blockImg">
+                                        <div class="blockImg" style="background: #033356;  padding: 6px;">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
                                         </div>
                                         <div>
@@ -471,27 +474,7 @@ $logo_livelearn = get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
                         <div class="blockdropdownnHeader">
                             <ul>
                                 <li>
-                                    <a href="#">
-                                        <div class="blockImg">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="titleSousElementHeader"><b>Skills paspoort</b></p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="blockImg">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-80.png" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="titleSousElementHeader"><b>Groeipaden</b></p>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
+                                    <a href="/community-overview">
                                         <div class="blockImg">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-81.png" alt="">
                                         </div>
@@ -500,16 +483,7 @@ $logo_livelearn = get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
                                         </div>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="blockImg">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="titleSousElementHeader"><b>Persoonlijke begeleiding</b></p>
-                                        </div>
-                                    </a>
-                                </li>
+
                             </ul>
                             <ul class="secondUlModal ">
                                 <li>
@@ -654,11 +628,10 @@ $logo_livelearn = get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
 
                 <ul class="navbar-nav nav-right">
                     <li class="nav-item active">
-                        <a class="nav-link" id="Over" href="/static-education-individual/">Over ons</a>
+                        <a class="nav-link" id="Over" href="/about/">Over ons</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link nav-linModife dropdown-toggle" id="Opleidingen" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#Opleidingen"  role="button"  href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Upskilling</a>
-
                     </li>
                     <li class="nav-item" >
                         <a class="nav-link" href="/inloggen/"><b>Inloggen</b></a>
