@@ -72,10 +72,7 @@ $leerpaden = get_posts($args);
                             </div>
                         </div>  
 
-
-                        <?php
-                            echo (do_shortcode('[user_registration_form id="59"]'));
-                        ?>
+                        <?php echo (do_shortcode('[user_registration_form id="8477"]')); ?>
 
                         <div class="text-center">
                             <p>Al een account? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
