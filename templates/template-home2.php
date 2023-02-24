@@ -1668,6 +1668,9 @@ $saved = get_user_meta($user_id, 'course');
                     if(!$bool)
                         continue;
 
+                    //Course type
+                    $course_type = get_field('course_type', $course->ID);
+
                     /*
                     * Categories
                     */
@@ -1726,17 +1729,22 @@ $saved = get_user_meta($user_id, 'course');
                         $price = 'Gratis';
 
                     /*
-                    * Thumbnails
+                    * Image
                     */
                     $thumbnail = get_field('preview', $course->ID)['url'];
                     if(!$thumbnail){
-                    $thumbnail = get_field('url_image_xml', $course->ID);
-                    if(!$thumbnail)
-                        $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                        $thumbnail = get_the_post_thumbnail_url($course->ID);
+                        if(!$thumbnail)
+                            $thumbnail = get_field('url_image_xml', $course->ID);
+                                if(!$thumbnail)
+                                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                     }
 
                     //Company
                     $company = get_field('company',  'user_' . $course->post_author);
+
+                    //Short description
+                    $short_description = get_field('short_description', $course->ID);
 
                     ?>
                     <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiperSlideModife">
@@ -1783,14 +1791,14 @@ $saved = get_user_meta($user_id, 'course');
                                     <div class="imgTitleCours">
                                         <?php
                                             if(!empty($company)){
-                                                $company_title = $company[0]->post_title;
-                                                $company_id = $company[0]->ID;
-                                                $company_logo = get_field('company_logo', $company_id);
+                                            $company_title = $company[0]->post_title;
+                                            $company_id = $company[0]->ID;
+                                            $company_logo = get_field('company_logo', $company_id);
                                         ?>
-                                        <div class="imgCoursProd">
-                                            <img src="<?php echo $company_logo; ?>" width="25" alt="">
-                                        </div>
-                                        <p class="nameCoursProd"><?php echo $company_title; ?></p>
+                                            <div class="imgCoursProd">
+                                                <img src="<?= $company_logo; ?>" width="25" alt="">
+                                            </div>
+                                            <p class="nameCoursProd"><?= $company_title; ?></p>
                                         <?php
                                             }
                                         ?>
@@ -1798,17 +1806,17 @@ $saved = get_user_meta($user_id, 'course');
                                     <div class="group9">
                                         <div class="blockOpein">
                                             <img class="iconAm" src="<?php echo get_stylesheet_directory_uri();?>/img/graduat.png" alt="">
-                                            <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
+                                            <p class="lieuAm"><?= $course_type; ?></p>
                                         </div>
                                         <div class="blockOpein">
                                             <img class="iconAm1" src="<?php echo get_stylesheet_directory_uri();?>/img/map.png" alt="">
-                                            <p class="lieuAm"><?php echo $location ?></p>
+                                            <p class="lieuAm"><?= $location; ?></p>
                                         </div>
                                     </div>
                                 </div>
-                                <p class="werkText"><?php echo $course->post_title;?></p>
+                                <p class="werkText"><?= $course->post_title; ?></p>
                                 <p class="descriptionPlatform">
-                                    <?php echo get_field('short_description', $course->ID) ?>
+                                    <?= $short_description ?>
                                 </p>
                             </div>
                         </div>

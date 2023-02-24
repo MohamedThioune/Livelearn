@@ -3,6 +3,4 @@
     global $wpdb;
 
     $table = $wpdb->prefix . 'databank';
-
-    
 ?>

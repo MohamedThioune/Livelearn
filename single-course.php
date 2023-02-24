@@ -166,8 +166,6 @@ if(!$thumbnail){
     $thumbnail = get_the_post_thumbnail_url($post->ID);
     if(!$thumbnail)
         $thumbnail = get_field('url_image_xml', $post->ID);
-        if(!$thumbnail)
-            $thumbnail = get_field('image', 'category_'. $category_id);
             if(!$thumbnail)
                 $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
 }
