@@ -219,7 +219,7 @@ $type_course = array(
         margin-bottom: 20px;
     }
     .contentSix {
-        margin-bottom: 30px;
+        margin-bottom: 68px;
     }
     .titleGroupText {
         font-weight: 500;
