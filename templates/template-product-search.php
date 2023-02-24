@@ -71,6 +71,11 @@
             ## SIDE PRODUCT CATEGORIES 
                 foreach($global_courses as $course)
                 {
+                    $hidden = true;
+                    $hidden = visibility($course, $visibility_company);
+                    if(!$hidden)
+                        continue;
+
                     $bool = false;
                     $experts = get_field('experts', $post->ID);
 
@@ -117,6 +122,11 @@
             ## SIDE PRODUCT USERS 
                 foreach($global_courses as $course)
                 {
+                    $hidden = true;
+                    $hidden = visibility($course, $visibility_company);
+                    if(!$hidden)
+                        continue;
+
                     $bool = false;
                     $expert = get_field('experts', $course->ID);
 
