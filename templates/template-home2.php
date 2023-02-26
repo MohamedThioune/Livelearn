@@ -1834,7 +1834,7 @@ $saved = get_user_meta($user_id, 'course');
 
 <div class="container-fluid">
     <div class="doawnloadBlockHome">
-        <h3>Je bent nu ver genoeg naar beneden gescrolled,
+        <h3>Je bent nu ver genoeg naar beneden gescrolled, 
             je kan de app hier gratis downloaden:</h3>
         <div class="d-flex justify-content-center">
             <a href="" class="btn btnStore">
