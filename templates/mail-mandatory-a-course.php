@@ -1,14 +1,12 @@
-
 <?php
-
-$mail_became_manager_body = 
+ $mail_mandatored_course_body = 
 '
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
   xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
-  <title>' . $first_name . ', je account op LiveLearn is succesvol aangemaakt</firs-name></title><!--[if !mso]><!-->
+  <title><firs-name>, je account op LiveLearn is succesvol aangemaakt</firs-name></title><!--[if !mso]><!-->
   <meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -117,7 +115,7 @@ $mail_became_manager_body =
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content"
                             style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
-                            data-testid="Y0h44Pmw76d">Nieuwe rol, manager</p>
+                            data-testid="Y0h44Pmw76d">Je account is succesvol aangemaakt</p>
                         </div>
                       </td>
                     </tr>
@@ -195,44 +193,6 @@ $mail_became_manager_body =
         </tbody>
       </table>
     </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-        style="background:#ffffff;background-color:#ffffff;width:100%;">
-        <tbody>
-          <tr>
-            <td
-              style="direction:ltr;font-size:0px;padding:20px 0px 20px 0px;padding-left:0px;padding-right:0px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
-                  width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="center"
-                        style="background:#ffffff;font-size:0px;padding:0px 25px 0px 25px;padding-top:0px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="border-collapse:collapse;border-spacing:0px;">
-                          <tbody>
-                            <tr>
-                              <td style="width:343px;"><img alt="" height="auto"
-                                  src="https://0gt5q.mjt.lu/tplimg/0gt5q/b/l63ls/uztn.png"
-                                  style="border:none;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
-                                  width="343"></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
     <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
     <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
       <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
@@ -254,11 +214,12 @@ $mail_became_manager_body =
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <h1 class="text-build-content"
                             style="text-align:center;; margin-top: 10px; font-weight: normal;"
-                            data-testid="RJMLrMvA0Rh"><span
-                              style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b>Je hebt de rol
-                                manager!</b></span></h1>
+                            data-testid="RJMLrMvA0Rh"><span style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b>Een van je managers heeft een verplichte cursus met je gedeeld !</b></span>
+                          </h1>
                           <p class="text-build-content" style="text-align: center; margin: 10px 0; margin-bottom: 10px;"
-                            data-testid="RJMLrMvA0Rh">Vanaf nu kan je jouw content delen met de rest van de wereld</p>
+                            data-testid="RJMLrMvA0Rh"><span
+                              style="color:#023356;font-family:Arial;font-size:14px;line-height:35px;">De eerste stap in
+                              een leven lang ontwikkelen.</span></p>
                         </div>
                       </td>
                     </tr>
@@ -269,18 +230,28 @@ $mail_became_manager_body =
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content" data-testid="S_MPaSnC0uI"
                             style="margin: 10px 0; margin-top: 10px;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi ' . $first_name . ' ,</span></p>
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi <b>' . $first_name  . '
+                              </b>,</span></p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;">&nbsp;</p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Je heb nu de rol
-                              als manager binnen LiveLearn. Dit betekent dat je nu content kan maken, delen of verkopen
-                              via je eigen </span><a class="link-build-content"
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Je account is
+                              succesvol aangemaakt en je kan nu onbeperkt gebruik maken van onze leermodules. Inloggen
+                              kan via </span><a class="link-build-content"
                               style="color:inherit;; text-decoration: none;" target="_blank"
-                              href="https://livelearn.nl/dashboard/company/"><span
-                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><u>manager
-                                  dashboard</u></span></a><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">.&nbsp;</span>
-                          </p>
-                    
+                              href="https://livelearn.nl/inloggen/"><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><u>deze
+                                  link</u></span></a><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">, waarna je
+                              eenvoudig onderwerpen en experts toe voegt aan je persoonlijke leeromgeving.</span></p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Ben je onderdeel
+                              van een organisatie óf wil je je jouw bedrijf op LiveLearn hebben? Neem dan </span><a
+                              class="link-build-content" style="color:inherit;; text-decoration: none;"
+                              href="mailto:contact@livelearn.nl"><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><u>contact</u></span></a><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> met ons op en
+                              binnen 24 uur staat je organisatie live.</span></p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;">&nbsp;</p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
                               style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Succes
                               namens,</span></p>
@@ -301,11 +272,11 @@ $mail_became_manager_body =
                             <tr>
                               <td align="center" bgcolor="#023356" role="presentation"
                                 style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#023356;"
-                                valign="middle"><a href="https://livelearn.nl/dashboard/company/"
+                                valign="middle"><a href="https://livelearn.nl/inloggen/"
                                   style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
                                   target="_blank"><span
-                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;"><b>Je
-                                      manager dashboard</b></span></a></td>
+                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Inloggen</span></a>
+                              </td>
                             </tr>
                           </tbody>
                         </table>
