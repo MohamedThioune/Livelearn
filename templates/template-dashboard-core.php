@@ -510,7 +510,10 @@ else if(isset($change_password)){
 
     header("Location: ". $message);
 }
+
 else if(isset($referee_employee)){    
+    $selected_members = array(5);
+
     $allocution = get_field('allocation', $course_id);
     if(!$allocution)
         $allocution = array();
@@ -550,12 +553,22 @@ else if(isset($referee_employee)){
     <a href="' . get_permalink($course_id) . '">' . $posts->post_title . '</a><br><br>
     Veel plezier bij het lezen !';
 
-    
     if(!empty($selected_members))
         foreach($selected_members as $expert){
             if(!empty($allocution))
                 if(in_array($expert, $allocution))
                     continue;
+
+            //Mail expert concerned by the sharing
+            $expert_shared = get_user_by('id', $expert);
+            $first_name = $expert_shared->first_name ?: $expert_shared->display_name;
+            $email = $expert_shared->user_email;
+            $share_a_course = 'mail-share-a-course.php';
+            require($share_a_course); 
+            
+            $subject = 'Iemand heeft een cursus met je gedeeld !';
+            $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+            wp_mail($email, $subject, $mail_shared_course_body, $headers, array( '' )) ;
 
             array_push($allocution, $expert);
             $posts = get_field('kennis_video', 'user_' . $expert);
@@ -566,11 +579,11 @@ else if(isset($referee_employee)){
                 'post_author' => $expert,
                 'post_type' => 'feedback',
                 'post_status' => 'publish'
-                );
-
+            );
             
             //Create
             $post_id = wp_insert_post($post_data);
+
             //Add further informations for feedback
             update_field('onderwerp_feedback', $onderwerp_feedback, $post_id);
             update_field('manager_feedback', $manager->ID, $post_id);
@@ -674,7 +687,7 @@ else if(isset($databank)){
         }
         else{ 
             $became_a_expert = 'mail-became-a-expert.php';
-            require(__DIR__ . $became_a_expert); 
+            require($became_a_expert); 
 
             //Mail - sign up
             $subject = 'Je LiveLearn inschrijving is binnen! ✨';
@@ -965,6 +978,78 @@ else if(isset($question_community)){
 
     $path = "/dashboard/user/communities/?mu=" . $community_id . "&message=Question saved successfully !";
     header("Location: ". $path);
+}
+
+else if(isset($mandatory_course)){    
+    $allocution = get_field('allocation', $course_id);
+    if(!$allocution)
+        $allocution = array();
+
+    $user_id = get_current_user_id();
+
+    $posts = get_post($course_id);
+    
+    //Create feedback
+    $manager = get_user_by('id', get_current_user_id());
+    $title_feedback = $manager->display_name . ' share you a course.';
+    $type = 'Verplichte cursus';
+
+    $link = get_permalink($course_id);
+
+    $beschrijving_feedback = '<p>' . $manager->display_name . ' heeft de cursus met u gedeeld : <br>
+    <a href="' . $link . '">' . $posts->post_title . '</a><br><br>
+    Veel plezier bij het lezen !';
+
+    if(!empty($selected_members))
+        foreach($selected_members as $expert){
+            if(!empty($allocution))
+                if(in_array($expert, $allocution))
+                    continue;
+
+            //Mail expert concerned by the mandatory
+            $expert_shared = get_user_by('id', $expert);
+            $first_name = $expert_shared->first_name ?: $expert_shared->display_name;
+            $email = $expert_shared->user_email;
+            $mandatory_a_course = 'mail-mandatory-a-course.php';
+            require($share_a_course);
+
+            $subject = 'Een van je managers heeft een verplichte cursus met je gedeeld!';
+            $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+            wp_mail($email, $subject, $mail_mandatored_course_body, $headers, array( '' )) ;
+
+            array_push($allocution, $expert);
+            $posts = get_field('kennis_video', 'user_' . $expert);
+        
+            //Data to create the feedback
+            $post_data = array(
+                'post_title' => $title_feedback,
+                'post_author' => $expert,
+                'post_type' => 'feedback',
+                'post_status' => 'publish'
+            );
+            
+            //Create
+            $post_id = wp_insert_post($post_data);
+            //Add further informations for feedback
+            update_field('type_feedback', $type, $post_id);
+            update_field('manager_feedback', $manager->ID, $post_id);
+            update_field('beschrijving_feedback', nl2br($beschrijving_feedback), $post_id);
+
+            if(!empty($posts))
+                array_push($posts, get_post($course_id));
+
+            update_field('mandatory_video', $posts, 'user_' . $expert);
+        }
+
+    //Adding new subtopics on course
+    update_field('allocation', $allocution, $course_id);
+
+    if($path == "dashboard")
+        $message = '/dashboard/company/learning-modules/?message=Manager deelde een verplichte cursus met succes!'; 
+    else if($path == "course")
+        $message = get_permalink($course_id) . '/?message=Manager deelde een verplichte cursus met succes!'; 
+
+    header("Location: ". $message);
 }
     
 ?>
