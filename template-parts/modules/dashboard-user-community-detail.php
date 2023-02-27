@@ -22,6 +22,10 @@
     //current user
     $user_id = get_current_user_id();
 
+    //current user image
+    $current_user_image = get_field('profile_img',  'user_' . $user_id);
+    $current_user_image = $current_user_image ?: get_stylesheet_directory_uri() . '/img/user.png';
+
     $no_content_ =  '
     <center>
         <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" width="140" height="150" alt="Skill no-content" >
