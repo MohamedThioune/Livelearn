@@ -15693,6 +15693,14 @@ background: #FFFFFF !important;
 .tab-block-functiegerichte .nav-link:hover {
     border-color: transparent !important;
 }
+.bekijk-text{
+    position: absolute;
+    color: #707070;
+    margin-bottom: 0;
+    left: 0;
+    bottom: 23px;
+    font-style: italic;
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
@@ -19026,6 +19034,17 @@ background: #FFFFFF !important;
         width: 55px;
         height: 55px;
     }
+    .tab-block-functiegerichte .nav-tabs {
+        width: 100%;
+        margin: 0 auto;
+        flex-wrap: nowrap;
+        overflow: scroll;
+        white-space: nowrap;
+    }
+    .content-inloggen {
+        padding-bottom: 0 !important;
+    }
+
 
 
 
