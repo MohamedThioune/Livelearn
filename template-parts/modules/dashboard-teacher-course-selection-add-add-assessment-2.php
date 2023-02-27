@@ -1,10 +1,10 @@
 
-<?php 
+<?php
 
 if (isset ($_POST) && !empty ($_POST))
 {
     extract ($_POST);
-    $questions = array();   
+    $questions = array();
     for ($i = 0; $i < $questionsCount ; $i++)
     {
         if (isset($titles[$i]) && !empty($titles[$i]))
@@ -25,7 +25,7 @@ if (isset ($_POST) && !empty ($_POST))
                     {
                         $questions[$i]['correct_response'] = array();
                         for ($k = 0; $k < 4; $k++){
-                            if ($responseStates[$k] == "true") 
+                            if ($responseStates[$k] == "true")
                                 array_push($questions[$i]['correct_response'],$k+1);
                         }
                         array_splice($responseStates , 0 , 4);
@@ -47,18 +47,23 @@ if (isset ($_POST) && !empty ($_POST))
                     <h2>2.Vragen</h2>
                 </div>
                 <?php 
-                     
+
                     // acf_form(array(
                     // 'post_id' => $_GET['id'],
                     // 'fields' => array('question'),
                     // 'submit_value'  => __('Opslaan & verder'),
                     // 'return' => '?func=add-add-assessment&id=%post_id%&step=3'
-                    // )); 
+                    // ));
                 ?>
             </div>
             <div class="new-assessment-form w-100 assessment-container">
                 <div class = "container-question-field" >
-                
+
+            <div class="new-assessment-form w-100 assessment-container position-relative">
+                <button type="button" class="btn btn-remove-assessments">
+                    Remove
+                </button>
+                <div class = "container-question-field" >
                     <div class="form-group">
                         <label for="exampleInputEmail1">Title</label>
                         <input required type="text" id="title" class="form-control" placeholder="Title of your queestion">
@@ -84,10 +89,10 @@ if (isset ($_POST) && !empty ($_POST))
                         <?php
                             }
                         ?>
-                        
-                            
+
+
                     </div>
-                
+
                 </div>
                 <div class="append"></div>
                 <div class="mt-5">
@@ -180,7 +185,7 @@ if (isset ($_POST) && !empty ($_POST))
                 questionsCount: questionsCount
             },
             success: (result) => {
-                
+
                 let id_post = <?php echo $_GET['id'] ?>;
                 window.location.href = "?func=add-add-assessment&id="+id_post+"&step=3"
             }

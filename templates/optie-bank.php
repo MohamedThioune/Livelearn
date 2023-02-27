@@ -85,7 +85,7 @@ if($optie == "accept"){
             
             update_field('course_type', $typos[$course->type] , $id_post);
         }
-
+        
         $onderwerpen = explode(',', $course->onderwerpen);
         
         /*
@@ -94,12 +94,18 @@ if($optie == "accept"){
 
         //Experts
         $contributors = explode(',', $course->contributors);
-
-        update_field('experts', $contributors, $id_post);
+        if(isset($contributors[0]))
+            if($contributors[0] && $contributors[0] != "" && $contributors[0] != " " )
+                update_field('experts', $contributors, $id_post);
+                
+        //Categories
+        if(isset($onderwerpen[0]))
+            if($onderwerpen[0] && $onderwerpen[0] != "" && $onderwerpen[0] != " " )
+                update_field('categories', $onderwerpen, $id_post);
+        
         update_field('short_description', nl2br($course->short_description), $id_post);
         update_field('long_description', nl2br($course->long_description), $id_post);
         update_field('url_image_xml', $course->image_xml, $id_post);
-        update_field('categories', $onderwerpen, $id_post);
 
         if( $course->company_id != 0 && $course->author_id != 0 ){
             $company = get_post($course->company_id);
@@ -109,8 +115,9 @@ if($optie == "accept"){
         //Date
         $data_locaties = explode('~', strval($course->date_multiple));
         if($data_locaties)
-            update_field('data_locaties_xml', $data_locaties, $id_post);
-
+            if(isset($data_locaties[0]))
+                if($data_locaties[0] && $data_locaties[0] != "" && $data_locaties[0] != " " )
+                    update_field('data_locaties_xml', $data_locaties, $id_post);
         /*
         ** END
         */
