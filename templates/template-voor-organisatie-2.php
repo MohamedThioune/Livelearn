@@ -28,7 +28,7 @@
                     <div class="content-detail-voor-organisation">
                         <h1>Creëer een constant lerende organisatie en trek talent aan</h1>
                         <p>Stimuleer de in- en doorstroom van jouw (flexibele) werknemers, zodat zij jouw bedrijf naar het volgende niveau kunnen tillen. </p>
-                        <a href="" class="btn btnMeerInformation">Meer informatie ?</a>
+                        <a href="/overview-organisaties/" class="btn btnMeerInformation">Meer informatie ?</a>
                     </div>
                     <div class="img-block">
                         <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/voor-oraganisatie-2.png" class="" alt="">
@@ -87,4 +87,5 @@
 
 
 
+<?php get_footer(); ?>
 <?php wp_footer(); ?>
