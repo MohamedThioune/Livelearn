@@ -4,6 +4,8 @@
 <?php wp_head(); ?>
 <?php get_header(); ?>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 
 <div class="content-functiegerichte">
     <section class="functionaliteiten">
@@ -85,14 +87,23 @@
                     </div>
                 </div>
             </div>
-
-
-
-            <div class="btn-Bekijk-functionaliteiten text-center">
-                <a href="" class="btn ">Bekijk al onze functionaliteiten</a>
-            </div>
         </div>
 
+    </section>
+    <section class="block-contact-calendy bleu-block-contact-calendy text-center" style="margin-top: 0;">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-center">
+                <div class="img-Direct-een">
+                    <img id="firstImg-direct-contact" src="<?php echo get_stylesheet_directory_uri();?>/img/Direct-een.png" alt="">
+                </div>
+                <div class="img-Direct-een">
+                    <img id="secondImg-direct-contact" src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der-Kolk.png" alt="">
+                </div>
+            </div>
+            <h3 class="title-Direct-een"><strong>Direct een afspraak inplannen?</strong><br> Hulp nodig of heb je vragen over LiveLearn? Wij zijn er om je te helpen.</h3>
+            <button class="btn btn-kies" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/livelearn/overleg-pilot'});return false;">Kies een datum</button>
+
+        </div>
     </section>
 </div>
 
