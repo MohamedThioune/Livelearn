@@ -23,8 +23,8 @@
     $user_id = get_current_user_id();
 
     //current user image
-    $current_user_image = get_field('profile_img',  'user_' . $user_id);
-    $current_user_image = $current_user_image ?: get_stylesheet_directory_uri() . '/img/user.png';
+    $user_image = get_field('profile_img',  'user_' . $user_id);
+    $user_image = $user_image ?: get_stylesheet_directory_uri() . '/img/user.png';
 
     $no_content_ =  '
     <center>
@@ -122,7 +122,7 @@ if($community){
                                 <div class="group-course-activity first-section-dashboard">
                                     <div class="question-block" data-toggle="modal" data-target="#modalQuestion" type="button">
                                         <div class="imgUser">
-                                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/autor1.png" alt="">
+                                            <img class="" src="<?= $user_image; ?>" alt="">
                                         </div>
                                         <p class="text-question">Do you have a question ?</p>
                                     </div>
