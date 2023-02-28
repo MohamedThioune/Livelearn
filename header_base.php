@@ -91,11 +91,12 @@ $url = home_url( $wp->request );
         <!-- get bootstrap icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
-        <!-- meta property -->
+        <!-- meta property 
         <meta property="og:title" content="Livelearn">
         <meta property="og:description" content="Ontdek, ontwikkel en maak carriere">
         <meta property="og:image" content="<?php echo get_stylesheet_directory_uri() . '/img/logo_livelearn.png' ?>">
         <meta property="og:url" content="<?= $url ?>">
+        -->
 
         <title><?php bloginfo('name'); ?></title>
         <?php wp_head(); ?>
