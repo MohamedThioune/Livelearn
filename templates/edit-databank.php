@@ -26,6 +26,7 @@ $course = $wpdb->get_results( $sql )[0];
     $allowed_tags = ['h1', 'h2', 'br','h3','h4','b','h5','h6','strong','em','blockquote','ul','ol','li','a'];
     $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
     $text = str_replace(["\r\n", "\r", "\n\n","\n\n\n","\n\n\n\n","\n\n\n\n\n","\n"], "<br>", $text);
+    $text = str_replace(['<h1>','<h3>','<h4>','<h5>','<h6>'],'<h2>',$text);
     return preg_replace($pattern, '', $text);
 }
 

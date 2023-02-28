@@ -221,7 +221,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         $('#select_field').hide(true,2000);
         $('#loader').attr('hidden',false);
         $.ajax({
-            url:'/artikels',
+            url:'/livelearn/artikels',
             type:'POST',
             datatype:'json',
             // cache:false,
@@ -286,8 +286,9 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 url: '/subtopics',
                 type: 'POST',
                 data: {
-                    ids: $ids,
+                    ids: $ids
                 },
+                error: function()
             });
         }
     });
@@ -308,7 +309,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                type: 'POST',
                data: {
             //        id: ids,
-            //        optie: optie,
+            //        optie: optie,    
                    class:classs
                 },
                error: function() {
