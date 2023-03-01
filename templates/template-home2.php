@@ -120,6 +120,9 @@ $type_course = array(
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 <style>
+    body{
+        background: #F5FAFD;
+    }
     .headerdashboard,.navModife {
         background: #deeef3;
         color: #ffffff !important;
@@ -219,7 +222,7 @@ $type_course = array(
         margin-bottom: 20px;
     }
     .contentSix {
-        margin-bottom: 30px;
+        margin-bottom: 68px;
     }
     .titleGroupText {
         font-weight: 500;
@@ -323,9 +326,9 @@ $type_course = array(
         #modalVideo .modal-dialog {
             width: 96% !important;
         }
-        #modalVideo .modal-dialog iframe {
-            width: 100%;
-            height: fit-content;
+        #modalVideo .modal-dialog video{
+            width: 100% !important;
+            height: 100% !important;
         }
         .block-logo-parteners2 .logo-element {
             width: 26.5%;
@@ -1037,20 +1040,24 @@ $saved = get_user_meta($user_id, 'course');
                             </div>
                         </div>
                     </div>
-                    <hr>
+                    <div class="position-relative">
+                        <p class="bekijk-text">Bekijk wat we doen</p>
+                        <hr>
+                    </div>
+
                 </div>
                 <?php if(!$user_id) { ?>
                 <div class="groupeBtn-Jouw-inloggen groupBtnConnecte">
                     <a href="http://wp12.influid.nl/login/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/googleImg.png" alt="" />
-                        Sign up with Google
+                        Gratis inloggen met Google
                     </a>
                     <!-- <button class="btn btn-signup">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/linkedin-icon.png" class="" alt="">
                         sign up with Linkedin
                     </button> -->
                     <a href="/inloggen" class="btn btn-signup-email">
-                        <span style="color:white">Sign up with E-mail</span>
+                        <span style="color:white">Gratis inloggen via mail</span>
                     </a>
                 </div>
                 <?php } ?>
@@ -1835,7 +1842,7 @@ $saved = get_user_meta($user_id, 'course');
 
 <div class="container-fluid">
     <div class="doawnloadBlockHome">
-        <h3>Je bent nu ver genoeg naar beneden gescrolled, 
+        <h3>Je bent nu ver genoeg naar beneden gescrold,
             je kan de app hier gratis downloaden:</h3>
         <div class="d-flex justify-content-center">
             <a href="" class="btn btnStore">

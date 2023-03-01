@@ -13145,9 +13145,9 @@ ul .selectAll .styled-checkbox:checked + label:after {
     margin: 35px auto;
 }
 .onze-expert-block{
-    margin-top: 70px;
+    margin-top: 85px;
     padding: 35px 0 40px;
-    margin-bottom: 40px;
+    margin-bottom: 65px;
 }
 .onze-expert-block .btn-collection {
     font-size: 26px;
@@ -13185,7 +13185,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    margin: 133px 0 90px;
+    margin: 175px 0 85px;
 }
 .first-block-binnen h3{
     color: #023356;
@@ -13268,14 +13268,14 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .block-logo-parteners2{
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 50px;
+    margin-bottom: 80px;
 }
 .doawnloadBlockHome{
     background: #E0EFF4;
     text-align: center;
     padding: 40px 30px;
     position: relative;
-    margin: 100px 0;
+    margin: 135px 0;
     border-right: 10px;
 }
 .doawnloadBlockHome h3{
@@ -13500,7 +13500,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .block-contact-calendy{
     background: #dfeff4;
     padding: 48px 0 70px;
-    margin: 95px 0;
+    margin: 120px 0;
 }
 .block-contact-calendy #firstImg-direct-contact{
     width: 120px;
@@ -15581,8 +15581,13 @@ background: #FFFFFF !important;
     margin-bottom: 15px;
 }
 .card-functionaliteiten img{
+<<<<<<< HEAD
     width: 80px;
     height: 80px;
+=======
+    width: 70px;
+    height: 70px;
+>>>>>>> 6158bd873425683c8f008094412ff61ad162181e
     margin-left: auto;
     margin-bottom: 15px;
 }
@@ -15655,12 +15660,61 @@ background: #FFFFFF !important;
     font-size: 22px;
 }
 #dashboard-min {
+<<<<<<< HEAD
     width: 20px;
 }
 #community-icon{
     width: 26px;
     margin-left: -3px;
 }
+=======
+
+    width: 19px !important;
+    margin-top: 1px;
+}
+#community-icon{
+    width: 26px !important;
+    margin-left: -3px;
+}
+.tab-block-functiegerichte {
+    margin-top: 30px;
+}
+.tab-block-functiegerichte .tab-content{
+    display: block !important;
+}
+.tab-block-functiegerichte .tab-content .tab-pane{
+    padding: 15px 0 !important;
+}
+.tab-block-functiegerichte .nav-item.show .nav-link, .tab-block-functiegerichte .nav-link.active {
+    color: #495057;
+    background-color: unset;
+    border-color: #00a89d;
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 2px solid #00a89d;
+    font-weight: 600;
+}
+.tab-block-functiegerichte .nav-tabs .nav-item a {
+    padding: 0px 0 8px !important;
+    color: #033356 !important;
+}
+.tab-block-functiegerichte .nav-tabs {
+    width: 38%;
+    margin: 0 auto;
+}
+.tab-block-functiegerichte .nav-link:hover {
+    border-color: transparent !important;
+}
+.bekijk-text{
+    position: absolute;
+    color: #707070;
+    margin-bottom: 0;
+    left: 0;
+    bottom: 23px;
+    font-style: italic;
+}
+>>>>>>> 6158bd873425683c8f008094412ff61ad162181e
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
@@ -18994,6 +19048,20 @@ background: #FFFFFF !important;
         width: 55px;
         height: 55px;
     }
+<<<<<<< HEAD
+=======
+    .tab-block-functiegerichte .nav-tabs {
+        width: 100%;
+        margin: 0 auto;
+        flex-wrap: nowrap;
+        overflow: scroll;
+        white-space: nowrap;
+    }
+    .content-inloggen {
+        padding-bottom: 0 !important;
+    }
+
+>>>>>>> 6158bd873425683c8f008094412ff61ad162181e
 
 
 
