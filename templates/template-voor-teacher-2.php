@@ -26,7 +26,7 @@
                     <div class="content-detail-voor-organisation">
                         <h1>Word onderdeel van het grootste expert & opleidersnetwerk</h1>
                         <p>Deel jouw kennis met de rest van de wereld.</p>
-                        <a href="" class="btn btnMeerInformation">Meer informatie ?</a>
+                        <a href="/overview-organisations-5/" class="btn btnMeerInformation">Meer informatie ?</a>
                     </div>
                     <div class="img-block">
                         <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Informatiesessie-LiveLearn.png" class="" alt="">
@@ -101,5 +101,5 @@
     </section>
 </div>
 
-
+<?php get_footer(); ?>
 <?php wp_footer(); ?>
