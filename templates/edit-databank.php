@@ -23,10 +23,11 @@ $course = $wpdb->get_results( $sql )[0];
  */
 
  function strip_html_tags($text) {
-    $allowed_tags = ['h1', 'h2', 'br','h3','h4','b','h5','h6','strong','em','blockquote','ul','ol','li','a'];
+    $allowed_tags = ['h2', 'br','strong','em','blockquote','ul','ol','li','a'];
+    $text = str_replace(["\r\n", "\r", "\n\n","\n\n\n","\n\n\n\n","\n\n\n\n\n"], "\n", $text);
+    $text = str_replace("\n","<br>",$text);
+    $text = str_replace(['h1','h3','h4','h5','h6'],'h2',$text);
     $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
-    $text = str_replace(["\r\n", "\r", "\n\n","\n\n\n","\n\n\n\n","\n\n\n\n\n","\n"], "<br>", $text);
-    $text = str_replace(['<h1>','<h3>','<h4>','<h5>','<h6>'],'<h2>',$text);
     return preg_replace($pattern, '', $text);
 }
 
