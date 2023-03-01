@@ -124,7 +124,7 @@ function RandomString(){
     'BeByBeta',
     'Zooi',
     'Growth Factory',
-    'Influid',
+    'Influid'//,
     // 'MediaTest',
     // 'MeMo2',
     // 'Impact Investor',
