@@ -25,12 +25,6 @@ if(!empty($topics_internal))
     if($key==0)
       $topic = ' 
       <div class="d-flex justify-content-between align-items-center mb-4">
-        <ul>
-            <li class="selectAll">
-                <input class="styled-checkbox" id="all" type="checkbox" value="all">
-                <label for="all">Select All</label>
-            </li>
-        </ul>
         
         <div class="position-relative">'
             // <input type="search" placeholder="Search for your favorite Subtopics" class="searchSubTopics">
