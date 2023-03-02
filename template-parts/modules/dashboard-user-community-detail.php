@@ -112,7 +112,7 @@ if($community){
                     <ul class="filters">
                         <li class="item active">Activity</li>
                         <li class="item position-relative">Members <span><?= $max_follower ?></span></li>
-                        <li class="item item-question position-relative">Questions <span>22</span></li>
+                        <!-- <li class="item item-question position-relative">Questions <span>22</span></li> -->
                         <!-- <li class="item position-relative">Courses <span><?= $max_course ?></span></li> -->
                     </ul>
                 </div>
