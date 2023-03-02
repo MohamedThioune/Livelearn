@@ -94,8 +94,8 @@ $url = home_url( $wp->request );
         <!-- meta property 
         <meta property="og:title" content="Livelearn">
         <meta property="og:description" content="Ontdek, ontwikkel en maak carriere">
-        <meta property="og:image" content="<?php echo get_stylesheet_directory_uri() . '/img/logo_livelearn.png' ?>">
-        <meta property="og:url" content="<?= $url ?>">
+        <meta property="og:image" content="">
+        <meta property="og:url" content="">
         -->
 
         <title><?php bloginfo('name'); ?></title>
@@ -116,7 +116,7 @@ $url = home_url( $wp->request );
 
         /*
         ** Categories - all  *
-    */
+        */
 
         $categories = array();
 
