@@ -15581,8 +15581,13 @@ background: #FFFFFF !important;
     margin-bottom: 15px;
 }
 .card-functionaliteiten img{
+<<<<<<< HEAD
+    width: 80px;
+    height: 80px;
+=======
     width: 70px;
     height: 70px;
+>>>>>>> 6158bd873425683c8f008094412ff61ad162181e
     margin-left: auto;
     margin-bottom: 15px;
 }
@@ -15655,6 +15660,14 @@ background: #FFFFFF !important;
     font-size: 22px;
 }
 #dashboard-min {
+<<<<<<< HEAD
+    width: 20px;
+}
+#community-icon{
+    width: 26px;
+    margin-left: -3px;
+}
+=======
 
     width: 19px !important;
     margin-top: 1px;
@@ -15701,6 +15714,7 @@ background: #FFFFFF !important;
     bottom: 23px;
     font-style: italic;
 }
+>>>>>>> 6158bd873425683c8f008094412ff61ad162181e
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
@@ -19034,6 +19048,8 @@ background: #FFFFFF !important;
         width: 55px;
         height: 55px;
     }
+<<<<<<< HEAD
+=======
     .tab-block-functiegerichte .nav-tabs {
         width: 100%;
         margin: 0 auto;
@@ -19045,6 +19061,7 @@ background: #FFFFFF !important;
         padding-bottom: 0 !important;
     }
 
+>>>>>>> 6158bd873425683c8f008094412ff61ad162181e
 
 
 
