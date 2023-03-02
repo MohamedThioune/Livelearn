@@ -9,7 +9,7 @@ global $wpdb;
 $pagination = 50;
 
 if(isset($_GET['id']))
-    $page = intval($_GET['id']);
+    $page = intval($_GET['id']); 
     if($page)
         $offset = ($page - 1) * $pagination;
 $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank ORDER BY id DESC LIMIT %d OFFSET %d", array($pagination, $offset));

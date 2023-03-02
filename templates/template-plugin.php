@@ -214,7 +214,7 @@ function RandomString(){
         'display_name' => $first_name,
         'first_name' => $first_name,
         'last_name' => $last_name,
-        'role' => 'author'
+        'role' => 'author' 
       );
 
       $author_id = wp_insert_user(wp_slash($userdata));       
