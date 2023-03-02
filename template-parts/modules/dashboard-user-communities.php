@@ -70,12 +70,12 @@ $other_communities = array();
                         ?>
                             <div class="card-communities">
                                 <div class="head-card-communities">
-                                    <img class="" src="<?= $community_image; ?>" alt="">
+                                    <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/groups-bg-11.png" alt="">
                                 </div>
                                 <div class="body-card-community">
                                     <div class="block-img-title d-flex align-items-center">
                                         <div class="imgCommunity">
-                                            <img class="" src="<?= $company_image; ?>" alt="">
+                                            <img class="" src="<?= $community_image; ?>" alt="">
                                         </div>
                                         <div>
                                             <a href="/dashboard/user/community-detail/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a>

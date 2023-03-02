@@ -1285,7 +1285,7 @@ $saved = get_user_meta($user_id, 'course');
            <div class="headCollections">
                <div class="dropdown show">
                    <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownHuman" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                       Onze top experts binnen <b>Alle categorieën</b> <b id="name_topic"><?= $name_topic; ?></b>
+                       Onze top experts binnen <b id="complete-categorien">Alle categorieën</b>
                    </a>
                    <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownHuman">
                         <select class="form-select selectSearchHome" name="search_type" id="topic_search" multiple="true">
@@ -1962,6 +1962,10 @@ $saved = get_user_meta($user_id, 'course');
 <script>
     $('#topic_search').change(function(){
         var topic_search = $("#topic_search option:selected").val();
+
+        var complete_categorieen = $("#topic_search option:selected").text();
+        $('#complete-categorien').html(complete_categorieen);
+
         $.ajax({
             url:"/fetch-ajax-home2",
             method:"post",

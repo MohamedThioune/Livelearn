@@ -548,22 +548,22 @@ $see_experts = get_users(
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <a href="/user-overview?id=<?= $expert->ID ?>">See</a>
-                                        <form id="by_one_form" action="/dashboard/user/" method="POST">
-                                            <input type="hidden" name="meta_value" form='by_one_form' value="<?= $expert->ID; ?>" id="">
-                                            <input type="hidden" id="user_id" form='by_one_form' name="user_id" value="<?= $user->ID ?>" id="">
-                                            <input type="hidden" name="meta_key" form='by_one_form' value="expert" id="">
-                                        </form>
-                                        <div>
-                                            <?php
-                                            if(empty($saves_experts))
-                                                echo "<button type='submit' class='btn btnFollowSubTopic' form='by_one_form' name='interest_push'>Follow</button>";
-                                            else
-                                                if (in_array($expert->ID, $saves_experts))
-                                                    echo "<button type='submit' style='background: red' class='btn btnFollowSubTopic' form='by_one_form' name='delete'>Unfollow</button>";
+                                        <!-- <form id="by_one_form" action="" method="POST"> -->
+                                            <input type="hidden" id="meta_value_expert<?= $key ?>" value="<?= $expert->ID; ?>">
+                                            <input type="hidden" id="user_id_expert<?= $key ?>" value="<?= $user->ID ?>">
+                                            <input type="hidden" id="meta_key_expert<?= $key ?>" value="expert" >
+                                            <div>
+                                                <?php
+                                                if(empty($saves_experts))
+                                                    echo "<button type='button' class='btn btnPushExpert btnFollowExpert' value='" . $key . "'><span id='autocomplete-push-expert" . $key . "'>Follow</span></button>";
                                                 else
-                                                    echo "<button type='submit' class='btn btnFollowSubTopic' form='by_one_form' name='interest_push'>Follow</button>";
-                                            ?>
-                                        </div>
+                                                    if (in_array($expert->ID, $saves_experts))
+                                                        echo "<button type='button' style='background-color: red' class='btn btnPushExpert btnFollowExpert' value='" . $key . "'><span id='autocomplete-push-expert" . $key . "'>Unfollow</span></button>";
+                                                    else
+                                                        echo "<button type='button' class='btn btnPushExpert btnFollowExpert' value='" . $key . "'><span id='autocomplete-push-expert" . $key . "'>Follow</span</button>";
+                                                ?>
+                                            </div>
+                                        <!-- </form> -->
                                     </div>
                                 </div>
                             </form>
