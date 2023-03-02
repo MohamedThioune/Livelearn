@@ -107,13 +107,10 @@
              <div class="row d-flex justify-content-center">
                  <div class="col-md-8 col-11 p-2 order-md-1 order-2 text-md-left text-center">
                     <p class="wordDeBestText2 mx-md-0 py-0 mt-0" style="color: #023356; max-width: 100%">
-                        <strong>Grootbedrijf en corporates</strong> 
+                        <strong>Midden en Klein Bedrijf</strong>
                     </p>                   
-                    <p class="krijgText"> 
-                        Afdelingen, meerdere landen, verschillende culturen het zijn een paar onderwerpen waar een 
-                        corporate organisatie dagelijks mee te maken heeft. LiveLearn biedt we een learning experience
-                        platform, waarbij je dit modulair en eenvoudig bijhoudt. Wij zorgen dat je organisatie op 
-                        individueel, team, afdeling en corporate niveau kan presteren.
+                    <p class="krijgText">
+                        Personeel, het is altijd moeilijk om hier het beste uit te halen.  Wat moet je aanbieden qua trainingen en hoe houd je alle ontwikkelingen bij? Als LiveLearn begrijpen we maar al te goed hoe je hier mee om moet gaan en daarom bieden wij een eenvoudig op te zetten ontwikkelomgeving voor MKB bedrijven.
                     </p>
                     <div>
                         <button type="submit" class="btn rounded-pill p-2 px-4 my-2" style="background: #00A89D"
