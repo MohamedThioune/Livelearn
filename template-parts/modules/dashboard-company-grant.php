@@ -3,7 +3,8 @@
     $user_id = $user->ID;
 
     extract($_POST);
-    
+
+    //Teacher
     if(isset($granted_push_teacher))
         if(!empty($granted)){
             foreach($granted as $grant)
@@ -11,16 +12,39 @@
                     $u = new WP_User($grant);
                     // Add role
                     $u->add_role( 'author' );
+
+                    //Mail - became a expert
+                    $first_name = ($u->first_name) ?: $u->display_name; 
+                    $email = $u->user_email;
+                    $mail_became_expert = '/../../templates/mail-became-a-expert.php';
+                    require(__DIR__ . $mail_became_expert);
+
+                    $subject = 'Je hebt de rol expert !';
+                    $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+                    wp_mail($u->user_email, $subject, $mail_became_expert_body, $headers, array( '' )) ; 
                 }            
             $success = true;
             $message = "Werknemer(s) met succes toegekend als een teacher";
             header('Location: /dashboard/company/grant/?message=' . $message);
         }
+    
+    //Manager
     if(isset($granted_push_manager)){
         $u = new WP_User($id_user);
         // Add role
-        if($rol_manager)
+        if($rol_manager){
             $u->add_role( 'manager' );
+
+            //Mail - became a manager
+            $first_name = ($u->first_name) ?: $u->display_name; 
+            $email = $u->user_email;
+            $mail_became_manager = '/../../templates/mail-became-a-manager.php';
+            require(__DIR__ . $mail_became_manager);
+
+            $subject = 'Je hebt de rol manager !';
+            $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+            wp_mail($u->user_email, $subject, $mail_became_manager_body, $headers, array( '' )) ; 
+        }
         // Remove role
         else
             $u->remove_role( 'manager' );
@@ -55,7 +79,7 @@
                         echo '<div class="titleOpleidingstype"><h2>You are not able to manage a member</h2></div>';
                     }
                     else{                        
-                        echo '<div class="titleOpleidingstype"><h2>Selecteer je managers</h2></div>';
+                        echo '<div class="titleOpleidingstype"><h2>Selecteer je experts</h2></div>';
                         $company = get_field('company',  'user_' . $user_id );
                         $company_connected = $company[0]->post_title;
 
@@ -63,7 +87,7 @@
                 ?>
                         <form action="" method="POST">
                             <div class="acf-field">
-                                <label for="locate">Geef een gebruiker de rol 'teacher' om een team aan te sturen :</label><br>
+                                <label for="locate">Geef een gebruiker de rol 'expert' om een team aan te sturen :</label><br>
                                 <div class="form-group">
                                         <?php
                                         //Get users from company

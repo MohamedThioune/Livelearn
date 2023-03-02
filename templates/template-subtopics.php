@@ -111,23 +111,8 @@
 
             $onderwerpen= join(',',$tags);
 
-            $articles=array(
-                'titel' => $artikels['titel'],
-                'type' => $artikels['type'],
-                'videos' => $artikels['videos'], 
-                'short_description' => $artikels['short_description'],
-                'long_description' => $artikels['long_description'],
-                'duration' => NULL, 
-                'prijs' => 0, 
-                'prijs_vat' => 0,
-                'image_xml' => $artikels['image_xml'], 
+            $articles=array( 
                 'onderwerpen' => $onderwerpen,
-                'date_multiple' =>  NULL, 
-                'course_id' => null,
-                'author_id' => $artikels['author_id'],
-                'company_id' =>  $artikels['company_id'],
-                'contributors' => null,
-                'status' => $artikels['status']
             );
 
             $updated=$wpdb->update($table,$articles,$where);

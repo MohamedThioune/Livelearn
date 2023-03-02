@@ -6,6 +6,7 @@
 
 <div class="container-fluid">
 
+
     <!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
     <div class="modal modalEcosyteme fade " id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
          style="position: absolute; ">
@@ -80,7 +81,7 @@
        <div class="headOverviewOrganisatie">
            <h1>Deel jouw kennis in een paar klikken</h1>
            <p class="description">Wij hanteren geen opstartkosten, dus iedereen kan meteen van start </p>
-           <a href="" class="btn btnbtnCreeerJe" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">Creeer je omgeving gratis</a>
+           <a href="/voor-teacher-2-2/" class="btn btnbtnCreeerJe" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">Creeer je omgeving gratis</a>
        </div>
         <div class="row">
             <div class="col-md-4">

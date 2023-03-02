@@ -81,7 +81,7 @@ style="overflow-x: hidden !important;">
         </li>
         <li class="elementTextDashboard">
             <a href="/dashboard/user/activity" class="d-flex">
-                <div class="iconeElement"><img src="<?php echo get_stylesheet_directory_uri();?>/img/Statistieken.png"></div>
+                <div class="iconeElement"><img id="dashboard-min" src="<?php echo get_stylesheet_directory_uri();?>/img/dashboard-min.png"></div>
                 <?php
                 if($option_menu[2] == 'activity') echo '<p class="textLiDashboard"><b>Mijn Activiteiten</b></p>'; else echo  '<p class="textLiDashboard">Mijn Activiteiten</p>';
                 ?>
@@ -99,7 +99,7 @@ style="overflow-x: hidden !important;">
         <li class="elementTextDashboard">
             <!-- /community-overview/ -->
             <a href="/dashboard/user/communities" class="d-flex">
-                <div class="iconeElement"><img src="<?php echo get_stylesheet_directory_uri();?>/img/Statistieken.png"></div>
+                <div class="iconeElement"><img id="community-icon" src="<?php echo get_stylesheet_directory_uri();?>/img/community-icon.png"></div>
                 <?php
                 if($option_menu[2] == 'communities') echo '<p class="textLiDashboard"><b>Communities</b></p>'; else echo  '<p class="textLiDashboard">Communities</p>';
                 ?>

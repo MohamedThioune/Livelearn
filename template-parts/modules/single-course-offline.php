@@ -1143,173 +1143,172 @@
 </div>
 
 
-            <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
-            <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-                style="position: absolute;height: 150% !important; overflow-y:hidden !important;">
-                <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
-                    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+<!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
+<div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    style="position: absolute;height: 150% !important; overflow-y:hidden !important;">
+    <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
 
-                    <div class="modal-content">
+        <div class="modal-content">
 
-                        <div class="modal-header border-bottom-0">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
+            <div class="modal-header border-bottom-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-                        <div class="modal-body  px-md-4 px-0">
-                            <div class="mb-4">
-                                <div class="text-center">
-                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
-                                </div>
-                                <h3 class="text-center my-2">Sign Up</h3>
-                                <div class="text-center">
-                                    <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                    data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign in</a></p>
-                                </div>
-                            </div>
-
-
-                            <?php
-                                echo (do_shortcode('[user_registration_form id="8477"]'));
-                            ?>
-
-                            <div class="text-center">
-                                <p>Al een account? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                        data-toggle="modal" data-target="#exampleModalCenter">Log-in</a></p>
-                            </div>
-
-                        </div>
+            <div class="modal-body  px-md-4 px-0">
+                <div class="mb-4">
+                    <div class="text-center">
+                        <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
                     </div>
+                    <h3 class="text-center my-2">Sign Up</h3>
+                    <div class="text-center">
+                        <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                        data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign in</a></p>
+                    </div>
+                </div>
 
+
+                <?php
+                    echo (do_shortcode('[user_registration_form id="8477"]'));
+                ?>
+
+                <div class="text-center">
+                    <p>Al een account? <a href="" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                            data-toggle="modal" data-target="#exampleModalCenter">Log-in</a></p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
+
+<!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
+<div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    style="position: absolute;overflow-y:hidden !important;height: 110%; ">
+    <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
+
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body  px-md-5 px-4">
+                <div class="mb-4">
+                    <div class="text-center">
+                        <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                    </div>
+                    <h3 class="text-center my-2">Sign In</h3>
+                    <div class="text-center">
+                        <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                        data-toggle="modal" data-target="#SignInWithEmail">&nbsp; Sign Up</a></p>
+                    </div>
+                </div>
+
+                <?php
+                wp_login_form([
+                    'redirect' => $url,
+                    'remember' => false,
+                    'label_username' => 'Wat is je e-mailadres?',
+                    'placeholder_email' => 'E-mailadress',
+                    'label_password' => 'Wat is je wachtwoord?'
+                ]);
+                ?>
+                <div class="text-center">
+                    <p>Nog geen account?  <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
+                                        data-toggle="modal" data-target="#SignInWithEmail">Meld je aan</a></p>
                 </div>
             </div>
-            <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
-
-            <!-- -------------------------------------- Start Modal Sign Up ----------------------------------------------- -->
-            <div class="modal modalEcosyteme fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-                style="position: absolute;overflow-y:hidden !important;height: 110%; ">
-                <div class="modal-dialog" role="document" style="width: 96% !important; max-width: 500px !important;
-                box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;">
-
-                    <div class="modal-content">
-                        <div class="modal-header border-bottom-0">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-
-                        <div class="modal-body  px-md-5 px-4">
-                            <div class="mb-4">
-                                <div class="text-center">
-                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
-                                </div>
-                                <h3 class="text-center my-2">Sign In</h3>
-                                <div class="text-center">
-                                    <p>Not an account? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                    data-toggle="modal" data-target="#SignInWithEmail">&nbsp; Sign Up</a></p>
-                                </div>
-                            </div>
-
-                            <?php
-                            wp_login_form([
-                                'redirect' => $url,
-                                'remember' => false,
-                                'label_username' => 'Wat is je e-mailadres?',
-                                'placeholder_email' => 'E-mailadress',
-                                'label_password' => 'Wat is je wachtwoord?'
-                            ]);
-                            ?>
-                            <div class="text-center">
-                                <p>Nog geen account?  <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
-                                                    data-toggle="modal" data-target="#SignInWithEmail">Meld je aan</a></p>
-                            </div>
-                        </div>
-                    </div>
+        </div>
 
 
-                </div>
+    </div>
+</div>
+<!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
+
+
+<!-- start Modal deel -->
+<div class="modal" id="modal1" data-animation="fadeIn">
+    <div class="modal-dialog modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
+        <div class="modal-content">
+            <div class="tab">
+                <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
+                <hr class="hrModifeDeel">
+                <?php
+                if ($user_id != 0)
+                {
+                ?>
+                    <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
+                <?php
+                }
+                ?>
             </div>
-            <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
-
-
-
-            <!-- start Modal deel -->
-            <div class="modal" id="modal1" data-animation="fadeIn">
-                <div class="modal-dialog modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
-                    <div class="modal-content">
-                        <div class="tab">
-                            <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
-                            <hr class="hrModifeDeel">
-                            <?php
-                            if ($user_id != 0)
-                            {
-                            ?>
-                                <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
-                            <?php
-                            }
-                            ?>
-                        </div>
-                        <div id="Extern" class="tabcontent">
-                        <div class="contentElementPartage">
-                            <a href="https://wa.me/?text=<?= $share_txt ?>" target="_blank" id="whatsapp"  class="btn contentIcone">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/whatsapp.png" alt="">
-                                <p class="titleIcone">WhatsAppp</p>
-                            </a>
-                        </div>
-                        <div class="contentElementPartage">
-                            <button class="btn contentIcone">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/facebook.png" alt="">
-                            </button>
-                            <p class="titleIcone">Facebook</p>
-                        </div>
-                        <div class="contentElementPartage">
-                            <button class="btn contentIcone">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/insta.png" alt="">
-                            </button>
-                            <p class="titleIcone">Instagram</p>
-                        </div>
-                        <div class="contentElementPartage">
-                            <button id="linkedin" class="btn contentIcone">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/linkedin.png" alt="">
-                            </button>
-                            <p class="titleIcone">Linkedin</p>
-                        </div>
-                        <div class="contentElementPartage">
-                            <a href="sms:?&body=<?= $share_txt ?>" target="_blank" id="" class="btn contentIcone">
-                                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/sms.png" alt="">
-                            </a>
-                            <p class="titleIcone">Sms</p>
-                        </div>
-                            <div>
-                                <p class="klikText">Klik om link te kopieren</p>
-                                <div class="input-group input-group-copy formCopyLink">
-                                    <input id="test1" type="text" class="linkTextCopy form-control" value="https://g.co/kgs/K1k9oA" readonly>
-                                    <span class="input-group-btn">
-                                    <button class="btn btn-default btnCopy">Copy</button>
-                                    </span>
-                                    <span class="linkCopied">link copied</span>
-                                </div>
-                            </div>
-                        </div>
-                        <?php
-                            if ($user_id==0)
-                            {
-                        ?>
-                            <div id="Intern" class="tabcontent">
-                                <form action="" class="formShare">
-                                    <input type="text" placeholder="Gebruikersnaam">
-                                    <input type="text" placeholder="Wachtwoord">
-                                    <button class="btn btnLoginModife">Log-in</button>
-                                </form>
-                            </div>
-                        <?php
-                            }
-                        ?>
+            <div id="Extern" class="tabcontent">
+            <div class="contentElementPartage">
+                <a href="https://wa.me/?text=<?= $share_txt ?>" target="_blank" id="whatsapp"  class="btn contentIcone">
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/whatsapp.png" alt="">
+                    <p class="titleIcone">WhatsAppp</p>
+                </a>
+            </div>
+            <div class="contentElementPartage">
+                <button class="btn contentIcone">
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/facebook.png" alt="">
+                </button>
+                <p class="titleIcone">Facebook</p>
+            </div>
+            <div class="contentElementPartage">
+                <button class="btn contentIcone">
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/insta.png" alt="">
+                </button>
+                <p class="titleIcone">Instagram</p>
+            </div>
+            <div class="contentElementPartage">
+                <button id="linkedin" class="btn contentIcone">
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/linkedin.png" alt="">
+                </button>
+                <p class="titleIcone">Linkedin</p>
+            </div>
+            <div class="contentElementPartage">
+                <a href="sms:?&body=<?= $share_txt ?>" target="_blank" id="" class="btn contentIcone">
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/sms.png" alt="">
+                </a>
+                <p class="titleIcone">Sms</p>
+            </div>
+                <div>
+                    <p class="klikText">Klik om link te kopieren</p>
+                    <div class="input-group input-group-copy formCopyLink">
+                        <input id="test1" type="text" class="linkTextCopy form-control" value="https://g.co/kgs/K1k9oA" readonly>
+                        <span class="input-group-btn">
+                        <button class="btn btn-default btnCopy">Copy</button>
+                        </span>
+                        <span class="linkCopied">link copied</span>
                     </div>
                 </div>
             </div>
-            <!-- fin Modal deel -->
+            <?php
+                if ($user_id==0)
+                {
+            ?>
+                <div id="Intern" class="tabcontent">
+                    <form action="" class="formShare">
+                        <input type="text" placeholder="Gebruikersnaam">
+                        <input type="text" placeholder="Wachtwoord">
+                        <button class="btn btnLoginModife">Log-in</button>
+                    </form>
+                </div>
+            <?php
+                }
+            ?>
+        </div>
+    </div>
+</div>
+<!-- fin Modal deel -->
 
 
 </div>

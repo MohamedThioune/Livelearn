@@ -7,6 +7,11 @@
 $page = 'check_visibility.php';
 require($page);
 
+$user_connected = get_current_user_id();
+
+if($user_connected)
+    header('Location: /dashboard/user/');
+
 if(!isset($visibility_company))
     $visibility_company = "";
 /*
@@ -115,6 +120,9 @@ $type_course = array(
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 <style>
+    body{
+        background: #F5FAFD;
+    }
     .headerdashboard,.navModife {
         background: #deeef3;
         color: #ffffff !important;
@@ -214,7 +222,7 @@ $type_course = array(
         margin-bottom: 20px;
     }
     .contentSix {
-        margin-bottom: 30px;
+        margin-bottom: 68px;
     }
     .titleGroupText {
         font-weight: 500;
@@ -318,8 +326,9 @@ $type_course = array(
         #modalVideo .modal-dialog {
             width: 96% !important;
         }
-        #modalVideo .modal-dialog iframe {
-            width: 100%;
+        #modalVideo .modal-dialog video{
+            width: 100% !important;
+            height: 100% !important;
         }
         .block-logo-parteners2 .logo-element {
             width: 26.5%;
@@ -402,6 +411,10 @@ $type_course = array(
                 left: 114px;
                 top: 6px;
                 z-index: 99;
+            }
+            iframe video{
+                width: 100% !important;
+                height: 100% !important;
             }
 
             @media all and (min-width: 300px) and (max-width: 767px){
@@ -1016,7 +1029,10 @@ $saved = get_user_meta($user_id, 'course');
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <iframe width="560" height="315" src="<?php echo get_stylesheet_directory_uri();?>/video/livelearn-home.mp4" title="livelearn video presentation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <video width="560" height="315" controls>
+                                        <source src="<?php echo get_stylesheet_directory_uri();?>/video/livelearn-home.mp4" title="livelearn video presentation"  allow="playsinline;" type="video/mp4" /><!-- Safari / iOS video    -->
+                                        <source src="<?php echo get_stylesheet_directory_uri();?>/video/livelearn-home.mp4" title="livelearn video presentation"  allow="playsinline;" type="video/ogg" /><!-- Firefox / Opera / Chrome10 -->
+                                    </video>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -1024,20 +1040,24 @@ $saved = get_user_meta($user_id, 'course');
                             </div>
                         </div>
                     </div>
-                    <hr>
+                    <div class="position-relative">
+                        <p class="bekijk-text">Bekijk wat we doen</p>
+                        <hr>
+                    </div>
+
                 </div>
                 <?php if(!$user_id) { ?>
                 <div class="groupeBtn-Jouw-inloggen groupBtnConnecte">
                     <a href="http://wp12.influid.nl/login/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/googleImg.png" alt="" />
-                        Sign up with Google
+                        Gratis inloggen met Google
                     </a>
                     <!-- <button class="btn btn-signup">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/linkedin-icon.png" class="" alt="">
                         sign up with Linkedin
                     </button> -->
                     <a href="/inloggen" class="btn btn-signup-email">
-                        <span style="color:white">Sign up with E-mail</span>
+                        <span style="color:white">Gratis inloggen via mail</span>
                     </a>
                 </div>
                 <?php } ?>
@@ -1656,6 +1676,9 @@ $saved = get_user_meta($user_id, 'course');
                     if(!$bool)
                         continue;
 
+                    //Course type
+                    $course_type = get_field('course_type', $course->ID);
+
                     /*
                     * Categories
                     */
@@ -1714,17 +1737,22 @@ $saved = get_user_meta($user_id, 'course');
                         $price = 'Gratis';
 
                     /*
-                    * Thumbnails
+                    * Image
                     */
                     $thumbnail = get_field('preview', $course->ID)['url'];
                     if(!$thumbnail){
-                    $thumbnail = get_field('url_image_xml', $course->ID);
-                    if(!$thumbnail)
-                        $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                        $thumbnail = get_the_post_thumbnail_url($course->ID);
+                        if(!$thumbnail)
+                            $thumbnail = get_field('url_image_xml', $course->ID);
+                                if(!$thumbnail)
+                                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                     }
 
                     //Company
                     $company = get_field('company',  'user_' . $course->post_author);
+
+                    //Short description
+                    $short_description = get_field('short_description', $course->ID);
 
                     ?>
                     <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiperSlideModife">
@@ -1771,14 +1799,14 @@ $saved = get_user_meta($user_id, 'course');
                                     <div class="imgTitleCours">
                                         <?php
                                             if(!empty($company)){
-                                                $company_title = $company[0]->post_title;
-                                                $company_id = $company[0]->ID;
-                                                $company_logo = get_field('company_logo', $company_id);
+                                            $company_title = $company[0]->post_title;
+                                            $company_id = $company[0]->ID;
+                                            $company_logo = get_field('company_logo', $company_id);
                                         ?>
-                                        <div class="imgCoursProd">
-                                            <img src="<?php echo $company_logo; ?>" width="25" alt="">
-                                        </div>
-                                        <p class="nameCoursProd"><?php echo $company_title; ?></p>
+                                            <div class="imgCoursProd">
+                                                <img src="<?= $company_logo; ?>" width="25" alt="">
+                                            </div>
+                                            <p class="nameCoursProd"><?= $company_title; ?></p>
                                         <?php
                                             }
                                         ?>
@@ -1786,17 +1814,17 @@ $saved = get_user_meta($user_id, 'course');
                                     <div class="group9">
                                         <div class="blockOpein">
                                             <img class="iconAm" src="<?php echo get_stylesheet_directory_uri();?>/img/graduat.png" alt="">
-                                            <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
+                                            <p class="lieuAm"><?= $course_type; ?></p>
                                         </div>
                                         <div class="blockOpein">
                                             <img class="iconAm1" src="<?php echo get_stylesheet_directory_uri();?>/img/map.png" alt="">
-                                            <p class="lieuAm"><?php echo $location ?></p>
+                                            <p class="lieuAm"><?= $location; ?></p>
                                         </div>
                                     </div>
                                 </div>
-                                <p class="werkText"><?php echo $course->post_title;?></p>
+                                <p class="werkText"><?= $course->post_title; ?></p>
                                 <p class="descriptionPlatform">
-                                    <?php echo get_field('short_description', $course->ID) ?>
+                                    <?= $short_description ?>
                                 </p>
                             </div>
                         </div>
@@ -1814,7 +1842,7 @@ $saved = get_user_meta($user_id, 'course');
 
 <div class="container-fluid">
     <div class="doawnloadBlockHome">
-        <h3>Je bent nu ver genoeg naar beneden gescrolled,
+        <h3>Je bent nu ver genoeg naar beneden gescrold,
             je kan de app hier gratis downloaden:</h3>
         <div class="d-flex justify-content-center">
             <a href="" class="btn btnStore">
