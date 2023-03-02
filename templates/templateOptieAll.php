@@ -12,7 +12,7 @@
         foreach($id as $key=>$obj){
             $sql=$wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE id = %d",$obj);
             $artikel = $wpdb->get_results($sql)[0];
-
+ 
             $where = ['id' => $obj];
             if($optie == "✔️"){
                 if($class[$key]=='missing'){

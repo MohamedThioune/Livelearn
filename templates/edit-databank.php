@@ -10,7 +10,7 @@
 
 extract($_GET);
 
-global $wpdb;
+global $wpdb; 
 
 $table = $wpdb->prefix . 'databank';
 
