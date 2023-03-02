@@ -87,8 +87,8 @@
 #voorOpleidersModal{
     width: fit-content;
     min-width: 585px;
-    top: 63px;
-    height: auto;
+    top: 60px;
+    right: 210px;
 }
 #voorOpleidersModal .blockdropdownnHeader {
     justify-content: center;
@@ -111,9 +111,10 @@
 #OpleidingenModal {
     width: 70%;
     margin: 0 auto;
-    top: 63px;
     z-index: 99999;
     height: auto;
+    left: 415px;
+    top: 60px;
 }
 #OpleidingenModal .blockdropdownnHeader .secondUlModal li {
     width: 27%;

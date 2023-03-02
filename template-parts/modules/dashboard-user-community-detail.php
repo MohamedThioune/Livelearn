@@ -22,6 +22,10 @@
     //current user
     $user_id = get_current_user_id();
 
+    //current user image
+    $user_image = get_field('profile_img',  'user_' . $user_id);
+    $user_image = $user_image ?: get_stylesheet_directory_uri() . '/img/user.png';
+
     $no_content_ =  '
     <center>
         <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" width="140" height="150" alt="Skill no-content" >
@@ -118,7 +122,7 @@ if($community){
                                 <div class="group-course-activity first-section-dashboard">
                                     <div class="question-block" data-toggle="modal" data-target="#modalQuestion" type="button">
                                         <div class="imgUser">
-                                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/autor1.png" alt="">
+                                            <img class="" src="<?= $user_image; ?>" alt="">
                                         </div>
                                         <p class="text-question">Do you have a question ?</p>
                                     </div>
@@ -370,9 +374,9 @@ if($community){
                                         <!-- <a href="#" class="btn btn-more-events">More Events</a> -->
                                     </div>
                                     <div class="advertissement-block">
-                                        <p class="name-ad">Learning Plateform</p>
+                                        <p class="name-ad">Learning Platform</p>
                                         <p class="description-ad">Whether you are a beginner or an experienced student, we have courses tailored to your level and interests !</p>
-                                        <a href="" class="btn btn-discover">Discover</a>
+                                        <a href="/dashboard/user/" class="btn btn-discover">Discover</a>
                                     </div>
                                     <div class="user-community-block">
                                         <?php
@@ -441,7 +445,7 @@ if($community){
                                 ?>
                                 <div class="card-members">
                                     <div class="head-card-members">
-                                        <img class="" src="<?= $community_image ?>" alt="">
+                                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/bgcomminity.png" alt="">                                    
                                     </div>
                                     <div class="img-user-block">
                                         <img class="" src="<?= $image_author ?>" alt="">

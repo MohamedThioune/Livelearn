@@ -8041,6 +8041,10 @@ tbody {
         .cardKraam2 {
             height: fit-content !important;
         }
+        .content-inloggen .btnPlayGoogle {
+            width: 178px;
+            margin-top: -9px !important;
+        }
 
         @media all and (min-width: 300px) and (max-width: 767px){
             .second-block-binnen img {
@@ -10606,11 +10610,34 @@ select {
 .btnMaakVerkopen {
     padding: 8px 25px 9px;
 }
-
 .krijgText {
-    font-size: 17px;
+    font-size: 20px;
+    line-height: 32px;
+    margin-bottom: 45px;
 }
+.img-zzpers{
+    width: 80%;
+    margin-top: -50px;
+}
+.btn-al-vanaf{
+    background: #00A89D;
+    color: #FFFFFF !important;
+    font-weight: 500;
+    padding: 9px 30px !important;
+    border-radius: 20px;
+    margin-right: 15px;
+    min-width: 205px;
 
+}
+.btn-Functionaliteiten{
+    background: #023356;
+    color: #FFFFFF !important;
+    padding: 9px 30px !important;
+    border-radius: 20px;
+    font-weight: 500;
+    min-width: 205px;
+
+}
 .btn-outline-realblue:hover {
     color: #FFFFFF !important;
 }
@@ -11536,9 +11563,10 @@ select {
 
 .zzpersTitle {
     font-size: 33px;
-    line-height: 42px;
+    margin-bottom: 23px;
     color: #023356;
-    margin-top: 30px;
+    font-weight: 600;
+    margin-top: 0px;
 }
 
 .blocklogoZppers {
@@ -13047,7 +13075,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     background-color: #b4b4b4;
     left: 114px;
     top: 6px;
-    z-index: 99;
+    z-index: 1;
     position: absolute;
     display: block;
 }
@@ -13117,9 +13145,9 @@ ul .selectAll .styled-checkbox:checked + label:after {
     margin: 35px auto;
 }
 .onze-expert-block{
-    margin-top: 70px;
+    margin-top: 85px;
     padding: 35px 0 40px;
-    margin-bottom: 40px;
+    margin-bottom: 65px;
 }
 .onze-expert-block .btn-collection {
     font-size: 26px;
@@ -13157,7 +13185,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    margin: 133px 0 90px;
+    margin: 175px 0 85px;
 }
 .first-block-binnen h3{
     color: #023356;
@@ -13240,14 +13268,14 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .block-logo-parteners2{
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 50px;
+    margin-bottom: 80px;
 }
 .doawnloadBlockHome{
     background: #E0EFF4;
     text-align: center;
     padding: 40px 30px;
     position: relative;
-    margin: 100px 0;
+    margin: 135px 0;
     border-right: 10px;
 }
 .doawnloadBlockHome h3{
@@ -13472,7 +13500,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .block-contact-calendy{
     background: #dfeff4;
     padding: 48px 0 70px;
-    margin: 95px 0;
+    margin: 120px 0;
 }
 .block-contact-calendy #firstImg-direct-contact{
     width: 120px;
@@ -13541,6 +13569,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     font-size: 34px;
     line-height: 48px;
 }
+
 .content-voor-teacher-2 .content-detail-voor-organisation p {
     color: #ffffff;
 }
@@ -15459,8 +15488,218 @@ background: #FFFFFF !important;
 .new-assessment-form .form-group .group-input-assement input {
     margin-right: 15px;
 }
-#voorOrganisati:hover + #voorOrganisatiBlock{
+.block-zzpers .zzpersSection {
+    background: linear-gradient(360deg, hsla(0, 0%, 100%, 1) 2%, hsla(198, 50%, 92%, 1) 100%);
+    padding-top: 50px;
+}
+.block-rating-logo hr {
+    margin-top: 1rem;
+    margin-bottom: 15px;
+    border: 0;
+    border-top: 1px solid #7e7e7e;
+    background: white;
+    width: 48%;
+}
+.block-rating-logo .block-start{
+    margin: 0 20px;
+}
+.block-rating-logo .block-hr-strat {
+    margin: 85px 0 50px;
+}
+.block-rating-logo h2{
+    text-align: center;
+    margin-bottom: 35px;
+    font-size: 25px;
+}
+.block-cardCourse-zzpers{
+    display: flex;
+    flex-wrap: wrap;
+}
+.block-cardCourse-zzpers .cardKraam2 {
+    width: 31%;
+    margin-bottom: 25px;
+}
+.cardCoursZzpers {
+    margin-bottom: 74px;
+}
+.cardCoursZzpers h3{
+    color: #04414d;
+    font-size: 25px;
+    margin-bottom: 33px;
+    font-weight: 500;
+}
+.block-rating-logo{
+    margin-bottom: 75px;
+}
+.bleu-block-contact-calendy {
+    background: #043356;
+    padding: 60px 0 70px;
+    margin-bottom: 0;
+}
+.bleu-block-contact-calendy .title-Direct-een {
+    color: #FFFFFF;
+    width: 492px;
+    line-height: 35px;
+}
+.bleu-block-contact-calendy .title-Direct-een span{
+    position: relative;
+    top: 15px;
+}
+.bleu-block-contact-calendy .btn-kies {
+    background: #E0EFF4;
+    padding: 8px 35px;
+    color: #053356;
+    font-size: 15px;
+    font-weight: bold;
+    min-width: 200px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+.bleu-block-contact-calendy .btn-kies:hover {
+    color: #053356 !important;
+}
+.functionaliteiten h2{
+    text-align: center;
+    color: #023356;
+    font-weight: bold;
+    font-size: 30px;
+}
+.functionaliteiten .img-functionaliteiten{
+    width: 75px;
+    height: 75px;
+    margin: 0px auto 22px;
+}
+.functionaliteiten .img-functionaliteiten .sub-title{
+    color: #023356;
+}
+.card-functionaliteiten{
+    background: #FFFFFF;
+    width: 32%;
+    margin-right: 15px;
+    padding: 16px 25px 33px;
+    border-radius: 9px;
+    margin-bottom: 15px;
+}
+.card-functionaliteiten img{
+    width: 70px;
+    height: 70px;
+    margin-left: auto;
+    margin-bottom: 15px;
+}
+.card-functionaliteiten .title{
+    color: #023356;
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+.card-functionaliteiten .description{
+    color: #023356;
+    font-size: 15px;
+    margin-bottom: 0;
+}
+.functionaliteiten .sub-title {
+    text-align: center;
+    color: #053356;
+    margin-bottom: 50px;
+}
+.functionaliteiten {
+    background: linear-gradient(180deg, hsla(198, 48%, 92%, 1) 62%, hsla(205, 95%, 17%, 1) 100%);
+    padding: 70px 0px;
+}
+.btn-Bekijk-functionaliteiten {
+    margin-top: 60px;
+}
+.btn-Bekijk-functionaliteiten a{
+    color: #023356 !important;
+    background: #E0EFF4;
+    padding: 9px 30px !important;
+    border-radius: 20px;
+    font-weight: 500;
+    min-width: 205px;
+}
+.btn-Bekijk-functionaliteiten a:hover{
+    color: #023356 !important;
+}
+.ur-frontend-form .ur-form-row  {
     display: block !important;
+}
+.ur-frontend-form .ur-form-row .ur-form-grid {
+    flex: 100% !important;
+    padding: 0 10px;
+    width: 100% !important;
+}
+.ur-frontend-form .ur-form-row input {
+    color: #023356;
+    font-size: 14px;
+    padding: 10px 21px !important;
+    margin-bottom: 15px !important;
+    background: #FFFFFF !important;
+    border-radius: 8px !important;
+    border: unset !important;
+    width: 100% !important;
+}
+.btn-remove-assessments{
+    color: red;
+    opacity: 0.7;
+    position: relative;
+    text-align: right;
+    float: right;
+}
+.btn-remove-assessments:hover{
+    opacity: 1;
+    color: red;
+    font-weight: normal;
+}
+.btn-remove-assessments i{
+    color: red;
+    font-size: 22px;
+}
+#dashboard-min {
+
+    width: 19px !important;
+    margin-top: 1px;
+}
+#community-icon{
+    width: 26px !important;
+    margin-left: -3px;
+}
+.tab-block-functiegerichte {
+    margin-top: 30px;
+}
+.tab-block-functiegerichte .tab-content{
+    display: block !important;
+}
+.tab-block-functiegerichte .tab-content .tab-pane{
+    padding: 15px 0 !important;
+}
+.tab-block-functiegerichte .nav-item.show .nav-link, .tab-block-functiegerichte .nav-link.active {
+    color: #495057;
+    background-color: unset;
+    border-color: #00a89d;
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 2px solid #00a89d;
+    font-weight: 600;
+}
+.tab-block-functiegerichte .nav-tabs .nav-item a {
+    padding: 0px 0 8px !important;
+    color: #033356 !important;
+}
+.tab-block-functiegerichte .nav-tabs {
+    width: 38%;
+    margin: 0 auto;
+}
+.tab-block-functiegerichte .nav-link:hover {
+    border-color: transparent !important;
+}
+.bekijk-text{
+    position: absolute;
+    color: #707070;
+    margin-bottom: 0;
+    left: 0;
+    bottom: 23px;
+    font-style: italic;
 }
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -18717,6 +18956,97 @@ background: #FFFFFF !important;
     .cardKraam2 {
         height: fit-content !important;
     }
+    .krijgText {
+        font-size: 15px;
+        line-height: 30px;
+        margin-bottom: 45px;
+    }
+    .btn-al-vanaf {
+        padding: 9px 25px !important;
+        min-width: 134px;
+        font-size: 14px;
+    }
+    .btn-Functionaliteiten {
+        padding: 9px 20px !important;
+        min-width: 165px;
+        font-size: 14px;
+    }
+    .img-zzpers {
+        width: 100%;
+        margin-top: -10px;
+    }
+    .block-rating-logo .block-hr-strat {
+        margin: 35px 0 40px;
+    }
+    .block-rating-logo h2 {
+        margin-bottom: 30px;
+        font-size: 23px;
+    }
+    .block-logo-parteners2 .logo-element {
+        width: 25%;
+    }
+    .block-logo-parteners2 {
+        margin-bottom: 10px;
+    }
+    .block-rating-logo {
+        margin-bottom: 50px;
+    }
+    .cardCoursZzpers {
+        margin-bottom: 20px;
+        padding: 0px 15px;
+    }
+    .block-cardCourse-zzpers .cardKraam2 {
+        width: 100%;
+        margin-bottom: 25px;
+        margin-right: 0;
+    }
+
+    .talent-binnen-block {
+        margin: 100px 15px 90px;
+    }
+    .first-block-binnen {
+        width: 100%;
+        padding-left: 0;
+    }
+    .second-block-binnen {
+        width: 100%;
+        max-height: 240px;
+        margin-top: 50px;
+        background: #dfeff4;
+        border-radius: 20px;
+    }
+    .block-zzpers .title-Direct-een {
+        width: 100%;
+        line-height: 35px;
+        padding: 11px 11px;
+    }
+    .functionaliteiten h2 {
+        font-size: 27px;
+    }
+    .block-functionaliteiten {
+        padding: 0px 15px;
+    }
+    .card-functionaliteiten {
+        width: 100%;
+        margin-right: 0px;
+    }
+    .card-functionaliteiten img {
+        width: 55px;
+        height: 55px;
+    }
+    .tab-block-functiegerichte .nav-tabs {
+        width: 100%;
+        margin: 0 auto;
+        flex-wrap: nowrap;
+        overflow: scroll;
+        white-space: nowrap;
+    }
+    .content-inloggen {
+        padding-bottom: 0 !important;
+    }
+
+
+
 
 
 }
@@ -18775,6 +19105,7 @@ background: #FFFFFF !important;
         margin-bottom: 20px;
         margin-top: 30px;
     }
+
     .blockAuthorMobile .imgAuthorBlock {
         width: 40px;
         height: 40px;
@@ -18944,6 +19275,15 @@ background: #FFFFFF !important;
         display: block !important;
         width: -webkit-fill-available;
         padding-top: 11px !important;
+    }
+    .block-cardCourse-zzpers .cardKraam2 {
+        width: 48%;
+        margin-bottom: 25px;
+        margin-right: 10px;
+    }
+    .card-functionaliteiten {
+        background: #FFFFFF;
+        width: 46%;
     }
     .formHeaderUser {
         display: none;

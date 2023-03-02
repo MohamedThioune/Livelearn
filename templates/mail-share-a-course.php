@@ -1,13 +1,14 @@
+
 <?php
 
-$mail_register_body = 
-
-'<!doctype html>
+$mail_shared_course_body = 
+'
+<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
   xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
-  <title>[[data:firstname:""]]</title><!--[if !mso]><!-->
+  <title><firs-name>, je account op LiveLearn is succesvol aangemaakt</firs-name></title><!--[if !mso]><!-->
   <meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -94,8 +95,8 @@ $mail_register_body =
   </style>
 </head>
 
-<body style="word-spacing:normal;background-color:#c3e0f5;">
-  <div style="background-color:#c3e0f5;">
+<body style="word-spacing:normal;background-color:#e0eff4;">
+  <div style="background-color:#e0eff4;">
     <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
     <div style="margin:0px auto;max-width:600px;">
       <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
@@ -114,7 +115,9 @@ $mail_register_body =
                         style="font-size:0px;padding:10px 25px;padding-top:0;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
                         <div
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
-                          <p style="margin: 10px 0;"></p>
+                          <p class="text-build-content"
+                            style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
+                            data-testid="Y0h44Pmw76d">Je account is succesvol aangemaakt</p>
                         </div>
                       </td>
                     </tr>
@@ -213,13 +216,12 @@ $mail_register_body =
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <h1 class="text-build-content"
                             style="text-align:center;; margin-top: 10px; font-weight: normal;"
-                            data-testid="RJMLrMvA0Rh"><span
-                              style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b>Welcome
-                                !</b></span></h1>
+                            data-testid="RJMLrMvA0Rh"><span style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b>Iemand heeft een cursus met je gedeeld !</b></span>
+                          </h1>
                           <p class="text-build-content" style="text-align: center; margin: 10px 0; margin-bottom: 10px;"
                             data-testid="RJMLrMvA0Rh"><span
-                              style="color:#023356;font-family:Arial;font-size:14px;line-height:35px;">ij LiveLearn, je
-                              account is ready.</span></p>
+                              style="color:#023356;font-family:Arial;font-size:14px;line-height:35px;">De eerste stap in
+                              een leven lang ontwikkelen.</span></p>
                         </div>
                       </td>
                     </tr>
@@ -231,29 +233,27 @@ $mail_register_body =
                           <p class="text-build-content" data-testid="S_MPaSnC0uI"
                             style="margin: 10px 0; margin-top: 10px;"><span
                               style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi <b>' . $first_name  . '
-                              </b></span></p>
+                              </b>,</span></p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;">&nbsp;</p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"></span></p>
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Je account is
+                              succesvol aangemaakt en je kan nu onbeperkt gebruik maken van onze leermodules. Inloggen
+                              kan via </span><a class="link-build-content"
+                              style="color:inherit;; text-decoration: none;" target="_blank"
+                              href="https://livelearn.nl/inloggen/"><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><u>deze
+                                  link</u></span></a><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">, waarna je
+                              eenvoudig onderwerpen en experts toe voegt aan je persoonlijke leeromgeving.</span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Je kan nu
-                              onbeperkt gebruik maken van LiveLearn om je te blijven ontwikkelen. Voeg eenvoudig
-                              onderwerpen en experts toe aan je persoonlijke omgeving om de volledige mogelijkheden van
-                              ons platform te ervaren.</span></p>
-
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> 
-                              Je LOGIN-ID is <b style="color:blue">' . $email . '</b><br>
-                              U hebt een cursus toegewezen gekregen en zult die zien zodra de beheerders ze hebben aanvaard.<br>
-                              </span>
-                          </p>
-
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"></span></p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Alle
-                              functionaliteiten ontdekken? Lees het volgende artikel.</span></p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"></span></p>
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Ben je onderdeel
+                              van een organisatie óf wil je je jouw bedrijf op LiveLearn hebben? Neem dan </span><a
+                              class="link-build-content" style="color:inherit;; text-decoration: none;"
+                              href="mailto:contact@livelearn.nl"><span
+                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><u>contact</u></span></a><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> met ons op en
+                              binnen 24 uur staat je organisatie live.</span></p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;">&nbsp;</p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
                               style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Succes
                               namens,</span></p>
@@ -274,12 +274,10 @@ $mail_register_body =
                             <tr>
                               <td align="center" bgcolor="#023356" role="presentation"
                                 style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#023356;"
-                                valign="middle">
-                                <a href="https://livelearn.nl/inloggen/"
-                                  style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;">
-                                  <span
-                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">
-                                    Connect to your account</span></p>
+                                valign="middle"><a href="https://livelearn.nl/inloggen/"
+                                  style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
+                                  target="_blank"><span
+                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Inloggen</span></a>
                               </td>
                             </tr>
                           </tbody>
@@ -488,16 +486,18 @@ $mail_register_body =
                         style="font-size:0px;padding:10px 25px;padding-top:0px;padding-right:25px;padding-bottom:0px;padding-left:25px;word-break:break-word;">
                         <div
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
-                          <p style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"><span
-                              style="font-size:16px;text-align:center;color:#55575d;font-family:Arial;line-height:22px;">This
-                              message was sent to [[EMAIL_TO]] as part of our welcome series. You received it because
-                              you subscribed to one of our mailing lists.<br />
-                              To stop receiving messages from this series, <a href="[[WORKFLOW_EXIT_LINK_EN]]"
-                                style="color:inherit;text-decoration:none;" target="_blank">please unsubscribe
-                                here</a>.<br />
-                              If you dont want to receive any of the communications sent to this list, <a
-                                href="[[WORKFLOW_EXIT_UNSUB_LINK_EN]]" style="color:inherit;text-decoration:none;"
-                                target="_blank">please unsubscribe here</a>.</span></p>
+                          <p class="text-build-content"
+                            style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
+                            data-testid="p1wGkfjeZKT7"><span
+                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">This message was
+                              sent to ' . $email . ' as part of our welcome series.</span><br><span
+                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">To stop receiving
+                              messages from this series, </span><a class="link-build-content"
+                              style="color:inherit;; text-decoration: none;" target="_blank"
+                              href="[[WORKFLOW_EXIT_LINK_EN]]"><span
+                                style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">please
+                                unsubscribe here</span></a><span
+                              style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">.</span></p>
                         </div>
                       </td>
                     </tr>

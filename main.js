@@ -142,16 +142,6 @@ jQuery(function($) {
     });
 
 
-    // hover
-    $("#voorOrganisati").hover(function() {
-        var isHovered = $(this).is(":hover");
-        if (isHovered) {
-            alert('ok');
-            $("#voorOrganisatiBlock").show();
-        } else {
-            $("#voorOrganisatiBlock").hide();
-        }
-    });
 
 
 
@@ -531,7 +521,7 @@ jQuery(function($) {
 
     // Pour first modal after login
     $(".btnBaangerichte").click(function() {
-        
+
         $(".subtopicBaangerichte").show();
         let cl = $(this).attr('class').split(' ')[3];
         hidden = ($(".cb_topics_bangricht_" + cl).attr('hidden'));

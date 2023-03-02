@@ -576,7 +576,7 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
             url:"/topic-ajax",
             method:"post",
             data:{
-                course_id:course_id,
+                course_id: "<?php echo $_GET['id']?>",
                 bangers:bangers,
                 functs:functs,
                 skills:skills,

@@ -147,7 +147,6 @@
                     }
                     
                 array_push($agenda, $course);
-
             }
 
             //Number of likes

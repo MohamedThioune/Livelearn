@@ -86,7 +86,7 @@
                         <?php if(isset($_GET['success'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>" ?>
                         <?php if(isset($_GET['danger'])) echo "<span class='alert alert-danger'>" . $_GET['message'] . "</span><br><br>" ?>
                     </center>
-                    <?php echo (do_shortcode('[user_registration_form id="59"]')); ?>
+                    <?php echo (do_shortcode('[user_registration_form id="8477"]')); ?>
                     <!-- <form action="/static-education-individual" method="POST" class="formBoekGratis">
                         <input type="text" name="user_login"  placeholder="Gebruikersnaam*" required>
                         <input type="text" name="first_name"  placeholder="Voornaam*" required>

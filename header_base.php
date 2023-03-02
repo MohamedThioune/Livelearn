@@ -56,7 +56,7 @@ $url = home_url( $wp->request );
         #main {
             padding-top: 40px;
         }
-        .tabletsearch{display: none !important;}   
+        .tabletsearch{display: none !important;}
     }
     @media (min-width: 300px) and (max-width: 767px){
         .navMobile-custom {
@@ -91,11 +91,12 @@ $url = home_url( $wp->request );
         <!-- get bootstrap icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
-        <!-- meta property -->
+        <!-- meta property 
         <meta property="og:title" content="Livelearn">
         <meta property="og:description" content="Ontdek, ontwikkel en maak carriere">
         <meta property="og:image" content="<?php echo get_stylesheet_directory_uri() . '/img/logo_livelearn.png' ?>">
         <meta property="og:url" content="<?= $url ?>">
+        -->
 
         <title><?php bloginfo('name'); ?></title>
         <?php wp_head(); ?>
@@ -183,14 +184,14 @@ $url = home_url( $wp->request );
                         <div class="modal-body  px-md-4 px-0">
                             <div class="mb-4">
                                 <div class="text-center">
-                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
-                                </div>  
+                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                                </div>
                                 <h3 class="text-center my-2">Sign Up</h3>
                                 <div class="text-center">
                                     <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
                                                             data-toggle="modal" data-target="#SignInWithEmail">&nbsp; Sign in</a></p>
                                 </div>
-                            </div>  
+                            </div>
 
 
                             <?php
@@ -225,7 +226,7 @@ $url = home_url( $wp->request );
                         <div class="modal-body  px-md-5 px-4">
                             <div class="mb-4">
                                 <div class="text-center">
-                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                                    <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
                                 </div>
                                 <h3 class="text-center my-2">Sign In</h3>
                                 <div class="text-center">
@@ -289,15 +290,15 @@ $url = home_url( $wp->request );
                     </div>
 
                     <!-- modal dropdown Voor organisaties -->
-                    <div class="activeModalHeader" id="voorOrganisatiBlock">
+                    <div class="activeModalHeader">
                         <div class="modal  dropdown-menu-custom" id="voorOrganisatiModal" tabindex="-1" role="dialog" aria-labelledby="voorOrganisatiLabel" aria-hidden="true">
                             <div class="souselementHeader">
                                 <div class="blockdropdownnHeader">
                                     <ul>
                                         <li>
                                             <a href="zzpers">
-                                                <div class="blockImg">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
+                                                <div class="blockImg" style="background: #033356;  padding: 6px;">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/zzper-icone.png" alt="">
                                                 </div>
                                                 <div>
                                                     <p class="titleSousElementHeader"><b>ZZP'ers</b></p>
@@ -307,8 +308,8 @@ $url = home_url( $wp->request );
                                         </li>
                                         <li>
                                             <a href="mkb">
-                                                <div class="blockImg">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-80.png" alt="">
+                                                <div class="blockImg" style="background: #033356;  padding: 6px;">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/mkb-icon.png" alt="">
                                                 </div>
                                                 <div>
                                                     <p class="titleSousElementHeader"><b>MKB</b></p>
@@ -318,8 +319,8 @@ $url = home_url( $wp->request );
                                         </li>
                                         <li>
                                             <a href="/grootbedrijf">
-                                                <div class="blockImg">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-81.png" alt="">
+                                                <div class="blockImg" style="background: #033356;  padding: 6px;">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Grootbedrijf-icon.png" alt="">
                                                 </div>
                                                 <div>
                                                     <p class="titleSousElementHeader"><b>Grootbedrijf</b></p>
@@ -329,8 +330,8 @@ $url = home_url( $wp->request );
                                         </li>
                                         <li>
                                             <a href="pricing">
-                                                <div class="blockImg">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
+                                                <div class="blockImg" style="background: #033356;  padding: 6px;">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/pricing-icon.png" alt="">
                                                 </div>
                                                 <div>
                                                     <p class="titleSousElementHeader"><b>Pricing</b></p>
@@ -343,7 +344,7 @@ $url = home_url( $wp->request );
                                         <?php
                                         foreach($bangerichts as $bangericht){
                                             $image_category = get_field('image', 'category_'. $bangericht->cat_ID);
-                                            $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/Image-79.png';            
+                                            $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/Image-79.png';
                                         ?>
                                         <li>
                                             <a href="sub-topic?subtopic=<?php echo $bangericht->cat_ID ?>">
@@ -383,7 +384,7 @@ $url = home_url( $wp->request );
                                         <a href="/creeren">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Creeër.png" alt="">
-                                            </div>  
+                                            </div>
                                             <div>
                                                 <p class="titleSousElementHeader"><b>Creëer</b></p>
                                                 <p class="subtitleSousElementHeader">nieuwe kennisproducten</p>
@@ -403,7 +404,7 @@ $url = home_url( $wp->request );
                                     </li>
                                     <li>
                                         <a href="/pricing">
-                                            <div class="blockImg">
+                                            <div class="blockImg" style="background: #033356;  padding: 6px;">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
                                             </div>
                                             <div>
@@ -466,27 +467,7 @@ $url = home_url( $wp->request );
                             <div class="blockdropdownnHeader">
                                 <ul>
                                     <li>
-                                        <a href="#">
-                                            <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-79.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="titleSousElementHeader"><b>Skills paspoort</b></p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-80.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="titleSousElementHeader"><b>Groeipaden</b></p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
+                                        <a href="/community-overview">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-81.png" alt="">
                                             </div>
@@ -495,16 +476,7 @@ $url = home_url( $wp->request );
                                             </div>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="blockImg">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Image-85.png" alt="">
-                                            </div>
-                                            <div>
-                                                <p class="titleSousElementHeader"><b>Persoonlijke begeleiding</b></p>
-                                            </div>
-                                        </a>
-                                    </li>
+
                                 </ul>
                                 <ul class="secondUlModal ">
                                     <li>
