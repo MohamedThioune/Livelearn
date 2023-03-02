@@ -48,38 +48,32 @@ if(!empty($topics_internal))
       'hide_empty' => 0, // change to 1 to hide categores not having a single post
     ));
 
-    foreach($tags as $tag){
+    foreach($tags as $key => $tag){
       if(in_array($tag->cat_ID, $topics_internal))
-        $topic_content = '<input type="hidden" name="meta_key" value="topic_affiliate" id="">
-                          <a href="#" type="button" form="by_one_form" class="btn btnFollowSubTopic">Internal</a>';
+        $topic_content = '<a href="#" type="button" class="btn btnFollowExpert">Internal</a>';
       else if (in_array($tag->cat_ID, $topics_external))
-        $topic_content = '<input type="hidden" name="meta_key" value="topic" id="">
-                          <button type="submit" form="by_one_form" name="delete" style="background:red;" class="btn btnFollowSubTopic">Unfollow</button>';
+        $topic_content = '<input type="hidden" id="meta_key_tag' . $key . '" value="topic">
+                          <button type="button" style="background:red;" class="btn btnPushTag btnFollowExpert"><span id="autocomplete-push-tag' . $key . '">Unfollow</span></button>';
       else
-        $topic_content = '<input type="hidden" name="meta_key" value="topic" id="">
-                          <button type="submit" form="by_one_form" name="interest_push" class="btn btnFollowSubTopic">Follow</button>';   
+        $topic_content = '<input type="hidden" id="meta_key_tag' . $key . '" value="topic">
+                          <button type="button" class="btn btnPushTag btnFollowExpert" value="' . $key . '"><span id="autocomplete-push-tag' . $key . '">Follow</span></button>';   
      
       $image_category = get_field('image', 'category_'. $tag->cat_ID);
       $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/placeholder.png';
       
       $row .= ' <div class="subtTopics-element">
                     <div class="d-flex align-items-center">
-                        <div class="checkbox rows">
-                            <input class="styled-checkbox" name="data[]" form="multiple_form_tags" id="'. $tag->cat_ID .'" type="checkbox" value="'. $tag->cat_ID .'">
-                            <label for="'. $tag->cat_ID .'"></label>
-                        </div>
                         <div class="img">
                             <img src="' . $image_category . '" alt="">
                         </div>
                         <p class="subTitleText">'. $tag->cat_name .'</p>
                     </div>
                     <div class="d-flex align-items-center">
-                        <a href="/category-overview?category=' . $tag->cat_ID . '" target="_blank">See</a>
-                        <form id="by_one_form" action="/dashboard/user/" method="POST">
-                          <input type="hidden" name="meta_value" value="' . $tag->cat_ID . '" id="">
-                          <input type="hidden" name="user_id" value="' . $id . '" id="">
+                        <a href="/category-overview?category=' . $tag->cat_ID . '" target="_blank">See</a> 
+                          <input type="hidden" id="meta_value_tag' . $key . '" value="' . $tag->cat_ID . '">
+                          <input type="hidden" id="user_id_tag' . $key . '" value="' . $id . '">
                             ' . $topic_content . '
-                        </form>
+                        
                     </div>
                 </div>';
       $bool_tag = true;
@@ -107,4 +101,28 @@ if(!empty($topics_internal))
         });
     });
     //# sourceURL=pen.js
+</script>
+
+<script>
+    $('.btnPushTag').click((e)=>{
+        var key = e.currentTarget.value;
+        var user_id = $("#user_id_tag" + key).val();
+        var meta_key = $("#meta_key_tag" + key).val();
+        var meta_value = $("#meta_value_tag" + key).val();
+        $.ajax({
+                url:"/interest-push",
+                method:"POST",
+                data:{
+                    'user_id': user_id,
+                    'meta_key': meta_key,
+                    'meta_value': meta_value
+                },
+                dataType:"text",
+                success: function(data){
+                    console.log(data);
+                    $('#autocomplete-push-tag' + key).html(data);
+
+                }
+        });
+    });
 </script>

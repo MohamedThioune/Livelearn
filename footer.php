@@ -222,6 +222,7 @@
     });
     //# sourceURL=pen.j
 </script>
+
 <script>
     $('.bntNotification').click((e)=>{
         $.ajax({
@@ -232,6 +233,31 @@
                 success: function(data){
                     // Get the modal
                     console.log(data);
+                }
+        });
+    });
+</script>
+
+<script>
+    $('.btnPushExpert').click((e)=>{
+        var key = e.currentTarget.value;
+        var user_id = $("#user_id_expert" + key).val();
+        var meta_key = $("#meta_key_expert" + key).val();
+        var meta_value = $("#meta_value_expert" + key).val();
+
+        $.ajax({
+                url:"/interest-push",
+                method:"POST",
+                data:{
+                    'user_id': user_id,
+                    'meta_key': meta_key,
+                    'meta_value': meta_value
+                },
+                dataType:"text",
+                success: function(data){
+                    console.log(data);
+                    $('#autocomplete-push-expert' + key).html(data);
+
                 }
         });
     });
@@ -296,6 +322,7 @@
         });
     });
 </script>-->
+
 <script>
     jQuery(function($){
         $('#header-search').keyup(function(){
