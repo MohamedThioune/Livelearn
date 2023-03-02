@@ -178,7 +178,6 @@ function RandomString(){
       'posts_per_page' => -1,
   );
   $companies = get_posts($args);
-  $i=0;
   foreach($websites as $key => $url){
     $company_name = $api_company_name[$key];
     $author_id = null;
@@ -229,8 +228,6 @@ function RandomString(){
     $artikels= json_decode(file_get_contents($span),true);
     $onderwerpen='';
     foreach($artikels as $article){
-      echo($i);
-      $i++;
       if ($article!=null) {
         $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where titel=%s and type=%s",array($article['title']['rendered'],'Artikel'));
         $result_title = $wpdb->get_results($sql_title);
