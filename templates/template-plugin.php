@@ -308,7 +308,7 @@ function RandomString(){
         }
         // var_dump($data);
         $wpdb->insert($table,$data);
-        $id_post = $wpdb->insert_id;
+        $id_post = $wpdb->insert_id; 
       }
     }
   }
