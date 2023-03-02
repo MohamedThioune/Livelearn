@@ -90,20 +90,6 @@ class Tags
   }
 }
 
-//  function visibility($course, $visibility_company){
-//    $bool = true;
-
-//    $invisibility = get_field('visibility', $course->ID);
-
-//    $company = get_field('company',  'user_' . $course->post_author);
-//    if(!empty($company))
-//        $company_title = $company[0]->post_title;
-
-//    if($invisibility && $visibility_company != $company_title )
-//        $bool = false;
-
-//    return $bool;
-//  }
 
 /** **************** Api Custom Endpoints **************** */
 
@@ -319,7 +305,8 @@ function get_expert_courses ($data) {
     return $expert_courses;
 }
 
-function get_total_followers ($data) {
+function get_total_followers ($data) 
+{
   $expert = $data['id'] != null  ?  get_user_by('ID', $data['id']) : false;
   if (!$expert)
     return ['error' => 'You have to fill the id of the expert'];
@@ -331,17 +318,10 @@ function get_total_followers ($data) {
         $count++;
   }
   return ['followers_count' => $count]; 
-  // $saved_course = get_user_meta('saved',9);
-  // return get_posts(
-  //     $args = array(
-  //       'post_type' => 'course',
-  //       'post__in' => [2070],
-  //   ));
 }
 
 function get_total_followed_experts()
 {
-  
   $current_user = $GLOBALS['user_id'];
   $count = 0;
   $experts_followed = get_user_meta($current_user, 'expert') != false ? get_user_meta($current_user, 'expert') : [];
@@ -1105,15 +1085,18 @@ function filter_course(WP_REST_Request $request)
   }
   $filtered_courses = array();
   foreach ($global_courses as $key => $course) {
+    
     /** Filter by tags */
-    if ($course->tags != [])
+    if ($course->tags != [] && $tags_parameter != [])
+    { 
       foreach ($course->tags as $key => $tag) {
         if (in_array($tag->id, $tags_parameter))
           if (!in_array($course, $filtered_courses)) {
             array_push($filtered_courses, $course);
-
           }
       }
+      
+    }
     /** Filter by author */
     if ($authors != [])
       foreach ($authors as $key => $autor) {
@@ -1155,11 +1138,11 @@ function filter_course(WP_REST_Request $request)
         if (!in_array($course, $filtered_courses)) {
           array_push($filtered_courses, $course);
         }
+    }
     return $filtered_courses;
-
   }
 
-  function filter_saved_courses()
+  function filter_saved_courses($request)
   {
     $current_user = $GLOBALS['user_id'];
     $course_saved = get_user_meta($current_user, 'course') ?? false;
@@ -1224,15 +1207,18 @@ function filter_course(WP_REST_Request $request)
       }
       $filtered_courses = array();
       foreach ($global_courses as $key => $course) {
+    
         /** Filter by tags */
-        if ($course->tags != [])
+        if ($course->tags != [] && $tags_parameter != [])
+        { 
           foreach ($course->tags as $key => $tag) {
             if (in_array($tag->id, $tags_parameter))
               if (!in_array($course, $filtered_courses)) {
                 array_push($filtered_courses, $course);
-
               }
           }
+          
+        }
         /** Filter by author */
         if ($authors != [])
           foreach ($authors as $key => $autor) {
@@ -1250,9 +1236,9 @@ function filter_course(WP_REST_Request $request)
                   array_push($filtered_courses, $course);
                 }
             }
-
+    
           }
-
+    
         /** Filter by minimum price */
         if ($min_price != 0)
           if ($course->price >= $min_price)
@@ -1264,29 +1250,28 @@ function filter_course(WP_REST_Request $request)
           if ($max_price >= $course->price)
             if (!in_array($course, $filtered_courses)) {
               array_push($filtered_courses, $course);
-
+    
             }
-
-
+    
+    
         //     /** Filter by company */
         if ($companies != [])
           if (in_array($course->author->company->ID, $companies))
             if (!in_array($course, $filtered_courses)) {
               array_push($filtered_courses, $course);
-
             }
+        }
         return $filtered_courses;
       }
-      return [];
-    }
+    return [];     
   }
-}
+  
+
 
 
   function community_share($data){
     $bool = false;
     $communities = array();
-    $community_courses = array();
     $company = array();
     $infos = array();
     $infos['success'] = false;
@@ -1334,34 +1319,7 @@ function filter_course(WP_REST_Request $request)
       $community->image = get_field('image_community', $community->ID) ?: $company_image;
       
       // courses comin through custom field 
-      $courses = get_field('course_community', $community->ID);
-      foreach($courses as $course){
-        $course_type = get_field('course_type', $course->ID);
-
-        //Legend image
-        $thumbnail = get_field('preview', $course->ID)['url'];
-        if(!$thumbnail){
-            $thumbnail = get_the_post_thumbnail_url($course->ID);
-            if(!$thumbnail)
-                $thumbnail = get_field('url_image_xml', $course->ID);
-            if(!$thumbnail)
-                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-        }
-
-        //Short description
-        $short_description = get_field('short_description', $course->ID);
-
-        $demand_course = (object)[
-          'title' => $course->post_title,
-          'picture_course' => $thumbnail,
-          'short_description' => $short_description,
-          'guid' => $course->guid,
-          'created_at' => $course->post_date
-        ];
-
-        array_push($community_courses, $demand_course);
-      }
-      $community->courses = $community_courses;
+      $community->courses = get_field('course_community', $community->ID);
 
       $demand_community = (object)[
         'title' => $community->post_title,
