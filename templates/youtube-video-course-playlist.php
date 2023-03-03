@@ -49,8 +49,6 @@ $table = $wpdb->prefix . 'databank';
       $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&id=" . $playlist_id . "&key=" . $api_key; 
     
       $playlists = json_decode(file_get_contents($url_playlist),true);
-      var_dump($playlists);
-
       foreach($playlists['items'] as $key => $playlist){
         //Check the existing value with metadata
         $meta_key = "course";
@@ -107,11 +105,10 @@ $table = $wpdb->prefix . 'databank';
 
           $meta = $meta_value . '~' . $post_id;          
 
-          if(add_user_meta(1, $meta_key, $meta))
-            echo '✔️';
+          // if(add_user_meta(1, $meta_key, $meta))
+          //   echo '✔️';
 
           echo "<span class='textOpleidRight'> Course_ID: " . $playlist['id'] . " - Insertion done successfully <br><br></span>";
-          break;
         }
         else{
           $meta_course = 0;
