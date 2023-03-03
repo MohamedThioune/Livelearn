@@ -106,8 +106,8 @@ $table = $wpdb->prefix . 'databank';
 
           $meta = $meta_value . '~' . $post_id;          
 
-          // if(add_user_meta(1, $meta_key, $meta))
-          //   echo '✔️';
+          if(add_user_meta(1, $meta_key, $meta))
+            echo '✔️';
 
           echo "<span class='textOpleidRight'> Course_ID : " . $playlist['id'] . " - Insertion done successfully <br><br></span>";
         }
@@ -143,7 +143,7 @@ $table = $wpdb->prefix . 'databank';
     echo '<h3>No news playlists found</h3>';
 
   //Empty youtube channels after parse
-  //update_field('youtube_playlists', null , 'user_'. $author_id)
+  update_field('youtube_playlists', null , 'user_'. $author_id)
 ?>
 
 </body>
