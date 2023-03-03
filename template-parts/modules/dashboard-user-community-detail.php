@@ -128,8 +128,8 @@ if($community){
                                         <p class="text-question">Do you have a question ?</p>
                                     </div>
 
-
-                                    <!-- <div>
+                                    <!-- 
+                                    <div>
                                         <div class="interviewer-block d-flex">
                                             <div class="imgUser">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Fadel.png" alt="">
@@ -235,7 +235,8 @@ if($community){
                                             </div>
                                         </div>
                                         <button class="btn btn-see-all">Seee All</button>
-                                    </div> -->
+                                    </div> 
+                                    -->
 
                                     <!-- Modal -->
                                     <div class="modal fade" id="modalQuestion" tabindex="-1" role="dialog" aria-labelledby="modalQuestionLabel" aria-hidden="true">
