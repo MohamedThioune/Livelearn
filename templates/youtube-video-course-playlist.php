@@ -49,6 +49,8 @@ $table = $wpdb->prefix . 'databank';
       $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&id=" . $playlist_id . "&key=" . $api_key; 
     
       $playlists = json_decode(file_get_contents($url_playlist),true);
+      var_dump($playlists);
+
       foreach($playlists['items'] as $key => $playlist){
         //Check the existing value with metadata
         $meta_key = "course";
@@ -143,7 +145,7 @@ $table = $wpdb->prefix . 'databank';
     echo '<h3>No news playlists found</h3>';
 
   //Empty youtube channels after parse
-  update_field('youtube_playlists', null , 'user_'. $author_id)
+  //update_field('youtube_playlists', null , 'user_'. $author_id)
 ?>
 
 </body>
