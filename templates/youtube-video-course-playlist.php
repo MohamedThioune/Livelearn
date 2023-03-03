@@ -98,7 +98,9 @@ $table = $wpdb->prefix . 'databank';
             'status' => $status
           );
 
-          $wpdb->insert($table,$data);
+          var_dump($data);
+          echo $wpdb->insert($table,$data);
+        
           $post_id = $wpdb->insert_id;
 
           echo $wpdb->last_error;
@@ -108,7 +110,7 @@ $table = $wpdb->prefix . 'databank';
           // if(add_user_meta(1, $meta_key, $meta))
           //   echo '✔️';
 
-          echo "<span class='textOpleidRight'> Course_ID: " . $playlist['id'] . " - Insertion done successfully <br><br></span>";
+          echo "<span class='textOpleidRight'> Course_ID : " . $playlist['id'] . " - Insertion done successfully <br><br></span>";
         }
         else{
           $meta_course = 0;
