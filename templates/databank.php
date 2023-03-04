@@ -53,7 +53,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     <div class="col-md-3">
                         
                         <select class="form form-control" id="select_field">
-                            <option value="">Get new contents from</option>
+                            <option value="">Get new contents from</option> 
                             <?php foreach ($websites as $website) { ?>
                                 <option class="selected_website" value="<?= $website ?>"><?= $website ?></option>
                             <?php } ?>
