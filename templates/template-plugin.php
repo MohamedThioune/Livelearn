@@ -312,4 +312,5 @@ function RandomString(){
       }
     }
   }
+  header("location:/databank");
 ?>   
