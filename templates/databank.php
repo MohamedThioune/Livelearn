@@ -1,6 +1,6 @@
-<?php /** Template Name: Databank */ ?>
+<? /** Template Name: Databank */ ?>
 
-<?php
+<?
 
 global $wpdb;
 /*
@@ -28,10 +28,10 @@ $user = wp_get_current_user();
 $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandrinks','sportnext','nbvt','vsbnetwerk','tvvl','nedverbak','tnw','changeINC','--------------------------','nvab','vbw','kndb','fgz','cvah','nbov','nuvo','CBD','Hoorzaken','Knvvn','Nvtl','stiba','Nfofruit','Iro','Lto','cbm','tuinbranche','jagersvereniging','Wapned','Dansbelang','Pictoright','Ngb','Griffiers','Nob','Bijenhouders','BBKnet','AuteursBond','ovfd','Adfiz','nvvr','Veneca','Sloopaannemers','Noa'];
 ?>
 
-<?php wp_head(); ?>
-<?php get_header(); ?>
+<? wp_head(); ?>
+<? get_header(); ?>
 
-<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+<link rel="stylesheet" href="<? echo get_stylesheet_directory_uri();?>/template.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
 
 <body>
@@ -39,7 +39,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     <div class="container-fluid">
         <div class="contentListeCourseDataBank">
             <div class="cardOverviewCours">
-                <?php 
+                <? 
                 if(isset($_GET["message"]))
                     echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>";
                 ?>
@@ -54,9 +54,8 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                         
                         <select class="form form-control" id="select_field">
                             <option value="">Get new contents from</option> 
-                            <?php foreach ($websites as $website) { ?>
+                            <? foreach ($websites as $website)  ?>
                                 <option class="selected_website" value="<?= $website ?>"><?= $website ?></option>
-                            <?php } ?>
                         </select>
                     </div>
                     <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status">
@@ -88,7 +87,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                             </tr>
                             </thead>
                             <tbody>
-                            <?php
+                            <?
                             if(!empty($courses)){
                                 foreach($courses as $course){
                                     if($course->state)
@@ -115,15 +114,15 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     
                                     $state = $course->course_id ? 'present' : 'missing';
                                     $key = $course->id;
-                                ?>
+                            ?>
                                 <tr id="<?= $key ?>" class="<?= $state ?>">
                                     <td class="textTh"><input type="checkbox" class="checkOne" name="checkOne[]" id="chkBox" value="<?= $course->id ?>"></td>
                                     <td class="textTh"> <img src="<?= $image; ?>" alt="image course" width="50" height="50"></td>
-                                    <td class="textTh courseDataBank" style="color:#212529;font-weight:bold"><?php echo $course->titel; ?></td>
+                                    <td class="textTh courseDataBank" style="color:#212529;font-weight:bold"><? echo $course->titel; ?></td>
                                     <td class="textTh tdCenter"><?= $course->type; ?></td>
                                     <td class="textTh tdCenter"><?= $course->prijs; ?></td>
                                     <td class="textTh courseOnderwerpen">
-                                        <?php
+                                        <?
                                         if(!empty($onderwerpen))
                                             foreach($onderwerpen as $value)
                                                 if($value)
@@ -131,12 +130,12 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                         ?>
                                     </td>
                                     <td class="textTh tdCenter"><?= $course->status; ?></td>
-                                    <td class="textTh tdCenter <?php if($course->author_id) echo ''; else echo 'author';  ?>"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo '<b>No author</b>'; ?></td>
-                                    <td class="textTh tdCenter <?php if(!empty($company)) echo ''; else echo 'company';  ?>"> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo '<b>No company</b>'; ?> </td>
+                                    <td class="textTh tdCenter <? if($course->author_id) echo ''; else echo 'author';  ?>"> <? if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo '<b>No author</b>'; ?></td>
+                                    <td class="textTh tdCenter <? if(!empty($company)) echo ''; else echo 'company';  ?>"> <? if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo '<b>No company</b>'; ?> </td>
                                     <td class="tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a href="/edit-databank?id=<?= $key ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> </td>
                                 </tr>
-                            <?php
-                            }
+                            <?
+                                }
                             }else{
                                 echo("There is nothing to see here");
                             }
@@ -145,7 +144,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                         </form>
                     </table>  
                     <center>
-                    <?php
+                    <?
                         foreach (range(1, $pagination_number) as $number){
                             if(isset($_GET['id']))
                                 if($_GET['id'] == $number)
@@ -501,5 +500,5 @@ $(document).ready(function () {
 //# sourceURL=pen.js
 </script>
 
-<?php get_footer(); ?>
-<?php wp_footer(); ?>
+<? get_footer(); ?>
+<? wp_footer(); ?>
