@@ -1750,7 +1750,7 @@ $saved = get_user_meta($user_id, 'course');
 
                     //Company
                     $company = get_field('company',  'user_' . $course->post_author);
-
+                    
                     //Short description
                     $short_description = get_field('short_description', $course->ID);
 
