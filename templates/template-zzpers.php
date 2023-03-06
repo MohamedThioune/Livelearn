@@ -136,19 +136,6 @@
 
         $blogs = get_posts($args);
 
-        /*
-        ** Leerpaden  owned *
-        */
-
-        $args = array(
-            'post_type' => 'learnpath',
-            'post_status' => 'publish',
-            'posts_per_page' => -1,
-            'author__in' => $authors
-        );
-
-        $leerpaden = get_posts($args);
-
     ?>
 
     <!-- old name => overview-organisations-1 -->
@@ -301,7 +288,7 @@
     </section>
     <section class="cardCoursZzpers">
         <div class="container-fluid">
-            <h3>Artikelen voor ZZP’ers</h3>
+            <h3>Artikelen voor ZZP'ers</h3>
             <div class="block-cardCourse-zzpers">
                 <a href="" class="cardKraam2">
                     <div class="headCardKraam">
