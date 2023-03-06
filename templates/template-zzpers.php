@@ -1,5 +1,7 @@
 <?php /** Template Name: Zzpers template */ ?>
-
+<?php $page = 'check_visibility.php'; 
+require($page);
+?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
@@ -105,27 +107,19 @@
         margin-left: 8px;
         margin-top: 10px;
     }
-
-
-
-    }
-
-
 </style>
 
 <div class="block-zzpers">
 
     <?php
-
         $users = get_users();
         $authors = array();
 
         foreach ($users as $key => $value) {
             $company_user = get_field('company',  'user_' . $value->ID );
             if($company_user[0]->post_title == 'DeZZP')
-                array_push($authors, $value->ID);
+            array_push($authors, $value->ID);
         }
-
         $args = array(
             'post_type' => 'post',
             'post_status' => 'publish',
@@ -146,9 +140,7 @@
             'posts_per_page' => -1,
             'author__in' => $authors
         );
-
         $leerpaden = get_posts($args);
-
     ?>
 
     <!-- old name => overview-organisations-1 -->
@@ -235,8 +227,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
         <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
@@ -301,12 +291,38 @@
     </section>
     <section class="cardCoursZzpers">
         <div class="container-fluid">
+        <?php// var_dump($blogs[0]) ?>
             <h3>Artikelen voor ZZP’ers</h3>
             <div class="block-cardCourse-zzpers">
-                <a href="" class="cardKraam2">
+            <?php foreach($blogs as $course) { 
+                $bool = true;
+                $bool = visibility($post, $visibility_company);
+                $course_type = get_field('course_type', $course->ID);
+                $user = get_user_by('id',$course->post_author);
+                $name = ($user->first_name=='') ? $user->display_name : $user->first_name;
+               
+                        if(!$bool)
+                            continue;
+                        $thumbnail = get_field('preview', $course->ID)['url'];
+                        $short_description = get_field('short_description' , $course->ID);
+                       // var_dump($price);
+                            if(!$thumbnail){
+                                $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                if(!$thumbnail)
+                                $thumbnail = get_field('url_image_xml', $course->ID);
+                                if(!$thumbnail)
+                                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                            }
+                        //price_course    
+                        $price = get_field('price' , $course->ID);
+                        $price = ($price !="0" && $price !=0 ) ? number_format($price, 2, '.', ',') : "Gratis";    
+                        //Company
+                        $company = get_field('company',  'user_' . $course->post_author);   
+                        ?>
+            <a href="" class="cardKraam2">
                     <div class="headCardKraam">
                         <div class="blockImgCardCour">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/card2.png" class="" alt="">
+                            <img src="<?php echo $thumbnail;?>" class="" alt="">
                         </div>
                         <div class="blockgroup7">
                             <div class="iconeTextKraa">
@@ -323,7 +339,7 @@
                             <div class="iconeTextKraa">
                                 <div class="sousiconeTextKraa">
                                     <img src="<?php echo get_stylesheet_directory_uri() . '/img/euro1.png'; ?>" class="icon7" alt="">
-                                    <p class="kraaText">Gratis</p>
+                                    <p class="kraaText"><?php echo $price; ?></p>
                                 </div>
                             </div>
                         </div>
@@ -333,278 +349,37 @@
                         <div class="group8">
                             <div class="imgTitleCours">
                                 <div class="imgCoursProd">
-                                    <img src="<?php echo get_stylesheet_directory_uri() . '/img/logo_livelearn.png'; ?>" width="25" class="icon7" alt="">
+                                    <?php
+                                    if(!empty($company)){
+                                        $company_title = $company[0]->post_title;
+                                        $company_id = $company[0]->ID;
+                                        $company_logo = get_field('company_logo', $company_id);
+                                    }
+                                    ?>
+                                    <img src="<?php echo $company_logo; ?>" width="25" class="icon7" alt="">
                                 </div>
-                                <p class="nameCoursProd">Livelearn</p>
+                                <p class="nameCoursProd"><?php echo $company_title; ?></p>
                             </div>
                             <div class="group9">
                                 <div class="blockOpein">
                                     <!-- <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt=""> -->
-                                    <p class="lieuAm">Artikelen voor ZZPers</p>
+                                    <p class="lieuAm">Artikelen <?php echo $name; ?></p>
                                 </div>
                                 <div class="blockOpein">
                                     <!-- <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt=""> -->
                                 </div>
                             </div>
                         </div>
-                        <p class="werkText">Test 2</p>
+                        <p class="werkText"><?php echo $course->post_title ?> <?php //echo $blog->post_title; ?></p>
                         <p class="descriptionPlatform">
-                            A short description of a very long course about football players dit is een enorme test van daniel om een cursus te creëren
+                            <?php echo $short_description ?>
                         </p>
                     </div>
                 </a>
-                <a href="" class="cardKraam2">
-                    <div class="headCardKraam">
-                        <div class="blockImgCardCour">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/card2.png" class="" alt="">
-                        </div>
-                        <div class="blockgroup7">
-                            <div class="iconeTextKraa">
-                                <div class="sousiconeTextKraa">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/kraam.png" class="icon7" alt="">
-                                    <p class="kraaText">Opleiding</p>
-                                </div>
-                                <div class="sousiconeTextKraa">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" class="icon7" alt="">
-                                    <p class="kraaText">MBO3</p>
-                                </div>
-
-                            </div>
-                            <div class="iconeTextKraa">
-                                <div class="sousiconeTextKraa">
-                                    <img src="<?php echo get_stylesheet_directory_uri() . '/img/euro1.png'; ?>" class="icon7" alt="">
-                                    <p class="kraaText">Gratis</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="contentCardProd">
-                        <div class="group8">
-                            <div class="imgTitleCours">
-                                <div class="imgCoursProd">
-                                    <img src="<?php echo get_stylesheet_directory_uri() . '/img/logo_livelearn.png'; ?>" width="25" class="icon7" alt="">
-                                </div>
-                                <p class="nameCoursProd">Livelearn</p>
-                            </div>
-                            <div class="group9">
-                                <div class="blockOpein">
-                                    <!-- <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt=""> -->
-                                    <p class="lieuAm">Artikelen voor ZZPers</p>
-                                </div>
-                                <div class="blockOpein">
-                                    <!-- <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt=""> -->
-                                </div>
-                            </div>
-                        </div>
-                        <p class="werkText">Test 2</p>
-                        <p class="descriptionPlatform">
-                            A short description of a very long course about football players dit is een enorme test van daniel om een cursus te creëren
-                        </p>
-                    </div>
-                </a>
-                <a href="" class="cardKraam2">
-                    <div class="headCardKraam">
-                        <div class="blockImgCardCour">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/card2.png" class="" alt="">
-                        </div>
-                        <div class="blockgroup7">
-                            <div class="iconeTextKraa">
-                                <div class="sousiconeTextKraa">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/kraam.png" class="icon7" alt="">
-                                    <p class="kraaText">Opleiding</p>
-                                </div>
-                                <div class="sousiconeTextKraa">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" class="icon7" alt="">
-                                    <p class="kraaText">MBO3</p>
-                                </div>
-
-                            </div>
-                            <div class="iconeTextKraa">
-                                <div class="sousiconeTextKraa">
-                                    <img src="<?php echo get_stylesheet_directory_uri() . '/img/euro1.png'; ?>" class="icon7" alt="">
-                                    <p class="kraaText">Gratis</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="contentCardProd">
-                        <div class="group8">
-                            <div class="imgTitleCours">
-                                <div class="imgCoursProd">
-                                    <img src="<?php echo get_stylesheet_directory_uri() . '/img/logo_livelearn.png'; ?>" width="25" class="icon7" alt="">
-                                </div>
-                                <p class="nameCoursProd">Livelearn</p>
-                            </div>
-                            <div class="group9">
-                                <div class="blockOpein">
-                                    <!-- <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt=""> -->
-                                    <p class="lieuAm">Artikelen voor ZZPers</p>
-                                </div>
-                                <div class="blockOpein">
-                                    <!-- <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt=""> -->
-                                </div>
-                            </div>
-                        </div>
-                        <p class="werkText">Test 2</p>
-                        <p class="descriptionPlatform">
-                            A short description of a very long course about football players dit is een enorme test van daniel om een cursus te creëren
-                        </p>
-                    </div>
-                </a>
-                <a href="" class="cardKraam2">
-                    <div class="headCardKraam">
-                        <div class="blockImgCardCour">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/card2.png" class="" alt="">
-                        </div>
-                        <div class="blockgroup7">
-                            <div class="iconeTextKraa">
-                                <div class="sousiconeTextKraa">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/kraam.png" class="icon7" alt="">
-                                    <p class="kraaText">Opleiding</p>
-                                </div>
-                                <div class="sousiconeTextKraa">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" class="icon7" alt="">
-                                    <p class="kraaText">MBO3</p>
-                                </div>
-
-                            </div>
-                            <div class="iconeTextKraa">
-                                <div class="sousiconeTextKraa">
-                                    <img src="<?php echo get_stylesheet_directory_uri() . '/img/euro1.png'; ?>" class="icon7" alt="">
-                                    <p class="kraaText">Gratis</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="contentCardProd">
-                        <div class="group8">
-                            <div class="imgTitleCours">
-                                <div class="imgCoursProd">
-                                    <img src="<?php echo get_stylesheet_directory_uri() . '/img/logo_livelearn.png'; ?>" width="25" class="icon7" alt="">
-                                </div>
-                                <p class="nameCoursProd">Livelearn</p>
-                            </div>
-                            <div class="group9">
-                                <div class="blockOpein">
-                                    <!-- <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt=""> -->
-                                    <p class="lieuAm">Artikelen voor ZZPers</p>
-                                </div>
-                                <div class="blockOpein">
-                                    <!-- <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt=""> -->
-                                </div>
-                            </div>
-                        </div>
-                        <p class="werkText">Test 2</p>
-                        <p class="descriptionPlatform">
-                            A short description of a very long course about football players dit is een enorme test van daniel om een cursus te creëren
-                        </p>
-                    </div>
-                </a>
-                <a href="" class="cardKraam2">
-                    <div class="headCardKraam">
-                        <div class="blockImgCardCour">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/card2.png" class="" alt="">
-                        </div>
-                        <div class="blockgroup7">
-                            <div class="iconeTextKraa">
-                                <div class="sousiconeTextKraa">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/kraam.png" class="icon7" alt="">
-                                    <p class="kraaText">Opleiding</p>
-                                </div>
-                                <div class="sousiconeTextKraa">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" class="icon7" alt="">
-                                    <p class="kraaText">MBO3</p>
-                                </div>
-
-                            </div>
-                            <div class="iconeTextKraa">
-                                <div class="sousiconeTextKraa">
-                                    <img src="<?php echo get_stylesheet_directory_uri() . '/img/euro1.png'; ?>" class="icon7" alt="">
-                                    <p class="kraaText">Gratis</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="contentCardProd">
-                        <div class="group8">
-                            <div class="imgTitleCours">
-                                <div class="imgCoursProd">
-                                    <img src="<?php echo get_stylesheet_directory_uri() . '/img/logo_livelearn.png'; ?>" width="25" class="icon7" alt="">
-                                </div>
-                                <p class="nameCoursProd">Livelearn</p>
-                            </div>
-                            <div class="group9">
-                                <div class="blockOpein">
-                                    <!-- <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt=""> -->
-                                    <p class="lieuAm">Artikelen voor ZZPers</p>
-                                </div>
-                                <div class="blockOpein">
-                                    <!-- <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt=""> -->
-                                </div>
-                            </div>
-                        </div>
-                        <p class="werkText">Test 2</p>
-                        <p class="descriptionPlatform">
-                            A short description of a very long course about football players dit is een enorme test van daniel om een cursus te creëren
-                        </p>
-                    </div>
-                </a>
-                <a href="" class="cardKraam2">
-                    <div class="headCardKraam">
-                        <div class="blockImgCardCour">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/card2.png" class="" alt="">
-                        </div>
-                        <div class="blockgroup7">
-                            <div class="iconeTextKraa">
-                                <div class="sousiconeTextKraa">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/kraam.png" class="icon7" alt="">
-                                    <p class="kraaText">Opleiding</p>
-                                </div>
-                                <div class="sousiconeTextKraa">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" class="icon7" alt="">
-                                    <p class="kraaText">MBO3</p>
-                                </div>
-
-                            </div>
-                            <div class="iconeTextKraa">
-                                <div class="sousiconeTextKraa">
-                                    <img src="<?php echo get_stylesheet_directory_uri() . '/img/euro1.png'; ?>" class="icon7" alt="">
-                                    <p class="kraaText">Gratis</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="contentCardProd">
-                        <div class="group8">
-                            <div class="imgTitleCours">
-                                <div class="imgCoursProd">
-                                    <img src="<?php echo get_stylesheet_directory_uri() . '/img/logo_livelearn.png'; ?>" width="25" class="icon7" alt="">
-                                </div>
-                                <p class="nameCoursProd">Livelearn</p>
-                            </div>
-                            <div class="group9">
-                                <div class="blockOpein">
-                                    <!-- <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt=""> -->
-                                    <p class="lieuAm">Artikelen voor ZZPers</p>
-                                </div>
-                                <div class="blockOpein">
-                                    <!-- <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt=""> -->
-                                </div>
-                            </div>
-                        </div>
-                        <p class="werkText">Test 2</p>
-                        <p class="descriptionPlatform">
-                            A short description of a very long course about football players dit is een enorme test van daniel om een cursus te creëren
-                        </p>
-                    </div>
-                </a>
-
+            <?php } ?>
             </div>
         </div>
+        
     </section>
     <section class="">
         <div class="container-fluid">
