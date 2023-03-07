@@ -17,10 +17,8 @@ if($optie == "accept"){
     if($class == 'missing')
     {
         //Insert some other course type
-        $type = ['Opleidingen', 'Training', 'Masterclass', 'E-learning', 'Webinar'];
-        $typos = ['Opleidingen' => 'course', 'Training' => 'training', 'Workshop' => 'workshop', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'Video' => 'video', 'Webinar' => 'webinar' ];
-
-        var_dump($course->type);
+        $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar'];
+        $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Webinar' => 'webinar' ];
 
         //Insert Artikel
         if (strval($course->type) == "Artikel"){
@@ -32,8 +30,6 @@ if($optie == "accept"){
                 'post_title'  => $course->titel
             );
             $id_post = wp_insert_post($args);
-
-            var_dump($id_post);
 
             //Custom
             update_field('course_type', 'article', $id_post);
@@ -71,6 +67,7 @@ if($optie == "accept"){
             update_field('course_type', 'video', $id_post);
             update_field('youtube_videos', $youtube_videos, $id_post);
         }
+        //Insert Others
         else if(in_array(strval($course->type), $type)){
             //Creation course
             $args = array(
@@ -86,7 +83,7 @@ if($optie == "accept"){
             foreach($typos as $key => $typo)
                 if($course->type == $key)
                     $coursetype == $typo;
-            
+
             update_field('course_type', $typos[$course->type] , $id_post);
         }
         
@@ -138,12 +135,11 @@ else if($optie == "decline"){
 }
 $data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
 
-// $updated = $wpdb->update( $table, $data, $where );
-// echo $wpdb->last_error;
+$updated = $wpdb->update( $table, $data, $where );
 
-// if($updated === false)
-//     return false; 
-// else 
-//     return true;
+if($updated === false)
+    return false; 
+else 
+    return true;
 
 ?>
