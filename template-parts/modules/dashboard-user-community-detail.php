@@ -87,7 +87,7 @@ if($community){
     $year = explode('-', $days)[0];
 
     if(!in_array($user_id, $followers))
-        header('Location : /community-overview/?message=Je moet lid zijn van deze gemeenschap voordat je toegang krijgt');
+        header('Location: /dashboard/user/community-overview/?message=Je moet lid zijn van deze gemeenschap voordat je toegang krijgt');
 ?>
 
 <script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/classic/ckeditor.js"></script>
