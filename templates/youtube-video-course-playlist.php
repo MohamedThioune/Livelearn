@@ -102,8 +102,6 @@ $table = $wpdb->prefix . 'databank';
         
           $post_id = $wpdb->insert_id;
 
-          echo $wpdb->last_error;
-
           $meta = $meta_value . '~' . $post_id;          
 
           if(add_user_meta(1, $meta_key, $meta))
@@ -143,7 +141,7 @@ $table = $wpdb->prefix . 'databank';
     echo '<h3>No news playlists found</h3>';
 
   //Empty youtube channels after parse
-  update_field('youtube_playlists', null , 'user_'. $author_id)
+  // update_field('youtube_playlists', null , 'user_'. $author_id)
 ?>
 
 </body>
