@@ -24,12 +24,11 @@
     $user_image = get_field('profile_img',  'user_' . $user_id);
     $user_image = $user_image ?: get_stylesheet_directory_uri() . '/img/user.png';
 
-    $no_content_ =  '
-    <center>
-        <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" width="140" height="150" alt="Skill no-content" >
-        <br><span class="text-dark h5 p-1 mt-2" style="color:#033256"> No content found !</span>
-    <center>
-    ';
+    $no_content = "
+    <p class='dePaterneText theme-card-description'> 
+        <span style='color:#033256'> Stay connected, Something big is coming 😊 </span> 
+    </p>
+    ";
 
     $no_content_event =  '
     <center>
@@ -433,7 +432,7 @@ if($community){
                                         <h2>Upcoming Schedule</h2>
                                         <?php
                                         if(!empty($events)){
-                                        foreach($events as $key => $course){
+                                            foreach($events as $key => $course){
                                             if($key == 3)
                                                 break;
 
@@ -483,10 +482,10 @@ if($community){
                                                 </div>
                                             </div>
                                         <?php
-                                                }
                                             }
-                                            else
-                                                echo $no_content;
+                                        }
+                                        else
+                                            echo $no_content;
                                         ?> 
                                         <!-- <a href="#" class="btn btn-more-events">More Events</a> -->
                                     </div>
