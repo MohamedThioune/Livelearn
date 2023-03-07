@@ -58,7 +58,7 @@ $other_communities = array();
                             $followers = get_field('follower_community', $community->ID);
                             if(!empty($followers))
                                 $max_follower = count($followers);
-
+                            var_dump($followers);
                             foreach ($followers as $key => $value)
                                 if($value->ID == $user_id){
                                     $bool = true;

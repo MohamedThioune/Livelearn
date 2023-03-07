@@ -83,14 +83,15 @@ if($community){
     $month = $calendar[explode('-', $date)[1]];
     $year = explode('-', $days)[0];
     
+    $bool = false;
     //Communities granted
     foreach($followers as $follower)
         if($follower->ID == $user_id){
-            $bool_community = true;
+            $bool = true;
             break;
         }
 
-    if($bool_community)
+    if($bool)
         header('Location: /dashboard/user/communities/?message=Je moet lid zijn van deze gemeenschap voordat je toegang krijgt');
 ?>
 
