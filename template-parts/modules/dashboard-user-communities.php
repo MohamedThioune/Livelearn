@@ -69,7 +69,7 @@ $other_communities = array();
                             }
                             else{
                                 array_push($other_communities, $community);
-                                $access_community = '<button type="button" class="name-community" data-toggle="tooltip" data-placement="top" title="Je moet eerst tot deze gemeenschap behoren">' . $community->post_title . '</button>';
+                                $access_community = '<a href="#" class="name-community" data-toggle="tooltip" data-placement="top" title="Je moet eerst tot deze gemeenschap behoren">' . $community->post_title . '</a>';
                             }                        
                         ?>
                             <div class="card-communities">
