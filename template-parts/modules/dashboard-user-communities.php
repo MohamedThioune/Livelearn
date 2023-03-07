@@ -16,6 +16,9 @@ $other_communities = array();
     <div class="head-community">
         <h1>Communities</h1>
     </div>
+
+    <?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"; ?>
+
     <div class="tabs-search-block">
         <div class="tabs-courses">
             <div class="tabs">
@@ -61,12 +64,16 @@ $other_communities = array();
                                     $bool = true;
                                     break;
                                 }
-
-                            if($bool)
-                                array_push($your_communities, $community);
-                            else
-                                array_push($other_communities, $community);
                             
+                            $access_community = "";
+                            if($bool){
+                                array_push($your_communities, $community);
+                                $access_community = '<a href="/dashboard/user/community-detail/?mu=' . $community->ID . '" class="name-community">' . $community->post_title . '</a>';
+                            }
+                            else{
+                                array_push($other_communities, $community);
+                                $access_community = '<a href="#" class="name-community" data-toggle="tooltip" data-placement="top" title="Je moet eerst tot deze gemeenschap behoren">' . $community->post_title . '</a>';
+                            }                        
                         ?>
                             <div class="card-communities">
                                 <div class="head-card-communities">
@@ -78,7 +85,7 @@ $other_communities = array();
                                             <img class="" src="<?= $community_image; ?>" alt="">
                                         </div>
                                         <div>
-                                            <a href="/dashboard/user/community-detail/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a>
+                                            <?= $access_community ?>
                                             <p class="statut-community">Private Groups</p>
                                         </div>
                                     </div>
@@ -141,6 +148,15 @@ $other_communities = array();
                             if(!empty($followers))
                                 $max_follower = count($followers);
                             
+                            $access_community = "";
+                            if($bool){
+                                array_push($your_communities, $community);
+                                $access_community = '<a href="/dashboard/user/community-detail/?mu=' . $community->ID . '" class="name-community">' . $community->post_title . '</a>';
+                            }
+                            else{
+                                array_push($other_communities, $community);
+                                $access_community = '<a href="#" class="name-community" data-toggle="tooltip" data-placement="top" title="Je moet eerst tot deze gemeenschap behoren">' . $community->post_title . '</a>';
+                            }
                         ?>
                             <div class="card-communities">
                                 <div class="head-card-communities">
@@ -152,6 +168,7 @@ $other_communities = array();
                                             <img class="" src="<?= $company_image; ?>" alt="">
                                         </div>
                                         <div>
+                                            <?= $access_community ?>
                                             <a href="/dashboard/user/community-detail/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a>
                                             <p class="statut-community">Private Groups</p>
                                         </div>
@@ -226,7 +243,7 @@ $other_communities = array();
                                             <img class="" src="<?= $company_image; ?>" alt="">
                                         </div>
                                         <div>
-                                            <a href="/dashboard/user/community-detail/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a>
+                                            <?= $access_community ?>
                                             <p class="statut-community">Private Groups</p>
                                         </div>
                                     </div>

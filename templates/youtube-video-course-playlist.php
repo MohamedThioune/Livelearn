@@ -98,7 +98,7 @@ $table = $wpdb->prefix . 'databank';
             'status' => $status
           );
 
-          echo $wpdb->insert($table,$data);
+          $wpdb->insert($table,$data);
         
           $post_id = $wpdb->insert_id;
 
