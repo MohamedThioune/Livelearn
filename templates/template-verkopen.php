@@ -4,6 +4,9 @@
 <?php get_header(); ?>
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+
 
 <body>
      
@@ -18,7 +21,7 @@
                         Wij bieden jou direct toegang tot al onze gebruikers door jouw kennisproducten gratis toe te voegen 
                         aan ons platform. Je betaalt alleen voor gebruik, dus geen addertje onder het gras. 
                     </p>
-                    <a data-toggle="modal" data-target="#exampleModalCenter"  aria-label="Close" data-dismiss="modal" class="btn rounded rounded-pill fw-bold px-4 text-white" style="background: #00A89D">
+                    <a href="/voor-teacher-2-2/" class="btn rounded rounded-pill fw-bold px-4 text-white" style="background: #00A89D">
                         <strong>Maak je omgeving</strong>  
                     </a>
 
@@ -127,32 +130,22 @@
             </div>
         </div>
     </section>
-        
 
 
-    <section class="py-5" style="background: #043356">
-        <div class="container-fluid py-5">
-            <div class="row d-flex justify-content-center align-items-center mx-2">
-            
-                <div class="col-md-6 px-md-0 text-md-left text-center">
-                    <img class="im-fluid w-75"  src="<?php echo get_stylesheet_directory_uri();?>/img/Contact_team2.png" alt="team">     
-                </div>
-
-                <div class="col-md-6 px-md-0 text-md-left text-center">
-                    <h2 class="hero-title text-white">Direct contact met één van onze adviseurs?</h2>
-                    <div class="my-3 text-white">
-                        <p>
-                            We helpen je graag met jouw specifieke vragen omtrent talent 
-                            management en de toepasbaarheid hiervan binnen je organisatie.
-                        </p>
+    <section>
+        <div class="block-contact-calendy bleu-block-contact-calendy  text-center">
+            <div class="container-fluid">
+                <div class="d-flex justify-content-center">
+                    <div class="img-Direct-een">
+                        <img id="firstImg-direct-contact" src="<?php echo get_stylesheet_directory_uri();?>/img/Direct-een.png" alt="">
                     </div>
-                    <a href="mailto:contact@livelearn.nl" class="btn btn-default rounded-pill px-5 my-2 ml-md-0 ml-2" style="background: #E3EFF4">
-                        <strong class="text-dark">Email </strong>
-                    </a>
-                    <a href="tel: +31627003962" class="btn btn-default text-white rounded-pill px-5 my-2 ml-md-3" style="background: #00A89D">
-                        <strong >Bellen</strong>
-                    </a>
+                    <div class="img-Direct-een">
+                        <img id="secondImg-direct-contact" src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der-Kolk.png" alt="">
+                    </div>
                 </div>
+                <h3 class="title-Direct-een"><strong>Direct een afspraak inplannen?</strong><br> <spann>Toch liever een afspraak inplannen met ons team? Kies een datum en tijd die jou het best uitkomt.</spann></h3>
+                <button class="btn btn-kies" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/livelearn/overleg-pilot'});return false;">Kies een datum</button>
+
             </div>
         </div>
     </section>

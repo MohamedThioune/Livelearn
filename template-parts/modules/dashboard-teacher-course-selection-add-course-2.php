@@ -53,13 +53,13 @@
                     <div class="circleIndicator">
                         <i class="fa fa-paste" aria-hidden="true"></i>
                     </div>
-                    <p class="textOpleidRight">Details en onderwepren</p>
+                    <p class="textOpleidRight">Settings</p>
                 </a>
                 <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=5&edit'?>" class="contentBlockCourse">
                     <div class="circleIndicator">
                         <i class="fa fa-tag" aria-hidden="true"></i>
                     </div>
-                    <p class="textOpleidRight">Tags</p>
+                    <p class="textOpleidRight">Onderwerpen</p>
                 </a>
                 <a href="<?php echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=6&edit' ?>" class="contentBlockCourse">
                     <div class="circleIndicator">

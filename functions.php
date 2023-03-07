@@ -37,7 +37,7 @@ function cpt_taxonomies() {
         'hierarchical'      => true,
         'labels'            => $labels,
         'show_ui'           => true,
-        'show_in_rest'        => true,
+        'show_in_rest'      => true,
         'show_admin_column' => true,
         'query_var'         => true,
         'rewrite'           => array( 'slug' => 'course_category' ),
@@ -301,6 +301,8 @@ function custom_post_type() {
 
     register_post_type( 'assign', $assign_args );
 
+    //Views
+
     $view = array(
         'name'                => _x( 'Views', 'Views', 'view' ),
         'singular_name'       => _x( 'View', 'View', 'view' ),
@@ -342,14 +344,16 @@ function custom_post_type() {
 
     register_post_type( 'view', $view_args );
 
+    //Companies
+
     $company = array(
         'name'                => _x( 'Companies', 'Companies', 'company' ),
         'singular_name'       => _x( 'Companies', 'Company', 'company' ),
         'menu_name'           => __( 'Companies', 'company' ),
         //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
-        'all_items'           => __( 'All companies', 'course' ),
-        'view_item'           => __( 'View company', 'view_course' ),
-        'add_new_item'        => __( 'New company', 'add_new_course' ),
+        'all_items'           => __( 'All companies', 'company' ),
+        'view_item'           => __( 'View company', 'view_company' ),
+        'add_new_item'        => __( 'New company', 'add_new_company' ),
         'add_new'             => __( 'New company', 'text_domain' ),
         'edit_item'           => __( 'Edit Item', 'text_domain' ),
         'update_item'         => __( 'Update Item', 'text_domain' ),
@@ -382,8 +386,53 @@ function custom_post_type() {
 
     );
 
-
     register_post_type( 'company', $company_args );
+
+    //Communities
+
+    $community = array(
+        'name'                => _x( 'Communities', 'Communities', 'community' ),
+        'singular_name'       => _x( 'Communities', 'Community', 'community' ),
+        'menu_name'           => __( 'Communities', 'community' ),
+        //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
+        'all_items'           => __( 'All companies', 'community' ),
+        'view_item'           => __( 'View community', 'view_community' ),
+        'add_new_item'        => __( 'New community', 'add_new_community' ),
+        'add_new'             => __( 'New community', 'text_domain' ),
+        'edit_item'           => __( 'Edit Item', 'text_domain' ),
+        'update_item'         => __( 'Update Item', 'text_domain' ),
+        'search_items'        => __( 'Search Item', 'text_domain' ),
+        'not_found'           => __( 'Not found', 'text_domain' ),
+        'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
+    );
+
+    $community_args = array(
+        'label'               => __( 'community', 'text_domain' ),
+        'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
+        'labels'              => $community,
+        'supports'            => array('title', 'editor', 'author', 'custom-fields', 'excerpt'),
+        //'taxonomies'          => array('sales-person', 'sales-margin', 'location' ),
+        'hierarchical'        => false,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_rest'        => false,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => true,
+        'show_in_admin_bar'   => true,
+        'menu_position'       => 5,
+        'menu_icon'           => '',
+        'can_export'          => true,
+        'rewrite'             => array('slug' => 'community'),
+        'has_archive'         => true,
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'capability_type'     => 'page',
+
+    );
+
+
+    register_post_type( 'community', $community_args );
+
 }
 add_action( 'init', 'custom_post_type', 0 );
 
@@ -551,21 +600,21 @@ function set_assign_data( $entry, $form ) {
 
 }
 
-add_filter( 'rest_authentication_errors', function( $result ) {
-    if ( true === $result || is_wp_error( $result ) ) {
-        return $result;
-    }
+// add_filter( 'rest_authentication_errors', function( $result ) {
+//     if ( true === $result || is_wp_error( $result ) ) {
+//         return $result;
+//     }
 
-    if ( ! is_user_logged_in() ) {
-        return new WP_Error(
-            'rest_not_logged_in',
-            __( 'You are not currently logged in.' ),
-            array( 'status' => 401 )
-        );
-    }
+//     if ( ! is_user_logged_in() ) {
+//         return new WP_Error(
+//             'rest_not_logged_in',
+//             __( 'You are not currently logged in.' ),
+//             array( 'status' => 401 )
+//         );
+//     }
 
-    return $result;
-});
+//     return $result;
+// });
 
 function filter_woocommerce_api_product_response( $product_data, $product, $fields, $this_server ) { 
     $product_data['vendor_id'] = get_post_field( 'post_author', $product->id);
@@ -737,279 +786,6 @@ function tracker_course(WP_REST_Request $request){
 
     return ['success' => 'Tracker course executed successfully !'];
 
-}
-
-function recommended_course(){
-    //The user
-    $user = get_current_user_id();
-
-    //The company
-    $company_visibility = get_field('company',  'user_' . $user_visibility->ID);
-    if(!empty($company_visibility))
-        $visibility_company = $company_visibility[0]->post_title;
-    
-    $i = 0;
-
-    $courses = array();
-    $course_id = array();
-    $random_id = array(); 
-    $categories = array();
-
-    //Categories
-    $cats = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'orderby'    => 'name',
-        'exclude' => 'Uncategorized',
-        'parent'     => 0,
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
-
-    foreach($cats as $category){
-        $cat_id = strval($category->cat_ID);
-        $category = intval($cat_id);
-        array_push($categories, $category);
-    }
-
-    /*
-    ** Categories
-    */
-    $bangerichts = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'parent'  => $categories[1],
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
-    $functies = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'parent'  => $categories[0],
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
-    $skills = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'parent'  => $categories[3],
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
-    $interesses = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'parent'  => $categories[2],
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
-    $subtopics = array(); 
-    foreach($categories as $categ){
-        //Topics
-        $topicss = get_categories(
-            array(
-            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-            'parent'  => $categ,
-            'hide_empty' => 0, // change to 1 to hide categores not having a single post
-            ) 
-        );
-
-        foreach ($topicss as  $value) {
-            $subtopic = get_categories( 
-                array(
-                'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-                'parent'  => $value->cat_ID,
-                'hide_empty' => 0,
-                //  change to 1 to hide categores not having a single post
-                ) 
-            );
-            $subtopics = array_merge($subtopics, $subtopic);      
-        }
-    }
-
-    // Get interests courses
-    $topics_external = get_user_meta($user, 'topic');
-    $topics_internal = get_user_meta($user, 'topic_affiliate');
-
-    $topics = array();
-    if(!empty($topics_external))
-        $topics = $topics_external;
-
-    if(!empty($topics_internal))
-        foreach($topics_internal as $value)
-            array_push($topics, $value);
-
-    $experts = get_user_meta($user, 'expert');
-    $args = array(
-        'post_type' => array('course', 'post'), 
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'order' => 'DESC'
-    );
-    $global_courses = get_posts($args);
-
-    foreach ($global_courses as $key => $course) {    
-        //Control visibility
-        $invisibility = get_field('visibility', $course->ID);
-        $company = get_field('company',  'user_' . $course->post_author);
-        if(!empty($company))
-            $company_title = $company[0]->post_title;
-        if($invisibility && $visibility_company != $company_title )
-            continue;
-        
-        //Preferences categories
-        $category_default = get_field('categories', $course->ID);
-        $category_xml = get_field('category_xml', $course->ID);
-        $read_category = array();
-        if(!empty($category_default))
-            foreach($category_default as $item)
-                if($item)
-                    if(!in_array($item['value'],$read_category))
-                        array_push($read_category,$item['value']);
-                    
-        else if(!empty($category_xml))
-            foreach($category_xml as $item)
-                if($item)
-                    if(!in_array($item['value'],$read_category))
-                        array_push($read_category,$item['value']);
-                    
-        foreach($topics as $topic_value){
-            if($read_category)
-                if(in_array($topic_value, $read_category) ){
-                    if(!in_array($course->ID, $course_id)){
-                        array_push($course_id, $course->ID);
-                        array_push($courses, $course);  
-                        break;
-                    }
-            }
-        }
-
-        //Preference author
-        if(in_array($course->post_author, $experts)){
-            if(!in_array($course->ID, $course_id)){
-                array_push($course_id, $course->ID);
-                array_push($courses, $course);       
-            }
-        }
-
-        //Preference expert
-        $experties = get_field('experts', $course->ID);  
-        foreach($experties as $topic_expert){
-            if(in_array($topic_expert, $experts)){
-                if(!in_array($course->ID, $course_id)){
-                    array_push($course_id, $course->ID);
-                    array_push($courses, $course);  
-                    break;
-                }
-            }
-        }
-
-    }
-
-    $courses = array_slice($courses, 0, 150);
-
-    //Views
-    $user_post_view = get_posts(
-        array(
-            'post_type' => 'view',
-            'post_status' => 'publish',
-            'author' => $user,
-            'order' => 'DESC'
-        )
-    )[0];   
-    $is_view = false;
-
-    if (count($user_post_view)!= 0)
-    {
-        $courses_id = array();
-        $is_view=true;
-    
-        $all_user_views = (get_field('views', $user_post_view->ID));
-        $max_points = 10;
-        $recommended_courses = array();
-
-        foreach($all_user_views as $key => $view) {
-            foreach ($courses as $key => $course) {
-                $points = 0;
-                $course->image = "";
-                $course->author_image = "";
-
-
-                $course_type = get_field('course_type', $course->ID);
-
-                /*
-                * Thumbnails
-                */
-                $course->image = get_field('preview', $course->ID)['url'];
-                if(!$course->image){
-                    $course->image = get_the_post_thumbnail_url($course->ID);
-                    if(!$course->image)
-                        $course->image = get_field('url_image_xml', $course->ID);
-                            if(!$course->image)
-                                $course->image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-                }
-                
-                //Image author
-                $course->author_image = get_field('profile_img', 'user_' . $course->post_author);
-                $course->author_image = $course->author_image ?: get_stylesheet_directory_uri() . '/img/user.png';
-
-                //Read category viewed
-                $read_category_view = array();
-                $category_default = get_field('categories', $view['course']->ID);
-                $category_xml = get_field('category_xml', $view['course']->ID);        
-                if(!empty($category_default))
-                    foreach($category_default as $item)
-                        if($item)
-                            if(!in_array($item['value'],$read_category_view))
-                                array_push($read_category_view, $item['value']);
-                            
-                else if(!empty($category_xml))
-                    foreach($category_xml as $item)
-                        if($item)
-                            if(!in_array($item['value'],$read_category_view))
-                                array_push($read_category_view, $item['value']);
-                            
-                
-                //Read category course
-                $read_category_course = array();
-                $category_default = get_field('categories', $view['course']->ID);
-                $category_xml = get_field('category_xml', $view['course']->ID);        
-                if(!empty($category_default))
-                    foreach($category_default as $item)
-                        if($item)
-                            if(!in_array($item['value'],$read_category_course))
-                                array_push($read_category_course, $item['value']);
-                            
-                else if(!empty($category_xml))
-                    foreach($category_xml as $item)
-                        if($item)
-                            if(!in_array($item['value'],$read_category_course))
-                                array_push($read_category_course, $item['value']);
-                
-                //Price view
-                $view_prijs = get_field('price', $view['course']->ID);
-
-                foreach($read_category_view as $value){
-                    if($points == 6)
-                        break;
-                    if(in_array($value, $read_category_course))
-                        $points += 3;
-                }
-                if ($view['course']->post_author == $course->post_author) 
-                    $points += 3;
-                if ($view_prijs <= $course->price)
-                    $points += 1;
-                
-                $percent = abs(($points/$max_points) * 100);
-                if ($percent >= 50)
-                    if(!in_array($course->ID, $random_id)){
-                        array_push($random_id, $course->ID);
-                        array_push($recommended_courses, $course);
-                    }
-            }
-        }
-    }
-
-    $recommended_courses = array_slice($recommended_courses, 0, 20); 
-
-    if (empty($recommended_courses))
-        $recommended_courses = $courses;
-
-    shuffle($recommended_courses);
-    if (!empty($recommended_courses))
-        return $recommended_courses;
-    else 
-        return ["error" => "Nothing to show, don't ask me why 😅 !"];
 }
 
 function store_comments(WP_REST_Request $request){
@@ -1298,13 +1074,13 @@ add_action( 'rest_api_init', function () {
     'callback' => 'allAuthors',
   ));
 
-  register_rest_route( 'custom/v1', '/topics/(?P<id>\d+)/subtopics', array(
-    'methods' => 'GET',
+  register_rest_route( 'custom/v1', '/topics/subtopics', array(
+    'methods' => 'POST',
     'callback' => 'related_topics_subtopics',
   ));
 
   register_rest_route( 'custom/v1', '/follow_multiple', array(
-    'methods' => 'GET',
+    'methods' => 'POST',
     'callback' => 'follow_multiple_meta',
   ));
 
@@ -1328,4 +1104,51 @@ add_action( 'rest_api_init', function () {
     'callback' => 'get_saved_course',
   ));
 
-} );
+  register_rest_route('custom/v1', '/save/course/(?P<id>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'save_course',
+  ));
+
+  register_rest_route('custom/v1', '/course/(?P<id>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'get_course_by_id',
+  ));
+
+  register_rest_route('custom/v1', '/liked/courses', array(
+    'methods' => 'GET',
+    'callback' => 'get_liked_courses',
+  ));
+
+  register_rest_route('custom/v1', '/course/(?P<id>\d+)/likes/count', array(
+    'methods' => 'GET',
+    'callback' => 'get_count_courses_likes',
+  ));
+
+  register_rest_route('custom/v1', '/like/course/(?P<id>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'like_course',
+  ));
+
+  register_rest_route('custom/v1', '/subtopic/(?P<id>\d+)/courses/', array(
+    'methods' => 'GET',
+    'callback' => 'get_courses_of_subtopics',
+  ));
+
+  register_rest_route('custom/v1', '/filter/courses', array(
+    'methods' => 'POST',
+    'callback' => 'filter_course',
+  ));
+
+
+  register_rest_route('custom/v1', '/filter/courses/saved', array(
+    'methods' => 'GET',
+    'callback' => 'filter_saved_courses',
+  ));
+
+  register_rest_route('custom/v1', '/company/(?P<community>[-\w]+)', array(
+    'methods' => 'GET',
+    'callback' => 'community_share',
+  ));
+
+
+});

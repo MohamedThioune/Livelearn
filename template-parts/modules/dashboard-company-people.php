@@ -3,14 +3,15 @@
     $data_user = wp_get_current_user();
     $user_connected = $data_user->data->ID;
     $company = get_field('company',  'user_' . $user_connected);
+
+    //Departments 
+    $departments = get_field('departments', $company[0]->ID);
     
     if(!empty($company))
         $company_connected = $company[0]->post_title;
 
     $grant = get_field('manager',  'user_' . $user_connected);
     $ismanaged = get_field('managed',  'user_' . $user_connected); 
-
-    $user = get_users(array('include'=> 1))[0]->data;
 
     $members = array();
     foreach($users as $user)
@@ -28,7 +29,6 @@
     extract($_POST);
 
     if(isset($missing_details_user)){
-
         update_field('telnr', $telnr, 'user_'.$id_user);
         update_field('role', $role_user, 'user_'.$id_user);
         update_field('department', $department, 'user_'.$id_user);
@@ -69,15 +69,18 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
 
                         $you = NULL;
                         if(!in_array('administrator', $user->roles))
-                            $you  =  (in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : NULL;
+                            $you = (in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : NULL;
                         
+                        $manager = get_field('ismanaged', 'user_' . $user->ID);
+                        $manager_image = get_field('profile_img',  'user_' . $manager); 
+
                         $link = "/dashboard/company/profile/?id=" . $user->ID . '&manager='. $user_connected; 
                     ?>
                         <tr id="<?php echo $user->ID; ?>" >
-                            <td scope="row"><?= $key; ?></td>
+                            <td scope="row"><?= $key + 1; ?></td>
                             <td class="textTh thModife">
                                 <div class="ImgUser">
-                                <a href="<?= $link; ?>" > <img src="<?php echo $image_user ?>" alt=""> </a>
+                                    <a href="<?= $link; ?>" > <img src="<?php echo $image_user ?>" alt=""> </a>
                                 </div>
                             </td>
                             <td class="textTh"> <a href="<?= $link; ?>" style="text-decoration:none;"><?php if(!empty($user->first_name)){echo $user->first_name;}else{echo $user->display_name;}?></a> </td>
@@ -85,7 +88,97 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                             <td class="textTh"><?php echo get_field('telnr', 'user_'.$user->ID);?></td>
                             <td class="textTh elementOnder"><?php echo get_field('role', 'user_'.$user->ID);?></td>
                             <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
-                            <td class="textTh"><?= $you ?></td>
+                            <td class="textTh thModife">
+                                <?php 
+                                if($manager_image){
+                                ?>
+                                <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="">
+                                    <div class="ImgUser">
+                                        <img src="<?= $manager_image ?>" alt="">
+                                    </div>
+                                    <!-- <div class="ImgUser">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
+                                    </div>
+                                    <div class="ImgUser">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
+                                    </div> -->
+                                </button>
+                                    <!-- Modal -->
+                                    <div class="modal modalAllManager fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="userModalLabel">List of Manager</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table class="table table-all-manager">
+                                                        <thead>
+                                                        <tr>
+                                                            <th scope="col">Name</th>
+                                                            <th scope="col">Photo</th>
+                                                            <th scope="col">Company</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td>Daniel</td>
+                                                            <td>
+                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
+                                                            </td>
+                                                            <td>Livelearn</td>
+                                                            <td><a href="">See</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Daniel</td>
+                                                            <td>
+                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Fadel.png" alt="">
+                                                            </td>
+                                                            <td>Livelearn</td>
+                                                            <td><a href="">See</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Daniel</td>
+                                                            <td>
+                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
+                                                            </td>
+                                                            <td>Livelearn</td>
+                                                            <td><a href="">See</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Daniel</td>
+                                                            <td>
+                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
+                                                            </td>
+                                                            <td>Livelearn</td>
+                                                            <td><a href="">See</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Daniel</td>
+                                                            <td>
+                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
+                                                            </td>
+                                                            <td>Livelearn</td>
+                                                            <td><a href="">See</a></td>
+                                                        </tr>
+
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <?php
+                                    }
+                                ?>
+                            </td>
                             <td class="textTh">
                                 <div class="dropdown text-white">
                                     <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
@@ -95,18 +188,21 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                     <ul class="dropdown-menu">
                                         <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?= $link; ?>" target="_blank">Bekijk</a></li>
                                         <?php
-                                        if($you){
-                                        ?>                            
-                                            <li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalEdit<?= $key ?>" href="#">Edit</a></li>
-                                            <li class="my-1">
-                                                <div class="remove">
-                                                    <?php
-                                                        echo '<img class="removeImg" src="' . get_stylesheet_directory_uri() . '/img/deleteIcone.png" alt="">';
-                                                    ?>
-                                                    <span>Verwijderen</span>
-                                                </div>
-                                            </li>
-                                        <?php
+                                        if($you)
+                                            echo '<li class="my-1"><i class="fa fa-pencil px-2" ></i><a data-toggle="modal" data-target="#modalEdit' . $key . '" href="#">Edit</a></li>';
+
+                                        if(in_array('administrator', $data_user->roles))
+                                            if(!in_array('administrator', $user->roles) && !in_array('hr', $user->roles)){
+                                            ?>
+                                                <li class="my-1">
+                                                    <div class="remove">
+                                                        <?php
+                                                            echo '<img class="removeImg" src="' . get_stylesheet_directory_uri() . '/img/deleteIcone.png" alt="">';
+                                                        ?>
+                                                        <span>Verwijderen</span>
+                                                    </div>
+                                                </li>
+                                            <?php
                                         }
                                         ?>
                                     </ul>
@@ -132,8 +228,22 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                                 <input type="text" name="role_user" value="<?php echo get_field('role', 'user_'.$user->ID);?>" class="form-control" placeholder="">
                                             </div>
                                             <div class="form-group">
-                                                <label for="afdeling">Afdeling</label>
-                                                <input type="text" name="department" value="<?php echo get_field('department', 'user_'.$user->ID);?>" class="form-control" placeholder="">
+                                                <label for="telefoonnummer">Departement</label>
+                                                <div class="formModifeChoose" >
+                                                    <div class="formModifeChoose">
+
+                                                        <select placeholder="Choose skills" class="multipleSelect2 selectdepartement" name="department">
+                                                            <?php 
+                                                             foreach($departments as $department)
+                                                                if($department['name'] == get_field('department', 'user_'.$user->ID) )
+                                                                    echo '<option value="' . $department['name'] .'" selected>' . $department['name'] . '</option>';
+                                                                else
+                                                                    echo '<option value="' . $department['name'] .'" >' . $department['name'] . '</option>';
+                                                            ?>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <button type="submit" name="missing_details_user" class="btn btn-add-budget">Add</button>
@@ -159,6 +269,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 
 <script type="text/javascript">
     $(".remove").click(function(){

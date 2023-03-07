@@ -13,9 +13,65 @@
     
     $option_menu = explode('/', $url);
 
+    $access_granted = false;
+
+    //User informations
     $user = wp_get_current_user();
-    if ( !in_array( 'hr', $user->roles ) && !in_array( 'manager', $user->roles ) && !in_array( 'administrator', $user->roles ) && !in_array( 'author', $user->roles ) ) 
-        header('Location: /dashboard/user');
+    $company = get_field('company', 'user_' . $user->ID);
+    if(empty($company) ){
+        $company = $company[0];
+        $company_connected = $company->post_title;
+    }
+
+    /*
+    ** List subscriptions
+    */ 
+    $endpoint = 'https://livelearn.nl/wp-json/wc/v3/subscriptions';
+
+    $params = array(
+        // login url params required to direct user to facebook and promt them with a login dialog
+        'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
+        'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
+    );
+
+    // create endpoint with params
+    $api_endpoint = $endpoint . '?' . http_build_query( $params );
+
+    // initialize curl
+    $ch = curl_init();
+    
+    // set other curl options customer
+    curl_setopt($ch, CURLOPT_URL, $api_endpoint);
+    curl_setopt($ch, CURLOPT_POST, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
+
+    $httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
+
+    // get responses
+    // $response = curl_exec($ch);
+    // if ($response === false) {
+    //     $response = curl_error($ch);
+    //     $error = true;
+    //     echo stripslashes($response);
+    // }
+    // else{
+    //     $data_response = json_decode( $response, true );
+    //     if(!empty($data_response))
+    //         foreach($data_response as $subscription)
+    //             if($subscription['billing']['company'] == $company_connected && $subscription['status'] == 'active'){
+    //                 $access_granted = true;
+    //                 break;
+    //             }                    
+    // }
+
+    // if ( !in_array( 'hr', $user->roles ) && !in_array( 'manager', $user->roles ) && !in_array( 'administrator', $user->roles ) && !in_array( 'author', $user->roles ) ) 
+    //     header('Location: /dashboard/user');
+
+    // if ( !$access_granted )
+    //     header('Location: /dashboard/company/profile-company');
+
 ?>
 <section class="sidBarDashboard sidBarDashboardIndividual" name="section1">
     <ul class="">
@@ -61,36 +117,48 @@
             </a>
         </li>
         <li class="elementTextDashboard">
-            <a href="#" class="d-flex">
-                <div class="elementImgSidebar" >
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Berichten.png" >
+            <button href="#" class="d-flex berichtenBtn">
+                <div class="d-flex">
+                    <div class="elementImgSidebar" >
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Berichten.png" >
+                    </div>
+                   <span>Berichten</span>
                 </div>
-                <span > Berichten</span>
-            </a>
+                <span class="comming-soon">Coming Soon</span>
+            </button>
         </li>
         <li class="elementTextDashboard">
-            <a href="#" class="d-flex">
-                <div class="elementImgSidebar" >
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Financien.png" >
+            <button href="#" class="d-flex berichtenBtn">
+                <div class="d-flex">
+                    <div class="elementImgSidebar" >
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Financien.png" >
+                    </div>
+                   <span>Financien</span>
                 </div>
-                <span > Financien</span>
-            </a>
+                <span class="comming-soon">Coming Soon</span>
+            </button>
         </li>
         <li class="elementTextDashboard">
-            <a href="#" class="d-flex">
-                <div class="elementImgSidebar" >
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Statistieken.png" >
+            <button href="#" class="d-flex berichtenBtn">
+                <div class="d-flex">
+                    <div class="elementImgSidebar" >
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Statistieken.png" >
+                    </div>
+                   <span>Statistieken</span>
                 </div>
-                <span > Statistieken</span>
-            </a>
+                <span class="comming-soon">Coming Soon</span>
+            </button>
         </li>
         <li class="elementTextDashboard">
-            <a href="#" class="d-flex">
-                <div class="elementImgSidebar" >
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Instellingen.png" >
+            <button href="#" class="d-flex berichtenBtn">
+                <div class="d-flex">
+                    <div class="elementImgSidebar" >
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Instellingen.png" >
+                    </div>
+                   <span>Instellingen</span>
                 </div>
-                <span > Instellingen</span>
-            </a>
+                <span class="comming-soon">Coming Soon</span>
+            </button>
         </li>
     </ul>
 </section>

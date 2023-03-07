@@ -84,13 +84,14 @@
                             <div class="blockImgCarLogin">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Groupe8.png" alt="">
                             </div>
-                            <p class="textNog"> Ben jij een opleider of expert? Meld je hier aan.</p>
+                            <p class="textNog"> Creëer in 5 minuten een gratis leeromgeving voor jouw team of organisatie.
+</p>
                         </div>
                         <div class="boxLOginCardOne">
                             <div class="blockImgCarLogin">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/headWeb8.png" alt="">
                             </div>
-                            <p class="textNog">De eerste maad helemaal vrijblijvend</p>
+                            <p class="textNog"> Ben jij een opleider of expert? Meld je hier aan.</p>
                         </div>
                     </div>
                     <div class="col-lg-6  col-md-7">
@@ -101,7 +102,7 @@
                                  -->
                                 <center><p class="TitleForm">Registreren</p></center>
 
-                                <?php echo (do_shortcode('[user_registration_form id="59"]')); ?>
+                                <?php echo (do_shortcode('[user_registration_form id="8477"]')); ?>
                             </form>
                         </div>
                     </div>

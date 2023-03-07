@@ -83,7 +83,7 @@
     $args = array(
     'post_type' => array('course','post','leerpad','assessment'),
     'post_status' => 'publish',
-    'posts_per_page' => -1,
+    'posts_per_page' => 500,
     'order' => 'DESC',                          
     );
     $courses = get_posts($args);
@@ -247,9 +247,9 @@
         <div class="cardOverviewCours">
             <div class="headListeCourse">
                 <p class="JouwOpleid">Alle opleidingen</p>
-                <input id="search_txt_company" class="form-control inputSearchZoek" type="search" placeholder="Zoek opleidingen, experts of ondervwerpen" aria-label="Search" >
-                <?php 
-                if ( in_array( 'hr', $user_in->roles ) || in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
+                <input id="search_txt_course" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" >                
+                <?php
+                if ( in_array( 'author', $user_in->roles ) || in_array( 'hr', $user_in->roles ) || in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
                     echo '<a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>';
                 ?>
             </div>
@@ -268,9 +268,9 @@
                         <option value="Workshop"    <?php if(isset($leervom)) if(in_array('Workshop', $leervom)) echo "selected" ; else echo ""  ?> >Workshop</option>
                         <option value="E-learning"  <?php if(isset($leervom)) if(in_array('E-learning', $leervom)) echo "selected" ; else echo ""  ?> >E-learning</option>
                         <option value="Masterclass" <?php if(isset($leervom)) if(in_array('Masterclass', $leervom)) echo "selected" ; else echo ""  ?> >Masterclass</option>
-                        <option value="Video"  <?php if(isset($leervom)) if(in_array('Video', $leervom)) echo "selected" ; else echo ""  ?> >Video</option>
+                        <option value="Video"       <?php if(isset($leervom)) if(in_array('Video', $leervom)) echo "selected" ; else echo ""  ?> >Video</option>
                         <option value="Assessment"  <?php if(isset($leervom)) if(in_array('Assessment', $leervom)) echo "selected" ; else echo ""  ?> >Assessment</option>
-                        <option value="Lezing" <?php if(isset($leervom)) if(in_array('Lezing', $leervom)) echo "selected" ; else echo ""  ?> >Lezing</option>
+                        <option value="Lezing"      <?php if(isset($leervom)) if(in_array('Lezing', $leervom)) echo "selected" ; else echo ""  ?> >Lezing</option>
                         <option value="Event"  <?php if(isset($leervom)) if(in_array('Event', $leervom)) echo "selected" ; else echo ""  ?> >Event</option>
                         <option value="Leerpad"<?php if(isset($leervom)) if(in_array('Leerpad', $leervom)) echo "selected" ; else echo ""  ?> >Leerpad</option>
                         <option value="Artikel"<?php if(isset($leervom)) if(in_array('Artikel', $leervom)) echo "selected" ; else echo ""  ?> >Artikel</option>
@@ -310,11 +310,13 @@
                         <th scope="col">Optie</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="autocomplete_company_databank">
                         <?php 
                         foreach($courses as $key => $course){
-                            if(!visibility($course, $visibility_company))
-                                continue;    
+                            $bool = true;
+                            $bool = visibility($course, $visibility_company);
+                            if(!$bool)
+                                continue;   
 
                             $category = ' ';
 
@@ -364,7 +366,7 @@
                             else{
                                 $dates = get_field('dates', $course->ID);
                                 if($dates)
-                                    $day = explode(' ', $dates[0]['date']);
+                                    $day = explode(' ', $dates[0]['date'])[0];
                                 else{
                                     $data = get_field('data_locaties_xml', $course->ID);
                                     if(isset($data[0]['value'])){
@@ -436,50 +438,53 @@
                         ?>
                         <tr>
                             <td scope="row"><?= $key; ?></td>
-                            <td class="textTh "><a style="color:#212529;font-weight:bold" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
-                            <td class="textTh"><?php echo $price; ?></td>
+                            <td class="textTh text-left"><a style="color:#212529;font-weight:bold" href="<?php echo get_permalink($course->ID) ?>"><?php echo $course->post_title; ?></a></td>
+                                <td class="textTh"><?php echo $price; ?></td>
                             <?php
                             if (in_array('administrator', $user_in->roles ) ) {
                             ?>
                             <td id= <?php echo $course->ID; ?> class="textTh td_subtopics">
-                                <?php
-                                    $course_subtopics = get_field('categories', $course->ID);
-                                    $field='';
-                                    if($course_subtopics!=null){
+                            <?php
+                                $course_subtopics = get_field('categories', $course->ID);
+                                $field='';
+                                $read_topis = array();
+                                if($course_subtopics != null){
                                     if (is_array($course_subtopics) || is_object($course_subtopics)){
-                                        foreach ($course_subtopics as $key =>  $course_subtopic) {
-                                               if ($course_subtopic!="" && $course_subtopic!="Array")
-                                                   $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
-                                      }
-                                         $field=substr($field,0,-1);
-                                         echo $field;
-                                    
-                                }
-                            }
-                            }
-                            else
-                            {
-                                ?>
-                                <td class="textTh ">
-                                    <?php
-                                        $course_subtopics = get_field('categories', $course->ID);
-                                        $field='';
-                                        if($course_subtopics!=null){
-                                        if (is_array($course_subtopics) || is_object($course_subtopics)){
-                                            foreach ($course_subtopics as $key =>  $course_subtopic) {
-                                                if ($course_subtopic!="" && $course_subtopic!="Array")
-                                                    $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                        foreach ($course_subtopics as $key => $course_subtopic) {
+                                            if ($course_subtopic != "" && $course_subtopic != "Array" && !in_array(intval($course_subtopic['value']), $read_topis)){
+                                                $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                                array_push($read_topis, intval($course_subtopic['value']));
+                                            }
                                         }
-                                            $field=substr($field,0,-1);
-                                            echo $field;
-                                        
+                                        $field = substr($field,0,-1);
+                                        echo $field;
                                     }
                                 }
                             }
-
+                            else
+                            {
+                            ?>
+                            <td class="textTh ">
+                                <?php
+                                $course_subtopics = get_field('categories', $course->ID);
+                                $field='';
+                                $read_topis = array();
+                                if($course_subtopics != null){
+                                    if (is_array($course_subtopics) || is_object($course_subtopics)){
+                                        foreach ($course_subtopics as $key => $course_subtopic) {
+                                            if ($course_subtopic != "" && $course_subtopic != "Array" && !in_array(intval($course_subtopic['value']), $read_topis)){
+                                                $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                                array_push($read_topis, intval($course_subtopic['value']));
+                                            }
+                                        }
+                                        $field = substr($field,0,-1);
+                                        echo $field;
+                                    }
+                                }
+                            }
                             ?>
                             </p>             
-                        </td>
+                            </td>
                             <td class="textTh"><?php echo $day; ?></td>
                             <td class="textTh">Live</td>
                             <td class="textTh">
@@ -489,10 +494,7 @@
                                               src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                     </p>
                                     <ul class="dropdown-menu">
-                                        <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?php echo $link; ?>" target="_blank">Bekijk</a></li>
-                                        <li class="my-2"><i class="fa fa-gear px-2"></i><a href="<?= $path_edit ?>" target="_blank">Pas aan</a></li>
-                                        <!-- <li class="my-1"><i class="fa fa-share px-2"></i><input type="button" id="" value="Share"/></li> -->
-                                        <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2 "></i><input type="button" id="" value="Verwijderen"/></li>
+                                        <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?php echo $link; ?>" target="_blank">Bekijk</a></li>    
                                     </ul>
                                 </div>
                             </td>
@@ -610,5 +612,28 @@
   }
   })
 });
+</script>
+
+
+<script>
+
+     $('#search_txt_course').keyup(function(){
+        var txt = $(this).val();
+
+        $.ajax({
+
+            url:"/fetch-databank-course",
+            method:"post",
+            data:{
+                search_txt_course : txt,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete_company_databank').html(data);
+            }
+        });
+
+    });
 </script>
 

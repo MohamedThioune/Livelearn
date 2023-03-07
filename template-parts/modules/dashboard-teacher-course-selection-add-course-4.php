@@ -46,13 +46,13 @@
                     <div class="circleIndicator passEtape2">
                         <i class="fa fa-paste" aria-hidden="true"></i>
                     </div>
-                    <p class="textOpleidRight">Details en onderwepren</p>
+                    <p class="textOpleidRight">Settings</p>
                 </a>
                 <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=5&edit'; else echo "#" ?>" class="contentBlockCourse">
                     <div class="circleIndicator">
                         <i class="fa fa-tag" aria-hidden="true"></i>
                     </div>
-                    <p class="textOpleidRight">Tags</p>
+                    <p class="textOpleidRight">Onderwerpen</p>
                 </a>
                 <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=6&edit'; else echo "#" ?>" class="contentBlockCourse">
                     <div class="circleIndicator">

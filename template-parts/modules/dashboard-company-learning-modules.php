@@ -34,7 +34,6 @@ $orders = wc_get_orders($order_args);
     /*
     ** Categories - all  * 
     */
-
     $categories = array();
 
     $cats = get_categories( 
@@ -94,9 +93,7 @@ $orders = wc_get_orders($order_args);
 
 <!-- modal-style -->
 <style>
-    body {
-        padding-top: 0px !important;
-    }
+
 
     /* modal on dashboard-learning-modules */
     @media (max-width: 991.98px) {
@@ -174,7 +171,7 @@ $orders = wc_get_orders($order_args);
 
 
 
-<div class="contentListeCourse">
+<div class="contentListeCourse contentLeaning">
     <!-- 
     <div class="cardOverviewCours">
         <div class="headListeCourse">
@@ -284,6 +281,7 @@ $orders = wc_get_orders($order_args);
     <div class="cardOverviewCours">
         <div class="headListeCourse">
             <p class="JouwOpleid">Jouw opleidingen</p>
+            <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" >
             <?php 
                 if ( in_array( 'hr', $user_in->roles ) || in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
                     echo '<a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>';
@@ -295,6 +293,7 @@ $orders = wc_get_orders($order_args);
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Verkoop</th>
                         <th scope="col">Titel</th>
                         <th scope="col">Leervorm</th>
                         <th scope="col">Prijs</th>
@@ -346,7 +345,7 @@ $orders = wc_get_orders($order_args);
                         else{
                             $dates = get_field('dates', $course->ID);
                             if($dates)
-                                $day = explode(' ', $dates[0]['date']);
+                                $day = explode(' ', $dates[0]['date'])[0];
                             else{
                                 $data = get_field('data_locaties_xml', $course->ID);
                                 if(isset($data[0]['value'])){
@@ -392,21 +391,28 @@ $orders = wc_get_orders($order_args);
                             $link = '/detail-assessment?assessment_id=' . $course->ID;
                         else
                             $link = get_permalink($course->ID);
+
+                        if(!$course_type)
+                            $course_type = 'Artikel';
                     ?>
                     <tr id="<?php echo $course->ID; ?>">
-                        <td scope="row"><?= $key; ?></td>
-                        <td class="textTh"><a style="color:#212529;" href="<?php echo $link; ?>"><?php echo $course->post_title; ?></a></td>
+                        <td scope="row"><?= $key; ?></td>                        
+                        <td class="textTh"><?php if(!empty(get_field('visibility',$course->ID))) echo 'nee'; else echo 'ja'; ?></td>
+                        <td class="textTh text-left"><a style="color:#212529;" href="<?php echo $link; ?>"><?php echo $course->post_title; ?></a></td>
                         <td class="textTh"><?php echo $course_type; ?></td>
                         <td class="textTh"><?php echo $price; ?></td>
                         <td id= "<?php echo $course->ID; ?>" class="textTh td_subtopics" >
                             <?php
                                 $course_subtopics = get_field('categories', $course->ID);
-                                $field='';
-                                if($course_subtopics!=null){
+                                $field = '';
+                                $read_topis = array();
+                                if($course_subtopics != null){
                                     if (is_array($course_subtopics) || is_object($course_subtopics)){
-                                        foreach ($course_subtopics as $key =>  $course_subtopic) {
-                                            if ($course_subtopic!="" && $course_subtopic!="Array")
+                                        foreach ($course_subtopics as $key => $course_subtopic) {
+                                            if ($course_subtopic != "" && $course_subtopic != "Array" && !in_array(intval($course_subtopic['value']), $read_topis)){
                                                 $field.=(String)get_the_category_by_ID($course_subtopic['value']).',';
+                                                array_push($read_topis, intval($course_subtopic['value']));
+                                            }
                                         }
                                         $field = substr($field,0,-1);
                                         echo $field;
@@ -415,7 +421,7 @@ $orders = wc_get_orders($order_args);
                             ?>
                             </p>             
                         </td>
-                        <td class="textTh"><?php echo $day; ?></td>
+                        <td class="textTh"><?php echo($day); ?></td>
                         <td class="textTh">
                             <div class="dropdown text-white">
                                 <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
@@ -424,9 +430,12 @@ $orders = wc_get_orders($order_args);
                                 </p>
                                 <ul class="dropdown-menu">
                                     <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?php echo $link; ?>" target="_blank">Bekijk</a></li>
-                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="<?= $path_edit ?>" target="_blank">Pas aan</a></li>
-                                    <!-- <li class="my-1"><i class="fa fa-share px-2"></i><input type="button" id="" value="Share"/></li> -->
-                                    <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2 "></i><input type="button" id="" value="Verwijderen"/></li>
+                                    <?php
+                                    if($course->post_author == $user_in->ID || in_array('hr', $user_in->roles) || in_array('administrator', $user_in->roles) ){
+                                        echo '<li class="my-2"><i class="fa fa-gear px-2"></i><a href="' . $path_edit . '" target="_blank">Pas aan</a></li>';
+                                        echo '<li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2 "></i><input type="button" id="" value="Verwijderen"/></li>';
+                                    }
+                                    ?>
                                 </ul>
                             </div>
                         </td>

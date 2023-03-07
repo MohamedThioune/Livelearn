@@ -5,16 +5,10 @@
 */
 if (isset($_GET['edit']))
 {
-    
     $already_linked_tags = array();
-    if (get_field('categories',$_GET['id'])!=null)
-    {
+    if (get_field('categories',$_GET['id']) != null)
         foreach (get_field('categories',$_GET['id']) as $key => $value) 
-        {
             array_push($already_linked_tags,$value['value']);
-        } 
-    }
-    
 }
 
     /*
@@ -87,9 +81,11 @@ if (isset($_GET['edit']))
             $row_bangrichts.='<div hidden=true class="cb_topics_bangricht_'.($key1+1).'" '.($key1+1).'">';
             foreach($cats_bangerichts as $key => $value)
             {
-                $selected = in_array($value->cat_ID,$already_linked_tags) ? 'checked' : '' ;   
-                
-                                    $row_bangrichts .= '
+                $selected = '';
+                if(!empty($already_linked_tags))
+                    $selected = in_array($value->cat_ID,$already_linked_tags) ? 'checked' : '' ; 
+                                    
+                $row_bangrichts .= '
                 <input '.$selected.' class="selected" type="checkbox" name="choice_bangrichts_'.$value->cat_ID.'" value= '.$value->cat_ID .' id=subtopics_bangricht_'.$value->cat_ID.' /><label class="labelChoose" for=subtopics_bangricht_'.$value->cat_ID.'>'. $value->cat_name .'</label>';
             }
             $row_bangrichts.= '</div>';
@@ -485,7 +481,7 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                         <div class="circleIndicator passEtape2">
                             <i class="fa fa-tag" aria-hidden="true"></i>
                         </div>
-                        <p class="textOpleidRight">Tags</p>
+                        <p class="textOpleidRight">Onderwerpen</p>
                     </a>
                     <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=6&edit'; ?>"  class="contentBlockCourse">
                         <div class="circleIndicator">
@@ -503,14 +499,14 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
 
 <script>
 
-var selected_subtopics_id=[];
+    var selected_subtopics_id=[];
     $(".selected").click((e)=>{
         let tags_id = e.target.value;
         let if_exist = selected_subtopics_id.indexOf(tags_id);
         if (if_exist > 0)
             selected_subtopics_id.splice(if_exist, 1)
         else 
-        selected_subtopics_id.push(tags_id);
+            selected_subtopics_id.push(tags_id);
         
     })
     

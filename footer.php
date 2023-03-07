@@ -17,9 +17,6 @@
   </div>
 </div>
 
-
-
-
 <footer class="footer-area footerLive">
     <div class="footer-big">
         <!-- start .container -->
@@ -225,6 +222,7 @@
     });
     //# sourceURL=pen.j
 </script>
+
 <script>
     $('.bntNotification').click((e)=>{
         $.ajax({
@@ -240,16 +238,73 @@
     });
 </script>
 
+<script>
+    $('.btnPushExpert').click((e)=>{
+        var key = e.currentTarget.value;
+        var user_id = $("#user_id_expert" + key).val();
+        var meta_key = $("#meta_key_expert" + key).val();
+        var meta_value = $("#meta_value_expert" + key).val();
+
+        $.ajax({
+                url:"/interest-push",
+                method:"POST",
+                data:{
+                    'user_id': user_id,
+                    'meta_key': meta_key,
+                    'meta_value': meta_value
+                },
+                dataType:"text",
+                success: function(data){
+                    console.log(data);
+                    $('#autocomplete-push-expert' + key).html(data);
+
+                }
+        });
+    });
+</script>
+
+<script>
+    var topics_selected = [];
+    $(".topics").click((e)=>{
+        let tags_id = e.target.value;
+        let if_exist = topics_selected.indexOf(tags_id);
+        if (if_exist > 0)
+            topics_selected.splice(if_exist, 1)
+        else 
+            topics_selected.push(tags_id);        
+    });
+ 
+    $("#btn-topics").click((e)=>
+    {
+        $(e.preventDefault())
+        var user_id = $("#user_id").val();
+
+        $.ajax({
+            url:"/topic-ajax-quick",
+            method:"post",
+            data:{
+                id : user_id,
+                topics : topics_selected
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete_tags').html(data);
+            }
+        });
+    })
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/swiper.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
 
-<!-- <script type="text/javascript">
+<!--<script type="text/javascript">
       $(window).on('load', function() {
-
-        $('#cookieModal').modal('show');
+        $('#myFirstModal').modal('show');
+          alert('ok');
     });
-</script> -->
+</script>-->
 <!--<script>
     const buttons = document.querySelectorAll('.button');
 
@@ -267,6 +322,7 @@
         });
     });
 </script>-->
+
 <script>
     jQuery(function($){
         $('#header-search').keyup(function(){
@@ -285,7 +341,7 @@
             if(txt){
                 $.ajax({
 
-                    url:"fetch-ajax",
+                    url:"/fetch-ajax",
                     method:"post",
                     data:{
                         search:txt,

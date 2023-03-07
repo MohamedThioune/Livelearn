@@ -36,7 +36,7 @@ foreach($global_courses as $course)
     if(!visibility($course, $visibility_company))
         continue;                
 
-    $experts = get_field('experts', $course->ID);    
+    $experts = get_field('experts', $course->ID);
     if($course->post_author == $user_id || in_array($user_id, $experts) ){
         array_push($courses, $course);
     }
@@ -131,7 +131,7 @@ $title_road_path = get_field('title_road_path', 'user_'.$user_id);
                                         <th class="">
                                             <div class="checkbox table-checkbox ">
                                                 <label class="block-label d-flex align-items-center selection-button-checkbox">
-                                                    <input type="checkbox" name="all" class="mr-2" value="all" id="toggleAll" tabindex="0"></label>
+                                                <input type="checkbox" name="all" class="mr-2" value="all" id="toggleAll" tabindex="0"></label>
                                             </div>
                                         </th>
                                         <th>
@@ -173,7 +173,7 @@ $title_road_path = get_field('title_road_path', 'user_'.$user_id);
                                                 <td>
                                                     <div class="checkbox table-checkbox">
                                                         <label class="block-label selection-button-checkbox">
-                                                            <input type="checkbox" name="road_path[]" value="<?= $course->ID; ?>"> </label>
+                                                        <input type="checkbox" name="road_path[]" value="<?= $course->ID; ?>"> </label>
                                                     </div>
                                                 </td>
                                                 <td>

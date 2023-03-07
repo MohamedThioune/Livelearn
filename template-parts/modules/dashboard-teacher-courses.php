@@ -25,14 +25,14 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
     <div class="cardOverviewCours">
         <div class="headListeCourse">
             <p class="JouwOpleid">Mijn leermodules</p>
+            <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" >
             <a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe</a>
         </div>
         <div class="contentCardListeCourse">
-            <table class="table table-responsive">
+            <table class="table table-responsive" id="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Sign-Ups</th>
                         <th scope="col">Titel</th>
                         <th scope="col">Prijs</th>
                         <th scope="col">Onderwerp(en)</th>
@@ -93,7 +93,7 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
                         else{
                             $dates = get_field('dates', $course->ID);
                             if($dates)
-                                $day = explode(' ', $dates[0]['date']);
+                                $day = explode(' ', $dates[0]['date'])[0];
                             else{
                                 $data = get_field('data_locaties_xml', $course->ID);
                                 if(isset($data[0]['value'])){
@@ -135,10 +135,7 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
                     ?>
                     <tr id="<?php echo $course->ID; ?>" data-attr="<?php echo $course->ID;?>">
                         <td scope="row"><?= $i; ?></td>
-                        <td class="textTh">
-                            <a href="/dashboard/teacher/signups/?parse=<?php echo $course->ID;?>"><i class="fas fa-globe-africa"></i></a>
-                        </td>
-                        <td class="textTh elementOnder"><a style="color:#212529;font-weight:bold" href="<?php echo $link ?>"><?php echo $course->post_title; ?></a></td>
+                        <td class="textTh elementOnder text-left"><a style="color:#212529;font-weight:bold" href="/dashboard/teacher/signups/?parse=<?= $course->ID; ?>"> <?php echo $course->post_title; ?> </a></td>
                         <td class="textTh"><?php echo $price; ?></td>
                         <td class="textTh "><?php echo $category; ?></td>
                         <td class="textTh"><?php echo $day; ?></td>
@@ -150,8 +147,9 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
                                 </p>
                                 <ul class="dropdown-menu">
                                     <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?php echo $link; ?>" target="_blank">Bekijk</a></li>
-                                    <li class="my-2"><a href="<?php echo $path_edit; ?>"><i class="fa fa-gear px-2"></i> Pas aan</a></li>
+                                    <li class="my-1"><a href="<?php echo $path_edit; ?>"><i class="fa fa-gear px-2"></i> Pas aan</a></li>
                                     <li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="" value="Verwijderen"/></li>
+                                    <li class="my-1"><a href="/dashboard/teacher/signups/?parse=<?php echo $course->ID;?>"> <i class="fas fa-globe-africa px-2"></i>&nbsp;Inschrijvingen</a></li>
                                 </ul>
                             </div>
                         </td>

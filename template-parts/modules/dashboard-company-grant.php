@@ -3,7 +3,8 @@
     $user_id = $user->ID;
 
     extract($_POST);
-    
+
+    //Teacher
     if(isset($granted_push_teacher))
         if(!empty($granted)){
             foreach($granted as $grant)
@@ -11,21 +12,50 @@
                     $u = new WP_User($grant);
                     // Add role
                     $u->add_role( 'author' );
+
+                    //Mail - became a expert
+                    $first_name = ($u->first_name) ?: $u->display_name; 
+                    $email = $u->user_email;
+                    $mail_became_expert = '/../../templates/mail-became-a-expert.php';
+                    require(__DIR__ . $mail_became_expert);
+
+                    $subject = 'Je hebt de rol expert !';
+                    $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+                    wp_mail($u->user_email, $subject, $mail_became_expert_body, $headers, array( '' )) ; 
                 }            
             $success = true;
             $message = "Werknemer(s) met succes toegekend als een teacher";
             header('Location: /dashboard/company/grant/?message=' . $message);
         }
+    
+    //Manager
     if(isset($granted_push_manager)){
+        $u = new WP_User($id_user);
+        // Add role
         if($rol_manager){
-            $u = new WP_User($id_user);
-            // Add role
             $u->add_role( 'manager' );
+
+            //Mail - became a manager
+            $first_name = ($u->first_name) ?: $u->display_name; 
+            $email = $u->user_email;
+            $mail_became_manager = '/../../templates/mail-became-a-manager.php';
+            require(__DIR__ . $mail_became_manager);
+
+            $subject = 'Je hebt de rol manager !';
+            $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+            wp_mail($u->user_email, $subject, $mail_became_manager_body, $headers, array( '' )) ; 
         }
-        update_field('manager', 1, 'user_'.$id_user);
-        update_field('amount_budget', $amount_budget, 'user_'.$id_user);
+        // Remove role
+        else
+            $u->remove_role( 'manager' );
+        
+        // Optional remove teacher
+        if(!$rol_teacher)
+            $u->remove_role( 'author' );
+        
+        update_field('amount_budget', $amount_budget, 'user_' . $id_user);
         $success = true;
-        $message = "Werknemer(s) met succes toegekend als een manager";
+        $message = "Werknemer(s) met succes toegekend";
         header('Location: /dashboard/company/grant/?message=' . $message);
     }
 ?>
@@ -49,7 +79,7 @@
                         echo '<div class="titleOpleidingstype"><h2>You are not able to manage a member</h2></div>';
                     }
                     else{                        
-                        echo '<div class="titleOpleidingstype"><h2>Selecteer je managers</h2></div>';
+                        echo '<div class="titleOpleidingstype"><h2>Selecteer je experts</h2></div>';
                         $company = get_field('company',  'user_' . $user_id );
                         $company_connected = $company[0]->post_title;
 
@@ -57,7 +87,7 @@
                 ?>
                         <form action="" method="POST">
                             <div class="acf-field">
-                                <label for="locate">Geef een gebruiker de rol 'teacher' om een team aan te sturen :</label><br>
+                                <label for="locate">Geef een gebruiker de rol 'expert' om een team aan te sturen :</label><br>
                                 <div class="form-group">
                                         <?php
                                         //Get users from company
@@ -121,6 +151,7 @@
 
                     if(!in_array('manager', $used->roles) && !in_array('author', $used->roles) )
                         continue;
+
                     $companies = get_field('company',  'user_' . $used->ID);
                     if(!empty($company) && $user_id != $used->ID ){
                         $companie = $companies[0]->post_title;
@@ -135,8 +166,8 @@
                             $is_manager = (in_array('manager', $used->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
                             $is_author = (in_array('author', $used->roles)) ? '<i class="fa fa-check"></i>' : '<i class="fa fa-close"></i>';
 
-                            $amount_budget = get_field('amount_budget',  'user_' . $used->ID) ?: 0 ;
-                ?>
+                            $amount_budget = get_field('amount_budget', 'user_' . $used->ID) ? : 0;
+                    ?>
                         <tr id="" >
                             <td scope="row"><?= $i ?></td>
                             <td class="textTh thModife">
@@ -177,15 +208,25 @@
                                         <input type="hidden" name="id_user" value="<?= $used->ID?>">
                                         <div class="form-group block-check-grant">
                                             <label>
-                                                <input type="checkbox" name="rol_manager" value="1"><span class="checbox-element-label">Manager</span>
+                                                <input type="checkbox" name="rol_manager" value="1" <?php echo ((in_array('manager', $used->roles)) ? 'checked' : '') ?>><span class="checbox-element-label">Manager</span>
                                             </label>
+
+                                            <?php
+                                            if(in_array('author', $used->roles)){
+                                            ?>
+                                            <label>
+                                                <input type="checkbox" name="rol_teacher" value="1" checked><span class="checbox-element-label">Teacher</span>
+                                            </label>
+                                            <?php
+                                            }
+                                            ?>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="exampleInputPassword1">Leerbudget</label>
                                             <input type="number" name="amount_budget" value="<?= $amount_budget ;?>" class="form-control" placeholder="Amount €">
                                         </div>
-                                        <button type="submit" name="granted_push_manager" class="btn btn-add-budget">Add</button>
+                                        <button type="submit" name="granted_push_manager" class="btn btn-add-budget">Save</button>
                                     </form>
                                 </div>
                             </div>

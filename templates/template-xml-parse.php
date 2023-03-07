@@ -50,14 +50,14 @@
     echo "<h3>".$data_xml[0]->programClassification->orgUnitId." running <i class='fas fa-spinner fa-pulse'></i></h3><br><br>";
 
     //Retrieve courses
-    //$i = 0;
+    // $i = 0;
     foreach($data_xml as $key => $datum){
       // $i++;
       // if($i == 2)
       //   break;
 
       $status = 'extern';
-      $course_type = "";
+      $course_type = "Opleidingen";
       $image = "";
       
       /*
@@ -120,12 +120,10 @@
 
       //Implement author of this course
       foreach($users as $user) {
-        $teacher_id = get_field('teacher_id',  'user_' . $user->ID);
         $company_user = get_field('company',  'user_' . $user->ID);
         
-        if(strtolower($company_user[0]->post_title) == strval($post['org']) ){
+        if(strtolower($company_user[0]->post_title) == strtolower(strval($post['org'])) ){
           $author_id = $user->ID;
-
           $company = $company_user[0];
           $company_id = $company_user[0]->ID;  
         }
@@ -150,15 +148,16 @@
         $password = RandomString();
         $random = RandomString();
         $email = "author_" . strval($datum->programClassification->orgUnitId) . $random . "@expertise.nl";
-        $first_name = explode(' ', strval($datum->programCurriculum->teacher->name))[0];
-        //$last_name = explode(' ', strval($datum->programCurriculum->teacher->name))[1];
+        $first_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[0]) ?? RandomString();;
+        $last_name = (explode(' ', strval($datum->programCurriculum->teacher->name))[1]) ?? RandomString();
+        $display_name = ($first_name ) ?? RandomString();
 
         $userdata = array(
             'user_pass' => $password,
-            'user _login' => $login,
+            'user_login' => $login,
             'user_email' => $email,
             'user_url' => 'https://livelearn.nl/inloggen/',
-            'display_name' => strval($datum->programCurriculum->teacher->name),
+            'display_name' => $display_name,
             'first_name' => $first_name,
             'last_name' => $last_name,
             'role' => 'author'
@@ -178,17 +177,19 @@
       $description_html = explode(' ', strval($datum->programDescriptions->programSummaryHtml));    
       $keywords = array_merge($title, $description, $description_html);
 
-      // Value : course type
-      if(in_array('masterclass:', $keywords) || in_array('Masterclass', $keywords) || in_array('masterclass', $keywords))
-        $course_type = "Masterclass";
-      else if(in_array('(training)', $keywords) || in_array('training', $keywords) || in_array('Training', $keywords))
-        $course_type = "Training";
-      else if(in_array('live', $keywords) && in_array('seminar', $keywords))
-        $course_type = "Webinar";
-      else if(in_array('Live', $keywords) || in_array('Online', $keywords) || in_array('E-learning', $keywords) )
-        $course_type = "E-learning";
-      else
-        $course_type = "Opleidingen"; 
+      if(!empty($keywords)){
+        // Value : course type
+        if(in_array('masterclass:', $keywords) || in_array('Masterclass', $keywords) || in_array('masterclass', $keywords))
+          $course_type = "Masterclass";
+        else if(in_array('(training)', $keywords) || in_array('training', $keywords) || in_array('Training', $keywords))
+          $course_type = "Training";
+        else if(in_array('live', $keywords) && in_array('seminar', $keywords))
+          $course_type = "Webinar";
+        else if(in_array('Live', $keywords) || in_array('Online', $keywords) || in_array('E-learning', $keywords) )
+          $course_type = "E-learning";
+        else
+          $course_type = "Opleidingen";
+      }
       
       // Value : description    
       if($datum->programDescriptions->programDescriptionHtml)
@@ -272,7 +273,7 @@
             foreach($categorys as $category){
               $cat_slug = strval($category->slug);
               $cat_name = strval($category->cat_name);             
-              if(strpos($searchword, $cat_slug) !== false || in_array($searchword, $cat_name))
+              if(strpos($searchword, $cat_slug) !== false)
                 if(!in_array($category->cat_ID, $tags))
                     array_push($tags, $category->cat_ID);
             }
@@ -340,7 +341,6 @@
               $infos = rtrim($infos, ';');
 
             array_push($data_locaties_xml, $infos);  
-            $data_locaties_xml = array();          
           }
 
           $data_locaties = join('~', $data_locaties_xml);
@@ -377,7 +377,6 @@
         'company_id' => $company_id,
         'status' => $status
       );
-
       $where = [ 'titel' => strval($datum->programDescriptions->programName) ];
       $updated = $wpdb->update( $table, $post, $where );
 
@@ -385,6 +384,7 @@
 
         $wpdb->insert($table, $post);
         $post_id = $wpdb->insert_id;
+        // $post_id = 1;
 
         echo $wpdb->last_error;
 
