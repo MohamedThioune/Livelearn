@@ -1,6 +1,7 @@
 <?php /** Template Name: Fetch ajax */ ?>
 
 <?php
+$visibility_company = NULL;
 $page = 'check_visibility.php';
 
 require($page); 
@@ -139,6 +140,11 @@ if(isset($_POST['search_path'])){
     if(strlen($_POST['search']) >= 3)
         foreach($courses as $course){
             if(stristr($course->post_title, $_POST['search'])){
+                if($typo != 'Alles'){
+                    $course_type = get_field('course_type', $course->ID);
+                    if($course_type != $typo)
+                        continue;
+                }
                 $row_opleidingen .= "<a href='". get_permalink($course->ID) ."' class='dropdown-item'><img class='icon9' src='". get_stylesheet_directory_uri() ."/img/fic_book.png' alt=''>" . $course->post_title ."</a>";
                 $ro++;
             }
@@ -150,7 +156,7 @@ if(isset($_POST['search_path'])){
     //theme-mastersearch-divider
     if($row_opleidingen != "" || $row_onderwerpen != "" || $row_opleiders != ""){
         if($row_opleidingen != "")
-            $output .= "<p class='theme-mastersearch-divider' style='color:black'>Opleidingen</p>" . $row_opleidingen;  
+            $output .= "<p class='theme-mastersearch-divider' style='color:black'>Cursussen</p>" . $row_opleidingen;  
         if($row_onderwerpen != "")
             $output .= "<p class='theme-mastersearch-divider' style='color:black'>Onderwerpen</p>" . $row_onderwerpen;
         if($row_opleiders != "")

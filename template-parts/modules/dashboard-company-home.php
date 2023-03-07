@@ -36,7 +36,8 @@
                         <img src="<?php echo get_stylesheet_directory_uri() ?>/img/LiveLearn_leerdatabank.png" alt="">
                     </div>
                 </a>
-                <a href="/dashboard/company/leerbudgetten" class="cardCoursManager">
+                <a href="#" class="cardCoursManager">
+                    <small>Coming soon!</small>
                     <p class="contentText">Overzicht<br>
                         <b>Leerbudget</b>
                     </p>

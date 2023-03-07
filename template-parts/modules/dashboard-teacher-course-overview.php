@@ -95,7 +95,7 @@ $podcast_single = "Podcast";
                         else{
                             $dates = get_field('dates', $course->ID);
                             if($dates)
-                                $day = explode(' ', $dates[0]['date']);
+                                $day = explode(' ', $dates[0]['date'])[0];
                             else{
                                 $data = get_field('data_locaties_xml', $course->ID);
                                 if(isset($data[0]['value'])){
@@ -118,7 +118,7 @@ $podcast_single = "Podcast";
                         else if($course_type == $video_single)
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-video&id=" . $course->ID ."&edit";
                         else if(in_array($course_type,$white_type_array))
-                            $path_edit = "/dashboard/teacher/course-selection/?func=add-add-white&id=" . $course->ID ."&edit";
+                            $path_edit = "/dashboard/teacher/course-selection/?func=add-white&id=" . $course->ID ."&edit";
                         else if(in_array($course_type,$course_type_array))
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-course&id=" . $course->ID ."&edit";
                         else if($course_type == $leerpad_single)
@@ -127,6 +127,7 @@ $podcast_single = "Podcast";
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-assessment&id=" . $course->ID ."&edit";
                         else if($course_type == $podcast_single)
                             $path_edit = "/dashboard/teacher/course-selection/?func=add-podcast&id=" . $course->ID ."&edit";
+                        
 
                         $link = "";    
                         if($course_type == "Leerpad")

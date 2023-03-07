@@ -18,6 +18,19 @@
 defined( 'ABSPATH' ) || exit;
 
 do_action( 'woocommerce_before_cart' ); ?>
+<style>
+    @media (min-width: 300px) and (max-width: 767px){
+        #burger {
+            margin-top: 0 !important;
+            position: relative;
+            top: -2px;
+        }
+    }
+
+</style>
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+
+
 <div class="wrapper mt-4 mb-4">
     <div class="container">
         <form class="woocommerce-cart-form" action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post">
@@ -32,8 +45,31 @@ do_action( 'woocommerce_before_cart' ); ?>
                     $_product   = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
                     $product_id = apply_filters( 'woocommerce_cart_item_product_id', $cart_item['product_id'], $cart_item, $cart_item_key );
 
+                    $course_item = get_post($product_id - 1);
+
+                    $course_type = get_field('course_type', $course_item->ID);
+                    //Image
+                    $course_item_ima = get_field('preview', $course_item->ID)['url'];
+                    if(!$course_item_ima){
+                        $course_item_ima = get_the_post_thumbnail_url($course_item->ID);
+                        if(!$course_item_ima)
+                            $course_item_ima = get_field('url_image_xml', $course_item->ID);
+                                if(!$course_item_ima)
+                                    $course_item_ima = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                    }
+
+                    //Company
+                    $company = get_field('company',  'user_' . $course_item->post_author);
+                    $company_title = $company[0]->post_title;
+                    $company_logo = get_field('company_logo', $company[0]->ID);
+
+                    //Expert
+                    $course_item_author = get_user_by('ID', $course_item->post_author);
+                    $course_item_author_image = get_field('profile_img', 'user_' . $course_item->post_author) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                    $course_item_author_name = (isset($course_item_author->first_name)) ? $course_item_author->first_name : $course_item_author->display_name;
+
                     if ( $_product && $_product->exists() && $cart_item['quantity'] > 0 && apply_filters( 'woocommerce_cart_item_visible', true, $cart_item, $cart_item_key ) ) {
-                        $product_permalink = apply_filters( 'woocommerce_cart_item_permalink', $_product->is_visible() ? $_product->get_permalink( $cart_item ) : '', $cart_item, $cart_item_key );
+                        $product_permalink = get_permalink($course_item);
                 ?>
                 <div class="theme-cart-row <?php echo esc_attr( apply_filters( 'woocommerce_cart_item_class', 'cart_item', $cart_item, $cart_item_key ) ); ?>">
 
@@ -71,15 +107,15 @@ do_action( 'woocommerce_before_cart' ); ?>
                     <div class="groupCompanyAuthorCart">
                         <div class="company">
                             <div class="imgElement">
-                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                                <img class="" src="<?= $company_logo ?>" alt="">
                             </div>
-                            <p class="Name">Livelearn</p>
+                            <p class="Name"><?= $company_title ?></p>
                         </div>
                         <div class="author">
                             <div class="imgElement">
-                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Image54.png" alt="">
+                                <img class="" src="<?= $course_item_author_image ?>" alt="">
                             </div>
-                            <p class="Name">Daniel</p>
+                            <p class="Name"><?= $course_item_author_name ?></p>
                         </div>
                     </div>
 
@@ -98,7 +134,7 @@ do_action( 'woocommerce_before_cart' ); ?>
                     <div class="theme-cart__price-wrapper">
                         <div class="blockPriceWapperDescription">
                             <div class="firstBlock">
-                                <p class="shortDescriptionCart">Deelname aan opleiding werkkamersessie 'Acquieren is werven'.</p>
+                                <p class="shortDescriptionCart"><?= $course_item->post_title ?></p>
                               <!--  <span class="theme-cart__price__title">Prijs</span>-->
                                 <div class="theme-cart__product-price" data-title="<?php esc_attr_e( 'Price', 'woocommerce' ); ?>">
                                     <?php
@@ -175,7 +211,7 @@ do_action( 'woocommerce_before_cart' ); ?>
 
       <div class="cart-checkOut">
           <div class="blockImgCartCourse">
-              <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Edge-west.png" alt="">
+              <img src="<?= $course_item_ima; ?>" alt="">
           </div>
           <div class="cart-collaterals">
               <?php

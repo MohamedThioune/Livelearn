@@ -12,7 +12,7 @@ $function = get_field('role',  'user_' . $user->ID);
 $biographical_info = get_field('biographical_info',  'user_' . $user->ID);
 
 if(!empty($company))
-    $company = $company[0]->post_title;
+    $company_name = $company[0]->post_title;
 
 /*
 * * Get interests topics and experts
@@ -103,19 +103,11 @@ $todos = get_posts($args);
                                           src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
                                 </p>
                                 <ul class="dropdown-menu">
-                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="#">Bekijk</a></li>
-                                    <li class="my-2"><i class="fa fa-gear px-2"></i><a href="#">Pas aan</a></li>
-                                    <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
+                                    <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>">Bekijk</a></li>
+                                    <!-- <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li> -->
                                 </ul>
                             </div>
                         </td>
-                        <!--
-                    <td>Weekly</td>
-                    <td>
-                        <button class="btn bntDelete">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/delete.png">
-                        </button>
-                    </td> -->
                     </tr>
                     <?php
                 }

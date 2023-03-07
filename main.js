@@ -1,5 +1,24 @@
 jQuery(function($) {
 
+    // for menu large
+    $("#burger-web").click(function() {
+        $(".theme-side-menu").addClass("extensive");
+    });
+    // for menu large
+    $("#burgerCroie-web").click(function() {
+        $(".theme-side-menu").removeClass("extensive");
+    });
+
+    $("#burger-web").click(function() {
+        $("#burgerCroie-web").show();
+        $("#burger-web").hide();
+    });
+
+    $("#burgerCroie-web").click(function() {
+        $("#burgerCroie-web").hide();
+        $("#burger-web").show();
+    });
+
     //variable for offline courses date input
     $('.block2evens').each(function() {
         console.log('enting for reservations done');
@@ -14,6 +33,17 @@ jQuery(function($) {
             return false;
         });
     });
+
+    //pour mobile
+    $('.close-block').click(function (){
+        $('.blockShowApp').hide();
+        $('.navMobile').removeClass('navMobile-custom')
+        $('body').removeClass('body-custom')
+    });
+    if ($('.navMobile').hasClass('navMobile-custom')) {
+        // Ajoute la classe
+        $('body').addClass('body-custom');
+    }
 
     //header on scroll fix
     var height = ($('nav.navbar').css('height'));
@@ -34,12 +64,91 @@ jQuery(function($) {
     $(".hideBarFilterBlock").click(function() {
         $(".formFilterDatabank, .hideBarFilterBlock").hide();
     });
+// for flow button
+    $('.btnFollowSubTopic').click(function() {
 
+        $(this).text(function(_, text) {
+            return text === "Follow" ? "Unfollow" : "Follow";
+        });
+        if($(this).text() == "Follow") {
+            $(this).removeClass('unfollow');
+        } else if($(this).text() == "Unfollow") {
+            $(this).addClass('unfollow');
+        }
+    });
+    // for all select
+    $('#all').change(function(e) {
+        if (e.currentTarget.checked) {
+            $('.rows').find('input[type="checkbox"]').prop('checked', true);
+        } else {
+            $('.rows').find('input[type="checkbox"]').prop('checked', false);
+        }
+    });
+    $('#allExpert').change(function(e) {
+        if (e.currentTarget.checked) {
+            $('.rows2').find('input[type="checkbox"]').prop('checked', true);
+        } else {
+            $('.rows2').find('input[type="checkbox"]').prop('checked', false);
+        }
+    });
+
+    $(".btnNext").click(function() {
+        $(".content-topics").hide();
+        $(".content-subTopics").show();
+    });
+    $("#backTopics").click(function() {
+        $(".content-topics").show();
+        $(".content-subTopics").hide();
+    });
+
+
+    $(document).on('hidden.bs.modal', '#bedrijfsprofiel_modal',function () {
+        $('#bedrijfsprofiel_modal').css('overflowY','auto')
+    });
 
 
     $(".bntNotification").click(function() {
         $(".alertNotification").hide();
     });
+
+
+    // show comment
+
+
+
+  /*  const elements = document.querySelectorAll('.like-and-comment .element-like-and-comment');
+    const blockComments = document.querySelectorAll('.like-and-comment .first-element');
+
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].addEventListener('click', function() {
+            for (let j = 0; j < blockComments.length; j++) {
+                if (blockComments[j].classList.contains('show-comments')) {
+                    blockComments[j].classList.remove('show-comments');
+                }
+            }
+            blockComments[i].classList.toggle('show-comments');
+        });
+    }*/
+
+    // Select all the buttons and content blocks
+    var buttons = document.querySelectorAll('.element-like-and-comment');
+    var contents = document.querySelectorAll('.first-element');
+
+    $(document).ready(function() {
+        $(buttons).click(function() {
+            var target = $(this).data('target');
+            $('#' + target).toggle();
+        });
+    });
+
+
+
+
+
+
+
+
+
 
     // for modal skills passport home page
     $("#btnStep1SkillsPasspoort").click(function() {
@@ -191,6 +300,10 @@ jQuery(function($) {
 
 
 
+    $("#modalClose").click(function () {
+        $("#theModal").modal("hide");
+    });
+
     //close login popup
     $('.modal button.close').on('click', function(e) {
         e.preventDefault();
@@ -239,16 +352,6 @@ jQuery(function($) {
         $(".boxSousNav3-2").hide();
         $("#croieProfil").hide();
         $(".croie").toggle();
-    });
-
-    $("#burger-web").click(function() {
-        $("#burgerCroie-web").show();
-        $("#burger-web").hide();
-    });
-
-    $("#burgerCroie-web").click(function() {
-        $("#burgerCroie-web").hide();
-        $("#burger-web").show();
     });
 
     $(".croie").click(function() {
@@ -418,6 +521,7 @@ jQuery(function($) {
 
     // Pour first modal after login
     $(".btnBaangerichte").click(function() {
+
         $(".subtopicBaangerichte").show();
         let cl = $(this).attr('class').split(' ')[3];
         hidden = ($(".cb_topics_bangricht_" + cl).attr('hidden'));
@@ -446,19 +550,23 @@ jQuery(function($) {
         $(".cb_topics_personal_" + cl).attr('hidden', !hidden);
     });
 
-    $("#nextblockBaangerichte").click(function() {
+    $("#nextblockBaangerichte, #btnSkipTopics1").click(function() {
         $(".blockfunctiegericht").show();
         $(".blockBaangerichte").hide();
     });
 
-    $("#nextFunctiegericht").click(function() {
+    $("#nextFunctiegericht, #btnSkipTopics2").click(function() {
         $(".blockSkills").show();
         $(".blockfunctiegericht").hide();
     });
 
-    $("#nextSkills").click(function() {
+    $("#nextSkills, #btnSkipTopics3").click(function() {
         $(".blockPersonal").show();
         $(".blockSkills").hide();
+    });
+
+    $("#btnSkipTopics4").click(function() {
+        $(".blockPersonal").hide();
     });
 
 
@@ -477,16 +585,6 @@ jQuery(function($) {
     $("#btnStart3").click(function() {
         $("#step2OverviewAssessmentBackend").hide();
         $("#step3OverviewAssessmentBackend").show();
-    });
-
-
-    // for menu large
-    $("#burger-web").click(function() {
-        $(".theme-side-menu").addClass("extensive");
-    });
-    // for menu large
-    $("#burgerCroie-web").click(function() {
-        $(".theme-side-menu").removeClass("extensive");
     });
 
     // for road path

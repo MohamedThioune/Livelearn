@@ -14,11 +14,12 @@ if(!isset($_GET['id']))
 $image = get_field('profile_img',  'user_' . $user->ID);
 if(!$image)
    $image = get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
 $company = get_field('company',  'user_' . $user->ID);
 $biographical_info = get_field('biographical_info',  'user_' . $user->ID);
 
 if(!empty($company))
-    $company = $company[0]->post_title;
+    $company_name = $company[0]->post_title;
 
 /*
 * * Get interests topics and experts
@@ -37,6 +38,23 @@ else
 /*
 * * End  
 */
+
+/*
+* * Get all experts
+*/
+$see_experts = get_users(
+    array(
+    'role__in' => ['author'],
+    'posts_per_page' => -1,
+    )
+);
+
+/*
+* * End  
+*/
+
+echo "<input type='hidden' id='user_id' value='" . $user->ID . "'>";
+
 ?>
 <section id="sectionDashboard1" class="sidBarDashboard sidBarDashboardIndividual" name="section1"
 style="overflow-x: hidden !important;">
@@ -63,24 +81,39 @@ style="overflow-x: hidden !important;">
         </li>
         <li class="elementTextDashboard">
             <a href="/dashboard/user/activity" class="d-flex">
-                <div class="iconeElement"><img src="<?php echo get_stylesheet_directory_uri();?>/img/Statistieken.png"></div>
+                <div class="iconeElement"><img id="dashboard-min" src="<?php echo get_stylesheet_directory_uri();?>/img/dashboard-min.png"></div>
                 <?php
                 if($option_menu[2] == 'activity') echo '<p class="textLiDashboard"><b>Mijn Activiteiten</b></p>'; else echo  '<p class="textLiDashboard">Mijn Activiteiten</p>';
                 ?>
             </a>
         </li>
         <li class="elementTextDashboard">
-            <a href="/dashboard/user/assessment" class="d-flex">
+            <a href="#" class="d-flex">
                 <div class="iconeElement"><img class="iconAssesment1" src="<?php echo get_stylesheet_directory_uri();?>/img/assessment.png" alt=""></div>
                 <?php
                 if($option_menu[2] == 'assessment') echo '<p class="textLiDashboard"><b>Assessments</b></p>'; else echo  '<p class="textLiDashboard">Assessments</p>';
                 ?>
+                <small class="comming-soon">&nbsp;&nbsp; <b>Coming Soon</b> </small>
             </a>
         </li>
-        <p class="textOnder">ONDERWERPEN <span> <a href="/onderwer"> Voeg toe </a></span></p>
+        <li class="elementTextDashboard">
+            <!-- /community-overview/ -->
+            <a href="/dashboard/user/communities" class="d-flex">
+                <div class="iconeElement"><img id="community-icon" src="<?php echo get_stylesheet_directory_uri();?>/img/community-icon.png"></div>
+                <?php
+                if($option_menu[2] == 'communities') echo '<p class="textLiDashboard"><b>Communities</b></p>'; else echo  '<p class="textLiDashboard">Communities</p>';
+                ?>
+            </a>
+        </li>
+        <div class="d-flex align-content-center">
+            <p class="textOnder">ONDERWERPEN </p>
+            <button type="button" class="btn btnVoegToe" data-toggle="modal" data-target="#exampleModal">
+                <span>Voeg toe</span>
+                <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+        </div>
         <li class="elementTextDashboard">
             <?php
-           
             if(!empty($topics_external))
                 foreach($topics_external as $topic){
                     $name = (String)get_the_category_by_ID($topic);
@@ -110,8 +143,13 @@ style="overflow-x: hidden !important;">
             ?>
 
         </li>
-        <p class="textOnder">EXPERTS / OPLEIDERS <span> <a href="/opleiders"> Voeg toe </a></span></p>
-
+        <div class="d-flex align-content-center">
+            <p class="textOnder">EXPERTS / OPLEIDERS</p>
+            <button type="button" class="btn btnVoegToe" data-toggle="modal" data-target="#modalExpert">
+              <span>Voeg toe</span>
+                <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+        </div>
         <li class="elementTextDashboard">    
             <?php
             
@@ -126,15 +164,83 @@ style="overflow-x: hidden !important;">
                     $image_author = get_field('profile_img',  'user_' . $expert);
                     $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/iconeExpert.png';
                     echo "
-                    <a href='/user-overview/?id=". $expert ."' class='d-flex'>
-                        <div class='iconeElement'>
-                            <img src='". $image_author ."' alt='image utilisateur'>
-                        </div>
-                        <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
-                    </a><br>";
+                        <a href='/user-overview/?id=". $expert ."' class='d-flex'>
+                            <div class='iconeElement'>
+                                <img src='". $image_author ."' alt='image utilisateur'>
+                            </div>
+                            <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
+                        </a><br>";
                     
                 }
             ?>
         </li>
     </ul>
 </section>
+
+
+
+<?php
+    $categories = array();
+
+    $cats = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'orderby'    => 'name',
+        'exclude' => 'Uncategorized',
+        'parent'     => 0,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    foreach($cats as $category){
+        $cat_id = strval($category->cat_ID);
+        $category = intval($cat_id);
+        array_push($categories, $category);
+    }
+
+    //Topics
+    $topics = array();
+    foreach ($categories as $value){
+        $merged = get_categories( array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $value,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ) );
+
+        if(!empty($merged))
+            $topics = array_merge($topics, $merged); 
+    }
+?>
+<!-- Modal add topics and subtopics -->
+<div class="modal fade modalAddTopicsAnd modal-topics-expert" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Maak en keuze :</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="content-topics">
+                    <ul class="unstyled centered">
+                        <?php
+                            foreach($topics as $key => $topic)
+                                echo '<li>
+                                        <input class="styled-checkbox topics" id="styled-checkbox-'. $key .'" type="checkbox" value="' . $topic->cat_ID . '">
+                                        <label for="styled-checkbox-'. $key .'">' . $topic->cat_name . '</label>
+                                      </li>';
+                        ?>
+                    </ul>
+                    <div class="mt-2">
+                        <button type="button" id="btn-topics" class="btn btnNext">Next</button>
+                    </div>
+                </div>
+                <div class="content-subTopics">
+                    <form action="" method="post" id="autocomplete_tags">
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

@@ -19,10 +19,10 @@ if(isset($manager_employee))
         foreach($allocate as $locate){
             if(!in_array($locate, $allocate_basic))
                 array_push($allocate_basic, $locate);
-            update_field('ismanaged', $user_id, 'user_'.$locate);
+            update_field('ismanaged', $user_id, 'user_' . $locate);
         }
         //Manager precision
-        update_field('managed', $allocate_basic, 'user_'.$user_id);
+        update_field('managed', $allocate_basic, 'user_' . $user_id);
 
         $success = true;
         $message = "Successfully assigning employees as their manager";
@@ -39,7 +39,7 @@ $users = get_users();
     ?>
     <form action="/dashboard/company/allocate" method="post">
         <div class="acf-field">
-            <label for="locate">Selecteer de mensen die u wilt beheren :</label><br>
+            <label for="locate">Selecteer de mensen die u wilt managen :</label><br>
             <div class="form-group">
                     <?php
                     //Get users from company

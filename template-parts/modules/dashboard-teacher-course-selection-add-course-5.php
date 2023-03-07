@@ -115,7 +115,9 @@
             $row_bangrichts.='<div hidden=true class="cb_topics_bangricht_'.($key1+1).'" '.($key1+1).'">';
             foreach($cats_bangerichts as $key => $value)
             {
-                $selected = in_array($value->cat_ID,$already_linked_tags) ? 'checked' : '' ;   
+                $selected = '';
+                if(!empty($already_linked_tags))
+                    $selected = in_array($value->cat_ID,$already_linked_tags) ? 'checked' : '' ;   
                 $row_bangrichts .= '
                 <input '.$selected.' class="selected" type="checkbox" name="choice_bangrichts_'.$value->cat_ID.'" value= '.$value->cat_ID .' id=subtopics_bangricht_'.$value->cat_ID.' /><label class="labelChoose" for=subtopics_bangricht_'.$value->cat_ID.'>'. $value->cat_name .'</label>';
             }
@@ -509,13 +511,13 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                         <div class="circleIndicator passEtape">
                             <i class="fa fa-paste" aria-hidden="true"></i>
                         </div>
-                        <p class="textOpleidRight">Details en onderwepren</p>
+                        <p class="textOpleidRight">Settings</p>
                     </a>
                     <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=5&edit'; else echo "#" ?>" class="contentBlockCourse">
                         <div class="circleIndicator passEtape2">
                             <i class="fa fa-tag" aria-hidden="true"></i>
                         </div>
-                        <p class="textOpleidRight">Tags</p>
+                        <p class="textOpleidRight">Onderwerpen</p>
                     </a>
                     <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-course&id=' . $_GET['id'] . '&type=' . $_GET['type'] . '&step=6&edit'; else echo "#" ?>" class="contentBlockCourse">
                         <div class="circleIndicator">

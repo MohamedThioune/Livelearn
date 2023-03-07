@@ -1,428 +1,299 @@
 <?php
+
 $current_user = wp_get_current_user();
+
+if(!in_array('administrator', $current_user->roles) && !in_array('hr', $current_user->roles)) 
+    header('Location: /dashboard/company/');
+
 $company = get_field('company', 'user_' . $current_user->ID);
-if(!empty($company) ) 
+if(!empty($company) ){
     $company = $company[0];
-    
-$users = get_users();
-$members = array();
-foreach($users as $user)
-    $company = get_field('company',  'user_' . $user->ID);
-    if(!empty($company)){
-        $company = $company[0]->post_title;
-        if($company == $company_connected)
-            array_push($members, $user);
-    }
-    
-$team = count($members);
-    
+    $company_connected = $company->post_title;
+}
+
 $telnr = get_field('telnr', 'user_' . $current_user->ID);
 
-extract($_POST);
-if(isset($starter)){
-    // endpoint for product & customer 
-    $endpoint_customer = 'livelearn.nl/wp-json/wc/v3/customers';
-    $endpoint_product = 'livelearn.nl/wp-json/wc/v3/products';
-
-    $params = array( // login url params required to direct user to facebook and promt them with a login dialog
-        'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
-        'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
-    );
-
-    //create endpoint with params
-	$api_endpoint_customer = $endpoint_customer . '?' . http_build_query( $params );
-    $api_endpoint_product = $endpoint_product . '?' . http_build_query( $params );
-    
-    $data =  [
-        'email' => 'daniel@livelearn.nl',
-        'first_name' => 'Daniel',
-        'last_name' => 'Van Der Kolk',
-        'username' => 'Daniel.Van',
-        'billing' => [
-            'first_name' => 'Daniel',
-            'last_name' => 'Van Der Kolk',
-            'company' =>  'Livelearn',
-            'address_1' => $factuur_address,
-            'address_2' => '',
-            'city' => 'San Francisco',
-            'state' => 'CA',
-            'postcode' => '94103',
-            'country' => 'US',
-            'email' => 'daniel@livelearn.nl',
-            'phone' => "(31) 6 27 00 39 62"
-        ],
-        'shipping' => [
-            'first_name' => 'Daniel',
-            'last_name' => 'Van Der Kolk',
-            'company' =>  'Livelearn',
-            'address_1' => $factuur_address,
-            'address_2' => '',
-            'city' => 'San Francisco',
-            'state' => 'CA',
-            'postcode' => '94103',
-            'country' => 'US'
-        ]
-    ];
-
-    $data_product = [
-        'name' => $company->post_title . ' monthly subscription by livelearn',
-        'type' => 'simple',
-        'regular_price' => '5',
-        'description' => 'No short description',
-        'short_description' => 'No long description',
-        'categories' => [
-            [
-                'id' => 9
-            ],
-            [
-                'id' => 14
-            ]
-        ],
-        'images' => [
-            [
-                'src' => 'http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_front.jpg'
-            ],
-            [
-                'src' => 'http://demo.woothemes.com/woocommerce/wp-content/uploads/sites/56/2013/06/T_2_back.jpg'
-            ]
-        ]
-    ];
-
-    // initialize curl
-	$ch = curl_init();
-    $chp = curl_init();
-    
-    // set other curl options customer
-    curl_setopt($ch, CURLOPT_URL, $api_endpoint_customer);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
-
-    // set other curl options customer
-    curl_setopt($chp, CURLOPT_URL, $api_endpoint_product);
-    curl_setopt($chp, CURLOPT_POST, true);
-    curl_setopt($chp, CURLOPT_POSTFIELDS, $data_product);
-    curl_setopt($chp, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($chp, CURLOPT_FOLLOWLOCATION, TRUE);
-    curl_setopt($chp, CURLOPT_RETURNTRANSFER, true );
-
-    $httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
-    $httpCodeP = curl_getinfo($chp , CURLINFO_HTTP_CODE); // this results 0 every time
-
-    // get responses
-    $response_customer = curl_exec($ch);
-    $response_product = curl_exec($chp);
-
-    if ($response_customer === false || $response_product === false) {
-        $response_customer = curl_error($ch);
-        $response_product = curl_error($ch);
-        $error = true;
-        $message = "Something went wrong !";
+//Team members
+$users = get_users();
+$members = array();
+foreach($users as $user){
+    $company_value = get_field('company',  'user_' . $user->ID);
+    if(!empty($company_value)){
+        $company_value_title = $company_value[0]->post_title;
+        if($company_value_title == $company_connected)
+            array_push($members, $user);
     }
-    else{
-        // get customer_id
-        $data_response = json_decode( $response_customer, true );
-        $customer_id = $data_response[0]['id'];
+}
+$team = count($members);
 
-        // get product_id
-        $data_response_product = json_decode( $response_product, true );
-        $product_id = $data_response_product[0]['id'];
+if ( !in_array( 'hr', $current_user->roles ) && !in_array( 'manager', $current_user->roles ) && !in_array( 'administrator', $current_user->roles ) && !in_array( 'author', $current_user->roles ) ) 
+    header('Location: /dashboard/user');
 
-        /*
-        ** Create subscription
-        */ 
-        $endpoint = 'livelearn.nl/wp-json/wc/v3/customers';
+/*
+** List subscriptions
+*/ 
+$endpoint = 'https://livelearn.nl/wp-json/wc/v3/subscriptions';
 
-        $params = array( // login url params required to direct user to facebook and promt them with a login dialog
-            'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
-            'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
-        );
+$params = array(
+    // login url params required to direct user to facebook and promt them with a login dialog
+    'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
+    'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
+);
 
-        //create endpoint with params
-        $api_endpoint = $endpoint . '?' . http_build_query( $params );
-        
-        $data = [
-            'customer_id'       => $customer_id,
-            'status'            => 'active',
-            'billing_period'    => 'month',
-            'billing_interval'  => 12,
-            'start_date'        => '2022-12-06 09:05:00',
-            'next_payment_date' => '2023-01-06 09:45:00',
-            'payment_method'    => 'mollie',
-            'payment_details'   => [
-            
-            ],
-            'billing' => [
-                'first_name' => 'Daniel',
-                'last_name' => 'Van Der Kolk',
-                'company' =>  'Livelearn',
-                'address_1' => $factuur_address,
-                'address_2' => '',
-                'city' => 'San Francisco',
-                'state' => 'CA',
-                'postcode' => '94103',
-                'country' => 'US',
-                'email' => 'daniel@livelearn.nl',
-                'phone' => "(31) 6 27 00 39 62"
-            ],
-            'shipping' => [
-                'first_name' => 'Daniel',
-                'last_name' => 'Van Der Kolk',
-                'company' =>  'Livelearn',
-                'address_1' => $factuur_address,
-                'address_2' => '',
-                'city' => 'San Francisco',
-                'state' => 'CA',
-                'postcode' => '94103',
-                'country' => 'US'
-            ],
-            'line_items' => [
-                [
-                    'product_id' => $product_id,
-                    'quantity'   => $team
-                ],
-                [
-                    'product_id'   => $product_id,
-                    'variation_id' => 0,
-                    'quantity'     => $team
-                ]
-            ],
-            'shipping_lines' => [
-                [
-                    'method_id'    => 'flat_rate',
-                    'method_title' => 'Flat Rate',
-                    'total'        => '10'
-                ]
-            ],
-            'meta_data' => [
-                [
-                    'key'   => '_custom_subscription_meta',
-                    'value' => 'custom meta'
-                ]
-            ]
-        ];
+// create endpoint with params
+$api_endpoint = $endpoint . '?' . http_build_query( $params );
 
-        // initialize curl
-        $ch = curl_init();
-        
-        // set other curl options customer
-        curl_setopt($ch, CURLOPT_URL, $api_endpoint);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
+// initialize curl
+$ch = curl_init();
 
-        $httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
+// set other curl options customer
+curl_setopt($ch, CURLOPT_URL, $api_endpoint);
+curl_setopt($ch, CURLOPT_POST, false);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
 
-        // get responses
-        $response = curl_exec($ch);
-        if ($response === false) {
-            $response = curl_error($ch);
-            $error = true;
-            $message = "Something went wrong !";
-            echo stripslashes($response);
-        }
-
-        $data_response = json_decode( $response, true );
-        var_dump($data_response);
-
-    }
-
-    // close curl
-    curl_close( $ch );
+$httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
+$access_granted = false;
+$abonnement = array();
+// get responses
+$response = curl_exec($ch);
+if ($response === false) {
+    $response = curl_error($ch);
+    $error = true;
+    echo stripslashes($response);
+}
+else{
+    $data_response = json_decode( $response, true );
+    if(!empty($data_response))
+        foreach($data_response as $row)
+            if($row['billing']['company'] == $company_connected && $row['status'] == 'active'){
+                $access_granted = true;
+                $abonnement = $row;
+                break;
+            }                    
 }
 ?>
-<style>
-    .nav-tabs .nav-link.active {
-        background: #023356 !important;
-        color: #fff !important;
-    }
-    @media all and (max-width: 567px) {
-        .nav-fill {
-            margin-bottom: 50px !important;
-        }
-        .nav-tabs .nav-item a {
-            padding-top: 10px !important;
-            height: 43px;
-        }
 
-    }
-</style>
+<?php
+if (!$access_granted ){
+?>
 <div class="contentProfil ">
-    <div class="blockSidbarMobile blockSidbarMobile2">
-        <div class="zijbalk">
-            <p class="zijbalkMenu">zijbalk menu</p>
-            <button class="btn btnSidbarMob">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/filter.png" alt="">
-            </button>
+
+    <h1 class="titleSubscription">Abonnement</h1>
+    <center><?php if(isset($_GET['message'])) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>"?></center>
+    <div class="contentFormSubscription">
+       <h4> Team : <?= $team . ' X ' . '5' ?> = <?= $team * 5 ?>.00 € </h4><br>
+        <div id="required">
+        
         </div>
-    </div>
-    <div class="row ">
-        <div class="col-md-12">
-          
-            <!-- Tabs navs -->
-            <ul class="headTabsCompany" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="btn btnCustomTabs btnactive" type="button" id="tab1">
-                        Algemene bedrijfsinformatie
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="btnCustomTabs btn" type="button" id="tab2">
-                        Financiêle informatie
-                    </button>
-                </li>
-            </ul>
-            <!-- Tabs navs -->
+        <!-- <form action="" method="POST"> -->
+            <input type="hidden" id="user_id" value="<?= $current_user->ID ?>" >
 
-            <!-- Tabs content -->
-            <div class="tabContentCompany">
-                <div class="tab-pane show"  id="tab1Content" class="tab">
-                    <?php
-
-                        if(!empty($company)) {
-                            acf_form([
-                                'id' => 'edit-company-data-form',
-                                'post_id' => $company->ID,
-                                'fields' => array('company_logo', 'company_address', 'company_place', 'company_country'),
-                                'new_post' => false,
-                            ]);
-                        }
-                    ?>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="first_name">First name</label>
+                    <i class="fas fa-user" aria-hidden="true"></i>
+                    <input type="text" class="form-control" id="first_name" value="<?= $current_user->first_name ?>" aplaceholder="First name" name="first_name" required>
                 </div>
-                <div class="tab-pane"  id="tab2Content" class="tab">
-                    <div class="bg-white mt-5 p-2 radius-custom mb-4" id="div_table" style="display:block" >  
-                        <!-- <div class="h5 pt-2"><strong>Buget Livelearn team</strong></div> -->
-                        <div class="d-flex justify-content-between w-100 border-bottom border-5 pb-2">
-                            <div class="h5 pt-2"><strong>Buget Livelearn team</strong></div>
-                            <div><i class="fa fa-gear fa-2x pt-1"></i></div>
-                        </div>
+                <div class="form-group col-md-6">
+                    <label for="last_name">Last name</label>
+                    <i class="fas fa-users" aria-hidden="true"></i>
+                    <input type="text" class="form-control" id="last_name" value="<?= $current_user->last_name ?>" placeholder="Last name" name="last_name" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="bedrjifsnaam">Company Name</label>
+                <i class="fas fa-building" aria-hidden="true"></i>
+                <input type="text" class="form-control" id="bedrjifsnaam" value="<?= $company_connected ?>" placeholder="Bedrjifsnaam" name="bedrjifsnaam" required>
+            </div>
+            <div class="form-group">
+                <label for="city">Company place</label>
+                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                <input type="text" class="form-control" id="city" value="" placeholder="City" name="city">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="email">Email</label>
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                    <input type="email" class="form-control" id="email" value="<?= $current_user->user_email ?>" placeholder="Email" name="email" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="phone">Phone number</label>
+                    <i class="fas fa-phone" aria-hidden="true"></i>
+                    <input type="number" class="form-control" id="phone" value="<?= $telnr ?>" placeholder="Phone number" name="phone" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="actuur_address">Factuur Adress</label>
+                <i class="fas fa-thumbtack"></i>
+                <input type="text" class="form-control" id="factuur_address" value="" placeholder="Factuur Adress" name="factuur_address">
+            </div>
 
-                        <form method="POST" action="" class="">
-
-                            <!-- <div class="form-group py-4">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <label for="inputPassword" class="col-sm-2 col-form-label">
-                                            <strong class="h5">Bedrijfsnaam</strong></label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <input type="text" class="form-control border-0" id="inputPassword" placeholder=""
-                                        style="background: #E0EFF4">
-                                    </div>
-                                </div>
-                            </div> -->
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <label for="inputPassword" class="col-sm-2 col-form-label">
-                                            <strong class="h5">Factuuradres</strong></label>
-                                    </div>
-                                    <div class="col-md-8 pt-2">
-                                        <input type="text" name="factuur_address" class="form-control border-0" id="inputPassword" 
-                                            placeholder="" style="background: #E0EFF4">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <label for="inputPassword" class="col-sm-2 col-form-label">
-                                            <strong class="h5">Credicardgegevents</strong></label>
-                                    </div>
-                                    <div class="col-md-8 pt-2">
-                                        <input type="text" name="credit_card" class="form-control border-0" id="inputPassword" 
-                                            placeholder="" style="background: #E0EFF4">
-                                    </div>
-                                </div>
-                            </div>  
-
-                            <div class="row d-flex justify-content-center">
-                                    <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-                                    <button class="btn text-white" name="starter" style="background: #00A89D"><strong>Naar bedrijfsniveau</strong></button>
-                            </div>
-
-                        </form>
-                        
+            <div class="form-group">
+                <div class="checkSubs">
+                    <div class="form-check">
+                        <input class="form-check-input credit-card" type="radio" name="payement" id="method_payment" value="credit_card" >
+                        <label class="form-check-label" for="creditcard">
+                            Credit card 
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="payement" id="method_payment" value="invoice" checked>
+                        <label class="form-check-label" for="invoice">
+                            Invoice
+                        </label>
                     </div>
                 </div>
             </div>
-            <!-- Tabs content -->
 
-            <!-- <div class="blockgeneralPersoo">
-                <div class="blockPersoo2">
-                    <div class="blockPersoonlijke">
-                        <div class="headPersoon">
-                            <p class="titleHeadPersoon">Persoonlijke</p>
-                            <a href="#" class="iconeSetting">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/iconeSettings.png" alt="">
-                            </a>
-                        </div>
-                        <div class="contentPersoon">
-                            <a href="../detail-profile-teacher" class="blockImgName">
-                               <div class="profilImg">
-                                   <img src="<?php echo $image ?>" alt="">
-                               </div>
-                                <div class="blockTilteName">
-                                    <p class="name"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . '' . $user->last_name; else echo $user->display_name; ?></p>
-                                </div>
-                            </a>
-                            <div class="blockDetailprofil">
-                                <div class="iconeBlock">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" alt="">
-                                </div>
-                                <p class="TextDetail"><?php echo $company ?></p>
-                            </div>
-                            <div class="blockDetailprofil">
-                                <div class="iconeBlock">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" alt="">
-                                </div>
-                                <p class="TextDetail"><?php echo get_field('role', 'user_'.$user->ID);?></p>
-                            </div>
-                            <div class="blockDetailprofil">
-                                <div class="iconeBlock">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" alt="">
-                                </div>
-                                <p class="TextDetail"><?php echo $user->user_email;?></p>
-                            </div>
-                            <div class="blockDetailprofil">
-                                <div class="iconeBlock">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" alt="">
-                                </div>
-                                <p class="TextDetail"></p>
-                            </div>
-                            <div class="blockDetailprofil">
-                                <div class="iconeBlock">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" alt="">
-                                </div>
-                                <p class="TextDetail"><?php echo get_field('telnr', 'user_'.$user->ID);?></p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="is_trial" >
+                    <label class="form-check-label" for="is_trial">
+                        Trial (14 days)
+                    </label>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" name="starter" id="starter" class="btn btn-sendSubscrip">Start</button>
+            </div>
+        <!-- </form> -->
+        <div id="output">
+    
         </div>
-        <div class="col-md-5"></div>
     </div>
+
 </div>
+<?php
+}
+else
+    include_once('dashboard-company-confirmation.php');
+?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://js.mollie.com/v1/mollie.js"></script>
 
--->
 <script>
-    $("#tab2").click(function() {
-        $("#tab2").addClass('btnactive') ;
-        $("#tab1").removeClass('btnactive') ;
-        $("#tab2Content").show();
-        $("#tab1Content").hide();
+
+    function show1(){
+        document.getElementById('payementCard').style.display ='none';
+    }
+    function show2(){
+        document.getElementById('payementCard').style.display = 'block';
+    }
+
+    $(document).ready(function(){
+        $("#is_trial").change(function() {
+            if(this.checked) {
+                $("#starter").text("Start Trial");
+            } else {
+                $("#starter").text("Start")
+            }
+        });
     });
-    $("#tab1").click(function() {
-        $("#tab1").addClass('btnactive') ;
-        $("#tab2").removeClass('btnactive') ;
-        $("#tab1Content").show();
-        $("#tab2Content").hide();
+
+</script>
+
+<script>
+    
+    var button = document.getElementById('starter');
+    button.addEventListener('click', function(e) {
+        $(e.preventDefault());
+        var pass = 0;
+
+        var user_id = $('#user_id').val();
+        var first_name = $('#first_name').val();
+        var last_name = $('#last_name').val();
+        var bedrjifsnaam = $('#bedrjifsnaam').val();
+        var city = $('#city').val();
+        var email = $('#email').val();
+        var phone = $('#phone').val();
+        var factuur_address = $('#factuur_address').val();
+        var method_payment_state = document.getElementById('method_payment').checked;
+        var is_trial_state = document.getElementById('is_trial').checked;
+        var is_trial = 0;
+        var method_payment = "invoice";
+
+        if(method_payment_state)
+            method_payment = "credit_card";
+
+        if(is_trial_state)
+            is_trial = 1;
+        
+        if( Boolean(first_name) && Boolean(last_name) && Boolean(bedrjifsnaam) && Boolean(email) && Boolean(phone) )
+            pass = 1;
+
+        if(pass == 1){
+            $('#required').html("");
+
+            $('#starter').hide();
+
+            if(method_payment == 'credit_card'){
+                $.ajax({
+                    url:"/credit-card-details",
+                    method:"post",
+                    data:{
+                        user_id : user_id,
+                        first_name : first_name,
+                        last_name : last_name,
+                        bedrjifsnaam : bedrjifsnaam,
+                        city : city,
+                        email : email,
+                        phone : phone,
+                        factuur_address : factuur_address,
+                        is_trial : is_trial,
+                        method_payment : method_payment,
+                    },
+                    dataType:"text",
+                    success: function(data){
+                        console.log(data);
+                        window.location.href = data;
+                        // $('#output').html(data);
+                    },
+                    error: function (jqXHR, exception) {
+                        if (jqXHR.status == 500) {
+                            $('#output').html("<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Internal error, please try later !</a></center>");
+                        } else {
+                            $('#output').html("<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Something went wrong, please try later !</a></center>");
+                        }
+                        // Your error handling logic here..
+                    }
+                });
+            }
+            else{
+                $.ajax({
+                    url:"/starter",
+                    method:"post",
+                    data:{
+                        user_id : user_id,
+                        first_name : first_name,
+                        last_name : last_name,
+                        bedrjifsnaam : bedrjifsnaam,
+                        city : city,
+                        email : email,
+                        phone : phone,
+                        factuur_address : factuur_address,
+                        is_trial : is_trial,
+                        method_payment : method_payment,
+                    },
+                    dataType:"text",
+                    success: function(data){
+                        location.reload();
+                        // console.log(data);
+                    },
+                    error: function (jqXHR, exception) {
+                        if (jqXHR.status == 500) {
+                            $('#output').html("<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Internal error, please try later !</a></center>");
+                        } else {
+                            $('#output').html("<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Something went wrong, please try later !</a></center>");
+                        }
+                        // Your error handling logic here..
+                    }
+                });
+            }
+        }
+        else
+            $('#required').html("<b><small style='color: #E10F51'>*Please fill all fields correctly</small><b><br>");
     });
+
 </script>

@@ -15,7 +15,6 @@
         'order' => 'ASC', 
     );
     $assessments = get_posts($args);
-    
 ?>
 
 <div class="content-assessment">
@@ -35,7 +34,9 @@
 
                     $timer = 0;
                     $questions = get_field('question',$assessment->ID);
-                    $number_question = count($questions);
+                    $number_question = 0;
+                    if(!empty($questions))
+                        $number_question = count($questions);
                     foreach ($questions as $question)
                     {
                         $question_time = $question['timer'];
@@ -102,7 +103,7 @@
                             </div>
                         </div>
                         <div class="footerCardSkillsssessment">
-                            <a href= <?php echo "/detail-assessment?assessment_id=" . $assessment->ID; ?> class="btn btnDetailsAssessment">Details</a>
+                            <a href= <?php echo "/detail-assessment/?assessment_id=" . $assessment->ID; ?> class="btn btnDetailsAssessment">Details</a>
                             <button class="btn btnGetStartAssessment" data-target="#ModalBackEnd" data-toggle="modal" id= <?= $assessment->ID; ?> >Get Started</button>
                         </div>
                     </div>
@@ -128,7 +129,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="firstblockAssessments">
-                        <p class="titleCategorieAssessment">Start w/ your test : title</p>
+                        <p class="titleCategorieAssessment">Start your test</p>
                         <p class="descriptionAssessmentModal"><?= $description ?></p>
                         <p class="instructionTitle">Instructions</p>
                         <div class="listInstruction">
@@ -183,7 +184,7 @@
     <div id="secondBlockAssessmentsBackend">
         <div class="headSecondBlockAssessment">
             <button class="btn btnBackAssessments mr-2" id="back1"><img src="<?php echo get_stylesheet_directory_uri();?>/img/bi_arrow-left.png"></button>
-            <p class="titleCategorieAssessment">Start w/ your test : title</p>
+            <p class="titleCategorieAssessment">Start your test</p>
         </div>
         <div class="card cardOverviewAssessment">
             <div id="step1OverviewAssessmentBackend">
