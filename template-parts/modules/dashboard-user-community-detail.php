@@ -90,7 +90,7 @@ if($community){
             break;
         }
 
-    if(isset($bool_community))
+    if($bool_community)
         header('Location: /dashboard/user/communities/?message=Je moet lid zijn van deze gemeenschap voordat je toegang krijgt');
 ?>
 
