@@ -99,6 +99,8 @@ $table = $wpdb->prefix . 'databank';
           );
 
           $wpdb->insert($table,$data);
+
+          var_dump($data);
         
           $post_id = $wpdb->insert_id;
 
