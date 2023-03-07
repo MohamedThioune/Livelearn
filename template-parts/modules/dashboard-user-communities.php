@@ -17,21 +17,19 @@ $other_communities = array();
         <h1>Communities</h1>
     </div>
 
-    <?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"; ?>
-
     <div class="tabs-search-block">
         <div class="tabs-courses">
             <div class="tabs">
-                  <div class="head">
-                      <ul class="filters">
-                          <li class="item active">All</li>
-                          <li class="item">Your Groups</li>
-                          <li class="item">Others Groups</li>
-                      </ul>
-                      <!-- <input type="search" class="form-control search" placeholder="search"> -->
-                  </div>
+                <div class="head">
+                    <ul class="filters">
+                        <li class="item active">All</li>
+                        <li class="item">Your Groups</li>
+                        <li class="item">Others Groups</li>
+                    </ul>
+                    <!-- <input type="search" class="form-control search" placeholder="search"> -->
+                </div>
                 <div class="tabs__list">
-
+                     <?php if(isset($_GET['message'])) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>"; ?>
                     <div class="tab active">
                         <div class="group-card-communities d-flex flex-wrap">
                         <?php
@@ -58,7 +56,6 @@ $other_communities = array();
                             $followers = get_field('follower_community', $community->ID);
                             if(!empty($followers))
                                 $max_follower = count($followers);
-                            var_dump($followers);
                             foreach ($followers as $key => $value)
                                 if($value->ID == $user_id){
                                     $bool = true;
