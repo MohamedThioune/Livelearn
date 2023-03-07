@@ -20,32 +20,25 @@ if($optie == "accept"){
         $type = ['Opleidingen', 'Training', 'Masterclass', 'E-learning', 'Webinar'];
         $typos = ['Opleidingen' => 'course', 'Training' => 'training', 'Workshop' => 'workshop', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'Video' => 'video', 'Webinar' => 'webinar' ];
 
+        $args = array(
+            'post_type'   => 'post',
+            'post_author' => $course->author_id,
+            'post_status' => 'publish',
+            'post_title'  => $course->titel
+        );
+        $id_post = wp_insert_post($args);
+
+        echo $id_post;
+
+        return 0;
         //Insert Artikel
         if (strval($course->type) == "Artikel"){
-            $args = array(
-                'post_type'   => 'post',
-                'post_author' => $course->author_id,
-                'post_status' => 'publish',
-                'post_title'  => $course->titel
-            );
-            
-            $id_post = wp_insert_post($args);
-
             //Custom
             update_field('course_type', 'article', $id_post);
             update_field('article_itself', nl2br($course->long_description), $id_post);
         }
         //Insert YouTube
         else if (strval($course->type) == "Video"){
-            $args = array(
-                'post_type'   => 'course',
-                'post_author' => $course->author_id,
-                'post_status' => 'publish',
-                'post_title'  => $course->titel
-            );
-            
-            $id_post = wp_insert_post($args);
-
             //Custom
             $videos = explode(';', $course->videos);
             
@@ -68,15 +61,6 @@ if($optie == "accept"){
             update_field('youtube_videos', $youtube_videos, $id_post);
         }
         else if(in_array(strval($course->type), $type)){
-            $args = array(
-                'post_type'   => 'course',
-                'post_author' => $course->author_id,
-                'post_status' => 'publish',
-                'post_title'  => $course->titel
-            );
-            
-            $id_post = wp_insert_post($args);
-
             //Custom
             $coursetype = "";
             foreach($typos as $key => $typo)
@@ -124,7 +108,6 @@ if($optie == "accept"){
         
         $data = [ 'course_id' => $id_post]; // NULL value.
         $wpdb->update( $table, $data, $where );
-
     }
 }     
 else if($optie == "decline"){
@@ -135,12 +118,12 @@ else if($optie == "decline"){
 }
 $data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
 
-$updated = $wpdb->update( $table, $data, $where );
-echo $wpdb->last_error;
+// $updated = $wpdb->update( $table, $data, $where );
+// echo $wpdb->last_error;
 
-if($updated === false)
-    return false; 
-else 
-    return true;
+// if($updated === false)
+//     return false; 
+// else 
+//     return true;
 
 ?>
