@@ -424,7 +424,7 @@ if($community){
                                     <?php
                                         }
                                     else
-                                        echo $no_content;
+                                        echo "";
                                     ?>
                                 </div>
                                 <div class="second-section-dashboard">
