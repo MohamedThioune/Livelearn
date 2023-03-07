@@ -17,8 +17,6 @@
         array_push($other_communities, $community);
     }
 
-    $via_url = get_site_url() . "/community-overview";
-
     //current user
     $user_id = get_current_user_id();
 
@@ -85,9 +83,15 @@ if($community){
     $days = explode(' ', $date)[0];
     $month = $calendar[explode('-', $date)[1]];
     $year = explode('-', $days)[0];
+    
+    //Communities granted
+    $bool_community = false;
+    foreach($followers as $follower)
+        if($follower->ID == $user_id)
+            $bool_community = true;
 
-    if(!in_array($user_id, $followers))
-        header('Location: /dashboard/user/community-overview/?message=Je moet lid zijn van deze gemeenschap voordat je toegang krijgt');
+    if(!$bool_community)
+        header('Location: /dashboard/user/communities/?message=Je moet lid zijn van deze gemeenschap voordat je toegang krijgt');
 ?>
 
 <script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/classic/ckeditor.js"></script>
