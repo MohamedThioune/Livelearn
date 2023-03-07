@@ -133,8 +133,8 @@ else if($optie == "decline"){
     else if ($class == 'present' )
         wp_trash_post($course->course_id);
 }
-$data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
 
+$data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
 $updated = $wpdb->update( $table, $data, $where );
 
 if($updated === false)
