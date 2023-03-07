@@ -99,8 +99,6 @@ $table = $wpdb->prefix . 'databank';
           );
 
           $wpdb->insert($table,$data);
-
-          var_dump($data);
         
           $post_id = $wpdb->insert_id;
 
@@ -143,7 +141,7 @@ $table = $wpdb->prefix . 'databank';
     echo '<h3>No news playlists found</h3>';
 
   //Empty youtube channels after parse
-  // update_field('youtube_playlists', null , 'user_'. $author_id)
+  update_field('youtube_playlists', null , 'user_'. $author_id)
 ?>
 
 </body>
