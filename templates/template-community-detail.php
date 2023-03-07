@@ -143,21 +143,24 @@
         // courses comin through custom field 
         $courses = get_field('course_community', $community->ID);
 
+        // range on community
+        $level = get_field('range', $community->ID);
+
+        // employees of the company on community 
         $max_user = 0;
         if(!empty($authors))
             $max_user = count($authors);
 
+        // courses on community 
         $max_course = 0;
         if(!empty($courses))
             $max_course = count($courses);
 
+        // followers on community
         $max_follower = 0;
         $followers = get_field('follower_community', $community->ID);
         if(!empty($followers))
             $max_follower = count($followers);
-        
-        $level = get_field('range', $community->ID);
-
 ?>
     <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
     <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
