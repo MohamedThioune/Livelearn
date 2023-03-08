@@ -1142,132 +1142,84 @@ function filter_course(WP_REST_Request $request)
     return $filtered_courses;
   }
 
-  function filter_saved_courses($request)
+
+  function custom_filter_course(WP_REST_Request $request)
   {
-    $current_user = $GLOBALS['user_id'];
-    $course_saved = get_user_meta($current_user, 'course') ?? false;
+    $current_user_id = $GLOBALS['user_id'];
     $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
-    if (!empty($course_saved) || $course_saved) {
-      $courses = get_posts(
-        array(
-          'post_type' => array('course', 'post'),
-          'post_status' => 'publish',
-          'posts_per_page' => -1,
-          'order' => 'DESC',
-          'include' => $course_saved
-        )
-      );
-
-      $tags_parameter = $request['tags'] ?? [];
-      $authors = $request['authors'] ?? [];
-      $companies = $request['companies'] ?? [];
-      $date = $request['date'] ?? null;
-      $min_price = $request['min_price'] ?? 0;
-      $max_price = $request['max_price'] ?? 0;
-      $global_courses = array();
-      foreach ($courses as $key => $course) {
-        $course->visibility = get_field('visibility', $course->ID) ?? [];
-        $author = get_user_by('ID', $course->post_author);
-        $author_company = get_field('company', 'user_' . (int) $author->ID)[0];
-        if ($course->visibility != [])
-          if ($author_company != $current_user_company)
-            continue;
-        $course->experts = array();
-        $experts = get_field('experts', $course->ID);
-        if (!empty($experts))
-          foreach ($experts as $key => $expert) {
-            $expert = get_user_by('ID', $expert);
-            $experts_img = get_field('profile_img', 'user_' . $expert->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-            array_push($course->experts, new Expert($expert, $experts_img));
-          }
-        $author = get_user_by('ID', $course->post_author);
-        $author_img = get_field('profile_img', 'user_' . $author->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-        $course->author = new Expert($author, $author_img);
-        $course->longDescription = get_field('long_description', $course->ID);
-        $course->shortDescription = get_field('short_description', $course->ID);
-        $course->courseType = get_field('course_type', $course->ID);
-        $course->pathImage = get_field('url_image_xml', $course->ID);
-        $course->price = get_field('price', $course->ID) ?? 0;
-        $course->youtubeVideos = get_field('youtube_videos', $course->ID) ? get_field('youtube_videos', $course->ID) : [];
-        $course->podcasts = get_field('podcasts', $course->ID) ? get_field('podcasts', $course->ID) : [];
-        $course->visibility = get_field('visibility', $course->ID);
-        $course->connectedProduct = get_field('connected_product', $course->ID);
-        $tags = get_field('categories', $course->ID) ?? [];
-        $course->tags = array();
-        if ($tags)
-          if (!empty($tags))
-            foreach ($tags as $key => $category)
-              if (isset($category['value'])) {
-                $tag = new Tags($category['value'], get_the_category_by_ID($category['value']));
-                array_push($course->tags, $tag);
-              }
-
-        $new_course = new Course($course);
-        array_push($global_courses, $new_course);
-      }
-      $filtered_courses = array();
-      foreach ($global_courses as $key => $course) {
-    
-        /** Filter by tags */
-        if ($course->tags != [] && $tags_parameter != [])
-        { 
-          foreach ($course->tags as $key => $tag) {
-            if (in_array($tag->id, $tags_parameter))
-              if (!in_array($course, $filtered_courses)) {
-                array_push($filtered_courses, $course);
-              }
-          }
-          
+    $tags_parameter = $request['tags'] ?? [];
+    $authors = $request['authors'] ?? [];
+    $companies = $request['companies'] ?? [];
+    $date = $request['date'] ?? null;
+    $min_price = $request['min_price'] ?? 0;
+    $max_price = $request['max_price'] ?? 0;
+    $courses = $request['courses'];
+    $filtered_courses = array();
+    foreach ($courses as $key => $course) 
+    {
+      $course = (object)$course;
+      
+      /** Filter by tags */
+      if ($course->tags != [] && $tags_parameter != [])
+      { 
+        
+        foreach ($course->tags as $key => $tag) {
+          $tag = (object)$tag;
+          if (in_array($tag->id, $tags_parameter))
+            if (!in_array($course, $filtered_courses)) {
+              array_push($filtered_courses, $course);
+            
+            }
         }
-        /** Filter by author */
-        if ($authors != [])
-          foreach ($authors as $key => $autor) {
-            if ($autor == $course->author->id)
-              if (!in_array($course, $filtered_courses)) {
-                array_push($filtered_courses, $course);
-              }
-          }
-        if ($authors != [])
-          /** Filter by experts */
-          foreach ($authors as $key => $autor) {
-            foreach ($course->experts as $key => $expert) {
-              if ($autor == $expert->id)
-                if (!in_array($course, $filtered_courses)) {
-                  array_push($filtered_courses, $course);
-                }
-            }
-    
-          }
-    
-        /** Filter by minimum price */
-        if ($min_price != 0)
-          if ($course->price >= $min_price)
-            if (!in_array($course, $filtered_courses)) {
-              array_push($filtered_courses, $course);
-            }
-        /** Filter by maximum price */
-        if ($max_price != 0)
-          if ($max_price >= $course->price)
-            if (!in_array($course, $filtered_courses)) {
-              array_push($filtered_courses, $course);
-    
-            }
-    
-    
-        //     /** Filter by company */
-        if ($companies != [])
-          if (in_array($course->author->company->ID, $companies))
+        
+      }
+      /** Filter by author */
+      if ($authors != [])
+        foreach ($authors as $key => $autor) {
+          if ($autor == ((object)($course->author))->id)
             if (!in_array($course, $filtered_courses)) {
               array_push($filtered_courses, $course);
             }
         }
-        return $filtered_courses;
+      if ($authors != [])
+        /** Filter by experts */
+        foreach ($authors as $key => $autor) {
+          foreach ($course->experts as $key => $expert) {
+            if ($autor == ((object) $expert)->id)
+              if (!in_array($course, $filtered_courses)) {
+                array_push($filtered_courses, $course);
+              }
+          }
+
+        }
+
+      /** Filter by minimum price */
+        
+        if ($course->price >= $min_price)
+          if (!in_array($course, $filtered_courses)) {
+            array_push($filtered_courses, $course);
+          }
+      /** Filter by maximum price */
+      if ($max_price != 0)
+        if ($max_price >= $course->price)
+          if (!in_array($course, $filtered_courses)) {
+            array_push($filtered_courses, $course);
+          }
+
+
+      //     /** Filter by company */
+      if ($companies != [])
+      {
+        $course_company = $course->author["company"]["ID"];
+        if (in_array($course_company, $companies))
+          if (!in_array($course, $filtered_courses)) {
+            array_push($filtered_courses, $course);
+          }
       }
-    return [];     
+    }
+      return $filtered_courses;
   }
   
-
-
 
   function community_share($data){
     $bool = false;
