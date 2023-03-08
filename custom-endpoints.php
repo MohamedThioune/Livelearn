@@ -1224,6 +1224,7 @@ function filter_course(WP_REST_Request $request)
   function community_share($data){
     $bool = false;
     $communities = array();
+    $community_courses = array();
     $company = array();
     $infos = array();
     $infos['success'] = false;
@@ -1271,7 +1272,34 @@ function filter_course(WP_REST_Request $request)
       $community->image = get_field('image_community', $community->ID) ?: $company_image;
       
       // courses comin through custom field 
-      $community->courses = get_field('course_community', $community->ID);
+      $courses = get_field('course_community', $community->ID);
+      foreach($courses as $course){
+        $course_type = get_field('course_type', $course->ID);
+
+        //Legend image
+        $thumbnail = get_field('preview', $course->ID)['url'];
+        if(!$thumbnail){
+            $thumbnail = get_the_post_thumbnail_url($course->ID);
+            if(!$thumbnail)
+                $thumbnail = get_field('url_image_xml', $course->ID);
+            if(!$thumbnail)
+                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+        }
+
+        //Short description
+        $short_description = get_field('short_description', $course->ID);
+
+        $demand_course = (object)[
+          'title' => $course->post_title,
+          'picture_course' => $thumbnail,
+          'short_description' => $short_description,
+          'guid' => $course->guid,
+          'created_at' => $course->post_date
+        ];
+
+        array_push($community_courses, $demand_course);
+      }
+      $community->courses = $community_courses;
 
       $demand_community = (object)[
         'title' => $community->post_title,
