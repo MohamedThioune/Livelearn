@@ -119,7 +119,7 @@ if($community){
                     <ul class="filters">
                         <li class="item active">Activity</li>
                         <li class="item position-relative">Members <span><?= $max_follower ?></span></li>
-                        <!-- <li class="item item-question position-relative">Questions <span>22</span></li> -->
+                        <li class="item item-question position-relative">Questions <span>22</span></li>
                         <!-- <li class="item position-relative">Courses <span><?= $max_course ?></span></li> -->
                     </ul>
                 </div>
@@ -134,8 +134,7 @@ if($community){
                                         </div>
                                         <p class="text-question">Do you have a question ?</p>
                                     </div>
-
-                                    <!-- 
+                                    
                                     <div>
                                         <div class="interviewer-block d-flex">
                                             <div class="imgUser">
@@ -243,8 +242,7 @@ if($community){
                                         </div>
                                         <button class="btn btn-see-all">Seee All</button>
                                     </div> 
-                                    -->
-
+                                   
                                     <!-- Modal -->
                                     <div class="modal fade" id="modalQuestion" tabindex="-1" role="dialog" aria-labelledby="modalQuestionLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
@@ -283,14 +281,17 @@ if($community){
 
                                             if($i == 9)
                                                 continue;
-                                            
+
                                             //image
-                                            $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                            $thumbnail = get_field('preview', $course->ID)['url'];
+                                            if(!$thumbnail){
+                                                $thumbnail = get_the_post_thumbnail_url($course->ID);
                                             if(!$thumbnail)
                                                 $thumbnail = get_field('url_image_xml', $course->ID);
                                             if(!$thumbnail)
                                                 $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-                                            
+                                            }
+                                                                                                
                                             //short-description
                                             $short_description = get_field('short_description',  $course->ID);
 
