@@ -92,91 +92,87 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                 <?php 
                                 if($manager_image){
                                 ?>
-                                <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="">
+                                <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="userModal<?= $key ?>">
                                     <div class="ImgUser">
                                         <img src="<?= $manager_image ?>" alt="">
                                     </div>
-                                    <!-- <div class="ImgUser">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
-                                    </div>
                                     <div class="ImgUser">
                                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
-                                    </div> -->
+                                    </div>
                                 </button>
-                                    <!-- Modal -->
-                                    <div class="modal modalAllManager fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="userModalLabel">List of Manager</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <table class="table table-all-manager">
-                                                        <thead>
-                                                        <tr>
-                                                            <th scope="col">Name</th>
-                                                            <th scope="col">Photo</th>
-                                                            <th scope="col">Company</th>
-                                                            <th scope="col">Action</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>Daniel</td>
-                                                            <td>
-                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
-                                                            </td>
-                                                            <td>Livelearn</td>
-                                                            <td><a href="">See</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Daniel</td>
-                                                            <td>
-                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Fadel.png" alt="">
-                                                            </td>
-                                                            <td>Livelearn</td>
-                                                            <td><a href="">See</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Daniel</td>
-                                                            <td>
-                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
-                                                            </td>
-                                                            <td>Livelearn</td>
-                                                            <td><a href="">See</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Daniel</td>
-                                                            <td>
-                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
-                                                            </td>
-                                                            <td>Livelearn</td>
-                                                            <td><a href="">See</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Daniel</td>
-                                                            <td>
-                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
-                                                            </td>
-                                                            <td>Livelearn</td>
-                                                            <td><a href="">See</a></td>
-                                                        </tr>
+                                <!-- Modal -->
+                                <div class="modal modalAllManager fade" id="userModal<?= $key ?>" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="userModalLabel">List of Manager</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table table-all-manager">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Photo</th>
+                                                        <th scope="col">Company</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>Daniel</td>
+                                                        <td>
+                                                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
+                                                        </td>
+                                                        <td>Livelearn</td>
+                                                        <td><a href="">See</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Daniel</td>
+                                                        <td>
+                                                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Fadel.png" alt="">
+                                                        </td>
+                                                        <td>Livelearn</td>
+                                                        <td><a href="">See</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Daniel</td>
+                                                        <td>
+                                                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
+                                                        </td>
+                                                        <td>Livelearn</td>
+                                                        <td><a href="">See</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Daniel</td>
+                                                        <td>
+                                                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
+                                                        </td>
+                                                        <td>Livelearn</td>
+                                                        <td><a href="">See</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Daniel</td>
+                                                        <td>
+                                                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
+                                                        </td>
+                                                        <td>Livelearn</td>
+                                                        <td><a href="">See</a></td>
+                                                    </tr>
 
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                </div>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <?php
-                                    }
+                                </div>
+                                <?php
+                                }
                                 ?>
                             </td>
                             <td class="textTh">
