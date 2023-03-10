@@ -14821,10 +14821,15 @@ background: #FFFFFF !important;
 .new-card-course .title-favorite .title-course{
     font-style: normal;
     font-weight: 700;
-    font-size: 19px;
-    line-height: 19px;
+    font-size: 17px;
+    line-height: 25px;
     color: #043356;
     margin-bottom: 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-align: left;
 }
 .new-card-course .autor{
     font-style: normal;
@@ -15071,8 +15076,8 @@ background: #FFFFFF !important;
     object-fit: cover;
 }
 .block-img-title .imgCommunity{
-    width: 85px;
-    height: 85px;
+    width: 75px;
+    height: 75px;
     margin-top: -40px;
     margin-right: 15px;
 }
@@ -15086,7 +15091,11 @@ background: #FFFFFF !important;
     font-size: 17px;
     color: #000000;
     margin-bottom: 5px;
-    margin-top: 12px;
+    margin-top: 0px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 .block-img-title .statut-community{
     font-weight: 400;
@@ -15094,6 +15103,7 @@ background: #FFFFFF !important;
     line-height: 20px;
     color: #6B7C8F;
     text-align: left;
+    margin-bottom: 3px;
 }
 .card-communities .number-element{
     font-weight: 600;
