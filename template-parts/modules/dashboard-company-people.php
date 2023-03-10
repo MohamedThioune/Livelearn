@@ -110,8 +110,11 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                             <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
                             <td class="textTh thModife">
                                 <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="">
-                                    <?php foreach ($user->my_managers as $m) : 
+                                    <?php foreach ($user->my_managers as $key => $m) : 
                                         $image_manager = get_field('profile_img',  'user_' . $m->ID)?get_field('profile_img',  'user_' . $m->ID):get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                        if ($key == 2 ) {
+                                            break;
+                                        }
                                     ?>
                                     <div class="ImgUser">
                                         <img src="<?= $image_manager ?>" alt="img">
