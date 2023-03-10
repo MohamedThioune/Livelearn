@@ -9,7 +9,7 @@ global $wpdb;
 $pagination = 50;
 
 if(isset($_GET['id']))
-    $page = intval($_GET['id']);
+    $page = intval($_GET['id']); 
     if($page)
         $offset = ($page - 1) * $pagination;
 $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank ORDER BY id DESC LIMIT %d OFFSET %d", array($pagination, $offset));
@@ -47,16 +47,15 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                    <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
                        &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
-                       &nbsp;&nbsp;<button id="bouddha" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="load articles"></button>
-                       &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" disabled><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/artikel.jpg" alt="load subtopics"></button>
+                       <a id="bouddha" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="artikel" style="cursor:grab;"></a>
+                       &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/artikel.jpg" alt="load subtopics"></button>
                        
                     <div class="col-md-3">
                         
                         <select class="form form-control" id="select_field">
-                            <option value="">Get new contents from</option>
-                            <?php foreach ($websites as $website) { ?>
+                            <option value="">Get new contents from</option> 
+                            <?php foreach ($websites as $website)  ?>
                                 <option class="selected_website" value="<?= $website ?>"><?= $website ?></option>
-                            <?php } ?>
                         </select>
                     </div>
                     <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status">
@@ -115,7 +114,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     
                                     $state = $course->course_id ? 'present' : 'missing';
                                     $key = $course->id;
-                                ?>
+                            ?>
                                 <tr id="<?= $key ?>" class="<?= $state ?>">
                                     <td class="textTh"><input type="checkbox" class="checkOne" name="checkOne[]" id="chkBox" value="<?= $course->id ?>"></td>
                                     <td class="textTh"> <img src="<?= $image; ?>" alt="image course" width="50" height="50"></td>
@@ -136,7 +135,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     <td class="tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a href="/edit-databank?id=<?= $key ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> </td>
                                 </tr>
                             <?php
-                            }
+                                }
                             }else{
                                 echo("There is nothing to see here");
                             }
@@ -221,10 +220,10 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         $('#select_field').hide(true,2000);
         $('#loader').attr('hidden',false);
         $.ajax({
-            url:'/artikels',
+            url:'/artikels', 
             type:'POST',
             datatype:'json',
-            // cache:false,
+            cache:false,
             beforeSend:function(){
             },
             success:function(){
@@ -286,7 +285,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 url: '/subtopics',
                 type: 'POST',
                 data: {
-                    ids: $ids,
+                    ids: $ids
                 },
             });
         }
@@ -301,30 +300,30 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
     //     // var optie = e.target.id;
 
-    //     if(confirm('Are you sure you want to apply this record ?'))
-    //     {
-    //         $.ajax({
-    //            url: '/optieAll',
-    //            type: 'POST',
-    //            data: {
-    //                id: ids,
-    //                optie: optie,
-    //                class:classs
-    //             },
-    //            error: function() {
-    //               alert('Something is wrong');
-    //            },
-    //            success: function(data) {
-    //                 for(var i=0;i<ids.length;i++){
-    //                     $("#"+ids[i]).remove();
-    //                     console.log(ids[i]);
-    //                 }
-    //                 alert("Record applied successfully");
-    //                 location.reload();
-    //                 // window.location.href = "/livelearn/optieAll";
-    //            }
-    //         });
-    //     }
+        if(confirm('Are you sure you want to apply this record ?'))
+        {
+            $.ajax({
+               url: '/optieAll',
+               type: 'POST',
+               data: {
+            //        id: ids,
+            //        optie: optie,    
+                   class:classs
+                },
+               error: function() {
+                  alert('Something is wrong');
+               },
+               success: function(data) {
+                    for(var i=0;i<ids.length;i++){
+                        $("#"+ids[i]).remove();
+                        console.log(ids[i]);
+                    }
+                    alert("Record applied successfully");
+                    location.reload();
+                    // window.location.href = "/livelearn/optieAll";
+               }
+            });
+        }
         
     // });
 
@@ -489,7 +488,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     
 </script>  
 
-<script id="rendered-js" >
+<script defer id="rendered-js" >
 $(document).ready(function () {
     //Select2
     $(".multipleSelect2").select2({

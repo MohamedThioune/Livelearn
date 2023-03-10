@@ -99,7 +99,6 @@ $table = $wpdb->prefix . 'databank';
           );
 
           $wpdb->insert($table,$data);
-        
           $post_id = $wpdb->insert_id;
 
           $meta = $meta_value . '~' . $post_id;          
