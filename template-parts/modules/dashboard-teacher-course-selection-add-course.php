@@ -34,6 +34,7 @@
                         'submit_value'  => __('Opslaan & verder'),
                         'return' => '?func=add-course&id=%post_id%&step=2&type='.$_GET['type']
                     )); 
+                    
                 }?>
             </div>
         </div>

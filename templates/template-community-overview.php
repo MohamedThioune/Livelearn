@@ -133,6 +133,9 @@ $communities = get_posts($args);
                 $community_image = get_field('image_community', $community->ID) ?: $company_image;
 
                 $level = get_field('range', $community->ID);
+
+                // Get followers from community
+                $followers = get_field('follower_community', $community->ID);
             ?>
                 <div class="col-md-4">
                     <div class="card-community-overview">
@@ -167,8 +170,6 @@ $communities = get_posts($args);
                                     </div>
                                     <div class="userBlock">
                                         <?php
-                                            // Get followers from company
-                                            $followers = get_field('follower_community', $community->ID);
                                             if(!empty($followers))
                                             foreach($followers as $key => $value) {
                                                 if($key == 4)

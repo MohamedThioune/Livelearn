@@ -11,10 +11,23 @@
         $company_connected = $company[0]->post_title;
 
     $grant = get_field('manager',  'user_' . $user_connected);
-    $ismanaged = get_field('managed',  'user_' . $user_connected); 
-
+    $ismanaged = get_field('managed',  'user_' . $user_connected);
     $members = array();
-    foreach($users as $user)
+    $user_=[];
+    $member_id=[];
+    foreach($users as $user){
+        $my_managers = array(); 
+        foreach ($users as $key => $value) {
+            $users_manageds = get_field('managed',  'user_' . $value->ID);
+            if(!empty($users_manageds))
+                if (in_array($user->ID, $users_manageds)){
+                    array_push($my_managers, $value);
+                    //echo "Manager : # " . $value->ID . $value->first_name . " - User : # " . $user->ID . $user->display_name . "<br><br>";
+                }
+        }
+
+        $user->my_managers = $my_managers;
+
         if($user_connected != $user->ID ){
             $company = get_field('company',  'user_' . $user->ID);
             if(!empty($company)){
@@ -23,9 +36,16 @@
                     array_push($members, $user);
             }
         }
-    
+    }
+        //get  list of all managers
+        // $users_manageds=array();
+        // foreach($users as $user){
+        //     if(get_field('managed', 'user_'.$user->ID)){
+        //         $users_manageds[$user->ID] [] = get_field('managed',  'user_' . $user->ID); //pour un user toutes les personnes qu'il manage
+        //      //var_dump($users_manageds);
+        //  }
+        // }
     $count = count($members);
-
     extract($_POST);
 
     if(isset($missing_details_user)){
@@ -56,7 +76,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                         <th scope="col">Telefoonnummer</th>
                         <th scope="col" class="thOnder">Functie</th>
                         <th scope="col">Afdeling</th>
-                        <th scope="col">Manager</th>
+                        <th scope="col">Managers</th>
                         <th scope="col">Optie</th>
                     </tr>
                 </thead>
@@ -78,7 +98,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                     ?>
                         <tr id="<?php echo $user->ID; ?>" >
                             <td scope="row"><?= $key + 1; ?></td>
-                            <td class="textTh thModife">
+                            <td class="textTh thModife az">
                                 <div class="ImgUser">
                                     <a href="<?= $link; ?>" > <img src="<?php echo $image_user ?>" alt=""> </a>
                                 </div>
@@ -89,20 +109,17 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                             <td class="textTh elementOnder"><?php echo get_field('role', 'user_'.$user->ID);?></td>
                             <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
                             <td class="textTh thModife">
-                                <?php 
-                                if($manager_image){
-                                ?>
-                                <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="">
-                                    <div class="ImgUser">
-                                        <img src="<?= $manager_image ?>" alt="">
+
+                                <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="#userModal">
+                                    <?php foreach ($user->my_managers as $m) :
+                                    $image_manager = get_field('profile_img',  'user_' . $m->ID)?get_field('profile_img',  'user_' . $m->ID):get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                    ?>
+                                    <div class="ImgUser aq">
+                                        <img src="<?= $image_manager ?>" alt="img">
                                     </div>
-                                    <!-- <div class="ImgUser">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
-                                    </div>
-                                    <div class="ImgUser">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
-                                    </div> -->
+                                    <?php endforeach; ?>
                                 </button>
+
                                     <!-- Modal -->
                                     <div class="modal modalAllManager fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -124,47 +141,23 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <tr>
-                                                            <td>Daniel</td>
-                                                            <td>
-                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
-                                                            </td>
-                                                            <td>Livelearn</td>
-                                                            <td><a href="">See</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Daniel</td>
-                                                            <td>
-                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Fadel.png" alt="">
-                                                            </td>
-                                                            <td>Livelearn</td>
-                                                            <td><a href="">See</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Daniel</td>
-                                                            <td>
-                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
-                                                            </td>
-                                                            <td>Livelearn</td>
-                                                            <td><a href="">See</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Daniel</td>
-                                                            <td>
-                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
-                                                            </td>
-                                                            <td>Livelearn</td>
-                                                            <td><a href="">See</a></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Daniel</td>
-                                                            <td>
-                                                                <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/Ellipse17.png" alt="">
-                                                            </td>
-                                                            <td>Livelearn</td>
-                                                            <td><a href="">See</a></td>
-                                                        </tr>
+                                                        <?php foreach($members as $user) { 
+                                                            foreach($user->my_managers as $m):
+                                                                $image_manager_modal = get_field('profile_img',  'user_' . $m->ID)?get_field('profile_img',  'user_' . $m->ID):get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                                                $company = get_field('company',  'user_' . $m->ID);   
 
+                                                            ?>
+                                                        <tr>
+                                                            <td> <?php echo $m->first_name!='' ? $m->first_name : $m->display_name ?> </td>
+                                                            <td>
+                                                                <img class="" src="<?= $image_manager_modal ?> alt="">
+                                                            </td>
+                                                            <td><?= $company ?></td>
+                                                            <td><a href="">See</a></td>
+                                                        </tr>
+                                                        <?php 
+                                                        endforeach;
+                                                    } ?>
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -174,10 +167,6 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                             </div>
                                         </div>
                                     </div>
-
-                                    <?php
-                                    }
-                                ?>
                             </td>
                             <td class="textTh">
                                 <div class="dropdown text-white">
@@ -202,9 +191,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                                         <span>Verwijderen</span>
                                                     </div>
                                                 </li>
-                                            <?php
-                                        }
-                                        ?>
+                                            <?php } ?>
                                     </ul>
                                 </div>
                             </td>

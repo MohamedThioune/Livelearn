@@ -959,24 +959,21 @@ else if(isset($interest_multiple_push)){
 }
 
 else if(isset($question_community)){
-    $question_community = array();
     $question = array();
 
-    $user = wp_get_current_user();
+    $user_question = wp_get_current_user();
     $question_community = get_field('question_community', $community_id);
-    $question = [
-        'user_question' => $user,
-        'user_question' => $text_question
-    ];
+    $question['user_question'] = $user_question;
+    $question['text_question'] = $text_question;
 
-    if(empty($question_community))
-        $question_community = array($question);
-    else
-        array_push($question_community, $question);
+    if(!$question_community)
+        $question_community = array();
+
+    array_push($question_community, $question);
     
     update_field('question_community', $question_community, $community_id);
 
-    $path = "/dashboard/user/communities/?mu=" . $community_id . "&message=Question saved successfully !";
+    $path = "/dashboard/user/community-detail/?mu=" . $community_id . "&message=Question saved successfully !";
     header("Location: ". $path);
 }
 
