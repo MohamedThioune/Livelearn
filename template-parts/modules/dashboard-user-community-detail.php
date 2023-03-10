@@ -142,7 +142,7 @@ if($community){
                                         <p class="text-question">Do you have a question ?</p>
                                     </div>
                                     
-                                    <div>
+                                    <div class="w-100">
                                         <?php
                                         foreach($questions as $question):
                                         $user_question = $question['user_question'];

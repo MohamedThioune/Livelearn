@@ -1848,7 +1848,7 @@ $saved = get_user_meta($user_id, 'course');
             <a href="" class="btn btnStore">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/e-store.png" alt="">
             </a>
-            <a href="" class="btn btnPlayGoogle">
+            <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app" class="btn btnPlayGoogle">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/playGoogle.png" alt="">
             </a>
         </div>
