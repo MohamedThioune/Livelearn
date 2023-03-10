@@ -180,16 +180,16 @@
             <div class="imgBlockFooter">
                 <!-- <img src="<?php echo get_stylesheet_directory_uri();?>/img/logoFooter.png" alt="" class="logoFooter"> -->            </div>
             <div class="resauxsociaux">
-                <a href="">
+                <a href="https://www.linkedin.com/company/35716760/admin/" target="_blank">
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/linkedin.png" alt="">
                 </a>
-                <a href="">
+                <a href="#">
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/twitter.png" alt="">
                 </a>
-                <a href="">
+                <a href="https://www.facebook.com/LiveLearnHQ" target="_blank">
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/facebook.png" alt="">
                 </a>
-                <a href="">
+                <a href="https://www.instagram.com/livelearn.nl/ " target="_blank">
                     <img class="insta" src="<?php echo get_stylesheet_directory_uri();?>/img/insta.png" alt="">
                 </a>
             </div>
