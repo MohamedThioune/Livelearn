@@ -14821,10 +14821,15 @@ background: #FFFFFF !important;
 .new-card-course .title-favorite .title-course{
     font-style: normal;
     font-weight: 700;
-    font-size: 19px;
-    line-height: 19px;
+    font-size: 17px;
+    line-height: 25px;
     color: #043356;
     margin-bottom: 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-align: left;
 }
 .new-card-course .autor{
     font-style: normal;
@@ -15071,8 +15076,8 @@ background: #FFFFFF !important;
     object-fit: cover;
 }
 .block-img-title .imgCommunity{
-    width: 85px;
-    height: 85px;
+    width: 75px;
+    height: 75px;
     margin-top: -40px;
     margin-right: 15px;
 }
@@ -15086,7 +15091,11 @@ background: #FFFFFF !important;
     font-size: 17px;
     color: #000000;
     margin-bottom: 5px;
-    margin-top: 12px;
+    margin-top: 0px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 .block-img-title .statut-community{
     font-weight: 400;
@@ -15094,6 +15103,7 @@ background: #FFFFFF !important;
     line-height: 20px;
     color: #6B7C8F;
     text-align: left;
+    margin-bottom: 3px;
 }
 .card-communities .number-element{
     font-weight: 600;
@@ -15130,9 +15140,11 @@ background: #FFFFFF !important;
 .content-detail-community .head-detail-community{
     display: flex;
     background: url("img/bgcomminity.png") no-repeat;
-    margin: -30px -25px 30px;
+    margin: -30px 0px 30px -25px;
     padding: 50px 25px 15px;
     align-items: center;
+    width: 105%;
+    background-size: cover;
 }
 .content-detail-community .head-detail-community .block-detail-community{
     width: 410px;
@@ -15425,7 +15437,7 @@ background: #FFFFFF !important;
     margin-top: 36px;
 }
 .group-course-activity .question-block{
-    width: 97%;
+    width: 100%;
     background: white;
     display: flex;
     padding: 20px 20px;
@@ -15458,6 +15470,12 @@ background: #FFFFFF !important;
     background: #023356;
     color: white !important;
 }
+
+
+
+
+
+
 .ck-editor__editable {
     min-height: 200px;
     text-align: left;
@@ -15714,7 +15732,234 @@ background: #FFFFFF !important;
     bottom: 23px;
     font-style: italic;
 }
->>>>>>> 6158bd873425683c8f008094412ff61ad162181e
+.interviewer-block .ImgUser {
+    width: 44px;
+    margin-left: 0px;
+    height: 44px;
+}
+.interviewer-block .block-detail-interviewer{
+    width: 95%;
+    text-align: left;
+    margin-left: 17px;
+}
+.block-detail-interviewer .name-user-answer {
+    color: #033356;
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+.block-detail-interviewer .text-question{
+    font-size: 15px;
+    margin-bottom: 15px;
+    color: black;
+}
+.block-detail-interviewer .date-answer {
+    color: #4e4e4e;
+    margin-bottom: 7px;
+    margin-left: 100px;
+}
+.footer-answer-items{
+    display: flex;
+    align-items: center;
+    margin-right: 90px;
+}
+.footer-answer-items .fa{
+    color: #46a99e;
+    font-size: 19px;
+    margin-right: 12px;
+}
+.footer-answer-items p{
+    margin-bottom: 0;
+    font-size: 15px;
+}
+.interviewer-block{
+    margin-bottom: 20px;
+    background: white;
+    padding: 25px 20px;
+    border-radius: 11px;
+}
+#modalShareQuestion{
+    padding-top: 40px;
+}
+.block-all-answer{
+    display: none;
+    padding-left: 60px;
+    margin-top: 20px;
+}
+.block-all-answer .interviewer-block {
+    border-top: 1px solid #42454d5e;
+    margin-bottom: 0px;
+    margin-top: 20px;
+    border-radius: 0;
+    padding: 25px 0 0;
+}
+.block-input-answer{
+    display: none;
+}
+.block-input-answer input{
+    width: 100%;
+    min-height: 52px;
+    padding: 10px 95px 10px 20px;
+    background: #F0F5F7;
+    border: none;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+.block-input-answer .btn-send{
+    position: absolute;
+    right: 15px;
+    top: 22px;
+    background: #053356;
+    color: white;
+}
+.tab-one .text-question {
+    font-size: 15px;
+    margin-bottom: 15px;
+    color: black;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+.advert-course-Block .advert-one{
+    background: url("img/bg-avCourse.png") no-repeat;
+    padding: 25px 25px 3px;
+    overflow: hidden;
+    width: 68%;
+    margin-right: 25px;
+    margin-bottom: 0;
+    border-radius: 8px;
+}
+.advert-course-Block .advert-one .blockTextAdvert{
+    width: 60%;
+    color: white;
+}
+.advert-course-Block .advert-one .name {
+    color: white;
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+.advert-course-Block .advert-one .description {
+    color: white;
+    font-size: 16px;
+    font-weight: 300;
+    margin-bottom: 0;
+    line-height: 30px;
+}
+.advert-course-Block .advert-one .blockImgAdvert {
+    width: 31%;
+    margin-left: auto;
+    margin-top: -22px;
+    margin-right: 0px;
+}
+.advert-course-Block .advert-one .blockImgAdvert img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.advert-course-Block .advert-second{
+    width: 28%;
+    margin-top: 0;
+    margin-right: 0px;
+    background: #374557;
+    padding: 25px 25px;
+    color: white;
+    border-radius: 10px;
+}
+.advert-course-Block .advert-second .icone-course {
+    width: 50px;
+    height: 50px;
+    background: white;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    margin: 0px 15px 0px 0px;
+}
+.advert-course-Block .advert-second .icone-course img{
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+.advert-course-Block .number-course {
+    font-size: 13px;
+    margin-bottom: 2px;
+}
+.advert-course-Block .description{
+    font-size: 23px;
+    font-weight: 600;
+}
+.advert-course-Block .description-course{
+    margin-bottom: 0px;
+    font-size: 16px;
+    font-weight: 300;
+}
+.advert-course-Block{
+    margin-bottom: 40px;
+}
+.head-blockItemCourse .title{
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 19px;
+    color: #043356;
+    margin-bottom: 0;
+}
+.head-blockItemCourse .seeAllText{
+    margin-bottom: 0;
+    font-size: 17px;
+    color: #000000;
+    margin-right: 11px;
+}
+.head-blockItemCourse img{
+    height: 21px;
+}
+.card-course-activity .table .blockImgCourse{
+    width: 55px;
+    height: 55px;
+    margin-right: 22px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.card-course-activity .table .blockImgCourse img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.card-course-activity .table .name-element{
+    font-weight: 500;
+    font-size: 16px;
+    color: #071A27;
+    margin-bottom: 0;
+}
+.card-course-activity .table .blockImgUser{
+    width: 45px;
+    height: 45px;
+    border-radius: 100%;
+    overflow: hidden;
+    margin-right: 15px;
+}
+.card-course-activity .table .blockImgUser img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.card-course-activity table th, .table td {
+    text-align: left !important;
+}
+.card-course-activity table {
+    background: white;
+}
+.card-course-activity .table thead th {
+    border-bottom: 0px solid #dee2e6;
+}
+.r-1 {
+    position: relative;
+    top: -5.5px;
+}
+.head-blockItemCourse {
+    margin-bottom: 27px;
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;

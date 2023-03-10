@@ -81,7 +81,7 @@ $other_communities = array();
                                         <div class="imgCommunity">
                                             <img class="" src="<?= $community_image; ?>" alt="">
                                         </div>
-                                        <div>
+                                        <div class="text-left" style="padding-top: 15px;">
                                             <?= $access_community ?>
                                             <p class="statut-community">Private Groups</p>
                                         </div>
