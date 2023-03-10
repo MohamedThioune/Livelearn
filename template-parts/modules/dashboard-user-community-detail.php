@@ -83,6 +83,7 @@ if($community){
     $month = $calendar[explode('-', $date)[1]];
     $year = explode('-', $days)[0];
     
+    $user_id = get_current_user_id();
     $bool = false;
     //Communities granted
     foreach($followers as $follower)
@@ -92,8 +93,10 @@ if($community){
         }
     
     //Questions 
+    $max_question = 0;
     $questions = get_field('question_community', $community->ID);
-    $max_question = count($questions);
+    if(!empty($questions))
+        $max_question = count($questions);
 
     if(!$bool)
         header('Location: /dashboard/user/communities/?message=Je moet lid zijn van deze gemeenschap voordat je toegang krijgt');
