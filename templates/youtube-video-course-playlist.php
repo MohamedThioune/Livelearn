@@ -25,7 +25,7 @@ $table = $wpdb->prefix . 'databank';
   <h1>Youtube data API V3 - Playlist </h1>
   <?php
   /** Template Name: Youtube Video V3 Playlist */ 
-  $api_key = "AIzaSyDesrtvddE6l7tfbsPB3CTexWtqLwgNBK8";
+  $api_key = "AIzaSyB0J1q8-LdT0994UBb6Q35Ff5ObY-Kqi_0";
   $maxResults = 45;
 
   $users = get_users();
@@ -99,17 +99,15 @@ $table = $wpdb->prefix . 'databank';
           );
 
           $wpdb->insert($table,$data);
+        
           $post_id = $wpdb->insert_id;
-
-          echo $wpdb->last_error;
 
           $meta = $meta_value . '~' . $post_id;          
 
           if(add_user_meta(1, $meta_key, $meta))
             echo '✔️';
 
-          echo "<span class='textOpleidRight'> Course_ID: " . $playlist['id'] . " - Insertion done successfully <br><br></span>";
-          break;
+          echo "<span class='textOpleidRight'> Course_ID : " . $playlist['id'] . " - Insertion done successfully <br><br></span>";
         }
         else{
           $meta_course = 0;
