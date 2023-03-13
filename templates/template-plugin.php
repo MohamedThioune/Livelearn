@@ -36,8 +36,7 @@ function RandomString(){
       'Autoblog'=>'https://www.autoblog.nl/',
       'Crypto university'=>'https://www.cryptouniversity.nl/',
       'WineLife'=>'https://www.winelife.nl/',
-      'Perswijn'=>'https://perswijn.nl/',
-      'Koken met Kennis'=>'https://www.kokenmetkennis.nl/'//,
+      'Perswijn'=>'https://perswijn.nl/'
       // 'Minkowski'=>'https://minkowski.org/',
       // 'KIT publishers'=>'https://kitpublishers.nl/',
       // 'BeByBeta'=>'https://www.betastoelen.nl/',
