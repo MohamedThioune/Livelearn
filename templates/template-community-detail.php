@@ -116,7 +116,9 @@
     $user_id = get_current_user_id();
 
     $no_content =  '
+                    <p class="dePaterneText theme-card-description"> 
                     <span style="color:#033256"> Stay connected, Something big is coming 😊 </span> 
+                    </p>
                     ';
     $users = get_users();
     $authors = array();
