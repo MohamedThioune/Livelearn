@@ -296,9 +296,11 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                 search_user_company : txt,
             },
             dataType:"text",
-            success: function(data){
+            success: function(data) {
                 console.log(data);
-                $('#autocomplete_company_people').html(data);
+                const resultat_recherche = document.getElementById('autocomplete_company_people');
+                resultat_recherche.innerHTML = data;
+                // $('#autocomplete_company_people').html(data);
             }
         });
 
