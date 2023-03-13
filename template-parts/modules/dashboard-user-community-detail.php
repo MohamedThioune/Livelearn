@@ -25,9 +25,11 @@
     $user_image = $user_image ?: get_stylesheet_directory_uri() . '/img/user.png';
 
     $no_content = "
+    <center>
     <p class='dePaterneText theme-card-description'> 
         <span style='color:#033256'> Stay connected, Something big is coming 😊 </span> 
     </p>
+    </center>
     ";
 
     $no_content_event =  '
