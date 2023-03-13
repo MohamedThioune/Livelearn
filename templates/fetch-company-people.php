@@ -73,7 +73,7 @@ if(isset($search_user_company)){
         if( stristr($filter, $search_user_company) || $search_user_company == '')
             $row_company_people .= '
             <tr id="' . $user->ID .'" >
-                <td scope="row">' . $key + 1 . '</td>
+                <td scope="row">' . $key . '</td>
                 <td class="textTh thModife">
                     <div class="ImgUser">
                     <a href="' . $link . '" > <img src="' . $image_user  . '" alt=""> </a>
@@ -103,6 +103,5 @@ if(isset($search_user_company)){
             </tr>
             ';
     }
-
     echo $row_company_people;
 }
