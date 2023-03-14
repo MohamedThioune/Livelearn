@@ -17,21 +17,19 @@ $other_communities = array();
         <h1>Communities</h1>
     </div>
 
-    <?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"; ?>
-
     <div class="tabs-search-block">
         <div class="tabs-courses">
             <div class="tabs">
-                  <div class="head">
-                      <ul class="filters">
-                          <li class="item active">All</li>
-                          <li class="item">Your Groups</li>
-                          <li class="item">Others Groups</li>
-                      </ul>
-                      <!-- <input type="search" class="form-control search" placeholder="search"> -->
-                  </div>
+                <div class="head">
+                    <ul class="filters">
+                        <li class="item active">All</li>
+                        <li class="item">Your Groups</li>
+                        <li class="item">Others Groups</li>
+                    </ul>
+                    <!-- <input type="search" class="form-control search" placeholder="search"> -->
+                </div>
                 <div class="tabs__list">
-
+                     <?php if(isset($_GET['message'])) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>"; ?>
                     <div class="tab active">
                         <div class="group-card-communities d-flex flex-wrap">
                         <?php
@@ -58,7 +56,7 @@ $other_communities = array();
                             $followers = get_field('follower_community', $community->ID);
                             if(!empty($followers))
                                 $max_follower = count($followers);
-
+                            $bool = false;
                             foreach ($followers as $key => $value)
                                 if($value->ID == $user_id){
                                     $bool = true;
@@ -84,7 +82,7 @@ $other_communities = array();
                                         <div class="imgCommunity">
                                             <img class="" src="<?= $community_image; ?>" alt="">
                                         </div>
-                                        <div>
+                                        <div class="text-left" style="padding-top: 15px;">
                                             <?= $access_community ?>
                                             <p class="statut-community">Private Groups</p>
                                         </div>
@@ -110,6 +108,8 @@ $other_communities = array();
                                                     <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
                                               </form>";
                                     else
+                                        echo " <a href='/dashboard/user/community-detail/?mu=".$community->ID."' class='btn btn-join-group'>Go !</a>";
+
                                         // echo " <button type='button' class='btn btn-join-group' disabled>Join Group</button>";
                                     ?>
                                 </div>
@@ -160,7 +160,7 @@ $other_communities = array();
                         ?>
                             <div class="card-communities">
                                 <div class="head-card-communities">
-                                    <img class="" src="<?= $community_image; ?>" alt="">
+                                    <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/groups-bg-11.png" alt="">
                                 </div>
                                 <div class="body-card-community">
                                     <div class="block-img-title d-flex align-items-center">
@@ -169,7 +169,6 @@ $other_communities = array();
                                         </div>
                                         <div>
                                             <?= $access_community ?>
-                                            <a href="/dashboard/user/community-detail/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a>
                                             <p class="statut-community">Private Groups</p>
                                         </div>
                                     </div>
@@ -194,7 +193,7 @@ $other_communities = array();
                                                     <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
                                               </form>";
                                     else
-                                        echo " <button type='button' class='btn btn-join-group' disabled>Join Group</button>";
+                                        echo " <a href='/dashboard/user/community-detail/?mu=".$community->ID."' class='btn btn-join-group'>Go !</a>";
                                     ?>
                                 </div>
                             </div>
@@ -235,7 +234,7 @@ $other_communities = array();
                         ?>
                             <div class="card-communities">
                                 <div class="head-card-communities">
-                                    <img class="" src="<?= $community_image; ?>" alt="">
+                                    <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/groups-bg-11.png" alt="">
                                 </div>
                                 <div class="body-card-community">
                                     <div class="block-img-title d-flex align-items-center">

@@ -17,8 +17,6 @@
         array_push($other_communities, $community);
     }
 
-    $via_url = get_site_url() . "/community-overview";
-
     //current user
     $user_id = get_current_user_id();
 
@@ -26,12 +24,11 @@
     $user_image = get_field('profile_img',  'user_' . $user_id);
     $user_image = $user_image ?: get_stylesheet_directory_uri() . '/img/user.png';
 
-    $no_content_ =  '
-    <center>
-        <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" width="140" height="150" alt="Skill no-content" >
-        <br><span class="text-dark h5 p-1 mt-2" style="color:#033256"> No content found !</span>
-    <center>
-    ';
+    $no_content = "
+    <p class='dePaterneText theme-card-description'> 
+        <span style='color:#033256'> Stay connected, Something big is coming 😊 </span> 
+    </p>
+    ";
 
     $no_content_event =  '
     <center>
@@ -46,7 +43,7 @@
     if(isset($_GET['mu']))
         $community = get_post($_GET['mu']);
 
-    //Calendar don't mind about that
+    //Calendar don't mind about it
     $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
     
 
@@ -85,9 +82,24 @@ if($community){
     $days = explode(' ', $date)[0];
     $month = $calendar[explode('-', $date)[1]];
     $year = explode('-', $days)[0];
+    
+    $user_id = get_current_user_id();
+    $bool = false;
+    //Communities granted
+    foreach($followers as $follower)
+        if($follower->ID == $user_id){
+            $bool = true;
+            break;
+        }
+    
+    //Questions 
+    $max_question = 0;
+    $questions = get_field('question_community', $community->ID);
+    if(!empty($questions))
+        $max_question = count($questions);
 
-    if(!in_array($user_id, $followers))
-        header('Location : /community-overview/?message=Je moet lid zijn van deze gemeenschap voordat je toegang krijgt');
+    if(!$bool)
+        header('Location: /dashboard/user/communities/?message=Je moet lid zijn van deze gemeenschap voordat je toegang krijgt');
 ?>
 
 <script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/classic/ckeditor.js"></script>
@@ -114,7 +126,7 @@ if($community){
                     <ul class="filters">
                         <li class="item active">Activity</li>
                         <li class="item position-relative">Members <span><?= $max_follower ?></span></li>
-                        <!-- <li class="item item-question position-relative">Questions <span>22</span></li> -->
+                        <li class="item item-question position-relative">Questions <span><?= $max_question ?></span></li>
                         <!-- <li class="item position-relative">Courses <span><?= $max_course ?></span></li> -->
                     </ul>
                 </div>
@@ -129,117 +141,85 @@ if($community){
                                         </div>
                                         <p class="text-question">Do you have a question ?</p>
                                     </div>
-
-                                    <!-- 
-                                    <div>
+                                    
+                                    <div class="w-100">
+                                        <?php
+                                        foreach($questions as $key=>$question):
+                                        $user_question = $question['user_question'];
+                                        $user_question_name = $user_question->first_name ?: $user_question->display_name;
+                                        $user_question_image = get_field('profile_img', 'user_' . $user_question->ID);
+                                        $user_question_image = $user_question_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                        $text_question = $question['text_question'];
+                                        $reply_question = $question['reply_question'];
+                                        if(!empty($reply_question))
+                                            $reply_question_count = count($reply_question);
+                                        ?>
                                         <div class="interviewer-block d-flex">
                                             <div class="imgUser">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Fadel.png" alt="">
+                                                <img src="<?= $user_question_image ?>" alt="">
                                             </div>
                                             <div class="block-detail-interviewer">
                                                 <div class="d-flex align-items-center">
-                                                    <p class="name-user-answer">Abdourahmane Dieng</p>
-                                                    <p class="date-answer">March, 16 2023</p>
+                                                    <p class="name-user-answer"><?= $user_question_name; ?></p>
+                                                    <!-- <p class="date-answer">March, 16 2023</p> -->
                                                 </div>
-                                                <p class="text-question"> clAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud ametAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet..</p>
+                                                <p class="text-question"> <?= $text_question ?> </p>
                                                 <div class="d-flex">
                                                     <button class="btn footer-answer-items" id="answer-item-1">
                                                         <i class="fa fa-comment"></i>
-                                                        <p>34 answers</p>
+                                                        <p><?= $reply_question_count; ?> answers</p>
                                                     </button>
                                                     <button class="btn footer-answer-items" id="reply-btn-1">
                                                         <i class="fa fa-reply" aria-hidden="true"></i>
                                                         <p>Reply</p>
                                                     </button>
                                                 </div>
+                                                <!-- <div class="block-all-answer" id="">  -->
                                                 <div class="block-all-answer" id="block-all-answer-1">
-                                                    <div class="interviewer-block d-flex">
-                                                        <div class="imgUser">
-                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Fadel.png" alt="">
-                                                        </div>
-                                                        <div class="block-detail-interviewer">
-                                                            <div class="d-flex align-items-center">
-                                                                <p class="name-user-answer">Abdourahmane Dieng</p>
-                                                                <p class="date-answer">March, 16 2023</p>
+                                                    <?php
+                                                        foreach($reply_question as $reply):
+                                                        $user_reply = $reply['user_reply'];
+                                                        $user_reply_name = $user_reply->first_name ?: $user_reply->display_name;
+                                                        $user_reply_image = get_field('profile_img', 'user_' . $user_reply->ID);
+                                                        $user_reply_image = $user_reply_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                                        $text_reply = $reply['text_reply'];
+                                                    ?>
+                                                        <div class="interviewer-block d-flex">
+                                                            <div class="imgUser">
+                                                                <img src="<?= $user_reply_image ?>" alt="">
                                                             </div>
-                                                            <p class="text-question"> clAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud ametAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet..</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="interviewer-block d-flex">
-                                                        <div class="imgUser">
-                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Fadel.png" alt="">
-                                                        </div>
-                                                        <div class="block-detail-interviewer">
-                                                            <div class="d-flex align-items-center">
-                                                                <p class="name-user-answer">Abdourahmane Dieng</p>
-                                                                <p class="date-answer">March, 16 2023</p>
+                                                            <div class="block-detail-interviewer">
+                                                                <div class="d-flex align-items-center">
+                                                                    <p class="name-user-answer"><?= $user_reply_name ?></p>
+                                                                    <!-- <p class="date-answer">March, 16 2023</p> -->
+                                                                </div>
+                                                                <p class="text-question"> <?= $text_reply ?></p>
                                                             </div>
-                                                            <p class="text-question"> clAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud ametAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet..</p>
                                                         </div>
-                                                    </div>
+                                                    <?php
+                                                        endforeach;
+                                                        if(empty($reply_question))
+                                                            echo '<p>No responses !</p>';
+                                                    ?>
                                                 </div>
                                                 <div id="block-input-answer-1" class="block-input-answer position-relative">
-                                                    <input type="text">
-                                                    <button class="btn btn-send">Send</button>
+                                                    <form action="" method="POST" id="reply_question_community">
+                                                        <input type='hidden' form="reply_question_community" name='id' value='<?= $key ?>' >
+                                                        <input type='hidden' form="reply_question_community" name='community_id' value='<?= $community->ID ?>' >
+                                                        <input name="text_reply" form="reply_question_community" type="text" placeholder="Share your opinion on this question">
+                                                        <button type="submit" form="reply_question_community" name="reply_question_community" class="btn btn-send">Send</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="interviewer-block d-flex">
-                                            <div class="imgUser">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Fadel.png" alt="">
-                                            </div>
-                                            <div class="block-detail-interviewer">
-                                                <div class="d-flex align-items-center">
-                                                    <p class="name-user-answer">Abdourahmane Dieng</p>
-                                                    <p class="date-answer">March, 16 2023</p>
-                                                </div>
-                                                <p class="text-question"> clAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud ametAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet..</p>
-                                                <div class="d-flex">
-                                                    <button class="btn footer-answer-items" id="answer-item-1">
-                                                        <i class="fa fa-comment"></i>
-                                                        <p>34 answers</p>
-                                                    </button>
-                                                    <button class="btn footer-answer-items" id="reply-btn-1">
-                                                        <i class="fa fa-reply" aria-hidden="true"></i>
-                                                        <p>Reply</p>
-                                                    </button>
-                                                </div>
-                                                <div class="block-all-answer" id="block-all-answer-1">
-                                                    <div class="interviewer-block d-flex">
-                                                        <div class="imgUser">
-                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Fadel.png" alt="">
-                                                        </div>
-                                                        <div class="block-detail-interviewer">
-                                                            <div class="d-flex align-items-center">
-                                                                <p class="name-user-answer">Abdourahmane Dieng</p>
-                                                                <p class="date-answer">March, 16 2023</p>
-                                                            </div>
-                                                            <p class="text-question"> clAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud ametAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet..</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="interviewer-block d-flex">
-                                                        <div class="imgUser">
-                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Fadel.png" alt="">
-                                                        </div>
-                                                        <div class="block-detail-interviewer">
-                                                            <div class="d-flex align-items-center">
-                                                                <p class="name-user-answer">Abdourahmane Dieng</p>
-                                                                <p class="date-answer">March, 16 2023</p>
-                                                            </div>
-                                                            <p class="text-question"> clAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud ametAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet..</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div id="block-input-answer-1" class="block-input-answer position-relative">
-                                                    <input type="text">
-                                                    <button class="btn btn-send">Send</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button class="btn btn-see-all">Seee All</button>
+                                        <?php
+                                        endforeach;
+                                        if(empty($questions))
+                                            echo '<p>No questions !</p>';
+                                        ?>
+                                        <!-- <button class="btn btn-see-all">Seee All</button> -->
                                     </div> 
-                                    -->
-
+                                   
                                     <!-- Modal -->
                                     <div class="modal fade" id="modalQuestion" tabindex="-1" role="dialog" aria-labelledby="modalQuestionLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
@@ -253,11 +233,11 @@ if($community){
                                                 <div class="modal-body text-left">
                                                     <form action="" method="POST" id="question_community">
                                                         <input type='hidden' form="question_community" name='community_id' value='<?= $community->ID ?>' >
-                                                        <textarea form="question_community" name="text_question" id="editor">Write your question......</textarea>
+                                                        <textarea form="question_community" name="text_question" id="editor" placeholder="Write your question..."></textarea>
                                                     </form>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="reset" form="question_community" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="reset" form="question_community" class="btn btn-secondary" data-dismiss="mofdal">Close</button>
                                                     <button type="submit" form="question_community" name="question_community" class="btn btn-send">Send</button>
                                                 </div>
                                             </div>
@@ -278,14 +258,17 @@ if($community){
 
                                             if($i == 9)
                                                 continue;
-                                            
+
                                             //image
-                                            $thumbnail = get_the_post_thumbnail_url($course->ID);
-                                            if(!$thumbnail)
-                                                $thumbnail = get_field('url_image_xml', $course->ID);
-                                            if(!$thumbnail)
-                                                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-                                            
+                                            $thumbnail = get_field('preview', $course->ID)['url'];
+                                            if(!$thumbnail){
+                                                $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                                if(!$thumbnail)
+                                                    $thumbnail = get_field('url_image_xml', $course->ID);
+                                                if(!$thumbnail)
+                                                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                                            }
+                                                                                                
                                             //short-description
                                             $short_description = get_field('short_description',  $course->ID);
 
@@ -421,7 +404,7 @@ if($community){
                                     <?php
                                         }
                                     else
-                                        echo $no_content;
+                                        echo "";
                                     ?>
                                 </div>
                                 <div class="second-section-dashboard">
@@ -429,7 +412,7 @@ if($community){
                                         <h2>Upcoming Schedule</h2>
                                         <?php
                                         if(!empty($events)){
-                                        foreach($events as $key => $course){
+                                            foreach($events as $key => $course){
                                             if($key == 3)
                                                 break;
 
@@ -479,10 +462,10 @@ if($community){
                                                 </div>
                                             </div>
                                         <?php
-                                                }
                                             }
-                                            else
-                                                echo $no_content;
+                                        }
+                                        else
+                                            echo $no_content;
                                         ?> 
                                         <!-- <a href="#" class="btn btn-more-events">More Events</a> -->
                                     </div>
@@ -575,17 +558,27 @@ if($community){
                             </div>
                         </div>
                         <div class="tab tab-active">
+                            <?php
+                            foreach($questions as $question):
+                            $user_question = $question['user_question'];
+                            $user_question_name = $user_question->first_name ?: $user_question->display_name;
+                            $user_question_image = get_field('profile_img', 'user_' . $user_question->ID);
+                            $user_question_image = $user_question_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                            $text_question = $question['text_question'];
+                            ?>
                             <div class="interviewer-block d-flex">
                                 <div class="imgUser">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Fadel.png" alt="">
+                                    <img src="<?= $user_question_image ?>" alt="">
                                 </div>
                                 <div class="block-detail-interviewer">
+                                   
                                     <div class="d-flex align-items-center">
-                                        <p class="name-user-answer">Abdourahmane Dieng</p>
-                                        <p class="date-answer">March, 16 2023</p>
+                                        <p class="name-user-answer"><?= $user_question_name; ?></p>
+                                        <!-- <p class="date-answer">March, 16 2023</p> -->
                                     </div>
-                                    <p class="text-question"> clAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud ametAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet..</p>
+                                    <p class="text-question"><?= $text_question ?></p>
                                     <div class="d-flex">
+                                        <!-- 
                                         <button class="btn footer-answer-items" id="answer-item-1">
                                             <i class="fa fa-comment"></i>
                                             <p>34 answers</p>
@@ -594,8 +587,9 @@ if($community){
                                             <i class="fa fa-reply" aria-hidden="true"></i>
                                             <p>Reply</p>
                                         </button>
+                                        -->
                                     </div>
-                                    <div class="block-all-answer" id="block-all-answer-1">
+                                    <!-- <div class="block-all-answer" id="block-all-answer-1">
                                         <div class="interviewer-block d-flex">
                                             <div class="imgUser">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Fadel.png" alt="">
@@ -624,9 +618,14 @@ if($community){
                                     <div id="block-input-answer-1" class="block-input-answer position-relative">
                                         <input type="text">
                                         <button class="btn btn-send">Send</button>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
+                            <?php
+                            endforeach;
+                            if(empty($questions))
+                                echo '<p>No questions !</p>';
+                            ?>
                         </div>
                         <div class="tab">
                             <div class="group-files-members">

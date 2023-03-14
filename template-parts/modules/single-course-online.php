@@ -105,18 +105,16 @@ extract($_GET);
                                 echo "<img src='" . $thumbnail . "' alt='preview image'>";
                         }
                         else {
-                            if(isset($lesson))
-                                echo '
-                                    <audio controls>
-                                        <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/ogg">
-                                        <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/mpeg">
-                                        <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aac">
-                                        <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/wav">
-                                        <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aiff">
-                                    </audio>';
-                            else
-                                echo "<img src='" . $thumbnail . "' alt='preview image'>";
-
+                            if(!isset($lesson))
+                                $lesson = 0;
+                            echo '
+                                <audio controls>
+                                    <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/ogg">
+                                    <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/mpeg">
+                                    <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aac">
+                                    <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/wav">
+                                    <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aiff">
+                                </audio>';
                         }
                     }
 
@@ -689,7 +687,9 @@ extract($_GET);
                                     ?>
                                     <a style="color:#F79403" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo $post->post_title; ?></a>
                                     <?php
-                                    foreach($podcasts as $key => $podcast){
+                                        if(!isset($lesson))
+                                            $lesson = 0;
+                                        foreach($podcasts as $key => $podcast){
                                         $style = "";
                                         if(isset($lesson))
                                             if($lesson == $key)
