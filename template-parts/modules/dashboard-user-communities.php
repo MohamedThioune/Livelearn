@@ -108,6 +108,8 @@ $other_communities = array();
                                                     <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
                                               </form>";
                                     else
+                                        echo " <a href='/dashboard/user/community-detail/?mu='" . $community->ID . "' class='btn btn-join-group'>Go !</a>";
+
                                         // echo " <button type='button' class='btn btn-join-group' disabled>Join Group</button>";
                                     ?>
                                 </div>
@@ -158,7 +160,7 @@ $other_communities = array();
                         ?>
                             <div class="card-communities">
                                 <div class="head-card-communities">
-                                    <img class="" src="<?= $community_image; ?>" alt="">
+                                    <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/groups-bg-11.png" alt="">
                                 </div>
                                 <div class="body-card-community">
                                     <div class="block-img-title d-flex align-items-center">
@@ -167,7 +169,6 @@ $other_communities = array();
                                         </div>
                                         <div>
                                             <?= $access_community ?>
-                                            <a href="/dashboard/user/community-detail/?mu=<?= $community->ID ?>" class="name-community"><?= $community->post_title; ?></a>
                                             <p class="statut-community">Private Groups</p>
                                         </div>
                                     </div>
@@ -233,7 +234,7 @@ $other_communities = array();
                         ?>
                             <div class="card-communities">
                                 <div class="head-card-communities">
-                                    <img class="" src="<?= $community_image; ?>" alt="">
+                                    <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/groups-bg-11.png" alt="">
                                 </div>
                                 <div class="body-card-community">
                                     <div class="block-img-title d-flex align-items-center">
