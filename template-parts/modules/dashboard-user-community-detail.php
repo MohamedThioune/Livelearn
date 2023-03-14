@@ -225,11 +225,11 @@ if($community){
                                                 <div class="modal-body text-left">
                                                     <form action="" method="POST" id="question_community">
                                                         <input type='hidden' form="question_community" name='community_id' value='<?= $community->ID ?>' >
-                                                        <textarea form="question_community" name="text_question" id="editor">Write your question......</textarea>
+                                                        <textarea form="question_community" name="text_question" id="editor" placeholder="Write your question..."></textarea>
                                                     </form>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="reset" form="question_community" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="reset" form="question_community" class="btn btn-secondary" data-dismiss="mofdal">Close</button>
                                                     <button type="submit" form="question_community" name="question_community" class="btn btn-send">Send</button>
                                                 </div>
                                             </div>

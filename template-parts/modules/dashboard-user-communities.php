@@ -108,7 +108,7 @@ $other_communities = array();
                                                     <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
                                               </form>";
                                     else
-                                        echo " <a href='/dashboard/user/community-detail/?mu='" . $community->ID . "' class='btn btn-join-group'>Go !</a>";
+                                        echo " <a href='/dashboard/user/community-detail/?mu='".$community->ID."' class='btn btn-join-group'>Go !</a>";
 
                                         // echo " <button type='button' class='btn btn-join-group' disabled>Join Group</button>";
                                     ?>
@@ -193,7 +193,7 @@ $other_communities = array();
                                                     <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
                                               </form>";
                                     else
-                                        echo " <button type='button' class='btn btn-join-group' disabled>Join Group</button>";
+                                        echo " <a href='/dashboard/user/community-detail/?mu='".$community->ID."' class='btn btn-join-group'>Go !</a>";
                                     ?>
                                 </div>
                             </div>
