@@ -331,7 +331,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         var tr_element = e.target.parentElement.closest("tr");
         var ids = tr_element.id;
         var classs = tr_element.className;
-
+ 
         var optie = e.target.id;
 
         if(confirm('Are you sure you want to apply this record ?'))
