@@ -144,12 +144,15 @@ if($community){
                                     
                                     <div class="w-100">
                                         <?php
-                                        foreach($questions as $question):
+                                        foreach($questions as $key=>$question):
                                         $user_question = $question['user_question'];
                                         $user_question_name = $user_question->first_name ?: $user_question->display_name;
                                         $user_question_image = get_field('profile_img', 'user_' . $user_question->ID);
                                         $user_question_image = $user_question_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                         $text_question = $question['text_question'];
+                                        $reply_question = $question['reply_question'];
+                                        if(!empty($reply_question))
+                                            $reply_question_count = count($reply_question);
                                         ?>
                                         <div class="interviewer-block d-flex">
                                             <div class="imgUser">
@@ -164,7 +167,7 @@ if($community){
                                                 <div class="d-flex">
                                                     <button class="btn footer-answer-items" id="answer-item-1">
                                                         <i class="fa fa-comment"></i>
-                                                        <p>0 answers</p>
+                                                        <p><?= $reply_question_count; ?> answers</p>
                                                     </button>
                                                     <button class="btn footer-answer-items" id="reply-btn-1">
                                                         <i class="fa fa-reply" aria-hidden="true"></i>
@@ -173,34 +176,39 @@ if($community){
                                                 </div>
                                                 <!-- <div class="block-all-answer" id="block-all-answer-1"> -->
                                                 <div class="block-all-answer" id=""> 
-                                                    <div class="interviewer-block d-flex">
-                                                        <div class="imgUser">
-                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Fadel.png" alt="">
-                                                        </div>
-                                                        <div class="block-detail-interviewer">
-                                                            <div class="d-flex align-items-center">
-                                                                <p class="name-user-answer">Abdourahmane Dieng</p>
-                                                                <p class="date-answer">March, 16 2023</p>
+                                                    <?php
+                                                        foreach($reply_question as $reply):
+                                                        $user_reply = $reply['user_reply'];
+                                                        $user_reply_name = $user_reply->first_name ?: $user_reply->display_name;
+                                                        $user_reply_image = get_field('profile_img', 'user_' . $user_reply->ID);
+                                                        $user_reply_image = $user_reply_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                                        $text_reply = $reply['text_question'];
+                                                    ?>
+                                                        <div class="interviewer-block d-flex">
+                                                            <div class="imgUser">
+                                                                <img src="<?= $user_reply_image ?>" alt="">
                                                             </div>
-                                                            <p class="text-question"> clAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud ametAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet..</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="interviewer-block d-flex">
-                                                        <div class="imgUser">
-                                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Fadel.png" alt="">
-                                                        </div>
-                                                        <div class="block-detail-interviewer">
-                                                            <div class="d-flex align-items-center">
-                                                                <p class="name-user-answer">Abdourahmane Dieng</p>
-                                                                <p class="date-answer">March, 16 2023</p>
+                                                            <div class="block-detail-interviewer">
+                                                                <div class="d-flex align-items-center">
+                                                                    <p class="name-user-answer"><?= $user_reply_name ?></p>
+                                                                    <!-- <p class="date-answer">March, 16 2023</p> -->
+                                                                </div>
+                                                                <p class="text-question"> <?= $text_reply ?></p>
                                                             </div>
-                                                            <p class="text-question"> clAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud ametAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet..</p>
                                                         </div>
-                                                    </div>
+                                                    <?php
+                                                        endforeach;
+                                                        if(empty($reply_question))
+                                                            echo '<p>No responses !</p>';
+                                                    ?>
                                                 </div>
                                                 <div id="block-input-answer-1" class="block-input-answer position-relative">
-                                                    <input type="text">
-                                                    <button class="btn btn-send">Send</button>
+                                                    <form action="" method="POST" id="reply_question_community">
+                                                        <input type='hidden' form="reply_question_community" name='id' value='<?= $key ?>' >
+                                                        <input type='hidden' form="reply_question_community" name='community_id' value='<?= $community->ID ?>' >
+                                                        <input name="text_reply" form="reply_question_community" type="text" placeholder="Share your opinion on this question">
+                                                        <button type="submit" form="reply_question_community" name="reply_question_community" class="btn btn-send">Send</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
