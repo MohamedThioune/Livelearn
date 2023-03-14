@@ -87,7 +87,7 @@ if($optie == "accept"){
             update_field('course_type', $typos[$course->type] , $id_post);
         }
 
-        if(!is_wp_error($author_id)){
+        if(is_wp_error($id_post)){
             $error = new WP_Error($id_post);
             echo $error->get_error_message($id_post);
         }
