@@ -578,14 +578,16 @@ if($community){
                                     </div>
                                     <p class="text-question"><?= $text_question ?></p>
                                     <div class="d-flex">
-                                        <!-- <button class="btn footer-answer-items" id="answer-item-1">
+                                        <!-- 
+                                        <button class="btn footer-answer-items" id="answer-item-1">
                                             <i class="fa fa-comment"></i>
                                             <p>34 answers</p>
-                                        </button> -->
+                                        </button>
                                         <button class="btn footer-answer-items" id="reply-btn-1">
                                             <i class="fa fa-reply" aria-hidden="true"></i>
                                             <p>Reply</p>
                                         </button>
+                                        -->
                                     </div>
                                     <!-- <div class="block-all-answer" id="block-all-answer-1">
                                         <div class="interviewer-block d-flex">
