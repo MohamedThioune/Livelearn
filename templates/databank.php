@@ -291,14 +291,14 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         }
     });
 
-    $('.optieAll').click((e)=>{
-        // var tr_element = e.target.parentElement.closest("tr");
-        // var get = document.getElementsByName('checkOne');
-        var classs = tr_element.className;
+    // $('.optieAll').click((e)=>{
+    //     // var tr_element = e.target.parentElement.closest("tr");
+    //     // var get = document.getElementsByName('checkOne');
+    //     var classs = tr_element.className;
 
-        console.log(ids);
+    //     console.log(ids);
 
-        // var optie = e.target.id;
+    //     // var optie = e.target.id;
 
         if(confirm('Are you sure you want to apply this record ?'))
         {
@@ -325,7 +325,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             });
         }
         
-    });
+    // });
 
     $('.optie').click((e)=>{
         var tr_element = e.target.parentElement.closest("tr");

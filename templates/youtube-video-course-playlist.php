@@ -101,8 +101,6 @@ $table = $wpdb->prefix . 'databank';
           $wpdb->insert($table,$data);
           $post_id = $wpdb->insert_id;
 
-          echo $wpdb->last_error;
-
           $meta = $meta_value . '~' . $post_id;          
 
           if(add_user_meta(1, $meta_key, $meta))
