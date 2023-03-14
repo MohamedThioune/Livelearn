@@ -6,7 +6,11 @@ global $wpdb;
 
 $table = $wpdb->prefix . 'databank'; 
 
-extract($_POST);
+// extract($_POST);
+
+$id = 255;
+$optie = "accept";
+$class = "missing";
 
 $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
 $course = $wpdb->get_results( $sql )[0];
@@ -29,7 +33,7 @@ if($optie == "accept"){
                 'post_status' => 'publish',
                 'post_title'  => $course->titel
             );
-            $id_post = wp_insert_post($args);
+            $id_post = wp_insert_post($args, true);
 
             //Custom
             update_field('course_type', 'article', $id_post);
@@ -44,7 +48,7 @@ if($optie == "accept"){
                 'post_status' => 'publish',
                 'post_title'  => $course->titel
             );
-            $id_post = wp_insert_post($args);
+            $id_post = wp_insert_post($args, true);
 
             //Custom
             $videos = explode(';', $course->videos);
@@ -76,7 +80,7 @@ if($optie == "accept"){
                 'post_status' => 'publish',
                 'post_title'  => $course->titel
             );
-            $id_post = wp_insert_post($args);
+            $id_post = wp_insert_post($args, true);
 
             //Custom
             $coursetype = "";
@@ -85,6 +89,12 @@ if($optie == "accept"){
                     $coursetype == $typo;
 
             update_field('course_type', $typos[$course->type] , $id_post);
+        }
+
+        if(!is_wp_error($author_id)){
+            var_dump($id_post);
+            $error = new WP_Error($id_post);
+            echo $error->get_error_message($id_post);
         }
         
         $onderwerpen = explode(',', $course->onderwerpen);
