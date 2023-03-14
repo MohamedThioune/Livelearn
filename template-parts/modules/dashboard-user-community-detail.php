@@ -182,7 +182,7 @@ if($community){
                                                         $user_reply_name = $user_reply->first_name ?: $user_reply->display_name;
                                                         $user_reply_image = get_field('profile_img', 'user_' . $user_reply->ID);
                                                         $user_reply_image = $user_reply_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                                        $text_reply = $reply['text_question'];
+                                                        $text_reply = $reply['text_reply'];
                                                     ?>
                                                         <div class="interviewer-block d-flex">
                                                             <div class="imgUser">
