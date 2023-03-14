@@ -977,6 +977,30 @@ else if(isset($question_community)){
     header("Location: ". $path);
 }
 
+else if(isset($reply_question_community)){
+    $question = array();
+    $question_community = get_field('question_community', $community_id);
+
+    foreach($question_community as $key => $item){
+        if($key == $id){
+            $reply = array();
+            $user_reply = wp_get_current_user();
+            $reply['user_reply'] = $user_reply;
+            $reply['text_reply'] = $text_reply;
+            if(empty($item['reply_question']))
+                $item['reply_question'] = array();
+            
+            array_push($item['reply_question'], $reply);
+        }
+
+        array_push($question, $item);
+    }
+    update_field('question_community', $question, $community_id);
+
+    $path = "/dashboard/user/community-detail/?mu=" . $community_id . "&message=Reply question applied successfully !";
+    header("Location: ". $path);
+}
+
 else if(isset($mandatory_course)){    
     $allocution = get_field('allocation', $course_id);
     if(!$allocution)
