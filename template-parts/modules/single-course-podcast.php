@@ -3,6 +3,11 @@
 <?php get_header(); ?>
 <?php extract($_GET); ?>
 
+<?php 
+    if(!isset($lesson))
+        $lesson = 0;
+?>
+
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
     <!-- -----------------------------------Start Modal Direct contact & Voor wie ----------------------------------------------- -->
@@ -125,7 +130,7 @@
 
 
                     <?php
-                        echo (do_shortcode('[user_registration_form id="59"]'));
+                        echo (do_shortcode('[user_registration_form id="8477"]'));
                     ?>
 
                     <div class="text-center">
@@ -215,18 +220,17 @@
                     <?php 
                         if(!empty($podcasts)){
                         echo '<div class="codeless-player-audio  codeless-element">';
-                        if(isset($lesson))
+
                             echo '
-                                <audio controls id="myAudioID">
-                                    <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/ogg">
-                                    <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/mpeg">
-                                    <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aac">
-                                    <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/wav">
-                                    <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aiff">
-                                    Your browser does not support the audio element.
-                                </audio>';
-                            else
-                                echo "<img src='" . $thumbnail . "' alt='preview image'>";
+                            <audio controls id="myAudioID">
+                                <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/ogg">
+                                <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/mpeg">
+                                <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aac">
+                                <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/wav">
+                                <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aiff">
+                                Your browser does not support the audio element.
+                            </audio>';
+                
                         echo '</div>';
                         }
                     ?>

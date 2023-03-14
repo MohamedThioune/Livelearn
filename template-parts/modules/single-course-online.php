@@ -687,7 +687,7 @@ extract($_GET);
                                     ?>
                                     <a style="color:#F79403" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo $post->post_title; ?></a>
                                     <?php
-                                        if(isset($lesson))
+                                        if(!isset($lesson))
                                             $lesson = 0;
                                         foreach($podcasts as $key => $podcast){
                                         $style = "";
