@@ -174,8 +174,8 @@ if($community){
                                                         <p>Reply</p>
                                                     </button>
                                                 </div>
-                                                <!-- <div class="block-all-answer" id="block-all-answer-1"> -->
-                                                <div class="block-all-answer" id=""> 
+                                                <!-- <div class="block-all-answer" id="">  -->
+                                                <div class="block-all-answer" id="block-all-answer-1">
                                                     <?php
                                                         foreach($reply_question as $reply):
                                                         $user_reply = $reply['user_reply'];
