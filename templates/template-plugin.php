@@ -14,7 +14,7 @@ function RandomString(){
   return $randstring;
 }
   error_reporting(E_WARNING);
-  $websites=[
+  $website=[
       'WorkPlace Academy'=>'https://workplaceacademy.nl/',
       'Ynno'=>'https://www.ynno.com/',
       'PowerPlant'=>'https://powerplant.nl/',
@@ -91,6 +91,9 @@ function RandomString(){
       'AfterSales'=>'https://aftersalesmagazine.nl/',
       'CRS Consulting'=>'https://crsconsultants.nl/' 
   ];
+
+  $websites=array_chunk($website,20);
+
   $table = $wpdb->prefix.'databank';
   
   $company = null;
@@ -233,6 +236,7 @@ function RandomString(){
         }
         // var_dump($data);
         $wpdb->insert($table,$data);
+        $wpdb->last_error;
         $id_post = $wpdb->insert_id; 
       }
     }
