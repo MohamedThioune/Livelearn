@@ -44,7 +44,7 @@ function RandomString(){
       'Zooi'=>'https://zooi.nl/',
       'Growth Factory'=>'https://www.growthfactory.nl/',
       'Influid'=>'https://influid.nl/',
-      'MediaTest'=>'https://mediatest.nl/'//,
+      'MediaTest'=>'https://mediatest.nl/',
       'MeMo2'=>'https://memo2.nl/',
       'Impact Investor'=>'https://impact-investor.com/',
       'Equalture'=>'https://www.equalture.com/',
