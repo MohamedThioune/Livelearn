@@ -86,13 +86,13 @@ if($optie == "accept"){
 
             update_field('course_type', $typos[$course->type] , $id_post);
         }
-
+        var_dump($id_post);
         if(is_wp_error($id_post)){
             $error = new WP_Error($id_post);
-            echo $error->get_error_message($id_post);
+            // echo $error->get_error_message($id_post);
         }
         else
-            echo "post-id : " . $id_post;
+            // echo "post-id : " . $id_post;
          
         $onderwerpen = explode(',', $course->onderwerpen);
         
@@ -144,12 +144,12 @@ else if($optie == "decline"){
 $data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
 // $updated = $wpdb->update( $table, $data, $where );
 
-echo $id_post;
-return $id_post;
+// echo $id_post;
+// return $id_post;
 
-if($updated === false)
-    return false; 
-else 
-    return true;
+// if($updated === false)
+//     return false; 
+// else 
+//     return true;
 
 ?>
