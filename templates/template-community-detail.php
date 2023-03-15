@@ -116,10 +116,9 @@
     $user_id = get_current_user_id();
 
     $no_content =  '
-                    <center>
-                        <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" width="140" height="150" alt="Skill no-content" >
-                        <br><span class="text-dark h5 p-1 mt-2" style="color:#033256"> No content found !</span>
-                    <center>
+                    <p class="dePaterneText theme-card-description"> 
+                    <span style="color:#033256"> Stay connected, Something big is coming 😊 </span> 
+                    </p>
                     ';
     $users = get_users();
     $authors = array();
@@ -190,7 +189,7 @@
 
 
                     <?php
-                        echo (do_shortcode('[user_registration_form id="8477"]'));
+                        echo (do_shortcode('[user_registration_form id="8477"]')); 
                     ?>
 
                     <div class="text-center">

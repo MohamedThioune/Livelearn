@@ -298,7 +298,7 @@
                                         <div>
                                             <p class="klikText">Klik om link te kopieren</p>
                                             <div class="input-group input-group-copy formCopyLink w-75">
-                                                <input id="test1" type="text" class="linkTextCopy form-control" value="<?php echo get_permalink($post->ID) ?>" readonly>
+                                                <input id="test1" type="text" class="linkTextCopy form-control" value="<?php echo get_permalink($post->ID); ?>" readonly>
                                                 <span class="input-group-btn">
                                                 <button class="btn btn-default btnCopy">Copy</button>
                                                 </span>
@@ -503,6 +503,7 @@
                                                                         </table>
                                                                         <div class="contentBtnCardProduct">
                                                                             <?php
+                                                                            if($product):                                                                            
                                                                             $dateNameStart = $agenda_start . ', ' . $hour_start . ', ' . $location_start;
 
                                                                             echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
@@ -532,7 +533,9 @@
                                                                             <?php
                                                                             // if($user_id == 0)
                                                                             //     echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
-                                                                            do_action( 'woocommerce_after_add_to_cart_form' ); ?>
+                                                                            do_action( 'woocommerce_after_add_to_cart_form' );
+                                                                            endif;
+                                                                            ?>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -637,6 +640,7 @@
                                                                     </table>
                                                                     <div class="contentBtnCardProduct">
                                                                         <?php
+                                                                        if($product):                                                                            
                                                                         $dateNameStart = $agenda_start . ', ' . $h_start . ', ' . $location_start;
                                                                         //Reserveren action
                                                                         echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
@@ -665,7 +669,10 @@
                                                                         </form>
                                                                         <?php
                                                                        
-                                                                        do_action( 'woocommerce_after_add_to_cart_form' ); ?>
+                                                                        do_action( 'woocommerce_after_add_to_cart_form' ); 
+                                                                        endif;
+                                                                        ?>
+                                                                        
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -737,6 +744,8 @@
                                                                     </table>
                                                                     <div class="contentBtnCardProduct">
                                                                         <?php
+                                                                        if($product):                                                                            
+
                                                                         $dateNameStart = $agenda_start . ', ' . $h_start . ', ' . $location_start;
                                                                         //Reserveren action
                                                                         echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
@@ -766,7 +775,9 @@
                                                                         <?php
                                                                         // if($user_id == 0)
                                                                         //     echo "<button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='single_add_to_cart_button button alt'>Reserveren</button>";
-                                                                        do_action( 'woocommerce_after_add_to_cart_form' ); ?>
+                                                                        do_action( 'woocommerce_after_add_to_cart_form' ); 
+                                                                        endif;
+                                                                        ?>
                                                                     </div>
                                                                 </div>
                                                             </div>
