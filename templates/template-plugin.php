@@ -14,7 +14,7 @@ function RandomString(){
   return $randstring;
 }
   error_reporting(E_WARNING);
-  $website=[
+  $websites=[
       'WorkPlace Academy'=>'https://workplaceacademy.nl/',
       'Ynno'=>'https://www.ynno.com/',
       'PowerPlant'=>'https://powerplant.nl/',
@@ -34,7 +34,7 @@ function RandomString(){
       'Horizon'=>'https://horizontraining.nl/',
       'Kenneth Smit'=>'https://www.kennethsmit.com/',
       'Autoblog'=>'https://www.autoblog.nl/',
-      'Crypto university'=>'https://www.cryptouniversity.nl/',
+      'Crypto university'=>'https://www.cryptouniversity.nl/'/*,
       'WineLife'=>'https://www.winelife.nl/',
       'Perswijn'=>'https://perswijn.nl/',
       'Koken met Kennis'=>'https://www.kokenmetkennis.nl/',
@@ -89,10 +89,10 @@ function RandomString(){
       'The Real Deal'=>'https://therealdeal.com/',
       'HousingWire'=>'https://www.housingwire.com/',
       'AfterSales'=>'https://aftersalesmagazine.nl/',
-      'CRS Consulting'=>'https://crsconsultants.nl/' 
+      'CRS Consulting'=>'https://crsconsultants.nl/'*/
   ];
 
-  $websites=array_chunk($website,20);
+  // $websites=array_chunk($website,20);
 
   $table = $wpdb->prefix.'databank';
   
