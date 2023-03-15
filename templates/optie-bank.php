@@ -13,10 +13,10 @@ $course = $wpdb->get_results( $sql )[0];
 
 $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 
+echo $operation;
 if($optie == "accept"){
     if($operation == 'missing')
     {
-
         echo "Hello";
         //Insert some other course type
         $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar'];
@@ -142,9 +142,6 @@ else if($optie == "decline"){
     else if ($operation == 'present' )
         wp_trash_post($course->course_id);
 }
-
-echo "Bye !";
-
 $data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
 // $updated = $wpdb->update( $table, $data, $where );
 
