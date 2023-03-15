@@ -162,7 +162,6 @@ function RandomString(){
           if($images){
             // var_dump($images['guid']['rendered']);
               $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($images['guid']['rendered'], 'Artikel'));
-              
               $result_image = $wpdb->get_results($sql_image);
               if(!isset($result_image[0]) && !isset($result_title[0]))
               {
