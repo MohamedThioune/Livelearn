@@ -17,7 +17,6 @@ function RandomString(){
   $websites=[
       'WorkPlace Academy'=>'https://workplaceacademy.nl/',
       'Ynno'=>'https://www.ynno.com/',
-      'PowerPlant'=>'https://powerplant.nl/',
       'DeZZP'=>'https://www.dezzp.nl/',
       'Aestate'=>'https://www.aestate.nl/',
       'Alba Concepts'=>'https://albaconcepts.nl/',
