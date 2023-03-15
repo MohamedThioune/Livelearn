@@ -167,11 +167,11 @@
       }
 
       //Accord the author a company
-      if(!is_wp_error($id_post))
-        var_dump(is_wp_error($id_post));
+      if(!is_wp_error($author_id))
+        update_field('company', $company, 'user_' . $author_id);
 
       //Fill the company if do not exist "next-version"
-
+    
       $title = explode(' ', strval($datum->programDescriptions->programName));
       $description = explode(' ', strval($datum->programDescriptions->programSummaryText));
       $description_html = explode(' ', strval($datum->programDescriptions->programSummaryHtml));    
