@@ -15960,6 +15960,164 @@ background: #FFFFFF !important;
 .head-blockItemCourse {
     margin-bottom: 27px;
 }
+.notificationCourseCard .card-notification{
+    text-align: left;
+    background: white;
+    padding: 30px 20px 20px;
+}
+.notificationCourseCard .card-notification .notificationBlock{
+    border-bottom: 1px solid #9d9d9db3;
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+.notificationCourseCard .card-notification .notificationBlock:last-child{
+    border-bottom: 0px solid #9d9d9db3;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+.notificationCourseCard .card-notification .blockImgCard {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    overflow: hidden;
+    margin-right: 15px;
+}
+.notificationCourseCard .card-notification .blockImgCard img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.notificationCourseCard .card-notification .name{
+    margin-bottom: 2;
+    font-size: 16px;
+    font-weight: 500;
+}
+.notificationCourseCard .card-notification .time{
+    color: black;
+    margin-bottom: 0;
+}
+.notificationCourseCard .card-notification .descriptionNotification{
+    margin-top: 15px;
+    margin-bottom: 6px;
+    color: #42454d;
+    font-size: 14px;
+    width: 100%;
+}
+.content-data-analytics .analytics-block{
+    background: #053356;
+    width: 62%;
+    display: flex;
+    text-align: left;
+    padding: 27px 25px;
+    border-radius: 10px;
+    justify-content: space-between;
+}
+.content-data-analytics .analytics-block .first-content-analitycs{
+    width: 65%;
+}
+.content-data-analytics .analytics-block .first-content-analitycs .title-block{
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0.25px;
+    color: #FFFFFF;
+}
+.content-data-analytics .analytics-block .first-content-analitycs .spent-text{
+    font-size: 14px;
+    line-height: 22px;
+    color: #FFFFFF;
+    margin-bottom: 40px;
+}
+.first-content-analitycs .detail-analytic{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.first-content-analitycs .detail-analytic .sub-detail{
+    width: 48%;
+    display: flex;
+    margin-bottom: 18px;
+}
+.first-content-analitycs .detail-analytic .sub-detail .number-sub-detail{
+    font-weight: 400;
+    font-size: 11px;
+    color: #043356;
+    background: #FFFFFF;
+    padding: 7px 15px;
+    margin-right: 10px;
+    margin-bottom: 0;
+    border-radius: 5px;
+}
+.first-content-analitycs .detail-analytic .sub-detail .text-sub-detail{
+    font-weight: 400;
+    font-size: 16px;
+    color: #FFFFFF;
+    margin-bottom: 0;
+}
+.content-data-analytics .analytics-block .second-content-analitycs {
+    width: 27%;
+    margin-right: 15px;
+}
+.content-data-analytics .analytics-block .second-content-analitycs img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.other-analytics .number-other-detail {
+    font-weight: 500;
+    font-size: 22px;
+    color: #47A99E;
+    margin-bottom: 10px;
+    text-align: left;
+}
+.other-analytics .text-other-detail {
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 19px;
+    color: #2B2A2A;
+    margin-bottom: 0;
+}
+.content-data-analytics .detail-other-analytics {
+    min-width: 48%;
+    text-align: left;
+    padding-bottom: 25px;
+    padding-top: 20px;
+    padding-left: 30px;
+}
+.other-analytics .hrFirst{
+    border-left: 1px solid rgba(86, 95, 94, 0.4);
+    height: auto;
+    margin: 0 auto;
+    width: 20%;
+    border-top: 0;
+}
+.content-data-analytics .other-analytics {
+    min-width: 33%;
+    text-align: left;
+}
+.content-data-analytics .hrSecond{
+    margin: 0;
+}
+.numberCertificat{
+    font-size: 13px;
+    margin-bottom: 0;
+}
+.card-all-certificat{
+   background: #FFFFFF;
+}
+.card-all-certificat table th, .table td {
+    text-align: center !important;
+}
+.card-all-certificat table th, .table td p {
+    margin-bottom: 0;
+    color: #252525;
+}
+.card-all-certificat .table tbody a {
+    color: #47A99E !important;
+    font-weight: 500;
+}
+.card-all-certificat thead{
+    background: rgba(74, 160, 155, 0.05);
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;
