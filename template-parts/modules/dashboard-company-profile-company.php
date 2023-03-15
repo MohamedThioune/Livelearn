@@ -57,22 +57,22 @@ $httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
 $access_granted = false;
 $abonnement = array();
 // get responses
-$response = curl_exec($ch);
-if ($response === false) {
-    $response = curl_error($ch);
-    $error = true;
-    echo stripslashes($response);
-}
-else{
-    $data_response = json_decode( $response, true );
-    if(!empty($data_response))
-        foreach($data_response as $row)
-            if($row['billing']['company'] == $company_connected && $row['status'] == 'active'){
-                $access_granted = true;
-                $abonnement = $row;
-                break;
-            }                    
-}
+// $response = curl_exec($ch);
+// if ($response === false) {
+//     $response = curl_error($ch);
+//     $error = true;
+//     echo stripslashes($response);
+// }
+// else{
+//     $data_response = json_decode( $response, true );
+//     if(!empty($data_response))
+//         foreach($data_response as $row)
+//             if($row['billing']['company'] == $company_connected && $row['status'] == 'active'){
+//                 $access_granted = true;
+//                 $abonnement = $row;
+//                 break;
+//             }                    
+// }
 ?>
 
 <?php
