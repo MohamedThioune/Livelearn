@@ -169,13 +169,13 @@ if($community){
                                                         <i class="fa fa-comment"></i>
                                                         <p><?= $reply_question_count; ?> answers</p>
                                                     </button>
-                                                    <button class="btn footer-answer-items" id="reply-btn-1">
+                                                    <button class="btn footer-answer-items" data-target="block1" id="reply-btn-1">
                                                         <i class="fa fa-reply" aria-hidden="true"></i>
                                                         <p>Reply</p>
                                                     </button>
                                                 </div>
                                                 <!-- <div class="block-all-answer" id="">  -->
-                                                <div class="block-all-answer" id="block-all-answer-1">
+                                                <div class="block-all-answer" id="block1" id="block-all-answer-1">
                                                     <?php
                                                         foreach($reply_question as $reply):
                                                         $user_reply = $reply['user_reply'];
@@ -753,16 +753,14 @@ else
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    $("#answer-item-1").click(function() {
-        $("#block-all-answer-1").toggle();
+    $(document).ready(function() {
+        alert('aaa');
+        $(".footer-answer-items").click(function() {
+            var targetId = $(this).data("target"); // Récupération de l'ID cible depuis l'attribut data-target
+            $("#" + targetId).toggle(); // Afficher/Masquer le bloc en fonction de l'ID correspondant
+        });
     });
-    $("#reply-btn-1").click(function() {
-        $("#block-input-answer-1").toggle();
-    });
-    $(".btn-see-all").click(function() {
-        $(".item , .tab").removeClass('active');
-        $(".item-question , .tab-active").addClass('active');
-    });
+
 </script>
 <script>
     document.querySelectorAll(".filters .item").forEach(function (tab, index) {
