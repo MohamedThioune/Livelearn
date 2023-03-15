@@ -14,7 +14,7 @@ $course = $wpdb->get_results( $sql )[0];
 $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 
 if($optie == "accept"){
-    if($class == 'missing')
+    if($operation == 'missing')
     {
         //Insert some other course type
         $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar'];
@@ -135,15 +135,17 @@ if($optie == "accept"){
     }
 }     
 else if($optie == "decline"){
-    if ($class == 'missing')
+    if ($operation == 'missing')
         null;
-    else if ($class == 'present' )
+    else if ($operation == 'present' )
         wp_trash_post($course->course_id);
 }
 
 $data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
 $updated = $wpdb->update( $table, $data, $where );
 
+echo $id_post;
+return $id_post;
 if($updated === false)
     return false; 
 else 

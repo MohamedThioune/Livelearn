@@ -295,7 +295,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     $('.optie').click((e)=>{
         var tr_element = e.target.parentElement.closest("tr");
         var ids = tr_element.id;
-        var classs = tr_element.className;
+        var operation = tr_element.className;
 
         var optie = e.target.id;
 
@@ -307,7 +307,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                data: {
                    id: ids,
                    optie: optie,
-                   class: classs,
+                   operation: operation,
                 },
                error: function() {
                   alert('Something is wrong');
