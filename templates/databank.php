@@ -304,6 +304,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             $.ajax({
                url: '/optie-bank',
                type: 'POST',
+               dataType:"text",
                data: {
                    id: ids,
                    optie: optie,
