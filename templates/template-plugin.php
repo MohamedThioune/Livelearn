@@ -237,7 +237,7 @@ function RandomString(){
         try{
           // var_dump($data);
           $wpdb->insert($table,$data);
-          // echo $wpdb->last_error." ".$url;
+          echo $key;
           $id_post = $wpdb->insert_id;
         }catch(Exception $e) {
           echo $e->getMessage();
