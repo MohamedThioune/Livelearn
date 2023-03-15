@@ -195,7 +195,7 @@ $url = home_url( $wp->request );
 
 
                             <?php
-                            echo (do_shortcode('[user_registration_form id="8477"]'));
+                            echo (do_shortcode('[user_registration_form id="8477w"]'));
                             ?>
 
                             <div class="text-center">
