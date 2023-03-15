@@ -174,7 +174,7 @@ function RandomString(){
                     'type' => 'Artikel',
                     'videos' => NULL, 
                     'short_description' => $article['excerpt']['rendered'],
-                    'long_description' => strval($article['content']['rendered']),
+                    'long_description' => strip_tags(strval($article['content']['rendered'])),
                     'duration' => NULL, 
                     'prijs' => 0, 
                     'prijs_vat' => 0,
@@ -194,7 +194,7 @@ function RandomString(){
                     'type' => 'Artikel',
                     'videos' => NULL, 
                     'short_description' => $article['excerpt']['rendered'],
-                    'long_description' => strval($article['content']['rendered']),
+                    'long_description' => strip_tags(strval($article['content']['rendered'])),
                     'duration' => NULL, 
                     'prijs' => 0, 
                     'prijs_vat' => 0,
@@ -218,7 +218,7 @@ function RandomString(){
                   'type' => 'Artikel',
                   'videos' => NULL, 
                   'short_description' => $article['excerpt']['rendered'],
-                  'long_description' => strval($article['content']['rendered']),
+                  'long_description' => strip_tags(strval($article['content']['rendered'])),
                   'duration' => NULL,
                   'prijs' => 0,
                   'prijs_vat' => 0,
@@ -235,9 +235,9 @@ function RandomString(){
           }
         }
         // try{
-        //   // var_dump($data);
+          // var_dump($data);
           $wpdb->insert($table,$data);
-          echo $wpdb->last_error;
+          // echo $wpdb->last_error." ".$url;
           $id_post = $wpdb->insert_id;
         // }catch(Exception $e) {
         //   echo $e->getMessage();
