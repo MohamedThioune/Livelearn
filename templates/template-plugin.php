@@ -236,7 +236,7 @@ function RandomString(){
         }
         // var_dump($data);
         $wpdb->insert($table,$data);
-        $wpdb->last_error;
+        echo $wpdb->last_error;
         $id_post = $wpdb->insert_id; 
       }
     }
