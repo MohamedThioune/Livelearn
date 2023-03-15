@@ -16118,6 +16118,13 @@ background: #FFFFFF !important;
 .card-all-certificat thead{
     background: rgba(74, 160, 155, 0.05);
 }
+.card-all-certificat table a img{
+    width: 22px;
+}
+.card-all-certificat table button img{
+    width: 18px;
+    margin: 0 2px;
+}
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
         font-size: 25px;

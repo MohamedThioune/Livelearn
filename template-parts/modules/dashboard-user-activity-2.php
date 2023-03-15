@@ -343,7 +343,45 @@
                                     <tbody>
                                     <tr>
                                         <td>
-                                            <p class="text-center numberCertificat">WordPress Certificate</p>
+                                            <p class="text-center">WordPress Certificate</p>
+                                        </td>
+                                        <td>
+                                            <p class="name-element">6 April 2019</p>
+                                        </td>
+                                        <td class="">
+                                            <p class="name-element">18 %</p>
+                                        </td>
+                                        <td class="d-flex align-items-center justify-content-center">
+                                            <a href="">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/clarity_eye-line.png" class="" alt="">
+                                            </a>
+                                            <button class="btn btn-trash">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/clarity_trash-line.png" class="" alt="">
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p class="text-center">WordPress Certificate</p>
+                                        </td>
+                                        <td>
+                                            <p class="name-element">6 April 2019</p>
+                                        </td>
+                                        <td class="">
+                                            <p class="name-element">18 %</p>
+                                        </td>
+                                        <td class="d-flex align-items-center justify-content-center">
+                                            <a href="">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/clarity_eye-line.png" class="" alt="">
+                                            </a>
+                                            <button class="btn btn-trash">
+                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/clarity_trash-line.png" class="" alt="">
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p class="text-center">WordPress Certificate</p>
                                         </td>
                                         <td>
                                             <p class="name-element">6 April 2019</p>
