@@ -142,10 +142,11 @@ else if($optie == "decline"){
 }
 
 $data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
-$updated = $wpdb->update( $table, $data, $where );
+// $updated = $wpdb->update( $table, $data, $where );
 
 echo $id_post;
 return $id_post;
+
 if($updated === false)
     return false; 
 else 
