@@ -179,7 +179,7 @@ function RandomString(){
                   'type' => 'Artikel',
                   'videos' => NULL, 
                   'short_description' => $article['excerpt']['rendered'],
-                  'long_description' => substr(strip_html_tags(strval($article['content']['rendered'])),0,1000),
+                  'long_description' => htmlspecialchars(strval($article['content']['rendered'])),
                   'duration' => NULL, 
                   'prijs' => 0, 
                   'prijs_vat' => 0,
@@ -199,7 +199,7 @@ function RandomString(){
                   'type' => 'Artikel',
                   'videos' => NULL, 
                   'short_description' => $article['excerpt']['rendered'],
-                  'long_description' => substr(strip_html_tags(strval($article['content']['rendered'])),0,1000),
+                  'long_description' => htmlspecialchars(strval($article['content']['rendered'])),
                   'duration' => NULL, 
                   'prijs' => 0, 
                   'prijs_vat' => 0,
@@ -214,29 +214,29 @@ function RandomString(){
                 );
               }
             }
-          }else{
-            if(!isset($result_title[0]) )
-            {
-              $status = 'extern';
-              $data = array(
-                'titel' => $article['title']['rendered'],
-                'type' => 'Artikel',
-                'videos' => NULL, 
-                'short_description' => $article['excerpt']['rendered'],
-                'long_description' => substr(strip_html_tags(strval($article['content']['rendered'])),0,1000),
-                'duration' => NULL,
-                'prijs' => 0,
-                'prijs_vat' => 0,
-                'image_xml' => null,
-                'onderwerpen' => $onderwerpen,
-                'date_multiple' =>  NULL,
-                'course_id' => null,
-                'author_id' => $author_id,
-                'company_id' =>  $company_id,
-                'contributors' => null,
-                'status' => $status
-              );
-            }
+        }else{
+          if(!isset($result_title[0]) )
+          {
+            $status = 'extern';
+            $data = array(
+              'titel' => $article['title']['rendered'],
+              'type' => 'Artikel',
+              'videos' => NULL, 
+              'short_description' => $article['excerpt']['rendered'],
+              'long_description' => htmlspecialchars(strval($article['content']['rendered'])),
+              'duration' => NULL,
+              'prijs' => 0,
+              'prijs_vat' => 0,
+              'image_xml' => null,
+              'onderwerpen' => $onderwerpen,
+              'date_multiple' =>  NULL,
+              'course_id' => null,
+              'author_id' => $author_id,
+              'company_id' =>  $company_id,
+              'contributors' => null,
+              'status' => $status
+            );
+          }
         }
         try{
           // var_dump($data);
