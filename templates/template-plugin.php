@@ -48,7 +48,7 @@ function RandomString(){
       'Impact Investor'=>'https://impact-investor.com/',
       'Equalture'=>'https://www.equalture.com/',
       'Zorgmasters'=>'https://zorgmasters.nl/',
-      'AdSysco'=>'https://adsysco.nl/'/*,
+      'AdSysco'=>'https://adsysco.nl/',
       'Transport en Logistiek Nederland'=>'https://www.tln.nl/',
       'Financieel Fit'=>'https://www.financieelfit.nl/',
       'Business Insider'=>'https://www.businessinsider.nl/',
@@ -60,7 +60,7 @@ function RandomString(){
       'The Bruno Effect'=>'https://magazine.thebrunoeffect.com/',
       'Crypto Insiders'=>'https://www.crypto-insiders.nl/',
       'HappyHealth'=> 'https://happyhealthy.nl/',
-      'Focus'=>'https://focusmagazine.nl/',
+      'Focus'=>'https://focusmagazine.nl/'/*,
       'Chip Foto Magazine'=> 'https://www.chipfotomagazine.nl/',
       'Vogue'=> 'https://www.vogue.nl/',
       'TrendyStyle'=>'https://www.trendystyle.net/',
@@ -243,7 +243,7 @@ function RandomString(){
           $wpdb->insert($table,$data);
           echo $key."  ".$wpdb->last_error;
           if(isset($wpdb->last_error)){
-            echo $key."  ".$wpdb->last_error;
+            echo $key."  ".$wpdb->last_error."\n";
           }else
             $id_post = $wpdb->insert_id;
         }catch(Exception $e) {
