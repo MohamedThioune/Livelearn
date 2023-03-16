@@ -246,5 +246,5 @@ function RandomString(){
       }
     }
   }
-  // header("location:/databank");
+  header("location:/databank");
 ?>   
