@@ -91,6 +91,15 @@ function RandomString(){
       'CRS Consulting'=>'https://crsconsultants.nl/'*/
   ];
 
+    function strip_html_tags($text) {
+      $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
+      $text = preg_replace("/\n{2,}/", "\n", $text); 
+      $text = str_replace("\n","<br>",$text);
+      $text = str_replace(['h1','h3','h4','h5','h6'],'h2',$text);
+      $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
+      return preg_replace($pattern, '', $text);
+    } 
+
   // $websites=array_chunk($website,20);
 
   $table = $wpdb->prefix.'databank';
@@ -172,7 +181,7 @@ function RandomString(){
                     'type' => 'Artikel',
                     'videos' => NULL, 
                     'short_description' => $article['excerpt']['rendered'],
-                    'long_description' => substr(strip_tags(strval($article['content']['rendered'])),0,10000),
+                    'long_description' => substr(strip_html_tags(strval($article['content']['rendered'])),0,1000),
                     'duration' => NULL, 
                     'prijs' => 0, 
                     'prijs_vat' => 0,
@@ -192,7 +201,7 @@ function RandomString(){
                     'type' => 'Artikel',
                     'videos' => NULL, 
                     'short_description' => $article['excerpt']['rendered'],
-                    'long_description' => substr(strip_tags(strval($article['content']['rendered'])),0,10000),
+                    'long_description' => substr(strip_html_tags(strval($article['content']['rendered'])),0,1000),
                     'duration' => NULL, 
                     'prijs' => 0, 
                     'prijs_vat' => 0,
@@ -216,7 +225,7 @@ function RandomString(){
                   'type' => 'Artikel',
                   'videos' => NULL, 
                   'short_description' => $article['excerpt']['rendered'],
-                  'long_description' => substr(strip_tags(strval($article['content']['rendered'])),0,10000),
+                  'long_description' => substr(strip_html_tags(strval($article['content']['rendered'])),0,1000),
                   'duration' => NULL,
                   'prijs' => 0,
                   'prijs_vat' => 0,
