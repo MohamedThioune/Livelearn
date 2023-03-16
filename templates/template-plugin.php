@@ -164,61 +164,15 @@ function RandomString(){
       if ($article!=null) {
         $sql_title = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank where titel=%s and type=%s",array($article['title']['rendered'],'Artikel'));
         $result_title = $wpdb->get_results($sql_title);
-        $span2 = $url."wp-json/wp/v2/media/".$article['featured_media'];
-        if($article['featured_media']!=0){
-          
-          $images=json_decode(file_get_contents($span2),true);
-          if($images){
-            // var_dump($images['guid']['rendered']);
-              $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($images['guid']['rendered'], 'Artikel'));
-              $result_image = $wpdb->get_results($sql_image);
-              if(!isset($result_image[0]) && !isset($result_title[0]))
-              {
-                if (!isset($images['data']['status']) && $images['data']['status']!=404 && $images['data']['status']!=401) {
-                  $status = 'extern';
-                  $data = array(
-                    'titel' => $article['title']['rendered'],
-                    'type' => 'Artikel',
-                    'videos' => NULL, 
-                    'short_description' => $article['excerpt']['rendered'],
-                    'long_description' => substr(strip_html_tags(strval($article['content']['rendered'])),0,1000),
-                    'duration' => NULL, 
-                    'prijs' => 0, 
-                    'prijs_vat' => 0,
-                    'image_xml' => $images['guid']['rendered'], 
-                    'onderwerpen' => $onderwerpen, 
-                    'date_multiple' =>  NULL, 
-                    'course_id' => null,
-                    'author_id' => $author_id,
-                    'company_id' =>  $company_id,
-                    'contributors' => null, 
-                    'status' => $status
-                  );
-                }else {
-                  $status = 'extern';
-                  $data = array(
-                    'titel' => $article['title']['rendered'],
-                    'type' => 'Artikel',
-                    'videos' => NULL, 
-                    'short_description' => $article['excerpt']['rendered'],
-                    'long_description' => substr(strip_html_tags(strval($article['content']['rendered'])),0,1000),
-                    'duration' => NULL, 
-                    'prijs' => 0, 
-                    'prijs_vat' => 0,
-                    'image_xml' => null, 
-                    'onderwerpen' => $onderwerpen, 
-                    'date_multiple' =>  NULL, 
-                    'course_id' => null,
-                    'author_id' => $author_id,
-                    'company_id' =>  $company_id,
-                    'contributors' => null, 
-                    'status' => $status
-                  );
-                }
-              }
-            }else{
-              if(!isset($result_title[0]) )
-              {
+        $span2 = $url."wp-json/wp/v2/media/".$article['featured_media'];          
+        $images=json_decode(file_get_contents($span2),true);
+        if($images){
+          // var_dump($images['guid']['rendered']);
+            $sql_image = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE image_xml = %s AND type = %s", array($images['guid']['rendered'], 'Artikel'));
+            $result_image = $wpdb->get_results($sql_image);
+            if(!isset($result_image[0]) && !isset($result_title[0]))
+            {
+              if (!isset($images['data']['status']) && $images['data']['status']!=404 && $images['data']['status']!=401) {
                 $status = 'extern';
                 $data = array(
                   'titel' => $article['title']['rendered'],
@@ -226,20 +180,63 @@ function RandomString(){
                   'videos' => NULL, 
                   'short_description' => $article['excerpt']['rendered'],
                   'long_description' => substr(strip_html_tags(strval($article['content']['rendered'])),0,1000),
-                  'duration' => NULL,
-                  'prijs' => 0,
+                  'duration' => NULL, 
+                  'prijs' => 0, 
                   'prijs_vat' => 0,
-                  'image_xml' => null,
-                  'onderwerpen' => $onderwerpen,
-                  'date_multiple' =>  NULL,
+                  'image_xml' => $images['guid']['rendered'], 
+                  'onderwerpen' => $onderwerpen, 
+                  'date_multiple' =>  NULL, 
                   'course_id' => null,
                   'author_id' => $author_id,
                   'company_id' =>  $company_id,
-                  'contributors' => null,
+                  'contributors' => null, 
+                  'status' => $status
+                );
+              }else {
+                $status = 'extern';
+                $data = array(
+                  'titel' => $article['title']['rendered'],
+                  'type' => 'Artikel',
+                  'videos' => NULL, 
+                  'short_description' => $article['excerpt']['rendered'],
+                  'long_description' => substr(strip_html_tags(strval($article['content']['rendered'])),0,1000),
+                  'duration' => NULL, 
+                  'prijs' => 0, 
+                  'prijs_vat' => 0,
+                  'image_xml' => null, 
+                  'onderwerpen' => $onderwerpen, 
+                  'date_multiple' =>  NULL, 
+                  'course_id' => null,
+                  'author_id' => $author_id,
+                  'company_id' =>  $company_id,
+                  'contributors' => null, 
                   'status' => $status
                 );
               }
-          }
+            }
+          }else{
+            if(!isset($result_title[0]) )
+            {
+              $status = 'extern';
+              $data = array(
+                'titel' => $article['title']['rendered'],
+                'type' => 'Artikel',
+                'videos' => NULL, 
+                'short_description' => $article['excerpt']['rendered'],
+                'long_description' => substr(strip_html_tags(strval($article['content']['rendered'])),0,1000),
+                'duration' => NULL,
+                'prijs' => 0,
+                'prijs_vat' => 0,
+                'image_xml' => null,
+                'onderwerpen' => $onderwerpen,
+                'date_multiple' =>  NULL,
+                'course_id' => null,
+                'author_id' => $author_id,
+                'company_id' =>  $company_id,
+                'contributors' => null,
+                'status' => $status
+              );
+            }
         }
         try{
           // var_dump($data);
