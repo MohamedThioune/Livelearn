@@ -218,7 +218,7 @@ function RandomString(){
                   'short_description' => $article['excerpt']['rendered'],
                   'long_description' => chunk_split(strip_tags(strval($article['content']['rendered'])),1000),
                   'duration' => NULL,
-                  'prijs' => 0,
+                  'prijs' => 0, 
                   'prijs_vat' => 0,
                   'image_xml' => null,
                   'onderwerpen' => $onderwerpen,
