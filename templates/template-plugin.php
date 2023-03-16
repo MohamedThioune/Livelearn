@@ -238,7 +238,6 @@ function RandomString(){
           echo $key."  ".$wpdb->last_error;
           if(isset($wpdb->last_error)){
             echo $key."  ".$wpdb->last_error;
-            continue;
           }else
             $id_post = $wpdb->insert_id;
         }catch(Exception $e) {
