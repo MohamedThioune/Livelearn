@@ -141,6 +141,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                                             <th scope="col">Action</th>
                                                         </tr>
                                                         </thead>
+                                                        
                                                         <tbody>
                                                         <?php foreach($members as $user) { 
                                                             foreach($user->my_managers as $m):
@@ -153,7 +154,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                                             <td>
                                                                 <img class="" src="<?= $image_manager_modal ?> alt="">
                                                             </td>
-                                                            <td><?= $company ?></td>
+                                                            <td><?= $company[2] ?></td>
                                                             <td><a href="">See</a></td>
                                                         </tr>
                                                         <?php 
