@@ -1,7 +1,7 @@
 <?php /** Template Name: Get & Save Artikles*/?>
 
 <?php
-global $wpdb;
+// global $wpdb;
 
 function RandomString(){
   $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
