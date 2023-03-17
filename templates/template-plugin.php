@@ -93,7 +93,7 @@ function RandomString(){
 
     function strip_html_tags($text) {
       $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
-      $text = preg_replace("/\n{2,}/", "\n", $text); 
+      $text = preg_replace("/\n{1,}/", "\n", $text); 
       $text = str_replace("\n","<br>",$text);
       $text = str_replace(['h1','h3','h4','h5','h6'],'h2',$text);
       $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
@@ -238,14 +238,18 @@ function RandomString(){
             );
           }
         }
-        try{
-          // var_dump($data);
-          $wpdb->insert($table,$data);
-          echo $key."  ".$wpdb->last_error."<br>";
-          $id_post = $wpdb->insert_id;
-        }catch(Exception $e) {
-          echo $e->getMessage();
-        }
+        $databanks=array_push($data);
+      }
+    }
+    foreach($databanks as $databank){
+      try{
+        // var_dump($data);
+        $wpdb->insert($table,$databank);
+        echo $key."  ".$wpdb->last_error."<br>";
+        $id_post = $wpdb->insert_id;
+        
+      }catch(Exception $e) {
+        echo $e->getMessage();
       }
     }
   }
