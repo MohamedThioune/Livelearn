@@ -100,8 +100,6 @@ function RandomString(){
     return preg_replace($pattern, '', $text);
   }
 
-  $table = $wpdb->prefix.'databank';
-
   $company = null;
   
   $users = get_users();
@@ -112,6 +110,8 @@ function RandomString(){
   $companies = get_posts($args);
 
   function get_articles_recursive($websites, $index = 0) {
+    global $wpdb;
+    $table = $wpdb->prefix.'databank';
     if ($index < count($websites)) {
       $website = array_keys($websites)[$index];
       $author_id = null;
