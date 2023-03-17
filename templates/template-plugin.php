@@ -244,7 +244,7 @@ function RandomString(){
       }
       var_dump($databanks);
       // Call the function again with the next website
-      get_articles_recursive($websites, $index + 1);
+      get_articles_recursive($websites, $index++);
     }
   }
 
