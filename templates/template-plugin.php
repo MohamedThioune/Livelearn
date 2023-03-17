@@ -158,7 +158,7 @@ function RandomString(){
       if(!is_wp_error($author_id))
         update_field('company', $company, 'user_' . $author_id);
 
-      $url = $websites[$website] . 'wp-json/wp/v2/posts/?per_page=10';
+      $url = $websites[$website] . 'wp-json/wp/v2/posts/';
       $response = file_get_contents($url);
       $articles = json_decode($response, true);
       foreach ($articles as $article) {
