@@ -111,6 +111,7 @@ function RandomString(){
       'post_type' => 'company', 
       'posts_per_page' => -1,
   );
+  $databanks=array();
   $companies = get_posts($args);
   foreach($websites as $key => $url){
     $author_id = null;
@@ -241,17 +242,18 @@ function RandomString(){
         $databanks=array_push($data);
       }
     }
-    foreach($databanks as $databank){
-      try{
-        // var_dump($data);
-        $wpdb->insert($table,$databank);
-        echo $key."  ".$wpdb->last_error."<br>";
-        $id_post = $wpdb->insert_id;
+    var_dump($databanks);
+    // foreach($databanks as $databank){
+    //   try{
+    //     // var_dump($data);
+    //     $wpdb->insert($table,$databank);
+    //     echo $key."  ".$wpdb->last_error."<br>";
+    //     $id_post = $wpdb->insert_id;
         
-      }catch(Exception $e) {
-        echo $e->getMessage();
-      }
-    }
+    //   }catch(Exception $e) {
+    //     echo $e->getMessage();
+    //   }
+    // }
   }
   // header("location:/databank");
 ?>   
