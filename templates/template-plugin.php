@@ -239,7 +239,8 @@ function RandomString(){
             );
           }
         }
-        $databanks=array_push($data);
+        array_push($databanks,$data);
+        
       }
     }
     var_dump($databanks);
