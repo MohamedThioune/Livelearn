@@ -304,5 +304,3 @@ $other_communities = array();
 
 </script>
 
-
-
