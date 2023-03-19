@@ -47,7 +47,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                    <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
                        &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
-                       <a id="bouddha" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="artikel" style="cursor:grab;"></a>
+                       <a id="bouddha" href="/artikels" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="artikel" style="cursor:grab;"></a>
                        &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/artikel.jpg" alt="load subtopics"></button>
                        
                     <div class="col-md-3">
@@ -220,7 +220,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         $('#select_field').hide(true,2000);
         $('#loader').attr('hidden',false);
         $.ajax({
-            url:'/livelearn/artikels', 
+            url:'/artikels', 
             type:'POST',
             datatype:'json',
             cache:false,
@@ -236,7 +236,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 // window.location.href = "/livelearn/artikels";
             },
             error:function(error){
-                console.log("error"+error);
+                console("error"+error);
             }
         }); 
     });
@@ -332,7 +332,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         var tr_element = e.target.parentElement.closest("tr");
         var ids = tr_element.id;
         var classs = tr_element.className;
-
+ 
         var optie = e.target.id;
 
         if(confirm('Are you sure you want to apply this record ?'))
