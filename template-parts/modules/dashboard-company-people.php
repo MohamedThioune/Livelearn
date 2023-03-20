@@ -140,19 +140,21 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                                             <th scope="col">Action</th>
                                                         </tr>
                                                         </thead>
+                                                        
                                                         <tbody>
-                                                        <?php foreach($members as $user) { 
+                                                        <?php 
+                                                        $managersId=array();
+                                                        foreach($members as $user) {
                                                             foreach($user->my_managers as $m):
-                                                                $image_manager_modal = get_field('profile_img',  'user_' . $m->ID)?get_field('profile_img',  'user_' . $m->ID):get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                                                $company = get_field('company',  'user_' . $m->ID);   
-
+                                                                if(in_array($m->ID,$managersId)){break;}else{$managersId[]=$m->ID;}
+                                                                $company = get_field('company',  'user_' . $m->ID);
                                                             ?>
                                                         <tr>
                                                             <td> <?php echo $m->first_name!='' ? $m->first_name : $m->display_name ?> </td>
                                                             <td>
-                                                                <img class="" src="<?= $image_manager_modal ?> alt="">
+                                                                <img class="" src="<?php echo get_field('profile_img',  'user_' . $m->ID) ? get_field('profile_img',  'user_' . $m->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png'; ?>" alt="">
                                                             </td>
-                                                            <td><?= $company ?></td>
+                                                            <td><?= $company[0]->post_title; ?></td>
                                                             <td><a href="">See</a></td>
                                                         </tr>
                                                         <?php 
@@ -295,9 +297,11 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                 search_user_company : txt,
             },
             dataType:"text",
-            success: function(data){
+            success: function(data) {
                 console.log(data);
-                $('#autocomplete_company_people').html(data);
+                const resultat_recherche = document.getElementById('autocomplete_company_people');
+                resultat_recherche.innerHTML = data;
+                // $('#autocomplete_company_people').html(data);
             }
         });
 
