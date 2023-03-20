@@ -98,7 +98,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                     ?>
                         <tr id="<?php echo $user->ID; ?>" >
                             <td scope="row"><?= $key + 1; ?></td>
-                            <td class="textTh thModife">
+                            <td class="textTh thModife az">
                                 <div class="ImgUser">
                                     <a href="<?= $link; ?>" > <img src="<?php echo $image_user ?>" alt=""> </a>
                                 </div>
@@ -109,18 +109,17 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                             <td class="textTh elementOnder"><?php echo get_field('role', 'user_'.$user->ID);?></td>
                             <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
                             <td class="textTh thModife">
-                                <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="">
-                                    <?php foreach ($user->my_managers as $key => $m) : 
-                                        $image_manager = get_field('profile_img',  'user_' . $m->ID)?get_field('profile_img',  'user_' . $m->ID):get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                        if ($key == 2 ) {
-                                            break;
-                                        }
+
+                                <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="#userModal">
+                                    <?php foreach ($user->my_managers as $m) :
+                                    $image_manager = get_field('profile_img',  'user_' . $m->ID)?get_field('profile_img',  'user_' . $m->ID):get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                     ?>
-                                    <div class="ImgUser">
+                                    <div class="ImgUser aq">
                                         <img src="<?= $image_manager ?>" alt="img">
                                     </div>
                                     <?php endforeach; ?>
                                 </button>
+
                                     <!-- Modal -->
                                     <div class="modal modalAllManager fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -143,18 +142,19 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                                         </thead>
                                                         
                                                         <tbody>
-                                                        <?php foreach($members as $user) { 
+                                                        <?php 
+                                                        $managersId=array();
+                                                        foreach($members as $user) {
                                                             foreach($user->my_managers as $m):
-                                                                $image_manager_modal = get_field('profile_img',  'user_' . $m->ID)?get_field('profile_img',  'user_' . $m->ID):get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                                                $company = get_field('company',  'user_' . $m->ID);   
-
+                                                                if(in_array($m->ID,$managersId)){break;}else{$managersId[]=$m->ID;}
+                                                                $company = get_field('company',  'user_' . $m->ID);
                                                             ?>
                                                         <tr>
                                                             <td> <?php echo $m->first_name!='' ? $m->first_name : $m->display_name ?> </td>
                                                             <td>
-                                                                <img class="" src="<?= $image_manager_modal ?> alt="">
+                                                                <img class="" src="<?php echo get_field('profile_img',  'user_' . $m->ID) ? get_field('profile_img',  'user_' . $m->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png'; ?>" alt="">
                                                             </td>
-                                                            <td><?= $company[2] ?></td>
+                                                            <td><?= $company[0]->post_title; ?></td>
                                                             <td><a href="">See</a></td>
                                                         </tr>
                                                         <?php 

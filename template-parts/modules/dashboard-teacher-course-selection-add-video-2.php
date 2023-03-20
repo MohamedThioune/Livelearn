@@ -9,6 +9,11 @@
                 <?php
                 
                 update_field('course_type', 'video', $_GET['id']);
+
+                //Ecriture
+                update_field('nom_du_champ', $valeur, $id_post);
+                //Lecture
+                $coursetype = get_field('nom_du_champ', $id_post);
  
                 acf_form(array(
                     'post_id'       => $_GET['id'],
