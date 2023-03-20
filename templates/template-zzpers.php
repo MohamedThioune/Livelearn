@@ -291,35 +291,46 @@ require($page);
     </section>
     <section class="cardCoursZzpers">
         <div class="container-fluid">
-        <?php// var_dump($blogs[0]) ?>
-            <h3>Artikelen voor ZZP’ers</h3>
+            <h3>Artikelen voor ZZP'ers</h3>
             <div class="block-cardCourse-zzpers">
-            <?php foreach($blogs as $course) { 
+            <?php 
+            foreach($blogs as $course) { 
                 $bool = true;
                 $bool = visibility($post, $visibility_company);
+                if(!$bool)
+                    continue;
+
+                // type course
                 $course_type = get_field('course_type', $course->ID);
+
+                // image legend
+                $thumbnail = get_field('preview', $course->ID)['url'];
+                if(!$thumbnail){
+                    $thumbnail = get_the_post_thumbnail_url($course->ID);
+                    if(!$thumbnail)
+                    $thumbnail = get_field('url_image_xml', $course->ID);
+                    if(!$thumbnail)
+                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                }
+
+                //degree
+                $degree = get_field('degree', $course->ID);
+    
+                // author user : name
                 $user = get_user_by('id',$course->post_author);
                 $name = ($user->first_name=='') ? $user->display_name : $user->first_name;
-               
-                        if(!$bool)
-                            continue;
-                        $thumbnail = get_field('preview', $course->ID)['url'];
-                        $short_description = get_field('short_description' , $course->ID);
-                       // var_dump($price);
-                            if(!$thumbnail){
-                                $thumbnail = get_the_post_thumbnail_url($course->ID);
-                                if(!$thumbnail)
-                                $thumbnail = get_field('url_image_xml', $course->ID);
-                                if(!$thumbnail)
-                                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-                            }
-                        //price_course    
-                        $price = get_field('price' , $course->ID);
-                        $price = ($price !="0" && $price !=0 ) ? number_format($price, 2, '.', ',') : "Gratis";    
-                        //Company
-                        $company = get_field('company',  'user_' . $course->post_author);   
-                        ?>
-            <a href="" class="cardKraam2">
+
+                //short description
+                $short_description = get_field('short_description' , $course->ID); 
+
+                // price    
+                $price = get_field('price' , $course->ID);
+                $price = ($price !="0" && $price !=0 ) ? number_format($price, 2, '.', ',') : "Gratis"; 
+
+                // company
+                $company = get_field('company',  'user_' . $course->post_author);   
+                ?>
+                <a href="<?= get_permalink($course->ID); ?>" class="cardKraam2">
                     <div class="headCardKraam">
                         <div class="blockImgCardCour">
                             <img src="<?php echo $thumbnail;?>" class="" alt="">
@@ -328,23 +339,23 @@ require($page);
                             <div class="iconeTextKraa">
                                 <div class="sousiconeTextKraa">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/kraam.png" class="icon7" alt="">
-                                    <p class="kraaText">Opleiding</p>
+                                    <p class="kraaText"><?= $course_type ?></p>
                                 </div>
                                 <div class="sousiconeTextKraa">
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" class="icon7" alt="">
-                                    <p class="kraaText">MBO3</p>
+                                    <p class="kraaText"><?= $degree; ?></p>
                                 </div>
 
                             </div>
                             <div class="iconeTextKraa">
                                 <div class="sousiconeTextKraa">
                                     <img src="<?php echo get_stylesheet_directory_uri() . '/img/euro1.png'; ?>" class="icon7" alt="">
-                                    <p class="kraaText"><?php echo $price; ?></p>
+                                    <p class="kraaText"><?= $price; ?></p>
                                 </div>
                             </div>
                         </div>
-
                     </div>
+
                     <div class="contentCardProd">
                         <div class="group8">
                             <div class="imgTitleCours">
@@ -356,23 +367,23 @@ require($page);
                                         $company_logo = get_field('company_logo', $company_id);
                                     }
                                     ?>
-                                    <img src="<?php echo $company_logo; ?>" width="25" class="icon7" alt="">
+                                    <img src="<?= $company_logo; ?>" width="25" class="icon7" alt="">
                                 </div>
-                                <p class="nameCoursProd"><?php echo $company_title; ?></p>
+                                <p class="nameCoursProd"><?= $company_title; ?></p>
                             </div>
                             <div class="group9">
                                 <div class="blockOpein">
                                     <!-- <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt=""> -->
-                                    <p class="lieuAm">Artikelen <?php echo $name; ?></p>
+                                    <p class="lieuAm">Artikelen voor <?= $name; ?></p>
                                 </div>
                                 <div class="blockOpein">
                                     <!-- <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt=""> -->
                                 </div>
                             </div>
                         </div>
-                        <p class="werkText"><?php echo $course->post_title ?> <?php //echo $blog->post_title; ?></p>
+                        <p class="werkText"><?= $course->post_title ?></p>
                         <p class="descriptionPlatform">
-                            <?php echo $short_description ?>
+                            <?= $short_description ?>
                         </p>
                     </div>
                 </a>
