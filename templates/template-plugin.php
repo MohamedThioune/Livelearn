@@ -247,10 +247,6 @@ function RandomString(){
       get_articles_recursive($websites, $index++);
     }
   }
-<<<<<<< HEAD
-?>   
-=======
 
   get_articles_recursive($websites,0);
 ?>
->>>>>>> 9706233c9ce74b924b43515269c9c651ebf9fece
