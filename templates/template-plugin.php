@@ -7,7 +7,7 @@ function RandomString(){
   $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   $randstring = '';
   $rand='';
-  ini_set(1200);
+  ini_set("max_execution_time",1200);
   for ($i = 0; $i < 10; $i++) {
       $rand = $characters[rand(0, strlen($characters))];
       $randstring .= $rand;  
