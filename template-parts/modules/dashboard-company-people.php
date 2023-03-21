@@ -82,7 +82,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                 </thead>
                 <tbody id="autocomplete_company_people">
                     <?php
-                    foreach($members as $key => $user){
+                    foreach($members as $keyP => $user){
                         $image_user = get_field('profile_img',  'user_' . $user->ID); 
                         if(!$image_user)  
                             $image_user = get_stylesheet_directory_uri(). "/img/placeholder_user.png";
@@ -97,30 +97,37 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                         $link = "/dashboard/company/profile/?id=" . $user->ID . '&manager='. $user_connected; 
                     ?>
                         <tr id="<?php echo $user->ID; ?>" >
-                            <td scope="row"><?= $key + 1; ?></td>
+                            <td scope="row"><?= $keyP + 1; ?></td>
                             <td class="textTh thModife az">
                                 <div class="ImgUser">
                                     <a href="<?= $link; ?>" > <img src="<?php echo $image_user ?>" alt=""> </a>
                                 </div>
                             </td>
-                            <td class="textTh"> <a href="<?= $link; ?>" style="text-decoration:none;"><?php if(!empty($user->first_name)){echo $user->first_name;}else{echo $user->display_name;}?></a> </td>
+                            <td class="textTh"><a href="<?= $link; ?>" style="text-decoration:none;"><?php if(!empty($user->first_name)){echo $user->first_name;}else{echo $user->display_name;}?></a> </td>
                             <td class="textTh"><?php echo $user->user_email;?></td>
                             <td class="textTh"><?php echo get_field('telnr', 'user_'.$user->ID);?></td>
                             <td class="textTh elementOnder"><?php echo get_field('role', 'user_'.$user->ID);?></td>
                             <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
                             <td class="textTh thModife">
-                                <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="#userModal<?= $key ?>">
-                                    <?php foreach ($user->my_managers as $m) :
-                                    $image_manager = get_field('profile_img',  'user_' . $m->ID)?get_field('profile_img',  'user_' . $m->ID):get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                    ?>
-                                    <div class="ImgUser aq">
-                                        <img src="<?= $image_manager ?>" alt="img">
-                                    </div>
-                                    <?php endforeach; ?>
-                                </button>
 
+                                <?php 
+                                if(!empty($user->my_managers)):
+                                ?>
+                                <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="#userModal<?= $keyP; ?>">
+                                    <?php 
+                                    foreach ($user->my_managers as $key=> $m) :
+                                        if($key == 2)
+                                            break;
+                                        $image_manager = get_field('profile_img',  'user_' . $m->ID)?get_field('profile_img',  'user_' . $m->ID):get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                        ?>
+                                        <div class="ImgUser aq">
+                                            <img src="<?= $image_manager ?>" alt="img">
+                                        </div>
+                                    <?php endforeach; ?>
+                                </button> 
+                                <?php endif; ?>
                                 <!-- Modal -->
-                                <div class="modal modalAllManager fade" id="userModal<?= $key ?>" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+                                <div class="modal modalAllManager fade" id="userModal<?= $keyP; ?>" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -135,30 +142,24 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                                     <tr>
                                                         <th scope="col">Name</th>
                                                         <th scope="col">Photo</th>
-                                                        <th scope="col">Company</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                     </thead>
                                                     
                                                     <tbody>
                                                     <?php 
-                                                    $managersId=array();
-                                                    foreach($members as $user) {
-                                                        foreach($user->my_managers as $m):
-                                                            if(in_array($m->ID,$managersId)){break;}else{$managersId[]=$m->ID;}
-                                                                $company = get_field('company',  'user_' . $m->ID);
-                                                        ?>
+                                                    foreach($user->my_managers as $man):
+                                                        $link = "/dashboard/company/profile/?id=" . $man->ID . '&manager='. $user_connected; 
+                                                        $img_manager = get_field('profile_img',  'user_' . $man->ID) ? get_field('profile_img',  'user_' . $man->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                                    ?>
                                                     <tr>
-                                                        <td> <?php echo $m->first_name!='' ? $m->first_name : $m->display_name ?> </td>
+                                                        <td> <?php echo $man->first_name!='' ? $man->first_name : $man->display_name ?> </td>
                                                         <td>
-                                                            <img class="" src="<?php echo get_field('profile_img',  'user_' . $m->ID) ? get_field('profile_img',  'user_' . $m->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png'; ?>" alt="">
+                                                            <img class="" src="<?= $img_manager ?>" alt="">
                                                         </td>
-                                                        <td><?= $company[0]->post_title; ?></td>
-                                                        <td><a href="">See</a></td>
+                                                        <td><a href="<?= $link ?>">See</a></td>
                                                     </tr>
-                                                    <?php 
-                                                    endforeach;
-                                                } ?>
+                                                    <?php endforeach; ?>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -167,6 +168,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                                 </div>
                             </td>
                             <td class="textTh">
