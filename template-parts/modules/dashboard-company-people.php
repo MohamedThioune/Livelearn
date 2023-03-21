@@ -82,7 +82,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                 </thead>
                 <tbody id="autocomplete_company_people">
                     <?php
-                    foreach($members as  $key => $user){
+                    foreach($members as $key => $user){
                         $image_user = get_field('profile_img',  'user_' . $user->ID); 
                         if(!$image_user)  
                             $image_user = get_stylesheet_directory_uri(). "/img/placeholder_user.png";
@@ -109,8 +109,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                             <td class="textTh elementOnder"><?php echo get_field('role', 'user_'.$user->ID);?></td>
                             <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
                             <td class="textTh thModife">
-
-                                <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="#userModal">
+                                <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="#userModal<?= $key ?>">
                                     <?php foreach ($user->my_managers as $m) :
                                     $image_manager = get_field('profile_img',  'user_' . $m->ID)?get_field('profile_img',  'user_' . $m->ID):get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                     ?>
@@ -120,53 +119,55 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                     <?php endforeach; ?>
                                 </button>
 
-                                    <!-- Modal -->
-                                    <div class="modal modalAllManager fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="userModalLabel">List of Manager</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <table class="table table-all-manager">
-                                                        <thead>
-                                                        <tr>
-                                                            <th scope="col">Name</th>
-                                                            <th scope="col">Photo</th>
-                                                            <th scope="col">Company</th>
-                                                            <th scope="col">Action</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <?php foreach($members as $user) { 
-                                                            foreach($user->my_managers as $m):
-                                                                $image_manager_modal = get_field('profile_img',  'user_' . $m->ID)?get_field('profile_img',  'user_' . $m->ID):get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                                                $company = get_field('company',  'user_' . $m->ID);   
-
-                                                            ?>
-                                                        <tr>
-                                                            <td> <?php echo $m->first_name!='' ? $m->first_name : $m->display_name ?> </td>
-                                                            <td>
-                                                                <img class="" src="<?= $image_manager_modal ?> alt="">
-                                                            </td>
-                                                            <td><?= $company ?></td>
-                                                            <td><a href="">See</a></td>
-                                                        </tr>
-                                                        <?php 
-                                                        endforeach;
-                                                    } ?>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                </div>
+                                <!-- Modal -->
+                                <div class="modal modalAllManager fade" id="userModal<?= $key ?>" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="userModalLabel">List of Manager</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table table-all-manager">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Photo</th>
+                                                        <th scope="col">Company</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                    </thead>
+                                                    
+                                                    <tbody>
+                                                    <?php 
+                                                    $managersId=array();
+                                                    foreach($members as $user) {
+                                                        foreach($user->my_managers as $m):
+                                                            if(in_array($m->ID,$managersId)){break;}else{$managersId[]=$m->ID;}
+                                                                $company = get_field('company',  'user_' . $m->ID);
+                                                        ?>
+                                                    <tr>
+                                                        <td> <?php echo $m->first_name!='' ? $m->first_name : $m->display_name ?> </td>
+                                                        <td>
+                                                            <img class="" src="<?php echo get_field('profile_img',  'user_' . $m->ID) ? get_field('profile_img',  'user_' . $m->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png'; ?>" alt="">
+                                                        </td>
+                                                        <td><?= $company[0]->post_title; ?></td>
+                                                        <td><a href="">See</a></td>
+                                                    </tr>
+                                                    <?php 
+                                                    endforeach;
+                                                } ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </td>
                             <td class="textTh">
                                 <div class="dropdown text-white">
@@ -295,9 +296,11 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                 search_user_company : txt,
             },
             dataType:"text",
-            success: function(data){
+            success: function(data) {
                 console.log(data);
-                $('#autocomplete_company_people').html(data);
+                const resultat_recherche = document.getElementById('autocomplete_company_people');
+                resultat_recherche.innerHTML = data;
+                // $('#autocomplete_company_people').html(data);
             }
         });
 

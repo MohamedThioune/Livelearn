@@ -1,12 +1,13 @@
 <?php
- $mail_mandatored_course_body = 
+
+$mail_shared_course_body = 
 '
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
   xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
-  <title><firs-name>, je account op LiveLearn is succesvol aangemaakt</firs-name></title><!--[if !mso]><!-->
+  <title>'. $first_name .', someone want you to see a course.</firs-name></title><!--[if !mso]><!-->
   <meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -66,6 +67,16 @@
         width: 100% !important;
         max-width: 100%;
       }
+
+      .mj-column-per-25 {
+        width: 25% !important;
+        max-width: 25%;
+      }
+
+      .mj-column-per-75 {
+        width: 75% !important;
+        max-width: 75%;
+      }
     }
   </style>
   <style media="screen and (min-width:480px)">
@@ -73,11 +84,31 @@
       width: 100% !important;
       max-width: 100%;
     }
+
+    .moz-text-html .mj-column-per-25 {
+      width: 25% !important;
+      max-width: 25%;
+    }
+
+    .moz-text-html .mj-column-per-75 {
+      width: 75% !important;
+      max-width: 75%;
+    }
   </style>
   <style type="text/css">
     [owa] .mj-column-per-100 {
       width: 100% !important;
       max-width: 100%;
+    }
+
+    [owa] .mj-column-per-25 {
+      width: 25% !important;
+      max-width: 25%;
+    }
+
+    [owa] .mj-column-per-75 {
+      width: 75% !important;
+      max-width: 75%;
     }
   </style>
   <style type="text/css">
@@ -115,7 +146,7 @@
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content"
                             style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
-                            data-testid="Y0h44Pmw76d">Je account is succesvol aangemaakt</p>
+                            data-testid="Y0h44Pmw76d">A new course for you.</p>
                         </div>
                       </td>
                     </tr>
@@ -213,13 +244,10 @@
                         <div
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <h1 class="text-build-content"
-                            style="text-align:center;; margin-top: 10px; font-weight: normal;"
-                            data-testid="RJMLrMvA0Rh"><span style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b>Een van je managers heeft een verplichte cursus met je gedeeld !</b></span>
-                          </h1>
-                          <p class="text-build-content" style="text-align: center; margin: 10px 0; margin-bottom: 10px;"
+                            style="text-align:center;; margin-top: 10px; margin-bottom: 10px; font-weight: normal;"
                             data-testid="RJMLrMvA0Rh"><span
-                              style="color:#023356;font-family:Arial;font-size:14px;line-height:35px;">De eerste stap in
-                              een leven lang ontwikkelen.</span></p>
+                              style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b>Someone was
+                                thinking about you!</b></span></h1>
                         </div>
                       </td>
                     </tr>
@@ -230,39 +258,95 @@
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content" data-testid="S_MPaSnC0uI"
                             style="margin: 10px 0; margin-top: 10px;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi <b>' . $first_name  . '
-                              </b>,</span></p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;">&nbsp;</p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Je account is
-                              succesvol aangemaakt en je kan nu onbeperkt gebruik maken van onze leermodules. Inloggen
-                              kan via </span><a class="link-build-content"
-                              style="color:inherit;; text-decoration: none;" target="_blank"
-                              href="https://livelearn.nl/inloggen/"><span
-                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><u>deze
-                                  link</u></span></a><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">, waarna je
-                              eenvoudig onderwerpen en experts toe voegt aan je persoonlijke leeromgeving.</span></p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Ben je onderdeel
-                              van een organisatie óf wil je je jouw bedrijf op LiveLearn hebben? Neem dan </span><a
-                              class="link-build-content" style="color:inherit;; text-decoration: none;"
-                              href="mailto:contact@livelearn.nl"><span
-                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><u>contact</u></span></a><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> met ons op en
-                              binnen 24 uur staat je organisatie live.</span></p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;">&nbsp;</p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Succes
-                              namens,</span></p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Het LiveLearn
-                              team</span></p>
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi ' . $first_name . '
+                              ,</span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI"
-                            style="margin: 10px 0; margin-bottom: 10px;">&nbsp;</p>
+                            style="margin: 10px 0; margin-bottom: 10px;"><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">The following
+                              learning content is shared with you by '. $manager->display_name . ' :</span></p>
                         </div>
                       </td>
                     </tr>
+                  </tbody>
+                </table>
+              </div><!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+        style="background:#ffffff;background-color:#ffffff;width:100%;">
+        <tbody>
+          <tr>
+            <td
+              style="direction:ltr;font-size:0px;padding:20px 0px 20px 0px;padding-left:0px;padding-right:0px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:150px;" ><![endif]-->
+              <div class="mj-column-per-25 mj-outlook-group-fix"
+                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                  width="100%">
+                  <tbody>
+                    <tr>
+                      <td align="center"
+                        style="font-size:0px;padding:10px 25px 10px 25px;padding-right:25px;padding-left:25px;word-break:break-word;">
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                          style="border-collapse:collapse;border-spacing:0px;">
+                          <tbody>
+                            <tr>
+                              <td style="width:100px;"><img alt="" height="auto"
+                                  src="' . $thumbnail . '"
+                                  style="border:none;border-radius:25px;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
+                                  width="100"></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div><!--[if mso | IE]></td><td class="" style="vertical-align:top;width:450px;" ><![endif]-->
+              <div class="mj-column-per-75 mj-outlook-group-fix"
+                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                  width="100%">
+                  <tbody>
+                    <tr>
+                      <td align="left"
+                        style="font-size:0px;padding:10px 25px;padding-top:0px;padding-bottom:0px;word-break:break-word;">
+                        <div
+                          style="font-family:Arial, sans-serif;font-size:13px;letter-spacing:normal;line-height:1;text-align:left;color:#000000;">
+                          <p class="text-build-content" data-testid="yb3veC3LzzuKS9DcCsLpD"
+                            style="margin: 10px 0; margin-top: 10px;"><span style="font-family:Arial;"><b>' . $posts->title . '</b></span></p>
+                          <p class="text-build-content" data-testid="yb3veC3LzzuKS9DcCsLpD"
+                            style="margin: 10px 0; margin-bottom: 10px;"><span style="font-family:Arial;">' . $short_description . '</span></p>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div><!--[if mso | IE]></td></tr></table><![endif]-->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
+        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
+        <tbody>
+          <tr>
+            <td
+              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
+              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
+              <div class="mj-column-per-100 mj-outlook-group-fix"
+                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
+                  width="100%">
+                  <tbody>
                     <tr>
                       <td align="center" vertical-align="middle"
                         style="background:transparent;font-size:0px;padding:10px 25px 20px 25px;padding-right:25px;padding-bottom:20px;padding-left:25px;word-break:break-word;">
@@ -272,190 +356,21 @@
                             <tr>
                               <td align="center" bgcolor="#023356" role="presentation"
                                 style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#023356;"
-                                valign="middle"><a href="https://livelearn.nl/inloggen/"
+                                valign="middle"><a href="' . get_permalink($posts->ID) . '"
                                   style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
                                   target="_blank"><span
-                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Inloggen</span></a>
-                              </td>
+                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Go ahead !
+                                    </span></a></td>
                             </tr>
                           </tbody>
                         </table>
                       </td>
                     </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
-        <tbody>
-          <tr>
-            <td
-              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
-                  width="100%">
-                  <tbody>
                     <tr>
                       <td align="center" vertical-align="top"
                         style="font-size:0px;padding:10px 25px;padding-top:10px;padding-right:25px;padding-bottom:10px;padding-left:25px;word-break:break-word;">
                         <p style="border-top:dotted 1px #c2c2c2;font-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:dotted 1px #c2c2c2;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
 </td></tr></table><![endif]-->
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
-        <tbody>
-          <tr>
-            <td
-              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
-                  width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" ><tr><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#3B5998;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/facebook.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#1DA1F2;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/twitter.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#DD4B39;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/google-plus.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#BD081C;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/pinterest.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#0077B5;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/linkedin.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#405DE6;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/instagram.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td></tr></table><![endif]-->
                       </td>
                     </tr>
                   </tbody>
@@ -488,7 +403,7 @@
                             style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
                             data-testid="p1wGkfjeZKT7"><span
                               style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">This message was
-                              sent to ' . $email . ' as part of our welcome series.</span><br><span
+                              sent to [[EMAIL_TO]] as part of our welcome series.</span><br><span
                               style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">To stop receiving
                               messages from this series, </span><a class="link-build-content"
                               style="color:inherit;; text-decoration: none;" target="_blank"
