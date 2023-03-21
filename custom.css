@@ -6597,13 +6597,64 @@ button:focus {
     border-radius: 10px;
     padding: 20px 13px;
     width: 32%;
-    margin-right: 10px;
-    margin-bottom: 20px;
-    min-height: 196px;
+    margin-right: 7px;
+    margin-bottom: 30px;
+    min-height: 375px;
     position: relative;
     height: 100%;
+    text-align: left;
+    margin-left: 7px;
 }
-
+.cardAssessement .heead-img-block{
+    width: 100%;
+    height: 155px;
+    overflow: hidden;
+    border-radius: 5px;
+    margin-bottom: 19px;
+}
+.cardAssessement .heead-img-block img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.cardAssessement .body-card-assessment .title-assessment {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    color: #043356;
+    margin-bottom: 6px;
+}
+.cardAssessement .body-card-assessment .level {
+    font-size: 15px;
+    color: #4aaa97;
+    margin-bottom: 18px;
+}
+.cardAssessement .body-card-assessment .element-detail-assessment i{
+    font-size: 17px;
+    color: #033356;
+    margin-right: 10px;
+}
+.cardAssessement .body-card-assessment .text-element-detail {
+    font-size: 14px;
+    line-height: 18px;
+    margin-bottom: 0;
+    color: #333333;
+    font-weight: 400;
+}
+.cardAssessementBiss {
+    background: white;
+    width: 32%;
+    margin-right: 14px;
+    margin-bottom: 0px;
+    height: fit-content;
+    min-height: 325px;
+    border: 1px solid #FFFFFF;
+    box-shadow: 0px 0px 0px 1px rgb(0 0 0 / 10%);
+    border-radius: 10px;
+}
+.cardAssessementBiss .number-element {
+    font-weight: normal;
+}
 .bodyCardAssessment {
     display: flex;
     margin-bottom: 20px;
@@ -7574,7 +7625,7 @@ tbody {
     justify-content: space-between;
     align-items: center;
     position: absolute;
-    bottom: 25px;
+    bottom: 27px;
     width: 92%;
 }
 
@@ -15599,13 +15650,8 @@ background: #FFFFFF !important;
     margin-bottom: 15px;
 }
 .card-functionaliteiten img{
-<<<<<<< HEAD
     width: 80px;
     height: 80px;
-=======
-    width: 70px;
-    height: 70px;
->>>>>>> 6158bd873425683c8f008094412ff61ad162181e
     margin-left: auto;
     margin-bottom: 15px;
 }
@@ -15678,15 +15724,9 @@ background: #FFFFFF !important;
     font-size: 22px;
 }
 #dashboard-min {
-<<<<<<< HEAD
     width: 20px;
 }
 #community-icon{
-    width: 26px;
-    margin-left: -3px;
-}
-=======
-
     width: 19px !important;
     margin-top: 1px;
 }
@@ -15931,6 +15971,7 @@ background: #FFFFFF !important;
     font-size: 16px;
     color: #071A27;
     margin-bottom: 0;
+    text-align: left;
 }
 .card-course-activity .table .blockImgUser{
     width: 45px;
@@ -16124,6 +16165,111 @@ background: #FFFFFF !important;
 .card-all-certificat table button img{
     width: 18px;
     margin: 0 2px;
+}
+.skills-activity-block .content-card-skills .card-skills {
+    min-height: 178px !important;
+    width: 23% !important;
+}
+.skills-activity-block .content-card-skills .card-skills .donut-chart {
+    width: 90px !important;
+    height: 90px !important;
+}
+.skills-activity-block .donut-chart-text {
+    font-size: 11px !important;
+}
+.card-communities-activity{
+    display: flex;
+    background: #FFFFFF;
+    width: 32%;
+    margin-right: 13px;
+    padding: 15px;
+    border-radius: 6px;
+    text-align: left;
+    margin-bottom: 18px;
+}
+.card-communities-activity .block-img{
+    width: 50px;
+    height: 50px;
+    margin-right: 12px;
+}
+.card-communities-activity .block-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.card-communities-activity .name-community{
+    font-weight: 500;
+    font-size: 15px;
+    color: #043356;
+    margin-bottom: 5px;
+    text-align: left;
+}
+.card-communities-activity .number-members{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+    color: #464646;
+    margin-bottom: 0;
+}
+.blockItemCourse, .notificationCourseCard, .data-analitycs-block, .blockYourCertificates, .skills-activity-block{
+    margin-bottom: 55px;
+}
+.filterInputBlock{
+    background: #F7F7F7;
+    border: 1px solid #D5D5D5;
+    border-radius: 6px;
+    padding: 11px 11px;
+    display: flex;
+    align-items: center;
+}
+.filterInputBlock img{
+    width: 21px;
+    height: 21px;
+    margin-right: 3px;
+}
+.filterInputBlock select{
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    margin-bottom: 0 !important;
+    font-size: 17px !important;
+}
+.card-course-activity .head-card {
+    background: white;
+    padding: 20px;
+}
+.contentCardListeCourse table th, .table td {
+    text-align: left !important;
+}
+.content-title-notification{
+    width: 28% !important;
+}
+.tab-certificate table th, .table td {
+    text-align: center !important;
+}
+.content-assessment-2 .tabs-courses .head {
+    background: white;
+    padding: 13px 10px 15px;
+}
+.content-assessment-2 .tabs-courses .tabs .filters{
+    margin-bottom: 0;
+}
+.content-assessment-2 .tabs-courses .tabs .item {
+    color: #464646;
+    padding: 7px 30px;
+    font-weight: normal;
+}
+.content-assessment-2 .tabs-courses .tabs .item.active {
+    font-size: 17px;
+    color: #043356;
+    background: none;
+    border-radius: none;
+    font-weight: 600;
+}
+.content-assessment-2 .tabs__list {
+    padding-top: 40px;
 }
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -19458,8 +19604,6 @@ background: #FFFFFF !important;
         width: 55px;
         height: 55px;
     }
-<<<<<<< HEAD
-=======
     .tab-block-functiegerichte .nav-tabs {
         width: 100%;
         margin: 0 auto;
@@ -19470,8 +19614,80 @@ background: #FFFFFF !important;
     .content-inloggen {
         padding-bottom: 0 !important;
     }
-
->>>>>>> 6158bd873425683c8f008094412ff61ad162181e
+    .advert-course-Block {
+        margin-bottom: 40px;
+        flex-wrap: wrap;
+        padding: 10px 10px;
+    }
+    .advert-course-Block .advert-one {
+        width: 100%;
+        margin: 30px 0 33px;
+        border-radius: 8px;
+        padding: 22px 20px 0;
+    }
+    .advert-course-Block .advert-one .blockImgAdvert {
+        display: none;
+    }
+    .advert-course-Block .advert-one .blockTextAdvert {
+        width: 100%;
+        color: white;
+    }
+    .advert-course-Block .advert-one .name {
+        color: white;
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 6px;
+    }
+    .advert-one .description {
+        color: white;
+        font-size: 15px;
+        font-weight: 300;
+        margin-bottom: 27px;
+        line-height: 25px;
+    }
+    .advert-course-Block .advert-second {
+        width: 100%;
+        margin-top: 0;
+        margin-right: 0px;
+        background: #374557;
+        padding: 25px 25px;
+        color: white;
+        border-radius: 10px;
+    }
+    .block-tab-activity {
+        padding: 5px 15px;
+    }
+    .content-data-analytics .analytics-block {
+        background: #053356;
+        width: 100%;
+        padding: 27px 15px;
+    }
+    .content-data-analytics .analytics-block .second-content-analitycs {
+        display: none;
+    }
+    .content-data-analytics .analytics-block .first-content-analitycs {
+        width: 100%;
+    }
+    .content-data-analytics .other-analytics {
+        width: 100%;
+    }
+    .skills-activity-block .content-card-skills .card-skills {
+        min-height: 178px !important;
+        width: 45% !important;
+        overflow: hidden;
+    }
+    .card-communities-activity {
+        display: flex;
+        width: 100%;
+        margin-right: 0px;
+    }
+    .block-activity- {
+        overflow: scroll;
+    }
+    .block-activity- .card-activity-{
+        width: 100%;
+        min-width: 630px;
+    }
 
 
 
