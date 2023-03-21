@@ -165,7 +165,7 @@ $other_communities = array();
                                 <div class="body-card-community">
                                     <div class="block-img-title d-flex align-items-center">
                                         <div class="imgCommunity">
-                                            <img class="" src="<?= $company_image; ?>" alt="">
+                                            <img class="" src="<?= $community_image; ?>" alt="">
                                         </div>
                                         <div>
                                             <?= $access_community ?>
@@ -239,7 +239,7 @@ $other_communities = array();
                                 <div class="body-card-community">
                                     <div class="block-img-title d-flex align-items-center">
                                         <div class="imgCommunity">
-                                            <img class="" src="<?= $company_image; ?>" alt="">
+                                            <img class="" src="<?= $community_image; ?>" alt="">
                                         </div>
                                         <div>
                                             <?= $access_community ?>
