@@ -244,6 +244,9 @@ function RandomString(){
       }
     }
     var_dump($databanks);
+    header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
+    header("Pragma: no-cache"); // HTTP 1.0.
+    header("Expires: 0"); // Proxies.
     // foreach($databanks as $databank){
     //   try{
     //     // var_dump($data);
