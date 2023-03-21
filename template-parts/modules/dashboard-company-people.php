@@ -111,7 +111,9 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                             <td class="textTh thModife">
 
                                 <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="#userModal">
-                                    <?php foreach ($user->my_managers as $m) :
+                                    <?php foreach ($user->my_managers as $key=> $m) :
+                                    if($key==2)
+                                        break;
                                     $image_manager = get_field('profile_img',  'user_' . $m->ID)?get_field('profile_img',  'user_' . $m->ID):get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                     ?>
                                     <div class="ImgUser aq">
@@ -144,9 +146,13 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                                         <tbody>
                                                         <?php 
                                                         $managersId=array();
+                                                        $managersId1=array();
                                                         foreach($members as $user) {
-                                                            foreach($user->my_managers as $m):
-                                                                if(in_array($m->ID,$managersId)){break;}else{$managersId[]=$m->ID;}
+                                                            foreach($user->my_managers as $man){
+                                                                // if(in_array($man->ID,$managersId)){break;}else{$managersId[]=$man->ID;}
+                                                                foreach ($man as $m) {
+                                                                    if(in_array($m->ID,$managersId1)){break;}else{$managersId1[]=$m->ID;}
+                                                                    // var_dump($m);
                                                                 $company = get_field('company',  'user_' . $m->ID);
                                                             ?>
                                                         <tr>
@@ -158,7 +164,8 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                                                             <td><a href="">See</a></td>
                                                         </tr>
                                                         <?php 
-                                                        endforeach;
+                                                        }
+                                                        }
                                                     } ?>
                                                         </tbody>
                                                     </table>
