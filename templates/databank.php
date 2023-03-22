@@ -80,7 +80,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                             // Define the number of companies to display per page
                             $companiesPerPage = 10;
                             
-                            // Get the current page number from the query string
+                            // Get the current page number from the query string 
                             $pageNumber = isset($_GET['page']) ? $_GET['page'] : 1;
                             
                             // Calculate the start and end indexes of the companies to display
