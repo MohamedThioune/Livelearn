@@ -100,7 +100,7 @@
                                 <?php if(isset($_GET['success'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>" ?>
                                 <?php if(isset($_GET['danger'])) echo "<span class='alert alert-danger'>" . $_GET['message'] . "</span><br><br>" ?>
                                  -->
-                                <center><p class="TitleForm">Registreren</p></center>
+                                <center><p class="TitleForm">Registreren :</p></center>
 
                                 <?php echo (do_shortcode('[user_registration_form id="8477"]')); ?>
                             </form>
