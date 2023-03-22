@@ -2,6 +2,7 @@
 
 <?php
 global $wpdb;
+global $wpdb;
 
 function RandomString(){
   $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -132,6 +133,8 @@ function RandomString(){
 
     foreach($users as $user) {
       $company_user = get_field('company',  'user_' . $user->ID);
+    foreach($users as $user) {
+      $company_user = get_field('company',  'user_' . $user->ID);
 
       if(isset($company_user[0]->post_title)) 
         if(strtolower($company_user[0]->post_title) == strtolower($key) ){
@@ -140,7 +143,22 @@ function RandomString(){
           $company_id = $company_user[0]->ID;
         }
     }
+      if(isset($company_user[0]->post_title)) 
+        if(strtolower($company_user[0]->post_title) == strtolower($key) ){
+          $author_id = $user->ID;
+          $company = $company_user[0];
+          $company_id = $company_user[0]->ID;
+        }
+    }
     
+    if(!$author_id)
+    {
+      $login = RandomString();
+      $password = RandomString();
+      $random = RandomString();
+      $email = "author_" . $random . "@" . $key . ".nl";
+      $first_name = explode(' ', $key)[0];
+      $last_name = isset(explode(' ', $key)[1])?explode(' ', $key)[1]:'';
     if(!$author_id)
     {
       $login = RandomString();
@@ -160,10 +178,25 @@ function RandomString(){
         'last_name' => $last_name,
         'role' => 'author' 
       );
+      $userdata = array(
+        'user_pass' => $password,
+        'user_login' => $login,
+        'user_email' => $email,
+        'user_url' => 'https://livelearn.nl/inloggen/',
+        'display_name' => $first_name,
+        'first_name' => $first_name,
+        'last_name' => $last_name,
+        'role' => 'author' 
+      );
 
       $author_id = wp_insert_user(wp_slash($userdata));       
     }
+      $author_id = wp_insert_user(wp_slash($userdata));       
+    }
 
+    //Accord the author a company
+    if(!is_wp_error($author_id))
+      update_field('company', $company, 'user_' . $author_id);
     //Accord the author a company
     if(!is_wp_error($author_id))
       update_field('company', $company, 'user_' . $author_id);

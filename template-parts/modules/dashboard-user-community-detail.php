@@ -144,7 +144,7 @@ if($community){
                                     
                                     <div class="w-100">
                                         <?php
-                                        foreach($questions as $key=>$question):
+                                        foreach($questions as $key => $question):
                                         $user_question = $question['user_question'];
                                         $user_question_name = $user_question->first_name ?: $user_question->display_name;
                                         $user_question_image = get_field('profile_img', 'user_' . $user_question->ID);
@@ -165,17 +165,17 @@ if($community){
                                                 </div>
                                                 <p class="text-question"> <?= $text_question ?> </p>
                                                 <div class="d-flex">
-                                                    <button class="btn footer-answer-items" id="answer-item-1">
+                                                    <button class="btn footer-answer-items" data-target="block<?= $key; ?>" id="answer-item-1">
                                                         <i class="fa fa-comment"></i>
                                                         <p><?= $reply_question_count; ?> answers</p>
                                                     </button>
-                                                    <button class="btn footer-answer-items" id="reply-btn-1">
+                                                    <button class="btn footer-answer-items" data-target="block-input-answer-<?= $key; ?>" id="reply-btn-1">
                                                         <i class="fa fa-reply" aria-hidden="true"></i>
                                                         <p>Reply</p>
                                                     </button>
                                                 </div>
                                                 <!-- <div class="block-all-answer" id="">  -->
-                                                <div class="block-all-answer" id="block-all-answer-1">
+                                                <div class="block-all-answer" id="block<?= $key; ?>">
                                                     <?php
                                                         foreach($reply_question as $reply):
                                                         $user_reply = $reply['user_reply'];
@@ -193,7 +193,7 @@ if($community){
                                                                     <p class="name-user-answer"><?= $user_reply_name ?></p>
                                                                     <!-- <p class="date-answer">March, 16 2023</p> -->
                                                                 </div>
-                                                                <p class="text-question"> <?= $text_reply ?></p>
+                                                                <p class="text-question"><?= $text_reply ?></p>
                                                             </div>
                                                         </div>
                                                     <?php
@@ -202,7 +202,7 @@ if($community){
                                                             echo '<p>No responses !</p>';
                                                     ?>
                                                 </div>
-                                                <div id="block-input-answer-1" class="block-input-answer position-relative">
+                                                <div id="block-input-answer-<?= $key; ?>" class="block-input-answer position-relative">
                                                     <form action="" method="POST" id="reply_question_community">
                                                         <input type='hidden' form="reply_question_community" name='id' value='<?= $key ?>' >
                                                         <input type='hidden' form="reply_question_community" name='community_id' value='<?= $community->ID ?>' >
@@ -559,12 +559,15 @@ if($community){
                         </div>
                         <div class="tab tab-active">
                             <?php
-                            foreach($questions as $question):
+                            foreach($questions as $key => $question):
                             $user_question = $question['user_question'];
                             $user_question_name = $user_question->first_name ?: $user_question->display_name;
                             $user_question_image = get_field('profile_img', 'user_' . $user_question->ID);
                             $user_question_image = $user_question_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                             $text_question = $question['text_question'];
+                            $reply_question = $question['reply_question'];
+                            if(!empty($reply_question))
+                                $reply_question_count = count($reply_question);
                             ?>
                             <div class="interviewer-block d-flex">
                                 <div class="imgUser">
@@ -578,47 +581,52 @@ if($community){
                                     </div>
                                     <p class="text-question"><?= $text_question ?></p>
                                     <div class="d-flex">
-                                        <!-- 
-                                        <button class="btn footer-answer-items" id="answer-item-1">
+                                        
+                                        <button class="btn footer-answer-items" data-target="block-all-answer-<?= $key; ?>" id="answer-item-1">
                                             <i class="fa fa-comment"></i>
-                                            <p>34 answers</p>
+                                            <p><?= $reply_question_count; ?> answers</p>
                                         </button>
-                                        <button class="btn footer-answer-items" id="reply-btn-1">
+                                        <button class="btn footer-answer-items" data-target="block-input-answer-1-<?= $key; ?>" id="reply-btn-1">
                                             <i class="fa fa-reply" aria-hidden="true"></i>
                                             <p>Reply</p>
                                         </button>
-                                        -->
+                                       
                                     </div>
-                                    <!-- <div class="block-all-answer" id="block-all-answer-1">
+                                    <div class="block-all-answer" id="block-all-answer-<?= $key; ?>">
+                                    <?php
+                                        foreach($reply_question as $reply):
+                                        $user_reply = $reply['user_reply'];
+                                        $user_reply_name = $user_reply->first_name ?: $user_reply->display_name;
+                                        $user_reply_image = get_field('profile_img', 'user_' . $user_reply->ID);
+                                        $user_reply_image = $user_reply_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                        $text_reply = $reply['text_reply'];
+                                    ?>
                                         <div class="interviewer-block d-flex">
                                             <div class="imgUser">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Fadel.png" alt="">
+                                                <img src="<?= $user_reply_image ?>" alt="">
                                             </div>
                                             <div class="block-detail-interviewer">
                                                 <div class="d-flex align-items-center">
-                                                    <p class="name-user-answer">Abdourahmane Dieng</p>
-                                                    <p class="date-answer">March, 16 2023</p>
+                                                    <p class="name-user-answer"><?= $user_reply_name ?></p>
+                                                    <!-- <p class="date-answer">March, 16 2023</p> -->
                                                 </div>
-                                                <p class="text-question"> clAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud ametAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet..</p>
+                                                <p class="text-question"><?= $text_reply ?></p>
                                             </div>
                                         </div>
-                                        <div class="interviewer-block d-flex">
-                                            <div class="imgUser">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Fadel.png" alt="">
-                                            </div>
-                                            <div class="block-detail-interviewer">
-                                                <div class="d-flex align-items-center">
-                                                    <p class="name-user-answer">Abdourahmane Dieng</p>
-                                                    <p class="date-answer">March, 16 2023</p>
-                                                </div>
-                                                <p class="text-question"> clAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud ametAmet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet..</p>
-                                            </div>
-                                        </div>
+                                    <?php
+                                        endforeach;
+                                        if(empty($reply_question))
+                                            echo '<p>No responses !</p>';
+                                    ?>
                                     </div>
-                                    <div id="block-input-answer-1" class="block-input-answer position-relative">
-                                        <input type="text">
-                                        <button class="btn btn-send">Send</button>
-                                    </div> -->
+                                    <div id="block-input-answer-1-<?= $key; ?>" class="block-input-answer position-relative">
+                                        <form action="" method="POST">
+                                            <input type='hidden' name='id' value='<?= $key ?>' >
+                                            <input type='hidden' name='community_id' value='<?= $community->ID ?>' >
+                                            <input type="text" name="text_reply" placeholder="Share your opinion on this question">
+                                            <button type="submit" name="reply_question_community" class="btn btn-send">Send</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                             <?php
@@ -753,16 +761,13 @@ else
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    $("#answer-item-1").click(function() {
-        $("#block-all-answer-1").toggle();
+    $(document).ready(function() {
+        $(".footer-answer-items").click(function() {
+            var targetId = $(this).data("target"); // Récupération de l'ID cible depuis l'attribut data-target
+            $("#" + targetId).toggle(); // Afficher/Masquer le bloc en fonction de l'ID correspondant
+        });
     });
-    $("#reply-btn-1").click(function() {
-        $("#block-input-answer-1").toggle();
-    });
-    $(".btn-see-all").click(function() {
-        $(".item , .tab").removeClass('active');
-        $(".item-question , .tab-active").addClass('active');
-    });
+
 </script>
 <script>
     document.querySelectorAll(".filters .item").forEach(function (tab, index) {

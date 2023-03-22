@@ -1,13 +1,13 @@
 <?php
 
-$mail_shared_course_body = 
+$mail_new_followed_body = 
 '
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
   xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
-  <title>'. $first_name .', someone want  a course with you.</firs-name></title><!--[if !mso]><!-->
+  <title>' . $first_name . ', je hebt nieuwe volgers!</firs-name></title><!--[if !mso]><!-->
   <meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -67,16 +67,6 @@ $mail_shared_course_body =
         width: 100% !important;
         max-width: 100%;
       }
-
-      .mj-column-per-25 {
-        width: 25% !important;
-        max-width: 25%;
-      }
-
-      .mj-column-per-75 {
-        width: 75% !important;
-        max-width: 75%;
-      }
     }
   </style>
   <style media="screen and (min-width:480px)">
@@ -84,31 +74,11 @@ $mail_shared_course_body =
       width: 100% !important;
       max-width: 100%;
     }
-
-    .moz-text-html .mj-column-per-25 {
-      width: 25% !important;
-      max-width: 25%;
-    }
-
-    .moz-text-html .mj-column-per-75 {
-      width: 75% !important;
-      max-width: 75%;
-    }
   </style>
   <style type="text/css">
     [owa] .mj-column-per-100 {
       width: 100% !important;
       max-width: 100%;
-    }
-
-    [owa] .mj-column-per-25 {
-      width: 25% !important;
-      max-width: 25%;
-    }
-
-    [owa] .mj-column-per-75 {
-      width: 75% !important;
-      max-width: 75%;
     }
   </style>
   <style type="text/css">
@@ -146,7 +116,7 @@ $mail_shared_course_body =
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content"
                             style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
-                            data-testid="Y0h44Pmw76d">A new course for you.</p>
+                            data-testid="Y0h44Pmw76d">Je account is succesvol aangemaakt</p>
                         </div>
                       </td>
                     </tr>
@@ -244,10 +214,12 @@ $mail_shared_course_body =
                         <div
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <h1 class="text-build-content"
-                            style="text-align:center;; margin-top: 10px; margin-bottom: 10px; font-weight: normal;"
+                            style="text-align:center;; margin-top: 10px; font-weight: normal;"
                             data-testid="RJMLrMvA0Rh"><span
-                              style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b>Someone was
-                                thinking about you!</b></span></h1>
+                              style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b>You got a new
+                                follower</b></span></h1>
+                          <p class="text-build-content" style="text-align: center; margin: 10px 0; margin-bottom: 10px;"
+                            data-testid="RJMLrMvA0Rh">Je wordt steeds relevanter als expert in jouw vakgebied</p>
                         </div>
                       </td>
                     </tr>
@@ -258,72 +230,33 @@ $mail_shared_course_body =
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content" data-testid="S_MPaSnC0uI"
                             style="margin: 10px 0; margin-top: 10px;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi ' . $first_name . '
-                              ,</span></p>
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi ' . $first_name . ' ,</span></p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;">&nbsp;</p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI"
                             style="margin: 10px 0; margin-bottom: 10px;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">The following
-                              learning content is shared with you by '. $manager->display_name . ' of the person who shared the course with
-                              you&gt;:</span></p>
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Je hebt één of
+                              meerdere nieuwe volgers! Bekijk wie het zijn en zorg dat zij genoeg content hebben om zich
+                              verder te ontwikkelen.</span></p>
                         </div>
                       </td>
                     </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#ffffff" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-        style="background:#ffffff;background-color:#ffffff;width:100%;">
-        <tbody>
-          <tr>
-            <td
-              style="direction:ltr;font-size:0px;padding:20px 0px 20px 0px;padding-left:0px;padding-right:0px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:150px;" ><![endif]-->
-              <div class="mj-column-per-25 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
-                  width="100%">
-                  <tbody>
                     <tr>
-                      <td align="center"
-                        style="font-size:0px;padding:10px 25px 10px 25px;padding-right:25px;padding-left:25px;word-break:break-word;">
+                      <td align="center" vertical-align="middle"
+                        style="background:transparent;font-size:0px;padding:10px 25px 20px 25px;padding-right:25px;padding-bottom:20px;padding-left:25px;word-break:break-word;">
                         <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="border-collapse:collapse;border-spacing:0px;">
+                          style="border-collapse:separate;line-height:100%;">
                           <tbody>
                             <tr>
-                              <td style="width:100px;"><img alt="" height="auto"
-                                  src="' . $thumbnail . '"
-                                  style="border:none;border-radius:25px;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;"
-                                  width="100"></td>
+                              <td align="center" bgcolor="#023356" role="presentation"
+                                style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#023356;"
+                                valign="middle"><a href="https://livelearn.nl/inloggen/"
+                                  style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
+                                  target="_blank"><span
+                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Inloggen</span></a>
+                              </td>
                             </tr>
                           </tbody>
                         </table>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td><td class="" style="vertical-align:top;width:450px;" ><![endif]-->
-              <div class="mj-column-per-75 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
-                  width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="left"
-                        style="font-size:0px;padding:10px 25px;padding-top:0px;padding-bottom:0px;word-break:break-word;">
-                        <div
-                          style="font-family:Arial, sans-serif;font-size:13px;letter-spacing:normal;line-height:1;text-align:left;color:#000000;">
-                          <p class="text-build-content" data-testid="yb3veC3LzzuKS9DcCsLpD"
-                            style="margin: 10px 0; margin-top: 10px;"><span style="font-family:Arial;"><b>' . $posts->title . '</b></span></p>
-                          <p class="text-build-content" data-testid="yb3veC3LzzuKS9DcCsLpD"
-                            style="margin: 10px 0; margin-bottom: 10px;"><span style="font-family:Arial;">' . $short_description . '</span></p>
-                        </div>
                       </td>
                     </tr>
                   </tbody>
@@ -348,25 +281,6 @@ $mail_shared_course_body =
                 <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
                   width="100%">
                   <tbody>
-                    <tr>
-                      <td align="center" vertical-align="middle"
-                        style="background:transparent;font-size:0px;padding:10px 25px 20px 25px;padding-right:25px;padding-bottom:20px;padding-left:25px;word-break:break-word;">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="border-collapse:separate;line-height:100%;">
-                          <tbody>
-                            <tr>
-                              <td align="center" bgcolor="#023356" role="presentation"
-                                style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#023356;"
-                                valign="middle"><a href="' . get_permalink($posts->ID) . '"
-                                  style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
-                                  target="_blank"><span
-                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Take a look 
-                                    </span></a></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
                     <tr>
                       <td align="center" vertical-align="top"
                         style="font-size:0px;padding:10px 25px;padding-top:10px;padding-right:25px;padding-bottom:10px;padding-left:25px;word-break:break-word;">
@@ -404,7 +318,7 @@ $mail_shared_course_body =
                             style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
                             data-testid="p1wGkfjeZKT7"><span
                               style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">This message was
-                              sent to ' . $email . ' as part of our welcome series.</span><br><span
+                              sent to [[EMAIL_TO]] as part of our welcome series.</span><br><span
                               style="color:#55575d;font-family:Arial;font-size:16px;line-height:22px;">To stop receiving
                               messages from this series, </span><a class="link-build-content"
                               style="color:inherit;; text-decoration: none;" target="_blank"

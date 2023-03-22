@@ -227,7 +227,7 @@ extract($_GET);
                                         <div>
                                             <p class="klikText">Klik om link te kopieren</p>
                                             <div class="input-group input-group-copy formCopyLink">
-                                                <input id="test1" type="text" class="linkTextCopy form-control" value="<?php echo get_permalink($post->ID) ?>" readonly>
+                                                <input id="test1" type="text" class="linkTextCopy form-control" value="<?php echo get_permalink($post->ID); ?>" readonly>
                                                 <span class="input-group-btn">
                                                 <button class="btn btn-default btnCopy">Copy</button>
                                                 </span>
