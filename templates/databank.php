@@ -90,9 +90,10 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                             $paginationLinks = "";
                             for ($i = 1; $i <= $totalPages; $i++) {
                                 $activeClass = ($i == $pageNumber) ? "active" : "";
-                                $paginationLinks .= "<a class=\"{$activeClass}\" href=\"/artikels?page={$i}\">{$i}</a>";
+                                $paginationLinks .= "<a class=\"textLiDashboard\" href=\"/artikels?page={$i}\">{$i}</a>";
                             }
-
+                            
+                            echo $paginationLinks;
 
                         ?>
                     </center>
