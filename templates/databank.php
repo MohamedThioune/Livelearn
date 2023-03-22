@@ -28,6 +28,7 @@ $user = wp_get_current_user();
 $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandrinks','sportnext','nbvt','vsbnetwerk','tvvl','nedverbak','tnw','changeINC','--------------------------','nvab','vbw','kndb','fgz','cvah','nbov','nuvo','CBD','Hoorzaken','Knvvn','Nvtl','stiba','Nfofruit','Iro','Lto','cbm','tuinbranche','jagersvereniging','Wapned','Dansbelang','Pictoright','Ngb','Griffiers','Nob','Bijenhouders','BBKnet','AuteursBond','ovfd','Adfiz','nvvr','Veneca','Sloopaannemers','Noa'];
 ?>
 
+
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
@@ -70,6 +71,31 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     </div>
                 </div>
                 <div class="contentCardListeCourse">
+                    <center>
+                        <?php
+                            // Define the array of companies
+                            $companies = 74;
+                            
+                            // Define the number of companies to display per page
+                            $companiesPerPage = 10;
+                            
+                            // Get the current page number from the query string
+                            $pageNumber = isset($_GET['page']) ? $_GET['page'] : 1;
+                            
+                            // Calculate the start and end indexes of the companies to display
+                            $startIndex = ($pageNumber - 1) * $companiesPerPage;
+                            $endIndex = $startIndex + $companiesPerPage;
+
+                            $totalPages = ceil(count($companies) / $companiesPerPage);
+                            $paginationLinks = "";
+                            for ($i = 1; $i <= $totalPages; $i++) {
+                                $activeClass = ($i == $pageNumber) ? "active" : "";
+                                $paginationLinks .= "<a class=\"{$activeClass}\" href=\"/artikels?page={$i}\">{$i}</a>";
+                            }
+
+
+                        ?>
+                    </center>
                     <table class="table table-responsive">
                         <form action="/optieAll" method="POST">
                             <thead>
