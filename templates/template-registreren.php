@@ -102,8 +102,8 @@
                                  -->
                                 <center><p class="TitleForm">Registreren</p></center>
 
-                                <?php //echo (do_shortcode('[user_registration_form id="8477"]')); ?>
-                                <?php echo (do_shortcode('[user_registration_form id="59"]')); ?>
+                                <?php echo (do_shortcode('[user_registration_form id="8477"]')); ?>
+                                <?php //echo (do_shortcode('[user_registration_form id="59"]')); ?>
                             </form>
                         </div>
                     </div>
