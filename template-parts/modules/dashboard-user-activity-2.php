@@ -116,71 +116,88 @@ if(!empty($topics_internal))
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <td class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
+                                                </div>
+                                                <p class="name-element">UX - UI Design certificat</p>
                                             </div>
-                                            <p class="name-element">UX - UI Design certificat</p>
                                         </td>
                                         <td>
                                             <p class="name-element">12h 33m 10s</p>
                                         </td>
-                                        <td class="d-flex align-items-center r-1">
-                                            <div class="blockImgUser">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" class="" alt="">
+                                        <td class=" r-1">
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgUser">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" class="" alt="">
+                                                </div>
+                                                <p class="name-element">Darlene Robertson</p>
                                             </div>
-                                            <p class="name-element">Darlene Robertson</p>
+
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
+                                        <td >
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
+                                                </div>
+                                                <p class="name-element">Motion design </p>
                                             </div>
-                                            <p class="name-element">Motion design </p>
                                         </td>
                                         <td>
                                             <p class="name-element">12h 33m 10s</p>
                                         </td>
-                                        <td class="d-flex align-items-center r-1">
-                                            <div class="blockImgUser">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" class="" alt="">
+                                        <td class="r-1">
+                                            <div class="d-flex align-items-center ">
+                                                <div class="blockImgUser">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" class="" alt="">
+                                                </div>
+                                                <p class="name-element">Marvin McKinney</p>
                                             </div>
-                                            <p class="name-element">Marvin McKinney</p>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
+                                        <td >
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
+                                                </div>
+                                                <p class="name-element">videeo annimate After Effect</p>
                                             </div>
-                                            <p class="name-element">videeo annimate After Effect</p>
                                         </td>
                                         <td>
                                             <p class="name-element">12h 33m 10s</p>
                                         </td>
-                                        <td class="d-flex align-items-center r-1">
-                                            <div class="blockImgUser">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" class="" alt="">
-                                            </div>
-                                            <p class="name-element">Kathryn Murphy</p>
+                                        <td class="r-1">
+                                           <div class="d-flex align-items-center ">
+                                               <div class="blockImgUser">
+                                                   <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" class="" alt="">
+                                               </div>
+                                               <p class="name-element">Kathryn Murphy</p>
+                                           </div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
+                                        <td >
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
+                                                </div>
+                                                <p class="name-element">Mecanic volvo electric</p>
                                             </div>
-                                            <p class="name-element">Mecanic volvo electric</p>
                                         </td>
                                         <td>
                                             <p class="name-element">12h 33m 10s</p>
                                         </td>
-                                        <td class="d-flex align-items-center r-1">
-                                            <div class="blockImgUser">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" class="" alt="">
+                                        <td class=" r-1">
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgUser">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" class="" alt="">
+                                                </div>
+                                                <p class="name-element">Cameron Williamson</p>
                                             </div>
-                                            <p class="name-element">Cameron Williamson</p>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -649,11 +666,13 @@ if(!empty($topics_internal))
                                     </thead>
                                     <tbody class="text-left">
                                       <tr>
-                                        <td class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
+                                        <td >
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
+                                                </div>
+                                                <p class="name-element">UX - UI Design certificat</p>
                                             </div>
-                                            <p class="name-element">UX - UI Design certificat</p>
                                         </td>
                                         <td>
                                             <p class="name-element">12h 33m 10s</p>
@@ -672,11 +691,13 @@ if(!empty($topics_internal))
                                         </td>
                                     </tr>
                                       <tr>
-                                        <td class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
-                                            </div>
-                                            <p class="name-element">UX - UI Design certificat</p>
+                                        <td >
+                                           <div class="d-flex align-items-center">
+                                               <div class="blockImgCourse">
+                                                   <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
+                                               </div>
+                                               <p class="name-element">UX - UI Design certificat</p>
+                                           </div>
                                         </td>
                                         <td>
                                             <p class="name-element">12h 33m 10s</p>
@@ -695,11 +716,13 @@ if(!empty($topics_internal))
                                         </td>
                                     </tr>
                                       <tr>
-                                        <td class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
+                                        <td >
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
+                                                </div>
+                                                <p class="name-element">UX - UI Design certificat</p>
                                             </div>
-                                            <p class="name-element">UX - UI Design certificat</p>
                                         </td>
                                         <td>
                                             <p class="name-element">12h 33m 10s</p>
@@ -718,11 +741,13 @@ if(!empty($topics_internal))
                                         </td>
                                     </tr>
                                       <tr>
-                                        <td class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
-                                            </div>
-                                            <p class="name-element">UX - UI Design certificat</p>
+                                        <td >
+                                           <div class="d-flex align-items-center">
+                                               <div class="blockImgCourse">
+                                                   <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
+                                               </div>
+                                               <p class="name-element">UX - UI Design certificat</p>
+                                           </div>
                                         </td>
                                         <td>
                                             <p class="name-element">12h 33m 10s</p>
@@ -741,11 +766,13 @@ if(!empty($topics_internal))
                                         </td>
                                     </tr>
                                       <tr>
-                                        <td class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
+                                        <td >
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
+                                                </div>
+                                                <p class="name-element">UX - UI Design certificat</p>
                                             </div>
-                                            <p class="name-element">UX - UI Design certificat</p>
                                         </td>
                                         <td>
                                             <p class="name-element">12h 33m 10s</p>
