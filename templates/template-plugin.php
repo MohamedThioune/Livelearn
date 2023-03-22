@@ -240,12 +240,12 @@ function RandomString(){
         }
         try{
           // var_dump($data);
-          $wpdb->insert($table,$data);
+          // $wpdb->insert($table,$data);
           echo $key."  ".$wpdb->last_error;
           if(isset($wpdb->last_error)){
             echo $key."  ".$wpdb->last_error."\n";
           }else
-            $id_post = $wpdb->insert_id;
+            // $id_post = $wpdb->insert_id;
         }catch(Exception $e) {
           echo $e->getMessage();
         }
