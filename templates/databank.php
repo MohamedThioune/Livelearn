@@ -72,6 +72,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 </div>
                 <div class="contentCardListeCourse">
                     <center>
+                        <br>
                         <?php
                             // Define the array of companies
                             $companies = 74;
@@ -92,10 +93,10 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                 $activeClass = ($i == $pageNumber) ? "active" : "";
                                 $paginationLinks .= "<a class=\"textLiDashboard\" href=\"/artikels?page={$i}\">{$i}</a>";
                             }
-                            
                             echo $paginationLinks;
 
                         ?>
+                        <br>
                     </center>
                     <table class="table table-responsive">
                         <form action="/optieAll" method="POST">
