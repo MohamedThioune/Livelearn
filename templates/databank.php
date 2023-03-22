@@ -28,6 +28,7 @@ $user = wp_get_current_user();
 $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandrinks','sportnext','nbvt','vsbnetwerk','tvvl','nedverbak','tnw','changeINC','--------------------------','nvab','vbw','kndb','fgz','cvah','nbov','nuvo','CBD','Hoorzaken','Knvvn','Nvtl','stiba','Nfofruit','Iro','Lto','cbm','tuinbranche','jagersvereniging','Wapned','Dansbelang','Pictoright','Ngb','Griffiers','Nob','Bijenhouders','BBKnet','AuteursBond','ovfd','Adfiz','nvvr','Veneca','Sloopaannemers','Noa'];
 ?>
 
+
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
@@ -47,7 +48,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                    <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
                        &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
-                       <a id="bouddha" href="/artikels" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="artikel" style="cursor:grab;"></a>
+                       <a id="bouddha" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" disabled><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="artikel" style="cursor:grab;"></a>
                        &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/artikel.jpg" alt="load subtopics"></button>
                        
                     <div class="col-md-3">
@@ -70,6 +71,32 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     </div>
                 </div>
                 <div class="contentCardListeCourse">
+                    <center>
+                        <br>
+                        <?php
+                            // Define the array of companies
+                            $companies = 74;                            
+                            // Define the number of companies to display per page
+                            $companiesPerPage = 10;
+                            
+                            // Get the current page number from the query string 
+                            $pageNumber = isset($_GET['look']) ? $_GET['look'] : 1;
+                            
+                            // Calculate the start and end indexes of the companies to display
+                            $startIndex = ($pageNumber - 1) * $companiesPerPage;
+                            $endIndex = $startIndex + $companiesPerPage;
+
+                            $totalPages = ceil($companies / $companiesPerPage);
+                            $paginationLinks = "";
+                            for ($i = 1; $i <= $totalPages; $i++) {
+                                $activeClass = ($i == $pageNumber) ? "active" : "";?>
+                                <a href=<?="artikels/?look=".$i ?> class=<?=$activeClass?>><?=$i?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+                            }
+
+                        ?>
+                        <br>
+                    </center>
                     <table class="table table-responsive">
                         <form action="/optieAll" method="POST">
                             <thead>
@@ -216,14 +243,14 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     //     }
     // }
 
-    // $('#bouddha').click((e)=>{
+    // $('.bouddha').click((e)=>{
     //     $('#select_field').hide(true,2000);
     //     $('#loader').attr('hidden',false);
     //     $.ajax({
-    //         url:'/artikels', 
+    //         url:'/livelearn/artikels?page=1', 
     //         type:'POST',
     //         datatype:'json',
-    //         cache:false,
+    //         // cache:false,
     //         beforeSend:function(){
     //         },
     //         success:function(){
@@ -236,7 +263,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     //             // window.location.href = "/livelearn/artikels";
     //         },
     //         error:function(error){
-    //             console.log('error: '+error);
+    //             console("error"+error);
     //         }
     //     }); 
     // });
@@ -267,6 +294,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 }
             });
     });
+
     var ids=[];
     $(".checkOne").click((e)=>{
         let tags_id = e.target.value;
