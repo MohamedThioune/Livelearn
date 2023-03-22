@@ -13,7 +13,7 @@ function RandomString(){
   }
   return $randstring;
 }
-  error_reporting(E_WARNING);
+  // error_reporting(E_WARNING);
   $websites=[
       'WorkPlace Academy'=>'https://workplaceacademy.nl/',
       'Ynno'=>'https://www.ynno.com/',
@@ -32,7 +32,7 @@ function RandomString(){
       'Agile Scrum Group'=>'https://agilescrumgroup.nl/',
       'Horizon'=>'https://horizontraining.nl/',
       'Kenneth Smit'=>'https://www.kennethsmit.com/',
-      'Autoblog'=>'https://www.autoblog.nl/',
+      // 'Autoblog'=>'https://www.autoblog.nl/',
       'Crypto university'=>'https://www.cryptouniversity.nl/',
       'WineLife'=>'https://www.winelife.nl/',
       'Perswijn'=>'https://perswijn.nl/',
@@ -68,7 +68,7 @@ function RandomString(){
       'Purse Blog'=> 'https://www.purseblog.com/',
       'Coursera'=> 'https://blog.coursera.org/',
       'Udemy'=> 'https://blog.udemy.com/',
-      'CheckPoint'=> 'https://blog.checkpoint.com/'/*,
+      'CheckPoint'=> 'https://blog.checkpoint.com/',
       'De laatste meter'=> 'https://www.delaatstemeter.nl/',
       'ManagementSite'=> 'https://www.managementpro.nl/',
       '1 Minute Manager'=> 'https://www.1minutemanager.nl/',
@@ -88,7 +88,7 @@ function RandomString(){
       'The Real Deal'=>'https://therealdeal.com/',
       'HousingWire'=>'https://www.housingwire.com/',
       'AfterSales'=>'https://aftersalesmagazine.nl/',
-      'CRS Consulting'=>'https://crsconsultants.nl/'*/
+      'CRS Consulting'=>'https://crsconsultants.nl/'
   ];
 
     function strip_html_tags($text) {
@@ -99,8 +99,12 @@ function RandomString(){
       $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
       return preg_replace($pattern, '', $text);
     } 
-
-  // $websites=array_chunk($website,20);
+    $offset=0;
+  if (isset($_GET['look'])) {
+    $page = intval($_GET['look']);
+    $offset = ($page - 1) * 20;
+  }else
+    echo '<script>alert ("error")</script>';
 
   $table = $wpdb->prefix.'databank';
   
@@ -113,9 +117,15 @@ function RandomString(){
   );
   $databanks=array();
   $companies = get_posts($args);
+  $i=$offset;
+  $max=($offset+20<count($websites))?($offset+20):count($websites);
   foreach($websites as $key => $url){
-    $author_id = null;
-
+    if ($i>=$max) {
+      break;
+    }
+    // $author_id = null;
+    // var_dump($url);
+    
     foreach($companies as $companie) 
       if(strtolower($companie->post_title) == strtolower($key))
         $company = $companie;
@@ -239,25 +249,19 @@ function RandomString(){
             );
           }
         }
-        array_push($databanks,$data);
-        
+        try
+        {
+          // var_dump($data);
+          $wpdb->insert($table,$data);
+          // echo $key."  ".$wpdb->last_error."<br>";
+          $id_post = $wpdb->insert_id;
+          
+        }catch(Exception $e) {
+          echo $e->getMessage();
+        }
       }
     }
-    var_dump($databanks);
-    header("Cache-Control: no-cache, no-store, must-revalidate"); // HTTP 1.1.
-    header("Pragma: no-cache"); // HTTP 1.0.
-    header("Expires: 0"); // Proxies.
-    // foreach($databanks as $databank){
-    //   try{
-    //     // var_dump($data);
-    //     $wpdb->insert($table,$databank);
-    //     echo $key."  ".$wpdb->last_error."<br>";
-    //     $id_post = $wpdb->insert_id;
-        
-    //   }catch(Exception $e) {
-    //     echo $e->getMessage();
-    //   }
-    // }
+    $i++;
   }
-  // header("location:/databank");
+  header("location:/databank");
 ?>   
