@@ -75,7 +75,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                         <br>
                         <?php
                             // Define the array of companies
-                            $companies = 74;
+                            $companies = 74; 
                             
                             // Define the number of companies to display per page
                             $companiesPerPage = 10;
