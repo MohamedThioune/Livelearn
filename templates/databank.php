@@ -28,6 +28,84 @@ $user = wp_get_current_user();
 $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandrinks','sportnext','nbvt','vsbnetwerk','tvvl','nedverbak','tnw','changeINC','--------------------------','nvab','vbw','kndb','fgz','cvah','nbov','nuvo','CBD','Hoorzaken','Knvvn','Nvtl','stiba','Nfofruit','Iro','Lto','cbm','tuinbranche','jagersvereniging','Wapned','Dansbelang','Pictoright','Ngb','Griffiers','Nob','Bijenhouders','BBKnet','AuteursBond','ovfd','Adfiz','nvvr','Veneca','Sloopaannemers','Noa'];
 ?>
 
+<?php 
+    $websites=[
+        'WorkPlace Academy'=>'https://workplaceacademy.nl/',
+        'Ynno'=>'https://www.ynno.com/',
+        'DeZZP'=>'https://www.dezzp.nl/',
+        'Aestate'=>'https://www.aestate.nl/',
+        'Alba Concepts'=>'https://albaconcepts.nl/',
+        'AM'=>'https://www.am.nl/',
+        'Limoonworks'=>'https://limoonworks.nl/',
+        'DWA'=>'https://www.dwa.nl/',
+        'Van Spaendonck'=>'https://www.vanspaendonck.nl/',
+        'PTG-advies'=>'https://ptg-advies.nl/',
+        'Rever'=>'https://rever.nl/',
+        'Reworc'=>'https://www.reworc.com/',
+        'Sweco'=>'https://www.sweco.nl/',
+        'Co-pilot'=>'https://www.copilot.nl/',
+        'Agile Scrum Group'=>'https://agilescrumgroup.nl/',
+        'Horizon'=>'https://horizontraining.nl/',
+        'Kenneth Smit'=>'https://www.kennethsmit.com/',
+        // 'Autoblog'=>'https://www.autoblog.nl/',
+        'Crypto university'=>'https://www.cryptouniversity.nl/',
+        'WineLife'=>'https://www.winelife.nl/',
+        'Perswijn'=>'https://perswijn.nl/',
+        'Koken met Kennis'=>'https://www.kokenmetkennis.nl/',
+        'Minkowski'=>'https://minkowski.org/',
+        'KIT publishers'=>'https://kitpublishers.nl/',
+        'BeByBeta'=>'https://www.betastoelen.nl/',
+        'Zooi'=>'https://zooi.nl/',
+        'Growth Factory'=>'https://www.growthfactory.nl/',
+        'Influid'=>'https://influid.nl/',
+        'MediaTest'=>'https://mediatest.nl/',
+        'MeMo2'=>'https://memo2.nl/',
+        'Impact Investor'=>'https://impact-investor.com/',
+        'Equalture'=>'https://www.equalture.com/',
+        'Zorgmasters'=>'https://zorgmasters.nl/',
+        'AdSysco'=>'https://adsysco.nl/',
+        'Transport en Logistiek Nederland'=>'https://www.tln.nl/',
+        'Financieel Fit'=>'https://www.financieelfit.nl/',
+        'Business Insider'=>'https://www.businessinsider.nl/',
+        'Frankwatching'=>'https://www.frankwatching.com/',
+        'MarTech'=>'https://martech.org/',
+        'Search Engine Journal'=>'https://www.searchenginejournal.com/',
+        'Search Engine Land'=>'https://searchengineland.com/',
+        'TechCrunch'=>'https://techcrunch.com/',
+        'The Bruno Effect'=>'https://magazine.thebrunoeffect.com/',
+        'Crypto Insiders'=>'https://www.crypto-insiders.nl/',
+        'HappyHealth'=> 'https://happyhealthy.nl/',
+        'Focus'=>'https://focusmagazine.nl/',
+        'Chip Foto Magazine'=> 'https://www.chipfotomagazine.nl/',
+        'Vogue'=> 'https://www.vogue.nl/',
+        'TrendyStyle'=>'https://www.trendystyle.net/',
+        'WWD'=> 'https://wwd.com/',
+        'Purse Blog'=> 'https://www.purseblog.com/',
+        'Coursera'=> 'https://blog.coursera.org/',
+        'Udemy'=> 'https://blog.udemy.com/',
+        'CheckPoint'=> 'https://blog.checkpoint.com/',
+        'De laatste meter'=> 'https://www.delaatstemeter.nl/',
+        'ManagementSite'=> 'https://www.managementpro.nl/',
+        '1 Minute Manager'=> 'https://www.1minutemanager.nl/',
+        'De Strafschop'=> 'https://www.strafschop.nl/',
+        'JongeBazen'=> 'https://www.jongebazen.nl/',
+        'Expeditie Duurzaam'=> 'https://www.expeditieduurzaam.nl/',
+        'Pure Luxe'=>'https://pureluxe.nl/',
+        'WatchTime'=>'https://www.watchtime.com/',
+        'Monochrome'=>'https://monochrome-watches.com/',
+        'Literair Nederland'=>'https://www.literairnederland.nl/',
+        'Tzum'=>'https://www.tzum.info/',
+        'Developer'=>'https://www.developer-tech.com/',
+        'SD Times'=>'https://sdtimes.com/',
+        'GoDaddy'=>'https://www.godaddy.com/garage/',
+        'Bouw Wereld'=>'https://www.bouwwereld.nl/',
+        'Vastgoed actueel'=>'https://vastgoedactueel.nl/',
+        'The Real Deal'=>'https://therealdeal.com/',
+        'HousingWire'=>'https://www.housingwire.com/',
+        'AfterSales'=>'https://aftersalesmagazine.nl/',
+        'CRS Consulting'=>'https://crsconsultants.nl/'
+    ];
+?>
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
@@ -73,28 +151,15 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 <div class="contentCardListeCourse">
                     <center>
                         <br>
+                        <select name="companies" multiple="multiple" id="select_company">
                         <?php
-                            // Define the array of companies
-                            $companies = 74;                            
-                            // Define the number of companies to display per page
-                            $companiesPerPage = 10;
-                            
-                            // Get the current page number from the query string 
-                            $pageNumber = isset($_GET['look']) ? $_GET['look'] : 1;
-                            
-                            // Calculate the start and end indexes of the companies to display
-                            $startIndex = ($pageNumber - 1) * $companiesPerPage;
-                            $endIndex = $startIndex + $companiesPerPage;
-
-                            $totalPages = ceil($companies / $companiesPerPage);
-                            $paginationLinks = "";
-                            for ($i = 1; $i <= $totalPages; $i++) {
-                                $activeClass = ($i == $pageNumber) ? "active" : "";?>
-                                <a href=<?="artikels/?look=".$i ?> class=<?=$activeClass?>><?=$i?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php 
-                            }
-
+                          foreach ($websites as $key => $url) {
                         ?>
+                        <option value="<?=$url ?>"><?=$key?></option>
+                        <?php
+                          }  
+                        ?>
+                        </select>
                         <br>
                     </center>
                     <table class="table table-responsive">

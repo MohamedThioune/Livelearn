@@ -100,7 +100,7 @@ function RandomString(){
       $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
       return preg_replace($pattern, '', $text);
     } 
-    $offset=0;
+  $offset=0;
   if (isset($_GET['look'])) {
     $page = intval($_GET['look']);
     $offset = ($page - 1) * 20;
@@ -116,7 +116,6 @@ function RandomString(){
       'post_type' => 'company', 
       'posts_per_page' => -1,
   );
-  $databanks=array();
   $companies = get_posts($args);
   $i=$offset;
   $max=($offset+20<count($websites))?($offset+20):count($websites);
