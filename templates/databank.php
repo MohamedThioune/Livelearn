@@ -48,7 +48,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                    <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
                        &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
-                       <a id="bouddha" href="/artikels" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="artikel" style="cursor:grab;"></a>
+                       <a id="bouddha" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" disabled><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="artikel" style="cursor:grab;"></a>
                        &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/artikel.jpg" alt="load subtopics"></button>
                        
                     <div class="col-md-3">
@@ -75,25 +75,24 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                         <br>
                         <?php
                             // Define the array of companies
-                            $companies = 74; 
-                            
+                            $companies = 74;                            
                             // Define the number of companies to display per page
                             $companiesPerPage = 10;
                             
                             // Get the current page number from the query string 
-                            $pageNumber = isset($_GET['page']) ? $_GET['page'] : 1;
+                            $pageNumber = isset($_GET['look']) ? $_GET['look'] : 1;
                             
                             // Calculate the start and end indexes of the companies to display
                             $startIndex = ($pageNumber - 1) * $companiesPerPage;
                             $endIndex = $startIndex + $companiesPerPage;
 
-                            $totalPages = ceil(count($companies) / $companiesPerPage);
+                            $totalPages = ceil($companies / $companiesPerPage);
                             $paginationLinks = "";
                             for ($i = 1; $i <= $totalPages; $i++) {
-                                $activeClass = ($i == $pageNumber) ? "active" : "";
-                                $paginationLinks .= "<a class=\"textLiDashboard\" href=\"/artikels?page={$i}\">{$i}</a>";
+                                $activeClass = ($i == $pageNumber) ? "active" : "";?>
+                                <a href=<?="artikels/?look=".$i ?> class=<?=$activeClass?>><?=$i?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
                             }
-                            echo $paginationLinks;
 
                         ?>
                         <br>
@@ -244,30 +243,30 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     //     }
     // }
 
-    $('#bouddha').click((e)=>{
-        $('#select_field').hide(true,2000);
-        $('#loader').attr('hidden',false);
-        $.ajax({
-            url:'/artikels', 
-            type:'POST',
-            datatype:'json',
-            cache:false,
-            beforeSend:function(){
-            },
-            success:function(){
-                location.reload();
-                // window.location.href = "/livelearn/artikels";
-            },
-            complete:function(){
-                $('#select_field').hide(false,2000);
-                $('#loader').attr('hidden',true);
-                // window.location.href = "/livelearn/artikels";
-            },
-            error:function(error){
-                console("error"+error);
-            }
-        }); 
-    });
+    // $('.bouddha').click((e)=>{
+    //     $('#select_field').hide(true,2000);
+    //     $('#loader').attr('hidden',false);
+    //     $.ajax({
+    //         url:'/livelearn/artikels?page=1', 
+    //         type:'POST',
+    //         datatype:'json',
+    //         // cache:false,
+    //         beforeSend:function(){
+    //         },
+    //         success:function(){
+    //             location.reload();
+    //             // window.location.href = "/livelearn/artikels";
+    //         },
+    //         complete:function(){
+    //             $('#select_field').hide(false,2000);
+    //             $('#loader').attr('hidden',true);
+    //             // window.location.href = "/livelearn/artikels";
+    //         },
+    //         error:function(error){
+    //             console("error"+error);
+    //         }
+    //     }); 
+    // });
 
     $('#select_field').change((e)=>
     {
