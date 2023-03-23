@@ -2,6 +2,7 @@
 
 <?php
 global $wpdb;
+global $wpdb;
 
 function RandomString(){
   $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -13,7 +14,7 @@ function RandomString(){
   }
   return $randstring;
 }
-  error_reporting(E_WARNING);
+  // error_reporting(E_WARNING);
   $websites=[
       'WorkPlace Academy'=>'https://workplaceacademy.nl/',
       'Ynno'=>'https://www.ynno.com/',
@@ -32,7 +33,7 @@ function RandomString(){
       'Agile Scrum Group'=>'https://agilescrumgroup.nl/',
       'Horizon'=>'https://horizontraining.nl/',
       'Kenneth Smit'=>'https://www.kennethsmit.com/',
-      'Autoblog'=>'https://www.autoblog.nl/',
+      // 'Autoblog'=>'https://www.autoblog.nl/',
       'Crypto university'=>'https://www.cryptouniversity.nl/',
       'WineLife'=>'https://www.winelife.nl/',
       'Perswijn'=>'https://perswijn.nl/',
@@ -42,7 +43,7 @@ function RandomString(){
       'BeByBeta'=>'https://www.betastoelen.nl/',
       'Zooi'=>'https://zooi.nl/',
       'Growth Factory'=>'https://www.growthfactory.nl/',
-      'Influid'=>'https://influid.nl/'/*,
+      'Influid'=>'https://influid.nl/',
       'MediaTest'=>'https://mediatest.nl/',
       'MeMo2'=>'https://memo2.nl/',
       'Impact Investor'=>'https://impact-investor.com/',
@@ -88,19 +89,23 @@ function RandomString(){
       'The Real Deal'=>'https://therealdeal.com/',
       'HousingWire'=>'https://www.housingwire.com/',
       'AfterSales'=>'https://aftersalesmagazine.nl/',
-      'CRS Consulting'=>'https://crsconsultants.nl/'*/
+      'CRS Consulting'=>'https://crsconsultants.nl/'
   ];
 
     function strip_html_tags($text) {
       $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
-      $text = preg_replace("/\n{2,}/", "\n", $text);
+      $text = preg_replace("/\n{1,}/", "\n", $text); 
       $text = str_replace("\n","<br>",$text);
       $text = str_replace(['h1','h3','h4','h5','h6'],'h2',$text);
       $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
       return preg_replace($pattern, '', $text);
     } 
-
-  // $websites=array_chunk($website,20);
+    $offset=0;
+  if (isset($_GET['look'])) {
+    $page = intval($_GET['look']);
+    $offset = ($page - 1) * 20;
+  }else
+    echo '<script>alert ("error")</script>';
 
   $table = $wpdb->prefix.'databank';
   
@@ -111,14 +116,23 @@ function RandomString(){
       'post_type' => 'company', 
       'posts_per_page' => -1,
   );
+  $databanks=array();
   $companies = get_posts($args);
+  $i=$offset;
+  $max=($offset+20<count($websites))?($offset+20):count($websites);
   foreach($websites as $key => $url){
-    $author_id = null;
-
+    if ($i>=$max) {
+      break;
+    }
+    // $author_id = null;
+    // var_dump($url);
+    
     foreach($companies as $companie) 
       if(strtolower($companie->post_title) == strtolower($key))
         $company = $companie;
 
+    foreach($users as $user) {
+      $company_user = get_field('company',  'user_' . $user->ID);
     foreach($users as $user) {
       $company_user = get_field('company',  'user_' . $user->ID);
 
@@ -129,7 +143,22 @@ function RandomString(){
           $company_id = $company_user[0]->ID;
         }
     }
+      if(isset($company_user[0]->post_title)) 
+        if(strtolower($company_user[0]->post_title) == strtolower($key) ){
+          $author_id = $user->ID;
+          $company = $company_user[0];
+          $company_id = $company_user[0]->ID;
+        }
+    }
     
+    if(!$author_id)
+    {
+      $login = RandomString();
+      $password = RandomString();
+      $random = RandomString();
+      $email = "author_" . $random . "@" . $key . ".nl";
+      $first_name = explode(' ', $key)[0];
+      $last_name = isset(explode(' ', $key)[1])?explode(' ', $key)[1]:'';
     if(!$author_id)
     {
       $login = RandomString();
@@ -149,10 +178,25 @@ function RandomString(){
         'last_name' => $last_name,
         'role' => 'author' 
       );
+      $userdata = array(
+        'user_pass' => $password,
+        'user_login' => $login,
+        'user_email' => $email,
+        'user_url' => 'https://livelearn.nl/inloggen/',
+        'display_name' => $first_name,
+        'first_name' => $first_name,
+        'last_name' => $last_name,
+        'role' => 'author' 
+      );
 
       $author_id = wp_insert_user(wp_slash($userdata));       
     }
+      $author_id = wp_insert_user(wp_slash($userdata));       
+    }
 
+    //Accord the author a company
+    if(!is_wp_error($author_id))
+      update_field('company', $company, 'user_' . $author_id);
     //Accord the author a company
     if(!is_wp_error($author_id))
       update_field('company', $company, 'user_' . $author_id);
@@ -179,7 +223,7 @@ function RandomString(){
                   'type' => 'Artikel',
                   'videos' => NULL, 
                   'short_description' => $article['excerpt']['rendered'],
-                  'long_description' => htmlspecialchars(substr(strip_html_tags($article['content']['rendered']),0,1000)),
+                  'long_description' => htmlspecialchars(strip_html_tags($article['content']['rendered'])),
                   'duration' => NULL, 
                   'prijs' => 0, 
                   'prijs_vat' => 0,
@@ -199,7 +243,7 @@ function RandomString(){
                   'type' => 'Artikel',
                   'videos' => NULL, 
                   'short_description' => $article['excerpt']['rendered'],
-                  'long_description' => htmlspecialchars(substr(strip_html_tags($article['content']['rendered']),0,1000)),
+                  'long_description' => htmlspecialchars(strip_html_tags($article['content']['rendered'])),
                   'duration' => NULL, 
                   'prijs' => 0, 
                   'prijs_vat' => 0,
@@ -223,7 +267,7 @@ function RandomString(){
               'type' => 'Artikel',
               'videos' => NULL, 
               'short_description' => $article['excerpt']['rendered'],
-              'long_description' => htmlspecialchars(substr(strip_html_tags($article['content']['rendered']),0,1000)),
+              'long_description' => htmlspecialchars(strip_html_tags($article['content']['rendered'])),
               'duration' => NULL,
               'prijs' => 0,
               'prijs_vat' => 0,
@@ -238,19 +282,19 @@ function RandomString(){
             );
           }
         }
-        try{
+        try
+        {
           // var_dump($data);
-          // $wpdb->insert($table,$data);
-          echo $key."  ".$wpdb->last_error;
-          if(isset($wpdb->last_error)){
-            echo $key."  ".$wpdb->last_error."\n";
-          }else
-            // $id_post = $wpdb->insert_id;
+          $wpdb->insert($table,$data);
+          // echo $key."  ".$wpdb->last_error."<br>";
+          $id_post = $wpdb->insert_id;
+          
         }catch(Exception $e) {
           echo $e->getMessage();
         }
       }
     }
+    $i++;
   }
-  // header("location:/databank");
+  header("location:/databank");
 ?>   
