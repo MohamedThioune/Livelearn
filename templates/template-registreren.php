@@ -103,6 +103,10 @@
                                 <center><p class="TitleForm">Registreren </p></center>
 
                                 <?php echo (do_shortcode('[user_registration_form id="8477"]')); ?>
+<<<<<<< HEAD
+=======
+                                <?php //echo (do_shortcode('[user_registration_form id="59"]')); ?>
+>>>>>>> origin/Xadim
                             </form>
                         </div>
                     </div>
