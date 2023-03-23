@@ -8096,6 +8096,15 @@ tbody {
             width: 178px;
             margin-top: -9px !important;
         }
+        .advert-course-Block .advert-one .blockImgAdvert {
+            height: 188px;
+        }
+        .content-data-analytics .analytics-block .second-content-analitycs {
+            height: 199px;
+        }
+        .filterInputBlock select {
+            -webkit-appearance: menulist-text !important;
+        }
 
         @media all and (min-width: 300px) and (max-width: 767px){
             .second-block-binnen img {

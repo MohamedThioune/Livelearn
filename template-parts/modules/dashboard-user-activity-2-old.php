@@ -3,6 +3,8 @@
 
 $user = get_users(array('include'=> get_current_user_id()))[0]->data;
 
+$full_name_user = ($user->first_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
+
 $image = get_field('profile_img',  'user_' . $user->ID);
 if(!$image)
     $image = get_stylesheet_directory_uri() . '/img/Ellipse17.png';
@@ -27,7 +29,7 @@ $experts = get_user_meta($user->ID, 'expert');
 */
 
 /*
-* * Feedbacks
+* * Feedbacks of these user
 */
 $args = array(
     'post_type' => 'feedback',
@@ -36,8 +38,15 @@ $args = array(
     'order' => 'DESC',
     'posts_per_page' => -1,
 );
-
 $todos = get_posts($args);
+/*
+* * End
+*/
+
+/*
+* * Courses dedicated of these user "Boughts" + "Mandatories"
+*/
+
 
 /*
 * * End
@@ -61,11 +70,11 @@ if(!empty($topics_internal))
     <div class="advert-course-Block d-flex">
         <div class="advert-one d-flex">
             <div class="blockTextAdvert">
-                <p class="name">Hello <span>Daniel Van Der.....</span> !</p>
+                <p class="name">Hello <span> <?= $full_name_user ?></span> !</p>
                 <p class="description">Welcome to our e-learning platform's activity page! Here, you'll find a variety of engaging activities to help you, reinforce your learning .</p>
             </div>
             <div class="blockImgAdvert">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/adv-course.png" alt="">
+                <!-- <img src="<?php echo get_stylesheet_directory_uri();?>/img/adv-course.png" alt=""> -->
             </div>
         </div>
         <div class="advert-second d-block bg-bleu-luzien">
@@ -75,7 +84,7 @@ if(!empty($topics_internal))
                 </div>
                 <div class="d-block">
                     <p class="number-course">Your course</p>
-                    <p class="description">1300</p>
+                    <p class="description"><?= "0" ?></p>
                 </div>
             </div>
             <p class="description-course">A courses to help you learn and acquire new skills at your own pace, on your own time</p>
