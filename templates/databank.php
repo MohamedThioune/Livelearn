@@ -91,7 +91,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                             for ($i = 1; $i <= $totalPages; $i++) {
                                 $activeClass = ($i == $pageNumber) ? "active" : "";?>
                                 <a href=<?="artikels/?look=".$i ?> class=<?=$activeClass?>><?=$i?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
+                            <?php 
                             }
 
                         ?>
