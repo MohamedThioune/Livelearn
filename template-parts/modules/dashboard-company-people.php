@@ -13,8 +13,6 @@
     $grant = get_field('manager',  'user_' . $user_connected);
     $ismanaged = get_field('managed',  'user_' . $user_connected);
     $members = array();
-    $user_=[];
-    $member_id=[];
     foreach($users as $user){
         $my_managers = array(); 
         foreach ($users as $key => $value) {
@@ -59,11 +57,21 @@
 if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"; 
     if( in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) || in_array('manager', $data_user->roles) || $grant ) {
 ?>
+
     <div class="cardPeople">
-        <div class="headListeCourse">
+        <dsalary-systemiv class="headListeCourse">
             <p class="JouwOpleid">Werknemers (<?= $count; ?>)</p>
             <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
-            <a href="../people-mensen" class="btnNewCourse">Persoon toevoegen</a>
+            <div class="">
+                <button type="button" class="btn" data-toggle="modal" data-target="#polarisModal" data-whatever="@mdo">Polaris</button>
+                <button type="button" class="btn" data-toggle="modal" data-target="#loketModal" data-whatever="@mdo">Loket</button>
+                <!-- <select name="salary-system" id="salary-system">
+                    <option value=""></option>
+                        <option value="polaris" >POLARIS</option>
+                    <option value="loket">LOKET</option>
+                </select> -->
+                <a href="../people-mensen" class="btnNewCourse">Persoon toevoegen</a>
+            </div>
         </div>
         <div class="contentCardListeCourse">
             <table class="table table-responsive">
@@ -82,7 +90,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                 </thead>
                 <tbody id="autocomplete_company_people">
                     <?php
-                    foreach($members as  $key => $user){
+                    foreach($members as $keyP => $user){
                         $image_user = get_field('profile_img',  'user_' . $user->ID); 
                         if(!$image_user)  
                             $image_user = get_stylesheet_directory_uri(). "/img/placeholder_user.png";
@@ -97,85 +105,79 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                         $link = "/dashboard/company/profile/?id=" . $user->ID . '&manager='. $user_connected; 
                     ?>
                         <tr id="<?php echo $user->ID; ?>" >
-                            <td scope="row"><?= $key + 1; ?></td>
+                            <td scope="row"><?= $keyP + 1; ?></td>
                             <td class="textTh thModife az">
                                 <div class="ImgUser">
                                     <a href="<?= $link; ?>" > <img src="<?php echo $image_user ?>" alt=""> </a>
                                 </div>
                             </td>
-                            <td class="textTh"> <a href="<?= $link; ?>" style="text-decoration:none;"><?php if(!empty($user->first_name)){echo $user->first_name;}else{echo $user->display_name;}?></a> </td>
+                            <td class="textTh"><a href="<?= $link; ?>" style="text-decoration:none;"><?php if(!empty($user->first_name)){echo $user->first_name;}else{echo $user->display_name;}?></a> </td>
                             <td class="textTh"><?php echo $user->user_email;?></td>
                             <td class="textTh"><?php echo get_field('telnr', 'user_'.$user->ID);?></td>
                             <td class="textTh elementOnder"><?php echo get_field('role', 'user_'.$user->ID);?></td>
                             <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
                             <td class="textTh thModife">
 
-                                <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="#userModal">
-                                    <?php foreach ($user->my_managers as $key=> $m) :
-                                    if($key==2)
-                                        break;
-                                    $image_manager = get_field('profile_img',  'user_' . $m->ID)?get_field('profile_img',  'user_' . $m->ID):get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                    ?>
-                                    <div class="ImgUser aq">
-                                        <img src="<?= $image_manager ?>" alt="img">
-                                    </div>
+                                <?php 
+                                if(!empty($user->my_managers)):
+                                ?>
+                                <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="#userModal<?= $keyP; ?>">
+                                    <?php 
+                                    foreach ($user->my_managers as $key=> $m) :
+                                        if($key == 2)
+                                            break;
+                                        $image_manager = get_field('profile_img',  'user_' . $m->ID)?get_field('profile_img',  'user_' . $m->ID):get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                        ?>
+                                        <div class="ImgUser aq">
+                                            <img src="<?= $image_manager ?>" alt="img">
+                                        </div>
                                     <?php endforeach; ?>
-                                </button>
-
-                                    <!-- Modal -->
-                                    <div class="modal modalAllManager fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="userModalLabel">List of Manager</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <table class="table table-all-manager">
-                                                        <thead>
-                                                        <tr>
-                                                            <th scope="col">Name</th>
-                                                            <th scope="col">Photo</th>
-                                                            <th scope="col">Company</th>
-                                                            <th scope="col">Action</th>
-                                                        </tr>
-                                                        </thead>
-                                                        
-                                                        <tbody>
-                                                        <?php 
-                                                        $managersId=array();
-                                                        $managersId1=array();
-                                                        foreach($members as $user) {
-                                                            foreach($user->my_managers as $man){
-                                                                // if(in_array($man->ID,$managersId)){break;}else{$managersId[]=$man->ID;}
-                                                                foreach ($man as $m) {
-                                                                    if(in_array($m->ID,$managersId1)){break;}else{$managersId1[]=$m->ID;}
-                                                                    // var_dump($m);
-                                                                $company = get_field('company',  'user_' . $m->ID);
-                                                            ?>
-                                                        <tr>
-                                                            <td> <?php echo $m->first_name!='' ? $m->first_name : $m->display_name ?> </td>
-                                                            <td>
-                                                                <img class="" src="<?php echo get_field('profile_img',  'user_' . $m->ID) ? get_field('profile_img',  'user_' . $m->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png'; ?>" alt="">
-                                                            </td>
-                                                            <td><?= $company[0]->post_title; ?></td>
-                                                            <td><a href="">See</a></td>
-                                                        </tr>
-                                                        <?php 
-                                                        }
-                                                        }
-                                                    } ?>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                </div>
+                                </button> 
+                                <?php endif; ?>
+                                <!-- Modal -->
+                                <div class="modal modalAllManager fade" id="userModal<?= $keyP; ?>" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="userModalLabel">List of Manager</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <table class="table table-all-manager">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">Photo</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                    </thead>
+                                                    
+                                                    <tbody>
+                                                    <?php 
+                                                    foreach($user->my_managers as $man):
+                                                        $link = "/dashboard/company/profile/?id=" . $man->ID . '&manager='. $user_connected; 
+                                                        $img_manager = get_field('profile_img',  'user_' . $man->ID) ? get_field('profile_img',  'user_' . $man->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                                    ?>
+                                                    <tr>
+                                                        <td> <?php echo $man->first_name!='' ? $man->first_name : $man->display_name ?> </td>
+                                                        <td>
+                                                            <img class="" src="<?= $img_manager ?>" alt="">
+                                                        </td>
+                                                        <td><a href="<?= $link ?>">See</a></td>
+                                                    </tr>
+                                                    <?php endforeach; ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                </div>
                             </td>
                             <td class="textTh">
                                 <div class="dropdown text-white">
@@ -262,8 +264,83 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
     
 ?>
 </div>
+<!--begin Modal for connexion polaris -->
+<div class="modal fade" id="polarisModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="polarisModalLabel">POLARIS</h5>
+        <h6 style="color:red;" class="d-none text-center" id="error-connexion">Invalid cridentials</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="data-sending-from-form" method="POST">
+          <div class="form-group">
+            <label for="polaris-username" class="col-form-label">login</label>
+            <input type="text"  class="form-control" id="polaris-username" name="polaris-username">
+          </div>
+          <div class="form-group">
+            <label for="polaris-password" class="col-form-label">password</label>
+            <input type="password" class="form-control" id="polaris-password" name="polaris-password">
+          </div>
+        </form>
+      </div>
+      <div class="d-none" id="list-polaris">
+        <table>
+        <thead>
+        <tr>
+            <th>Naam</th>
+            <th>Straat</th>
+            <th>Plaats</th>
+            <th>Email</th>
+            <th>Optie</th>
+        </tr>
+        </thead>
+        <tbody id="data-polaris">
 
-
+        </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success" form="data-sending-from-form">conection</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end Modal for connexion polaris -->
+<!--begin Modal for connexion Loket -->
+<div class="modal fade" id="loketModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="polarisModalLabel">loket LOGIN</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form id="data-sending-from-form" method="GET">
+          <div class="form-group">
+            <label for="loket-username" class="col-form-label">login</label>
+            <input type="text" class="form-control" id="loket-username" name="username">
+          </div>
+          <div class="form-group">
+            <label for="loket-password" class="col-form-label">password</label>
+            <input type="password" class="form-control" id="loket-password" name="password">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end Modal for connexion loket -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 
@@ -297,7 +374,6 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
         var txt = $(this).val();
 
         $.ajax({
-
             url:"/fetch-company-people",
             method:"post",
             data:{
@@ -312,5 +388,74 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
             }
         });
 
+    });
+</script>
+<script>
+     $('#salary-system').change(function(e){
+        const select = e.target;
+        const optionSelected = select.options[select.selectedIndex].value;
+        console.log(select.options[select.selectedIndex]);
+        console.log(optionSelected);
+    });
+
+    // sending data form for polaris
+    $(document).ready(function() {
+  $('#data-sending-from-form').submit(function(event) {
+      var formData = $(this).serialize();
+      console.log('data submitted : ',formData);
+      event.preventDefault();
+      const username = $('input[name="polaris-username"]').val();
+      const password = $('input[name="polaris-password"]').val();
+      console.log(`data sending => ${username}:${password}`)
+    $.ajax({
+    url: 'https://login.bcs.nl/API/RestService/export?Connector=aqMedewerker_test',
+    method: 'GET',
+    headers: {
+        'Authorization': 'Basic ' + btoa(`${username}:${password}`)
+    },
+    success: function(responseXML) {
+        const formInformation = document.getElementById('data-sending-from-form');
+        const buttonSubmit = document.querySelector('.btn.btn-success');
+        buttonSubmit.className="d-none";
+        formInformation.className="d-none";
+        document.getElementById('list-polaris').classList.remove("d-none");
+        document.getElementById('error-connexion').classList.add("d-none");
+        console.log('success request :>',(responseXML));
+        // Récupérer les éléments <Regel>
+const regels = responseXML.querySelectorAll('Regel');
+const tbody = document.getElementById('data-polaris');
+// Initialiser le tableau qui contiendra les données
+const data = [];
+// Browse each element <Regel>
+regels.forEach((regel) => {
+  const row = {};
+// Browse through each child of the <Regel> element and retrieve values
+  regel.childNodes.forEach((node) => {
+    if (node.nodeType === 1) {
+      row[node.nodeName] = node.textContent;
+    }
+  });
+  // add object in the array of data
+  data.push(row);
+  console.log(row);
+  const tr = document.createElement("tr");
+  let email;
+  if (!row.Email) {email='';}else{email=row.Email}
+  tr.innerHTML =`
+  <td>${row.Naam}</td>
+  <td>${row.Straat}</td>
+  <td>${row.Plaats}</td>
+  <td>${email}</td>
+  <td><button>+</button></td>`;
+  tbody.appendChild(tr);
+});
+    
+    },
+        error: function(xhr, status, error) {
+            console.log('error request :>',error);
+            document.getElementById('error-connexion').classList.remove("d-none");
+        }
+    });
+    });
     });
 </script>

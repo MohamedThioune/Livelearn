@@ -146,6 +146,17 @@ else if(isset($interest_save)){
     if($meta_value != null){
         $meta_data = get_user_meta($user_id, $meta_key);
         if(!in_array($meta_value,$meta_data)){
+            if($meta_key == 'expert'){
+                $user_expert = get_user_by('id', $user_id);
+                $first_name = $user_expert->first_name ?: $user_expert->display_name;
+                $email = $user_expert->user_email;
+                $mail_page = 'mail-new-follower.php';
+                require($mail_page); 
+                
+                $subject = 'Je hebt een nieuwe volger !';
+                $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+                wp_mail($email, $subject, $mail_new_followed_body, $headers, array( '' )) ;
+            }
             add_user_meta($user_id, $meta_key, $meta_value);
             $message = "Succesvol opgeslagen cursus";
         }else{
@@ -307,6 +318,18 @@ else if(isset($interest_push)){
     if($meta_value != null){
         $meta_data = get_user_meta($user_id, $meta_key);
         if(!in_array($meta_value,$meta_data)){
+            //Email send expert
+            if($meta_key == 'expert'){
+                $user_expert = get_user_by('id', $user_id);
+                $first_name = $user_expert->first_name ?: $user_expert->display_name;
+                $email = $user_expert->user_email;
+                $mail_page = 'mail-new-follower.php';
+                require($mail_page); 
+                
+                $subject = 'Je hebt een nieuwe volger !';
+                $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+                wp_mail($email, $subject, $mail_new_followed_body, $headers, array( '' )) ;
+            }
             add_user_meta($user_id, $meta_key, $meta_value);
             if(isset($artikel)){
                 $path = get_permalink($artikel) . "/?message=Succesvol followed";
@@ -512,8 +535,6 @@ else if(isset($change_password)){
 }
 
 else if(isset($referee_employee)){    
-    $selected_members = array(5);
-
     $allocution = get_field('allocation', $course_id);
     if(!$allocution)
         $allocution = array();
@@ -559,7 +580,23 @@ else if(isset($referee_employee)){
                 if(in_array($expert, $allocution))
                     continue;
 
-            //Mail expert concerned by the sharing
+            /*
+            ** Mail expert concerned by the sharing
+            */
+
+            $course_type = get_field('course_type', $posts->ID);
+            //image post
+            $thumbnail = get_field('preview', $posts->ID)['url'];
+            if(!$thumbnail){
+                $thumbnail = get_the_post_thumbnail_url($posts->ID);
+                if(!$thumbnail)
+                    $thumbnail = get_field('url_image_xml', $posts->ID);
+                if(!$thumbnail)
+                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+            }
+            //short_description post
+            $short_description = get_field('short_description', $posts->ID);
+
             $expert_shared = get_user_by('id', $expert);
             $first_name = $expert_shared->first_name ?: $expert_shared->display_name;
             $email = $expert_shared->user_email;
@@ -947,9 +984,20 @@ else if(isset($interest_multiple_push)){
             }
             else{
                 $meta_data = get_user_meta($user_id, $meta_key);
-                if(!in_array($meta_value, $meta_data))
+                if(!in_array($meta_value, $meta_data)){
+                    if($meta_key == 'expert'){
+                        $user_expert = get_user_by('id', $user_id);
+                        $first_name = $user_expert->first_name ?: $user_expert->display_name;
+                        $email = $user_expert->user_email;
+                        $mail_page = 'mail-new-follower.php';
+                        require($mail_page); 
+                        
+                        $subject = 'Je hebt een nieuwe volger !';
+                        $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+                        wp_mail($email, $subject, $mail_new_followed_body, $headers, array( '' )) ;
+                    }
                     add_user_meta($user_id, $meta_key, $meta_value);
-                else
+                }else
                     delete_user_meta($user_id, $meta_key, $meta_value);  
             }                  
         }
@@ -1027,7 +1075,23 @@ else if(isset($mandatory_course)){
                 if(in_array($expert, $allocution))
                     continue;
 
-            //Mail expert concerned by the mandatory
+            /*
+            ** Mail expert concerned by the sharing
+            */
+
+            $course_type = get_field('course_type', $posts->ID);
+            //image post
+            $thumbnail = get_field('preview', $posts->ID)['url'];
+            if(!$thumbnail){
+                $thumbnail = get_the_post_thumbnail_url($posts->ID);
+                if(!$thumbnail)
+                    $thumbnail = get_field('url_image_xml', $posts->ID);
+                if(!$thumbnail)
+                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+            }
+            //short_description post
+            $short_description = get_field('short_description', $posts->ID);
+
             $expert_shared = get_user_by('id', $expert);
             $first_name = $expert_shared->first_name ?: $expert_shared->display_name;
             $email = $expert_shared->user_email;
