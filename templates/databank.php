@@ -3,6 +3,7 @@
 <?php
 
 global $wpdb;
+
 /*
 * * Pagination
 */
@@ -29,7 +30,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 ?>
 
 <?php 
-    $websites=[
+    $urls=[
         'WorkPlace Academy'=>'https://workplaceacademy.nl/',
         'Ynno'=>'https://www.ynno.com/',
         'DeZZP'=>'https://www.dezzp.nl/',
@@ -126,7 +127,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                    <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
                        &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
-                       <a id="bouddha" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" disabled><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="artikel" style="cursor:grab;"></a>
+                       <a id="bouddha" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="artikel" style="cursor:grab;"></a>
                        &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/artikel.jpg" alt="load subtopics"></button>
                        
                     <div class="col-md-3">
@@ -149,17 +150,18 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     </div>
                 </div>
                 <div class="contentCardListeCourse">
-                    <center>
+                    <center class="col-md-4 offset-md-4" style="justify-content:center;align-content:center;">
                         <br>
-                        <select name="companies" multiple="multiple" id="select_company">
-                        <?php
-                          foreach ($websites as $key => $url) {
-                        ?>
-                        <option value="<?=$url ?>"><?=$key?></option>
-                        <?php
-                          }  
-                        ?>
-                        </select>
+                            <select name="companies[]" class="multipleSelect2" multiple="true" id="select_company">
+                                <!-- <option name="default">Choose companies</option> -->
+                                <?php
+                                    foreach ($urls as $key => $url) {
+                                ?>
+                                    <option class="options"  value="<?=$url ?>" selected="" ><?=$key?></option>
+                                <?php
+                                    }  
+                                ?>
+                            </select>
                         <br>
                     </center>
                     <table class="table table-responsive">
@@ -283,6 +285,23 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 
+<script id="rendered-js" >
+    var list=[];
+    var names=[];
+    var c = document.getElementById("select_company");
+    $(document).ready(function () {
+        //Select2
+        $(".multipleSelect2").select2({
+            placeholder: "Maak uw keuze",
+            minimumInputLength:3,
+            maximumInputLength:5,
+        });
+        window.onload = $(".multipleSelect2").val("");
+    });
+
+    //# sourceURL=pen.js
+</script>
+
 <script type="text/javascript">
     function uncheckAll() {
         let checkboxes = document.querySelectorAll('input[type=checkbox]');
@@ -307,6 +326,68 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     //         call.checked=false;
     //     }
     // }
+
+    
+
+    // $('#bouddha').click((e)=>{
+    //     $('#select_field').hide(true,2000);
+    //     $('#loader').attr('hidden',false);
+    //     var options = $('#select_company').val();
+    //     $.ajax({
+    //         url: '/livelearn/artikels',
+    //         type: 'POST',
+    //         datatype:'text',
+    //         data: {
+    //             websites: websites,
+    //             names: $('#select_company').serializeArray()
+    //         },
+    //         success: function(){
+    //             // console.log(data);
+    //             // window.location.href = "/livelearn/artikels";
+    //         },
+    //         error: function(){
+    //             console.log('error');
+    //         },
+    //         complete: function(data){
+    //             $('#select_field').hide(false,2000);
+    //             $('#loader').attr('hidden',true);
+    //             console.log(websites);
+    //             console.log(names);
+    //         }
+    //     });
+    // });
+
+    $(document).ready(function() {
+  $('#bouddha').on('click', function() {
+    var selectedOptions = $('#select_company').find('option:selected');
+    var selectedValues = [];
+
+    selectedOptions.each(function() {
+      var value = $(this).val();
+      var text = $(this).text();
+      selectedValues.push({value: value, text: text});
+    });
+    $('#select_field').hide(true,2000);
+    $('#loader').attr('hidden',false);
+
+    // Send selectedValues array via AJAX to PHP file
+    $.ajax({
+      type: "POST",
+      url: "/livelearn/artikels",
+      data: { selectedValues: selectedValues },
+      success: function(response) {
+        console.log(response);
+        location.reload;
+      },error:function() {
+        console.log('error');
+      },
+      complete:function(){
+        $('#select_field').hide(false,2000);
+        $('#loader').attr('hidden',true);
+      }
+    });
+  });
+});
 
     // $('.bouddha').click((e)=>{
     //     $('#select_field').hide(true,2000);
