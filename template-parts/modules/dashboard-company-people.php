@@ -63,8 +63,8 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
             <p class="JouwOpleid">Werknemers (<?= $count; ?>)</p>
             <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
             <div class="">
-                <button type="button" class="btn" data-toggle="modal" data-target="#polarisModal" data-whatever="@mdo">Polaris</button>
-                <button type="button" class="btn" data-toggle="modal" data-target="#loketModal" data-whatever="@mdo">Loket</button>
+                <button type="button" class="btn" data-toggle="modal" data-target="#polarisModal">Polaris</button>
+                <button type="button" class="btn" data-toggle="modal" data-target="#loketModal">Loket</button>
                 <!-- <select name="salary-system" id="salary-system">
                     <option value=""></option>
                         <option value="polaris" >POLARIS</option>
@@ -279,11 +279,11 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
         <form id="data-sending-from-form" method="POST">
           <div class="form-group">
             <label for="polaris-username" class="col-form-label">login</label>
-            <input type="text"  class="form-control" id="polaris-username" name="polaris-username">
+            <input type="text" value="API_test_extern@bcs.nl" class="form-control" id="polaris-username" name="polaris-username">
           </div>
           <div class="form-group">
             <label for="polaris-password" class="col-form-label">password</label>
-            <input type="password" class="form-control" id="polaris-password" name="polaris-password">
+            <input type="password" value="Qa1B27x4D!s" class="form-control" id="polaris-password" name="polaris-password">
           </div>
         </form>
       </div>
@@ -292,7 +292,6 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
         <thead>
         <tr>
             <th>Naam</th>
-            <th>Straat</th>
             <th>Plaats</th>
             <th>Email</th>
             <th>Optie</th>
@@ -305,7 +304,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-success" form="data-sending-from-form">conection</button>
+        <button type="submit" class="btn btn-success" form="data-sending-from-form">conect to Polaris</button>
       </div>
     </div>
   </div>
@@ -316,13 +315,13 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="polarisModalLabel">loket LOGIN</h5>
+        <h5 class="modal-title" id="polarisModalLabel">LOKET</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-      <form id="data-sending-from-form" method="GET">
+      <form id="data-sending-from-form" method="POST">
           <div class="form-group">
             <label for="loket-username" class="col-form-label">login</label>
             <input type="text" class="form-control" id="loket-username" name="username">
@@ -335,7 +334,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
+        <button type="button" class="btn btn-primary">login</button>
       </div>
     </div>
   </div>
@@ -397,7 +396,6 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
         console.log(select.options[select.selectedIndex]);
         console.log(optionSelected);
     });
-
     // sending data form for polaris
     $(document).ready(function() {
   $('#data-sending-from-form').submit(function(event) {
@@ -441,12 +439,11 @@ regels.forEach((regel) => {
   const tr = document.createElement("tr");
   let email;
   if (!row.Email) {email='';}else{email=row.Email}
-  tr.innerHTML =`
-  <td>${row.Naam}</td>
-  <td>${row.Straat}</td>
+  tr.innerHTML = `
+  <td class="row-fullName">${row.Naam}</td>
   <td>${row.Plaats}</td>
-  <td>${email}</td>
-  <td><button>+</button></td>`;
+  <td class="row-email">${email}</td>
+  <td><button onclick="addInDatabase(event)">+ Add </button></td>`;
   tbody.appendChild(tr);
 });
     
@@ -458,4 +455,34 @@ regels.forEach((regel) => {
     });
     });
     });
+
+    function addInDatabase(e) {
+        const row = e.target.parentNode.parentNode;
+        const email = row.querySelector(".row-email").textContent.trim();
+        const fullName = row.querySelector(".row-fullName").textContent;
+        const nams = fullName.split(' ');
+        const firstName = nams[0];
+        const lastName = nams.slice(1).join(" ");
+        console.log("email :::"+email);
+        console.log("firstName :::   "+ firstName);
+        console.log("lastName :::   "+ lastName);
+        var dataToSend = { first_name: firstName, last_name: lastName, email: email };
+        dataToSend = JSON.stringify(dataToSend);
+        console.log('data sending ' + dataToSend );
+        $.ajax({
+        url: '/livelearn/dashboard/company/people-mensen/',
+        method: 'POST',
+        data: dataToSend,
+        success: function(response) {
+            console.log('success data sinding : =>'+response);
+            location.reload();
+            alert("data saving sucess...");
+        },
+        error: function(error) {
+            location.reload();
+            alert("error when sending data");
+            console.log("Erreur when sending data : =>"+JSON.stringify(error) );
+        }
+        });
+    }
 </script>
