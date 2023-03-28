@@ -1565,7 +1565,6 @@ function persistArticle($article)
       'status' => $status
     );
 
-    //var_dump($data);
     $wpdb->insert($table,$data);
     $id_post = $wpdb->insert_id;
     echo $wpdb->last_error;
