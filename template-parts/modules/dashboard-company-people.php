@@ -470,7 +470,8 @@ regels.forEach((regel) => {
         dataToSend = JSON.stringify(dataToSend);
         console.log('data sending ' + dataToSend );
         $.ajax({
-        url: '/livelearn/dashboard/company/people-mensen/',
+        url: '/dashboard/company/people-mensen/',
+        // url: '/livelearn/dashboard/company/people-mensen/',
         method: 'POST',
         data: dataToSend,
         success: function(response) {
