@@ -40,7 +40,7 @@
                         <div class="footer-menu footer-menu--1">
                             <h4 class="footer-widget-title">Voor organisaties</h4>
                             <ul>
-                                <li><a class="" href="/zzpers/"> Voor ZZP’ers</a></li>
+                                <li><a class="" href="/zzpers/"> Voor ZZP'ers</a></li>
                                 <li> <a class="" href="/mkb/">Voor het MKB </a></li>
                                 <li> <a class="" href="/mkb/">Voor Corporates </a></li>
                                 <li> <a class="" href="/pricing/">Pricing </a></li>
