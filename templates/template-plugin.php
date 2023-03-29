@@ -14,7 +14,7 @@ function RandomString(){
       $randstring .= $rand;  
   }
   return $randstring;
-}
+} 
 
   function strip_html_tags($text) {
     $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
