@@ -78,10 +78,12 @@ if(!empty($topics_internal))
   if(!$bool_tag)
     $topic .= '<center><span class="kraaText" style="color:red">No child categories belongs to your selection !</span></center><br>';
 
-  $output =  $topic . '
-            <div class="mt-3 mb-0">
-              <button type="submit" form="multiple_form_tags" class="btn btnNext mb-0" name="interest_multiple_push">Follow / Unfollow</button>
-            </div>';
+  $output = $topic;
+  
+  // $output =  $topic . 
+  //           '<div class="mt-3 mb-0">
+  //             <button type="submit" form="multiple_form_tags" class="btn btnNext mb-0" name="interest_multiple_push">Follow / Unfollow</button>
+  //           </div>';
 
   echo $output;
 
