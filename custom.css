@@ -16812,6 +16812,48 @@ background: #FFFFFF !important;
     display: block;
     height: 18px;
 }
+.tableNotification table th, .tableNotification td {
+    text-align: left !important;
+}
+
+/* for tabs url */
+#tab-url1 .hide {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+
+#tab-url1 .nav {
+    overflow: hidden;
+    margin: 0 0 40px 0;
+    display: flex;
+    justify-content: space-between;
+}
+#tab-url1 .nav li {
+    width: fit-content;
+    margin: 0 10px 0 0;
+}
+#tab-url1 .nav li a {
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 19px;
+    color: #3D4D59 !important;
+    margin: 0 5px;
+    padding: 13px 20px;
+    display: block;
+}
+#tab-url1 .nav li .current {
+    pointer-events: none;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 19px;
+    color: #6F6F6F;
+    background: #FFFFFF;
+    border-radius: 5px;
+}
+
+
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -20343,6 +20385,39 @@ background: #FFFFFF !important;
     }
     .share-block {
         margin-top: 20px;
+    }
+    #tab-url1 .nav {
+        border: 1px solid #bfbfbf;
+        padding: 20px 10px;
+        border-radius: 7px;
+    }
+    #tab-url1 .nav li a {
+        font-size: 14px;
+        margin: 0 5px;
+        padding: 8px 15px;
+    }
+    #tab-url1 .nav {
+        justify-content: initial;
+    }
+    #tab-url1 .nav li {
+        margin: 0 10px 4px 0;
+        min-width: 43%;
+        text-align: center;
+    }
+    #tab-url1 .nav li .current {
+        font-size: 15px;
+    }
+    #tab-url1 {
+        padding: 0 15px;
+    }
+    #tab-url1 .cardFavoriteCourses {
+        margin-left: 0px;
+        width: 100%;
+    }
+    .first-content-analitycs .detail-analytic .sub-detail:last-child {
+        width: 100%;
+        display: flex;
+        margin-bottom: 18px;
     }
 
 
