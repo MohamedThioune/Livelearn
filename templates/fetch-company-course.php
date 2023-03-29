@@ -1,4 +1,4 @@
-<?php /** Template Name: Fetch company course */ ?>
+<?php /** Template Name: Fetch activity course */ ?>
 
 <?php
 

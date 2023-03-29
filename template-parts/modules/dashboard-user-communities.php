@@ -46,7 +46,7 @@ $other_communities = array();
                             $year = explode('-', $days)[0];
 
                             //Courses comin through custom field 
-                            $courses = get_field('course_community', $community->ID);
+                            $courses = get_field('course_community', $community->ID); 
                             $max_course = 0;
                             if(!empty($courses))
                                 $max_course = count($courses);
@@ -110,7 +110,6 @@ $other_communities = array();
                                     else
                                         echo " <a href='/dashboard/user/community-detail/?mu=".$community->ID."' class='btn btn-join-group'>Go !</a>";
 
-                                        // echo " <button type='button' class='btn btn-join-group' disabled>Join Group</button>";
                                     ?>
                                 </div>
                             </div>
