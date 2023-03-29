@@ -316,11 +316,11 @@ $orders = wc_get_orders($order_args);
                         $category_str = 0;
                         if($category == ' '){
                             $one_category = get_field('categories',  $course->ID);
-                            if(isset($one_category[0]))
+                            if(isset($one_category[0]['value']))
                                 $category_str = intval(explode(',', $one_category[0]['value'])[0]);
                             else{
                                 $one_category = get_field('category_xml',  $course->ID);
-                                if(isset($one_category[0]))
+                                if(isset($one_category[0]['value']))
                                     $category_id = intval($one_category[0]['value']);
                             }
 

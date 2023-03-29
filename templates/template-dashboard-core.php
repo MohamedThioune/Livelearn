@@ -1009,6 +1009,7 @@ else if(isset($interest_multiple_push)){
 else if(isset($question_community)){
     $question = array();
 
+    //New question
     $user_question = wp_get_current_user();
     $question_community = get_field('question_community', $community_id);
     $question['user_question'] = $user_question;
