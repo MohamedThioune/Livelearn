@@ -127,7 +127,6 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                    <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
                        &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
-                       <a id="bouddha" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="artikel" style="cursor:grab;"></a>
                        &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/artikel.jpg" alt="load subtopics"></button>
                        
                     <div class="col-md-3">
@@ -152,7 +151,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 <div class="contentCardListeCourse">
                     <center class="col-md-4 offset-md-4" style="justify-content:center;align-content:center;">
                         <br>
-                            <select name="companies[]" class="multipleSelect2" multiple="true" id="select_company">
+                            <select name="companies[]" class="multipleSelect2 form form-control col-md-9" multiple="true" id="select_company">
                                 <!-- <option name="default">Choose companies</option> -->
                                 <?php
                                     foreach ($urls as $key => $url) {
@@ -162,6 +161,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     }  
                                 ?>
                             </select>
+                            &nbsp;&nbsp;<a id="bouddha">✔️</a>&nbsp;&nbsp; <a class="btn-default" onclick='$(".multipleSelect2").prop("disabled", false);'  style="background:white" >⚙️</a>
                         <br>
                     </center>
                     <table class="table table-responsive">
@@ -288,15 +288,19 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 <script id="rendered-js" >
     var list=[];
     var names=[];
-    var c = document.getElementById("select_company");
+    window.onload = $(".multipleSelect2").val("");
     $(document).ready(function () {
         //Select2
         $(".multipleSelect2").select2({
             placeholder: "Maak uw keuze",
-            minimumInputLength:3,
-            maximumInputLength:5,
+            maximumSelectionLength: 5,
+            minimumSelectionLength: 3,
+        }).on("change", function () {
+            if ($(this).val() && $(this).val().length >= 5) {
+                $(this).prop("disabled", true);
+            }
         });
-        window.onload = $(".multipleSelect2").val("");
+        
     });
  
     //# sourceURL=pen.js
@@ -319,44 +323,6 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         }
     }
 
-    // function update(checkBox){
-    //     check=document.getElementById('chkBox');
-    //     call=document.getElementById('checkAll');
-    //     if(check.checked==false){
-    //         call.checked=false;
-    //     }
-    // }
-
-    
-
-    // $('#bouddha').click((e)=>{
-    //     $('#select_field').hide(true,2000);
-    //     $('#loader').attr('hidden',false);
-    //     var options = $('#select_company').val();
-    //     $.ajax({
-    //         url: '/livelearn/artikels',
-    //         type: 'POST',
-    //         datatype:'text',
-    //         data: {
-    //             websites: websites,
-    //             names: $('#select_company').serializeArray()
-    //         },
-    //         success: function(){
-    //             // console.log(data);
-    //             // window.location.href = "/livelearn/artikels";
-    //         },
-    //         error: function(){
-    //             console.log('error');
-    //         },
-    //         complete: function(data){
-    //             $('#select_field').hide(false,2000);
-    //             $('#loader').attr('hidden',true);
-    //             console.log(websites);
-    //             console.log(names);
-    //         }
-    //     });
-    // });
-
     $(document).ready(function() {
   $('#bouddha').on('click', function() {
     var selectedOptions = $('#select_company').find('option:selected');
@@ -373,17 +339,18 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     // Send selectedValues array via AJAX to PHP file
     $.ajax({
       type: "POST",
-      url: "/livelearn/artikels",
+      url: "/artikels",
       data: { selectedValues: selectedValues },
       success: function(response) {
         console.log(response);
-        location.reload;
+        // location.reload();
       },error:function() {
         console.log('error');
       },
       complete:function(){
         $('#select_field').hide(false,2000);
         $('#loader').attr('hidden',true);
+        location.reload();
       }
     });
   });
@@ -393,7 +360,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     //     $('#select_field').hide(true,2000);
     //     $('#loader').attr('hidden',false);
     //     $.ajax({
-    //         url:'/livelearn/artikels?page=1', 
+    //         url:'/artikels?page=1', 
     //         type:'POST',
     //         datatype:'json',
     //         // cache:false,
@@ -401,12 +368,12 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     //         },
     //         success:function(){
     //             location.reload();
-    //             // window.location.href = "/livelearn/artikels";
+    //             // window.location.href = "/artikels";
     //         },
     //         complete:function(){
     //             $('#select_field').hide(false,2000);
     //             $('#loader').attr('hidden',true);
-    //             // window.location.href = "/livelearn/artikels";
+    //             // window.location.href = "/artikels";
     //         },
     //         error:function(error){
     //             console("error"+error);
@@ -494,7 +461,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     }
                     alert("Record applied successfully");
                     location.reload();
-                    // window.location.href = "/livelearn/optieAll";
+                    // window.location.href = "/optieAll";
                }
             });
         }
