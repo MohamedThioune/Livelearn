@@ -356,31 +356,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
   });
 });
 
-    // $('.bouddha').click((e)=>{
-    //     $('#select_field').hide(true,2000);
-    //     $('#loader').attr('hidden',false);
-    //     $.ajax({
-    //         url:'/artikels?page=1', 
-    //         type:'POST',
-    //         datatype:'json',
-    //         // cache:false,
-    //         beforeSend:function(){
-    //         },
-    //         success:function(){
-    //             location.reload();
-    //             // window.location.href = "/artikels";
-    //         },
-    //         complete:function(){
-    //             $('#select_field').hide(false,2000);
-    //             $('#loader').attr('hidden',true);
-    //             // window.location.href = "/artikels";
-    //         },
-    //         error:function(error){
-    //             console("error"+error);
-    //         }
-    //     }); 
-    // });
-
+    
     $('#select_field').change((e)=>
     {
         let website= $('#select_field').val();
@@ -427,7 +403,9 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 type: 'POST',
                 data: {
                     ids: $ids
-                },
+                },error:function(response) {
+                    console.log("error:".response);
+                }
             });
         }
     });
@@ -446,9 +424,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             $.ajax({
                url: '/optieAll',
                type: 'POST',
-               data: {
-            //        id: ids,
-            //        optie: optie,    
+               data: {   
                    class:classs
                 },
                error: function() {
