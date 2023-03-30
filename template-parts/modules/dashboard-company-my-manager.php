@@ -10,8 +10,6 @@ $biographical_info = get_field('biographical_info',  'user_' . $manager);
 
 $manager = get_users(array('include'=> $manager))[0]->data;
 
-
-
 ?>
 <div class="contentProfil ">
     <div class="blockgeneralPersoo2">
