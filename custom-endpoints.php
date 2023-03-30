@@ -1365,7 +1365,7 @@ function filter_course(WP_REST_Request $request)
      return $assessments;
   }
 
-  function answerAssessment(WP_REST_Request $request)
+  function answerAssessment (WP_REST_Request $request)
   {
     if (isset ($request) && !empty($request))
     {
