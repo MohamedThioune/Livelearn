@@ -6,7 +6,6 @@
 
     //Departments 
     $departments = get_field('departments', $company[0]->ID);
-    
     if(!empty($company))
         $company_connected = $company[0]->post_title;
 
@@ -304,7 +303,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-success" form="data-sending-from-form">conect to Polaris</button>
+        <button type="submit" class="btn btn-success" form="data-sending-from-form">Connect to Polaris</button>
       </div>
     </div>
   </div>
@@ -466,23 +465,24 @@ regels.forEach((regel) => {
         console.log("email :::"+email);
         console.log("firstName :::   "+ firstName);
         console.log("lastName :::   "+ lastName);
-        var dataToSend = { first_name: firstName, last_name: lastName, email: email };
+        var dataToSend = { first_name: firstName, last_name: lastName, email: email, single_add_people: "1"};
         dataToSend = JSON.stringify(dataToSend);
         console.log('data sending ' + dataToSend );
+
         $.ajax({
-        url: '/dashboard/company/people-mensen/',
-        // url: '/livelearn/dashboard/company/people-mensen/',
-        method: 'POST',
-        data: dataToSend,
-        success: function(response) {
-            console.log('success data sinding : =>'+response);
-            location.reload();
-            alert("data saving sucess...");
-        },
-        error: function(error) {
-            location.reload();
-            alert("error when sending data");
-            console.log("Erreur when sending data : =>"+JSON.stringify(error) );
+            url: '/dashboard/company/people-mensen/',
+            // url: '/livelearn/dashboard/company/people-mensen/',
+            method: 'POST',
+            data: dataToSend,
+            success: function(response) {
+                console.log('success data sinding : => ' + response);
+                // location.reload();
+                alert("data saving success...");
+            },
+            error: function(error) {
+                location.reload();
+                alert("error when sending data");
+                console.log("Erreur when sending data : =>"+JSON.stringify(error) );
         }
         });
     }
