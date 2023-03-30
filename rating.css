@@ -32,5 +32,5 @@
 .rating > input:checked ~ label:hover,
 .rating > label:hover ~ input:checked ~ label,
 .rating > input:checked ~ label:hover ~ label {
-    color: #FECE31;
+    color: #f79526;
 }
