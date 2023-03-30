@@ -9,7 +9,6 @@ $mail_notification_invitation = '/../../templates/mail-notification-invitation.p
 require(__DIR__ . $mail_notification_invitation); 
 
 extract($_POST);
-
 if(isset($single_add_people)){
     
     if($email != null)
@@ -36,6 +35,7 @@ if(isset($single_add_people)){
         );
 
         $user_id = wp_insert_user(wp_slash($userdata));
+        var_dump($user_id);
         if(is_wp_error($user_id)){
             $danger = $user_id->get_error_message();
             header("Location: /dashboard/company/people/?message=Er is een fout opgetreden, probeer het opnieuw.");
