@@ -9,7 +9,7 @@ global $wpdb;
 $pagination = 50;
 
 if(isset($_GET['id']))
-    $page = intval($_GET['id']);
+    $page = intval($_GET['id']); 
     if($page)
         $offset = ($page - 1) * $pagination;
 $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank ORDER BY id DESC LIMIT %d OFFSET %d", array($pagination, $offset));
@@ -27,6 +27,7 @@ else
 $user = wp_get_current_user();
 $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandrinks','sportnext','nbvt','vsbnetwerk','tvvl','nedverbak','tnw','changeINC','--------------------------','nvab','vbw','kndb','fgz','cvah','nbov','nuvo','CBD','Hoorzaken','Knvvn','Nvtl','stiba','Nfofruit','Iro','Lto','cbm','tuinbranche','jagersvereniging','Wapned','Dansbelang','Pictoright','Ngb','Griffiers','Nob','Bijenhouders','BBKnet','AuteursBond','ovfd','Adfiz','nvvr','Veneca','Sloopaannemers','Noa'];
 ?>
+
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
@@ -47,16 +48,15 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                    <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
                        &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
-                       &nbsp;&nbsp;<button id="bouddha" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="load articles"></button>
-                       &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" disabled><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/artikel.jpg" alt="load subtopics"></button>
+                       <a id="bouddha" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" disabled><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="artikel" style="cursor:grab;"></a>
+                       &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/artikel.jpg" alt="load subtopics"></button>
                        
                     <div class="col-md-3">
                         
                         <select class="form form-control" id="select_field">
-                            <option value="">Get new contents from</option>
-                            <?php foreach ($websites as $website) { ?>
+                            <option value="">Get new contents from</option> 
+                            <?php foreach ($websites as $website)  ?>
                                 <option class="selected_website" value="<?= $website ?>"><?= $website ?></option>
-                            <?php } ?>
                         </select>
                     </div>
                     <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status">
@@ -71,6 +71,32 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     </div>
                 </div>
                 <div class="contentCardListeCourse">
+                    <center>
+                        <br>
+                        <?php
+                            // Define the array of companies
+                            $companies = 74;                            
+                            // Define the number of companies to display per page
+                            $companiesPerPage = 10;
+                            
+                            // Get the current page number from the query string 
+                            $pageNumber = isset($_GET['look']) ? $_GET['look'] : 1;
+                            
+                            // Calculate the start and end indexes of the companies to display
+                            $startIndex = ($pageNumber - 1) * $companiesPerPage;
+                            $endIndex = $startIndex + $companiesPerPage;
+
+                            $totalPages = ceil($companies / $companiesPerPage);
+                            $paginationLinks = "";
+                            for ($i = 1; $i <= $totalPages; $i++) {
+                                $activeClass = ($i == $pageNumber) ? "active" : "";?>
+                                <a href=<?="artikels/?look=".$i ?> class=<?=$activeClass?>><?=$i?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <?php
+                            }
+
+                        ?>
+                        <br>
+                    </center>
                     <table class="table table-responsive">
                         <form action="/optieAll" method="POST">
                             <thead>
@@ -115,7 +141,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     
                                     $state = $course->course_id ? 'present' : 'missing';
                                     $key = $course->id;
-                                ?>
+                            ?>
                                 <tr id="<?= $key ?>" class="<?= $state ?>">
                                     <td class="textTh"><input type="checkbox" class="checkOne" name="checkOne[]" id="chkBox" value="<?= $course->id ?>"></td>
                                     <td class="textTh"> <img src="<?= $image; ?>" alt="image course" width="50" height="50"></td>
@@ -136,7 +162,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     <td class="tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a href="/edit-databank?id=<?= $key ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> </td>
                                 </tr>
                             <?php
-                            }
+                                }
                             }else{
                                 echo("There is nothing to see here");
                             }
@@ -217,30 +243,30 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     //     }
     // }
 
-    $('#bouddha').click((e)=>{
-        $('#select_field').hide(true,2000);
-        $('#loader').attr('hidden',false);
-        $.ajax({
-            url:'/artikels',
-            type:'POST',
-            datatype:'json',
-            // cache:false,
-            beforeSend:function(){
-            },
-            success:function(){
-                location.reload();
-                // window.location.href = "/livelearn/artikels";
-            },
-            complete:function(){
-                $('#select_field').hide(false,2000);
-                $('#loader').attr('hidden',true);
-                // window.location.href = "/livelearn/artikels";
-            },
-            error:function(error){
-                alert("error"+error);
-            }
-        }); 
-    });
+    // $('.bouddha').click((e)=>{
+    //     $('#select_field').hide(true,2000);
+    //     $('#loader').attr('hidden',false);
+    //     $.ajax({
+    //         url:'/livelearn/artikels?page=1', 
+    //         type:'POST',
+    //         datatype:'json',
+    //         // cache:false,
+    //         beforeSend:function(){
+    //         },
+    //         success:function(){
+    //             location.reload();
+    //             // window.location.href = "/livelearn/artikels";
+    //         },
+    //         complete:function(){
+    //             $('#select_field').hide(false,2000);
+    //             $('#loader').attr('hidden',true);
+    //             // window.location.href = "/livelearn/artikels";
+    //         },
+    //         error:function(error){
+    //             console("error"+error);
+    //         }
+    //     }); 
+    // });
 
     $('#select_field').change((e)=>
     {
@@ -268,6 +294,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 }
             });
     });
+
     var ids=[];
     $(".checkOne").click((e)=>{
         let tags_id = e.target.value;
@@ -286,29 +313,64 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 url: '/subtopics',
                 type: 'POST',
                 data: {
-                    ids: $ids,
+                    ids: $ids
                 },
             });
         }
     });
 
+    $('.optieAll').click((e)=>{
+        // var tr_element = e.target.parentElement.closest("tr");
+        // var get = document.getElementsByName('checkOne');
+        var classs = tr_element.className;
+
+        console.log(ids);
+
+        // var optie = e.target.id;
+
+        if(confirm('Are you sure you want to apply this record ?'))
+        {
+            $.ajax({
+               url: '/optieAll',
+               type: 'POST',
+               data: {
+            //        id: ids,
+            //        optie: optie,    
+                   class:classs
+                },
+               error: function() {
+                  alert('Something is wrong');
+               },
+               success: function(data) {
+                    for(var i=0;i<ids.length;i++){
+                        $("#"+ids[i]).remove();
+                        console.log(ids[i]);
+                    }
+                    alert("Record applied successfully");
+                    location.reload();
+                    // window.location.href = "/livelearn/optieAll";
+               }
+            });
+        }
+        
+    });
+
     $('.optie').click((e)=>{
         var tr_element = e.target.parentElement.closest("tr");
         var ids = tr_element.id;
-        var operation = tr_element.className;
-
+        var classs = tr_element.className;
+ 
         var optie = e.target.id;
 
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
                url: '/optie-bank',
-               type: 'post',
-               dataType:"text",
+               type: 'POST',
                data: {
                    id: ids,
                    optie: optie,
-                   operation: operation,
+                   class: classs,
                 },
                error: function() {
                   alert('Something is wrong');
@@ -454,7 +516,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     
 </script>  
 
-<script id="rendered-js" >
+<script defer id="rendered-js" >
 $(document).ready(function () {
     //Select2
     $(".multipleSelect2").select2({
