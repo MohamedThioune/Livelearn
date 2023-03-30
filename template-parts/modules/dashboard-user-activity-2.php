@@ -1,33 +1,34 @@
 <html lang="en">
 <?php
 
+/*
+* * Information user
+*/
 $user = get_users(array('include'=> get_current_user_id()))[0]->data;
-
+$full_name_user = ($user->first_name) ? $user->first_name . ' ' . $user->last_name : $user->display_name;
 $image = get_field('profile_img',  'user_' . $user->ID);
 if(!$image)
     $image = get_stylesheet_directory_uri() . '/img/Ellipse17.png';
-
 $company = get_field('company',  'user_' . $user->ID);
 $function = get_field('role',  'user_' . $user->ID);
-
 $biographical_info = get_field('biographical_info',  'user_' . $user->ID);
-
 if(!empty($company))
     $company_name = $company[0]->post_title;
-
-/*
-* * Get interests topics and experts
-*/
-
-$topics = get_user_meta($user->ID, 'topic');
-$experts = get_user_meta($user->ID, 'expert');
-
 /*
 * * End
 */
 
 /*
-* * Feedbacks
+* * Get interests topics and experts
+*/
+$topics = get_user_meta($user->ID, 'topic');
+$experts = get_user_meta($user->ID, 'expert');
+/*
+* * End
+*/
+
+/*
+* * Feedbacks of these user
 */
 $args = array(
     'post_type' => 'feedback',
@@ -36,9 +37,69 @@ $args = array(
     'order' => 'DESC',
     'posts_per_page' => -1,
 );
-
 $todos = get_posts($args);
+/*
+* * End
+*/
 
+/*
+* * Courses dedicated of these user "Boughts + Mandatories"
+*/
+
+$enrolled = array();
+$enrolled_courses = array();
+$kennis_video = get_field('kennis_video', 'user_' . $user->ID);
+$mandatory_video = get_field('mandatory_video', 'user_' . $user->ID);
+$expenses = 0;
+
+//Orders - enrolled courses  
+$args = array(
+    'customer_id' => $user->ID,
+    'post_status' => array('wc-processing'),
+    'orderby' => 'date',
+    'order' => 'DESC',
+    'limit' => -1,
+);
+$bunch_orders = wc_get_orders($args);
+
+foreach($bunch_orders as $order){
+    foreach ($order->get_items() as $item_id => $item ) {
+        //Get woo orders from user
+        $course_id = intval($item->get_product_id()) - 1;
+        $prijs = get_field('price', $course_id);
+        $expenses += $prijs; 
+        if(!in_array($course_id, $enrolled))
+            array_push($enrolled, $course_id);
+    }
+}
+if(!empty($enrolled))
+{
+    $args = array(
+        'post_type' => 'course', 
+        'posts_per_page' => -1,
+        'orderby' => 'post_date',
+        'order' => 'DESC',
+        'include' => $enrolled,  
+    );
+
+    $enrolled_courses = get_posts($args);
+
+    //Make sure videos shared not null before to merge with enrolled
+    if(!empty($kennis_video))
+        if(isset($kennis_video[0]))
+            if($kennis_video[0])
+                $enrolled_courses = array_merge($kennis_video, $enrolled_courses);
+
+    //Make sure videos put on mandatory is not null before to merge with enrolled
+    if(!empty($mandatory_video))
+        if(isset($mandatory_video[0]))
+            if($mandatory_video[0])
+                $enrolled_courses = array_merge($mandatory_video, $enrolled_courses);
+    if(!empty($enrolled_courses))
+        $your_count_courses = count($enrolled_courses);
+}
+
+$typo_course = array('Artikel' => 0, 'Opleidingen' => 0, 'Podcast' => 0, 'Video' => 0);
 /*
 * * End
 */
@@ -54,6 +115,69 @@ if(!empty($topics_external))
 if(!empty($topics_internal))
     foreach($topics_internal as $value)
         array_push($topics, $value);
+//Note
+$skills_note = get_field('skills', 'user_' . $user->ID);
+
+//Saved
+$saved = get_user_meta($user->ID, 'course');
+
+//Communities 
+$args = array(
+    'post_type' => 'community',
+    'post_status' => 'publish',
+    'order' => 'DESC',
+    'posts_per_page' => -1
+);
+$communities = get_posts($args); 
+
+//Stats by user profile
+$users = get_users();
+$profil_views = 0;   
+$profil_views_by = 0;
+
+//Profile view
+$profil_views = 0;   
+$args = array(
+    'post_type' => 'view', 
+    'post_status' => 'publish',
+    'author' => $user->ID,
+);
+$stat_user = get_posts($args);
+$stat_id = 0;
+if(!empty($stat_user))
+    $stat_id = $stat_user[0]->ID;
+
+$view_user = get_field('views_user', $stat_id);
+if(!empty($view_user)){
+    $id_users = array_column($view_user, 'view_id');
+    $id_users_count = array_count_values($id_users);
+    $profil_views = count($id_users_count);
+}
+
+//Profile view by 
+$redundance_profile = array(); 
+foreach ($users as $element) {
+    
+    //Views  
+    $args = array(
+        'post_type' => 'view', 
+        'post_status' => 'publish',
+        'author' => $element->ID,
+    );
+    $views_stat_user = get_posts($args);
+    $stat_id = 0;
+    if(!empty($views_stat_user))
+        $stat_id = $views_stat_user[0]->ID;
+    $view_user = get_field('views_user', $stat_id);
+
+    if(!empty($view_user))
+        foreach($view_user as $value)
+            if($value['view_id'])
+                if($value['view_id'] == $user->ID && !in_array($user->ID, $redundance_profile)){
+                    $profil_views_by += 1;
+                    array_push($redundance_profile, $element->ID);
+                }
+}
 ?>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
 <body>
@@ -61,11 +185,11 @@ if(!empty($topics_internal))
     <div class="advert-course-Block d-flex">
         <div class="advert-one d-flex">
             <div class="blockTextAdvert">
-                <p class="name">Hello <span>Daniel Van Der.....</span> !</p>
+                <p class="name">Hello <span> <?= $full_name_user ?></span> !</p>
                 <p class="description">Welcome to our e-learning platform's activity page! Here, you'll find a variety of engaging activities to help you, reinforce your learning .</p>
             </div>
             <div class="blockImgAdvert">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/adv-course.png" alt="">
+                <!-- <img src="<?php echo get_stylesheet_directory_uri();?>/img/adv-course.png" alt=""> -->
             </div>
         </div>
         <div class="advert-second d-block bg-bleu-luzien">
@@ -75,7 +199,7 @@ if(!empty($topics_internal))
                 </div>
                 <div class="d-block">
                     <p class="number-course">Your course</p>
-                    <p class="description">1300</p>
+                    <p class="description"><?= $your_count_courses ?></p>
                 </div>
             </div>
             <p class="description-course">A courses to help you learn and acquire new skills at your own pace, on your own time</p>
@@ -90,7 +214,7 @@ if(!empty($topics_internal))
                     <li class="item">Notifications</li>
                     <li class="item">Data and analytics</li>
                     <li class="item">Your certificates</li>
-                    <li class="item">Assessments</li>
+                    <!-- <li class="item">Assessments</li> -->
                     <li class="item">Communities</li>
                     <li class="item">Your skills</li>
                 </ul>
@@ -100,7 +224,7 @@ if(!empty($topics_internal))
                         <div class="blockItemCourse">
                             <div class="d-flex align-items-center justify-content-between head-blockItemCourse">
                                 <p class="title">Courses</p>
-                                <a href="" class="d-flex align-items-center">
+                                <a href="#" class="d-flex align-items-center">
                                     <p class="seeAllText">See All</p>
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/seeAllIcon.png" class="" alt="">
                                 </a>
@@ -115,74 +239,79 @@ if(!empty($topics_internal))
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
-                                            </div>
-                                            <p class="name-element">UX - UI Design certificat</p>
-                                        </td>
-                                        <td>
-                                            <p class="name-element">12h 33m 10s</p>
-                                        </td>
-                                        <td class="d-flex align-items-center r-1">
-                                            <div class="blockImgUser">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" class="" alt="">
-                                            </div>
-                                            <p class="name-element">Darlene Robertson</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
-                                            </div>
-                                            <p class="name-element">Motion design </p>
-                                        </td>
-                                        <td>
-                                            <p class="name-element">12h 33m 10s</p>
-                                        </td>
-                                        <td class="d-flex align-items-center r-1">
-                                            <div class="blockImgUser">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" class="" alt="">
-                                            </div>
-                                            <p class="name-element">Marvin McKinney</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
-                                            </div>
-                                            <p class="name-element">videeo annimate After Effect</p>
-                                        </td>
-                                        <td>
-                                            <p class="name-element">12h 33m 10s</p>
-                                        </td>
-                                        <td class="d-flex align-items-center r-1">
-                                            <div class="blockImgUser">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" class="" alt="">
-                                            </div>
-                                            <p class="name-element">Kathryn Murphy</p>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
-                                            </div>
-                                            <p class="name-element">Mecanic volvo electric</p>
-                                        </td>
-                                        <td>
-                                            <p class="name-element">12h 33m 10s</p>
-                                        </td>
-                                        <td class="d-flex align-items-center r-1">
-                                            <div class="blockImgUser">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" class="" alt="">
-                                            </div>
-                                            <p class="name-element">Cameron Williamson</p>
-                                        </td>
-                                    </tr>
+                                        <?php 
+                                        foreach($enrolled_courses as $key => $course) :
+                                        $bool = true;
+                                        $bool = visibility($course, $visibility_company);
+                                        if(!$bool)
+                                            continue;
+
+                                        //Course Type
+                                        $course_type = get_field('course_type', $course->ID);
+                                        
+                                        switch ($course_type) {
+                                            case 'Artikel':
+                                                $typo_course['Artikel']++;
+                                                break;
+                                            case 'Opleidingen':
+                                                $typo_course['Opleidingen']++;
+                                                break;
+                                            case 'Podcast':
+                                                $typo_course['Podcast']++;
+                                                break;
+                                            case 'Video':
+                                                $typo_course['Video']++;
+                                                break;
+                                        }
+                                        
+                                        if($key >= 4)
+                                            continue;
+                                        
+                                        //Legend image
+                                        $image_course = get_field('preview', $course->ID)['url'];
+                                        if(!$image_course){
+                                            $image_course = get_the_post_thumbnail_url($course->ID);
+                                            if(!$image_course)
+                                                $image_course = get_field('url_image_xml', $course->ID);
+                                            if(!$image_course)
+                                                $image_course = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                                        }
+
+                                        //Author
+                                        $author = get_user_by('ID', $course->post_author);      
+                                        $author_name = $author->first_name ?: $author->display_name;
+                                        $author_image = get_field('profile_img',  'user_' . $author->ID);
+                                        $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
+                                        //Clock duration
+                                        $duration_day = get_field('duration_day', $post->ID) ? get_field('duration_day', $post->ID) . 'days' : 'Unlimited';
+
+                                        ?>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="blockImgCourse">
+                                                        <img src="<?= $image_course ?>" class="" alt="">
+                                                    </div>
+                                                    <p class="name-element"><?= $course->post_title; ?></p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="name-element"><?= $duration_day ?></p>
+                                            </td>
+                                            <td class=" r-1">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="blockImgUser">
+                                                        <img src="<?= $author_image ?>" class="" alt="">
+                                                    </div>
+                                                    <p class="name-element"><?= $author_name ?></p>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <?php 
+                                        endforeach; 
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -196,42 +325,51 @@ if(!empty($topics_internal))
                                 </a>
                             </div>
                             <div class="card-notification">
+                                <?php 
+                                foreach($todos as $key => $todo) :
+
+                                if($key == 8)
+                                    break;
+
+                                $type = get_field('type_feedback', $todo->ID);
+                                $manager_id = get_field('manager_feedback', $todo->ID);
+                                if($manager_id){
+                                    $manager = get_user_by('ID', $manager_id);
+                                    $image = get_field('profile_img',  'user_' . $manager->ID);
+                                    $manager_display = ($manager->first_name) ?: $manager->display_name;
+                                    if(!$manager_display)
+                                        $manager_display = 'A manager';
+                                    $manager_image = get_field('profile_img',  'user_' . $manager->ID);
+                                    $manager_image = $manager_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                }else{
+                                    $manager_display = 'A manager';
+                                    $image = 0;
+                                }
+
+                                if(!$image)
+                                    $image = get_stylesheet_directory_uri() . '/img/Group216.png';
+
+                                if($type == "Feedback" || $type == "Compliment" || $type == "Gedeelde cursus")
+                                    $beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
+                                else if($type == "Persoonlijk ontwikkelplan")
+                                    $beschrijving_feedback = get_field('opmerkingen', $todo->ID);
+                                else if($type == "Beoordeling Gesprek")
+                                    $beschrijving_feedback = get_field('algemene_beoordeling', $todo->ID);
+                                ?>
                                 <div class="notificationBlock">
                                     <div class="d-flex">
                                         <div class="blockImgCard">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" class="" alt="">
+                                            <img src="<?= $manager_image ?>" class="" alt="">
                                         </div>
                                         <div>
-                                            <p class="name">Daniel</p>
-                                            <p class="time">1 hours ago</p>
+                                            <p class="name"><?= $manager_display ?></p>
+                                            <!-- <p class="time">1 hours ago</p> -->
                                         </div>
                                     </div>
-                                    <p class="descriptionNotification">It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                    <p class="descriptionNotification"><?= $beschrijving_feedback ?></p>
                                 </div>
-                                <div class="notificationBlock">
-                                    <div class="d-flex">
-                                        <div class="blockImgCard">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" class="" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="name">Daniel</p>
-                                            <p class="time">1 hours ago</p>
-                                        </div>
-                                    </div>
-                                    <p class="descriptionNotification">It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                </div>
-                                <div class="notificationBlock">
-                                    <div class="d-flex">
-                                        <div class="blockImgCard">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" class="" alt="">
-                                        </div>
-                                        <div>
-                                            <p class="name">Daniel</p>
-                                            <p class="time">1 hours ago</p>
-                                        </div>
-                                    </div>
-                                    <p class="descriptionNotification">It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                </div>
+                                <?php 
+                                endforeach; ?>
                             </div>
                         </div>
                         <div class="data-analitycs-block">
@@ -246,24 +384,24 @@ if(!empty($topics_internal))
                                 <div class="analytics-block">
                                     <div class="first-content-analitycs text-left">
                                         <p class="title-block">Analytics</p>
-                                        <p class="spent-text"> <b>22 K€</b> spent since the beginning of the adventure</p>
+                                        <p class="spent-text"> <b><?= $expenses ?>€</b> spent since the beginning of the adventure</p>
                                         <div class="detail-analytic">
                                             <div class="sub-detail">
-                                                <p class="number-sub-detail">29</p>
+                                                <p class="number-sub-detail"><?= $profil_views ?></p>
                                                 <p class="text-sub-detail">Profil view</p>
                                             </div>
                                             <div class="sub-detail">
-                                                <p class="number-sub-detail">18</p>
+                                                <p class="number-sub-detail">0</p>
                                                 <p class="text-sub-detail">Course Done</p>
                                             </div>
                                             <div class="sub-detail">
-                                                <p class="number-sub-detail">2</p>
-                                                <p class="text-sub-detail">Profil view</p>
+                                                <p class="number-sub-detail"><?= $profil_views_by ?></p>
+                                                <p class="text-sub-detail">My Profil view by </p>
                                             </div>
-                                            <div class="sub-detail">
+                                            <!-- <div class="sub-detail">
                                                 <p class="number-sub-detail">29</p>
                                                 <p class="text-sub-detail">Spent / Day</p>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                     <div class="second-content-analitycs">
@@ -273,25 +411,25 @@ if(!empty($topics_internal))
                                 <div class="other-analytics">
                                     <div class="d-flex justify-content-center">
                                         <div class="detail-other-analytics">
-                                            <p class="number-other-detail">22</p>
+                                            <p class="number-other-detail"><?= $typo_course['Artikel']; ?></p>
                                             <p class="text-other-detail">Articles</p>
                                         </div>
                                         <hr class="hrFirst">
                                         <div class="detail-other-analytics">
-                                            <p class="number-other-detail">35</p>
-                                            <p class="text-other-detail">E-learning Cours</p>
+                                            <p class="number-other-detail"><?= $typo_course['Opleidingen']; ?></p>
+                                            <p class="text-other-detail">Opleidingen</p>
                                         </div>
                                     </div>
                                     <hr class="hrSecond">
                                     <div class="d-flex justify-content-center">
                                         <div class="detail-other-analytics">
-                                            <p class="number-other-detail">5</p>
+                                            <p class="number-other-detail"><?= $typo_course['Podcast']; ?></p>
                                             <p class="text-other-detail">Podcast</p>
                                         </div>
                                         <hr class="hrFirst">
                                         <div class="detail-other-analytics">
-                                            <p class="number-other-detail">15</p>
-                                            <p class="text-other-detail">Videos Cours</p>
+                                            <p class="number-other-detail"><?= $typo_course['Video']; ?></p>
+                                            <p class="text-other-detail">Videos</p>
                                         </div>
                                     </div>
                                 </div>
@@ -301,10 +439,12 @@ if(!empty($topics_internal))
                         <div class="blockYourCertificates block-activity-">
                             <div class="d-flex align-items-center justify-content-between head-blockItemCourse">
                                 <p class="title">Your certificates</p>
+                                <!-- 
                                 <a href="" class="d-flex align-items-center">
                                     <p class="seeAllText">See All</p>
                                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/seeAllIcon.png" class="" alt="">
-                                </a>
+                                </a> 
+                                -->
                             </div>
                             <div class="card-all-certificat card-activity-">
                                 <table class="table table-responsive">
@@ -313,72 +453,43 @@ if(!empty($topics_internal))
                                         <th scope="col courseTitle">Certificat No.</th>
                                         <th scope="col">Title</th>
                                         <th scope="col">Upload Date</th>
-                                        <th>Certificate</th>
-                                        <th>Controls</th>
+                                        <!-- <th>Certificate</th> -->
+                                        <!-- <th>Controls</th> -->
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>
-                                            <p class="text-center numberCertificat">1</p>
-                                        </td>
-                                        <td>
-                                            <p class="name-element">WordPress Certificate</p>
-                                        </td>
-                                        <td class="">
-                                            <p class="name-element">6 April 2019</p>
-                                        </td>
-                                        <td>
-                                            <a href="">View</a>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-trash">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/clarity_trash-line.png" class="" alt="">
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="text-center numberCertificat">1</p>
-                                        </td>
-                                        <td>
-                                            <p class="name-element">WordPress Certificate</p>
-                                        </td>
-                                        <td class="">
-                                            <p class="name-element">6 April 2019</p>
-                                        </td>
-                                        <td>
-                                            <a href="">View</a>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-trash">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/clarity_trash-line.png" class="" alt="">
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <p class="text-center numberCertificat">1</p>
-                                        </td>
-                                        <td>
-                                            <p class="name-element">WordPress Certificate</p>
-                                        </td>
-                                        <td class="">
-                                            <p class="name-element">6 April 2019</p>
-                                        </td>
-                                        <td>
-                                            <a href="">View</a>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-trash">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/clarity_trash-line.png" class="" alt="">
-                                            </button>
-                                        </td>
-                                    </tr>
+                                        <?php
+                                            $strotime_date = strtotime($user->user_registered);
+                                            $date_registered = date("d M Y", $strotime_date);
+                                        ?>
+                                        
+                                        <tr>
+                                            <td>
+                                                <p class="text-center numberCertificat">0</p>
+                                            </td>
+                                            <td>
+                                                <p class="name-element">Join the family !</p>
+                                            </td>
+                                            <td class="">
+                                                <p class="name-element"><?= $date_registered ?></p>
+                                            </td>
+                                           <!--
+                                            <td>
+                                                <a href="#">View</a>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-trash">
+                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/clarity_trash-line.png" class="" alt="">
+                                                </button>
+                                            </td> 
+                                        -->
+                                        </tr>
+
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                        <!--
                         <div class="blockYourCertificates block-activity-">
                             <div class="d-flex align-items-center justify-content-between head-blockItemCourse">
                                 <p class="title">Assessments</p>
@@ -460,7 +571,8 @@ if(!empty($topics_internal))
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div> 
+                        -->
                         <div class="skills-activity-block">
                             <div class="d-flex align-items-center justify-content-between head-blockItemCourse">
                                 <p class="title">Skills</p>
@@ -494,9 +606,9 @@ if(!empty($topics_internal))
                                             <button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills<?= $key ?>">Edit <i class="fa fa-edit"></i></a>
-                                                <!-- <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a> -->
+                                                <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a>
                                             </div>
-                                        </div>
+                                        </div> 
                                     </div>
 
                                     <!-- Start modal edit skills-->
@@ -550,71 +662,72 @@ if(!empty($topics_internal))
                         </div>
                         <div class="content-card-communities-activity">
                             <div class="d-flex align-items-center justify-content-between head-blockItemCourse">
-                                <p class="title">Communities</p>
-                                <a href="" class="d-flex align-items-center">
-                                    <p class="seeAllText">See All</p>
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/seeAllIcon.png" class="" alt="">
-                                </a>
+                                <?php
+                                $i = 0;
+                                if(!empty($communities)){
+                                    echo '<p class="title">Communities</p>';
+                                    echo '<a href="#" class="d-flex align-items-center">
+                                                <p class="seeAllText">See All</p>
+                                                <img src="' . get_stylesheet_directory_uri() . '/img/seeAllIcon.png" class="" alt="">
+                                        </a>';
+                                }
+                                ?>
                             </div>
                             <div class="content-card-communities-activity d-flex flex-wrap">
+                                <?php
+                                 foreach($communities as $key => $value):
+                                    if(!$value)
+                                        continue;
+                    
+                                    if($i == 6)
+                                        break;
+                                    $i++;
+                     
+                                    $company = get_field('company_author', $value->ID)[0];
+                                    $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+                                    $community_image = get_field('image_community', $value->ID) ?: $company_image;
+                    
+                                    //Courses through custom field 
+                                    $courses = get_field('course_community', $value->ID);
+                                    $max_course = 0;
+                                    if(!empty($courses))
+                                        $max_course = count($courses);
+                                    
+                                    //Followers
+                                    $max_follower = 0;
+                                    $followers = get_field('follower_community', $value->ID);
+                                    if(!empty($followers))
+                                        $max_follower = count($followers);
+                                    $bool = false;
+                                    foreach ($followers as $key => $val)
+                                        if($val->ID == $user_id){
+                                            $bool = true;
+                                            break;
+                                        }
+                                    
+                                    $access_community = "";
+                                    if(!$bool)
+                                        continue;
+                                    else
+                                        $access_community = '/dashboard/user/community-detail/?mu=' . $value->ID ;
+                                                         
+                                ?>
                                 <div class="card-communities-activity">
                                     <div class="block-img">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/group-friends-gathering-together.jpg" class="" alt="">
+                                        <img src="<?= $community_image ?>" class="" alt="">
                                     </div>
                                     <div>
-                                        <p class="name-community">Designer community, Dakar</p>
-                                        <p class="number-members">112K Members</p>
+                                        <a href="<?= $access_community?>" class="name-community"><?= $value->post_title ?>, Netherlands</a>
+                                        <p class="number-members"><?= $max_follower ?> Members</p>
                                     </div>
                                 </div>
-                                <div class="card-communities-activity">
-                                    <div class="block-img">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/group-friends-gathering-together.jpg" class="" alt="">
-                                    </div>
-                                    <div>
-                                        <p class="name-community">Designer community, Dakar</p>
-                                        <p class="number-members">112K Members</p>
-                                    </div>
-                                </div>
-                                <div class="card-communities-activity">
-                                    <div class="block-img">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/group-friends-gathering-together.jpg" class="" alt="">
-                                    </div>
-                                    <div>
-                                        <p class="name-community">Designer community, Dakar</p>
-                                        <p class="number-members">112K Members</p>
-                                    </div>
-                                </div>
-                                <div class="card-communities-activity">
-                                    <div class="block-img">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/group-friends-gathering-together.jpg" class="" alt="">
-                                    </div>
-                                    <div>
-                                        <p class="name-community">Designer community, Dakar</p>
-                                        <p class="number-members">112K Members</p>
-                                    </div>
-                                </div>
-                                <div class="card-communities-activity">
-                                    <div class="block-img">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/group-friends-gathering-together.jpg" class="" alt="">
-                                    </div>
-                                    <div>
-                                        <p class="name-community">Designer community, Dakar</p>
-                                        <p class="number-members">112K Members</p>
-                                    </div>
-                                </div>
-                                <div class="card-communities-activity">
-                                    <div class="block-img">
-                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/group-friends-gathering-together.jpg" class="" alt="">
-                                    </div>
-                                    <div>
-                                        <p class="name-community">Designer community, Dakar</p>
-                                        <p class="number-members">112K Members</p>
-                                    </div>
-                                </div>
+                                <?php
+                                endforeach;
+                                ?>
                             </div>
                         </div>
                     </div>
-                    <div class="tab  tab-course">
+                    <div class="tab tab-course">
                         <div class="blockItemCourse">
                             <div class="d-flex align-items-center justify-content-between head-blockItemCourse">
                                 <p class="title">Courses</p>
@@ -625,8 +738,8 @@ if(!empty($topics_internal))
                             </div>
                             <div class="card-course-activity">
                                 <div class="head-card d-flex justify-content-between align-items-center">
-                                    <input id="" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" >
-                                    <div class="filterInputBlock">
+                                    <input id="search_activity_course" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" >
+                                    <!-- <div class="filterInputBlock">
                                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/filtering.svg" class="" alt="">
                                         <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                                             <option selected>Filter</option>
@@ -634,7 +747,7 @@ if(!empty($topics_internal))
                                             <option value="2">Two</option>
                                             <option value="3">Three</option>
                                         </select>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <table class="table table-responsive text-left">
                                     <thead>
@@ -644,125 +757,76 @@ if(!empty($topics_internal))
                                         <th scope="col">Instructor</th>
                                         <th scope="col">Statut</th>
                                         <th scope="col">Favorite</th>
-                                        <th scope="col">Action</th>
+                                        <!-- <th scope="col">Action</th> -->
                                     </tr>
                                     </thead>
-                                    <tbody class="text-left">
-                                      <tr>
-                                        <td class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
-                                            </div>
-                                            <p class="name-element">UX - UI Design certificat</p>
-                                        </td>
-                                        <td>
-                                            <p class="name-element">12h 33m 10s</p>
-                                        </td>
-                                        <td class="">
-                                            <p class="name-element">Darlene Robertson</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-left" style="color: #ff9b00;">In Progress</p>
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-heart mr-4"></i>
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-trash mr-4" style="color: red;"></i>
-                                        </td>
-                                    </tr>
-                                      <tr>
-                                        <td class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
-                                            </div>
-                                            <p class="name-element">UX - UI Design certificat</p>
-                                        </td>
-                                        <td>
-                                            <p class="name-element">12h 33m 10s</p>
-                                        </td>
-                                        <td class="">
-                                            <p class="name-element">Marvin McKinney</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-left" style="color: green;">Done</p>
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-heart-o mr-4"></i>
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-trash mr-4" style="color: red;"></i>
-                                        </td>
-                                    </tr>
-                                      <tr>
-                                        <td class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
-                                            </div>
-                                            <p class="name-element">UX - UI Design certificat</p>
-                                        </td>
-                                        <td>
-                                            <p class="name-element">12h 33m 10s</p>
-                                        </td>
-                                        <td class="">
-                                            <p class="name-element">Kathryn Murphy</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-left" style="color: #043356;">New</p>
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-heart mr-4"></i>
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-trash mr-4" style="color: red;"></i>
-                                        </td>
-                                    </tr>
-                                      <tr>
-                                        <td class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
-                                            </div>
-                                            <p class="name-element">UX - UI Design certificat</p>
-                                        </td>
-                                        <td>
-                                            <p class="name-element">12h 33m 10s</p>
-                                        </td>
-                                        <td class="">
-                                            <p class="name-element">Cameron Williamson</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-left" style="color: #ff9b00;">In Progress</p>
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-heart-o mr-4"></i>
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-trash mr-4" style="color: red;"></i>
-                                        </td>
-                                    </tr>
-                                      <tr>
-                                        <td class="d-flex align-items-center">
-                                            <div class="blockImgCourse">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/innovation.jpg" class="" alt="">
-                                            </div>
-                                            <p class="name-element">UX - UI Design certificat</p>
-                                        </td>
-                                        <td>
-                                            <p class="name-element">12h 33m 10s</p>
-                                        </td>
-                                        <td class="">
-                                            <p class="name-element">Kathryn Murphy</p>
-                                        </td>
-                                        <td>
-                                            <p class="text-left" style="color: green;">In Progress</p>
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-heart mr-4"></i>
-                                        </td>
-                                        <td>
-                                            <i class="fa fa-trash mr-4" style="color: red;"></i>
-                                        </td>
-                                    </tr>
+                                    <tbody id="autocomplete_activity_course" class="text-left">
+                                        <?php 
+                                        foreach($enrolled_courses as $key => $course) :
+                                        $bool = true;
+                                        $bool = visibility($course, $visibility_company);
+                                        if(!$bool)
+                                            continue;
+                                        
+                                        //Course Type
+                                        $course_type = get_field('course_type', $course->ID);
+
+                                        //Legend image
+                                        $image_course = get_field('preview', $course->ID)['url'];
+                                        if(!$image_course){
+                                            $image_course = get_the_post_thumbnail_url($course->ID);
+                                            if(!$image_course)
+                                                $image_course = get_field('url_image_xml', $course->ID);
+                                            if(!$image_course)
+                                                $image_course = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                                        }
+
+                                        //Author
+                                        $author = get_user_by('ID', $course->post_author);      
+                                        $author_name = $author->first_name ?: $author->display_name;
+
+                                        //Clock duration
+                                        $duration_day = get_field('duration_day', $post->ID) ? get_field('duration_day', $post->ID) . 'days' : 'Unlimited';
+
+                                        //Color
+                                        $color_done = "green";
+                                        $color_progress = "#ff9b00";
+                                        $color_new = "#043356";
+
+                                        //Button like    
+                                        $button_render = (in_array($course->ID, $saved)) ? '<i class="fa fa-heart mr-4"></i>' : '<i class="fa fa-heart-o mr-4"></i>';
+
+                                        ?>
+                                        <tr>
+                                            <td >
+                                                <div class="d-flex align-items-center">
+                                                    <div class="blockImgCourse">
+                                                        <img src="<?= $image_course ?>" class="" alt="">
+                                                    </div>
+                                                    <p class="name-element"><?= $course->post_title ?></p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="name-element"><?= $duration_day; ?></p>
+                                            </td>
+                                            <td class="">
+                                                <p class="name-element"><?= $author_name ?></p>
+                                            </td>
+                                            <td>
+                                                <p class="text-left" style="color: #043356;"> New </p>
+                                            </td>
+                                            <td>
+                                                <?= $button_render; ?>
+                                            </td>
+                                            <!-- 
+                                            <td>
+                                                <i class="fa fa-trash mr-4" style="color: red;"></i>
+                                            </td> 
+                                            -->
+                                        </tr>
+                                        <?php 
+                                        endforeach;
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -784,7 +848,7 @@ if(!empty($topics_internal))
                                             <th scope="col">Type</th>
                                             <th scope="col-4">Alert </th>
                                             <th scope="col">By</th>
-                                            <th scope="col">Optie</th>
+                                            <!-- <th scope="col">Optie</th> -->
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -820,6 +884,7 @@ if(!empty($topics_internal))
                                                 <td><?=$type?></td>
                                                 <td class="descriptionNotification"><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>"><?=$beschrijving_feedback?> </a></td>
                                                 <td><?= $manager_display; ?></td>
+                                                <!-- 
                                                 <td class="textTh">
                                                     <div class="dropdown text-white">
                                                         <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
@@ -828,10 +893,11 @@ if(!empty($topics_internal))
                                                         </p>
                                                         <ul class="dropdown-menu">
                                                             <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>">Bekijk</a></li>
-                                                            <!-- <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li> -->
+                                                            <li class="my-1" id="live"><i class="fa fa-trash px-2"></i><input type="button" id="<?= $course->ID; ?>" value="Verwijderen"/></li>
                                                         </ul>
                                                     </div>
-                                                </td>
+                                                </td> 
+                                                -->
                                             </tr>
                                             <?php
                                         }
@@ -850,24 +916,24 @@ if(!empty($topics_internal))
                             <div class="analytics-block">
                                 <div class="first-content-analitycs text-left">
                                     <p class="title-block">Analytics</p>
-                                    <p class="spent-text"> <b>22 K€</b> spent since the beginning of the adventure</p>
+                                    <p class="spent-text"> <b><?= $expenses ?>€</b> spent since the beginning of the adventure</p>
                                     <div class="detail-analytic">
                                         <div class="sub-detail">
-                                            <p class="number-sub-detail">29</p>
+                                            <p class="number-sub-detail"><?= $profil_views ?></p>
                                             <p class="text-sub-detail">Profil view</p>
                                         </div>
                                         <div class="sub-detail">
-                                            <p class="number-sub-detail">18</p>
+                                            <p class="number-sub-detail">0</p>
                                             <p class="text-sub-detail">Course Done</p>
                                         </div>
                                         <div class="sub-detail">
-                                            <p class="number-sub-detail">2</p>
-                                            <p class="text-sub-detail">Profil view</p>
+                                            <p class="number-sub-detail"><?= $profil_views_by ?></p>
+                                            <p class="text-sub-detail">My Profil view by </p>
                                         </div>
-                                        <div class="sub-detail">
+                                        <!-- <div class="sub-detail">
                                             <p class="number-sub-detail">29</p>
                                             <p class="text-sub-detail">Spent / Day</p>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="second-content-analitycs">
@@ -877,25 +943,25 @@ if(!empty($topics_internal))
                             <div class="other-analytics">
                                 <div class="d-flex justify-content-center">
                                     <div class="detail-other-analytics">
-                                        <p class="number-other-detail">22</p>
+                                        <p class="number-other-detail"><?= $typo_course['Artikel']; ?></p>
                                         <p class="text-other-detail">Articles</p>
                                     </div>
                                     <hr class="hrFirst">
                                     <div class="detail-other-analytics">
-                                        <p class="number-other-detail">35</p>
-                                        <p class="text-other-detail">E-learning Cours</p>
+                                        <p class="number-other-detail"><?= $typo_course['Opleidingen']; ?></p>
+                                        <p class="text-other-detail">Opleindingen</p>
                                     </div>
                                 </div>
                                 <hr class="hrSecond">
                                 <div class="d-flex justify-content-center">
                                     <div class="detail-other-analytics">
-                                        <p class="number-other-detail">5</p>
+                                        <p class="number-other-detail"><?= $typo_course['Podcast']; ?></p>
                                         <p class="text-other-detail">Podcast</p>
                                     </div>
                                     <hr class="hrFirst">
                                     <div class="detail-other-analytics">
-                                        <p class="number-other-detail">15</p>
-                                        <p class="text-other-detail">Videos Cours</p>
+                                        <p class="number-other-detail"><?= $typo_course['Video']; ?></p>
+                                        <p class="text-other-detail">Videos</p>
                                     </div>
                                 </div>
                             </div>
@@ -914,21 +980,29 @@ if(!empty($topics_internal))
                                     <th scope="col courseTitle">Certificat No.</th>
                                     <th scope="col">Title</th>
                                     <th scope="col">Upload Date</th>
+                                    <!-- 
                                     <th>Certificate</th>
-                                    <th>Controls</th>
+                                    <th>Controls</th> 
+                                    -->
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <?php
+                                    $strotime_date = strtotime($user->user_registered);
+                                    $date_registered = date("d M Y", $strotime_date);
+                                ?>
+                                
                                 <tr>
                                     <td>
-                                        <p class="text-center numberCertificat">1</p>
+                                        <p class="text-center numberCertificat">0</p>
                                     </td>
                                     <td>
-                                        <p class="name-element">WordPress Certificate</p>
+                                        <p class="name-element">Join the family !</p>
                                     </td>
                                     <td class="">
-                                        <p class="name-element">6 April 2019</p>
+                                        <p class="name-element"><?= $date_registered ?></p>
                                     </td>
+                                    <!-- 
                                     <td>
                                         <a href="">View</a>
                                     </td>
@@ -936,51 +1010,13 @@ if(!empty($topics_internal))
                                         <button class="btn btn-trash">
                                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/clarity_trash-line.png" class="" alt="">
                                         </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p class="text-center numberCertificat">1</p>
-                                    </td>
-                                    <td>
-                                        <p class="name-element">WordPress Certificate</p>
-                                    </td>
-                                    <td class="">
-                                        <p class="name-element">6 April 2019</p>
-                                    </td>
-                                    <td>
-                                        <a href="">View</a>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-trash">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/clarity_trash-line.png" class="" alt="">
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p class="text-center numberCertificat">1</p>
-                                    </td>
-                                    <td>
-                                        <p class="name-element">WordPress Certificate</p>
-                                    </td>
-                                    <td class="">
-                                        <p class="name-element">6 April 2019</p>
-                                    </td>
-                                    <td>
-                                        <a href="">View</a>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-trash">
-                                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/clarity_trash-line.png" class="" alt="">
-                                        </button>
-                                    </td>
-                                </tr>
+                                    </td> 
+                                    -->
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="tab tab-assessment">
+                    <!-- <div class="tab tab-assessment">
                         <div class="card-all-certificat">
                             <table class="table table-responsive">
                                 <thead>
@@ -1054,63 +1090,54 @@ if(!empty($topics_internal))
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="tab tab-communities">
                         <div class="content-card-communities-activity d-flex flex-wrap">
+                            <?php
+                            foreach($communities as $key => $value):
+                            if(!$value)
+                                continue;
+                                
+                            $company = get_field('company_author', $value->ID)[0];
+                            $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+                            $community_image = get_field('image_community', $value->ID) ?: $company_image;
+            
+                            //Courses through custom field 
+                            $courses = get_field('course_community', $value->ID);
+                            $max_course = 0;
+                            if(!empty($courses))
+                                $max_course = count($courses);
+            
+                            //Followers
+                            $max_follower = 0;
+                            $followers = get_field('follower_community', $value->ID);
+                            if(!empty($followers))
+                                $max_follower = count($followers);
+                            $bool = false;
+                            foreach ($followers as $key => $val)
+                                if($val->ID == $user_id){
+                                    $bool = true;
+                                    break;
+                                }
+                            
+                            $access_community = "";
+                            if(!$bool)
+                                continue;
+                            else
+                                $access_community = '/dashboard/user/community-detail/?mu=' . $value->ID ;
+                            ?>
                             <div class="card-communities-activity">
                                 <div class="block-img">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/group-friends-gathering-together.jpg" class="" alt="">
+                                    <img src="<?= $community_image ?>" class="" alt="">
                                 </div>
                                 <div>
-                                    <p class="name-community">Designer community, Dakar</p>
-                                    <p class="number-members">112K Members</p>
+                                    <p class="name-community"><?= $value->post_title ?>, Netherlands</p>
+                                    <p class="number-members"><?= $max_follower ?> Members</p>
                                 </div>
                             </div>
-                            <div class="card-communities-activity">
-                                <div class="block-img">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/group-friends-gathering-together.jpg" class="" alt="">
-                                </div>
-                                <div>
-                                    <p class="name-community">Designer community, Dakar</p>
-                                    <p class="number-members">112K Members</p>
-                                </div>
-                            </div>
-                            <div class="card-communities-activity">
-                                <div class="block-img">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/group-friends-gathering-together.jpg" class="" alt="">
-                                </div>
-                                <div>
-                                    <p class="name-community">Designer community, Dakar</p>
-                                    <p class="number-members">112K Members</p>
-                                </div>
-                            </div>
-                            <div class="card-communities-activity">
-                                <div class="block-img">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/group-friends-gathering-together.jpg" class="" alt="">
-                                </div>
-                                <div>
-                                    <p class="name-community">Designer community, Dakar</p>
-                                    <p class="number-members">112K Members</p>
-                                </div>
-                            </div>
-                            <div class="card-communities-activity">
-                                <div class="block-img">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/group-friends-gathering-together.jpg" class="" alt="">
-                                </div>
-                                <div>
-                                    <p class="name-community">Designer community, Dakar</p>
-                                    <p class="number-members">112K Members</p>
-                                </div>
-                            </div>
-                            <div class="card-communities-activity">
-                                <div class="block-img">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/group-friends-gathering-together.jpg" class="" alt="">
-                                </div>
-                                <div>
-                                    <p class="name-community">Designer community, Dakar</p>
-                                    <p class="number-members">112K Members</p>
-                                </div>
-                            </div>
+                            <?php 
+                            endforeach;
+                            ?>
                         </div>
                     </div>
                     <div class="tab tab-skills">
@@ -1389,8 +1416,29 @@ if(!empty($topics_internal))
     function rangeSlide(value) {
         document.getElementById('rangeValue').innerHTML = this.value + ' %';
     }
-
 </script>
+
+<script>
+     $('#search_activity_course').keyup(function(){
+        var txt = $(this).val();
+
+        $.ajax({
+
+            url:"/fetch-activity-course",
+            method:"post",
+            data:{
+                search_activity_course : txt,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete_activity_course').html(data);
+            }
+        });
+
+    });
+</script>
+
 
 </body>
 </html>
