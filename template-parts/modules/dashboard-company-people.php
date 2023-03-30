@@ -62,8 +62,12 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
             <p class="JouwOpleid">Werknemers (<?= $count; ?>)</p>
             <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
             <div class="">
-                <button type="button" class="btn" data-toggle="modal" data-target="#polarisModal">Polaris</button>
-                <button type="button" class="btn" data-toggle="modal" data-target="#loketModal">Loket</button>
+                <?php
+                if( in_array('administrator', $data_user->roles))
+                    echo '
+                        <button type="button" class="btn" data-toggle="modal" data-target="#polarisModal">Polaris</button>
+                        <button type="button" class="btn" data-toggle="modal" data-target="#loketModal">Loket</button>';
+                ?>
                 <!-- <select name="salary-system" id="salary-system">
                     <option value=""></option>
                         <option value="polaris" >POLARIS</option>
