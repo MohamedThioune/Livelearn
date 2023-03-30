@@ -1131,7 +1131,7 @@ foreach ($users as $element) {
                                     <img src="<?= $community_image ?>" class="" alt="">
                                 </div>
                                 <div>
-                                    <p class="name-community"><?= $value->post_title ?>, Netherlands</p>
+                                    <a href="<?= $access_community?>" class="name-community"><?= $value->post_title ?>, Netherlands</a>
                                     <p class="number-members"><?= $max_follower ?> Members</p>
                                 </div>
                             </div>
