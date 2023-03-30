@@ -3,6 +3,7 @@
 <?php
 
 global $wpdb;
+
 /*
 * * Pagination
 */
@@ -28,6 +29,84 @@ $user = wp_get_current_user();
 $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandrinks','sportnext','nbvt','vsbnetwerk','tvvl','nedverbak','tnw','changeINC','--------------------------','nvab','vbw','kndb','fgz','cvah','nbov','nuvo','CBD','Hoorzaken','Knvvn','Nvtl','stiba','Nfofruit','Iro','Lto','cbm','tuinbranche','jagersvereniging','Wapned','Dansbelang','Pictoright','Ngb','Griffiers','Nob','Bijenhouders','BBKnet','AuteursBond','ovfd','Adfiz','nvvr','Veneca','Sloopaannemers','Noa'];
 ?>
 
+<?php 
+    $urls=[
+        'WorkPlace Academy'=>'https://workplaceacademy.nl/',
+        'Ynno'=>'https://www.ynno.com/',
+        'DeZZP'=>'https://www.dezzp.nl/',
+        'Aestate'=>'https://www.aestate.nl/',
+        'Alba Concepts'=>'https://albaconcepts.nl/',
+        'AM'=>'https://www.am.nl/',
+        'Limoonworks'=>'https://limoonworks.nl/',
+        'DWA'=>'https://www.dwa.nl/',
+        'Van Spaendonck'=>'https://www.vanspaendonck.nl/',
+        'PTG-advies'=>'https://ptg-advies.nl/',
+        'Rever'=>'https://rever.nl/',
+        'Reworc'=>'https://www.reworc.com/',
+        'Sweco'=>'https://www.sweco.nl/',
+        'Co-pilot'=>'https://www.copilot.nl/',
+        'Agile Scrum Group'=>'https://agilescrumgroup.nl/',
+        'Horizon'=>'https://horizontraining.nl/',
+        'Kenneth Smit'=>'https://www.kennethsmit.com/',
+        // 'Autoblog'=>'https://www.autoblog.nl/',
+        'Crypto university'=>'https://www.cryptouniversity.nl/',
+        'WineLife'=>'https://www.winelife.nl/',
+        'Perswijn'=>'https://perswijn.nl/',
+        'Koken met Kennis'=>'https://www.kokenmetkennis.nl/',
+        'Minkowski'=>'https://minkowski.org/',
+        'KIT publishers'=>'https://kitpublishers.nl/',
+        'BeByBeta'=>'https://www.betastoelen.nl/',
+        'Zooi'=>'https://zooi.nl/',
+        'Growth Factory'=>'https://www.growthfactory.nl/',
+        'Influid'=>'https://influid.nl/',
+        'MediaTest'=>'https://mediatest.nl/',
+        'MeMo2'=>'https://memo2.nl/',
+        'Impact Investor'=>'https://impact-investor.com/',
+        'Equalture'=>'https://www.equalture.com/',
+        'Zorgmasters'=>'https://zorgmasters.nl/',
+        'AdSysco'=>'https://adsysco.nl/',
+        'Transport en Logistiek Nederland'=>'https://www.tln.nl/',
+        'Financieel Fit'=>'https://www.financieelfit.nl/',
+        'Business Insider'=>'https://www.businessinsider.nl/',
+        'Frankwatching'=>'https://www.frankwatching.com/',
+        'MarTech'=>'https://martech.org/',
+        'Search Engine Journal'=>'https://www.searchenginejournal.com/',
+        'Search Engine Land'=>'https://searchengineland.com/',
+        'TechCrunch'=>'https://techcrunch.com/',
+        'The Bruno Effect'=>'https://magazine.thebrunoeffect.com/',
+        'Crypto Insiders'=>'https://www.crypto-insiders.nl/',
+        'HappyHealth'=> 'https://happyhealthy.nl/',
+        'Focus'=>'https://focusmagazine.nl/',
+        'Chip Foto Magazine'=> 'https://www.chipfotomagazine.nl/',
+        'Vogue'=> 'https://www.vogue.nl/',
+        'TrendyStyle'=>'https://www.trendystyle.net/',
+        'WWD'=> 'https://wwd.com/',
+        'Purse Blog'=> 'https://www.purseblog.com/',
+        'Coursera'=> 'https://blog.coursera.org/',
+        'Udemy'=> 'https://blog.udemy.com/',
+        'CheckPoint'=> 'https://blog.checkpoint.com/',
+        'De laatste meter'=> 'https://www.delaatstemeter.nl/',
+        'ManagementSite'=> 'https://www.managementpro.nl/',
+        '1 Minute Manager'=> 'https://www.1minutemanager.nl/',
+        'De Strafschop'=> 'https://www.strafschop.nl/',
+        'JongeBazen'=> 'https://www.jongebazen.nl/',
+        'Expeditie Duurzaam'=> 'https://www.expeditieduurzaam.nl/',
+        'Pure Luxe'=>'https://pureluxe.nl/',
+        'WatchTime'=>'https://www.watchtime.com/',
+        'Monochrome'=>'https://monochrome-watches.com/',
+        'Literair Nederland'=>'https://www.literairnederland.nl/',
+        'Tzum'=>'https://www.tzum.info/',
+        'Developer'=>'https://www.developer-tech.com/',
+        'SD Times'=>'https://sdtimes.com/',
+        'GoDaddy'=>'https://www.godaddy.com/garage/',
+        'Bouw Wereld'=>'https://www.bouwwereld.nl/',
+        'Vastgoed actueel'=>'https://vastgoedactueel.nl/',
+        'The Real Deal'=>'https://therealdeal.com/',
+        'HousingWire'=>'https://www.housingwire.com/',
+        'AfterSales'=>'https://aftersalesmagazine.nl/',
+        'CRS Consulting'=>'https://crsconsultants.nl/'
+    ];
+?>
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
@@ -48,7 +127,6 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                    <p class="JouwOpleid"> <!-- Alle opleidingen --> <strong>Load From</strong> : &nbsp;
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
                        &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
-                       <a id="bouddha" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" disabled><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/article.jpg" alt="artikel" style="cursor:grab;"></a>
                        &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/artikel.jpg" alt="load subtopics"></button>
                        
                     <div class="col-md-3">
@@ -71,30 +149,19 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     </div>
                 </div>
                 <div class="contentCardListeCourse">
-                    <center>
+                    <center class="col-md-4 offset-md-4" style="justify-content:center;align-content:center;">
                         <br>
-                        <?php
-                            // Define the array of companies
-                            $companies = 74;                            
-                            // Define the number of companies to display per page
-                            $companiesPerPage = 10;
-                            
-                            // Get the current page number from the query string 
-                            $pageNumber = isset($_GET['look']) ? $_GET['look'] : 1;
-                            
-                            // Calculate the start and end indexes of the companies to display
-                            $startIndex = ($pageNumber - 1) * $companiesPerPage;
-                            $endIndex = $startIndex + $companiesPerPage;
-
-                            $totalPages = ceil($companies / $companiesPerPage);
-                            $paginationLinks = "";
-                            for ($i = 1; $i <= $totalPages; $i++) {
-                                $activeClass = ($i == $pageNumber) ? "active" : "";?>
-                                <a href=<?="artikels/?look=".$i ?> class=<?=$activeClass?>><?=$i?></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <?php
-                            }
-
-                        ?>
+                            <select name="companies[]" class="multipleSelect2 form form-control col-md-9" multiple="true" id="select_company">
+                                <!-- <option name="default">Choose companies</option> -->
+                                <?php
+                                    foreach ($urls as $key => $url) {
+                                ?>
+                                    <option class="options"  value="<?=$url ?>" selected="" ><?=$key?></option>
+                                <?php
+                                    }  
+                                ?>
+                            </select>
+                            &nbsp;&nbsp;<a id="bouddha">✔️</a>&nbsp;&nbsp; <a class="btn-default" onclick='$(".multipleSelect2").prop("disabled", false);'  style="background:white" >⚙️</a>
                         <br>
                     </center>
                     <table class="table table-responsive">
@@ -218,6 +285,27 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 
+<script id="rendered-js" >
+    var list=[];
+    var names=[];
+    window.onload = $(".multipleSelect2").val("");
+    $(document).ready(function () {
+        //Select2
+        $(".multipleSelect2").select2({
+            placeholder: "Maak uw keuze",
+            maximumSelectionLength: 5,
+            minimumSelectionLength: 3,
+        }).on("change", function () {
+            if ($(this).val() && $(this).val().length >= 5) {
+                $(this).prop("disabled", true);
+            }
+        });
+        
+    });
+ 
+    //# sourceURL=pen.js
+</script>
+
 <script type="text/javascript">
     function uncheckAll() {
         let checkboxes = document.querySelectorAll('input[type=checkbox]');
@@ -235,19 +323,44 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         }
     }
 
-    // function update(checkBox){
-    //     check=document.getElementById('chkBox');
-    //     call=document.getElementById('checkAll');
-    //     if(check.checked==false){
-    //         call.checked=false;
-    //     }
-    // }
+    $(document).ready(function() {
+  $('#bouddha').on('click', function() {
+    var selectedOptions = $('#select_company').find('option:selected');
+    var selectedValues = [];
+
+    selectedOptions.each(function() {
+      var value = $(this).val();
+      var text = $(this).text();
+      selectedValues.push({value: value, text: text});
+    });
+    $('#select_field').hide(true,2000);
+    $('#loader').attr('hidden',false);
+
+    // Send selectedValues array via AJAX to PHP file
+    $.ajax({
+      type: "POST",
+      url: "/artikels",
+      data: { selectedValues: selectedValues },
+      success: function(response) {
+        console.log(response);
+        // location.reload();
+      },error:function() {
+        console.log('error');
+      },
+      complete:function(){
+        $('#select_field').hide(false,2000);
+        $('#loader').attr('hidden',true);
+        location.reload();
+      }
+    });
+  });
+});
 
     // $('.bouddha').click((e)=>{
     //     $('#select_field').hide(true,2000);
     //     $('#loader').attr('hidden',false);
     //     $.ajax({
-    //         url:'/livelearn/artikels?page=1', 
+    //         url:'/artikels?page=1', 
     //         type:'POST',
     //         datatype:'json',
     //         // cache:false,
@@ -255,12 +368,12 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     //         },
     //         success:function(){
     //             location.reload();
-    //             // window.location.href = "/livelearn/artikels";
+    //             // window.location.href = "/artikels";
     //         },
     //         complete:function(){
     //             $('#select_field').hide(false,2000);
     //             $('#loader').attr('hidden',true);
-    //             // window.location.href = "/livelearn/artikels";
+    //             // window.location.href = "/artikels";
     //         },
     //         error:function(error){
     //             console("error"+error);
@@ -348,7 +461,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     }
                     alert("Record applied successfully");
                     location.reload();
-                    // window.location.href = "/livelearn/optieAll";
+                    // window.location.href = "/optieAll";
                }
             });
         }
