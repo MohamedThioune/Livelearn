@@ -1221,7 +1221,8 @@ function filter_course(WP_REST_Request $request)
   }
   
 
-  function community_share($data){
+  function community_share($data)
+  {
     $bool = false;
     $communities = array();
     $community_courses = array();
@@ -1333,3 +1334,71 @@ function filter_course(WP_REST_Request $request)
 
     return [$infos];
   }
+
+
+
+  function getAssessments()
+  {
+    $args = array(
+      'post_type' => 'assessment',
+      'post_status' => 'publish',
+      'posts_per_page' => -1
+    );
+  $assessments = get_posts($args) ?? [];
+     if (empty ($assessments))
+        return [];
+     foreach ($assessments as $key => $assessment) 
+    {
+      $questions=get_field('question',$assessment->ID);  
+      if (!empty($questions))
+      {
+        $assessment -> time = 0;
+        foreach ($questions as $key => $question) {
+          $assessment -> time += (int) $question['timer'];
+        }
+      }
+      
+      $assessment -> questions = $questions;
+      $assessment -> description = get_field('description_assessment',$assessment->ID);
+      $assessment -> author = get_user_by( 'ID', $assessment -> post_author  );
+    }
+     return $assessments;
+  }
+
+  function answerAssessment(WP_REST_Request $request)
+  {
+    if (isset ($request) && !empty($request))
+    {
+      $user_id = $request['user_id'];
+      $questions = get_field('question',$request['assessment_id']);
+      $assessment = get_post ($request['assessment_id']);
+      $user_responses = $request['user_responses'];
+      $score = 0;
+      $responses=array();
+      $args=array(
+        'post_type' => 'response_assessment',
+        'post_author' => $user_id,
+        'post_status' => 'publish',
+        'post_title' => $assessment->post_title .' '.get_user_by('ID',$assessment->post_author)->name,
+    );
+    $id_new_response=wp_insert_post($args);
+      if (isset ($questions) && !empty($questions))
+      {
+        foreach ($questions as $key => $question) {
+          
+         if($question["correct_response"] == $user_responses[$key])
+          {
+            $score++; 
+            array_push($responses, ["status"=>1,"sent_responses"=>$user_responses[$key],"response_id"=>$key]);
+          }
+          else
+            array_push($responses, ["status"=>0,"sent_responses"=>$user_responses[$key],"response_id"=>$key]); 
+        
+            update_field('responses_user', $responses, $id_new_response);
+            update_field('assessment_id',$request['assessment_id'],$id_new_response);
+            update_field('score',$score,$id_new_response);
+      }
+        return ['score' => $score];
+    }
+  }
+}
