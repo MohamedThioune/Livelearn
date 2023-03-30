@@ -1,4 +1,4 @@
-<?php /** Template Name: Fetch activity course */ ?>
+<?php /** Template Name: Fetch activity notification */ ?>
 
 <?php
 
@@ -6,134 +6,68 @@ extract($_POST);
 
 $user = get_users(array('include'=> get_current_user_id()))[0]->data;
 
-$row_activity_notification = " ";
-$page = 'check_visibility.php';
-require($page);
-
-//Saved
-$saved = get_user_meta($user->ID, 'course');
-
 /*
-* * Courses dedicated of these user "Boughts + Mandatories"
+* * Feedbacks of these user
+*/
+$args = array(
+    'post_type' => 'feedback',
+    'author' => $user->ID,
+    'orderby' => 'post_date',
+    'order' => 'DESC',
+    'posts_per_page' => -1,
+);
+$todos = get_posts($args);
+/*
+* * End
 */
 
-$enrolled = array();
-$enrolled_courses = array();
-$kennis_video = get_field('kennis_video', 'user_' . $user->ID);
-$mandatory_video = get_field('mandatory_video', 'user_' . $user->ID);
-$expenses = 0;
-
-//Orders - enrolled courses  
-$args = array(
-    'customer_id' => $user->ID,
-    'post_status' => array('wc-processing'),
-    'orderby' => 'date',
-    'order' => 'DESC',
-    'limit' => -1,
-);
-$bunch_orders = wc_get_orders($args);
-
-foreach($bunch_orders as $order){
-    foreach ($order->get_items() as $item_id => $item ) {
-        //Get woo orders from user
-        $course_id = intval($item->get_product_id()) - 1;
-        $prijs = get_field('price', $course_id);
-        $expenses += $prijs; 
-        if(!in_array($course_id, $enrolled))
-            array_push($enrolled, $course_id);
-    }
-}
-if(!empty($enrolled))
-{
-    $args = array(
-        'post_type' => 'course', 
-        'posts_per_page' => -1,
-        'orderby' => 'post_date',
-        'order' => 'DESC',
-        'include' => $enrolled,  
-    );
-
-    $enrolled_courses = get_posts($args);
-
-    //Make sure videos shared not null before to merge with enrolled
-    if(!empty($kennis_video))
-        if(isset($kennis_video[0]))
-            if($kennis_video[0])
-                $enrolled_courses = array_merge($kennis_video, $enrolled_courses);
-
-    //Make sure videos put on mandatory is not null before to merge with enrolled
-    if(!empty($mandatory_video))
-        if(isset($mandatory_video[0]))
-            if($mandatory_video[0])
-                $enrolled_courses = array_merge($mandatory_video, $enrolled_courses);
-    
-}
-
-
-if(isset($search_activity_course)){
-    foreach($enrolled_courses as $course){
-        $filter = $course->post_title;
-        $bool = true;
-        $bool = visibility($course, $visibility_company);
-        if(!$bool)
-            continue;
-
-        //Course Type
-        $course_type = get_field('course_type', $course->ID);
+if(isset($search_activity_notification)){
+    foreach($todos as $key => $todo) {
+        $filter = $todo->post_title; 
         
-        //Legend image
-        $image_course = get_field('preview', $course->ID)['url'];
-        if(!$image_course){
-            $image_course = get_the_post_thumbnail_url($course->ID);
-            if(!$image_course)
-                $image_course = get_field('url_image_xml', $course->ID);
-            if(!$image_course)
-                $image_course = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+        $type = get_field('type_feedback', $todo->ID);
+        $manager_id = get_field('manager_feedback', $todo->ID);
+        if($manager_id){
+            $manager = get_user_by('ID', $manager_id);
+            $image = get_field('profile_img',  'user_' . $manager->ID);
+            $manager_display = $manager->display_name;
+        }else{
+            $manager_display = 'A manager';
+            $image = 0;
         }
 
-        //Author
-        $author = get_user_by('ID', $course->post_author);      
-        $author_name = $author->first_name ?: $author->display_name;
-        $author_image = get_field('profile_img',  'user_' . $author->ID);
-        $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        if(!$image)
+            $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 
-        //Clock duration
-        $duration_day = get_field('duration_day', $post->ID) ? get_field('duration_day', $post->ID) . 'days' : 'Unlimited';
+        if($type == "Feedback" || $type == "Compliment" || $type == "Gedeelde cursus")
+            $beschrijving_feedback = get_field('beschrijving_feedback', $todo->ID);
+        else if($type == "Persoonlijk ontwikkelplan")
+            $beschrijving_feedback = get_field('opmerkingen', $todo->ID);
+        else if($type == "Beoordeling Gesprek")
+            $beschrijving_feedback = get_field('algemene_beoordeling', $todo->ID);
 
-        //Color
-        $color_done = "green";
-        $color_progress = "#ff9b00";
-        $color_new = "#043356";
-
-        //Button like    
-        $button_render = (in_array($course->ID, $saved)) ? '<i class="fa fa-heart mr-4"></i>' : '<i class="fa fa-heart-o mr-4"></i>';
-
-        if( stristr($filter, $search_activity_course) || $search_activity_course == '')
-            $row_activity_course .= '
+        if(stristr($filter, $search_activity_notification) || $search_activity_notification == '')
+            $row_activity_notification .= '
             <tr>
-                <td>
-                    <div class="d-flex align-items-center">
-                        <div class="blockImgCourse">
-                            <img src="' . $image_course . '" class="" alt="">
-                        </div>
-                        <p class="name-element">' . $course->post_title . '</p>
+                <td scope="row">' . $key . ' </td>
+                <td><a href="/dashboard/user/detail-notification/?todo=' . $todo->ID . '"> <strong>' . $todo->post_title . '</strong> </a></td>
+                <td>' . $type. '</td>
+                <td class="descriptionNotification"><a href="/dashboard/user/detail-notification/?todo=' . $todo->ID . '">'  . $beschrijving_feedback. '  </a></td>
+                <td>' . $manager_display . ' </td>
+                <td class="textTh">
+                    <div class="dropdown text-white">
+                        <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
+                            <img  style="width:20px"
+                                    src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                        </p>
+                        <ul class="dropdown-menu">
+                            <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="/dashboard/user/detail-notification/?todo=' . $todo->ID . ' ">Bekijk</a></li>
+                        </ul>
                     </div>
-                </td>
-                <td>
-                    <p class="name-element">' . $duration_day  . '</p>
-                </td>
-                <td class="">
-                    <p class="name-element">' . $author_name .'</p>
-                </td>
-                <td>
-                    <p class="text-left" style="color: #043356;"> New </p>
-                </td>
-                <td>
-                    ' . $button_render . '
                 </td>
             </tr>';
     }
 
-    echo $row_activity_course;
+    echo $row_activity_notification;
 }
 
