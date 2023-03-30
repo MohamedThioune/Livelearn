@@ -1152,6 +1152,17 @@ add_action( 'rest_api_init', function () {
     'callback' => 'community_share',
   ));
 
+  register_rest_route('custom/v1', '/assessments/', array(
+    'methods' => 'GET',
+    'callback' => 'getAssessments',
+  ));
+
+  register_rest_route('custom/v1', '/assessment/answer', array(
+    'methods' => 'POST',
+    'callback' => 'answerAssessment',
+  ));
+
+  
   
 
 
