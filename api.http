@@ -1,0 +1,17 @@
+ POST  http://localhost/wp-json/custom/v1/assessment/answer
+ Authorization: Basic bW9oYW1lZC50QGlsbGltaXRpcy5jb206Q2FsbG1lMjAwMi4=
+ Content-Type: application/json
+
+ {
+     "user_id":3,
+     "assessment_id":"2101",
+     "user_responses": [
+         ["2"],["3"]
+     ]
+       
+ }
+
+ #GET  http://localhost/wp-json/custom/v1/assessments
+# Authorization: Basic bW9oYW1lZC50QGlsbGltaXRpcy5jb206Q2FsbG1lMjAwMi4=
+# Content-Type: application/json
+
