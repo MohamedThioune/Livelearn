@@ -29,7 +29,7 @@ if (isset($_POST['id_current_assessment']))
             'post_status' => 'publish',
             'post_title' => $title.' '.$author,
         );
-        $id_new_response=wp_insert_post( $arg);
+        $id_new_response= wp_insert_post( $arg);
         $score=0;
         $responses=array();
         $user_responses=$_POST['user_responses'];
