@@ -32,6 +32,7 @@ if ( !in_array( 'hr', $current_user->roles ) && !in_array( 'manager', $current_u
 /*
 ** List subscriptions
 */ 
+
 $endpoint = 'https://livelearn.nl/wp-json/wc/v3/subscriptions';
 
 $params = array(
@@ -54,25 +55,34 @@ curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
 
 $httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
-$access_granted = false;
+$access_granted = 0;
 $abonnement = array();
-// get responses
-// $response = curl_exec($ch);
-// if ($response === false) {
-//     $response = curl_error($ch);
-//     $error = true;
-//     echo stripslashes($response);
-// }
-// else{
-//     $data_response = json_decode( $response, true );
-//     if(!empty($data_response))
-//         foreach($data_response as $row)
-//             if($row['billing']['company'] == $company_connected && $row['status'] == 'active'){
-//                 $access_granted = true;
-//                 $abonnement = $row;
-//                 break;
-//             }                    
-// }
+//get responses
+$response = curl_exec($ch);
+if ($response === false) {
+    $response = curl_error($ch);
+    $error = true;
+    echo stripslashes($response);
+}
+else{
+    $data_response = json_decode( $response, true );
+    if(!empty($data_response)){
+        $type = 'GET';
+        foreach($data_response as $row)
+            if($row['billing']['company'] == $company_connected && $row['status'] == 'active'){
+                $access_granted = 1;
+                $abonnement = $row;
+                //Invoice orders
+                $endpoint_order_invoice = 'https://livelearn.nl/wp-json/wc/v3/subscriptions/' . $row['id'] . '/orders'; 
+                $abonnement['invoices'] = makeApiCall($endpoint_order_invoice, 'GET'); 
+
+                //Credit cards 
+                $endpoint_order_credit = "";
+                //$abonnement['credit_cards'] = makeApiCall($endpoint_order_credit, 'GET'); 
+                break;
+            }  
+    }                 
+}
 ?>
 
 <?php
@@ -157,6 +167,7 @@ if (!$access_granted ){
             </div>
             <div class="modal-footer">
                 <button type="button" name="starter" id="starter" class="btn btn-sendSubscrip">Start</button>
+                <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status"></div>
             </div>
         <!-- </form> -->
         <div id="output">
@@ -201,7 +212,6 @@ else
         $(e.preventDefault());
         var pass = 0;
 
-        var user_id = $('#user_id').val();
         var first_name = $('#first_name').val();
         var last_name = $('#last_name').val();
         var bedrjifsnaam = $('#bedrjifsnaam').val();
@@ -233,7 +243,6 @@ else
                     url:"/credit-card-details",
                     method:"post",
                     data:{
-                        user_id : user_id,
                         first_name : first_name,
                         last_name : last_name,
                         bedrjifsnaam : bedrjifsnaam,
@@ -248,7 +257,7 @@ else
                     success: function(data){
                         console.log(data);
                         window.location.href = data;
-                        // $('#output').html(data);
+                        $('#output').html(data);
                     },
                     error: function (jqXHR, exception) {
                         if (jqXHR.status == 500) {
@@ -265,7 +274,6 @@ else
                     url:"/starter",
                     method:"post",
                     data:{
-                        user_id : user_id,
                         first_name : first_name,
                         last_name : last_name,
                         bedrjifsnaam : bedrjifsnaam,
@@ -277,7 +285,11 @@ else
                         method_payment : method_payment,
                     },
                     dataType:"text",
+                    beforeSend:function(){
+                        $('#loader').attr('hidden',false)
+                    },
                     success: function(data){
+                        // $('#output').html(data);
                         location.reload();
                         // console.log(data);
                     },

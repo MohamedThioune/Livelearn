@@ -6,10 +6,13 @@
 // Api key mollie
 $api_key = "Bearer test_c5nwVnj42cyscR8TkKp3CWJFd5pHk3";
 
-//Current company
+// current user id
+$user_id = get_current_user_id();
+
+// current company
 $company_title = get_field('company',  'user_' . $user_id)[0]->post_title;
 
-//Team members
+// team members
 $users = get_users();
 $members = array();
 foreach($users as $user){
@@ -22,13 +25,13 @@ foreach($users as $user){
 }
 $team = count($members);
  
-//create endpoint for product 
+// create endpoint for product 
 $endpoint_product = 'https://livelearn.nl/wp-json/wc/v3/products';
 $params = array( 
     'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
     'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
 );
-//endpoint with params
+// endpoint with params
 $api_endpoint = $endpoint_product . '?' . http_build_query( $params );
 $data = [
     'name' => $company_title . "~subscription",
