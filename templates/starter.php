@@ -3,10 +3,13 @@
 <?php
 extract($_POST);
 
-//Current company
+// current user id
+$user_id = get_current_user_id();
+
+// current company
 $company_title = get_field('company',  'user_' . $user_id)[0]->post_title;
 
-//Team members
+// team members
 $users = get_users();
 $members = array();
 foreach($users as $user){
@@ -19,13 +22,13 @@ foreach($users as $user){
 }
 $team = count($members);
  
-//endpoint for product 
+// endpoint for product 
 $endpoint_product = 'https://livelearn.nl/wp-json/wc/v3/products';
 $params = array( 
     'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
     'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
 );
-//create endpoint with params
+// create endpoint with params
 $api_endpoint = $endpoint_product . '?' . http_build_query( $params );
 $data = [
     'name' => $company_title ."~subscription",
@@ -47,7 +50,6 @@ curl_setopt($chp, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($chp, CURLOPT_FOLLOWLOCATION, TRUE);
 curl_setopt($chp, CURLOPT_RETURNTRANSFER, true );
 $httpCode = curl_getinfo($chp , CURLINFO_HTTP_CODE); // this results 0 every time
-
 
 // get responses
 $response_product = curl_exec($chp);
@@ -84,7 +86,7 @@ else{
         'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
         'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
     );
-    //create endpoint with params
+    // create endpoint with params
     $api_endpoint = $endpoint . '?' . http_build_query( $params );
     $data = [
         'customer_id'       => $user_id,
