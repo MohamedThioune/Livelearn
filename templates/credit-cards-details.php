@@ -187,7 +187,7 @@ else{
             // Create your payments
             $endpoint_pay = "https://api.mollie.com/v2/customers/" . $customer_id . "/payments";
             $api_key = "Bearer test_c5nwVnj42cyscR8TkKp3CWJFd5pHk3";
-            $base_url = "http://localhost:8888/local";
+            $base_url = get_site_url();
             $data_payment = [
                 'method' => 'creditcard',
                 'amount' => [
@@ -200,7 +200,7 @@ else{
                 'webhookUrl' => 'https://webshop.example.org/payments/webhook/',
                 'metadata' => [
                     'customer_id' => $customer_id,
-                    'woo_subscription_id' => $customer_id,
+                    'woo_subscription_id' => $woo_subscription_id,
                 ]
             ];
             // initialize curl
@@ -218,9 +218,10 @@ else{
             $data_response_pay = json_decode( $response_pay, true );
             // close curl
             curl_close( $chpay ); 
+            var_dump($response_pay);
             
             if (!isset($data_response_pay['_links']['checkout']['href'])) {
-                echo "<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Error occurred on transaction !</a></center>";
+                // echo $base_url . "/?message='Error occurred on transaction !'";
                 http_response_code(401);
             }
             else{
