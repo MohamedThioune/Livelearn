@@ -20,18 +20,18 @@
 
                     //Insert Artikel
                     if ($artikel->type == "Artikel"){
+                        //Creation post
                         $args = array(
                             'post_type'   => 'post',
-                            'post_author' => $artikel->author_id,
+                            'post_author' => $course->author_id,
                             'post_status' => 'publish',
-                            'post_title'  => $artikel->titel
+                            'post_title'  => $course->titel
                         );
-                        
-                        $id_post = wp_insert_post($args);
+                        $id_post = wp_insert_post($args, true);
 
                         //Custom
-                        update_field('course_type', 'Article', $id_post);
-                        update_field('article_itself', nl2br($artikel->long_description), $id_post);
+                        update_field('course_type', 'article', $id_post);
+                        update_field('article_itself', nl2br($course->long_description), $id_post);
                     }
                     $onderwerpen = explode(',', $artikel->onderwerpen);
 
