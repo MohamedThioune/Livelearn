@@ -16737,6 +16737,123 @@ background: #FFFFFF !important;
 .btn-show-list-course, .btn-hide-bar{
     display: none;
 }
+.list-podcast-checkout .card-podcast-checkout{
+    display: flex;
+    background: white;
+    padding: 28px 25px;
+    border: 1px solid #EBEBEB;
+    border-radius: 20px;
+    margin-bottom: 25px;
+}
+.list-podcast-checkout .card-podcast-checkout .order-number-episode{
+    font-weight: 500;
+    font-size: 24px;
+    color: #FFFFFF;
+    background: #368188;
+    border-radius: 6px;
+    width: 100px;
+    height: 50px;
+    text-align: center;
+    padding-top: 6px;
+    margin-right: 20px;
+}
+.list-podcast-checkout .card-podcast-checkout .detail-podcast{
+    font-weight: 300;
+    font-size: 14px;
+    color: #B7B7B7;
+    margin: 0 20px 10px;
+}
+.list-podcast-checkout .card-podcast-checkout .title-episode-podcast{
+    font-weight: 400;
+    font-size: 20px;
+    color: #353535 !important;
+    margin-bottom: 10px;
+}
+.list-podcast-checkout .card-podcast-checkout .title-episode-podcast span{
+    color: #46bfa3;
+}
+.list-podcast-checkout .card-podcast-checkout .description-episode{
+    font-weight: 400;
+    font-size: 13px;
+    margin-bottom: 20px;
+    color: #8D8D8D;
+    line-height: 20px;
+}
+.share-block{
+    display: flex;
+    margin-right: 15px;
+    padding: 0;
+}
+.share-block:last-child{
+    margin-right: 0px;
+}
+.share-block p{
+    color: #B7B7B7;
+    font-size: 16px;
+    margin-bottom: 0;
+    position: relative;
+    top: -3px;
+}
+.share-block i{
+    font-size: 18px;
+    color: #00a89d;
+    margin-right: 9px;
+}
+.green-audio-player {
+    width: 90% !important;
+    min-width: 300px;
+    height: 20px !important;
+    box-shadow: none !important;
+}
+.modal-dialog-checkout {
+    margin-top: 86px;
+}
+.green-audio-player svg, .green-audio-player img {
+    display: block;
+    height: 18px;
+}
+.tableNotification table th, .tableNotification td {
+    text-align: left !important;
+}
+
+/* for tabs url */
+#tab-url1 .hide {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+
+#tab-url1 .nav {
+    overflow: hidden;
+    margin: 0 0 40px 0;
+    display: flex;
+    justify-content: space-between;
+}
+#tab-url1 .nav li {
+    width: fit-content;
+    margin: 0 10px 0 0;
+}
+#tab-url1 .nav li a {
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 19px;
+    color: #3D4D59 !important;
+    margin: 0 5px;
+    padding: 13px 20px;
+    display: block;
+}
+#tab-url1 .nav li .current {
+    pointer-events: none;
+    font-style: normal;
+    font-size: 18px;
+    line-height: 19px;
+    color: #6F6F6F;
+    background: #FFFFFF;
+    border-radius: 5px;
+}
+
+
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -20239,7 +20356,69 @@ background: #FFFFFF !important;
     .side-bar-course .tabs-courses .tabs .filters {
         padding-bottom: 0;
     }
-
+    .list-podcast-checkout .card-podcast-checkout .order-number-episode {
+        font-size: 18px;
+        width: 50px;
+        height: 40px;
+        margin-right: 10px;
+    }
+    .list-podcast-checkout .card-podcast-checkout {
+        flex-wrap: wrap;
+    }
+    .block-detail-card-checkout {
+        width: 100%;
+    }
+    .list-podcast-checkout .card-podcast-checkout .detail-podcast {
+        font-size: 14px;
+        margin: 0 3px 15px;
+    }
+    .list-podcast-checkout .card-podcast-checkout .title-episode-podcast {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+    .green-audio-player .controls .controls__slider{
+        height: 5px !important;
+        padding: 0 !important;
+    }
+    .audioBlock{
+        flex-wrap: wrap;
+    }
+    .share-block {
+        margin-top: 20px;
+    }
+    #tab-url1 .nav {
+        border: 1px solid #bfbfbf;
+        padding: 20px 10px;
+        border-radius: 7px;
+    }
+    #tab-url1 .nav li a {
+        font-size: 14px;
+        margin: 0 5px;
+        padding: 8px 15px;
+    }
+    #tab-url1 .nav {
+        justify-content: initial;
+    }
+    #tab-url1 .nav li {
+        margin: 0 10px 4px 0;
+        min-width: 43%;
+        text-align: center;
+    }
+    #tab-url1 .nav li .current {
+        font-size: 15px;
+    }
+    #tab-url1 {
+        padding: 0 15px;
+    }
+    #tab-url1 .cardFavoriteCourses {
+        margin-left: 0px;
+        width: 100%;
+    }
+    .first-content-analitycs .detail-analytic .sub-detail:last-child {
+        width: 100%;
+        display: flex;
+        margin-bottom: 18px;
+    }
 
 
 
