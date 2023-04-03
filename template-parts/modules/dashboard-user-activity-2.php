@@ -744,15 +744,15 @@ foreach ($users as $element) {
                                     $access_community = '/dashboard/user/community-detail/?mu=' . $value->ID ;
 
                                 ?>
-                                <div class="card-communities-activity">
+                                <a href="/<?= $access_community?>"  class="card-communities-activity">
                                     <div class="block-img">
                                         <img src="<?= $community_image ?>" class="" alt="">
                                     </div>
                                     <div>
-                                        <a href="<?= $access_community?>" class="name-community"><?= $value->post_title ?>, Netherlands</a>
+                                        <p class="name-community"><?= $value->post_title ?>, Netherlands</p>
                                         <p class="number-members"><?= $max_follower ?> Members</p>
                                     </div>
-                                </div>
+                                </a>
                             <?php
                             endforeach;
                             ?>
@@ -1169,7 +1169,7 @@ foreach ($users as $element) {
                             else
                                 $access_community = '/dashboard/user/community-detail/?mu=' . $value->ID ;
                             ?>
-                            <div class="card-communities-activity">
+                            <a href="/<?= $access_community?>" class="card-communities-activity">
                                 <div class="block-img">
                                     <img src="<?= $community_image ?>" class="" alt="">
                                 </div>
@@ -1177,7 +1177,7 @@ foreach ($users as $element) {
                                     <p class="name-community"><?= $value->post_title ?>, Netherlands</p>
                                     <p class="number-members"><?= $max_follower ?> Members</p>
                                 </div>
-                            </div>
+                            </a>
                         <?php
                         endforeach;
                         ?>
