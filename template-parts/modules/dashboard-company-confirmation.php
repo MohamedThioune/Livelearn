@@ -87,9 +87,9 @@
                 $situation = ($order['needs_payment']) ? '<span class="hold">On hold</span>' : '<span class="done">Done</span>';
                 ?> 
                 <tr>
-                    <td><?= $order_date_created ?></td>
+                    <td><?= $order_date_created[0] ?></td>
                     <td><?= $payment_method_title ?></td>
-                    <td><?= $order['date_created'] ?> €</td>
+                    <td><?= $order['total'] ?> €</td>
                     <td><?= $situation ?></td>
                     <!-- 
                     <td>
