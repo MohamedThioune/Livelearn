@@ -58,7 +58,7 @@
     <?php
     $situation = "";
     if(isset($abonnement['invoices']))
-    if($abonnement['invoices'])
+    if($abonnement['invoices']):
     ?>
     <div class="content-list-amount">
         <div class="d-flex justify-content-between align-items-center head-block">
@@ -108,5 +108,7 @@
             </tbody>
         </table>
     </div>
-    
+    <?php
+    endif;
+    ?>
 </div>

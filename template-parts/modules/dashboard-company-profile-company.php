@@ -254,9 +254,12 @@ else
                         method_payment : method_payment,
                     },
                     dataType:"text",
+                    // beforeSend:function(){
+                    //     $('#loader').attr('hidden',false)
+                    // },
                     success: function(data){
                         console.log(data);
-                        window.location.href = data;
+                        // window.location.href = data;
                         $('#output').html(data);
                     },
                     error: function (jqXHR, exception) {
