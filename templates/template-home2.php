@@ -1048,7 +1048,7 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
                 <?php if(!$user_id) { ?>
                 <div class="groupeBtn-Jouw-inloggen groupBtnConnecte">
-                    <a href="http://wp12.influid.nl/login/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
+                    <a href="http://livelearn.nl/login/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/googleImg.png" alt="" />
                         Gratis inloggen met Google
                     </a>

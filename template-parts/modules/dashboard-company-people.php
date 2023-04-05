@@ -13,8 +13,7 @@
     $grant = get_field('manager',  'user_' . $user_connected);
     $ismanaged = get_field('managed',  'user_' . $user_connected);
     $members = array();
-    $user_=[];
-    $member_id=[];
+    $member_id = [];
     foreach($users as $user){
         $my_managers = array(); 
         foreach ($users as $key => $value) {
@@ -22,7 +21,6 @@
             if(!empty($users_manageds))
                 if (in_array($user->ID, $users_manageds)){
                     array_push($my_managers, $value);
-                    //echo "Manager : # " . $value->ID . $value->first_name . " - User : # " . $user->ID . $user->display_name . "<br><br>";
                 }
         }
 
@@ -37,14 +35,7 @@
             }
         }
     }
-        //get  list of all managers
-        // $users_manageds=array();
-        // foreach($users as $user){
-        //     if(get_field('managed', 'user_'.$user->ID)){
-        //         $users_manageds[$user->ID] [] = get_field('managed',  'user_' . $user->ID); //pour un user toutes les personnes qu'il manage
-        //      //var_dump($users_manageds);
-        //  }
-        // }
+       
     $count = count($members);
     extract($_POST);
 
