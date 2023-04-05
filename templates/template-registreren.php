@@ -84,8 +84,7 @@
                             <div class="blockImgCarLogin">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Groupe8.png" alt="">
                             </div>
-                            <p class="textNog"> Creëer in 5 minuten een gratis leeromgeving voor jouw team of organisatie.
-</p>
+                            <p class="textNog"> Creëer in 5 minuten een gratis leeromgeving voor jouw team of organisatie.</p>
                         </div>
                         <div class="boxLOginCardOne">
                             <div class="blockImgCarLogin">
