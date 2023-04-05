@@ -1,6 +1,58 @@
 <?php 
+extract($_POST);
+if (!isset($multiple_add_people) && !isset($multiple_add_people)) {
+    foreach ($_POST as $json => $value) {
+        $decoded = json_decode($json, true);
+        $first_name = str_replace('_',' ',$decoded['first_name']);
+        $last_name = str_replace('_',' ',$decoded['last_name']);
+        $email = str_replace('_','.',$decoded['email']);
+        if($email != null) {
+        if($first_name == null)
+            $first_name = "ANONYM";
+        
+        if($last_name == null)
+            $last_name = "ANONYM";
 
+        $login = RandomString();
+        $password = "Livelearn2023";
 
+        $userdata = array(
+            'user_pass' => $password,
+            'user_login' => $login,
+            'user_email' => $email,
+            'user_url' => 'https://livelearn.nl/inloggen/',
+            'display_name' => $first_name,
+            'first_name' => $first_name,
+            'last_name' => $last_name,
+            'role' => 'subscriber'
+        );
+        // var_dump($userdata);die;
+        $user_id = wp_insert_user(wp_slash($userdata));
+        if(is_wp_error($user_id)){
+            $danger = $user_id->get_error_message();
+            var_dump($danger);
+            // header("Location: /dashboard/company/people/?message=Er is een fout opgetreden, probeer het opnieuw.");
+            // echo ("<span class='alert alert-info'>" .  $danger . "</span>");   
+        }
+        else{
+            var_dump('success');
+                $guest = wp_get_current_user();
+                $company = get_field('company',  'user_' . $guest->ID);
+                update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
+                update_field('company', $company[0], 'user_'.$user_id);
+
+                $subject = 'Je LiveLearn inschrijving is binnen! ✨';
+                $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+                wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )) ; 
+
+                // header("Location: /livelearn/dashboard/company/people/?message=U heeft met succes een nieuwe werknemer aangemaakt ✔️ ");
+            }
+    }
+    else
+        header("Location: /livelearn/dashboard/company/people-mensen/?message=Vul de e-mail in, alsjeblieft");
+
+    }
+}
 $user = get_users(array('include'=> get_current_user_id()))[0]->data;
 $image = get_field('profile_img',  'user_' . $user->ID);
 $company = get_field('company',  'user_' . $user->ID);
@@ -8,7 +60,6 @@ $company = get_field('company',  'user_' . $user->ID);
 $mail_notification_invitation = '/../../templates/mail-notification-invitation.php';
 require(__DIR__ . $mail_notification_invitation); 
 
-extract($_POST);
 
 if(isset($single_add_people)){
     
@@ -34,7 +85,6 @@ if(isset($single_add_people)){
             'last_name' => $last_name,
             'role' => 'subscriber'
         );
-
         $user_id = wp_insert_user(wp_slash($userdata));
         if(is_wp_error($user_id)){
             $danger = $user_id->get_error_message();
