@@ -5,8 +5,10 @@ $user = get_users(array('include'=> get_current_user_id()))[0]->data;
 $image = get_field('profile_img',  'user_' . $user->ID);
 $company = get_field('company',  'user_' . $user->ID);
 
-extract($_POST);
+$mail_notification_invitation = '/../../templates/mail-notification-invitation.php';
+require(__DIR__ . $mail_notification_invitation); 
 
+extract($_POST);
 if(isset($single_add_people)){
     
     if($email != null)
@@ -19,7 +21,7 @@ if(isset($single_add_people)){
     
 
         $login = RandomString();
-        $password = RandomString();
+        $password = "Livelearn2023";
 
         $userdata = array(
             'user_pass' => $password,
@@ -33,57 +35,28 @@ if(isset($single_add_people)){
         );
 
         $user_id = wp_insert_user(wp_slash($userdata));
+        var_dump($user_id);
         if(is_wp_error($user_id)){
             $danger = $user_id->get_error_message();
-            ?>
-            <script>
-                window.location.replace("/dashboard/company/people/?message=Er is een fout opgetreden, probeer het opnieuw.");
-            </script>
-            <?php
+            header("Location: /dashboard/company/people/?message=Er is een fout opgetreden, probeer het opnieuw.");
             echo ("<span class='alert alert-info'>" .  $danger . "</span>");   
-        }
-        else if(strlen($first_name) < 3){
-            $danger = "Gebruiker aangemaakt maar we raden u aan een voornaam van meer dan 2 karakters te plaatsen";
-            ?>
-            <script>
-                window.location.replace("/dashboard/company/people/?message=Er is een fout opgetreden, probeer het opnieuw.");
-            </script>
-            <?php
-            echo ("<span class='alert alert-info'>" .  $danger . "</span>"); 
         }
         else
             {
+                $guest = wp_get_current_user();
+                $company = get_field('company',  'user_' . $guest->ID);
                 update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
-                $subject = 'Je LiveLearn inschrijving is binnen! ✨';
-                $body = "
-                Bedankt voor je inschrijving<br>
-                <h1>Hello " . $first_name  . "</h1>,<br> 
-                Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br><br>
-                <h4>Inloggen:</h4><br>
-                <h6><a href='https://livelearn.nl/inloggen/'> Connexion </a></h6>
-                ";
-            
-                $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
-                wp_mail($email, $subject, $body, $headers, array( '' )) ; 
-    
                 update_field('company', $company[0], 'user_'.$user_id);
-            ?>
-                <script>
-                window.location.replace("/dashboard/company/people/?message=U heeft met succes een nieuwe werknemer aangemaakt ✔️ ");
-            </script>
 
-        <?php
-            
-        }
+                $subject = 'Je LiveLearn inschrijving is binnen! ✨';
+                $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+                wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )) ; 
+
+                header("Location: /dashboard/company/people/?message=U heeft met succes een nieuwe werknemer aangemaakt ✔️ ");
+            }
     }
     else
-    {
-        ?>
-        <script>
-            window.location.replace("/dashboard/company/people-mensen/?message=Vul de e-mail in, alsjeblieft");
-        </script>
-        <?php
-    }
+        header("Location: /dashboard/company/people-mensen/?message=Vul de e-mail in, alsjeblieft");
 
 }
 else if(isset($multiple_add_people)){
@@ -94,6 +67,7 @@ else if(isset($multiple_add_people)){
             {
                 $login = RandomString();
                 $password = RandomString();
+                $your_password = $password;
                 $first_name = RandomString();
                 $last_name = RandomString();
     
@@ -115,21 +89,14 @@ else if(isset($multiple_add_people)){
                     continue;
                 }
                 else{
-
+                    $guest = wp_get_current_user();
+                    $company = get_field('company',  'user_' . $guest->ID);    
                     update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
                     update_field('company', $company[0], 'user_'.$user_id);
 
                     $subject = 'Je LiveLearn inschrijving is binnen! ✨';
-                    $body = "
-                        Bedankt voor je inschrijving<br>
-                        <h1>Hello and welcome to livelearn</h1>,<br> 
-                        Je hebt je succesvol geregistreerd. Welcome onboard! Je LOGIN-ID is <b style='color:blue'>" . $login . "</b>  en je wachtwoord <b>".$password."</b><br><br>
-                        <h4>Inloggen:</h4><br>
-                        <h6><a href='https://livelearn.nl/inloggen/'> Connexion </a></h6>
-                    ";
-                
                     $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
-                    wp_mail($email, $subject, $body, $headers, array( '' )) ;
+                    wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )) ;
                 }
             }
         }
@@ -172,7 +139,7 @@ else if(isset($multiple_add_people)){
                         <ul>
                             <li> <input type="text" name="first_name" placeholder="Voornaam" required>       </li>
                             <li> <input type="text" name="last_name" placeholder="Achternaam" required>      </li>
-                            <li> <input type="email" name="email" placeholder="ZaKelijk mailadres" required> </li>
+                            <li> <input type="email" name="email" placeholder="Zakelijk mailadres" required> </li>
                         </ul>
                         <br><br>
                         <button type="submit" name="single_add_people" class="btn btnMensenToevoegen">Werknemer toevoegen</button>
@@ -184,9 +151,9 @@ else if(isset($multiple_add_people)){
             <form action="/dashboard/company/people-mensen/" method="POST">
                 <div class="bodyBlockOverviewMensen" >
                     <ul>
-                        <li><input type="email" name="emails[]" class="" placeholder="ZaKelijk mailadres"></li>
-                        <li><input type="email" name="emails[]" class="" placeholder="ZaKelijk mailadres"></li>
-                        <li id="item_details"><input name="emails[]" type="email"  id="item_name" class="input_text" placeholder="ZaKelijk mailadres" /></li>
+                        <li><input type="email" name="emails[]" class="" placeholder="Zakelijk mailadres"></li>
+                        <li><input type="email" name="emails[]" class="" placeholder="Zakelijk mailadres"></li>
+                        <li id="item_details"><input name="emails[]" type="email"  id="item_name" class="input_text" placeholder="Zakelijk mailadres" /></li>
                     </ul>
                     <ul id="new_item_details" class="new_item_details"></ul>
                     <div class="groupBtnMesen">
@@ -198,7 +165,7 @@ else if(isset($multiple_add_people)){
                         </div>
                     </div>
 
-                    <button type="submit" name="multiple_add_people" class="btn btnMensenToevoegen">Werknemer toevoegen</button>
+                    <button type="submit" name="multiple_add_people" class="btn btnMensenToevoegen">Werknemers toevoegen</button>
                 </div>
             </form>
         </div>

@@ -84,13 +84,14 @@
                             <div class="blockImgCarLogin">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Groupe8.png" alt="">
                             </div>
-                            <p class="textNog"> Ben jij een opleider of expert? Meld je hier aan.</p>
+                            <p class="textNog"> Creëer in 5 minuten een gratis leeromgeving voor jouw team of organisatie.
+</p>
                         </div>
                         <div class="boxLOginCardOne">
                             <div class="blockImgCarLogin">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/headWeb8.png" alt="">
                             </div>
-                            <p class="textNog">De eerste maad helemaal vrijblijvend</p>
+                            <p class="textNog"> Ben jij een opleider of expert? Meld je hier aan.</p>
                         </div>
                     </div>
                     <div class="col-lg-6  col-md-7">
@@ -99,9 +100,17 @@
                                 <?php if(isset($_GET['success'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>" ?>
                                 <?php if(isset($_GET['danger'])) echo "<span class='alert alert-danger'>" . $_GET['message'] . "</span><br><br>" ?>
                                  -->
-                                <center><p class="TitleForm">Registreren</p></center>
+                                <center><p class="TitleForm">Registreren </p></center>
 
-                                <?php echo (do_shortcode('[user_registration_form id="59"]')); ?>
+                                <?php echo (do_shortcode('[user_registration_form id="8477"]')); ?>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+                                <?php //echo (do_shortcode('[user_registration_form id="59"]')); ?>
+>>>>>>> origin/Xadim
+=======
+                                <?php //echo (do_shortcode('[user_registration_form id="59"]')); ?>
+>>>>>>> origin/Xadim
                             </form>
                         </div>
                     </div>
@@ -110,6 +119,7 @@
        </div>
     </div>
 </div>
+
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
 

@@ -180,7 +180,7 @@ $saved = get_user_meta($user_id, 'course');
 
 
                     <?php
-                        echo (do_shortcode('[user_registration_form id="59"]'));
+                        echo (do_shortcode('[user_registration_form id="8477"]'));
                     ?>
 
                     <div class="text-center">

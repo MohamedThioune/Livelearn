@@ -15,19 +15,39 @@
         'order' => 'ASC', 
     );
     $assessments = get_posts($args);
-    
 ?>
 
-<div class="content-assessment">
-    <div class="contentAsessment">
-        <center>
-            <h1 class="titleAssessment">Assessments</h1>
-            <p class="descriptionAssessment">Stand out from other job seekers by completing an assessment ! Livelearn will feature top performers to employers</p>
-        </center>
-        <div class="contentCardAssessment">
+
+<div class="content-assessment-2">
+    <div class="head-element-assessment">
+        <h1 class="titleAssessment">Assessments</h1>
+        <p class="descriptionAssessment">Stand out from other job seekers by completing an assessment ! Livelearn will feature top performers to employers</p>
+    </div>
+
+    <div class="tabs-courses">
+        <div class="tabs">
+            <div class="head">
+                <ul class="filters">
+                    <li class="item active">All</li>
+                    <li class="item">In Progress</li>
+                    <li class="item">Done</li>
+                    <li class="item">Other assessment</li>
+                </ul>
+                <!-- <input type="search" class="form-control search" placeholder="search"> -->
+            </div>
+            <div class="tabs__list">
+                <div class="tab active">
+                    <div class="contentCardAssessment">
+
+                        
+
             <?php
+
+                    /** Assessment displaying */
+
                 foreach($assessments as $key => $assessment) {
-                   
+                    
+                    $assessment_title = $assessment->post_title;
                     $description = get_field('description_assessment',$assessment->ID);
                     $how_it_works = get_field('how_it_works', $assessment->ID);
                     $level = get_field('difficulty_assessment', $assessment->ID);
@@ -35,7 +55,9 @@
 
                     $timer = 0;
                     $questions = get_field('question',$assessment->ID);
-                    $number_question = count($questions);
+                    $number_question = 0;
+                    if(!empty($questions))
+                        $number_question = count($questions);
                     foreach ($questions as $question)
                     {
                         $question_time = $question['timer'];
@@ -63,17 +85,100 @@
                     }
 
             ?>
+
+                        <div class="cardAssessement">
+                            <div class="heead-img-block">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/assessment-1.png" alt="">
+                            </div>
+                            <div class="body-card-assessment">
+                                <p class="title-assessment"> <?= $assessment_title ?></p>
+                                <p class="level"> <?= $level ?> </p>
+                                <div class="d-flex justify-content-between flex-wrap">
+                                    <div class="d-flex element-detail-assessment">
+                                        <i class="far fa-clock"></i>
+                                        <p class="text-element-detail"> <?= $timer ?> minutes</p>
+                                    </div>
+                                    <div class="d-flex element-detail-assessment">
+                                        <i class="far fa-clone"></i>
+                                        <p class="text-element-detail">Multiple Choice Quiz</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="footerCardSkillsssessment">
+                                <a href= <?= "/detail-assessment/?assessment_id=" . $assessment->ID; ?> class="btn btnDetailsAssessment">Details</a>
+                                <form action="/dashboard/user/answer-assessment" method="post">
+                                    <input type="hidden" name="assessment_id" value= <?= $assessment->ID; ?> >
+                                    <button class="btn btnGetStartAssessment" data-target="#ModalBackEnd" data-toggle="modal" id="">Get Started</button>
+                                </form>
+                            </div>
+                        </div>
+                        
+
+                        <?php
+                        }
+                        ?>
+                </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+<!--    <div class="contentAsessment">
+        <div class="contentCardAssessment">
+            <?php
+/*                foreach($assessments as $key => $assessment) {
+                   
+                    $description = get_field('description_assessment',$assessment->ID);
+                    $how_it_works = get_field('how_it_works', $assessment->ID);
+                    $level = get_field('difficulty_assessment', $assessment->ID);
+                    $language = get_field('language_assessment', $assessment->ID);
+
+                    $timer = 0;
+                    $questions = get_field('question',$assessment->ID);
+                    $number_question = 0;
+                    if(!empty($questions))
+                        $number_question = count($questions);
+                    foreach ($questions as $question)
+                    {
+                        $question_time = $question['timer'];
+                        $timer += timeToSeconds($question_time);
+                    }
+                    // Get minutes by given string seconds
+                    $timer = ceil($timer/60);
+
+                    //Image
+                    $image = get_field('image_assessement', $assessment->ID)['url'];
+                    if(!$image){
+                        $image = get_the_post_thumbnail_url($assessment->ID);
+                        if(!$image)
+                            $image = get_field('url_image_xml', $assessment->ID);
+                                if(!$image)
+                                    $image = get_stylesheet_directory_uri() . '/img' . '/backend1.png';
+                    }
+
+                    //Tags !mportant 
+                    $posttags = get_the_tags();
+
+                    if(!$posttags){
+                        $category_default = get_field('categories', $assessment->ID);
+                        $category_xml = get_field('category_xml', $assessment->ID);
+                    }
+
+            ?>
                     <div class="cardAssessement" >
                         <div class="bodyCardAssessment">
                             <div class="contentImgAssessment">
-                                <img src="<?= $image; ?>">
+                                <img src="<?php /*= $image; */?>">
                             </div>
                             <div>
-                                <p class="textMutliSelect"><?= $level ?></p>
-                                <p class="categoryCours"><?= $assessment->post_title ?> </p>
+                                <p class="textMutliSelect"><?php /*= $level */?></p>
+                                <p class="categoryCours"><?php /*= $assessment->post_title */?> </p>
                                 <p class="elementCategory">
                                     <?php
-                                    if(!empty($posttags))
+/*                                    if(!empty($posttags))
                                         foreach($posttags as $posttag)
                                             echo $posttag->name . ',';
                                     else{
@@ -93,27 +198,26 @@
                                                         echo (String)get_the_category_by_ID($item['value']) . ',';
                                                     }
                                     }
-                                    ?>
+                                    */?>
                                 </p>
                                 <div class="d-flex align-items-center">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/mdi_timer-sand.png">
-                                    <p class="timeAssessement"><?= $timer ?> Minutes</p>
+                                    <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/mdi_timer-sand.png">
+                                    <p class="timeAssessement"><?php /*= $timer */?> Minutes</p>
                                 </div>
                             </div>
                         </div>
                         <div class="footerCardSkillsssessment">
-                            <a href= <?php echo "/detail-assessment?assessment_id=" . $assessment->ID; ?> class="btn btnDetailsAssessment">Details</a>
-                            <button class="btn btnGetStartAssessment" data-target="#ModalBackEnd" data-toggle="modal" id= <?= $assessment->ID; ?> >Get Started</button>
+                            <a href= <?php /*echo "/detail-assessment/?assessment_id=" . $assessment->ID; */?> class="btn btnDetailsAssessment">Details</a>
+                            <button class="btn btnGetStartAssessment" data-target="#ModalBackEnd" data-toggle="modal" id= <?php /*= $assessment->ID; */?> >Get Started</button>
                         </div>
                     </div>
             <?php
-                }
-            ?>
+/*                }
+            */?>
             
           
     </div>
-
-</div>
+    </div>-->
 
 
 <!--for backend-->
@@ -128,7 +232,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="firstblockAssessments">
-                        <p class="titleCategorieAssessment">Start w/ your test : title</p>
+                        <p class="titleCategorieAssessment">Start your test</p>
                         <p class="descriptionAssessmentModal"><?= $description ?></p>
                         <p class="instructionTitle">Instructions</p>
                         <div class="listInstruction">
@@ -183,7 +287,7 @@
     <div id="secondBlockAssessmentsBackend">
         <div class="headSecondBlockAssessment">
             <button class="btn btnBackAssessments mr-2" id="back1"><img src="<?php echo get_stylesheet_directory_uri();?>/img/bi_arrow-left.png"></button>
-            <p class="titleCategorieAssessment">Start w/ your test : title</p>
+            <p class="titleCategorieAssessment">Start your test</p>
         </div>
         <div class="card cardOverviewAssessment">
             <div id="step1OverviewAssessmentBackend">
@@ -262,7 +366,27 @@
 
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.querySelectorAll(".filters .item").forEach(function (tab, index) {
+        tab.addEventListener("click", function () {
+            const filters = document.querySelectorAll(".filters .item");
+            const tabs = document.querySelectorAll(".tabs__list .tab");
+
+            filters.forEach(function (tab) {
+                tab.classList.remove("active");
+            });
+            this.classList.add("active");
+
+            tabs.forEach(function (tabContent) {
+                tabContent.classList.remove("active");
+            });
+            tabs[index].classList.add("active");
+        });
+    });
+
+</script>
 <script>
 
     var id_current_assessment;

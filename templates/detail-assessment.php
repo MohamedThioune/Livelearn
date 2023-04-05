@@ -34,6 +34,17 @@ function timeToSeconds(string $time): int
     /* Get minutes by given string seconds  */
     $timer=ceil($timer/60);
 
+/* Reviews */
+$reviews = get_field('reviews', $assessment_id);
+
+$my_review_bool = false;
+
+foreach ($reviews as $review)
+    if($review['user']->ID == $user_id){
+        $my_review_bool = true;
+        break;
+    }
+
 ?>
 
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
@@ -161,7 +172,7 @@ function timeToSeconds(string $time): int
                             <ul id="tabs-nav">
                                 <li><a href="#tab1">how it works</a></li>
                                 <li><a href="#tab2">Reviews</a></li>
-                                <li><a href="#tab3">Add Reviews</a></li>
+                                <?php if(!$my_review_bool) echo '<li><a href="#tab3">Add Reviews</a></li>'; ?>
                             </ul> <!-- END tabs-nav -->
                             <div id="tabs-content">
                                 <div id="tab1" class="tab-content">
@@ -204,119 +215,80 @@ function timeToSeconds(string $time): int
                                         </div>
                                 </div>
                                 <div id="tab2" class="tab-content">
-                                    <h2>Reviews</h2>
-                                    <div class="review-info-card">
-                                        <div class="review-user-mini-profile">
-                                            <div class="user-photo">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
-                                            </div>
-                                            <div class="user-name">
-                                                <p>Daniel</p>
-                                                <div class="rating-element">
-                                                    <div class="rating-stats">
-                                                        <div id="rating-container-custom">
-                                                            <ul class="list-show">
-                                                                <li class="selected"></li>
-                                                                <li class="selected"></li>
-                                                                <li class="selected"></li>
-                                                                <li class="disabled"></li>
-                                                                <li class="disabled"></li>
-                                                            </ul>
+                                    <?php
+                                    if(!empty($reviews)){
+                                        foreach($reviews as $review){
+                                            $user = $review['user'];
+                                            $image_author = get_field('profile_img',  'user_' . $user->ID);
+                                            $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
+                                            $rating = $review['rating'];
+                                        ?>
+                                        <div class="review-info-card">
+                                            <div class="review-user-mini-profile">
+                                                <div class="user-photo">
+                                                    <img src="<?= $image_author; ?>" alt="">
+                                                </div>
+                                                <div class="user-name">
+                                                    <p><?= $user->display_name; ?></p>
+                                                    <div class="rating-element">
+                                                        <div class="rating">
+                                                        <?php
+                                                            for($i = $rating; $i >= 1; $i--){
+                                                                if($i == $rating)
+                                                                    echo '<input type="radio" name="rating" value="' . $i . ' " checked disabled/>
+                                                                    <label class="star" title="" aria-hidden="true"></label>';
+                                                                else
+                                                                    echo '<input type="radio" name="rating" value="' . $i . ' " disabled/>
+                                                                        <label class="star" title="" aria-hidden="true"></label>';
+                                                            }
+                                                        ?>
                                                         </div>
-                                                        <p class="hours-element">18 hours ago</p>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <p class="reviewsText">Half the lanes don't work! But it's decent for the price. Waited over 30 minutes for our drinks!!!! But yes I recommend it. It's not great but it's OK I guess</p>
+                                            <p class="reviewsText"><?= $review['feedback']; ?></p>
 
-                                    </div>
-                                    <div class="review-info-card">
-                                        <div class="review-user-mini-profile">
-                                            <div class="user-photo">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
-                                            </div>
-                                            <div class="user-name">
-                                                <p>Daniel</p>
-                                                <div class="rating-element">
-                                                    <div class="rating-stats">
-                                                        <div id="rating-container">
-                                                            <ul class="list-show">
-                                                                <li class="selected"></li>
-                                                                <li class="selected"></li>
-                                                                <li class="selected"></li>
-                                                                <li class="disabled"></li>
-                                                                <li class="disabled"></li>
-                                                            </ul>
-                                                        </div>
-                                                        <p class="hours-element">18 hours ago</p>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
-                                        <p class="reviewsText">Half the lanes don't work! But it's decent for the price. Waited over 30 minutes for our drinks!!!! But yes I recommend it. It's not great but it's OK I guess</p>
-
-                                    </div>
-                                    <div class="review-info-card">
-                                        <div class="review-user-mini-profile">
-                                            <div class="user-photo">
-                                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/dan.jpg" alt="">
-                                            </div>
-                                            <div class="user-name">
-                                                <p>Daniel</p>
-                                                <div class="rating-element">
-                                                    <div class="rating-stats">
-                                                        <div id="rating-container">
-                                                            <ul class="list-show">
-                                                                <li class="selected"></li>
-                                                                <li class="selected"></li>
-                                                                <li class="selected"></li>
-                                                                <li class="disabled"></li>
-                                                                <li class="disabled"></li>
-                                                            </ul>
-                                                        </div>
-                                                        <p class="hours-element">18 hours ago</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <p class="reviewsText">Half the lanes don't work! But it's decent for the price. Waited over 30 minutes for our drinks!!!! But yes I recommend it. It's not great but it's OK I guess</p>
-
-                                    </div>
+                                    <?php
+                                        }
+                                    }
+                                    else
+                                        echo "<h6>No reviews for this course ...</h6>";
+                                    ?>
                                 </div>
                                 <div id="tab3" class="tab-content">
-                                    <h2>Add review</h2>
-                                    <form>
-                                        <div class="row">
-                                            <div class="form-group col-6">
-                                                <label for="exampleInputEmail1">Name</label>
-                                                <input type="text" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter Name">
-                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                    <?php
+                                    if($user_id != 0 && !$my_review_bool){
+                                    ?>
+                                    <div class="formSingleCoourseReview">
+                                        <label>Rating</label>
+                                        <div class="rating-element2">
+                                            <div class="rating">
+                                                <input type="radio" id="star5" class="stars" name="rating" value="5" />
+                                                <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
+                                                <input type="radio" id="star4" class="stars" name="rating" value="4" />
+                                                <label class="star" for="star4" title="Great" aria-hidden="true"></label>
+                                                <input type="radio" id="star3" class="stars" name="rating" value="3" />
+                                                <label class="star" for="star3" title="Very good" aria-hidden="true"></label>
+                                                <input type="radio" id="star2" class="stars" name="rating" value="2" />
+                                                <label class="star" for="star2" title="Good" aria-hidden="true"></label>
+                                                <input type="radio" id="star1" name="rating" value="1" />
+                                                <label class="star" for="star1" class="stars" title="Bad" aria-hidden="true"></label>
                                             </div>
-                                            <div class="form- col-6">
-                                                <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                                            </div>
+                                            <span class="rating-counter"></span>
                                         </div>
+
                                         <div class="form-group">
-                                            <label for="rating-container-custom">Rating</label>
-                                            <div id="rating-container-custom">
-                                                <ul class="list">
-                                                    <li></li>
-                                                    <li></li>
-                                                    <li></li>
-                                                    <li></li>
-                                                    <li></li>
-                                                </ul>
-                                            </div>
+                                            <label for="">Feedback</label>
+                                            <textarea name="feedback_content" id="feedback" rows="10"></textarea>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputPassword1">Feedback</label>
-                                            <textarea name="" id=""  rows="10"></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-sendRating">Send</button>
-                                    </form>
+                                        <input type="button" class='btn btn-sendRating' id='btn_review' name='review_post' value='Send'>
+                                    </div>
+                                    <?php
+                                    }
+                                    else
+                                        echo "<button data-toggle='modal' data-target='#SignInWithEmail'  data-dismiss='modal'class='btnLeerom' style='border:none'> You must sign-in for review </button>";
+                                    ?>
                                 </div>
                             </div> <!-- END tabs-content -->
                         </div> <!-- END tabs -->

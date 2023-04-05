@@ -4,6 +4,9 @@
 $page = 'check_visibility.php';
 require($page); 
 
+// $mail_notification_invitation = 'mail-notification-invitation.php';
+// require(__DIR__ . $mail_notification_invitation); 
+
 global $wpdb;
 
 $table = $wpdb->prefix . 'databank'; 
@@ -27,6 +30,45 @@ function RandomString(){
         $randstring .= $rand;  
     }
     return $randstring;
+}
+
+function makeApiCall($endpoint, $type) {
+    // credentials
+    $params = array(
+        // login url params required to direct user to facebook and promt them with a login dialog
+        'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
+        'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
+    );
+
+    // initialize curl
+    $ch = curl_init();
+
+    $output_type = ( $type == 'GET' ) ? false : true; 
+
+    // create endpoint with params
+    $apiEndpoint = $endpoint . '?' . http_build_query( $params );
+    
+    // set other curl options
+    curl_setopt($ch, CURLOPT_URL, $apiEndpoint);
+    curl_setopt($ch, CURLOPT_POST, $output_type);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
+
+    // get response
+    $response = curl_exec( $ch );
+    if ($response === false) {
+        $response = curl_error($ch);
+        $error = true;
+        echo stripslashes($response);
+        return false;
+    }
+
+    // close curl
+    curl_close( $ch );
+
+    // return data
+    return json_decode( $response, true );
 }
 
 if(empty($user_data->roles))
@@ -133,9 +175,7 @@ else if(isset($_POST['edit_education'])){
     }
     update_field('education', $bunch, 'user_'. $user->ID);
     $educations = get_field('education',  'user_' . $user->ID);
-
 }
-
 
 /*
 * * Push saved  
@@ -145,6 +185,17 @@ else if(isset($interest_save)){
     if($meta_value != null){
         $meta_data = get_user_meta($user_id, $meta_key);
         if(!in_array($meta_value,$meta_data)){
+            if($meta_key == 'expert'){
+                $user_expert = get_user_by('id', $user_id);
+                $first_name = $user_expert->first_name ?: $user_expert->display_name;
+                $email = $user_expert->user_email;
+                $mail_page = 'mail-new-follower.php';
+                require($mail_page); 
+                
+                $subject = 'Je hebt een nieuwe volger !';
+                $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+                wp_mail($email, $subject, $mail_new_followed_body, $headers, array( '' )) ;
+            }
             add_user_meta($user_id, $meta_key, $meta_value);
             $message = "Succesvol opgeslagen cursus";
         }else{
@@ -306,6 +357,18 @@ else if(isset($interest_push)){
     if($meta_value != null){
         $meta_data = get_user_meta($user_id, $meta_key);
         if(!in_array($meta_value,$meta_data)){
+            //Email send expert
+            if($meta_key == 'expert'){
+                $user_expert = get_user_by('id', $user_id);
+                $first_name = $user_expert->first_name ?: $user_expert->display_name;
+                $email = $user_expert->user_email;
+                $mail_page = 'mail-new-follower.php';
+                require($mail_page); 
+                
+                $subject = 'Je hebt een nieuwe volger !';
+                $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+                wp_mail($email, $subject, $mail_new_followed_body, $headers, array( '' )) ;
+            }
             add_user_meta($user_id, $meta_key, $meta_value);
             if(isset($artikel)){
                 $path = get_permalink($artikel) . "/?message=Succesvol followed";
@@ -480,10 +543,16 @@ else if(isset($review_post)){
         array_push($reviews,$review);
 
         update_field('reviews',$reviews, $course_id);
-        $message = get_permalink($course_id) . '/?message=Your review added successfully'; 
+        if($post_type == 'community')
+            $message = "/dashboard/user/communities/?mu=" . $course_id . "&message=Question saved successfully !";
+        else 
+            $message = get_permalink($course_id) . '/?message=Your review added successfully'; 
     }
-    else 
-        $message = get_permalink($course_id) . '/?message=User not find...';        
+    else
+        if($post_type == 'community')
+            $message = "/dashboard/user/communities/?mu=" . $course_id . "&message=Question saved successfully !";
+        else 
+            $message = get_permalink($course_id) . '/?message=User not find ...';        
 
     header("Location: ". $message);
 }
@@ -503,8 +572,12 @@ else if(isset($change_password)){
 
     header("Location: ". $message);
 }
+
 else if(isset($referee_employee)){    
     $allocution = get_field('allocation', $course_id);
+    if(!$allocution)
+        $allocution = array();
+
     $user_id = get_current_user_id();
 
     $posts = get_post($course_id);
@@ -540,34 +613,64 @@ else if(isset($referee_employee)){
     <a href="' . get_permalink($course_id) . '">' . $posts->post_title . '</a><br><br>
     Veel plezier bij het lezen !';
 
-    
     if(!empty($selected_members))
-        foreach($selected_members as $expert)
-            if(!in_array($expert, $allocution)){
-                array_push($allocution, $expert);
-                $posts = get_field('kennis_video', 'user_' . $expert);
-               
-                //Data to create the feedback
-                $post_data = array(
-                    'post_title' => $title_feedback,
-                    'post_author' => $expert,
-                    'post_type' => 'feedback',
-                    'post_status' => 'publish'
-                    );
+        foreach($selected_members as $expert){
+            if(!empty($allocution))
+                if(in_array($expert, $allocution))
+                    continue;
 
-                //Create
-                $post_id = wp_insert_post($post_data);
-                //Add further informations for feedback
-                update_field('onderwerp_feedback', $onderwerp_feedback, $post_id);
-                update_field('manager_feedback', $manager->ID, $post_id);
-                update_field('type_feedback', $type, $post_id);
-                update_field('beschrijving_feedback', nl2br($beschrijving_feedback), $post_id);
+            /*
+            ** Mail expert concerned by the sharing
+            */
 
-                if(!empty($posts))
-                    array_push($posts, get_post($course_id));
-
-                update_field('kennis_video', $posts, 'user_' . $expert);
+            $course_type = get_field('course_type', $posts->ID);
+            //image post
+            $thumbnail = get_field('preview', $posts->ID)['url'];
+            if(!$thumbnail){
+                $thumbnail = get_the_post_thumbnail_url($posts->ID);
+                if(!$thumbnail)
+                    $thumbnail = get_field('url_image_xml', $posts->ID);
+                if(!$thumbnail)
+                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
             }
+            //short_description post
+            $short_description = get_field('short_description', $posts->ID);
+
+            $expert_shared = get_user_by('id', $expert);
+            $first_name = $expert_shared->first_name ?: $expert_shared->display_name;
+            $email = $expert_shared->user_email;
+            $share_a_course = 'mail-share-a-course.php';
+            require($share_a_course); 
+            
+            $subject = 'Iemand heeft een cursus met je gedeeld !';
+            $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+            wp_mail($email, $subject, $mail_shared_course_body, $headers, array( '' )) ;
+
+            array_push($allocution, $expert);
+            $posts = get_field('kennis_video', 'user_' . $expert);
+        
+            //Data to create the feedback
+            $post_data = array(
+                'post_title' => $title_feedback,
+                'post_author' => $expert,
+                'post_type' => 'feedback',
+                'post_status' => 'publish'
+            );
+            
+            //Create
+            $post_id = wp_insert_post($post_data);
+
+            //Add further informations for feedback
+            update_field('onderwerp_feedback', $onderwerp_feedback, $post_id);
+            update_field('manager_feedback', $manager->ID, $post_id);
+            update_field('type_feedback', $type, $post_id);
+            update_field('beschrijving_feedback', nl2br($beschrijving_feedback), $post_id);
+
+            if(!empty($posts))
+                array_push($posts, get_post($course_id));
+
+            update_field('kennis_video', $posts, 'user_' . $expert);
+        }
 
     //Adding new subtopics on course
     update_field('allocation', $allocution, $course_id);
@@ -659,6 +762,10 @@ else if(isset($databank)){
             header("Location: ". $danger);
         }
         else{ 
+            $became_a_expert = 'mail-became-a-expert.php';
+            require($became_a_expert); 
+
+            //Mail - sign up
             $subject = 'Je LiveLearn inschrijving is binnen! ✨';
             $body = "
             Bedankt voor je inschrijving<br>
@@ -669,9 +776,12 @@ else if(isset($databank)){
             <h4>Inloggen:</h4><br>
             <h6><a href='https://livelearn.nl/inloggen/'> Connexion </a></h6>
             ";
-        
             $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
             wp_mail($email, $subject, $body, $headers, array( '' )) ; 
+
+            //Mail - became a expert
+            $subject = 'Je hebt de rol expert !';
+            wp_mail($email, $subject, $mail_became_expert_body, $headers, array( '' )) ; 
         }
 
         $data = [ 'author_id' => $user_id ]; // NULL value.
@@ -785,7 +895,6 @@ else if(isset($note_skill_edit)){
     else
         $skills = $bunch;
 
-    var_dump($skills);
     update_field('skills', $skills, 'user_' . $user_id);
     $message = '/dashboard/user/settings/?message=Note updated sucessfully'; 
 
@@ -833,14 +942,241 @@ else if (isset($note_skill_new)){
     else
         $skills = $bunch;
 
-    var_dump($skills);
     update_field('skills', $skills, 'user_' . $user_id);
     $message = '/dashboard/user/settings/?message=Note updated sucessfully'; 
     
     header("Location: ". $message);
 }
 
+else if(isset($departement_add)){
+    $user_id = get_current_user_id();
+    $company = get_field('company',  'user_' . $user_id);
+    $departments = get_field('departments', $company[0]->ID);
 
+    $department = array();
+    $department['name'] = $name_department;
+
+    if(!$departments)
+        $departments = array();
+
+    array_push($departments, $department);
+
+    update_field('departments', $departments, $company[0]->ID);
+    $message = '/dashboard/company/afdelingen/?message=Department added successfully !'; 
+    header("Location: ". $message);
+}
+
+else if(isset($departement_delete)){
+    $user_id = get_current_user_id();
+    $company = get_field('company',  'user_' . $user_id);
+    $departments = get_field('departments', $company[0]->ID);
+    $bunch = array();
+    foreach($departments as $key => $value)
+        if($key == $id)
+            continue;
+        else
+            array_push($bunch,$value);
+    
+    update_field('departments', $bunch, $company[0]->ID);
+    $message = '/dashboard/company/afdelingen/?message=Department deleted successfully !'; 
+    header("Location: ". $message);
+}
+
+else if(isset($details_user_departement)){
+    update_field('role', $role_user, 'user_'.$id_user);
+    update_field('department', $department, 'user_'.$id_user);
+    $message = '/dashboard/company/afdelingen/?message=Informations updated successfully !'; 
+    header("Location: ". $message);
+}
+
+else if(isset($follow_community)){
+    $user = wp_get_current_user();
+    $followers = get_field('follower_community', $community_id);
+    if(!$followers)
+        $followers = array();
+    array_push($followers, $user);
+
+    update_field('follower_community', $followers, $community_id);
+
+    $path = "/dashboard/user/communities/?mu=" . $community_id . "&message=Successfully subscribed to this community !";
+    header("Location: ". $path);
+}
+
+else if(isset($unfollow_community)){
+    $path = "/dashboard/user/communities/?mu=" . $community_id . "&message=Successfully unsubscribed to this community !";
+    header("Location: ". $path);
+}
+
+else if(isset($interest_multiple_push)){
+    foreach($data as $meta_value)        
+        if($meta_value){
+            if($meta_key == 'topic'){
+                $meta_data_extern = get_user_meta($user_id, $meta_key);
+                $meta_data_intern = get_user_meta($user_id, 'topic_affiliate');
+                if(!in_array($meta_value, $meta_data_extern) && !in_array($meta_value, $meta_data_intern) )
+                    add_user_meta($user_id, $meta_key, $meta_value);
+                else
+                    if(in_array($meta_value, $meta_data_extern))
+                        delete_user_meta($user_id, $meta_key, $meta_value);
+                    else
+                        delete_user_meta($user_id, "topic_affiliate", $meta_value);
+            }
+            else{
+                $meta_data = get_user_meta($user_id, $meta_key);
+                if(!in_array($meta_value, $meta_data)){
+                    if($meta_key == 'expert'){
+                        $user_expert = get_user_by('id', $user_id);
+                        $first_name = $user_expert->first_name ?: $user_expert->display_name;
+                        $email = $user_expert->user_email;
+                        $mail_page = 'mail-new-follower.php';
+                        require($mail_page); 
+                        
+                        $subject = 'Je hebt een nieuwe volger !';
+                        $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+                        wp_mail($email, $subject, $mail_new_followed_body, $headers, array( '' )) ;
+                    }
+                    add_user_meta($user_id, $meta_key, $meta_value);
+                }else
+                    delete_user_meta($user_id, $meta_key, $meta_value);  
+            }                  
+        }
+        
+    $message = "News interests applied !";
+    header("location: ../../dashboard/user/?message=" . $message);
+}
+
+else if(isset($question_community)){
+    $question = array();
+
+    //New question
+    $user_question = wp_get_current_user();
+    $question_community = get_field('question_community', $community_id);
+    $question['user_question'] = $user_question;
+    $question['text_question'] = $text_question;
+
+    if(!$question_community)
+        $question_community = array();
+
+    array_push($question_community, $question);
+    
+    update_field('question_community', $question_community, $community_id);
+
+    $path = "/dashboard/user/community-detail/?mu=" . $community_id . "&message=Question saved successfully !";
+    header("Location: ". $path);
+}
+
+else if(isset($reply_question_community)){
+    $question = array();
+    $question_community = get_field('question_community', $community_id);
+
+    foreach($question_community as $key => $item){
+        if($key == $id){
+            $reply = array();
+            $user_reply = wp_get_current_user();
+            $reply['user_reply'] = $user_reply;
+            $reply['text_reply'] = $text_reply;
+            if(empty($item['reply_question']))
+                $item['reply_question'] = array();
+            
+            array_push($item['reply_question'], $reply);
+        }
+
+        array_push($question, $item);
+    }
+    update_field('question_community', $question, $community_id);
+
+    $path = "/dashboard/user/community-detail/?mu=" . $community_id . "&message=Reply question applied successfully !";
+    header("Location: ". $path);
+}
+
+else if(isset($mandatory_course)){    
+    $allocution = get_field('allocation', $course_id);
+    if(!$allocution)
+        $allocution = array();
+
+    $user_id = get_current_user_id();
+
+    $posts = get_post($course_id);
+    
+    //Create feedback
+    $manager = get_user_by('id', get_current_user_id());
+    $title_feedback = $manager->display_name . ' share you a course.';
+    $type = 'Verplichte cursus';
+
+    $link = get_permalink($course_id);
+
+    $beschrijving_feedback = '<p>' . $manager->display_name . ' heeft de cursus met u gedeeld : <br>
+    <a href="' . $link . '">' . $posts->post_title . '</a><br><br>
+    Veel plezier bij het lezen !';
+
+    if(!empty($selected_members))
+        foreach($selected_members as $expert){
+            if(!empty($allocution))
+                if(in_array($expert, $allocution))
+                    continue;
+
+            /*
+            ** Mail expert concerned by the sharing
+            */
+
+            $course_type = get_field('course_type', $posts->ID);
+            //image post
+            $thumbnail = get_field('preview', $posts->ID)['url'];
+            if(!$thumbnail){
+                $thumbnail = get_the_post_thumbnail_url($posts->ID);
+                if(!$thumbnail)
+                    $thumbnail = get_field('url_image_xml', $posts->ID);
+                if(!$thumbnail)
+                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+            }
+            //short_description post
+            $short_description = get_field('short_description', $posts->ID);
+
+            $expert_shared = get_user_by('id', $expert);
+            $first_name = $expert_shared->first_name ?: $expert_shared->display_name;
+            $email = $expert_shared->user_email;
+            $mandatory_a_course = 'mail-mandatory-a-course.php';
+            require($share_a_course);
+
+            $subject = 'Een van je managers heeft een verplichte cursus met je gedeeld!';
+            $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+            wp_mail($email, $subject, $mail_mandatored_course_body, $headers, array( '' )) ;
+
+            array_push($allocution, $expert);
+            $posts = get_field('kennis_video', 'user_' . $expert);
+        
+            //Data to create the feedback
+            $post_data = array(
+                'post_title' => $title_feedback,
+                'post_author' => $expert,
+                'post_type' => 'feedback',
+                'post_status' => 'publish'
+            );
+            
+            //Create
+            $post_id = wp_insert_post($post_data);
+            //Add further informations for feedback
+            update_field('type_feedback', $type, $post_id);
+            update_field('manager_feedback', $manager->ID, $post_id);
+            update_field('beschrijving_feedback', nl2br($beschrijving_feedback), $post_id);
+
+            if(!empty($posts))
+                array_push($posts, get_post($course_id));
+
+            update_field('mandatory_video', $posts, 'user_' . $expert);
+        }
+
+    //Adding new subtopics on course
+    update_field('allocation', $allocution, $course_id);
+
+    if($path == "dashboard")
+        $message = '/dashboard/company/learning-modules/?message=Manager deelde een verplichte cursus met succes!'; 
+    else if($path == "course")
+        $message = get_permalink($course_id) . '/?message=Manager deelde een verplichte cursus met succes!'; 
+
+    header("Location: ". $message);
+}
+    
 ?>
 <?php wp_head(); ?>
 

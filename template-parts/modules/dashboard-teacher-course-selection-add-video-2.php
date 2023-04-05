@@ -9,6 +9,11 @@
                 <?php
                 
                 update_field('course_type', 'video', $_GET['id']);
+
+                //Ecriture
+                update_field('nom_du_champ', $valeur, $id_post);
+                //Lecture
+                $coursetype = get_field('nom_du_champ', $id_post);
  
                 acf_form(array(
                     'post_id'       => $_GET['id'],
@@ -59,7 +64,7 @@
                     <div class="circleIndicator">
                         <i class="fa fa-tag" aria-hidden="true"></i>
                     </div>
-                    <p class="textOpleidRight">Tags</p>
+                    <p class="textOpleidRight">Onderwerpen</p>
                 </a>
                 <a  href="<?php echo '/dashboard/teacher/course-selection/?func=add-video&id=' . $_GET['id'] . '&step=6&edit'; ?>"  class="contentBlockCourse">
                     <div class="circleIndicator">
