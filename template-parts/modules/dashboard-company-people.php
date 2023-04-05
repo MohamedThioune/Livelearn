@@ -1,5 +1,7 @@
 <?php
+    session_start();
     $users = get_users();
+    $list_of_all_employees=array();
     $data_user = wp_get_current_user();
     $user_connected = $data_user->data->ID;
     $company = get_field('company',  'user_' . $user_connected);
@@ -35,17 +37,8 @@
             }
         }
     }
-        //get  list of all managers
-        // $users_manageds=array();
-        // foreach($users as $user){
-        //     if(get_field('managed', 'user_'.$user->ID)){
-        //         $users_manageds[$user->ID] [] = get_field('managed',  'user_' . $user->ID); //pour un user toutes les personnes qu'il manage
-        //      //var_dump($users_manageds);
-        //  }
-        // }
     $count = count($members);
     extract($_POST);
-
     if(isset($missing_details_user)){
         update_field('telnr', $telnr, 'user_'.$id_user);
         update_field('role', $role_user, 'user_'.$id_user);
@@ -53,11 +46,120 @@
         $message = "Informations updated";
         header('Location: /dashboard/company/people/?message=' . $message);
     }
-
-if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"; 
+    if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"; 
     if( in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) || in_array('manager', $data_user->roles) || $grant ) {
-?>
+        extract($_POST);
+        if (isset($client_id)&& isset($client_secret)){
+        $baseurl  =  'https://oauth.loket-acc.nl';
+        // $redirect = 'https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        $redirect = get_site_url()."/dashboard/company/people/";
+        $status = rand(1000,9999);
+        $url = "$baseurl/authorize?client_id=$client_id&redirect_uri=$redirect&response_type=code&scope=all&state=$status";
+        header("Location: $url");
+        $_SESSION['client_id']=$client_id;
+        $_SESSION['client_secret']=$client_secret;
+    }
+    if (isset($_GET['code'])) {
+        if($_GET['code']){
+            extract($_GET);
+            $token="";
+            $id_entreprise = get_field('id_company_loket',$company_connected->ID);
+            // var_dump('The code generate : '.$code);
+            $client_id = $_SESSION['client_id'];
+            $client_secret = $_SESSION['client_secret'];
+            $redirect_uri = "https://livelearn.nl/dashboard/company/people/";
+            $grant_type = "authorization_code";
+            // URL de l'endpoint d'obtention du token
+            $token_url = "https://oauth.loket-acc.nl";
+            // Corps de la demande POST
+            $body = http_build_query(array(
+                'code' => $code,
+                'client_id' => $client_id,
+                'client_secret' => $client_secret,
+                'redirect_uri' => $redirect_uri,
+                'grant_type' => $grant_type
+            ));
+            // header of POST request
+            $headers = array(
+                'Content-Type: application/x-www-form-urlencoded',
+                'Content-Length: ' . strlen($body)
+            );
+            $options = array(
+                    'http' => array(
+                    'method' => 'POST',
+                    'header' => implode("\r\n", $headers),
+                    'content' => $body
+                )
+            );
+            $context = stream_context_create($options);
+                //POST request
+            $response = file_get_contents($token_url."/token", false, $context);
+            $data = json_decode($response, true); // token getted
+            // $token = $data['access_token'];
+            $_SESSION['token'] = $data['access_token'];
+            $token = $_SESSION['token'];
+            // var_dump('token : '.$token);
 
+            // id company
+                $url_employees="https://api.loket-acc.nl/v2/providers/employers";
+                // $header_employees = array(
+                //     "Authorization: Bearer $token",
+                //     "Content-Type: application/json"
+                // );
+                $options = array(
+                    'http' => array(
+                    'method' => 'GET',
+                    'header' => "Authorization: Bearer $token\r\n" . 
+                    "Content-Type: application/json\r\n"
+                )
+            );
+            $context = stream_context_create($options);
+            $response = file_get_contents($url_employees, false, $context);
+
+            $json_data = json_decode($response, true);
+            if ($json_data) {
+                $embedded = $json_data['_embedded'];
+                $id_entreprise = $embedded[0]['id'];
+                update_field('id_company_loket',$id_entreprise,$company_connected->ID);
+                var_dump("id de l'entreprise : $id_entreprise");
+                //get list of all employee
+                $list = "https://api.loket-acc.nl/v2/providers/employers/$id_entreprise/employees";
+                $options = array(
+                    'http' => array(
+                        'header' => "Content-type: application/x-www-form-urlencoded\r\n" .
+                        "Authorization: Bearer $token\r\n",
+                        'method' => 'GET'
+                    )
+                );
+                $context = stream_context_create($options);
+                $liste_employees = file_get_contents($list, false, $context);
+                if ($liste_employees) {
+                    $empl=json_decode($liste_employees,true);
+                    foreach ($empl['_embedded'] as $key => $employee) {
+                        $tab = [];
+                        $tab['firstName'] = $employee['personalDetails']['firstName'];
+                        $tab['lastName'] = $employee['personalDetails']['lastName'];
+                        $tab['dateOfBirth'] = $employee['personalDetails']['dateOfBirth'];
+                        $tab['aowDate'] = $employee['personalDetails']['aowDate'];
+                        $tab['photo'] = $employee['personalDetails']['photo'];
+                        $tab['phoneNumber'] = $employee['contactInformation']['phoneNumber'];
+                        $tab['mobilePhoneNumber'] = $employee['contactInformation']['mobilePhoneNumber'];
+                        $tab['emailAddress'] = $employee['contactInformation']['emailAddress'];
+                        $tab['street'] = $employee['address']['street'];
+                        $tab['city'] = $employee['address']['city'];
+                        $list_of_all_employees[] =$tab; 
+                    }
+                }else {
+                    
+                }
+            }
+            //  else {
+            //     var_dump("Error decoding JSON : " . json_last_error_msg());
+            // }
+            // var_dump($list_of_all_employees);
+        }
+    }
+    ?>
     <div class="cardPeople">
         <dsalary-systemiv class="headListeCourse">
             <p class="JouwOpleid">Werknemers (<?= $count; ?>)</p>
@@ -65,15 +167,19 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
             <div class="">
                 <button type="button" class="btn" data-toggle="modal" data-target="#polarisModal">Polaris</button>
                 <button type="button" class="btn" data-toggle="modal" data-target="#loketModal">Loket</button>
-                <!-- <select name="salary-system" id="salary-system">
+                <a href="../people-mensen" class="btnNewCourse">Persoon toevoegen</a>
+                <select name="salary-system" id="salary-system">
                     <option value=""></option>
                         <option value="polaris" >POLARIS</option>
                     <option value="loket">LOKET</option>
-                </select> -->
-                <a href="../people-mensen" class="btnNewCourse">Persoon toevoegen</a>
+                    <option value="">
+                        <a href="../people-mensen" class="btnNewCourse">Persoon toevoegen</a>
+                    </option>
+                </select>
             </div>
         </div>
         <div class="contentCardListeCourse">
+
             <table class="table table-responsive">
                 <thead>
                     <tr>
@@ -275,6 +381,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <div id="back-polaris" class="text-center"></div>
       <div class="modal-body">
         <form id="data-sending-from-form" method="POST">
           <div class="form-group">
@@ -288,7 +395,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
         </form>
       </div>
       <div class="d-none" id="list-polaris">
-        <table>
+        <table class="table table-hover">
         <thead>
         <tr>
             <th>Naam</th>
@@ -303,7 +410,7 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
         </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-success" form="data-sending-from-form">conect to Polaris</button>
       </div>
     </div>
@@ -320,21 +427,53 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <div id="back-loket" class="text-center"></div>
       <div class="modal-body">
-      <form id="data-sending-from-form" method="POST">
+        <?php
+        $class = '';
+        if ($list_of_all_employees) {
+            $class = 'd-none';
+            // var_dump($list_of_all_employees);
+            ?>
+        <div>
+        <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Naam</th>
+            <th>city</th>
+            <th>Email</th>
+            <th>Optie</th>
+        </tr>
+        </thead>
+        <tbody>
+            <?php foreach($list_of_all_employees as $employee) : ?>
+            <tr>
+                <td class="row-fullName"><?=$employee['firstName'].' '.$employee['lastName'] ?></td>
+                <td><?= $employee['city']?></td>
+                <!-- <td><?//= $employee['emailAddress']?></td> -->
+                <td class="row-email"><?= $employee['emailAddress'] ?: $employee['firstName'].'-'.$employee['lastName']."@".$employee['firstName']."-livelearn.nl"?></td>
+                <td><button class="btn btn-outline-success" onclick="addInDatabase(event,'loket')">+Add</button></td>
+            </tr>
+            <?php endforeach ?>
+        </tbody>
+        </table>
+      </div>
+      <?php } ?>
+
+      <form class="<?= $class ?>" id="from-form-loket" action="/dashboard/company/people/" method="POST">
           <div class="form-group">
-            <label for="loket-username" class="col-form-label">login</label>
-            <input type="text" class="form-control" id="loket-username" name="username">
+            <label for="loket-username" class="col-form-label">client id</label>
+            <input type="text" value="ThirdPartiesTestClient" class="form-control" id="loket-username" name="client_id">
           </div>
           <div class="form-group">
-            <label for="loket-password" class="col-form-label">password</label>
-            <input type="password" class="form-control" id="loket-password" name="password">
+            <label for="loket-password" class="col-form-label">client secret</label>
+            <input type="password" value="Welkom01" class="form-control " id="loket-password" name="client_secret">
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">login</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success <?= $class ?>" form="from-form-loket">login to Loket</button>
       </div>
     </div>
   </div>
@@ -371,7 +510,6 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
 
      $('#search_txt_company').keyup(function(){
         var txt = $(this).val();
-
         $.ajax({
             url:"/fetch-company-people",
             method:"post",
@@ -386,7 +524,6 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                 // $('#autocomplete_company_people').html(data);
             }
         });
-
     });
 </script>
 <script>
@@ -399,9 +536,9 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
     // sending data form for polaris
     $(document).ready(function() {
   $('#data-sending-from-form').submit(function(event) {
+      event.preventDefault();
       var formData = $(this).serialize();
       console.log('data submitted : ',formData);
-      event.preventDefault();
       const username = $('input[name="polaris-username"]').val();
       const password = $('input[name="polaris-password"]').val();
       console.log(`data sending => ${username}:${password}`)
@@ -419,12 +556,9 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
         document.getElementById('list-polaris').classList.remove("d-none");
         document.getElementById('error-connexion').classList.add("d-none");
         console.log('success request :>',(responseXML));
-        // Récupérer les éléments <Regel>
-const regels = responseXML.querySelectorAll('Regel');
-const tbody = document.getElementById('data-polaris');
-// Initialiser le tableau qui contiendra les données
-const data = [];
-// Browse each element <Regel>
+        const regels = responseXML.querySelectorAll('Regel');
+        const tbody = document.getElementById('data-polaris');
+        const data = [];
 regels.forEach((regel) => {
   const row = {};
 // Browse through each child of the <Regel> element and retrieve values
@@ -435,15 +569,19 @@ regels.forEach((regel) => {
   });
   // add object in the array of data
   data.push(row);
-  console.log(row);
   const tr = document.createElement("tr");
   let email;
-  if (!row.Email) {email='';}else{email=row.Email}
+  if (!row.Email){
+    console.log(row.Naam.split(' ')[0]+'@livelearn-'+row.Naam.split(' ')[1]+'.nl')
+    email=row.Naam.split(' ')[0]+'@livelearn-'+row.Naam.split(' ')[1]+'.nl';
+    // email=''
+    console.log(email);
+}else{email=row.Email}
   tr.innerHTML = `
   <td class="row-fullName">${row.Naam}</td>
   <td>${row.Plaats}</td>
   <td class="row-email">${email}</td>
-  <td><button onclick="addInDatabase(event)">+ Add </button></td>`;
+  <td><button onclick="addInDatabase(event)" class="btn btn-outline-success">+ Add </button></td>`;
   tbody.appendChild(tr);
 });
     
@@ -456,33 +594,47 @@ regels.forEach((regel) => {
     });
     });
 
-    function addInDatabase(e) {
+    function addInDatabase(e,adminSalary='') {
+        // idSubmitted='back-polaris'
+        if (adminSalary=='loket') {
+            idSubmitted = 'back-loket';
+        } else {
+            idSubmitted = 'back-polaris';
+        }
+        console.log('idSubmitted :::::::::'+idSubmitted)
+        console.log('adminSalary::::::::::'+adminSalary)
         const row = e.target.parentNode.parentNode;
         const email = row.querySelector(".row-email").textContent.trim();
+        console.log(email)
         const fullName = row.querySelector(".row-fullName").textContent;
         const nams = fullName.split(' ');
         const firstName = nams[0];
+        console.log(firstName)
         const lastName = nams.slice(1).join(" ");
+        console.log(lastName)
         console.log("email :::"+email);
         console.log("firstName :::   "+ firstName);
         console.log("lastName :::   "+ lastName);
-        var dataToSend = { first_name: firstName, last_name: lastName, email: email };
+        var dataToSend = {first_name:firstName,last_name:lastName,email:email};
         dataToSend = JSON.stringify(dataToSend);
         console.log('data sending ' + dataToSend );
         $.ajax({
         url: '/dashboard/company/people-mensen/',
-        // url: '/livelearn/dashboard/company/people-mensen/',
+        // url: '/dashboard/company/people-mensen/',
         method: 'POST',
         data: dataToSend,
         success: function(response) {
             console.log('success data sinding : =>'+response);
-            location.reload();
-            alert("data saving sucess...");
+            msg_success = "<span class='alert alert-success'>U heeft met succes een nieuwe werknemer aangemaakt ✔️</span>";
+            document.getElementById(idSubmitted).innerHTML = response;
+            // location.reload();
         },
         error: function(error) {
-            location.reload();
-            alert("error when sending data");
-            console.log("Erreur when sending data : =>"+JSON.stringify(error) );
+            msg_error = "<span class='alert alert-danger'>Er is een fout opgetreden, probeer het opnieuw.</span>";
+            err=error.responseText
+            document.getElementById(idSubmitted).innerHTML = error;
+            console.log("Erreur when sending data : => " +JSON.stringify(error) );
+            // location.reload();
         }
         });
     }
