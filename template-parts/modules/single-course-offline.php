@@ -428,6 +428,7 @@
                                                             $date_end = $datum['data'][count($datum['data'])-1]['start_date'];
                                                             $agenda_start = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
                                                             $hour_start = explode(' ', $date_start)[1];
+                                                            $year_start = explode(' ', $date_start)[2];
                                                             $location_start = $datum['data'][0]['location'];
                                                             if($date_end)
                                                                 $agenda_end = explode('/', explode(' ', $date_end)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_end)[0])[1]];
@@ -471,7 +472,6 @@
                                                                         if($date_start != null) {
                                                                             $day = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
                                                                             $hour = explode(' ', $date_start)[1];
-
                                                                             ?>
                                                                             <div class="blockDateEvens">
                                                                                  <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
@@ -504,7 +504,7 @@
                                                                         <div class="contentBtnCardProduct">
                                                                             <?php
                                                                             if($product):                                                                            
-                                                                            $dateNameStart = $agenda_start . ', ' . $hour_start . ', ' . $location_start;
+                                                                            $dateNameStart = $agenda_start . ', ' . $hour_start . ', ' . $year_start . ', ' . $location_start;
 
                                                                             echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
 

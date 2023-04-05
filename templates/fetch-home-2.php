@@ -189,7 +189,7 @@ if(isset($topic_search)){
             $display_name =  $user->display_name;
 
         $block .= '
-            <a href="/dashboard/user-overview/?id="' . $user->ID .'" target="_blank" class="col-md-4">
+            <a href="user-overview?id="' . $user->ID .'" target="_blank" class="col-md-4">
                 <div class="boxCollections">
                     <p class="numberList">' . ++$num . '</p>
                     <div class="circleImgCollection">
