@@ -1,5 +1,5 @@
 <?php
-global $wp; 
+global $wp;
 
 $user = wp_get_current_user();
 
@@ -8,7 +8,7 @@ $user = wp_get_current_user();
 */
 
 $args = array(
-    'post_type' => 'feedback', 
+    'post_type' => 'feedback',
     'author' => $user->ID,
     'orderby' => 'post_date',
     'order' => 'DESC',
@@ -20,7 +20,7 @@ $todos = array();
 
 $url = home_url( $wp->request );
 
-$link = (!empty($user)) ? '/dashboard/user' : '/'; 
+$link = (!empty($user)) ? '/dashboard/user' : '/';
 
 if(!empty($notifications))
     foreach($notifications as $todo){
@@ -31,6 +31,20 @@ if(!empty($notifications))
 
         array_push($todos,$todo);
     }
+
+/*
+* * Get all experts
+*/
+$see_experts = get_users(
+    array(
+        'role__in' => ['author'],
+        'posts_per_page' => -1,
+    )
+);
+
+/*
+* * End
+*/
 
 ?>
 
@@ -59,6 +73,32 @@ if(!empty($notifications))
                 background: #023356 !important;
                 color: white !important;
             }
+            #bedrijfsprofiel_modal {
+                overflow-y: auto !important;
+                background: #0000009e;
+                max-height: 100%;
+                display: none;
+            }
+            #bedrijfsprofiel_modal .tab-pane{
+                display: none;
+            }
+            #bedrijfsprofiel_modal .pills-tabContent .show{
+                display: block;
+            }
+            #bedrijfsprofiel_modal .gfield_label{
+                position: relative !important;
+                -webkit-clip-path: unset !important;
+                height: unset !important;
+                width: fit-content !important;
+
+            }
+            .content-home2 form .selectSearchHome {
+                height: unset !important;
+            }
+            .fa-angle-down-bleu{
+                display: none;
+            }
+
         </style>
 
         <title><?php bloginfo('name'); ?></title>
@@ -67,61 +107,61 @@ if(!empty($notifications))
     <body class="header-user canhas">
 
 
-        <!-- Modal -->
-        <div class="modal fade mt-5" id="bedrijfsprofiel_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  style="width:98%; overflow-y: hidden !important">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content px-md-5 px-1">
-                    <div class="modal-header border-0">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+    <!-- Modal -->
+    <div class="modal fade  modal-dialog-scrollable" id="bedrijfsprofiel_modal" tabindex="-1" role="dialog" aria-labelledby="bedrijfsprofiel_modalModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pt-0">
+                    <div class="text-center mb-4">
+                        <p class="JouwOpleid" style="font-size: 20px !important">
+                            Creëer een bedrijfsprofiel of unlock de voordelen van jouw organisatie
+                        </p>
                     </div>
-                    <div class="modal-body pt-0">
-                        <div class="text-center mb-4">
-                            <p class="JouwOpleid" style="font-size: 20px !important">
-                                Creëer een bedrijfsprofiel of unlock de voordelen van jouw organisatie
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="height: 34px">
+                        <li class="nav-item w-50 text-center">
+                            <a class="nav-link text-dark active rounded rounded-pill h-100" id="pills-home-tab" data-toggle="pill"
+                               href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"
+                               style="padding-top: 5px !important; background: #E6E6E6">Word onderdeel van een bedrijf</a>
+                        </li>
+                        <li class="nav-item w-50 text-center">
+                            <a class="nav-link text-dark rounded rounded-pill h-100" id="pills-profile-tab" data-toggle="pill"
+                               href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"
+                               style="padding-top: 5px !important;background: #E6E6E6">Maak een bedrijfsprofiel</a>
+                        </li>
+                    </ul>
+
+                    <div class="pills-tabContent" >
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                            <?php echo do_shortcode("[gravityform id='14' title='false' description='false' ajax='true']"); ?>
+                            <p class="description pt-2 text-center">
+                                Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je
+                                direct toegang tot je bedrijfs leeromgeving
                             </p>
                         </div>
-                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="height: 34px">
-                            <li class="nav-item w-50 text-center">
-                                <a class="nav-link text-dark active rounded rounded-pill h-100" id="pills-home-tab" data-toggle="pill"
-                                 href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true"
-                                 style="padding-top: 5px !important; background: #E6E6E6">Word onderdeel van een bedrijf</a>
-                            </li>
-                            <li class="nav-item w-50 text-center">
-                                <a class="nav-link text-dark rounded rounded-pill h-100" id="pills-profile-tab" data-toggle="pill" 
-                                href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"
-                                style="padding-top: 5px !important;background: #E6E6E6">Maak een bedrijfsprofiel</a>
-                            </li>
-                        </ul>
+                        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            <?php echo do_shortcode("[gravityform id='15' title='false' description='false' ajax='true']"); ?>
+                            <p class="description pt-2 text-center">
+                                Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je
+                                direct toegang tot je bedrijfs leeromgeving
+                            </p>
 
-                        <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                                <?php echo do_shortcode("[gravityform id='14' title='false' description='false' ajax='true']"); ?>                                
-                                <p class="description pt-2 text-center">
-                                    Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je 
-                                    direct toegang tot je bedrijfs leeromgeving
-                                </p>
-                            </div>
-                            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                            <?php echo do_shortcode("[gravityform id='15' title='false' description='false' ajax='true']"); ?>                                
-                                <p class="description pt-2 text-center">
-                                    Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je 
-                                    direct toegang tot je bedrijfs leeromgeving
-                                </p>
-
-                                <p class="JouwOpleid pt-3 text-center">
-                                    Eerst le zen wat we doen? <a href="">Click hier!</a>
-                                </p>
-                            </div>
+                            <p class="JouwOpleid pt-3 text-center">
+                                Eerst le zen wat we doen? <a href="">Click hier!</a>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
         <nav class="navbar navbar-expand-lg navbar-dark headerdashboard">
-            
             <div class="blockIconeWidth">
                 <button id="burger-web" class="largeElement btn">
                     <i class="fa fa-bars text-white" style="font-size: 25px"></i>
@@ -135,6 +175,7 @@ if(!empty($notifications))
                     <div class="nav-item" href="#">
                         <button class="btn bntNotification" data-toggle="modal" data-target="#ModalNotification">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
+                            <i class="fas fa-bell"></i>
                             <span style="color:white" class="alertNotification"><?=count($todos);?></span>
                         </button>
 
@@ -159,7 +200,7 @@ if(!empty($notifications))
 
                                                 $type = get_field('type_feedback', $todo->ID);
                                                 $manager = get_field('manager_feedback', $todo->ID);
-                                        ?> 
+                                        ?>
                                             <a href="/dashboard/user/detail-notification/?todo=<?=$todo->ID;?>" class="modal-content-body">
                                                 <p class="feedbackText"><?=$type;?> : <span><?=$todo->post_title;?></span></p>
                                                 <p class="feedbackText">By: <span> <?php if(!empty($manager->first_name)){echo $manager->first_name;}else{echo $manager->display_name;}?> </span></p>
@@ -171,7 +212,7 @@ if(!empty($notifications))
                                             <div>
                                                 <div class="modal-content-body">
                                                     <p class="feedbackText">No new updates ...</p>
-                                                    <a href="/dashboard/user/notification" class="feedbackText">Bekijk alle notificaties</a>
+                                                    <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                                 </div>
                                             </div>
 
@@ -197,7 +238,7 @@ if(!empty($notifications))
                                     if ( in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator')
                                         echo '<a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>';
 
-                                if ( in_array( 'hr', $user->roles ) || in_array( 'author', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )) 
+                                if ( in_array( 'hr', $user->roles ) || in_array( 'author', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles ))
                                     echo '<a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>';
                             ?>
                         </div>
@@ -207,6 +248,7 @@ if(!empty($notifications))
                 <a href="<?= $link; ?>" class="navbar-brand navBrand" >
                     <div class="logoModife logoWeb logoDashboard">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_white.png" alt="">
+                        <img class="imgLogoBleu" src="<?php echo get_stylesheet_directory_uri();?>/img/LiveLearn_logo.png" alt="">
                     </div>
                     <a href="<?= $link; ?>" class="logoMobile">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn_white.png" alt="LogoMobile" >
@@ -215,6 +257,7 @@ if(!empty($notifications))
                 <div class="elementWeb dashboardsElement">
                     <a href="#" class="nav-link navModife4 btn dropdown-toggle " type="button" id="dropdownNavButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Dashboards <img class="imgArrowDropDown" src="<?php echo get_stylesheet_directory_uri();?>/img/down-chevron.svg" alt="">
+                        
                     </a>
                     <div class="dropdown-menu dropdown-menu-dashboard" aria-labelledby="dropdownMenuButton1">
                         <?php
@@ -223,10 +266,10 @@ if(!empty($notifications))
                             echo '<a class="dropdown-item" href="/dashboard/user">Eigen leeromgeving</a>';
 
                         if(!empty($company))
-                            if ( in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator') 
+                            if ( in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )  || $user->roles == 'administrator')
                                 echo '<a class="dropdown-item" href="/dashboard/company">Manager <span>intern</span></a>';
-   
-                        if ( in_array( 'hr', $user->roles ) || in_array( 'author', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles )) 
+
+                        if ( in_array( 'hr', $user->roles ) || in_array( 'author', $user->roles ) || in_array( 'manager', $user->roles ) || in_array( 'administrator', $user->roles ))
                             echo '<a class="dropdown-item" href="/dashboard/teacher">Teacher <span>Extern</span></a>';
                         ?>
                     </div>
@@ -241,19 +284,26 @@ if(!empty($notifications))
                             </div>
                         </div>
                     </form>
-                    
+
 
                     <ul class="elementHeaderUser ">
                         <li class="nav-item dropdown addButtonLink">
                             <a href="#" class="nav-link navModife4 btn dropdown-toggle" type="button" id="dropdownNavButtonAdd" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/addition.png" alt="addition" 
+                                <img class="additionImg" src="<?php echo get_stylesheet_directory_uri();?>/img/addition.png" alt="addition"
                                 style="width: 36px !important; height: 36px !important">
+                                <div class="additionBlock">
+                                    <i class="fas fa-plus" aria-hidden="true"></i>
+                                </div>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonAdd">
-                                <a class="dropdown-item" href="/onderwer/">Onderwerpen</a>
-                                <a class="dropdown-item" href="/opleiders/">Experts</a>
+                                <button type="button" class="btn showModalAdd" data-toggle="modal" data-target="#exampleModal">
+                                    Onderwerpen
+                                </button>
+                                <button type="button" class="btn showModalAdd" data-toggle="modal" data-target="#modalExpert">
+                                    Experts
+                                </button>
                             </div>
-                        </li>
+                        </li> 
                         <?php
                         $company_id = 0;
                         if(!empty($company))
@@ -263,13 +313,13 @@ if(!empty($notifications))
 
                         ?>
                         <li class="nav-link companyButton">
-                        <?php 
+                        <?php
                             if($company_id)
                                 if(in_array( 'hr', $user->roles ) || in_array( 'manager', $user->roles ) || in_array('administrator', $user->roles) )
                                     $ref_company = "/dashboard/company";
                                 else
                                     $ref_company = "#";
- 
+
                         ?>
                             <a <?php if(isset($ref_company)) echo'href ="' .$ref_company. '"'; else echo 'data-toggle="modal" data-target="#bedrijfsprofiel_modal"'; ?> >
                                 <div class="userBlockNav">
@@ -278,7 +328,7 @@ if(!empty($notifications))
                             </a>
 
                         </li>
-                       
+
                       <!--  <div class="second-element-mobile" id="burgerAndbelief">
                             <button id="burger" class=" btn burgerElement boxSousNav3-2">
                                 <i class="fa fa-bars text-white" style="font-size: 25px"></i>
@@ -292,6 +342,7 @@ if(!empty($notifications))
                         <li class="position-relative dropdown dropdownNotificationToggle">
                             <button class="btn bntNotification elementWeb dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/notification.svg" alt="">
+                                <i class="fas fa-bell"></i>
                                 <?php if(!empty($todos)){ ?> <span style="color:white" class="alertNotification"><?=count($todos);?></span> <?php } ?>
                             </button>
                             <div class="dropdown-menu dropdownNotificationWeb" aria-labelledby="dropdownMenuButton" id="ModalNotification">
@@ -309,7 +360,7 @@ if(!empty($notifications))
                                             $type = get_field('type_feedback', $todo->ID);
                                             $manager = get_field('manager_feedback', $todo->ID);
 
-                                    ?> 
+                                    ?>
                                         <a href="/dashboard/user/detail-notification/?todo=<?=$todo->ID;?>" class="">
                                             <p class="feedbackText"><?=$type;?> : <span><?=$todo->post_title;?></span></p>
                                             <p class="feedbackText">By: <span> <?php if(!empty($manager->first_name)){echo $manager->first_name;}else{echo $manager->display_name;}?> </span></p>
@@ -317,7 +368,7 @@ if(!empty($notifications))
                                 <?php
                                         }
                                         echo '<div class="">
-                                                  <a href="/dashboard/user/notification" class="btn BekijkNotifications">Bekijk alle notificaties</a>
+                                                  <a href="/dashboard/user/detail-notification/?todo=6620" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                               </div>';
                                     }
                                     else{
@@ -325,7 +376,7 @@ if(!empty($notifications))
                                         <div>
                                             <div class="">
                                                 <p class="feedbackText">No new updates ...</p>
-                                                <a href="/dashboard/user/notification/?" class="btn BekijkNotifications">Bekijk alle notificaties</a>
+                                                <a href="/dashboard/user/notification/" class="btn BekijkNotifications">Bekijk alle notificaties</a>
                                             </div>
                                         </div>
                                 <?php
@@ -334,7 +385,7 @@ if(!empty($notifications))
                             </div>
                         </li>
                         <?php
-                        $user_image_account = (get_field('profile_img',  'user_' . $user->ID)) ? get_field('profile_img',  'user_' . $user->ID) :  get_stylesheet_directory_uri() . '/img/placeholder_user.png';  
+                        $user_image_account = (get_field('profile_img',  'user_' . $user->ID)) ? get_field('profile_img',  'user_' . $user->ID) :  get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                         ?>
 
                         <li class="nav-item item4 dropdown" id="profilDropdown">
@@ -352,3 +403,175 @@ if(!empty($notifications))
             </div>
         </nav>
      <!-- </body> -->
+
+
+    <?php
+    $categories = array();
+
+    $cats = get_categories( array(
+        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+        'orderby'    => 'name',
+        'exclude' => 'Uncategorized',
+        'parent'     => 0,
+        'hide_empty' => 0, // change to 1 to hide categores not having a single post
+    ) );
+
+    foreach($cats as $category){
+        $cat_id = strval($category->cat_ID);
+        $category = intval($cat_id);
+        array_push($categories, $category);
+    }
+
+    //Topics
+    $topics = array();
+    foreach ($categories as $value){
+        $merged = get_categories( array(
+            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
+            'parent'  => $value,
+            'hide_empty' => 0, // change to 1 to hide categores not having a single post
+        ) );
+
+        if(!empty($merged))
+            $topics = array_merge($topics, $merged);
+    }
+    ?>
+    <!-- Modal add topics and subtopics -->
+    <div class="modal fade modalAddTopicsAnd modal-topics-expert" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Maak en keuze :</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="content-topics">
+                        <ul class="unstyled centered">
+                            <?php
+                            foreach($topics as $key => $topic)
+                                echo '<li>
+                                        <input class="styled-checkbox topics" id="styled-checkbox-'. $key .'" type="checkbox" value="' . $topic->cat_ID . '">
+                                        <label for="styled-checkbox-'. $key .'">' . $topic->cat_name . '</label>
+                                      </li>';
+                            ?>
+                        </ul>
+                        <div class="mt-2">
+                            <button type="button" id="btn-topics" class="btn btnNext">Next</button>
+                        </div>
+                    </div>
+                    <div class="content-subTopics">
+                        <form id="multiple_form_tags" method="POST" action="">
+                            <input type="hidden" id="user_id" name="user_id" form="multiple_form_tags" value="<?= $user->ID ?>" id="">
+                            <input type="hidden" name="meta_key" form="multiple_form_tags" value="topic" id="">
+                        </form>
+                        <div id="autocomplete_tags">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal add Expert -->
+    <div class="modal fade modalAddExpert modal-topics-expert" id="modalExpert" tabindex="-1" role="dialog" aria-labelledby="modalExpertLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Select your experts </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="head">
+                        <!--
+                        <ul>
+                            <li class="selectAll">
+                                <input class="styled-checkbox" id="allExpert" type="checkbox" value="allExpert">
+                                <label for="allExpert">Select All</label>
+                            </li>
+                        </ul>
+
+                        <div class="blockFilter">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Filter by category</option>
+                                <option value="1">Trending</option>
+                                <option value="2">Companies</option>
+                                <option value="3">Construction</option>
+                                <option value="3">HR</option>
+                                <option value="3">Food</option>
+                            </select>
+                        </div>
+                       
+                        <div class="blockSearch position-relative">
+                            <input type="search" placeholder="Search your expert" class="searchSubTopics">
+                            <img class="searchImg" src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png" alt="">
+                        </div>
+                         -->
+                    </div>
+                    <div class="content-expert">
+                        <?php
+                        $saves_experts = get_user_meta($user->ID, 'expert');
+                        foreach($see_experts as $key => $expert){
+                            if($key ==  20)
+                                continue;
+
+                            if($user->ID == $expert->ID)
+                                continue;
+
+                            $image_author = get_field('profile_img',  'user_' . $expert->ID);
+                            $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
+                            ?>
+                            <form id="multiple_form" method="POST" action="">
+                                <input type="hidden" id="user_id" name="user_id" form="multiple_form" value="<?= $user->ID ?>" id="">
+                                <input type="hidden" name="meta_key" form="multiple_form" value="expert" id="">
+                                <div class="expert-element rows2">
+                                    <div class="d-flex align-items-center">
+                                        <!-- 
+                                            <div class="checkB">
+                                                <input class="styled-checkbox" name="data[]" id="<?= $expert->ID ?>" form="multiple_form" type="checkbox" value="<?= $expert->ID ?>">
+                                                <label for="<?= $expert->ID ?>"></label>
+                                            </div> 
+                                        -->
+                                        <div class="img">
+                                            <img src="<?= $image_author ?>" alt="">
+                                        </div>
+                                        <p class="subTitleText nameExpert"><?= $expert->display_name; ?></p>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <a href="/user-overview?id=<?= $expert->ID ?>">See</a>
+                                        <!-- <form id="by_one_form" action="" method="POST"> -->
+                                            <input type="hidden" id="meta_value_expert<?= $key ?>" value="<?= $expert->ID; ?>">
+                                            <input type="hidden" id="user_id_expert<?= $key ?>" value="<?= $user->ID ?>">
+                                            <input type="hidden" id="meta_key_expert<?= $key ?>" value="expert" >
+                                            <div>
+                                                <?php
+                                                if(empty($saves_experts))
+                                                    echo "<button type='button' class='btn btnPushExpert btnFollowExpert' value='" . $key . "'><span id='autocomplete-push-expert" . $key . "'>Follow</span></button>";
+                                                else
+                                                    if (in_array($expert->ID, $saves_experts))
+                                                        echo "<button type='button' style='background-color: red' class='btn btnPushExpert btnFollowExpert' value='" . $key . "'><span id='autocomplete-push-expert" . $key . "'>Unfollow</span></button>";
+                                                    else
+                                                        echo "<button type='button' class='btn btnPushExpert btnFollowExpert' value='" . $key . "'><span id='autocomplete-push-expert" . $key . "'>Follow</span</button>";
+                                                ?>
+                                            </div>
+                                        <!-- </form> -->
+                                    </div>
+                                </div>
+                            </form>
+                            <?php
+                        }
+                        ?>
+                       
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+

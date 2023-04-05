@@ -27,7 +27,7 @@ $phone_user = get_field('telnr', 'user_' . $leerpad->post_author);
 if(isset($_GET['position']))
     $position = $_GET['position'];
 else
-    $position = 0; 
+    $position = 0;
 
 /*
 * * Playlist playing ... *
@@ -52,7 +52,11 @@ $description = get_field('long_description', $leerpadden[$position]->ID);
 /*
 * Likes
 */
-$favoured = count(get_field('favorited', $leerpad->ID));
+
+
+$favoured = count((array)get_field('favorited', $leerpad->ID));
+
+
 if(!$favoured)
     $favoured = 0;
 /*
@@ -71,6 +75,11 @@ foreach ($reviews as $review)
 
 
 ?>
+    <style>
+        .customize-support {
+            padding-top: 60px !important;
+        }
+    </style>
 
     <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 
@@ -142,7 +151,7 @@ foreach ($reviews as $review)
                 </div>
                 <div class="modal-body">
                     <div class="">
-                       
+
                         <?php
                         $author = get_user_by('id', $leerpad->post_author);
                         ?>
@@ -163,7 +172,7 @@ foreach ($reviews as $review)
         <div class="container-fluid">
             <div class="overElement">
                 <div class="blockOneOver">
-                    <?php 
+                    <?php
                     if(isset($_GET["message"]))
                         echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>";
                     ?>
@@ -181,6 +190,66 @@ foreach ($reviews as $review)
                     <div class="img-fluid-course">
                         <img src="<?= $preview; ?>" alt="">
                     </div>
+
+<!--                    for podcast-->
+                    <!--<div>
+
+                        <div class="img-fluid-course img-podacast imgPadcastCourse">
+                            <?php /*echo "<img src='" . $thumbnail . "' alt='preview image'>"; */?>
+                        </div>
+                        <div class="sound-wave">
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" preserveAspectRatio="none" viewBox="0 0 1440 560">
+                                <g mask='url("#SvgjsMask1099")' fill="none">
+                                    <rect fill="#0e2a47"></rect>
+                                    <g transform="translate(0, 0)" stroke-linecap="round" stroke="url(#SvgjsLinearGradient1100)">
+                                        <path d="M375 202.15 L375 357.85" stroke-width="17.25" class="bar-scale2 "></path>
+                                        <path d="M398 155.33 L398 404.67" stroke-width="17.25" class="bar-scale3"></path>
+                                        <path d="M421 196.44 L421 363.56" stroke-width="17.25" class="bar-scale3 "></path>
+                                        <path d="M444 259.91 L444 300.09" stroke-width="17.25" class="bar-scale1 "></path>
+                                        <path d="M467 208.25 L467 351.75" stroke-width="17.25" class="bar-scale3 "></path>
+                                        <path d="M490 184.8 L490 375.2" stroke-width="17.25" class="bar-scale2 "></path>
+                                        <path d="M513 249.28 L513 310.72" stroke-width="17.25" class="bar-scale2 "></path>
+                                        <path d="M536 220.75 L536 339.25" stroke-width="17.25" class="bar-scale3 "></path>
+                                        <path d="M559 254.8 L559 305.2" stroke-width="17.25" class="bar-scale1 "></path>
+                                        <path d="M582 186.77 L582 373.23" stroke-width="17.25" class="bar-scale3 "></path>
+                                        <path d="M605 210.13 L605 349.87" stroke-width="17.25" class="bar-scale1 "></path>
+                                        <path d="M628 234.45 L628 325.55" stroke-width="17.25" class="bar-scale3 "></path>
+                                        <path d="M651 241.1 L651 318.89" stroke-width="17.25" class="bar-scale2 "></path>
+                                        <path d="M674 202.95 L674 357.05" stroke-width="17.25" class="bar-scale3 "></path>
+                                        <path d="M697 165.81 L697 394.19" stroke-width="17.25" class="bar-scale2 "></path>
+                                        <path d="M720 224.51 L720 335.49" stroke-width="17.25" class="bar-scale2 "></path>
+                                        <path d="M743 157.59 L743 402.4" stroke-width="17.25" class="bar-scale1 "></path>
+                                        <path d="M766 164.98 L766 395.02" stroke-width="17.25" class="bar-scale1 "></path>
+                                        <path d="M789 158.93 L789 401.07" stroke-width="17.25" class="bar-scale3 "></path>
+                                        <path d="M812 224.24 L812 335.76" stroke-width="17.25" class="bar-scale2 "></path>
+                                        <path d="M835 171.73 L835 388.27" stroke-width="17.25" class="bar-scale1 "></path>
+                                        <path d="M858 264.89 L858 295.11" stroke-width="17.25" class="bar-scale2 "></path>
+                                        <path d="M881 175.14 L881 384.86" stroke-width="17.25" class="bar-scale1 "></path>
+                                        <path d="M904 248.17 L904 311.83" stroke-width="17.25" class="bar-scale3 "></path>
+                                        <path d="M927 185.4 L927 374.6" stroke-width="17.25" class="bar-scale1 "></path>
+                                        <path d="M950 234.82 L950 325.18" stroke-width="17.25" class="bar-scale3 "></path>
+                                        <path d="M973 229.9 L973 330.1" stroke-width="17.25" class="bar-scale3 "></path>
+                                        <path d="M996 194.25 L996 365.75" stroke-width="17.25" class="bar-scale2 "></path>
+                                        <path d="M1019 162.47 L1019 397.53" stroke-width="17.25" class="bar-scale1 "></path>
+                                        <path d="M1042 205.06 L1042 354.94" stroke-width="17.25" class="bar-scale3 "></path>
+                                        <path d="M1065 240.52 L1065 319.48" stroke-width="17.25" class="bar-scale1 "></path>
+                                    </g>
+                                </g>
+                                <defs>
+                                    <mask id="SvgjsMask1099">
+                                        <rect width="1440" height="560" fill="#ffffff"></rect>
+                                    </mask>
+                                    <linearGradient x1="360" y1="280" x2="1080" y2="280" gradientUnits="userSpaceOnUse" id="SvgjsLinearGradient1100">
+                                        <stop stop-color="#3a7cc3" offset="0"></stop>
+                                        <stop stop-color="#dd1133" offset="1"></stop>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                    </div>-->
+
+
+
                     <p class="beschiBlockText"><?= $actual_infos; ?></p>
 
                     <!-- -------------------------------------- Start Icons row ------------------------------------->
@@ -205,7 +274,7 @@ foreach ($reviews as $review)
                         <div class="d-flex flex-row block2">
                             <div class="d-flex flex-column mx-md-3 mx-2">
                                 <form action="/dashboard/user/" method="POST">
-                               
+
                                 <?php
                                 if($user_id != 0)
                                     echo "
@@ -335,7 +404,7 @@ foreach ($reviews as $review)
                                     foreach($reviews as $review){
                                         $user = $review['user'];
                                         $image_author = get_field('profile_img',  'user_' . $user->ID);
-                                        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';                    
+                                        $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/user.png';
                                     ?>
                                     <div class="review-info-card">
                                         <div class="review-user-mini-profile">
@@ -366,18 +435,18 @@ foreach ($reviews as $review)
                                 <?php
                                     }
                                 }
-                                else 
+                                else
                                     echo "<h6>No reviews for this course ...</h6>";
                                 ?>
                             </div>
                             <div id="tab3" class="tab-content">
-                                <?php 
+                                <?php
                                 if($user_id != 0 && !$my_review_bool){
                                 ?>
                                 <div class="formSingleCoourseReview">
                                     <label>Rating</label>
                                     <div class="rating-element2">
-                                        <div class="rating"> 
+                                        <div class="rating">
                                             <input type="radio" id="star5" class="stars" name="rating" value="5" />
                                             <label class="star" for="star5" title="Awesome" aria-hidden="true"></label>
                                             <input type="radio" id="star4" class="stars" name="rating" value="4" />
@@ -430,14 +499,14 @@ foreach ($reviews as $review)
                             <div class="modal-body  px-md-4 px-0">
                                 <div class="mb-4">
                                     <div class="text-center">
-                                        <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
-                                    </div>  
+                                        <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                                    </div>
                                     <h3 class="text-center my-2">Sign Up</h3>
                                     <div class="text-center">
                                         <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
                                         data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign in</a></p>
                                     </div>
-                                </div>  
+                                </div>
 
 
                                 <?php
@@ -451,7 +520,7 @@ foreach ($reviews as $review)
 
                             </div>
                         </div>
-                    
+
                     </div>
                 </div>
                 <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
@@ -472,7 +541,7 @@ foreach ($reviews as $review)
                             <div class="modal-body  px-md-5 px-4">
                                 <div class="mb-4">
                                     <div class="text-center">
-                                        <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                                        <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
                                     </div>
                                     <h3 class="text-center my-2">Sign In</h3>
                                     <div class="text-center">
@@ -519,7 +588,7 @@ foreach ($reviews as $review)
                     <div class="play-road-element">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <p class="title"><?= $leerpad->post_title; ?></p>
-                            <p class="number"><?= count($leerpadden); ?> Courses</p>
+                            <p class="number"><?= count((array)$leerpadden); ?> Courses</p>
                         </div>
                         <?php
                             foreach($leerpadden as $key => $course){
@@ -552,7 +621,7 @@ foreach ($reviews as $review)
                         <?php
                             }
                         ?>
-                        
+
                     </div>
 
 
@@ -690,6 +759,41 @@ foreach ($reviews as $review)
 
 
     </div>
+    </div>
+
+
+
+    <!-- for podcast-->
+    <div class="audioBar">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center text-center">
+                <button class="codeless-player-toggle">
+                    <img id="down-chevron" src="<?php echo get_stylesheet_directory_uri();?>/img/down-chevron.svg" alt="">
+                    <img id="up-chevron" src="<?php echo get_stylesheet_directory_uri();?>/img/up-chevron.png" alt="">
+                </button>
+                <div class="codeless-player-info codeless-element">
+                    <div class="codeless-player-nav">
+                        <button class="previous round livecast-play">&#8249;</button>
+                        <button class="next round livecast-play">&#8250;</button>
+                    </div>
+                    <div class="codeless-player-content">
+                        <h4>What is the ecosystem?</h4>
+                        <p class="categorie">World</p>
+                    </div>
+                </div>
+                <div class="codeless-player-audio  codeless-element">
+                    <audio controls>
+                        <source src="horse.ogg" type="audio/ogg">
+                        <source src="<?php echo get_stylesheet_directory_uri();?>/sounds/firstSounds.mp3" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>

@@ -7,6 +7,11 @@
 $page = 'check_visibility.php';
 require($page);
 
+$user_connected = get_current_user_id();
+
+if($user_connected)
+    header('Location: /dashboard/user/');
+
 $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
 ?>
@@ -352,7 +357,7 @@ $degrees=[
 
     ?>
     <!-- Modal First Connection -->
-    <div class="contentModalFirst">
+    <div class="contentModalFirst"²>
         <div class="modal" id="myFirstModal" tabindex="-1" role="dialog" aria-labelledby="myFirstModalScrollableTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -388,6 +393,7 @@ $degrees=[
                                 </div>
                                 <button type="button" class="btn btnNext" id="nextblockBaangerichte">Next</button>
                             </div>
+                            <button type="button" class="btn btnSkipTopics" id="btnSkipTopics1">Skip</button>
                         </div>
 
                         <div class="blockfunctiegericht">
@@ -414,6 +420,7 @@ $degrees=[
                                 </div>
                                 <button type="button" class="btn btnNext" id="nextFunctiegericht">Next</button>
                             </div>
+                            <button type="button" class="btn btnSkipTopics" id="btnSkipTopics2">Skip</button>
                         </div>
 
                         <div class="blockSkills">
@@ -1105,7 +1112,7 @@ $degrees=[
                             $thumbnail = get_stylesheet_directory_uri() . '/img/placeholder.png';
 
                         /*
-                            * Companies
+                        * Companies
                         */
                         $company = get_field('company',  'user_' . $course->post_author);
                         $company_id = $company[0]->ID;
@@ -1238,7 +1245,7 @@ $degrees=[
                     *  Date and Location
                     */
                     $location = 'Virtual';
-                    $day = "<p><i class='fas fa-calendar-week'></i></p>";
+                    $day = "-";
                     $month = '';
 
                     $datas = get_field('data_locaties', $course->ID);
@@ -1246,7 +1253,7 @@ $degrees=[
                     /*
                     *  Date and Location
                     */ 
-                    $day = "<i class='fas fa-calendar-week'></i>";
+                    $day = "-";
                     $month = ' ';
                     $location = ' ';
                 
@@ -1258,7 +1265,7 @@ $degrees=[
                     else{
                         $dates = get_field('dates', $course->ID);
                         if($dates)
-                            $day = explode(' ', $dates[0]['date']);
+                            $day = explode(' ', $dates[0]['date'])[0];
                         else{
                             $data = get_field('data_locaties_xml', $course->ID);
                             if(isset($data[0]['value'])){
@@ -1712,4 +1719,3 @@ $degrees=[
         });
     });
 </script>
-

@@ -20,9 +20,14 @@
         $profes = array();
         $topic = "";
 
+        if (!isset($leervom))
+            $leervom = array();
+
         $args = array(
             'post_type' => array('post','course'), 
             'post_status' => 'publish',
+            'orderby' => 'date',
+            'order'   => 'DESC',
             'posts_per_page' => -1,
         );
         $global_courses = get_posts($args);
@@ -45,12 +50,20 @@
             $args = array(
                 'post_type' => array('post','course'), 
                 'post_status' => 'publish',
+                'orderby' => 'date',
+                'order'   => 'DESC',
                 'posts_per_page' => -1,
             );
             $posts = get_posts($args);
             foreach($posts as $datum)
                 if(stristr($datum->post_title, $search)){
-                    array_push($courses, $datum);
+                    if($search_type == 'Alles')
+                        array_push($courses, $datum);
+                    else{
+                        $course_type = get_field('course_type', $datum->ID);
+                        if($course_type == $search_type)
+                            array_push($courses, $datum);
+                    }
                 }
         }
         else{ 
@@ -58,6 +71,11 @@
             ## SIDE PRODUCT CATEGORIES 
                 foreach($global_courses as $course)
                 {
+                    $hidden = true;
+                    $hidden = visibility($course, $visibility_company);
+                    if(!$hidden)
+                        continue;
+
                     $bool = false;
                     $experts = get_field('experts', $post->ID);
 
@@ -104,6 +122,11 @@
             ## SIDE PRODUCT USERS 
                 foreach($global_courses as $course)
                 {
+                    $hidden = true;
+                    $hidden = visibility($course, $visibility_company);
+                    if(!$hidden)
+                        continue;
+
                     $bool = false;
                     $expert = get_field('experts', $course->ID);
 
@@ -165,6 +188,8 @@
                 $args = array(
                     'post_type' => array('post','course'), 
                     'posts_per_page' => -1,
+                    'orderby' => 'date',
+                    'order'   => 'DESC',
                     'author__in' => $users_companie,  
                 );
         
@@ -173,6 +198,8 @@
                 $args = array(
                     'post_type' => array('post','course'), 
                     'post_status' => 'publish',
+                    'orderby' => 'date',
+                    'order'   => 'DESC',
                     'posts_per_page' => 500,
                 );
                 $courses = get_posts($args);
@@ -445,49 +472,49 @@
                         ?>
                         <div class="checkFilter">
                             <label class="contModifeCheck">Opleiding
-                                <input style="color:red;" type="checkbox" id="opleiding" name="leervom[]" value="Opleidingen"  <?php if(isset($leervom)) if(in_array('Opleidingen', $leervom)) echo "checked" ; else echo ""  ?> >
+                                <input style="color:red;" type="checkbox" id="opleiding" name="leervom[]" value="Opleidingen"  <?php if( !empty($leervom) ||  isset($search_type) ) if(in_array('Opleidingen', $leervom) || $search_type == "Opleidingen" ) echo "checked" ; else echo ""  ?> >
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div>
                         <div class="checkFilter">
                             <label class="contModifeCheck">Masterclass
-                                <input type="checkbox" id="masterclass" name="leervom[]" value="Masterclass"  <?php if(isset($leervom)) if(in_array('Masterclass', $leervom)) echo "checked" ; else echo ""  ?> >
+                                <input type="checkbox" id="masterclass" name="leervom[]" value="Masterclass"  <?php if( !empty($leervom) ||  isset($search_type) ) if(in_array('Masterclass', $leervom) || $search_type == "Masterclass" ) echo "checked" ; else echo ""  ?> >
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div>
                         <div class="checkFilter">
                             <label class="contModifeCheck">Workshop
-                                <input type="checkbox" id="workshop" name="leervom[]" value="Workshop"  <?php if(isset($leervom)) if(in_array('Workshop', $leervom)) echo "checked" ; else echo ""  ?> >
+                                <input type="checkbox" id="workshop" name="leervom[]" value="Workshop"  <?php if( !empty($leervom) ||  isset($search_type) ) if(in_array('Workshop', $leervom) || $search_type == "Workshop" ) echo "checked" ; else echo ""  ?> >
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div>
                         <div class="checkFilter">
                             <label class="contModifeCheck">E-Learning
-                                <input type="checkbox" id="learning" name="leervom[]" value="E-learning"  <?php if(isset($leervom)) if(in_array('E-learning', $leervom)) echo "checked" ; else echo ""  ?> >
+                                <input type="checkbox" id="learning" name="leervom[]" value="E-learning"  <?php if( !empty($leervom) ||  isset($search_type) ) if(in_array('E-learning', $leervom) || $search_type == "E-learning" ) echo "checked" ; else echo ""  ?> >
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div>
                         <div class="checkFilter">
                             <label class="contModifeCheck">Event
-                                <input type="checkbox" id="event" name="leervom[]" value="Event"  <?php if(isset($leervom)) if(in_array('Event', $leervom)) echo "checked" ; else echo ""  ?> >
+                                <input type="checkbox" id="event" name="leervom[]" value="Event"  <?php if( !empty($leervom) ||  isset($search_type) ) if(in_array('Event', $leervom) || $search_type == "Event" ) echo "checked" ; else echo ""  ?> >
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div> 
                         <div class="checkFilter">
                             <label class="contModifeCheck">Video
-                                <input type="checkbox" id="event" name="leervom[]" value="Video" <?php if(isset($leervom)) if(in_array('Video', $leervom)) echo "checked" ; else echo ""  ?> >
+                                <input type="checkbox" id="event" name="leervom[]" value="Video" <?php if( !empty($leervom) ||  isset($search_type) ) if(in_array('Video', $leervom) || $search_type == "Video" ) echo "checked" ; else echo ""  ?> >
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div> 
                         <div class="checkFilter">
                             <label class="contModifeCheck">Training
-                                <input type="checkbox" id="event" name="leervom[]" value="Training" <?php if(isset($leervom)) if(in_array('Training', $leervom)) echo "checked" ; else echo ""  ?> >
+                                <input type="checkbox" id="event" name="leervom[]" value="Training" <?php if( !empty($leervom) ||  isset($search_type) ) if(in_array('Training', $leervom) || $search_type == "Training" ) echo "checked" ; else echo ""  ?> >
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div>
                         <div class="checkFilter">
                             <label class="contModifeCheck">Artikel
-                                <input type="checkbox" id="event" name="leervom[]" value="Artikel" <?php if(isset($leervom)) if(in_array('Artikel', $leervom)) echo "checked" ; else echo ""  ?> >
+                                <input type="checkbox" id="event" name="leervom[]" value="Artikel" <?php if( !empty($leervom) ||  isset($search_type) ) if(in_array('Artikel', $leervom) || $search_type == "Artikel" ) echo "checked" ; else echo ""  ?> >
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
                         </div> 

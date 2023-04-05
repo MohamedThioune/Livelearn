@@ -22,6 +22,7 @@
                     <a class="navbar-brand navBrand" href="/dashboard/user/">
                         <div class="logoModife">
                             <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_white.png" alt="">
+                            <img class="imgLogoBleu" src="<?php echo get_stylesheet_directory_uri();?>/img/LiveLearn_logo.png" alt="">
                         </div>
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,7 +95,32 @@
                     </div>
                 </div>
             </nav>
-            <nav class="navMobile">
+            <nav class="navMobile navMobile-custom">
+                <div class="blockShowApp">
+                    <div class="container-fluid">
+                        <div class="elements-blockShowApp">
+                            <div class="d-flex align-items-center frist-block">
+                                <button type="button" class="btn close-block">
+                                    x
+                                </button>
+                                <div class="logo-livelearn">
+                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="search">
+                                </div>
+                            </div>
+                            <div class="secondBlock">
+                                <p class="text-Probeer"><b>Probeer onze gratis leer-app</b></p>
+                                <p class="text-Probeer">En start meteen met jezelf te ontwikkelen</p>
+                                <div class="d-flex">
+                                    <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/ios-star.png" alt="search">
+                                    <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/ios-star.png" alt="search">
+                                    <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/ios-star.png" alt="search">
+                                    <img class="star-app-img" src="<?php echo get_stylesheet_directory_uri();?>/img/ios-star.png" alt="search">
+                                </div>
+                            </div>
+                            <a href="" class="btn btn-Openen">Openen</a>
+                        </div>
+                    </div>
+                </div>
                 <div class="ProfilGraduatioBlock">
                     <div class="sousNav1">
                         <div class="boxImgNav">

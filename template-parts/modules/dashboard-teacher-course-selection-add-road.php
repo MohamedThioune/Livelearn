@@ -56,13 +56,13 @@
                     <div class="circleIndicator ">
                         <i class="fa fa-tag" aria-hidden="true"></i>
                     </div>
-                    <p class="textOpleidRight ">Tags</p>
+                    <p class="textOpleidRight ">Onderwerpen</p>
                 </a>
                 <a href="<?php if(isset($_GET['id'])) echo '/dashboard/teacher/course-selection/?func=add-road&id=' . $_GET['id'] . '&step=4&edit'; else echo "?func=add-white&message=Please finish this step before"; ?>" class="contentBlockCourse">
                     <div class="circleIndicator">
                     <i class="fa fa-user" aria-hidden="true"></i>
                     </div>
-                    <p class="textOpleidRight">Expert</p>
+                    <p class="textOpleidRight">Experts</p>
                 </a>
             </div>
         </div>

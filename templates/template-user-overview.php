@@ -147,7 +147,6 @@
                     }
                     
                 array_push($agenda, $course);
-
             }
 
             //Number of likes
@@ -211,7 +210,6 @@
 
         //Note
         $skills_note = get_field('skills', 'user_' . $user->ID);
-
     }
 
 
@@ -304,7 +302,7 @@
 
 
                     <?php
-                        echo (do_shortcode('[user_registration_form id="59"]'));
+                        echo (do_shortcode('[user_registration_form id="8477"]'));
                     ?>
 
                     <div class="text-center">
@@ -666,14 +664,18 @@
                                 else 
                                     $price = 'Gratis';
 
+                                //Course Type
+                                $course_type = get_field('course_type', $course->ID);
                                 /*
                                 * Thumbnails
-                                */ 
-                                $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                */
+                                $thumbnail = get_field('preview', $course->ID)['url'];
                                 if(!$thumbnail){
-                                    $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
+                                    $thumbnail = get_the_post_thumbnail_url($course->ID);
                                     if(!$thumbnail)
-                                        $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                                        $thumbnail = get_field('url_image_xml', $course->ID);
+                                            if(!$thumbnail)
+                                                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                                 }
 
                                 //Image author of this post 
@@ -825,14 +827,18 @@
                                 else 
                                     $price = 'Gratis';
 
+                                //Course Type
+                                $course_type = get_field('course_type', $course->ID);
                                 /*
                                 * Thumbnails
-                                */ 
-                                $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                */
+                                $thumbnail = get_field('preview', $course->ID)['url'];
                                 if(!$thumbnail){
-                                    $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
+                                    $thumbnail = get_the_post_thumbnail_url($course->ID);
                                     if(!$thumbnail)
-                                        $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                                        $thumbnail = get_field('url_image_xml', $course->ID);
+                                            if(!$thumbnail)
+                                                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                                 }
 
                                 //Image author of this post 
@@ -953,14 +959,18 @@
                                 else 
                                     $price = 'Gratis';
 
+                                //Course Type
+                                $course_type = get_field('course_type', $course->ID);
                                 /*
                                 * Thumbnails
-                                */ 
-                                $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                */
+                                $thumbnail = get_field('preview', $course->ID)['url'];
                                 if(!$thumbnail){
-                                    $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
+                                    $thumbnail = get_the_post_thumbnail_url($course->ID);
                                     if(!$thumbnail)
-                                        $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                                        $thumbnail = get_field('url_image_xml', $course->ID);
+                                            if(!$thumbnail)
+                                                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                                 }
 
                                 //Image author of this post 
@@ -970,8 +980,6 @@
 
                                 //Other case : youtube
                                 $youtube_videos = get_field('youtube_videos', $course->ID);
-
-    
 
                             ?>
                                 <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiper-slide4">
@@ -1172,14 +1180,18 @@
                                 else 
                                     $price = 'Gratis';
 
+                                //Course Type
+                                $course_type = get_field('course_type', $course->ID);
                                 /*
                                 * Thumbnails
-                                */ 
-                                $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                */
+                                $thumbnail = get_field('preview', $course->ID)['url'];
                                 if(!$thumbnail){
-                                    $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
+                                    $thumbnail = get_the_post_thumbnail_url($course->ID);
                                     if(!$thumbnail)
-                                        $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                                        $thumbnail = get_field('url_image_xml', $course->ID);
+                                            if(!$thumbnail)
+                                                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                                 }
 
                                 //Image author of this post 
@@ -1313,14 +1325,18 @@
                                     else 
                                         $price = 'Gratis';
 
+                                    //Course Type
+                                    $course_type = get_field('course_type', $course->ID);
                                     /*
                                     * Thumbnails
-                                    */ 
-                                    $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                    */
+                                    $thumbnail = get_field('preview', $course->ID)['url'];
                                     if(!$thumbnail){
-                                        $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
+                                        $thumbnail = get_the_post_thumbnail_url($course->ID);
                                         if(!$thumbnail)
-                                            $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                                            $thumbnail = get_field('url_image_xml', $course->ID);
+                                                if(!$thumbnail)
+                                                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                                     }
 
                                     //Image author of this post 
@@ -1477,14 +1493,18 @@
                                 else 
                                     $price = 'Gratis';
 
+                                //Course Type
+                                $course_type = get_field('course_type', $course->ID);
                                 /*
                                 * Thumbnails
-                                */ 
-                                $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                */
+                                $thumbnail = get_field('preview', $course->ID)['url'];
                                 if(!$thumbnail){
-                                    $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
+                                    $thumbnail = get_the_post_thumbnail_url($course->ID);
                                     if(!$thumbnail)
-                                        $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                                        $thumbnail = get_field('url_image_xml', $course->ID);
+                                            if(!$thumbnail)
+                                                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                                 }
 
                                 //Image author of this post 
@@ -1641,15 +1661,20 @@
                                 else 
                                     $price = 'Gratis';
 
+                                //Course Type
+                                $course_type = get_field('course_type', $course->ID);
                                 /*
                                 * Thumbnails
-                                */ 
-                                $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                */
+                                $thumbnail = get_field('preview', $course->ID)['url'];
                                 if(!$thumbnail){
-                                    $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
+                                    $thumbnail = get_the_post_thumbnail_url($course->ID);
                                     if(!$thumbnail)
-                                        $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                                        $thumbnail = get_field('url_image_xml', $course->ID);
+                                            if(!$thumbnail)
+                                                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                                 }
+
                                 //Image author of this post 
                                 $image_author = get_field('profile_img',  'user_' . $course->post_author);
                                 $image_author = $image_author ? $image_author : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
@@ -1742,15 +1767,20 @@
                                 else 
                                     $price = 'Gratis';
 
-                            /*
+                                //Course Type
+                                $course_type = get_field('course_type', $course->ID);
+                                /*
                                 * Thumbnails
-                                */ 
-                                $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                */
+                                $thumbnail = get_field('preview', $course->ID)['url'];
                                 if(!$thumbnail){
-                                    $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
+                                    $thumbnail = get_the_post_thumbnail_url($course->ID);
                                     if(!$thumbnail)
-                                        $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                                        $thumbnail = get_field('url_image_xml', $course->ID);
+                                            if(!$thumbnail)
+                                                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                                 }
+
                                 //Image author of this post 
                                 $image_author = get_field('profile_img',  'user_' . $course->post_author);
                                 $image_author = $image_author ? $image_author : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
@@ -1896,14 +1926,18 @@
                                 else 
                                     $price = 'Gratis';
 
-                            /*
+                                //Course Type
+                                $course_type = get_field('course_type', $course->ID);
+                                /*
                                 * Thumbnails
-                                */ 
-                                $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                */
+                                $thumbnail = get_field('preview', $course->ID)['url'];
                                 if(!$thumbnail){
-                                    $thumbnail = get_field('field_619ffa6344a2c', $course->ID);
+                                    $thumbnail = get_the_post_thumbnail_url($course->ID);
                                     if(!$thumbnail)
-                                        $thumbnail = get_stylesheet_directory_uri() . '/img/libay.png';
+                                        $thumbnail = get_field('url_image_xml', $course->ID);
+                                            if(!$thumbnail)
+                                                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                                 }
 
                                 //Image author of this post 
@@ -2033,7 +2067,7 @@
                             if(!empty($topics)){
                             ?>
                             <div class="skills-side">
-                                <span class="text-dark h5 p-1 mt-2">My skills</span>
+                                <span class="text-dark h5 p-1 mt-2">My skills</span><br>
                                 
                                 <?php foreach($topics as $value){ 
                                         $topic = get_the_category_by_ID($value);
