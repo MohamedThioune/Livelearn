@@ -9297,7 +9297,7 @@ ul#tabs-nav li.active a {
 
 .headOverviewOrganisatie {
     margin: 0 auto 100px;
-    width: 380px;
+    width: 700px;
     text-align: center;
 }
 
@@ -20013,7 +20013,7 @@ background: #FFFFFF !important;
         background: #023356;
     }
     .content-voor-2  {
-        padding-bottom: 100px;
+        padding-bottom: 0px;
     }
     .content-voor-teacher-2 .firstSection .blockForm2 {
         margin-top: 40px;

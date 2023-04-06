@@ -78,9 +78,10 @@
 
     <div class="contentOverviewOrganisatie pt-5">
        <div class="headOverviewOrganisatie">
-           <h1>Een Lerende organisatie voor klein én groot</h1>
-           <p class="description">Wij hanteren geen opstartkosten, dus iedereen kan meteen van start </p>
-           <a href="" class="btn btnbtnCreeerJe" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">Creeer je omgeving gratis</a>
+           <h1>Een lerende organisatie voor klein én groot</h1>
+           <p class="description">Wij hanteren geen opstartkosten, dus je kan meteen van start. Wij doen alleen een snelle check om naar je organisatie te kijken. Zodat we  zeker weten dat wij kunnen bieden wat jij nodig hebt.
+               creëer je omgeving gratis</p>
+           <a href="/voor-organisatie-2/" class="btn btnbtnCreeerJe" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">Creeer je omgeving gratis</a>
        </div>
         <div class="row">
             <div class="col-md-4">

@@ -282,11 +282,9 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
             });
         }
     });
-
 </script>
 
 <script>
-
      $('#search_txt_company').keyup(function(){
         var txt = $(this).val();
 
@@ -302,9 +300,9 @@ if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['m
                 console.log(data);
                 const resultat_recherche = document.getElementById('autocomplete_company_people');
                 resultat_recherche.innerHTML = data;
-                // $('#autocomplete_company_people').html(data);
+                $('#autocomplete_company_people').html(data);
             }
         });
-
+        
     });
 </script>

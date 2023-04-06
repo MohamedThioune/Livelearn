@@ -95,9 +95,10 @@ if($community){
     //Questions 
     $max_question = 0;
     $questions = get_field('question_community', $community->ID);
-    if(!empty($questions))
+    if(!empty($questions)){
         $max_question = count($questions);
-
+        $questions = array_reverse($questions);
+    }
     if(!$bool)
         header('Location: /dashboard/user/communities/?message=Je moet lid zijn van deze gemeenschap voordat je toegang krijgt');
 ?>
@@ -145,12 +146,15 @@ if($community){
                                     <div class="w-100">
                                         <?php
                                         foreach($questions as $key => $question):
+                                        if($key == 2)
+                                            break;
                                         $user_question = $question['user_question'];
                                         $user_question_name = $user_question->first_name ?: $user_question->display_name;
                                         $user_question_image = get_field('profile_img', 'user_' . $user_question->ID);
                                         $user_question_image = $user_question_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                         $text_question = $question['text_question'];
                                         $reply_question = $question['reply_question'];
+                                        $reply_question_count = 0;
                                         if(!empty($reply_question))
                                             $reply_question_count = count($reply_question);
                                         ?>
@@ -566,6 +570,7 @@ if($community){
                             $user_question_image = $user_question_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                             $text_question = $question['text_question'];
                             $reply_question = $question['reply_question'];
+                            $reply_question_count = 0;
                             if(!empty($reply_question))
                                 $reply_question_count = count($reply_question);
                             ?>
@@ -579,7 +584,7 @@ if($community){
                                         <p class="name-user-answer"><?= $user_question_name; ?></p>
                                         <!-- <p class="date-answer">March, 16 2023</p> -->
                                     </div>
-                                    <p class="text-question"><?= $text_question ?></p>
+                                    <p class="text-question"><?= $text_question ?> </p>
                                     <div class="d-flex">
                                         
                                         <button class="btn footer-answer-items" data-target="block-all-answer-<?= $key; ?>" id="answer-item-1">

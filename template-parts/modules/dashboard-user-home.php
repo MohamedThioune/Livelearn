@@ -541,7 +541,6 @@ if (!empty($user_post_view))
 
                     if(!in_array($course->post_author, $teachers))
                         array_push($teachers, $course->post_author);
-
                 }
         }
     }
