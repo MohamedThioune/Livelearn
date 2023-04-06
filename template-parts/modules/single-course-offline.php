@@ -428,7 +428,7 @@
                                                             $date_end = $datum['data'][count($datum['data'])-1]['start_date'];
                                                             $agenda_start = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
                                                             $hour_start = explode(' ', $date_start)[1];
-                                                            $year_start = explode(' ', $date_start)[2];
+                                                            $year_start = explode('/', explode(' ', $date_end)[0])[2];
                                                             $location_start = $datum['data'][0]['location'];
                                                             if($date_end)
                                                                 $agenda_end = explode('/', explode(' ', $date_end)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_end)[0])[1]];
@@ -504,7 +504,7 @@
                                                                         <div class="contentBtnCardProduct">
                                                                             <?php
                                                                             if($product):                                                                            
-                                                                            $dateNameStart = $agenda_start . ', ' . $hour_start . ', ' . $year_start . ', ' . $location_start;
+                                                                            $dateNameStart = $agenda_start . ', ' . $hour_start . ', ' . $location_start . ', ' . $year_start;
 
                                                                             echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
 
@@ -568,6 +568,7 @@
                                                 $timer_e = explode(':', $date_end[1]);
                                                 $h_end =  $timer_e[0] . ':' . $timer_e[1];
 
+                                                $year_start =  $d_start[2]; 
                                                 $agenda_start = $d_start[0] . ' ' . $calendar[$d_start[1]];
                                                 $agenda_end = $d_end[0] . ' ' . $calendar[$d_end[1]];
 
@@ -641,7 +642,8 @@
                                                                     <div class="contentBtnCardProduct">
                                                                         <?php
                                                                         if($product):                                                                            
-                                                                        $dateNameStart = $agenda_start . ', ' . $h_start . ', ' . $location_start;
+                                                                        $dateNameStart = $agenda_start . ', ' . $h_start . ', ' . $location_start . ', ' . $year_start;
+
                                                                         //Reserveren action
                                                                         echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
 
@@ -745,8 +747,8 @@
                                                                     <div class="contentBtnCardProduct">
                                                                         <?php
                                                                         if($product):                                                                            
+                                                                        $dateNameStart = $agenda_start . ', ' . $h_start . ', ' . $location_start  . ', ' . $year_start;
 
-                                                                        $dateNameStart = $agenda_start . ', ' . $h_start . ', ' . $location_start;
                                                                         //Reserveren action
                                                                         echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
 
