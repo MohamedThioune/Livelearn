@@ -166,17 +166,29 @@
             <p class="JouwOpleid">Werknemers (<?= $count; ?>)</p>
             <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
             <div class="">
-                <button type="button" class="btn" data-toggle="modal" data-target="#polarisModal">Polaris</button>
+               <!-- <button type="button" class="btn" data-toggle="modal" data-target="#polarisModal">Polaris</button>
                 <button type="button" class="btn" data-toggle="modal" data-target="#loketModal">Loket</button>
-                <a href="../people-mensen" class="btnNewCourse">Persoon toevoegen</a>
-                <select name="salary-system" id="salary-system">
+                <a href="../people-mensen" class="btnNewCourse">Persoon toevoegen</a>-->
+
+                <div class="dropdown custom-dropdown-select">
+                    <button class="btn btn-choose-company dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Choose a company
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <button type="button" class="dropdown-item btn btn-show-modal" data-toggle="modal" data-target="#polarisModal">Polaris</button>
+                        <button type="button" class="dropdown-item btn btn-show-modal" data-toggle="modal" data-target="#loketModal">Loket</button>
+                        <a href="../people-mensen" class="dropdown-item" >Persoon toevoegen</a>
+                    </div>
+                </div>
+
+                <!--<select name="salary-system" id="salary-system">
                     <option value=""></option>
                         <option value="polaris" >POLARIS</option>
                     <option value="loket">LOKET</option>
                     <option value="">
                         <a href="../people-mensen" class="btnNewCourse">Persoon toevoegen</a>
                     </option>
-                </select>
+                </select>-->
             </div>
         </div>
         <div class="contentCardListeCourse">
@@ -372,7 +384,7 @@
 ?>
 </div>
 <!--begin Modal for connexion polaris -->
-<div class="modal fade" id="polarisModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade otherModal" id="polarisModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -411,15 +423,14 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-success" form="data-sending-from-form">conect to Polaris</button>
+        <button type="submit" class="btn btn-success" form="data-sending-from-form">Connect to Polaris</button>
       </div>
     </div>
   </div>
 </div>
 <!--end Modal for connexion polaris -->
 <!--begin Modal for connexion Loket -->
-<div class="modal fade" id="loketModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade otherModal" id="loketModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -472,7 +483,6 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-success <?= $class ?>" form="from-form-loket">login to Loket</button>
       </div>
     </div>
@@ -639,4 +649,10 @@ regels.forEach((regel) => {
         }
         });
     }
+</script>
+<script>
+    $('.custom-dropdown-select .dropdown-item').on('click', function(){
+        $('.dropdown-toggle').html($(this).html());
+    });
+
 </script>
