@@ -17264,6 +17264,16 @@ background: #FFFFFF !important;
 .otherModal table th, .table td {
      text-align: left !important;
 }
+.add-people-manualy {
+    border: 1px solid #47A99E;
+    color: #47A99E !important;
+    margin-right: 20px;
+    padding: 6px 15px;
+}
+.add-people-manualy:hover {
+    color: #ffffff !important;
+    background: #47A99E !important;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
