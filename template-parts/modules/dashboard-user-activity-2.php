@@ -55,6 +55,7 @@ $expenses = 0;
 //Orders - enrolled courses  
 $args = array(
     'customer_id' => $user->ID,
+    'post_status' => array_keys(wc_get_order_statuses()),
     'post_status' => array('wc-processing'),
     'orderby' => 'date',
     'order' => 'DESC',
@@ -81,20 +82,20 @@ if(!empty($enrolled))
         'order' => 'DESC',
         'include' => $enrolled,  
     );
-
     $enrolled_courses = get_posts($args);
 
     //Make sure videos shared not null before to merge with enrolled
-    if(!empty($kennis_video))
-        if(isset($kennis_video[0]))
-            if($kennis_video[0])
-                $enrolled_courses = array_merge($kennis_video, $enrolled_courses);
+    // if(!empty($kennis_video))
+    //     if(isset($kennis_video[0]))
+    //         if($kennis_video[0])
+    //             $enrolled_courses = array_merge($kennis_video, $enrolled_courses);
 
     //Make sure videos put on mandatory is not null before to merge with enrolled
     if(!empty($mandatory_video))
         if(isset($mandatory_video[0]))
             if($mandatory_video[0])
                 $enrolled_courses = array_merge($mandatory_video, $enrolled_courses);
+
     if(!empty($enrolled_courses))
         $your_count_courses = count($enrolled_courses);
 }
@@ -215,7 +216,7 @@ foreach ($users as $element) {
             <li class="nav-three"><a href="#Notifications">Notifications</a></li>
             <li class="nav-four "><a href="#Data-and-analytics">Data and analytics</a></li>
             <li class="nav-five "><a href="#Certificates">Your certificates</a></li>
-<!--            <li class="nav-six "><a href="#Assessments">Assessments</a></li>-->
+            <!-- <li class="nav-six "><a href="#Assessments">Assessments</a></li> -->
             <li class="nav-seven "><a href="#Communities">Communities</a></li>
             <li class="nav-eight last"><a href="#skills">Your skills</a></li>
         </ul>
@@ -227,7 +228,7 @@ foreach ($users as $element) {
                     <div class="blockItemCourse">
                         <div class="d-flex align-items-center justify-content-between head-blockItemCourse">
                             <p class="title">Courses</p>
-                            <a href="/?tab=Course" class="d-flex align-items-center">
+                            <a href="?tab=Course" class="d-flex align-items-center">
                                 <p class="seeAllText">See All</p>
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/seeAllIcon.png" class="" alt="">
                             </a>
@@ -243,6 +244,7 @@ foreach ($users as $element) {
                                 </thead>
                                 <tbody>
                                 <?php
+                                $offline = ['Opleidingen','Training','Workshop','Masterclass'];
                                 foreach($enrolled_courses as $key => $course) :
                                     $bool = true;
                                     $bool = visibility($course, $visibility_company);
@@ -251,7 +253,18 @@ foreach ($users as $element) {
 
                                     //Course Type
                                     $course_type = get_field('course_type', $course->ID);
+                                    
+                                    //Checkout URL
+                                    if(in_array($course_type, $offline))
+                                        $href_checkout = "/dashboard/user/checkout-offline/?post=" . $course->post_name;
+                                    else if($course_type == 'Video')
+                                        $href_checkout = "/dashboard/user/checkout-video/?post=" . $course->post_name;
+                                    else if($course_type == 'Podcast')
+                                        $href_checkout = "/dashboard/user/checkout-podcast/?post=" . $course->post_name;
+                                    else
+                                        $href_checkout = "#";
 
+                                    // Analytics
                                     switch ($course_type) {
                                         case 'Artikel':
                                             $typo_course['Artikel']++;
@@ -296,7 +309,7 @@ foreach ($users as $element) {
                                                 <div class="blockImgCourse">
                                                     <img src="<?= $image_course ?>" class="" alt="">
                                                 </div>
-                                                <p class="name-element"><?= $course->post_title; ?></p>
+                                                <a href="<?= $href_checkout; ?>" class="name-element"><?= $course->post_title; ?></a>
                                             </div>
                                         </td>
                                         <td>
@@ -322,7 +335,7 @@ foreach ($users as $element) {
                     <div class="blockItemCourse notificationCourseCard">
                         <div class="d-flex align-items-center justify-content-between head-blockItemCourse">
                             <p class="title">Notifications</p>
-                            <a href="/?tab=Notifications" class="d-flex align-items-center">
+                            <a href="?tab=Notifications" class="d-flex align-items-center">
                                 <p class="seeAllText">See All</p>
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/seeAllIcon.png" class="" alt="">
                             </a>
@@ -407,7 +420,7 @@ foreach ($users as $element) {
                     <div class="data-analitycs-block">
                         <div class="d-flex align-items-center justify-content-between head-blockItemCourse">
                             <p class="title">Data and analytics</p>
-                            <a href="/?tab=Data-and-analytics" class="d-flex align-items-center">
+                            <a href="?tab=Data-and-analytics" class="d-flex align-items-center">
                                 <p class="seeAllText">See All</p>
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/seeAllIcon.png" class="" alt="">
                             </a>
@@ -608,7 +621,7 @@ foreach ($users as $element) {
                     <div class="skills-activity-block">
                         <div class="d-flex align-items-center justify-content-between head-blockItemCourse">
                             <p class="title">Skills</p>
-                            <a href="/?tab=skills" class="d-flex align-items-center">
+                            <a href="?tab=skills" class="d-flex align-items-center">
                                 <p class="seeAllText">See All</p>
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/seeAllIcon.png" class="" alt="">
                             </a>
@@ -799,6 +812,16 @@ foreach ($users as $element) {
                                     //Course Type
                                     $course_type = get_field('course_type', $course->ID);
 
+                                    //Checkout URL
+                                    if(in_array($course_type, $offline))
+                                        $href_checkout = "/dashboard/user/checkout-offline";
+                                    if($course_type == 'Video')
+                                        $href_checkout = "/dashboard/user/checkout-video";
+                                    if($course_type == 'Podcast')
+                                        $href_checkout = "/dashboard/user/checkout-podcast";
+                                    else
+                                        $href_checkout = "#";
+
                                     //Legend image
                                     $image_course = get_field('preview', $course->ID)['url'];
                                     if(!$image_course){
@@ -831,7 +854,7 @@ foreach ($users as $element) {
                                                 <div class="blockImgCourse">
                                                     <img src="<?= $image_course ?>" class="" alt="">
                                                 </div>
-                                                <p class="name-element"><?= $course->post_title ?></p>
+                                                <a href="<?= $href_checkout; ?>" class="name-element"><?= $course->post_title ?></>
                                             </div>
                                         </td>
                                         <td>
