@@ -616,7 +616,6 @@
 
 
 <script>
-
      $('#search_txt_course').keyup(function(){
         var txt = $(this).val();
 

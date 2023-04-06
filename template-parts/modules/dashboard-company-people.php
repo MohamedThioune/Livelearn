@@ -15,6 +15,7 @@
     $grant = get_field('manager',  'user_' . $user_connected);
     $ismanaged = get_field('managed',  'user_' . $user_connected);
     $members = array();
+    $member_id = [];
     foreach($users as $user){
         $my_managers = array(); 
         foreach ($users as $key => $value) {
@@ -22,7 +23,6 @@
             if(!empty($users_manageds))
                 if (in_array($user->ID, $users_manageds)){
                     array_push($my_managers, $value);
-                    //echo "Manager : # " . $value->ID . $value->first_name . " - User : # " . $user->ID . $user->display_name . "<br><br>";
                 }
         }
 
@@ -39,6 +39,7 @@
     }
     $count = count($members);
     extract($_POST);
+   
     if(isset($missing_details_user)){
         update_field('telnr', $telnr, 'user_'.$id_user);
         update_field('role', $role_user, 'user_'.$id_user);
@@ -49,6 +50,7 @@
     if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"; 
     if( in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) || in_array('manager', $data_user->roles) || $grant ) {
         extract($_POST);
+
         if (isset($client_id)&& isset($client_secret)){
         $baseurl  =  'https://oauth.loket-acc.nl';
         // $redirect = 'https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
@@ -96,8 +98,7 @@
             $response = file_get_contents($token_url."/token", false, $context);
             $data = json_decode($response, true); // token getted
             // $token = $data['access_token'];
-            $_SESSION['token'] = $data['access_token'];
-            $token = $_SESSION['token'];
+            $token = "Ik3TF4d_H1OeWdBp9Xg6z4DGUfKfE1TNvu5ZfGVUxq0O9x9OdXO6pMf6lPAjeJ68gkBMzip82zCpvrX9JVTYcqGUJRSbUGNuqWHr3GNs6v4DFrKo2MVYBj5e3hpqfbsklmVQ-VHWscdt_uVKFyxvYugKH4YVeuCzWTe-wNqh_Ryy_YqZ89ZmihyjWVufcFLZMq_U4I45aIkng1QV_1pH39IhJxMFMLgMXYR0eM0ECydhIyzhsFSQJe90Hej27pm9mhuJrzqBy6wr89zOODbu80x-YiFNb8u2ggZQ-ftsFuwPp7Ied-01NgQb-AYkP39Cy30ekD9KdI2opTUNbNixZO5UVaJWtGq0d37TlGgtZCO6WiGQyO8Jf09ebcvXvrX3TUCW1fevFExGx1DpSRQXZ27zYic";
             // var_dump('token : '.$token);
 
             // id company
@@ -121,7 +122,7 @@
                 $embedded = $json_data['_embedded'];
                 $id_entreprise = $embedded[0]['id'];
                 update_field('id_company_loket',$id_entreprise,$company_connected->ID);
-                var_dump("id de l'entreprise : $id_entreprise");
+                // var_dump("id de l'entreprise : $id_entreprise");
                 //get list of all employee
                 $list = "https://api.loket-acc.nl/v2/providers/employers/$id_entreprise/employees";
                 $options = array(
@@ -161,7 +162,7 @@
     }
     ?>
     <div class="cardPeople">
-        <dsalary-systemiv class="headListeCourse">
+        <div class="headListeCourse">
             <p class="JouwOpleid">Werknemers (<?= $count; ?>)</p>
             <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
             <div class="">
@@ -433,7 +434,6 @@
         $class = '';
         if ($list_of_all_employees) {
             $class = 'd-none';
-            // var_dump($list_of_all_employees);
             ?>
         <div>
         <table class="table table-hover">
@@ -460,7 +460,7 @@
       </div>
       <?php } ?>
 
-      <form class="<?= $class ?>" id="from-form-loket" action="/dashboard/company/people/" method="POST">
+      <form class="<?= $class ?>" id="from-form-loket" action="/livelearn/dashboard/company/people/" method="POST">
           <div class="form-group">
             <label for="loket-username" class="col-form-label">client id</label>
             <input type="text" value="ThirdPartiesTestClient" class="form-control" id="loket-username" name="client_id">
@@ -503,14 +503,13 @@
             });
         }
     });
-
 </script>
 
 <script>
-
      $('#search_txt_company').keyup(function(){
         var txt = $(this).val();
         $.ajax({
+
             url:"/fetch-company-people",
             method:"post",
             data:{
@@ -521,7 +520,7 @@
                 console.log(data);
                 const resultat_recherche = document.getElementById('autocomplete_company_people');
                 resultat_recherche.innerHTML = data;
-                // $('#autocomplete_company_people').html(data);
+                $('#autocomplete_company_people').html(data);
             }
         });
     });
@@ -601,17 +600,14 @@ regels.forEach((regel) => {
         } else {
             idSubmitted = 'back-polaris';
         }
-        console.log('idSubmitted :::::::::'+idSubmitted)
-        console.log('adminSalary::::::::::'+adminSalary)
+        // console.log('idSubmitted :::::::::'+idSubmitted)
+        // console.log('adminSalary::::::::::'+adminSalary)
         const row = e.target.parentNode.parentNode;
         const email = row.querySelector(".row-email").textContent.trim();
-        console.log(email)
         const fullName = row.querySelector(".row-fullName").textContent;
         const nams = fullName.split(' ');
         const firstName = nams[0];
-        console.log(firstName)
         const lastName = nams.slice(1).join(" ");
-        console.log(lastName)
         console.log("email :::"+email);
         console.log("firstName :::   "+ firstName);
         console.log("lastName :::   "+ lastName);
@@ -619,20 +615,25 @@ regels.forEach((regel) => {
         dataToSend = JSON.stringify(dataToSend);
         console.log('data sending ' + dataToSend );
         $.ajax({
-        url: '/dashboard/company/people-mensen/',
+        url: '/livelearn/dashboard/company/people-mensen/',
+        // url: '/livelearn/dashboard/company/people/',
         // url: '/dashboard/company/people-mensen/',
         method: 'POST',
+        // dataType: 'json',
         data: dataToSend,
         success: function(response) {
             console.log('success data sinding : =>'+response);
+            alert("data saving sucess...");
             msg_success = "<span class='alert alert-success'>U heeft met succes een nieuwe werknemer aangemaakt ✔️</span>";
             document.getElementById(idSubmitted).innerHTML = response;
             // location.reload();
         },
         error: function(error) {
+            alert("error when sending data");
+            console.log("Erreur when sending data : =>"+JSON.stringify(error) );
             msg_error = "<span class='alert alert-danger'>Er is een fout opgetreden, probeer het opnieuw.</span>";
             err=error.responseText
-            document.getElementById(idSubmitted).innerHTML = error;
+            document.getElementById(idSubmitted).innerHTML = JSON.stringify(error);
             console.log("Erreur when sending data : => " +JSON.stringify(error) );
             // location.reload();
         }

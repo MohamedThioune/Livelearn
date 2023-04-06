@@ -72,7 +72,6 @@ $see_experts = get_users(
             .nav-pills .nav-link.active {
                 background: #023356 !important;
                 color: white !important;
-
             }
             #bedrijfsprofiel_modal {
                 overflow-y: auto !important;
@@ -490,7 +489,6 @@ $see_experts = get_users(
                 <div class="modal-body">
                     <div class="head">
                         <!--
-
                         <ul>
                             <li class="selectAll">
                                 <input class="styled-checkbox" id="allExpert" type="checkbox" value="allExpert">
@@ -513,7 +511,6 @@ $see_experts = get_users(
                             <input type="search" placeholder="Search your expert" class="searchSubTopics">
                             <img class="searchImg" src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png" alt="">
                         </div>
-
                          -->
                     </div>
                     <div class="content-expert">
@@ -570,11 +567,7 @@ $see_experts = get_users(
                             <?php
                         }
                         ?>
-                        <!--
-                        <div class="mt-3 mb-0">
-                            <button type="submit" form="multiple_form" class="btn btnNext mb-0" name="interest_multiple_push">Follow / Unfollow</button>
-                        </div> 
-                        -->
+                       
                     </div>
                 </div>
 
