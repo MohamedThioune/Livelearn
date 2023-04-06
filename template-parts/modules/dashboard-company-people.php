@@ -6,9 +6,9 @@
     $user_connected = $data_user->data->ID;
     $company = get_field('company',  'user_' . $user_connected);
 
-    //Departments 
+    //Departments
     $departments = get_field('departments', $company[0]->ID);
-    
+
     if(!empty($company))
         $company_connected = $company[0]->post_title;
 
@@ -17,7 +17,7 @@
     $members = array();
     $member_id = [];
     foreach($users as $user){
-        $my_managers = array(); 
+        $my_managers = array();
         foreach ($users as $key => $value) {
             $users_manageds = get_field('managed',  'user_' . $value->ID);
             if(!empty($users_manageds))
@@ -39,7 +39,7 @@
     }
     $count = count($members);
     extract($_POST);
-   
+
     if(isset($missing_details_user)){
         update_field('telnr', $telnr, 'user_'.$id_user);
         update_field('role', $role_user, 'user_'.$id_user);
@@ -47,7 +47,7 @@
         $message = "Informations updated";
         header('Location: /dashboard/company/people/?message=' . $message);
     }
-    if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>"; 
+    if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>";
     if( in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) || in_array('manager', $data_user->roles) || $grant ) {
         extract($_POST);
 
@@ -110,7 +110,7 @@
                 $options = array(
                     'http' => array(
                     'method' => 'GET',
-                    'header' => "Authorization: Bearer $token\r\n" . 
+                    'header' => "Authorization: Bearer $token\r\n" .
                     "Content-Type: application/json\r\n"
                 )
             );
@@ -148,10 +148,10 @@
                         $tab['emailAddress'] = $employee['contactInformation']['emailAddress'];
                         $tab['street'] = $employee['address']['street'];
                         $tab['city'] = $employee['address']['city'];
-                        $list_of_all_employees[] =$tab; 
+                        $list_of_all_employees[] =$tab;
                     }
                 }else {
-                    
+
                 }
             }
             //  else {
@@ -170,18 +170,20 @@
                 <button type="button" class="btn" data-toggle="modal" data-target="#loketModal">Loket</button>
                 <a href="../people-mensen" class="btnNewCourse">Persoon toevoegen</a>-->
 
-                <div class="dropdown custom-dropdown-select">
-                    <button class="btn btn-choose-company dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Choose a company
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <button type="button" class="dropdown-item btn btn-show-modal" data-toggle="modal" data-target="#polarisModal">Polaris</button>
-                        <button type="button" class="dropdown-item btn btn-show-modal" data-toggle="modal" data-target="#loketModal">Loket</button>
-                        <a href="../people-mensen" class="dropdown-item" >Persoon toevoegen</a>
+                <div class="d-flex align-items-center">
+                    <a href="../people-mensen" class="btn add-people-manualy">Add people manually</a>
+                    <div class="dropdown custom-dropdown-select">
+                        <button class="btn btn-choose-company dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             Salary administration
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <button type="button" class="dropdown-item btn btn-show-modal" data-toggle="modal" data-target="#polarisModal">Polaris</button>
+                            <button type="button" class="dropdown-item btn btn-show-modal" data-toggle="modal" data-target="#loketModal">Loket</button>
+                        </div>
                     </div>
                 </div>
 
-                <!--<select name="salary-system" id="salary-system">
+                <!--<select name="salary-system"  id="salary-system">
                     <option value=""></option>
                         <option value="polaris" >POLARIS</option>
                     <option value="loket">LOKET</option>
@@ -210,18 +212,18 @@
                 <tbody id="autocomplete_company_people">
                     <?php
                     foreach($members as $keyP => $user){
-                        $image_user = get_field('profile_img',  'user_' . $user->ID); 
-                        if(!$image_user)  
+                        $image_user = get_field('profile_img',  'user_' . $user->ID);
+                        if(!$image_user)
                             $image_user = get_stylesheet_directory_uri(). "/img/placeholder_user.png";
 
                         $you = NULL;
                         if(!in_array('administrator', $user->roles))
                             $you = (in_array($user->ID, $ismanaged) || in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) ) ?  'You' : NULL;
-                        
-                        $manager = get_field('ismanaged', 'user_' . $user->ID);
-                        $manager_image = get_field('profile_img',  'user_' . $manager); 
 
-                        $link = "/dashboard/company/profile/?id=" . $user->ID . '&manager='. $user_connected; 
+                        $manager = get_field('ismanaged', 'user_' . $user->ID);
+                        $manager_image = get_field('profile_img',  'user_' . $manager);
+
+                        $link = "/dashboard/company/profile/?id=" . $user->ID . '&manager='. $user_connected;
                     ?>
                         <tr id="<?php echo $user->ID; ?>" >
                             <td scope="row"><?= $keyP + 1; ?></td>
@@ -237,11 +239,11 @@
                             <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
                             <td class="textTh thModife">
 
-                                <?php 
+                                <?php
                                 if(!empty($user->my_managers)):
                                 ?>
                                 <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="#userModal<?= $keyP; ?>">
-                                    <?php 
+                                    <?php
                                     foreach ($user->my_managers as $key=> $m) :
                                         if($key == 2)
                                             break;
@@ -251,7 +253,7 @@
                                             <img src="<?= $image_manager ?>" alt="img">
                                         </div>
                                     <?php endforeach; ?>
-                                </button> 
+                                </button>
                                 <?php endif; ?>
                                 <!-- Modal -->
                                 <div class="modal modalAllManager fade" id="userModal<?= $keyP; ?>" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
@@ -272,11 +274,11 @@
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                     </thead>
-                                                    
+
                                                     <tbody>
-                                                    <?php 
+                                                    <?php
                                                     foreach($user->my_managers as $man):
-                                                        $link = "/dashboard/company/profile/?id=" . $man->ID . '&manager='. $user_connected; 
+                                                        $link = "/dashboard/company/profile/?id=" . $man->ID . '&manager='. $user_connected;
                                                         $img_manager = get_field('profile_img',  'user_' . $man->ID) ? get_field('profile_img',  'user_' . $man->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                                     ?>
                                                     <tr>
@@ -350,7 +352,7 @@
                                                     <div class="formModifeChoose">
 
                                                         <select placeholder="Choose skills" class="multipleSelect2 selectdepartement" name="department">
-                                                            <?php 
+                                                            <?php
                                                              foreach($departments as $department)
                                                                 if($department['name'] == get_field('department', 'user_'.$user->ID) )
                                                                     echo '<option value="' . $department['name'] .'" selected>' . $department['name'] . '</option>';
@@ -370,17 +372,17 @@
                             </div>
                         </div>
                     <?php
-                    } 
+                    }
                     ?>
                 </tbody>
             </table>
         </div>
     </div>
-<?php 
+<?php
     }
     else
         echo "<h3>Access denied !<h3>";
-    
+
 ?>
 </div>
 <!--begin Modal for connexion polaris -->
@@ -508,7 +510,7 @@
                success: function(data) {
                     $("#"+id).remove();
                     console.log(data);
-                    alert("User removed successfully from your company !");  
+                    alert("User removed successfully from your company !");
                }
             });
         }
@@ -593,7 +595,7 @@ regels.forEach((regel) => {
   <td><button onclick="addInDatabase(event)" class="btn btn-outline-success">+ Add </button></td>`;
   tbody.appendChild(tr);
 });
-    
+
     },
         error: function(xhr, status, error) {
             console.log('error request :>',error);
