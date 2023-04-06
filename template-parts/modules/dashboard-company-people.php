@@ -97,8 +97,8 @@
                 //POST request
             $response = file_get_contents($token_url."/token", false, $context);
             $data = json_decode($response, true); // token getted
-            // $token = $data['access_token'];
-            $token = "Ik3TF4d_H1OeWdBp9Xg6z4DGUfKfE1TNvu5ZfGVUxq0O9x9OdXO6pMf6lPAjeJ68gkBMzip82zCpvrX9JVTYcqGUJRSbUGNuqWHr3GNs6v4DFrKo2MVYBj5e3hpqfbsklmVQ-VHWscdt_uVKFyxvYugKH4YVeuCzWTe-wNqh_Ryy_YqZ89ZmihyjWVufcFLZMq_U4I45aIkng1QV_1pH39IhJxMFMLgMXYR0eM0ECydhIyzhsFSQJe90Hej27pm9mhuJrzqBy6wr89zOODbu80x-YiFNb8u2ggZQ-ftsFuwPp7Ied-01NgQb-AYkP39Cy30ekD9KdI2opTUNbNixZO5UVaJWtGq0d37TlGgtZCO6WiGQyO8Jf09ebcvXvrX3TUCW1fevFExGx1DpSRQXZ27zYic";
+             $token = $data['access_token'];
+            //$token = "Ik3TF4d_H1OeWdBp9Xg6z4DGUfKfE1TNvu5ZfGVUxq0O9x9OdXO6pMf6lPAjeJ68gkBMzip82zCpvrX9JVTYcqGUJRSbUGNuqWHr3GNs6v4DFrKo2MVYBj5e3hpqfbsklmVQ-VHWscdt_uVKFyxvYugKH4YVeuCzWTe-wNqh_Ryy_YqZ89ZmihyjWVufcFLZMq_U4I45aIkng1QV_1pH39IhJxMFMLgMXYR0eM0ECydhIyzhsFSQJe90Hej27pm9mhuJrzqBy6wr89zOODbu80x-YiFNb8u2ggZQ-ftsFuwPp7Ied-01NgQb-AYkP39Cy30ekD9KdI2opTUNbNixZO5UVaJWtGq0d37TlGgtZCO6WiGQyO8Jf09ebcvXvrX3TUCW1fevFExGx1DpSRQXZ27zYic";
             // var_dump('token : '.$token);
 
             // id company
