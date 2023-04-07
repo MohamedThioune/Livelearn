@@ -1,5 +1,6 @@
 <?php 
 extract($_POST);
+if($_POST){
 if (!isset($multiple_add_people) && !isset($multiple_add_people)) {
     $response = "";
     foreach ($_POST as $json => $value) {
@@ -23,7 +24,7 @@ if (!isset($multiple_add_people) && !isset($multiple_add_people)) {
         // var_dump($userdata);die;
         $user_id = wp_insert_user(wp_slash($userdata));
         if(is_wp_error($user_id)){
-            $response = $user_id->get_error_message();
+            $response ="<span class='alert alert-danger'>". $user_id->get_error_message()."</span>";
             // header("Location: /dashboard/company/people/?message=Er is een fout opgetreden, probeer het opnieuw.");
             // echo ("<span class='alert alert-info'>" .  $danger . "</span>");   
         }
@@ -35,12 +36,12 @@ if (!isset($multiple_add_people) && !isset($multiple_add_people)) {
                 $subject = 'Je LiveLearn inschrijving is binnen! ✨';
                 $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
                 wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )) ; 
-                $response = "U heeft met succes een nieuwe werknemer aangemaakt ✔️";
+                $response = "<span class='alert alert-success'>U heeft met succes een nieuwe werknemer aangemaakt ✔️</span>";
             }
     }
     die($response);
 }
-
+}
 $user = get_users(array('include'=> get_current_user_id()))[0]->data;
 $image = get_field('profile_img',  'user_' . $user->ID);
 $company = get_field('company',  'user_' . $user->ID);
