@@ -165,7 +165,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                         <br>
                     </center>
                     <table class="table table-responsive">
-                        <form action="/optieAll" method="POST">
+                        <form method="POST">
                             <thead>
                             <tr>
                                 <th scope="col"><input type="checkbox" id="checkAll" onclick='checkUncheck(this);'></th>
@@ -398,13 +398,21 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     $('#subtopics').click((e)=>
     {
         if($ids==null){alert("Please, select some articles!!");}else{
+            $('#loader').attr('hidden',true);
+            $('#select_field').attr('hidden',false);
             $.ajax({
-                url: '/subtopics',
+                url: '/livelearn/subtopics',
                 type: 'POST',
                 data: {
-                    ids: $ids
+                    ids: ids
                 },error:function(response) {
                     console.log("error:".response);
+                },success:function(response){
+                    console.log(response);
+                },complete:function(response){
+                    console.log("complete:".response);
+                    $('#loader').attr('hidden',false);
+                    $('#select_field').attr('hidden',true);
                 }
             });
         }
