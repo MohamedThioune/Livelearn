@@ -2,6 +2,7 @@
     session_start();
     $users = get_users();
     $list_of_all_employees=array();
+    $class_employee_is_available="d-none";
     $data_user = wp_get_current_user();
     $user_connected = $data_user->data->ID;
     $company = get_field('company',  'user_' . $user_connected);
@@ -56,6 +57,7 @@
         // $redirect = 'https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         $redirect = get_site_url()."/dashboard/company/people/";
         $status = rand(1000,9999);
+        // $message_loket="user from loket are available.";
         $url = "$baseurl/authorize?client_id=$client_id&redirect_uri=$redirect&response_type=code&scope=all&state=$status";
         header("Location: $url");
         $_SESSION['client_id']=$client_id;
@@ -71,7 +73,6 @@
             // var_dump('The code generate : '.$code);
             $client_id = $_SESSION['client_id'];
             $client_secret = $_SESSION['client_secret'];
-            $redirect_uri = "https://livelearn.nl/dashboard/company/people/";
             $grant_type = "authorization_code";
             // URL de l'endpoint d'obtention du token
             $token_url = "https://oauth.loket-acc.nl";
@@ -80,7 +81,7 @@
                 'code' => $code,
                 'client_id' => $client_id,
                 'client_secret' => $client_secret,
-                'redirect_uri' => $redirect_uri,
+                'redirect_uri' => $redirect,
                 'grant_type' => $grant_type
             ));
             // header of POST request
@@ -136,6 +137,7 @@
                 $context = stream_context_create($options);
                 $liste_employees = file_get_contents($list, false, $context);
                 if ($liste_employees) {
+
                     $empl=json_decode($liste_employees,true);
                     foreach ($empl['_embedded'] as $key => $employee) {
                         $tab = [];
@@ -170,6 +172,8 @@
                 <div class="d-flex align-items-center">
                     <a href="../people-mensen" class="btn add-people-manualy">Add people manually</a>
                     <div class="dropdown custom-dropdown-select">
+                        <span class="alert alert-success ">data from loket are available</span>
+                        
                         <button class="btn btn-choose-company dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                              Salary administration
                         </button>
@@ -446,6 +450,7 @@
         <?php
         $class = '';
         if ($list_of_all_employees) {
+            $class_employee_is_available='';
             $class = 'd-none';
             ?>
         <div>
@@ -472,14 +477,14 @@
       </div>
       <?php } ?>
 
-      <form class="<?= $class ?>" id="from-form-loket" action="/dashboard/company/people/" method="POST">
+      <form class="<?= $class ?>" id="from-form-loket" action="/livelearn/dashboard/company/people/" method="POST">
           <div class="form-group">
             <label for="loket-username" class="col-form-label">client id</label>
-            <input type="text" class="form-control" id="loket-username" name="client_id">
+            <input type="text" class="form-control" id="loket-username" name="client_id" require>
           </div>
           <div class="form-group">
             <label for="loket-password" class="col-form-label">client secret</label>
-            <input type="password"  class="form-control " id="loket-password" name="client_secret">
+            <input type="password"  class="form-control " id="loket-password" name="client_secret" require>
           </div>
         </form>
       </div>
@@ -559,8 +564,8 @@
         'Authorization': 'Basic ' + btoa(`${username}:${password}`)
     },
     beforeSend:function(){
-            // $('#loader').attr('hidden',false)
-            // $('#data-sending-from-form').attr('hidden',true)
+            $('#loader').attr('hidden',false)
+            $('#data-sending-from-form').attr('hidden',true)
         },
     success: function(responseXML) {
         $('#loader').attr('hidden',true)
@@ -627,8 +632,8 @@
         dataToSend = JSON.stringify(dataToSend);
         console.log('data sending ' + dataToSend );
         $.ajax({
-        // url: '/livelearn/dashboard/company/people-mensen/',
-        url: '/dashboard/company/people-mensen/',
+        url: '/livelearn/dashboard/company/people-mensen/',
+        // url: '/dashboard/company/people-mensen/',
         method: 'POST',
         data: dataToSend,
         beforeSend:function(){

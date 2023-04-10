@@ -21,12 +21,9 @@ if (!isset($multiple_add_people) && !isset($multiple_add_people)) {
             'last_name' => $last_name,
             'role' => 'subscriber'
         );
-        // var_dump($userdata);die;
         $user_id = wp_insert_user(wp_slash($userdata));
         if(is_wp_error($user_id)){
             $response ="<span class='alert alert-danger'>". $user_id->get_error_message()."</span>";
-            // header("Location: /dashboard/company/people/?message=Er is een fout opgetreden, probeer het opnieuw.");
-            // echo ("<span class='alert alert-info'>" .  $danger . "</span>");   
         }
         else{
                 $guest = wp_get_current_user();
@@ -39,7 +36,8 @@ if (!isset($multiple_add_people) && !isset($multiple_add_people)) {
                 $response = "<span class='alert alert-success'>U heeft met succes een nieuwe werknemer aangemaakt ✔️</span>";
             }
     }
-    die($response);
+    echo $response;
+    return 1;
 }
 }
 $user = get_users(array('include'=> get_current_user_id()))[0]->data;
