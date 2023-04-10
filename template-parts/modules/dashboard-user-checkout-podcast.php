@@ -2,13 +2,127 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
 <link rel="stylesheet" type="text/css" href="<?php echo get_stylesheet_directory_uri();?>/green-audio-player.css">
 <?php header('Access-Control-Allow-Origin: *'); ?>
+<?php
 
+$post = 0;
+
+if(isset($_GET['post']))
+    if($_GET['post'])
+        $post = get_page_by_path($_GET['post'], OBJECT, 'course');
+
+if($post):
+
+/* * Informations course * */
+
+// Coursetype
+$course_type = get_field('course_type', $post->ID);
+// Image
+$image = get_field('preview', $post->ID)['url'];
+if(!$image):
+    $image = get_the_post_thumbnail_url($post->ID);
+    if(!$image)
+        $image = get_field('url_image_xml', $post->ID);
+    if(!$image)
+        $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+endif;
+
+// User && author name 
+$author = get_user_by('ID', $post->post_author);
+$author_name = $author->first_name ?: $author->display_name;
+$author_last_name = $author->last_name ?: '';
+$user = wp_get_current_user();
+$user_name = $user->first_name ?: $user->display_name;
+$user_last_name = $user->last_name ?: '';
+
+// Categories
+$categories = array();
+$posttags = get_the_tags();
+if(!$posttags){
+    $category_default = get_field('categories', $post->ID);
+    $category_xml = get_field('category_xml', $post->ID);
+    if(!empty($category_default))
+        $categories = $category_default;
+    else if(!empty($category_xml))
+        $categories = $category_xml;
+}
+
+// Long/Short description
+$long_description = get_field('long_description', $post->ID);
+$short_description = get_field('short_description', $post->ID);
+
+//Prijs
+$price = " ";
+$price = get_field('price', $course->ID);
+if($price != "0")
+    $prijs = number_format($p, 2, '.', ',');
+else
+    $prijs = 'Gratis';
+
+//Language
+$language = (get_field('language', $post->ID)) ?: 'Dutch';
+
+//Podcasts
+$podcasts = get_field('podcasts', $post->ID);
+
+//Share txt
+$share_txt = "Hello, i share this course with ya *" . $post->post_title . "* \n Link : " . get_permalink($post->ID) . "\nHope you'll like it.";
+
+/* * Informations reservation * */
+//Orders - enrolled courses 
+$datenr = 0; 
+$calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+
+$enrolled = array();
+$enrolled_courses = array();
+$args = array(
+    'customer_id' => $user->ID,
+    'post_status' => array_keys(wc_get_order_statuses()),
+    'post_status' => array('wc-processing'),
+    'orderby' => 'date',
+    'order' => 'DESC',
+    'limit' => -1,
+);
+$bunch_orders = wc_get_orders($args);
+
+foreach($bunch_orders as $order){
+    foreach ($order->get_items() as $item_id => $item ) {
+        $course_id = intval($item->get_product_id()) - 1;
+        if($course_id == $post->ID)
+            $bool = true;
+        //Get woo orders from user
+        if(!in_array($course_id, $enrolled))
+            array_push($enrolled, $course_id);
+    }
+}
+
+// if(!$bool)
+//     header('Location: /dashboard/user/activity' );
+
+$count_enrolled = 0;
+if(!empty($enrolled))
+{
+    $count_enrolled = count($enrolled);
+    // $args = array(
+    //     'post_type' => 'course', 
+    //     'posts_per_page' => -1,
+    //     'orderby' => 'post_date',
+    //     'order' => 'DESC',
+    //     'include' => $enrolled,  
+    // );
+    // $enrolled_courses = get_posts($args);
+}
+
+$count_podcasts = 0;
+if(!empty($podcasts))
+    $count_podcasts = count($podcasts); 
+
+?>
 <body>
 <div class="content-buying-course-1">
     <div class="advert-course-Block d-flex">
         <div class="advert-one d-flex">
             <div class="blockTextAdvert">
-                <p class="name">Hello <span>Daniel Van Der.....</span> !</p>
+                <p class="name">Hello <span><?= $user_name . ' '. $user_last_name; ?></span> !</p>
                 <p class="description">Welcome to our e-learning platform's activity page! Here, you'll find a variety of engaging activities to help you, reinforce your learning .</p>
             </div>
             <div class="blockImgAdvert">
@@ -22,7 +136,7 @@
                 </div>
                 <div class="d-block">
                     <p class="number-course">Your course</p>
-                    <p class="description">1300</p>
+                    <p class="description"><?= $count_enrolled; ?></p>
                 </div>
             </div>
             <p class="description-course">A courses to help you learn and acquire new skills at your own pace, on your own time</p>
@@ -42,47 +156,70 @@
                         <div class="tab active">
                             <div class="card-info">
                                 <div class="course-info-block">
+                                    
                                     <h3>Courses Information</h3>
-                                    <p class="text-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                                    <p class="text-description">It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                    <p class="text-description">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence was created for the bliss of souls like mine.I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence, that I neglect my talents.</p>
-                                    <p class="text-description">A collection of textile samples lay spread out on the table - Samsa was a travelling salesman - and above it there hung a picture that he had recently cut out of an illustrated magazine and housed in a nice, gilded frame.</p>
+                                    <p class="text-description">
+                                    <?= ($long_description) ?: $short_description; ?>
+                                    </p>
                                 </div>
+
+                                <?php
+                                if(!empty($categories)):
+                                ?>
                                 <div class="tag-block">
-                                    <h3>Our Courses</h3>
+                                    <h3>Our Topics</h3>
                                     <div class="d-flex flex-wrap">
-                                        <p class="tag-description">Computer</p>
-                                        <p class="tag-description">Programming</p>
-                                        <p class="tag-description">Photoshop</p>
-                                        <p class="tag-description">Management</p>
+                                    <?php
+                                    $read_category = array();
+                                    foreach($categories as $item)
+                                        if($item)
+                                        if(!in_array($item['value'],$read_category)){
+                                            array_push($read_category,$item['value']);
+                                            echo"<p class='tag-description'>" . (String)get_the_category_by_ID($item['value']) . "</p>";
+                                        }
+                                    ?>
                                     </div>
                                 </div>
+                                <?php endif; ?>
+
                                 <div class="language-block">
                                     <h3>Language</h3>
-                                    <p class="text-description">English</p>
+                                    <p class="text-description"><?= $language ?></p>
                                 </div>
                             </div>
                         </div>
                         <div class="tab">
+                            <?php
+                            if(!empty($podcasts)):
+                            $timestamp = strtotime($post->post_date);
+                            $podcast_date = date('d M Y', $timestamp);
+                            ?>
                             <div class="list-podcast-checkout">
+                                <?php
+                                foreach($podcasts as $key => $podcast):
+                                ?>
                                 <div class="card-podcast-checkout">
-                                    <p class="order-number-episode">1</p>
+                                    <p class="order-number-episode"><?= $key + 1 ?></p>
                                     <div class="block-detail-card-checkout">
                                         <div class="d-flex">
-                                            <p class="detail-podcast">7 Jun 2019</p>
-                                            <p class="detail-podcast">by John Smith</p>
-                                            <p class="detail-podcast">Course en ux ui design</p>
+                                            <p class="detail-podcast"><?= $podcast_date ?></p>
+                                            <p class="detail-podcast">by <?= $author_name . ' ' . $author_last_name ?></p>
+                                            <!-- <p class="detail-podcast"><?= $podcast['course_podcast_title'] ?></p> -->
                                         </div>
-                                        <p class="title-episode-podcast"><span>01</span> Episode Powerful Tips To Creating Testimonials That Sell Your</p>
-                                        <p class="description-episode">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
+                                        <p class="title-episode-podcast"><span><?= $key + 1 ?></span> <?= $podcast['course_podcast_title'] ?></p>
+                                        <p class="description-episode"><?= $short_description ?></p>
                                         <div class="audioBlock d-flex">
-                                           <!-- <audio controls>
-                                                <source src="https://www.coothead.co.uk/audio/You-Cant-Always-Get-What-You-Want.mp3" type="audio/mpeg">
-                                            </audio>-->
                                             <div class="ready-player-3 player-with-download">
-                                                <audio crossorigin>
-                                                    <source src="https://www.coothead.co.uk/audio/You-Cant-Always-Get-What-You-Want.mp3" type="audio/mpeg">
-                                                </audio>
+                                                <?= 
+                                                '<audio crossorigin>
+                                                     <source src="' . $podcast['course_podcast_data'] . '" type="audio/ogg">
+                                                     <source src="' . $podcast['course_podcast_data'] . '" type="audio/mpeg">
+                                                     <source src="' . $podcast['course_podcast_data']  . '" type="audio/aac">
+                                                     <source src="' . $podcast['course_podcast_data'] . '" type="audio/wav">
+                                                     <source src="' . $podcast['course_podcast_data']  . '" type="audio/aiff">
+                                                     Your browser does not support the audio element.
+                                                 </audio>';
+                                                ?>                                                
                                             </div>
                                             <button type="button" class="btn share-block btn" data-toggle="modal" data-target="#modal1">
                                                 <i class="fa fa-share-alt"></i>
@@ -90,7 +227,7 @@
                                             </button>
 
 
-                                            <!-- début Modal -->
+                                            <!-- Start Modal -->
                                             <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal1Title" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-checkout modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
                                                     <div class="modal-content">
@@ -135,8 +272,8 @@
                                                                 <div class="input-group input-group-copy formCopyLink w-75">
                                                                     <input id="test1" type="text" class="linkTextCopy form-control" value="<?php echo get_permalink($post->ID); ?>" readonly>
                                                                     <span class="input-group-btn">
-                                                <button class="btn btn-default btnCopy">Copy</button>
-                                                </span>
+                                                                        <button class="btn btn-default btnCopy">Copy</button>
+                                                                    </span>
                                                                     <span class="linkCopied">link copied</span>
                                                                 </div>
                                                             </div>
@@ -182,259 +319,15 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- fin Modal -->
+                                            <!-- End Modal -->
 
 
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-podcast-checkout">
-                                    <p class="order-number-episode">1</p>
-                                    <div class="block-detail-card-checkout">
-                                        <div class="d-flex">
-                                            <p class="detail-podcast">7 Jun 2019</p>
-                                            <p class="detail-podcast">by John Smith</p>
-                                            <p class="detail-podcast">Course en ux ui design</p>
-                                        </div>
-                                        <p class="title-episode-podcast"><span>01</span> Episode Powerful Tips To Creating Testimonials That Sell Your</p>
-                                        <p class="description-episode">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
-                                        <div class="audioBlock d-flex">
-                                           <!-- <audio controls>
-                                                <source src="https://www.coothead.co.uk/audio/You-Cant-Always-Get-What-You-Want.mp3" type="audio/mpeg">
-                                            </audio>-->
-                                            <div class="ready-player-3 player-with-download">
-                                                <audio crossorigin>
-                                                    <source src="https://www.coothead.co.uk/audio/You-Cant-Always-Get-What-You-Want.mp3" type="audio/mpeg">
-                                                </audio>
-                                            </div>
-                                            <button type="button" class="btn share-block btn" data-toggle="modal" data-target="#modal1">
-                                                <i class="fa fa-share-alt"></i>
-                                                <p>Share</p>
-                                            </button>
-
-
-                                            <!-- début Modal -->
-                                            <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal1Title" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-checkout modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="tab">
-                                                            <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
-                                                            <hr class="hrModifeDeel">
-                                                            <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
-                                                        </div>
-                                                        <div id="Extern" class="tabcontent">
-                                                            <div class="contentElementPartage">
-                                                                <a href="https://wa.me/?text=<?= $share_txt ?>" target="_blank" id="whatsapp"  class="btn contentIcone">
-                                                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/whatsapp.png" alt="">
-                                                                </a>
-                                                                <p class="titleIcone">WhatsApp</p>
-                                                            </div>
-                                                            <div class="contentElementPartage">
-                                                                <button class="btn contentIcone">
-                                                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/facebook.png" alt="">
-                                                                </button>
-                                                                <p class="titleIcone">Facebook</p>
-                                                            </div>
-                                                            <div class="contentElementPartage">
-                                                                <button class="btn contentIcone">
-                                                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/insta.png" alt="">
-                                                                </button>
-                                                                <p class="titleIcone">Instagram</p>
-                                                            </div>
-                                                            <div class="contentElementPartage">
-                                                                <button id="linkedin" class="btn contentIcone">
-                                                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/linkedin.png" alt="">
-                                                                </button>
-                                                                <p class="titleIcone">Linkedin</p>
-                                                            </div>
-                                                            <div class="contentElementPartage">
-                                                                <a href="sms:?&body=<?= $share_txt ?>" target="_blank" id="sms" class="btn contentIcone">
-                                                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/sms.png" alt="">
-                                                                </a>
-                                                                <p class="titleIcone">Sms</p>
-                                                            </div>
-                                                            <div>
-                                                                <p class="klikText">Klik om link te kopieren</p>
-                                                                <div class="input-group input-group-copy formCopyLink w-75">
-                                                                    <input id="test1" type="text" class="linkTextCopy form-control" value="<?php echo get_permalink($post->ID); ?>" readonly>
-                                                                    <span class="input-group-btn">
-                                                <button class="btn btn-default btnCopy">Copy</button>
-                                                </span>
-                                                                    <span class="linkCopied">link copied</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <?php
-
-                                                        if ($user_id == 0)
-                                                        {
-                                                            echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
-                                                            wp_login_form([
-                                                                'redirect' => $url,
-                                                                'remember' => false,
-                                                                'label_username' => 'Wat is je e-mailadres?',
-                                                                'placeholder_email' => 'E-mailadress',
-                                                                'label_password' => 'Wat is je wachtwoord?'
-                                                            ]);
-                                                            echo "</div>";
-                                                        }
-                                                        else{
-                                                            echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
-                                                            echo "<form action='/dashboard/user/' class='formConetentIntern' method='POST'>";
-                                                            echo "<label for='member_id'><b>Deel deze cursus met uw team :</b></label>";
-                                                            echo "<select class='multipleSelect2' id='member_id' name='selected_members[]' multiple='true'>";
-                                                            if(!empty($users_company))
-                                                                foreach($users_company as $user){
-                                                                    $name = get_users(array('include'=> $user))[0]->data->display_name;
-                                                                    if(!empty($allocution))
-                                                                        if(in_array($user, $allocution))
-                                                                            echo "<option selected  value='" . $user . "'>" . $name . "</option>";
-                                                                        else
-                                                                            echo "<option value='" . $user . "'>" . $name . "</option>";
-                                                                    else
-                                                                        echo "<option class='redE' value='" . $user . "'>" . $name . "</option>";
-                                                                }
-                                                            echo "</select></br></br>";
-                                                            echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
-                                                            echo "<input type='hidden' name='path' value='course' />";
-                                                            echo "<input type='submit' class='btn btn-info' name='referee_employee' value='Apply' >";
-                                                            echo "</form>";
-                                                            echo "</div>";
-                                                        }
-                                                        ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- fin Modal -->
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-podcast-checkout">
-                                    <p class="order-number-episode">1</p>
-                                    <div class="block-detail-card-checkout">
-                                        <div class="d-flex">
-                                            <p class="detail-podcast">7 Jun 2019</p>
-                                            <p class="detail-podcast">by John Smith</p>
-                                            <p class="detail-podcast">Course en ux ui design</p>
-                                        </div>
-                                        <p class="title-episode-podcast"><span>01</span> Episode Powerful Tips To Creating Testimonials That Sell Your</p>
-                                        <p class="description-episode">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
-                                        <div class="audioBlock d-flex">
-                                           <!-- <audio controls>
-                                                <source src="https://www.coothead.co.uk/audio/You-Cant-Always-Get-What-You-Want.mp3" type="audio/mpeg">
-                                            </audio>-->
-                                            <div class="ready-player-3 player-with-download">
-                                                <audio crossorigin>
-                                                    <source src="https://www.coothead.co.uk/audio/You-Cant-Always-Get-What-You-Want.mp3" type="audio/mpeg">
-                                                </audio>
-                                            </div>
-                                            <button type="button" class="btn share-block btn" data-toggle="modal" data-target="#modal1">
-                                                <i class="fa fa-share-alt"></i>
-                                                <p>Share</p>
-                                            </button>
-
-
-                                            <!-- début Modal -->
-                                            <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal1Title" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-checkout modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="tab">
-                                                            <button class="tablinks btn active" onclick="openCity(event, 'Extern')">Extern</button>
-                                                            <hr class="hrModifeDeel">
-                                                            <button class="tablinks btn" onclick="openCity(event, 'Intern')">Intern</button>
-                                                        </div>
-                                                        <div id="Extern" class="tabcontent">
-                                                            <div class="contentElementPartage">
-                                                                <a href="https://wa.me/?text=<?= $share_txt ?>" target="_blank" id="whatsapp"  class="btn contentIcone">
-                                                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/whatsapp.png" alt="">
-                                                                </a>
-                                                                <p class="titleIcone">WhatsApp</p>
-                                                            </div>
-                                                            <div class="contentElementPartage">
-                                                                <button class="btn contentIcone">
-                                                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/facebook.png" alt="">
-                                                                </button>
-                                                                <p class="titleIcone">Facebook</p>
-                                                            </div>
-                                                            <div class="contentElementPartage">
-                                                                <button class="btn contentIcone">
-                                                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/insta.png" alt="">
-                                                                </button>
-                                                                <p class="titleIcone">Instagram</p>
-                                                            </div>
-                                                            <div class="contentElementPartage">
-                                                                <button id="linkedin" class="btn contentIcone">
-                                                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/linkedin.png" alt="">
-                                                                </button>
-                                                                <p class="titleIcone">Linkedin</p>
-                                                            </div>
-                                                            <div class="contentElementPartage">
-                                                                <a href="sms:?&body=<?= $share_txt ?>" target="_blank" id="sms" class="btn contentIcone">
-                                                                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/sms.png" alt="">
-                                                                </a>
-                                                                <p class="titleIcone">Sms</p>
-                                                            </div>
-                                                            <div>
-                                                                <p class="klikText">Klik om link te kopieren</p>
-                                                                <div class="input-group input-group-copy formCopyLink w-75">
-                                                                    <input id="test1" type="text" class="linkTextCopy form-control" value="<?php echo get_permalink($post->ID); ?>" readonly>
-                                                                    <span class="input-group-btn">
-                                                <button class="btn btn-default btnCopy">Copy</button>
-                                                </span>
-                                                                    <span class="linkCopied">link copied</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <?php
-
-                                                        if ($user_id == 0)
-                                                        {
-                                                            echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
-                                                            wp_login_form([
-                                                                'redirect' => $url,
-                                                                'remember' => false,
-                                                                'label_username' => 'Wat is je e-mailadres?',
-                                                                'placeholder_email' => 'E-mailadress',
-                                                                'label_password' => 'Wat is je wachtwoord?'
-                                                            ]);
-                                                            echo "</div>";
-                                                        }
-                                                        else{
-                                                            echo "<div id='Intern' class='tabcontent px-md-5 p-3'>";
-                                                            echo "<form action='/dashboard/user/' class='formConetentIntern' method='POST'>";
-                                                            echo "<label for='member_id'><b>Deel deze cursus met uw team :</b></label>";
-                                                            echo "<select class='multipleSelect2' id='member_id' name='selected_members[]' multiple='true'>";
-                                                            if(!empty($users_company))
-                                                                foreach($users_company as $user){
-                                                                    $name = get_users(array('include'=> $user))[0]->data->display_name;
-                                                                    if(!empty($allocution))
-                                                                        if(in_array($user, $allocution))
-                                                                            echo "<option selected  value='" . $user . "'>" . $name . "</option>";
-                                                                        else
-                                                                            echo "<option value='" . $user . "'>" . $name . "</option>";
-                                                                    else
-                                                                        echo "<option class='redE' value='" . $user . "'>" . $name . "</option>";
-                                                                }
-                                                            echo "</select></br></br>";
-                                                            echo "<input type='hidden' name='course_id' value='" . $post->ID . "' >";
-                                                            echo "<input type='hidden' name='path' value='course' />";
-                                                            echo "<input type='submit' class='btn btn-info' name='referee_employee' value='Apply' >";
-                                                            echo "</form>";
-                                                            echo "</div>";
-                                                        }
-                                                        ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- fin Modal -->
-
-
-                                        </div>
-                                    </div>
-                                </div>
+                                <?php endforeach; ?>
                             </div>
+                            <?php endif; ?>
                         </div>
                         <div class="tab ReviewTab">
                             <div class="d-flex justify-content-between flex-wrap">
@@ -649,8 +542,8 @@
             <div class="card-strat-block">
                 <a href="" class="btn btn-strat">Strat</a>
                 <ul>
-                    <li><img src="<?php echo get_stylesheet_directory_uri();?>/img/ic_outline-play-arrow.png" alt="">11 hours on-demand video</li>
-                    <li><img src="<?php echo get_stylesheet_directory_uri();?>/img/ph_files-light.png" alt="">69 downloadable resources</li>
+                    <li><img src="<?php echo get_stylesheet_directory_uri();?>/img/ic_outline-play-arrow.png" alt="">0 hours on-demand video</li>
+                    <li><img src="<?php echo get_stylesheet_directory_uri();?>/img/ph_files-light.png" alt=""><?= $count_podcasts; ?> downloadable resources</li>
                     <li><img src="<?php echo get_stylesheet_directory_uri();?>/img/ph_key-light.png" alt="">Full lifetime access</li>
                     <li><img src="<?php echo get_stylesheet_directory_uri();?>/img/certificate-regular.png" alt="">Certificate of Completion</li>
                 </ul>
@@ -659,15 +552,11 @@
                 <p class="title-card-strat-block">Course Features</p>
                 <div class="element-card-features">
                     <p class="title-element">Lectures</p>
-                    <p class="text-number">6</p>
-                </div>
-                <div class="element-card-features">
-                    <p class="title-element">Quizzes</p>
-                    <p class="text-number">1</p>
+                    <p class="text-number">0</p>
                 </div>
                 <div class="element-card-features">
                     <p class="title-element">Duration</p>
-                    <p class="text-number">3 hours</p>
+                    <p class="text-number">0 hours</p>
                 </div>
                 <div class="element-card-features">
                     <p class="title-element">Skill level</p>
@@ -675,21 +564,35 @@
                 </div>
                 <div class="element-card-features">
                     <p class="title-element">Language</p>
-                    <p class="text-number">English</p>
+                    <p class="text-number"><?= $language ?></p>
                 </div>
             </div>
+            <?php
+            if(!empty($categories)):
+            ?>
             <div class="card-strat-block card-Course card-feature">
                 <p class="title-card-strat-block">Topics</p>
-               <div class="group-topic-course d-flex flex-wrap">
-                   <p>ui design</p>
-                   <p>Tech</p>
-                   <p>Lerning</p>
-                   <p>Figma</p>
-               </div>
+                <div class="group-topic-course d-flex flex-wrap">
+                <?php
+                $read_category = array();
+                foreach($categories as $item)
+                    if($item)
+                    if(!in_array($item['value'],$read_category)){
+                        array_push($read_category,$item['value']);
+                        echo"<p>" . (String)get_the_category_by_ID($item['value']) . "</p>";
+                    }
+                ?>
+                </div>
             </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
+<?php
+else:
+    echo "<p> This content is no more available !</p>";
+endif;
+?>
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
