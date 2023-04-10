@@ -17274,6 +17274,60 @@ background: #FFFFFF !important;
     color: #ffffff !important;
     background: #47A99E !important;
 }
+.select-internal-external {
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem !important;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #495057 !important;
+    background-color: #fff !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 0.25rem;
+    box-shadow: none;
+}
+.search-multi-select-group .bootstrap-select{
+    width: 100% !important;
+}
+.message-area, .search-multi-select-group .bootstrap-select button{
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+.btn-Submit{
+    background: #053356;
+    color: #FFFFFF !important;
+    padding: 10px 25px;
+}
+#MandatoryModal .modal-footer {
+    border-top: 0px !important;
+}
+#MandatoryModal label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    font-size: 15px;
+    color: #053356;
+    font-weight: 400;
+}
+#MandatoryModal .form-group {
+    margin-bottom: 27px;
+}
+.btn-registreren {
+    background: #033356;
+    color: white !important;
+    padding: 8px 20px;
+    font-size: 15px;
+    margin-right: 20px;
+    border-radius: 6px;
+}
+.modal-footer a:hover {
+    color: white !important;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
