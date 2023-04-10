@@ -4,6 +4,8 @@
 
 $post = 0;
 
+$user = wp_get_current_user();
+
 if(isset($_GET['post']))
     if($_GET['post'])
         $post = get_page_by_path($_GET['post'], OBJECT, 'course');
@@ -28,8 +30,6 @@ $author = get_user_by('ID', $post->post_author);
 $author_name = $author->first_name ?: $author->display_name;
 $author_last_name = $author->last_name ?: '';
 
-// $user_picture = get_field('profile_img', 'user_' . $post->post_author) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-
 // Categories
 $categories = array();
 $posttags = get_the_tags();
@@ -42,8 +42,9 @@ if(!$posttags){
         $categories = $category_xml;
 }
 
-// Long description
+// Long/Short description
 $long_description = get_field('long_description', $post->ID);
+$short_description = get_field('short_description', $post->ID);
 
 //Prijs
 $price = " ";
@@ -68,19 +69,22 @@ $args = array(
     'limit' => -1,
 );
 $bunch_orders = wc_get_orders($args);
-
+$bool = false;
 foreach($bunch_orders as $order){
     foreach ($order->get_items() as $item_id => $item ) {
         $course_id = intval($item->get_product_id()) - 1;
-        if($course_id == $post->ID)
+        if($course_id == $post->ID){
             $datenr = $item->get_meta_data('Option')[0]->value;
-        //Get woo orders from user
-        $prijs = get_field('price', $course_id);
-        $expenses += $prijs; 
+            $bool = true;
+        }
+        //Get woo orders from user 
         if(!in_array($course_id, $enrolled))
             array_push($enrolled, $course_id);
     }
 }
+if(!$bool)
+    header('Location: /dashboard/user/activity' );
+
 if(!empty($enrolled))
 {
     $args = array(
@@ -92,12 +96,19 @@ if(!empty($enrolled))
     );
     $enrolled_courses = get_posts($args);
 }
+$locationenr = "Online";
+$yearenr = date("Y");
+
 if($datenr){
     $datenrs = explode(",", $datenr);
     $dayenr = explode(" ", $datenrs[0])[0]; 
     $monthenr = explode(" ", $datenrs[0])[1]; 
-    if($datenrs[2])
-        $locationenr = $datenrs[2];
+    if(isset($datenrs[2]))
+        if($datenrs[2])
+            $locationenr = $datenrs[2];
+    if(isset($datenrs[3]))
+        if($datenrs[3])
+            $yearenr = $datenrs[3];
 }
 
 ?>
@@ -135,10 +146,12 @@ if($datenr){
                     <!-- <i class="fa fa-heart"></i>-->
                    Favorite
                </button>
-               <button class="btn btn-share">
+               <!-- 
+                <button class="btn btn-share">
                    <i class="fa fa-share-alt"></i>
                    Share
-               </button>
+               </button> 
+                -->
            </div>
            <div class="card-info-checkout">
                 <?= $long_description; ?>
@@ -181,7 +194,19 @@ if($datenr){
                         <div>
                             <p class="sub-text-1">Date and Time</p>
                             <p class="sub-text-2"><?= $datenr ?></p>
-                            <a href="#" class="sub-text-3"> <i class="fa fa-calendar"></i> Add to Calendar</a>
+                            <?php
+                                $text_calendar = "Livelearn - " . $post->post_title;
+                                $month_calendar = array_search($monthenr, $calendar);
+                                $hourenr = explode(':', $datenrs[1]);
+                                $startenr = $yearenr .''. $month_calendar .''. $dayenr;
+                                $starthourenr = $hourenr[0] . $hourenr[1] . "00";
+                                $finishourenr = ($hourenr[0] == 24) ? "01" . '' . $hourenr[1] . "00" : "0" . ($hourenr[0] + 1) . '' . $hourenr[1] . "00";
+                                $date_calendar = $startenr . 'T'. $starthourenr . '/' . $startenr . 'T' . $finishourenr;
+
+                                $informations_calendar = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" . $text_calendar . "&details=" . $short_description . "&dates=" . $date_calendar . "&location=" . $locationenr;
+
+                            ?>
+                            <a href="<?= $informations_calendar ?>" class="sub-text-3"> <i class="fa fa-calendar"></i> Add to Calendar</a>
                         </div>
                     </div>
                     <div class="block-element-detail">
@@ -230,24 +255,50 @@ if($datenr){
                 </div>
 
                 <?php
-                $i = 0;
+                $x = 0;
                 foreach($enrolled_courses as $course):
                 if($course->ID == $post->ID)
                     continue;
-                $i++;
-                if($i == 4)
+
+                if($x == 4)
                     break;
+                $x++;
+
+                // Categories
+                $categories = array();
+                $posttags = get_the_tags();
+                if(!$posttags){
+                    $category_default = get_field('categories', $course->ID);
+                    $category_xml = get_field('category_xml', $course->ID);
+                    if(!empty($category_default))
+                        $categories = $category_default;
+                    else if(!empty($category_xml))
+                        $categories = $category_xml;
+                }
+
                 ?>
                 <div class="element-other-course">
                     <p class="name-other-cours"><?= $course->post_title ?></p>
-                    <!-- <div class="d-flex flex-wrap">
-                        <p class="tag-category">ux ui design</p>
-                        <p class="tag-category">Figma</p>
-                    </div> -->
+                    <div class="d-flex flex-wrap">
+                        <?php
+                        $read_category = array();
+                        $i = 0;
+                        foreach($categories as $item){
+                            if($i == 3)
+                                break;
+                            if($item)
+                                if(!in_array($item['value'],$read_category)){
+                                    $i++;
+                                    array_push($read_category,$item['value']);
+                                    echo"<p class='tag-category'>" . (String)get_the_category_by_ID($item['value']) . "</p>";
+                                }
+                        }
+                        ?>
+                    </div>
                 </div>
                 <?php endforeach; ?>
                 
-                <a href="" class="btn btn-discover-more">Discover more</a>
+                <a href="/dashboard/user/activity" class="btn btn-discover-more">Discover more</a>
             </div>
         </div>
     </div>

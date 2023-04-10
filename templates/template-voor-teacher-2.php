@@ -35,27 +35,9 @@
                 <div class="col-md-5">
                     <div class="blockForm2">
                         <p><b>Aanmelden expert of opleider</b></p>
-                        <form action="" class="form-Voor-teacher2">
-                            <div class="input-group">
-                                <input type="text" placeholder="Voornaam*">
-                            </div>
-                            <div class="input-group">
-                                <input type="text" placeholder="Achternaam*">
-                            </div>
-                            <div class="input-group">
-                                <input type="text" placeholder="Bedrijf*">
-                            </div>
-                            <div class="input-group">
-                                <input type="text" placeholder="E-mailadres*">
-                            </div>
-                            <div class="input-group">
-                                <input type="text" placeholder="Telefoonnummer*">
-                            </div>
-                            <div class="input-group">
-                                <input type="text" placeholder="Functie*">
-                            </div>
-                            <button type="submit" class="btn btn-omgeving">Creëer je omgeving</button>
-                        </form>
+                        <?php
+                            echo do_shortcode("[gravityform id='17' title='false' description='false' ajax='true']");
+                        ?>
                     </div>
                 </div>
             </div>
