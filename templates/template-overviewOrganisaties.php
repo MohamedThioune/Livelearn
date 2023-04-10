@@ -21,54 +21,10 @@
                     <div class="text-center"><h4 style="color:#043356">Activeer zakelijke </h4></div>
                     <div class="text-center"><h6 style="color:#043356">Leeromgeving </h6></div> <br>
 
-                    <form>  
-                        <div class="row mb-4">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <input type="   text" id="form3Example1" class="form-control" 
-                                    placeholder="voornaam" style="background: white !important" />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                    <input type="text" id="form3Example2" class="form-control"
-                                     placeholder="Achternaam" style="background: white !important"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <input type="text" id="form3Example1" class="form-control" 
-                                    placeholder="Email" style="background: white !important"/>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                    <input type="text" id="form3Example2" class="form-control" 
-                                    placeholder="Telefoon" style="background: white !important" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <input type="text" id="form3Example1" class="form-control" 
-                                    placeholder="Bedrijsnaam" style="background: white !important"/>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                    <input type="text" id="form3Example2" class="form-control" 
-                                    placeholder="Aantal mensen" style="background: white !important"/>
-                                </div>
-                            </div>
-                        </div>
+                    <?php
+                        echo do_shortcode("[gravityform id='12' title='false' description='false' ajax='true']");
+                    ?>
 
-                        <!-- Submit button -->
-                        <button type="submit" class="btn btn-block mb-4 fw-bold text-white" style="background: #47A99E">Vraag aan</button>
-
-                    </form>
                 </div>
             </div>
         </div>
