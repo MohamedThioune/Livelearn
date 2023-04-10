@@ -73,7 +73,6 @@ if(isset($single_add_people)){
             'role' => 'subscriber'
         );
         $user_id = wp_insert_user(wp_slash($userdata));
-        var_dump($user_id);
         if(is_wp_error($user_id)){
             $danger = $user_id->get_error_message();
             header("Location: /dashboard/company/people/?message=Er is een fout opgetreden, probeer het opnieuw.");

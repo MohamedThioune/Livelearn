@@ -4,6 +4,8 @@
 
 $post = 0;
 
+$user = wp_get_current_user();
+
 if(isset($_GET['post']))
     if($_GET['post'])
         $post = get_page_by_path($_GET['post'], OBJECT, 'course');
@@ -27,8 +29,6 @@ endif;
 $author = get_user_by('ID', $post->post_author);
 $author_name = $author->first_name ?: $author->display_name;
 $author_last_name = $author->last_name ?: '';
-
-// $user_picture = get_field('profile_img', 'user_' . $post->post_author) ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
 // Categories
 $categories = array();
@@ -69,19 +69,22 @@ $args = array(
     'limit' => -1,
 );
 $bunch_orders = wc_get_orders($args);
-
+$bool = false;
 foreach($bunch_orders as $order){
     foreach ($order->get_items() as $item_id => $item ) {
         $course_id = intval($item->get_product_id()) - 1;
-        if($course_id == $post->ID)
+        if($course_id == $post->ID){
             $datenr = $item->get_meta_data('Option')[0]->value;
-        //Get woo orders from user
-        $prijs = get_field('price', $course_id);
-        $expenses += $prijs; 
+            $bool = true;
+        }
+        //Get woo orders from user 
         if(!in_array($course_id, $enrolled))
             array_push($enrolled, $course_id);
     }
 }
+if(!$bool)
+    header('Location: /dashboard/user/activity' );
+
 if(!empty($enrolled))
 {
     $args = array(
@@ -203,7 +206,7 @@ if($datenr){
                                 $informations_calendar = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" . $text_calendar . "&details=" . $short_description . "&dates=" . $date_calendar . "&location=" . $locationenr;
 
                             ?>
-                            <a href="<?= $informations_calendar ?>" target="_blank" class="sub-text-3"> <i class="fa fa-calendar"></i> Add to Calendar</a>
+                            <a href="<?= $informations_calendar ?>" class="sub-text-3"> <i class="fa fa-calendar"></i> Add to Calendar</a>
                         </div>
                     </div>
                     <div class="block-element-detail">
@@ -252,20 +255,21 @@ if($datenr){
                 </div>
 
                 <?php
-                $i = 0;
+                $x = 0;
                 foreach($enrolled_courses as $course):
                 if($course->ID == $post->ID)
                     continue;
-                $i++;
-                if($i == 4)
+
+                if($x == 4)
                     break;
+                $x++;
 
                 // Categories
                 $categories = array();
                 $posttags = get_the_tags();
                 if(!$posttags){
-                    $category_default = get_field('categories', $post->ID);
-                    $category_xml = get_field('category_xml', $post->ID);
+                    $category_default = get_field('categories', $course->ID);
+                    $category_xml = get_field('category_xml', $course->ID);
                     if(!empty($category_default))
                         $categories = $category_default;
                     else if(!empty($category_xml))
