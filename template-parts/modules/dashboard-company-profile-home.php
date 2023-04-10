@@ -302,8 +302,8 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="dateValid">Amount of points (PE)</label>
-                                                    <input type="number" class="form-control" id="dateValid" placeholder="$ 456">
+                                                    <label for="amount">Amount of points (PE)</label>
+                                                    <input type="number" class="form-control" id="amount" placeholder="456">
                                                 </div>
 
                                                 <div class="form-group">

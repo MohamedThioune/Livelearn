@@ -17314,8 +17314,19 @@ background: #FFFFFF !important;
     color: #053356;
     font-weight: 400;
 }
-.#MandatoryModal .form-group {
+#MandatoryModal .form-group {
     margin-bottom: 27px;
+}
+.btn-registreren {
+    background: #033356;
+    color: white !important;
+    padding: 8px 20px;
+    font-size: 15px;
+    margin-right: 20px;
+    border-radius: 6px;
+}
+.modal-footer a:hover {
+    color: white !important;
 }
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
