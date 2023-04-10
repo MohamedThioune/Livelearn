@@ -1,5 +1,6 @@
 <?php
 add_action( 'wp_enqueue_scripts', 'enqueue_parent_styles' );
+$GLOBALS['id_user'] = get_current_user_id();
 include "custom-endpoints.php";
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
@@ -600,21 +601,20 @@ function set_assign_data( $entry, $form ) {
 
 }
 
-// add_filter( 'rest_authentication_errors', function( $result ) {
-//     if ( true === $result || is_wp_error( $result ) ) {
-//         return $result;
-//     }
+add_filter( 'rest_authentication_errors', function( $result ) {
+    if ( true === $result || is_wp_error( $result ) ) {
+        return $result;
+    }
 
-//     if ( ! is_user_logged_in() ) {
-//         return new WP_Error(
-//             'rest_not_logged_in',
-//             __( 'You are not currently logged in.' ),
-//             array( 'status' => 401 )
-//         );
-//     }
-
-//     return $result;
-// });
+    if ( ! is_user_logged_in() ) {
+        return new WP_Error(
+            'rest_not_logged_in',
+            __( 'You are not currently logged in.' ),
+            array( 'status' => 401 )
+        );
+    }
+    return $result;
+});
 
 function filter_woocommerce_api_product_response( $product_data, $product, $fields, $this_server ) { 
     $product_data['vendor_id'] = get_post_field( 'post_author', $product->id);
@@ -632,7 +632,7 @@ add_filter( 'woocommerce_api_product_response', 'filter_woocommerce_api_product_
 function recommended_course()
 {
   //The user
-  $user = get_current_user_id();
+  $user = $GLOBALS['user_id'];
   
   $company_visibility = get_field('company',  'user_' . $user);
 
@@ -848,8 +848,6 @@ function recommended_course()
           }
 
   }
-
-  return $courses;
 
   $courses = array_slice($courses, 0, 150);
 
