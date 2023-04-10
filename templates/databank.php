@@ -395,17 +395,18 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         console.log(ids);
     });
 
-    document.ready(function(){
         $('#subtopics').on('click', function()
         {
-            if($ids==null){alert("Please, select some articles!!");}else{
-                $('#loader').attr('hidden',true);
-                $('#select_field').attr('hidden',false);
+            if(ids==null){alert("Please, select some articles!!");}else{
+                
                 $.ajax({
                     url: '/livelearn/subtopics',
                     type: 'POST',
                     data: {
                         ids: ids
+                    },beforeSend:function(){
+                        $('#loader').attr('hidden',true);
+                        $('#select_field').attr('hidden',false);
                     },error:function(response) {
                         console.log("error:".response);
                     },success:function(response){
@@ -418,7 +419,6 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 });
             }
         });
-    });
 
     $('.optieAll').click((e)=>{
         // var tr_element = e.target.parentElement.closest("tr");

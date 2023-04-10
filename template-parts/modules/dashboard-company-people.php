@@ -137,7 +137,7 @@
                 $context = stream_context_create($options);
                 $liste_employees = file_get_contents($list, false, $context);
                 if ($liste_employees) {
-
+                    $class_employee_is_available='';
                     $empl=json_decode($liste_employees,true);
                     foreach ($empl['_embedded'] as $key => $employee) {
                         $tab = [];
@@ -159,7 +159,7 @@
                 }
             }
              else {
-                // var_dump("not id company");
+                var_dump("not id company");
             }
         }
     }
@@ -169,11 +169,12 @@
             <p class="JouwOpleid">Werknemers (<?= $count; ?>)</p>
             <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
             <div class="">
+                <?php if($list_of_all_employees): ?>
+                <span class="alert alert-success ">data from loket are available</span>
+                <?php endif ?>
                 <div class="d-flex align-items-center">
                     <a href="../people-mensen" class="btn add-people-manualy">Add people manually</a>
                     <div class="dropdown custom-dropdown-select">
-                        <span class="alert alert-success ">data from loket are available</span>
-                        
                         <button class="btn btn-choose-company dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                              Salary administration
                         </button>
@@ -450,7 +451,6 @@
         <?php
         $class = '';
         if ($list_of_all_employees) {
-            $class_employee_is_available='';
             $class = 'd-none';
             ?>
         <div>
@@ -566,7 +566,7 @@
     beforeSend:function(){
             $('#loader').attr('hidden',false)
             $('#data-sending-from-form').attr('hidden',true)
-        },
+    },
     success: function(responseXML) {
         $('#loader').attr('hidden',true)
         const formInformation = document.getElementById('data-sending-from-form');
