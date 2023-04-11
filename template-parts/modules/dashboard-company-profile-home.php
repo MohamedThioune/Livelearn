@@ -251,8 +251,8 @@
                     <div id="Mandatory" class="b-tab contentBlockSetting">
                         <div class="content">
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#MandatoryModal">
-                                Launch demo modal
+                            <button type="button" class="btn btn-add-mandatory" data-toggle="modal" data-target="#MandatoryModal">
+                                Add Mandatory Course
                             </button>
 
                             <!-- Modal -->

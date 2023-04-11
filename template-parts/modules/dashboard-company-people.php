@@ -654,7 +654,7 @@ regels.forEach((regel) => {
 </script>
 <script>
     $('.custom-dropdown-select .dropdown-item').on('click', function(){
-        $('.dropdown-toggle').html($(this).html());
+        $('.btn-choose-company').html($(this).html());
     });
 
 </script>
