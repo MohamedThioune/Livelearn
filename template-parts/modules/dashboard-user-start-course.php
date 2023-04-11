@@ -78,7 +78,7 @@ else if(!empty($youtube_videos))
                                         if(empty($courses) && empty($youtube_videos))
                                             echo 
                                             "<li>
-                                                <span> No lesson as far, soon available </span>
+                                                <span> No lesson as far, soon available ... </span>
                                             </li>";
                                         else if(!empty($courses)){
                                             echo "<li>";
@@ -88,7 +88,7 @@ else if(!empty($youtube_videos))
                                                         if($lesson == $key)
                                                             $style = "color:#F79403";
                                                     echo '  
-                                                    <a style="' .$style . '"  href="?topic=0&lesson=' . $key . '" >
+                                                    <a style="' .$style . '"  href="?post=' . $post->post_name . '&topic=0&lesson=' . $key . '" >
                                                         <i class="far fa-play-circle" aria-hidden="true"></i>' . $video['course_lesson_title'] . '
                                                     </a>';
                                                 }
@@ -102,21 +102,13 @@ else if(!empty($youtube_videos))
                                                         if($lesson == $key)
                                                             $style = "color:#F79403";
                                                     echo '  
-                                                    <a style="' .$style . '" href="?topic=0&lesson=' . $key . '" >
+                                                    <a style="' .$style . '" href="?post=' . $post->post_name . '&topic=0&lesson=' . $key . '" >
                                                         <i class="far fa-play-circle" aria-hidden="true"></i>' . $video['title'] . '
                                                     </a>';
                                                 }
                                             echo "</li>";
                                         }
                                         ?>
-                                       
-                                        <!-- 
-                                        <li>
-                                            <a href="">
-                                                <i class="far fa-play-circle" aria-hidden="true"></i>Discover the organization of a network
-                                            </a>
-                                        </li> 
-                                        -->
                                     </ul>
                                 </div>
                             </div>
@@ -188,13 +180,6 @@ else if(!empty($youtube_videos))
             </div>
         </div>
         <div class="content-course-strat position-relative">
-            <!-- 
-            <video controls>
-                <source src="https://www.youtube.com/embed/dcPp_U-v3bI" title="YouTube video player" allowfullscreen />
-                <source src="https://www.youtube.com/embed/dcPp_U-v3bI" title="livelearn video presentation"  allow="playsinline;" type="video/ogg" /> 
-            </video> 
-            -->
-
             <?php
                 if(!empty($courses) && !empty($youtube_videos))
                     echo "<img src='" . $image . "' alt='preview image'>";
@@ -215,10 +200,18 @@ else if(!empty($youtube_videos))
                             echo "<img src='" . $image . "' alt='preview image'>";
             ?>
             <div class="d-flex justify-content-between prev-next-btn">
-                <a href="" class="btn btn-next ml-auto">
+                <form action="" method="POST">
+                    <input type="hidden" name="course_read" value="<?= $post->post_name ?>">
+                    <input type="hidden" name="lesson_key" value="<?= $key ?>">
+                    <button class="btn btn-next ml-auto btn btn-info" name="read_action_lesson" type="submit">
+                        I've finished this video I'll continue
+                        <i class="fa fa-angle-right"></i>
+                    </button>
+                </form>
+                <!-- <a href="" class="btn btn-next ml-auto">
                     I've finished this video I'll continue
                     <i class="fa fa-angle-right"></i>
-                </a>
+                </a> -->
             </div>
         </div>
     </div>
