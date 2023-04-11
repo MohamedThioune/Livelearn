@@ -5,7 +5,7 @@
     extract($_POST);
 
     $table = $wpdb->prefix . 'databank';
-
+    die($ids);
     if (isset($ids)) {
         foreach ($ids as $key => $id) {
             $sql=$wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE id = %d",$id);
@@ -117,7 +117,6 @@
                 );
 
                 $updated=$wpdb->update($table,$articles,$where);
-
             }
         }
 ?>

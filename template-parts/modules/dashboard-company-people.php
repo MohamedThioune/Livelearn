@@ -151,7 +151,7 @@
                         $tab['emailAddress'] = $employee['contactInformation']['emailAddress'];
                         $tab['street'] = $employee['address']['street'];
                         $tab['city'] = $employee['address']['city'];
-                        $list_of_all_employees[] =$tab;
+                        $list_of_all_employees[] = $tab;
                     }
                 }else {
                 var_dump("not list of employee");
@@ -159,7 +159,7 @@
                 }
             }
              else {
-                var_dump("not id company");
+                // var_dump("not id company");
             }
         }
     }
@@ -170,7 +170,7 @@
             <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
             <div class="">
                 <?php if($list_of_all_employees): ?>
-                <span class="alert alert-success ">data from loket are available</span>
+                <span class="alert alert-success ">people from loket are available</span>
                 <?php endif ?>
                 <div class="d-flex align-items-center">
                     <a href="../people-mensen" class="btn add-people-manualy">Add people manually</a>
@@ -552,6 +552,7 @@
     $(document).ready(function() {
   $('#data-sending-from-form').submit(function(event) {
       event.preventDefault();
+      const formInformation = document.getElementById('data-sending-from-form');
       var formData = $(this).serialize();
       console.log('data submitted : ',formData);
       const username = $('input[name="polaris-username"]').val();
@@ -564,12 +565,12 @@
         'Authorization': 'Basic ' + btoa(`${username}:${password}`)
     },
     beforeSend:function(){
-            $('#loader').attr('hidden',false)
-            $('#data-sending-from-form').attr('hidden',true)
+        $('#loader').attr('hidden',false)
+        formInformation.className="d-none";
+       // $('#data-sending-from-form').attr('hidden',true)
     },
     success: function(responseXML) {
         $('#loader').attr('hidden',true)
-        const formInformation = document.getElementById('data-sending-from-form');
         const buttonSubmit = document.querySelector('.btn.btn-success');
         buttonSubmit.className="d-none";
         formInformation.className="d-none";
@@ -593,7 +594,6 @@
         let email;
         if (!row.Email){
             email=row.Naam.split(' ')[0]+'@livelearn-'+row.Naam.split(' ')[1]+'.nl';
-            // email=''
         }else{email=row.Email}
         tr.innerHTML = `
         <td class="row-fullName">${row.Naam}</td>
@@ -606,6 +606,7 @@
     },
         error: function(xhr, status, error) {
             $('#loader').attr('hidden',true)
+            formInformation.className=" ";
             console.log('error request :>',error);
             document.getElementById('error-connexion').classList.remove("d-none");
         }
@@ -662,8 +663,8 @@
     }
 </script>
 <script>
-    $('.custom-dropdown-select .dropdown-item').on('click', function(){
-        $('.dropdown-toggle').html($(this).html());
+   $('.custom-dropdown-select .dropdown-item').on('click', function(){
+        $('.btn-choose-company').html($(this).html());
     });
 
 </script>
