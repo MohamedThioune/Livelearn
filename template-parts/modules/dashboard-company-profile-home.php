@@ -68,6 +68,8 @@
     $skills_note = get_field('skills', 'user_' . $user->ID);
 
 ?>
+<!-- Latest BS-Select compiled and minified CSS/JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css">
 <div class="contentProilView">
 
     <div class="row">
@@ -129,6 +131,9 @@
                         </button>
                         <button  data-tab="Skills" class="b-nav-tab btn">
                             Skills
+                        </button>
+                        <button  data-tab="Mandatory" class="b-nav-tab btn">
+                            Mandatory
                         </button>
                         <button  data-tab="Certificaten" class="b-nav-tab btn">
                             Certificaten
@@ -240,6 +245,79 @@
                                 echo "<p class='textDetailCategorie'>we do not have statistics at this time </p>";
                             }
                             ?>
+                        </div>
+                    </div>
+
+                    <div id="Mandatory" class="b-tab contentBlockSetting">
+                        <div class="content">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-add-mandatory" data-toggle="modal" data-target="#MandatoryModal">
+                                Add Mandatory Course
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="MandatoryModal" tabindex="-1" role="dialog" aria-labelledby="MandatoryModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="MandatoryModalLabel">Mandatory Sharing</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="form-group">
+                                                    <label for="maneMandatory">Name of Mamdatory Course</label>
+                                                    <input type="text" class="form-control" id="maneMandatory" aria-describedby="maneMandatoryHelp" placeholder="Enter  Name of the Mandatory">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="sub-label">Select internal course or external course</label>
+                                                    <select class="form-select select-internal-external mb-0" aria-label="Default ">
+                                                        <option selected>Select</option>
+                                                        <option value="Internal">Internal course</option>
+                                                        <option value="external">External course</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="sub-label">Select Your Courses</label>
+                                                    <div class="search-multi-select-group">
+                                                        <select class="selectpicker" multiple aria-label="Default select example" data-live-search="true">
+                                                            <option value=""></option>
+                                                            <option value="1">One</option>
+                                                            <option value="2">Two</option>
+                                                            <option value="3">Three</option>
+                                                            <option value="4">Four</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="dateDone">Has to be done Before</label>
+                                                    <input type="date" class="form-control" id="dateDone" placeholder="choose date">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="dateValid">Valid for (time period)</label>
+                                                    <input type="date" class="form-control" id="dateValid" placeholder="choose date">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="amount">Amount of points (PE)</label>
+                                                    <input type="number" class="form-control" id="amount" placeholder="456">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <textarea class="message-area" name="message" id="" cols="30" rows="10"></textarea>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-Submit">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -422,61 +500,6 @@
                             </div>
                         </div>
                     </div>
-
-
-                    <script>
-                        'use strict';
-
-                        function Tabs() {
-                            var bindAll = function() {
-                                var menuElements = document.querySelectorAll('[data-tab]');
-                                for(var i = 0; i < menuElements.length ; i++) {
-                                    menuElements[i].addEventListener('click', change, false);
-                                }
-                            };
-
-                            var clear = function() {
-                                var menuElements = document.querySelectorAll('[data-tab]');
-                                for(var i = 0; i < menuElements.length ; i++) {
-                                    menuElements[i].classList.remove('active');
-                                    var id = menuElements[i].getAttribute('data-tab');
-                                    document.getElementById(id).classList.remove('active');
-                                }
-                            };
-
-                            var change = function(e) {
-                                clear();
-                                e.target.classList.add('active');
-                                var id = e.currentTarget.getAttribute('data-tab');
-                                document.getElementById(id).classList.add('active');
-                            };
-
-                            bindAll();
-
-                            //window.location.hash = target_panel_selector ;
-                            if(history.pushState) {
-                                history.pushState(null, null, target_panel_selector);
-                            } else {
-                                window.location.hash = target_panel_selector;
-                            }
-                            return false;
-                        }
-
-                        var connectTabs = new Tabs();
-
-                    </script>
-
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-                    <script>
-                        $(document).ready(function() {
-                            $(".js-select2").select2();
-                            $(".js-select2-multi").select2();
-
-                            $(".large").select2({
-                                dropdownCssClass: "big-drop",
-                            });
-                        });
-                    </script>
 
                 </div>
 
@@ -821,7 +844,67 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".selectpicker").selectpicker();
 
+    })
+</script>
+<script>
+    'use strict';
+
+    function Tabs() {
+        var bindAll = function() {
+            var menuElements = document.querySelectorAll('[data-tab]');
+            for(var i = 0; i < menuElements.length ; i++) {
+                menuElements[i].addEventListener('click', change, false);
+            }
+        };
+
+        var clear = function() {
+            var menuElements = document.querySelectorAll('[data-tab]');
+            for(var i = 0; i < menuElements.length ; i++) {
+                menuElements[i].classList.remove('active');
+                var id = menuElements[i].getAttribute('data-tab');
+                document.getElementById(id).classList.remove('active');
+            }
+        };
+
+        var change = function(e) {
+            clear();
+            e.target.classList.add('active');
+            var id = e.currentTarget.getAttribute('data-tab');
+            document.getElementById(id).classList.add('active');
+        };
+
+        bindAll();
+
+        //window.location.hash = target_panel_selector ;
+        if(history.pushState) {
+            history.pushState(null, null, target_panel_selector);
+        } else {
+            window.location.hash = target_panel_selector;
+        }
+        return false;
+    }
+
+    var connectTabs = new Tabs();
+
+</script>
+
+<script>
+    $(document).ready(function() {
+        $(".js-select2").select2();
+        $(".js-select2-multi").select2();
+
+        $(".large").select2({
+            dropdownCssClass: "big-drop",
+        });
+    });
+</script>
 <script>
 
     

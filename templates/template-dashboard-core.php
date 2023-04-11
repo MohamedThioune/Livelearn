@@ -1176,6 +1176,58 @@ else if(isset($mandatory_course)){
 
     header("Location: ". $message);
 }
+
+else if(isset($read_action_lesson)){
+    $user = wp_get_current_user();
+
+    //Get read by user 
+    $args = array(
+        'post_type' => 'progression', 
+        'post_status' => 'publish',
+        'search_title'  => $course_read,
+        'author' => $user->ID,
+        'posts_per_page' => -1
+    );
+    $progressions = get_posts($args);
+
+    if(empty($progressions)){
+        //Create progression
+        $post_data = array(
+            'post_title' => $course_read,
+            'post_author' => $user->ID,
+            'post_type' => 'progression',
+            'post_status' => 'publish'
+        );
+        $progression_id = wp_insert_post($post_data);
+    }
+    else
+        $progression_id = $progressions[0]->ID;
+    
+    //Lesson read
+    $lesson_reads = get_field('lesson_actual_read', $progression_id);
+    $lesson_read = array();
+    $lesson_read['key_lesson'] = $lesson_key;
+
+    $bool = true;
+
+    if(!empty($lesson_reads))
+        foreach ($lesson_reads as $key => $item) 
+            if($item['key_lesson'] == $lesson_key){
+                $bool = false;
+                break;
+            }
+
+    if(!$lesson_reads)
+        $lesson_reads = array();
+        
+    if($bool){
+        array_push($lesson_reads, $lesson_read);
+        update_field('lesson_actual_read', $lesson_reads, $progression_id);
+    }
+
+    //if exists return next lesson
+    //else return checkout video or end chapter
+}
     
 ?>
 <?php wp_head(); ?>

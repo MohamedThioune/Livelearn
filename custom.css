@@ -12152,7 +12152,7 @@ select {
     margin-top: 40px;
 }
 
-.product-podcat1 .sound-wave {
+.sound-wave {
     display: none;
     height: 320px;
     width: 100%;
@@ -12163,7 +12163,7 @@ select {
     padding-top: 20px;
 }
 
-.product-podcat1 .hide {
+.product-podcat1 .hide, .content-course-strat .hide {
     display: none;
 }
 
@@ -12179,7 +12179,7 @@ select {
     }
 }
 
-.product-podcat1 .bar-scale1 {
+.bar-scale1 {
     animation: scale1 0.6s infinite;
     transform-origin: center;
 }
@@ -12196,7 +12196,7 @@ select {
     }
 }
 
-.product-podcat1 .bar-scale2 {
+.bar-scale2 {
     animation: scale2 0.6s infinite;
     transform-origin: center;
 }
@@ -12213,12 +12213,12 @@ select {
     }
 }
 
-.product-podcat1 .bar-scale3 {
+.bar-scale3 {
     animation: scale3 0.6s infinite;
     transform-origin: center;
 }
 
-.product-podcat1 .stop-animation {
+.stop-animation {
     animation-duration: 0s;
 }
 
@@ -17274,6 +17274,78 @@ background: #FFFFFF !important;
     color: #ffffff !important;
     background: #47A99E !important;
 }
+.select-internal-external {
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem !important;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #495057 !important;
+    background-color: #fff !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 0.25rem;
+    box-shadow: none;
+}
+.search-multi-select-group .bootstrap-select{
+    width: 100% !important;
+}
+.message-area, .search-multi-select-group .bootstrap-select button{
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+}
+.btn-Submit{
+    background: #053356;
+    color: #FFFFFF !important;
+    padding: 10px 25px;
+}
+#MandatoryModal .modal-footer {
+    border-top: 0px !important;
+}
+#MandatoryModal label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    font-size: 15px;
+    color: #053356;
+    font-weight: 400;
+}
+#MandatoryModal .form-group {
+    margin-bottom: 27px;
+}
+.btn-registreren {
+    background: #033356;
+    color: white !important;
+    padding: 8px 20px;
+    font-size: 15px;
+    margin-right: 20px;
+    border-radius: 6px;
+}
+.modal-footer a:hover {
+    color: white !important;
+}
+.btn-add-mandatory{
+    background: #00aa9e;
+    color: #FFFFFF !important;
+}
+.content-course-strat .imgPadcastCourse, .sound-wave{
+    height: 450px;
+    border-radius: 15px;
+    overflow: hidden;
+}
+.content-course-strat .imgPadcastCourse img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.content-list-course ul li a span{
+    font-weight: 500;
+}
+
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -20909,6 +20981,17 @@ background: #FFFFFF !important;
     }
     .group-list-course .element-list-course .time, .group-list-course .element-list-course .status {
         width: 40% !important;
+    }
+    .content-course-strat .imgPadcastCourse, .sound-wave {
+        height: 250px;
+    }
+    .body-content-strat .content-course-strat {
+        margin-top: 20px !important;
+        min-height: 0vh !important;
+        padding-bottom: 0;
+    }
+    .sound-wave {
+        padding-top: 18%;
     }
 
 
