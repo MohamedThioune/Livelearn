@@ -1,6 +1,5 @@
 <html lang="en">
 
-<?php /** Template Name: start-course */ ?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
@@ -44,7 +43,16 @@ else if(!empty($youtube_videos))
     $count_videos = count($youtube_videos);
 
 ?>
+<style>
+    .theme-side-menu {
+        display: none !important;
+    }
+    .theme-learning, .theme-form, .theme-content__button-group, .theme-dashboard-blocks {
+        padding: 0 !important;
+    }
+</style>
 <body>
+
 <div class="content-start-course">
     <div class="headBlock ">
         <div class="d-flex justify-content-between align-items-center">
