@@ -397,7 +397,10 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
         $('#subtopics').on('click', function()
         {
-            if(ids==null){alert("Please, select some articles!!");}else{
+            console.log(ids);
+            if(ids==null){
+                alert("Please, select some articles!!");
+            }else{
                 
                 $.ajax({
                     url: '/livelearn/subtopics',
@@ -410,7 +413,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     },error:function(response) {
                         console.log("error:".response);
                     },success:function(response){
-                        console.log(response);
+                        console.log('success',response);
                     },complete:function(response){
                         console.log("complete:".response);
                         $('#loader').attr('hidden',false);
