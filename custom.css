@@ -9297,7 +9297,7 @@ ul#tabs-nav li.active a {
 
 .headOverviewOrganisatie {
     margin: 0 auto 100px;
-    width: 380px;
+    width: 700px;
     text-align: center;
 }
 
@@ -17215,8 +17215,65 @@ background: #FFFFFF !important;
     color: #033356;
     margin-bottom: 40px;
 }
-
-
+.btn-choose-company{
+    color: #fff !important;
+    background-color: #033356 !important;
+    border-color: #033356 !important;
+    display: flex;
+    justify-content: space-between;
+    min-width: 100px;
+    align-items: center;
+}
+.btn-show-modal {
+    background-color: #ffffff !important;
+    color: #033356 !important;
+    font-size: 15px !important;
+}
+.modal-footer .btn-success {
+    color: #fff;
+    background-color: #47A99E;
+    border-color: #47A99E;
+    padding: 8px 15px !important;
+    margin-top: 0px;
+    font-weight: 500;
+}
+.otherModal .btn-outline-success {
+    color: #47A99E !important;
+    border-color: #47A99E !important;
+}
+.otherModal .btn-outline-success:hover {
+    color: #fff !important;
+    background-color: #47A99E !important;
+    border-color: #47A99E !important;
+}
+.btn-success:not(:disabled):not(.disabled):active, .btn-outline-success:not(:disabled):not(.disabled):active{
+    color: #FFFFFF !important;
+    border-color: #47A99E !important;
+    background: #47A99E !important;
+}
+.modal-footer .btn-close{
+    color: #fff;
+    background-color: #42454d !important;
+    border-color: #42454d !important;
+    padding: 8px 15px !important;
+    margin: 0 20px !important;
+}
+#polarisModal .modal-footer>* {
+    margin-bottom: 0 !important;
+}
+.otherModal table th, .table td {
+     text-align: left !important;
+}
+.add-people-manualy {
+    border: 1px solid #47A99E;
+    color: #47A99E !important;
+    margin-right: 20px;
+    padding: 6px 15px;
+}
+.add-people-manualy:hover {
+    color: #ffffff !important;
+    background: #47A99E !important;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -20013,7 +20070,7 @@ background: #FFFFFF !important;
         background: #023356;
     }
     .content-voor-2  {
-        padding-bottom: 100px;
+        padding-bottom: 0px;
     }
     .content-voor-teacher-2 .firstSection .blockForm2 {
         margin-top: 40px;
