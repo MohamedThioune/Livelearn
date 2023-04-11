@@ -240,11 +240,10 @@ require($page);
                         Waarschijnlijk ben jij al druk genoeg met het draaiend houden van je bedrijf. Daarom zorgen wij als LiveLearn dat jij alle trends en ontwikkelingen direct in je eigen ontwikkelomgeving ontvangt.
                     </p>
                     <div>
-                        <button type="submit" class="btn btn-al-vanaf"
-                                data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">
+                        <a href="/voor-teacher-2-2/" class="btn btn-al-vanaf">
                             Al vanaf €4,95
-                        </button>
-                        <a href="" class="btn btn-Functionaliteiten">Functionaliteiten</a>
+                        </a>
+                        <a href="/functiegerichte-2/" class="btn btn-Functionaliteiten">Functionaliteiten</a>
 
                     </div>
                 </div>
@@ -414,7 +413,6 @@ require($page);
                     </div>
                     <div class="d-flex align-items-center mt-4">
                         <a href="/voor-organisatie-2/" class="btn btnStratAlVoor">Start al voor €4,95</a>
-                        <p class="GespecialiseerdText">Gespecialiseerd in het MKB</p>
                     </div>
                 </div>
                 <div class="second-block-binnen">
@@ -471,7 +469,7 @@ require($page);
                </div>
            </div>
            <div class="btn-Bekijk-functionaliteiten text-center">
-               <a href="" class="btn ">Bekijk al onze functionaliteiten</a>
+               <a href="/functiegerichte-2/" class="btn ">Bekijk al onze functionaliteiten</a>
            </div>
        </div>
 

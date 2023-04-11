@@ -620,7 +620,7 @@ $url = home_url( $wp->request );
 
                         <ul class="navbar-nav nav-right">
                             <li class="nav-item active">
-                                <a class="nav-link" id="Over" href="/static-education-individual/">Over ons</a>
+                                <a class="nav-link" id="Over" href="/about/">Over ons</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link nav-linModife dropdown-toggle" id="Opleidingen" type="button" data-toggle="dropdown" data-toggle="modal" data-target="#Opleidingen"  role="button"  href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Upskilling</a>
