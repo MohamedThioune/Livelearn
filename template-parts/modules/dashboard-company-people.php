@@ -2,6 +2,7 @@
     session_start();
     $users = get_users();
     $list_of_all_employees=array();
+    $class_employee_is_available="d-none";
     $data_user = wp_get_current_user();
     $user_connected = $data_user->data->ID;
     $company = get_field('company',  'user_' . $user_connected);
@@ -56,6 +57,7 @@
         // $redirect = 'https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         $redirect = get_site_url()."/dashboard/company/people/";
         $status = rand(1000,9999);
+        // $message_loket="user from loket are available.";
         $url = "$baseurl/authorize?client_id=$client_id&redirect_uri=$redirect&response_type=code&scope=all&state=$status";
         header("Location: $url");
         $_SESSION['client_id']=$client_id;
@@ -65,11 +67,12 @@
         if($_GET['code']){
             extract($_GET);
             $token="";
-            $id_entreprise = get_field('id_company_loket',$company_connected->ID);
+            $tokenIsValide=false;
+            // $id_entreprise = get_field('id_company_loket',$company_connected->ID);
+            // if ($tokenIsValide){
             // var_dump('The code generate : '.$code);
             $client_id = $_SESSION['client_id'];
             $client_secret = $_SESSION['client_secret'];
-            $redirect_uri = "https://livelearn.nl/dashboard/company/people/";
             $grant_type = "authorization_code";
             // URL de l'endpoint d'obtention du token
             $token_url = "https://oauth.loket-acc.nl";
@@ -78,7 +81,7 @@
                 'code' => $code,
                 'client_id' => $client_id,
                 'client_secret' => $client_secret,
-                'redirect_uri' => $redirect_uri,
+                'redirect_uri' => $redirect,
                 'grant_type' => $grant_type
             ));
             // header of POST request
@@ -97,16 +100,15 @@
                 //POST request
             $response = file_get_contents($token_url."/token", false, $context);
             $data = json_decode($response, true); // token getted
-             $token = $data['access_token'];
-            //$token = "Ik3TF4d_H1OeWdBp9Xg6z4DGUfKfE1TNvu5ZfGVUxq0O9x9OdXO6pMf6lPAjeJ68gkBMzip82zCpvrX9JVTYcqGUJRSbUGNuqWHr3GNs6v4DFrKo2MVYBj5e3hpqfbsklmVQ-VHWscdt_uVKFyxvYugKH4YVeuCzWTe-wNqh_Ryy_YqZ89ZmihyjWVufcFLZMq_U4I45aIkng1QV_1pH39IhJxMFMLgMXYR0eM0ECydhIyzhsFSQJe90Hej27pm9mhuJrzqBy6wr89zOODbu80x-YiFNb8u2ggZQ-ftsFuwPp7Ied-01NgQb-AYkP39Cy30ekD9KdI2opTUNbNixZO5UVaJWtGq0d37TlGgtZCO6WiGQyO8Jf09ebcvXvrX3TUCW1fevFExGx1DpSRQXZ27zYic";
-            // var_dump('token : '.$token);
+            // $_SESSION['token-loket'] = $data['access_token'];
+            $token = $data['access_token'];
+            // $token = "lKuDoocYhVktpHirYL76WqKmx-o1ujxXfr3kaglAhUZ_D3zuMpEWRYj9BQrQQsJURkWuZKt0Z7umWrjPSVBNGUcdCK-64ixR-f0DFJmdiJVF3OY3Q9swpJVTPoNFF_8LdG0urxmQt94Hx4UOLXIDOunGDD99Laxr1P83RfFg5Q0GL7LHWMecg2ogyzbcov5ZQesUTBWVK2uaohiHyltMN5pGE6epZ6l8jFWhYs1CqZTxwFKxzNy1Mzyy_qHIbkwT-O7l1D7FXx-vtK_eCFEVC8NQuhqIuqYtezHLq33S0WKXgdvLAU27XpQZ-ey2C5iNy6leOQ6DlLiF2PMxvu-jDZb5f2D8DrDKiRrXf68OGtkxXHRw76nFw7MEn7fTUTsrvHxkCC0hD5HXysRBj3VVmBqfRA8";
+            // var_dump($token);
+            // $token = $_SESSION['token-loket'];
+            // }
 
             // id company
                 $url_employees="https://api.loket-acc.nl/v2/providers/employers";
-                // $header_employees = array(
-                //     "Authorization: Bearer $token",
-                //     "Content-Type: application/json"
-                // );
                 $options = array(
                     'http' => array(
                     'method' => 'GET',
@@ -135,6 +137,7 @@
                 $context = stream_context_create($options);
                 $liste_employees = file_get_contents($list, false, $context);
                 if ($liste_employees) {
+                    $class_employee_is_available='';
                     $empl=json_decode($liste_employees,true);
                     foreach ($empl['_embedded'] as $key => $employee) {
                         $tab = [];
@@ -148,16 +151,16 @@
                         $tab['emailAddress'] = $employee['contactInformation']['emailAddress'];
                         $tab['street'] = $employee['address']['street'];
                         $tab['city'] = $employee['address']['city'];
-                        $list_of_all_employees[] =$tab;
+                        $list_of_all_employees[] = $tab;
                     }
                 }else {
-
+                var_dump("not list of employee");
+                    $tokenIsValide = true;
                 }
             }
-            //  else {
-            //     var_dump("Error decoding JSON : " . json_last_error_msg());
-            // }
-            // var_dump($list_of_all_employees);
+             else {
+                // var_dump("not id company");
+            }
         }
     }
     ?>
@@ -166,10 +169,9 @@
             <p class="JouwOpleid">Werknemers (<?= $count; ?>)</p>
             <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
             <div class="">
-               <!-- <button type="button" class="btn" data-toggle="modal" data-target="#polarisModal">Polaris</button>
-                <button type="button" class="btn" data-toggle="modal" data-target="#loketModal">Loket</button>
-                <a href="../people-mensen" class="btnNewCourse">Persoon toevoegen</a>-->
-
+                <?php if($list_of_all_employees): ?>
+                <span class="alert alert-success ">people from loket are available</span>
+                <?php endif ?>
                 <div class="d-flex align-items-center">
                     <a href="../people-mensen" class="btn add-people-manualy">Add people manually</a>
                     <div class="dropdown custom-dropdown-select">
@@ -182,15 +184,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!--<select name="salary-system"  id="salary-system">
-                    <option value=""></option>
-                        <option value="polaris" >POLARIS</option>
-                    <option value="loket">LOKET</option>
-                    <option value="">
-                        <a href="../people-mensen" class="btnNewCourse">Persoon toevoegen</a>
-                    </option>
-                </select>-->
             </div>
         </div>
         <div class="contentCardListeCourse">
@@ -360,11 +353,9 @@
                                                                     echo '<option value="' . $department['name'] .'" >' . $department['name'] . '</option>';
                                                             ?>
                                                         </select>
-
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <button type="submit" name="missing_details_user" class="btn btn-add-budget">Add</button>
                                         </form>
                                     </div>
@@ -396,20 +387,29 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+    <div hidden="true" id="loader" class="text-center" role="status">
+         <div class="spinner-border" role="status">
+        </div>
+    </div>
       <div id="back-polaris" class="text-center"></div>
       <div class="modal-body">
-        <form id="data-sending-from-form" method="POST">
+        <form class="needs-validation" novalidate id="data-sending-from-form" method="POST">
           <div class="form-group">
             <label for="polaris-username" class="col-form-label">login</label>
-            <input type="text" value="API_test_extern@bcs.nl" class="form-control" id="polaris-username" name="polaris-username">
+            <input type="text" class="form-control" id="polaris-username" name="polaris-username" aria-describedby="inputGroupPrepend" required>
           </div>
           <div class="form-group">
             <label for="polaris-password" class="col-form-label">password</label>
-            <input type="password" value="Qa1B27x4D!s" class="form-control" id="polaris-password" name="polaris-password">
+            <input type="password" class="form-control" id="polaris-password" name="polaris-password" aria-describedby="inputGroupPrepend" required>
           </div>
         </form>
       </div>
-      <div class="d-none" id="list-polaris">
+      <div hidden="true" id="loader-back-polaris" class="text-center" role="status">
+         <div class="spinner-border" role="status">
+
+        </div>
+      </div>
+      <div class="d-none loader-back-polaris" id="list-polaris">
         <table class="table table-hover">
         <thead>
         <tr>
@@ -442,7 +442,12 @@
         </button>
       </div>
       <div id="back-loket" class="text-center"></div>
-      <div class="modal-body">
+      <div hidden="true" id="loader-back-loket" class="text-center" role="status">
+         <div class="spinner-border" role="status">
+            
+        </div>
+      </div>
+      <div class="modal-body loader-back-loket" id="list-loket">
         <?php
         $class = '';
         if ($list_of_all_employees) {
@@ -463,7 +468,6 @@
             <tr>
                 <td class="row-fullName"><?=$employee['firstName'].' '.$employee['lastName'] ?></td>
                 <td><?= $employee['city']?></td>
-                <!-- <td><?//= $employee['emailAddress']?></td> -->
                 <td class="row-email"><?= $employee['emailAddress'] ?: $employee['firstName'].'-'.$employee['lastName']."@".$employee['firstName']."-livelearn.nl"?></td>
                 <td><button class="btn btn-outline-success" onclick="addInDatabase(event,'loket')">+Add</button></td>
             </tr>
@@ -476,11 +480,11 @@
       <form class="<?= $class ?>" id="from-form-loket" action="/livelearn/dashboard/company/people/" method="POST">
           <div class="form-group">
             <label for="loket-username" class="col-form-label">client id</label>
-            <input type="text" value="ThirdPartiesTestClient" class="form-control" id="loket-username" name="client_id">
+            <input type="text" class="form-control" id="loket-username" name="client_id" require>
           </div>
           <div class="form-group">
             <label for="loket-password" class="col-form-label">client secret</label>
-            <input type="password" value="Welkom01" class="form-control " id="loket-password" name="client_secret">
+            <input type="password"  class="form-control " id="loket-password" name="client_secret" require>
           </div>
         </form>
       </div>
@@ -548,6 +552,7 @@
     $(document).ready(function() {
   $('#data-sending-from-form').submit(function(event) {
       event.preventDefault();
+      const formInformation = document.getElementById('data-sending-from-form');
       var formData = $(this).serialize();
       console.log('data submitted : ',formData);
       const username = $('input[name="polaris-username"]').val();
@@ -559,8 +564,13 @@
     headers: {
         'Authorization': 'Basic ' + btoa(`${username}:${password}`)
     },
+    beforeSend:function(){
+        $('#loader').attr('hidden',false)
+        formInformation.className="d-none";
+       // $('#data-sending-from-form').attr('hidden',true)
+    },
     success: function(responseXML) {
-        const formInformation = document.getElementById('data-sending-from-form');
+        $('#loader').attr('hidden',true)
         const buttonSubmit = document.querySelector('.btn.btn-success');
         buttonSubmit.className="d-none";
         formInformation.className="d-none";
@@ -570,34 +580,33 @@
         const regels = responseXML.querySelectorAll('Regel');
         const tbody = document.getElementById('data-polaris');
         const data = [];
-regels.forEach((regel) => {
-  const row = {};
-// Browse through each child of the <Regel> element and retrieve values
-  regel.childNodes.forEach((node) => {
-    if (node.nodeType === 1) {
-      row[node.nodeName] = node.textContent;
-    }
-  });
-  // add object in the array of data
-  data.push(row);
-  const tr = document.createElement("tr");
-  let email;
-  if (!row.Email){
-    console.log(row.Naam.split(' ')[0]+'@livelearn-'+row.Naam.split(' ')[1]+'.nl')
-    email=row.Naam.split(' ')[0]+'@livelearn-'+row.Naam.split(' ')[1]+'.nl';
-    // email=''
-    console.log(email);
-}else{email=row.Email}
-  tr.innerHTML = `
-  <td class="row-fullName">${row.Naam}</td>
-  <td>${row.Plaats}</td>
-  <td class="row-email">${email}</td>
-  <td><button onclick="addInDatabase(event)" class="btn btn-outline-success">+ Add </button></td>`;
-  tbody.appendChild(tr);
-});
+        regels.forEach((regel) => {
+        const row = {};
+        // Browse through each child of the <Regel> element and retrieve values
+        regel.childNodes.forEach((node) => {
+            if (node.nodeType === 1) {
+            row[node.nodeName] = node.textContent;
+            }
+        });
+        // add object in the array of data
+        data.push(row);
+        const tr = document.createElement("tr");
+        let email;
+        if (!row.Email){
+            email=row.Naam.split(' ')[0]+'@livelearn-'+row.Naam.split(' ')[1]+'.nl';
+        }else{email=row.Email}
+        tr.innerHTML = `
+        <td class="row-fullName">${row.Naam}</td>
+        <td>${row.Plaats}</td>
+        <td class="row-email">${email}</td>
+        <td><button onclick="addInDatabase(event)" class="btn btn-outline-success">+ Add </button></td>`;
+        tbody.appendChild(tr);
+        });
 
     },
         error: function(xhr, status, error) {
+            $('#loader').attr('hidden',true)
+            formInformation.className=" ";
             console.log('error request :>',error);
             document.getElementById('error-connexion').classList.remove("d-none");
         }
@@ -606,14 +615,11 @@ regels.forEach((regel) => {
     });
 
     function addInDatabase(e,adminSalary='') {
-        // idSubmitted='back-polaris'
+        idSubmitted='back-polaris'
         if (adminSalary=='loket') {
             idSubmitted = 'back-loket';
-        } else {
-            idSubmitted = 'back-polaris';
         }
-        // console.log('idSubmitted :::::::::'+idSubmitted)
-        // console.log('adminSalary::::::::::'+adminSalary)
+        
         const row = e.target.parentNode.parentNode;
         const email = row.querySelector(".row-email").textContent.trim();
         const fullName = row.querySelector(".row-fullName").textContent;
@@ -628,20 +634,24 @@ regels.forEach((regel) => {
         console.log('data sending ' + dataToSend );
         $.ajax({
         url: '/livelearn/dashboard/company/people-mensen/',
-        // url: '/livelearn/dashboard/company/people/',
         // url: '/dashboard/company/people-mensen/',
         method: 'POST',
-        // dataType: 'json',
         data: dataToSend,
+        beforeSend:function(){
+            document.getElementById(idSubmitted).innerHTML = '';
+            $('#loader-'+idSubmitted).attr('hidden',false)
+            $('.loader-'+idSubmitted).attr('hidden',true)
+        },
         success: function(response) {
-            console.log('success data sinding : =>'+response);
-            alert("data saving sucess...");
+            $('.loader-'+idSubmitted).attr('hidden',false)
+            $('#loader-'+idSubmitted).attr('hidden',true)
             msg_success = "<span class='alert alert-success'>U heeft met succes een nieuwe werknemer aangemaakt ✔️</span>";
             document.getElementById(idSubmitted).innerHTML = response;
             // location.reload();
         },
         error: function(error) {
-            alert("error when sending data");
+            $('#loader-'+idSubmitted).attr('hidden',true)
+            $('.loader-'+idSubmitted).attr('hidden',false)
             console.log("Erreur when sending data : =>"+JSON.stringify(error) );
             msg_error = "<span class='alert alert-danger'>Er is een fout opgetreden, probeer het opnieuw.</span>";
             err=error.responseText
@@ -653,7 +663,7 @@ regels.forEach((regel) => {
     }
 </script>
 <script>
-    $('.custom-dropdown-select .dropdown-item').on('click', function(){
+   $('.custom-dropdown-select .dropdown-item').on('click', function(){
         $('.btn-choose-company').html($(this).html());
     });
 

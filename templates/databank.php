@@ -165,7 +165,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                         <br>
                     </center>
                     <table class="table table-responsive">
-                        <form action="/optieAll" method="POST">
+                        <form method="POST">
                             <thead>
                             <tr>
                                 <th scope="col"><input type="checkbox" id="checkAll" onclick='checkUncheck(this);'></th>
@@ -324,37 +324,37 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     }
 
     $(document).ready(function() {
-  $('#bouddha').on('click', function() {
-    var selectedOptions = $('#select_company').find('option:selected');
-    var selectedValues = [];
+        $('#bouddha').on('click', function() {
+            var selectedOptions = $('#select_company').find('option:selected');
+            var selectedValues = [];
 
-    selectedOptions.each(function() {
-      var value = $(this).val();
-      var text = $(this).text();
-      selectedValues.push({value: value, text: text});
-    });
-    $('#select_field').hide(true,2000);
-    $('#loader').attr('hidden',false);
+            selectedOptions.each(function() {
+            var value = $(this).val();
+            var text = $(this).text();
+            selectedValues.push({value: value, text: text});
+            });
+            $('#select_field').hide(true,2000);
+            $('#loader').attr('hidden',false);
 
-    // Send selectedValues array via AJAX to PHP file
-    $.ajax({
-      type: "POST",
-      url: "/artikels",
-      data: { selectedValues: selectedValues },
-      success: function(response) {
-        console.log(response);
-        // location.reload();
-      },error:function() {
-        console.log('error');
-      },
-      complete:function(){
-        $('#select_field').hide(false,2000);
-        $('#loader').attr('hidden',true);
-        location.reload();
-      }
+            // Send selectedValues array via AJAX to PHP file
+            $.ajax({
+            type: "POST",
+            url: "/artikels",
+            data: { selectedValues: selectedValues },
+            success: function(response) {
+                console.log(response);
+                // location.reload();
+            },error:function() {
+                console.log('error');
+            },
+            complete:function(){
+                $('#select_field').hide(false,2000);
+                $('#loader').attr('hidden',true);
+                location.reload();
+            }
+            });
+        });
     });
-  });
-});
 
     
     $('#select_field').change((e)=>
@@ -395,20 +395,33 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         console.log(ids);
     });
 
-    $('#subtopics').click((e)=>
-    {
-        if($ids==null){alert("Please, select some articles!!");}else{
-            $.ajax({
-                url: '/subtopics',
-                type: 'POST',
-                data: {
-                    ids: $ids
-                },error:function(response) {
-                    console.log("error:".response);
-                }
-            });
-        }
-    });
+        $('#subtopics').on('click', function()
+        {
+            console.log(ids);
+            if(ids==null){
+                alert("Please, select some articles!!");
+            }else{
+                
+                $.ajax({
+                    url: '/livelearn/subtopics',
+                    type: 'POST',
+                    data: {
+                        ids: ids
+                    },beforeSend:function(){
+                        $('#loader').attr('hidden',true);
+                        $('#select_field').attr('hidden',false);
+                    },error:function(response) {
+                        console.log("error:".response);
+                    },success:function(response){
+                        console.log('success',response);
+                    },complete:function(response){
+                        console.log("complete:".response);
+                        $('#loader').attr('hidden',false);
+                        $('#select_field').attr('hidden',true);
+                    }
+                });
+            }
+        });
 
     $('.optieAll').click((e)=>{
         // var tr_element = e.target.parentElement.closest("tr");
