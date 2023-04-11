@@ -1,5 +1,6 @@
 <?php
 add_action( 'wp_enqueue_scripts', 'enqueue_parent_styles' );
+$GLOBALS['id_user'] = get_current_user_id();
 include "custom-endpoints.php";
 function enqueue_parent_styles() {
     wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/assets/bootstrap/css/bootstrap.min.css' );
@@ -389,7 +390,6 @@ function custom_post_type() {
     register_post_type( 'company', $company_args );
 
     //Communities
-
     $community = array(
         'name'                => _x( 'Communities', 'Communities', 'community' ),
         'singular_name'       => _x( 'Communities', 'Community', 'community' ),
@@ -430,8 +430,49 @@ function custom_post_type() {
 
     );
 
+    //Progression
+    $progression = array(
+        'name'                => _x( 'Progressions', 'Progressions', 'progression' ),
+        'singular_name'       => _x( 'Progressions', 'Progression', 'progression' ),
+        'menu_name'           => __( 'Progressions', 'progression' ),
+        //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
+        'all_items'           => __( 'All companies', 'progression' ),
+        'view_item'           => __( 'View progression', 'view_progression' ),
+        'add_new_item'        => __( 'New progression', 'add_new_progression' ),
+        'add_new'             => __( 'New progression', 'text_domain' ),
+        'edit_item'           => __( 'Edit Item', 'text_domain' ),
+        'update_item'         => __( 'Update Item', 'text_domain' ),
+        'search_items'        => __( 'Search Item', 'text_domain' ),
+        'not_found'           => __( 'Not found', 'text_domain' ),
+        'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
+    );
 
-    register_post_type( 'community', $community_args );
+    $progression_args = array(
+        'label'               => __( 'progression', 'text_domain' ),
+        'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
+        'labels'              => $progression,
+        'supports'            => array('title', 'editor', 'author', 'custom-fields', 'excerpt'),
+        //'taxonomies'          => array('sales-person', 'sales-margin', 'location' ),
+        'hierarchical'        => false,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_rest'        => false,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => true,
+        'show_in_admin_bar'   => true,
+        'menu_position'       => 5,
+        'menu_icon'           => '',
+        'can_export'          => true,
+        'rewrite'             => array('slug' => 'progression'),
+        'has_archive'         => true,
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'capability_type'     => 'page',
+
+    );
+
+
+    register_post_type( 'progression', $progression_args );
 
 }
 add_action( 'init', 'custom_post_type', 0 );
@@ -600,21 +641,20 @@ function set_assign_data( $entry, $form ) {
 
 }
 
-// add_filter( 'rest_authentication_errors', function( $result ) {
-//     if ( true === $result || is_wp_error( $result ) ) {
-//         return $result;
-//     }
+add_filter( 'rest_authentication_errors', function( $result ) {
+    if ( true === $result || is_wp_error( $result ) ) {
+        return $result;
+    }
 
-//     if ( ! is_user_logged_in() ) {
-//         return new WP_Error(
-//             'rest_not_logged_in',
-//             __( 'You are not currently logged in.' ),
-//             array( 'status' => 401 )
-//         );
-//     }
-
-//     return $result;
-// });
+    if ( ! is_user_logged_in() ) {
+        return new WP_Error(
+            'rest_not_logged_in',
+            __( 'You are not currently logged in.' ),
+            array( 'status' => 401 )
+        );
+    }
+    return $result;
+});
 
 function filter_woocommerce_api_product_response( $product_data, $product, $fields, $this_server ) { 
     $product_data['vendor_id'] = get_post_field( 'post_author', $product->id);
@@ -632,7 +672,7 @@ add_filter( 'woocommerce_api_product_response', 'filter_woocommerce_api_product_
 function recommended_course()
 {
   //The user
-  $user = get_current_user_id();
+  $user = $GLOBALS['user_id'];
   
   $company_visibility = get_field('company',  'user_' . $user);
 
@@ -848,8 +888,6 @@ function recommended_course()
           }
 
   }
-
-  return $courses;
 
   $courses = array_slice($courses, 0, 150);
 

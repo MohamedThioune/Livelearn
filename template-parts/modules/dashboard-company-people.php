@@ -2,6 +2,7 @@
     session_start();
     $users = get_users();
     $list_of_all_employees=array();
+    $class_employee_is_available="d-none";
     $data_user = wp_get_current_user();
     $user_connected = $data_user->data->ID;
     $company = get_field('company',  'user_' . $user_connected);
@@ -56,6 +57,7 @@
         // $redirect = 'https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         $redirect = get_site_url()."/dashboard/company/people/";
         $status = rand(1000,9999);
+        // $message_loket="user from loket are available.";
         $url = "$baseurl/authorize?client_id=$client_id&redirect_uri=$redirect&response_type=code&scope=all&state=$status";
         header("Location: $url");
         $_SESSION['client_id']=$client_id;
@@ -71,7 +73,6 @@
             // var_dump('The code generate : '.$code);
             $client_id = $_SESSION['client_id'];
             $client_secret = $_SESSION['client_secret'];
-            $redirect_uri = "https://livelearn.nl/dashboard/company/people/";
             $grant_type = "authorization_code";
             // URL de l'endpoint d'obtention du token
             $token_url = "https://oauth.loket-acc.nl";
@@ -80,7 +81,7 @@
                 'code' => $code,
                 'client_id' => $client_id,
                 'client_secret' => $client_secret,
-                'redirect_uri' => $redirect_uri,
+                'redirect_uri' => $redirect,
                 'grant_type' => $grant_type
             ));
             // header of POST request
@@ -136,6 +137,7 @@
                 $context = stream_context_create($options);
                 $liste_employees = file_get_contents($list, false, $context);
                 if ($liste_employees) {
+                    $class_employee_is_available='';
                     $empl=json_decode($liste_employees,true);
                     foreach ($empl['_embedded'] as $key => $employee) {
                         $tab = [];
@@ -149,7 +151,7 @@
                         $tab['emailAddress'] = $employee['contactInformation']['emailAddress'];
                         $tab['street'] = $employee['address']['street'];
                         $tab['city'] = $employee['address']['city'];
-                        $list_of_all_employees[] =$tab;
+                        $list_of_all_employees[] = $tab;
                     }
                 }else {
                 var_dump("not list of employee");
@@ -167,6 +169,9 @@
             <p class="JouwOpleid">Werknemers (<?= $count; ?>)</p>
             <input id="search_txt_company" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek medewerker" aria-label="Search" >
             <div class="">
+                <?php if($list_of_all_employees): ?>
+                <span class="alert alert-success ">people from loket are available</span>
+                <?php endif ?>
                 <div class="d-flex align-items-center">
                     <a href="../people-mensen" class="btn add-people-manualy">Add people manually</a>
                     <div class="dropdown custom-dropdown-select">
@@ -472,14 +477,14 @@
       </div>
       <?php } ?>
 
-      <form class="<?= $class ?>" id="from-form-loket" action="/dashboard/company/people/" method="POST">
+      <form class="<?= $class ?>" id="from-form-loket" action="/livelearn/dashboard/company/people/" method="POST">
           <div class="form-group">
             <label for="loket-username" class="col-form-label">client id</label>
-            <input type="text" class="form-control" id="loket-username" name="client_id">
+            <input type="text" class="form-control" id="loket-username" name="client_id" require>
           </div>
           <div class="form-group">
             <label for="loket-password" class="col-form-label">client secret</label>
-            <input type="password"  class="form-control " id="loket-password" name="client_secret">
+            <input type="password"  class="form-control " id="loket-password" name="client_secret" require>
           </div>
         </form>
       </div>
@@ -547,6 +552,7 @@
     $(document).ready(function() {
   $('#data-sending-from-form').submit(function(event) {
       event.preventDefault();
+      const formInformation = document.getElementById('data-sending-from-form');
       var formData = $(this).serialize();
       console.log('data submitted : ',formData);
       const username = $('input[name="polaris-username"]').val();
@@ -559,12 +565,12 @@
         'Authorization': 'Basic ' + btoa(`${username}:${password}`)
     },
     beforeSend:function(){
-            // $('#loader').attr('hidden',false)
-            // $('#data-sending-from-form').attr('hidden',true)
-        },
+        $('#loader').attr('hidden',false)
+        formInformation.className="d-none";
+       // $('#data-sending-from-form').attr('hidden',true)
+    },
     success: function(responseXML) {
         $('#loader').attr('hidden',true)
-        const formInformation = document.getElementById('data-sending-from-form');
         const buttonSubmit = document.querySelector('.btn.btn-success');
         buttonSubmit.className="d-none";
         formInformation.className="d-none";
@@ -588,7 +594,6 @@
         let email;
         if (!row.Email){
             email=row.Naam.split(' ')[0]+'@livelearn-'+row.Naam.split(' ')[1]+'.nl';
-            // email=''
         }else{email=row.Email}
         tr.innerHTML = `
         <td class="row-fullName">${row.Naam}</td>
@@ -601,6 +606,7 @@
     },
         error: function(xhr, status, error) {
             $('#loader').attr('hidden',true)
+            formInformation.className=" ";
             console.log('error request :>',error);
             document.getElementById('error-connexion').classList.remove("d-none");
         }
@@ -627,8 +633,8 @@
         dataToSend = JSON.stringify(dataToSend);
         console.log('data sending ' + dataToSend );
         $.ajax({
-        // url: '/livelearn/dashboard/company/people-mensen/',
-        url: '/dashboard/company/people-mensen/',
+        url: '/livelearn/dashboard/company/people-mensen/',
+        // url: '/dashboard/company/people-mensen/',
         method: 'POST',
         data: dataToSend,
         beforeSend:function(){
@@ -657,8 +663,8 @@
     }
 </script>
 <script>
-    $('.custom-dropdown-select .dropdown-item').on('click', function(){
-        $('.dropdown-toggle').html($(this).html());
+   $('.custom-dropdown-select .dropdown-item').on('click', function(){
+        $('.btn-choose-company').html($(this).html());
     });
 
 </script>

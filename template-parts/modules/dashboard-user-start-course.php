@@ -1,19 +1,65 @@
 <html lang="en">
 
-<?php /** Template Name: start-course */ ?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
+
+<?php
+
+
+$post_id = 0;
+
+if(isset($_GET['post']))
+    if($_GET['post'])
+        $post = get_page_by_path($_GET['post'], OBJECT, 'course');
+
+$lesson = (isset($_GET['lesson'])) ? $_GET['lesson'] : 0 ;
+
+if($post):
+
+/* * Informations course * */
+
+// Coursetype
+$course_type = get_field('course_type', $post->ID);
+// Image
+$image = get_field('preview', $post->ID)['url'];
+if(!$image):
+    $image = get_the_post_thumbnail_url($post->ID);
+    if(!$image)
+        $image = get_field('url_image_xml', $post->ID);
+    if(!$image)
+        $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+endif;
+
+//Videos
+$courses = get_field('data_virtual', $post->ID);
+$youtube_videos = get_field('youtube_videos', $post->ID);
+$count_videos = 0;
+if(!empty($courses))
+    $count_videos = count($courses);
+else if(!empty($youtube_videos))
+    $count_videos = count($youtube_videos);
+
+?>
+<style>
+    .theme-side-menu {
+        display: none !important;
+    }
+    .theme-learning, .theme-form, .theme-content__button-group, .theme-dashboard-blocks {
+        padding: 0 !important;
+    }
+</style>
 <body>
+
 <div class="content-start-course">
     <div class="headBlock ">
         <div class="d-flex justify-content-between align-items-center">
             <div class="">
                 <a href=""><i class="fa fa-angle-left"></i>Back</a>
-                <p class="title-course">Learn Responsive Web Design Essentials</p>
-                <p class="text-number-element">Video (35)</p>
+                <p class="title-course"><?php echo $post->post_title; ?></p>
+                <p class="text-number-element">Video (<?= $count_videos ?>)</p>
             </div>
             <p class="percentage-progress-course">2%</p>
         </div>
@@ -36,37 +82,41 @@
                             <div class="tab tab-Overview active">
                                 <div class="content-list-course">
                                     <ul class="text-left">
-                                        <li>
-                                            <a href="">
-                                                <i class="far fa-play-circle" aria-hidden="true"></i>Discover the organization of a network
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="">
-                                                <i class="far fa-play-circle" aria-hidden="true"></i>Discover the organization of a network
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="">
-                                                <i class="far fa-play-circle" aria-hidden="true"></i>Discover the organization of a network
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="">
-                                                <i class="far fa-play-circle" aria-hidden="true"></i>Discover the organization of a network
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="">
-                                                <i class="far fa-play-circle" aria-hidden="true"></i>Discover the organization of a network
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="">
-                                                Conclusion
-                                            </a>
-                                        </li>
-
+                                        <?php
+                                        if(empty($courses) && empty($youtube_videos))
+                                            echo 
+                                            "<li>
+                                                <span> No lesson as far, soon available ... </span>
+                                            </li>";
+                                        else if(!empty($courses)){
+                                            echo "<li>";
+                                                foreach($courses as $key => $video){
+                                                    $style = "";
+                                                    if(isset($lesson))
+                                                        if($lesson == $key)
+                                                            $style = "color:#F79403";
+                                                    echo '  
+                                                    <a style="' .$style . '"  href="?post=' . $post->post_name . '&topic=0&lesson=' . $key . '" >
+                                                        <i class="far fa-play-circle" aria-hidden="true"></i>' . $video['course_lesson_title'] . '
+                                                    </a>';
+                                                }
+                                            echo "</li>";
+                                        }
+                                        else if(!empty($youtube_videos)){
+                                            echo "<li>";
+                                                foreach($youtube_videos as $key => $video){
+                                                    $style = "";
+                                                    if(isset($lesson))
+                                                        if($lesson == $key)
+                                                            $style = "color:#F79403";
+                                                    echo '  
+                                                    <a style="' .$style . '" href="?post=' . $post->post_name . '&topic=0&lesson=' . $key . '" >
+                                                        <i class="far fa-play-circle" aria-hidden="true"></i>' . $video['title'] . '
+                                                    </a>';
+                                                }
+                                            echo "</li>";
+                                        }
+                                        ?>
                                     </ul>
                                 </div>
                             </div>
@@ -138,24 +188,47 @@
             </div>
         </div>
         <div class="content-course-strat position-relative">
-            <video controls>
-                <source src="https://www.youtube.com/embed/dcPp_U-v3bI" title="YouTube video player" allowfullscreen />
-                <source src="https://www.youtube.com/embed/dcPp_U-v3bI" title="livelearn video presentation"  allow="playsinline;" type="video/ogg" /><!-- Firefox / Opera / Chrome10 -->
-            </video>
+            <?php
+                if(!empty($courses) && !empty($youtube_videos))
+                    echo "<img src='" . $image . "' alt='preview image'>";
+                else
+                    if(!empty($courses))
+                        if(isset($topic) && isset($lesson))
+                            echo " <video class='blockImgCour' poster='' controls>
+                                        <source src='" . $courses[$lesson]['course_lesson_data'] . "' title=" . $courses[$lesson]['course_lesson_title'] . "  type='video/mp4;charset=UTF-8' />
+                                        <source src='" . $courses[$lesson]['course_lesson_data'] . "' title=" . $courses[$lesson]['course_lesson_title'] . "  type='video/webm; codecs='vp8, vorbis'' />
+                                        <source src='" . $courses[$lesson]['course_lesson_data'] . "' title=" . $courses[$lesson]['course_lesson_title'] . "  type='video/ogg; codecs='theora, vorbis'' />
+                                    </video>";
+                        else
+                            echo "<img src='" . $image . "' alt='preview image'>";
+                    else if(!empty($youtube_videos))
+                        if(isset($lesson))
+                            echo '<iframe width="730" height="433" src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                        else
+                            echo "<img src='" . $image . "' alt='preview image'>";
+            ?>
             <div class="d-flex justify-content-between prev-next-btn">
-                <!--  <a href="" class="btn btn-prev">
-                       <i class="fa fa-angle-left"></i>
-                       text ici
-                </a>-->
-                <a href="" class="btn btn-next ml-auto">
+                <form action="" method="POST">
+                    <input type="hidden" name="course_read" value="<?= $post->post_name ?>">
+                    <input type="hidden" name="lesson_key" value="<?= $key ?>">
+                    <button class="btn btn-next ml-auto btn btn-info" name="read_action_lesson" type="submit">
+                        I've finished this video I'll continue
+                        <i class="fa fa-angle-right"></i>
+                    </button>
+                </form>
+                <!-- <a href="" class="btn btn-next ml-auto">
                     I've finished this video I'll continue
                     <i class="fa fa-angle-right"></i>
-                </a>
+                </a> -->
             </div>
         </div>
     </div>
-</div>`
-
+</div>
+<?php
+else:
+    echo "<p> This content is no more available !</p>";
+endif;
+?>
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

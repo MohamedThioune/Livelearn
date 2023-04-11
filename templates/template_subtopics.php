@@ -1,17 +1,17 @@
-<?php /** Template Name: Subtopics*/ ?>
+<?php /** Template Name: Subtopics */ ?>
 <?php
     global $wpdb;
 
     extract($_POST);
 
     $table = $wpdb->prefix . 'databank';
-
+    die($ids);
     if (isset($ids)) {
         foreach ($ids as $key => $id) {
-            $sql=$wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE id = %d",$obj);
+            $sql=$wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE id = %d",$id);
             $artikels = $wpdb->get_results($sql)[0];
 
-            $where = ['id' => $obj];
+            $where = ['id' => $id];
             
             $type = 'Artikel';
 
@@ -99,15 +99,15 @@
 
             $occurrence = array_count_values(array_map('strtolower', $keywords));
             foreach($keywords as $searchword){
-            $searchword = strtolower(strval($searchword));
-            foreach($categorys as $category){
-                $cat_slug = $category->slug;
-                $cat_name = $category->cat_name; 
-                if($occurrence[strtolower($category->cat_name)] >= 1)
-                if(strpos($searchword, $cat_slug) !== false || in_array($searchword, $cat_name))
-                    if(!in_array($category->cat_ID, $tags))
-                        array_push($tags, $category->cat_ID);
-            }
+                $searchword = strtolower(strval($searchword));
+                foreach($categorys as $category){
+                    $cat_slug = $category->slug;
+                    $cat_name = $category->cat_name; 
+                    if($occurrence[strtolower($category->cat_name)] >= 1)
+                    if(strpos($searchword, $cat_slug) !== false || in_array($searchword, $cat_name))
+                        if(!in_array($category->cat_ID, $tags))
+                            array_push($tags, $category->cat_ID);
+                }
             }
 
             $onderwerpen= join(',',$tags);
@@ -117,7 +117,6 @@
                 );
 
                 $updated=$wpdb->update($table,$articles,$where);
-
             }
         }
 ?>
