@@ -90,7 +90,7 @@
         </div>
     </div>
     <div class="text-center">
-        <a href="" class="btn btn-Start-to-learn">Start to learn </a>
+        <button class="btn btn-Start-to-learn">I've finished</button>
     </div>
 </div>
 
