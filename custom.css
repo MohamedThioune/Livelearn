@@ -2346,6 +2346,20 @@ input:focus-visible {
     min-height: 51px;
 }
 
+.content-home2 form .searchInputHome {
+    color: #707070;
+    border: none;
+    padding: 11px 20px;
+    background: white;
+    border-radius: 13px;
+    margin: 0 auto 25px;
+    min-height: 51px;
+    height: 100%;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    width: 100%;
+}
+
 .searchContentBlock .deToekomstText {
     color: #707070;
 }
@@ -8024,6 +8038,9 @@ tbody {
         .cardKraam2 {
             border: 0px solid lightgrey !important;
         }
+        .content-home2 form .searchInputHome, .content-home2 .newFormSarchBar .js-bs-select-dropdown, .content-home2 .newFormSarchBar .group-input-dropdown {
+            height: fit-content !important;
+        }
         .roadpathBlockNumber img {
             width: 30px !important;
             height: 30px !important;
@@ -8105,6 +8122,9 @@ tbody {
         .filterInputBlock select {
             -webkit-appearance: menulist-text !important;
         }
+        .content-inloggen .btnPlayGoogle, .content-inloggen .btnStore {
+            height: 60px !important;
+        }
 
         @media all and (min-width: 300px) and (max-width: 767px){
             .second-block-binnen img {
@@ -8115,6 +8135,10 @@ tbody {
             }
             .btnStore img, .btnPlayGoogle img {
                 max-height: 46px !important;
+            }
+            .content-inloggen .btnPlayGoogle, .content-inloggen .btnStore {
+                height: 60px !important;
+                margin-top: -2px;
             }
         }
     }
@@ -13106,10 +13130,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     font-weight: bold;
     max-width: 560px;
 }
-.content-home2 .voorBlock form {
-    width: fit-content;
-    margin: 0 auto;
-}
+
 .content-home2 form .selectSearchHome{
     position: absolute;
     left: 0px;
@@ -13128,23 +13149,47 @@ ul .selectAll .styled-checkbox:checked + label:after {
     width: fit-content;
     background: url("data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+") no-repeat 95% 50% !important;
 }
-.content-home2 form:before {
-    content: "";
-    width: 2px;
-    height: 40px;
-    background-color: #b4b4b4;
-    left: 114px;
-    top: 6px;
-    z-index: 1;
-    position: absolute;
-    display: block;
-}
+
 .content-home2 form .selectSearchHome:focus-visible {
     outline: 0px !important;
 }
-.content-home2 form .searchInputHome {
-    padding-left: 120px;
+.content-home2 .newFormSarchBar{
+    display: flex;
+    justify-content: center;
+    width: 75%;
+    margin: 0 auto;
 }
+.content-home2 .newFormSarchBar .js-bs-select-dropdown, .newFormSarchBar .group-input-dropdown{
+    height: 100%;
+
+}
+.content-home2 .newFormSarchBar .group-input-dropdown{
+    width: 100%;
+}
+
+.content-home2 .newFormSarchBar .js-bs-select-dropdown {
+    width: auto;
+    border: none;
+    padding: 5px 10px;
+    background: white;
+    margin: 0 auto;
+    min-height: 51px;
+    height: 100%;
+    border-radius: 13px 0px 0px 13px;
+    border-right: 1px solid #c2c2c2;
+}
+.content-home2 .newFormSarchBar .dropdown-menu {
+    min-width: unset !important;
+    width: fit-content;
+    left: -11px !important;
+    top: 1px !important;
+    height: 309px;
+    overflow: scroll;
+}
+.content-home2 .newFormSarchBar .dropdown-menu .flex-column {
+    display: none !important;
+}
+
 .content-home2 .btn-Zoek{
     right: 15px;
 }
@@ -17345,7 +17390,9 @@ background: #FFFFFF !important;
 .content-list-course ul li a span{
     font-weight: 500;
 }
-
+.newFormSarchBar .group-input-dropdown input{
+    margin-bottom: 0;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -20992,6 +21039,92 @@ background: #FFFFFF !important;
     }
     .sound-wave {
         padding-top: 18%;
+    }
+    #modalForApp .modal-content {
+        height: 100%;
+    }
+    #modalForApp .modal-body{
+        display: flex;
+        align-items: center;
+    }
+    #modalForApp .modal-body .content-img-logo{
+        width: 219px;
+        height: 48px;
+        margin: 0 auto 20px;
+    }
+    #modalForApp .modal-body .content-img-logo img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .market-btn {
+        display: inline-block;
+        padding: 6px 20px;
+        padding-left: 2.8125rem;
+        transition: border-color 0.25s ease-in-out, background-color 0.25s ease-in-out;
+        border: 1px solid #e7e7e7;
+        background-position: center left 0.75rem !important;
+        background-color: #fff !important;
+        border-radius: 13px;
+        text-decoration: none;
+        width: 64%;
+        margin-bottom: 25px;
+        background-size: 34px !important;
+    }
+    .market-btn .market-button-title {
+        display: block;
+        color: #222;
+        font-size: 1.125rem;
+    }
+    .market-btn .market-button-subtitle {
+        display: block;
+        margin-bottom: -0.25rem;
+        color: #888;
+        font-size: 0.75rem;
+    }
+    .apple-btn{
+        background: url("img/apple-icon.svg") no-repeat;
+    }
+    .google-btn{
+        background: url("img/googlePlay-icon.svg") no-repeat;
+    }
+
+    #modalForApp .title-content-modal {
+        color: #707070;
+        font-size: 17px;
+        font-weight: 300;
+        margin-bottom: 30px;
+    }
+    #modalForApp .title-content-modal span{
+        color: #00A89D;
+        font-weight: 400;
+    }
+    .Aanmelden-text{
+        color: #023356;
+        font-size: 15px;
+        font-weight: 400;
+    }
+    .Aanmelden-text span{
+        font-weight: 300;
+    }
+    #modalForApp {
+        display: block;
+        height: 100%;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 11px;
+        width: 100%;
+        padding-top: 35px;
+        opacity: 1 !important;
+    }
+    #modalForApp .modal-dialog {
+        height: 100%;
+        width: 97% !important;
+    }
+    .content-home2 .newFormSarchBar .js-bs-select-dropdown {
+        padding: 6px 0px;
     }
 
 

@@ -17,6 +17,46 @@
   </div>
 </div>
 
+
+<!--modal for app mobile when load page-->
+
+<div id="modalForApp" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="content-modal">
+                    <div class="content-img-logo">
+                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/LiveLearn_logo.png" alt="">
+                    </div>
+                    <p class="title-content-modal">Registreer je gratis om <span>educatieve content</span> te ontvangen van collega’s, vrienden én de experts uit de markt.</p>
+                    <div class="group-btn-get-app">
+
+                        <!-- Google Play button -->
+                        <a href="https://apps.apple.com/nl/app/livelearn/id1666976386"  class="market-btn apple-btn" role="button">
+                            <span class="market-button-subtitle">Download on the</span>
+                            <span class="market-button-title">App Store</span>
+                        </a>
+
+                        <!-- Google Play button -->
+                        <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app&hl=fr" class="market-btn google-btn" role="button">
+                            <span class="market-button-subtitle">Download on the</span>
+                            <span class="market-button-title">Google Play</span>
+                        </a>
+                    </div>
+                    <p class="Aanmelden-text">Aanmelden <span>of</span> registreren</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 <footer class="footer-area footerLive">
     <div class="footer-big">
         <!-- start .container -->
@@ -205,7 +245,6 @@
         <!-- end /.container -->
     </div>
     <!-- end /.footer-big -->
-
 </footer>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script>
@@ -298,7 +337,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/swiper.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
+<script>
 
+
+    $(window).on('resize', function() {
+        if ($(window).width() < 767) {
+            $('#modalForApp').show();
+        } else {
+            $('#modalForApp').hide();
+        }
+        $('#modalForApp .close').click(function() {
+            $('#modalForApp').hide();
+        });
+    });
+</script>
 <!--<script type="text/javascript">
       $(window).on('load', function() {
         $('#myFirstModal').modal('show');
