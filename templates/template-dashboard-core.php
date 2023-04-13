@@ -32,6 +32,45 @@ function RandomString(){
     return $randstring;
 }
 
+function makeApiCall($endpoint, $type) {
+    // credentials
+    $params = array(
+        // login url params required to direct user to facebook and promt them with a login dialog
+        'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
+        'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
+    );
+
+    // initialize curl
+    $ch = curl_init();
+
+    $output_type = ( $type == 'GET' ) ? false : true; 
+
+    // create endpoint with params
+    $apiEndpoint = $endpoint . '?' . http_build_query( $params );
+    
+    // set other curl options
+    curl_setopt($ch, CURLOPT_URL, $apiEndpoint);
+    curl_setopt($ch, CURLOPT_POST, $output_type);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
+
+    // get response
+    $response = curl_exec( $ch );
+    if ($response === false) {
+        $response = curl_error($ch);
+        $error = true;
+        echo stripslashes($response);
+        return false;
+    }
+
+    // close curl
+    curl_close( $ch );
+
+    // return data
+    return json_decode( $response, true );
+}
+
 if(empty($user_data->roles))
     header('Location:/');
 
@@ -1136,6 +1175,58 @@ else if(isset($mandatory_course)){
         $message = get_permalink($course_id) . '/?message=Manager deelde een verplichte cursus met succes!'; 
 
     header("Location: ". $message);
+}
+
+else if(isset($read_action_lesson)){
+    $user = wp_get_current_user();
+
+    //Get read by user 
+    $args = array(
+        'post_type' => 'progression', 
+        'post_status' => 'publish',
+        'search_title'  => $course_read,
+        'author' => $user->ID,
+        'posts_per_page' => -1
+    );
+    $progressions = get_posts($args);
+
+    if(empty($progressions)){
+        //Create progression
+        $post_data = array(
+            'post_title' => $course_read,
+            'post_author' => $user->ID,
+            'post_type' => 'progression',
+            'post_status' => 'publish'
+        );
+        $progression_id = wp_insert_post($post_data);
+    }
+    else
+        $progression_id = $progressions[0]->ID;
+    
+    //Lesson read
+    $lesson_reads = get_field('lesson_actual_read', $progression_id);
+    $lesson_read = array();
+    $lesson_read['key_lesson'] = $lesson_key;
+
+    $bool = true;
+
+    if(!empty($lesson_reads))
+        foreach ($lesson_reads as $key => $item) 
+            if($item['key_lesson'] == $lesson_key){
+                $bool = false;
+                break;
+            }
+
+    if(!$lesson_reads)
+        $lesson_reads = array();
+        
+    if($bool){
+        array_push($lesson_reads, $lesson_read);
+        update_field('lesson_actual_read', $lesson_reads, $progression_id);
+    }
+
+    //if exists return next lesson
+    //else return checkout video or end chapter
 }
     
 ?>

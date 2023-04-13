@@ -26,12 +26,12 @@ $artikel = $blogs[0];
 <div class="contentPricing">
     <div class="container">
         <p class="titlePricing">Altijd transparante prijzen</p>
-        <p class="sousPricing">We hebben de prijzen zo eenvoudig mogelijk proberen te maken: <br>  Als individu betaal je niets, als opleider / expert alleen voor nieuwe klanten en als organisatie betaal je voor gebruik. </p>
+        <p class="sousPricing">We hebben de prijzen zo eenvoudig mogelijk gemaakt. Als individu is LiveLearn altijd gratis. Wanneer je LiveLearn gebruikt als opleider / expert betaal je alleen een fee voor nieuwe klanten en als organisatie betaal je per medewerker per maand. </p>
         <div class="row">
             <div class="col-md-4">
-                <a href="/static-education-advice">
+                <a href="/inloggen-2/">
                     <div class="cardPricing">
-                        <p class="titleCardPPricing">Individueel skills paspoort</p>
+                        <p class="titleCardPPricing">Individuele leeromgeving</p>
                         <p class="sousTitlePricing">Altijd gratis</p>
                         <div class="blockCardPricing">
                             <div class="circleSpanEigen">
@@ -43,7 +43,7 @@ $artikel = $blogs[0];
                             <div class="circleSpanEigen">
                                 <i class="fas fa-tag"></i>
                             </div>
-                            <p>Top wel 65% korting op scholing</p>
+                            <p>Tot wel 65% korting op scholing</p>
                         </div>
                         <div class="blockCardPricing">
                             <div class="circleSpanEigen">

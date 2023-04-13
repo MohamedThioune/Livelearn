@@ -6,10 +6,13 @@
 // Api key mollie
 $api_key = "Bearer test_c5nwVnj42cyscR8TkKp3CWJFd5pHk3";
 
-//Current company
+// current user id
+$user_id = get_current_user_id();
+
+// current company
 $company_title = get_field('company',  'user_' . $user_id)[0]->post_title;
 
-//Team members
+// team members
 $users = get_users();
 $members = array();
 foreach($users as $user){
@@ -22,13 +25,13 @@ foreach($users as $user){
 }
 $team = count($members);
  
-//create endpoint for product 
+// create endpoint for product 
 $endpoint_product = 'https://livelearn.nl/wp-json/wc/v3/products';
 $params = array( 
     'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
     'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
 );
-//endpoint with params
+// endpoint with params
 $api_endpoint = $endpoint_product . '?' . http_build_query( $params );
 $data = [
     'name' => $company_title . "~subscription",
@@ -184,7 +187,7 @@ else{
             // Create your payments
             $endpoint_pay = "https://api.mollie.com/v2/customers/" . $customer_id . "/payments";
             $api_key = "Bearer test_c5nwVnj42cyscR8TkKp3CWJFd5pHk3";
-            $base_url = "http://localhost:8888/local";
+            $base_url = get_site_url();
             $data_payment = [
                 'method' => 'creditcard',
                 'amount' => [
@@ -197,7 +200,7 @@ else{
                 'webhookUrl' => 'https://webshop.example.org/payments/webhook/',
                 'metadata' => [
                     'customer_id' => $customer_id,
-                    'woo_subscription_id' => $customer_id,
+                    'woo_subscription_id' => $woo_subscription_id,
                 ]
             ];
             // initialize curl
@@ -215,9 +218,10 @@ else{
             $data_response_pay = json_decode( $response_pay, true );
             // close curl
             curl_close( $chpay ); 
+            var_dump($response_pay);
             
             if (!isset($data_response_pay['_links']['checkout']['href'])) {
-                echo "<center><br><a class='btn btn-success' style='background : #E10F51; color : white' href='#'>Error occurred on transaction !</a></center>";
+                // echo $base_url . "/?message='Error occurred on transaction !'";
                 http_response_code(401);
             }
             else{

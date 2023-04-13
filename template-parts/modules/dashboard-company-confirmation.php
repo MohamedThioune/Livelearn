@@ -1,6 +1,5 @@
 <?php
     $abonnement_date_created = $abonnement['date_created'];
-
     $abonnement_date_created = explode('T',$abonnement_date_created);
 ?>
 <div class="contentProfil ">
@@ -56,94 +55,60 @@
         </div>
     </div>
 
+    <?php
+    $situation = "";
+    if(isset($abonnement['invoices']))
+    if($abonnement['invoices']):
+    ?>
     <div class="content-list-amount">
         <div class="d-flex justify-content-between align-items-center head-block">
             <h2></h2>
-            <input class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" >
+            <!-- <input class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" > -->
         </div>
         <table class="table">
             <thead>
             <tr>
                 <th scope="col">Date</th>
                 <th scope="col">Instrument/Account</th>
-                <th scope="col">Type</th>
                 <th scope="col">Amount</th>
                 <th scope="col">Situation</th>
-                <th scope="col">Action</th>
+                <!-- <th scope="col">Action</th> -->
             </tr>
             </thead>
-            <tbody>
-            <tr>
-                <td>10/12/22</td>
-                <td>GNB 384502</td>
-                <td>Debit</td>
-                <td>800 €</td>
-                <td><span class="done">Done</span></td>
-                <td>
-                    <div class="dropdown text-white">
-                        <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
-                            <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                        </p>
-                        <ul class="dropdown-menu">
-                            <li class="my-1"><i class="fa fa-money px-2"></i><a href="" target="_blank">Pay</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>10/11/22</td>
-                <td>GNB 384502</td>
-                <td>Credit</td>
-                <td>800 €</td>
-                <td><span class="hold">On hold</span></td>
-                <td>
-                    <div class="dropdown text-white">
-                        <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
-                            <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                        </p>
-                        <ul class="dropdown-menu">
-                            <li class="my-1"><i class="fa fa-money px-2"></i><a href="" target="_blank">Pay</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>10/12/22</td>
-                <td>GNB 384502</td>
-                <td>Debit</td>
-                <td>800 €</td>
-                <td><span class="done">Done</span></td>
-                <td>
-                    <div class="dropdown text-white">
-                        <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
-                            <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                        </p>
-                        <ul class="dropdown-menu">
-                            <li class="my-1"><i class="fa fa-money px-2"></i><a href="" target="_blank">Pay</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>10/11/22</td>
-                <td>GNB 384502</td>
-                <td>Credit</td>
-                <td>800 €</td>
-                <td><span class="hold">On hold</span></td>
-                <td>
-                    <div class="dropdown text-white">
-                        <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
-                            <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
-                        </p>
-                        <ul class="dropdown-menu">
-                            <li class="my-1"><i class="fa fa-money px-2"></i><a href="" target="_blank">Pay</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
 
+            <tbody>
+                <?php 
+                foreach($abonnement['invoices'] as $order):
+                $order_date_created = $order['date_created'];
+                $order_date_created = explode('T', $order_date_created);
+
+                $payment_method_title = ($order['payment_method_title'] || $order['payment_method_title'] != "" ) ? $order['payment_method_title'] : "N/D";
+
+                $situation = ($order['needs_payment']) ? '<span class="hold">On hold</span>' : '<span class="done">Done</span>';
+                ?> 
+                <tr>
+                    <td><?= $order_date_created[0] ?></td>
+                    <td><?= $payment_method_title ?></td>
+                    <td><?= $order['total'] ?> €</td>
+                    <td><?= $situation ?></td>
+                    <!-- 
+                    <td>
+                        <div class="dropdown text-white">
+                            <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
+                                <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                            </p>
+                            <ul class="dropdown-menu">
+                                <li class="my-1"><i class="fa fa-money px-2"></i><a href="" target="_blank">Pay</a></li>
+                            </ul>
+                        </div>
+                    </td> 
+                    -->
+                </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
-
+    <?php
+    endif;
+    ?>
 </div>

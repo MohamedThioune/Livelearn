@@ -428,6 +428,7 @@
                                                             $date_end = $datum['data'][count($datum['data'])-1]['start_date'];
                                                             $agenda_start = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
                                                             $hour_start = explode(' ', $date_start)[1];
+                                                            $year_start = explode('/', explode(' ', $date_start)[0])[2];
                                                             $location_start = $datum['data'][0]['location'];
                                                             if($date_end)
                                                                 $agenda_end = explode('/', explode(' ', $date_end)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_end)[0])[1]];
@@ -465,13 +466,13 @@
                                                                     <div class="Course-info">
                                                                         <h3>Cursus</h3>
                                                                         <?php
+                                                                        var_dump($year_start);
                                                                         for($i = 0; $i < count($datum['data']); $i++) {
                                                                         $date_start = $datum['data'][$i]['start_date'];
                                                                         $location = $datum['data'][$i]['location'];
                                                                         if($date_start != null) {
                                                                             $day = explode('/', explode(' ', $date_start)[0])[0] . ' ' . $calendar[explode('/', explode(' ', $date_start)[0])[1]];
                                                                             $hour = explode(' ', $date_start)[1];
-
                                                                             ?>
                                                                             <div class="blockDateEvens">
                                                                                  <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
@@ -504,7 +505,7 @@
                                                                         <div class="contentBtnCardProduct">
                                                                             <?php
                                                                             if($product):                                                                            
-                                                                            $dateNameStart = $agenda_start . ', ' . $hour_start . ', ' . $location_start;
+                                                                            $dateNameStart = $agenda_start . ', ' . $hour_start . ', ' . $location_start . ', ' . $year_start;
 
                                                                             echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
 
@@ -568,6 +569,7 @@
                                                 $timer_e = explode(':', $date_end[1]);
                                                 $h_end =  $timer_e[0] . ':' . $timer_e[1];
 
+                                                $year_start = $d_start[2]; 
                                                 $agenda_start = $d_start[0] . ' ' . $calendar[$d_start[1]];
                                                 $agenda_end = $d_end[0] . ' ' . $calendar[$d_end[1]];
 
@@ -597,6 +599,7 @@
                                                             <div class="detailSummary">
                                                                 <div class="Course-info">
                                                                     <h3>Cursus</h3>
+                                                                    <?php var_dump($year_start); ?>
                                                                     <?php
                                                                     if(!empty($infos))
                                                                         $x = 0;
@@ -608,7 +611,6 @@
                                                                     $location = explode('-',$date[2])[1];
                                                                     ?>
                                                                     <div class="blockDateEvens">
-
                                                                         <p class="dateEvens"><?php echo $day . ', ' . $hour . ', ' . $location  ?></p>
                                                                     </div>
                                                                         <?php
@@ -641,7 +643,8 @@
                                                                     <div class="contentBtnCardProduct">
                                                                         <?php
                                                                         if($product):                                                                            
-                                                                        $dateNameStart = $agenda_start . ', ' . $h_start . ', ' . $location_start;
+                                                                        $dateNameStart = $agenda_start . ', ' . $h_start . ', ' . $location_start . ', ' . $year_start;
+
                                                                         //Reserveren action
                                                                         echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
 
@@ -697,6 +700,7 @@
                                                 $timer_s = explode(':', $date_start[1]);
                                                 $h_start = $timer_s[0] . ':' . $timer_s[1];
 
+                                                $year_start = $d_start[0];
                                                 $agenda_start = $d_start[2] . ' ' . $calendar[$d_start[1]];
                                                 $location_start = 'Virtual';
                                             ?>
@@ -718,6 +722,7 @@
                                                             <div class="detailSummary">
                                                                 <div class="Course-info">
                                                                     <h3>Cursus</h3>
+                                                                    <?php var_dump($year_start); ?>
                                                                     <div class="blockDateEvens">
                                                                         <p class="dateEvens"><?php echo $agenda_start . ', ' . $h_start ?></p>
                                                                     </div>
@@ -745,8 +750,8 @@
                                                                     <div class="contentBtnCardProduct">
                                                                         <?php
                                                                         if($product):                                                                            
+                                                                        $dateNameStart = $agenda_start . ', ' . $h_start . ', ' . $location_start  . ', ' . $year_start;
 
-                                                                        $dateNameStart = $agenda_start . ', ' . $h_start . ', ' . $location_start;
                                                                         //Reserveren action
                                                                         echo '<input type="hidden" data-attr="dateNameStart" value="' . $dateNameStart . '">';
 
