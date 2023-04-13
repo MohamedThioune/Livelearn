@@ -244,7 +244,7 @@ foreach ($users as $element) {
                                 </thead>
                                 <tbody>
                                 <?php
-                                $offline = ['Opleidingen','Training','Workshop','Masterclass'];
+                                $offline = ['Opleidingen', 'Training', 'Workshop', 'Masterclass', 'Event'];
                                 foreach($enrolled_courses as $key => $course) :
                                     $bool = true;
                                     $bool = visibility($course, $visibility_company);

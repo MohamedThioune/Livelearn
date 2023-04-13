@@ -436,7 +436,7 @@ function custom_post_type() {
         'singular_name'       => _x( 'Progressions', 'Progression', 'progression' ),
         'menu_name'           => __( 'Progressions', 'progression' ),
         //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
-        'all_items'           => __( 'All companies', 'progression' ),
+        'all_items'           => __( 'All progressions', 'progression' ),
         'view_item'           => __( 'View progression', 'view_progression' ),
         'add_new_item'        => __( 'New progression', 'add_new_progression' ),
         'add_new'             => __( 'New progression', 'text_domain' ),
