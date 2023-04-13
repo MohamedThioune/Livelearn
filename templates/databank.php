@@ -402,7 +402,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 $('#loader').attr('hidden',false);
                 $('#select_field').attr('hidden',true);
                 $.ajax({
-                    url: '/livelearn/subtopics',
+                    url: '/subtopics',
                     type: 'POST',
                     data: {
                         ids: ids
