@@ -15,9 +15,9 @@
             
             $type = 'Artikel';
 
-            $title = explode(' ', $article['title']['rendered']);
-            $description = explode(' ', trim(strip_tags($article['excerpt']['rendered'])));
-            $long_description = explode(' ',trim(strip_tags($article['content']['rendered'])));    
+            $title = explode(' ', $artikels['title']['rendered']);
+            $description = explode(' ', trim(strip_tags($artikels['excerpt']['rendered'])));
+            $long_description = explode(' ',trim(strip_tags($artikels['content']['rendered'])));    
             $keywords = array_merge($title, $description, $long_description);
             $tags = array();
             $onderwerpen = "";
@@ -89,11 +89,11 @@
                 }
 
                 if(empty($tags)){
-                $occurrence = array_count_values(array_map('strtolower', $keywords));
-                arsort($occurrence);
-                foreach($categorys as $value)
-                    if($occurrence[strtolower($value->cat_name)] >= 1)
-                    array_push($tags, $value->cat_ID);
+                    $occurrence = array_count_values(array_map('strtolower', $keywords));
+                    arsort($occurrence);
+                    foreach($categorys as $value)
+                        if($occurrence[strtolower($value->cat_name)] >= 1)
+                        array_push($tags, $value->cat_ID);
                 }
             }
 
@@ -112,11 +112,11 @@
 
             $onderwerpen= join(',',$tags);
 
-                $articles=array( 
+                $artikelss=array( 
                     'onderwerpen' => $onderwerpen
                 );
 
-                $updated=$wpdb->update($table,$articles,$where);
+                $updated=$wpdb->update($table,$artikelss,$where);
 
             }
         }
