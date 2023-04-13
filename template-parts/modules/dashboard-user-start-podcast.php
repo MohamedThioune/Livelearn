@@ -6,6 +6,68 @@
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
 
+<?php
+
+$post_id = 0;
+
+if(isset($_GET['post']))
+    if($_GET['post'])
+        $post = get_page_by_path($_GET['post'], OBJECT, 'course');
+
+$lesson = (isset($_GET['lesson'])) ? $_GET['lesson'] : 0 ;
+
+if($post):
+
+/* * Informations course * */
+// Coursetype
+$course_type = get_field('course_type', $post->ID);
+// Image
+$image = get_field('preview', $post->ID)['url'];
+if(!$image):
+    $image = get_the_post_thumbnail_url($post->ID);
+    if(!$image)
+        $image = get_field('url_image_xml', $post->ID);
+    if(!$image)
+        $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+endif;
+
+//Podcasts
+$podcasts = get_field('podcasts', $post->ID);
+$count_podcasts = 0;
+if(!empty($podcasts))
+    $count_podcasts = count($podcasts);
+
+/* * Lesson reads details * */
+$user = wp_get_current_user();
+//Get read by user 
+$args = array(
+    'post_type' => 'progression', 
+    'post_status' => 'publish',
+    'search_title' => $post->post_name,
+    'author' => $user->ID,
+    'posts_per_page' => -1
+);
+$progressions = get_posts($args);
+if(empty($progressions)){
+    //Create progression
+    $post_data = array(
+        'post_title' => $post->post_name,
+        'post_author' => $user->ID,
+        'post_type' => 'progression',
+        'post_status' => 'publish'
+    );
+    $progression_id = wp_insert_post($post_data);
+}
+else
+    $progression_id = $progressions[0]->ID;
+//Lesson read
+$lesson_reads = get_field('lesson_actual_read', $progression_id);
+$count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
+
+//Pourcentage
+$pourcentage = ($count_podcasts) ? ($count_lesson_reads / $count_podcasts) * 100 : 0;
+$pourcentage = intval($pourcentage);
+?>
 
 <style>
     .theme-side-menu {
@@ -45,12 +107,12 @@
         <div class="d-flex justify-content-between align-items-center">
             <div class="">
                 <div class="d-flex align-items-center">
-                    <a href=""><i class="fa fa-angle-left"></i>Back</a>
-                    <p class="title-course">Livelearn Podcast example</p>
+                    <a href="/dashboard/user/checkout-podcast/$post=<?= $post->post_name ?>""><i class="fa fa-angle-left"></i>Back</a>
+                    <p class="title-course"><?php echo $post->post_title; ?></p>
                 </div>
-                <p class="text-number-element">List (15)</p>
+                <p class="text-number-element">List (<?= $count_podcasts ?>)</p>
             </div>
-            <p class="percentage-progress-course">2%</p>
+            <p class="percentage-progress-course"><?= $pourcentage ?>%</p>
         </div>
         <button class="btn btn-show-list-course" type="button"><i class="fa fa-filter"></i> Show list course element </button>
     </div>
@@ -71,31 +133,33 @@
                             <div class="tab tab-Overview active">
                                 <div class="content-list-course">
                                     <ul class="text-left">
+                                        <?php
+                                        if(empty($podcasts))
+                                            echo 
+                                            "<li>
+                                                <span> No lesson as far, soon available ... </span>
+                                            </li>";
+                                        else
+                                            foreach($podcasts as $key => $podcast){
+                                                echo "<li>";
+                                                $style = "";
+                                                if(isset($lesson))
+                                                    if($lesson == $key)
+                                                        $style = "color:#F79403";
+                                                echo '  
+                                                <a style="' .$style . '"  href="?post=' . $post->post_name . '&topic=0&lesson=' . $key . '" >
+                                                    <i class="fas fa-microphone-alt" aria-hidden="true"></i><span>' . $key + 1 . '</span> ' . $podcast['course_podcast_title'] . '
+                                                </a>';
+                                                echo "</li>";
+                                            }
+                                        ?>
+                                        <!-- 
                                         <li>
                                             <a href="">
                                                 <i class="fas fa-microphone-alt" aria-hidden="true"></i><span>01</span> Discover the organization
                                             </a>
-                                        </li>
-                                        <li>
-                                            <a href="">
-                                                <i class="fas fa-microphone-alt" aria-hidden="true"></i><span>02</span> Discover the organization
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="">
-                                                <i class="fas fa-microphone-alt" aria-hidden="true"></i><span>03</span> Discover the organization
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="">
-                                                <i class="fas fa-microphone-alt" aria-hidden="true"></i><span>04</span> Discover the organization
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="">
-                                                <i class="fas fa-microphone-alt" aria-hidden="true"></i><span>05</span> Discover the organization
-                                            </a>
-                                        </li>
+                                        </li> 
+                                        -->
                                     </ul>
                                 </div>
                             </div>
@@ -169,58 +233,67 @@
         <div class="content-course-strat position-relative">
 
           <div>
-              <div class="imgPadcastCourse">
-                  <img src="<?php echo get_stylesheet_directory_uri();?>/img/assessment-2.png" alt="">
-              </div>
-              <div class="sound-wave">
-                  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" preserveAspectRatio="none" viewBox="0 0 1440 560">
-                      <g mask='url("#SvgjsMask1099")' fill="none">
-                          <rect fill="#0e2a47"></rect>
-                          <g transform="translate(0, 0)" stroke-linecap="round" stroke="url(#SvgjsLinearGradient1100)">
-                              <path d="M375 202.15 L375 357.85" stroke-width="17.25" class="bar-scale2 "></path>
-                              <path d="M398 155.33 L398 404.67" stroke-width="17.25" class="bar-scale3"></path>
-                              <path d="M421 196.44 L421 363.56" stroke-width="17.25" class="bar-scale3 "></path>
-                              <path d="M444 259.91 L444 300.09" stroke-width="17.25" class="bar-scale1 "></path>
-                              <path d="M467 208.25 L467 351.75" stroke-width="17.25" class="bar-scale3 "></path>
-                              <path d="M490 184.8 L490 375.2" stroke-width="17.25" class="bar-scale2 "></path>
-                              <path d="M513 249.28 L513 310.72" stroke-width="17.25" class="bar-scale2 "></path>
-                              <path d="M536 220.75 L536 339.25" stroke-width="17.25" class="bar-scale3 "></path>
-                              <path d="M559 254.8 L559 305.2" stroke-width="17.25" class="bar-scale1 "></path>
-                              <path d="M582 186.77 L582 373.23" stroke-width="17.25" class="bar-scale3 "></path>
-                              <path d="M605 210.13 L605 349.87" stroke-width="17.25" class="bar-scale1 "></path>
-                              <path d="M628 234.45 L628 325.55" stroke-width="17.25" class="bar-scale3 "></path>
-                              <path d="M651 241.1 L651 318.89" stroke-width="17.25" class="bar-scale2 "></path>
-                              <path d="M674 202.95 L674 357.05" stroke-width="17.25" class="bar-scale3 "></path>
-                              <path d="M697 165.81 L697 394.19" stroke-width="17.25" class="bar-scale2 "></path>
-                              <path d="M720 224.51 L720 335.49" stroke-width="17.25" class="bar-scale2 "></path>
-                              <path d="M743 157.59 L743 402.4" stroke-width="17.25" class="bar-scale1 "></path>
-                              <path d="M766 164.98 L766 395.02" stroke-width="17.25" class="bar-scale1 "></path>
-                              <path d="M789 158.93 L789 401.07" stroke-width="17.25" class="bar-scale3 "></path>
-                              <path d="M812 224.24 L812 335.76" stroke-width="17.25" class="bar-scale2 "></path>
-                              <path d="M835 171.73 L835 388.27" stroke-width="17.25" class="bar-scale1 "></path>
-                              <path d="M858 264.89 L858 295.11" stroke-width="17.25" class="bar-scale2 "></path>
-                              <path d="M881 175.14 L881 384.86" stroke-width="17.25" class="bar-scale1 "></path>
-                              <path d="M904 248.17 L904 311.83" stroke-width="17.25" class="bar-scale3 "></path>
-                              <path d="M927 185.4 L927 374.6" stroke-width="17.25" class="bar-scale1 "></path>
-                              <path d="M950 234.82 L950 325.18" stroke-width="17.25" class="bar-scale3 "></path>
-                              <path d="M973 229.9 L973 330.1" stroke-width="17.25" class="bar-scale3 "></path>
-                              <path d="M996 194.25 L996 365.75" stroke-width="17.25" class="bar-scale2 "></path>
-                              <path d="M1019 162.47 L1019 397.53" stroke-width="17.25" class="bar-scale1 "></path>
-                              <path d="M1042 205.06 L1042 354.94" stroke-width="17.25" class="bar-scale3 "></path>
-                              <path d="M1065 240.52 L1065 319.48" stroke-width="17.25" class="bar-scale1 "></path>
-                          </g>
-                      </g>
-                      <defs>
-                          <mask id="SvgjsMask1099">
-                              <rect width="1440" height="560" fill="#ffffff"></rect>
-                          </mask>
-                          <linearGradient x1="360" y1="280" x2="1080" y2="280" gradientUnits="userSpaceOnUse" id="SvgjsLinearGradient1100">
-                              <stop stop-color="#3a7cc3" offset="0"></stop>
-                              <stop stop-color="#dd1133" offset="1"></stop>
-                          </linearGradient>
-                      </defs>
-                  </svg>
-              </div>
+            <div class="imgPadcastCourse">
+            <?php echo "<img src='" . $image . "' alt='preview image'>"; ?>
+            </div>
+            <form action="" method="POST">
+                <input type="hidden" name="course_read" value="<?= $post->post_name ?>">
+                <input type="hidden" name="lesson_key" value="<?= $lesson ?>">
+                <input type="hidden" name="podcast_read" value="1">
+                <button class="btn btn-next ml-auto btn btn-info" name="read_action_lesson" type="submit">
+                    I've finished this podcast I'll continue
+                    <i class="fa fa-angle-right"></i>
+                </button>
+            </form>
+            <div class="sound-wave">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" preserveAspectRatio="none" viewBox="0 0 1440 560">
+                    <g mask='url("#SvgjsMask1099")' fill="none">
+                        <rect fill="#0e2a47"></rect>
+                        <g transform="translate(0, 0)" stroke-linecap="round" stroke="url(#SvgjsLinearGradient1100)">
+                            <path d="M375 202.15 L375 357.85" stroke-width="17.25" class="bar-scale2 "></path>
+                            <path d="M398 155.33 L398 404.67" stroke-width="17.25" class="bar-scale3"></path>
+                            <path d="M421 196.44 L421 363.56" stroke-width="17.25" class="bar-scale3 "></path>
+                            <path d="M444 259.91 L444 300.09" stroke-width="17.25" class="bar-scale1 "></path>
+                            <path d="M467 208.25 L467 351.75" stroke-width="17.25" class="bar-scale3 "></path>
+                            <path d="M490 184.8 L490 375.2" stroke-width="17.25" class="bar-scale2 "></path>
+                            <path d="M513 249.28 L513 310.72" stroke-width="17.25" class="bar-scale2 "></path>
+                            <path d="M536 220.75 L536 339.25" stroke-width="17.25" class="bar-scale3 "></path>
+                            <path d="M559 254.8 L559 305.2" stroke-width="17.25" class="bar-scale1 "></path>
+                            <path d="M582 186.77 L582 373.23" stroke-width="17.25" class="bar-scale3 "></path>
+                            <path d="M605 210.13 L605 349.87" stroke-width="17.25" class="bar-scale1 "></path>
+                            <path d="M628 234.45 L628 325.55" stroke-width="17.25" class="bar-scale3 "></path>
+                            <path d="M651 241.1 L651 318.89" stroke-width="17.25" class="bar-scale2 "></path>
+                            <path d="M674 202.95 L674 357.05" stroke-width="17.25" class="bar-scale3 "></path>
+                            <path d="M697 165.81 L697 394.19" stroke-width="17.25" class="bar-scale2 "></path>
+                            <path d="M720 224.51 L720 335.49" stroke-width="17.25" class="bar-scale2 "></path>
+                            <path d="M743 157.59 L743 402.4" stroke-width="17.25" class="bar-scale1 "></path>
+                            <path d="M766 164.98 L766 395.02" stroke-width="17.25" class="bar-scale1 "></path>
+                            <path d="M789 158.93 L789 401.07" stroke-width="17.25" class="bar-scale3 "></path>
+                            <path d="M812 224.24 L812 335.76" stroke-width="17.25" class="bar-scale2 "></path>
+                            <path d="M835 171.73 L835 388.27" stroke-width="17.25" class="bar-scale1 "></path>
+                            <path d="M858 264.89 L858 295.11" stroke-width="17.25" class="bar-scale2 "></path>
+                            <path d="M881 175.14 L881 384.86" stroke-width="17.25" class="bar-scale1 "></path>
+                            <path d="M904 248.17 L904 311.83" stroke-width="17.25" class="bar-scale3 "></path>
+                            <path d="M927 185.4 L927 374.6" stroke-width="17.25" class="bar-scale1 "></path>
+                            <path d="M950 234.82 L950 325.18" stroke-width="17.25" class="bar-scale3 "></path>
+                            <path d="M973 229.9 L973 330.1" stroke-width="17.25" class="bar-scale3 "></path>
+                            <path d="M996 194.25 L996 365.75" stroke-width="17.25" class="bar-scale2 "></path>
+                            <path d="M1019 162.47 L1019 397.53" stroke-width="17.25" class="bar-scale1 "></path>
+                            <path d="M1042 205.06 L1042 354.94" stroke-width="17.25" class="bar-scale3 "></path>
+                            <path d="M1065 240.52 L1065 319.48" stroke-width="17.25" class="bar-scale1 "></path>
+                        </g>
+                    </g>
+                    <defs>
+                        <mask id="SvgjsMask1099">
+                            <rect width="1440" height="560" fill="#ffffff"></rect>
+                        </mask>
+                        <linearGradient x1="360" y1="280" x2="1080" y2="280" gradientUnits="userSpaceOnUse" id="SvgjsLinearGradient1100">
+                            <stop stop-color="#3a7cc3" offset="0"></stop>
+                            <stop stop-color="#dd1133" offset="1"></stop>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
           </div>
 
            <!-- <div class="d-flex justify-content-between prev-next-btn">
@@ -244,16 +317,16 @@
                         <button class="next round livecast-play">&#8250;</button>
                     </div>
                     <div class="codeless-player-content">
-                        <h5>Discover the organization</h5>
+                        <h5><?= $podcasts[$lesson]['course_podcast_title'] ?></h5>
                     </div>
                 </div>
                <div class="codeless-player-audio  codeless-element">
                     <audio controls id="myAudioID">
-                        <source src="<?php echo get_stylesheet_directory_uri();?>/sounds/firstSounds.mp3" type="audio/ogg">
-                        <source src="<?php echo get_stylesheet_directory_uri();?>/sounds/firstSounds.mp3" type="audio/mpeg">
-                        <source src="<?php echo get_stylesheet_directory_uri();?>/sounds/firstSounds.mp3" type="audio/aac">
-                        <source src="<?php echo get_stylesheet_directory_uri();?>/sounds/firstSounds.mp3" type="audio/wav">
-                        <source src="<?php echo get_stylesheet_directory_uri();?>/sounds/firstSounds.mp3" type="audio/aiff">
+                        <source src="<?= $podcasts[$lesson]['course_podcast_data'] ?>" type="audio/ogg">
+                        <source src="<?= $podcasts[$lesson]['course_podcast_data'] ?>" type="audio/mpeg">
+                        <source src="<?= $podcasts[$lesson]['course_podcast_data'] ?>" type="audio/aac">
+                        <source src="<?= $podcasts[$lesson]['course_podcast_data'] ?>" type="audio/wav">
+                        <source src="<?= $podcasts[$lesson]['course_podcast_data'] ?>" type="audio/aiff">
                         Your browser does not support the audio element.
                     </audio>
                 </div>
@@ -262,6 +335,11 @@
     </div>
 </div>
 
+<?php
+else:
+    echo "<p> This content is no more available !</p>";
+endif;
+?>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
