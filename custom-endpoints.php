@@ -120,7 +120,7 @@ function allCourses ($data)
       $page = $data['page'];
     if(!empty($courses))
       $number_of_post = count($courses);
-  $results_per_page = 100;
+  $results_per_page = 50;
   $start = ($page-1) * $results_per_page ;
   $end = ( ($page) * $results_per_page ) > $number_of_post ? $number_of_post : ($page) * $results_per_page   ;
 
@@ -1401,4 +1401,145 @@ function filter_course(WP_REST_Request $request)
         return ['score' => $score];
     }
   }
+}
+
+function getCommunities()
+{
+  //All communities
+  $args = array(
+    'post_type' => 'community',
+    'post_status' => 'publish',
+    'posts_per_page' => -1 
+  );
+  $communities = get_posts($args);
+  foreach ($communities as $key => $community) {
+    $community-> author_company = get_field('company_author',$community->ID) ? get_field('company_author',$community->ID) : null;
+    $community->image_community = get_field('image_community',$community->ID) ? get_field('image_community',$community->ID) : null;
+    $community->range = get_field('range',$community->ID) ? get_field('range',$community->ID) : null;
+    $follower_community = get_field('follower_community',$community->ID) ? get_field('follower_community',$community->ID) : [];
+    $community->followers = array();
+    $community->courses = array();
+    $community->questions = array();
+    if (!empty($follower_community))
+
+      foreach ($follower_community as $key => $follower) {
+        $follower -> data ->profile_image =  get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $follower -> data ->role = get_field('role', 'user_' . (int)$follower -> data ->ID) ? get_field('role', 'user_' . (int)$follower -> data ->ID) : '';
+        array_push($community->followers, $follower -> data);
+      }
+
+    $community -> questions = get_field('question_community',$community->ID) ? get_field('question_community',$community->ID) : [];
+    $courses_community = get_field('course_community',$community->ID) ?? [];
+    if (!empty($courses_community))
+
+      foreach ($courses_community as $key => $course)
+      {
+            $author = get_user_by( 'ID', $course -> post_author);
+            $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            $course-> author = new Expert ($author , $author_img);
+            $course->longDescription = get_field('long_description',$course->ID);
+            $course->shortDescription = get_field('short_description',$course->ID);
+            $course->courseType = get_field('course_type',$course->ID);
+            $course->pathImage = get_field('url_image_xml',$course->ID);
+            $course->price = get_field('price',$course->ID) ?? 0;
+            $course->youtubeVideos = get_field('youtube_videos',$course->ID) ? get_field('youtube_videos',$course->ID) : []  ;
+            $course->podcasts = get_field('podcasts',$course->ID) ? get_field('podcasts',$course->ID) : [];
+            $course->visibility = get_field('visibility',$course->ID);
+            $course->connectedProduct = get_field('connected_product',$course->ID);
+            $tags = get_field('categories',$course->ID) ? get_field('categories',$course->ID) : [];
+            $course->tags= array();
+            if($tags)
+              if (!empty($tags))
+                foreach ($tags as $key => $category) 
+                  if(isset($category['value'])){
+                    $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+                    array_push($course->tags,$tag);
+                  }
+            array_push($community->courses,new Course($course));
+          
+      }
+
+  }
+  
+  return $communities;
+
+}
+
+function joinCommunity( WP_REST_Request $request )
+{
+  $user_id = $request['user_id'] ?? 0;
+  $community_id = $request['community_id'] ?? 0;
+
+  if ($user_id == 0)
+    return ["error" => "You have to fill the correct user id !"];
+
+  if ($community_id == 0)
+    return ["error" => "You have to fill the correct community id !"];
+
+  $community = get_post($community_id);
+  $user = get_user_by('ID',$user_id); 
+  if (!$user_id)
+    return ["error" => "This user does not exist !"];
+
+  if (!$community)
+    return ["error" => "This community does not exist !"];
+
+  $community_followers = get_field('follower_community',$community->ID) ? get_field('follower_community',$community->ID) : [] ;
+  
+  foreach($community_followers as $key => $follower)
+  {
+    if ($follower -> data == $user -> data)
+    {
+      unset ($community_followers[$key]);
+      if (update_field('follower_community',$community_followers,$community->ID))
+        return ['success ' => 'Successfully unsubscribed in this community !'];
+    }
+  }
+  
+  array_push($community_followers,$user);
+  
+  if (update_field('follower_community',$community_followers,$community->ID))
+    return ['success' => 'Successfully subscribed in this community !'];
+  
+  return ['error' => 'Subscription to this community failed!'];
+
+}
+
+function createQuestion(WP_REST_Request $request)
+{
+  
+  $user_id = $request['user_id'] ?? 0;
+  $community_id = $request['community_id'] ?? 0;
+  $text_question = $request['text_question'] ?? "";
+  
+  if ($user_id == 0)
+    return ["error" => "You have to fill the correct user id !"];
+
+  if ($community_id == 0)
+    return ["error" => "You have to fill the correct community id !"];
+  
+  if ($text_question == "")
+  return ["error" => "You have to fill the wording of the question !"];
+
+  $community = get_post($community_id);
+  $user = get_user_by('ID',$user_id); 
+  if (!$user_id)
+    return ["error" => "This user does not exist !"];
+
+  if (!$community)
+    return ["error" => "This community does not exist !"];
+  
+  $question = array();
+
+    //New question
+    $question_community = get_field('question_community', $community_id) ? get_field('question_community', $community_id) : [] ;
+    $question['user_question'] = $user;
+    $question['text_question'] = $text_question;
+    array_push($question_community, $question);
+
+    if (update_field('question_community', $question_community, $community_id))
+      return ['success' => 'Question saved successfully !'];
+
+    return ['error' => 'Question not saved successfully !'];
+    
 }
