@@ -370,7 +370,6 @@ foreach ($global_courses as $key => $course) {
             $mon = explode('/', explode(' ', $data)[0])[1];
             $month = $calendar[$mon];
         }
-
         $location = $datas[0]['data'][0]['location'];
     }else{
         $datum = get_field('data_locaties_xml', $course->ID);
@@ -464,8 +463,7 @@ $user_post_view = get_posts(
         'author' => $user,
         'order' => 'DESC'
     )
-    )[0];
-
+)[0];
 $is_view = false;
 
 if (!empty($user_post_view))
