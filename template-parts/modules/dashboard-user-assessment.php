@@ -108,7 +108,7 @@
                                 <a href= <?= "/detail-assessment/?assessment_id=" . $assessment->ID; ?> class="btn btnDetailsAssessment">Details</a>
                                 <form action="/dashboard/user/answer-assessment" method="post">
                                     <input type="hidden" name="assessment_id" value= <?= $assessment->ID; ?> >
-                                    <button class="btn btnGetStartAssessment" data-target="#ModalBackEnd" data-toggle="modal" id="">Get Started</button>
+                                    <button class="btn btnGetStartAssessment" data-target="" data-toggle="" id="">Get Started</button>
                                 </form>
                             </div>
                         </div>
