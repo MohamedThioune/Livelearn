@@ -1177,6 +1177,50 @@ else if(isset($mandatory_course)){
     header("Location: ". $message);
 }
 
+else if(isset($valid_offline)){
+    $user = wp_get_current_user();
+
+    //Get read by user 
+    //Get posts searching by title
+    $args = array(
+        'post_type' => 'progression', 
+        'title' => $course_read,
+        'post_status' => 'publish',
+        'author' => $user->ID,
+        'posts_per_page'         => 1,
+        'no_found_rows'          => true,
+        'ignore_sticky_posts'    => true,
+        'update_post_term_cache' => false,
+        'update_post_meta_cache' => false,
+    );
+    $progressions = get_posts($args);
+
+    if(empty($progressions)){
+        //Create progression
+        $post_data = array(
+            'post_title' => $course_read,
+            'post_author' => $user->ID,
+            'post_type' => 'progression',
+            'post_status' => 'publish'
+        );
+        $progression_id = wp_insert_post($post_data);
+    }
+    else
+        $progression_id = $progressions[0]->ID;
+        
+    //Finish 
+    update_field('state_actual', 1, $progression_id);
+
+    $post = 0;
+    $post = get_page_by_path($course_read, OBJECT, 'course');
+    if($post)
+        $follow_reads = "/dashboard/user/checkout-offline?post=" . $post->post_name;
+    else
+        $follow_reads = "/dashboard/user/activity";
+
+    header("Location: " . $follow_reads);
+}
+
 else if(isset($read_action_lesson)){
     $user = wp_get_current_user();
 
