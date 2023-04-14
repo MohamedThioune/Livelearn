@@ -1074,10 +1074,10 @@ ul.sub-menu li a {
 }
 
 .btnNewCourse {
-    color: #FFFFFF !important;
-    background: #023356;
-    font-size: 14px;
-    padding: 4px 20px;
+    color: #023356 !important;
+    border: 1px solid #023356;
+    font-size: 15px;
+    padding: 7px 25px;
     margin-bottom: 0;
     font-weight: bold;
     border-radius: 8px;
@@ -1085,6 +1085,11 @@ ul.sub-menu li a {
     height: fit-content;
 }
 
+.btnNewCourse:hover {
+    background: #023356;
+    text-decoration: none;
+    color: #FFFFFF !important;
+}
 .btnActiviteit {
     color: #FFFFFF;
     background: #00A89D;
@@ -1097,10 +1102,7 @@ ul.sub-menu li a {
     height: fit-content;
 }
 
-.btnNewCourse:hover {
-    color: white;
-    text-decoration: none;
-}
+
 
 .cardListeCourse {
     background: white;
@@ -11575,11 +11577,6 @@ select {
 #btn-remove-mesen {
     display: none;
 }
-
-.learningDatabankContent {
-    padding-top: 50px;
-}
-
 .inputSearchZoek {
     background: #F0F5F7;
     border-radius: 8px;
