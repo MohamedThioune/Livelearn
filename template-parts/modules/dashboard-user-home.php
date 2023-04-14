@@ -208,11 +208,11 @@ $bunch_orders = wc_get_orders($args);
 foreach($bunch_orders as $order){
     foreach ($order->get_items() as $item_id => $item ) {
         //Get woo orders from user
-        $course_id = intval($item->get_product_id()) - 1;
+        $id_course = intval($item->get_product_id()) - 1;
         $prijs = get_field('price', $course_id);
         $expenses += $prijs; 
-        if(!in_array($course_id, $enrolled))
-            array_push($enrolled, $course_id);
+        if(!in_array($id_course, $enrolled))
+            array_push($enrolled, $id_course);
     }
 }
 if(!empty($enrolled))
