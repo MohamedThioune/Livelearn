@@ -7,7 +7,7 @@ function timeToSeconds(string $time): int
     if (count($time_array) === 2 && $time_array[0]!='00') {
         return  $time_array[0] * 60 + $time_array[1];
     }
-    return $time_array[1];
+    return (int)$time_array[1];
 }
 
     if (isset($_POST) && !empty ($_POST))
@@ -16,6 +16,7 @@ function timeToSeconds(string $time): int
         $assessment = get_post($assessment_id);
         $questions = get_field('question',$assessment->ID);
         $question_count = count($questions);
+        
     }
 ?>
 <div class="main-container"> 
@@ -32,7 +33,10 @@ function timeToSeconds(string $time): int
                     <form id="getAnswer">
                       <?php
                         $alphabet = range('A', 'Z');
-                        for ($i=0;$i<4;$i++) { ?>
+                        for ($i=0;$i<4;$i++) 
+                        { 
+                            
+                            ?>
                             <label class="container-checkbox">
                             <span class="numberAssassment"><?= $alphabet[$i]?> </span>
                                 <span class="assassment  <?php echo 'answer_'.($i+1);?>"> <?= $questions[0]["responses"][$i] ?> </span>
