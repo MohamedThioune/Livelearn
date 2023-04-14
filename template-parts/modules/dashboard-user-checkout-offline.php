@@ -53,10 +53,11 @@ if($price != "0")
     $prijs = number_format($p, 2, '.', ',');
 else
     $prijs = 'Gratis';
+
 /* * Informations reservation * */
 //Orders - enrolled courses 
 $datenr = 0; 
-$calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+$calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Juni', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
 $enrolled = array();
 $enrolled_courses = array();
@@ -111,7 +112,62 @@ if($datenr){
             $yearenr = $datenrs[3];
 }
 
+// Saved courses
+$favorite = '<button type="button" id="' . $user->ID ."_". $post->ID . '_course" class="btn btnFavorite btn_favourite">
+                <i class="fa fa-heart"></i>
+                Favorite
+            </button>';
+$unfavorite = '<button type="button" id="' . $user->ID ."_". $post->ID . '_course" class="btn btnFavorite ">
+                    <i class="fa fa-heart-o"></i>
+                    Add to Favorite
+               </button>';
+
+$raw_saved = get_user_meta($user->ID, 'course');
+$favorite_status = $unfavorite;
+if(in_array($post->ID, $raw_saved))
+    $favorite_status = $favorite;
+
+/* * State actual details * */
+//Get read by user 
+$args = array(
+    'post_type' => 'progression', 
+    'title' => $post->post_name,
+    'post_status' => 'publish',
+    'author' => $user->ID,
+    'posts_per_page'         => 1,
+    'no_found_rows'          => true,
+    'ignore_sticky_posts'    => true,
+    'update_post_term_cache' => false,
+    'update_post_meta_cache' => false
+);
+$progressions = get_posts($args);
+if(empty($progressions)){
+    //Create progression
+    $post_data = array(
+        'post_title' => $post->post_name,
+        'post_author' => $user->ID,
+        'post_type' => 'progression',
+        'post_status' => 'publish'
+    );
+    $progression_id = wp_insert_post($post_data);
+}
+else
+    $progression_id = $progressions[0]->ID;
+//Finish read
+$is_finish = get_field('state_actual', $progression_id);
+
+//Button agreement event
+$bool_participate = false;
+$month_calendar = array_search($monthenr, $calendar);
+$date_event = $dayenr . "." . $month_calendar . "." . $yearenr;
+$date_now = strtotime(date('Y-m-d'));
+$this_date = strtotime($date_event);
+
+if($this_date <= $date_now && !$is_finish)
+    $bool_participate = true;
+
 ?>
+
 <body>
 <div class="content-checkout-of">
     <div class="head-checkout-of d-flex">
@@ -141,11 +197,9 @@ if($datenr){
                <img src="<?= $image; ?>" alt="">
            </div>
            <div class="d-flex justify-content-center groupBtn-checkout-of">
-               <button type="button" class="btn btnFavorite">
-                   <i class="fa fa-heart-o"></i>
-                    <!-- <i class="fa fa-heart"></i>-->
-                   Favorite
-               </button>
+               <?=
+               $favorite_status
+               ?>
                <!-- 
                 <button class="btn btn-share">
                    <i class="fa fa-share-alt"></i>
@@ -156,6 +210,23 @@ if($datenr){
            <div class="card-info-checkout">
                 <?= $long_description; ?>
            </div>
+
+            <?php
+            if($bool_participate):
+            ?>
+            <div class="card-info-checkout">
+                <form action="" method="POST">
+                    <input type="hidden" name="course_read" value="<?= $post->post_name ?>">
+                    <button class="btn btn-next ml-auto btn btn-primary" name="valid_offline" type="submit">
+                        I already participate to this event &nbsp;
+                        <i class="fa fa-angle-right"></i>
+                    </button>
+                </form>
+            </div>
+            <?php
+            endif;
+            ?>
+
        </div>
         <div class="second-contain">
             <div class="detail-checkout-of">
@@ -196,7 +267,6 @@ if($datenr){
                             <p class="sub-text-2"><?= $datenr ?></p>
                             <?php
                                 $text_calendar = "Livelearn - " . $post->post_title;
-                                $month_calendar = array_search($monthenr, $calendar);
                                 $hourenr = explode(':', $datenrs[1]);
                                 $startenr = $yearenr .''. $month_calendar .''. $dayenr;
                                 $starthourenr = $hourenr[0] . $hourenr[1] . "00";
@@ -311,6 +381,41 @@ endif;
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    $(".btnFavorite").click((e)=>
+    {
+        
+        btn_id = e.target.id;
+        meta_key = btn_id.split("_")[2];
+        id = btn_id.split("_")[1];
+        user_id = btn_id.split("_")[0];
+
+        alert(e.target);
+        $.ajax({
+            url:"/like",
+            method:"post",
+            data:{
+                meta_key : meta_key,
+                id : id,
+                user_id : user_id,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                if(e.target.innerHTML == "<?php echo $favorite; ?>")
+                {
+                    e.target.html("<?php echo $unfavorite; ?>");
+                }
+                else
+                {
+                    e.target.html("<?php echo $favorite; ?>");
+                }
+            }
+        });
+    })
+</script>
+
 <script>
     const daysEl = document.getElementById('days');
     const hoursEl = document.getElementById('hours');
