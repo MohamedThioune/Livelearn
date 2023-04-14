@@ -430,6 +430,8 @@ function custom_post_type() {
 
     );
 
+    register_post_type( 'community', $community_args );
+
     //Progression
     $progression = array(
         'name'                => _x( 'Progressions', 'Progressions', 'progression' ),
