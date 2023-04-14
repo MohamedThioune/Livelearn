@@ -436,7 +436,7 @@ function custom_post_type() {
         'singular_name'       => _x( 'Progressions', 'Progression', 'progression' ),
         'menu_name'           => __( 'Progressions', 'progression' ),
         //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
-        'all_items'           => __( 'All companies', 'progression' ),
+        'all_items'           => __( 'All progressions', 'progression' ),
         'view_item'           => __( 'View progression', 'view_progression' ),
         'add_new_item'        => __( 'New progression', 'add_new_progression' ),
         'add_new'             => __( 'New progression', 'text_domain' ),
@@ -669,10 +669,10 @@ add_filter( 'woocommerce_api_product_response', 'filter_woocommerce_api_product_
 ** Endpoints - API
 */
 
-function recommended_course()
+function recommended_course($data)
 {
   //The user
-  $user = $GLOBALS['user_id'];
+  $user = $data['id'];
   
   $company_visibility = get_field('company',  'user_' . $user);
 
@@ -1443,7 +1443,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'tracker_course',
   ) );
 
-  register_rest_route( 'custom/v1', '/recommended/course', array(
+  register_rest_route( 'custom/v1', '/recommended/course/(?P<id>\d+)', array(
     'methods' => 'GET',
     'callback' => 'recommended_course',
   ) );
@@ -1581,8 +1581,21 @@ add_action( 'rest_api_init', function () {
     'callback' => 'answerAssessment',
   ));
 
-  
-  
+  register_rest_route ('custom/v1', '/communities', array(
+    'methods' => 'GET',
+    'callback' => 'getCommunities',
+  ));
 
+  register_rest_route ('custom/v1', '/join/community/', array(
+    'methods' => 'PUT',
+    'callback' => 'joinCommunity',
+  ));
+
+  register_rest_route ('custom/v1', '/ask/community/', array(
+    'methods' => 'PUT',
+    'callback' => 'createQuestion',
+  ));
+  
+  
 
 });
