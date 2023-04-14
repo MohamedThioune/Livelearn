@@ -179,6 +179,7 @@
                              Salary administration
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <button type="button" class="dropdown-item btn btn-show-modal" data-toggle="modal" data-target="#nmbrsModal">Nmbrs</button>
                             <button type="button" class="dropdown-item btn btn-show-modal" data-toggle="modal" data-target="#polarisModal">Polaris</button>
                             <button type="button" class="dropdown-item btn btn-show-modal" data-toggle="modal" data-target="#loketModal">Loket</button>
                         </div>
@@ -376,12 +377,71 @@
 
 ?>
 </div>
+
+<!--begin Modal for Nmbrs -->
+<div class="modal fade otherModal" id="nmbrsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">NMBRS</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!--
+            <div hidden="true" id="loader" class="text-center" role="status">
+                <div class="spinner-border" role="status">
+                </div>
+            </div>
+            -->
+            <div id="back-polaris" class="text-center"></div>
+            <div class="modal-body">
+                <form class="needs-validation" novalidate id="data-sending-from-form" method="POST">
+                    <div class="form-group">
+                        <label for="polaris-username" class="col-form-label">login</label>
+                        <input value="daniel@livelearn.nl" type="text" class="form-control" name="polaris-username" aria-describedby="inputGroupPrepend" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="polaris-password" class="col-form-label">password</label>
+                        <input value="C@llme2022!12345" type="password" class="form-control" name="polaris-password" aria-describedby="inputGroupPrepend" required>
+                    </div>
+                </form>
+            </div>
+            <div hidden="true" id="loader-back-polaris" class="text-center" role="status">
+                <div class="spinner-border" role="status">
+
+                </div>
+            </div>
+            <div class="d-none loader-back-polaris">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Naam</th>
+                        <th>Plaats</th>
+                        <th>Email</th>
+                        <th>Optie</th>
+                    </tr>
+                    </thead>
+                    <tbody >
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" form="data-sending-from-form">Connect to nmbrs</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end Modal for Nmbrs -->
+
+
 <!--begin Modal for connexion polaris -->
 <div class="modal fade otherModal" id="polarisModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="polarisModalLabel">POLARIS</h5>
+        <h5 class="modal-title">POLARIS</h5>
         <h6 style="color:red;" class="d-none text-center" id="error-connexion">Invalid cridentials</h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -436,7 +496,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="polarisModalLabel">LOKET</h5>
+        <h5 class="modal-title">LOKET</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -477,7 +537,7 @@
       </div>
       <?php } ?>
 
-      <form class="<?= $class ?>" id="from-form-loket" action="/livelearn/dashboard/company/people/" method="POST">
+      <form class="<?= $class ?>" id="from-form-loket" action="/dashboard/company/people/" method="POST">
           <div class="form-group">
             <label for="loket-username" class="col-form-label">client id</label>
             <input type="text" class="form-control" id="loket-username" name="client_id" require>
@@ -633,7 +693,7 @@
         dataToSend = JSON.stringify(dataToSend);
         console.log('data sending ' + dataToSend );
         $.ajax({
-        url: '/livelearn/dashboard/company/people-mensen/',
+        url: '/dashboard/company/people-mensen/',
         // url: '/dashboard/company/people-mensen/',
         method: 'POST',
         data: dataToSend,
