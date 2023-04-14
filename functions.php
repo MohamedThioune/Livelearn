@@ -430,6 +430,8 @@ function custom_post_type() {
 
     );
 
+    register_post_type( 'community', $community_args ); 
+
     //Progression
     $progression = array(
         'name'                => _x( 'Progressions', 'Progressions', 'progression' ),
@@ -1594,6 +1596,11 @@ add_action( 'rest_api_init', function () {
   register_rest_route ('custom/v1', '/ask/community/', array(
     'methods' => 'PUT',
     'callback' => 'createQuestion',
+  ));
+
+  register_rest_route ('custom/v1', '/reply/community/', array(
+    'methods' => 'PUT',
+    'callback' => 'replyQuestion',
   ));
   
   

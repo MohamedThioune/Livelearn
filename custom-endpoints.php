@@ -120,7 +120,7 @@ function allCourses ($data)
       $page = $data['page'];
     if(!empty($courses))
       $number_of_post = count($courses);
-  $results_per_page = 50;
+  $results_per_page = 100;
   $start = ($page-1) * $results_per_page ;
   $end = ( ($page) * $results_per_page ) > $number_of_post ? $number_of_post : ($page) * $results_per_page   ;
 
@@ -1017,6 +1017,10 @@ function filter_course(WP_REST_Request $request)
             update_field('responses_user', $responses, $id_new_response);
             update_field('assessment_id',$request['assessment_id'],$id_new_response);
             update_field('score',$score,$id_new_response);
+            $percentage = ($score / count ($questions) ) * 100;
+            if ( $percentage >= 60 )
+              add_user_meta( $user_id, 'assessment_validated',$assessment);
+
       }
         return ['score' => $score];
     }
@@ -1162,4 +1166,52 @@ function createQuestion(WP_REST_Request $request)
 
     return ['error' => 'Question not saved successfully !'];
     
+}
+
+function replyQuestion(WP_REST_Request $request)
+{
+  $user_id = $request['user_id'] ?? 0;
+  $community_id = $request['community_id'] ?? 0;
+  $text_reply = $request['text_reply'] ?? "";
+  $index_question = is_int($request['index_question']) ? $request['index_question'] : null;
+  if ($user_id == 0)
+    return ["error" => "You have to fill the correct user id !"];
+
+  if ($community_id == 0)
+    return ["error" => "You have to fill the correct community id !"];
+  
+  if ($text_reply == "")
+  return ["error" => "You have to fill the wording of your reply !"];
+
+  
+  $community = get_post($community_id);
+  $user = get_user_by('ID',$user_id);
+
+  if (!$user_id)
+    return ["error" => "This user does not exist !"];
+
+  if (!$community)
+    return ["error" => "This community does not exist !"];
+
+    $question_community = get_field('question_community', $community_id) ? get_field('question_community', $community_id) : [] ;
+  
+    if (!empty($question_community))
+      if(is_int($index_question))
+        {
+          if (isset($question_community[$index_question]) && !empty($question_community[$index_question])){
+            $reply = array();
+            $user_reply = $user;
+            $reply['user_reply'] = $user_reply;
+            $reply['text_reply'] = $text_reply;
+
+            if(empty($question_community[$index_question]['reply_question']))
+                $question_community[$index_question]['reply_question'] = array();
+
+            array_push($question_community[$index_question]['reply_question'], $reply);
+            update_field('question_community', $question_community, $community_id);
+            return $question_community[$index_question];
+          }
+          return ['error' => "This index of question doesn't exist !"];
+        }
+      
 }
