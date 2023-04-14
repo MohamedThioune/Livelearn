@@ -104,18 +104,37 @@ foreach($bunch_orders as $order){
 
 $count_enrolled = 0;
 if(!empty($enrolled))
-{
     $count_enrolled = count($enrolled);
-    // $args = array(
-    //     'post_type' => 'course', 
-    //     'posts_per_page' => -1,
-    //     'orderby' => 'post_date',
-    //     'order' => 'DESC',
-    //     'include' => $enrolled,  
-    // );
-    // $enrolled_courses = get_posts($args);
-}
 
+/* * Lesson reads details * */
+//Get read by user 
+$args = array(
+    'post_type' => 'progression', 
+    'title' => $post->post_name,
+    'post_status' => 'publish',
+    'author' => $user->ID,
+    'posts_per_page'         => 1,
+    'no_found_rows'          => true,
+    'ignore_sticky_posts'    => true,
+    'update_post_term_cache' => false,
+    'update_post_meta_cache' => false
+);
+$progressions = get_posts($args);
+if(empty($progressions)){
+    //Create progression
+    $post_data = array(
+        'post_title' => $post->post_name,
+        'post_author' => $user->ID,
+        'post_type' => 'progression',
+        'post_status' => 'publish'
+    );
+    $progression_id = wp_insert_post($post_data);
+}
+else
+    $progression_id = $progressions[0]->ID;
+//Lesson read
+$lesson_reads = get_field('lesson_actual_read', $progression_id);
+$count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
 
 ?>
 
@@ -207,19 +226,19 @@ if(!empty($enrolled))
                                <div class="block-element-list">
                                     <div class="block-element-list-item">
                                         <?php
-                                        $status_video_done = '<i class="fa fa-check-circle done"></i>
+                                        $video_done = '<i class="fa fa-check-circle done"></i>
                                                             <p class="statut-video-list">Done</p>';
-                                        $status_video_inprogress = '<i class="far fa-check-circle"></i>
-                                                                    <p class="statut-video-list">In Progress</p>';
-                                        $status_video_begin = '<i class="far fa-check-circle"></i>
+                                        $video_begin = '<i class="far fa-check-circle"></i>
                                                             <p class="statut-video-list">Begin</p>';
 
                                         foreach($courses as $key => $video):
-                                            // $style = "";
-                                            // if(isset($lesson))
-                                            //     if($lesson == $key)
-                                            //         $style = "color:#F79403";
-
+                                
+                                            $status = $video_begin;
+                                            foreach($lesson_reads as $lesson)
+                                                if($lesson['key_lesson'] == $key){
+                                                    $status = $video_done;
+                                                    break;
+                                                }
                                             $read_lesson = "/dashboard/user/start-course?post=" . $post->post_name . "&lesson=" . $key;
             
                                             echo'
@@ -230,8 +249,7 @@ if(!empty($enrolled))
                                                     <p class="time-video-liste">0 Min</p>
                                                 </div>
                                                 <div class="d-flex align-items-center element-liste-video">
-                                                    <i class="far fa-check-circle"></i>
-                                                    <p class="statut-video-list">Begin</p>
+                                                ' . $status . '
                                                 </div>
                                                 <div>
                                                     <a href="' . $read_lesson . '">
