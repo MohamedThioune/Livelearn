@@ -669,10 +669,10 @@ add_filter( 'woocommerce_api_product_response', 'filter_woocommerce_api_product_
 ** Endpoints - API
 */
 
-function recommended_course()
+function recommended_course($data)
 {
   //The user
-  $user = $GLOBALS['user_id'];
+  $user = $data['id'];
   
   $company_visibility = get_field('company',  'user_' . $user);
 
@@ -1443,7 +1443,7 @@ add_action( 'rest_api_init', function () {
     'callback' => 'tracker_course',
   ) );
 
-  register_rest_route( 'custom/v1', '/recommended/course', array(
+  register_rest_route( 'custom/v1', '/recommended/course/(?P<id>\d+)', array(
     'methods' => 'GET',
     'callback' => 'recommended_course',
   ) );
