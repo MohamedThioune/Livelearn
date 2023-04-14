@@ -1581,8 +1581,21 @@ add_action( 'rest_api_init', function () {
     'callback' => 'answerAssessment',
   ));
 
-  
-  
+  register_rest_route ('custom/v1', '/communities', array(
+    'methods' => 'GET',
+    'callback' => 'getCommunities',
+  ));
 
+  register_rest_route ('custom/v1', '/join/community/', array(
+    'methods' => 'PUT',
+    'callback' => 'joinCommunity',
+  ));
+
+  register_rest_route ('custom/v1', '/ask/community/', array(
+    'methods' => 'PUT',
+    'callback' => 'createQuestion',
+  ));
+  
+  
 
 });
