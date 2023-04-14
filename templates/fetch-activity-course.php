@@ -80,6 +80,16 @@ if(isset($search_activity_course)){
 
         //Course Type
         $course_type = get_field('course_type', $course->ID);
+
+        //Checkout URL
+        if(in_array($course_type, $offline))
+            $href_checkout = "/dashboard/user/checkout-offline/?post=" . $course->post_name;
+        else if($course_type == 'Video')
+            $href_checkout = "/dashboard/user/checkout-video/?post=" . $course->post_name;
+        else if($course_type == 'Podcast')
+            $href_checkout = "/dashboard/user/checkout-podcast/?post=" . $course->post_name;
+        else
+            $href_checkout = "#";
         
         //Legend image
         $image_course = get_field('preview', $course->ID)['url'];
@@ -108,6 +118,36 @@ if(isset($search_activity_course)){
         //Button like    
         $button_render = (in_array($course->ID, $saved)) ? '<i class="fa fa-heart mr-4"></i>' : '<i class="fa fa-heart-o mr-4"></i>';
 
+        /* * State actual details * */
+        //Color
+        $text_status = "New";
+        $status_color = "#043356";
+        //Get read by user 
+        $args = array(
+            'post_type' => 'progression', 
+            'title' => $course->post_name,
+            'post_status' => 'publish',
+            'author' => $user->ID,
+            'posts_per_page'         => 1,
+            'no_found_rows'          => true,
+            'ignore_sticky_posts'    => true,
+            'update_post_term_cache' => false,
+            'update_post_meta_cache' => false
+        );
+        $progressions = get_posts($args);
+        if(!empty($progressions)){
+            $status_color = "#ff9b00";
+            $text_status = "In progress";
+            $progression_id = $progressions[0]->ID;
+            //Finish read
+            $is_finish = get_field('state_actual', $progression_id);
+            if($is_finish){
+                $status_color = "green";
+                $text_status = "Done";
+
+            }
+        }
+
         if( stristr($filter, $search_activity_course) || $search_activity_course == '')
             $row_activity_course .= '
             <tr>
@@ -123,10 +163,10 @@ if(isset($search_activity_course)){
                     <p class="name-element">' . $duration_day  . '</p>
                 </td>
                 <td class="">
-                    <p class="name-element">' . $author_name .'</p>
+                    <p class="name-element">' . $author_name . '</p>
                 </td>
                 <td>
-                    <p class="text-left" style="color: #043356;"> New </p>
+                    <p class="text-left" style="color:' . $status_color .'">' . $text_status .'</p>
                 </td>
                 <td>
                     ' . $button_render . '
