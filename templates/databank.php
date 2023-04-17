@@ -395,33 +395,31 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         console.log(ids);
     });
 
-        $('#subtopics').on('click', function()
-        {
-            console.log(ids);
-            if(ids==null){
-                alert("Please, select some articles!!");
-            }else{
-                
-                $.ajax({
-                    url: '/livelearn/subtopics',
-                    type: 'POST',
-                    data: {
-                        ids: ids
-                    },beforeSend:function(){
-                        $('#loader').attr('hidden',true);
-                        $('#select_field').attr('hidden',false);
-                    },error:function(response) {
-                        console.log("error:".response);
-                    },success:function(response){
-                        console.log('success',response);
-                    },complete:function(response){
-                        console.log("complete:".response);
-                        $('#loader').attr('hidden',false);
-                        $('#select_field').attr('hidden',true);
-                    }
-                });
-            }
-        });
+    $('#subtopics').on('click', function()
+    {
+        if($ids==null){alert("Please, select some articles!!");}else{
+            $('#loader').attr('hidden',false);
+            $('#select_field').attr('hidden',true);
+            $.ajax({
+                url: '/subtopics',
+                type: 'POST',
+                data: {
+                    ids: ids
+                },beforeSend:function(){
+                    $('#loader').attr('hidden',true);
+                    $('#select_field').attr('hidden',false);
+                },error:function(response) {
+                    console.log("error:".response);
+                },success:function(response){
+                    console.log('success',response);
+                },complete:function(response){
+                    console.log("complete:".response);
+                    $('#loader').attr('hidden',true);
+                    $('#select_field').attr('hidden',false);
+                }
+            });
+        }
+    });
 
     $('.optieAll').click((e)=>{
         // var tr_element = e.target.parentElement.closest("tr");
