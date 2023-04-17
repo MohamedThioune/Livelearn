@@ -629,6 +629,9 @@ foreach ($users as $element) {
                         <div class="content-card-skills">
                             <?php
                             foreach($topics as $key=>$value){
+                                if(!$value || is_wp_error(!$value))
+                                    continue;
+
                                 $i = 0;
                                 $topic = get_the_category_by_ID($value);
                                 $note = 0;
@@ -1245,6 +1248,9 @@ foreach ($users as $element) {
                             <div class="content-card-skills">
                                 <?php
                                 foreach($topics as $key=>$value){
+                                    if(!$value || is_wp_error(!$value))
+                                        continue;
+
                                     $i = 0;
                                     $topic = get_the_category_by_ID($value);
                                     $note = 0;
