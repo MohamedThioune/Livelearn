@@ -478,9 +478,12 @@ else if(isset($road_path_created)){
     */
     update_field('road_path', $courses, $post_id);
 
-    foreach($topics as $topic)
+    foreach($topics as $topic){
+        if(is_wp_error(!$topic))
+            continue;
         if($topic != '')
             update_field('topic_road_path', $topic, $post_id);
+    }
 
     $message = "/dashboard/teacher/road-path/?id=". $post_id . "&message=Road path created successfully"; 
     header("Location: ". $message);
@@ -911,8 +914,11 @@ else if (isset($note_skill_new)){
     if(!empty($topics_external))
         $topics = $topics_external;
     if(!empty($topics_internal))
-        foreach($topics_internal as $value)
+        foreach($topics_internal as $value){
+            if(!$value || is_wp_error(!$value))
+                continue;
             array_push($topics, $value);
+        }
 
     //Add topic
     if(!in_array($id, $topics))
