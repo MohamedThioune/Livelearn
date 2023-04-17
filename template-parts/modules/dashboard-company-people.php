@@ -477,7 +477,7 @@
       </div>
       <?php } ?>
 
-      <form class="<?= $class ?>" id="from-form-loket" action="/livelearn/dashboard/company/people/" method="POST">
+      <form class="<?= $class ?>" id="from-form-loket" action="/dashboard/company/people/" method="POST">
           <div class="form-group">
             <label for="loket-username" class="col-form-label">client id</label>
             <input type="text" class="form-control" id="loket-username" name="client_id" require>
@@ -633,7 +633,7 @@
         dataToSend = JSON.stringify(dataToSend);
         console.log('data sending ' + dataToSend );
         $.ajax({
-        url: '/livelearn/dashboard/company/people-mensen/',
+        url: '/dashboard/company/people-mensen/',
         // url: '/dashboard/company/people-mensen/',
         method: 'POST',
         data: dataToSend,
