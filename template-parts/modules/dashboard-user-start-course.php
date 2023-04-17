@@ -8,7 +8,6 @@
 
 <?php
 
-
 $post_id = 0;
 
 if(isset($_GET['post']))
@@ -20,7 +19,6 @@ $lesson = (isset($_GET['lesson'])) ? $_GET['lesson'] : 0 ;
 if($post):
 
 /* * Informations course * */
-
 // Coursetype
 $course_type = get_field('course_type', $post->ID);
 // Image
@@ -42,7 +40,39 @@ if(!empty($courses))
 else if(!empty($youtube_videos))
     $count_videos = count($youtube_videos);
 
+/* * Lesson reads details * */
+$user = wp_get_current_user();
+//Get read by user 
+$args = array(
+    'post_type' => 'progression', 
+    'post_status' => 'publish',
+    'search_title' => $post->post_name,
+    'author' => $user->ID,
+    'posts_per_page' => -1
+);
+$progressions = get_posts($args);
+if(empty($progressions)){
+    //Create progression
+    $post_data = array(
+        'post_title' => $post->post_name,
+        'post_author' => $user->ID,
+        'post_type' => 'progression',
+        'post_status' => 'publish'
+    );
+    $progression_id = wp_insert_post($post_data);
+}
+else
+    $progression_id = $progressions[0]->ID;
+//Lesson read
+$lesson_reads = get_field('lesson_actual_read', $progression_id);
+$count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
+
+//Pourcentage
+$pourcentage = ($count_videos) ? ($count_lesson_reads / $count_videos) * 100 : 0;
+$pourcentage = intval($pourcentage);
+
 ?>
+
 <style>
     .theme-side-menu {
         display: none !important;
@@ -57,11 +87,11 @@ else if(!empty($youtube_videos))
     <div class="headBlock ">
         <div class="d-flex justify-content-between align-items-center">
             <div class="">
-                <a href=""><i class="fa fa-angle-left"></i>Back</a>
+                <a href="/dashboard/user/checkout-video/$post=<?= $post->post_name ?>"><i class="fa fa-angle-left"></i>Back</a>
                 <p class="title-course"><?php echo $post->post_title; ?></p>
                 <p class="text-number-element">Video (<?= $count_videos ?>)</p>
             </div>
-            <p class="percentage-progress-course">2%</p>
+            <p class="percentage-progress-course"><?= $pourcentage ?>%</p>
         </div>
         <button class="btn btn-show-list-course" type="button"><i class="fa fa-filter"></i> Show list course element </button>
     </div>
@@ -86,45 +116,38 @@ else if(!empty($youtube_videos))
                                         if(empty($courses) && empty($youtube_videos))
                                             echo 
                                             "<li>
-                                                <span> No lesson as far, soon available </span>
+                                                <span> No lesson as far, soon available ... </span>
                                             </li>";
                                         else if(!empty($courses)){
-                                            echo "<li>";
-                                                foreach($courses as $key => $video){
-                                                    $style = "";
-                                                    if(isset($lesson))
-                                                        if($lesson == $key)
-                                                            $style = "color:#F79403";
-                                                    echo '  
-                                                    <a style="' .$style . '"  href="?topic=0&lesson=' . $key . '" >
-                                                        <i class="far fa-play-circle" aria-hidden="true"></i>' . $video['course_lesson_title'] . '
-                                                    </a>';
-                                                }
-                                            echo "</li>";
+                                            foreach($courses as $key => $video){
+                                                echo "<li>";
+                                                $style = "";
+                                                if(isset($lesson))
+                                                    if($lesson == $key)
+                                                        $style = "color:#F79403";
+                                                echo '  
+                                                <a style="' .$style . '"  href="?post=' . $post->post_name . '&topic=0&lesson=' . $key . '" >
+                                                    <i class="far fa-play-circle" aria-hidden="true"></i>' . $video['course_lesson_title'] . '
+                                                </a>';
+                                                echo "</li>";
+                                            }
+
                                         }
                                         else if(!empty($youtube_videos)){
-                                            echo "<li>";
-                                                foreach($youtube_videos as $key => $video){
-                                                    $style = "";
-                                                    if(isset($lesson))
-                                                        if($lesson == $key)
-                                                            $style = "color:#F79403";
-                                                    echo '  
-                                                    <a style="' .$style . '" href="?topic=0&lesson=' . $key . '" >
-                                                        <i class="far fa-play-circle" aria-hidden="true"></i>' . $video['title'] . '
-                                                    </a>';
-                                                }
-                                            echo "</li>";
+                                            foreach($youtube_videos as $key => $video){
+                                                echo "<li>";
+                                                $style = "";
+                                                if(isset($lesson))
+                                                    if($lesson == $key)
+                                                        $style = "color:#F79403";
+                                                echo '  
+                                                <a style="' .$style . '" href="?post=' . $post->post_name . '&topic=0&lesson=' . $key . '" >
+                                                    <i class="far fa-play-circle" aria-hidden="true"></i>' . $video['title'] . '
+                                                </a>';
+                                                echo "</li>";
+                                            }
                                         }
                                         ?>
-                                       
-                                        <!-- 
-                                        <li>
-                                            <a href="">
-                                                <i class="far fa-play-circle" aria-hidden="true"></i>Discover the organization of a network
-                                            </a>
-                                        </li> 
-                                        -->
                                     </ul>
                                 </div>
                             </div>
@@ -196,13 +219,6 @@ else if(!empty($youtube_videos))
             </div>
         </div>
         <div class="content-course-strat position-relative">
-            <!-- 
-            <video controls>
-                <source src="https://www.youtube.com/embed/dcPp_U-v3bI" title="YouTube video player" allowfullscreen />
-                <source src="https://www.youtube.com/embed/dcPp_U-v3bI" title="livelearn video presentation"  allow="playsinline;" type="video/ogg" /> 
-            </video> 
-            -->
-
             <?php
                 if(!empty($courses) && !empty($youtube_videos))
                     echo "<img src='" . $image . "' alt='preview image'>";
@@ -223,10 +239,18 @@ else if(!empty($youtube_videos))
                             echo "<img src='" . $image . "' alt='preview image'>";
             ?>
             <div class="d-flex justify-content-between prev-next-btn">
-                <a href="" class="btn btn-next ml-auto">
+                <form action="" method="POST">
+                    <input type="hidden" name="course_read" value="<?= $post->post_name ?>">
+                    <input type="hidden" name="lesson_key" value="<?= $lesson ?>">
+                    <button class="btn btn-next ml-auto btn btn-info" name="read_action_lesson" type="submit">
+                        I've finished this video I'll continue
+                        <i class="fa fa-angle-right"></i>
+                    </button>
+                </form>
+                <!-- <a href="" class="btn btn-next ml-auto">
                     I've finished this video I'll continue
                     <i class="fa fa-angle-right"></i>
-                </a>
+                </a> -->
             </div>
         </div>
     </div>

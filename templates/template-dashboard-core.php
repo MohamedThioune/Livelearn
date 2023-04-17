@@ -1176,6 +1176,154 @@ else if(isset($mandatory_course)){
 
     header("Location: ". $message);
 }
+
+else if(isset($valid_offline)){
+    $user = wp_get_current_user();
+
+    //Get read by user 
+    //Get posts searching by title
+    $args = array(
+        'post_type' => 'progression', 
+        'title' => $course_read,
+        'post_status' => 'publish',
+        'author' => $user->ID,
+        'posts_per_page'         => 1,
+        'no_found_rows'          => true,
+        'ignore_sticky_posts'    => true,
+        'update_post_term_cache' => false,
+        'update_post_meta_cache' => false,
+    );
+    $progressions = get_posts($args);
+
+    if(empty($progressions)){
+        //Create progression
+        $post_data = array(
+            'post_title' => $course_read,
+            'post_author' => $user->ID,
+            'post_type' => 'progression',
+            'post_status' => 'publish'
+        );
+        $progression_id = wp_insert_post($post_data);
+    }
+    else
+        $progression_id = $progressions[0]->ID;
+        
+    //Finish 
+    update_field('state_actual', 1, $progression_id);
+
+    $post = 0;
+    $post = get_page_by_path($course_read, OBJECT, 'course');
+    if($post)
+        $follow_reads = "/dashboard/user/checkout-offline?post=" . $post->post_name;
+    else
+        $follow_reads = "/dashboard/user/activity";
+
+    header("Location: " . $follow_reads);
+}
+
+else if(isset($read_action_lesson)){
+    $user = wp_get_current_user();
+
+    //Get read by user 
+    //Get posts searching by title
+    $args = array(
+        'post_type' => 'progression', 
+        'title' => $course_read,
+        'post_status' => 'publish',
+        'author' => $user->ID,
+        'posts_per_page'         => 1,
+        'no_found_rows'          => true,
+        'ignore_sticky_posts'    => true,
+        'update_post_term_cache' => false,
+        'update_post_meta_cache' => false,
+    );
+    $progressions = get_posts($args);
+
+    if(empty($progressions)){
+        //Create progression
+        $post_data = array(
+            'post_title' => $course_read,
+            'post_author' => $user->ID,
+            'post_type' => 'progression',
+            'post_status' => 'publish'
+        );
+        $progression_id = wp_insert_post($post_data);
+    }
+    else
+        $progression_id = $progressions[0]->ID;
+    
+    //Lesson read
+    $lesson_reads = get_field('lesson_actual_read', $progression_id);
+    $lesson_read = array();
+    $lesson_read['key_lesson'] = $lesson_key;
+
+    $bool = true;
+
+    if(!empty($lesson_reads))
+        foreach ($lesson_reads as $key => $item) 
+            if($item['key_lesson'] == $lesson_key){
+                $bool = false;
+                break;
+            }
+
+    if(!$lesson_reads)
+        $lesson_reads = array();
+        
+    if($bool){
+        array_push($lesson_reads, $lesson_read);
+        update_field('lesson_actual_read', $lesson_reads, $progression_id);
+    }
+
+    $next_lesson = false;
+    $post = 0;
+    if($course_read){
+        $post = get_page_by_path($course_read, OBJECT, 'course');
+        //Content count
+        $courses = get_field('data_virtual', $post->ID);
+        $youtube_videos = get_field('youtube_videos', $post->ID);
+        $podcasts = get_field('podcasts', $post->ID);
+        $count_item = 0;
+        if(!empty($courses)){
+            $content = $courses;
+            $count_item = count($courses);
+        }else if(!empty($youtube_videos)){
+            $content = $youtube_videos;
+            $count_item = count($youtube_videos);
+        }
+        else if(!empty($podcasts)){
+            $content = $podcasts;
+            $count_item = count($podcasts);
+        }
+
+        //lesson reads count
+        $lesson_reads = get_field('lesson_actual_read', $progression_id);
+        $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
+
+        if($count_lesson_reads == $count_item)
+            update_field('state_actual', 1 , $progression_id);
+
+    }
+
+    //if exists return next lesson
+    //else return checkout video or end chapter
+    if($post)
+        if(isset($content[$lesson_key + 1])){
+            $key = $lesson_key + 1;
+            if(isset($podcast_read))
+                $follow_reads = "/dashboard/user/start-podcast?post=" . $post->post_name . "&lesson=" . $key;
+            else
+                $follow_reads = "/dashboard/user/start-course?post=" . $post->post_name . "&lesson=" . $key;
+        }
+        else
+            if(isset($podcast_read))
+                $follow_reads = "/dashboard/user/checkout-podcast?post=" . $post->post_name;
+            else
+                $follow_reads = "/dashboard/user/checkout-video?post=" . $post->post_name;
+    else
+        $follow_reads = "/dashboard/user/activity";
+
+    header("Location: " . $follow_reads);
+}
     
 ?>
 <?php wp_head(); ?>
