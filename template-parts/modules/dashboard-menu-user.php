@@ -116,6 +116,10 @@ style="overflow-x: hidden !important;">
             <?php
             if(!empty($topics_external))
                 foreach($topics_external as $topic){
+                    if(!$topic || is_wp_error(!$topic)){
+                        continue;
+                        var_dump($topic);
+                    }
                     $name = (String)get_the_category_by_ID($topic);
                     $image_category = get_field('image', 'category_'. $topic);
                     $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/iconOnderverpen.png';
@@ -130,6 +134,10 @@ style="overflow-x: hidden !important;">
 
             if(!empty($topics_internal))
                 foreach($topics_internal as $topic){
+                    if(!$topic || is_wp_error(!$topic)){
+                        continue;
+                        var_dump($topic);
+                    }
                     $name = (String)get_the_category_by_ID($topic);
                     $image_category = get_field('image', 'category_'. $topic);
                     $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/iconOnderverpen.png';
