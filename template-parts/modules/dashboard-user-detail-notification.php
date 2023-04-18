@@ -12,11 +12,10 @@
     );
 
     $todos = get_posts($args);
-
     $user_id = get_current_user_id();
     if($_GET['todo'] > 0 ){
 
-        $value = get_post($_GET['todo']);   
+        $value = get_post($_GET['todo']);  
         if(!empty($value)){
             $type = get_field('type_feedback', $value->ID);
             $manager_id = get_field('manager_feedback', $value->ID);

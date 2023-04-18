@@ -45,10 +45,14 @@ $user = wp_get_current_user();
 //Get read by user 
 $args = array(
     'post_type' => 'progression', 
+    'title' => $post->post_name,
     'post_status' => 'publish',
-    'search_title' => $post->post_name,
     'author' => $user->ID,
-    'posts_per_page' => -1
+    'posts_per_page'         => 1,
+    'no_found_rows'          => true,
+    'ignore_sticky_posts'    => true,
+    'update_post_term_cache' => false,
+    'update_post_meta_cache' => false
 );
 $progressions = get_posts($args);
 if(empty($progressions)){
@@ -65,6 +69,7 @@ else
     $progression_id = $progressions[0]->ID;
 //Lesson read
 $lesson_reads = get_field('lesson_actual_read', $progression_id);
+
 $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
 
 //Pourcentage
@@ -87,7 +92,7 @@ $pourcentage = intval($pourcentage);
     <div class="headBlock ">
         <div class="d-flex justify-content-between align-items-center">
             <div class="">
-                <a href="/dashboard/user/checkout-video/$post=<?= $post->post_name ?>"><i class="fa fa-angle-left"></i>Back</a>
+                <a href="/dashboard/user/checkout-video/?post=<?= $post->post_name ?>"><i class="fa fa-angle-left"></i>Back</a>
                 <p class="title-course"><?php echo $post->post_title; ?></p>
                 <p class="text-number-element">Video (<?= $count_videos ?>)</p>
             </div>
@@ -105,7 +110,7 @@ $pourcentage = intval($pourcentage);
                     <div class="tabs">
                         <ul class="filters">
                             <li class="item active">Overview</li>
-                            <li class="item">Review</li>
+                            <!-- <li class="item">Review</li> -->
                         </ul>
 
                         <div class="tabs__list">

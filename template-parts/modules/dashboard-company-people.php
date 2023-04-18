@@ -14,7 +14,7 @@
         $company_connected = $company[0]->post_title;
 
     $grant = get_field('manager',  'user_' . $user_connected);
-    $ismanaged = get_field('managed',  'user_' . $user_connected);
+    $ismanaged = get_field('managed','user_' . $user_connected);
     $members = array();
     $member_id = [];
     foreach($users as $user){
@@ -52,12 +52,11 @@
     if( in_array('administrator', $data_user->roles) || in_array('hr', $data_user->roles) || in_array('manager', $data_user->roles) || $grant ) {
         extract($_POST);
 
-        if (isset($client_id)&& isset($client_secret)){
+        if (isset($client_id)&& isset($client_secret) ){
         $baseurl  =  'https://oauth.loket-acc.nl';
-        // $redirect = 'https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         $redirect = get_site_url()."/dashboard/company/people/";
+        //$redirect = "https://livelearn.nl/dashboard/company/people/";
         $status = rand(1000,9999);
-        // $message_loket="user from loket are available.";
         $url = "$baseurl/authorize?client_id=$client_id&redirect_uri=$redirect&response_type=code&scope=all&state=$status";
         header("Location: $url");
         $_SESSION['client_id']=$client_id;
@@ -179,6 +178,7 @@
                              Salary administration
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <button type="button" class="dropdown-item btn btn-show-modal" data-toggle="modal" data-target="#nmbrsModal">Nmbrs</button>
                             <button type="button" class="dropdown-item btn btn-show-modal" data-toggle="modal" data-target="#polarisModal">Polaris</button>
                             <button type="button" class="dropdown-item btn btn-show-modal" data-toggle="modal" data-target="#loketModal">Loket</button>
                         </div>
@@ -376,12 +376,70 @@
 
 ?>
 </div>
+
+<!--begin Modal for Nmbrs -->
+<div class="modal fade otherModal" id="nmbrsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">NMBRS</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!--
+            <div hidden="true" id="loader" class="text-center" role="status">
+                <div class="spinner-border" role="status">
+                </div>
+            </div>
+            -->
+            <div id="back-nmbrs" class="text-center"></div>
+            <div class="modal-body">
+                <form class="needs-validation" novalidate id="data-sending-from-nmbrs" method="POST">
+                    <div class="form-group">
+                        <label for="nmbrs-username" class="col-form-label">login</label>
+                        <input type="text" class="form-control" name="nmbrs-username" aria-describedby="inputGroupPrepend" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="nmbrs-password" class="col-form-label">password</label>
+                        <input type="password" class="form-control" name="nmbrs-password" aria-describedby="inputGroupPrepend" required>
+                    </div>
+                </form>
+            </div>
+            <div hidden="true" id="" class="text-center" role="status">
+                <div class="spinner-border" role="status">
+
+                </div>
+            </div>
+            <div class="d-none loader-back-nmbrs">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Naam</th>
+                        <th>Plaats</th>
+                        <th>Email</th>
+                        <th>Optie</th>
+                    </tr>
+                    </thead>
+                    <tbody >
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" form="data-sending-from-nmbrs">Connect to nmbrs</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end Modal for Nmbrs -->
+
 <!--begin Modal for connexion polaris -->
 <div class="modal fade otherModal" id="polarisModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="polarisModalLabel">POLARIS</h5>
+        <h5 class="modal-title">POLARIS</h5>
         <h6 style="color:red;" class="d-none text-center" id="error-connexion">Invalid cridentials</h6>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -393,7 +451,7 @@
     </div>
       <div id="back-polaris" class="text-center"></div>
       <div class="modal-body">
-        <form class="needs-validation" novalidate id="data-sending-from-form" method="POST">
+        <form class="needs-validation" novalidate id="data-sending-from-polaris" method="POST">
           <div class="form-group">
             <label for="polaris-username" class="col-form-label">login</label>
             <input type="text" class="form-control" id="polaris-username" name="polaris-username" aria-describedby="inputGroupPrepend" required>
@@ -425,18 +483,19 @@
         </table>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-success" form="data-sending-from-form">Connect to Polaris</button>
+        <button type="submit" class="btn btn-success polaris" form="data-sending-from-polaris">Connect to Polaris</button>
       </div>
     </div>
   </div>
 </div>
 <!--end Modal for connexion polaris -->
+
 <!--begin Modal for connexion Loket -->
 <div class="modal fade otherModal" id="loketModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="polarisModalLabel">LOKET</h5>
+        <h5 class="modal-title">LOKET</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -549,30 +608,33 @@
         console.log(optionSelected);
     });
     // sending data form for polaris
-    $(document).ready(function() {
-  $('#data-sending-from-form').submit(function(event) {
+  $(document).ready(function() {
+  $('#data-sending-from-polaris').submit(function(event) {
       event.preventDefault();
-      const formInformation = document.getElementById('data-sending-from-form');
+      const formInformation = document.getElementById('data-sending-from-polaris');
       var formData = $(this).serialize();
       console.log('data submitted : ',formData);
       const username = $('input[name="polaris-username"]').val();
       const password = $('input[name="polaris-password"]').val();
+      console.log(username)
+      console.log(password)
       console.log(`data sending => ${username}:${password}`)
-    $.ajax({
+      const buttonSubmit = document.querySelector('.btn.btn-success.polaris');
+      $.ajax({
     url: 'https://login.bcs.nl/API/RestService/export?Connector=aqMedewerker_test',
     method: 'GET',
     headers: {
         'Authorization': 'Basic ' + btoa(`${username}:${password}`)
+      // 'Authorization': 'Basic ' + btoa(`API_test_extern@bcs.nl:Qa1B27x4D!s`)
     },
     beforeSend:function(){
-        $('#loader').attr('hidden',false)
-        formInformation.className="d-none";
-       // $('#data-sending-from-form').attr('hidden',true)
+        $('#loader').attr('hidden',false) //show the loader
+        formInformation.className="d-none"; //hiden the form
+        buttonSubmit.className="d-none";
+       // $('#data-sending-from-polaris').attr('hidden',true) // hidden the submitting button
     },
     success: function(responseXML) {
         $('#loader').attr('hidden',true)
-        const buttonSubmit = document.querySelector('.btn.btn-success');
-        buttonSubmit.className="d-none";
         formInformation.className="d-none";
         document.getElementById('list-polaris').classList.remove("d-none");
         document.getElementById('error-connexion').classList.add("d-none");
@@ -619,16 +681,15 @@
         if (adminSalary=='loket') {
             idSubmitted = 'back-loket';
         }
-        
         const row = e.target.parentNode.parentNode;
         const email = row.querySelector(".row-email").textContent.trim();
         const fullName = row.querySelector(".row-fullName").textContent;
         const nams = fullName.split(' ');
         const firstName = nams[0];
         const lastName = nams.slice(1).join(" ");
-        console.log("email :::"+email);
-        console.log("firstName :::   "+ firstName);
-        console.log("lastName :::   "+ lastName);
+        console.log("email :"+email);
+        console.log("firstName :"+ firstName);
+        console.log("lastName :"+ lastName);
         var dataToSend = {first_name:firstName,last_name:lastName,email:email};
         dataToSend = JSON.stringify(dataToSend);
         console.log('data sending ' + dataToSend );
