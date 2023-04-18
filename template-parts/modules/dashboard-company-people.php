@@ -55,6 +55,7 @@
         if (isset($client_id)&& isset($client_secret) ){
         $baseurl  =  'https://oauth.loket-acc.nl';
         $redirect = get_site_url()."/dashboard/company/people/";
+        //$redirect = "https://livelearn.nl/dashboard/company/people/";
         $status = rand(1000,9999);
         $url = "$baseurl/authorize?client_id=$client_id&redirect_uri=$redirect&response_type=code&scope=all&state=$status";
         header("Location: $url");
@@ -453,11 +454,11 @@
         <form class="needs-validation" novalidate id="data-sending-from-polaris" method="POST">
           <div class="form-group">
             <label for="polaris-username" class="col-form-label">login</label>
-            <input value="API_test_extern@bcs.nl" type="text" class="form-control" id="polaris-username" name="polaris-username" aria-describedby="inputGroupPrepend" required>
+            <input type="text" class="form-control" id="polaris-username" name="polaris-username" aria-describedby="inputGroupPrepend" required>
           </div>
           <div class="form-group">
             <label for="polaris-password" class="col-form-label">password</label>
-            <input value="Qa1B27x4D!s" type="password" class="form-control" id="polaris-password" name="polaris-password" aria-describedby="inputGroupPrepend" required>
+            <input type="password" class="form-control" id="polaris-password" name="polaris-password" aria-describedby="inputGroupPrepend" required>
           </div>
         </form>
       </div>
