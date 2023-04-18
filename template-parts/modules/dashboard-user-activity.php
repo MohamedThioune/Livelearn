@@ -373,6 +373,8 @@ foreach ($users as $element) {
                                                 $manager_display = 'A manager';
                                                 $image = 0;
                                             }
+                                            if($key >= 4)
+                                                continue;
 
                                             if(!$image)
                                                 $image = get_stylesheet_directory_uri() . '/img/Group216.png';
@@ -632,8 +634,9 @@ foreach ($users as $element) {
                                 $i = 0;
                                 $topic = get_the_category_by_ID($value);
                                 $note = 0;
-                                if(!$topic)
+                                if(!$topic && $key < 4)
                                     continue;
+
                                 if(!empty($skills_note))
                                     foreach($skills_note as $skill)
                                         if($skill['id'] == $value){
@@ -648,55 +651,15 @@ foreach ($users as $element) {
                                     </div>
                                     <p class="name-course"><?= $name_topic ?></p>
                                     <div class="footer-card-skills">
-                                        <button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills<?= $key ?>">Edit <i class="fa fa-edit"></i></a>
-                                            <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a>
-                                        </div>
+                                        <!--<button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills<?php /*= $key */?>">Edit <i class="fa fa-edit"></i></a>
+                                                      <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a>
+                                            </div>-->
+                                        <a href="/dashboard/user/settings/"><i class="fa fa-gear"></i></a>
                                     </div>
                                 </div>
 
-                                <!-- Start modal edit skills-->
-                                <div class="modal modalEdu fade" id="exampleModalSkills<?= $key ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Edit Skills</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <form action="" method="POST">
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="col-lg-12 col-md-12">
-                                                            <div class="group-input-settings">
-                                                                <label for="">Name</label>
-                                                                <input name="" type="text" placeholder="<?= $name_topic ?>" disabled>
-                                                                <input name="id" type="hidden" value="<?= $value ?>">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12 col-md-12 skillBar-col">
-                                                            <div class="group-input-settings">
-                                                                <label for="">Kies uw vaardigheidsniveau in percentage</label>
-                                                                <div class="slider-wrapper">
-                                                                    <div class="edit"></div>
-                                                                </div>
-                                                                <div class="rangeslider-wrap">
-                                                                    <input name="note" type="range" min="0" max="100" step="10" labels="0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100" value="<?= $note ?>" onChange="rangeSlide(this.value)">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button class="btn btnSaveSetting" type="submit" name="note_skill_edit">Save</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--  End modal edit skills-->
                                 <?php
                                 $i++;
                             }
@@ -710,8 +673,8 @@ foreach ($users as $element) {
                             <?php
                             $i = 0;
                             if(!empty($communities)){
-                                echo '<p class="title">Communities</p>';
-                                echo '<a href="/?tab=Communities" class="d-flex align-items-center">
+                                echo '<p class="title">Communities </p>';
+                                echo '<a href="/?tab=Communities " class="d-flex align-items-center">
                                                 <p class="seeAllText">See All</p>
                                                 <img src="' . get_stylesheet_directory_uri() . '/img/seeAllIcon.png" class="" alt="">
                                         </a>';
@@ -1222,7 +1185,7 @@ foreach ($users as $element) {
                             else
                                 $access_community = '/dashboard/user/community-detail/?mu=' . $value->ID ;
                             ?>
-                            <a href="/<?= $access_community?>" class="card-communities-activity">
+                            <a href="<?= $access_community?>" class="card-communities-activity">
                                 <div class="block-img">
                                     <img src="<?= $community_image ?>" class="" alt="">
                                 </div>
@@ -1264,55 +1227,15 @@ foreach ($users as $element) {
                                         </div>
                                         <p class="name-course"><?= $name_topic ?></p>
                                         <div class="footer-card-skills">
-                                            <button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
+                                            <!--<button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills<?= $key ?>">Edit <i class="fa fa-edit"></i></a>
-                                                <!-- <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a> -->
-                                            </div>
+                                                <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills<?php /*= $key */?>">Edit <i class="fa fa-edit"></i></a>
+                                                      <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a>
+                                            </div>-->
+                                            <a href="/dashboard/user/settings/"><i class="fa fa-gear"></i></a>
                                         </div>
                                     </div>
 
-                                    <!-- Start modal edit skills-->
-                                    <div class="modal modalEdu fade" id="exampleModalSkills<?= $key ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Edit Skills</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <form action="" method="POST">
-                                                    <div class="modal-body">
-                                                        <div class="row">
-                                                            <div class="col-lg-12 col-md-12">
-                                                                <div class="group-input-settings">
-                                                                    <label for="">Name</label>
-                                                                    <input name="" type="text" placeholder="<?= $name_topic ?>" disabled>
-                                                                    <input name="id" type="hidden" value="<?= $value ?>">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12 col-md-12 skillBar-col">
-                                                                <div class="group-input-settings">
-                                                                    <label for="">Kies uw vaardigheidsniveau in percentage</label>
-                                                                    <div class="slider-wrapper">
-                                                                        <div class="edit"></div>
-                                                                    </div>
-                                                                    <div class="rangeslider-wrap">
-                                                                        <input name="note" type="range" min="0" max="100" step="10" labels="0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100" value="<?= $note ?>" onChange="rangeSlide(this.value)">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button class="btn btnSaveSetting" type="submit" name="note_skill_edit">Save</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--  End modal edit skills-->
                                     <?php
                                     $i++;
                                 }
