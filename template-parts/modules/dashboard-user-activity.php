@@ -90,12 +90,6 @@ if(!empty($enrolled))
     //         if($kennis_video[0])
     //             $enrolled_courses = array_merge($kennis_video, $enrolled_courses);
 
-    //Make sure videos put on mandatory is not null before to merge with enrolled
-    if(!empty($mandatory_video))
-        if(isset($mandatory_video[0]))
-            if($mandatory_video[0])
-                $enrolled_courses = array_merge($mandatory_video, $enrolled_courses);
-
     if(!empty($enrolled_courses))
         $your_count_courses = count($enrolled_courses);
 }
@@ -104,6 +98,19 @@ $typo_course = array('Artikel' => 0, 'Opleidingen' => 0, 'Podcast' => 0, 'Video'
 /*
 * * End
 */
+
+/** Mandatories **/
+$args = array(
+    'post_type' => 'mandatory', 
+    'post_status' => 'publish',
+    'author' => $user->ID,
+    'posts_per_page'         => -1,
+    'no_found_rows'          => true,
+    'ignore_sticky_posts'    => true,
+    'update_post_term_cache' => false,
+    'update_post_meta_cache' => false
+);
+$mandatories = get_posts($args);
 
 //Skills
 $topics_external = get_user_meta($user->ID, 'topic');
@@ -206,7 +213,7 @@ foreach ($users as $element) {
             </div>
             <p class="description-course">A courses to help you learn and acquire new skills at your own pace, on your own time</p>
         </div>
-        </div>
+    </div>
 
     <div id="tab-url1">
 
@@ -302,6 +309,7 @@ foreach ($users as $element) {
                                     //Clock duration
                                     $duration_day = get_field('duration_day', $post->ID) ? get_field('duration_day', $post->ID) . 'days' : 'Unlimited';
 
+
                                     ?>
                                     <tr>
                                         <td>
@@ -310,6 +318,131 @@ foreach ($users as $element) {
                                                     <img src="<?= $image_course ?>" class="" alt="">
                                                 </div>
                                                 <a href="<?= $href_checkout; ?>" class="name-element"><?= $course->post_title; ?></a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="name-element"><?= $duration_day ?></p>
+                                        </td>
+                                        <td class=" r-1">
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgUser">
+                                                    <img src="<?= $author_image ?>" class="" alt="">
+                                                </div>
+                                                <p class="name-element"><?= $author_name ?></p>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                <?php
+                                endforeach;
+                                ?>
+                                </tbody>
+                            </table>
+                            <table class="table table-responsive">
+                                <thead>
+                                <tr>
+                                    <th scope="col courseTitle">Mandatories</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                                <br><?php if($_GET['message']) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span>" ?><br>
+
+                                </thead>
+                                <tbody>
+                                <?php
+                                $offline = ['Opleidingen', 'Training', 'Workshop', 'Masterclass', 'Event'];
+                                foreach($mandatories as $key => $value) :
+                                    $course = get_page_by_path($value->post_title, OBJECT, 'course');
+                                    if(!$course)
+                                        continue;
+
+                                    $bool = true;
+                                    $bool = visibility($course, $visibility_company);
+                                    if(!$bool)
+                                        continue;
+
+                                    //Course Type
+                                    $course_type = get_field('course_type', $course->ID);
+                                    
+                                    //Checkout URL
+                                    if(in_array($course_type, $offline))
+                                        $href_checkout = "/dashboard/user/checkout-offline/?post=" . $course->post_name . "&man=";
+                                    else if($course_type == 'Video')
+                                        $href_checkout = "/dashboard/user/checkout-video/?post=" . $course->post_name . "&man=";
+                                    else if($course_type == 'Podcast')
+                                        $href_checkout = "/dashboard/user/checkout-podcast/?post=" . $course->post_name . "&man=";
+                                    else
+                                        $href_checkout = "#";
+
+                                    // Analytics
+                                    switch ($course_type) {
+                                        case 'Artikel':
+                                            $typo_course['Artikel']++;
+                                            break;
+                                        case 'Opleidingen':
+                                            $typo_course['Opleidingen']++;
+                                            break;
+                                        case 'Podcast':
+                                            $typo_course['Podcast']++;
+                                            break;
+                                        case 'Video':
+                                            $typo_course['Video']++;
+                                            break;
+                                    }
+
+                                    if($key >= 4)
+                                        continue;
+
+                                    //Legend image
+                                    $image_course = get_field('preview', $course->ID)['url'];
+                                    if(!$image_course){
+                                        $image_course = get_the_post_thumbnail_url($course->ID);
+                                        if(!$image_course)
+                                            $image_course = get_field('url_image_xml', $course->ID);
+                                        if(!$image_course)
+                                            $image_course = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                                    }
+
+                                    //Author
+                                    $author = get_user_by('ID', $course->post_author);
+                                    $author_name = $author->first_name ?: $author->display_name;
+                                    $author_image = get_field('profile_img',  'user_' . $author->ID);
+                                    $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
+                                    //Clock duration
+                                    $duration_day = get_field('duration_day', $post->ID) ? get_field('duration_day', $post->ID) . 'days' : 'Unlimited';
+
+                                    //Get read by user 
+                                    $args = array(
+                                        'post_type' => 'progression', 
+                                        'title' => $course->post_name,
+                                        'post_status' => 'publish',
+                                        'author' => $user->ID,
+                                        'posts_per_page'         => 1,
+                                        'no_found_rows'          => true,
+                                        'ignore_sticky_posts'    => true,
+                                        'update_post_term_cache' => false,
+                                        'update_post_meta_cache' => false
+                                    );
+                                    $progressions = get_posts($args);
+                                    $is_finish = 0;
+                                    if(!empty($progressions)){
+                                        $progression_id = $progressions[0]->ID;
+                                        //Finish read
+                                        $is_finish = get_field('state_actual', $progression_id);
+                                    }
+                                    $style_mandatory = "";
+                                    if($is_finish)
+                                        $style_mandatory = '✅';
+
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?= $image_course ?>" class="" alt="">
+                                                </div>
+                                                <a href="<?= $href_checkout; ?>" class="name-element"><?= $course->post_title; ?>&nbsp;&nbsp;<?= $style_mandatory ?></a>
                                             </div>
                                         </td>
                                         <td>
@@ -373,6 +506,8 @@ foreach ($users as $element) {
                                                 $manager_display = 'A manager';
                                                 $image = 0;
                                             }
+                                            if($key >= 4)
+                                                continue;
 
                                             if(!$image)
                                                 $image = get_stylesheet_directory_uri() . '/img/Group216.png';
@@ -635,8 +770,9 @@ foreach ($users as $element) {
                                 $i = 0;
                                 $topic = get_the_category_by_ID($value);
                                 $note = 0;
-                                if(!$topic)
+                                if(!$topic && $key < 4)
                                     continue;
+
                                 if(!empty($skills_note))
                                     foreach($skills_note as $skill)
                                         if($skill['id'] == $value){
@@ -651,55 +787,15 @@ foreach ($users as $element) {
                                     </div>
                                     <p class="name-course"><?= $name_topic ?></p>
                                     <div class="footer-card-skills">
-                                        <button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                            <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills<?= $key ?>">Edit <i class="fa fa-edit"></i></a>
-                                            <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a>
-                                        </div>
+                                        <!--<button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills<?php /*= $key */?>">Edit <i class="fa fa-edit"></i></a>
+                                                      <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a>
+                                            </div>-->
+                                        <a href="/dashboard/user/settings/"><i class="fa fa-gear"></i></a>
                                     </div>
                                 </div>
 
-                                <!-- Start modal edit skills-->
-                                <div class="modal modalEdu fade" id="exampleModalSkills<?= $key ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Edit Skills</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <form action="" method="POST">
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="col-lg-12 col-md-12">
-                                                            <div class="group-input-settings">
-                                                                <label for="">Name</label>
-                                                                <input name="" type="text" placeholder="<?= $name_topic ?>" disabled>
-                                                                <input name="id" type="hidden" value="<?= $value ?>">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-12 col-md-12 skillBar-col">
-                                                            <div class="group-input-settings">
-                                                                <label for="">Kies uw vaardigheidsniveau in percentage</label>
-                                                                <div class="slider-wrapper">
-                                                                    <div class="edit"></div>
-                                                                </div>
-                                                                <div class="rangeslider-wrap">
-                                                                    <input name="note" type="range" min="0" max="100" step="10" labels="0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100" value="<?= $note ?>" onChange="rangeSlide(this.value)">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button class="btn btnSaveSetting" type="submit" name="note_skill_edit">Save</button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--  End modal edit skills-->
                                 <?php
                                 $i++;
                             }
@@ -713,8 +809,8 @@ foreach ($users as $element) {
                             <?php
                             $i = 0;
                             if(!empty($communities)){
-                                echo '<p class="title">Communities</p>';
-                                echo '<a href="/?tab=Communities" class="d-flex align-items-center">
+                                echo '<p class="title">Communities </p>';
+                                echo '<a href="/?tab=Communities " class="d-flex align-items-center">
                                                 <p class="seeAllText">See All</p>
                                                 <img src="' . get_stylesheet_directory_uri() . '/img/seeAllIcon.png" class="" alt="">
                                         </a>';
@@ -1225,7 +1321,7 @@ foreach ($users as $element) {
                             else
                                 $access_community = '/dashboard/user/community-detail/?mu=' . $value->ID ;
                             ?>
-                            <a href="/<?= $access_community?>" class="card-communities-activity">
+                            <a href="<?= $access_community?>" class="card-communities-activity">
                                 <div class="block-img">
                                     <img src="<?= $community_image ?>" class="" alt="">
                                 </div>
@@ -1270,55 +1366,15 @@ foreach ($users as $element) {
                                         </div>
                                         <p class="name-course"><?= $name_topic ?></p>
                                         <div class="footer-card-skills">
-                                            <button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
+                                            <!--<button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills<?= $key ?>">Edit <i class="fa fa-edit"></i></a>
-                                                <!-- <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a> -->
-                                            </div>
+                                                <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills<?php /*= $key */?>">Edit <i class="fa fa-edit"></i></a>
+                                                      <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a>
+                                            </div>-->
+                                            <a href="/dashboard/user/settings/"><i class="fa fa-gear"></i></a>
                                         </div>
                                     </div>
 
-                                    <!-- Start modal edit skills-->
-                                    <div class="modal modalEdu fade" id="exampleModalSkills<?= $key ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Edit Skills</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <form action="" method="POST">
-                                                    <div class="modal-body">
-                                                        <div class="row">
-                                                            <div class="col-lg-12 col-md-12">
-                                                                <div class="group-input-settings">
-                                                                    <label for="">Name</label>
-                                                                    <input name="" type="text" placeholder="<?= $name_topic ?>" disabled>
-                                                                    <input name="id" type="hidden" value="<?= $value ?>">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12 col-md-12 skillBar-col">
-                                                                <div class="group-input-settings">
-                                                                    <label for="">Kies uw vaardigheidsniveau in percentage</label>
-                                                                    <div class="slider-wrapper">
-                                                                        <div class="edit"></div>
-                                                                    </div>
-                                                                    <div class="rangeslider-wrap">
-                                                                        <input name="note" type="range" min="0" max="100" step="10" labels="0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100" value="<?= $note ?>" onChange="rangeSlide(this.value)">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button class="btn btnSaveSetting" type="submit" name="note_skill_edit">Save</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--  End modal edit skills-->
                                     <?php
                                     $i++;
                                 }

@@ -10,6 +10,10 @@ if(isset($_GET['post']))
     if($_GET['post'])
         $post = get_page_by_path($_GET['post'], OBJECT, 'course');
 
+$mandatory= false;
+if(isset($_GET['man']))
+    $mandatory = true;
+        
 if($post):
 
 /* * Informations course * */
@@ -171,7 +175,7 @@ $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
                     <ul class="filters">
                         <li class="item active">Course Overview</li>
                         <li class="item">Course Content</li>
-                        <li class="item">Review</li>
+                        <!-- <li class="item">Review</li> -->
                     </ul>
 
                     <div class="tabs__list">

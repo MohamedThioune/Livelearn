@@ -164,6 +164,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                             &nbsp;&nbsp;<a id="bouddha">✔️</a>&nbsp;&nbsp; <a class="btn-default" onclick='$(".multipleSelect2").prop("disabled", false);'  style="background:white" >⚙️</a>
                         <br>
                     </center>
+                    <div class="" id="content-back-topics"></div>
                     <table class="table table-responsive">
                         <form method="POST">
                             <thead>
@@ -388,10 +389,10 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     $(".checkOne").click((e)=>{
         let tags_id = e.target.value;
         let if_exist = ids.indexOf(tags_id);
-        if (if_exist > 0)
-            ids.splice(if_exist, 1)
-        else 
-            ids.push(tags_id);
+        if (!ids.includes(tags_id))
+                ids.push(tags_id);//push the element in array
+            else
+                ids.splice(if_exist, 1) // remove it in array
         console.log(ids);
     });
 

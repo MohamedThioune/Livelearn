@@ -258,43 +258,46 @@
                     <p class="fliterElementText">Filter</p>
                     <button class="btn btnIcone8" id="show"><img src="<?php echo get_stylesheet_directory_uri();?>/img/filter.png" alt=""></button>
                 </div>
-                <form action="" method="POST" >
-                    <P class="textFilter">Filter :</P>
-                    <button class="btn hideBarFilterBlock"><i class="fa fa-close"></i></button>
-                    <select name="leervom[]">
-                        <option value="" disabled>Leervoom</option>
-                        <option value="Opleidingen" <?php if(isset($leervom)) if(in_array('Opleidingen', $leervom)) echo "selected" ; else echo ""  ?>>Opleidingen</option>
-                        <option value="Training"    <?php if(isset($leervom)) if(in_array('Training', $leervom)) echo "selected" ; else echo ""  ?> >Training</option>
-                        <option value="Workshop"    <?php if(isset($leervom)) if(in_array('Workshop', $leervom)) echo "selected" ; else echo ""  ?> >Workshop</option>
-                        <option value="E-learning"  <?php if(isset($leervom)) if(in_array('E-learning', $leervom)) echo "selected" ; else echo ""  ?> >E-learning</option>
-                        <option value="Masterclass" <?php if(isset($leervom)) if(in_array('Masterclass', $leervom)) echo "selected" ; else echo ""  ?> >Masterclass</option>
-                        <option value="Video"       <?php if(isset($leervom)) if(in_array('Video', $leervom)) echo "selected" ; else echo ""  ?> >Video</option>
-                        <option value="Assessment"  <?php if(isset($leervom)) if(in_array('Assessment', $leervom)) echo "selected" ; else echo ""  ?> >Assessment</option>
-                        <option value="Lezing"      <?php if(isset($leervom)) if(in_array('Lezing', $leervom)) echo "selected" ; else echo ""  ?> >Lezing</option>
-                        <option value="Event"  <?php if(isset($leervom)) if(in_array('Event', $leervom)) echo "selected" ; else echo ""  ?> >Event</option>
-                        <option value="Leerpad"<?php if(isset($leervom)) if(in_array('Leerpad', $leervom)) echo "selected" ; else echo ""  ?> >Leerpad</option>
-                        <option value="Artikel"<?php if(isset($leervom)) if(in_array('Artikel', $leervom)) echo "selected" ; else echo ""  ?> >Artikel</option>
-                        <option value="Podcast"<?php if(isset($leervom)) if(in_array('Podcast', $leervom)) echo "selected" ; else echo ""  ?> >Podcast</option>
+                <div class="formFilterDatabank">
+                    <form action="" method="POST" >
+                        <P class="textFilter">Filter :</P>
+                        <button class="btn hideBarFilterBlock"><i class="fa fa-close"></i></button>
+                        <select name="leervom[]">
+                            <option value="" disabled>Leervoom</option>
+                            <option value="Opleidingen" <?php if(isset($leervom)) if(in_array('Opleidingen', $leervom)) echo "selected" ; else echo ""  ?>>Opleidingen</option>
+                            <option value="Training"    <?php if(isset($leervom)) if(in_array('Training', $leervom)) echo "selected" ; else echo ""  ?> >Training</option>
+                            <option value="Workshop"    <?php if(isset($leervom)) if(in_array('Workshop', $leervom)) echo "selected" ; else echo ""  ?> >Workshop</option>
+                            <option value="E-learning"  <?php if(isset($leervom)) if(in_array('E-learning', $leervom)) echo "selected" ; else echo ""  ?> >E-learning</option>
+                            <option value="Masterclass" <?php if(isset($leervom)) if(in_array('Masterclass', $leervom)) echo "selected" ; else echo ""  ?> >Masterclass</option>
+                            <option value="Video"       <?php if(isset($leervom)) if(in_array('Video', $leervom)) echo "selected" ; else echo ""  ?> >Video</option>
+                            <option value="Assessment"  <?php if(isset($leervom)) if(in_array('Assessment', $leervom)) echo "selected" ; else echo ""  ?> >Assessment</option>
+                            <option value="Lezing"      <?php if(isset($leervom)) if(in_array('Lezing', $leervom)) echo "selected" ; else echo ""  ?> >Lezing</option>
+                            <option value="Event"  <?php if(isset($leervom)) if(in_array('Event', $leervom)) echo "selected" ; else echo ""  ?> >Event</option>
+                            <option value="Leerpad"<?php if(isset($leervom)) if(in_array('Leerpad', $leervom)) echo "selected" ; else echo ""  ?> >Leerpad</option>
+                            <option value="Artikel"<?php if(isset($leervom)) if(in_array('Artikel', $leervom)) echo "selected" ; else echo ""  ?> >Artikel</option>
+                            <option value="Podcast"<?php if(isset($leervom)) if(in_array('Podcast', $leervom)) echo "selected" ; else echo ""  ?> >Podcast</option>
 
-                    </select>
-                   <div class="priceInput">
-                       <div class="priceFilter">
-                           <input type="number" name="min" value="<?php if(isset($min)) echo $min ?>" placeholder="min Prijs">
-                           <input type="number" name="max" value="<?php if(isset($max)) echo $max ?>" placeholder="tot Prijs">
-                       </div>
-                       <div class="input-group">
-                           <label for="">Gratis</label>
-                           <input name="gratis" type="checkbox" <?php if(isset($gratis)) echo 'checked'; else  echo  '' ?> >
-                       </div>
-                   </div>
-                    <select name="status">
-                        <option value="" disabled selected>Status</option>
-                        <option value="Live">Live</option>
-                        <option value="Not Live">Not live</option>
-                    </select>
-                   <!-- <input type='date' class="form-control date" placeholder="selecteer een datum" /> -->
-                    <button class="btn btnApplyFilter" name="filter_databank" type="submit">Apply</button>
-                </form>
+                        </select>
+                        <div class="priceInput">
+                            <div class="priceFilter">
+                                <input type="number" name="min" value="<?php if(isset($min)) echo $min ?>" placeholder="min Prijs">
+                                <input type="number" name="max" value="<?php if(isset($max)) echo $max ?>" placeholder="tot Prijs">
+                            </div>
+                            <div class="input-group">
+                                <label for="">Gratis</label>
+                                <input name="gratis" type="checkbox" <?php if(isset($gratis)) echo 'checked'; else  echo  '' ?> >
+                            </div>
+                        </div>
+                        <select name="status">
+                            <option value="" disabled selected>Status</option>
+                            <option value="Live">Live</option>
+                            <option value="Not Live">Not live</option>
+                        </select>
+                        <!-- <input type='date' class="form-control date" placeholder="selecteer een datum" /> -->
+                        <button class="btn btnApplyFilter" name="filter_databank" type="submit">Apply</button>
+                    </form>
+                </div>
+
             </div>
             <div class="contentCardListeCourse">
                 <table class="table table-responsive">
