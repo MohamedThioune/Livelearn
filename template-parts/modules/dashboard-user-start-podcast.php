@@ -126,7 +126,7 @@ $pourcentage = intval($pourcentage);
                     <div class="tabs">
                         <ul class="filters">
                             <li class="item active">Overview</li>
-                            <li class="item">Review</li>
+                            <!-- <li class="item">Review</li> -->
                         </ul>
 
                         <div class="tabs__list">
