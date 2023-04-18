@@ -38,7 +38,7 @@ if (!empty($portfolios))
             </div>
             <?php 
                 if($user->ID == get_current_user_id())
-                    echo "<a href='/dashboard/user/settings' style='color:white; font-weight:bold; font-size: 1.3em'><button class='btn btndoawnloadCv'><i class='fas fa-user-cog'></i></button></a>";
+                    echo "<a href='/dashboard/user/settings' style='color:white;'><button class='btn btndoawnloadCv'><i class='fa fa-gear'></i>Edit</button></a>";
                 else 
                     echo "<a class='btn btndoawnloadCv' href='#'>Download CV</a>";
             ?>
