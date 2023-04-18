@@ -137,9 +137,9 @@ if($community){
                             <div class="d-flex flex-wrap">
                                 <div class="group-course-activity first-section-dashboard">
                                     <div class="question-block" data-toggle="modal" data-target="#modalQuestion" type="button">
-                                        <div class="imgUser">
+                                        <a href="" class="imgUser">
                                             <img class="" src="<?= $user_image; ?>" alt="">
-                                        </div>
+                                        </a>
                                         <p class="text-question">Do you have a question ?</p>
                                     </div>
                                     
@@ -159,9 +159,9 @@ if($community){
                                             $reply_question_count = count($reply_question);
                                         ?>
                                         <div class="interviewer-block d-flex">
-                                            <div class="imgUser">
+                                            <a href="" class="imgUser">
                                                 <img src="<?= $user_question_image ?>" alt="">
-                                            </div>
+                                            </a>
                                             <div class="block-detail-interviewer">
                                                 <div class="d-flex align-items-center">
                                                     <p class="name-user-answer"><?= $user_question_name; ?></p>
@@ -189,9 +189,9 @@ if($community){
                                                         $text_reply = $reply['text_reply'];
                                                     ?>
                                                         <div class="interviewer-block d-flex">
-                                                            <div class="imgUser">
+                                                            <a href="" class="imgUser">
                                                                 <img src="<?= $user_reply_image ?>" alt="">
-                                                            </div>
+                                                            </a>
                                                             <div class="block-detail-interviewer">
                                                                 <div class="d-flex align-items-center">
                                                                     <p class="name-user-answer"><?= $user_reply_name ?></p>
@@ -207,10 +207,10 @@ if($community){
                                                     ?>
                                                 </div>
                                                 <div id="block-input-answer-<?= $key; ?>" class="block-input-answer position-relative">
-                                                    <form action="" method="POST" id="reply_question_community">
+                                                    <form action="" method="post" id="reply_question_community">
                                                         <input type='hidden' form="reply_question_community" name='id' value='<?= $key ?>' >
                                                         <input type='hidden' form="reply_question_community" name='community_id' value='<?= $community->ID ?>' >
-                                                        <input name="text_reply" form="reply_question_community" type="text" placeholder="Share your opinion on this question">
+                                                        <input name="txt_reply" form="reply_question_community" type="text" placeholder="Share your opinion on this question">
                                                         <button type="submit" form="reply_question_community" name="reply_question_community" class="btn btn-send">Send</button>
                                                     </form>
                                                 </div>
@@ -230,9 +230,11 @@ if($community){
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel"></h5>
+
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
+
                                                 </div>
                                                 <div class="modal-body text-left">
                                                     <form action="" method="POST" id="question_community">
@@ -354,9 +356,9 @@ if($community){
                                                     $rating = $review['rating'];
                                                     ?>
                                                 <div class="comment-element-block">
-                                                    <div class="imgUserComment">
+                                                    <a class="imgUserComment">
                                                         <img class="" src="<?= $image_author; ?>" alt="">
-                                                    </div>
+                                                    </a>
                                                     <div style="width: 93%;">
                                                         <p class="name-user-comment"><?= $user->display_name; ?></p>
                                                         <p class="date-time-comment"></p>
@@ -575,9 +577,9 @@ if($community){
                                 $reply_question_count = count($reply_question);
                             ?>
                             <div class="interviewer-block d-flex">
-                                <div class="imgUser">
+                                <a href="" class="imgUser">
                                     <img src="<?= $user_question_image ?>" alt="">
-                                </div>
+                                </a>
                                 <div class="block-detail-interviewer">
                                    
                                     <div class="d-flex align-items-center">
@@ -607,9 +609,9 @@ if($community){
                                         $text_reply = $reply['text_reply'];
                                     ?>
                                         <div class="interviewer-block d-flex">
-                                            <div class="imgUser">
+                                            <a href="" class="imgUser">
                                                 <img src="<?= $user_reply_image ?>" alt="">
-                                            </div>
+                                            </a>
                                             <div class="block-detail-interviewer">
                                                 <div class="d-flex align-items-center">
                                                     <p class="name-user-answer"><?= $user_reply_name ?></p>
@@ -625,11 +627,11 @@ if($community){
                                     ?>
                                     </div>
                                     <div id="block-input-answer-1-<?= $key; ?>" class="block-input-answer position-relative">
-                                        <form action="" method="POST">
-                                            <input type='hidden' name='id' value='<?= $key ?>' >
-                                            <input type='hidden' name='community_id' value='<?= $community->ID ?>' >
-                                            <input type="text" name="text_reply" placeholder="Share your opinion on this question">
-                                            <button type="submit" name="reply_question_community" class="btn btn-send">Send</button>
+                                        <form action="" id="reply_form" method="POST">
+                                            <input type='hidden' form="reply_form" name='id' value='<?= $key ?>' >
+                                            <input type='hidden' form="reply_form" name='community_id' value='<?= $community->ID ?>' >
+                                            <input type="text" form="reply_form" name="txtreply" placeholder="Share your opinion on this question">
+                                            <button type="submit" form="reply_form" name="reply_question_community" class="btn btn-send">Send</button>
                                         </form>
                                     </div>
                                 </div>

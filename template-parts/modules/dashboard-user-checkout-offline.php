@@ -10,6 +10,10 @@ if(isset($_GET['post']))
     if($_GET['post'])
         $post = get_page_by_path($_GET['post'], OBJECT, 'course');
 
+$mandatory= false;
+if(isset($_GET['man']))
+    $mandatory = true;
+
 if($post):
 
 /* * Informations course * */
@@ -84,7 +88,7 @@ foreach($bunch_orders as $order){
     }
 }
 if(!$bool)
-    header('Location: /dashboard/user/activity' );
+    header('Location: /dashboard/user/activity?message=You need to buy this course first !' );
 
 if(!empty($enrolled))
 {
@@ -318,7 +322,52 @@ if($this_date <= $date_now && !$is_finish)
                     ?> 
                 </div>
             </div>
-            <?php endif; ?>
+            <?php endif;
+            if($mandatory): 
+            //Mandatory 
+            $args = array(
+                'post_type' => 'mandatory', 
+                'title' => $post->post_name,
+                'post_status' => 'publish',
+                'author' => $user->ID,
+                'posts_per_page'         => 1,
+                'no_found_rows'          => true,
+                'ignore_sticky_posts'    => true,
+                'update_post_term_cache' => false,
+                'update_post_meta_cache' => false
+            );
+            $mandatorie = get_posts($args); 
+            if(!empty($mandatorie)):
+            //Further informations for mandator
+            $done_must = get_field('done_must', $mandatorie[0]->ID);
+            $valid_must = get_field('valid_must', $mandatorie[0]->ID);
+            $point_must = get_field('point_must', $mandatorie[0]->ID);
+            $manager_must = get_field('manager_must', $mandatorie[0]->ID);
+            $manager_name_must = (isset($manager_must->first_name)) ? $manager_must->first_name : $manager_must->display_name;
+            ?>
+            <div class="card-strat-block card-Course card-feature">
+                <p class="title-card-strat-block">Mandatory</p>
+                <div class="element-card-features">
+                    <p class="title-element">Manager</p>
+                    <p class="text-number"><?= $manager_name_must; ?></p>
+                </div>
+                <div class="element-card-features">
+                    <p class="title-element">Points</p>
+                    <p class="text-number"><?= $point_must ?></p>
+                </div>
+                <div class="element-card-features">
+                    <p class="title-element">Valid (days)</p>
+                    <p class="text-number"><?= $valid_must ?></p>
+                </div>
+                <div class="element-card-features">
+                    <p class="title-element">Must be done by</p>
+                    <p class="text-number"><?= $done_must ?></p>
+                </div>
+            </div>
+            <?php
+            endif;
+            endif;
+            ?>
             <div class="detail-checkout-of">
                 <div class="head-element">
                     <p>Others Course</p>
