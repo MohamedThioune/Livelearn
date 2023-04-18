@@ -1541,13 +1541,24 @@ if(isset($_GET['message']))
                 $followers = get_field('follower_community', $value->ID);
                 if(!empty($followers))
                     $max_follower = count($followers);
+                $bool = false;
+                foreach ($followers as $key => $item)
+                    if($item->ID == $user){
+                        $bool = true;
+                        break;
+                    }
+                
+                if($bool)
+                    $access_community = '<a href="/dashboard/user/community-detail/?mu=' . $value->ID . '" class="title">' . $value->post_title . ', Netherlands</a>';
+                else
+                    continue;
             ?>
             <div class="card-Community d-flex align-items-center">
                 <div class="imgCommunity">
                     <img class="calendarImg" src="<?= $community_image ?>" alt="">
                 </div>
                 <div>
-                    <p class="title"><?= $value->post_title ?>, Netherlands</p>
+                    <?= $access_community ?>
                     <p class="number-members"><?= $max_follower ?> Members</p>
                 </div>
             </div>

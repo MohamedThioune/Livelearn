@@ -8,6 +8,10 @@ if(isset($_GET['post']))
     if($_GET['post'])
         $post = get_page_by_path($_GET['post'], OBJECT, 'course');
 
+$mandatory= false;
+if(isset($_GET['man']))
+    $mandatory = true;
+
 if($post):
 
 /* * Informations course * */
@@ -170,7 +174,7 @@ $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
                     <ul class="filters">
                         <li class="item active">Course Overview</li>
                         <li class="item">Course Content</li>
-                        <li class="item">Review</li>
+                        <!-- <li class="item">Review</li> -->
                     </ul>
 
                     <div class="tabs__list">
@@ -475,7 +479,7 @@ $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
         </div>
         <div class="group-card-strat-block">
             <div class="card-strat-block">
-                <a href="" class="btn btn-strat">Strat</a>
+                <a href="<?php echo "/dashboard/user/start-course?post=" . $post->post_name . "&lesson=0"; ?>" class="btn btn-strat">Start</a>
                 <ul>
                     <li><img src="<?php echo get_stylesheet_directory_uri();?>/img/ic_outline-play-arrow.png" alt="">0 hours on-demand video</li>
                     <li><img src="<?php echo get_stylesheet_directory_uri();?>/img/ph_files-light.png" alt=""><?= $count_videos; ?> downloadable resources</li>
@@ -519,7 +523,52 @@ $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
                 ?>
                 </div>
             </div>
-            <?php endif; ?>
+            <?php endif;
+            if($mandatory): 
+            //Mandatory 
+            $args = array(
+                'post_type' => 'mandatory', 
+                'title' => $post->post_name,
+                'post_status' => 'publish',
+                'author' => $user->ID,
+                'posts_per_page'         => 1,
+                'no_found_rows'          => true,
+                'ignore_sticky_posts'    => true,
+                'update_post_term_cache' => false,
+                'update_post_meta_cache' => false
+            );
+            $mandatorie = get_posts($args); 
+            if(!empty($mandatorie)):
+            //Further informations for mandator
+            $done_must = get_field('done_must', $mandatorie[0]->ID);
+            $valid_must = get_field('valid_must', $mandatorie[0]->ID);
+            $point_must = get_field('point_must', $mandatorie[0]->ID);
+            $manager_must = get_field('manager_must', $mandatorie[0]->ID);
+            $manager_name_must = (isset($manager_must->first_name)) ? $manager_must->first_name : $manager_must->display_name;
+            ?>
+            <div class="card-strat-block card-Course card-feature">
+                <p class="title-card-strat-block">Mandatory</p>
+                <div class="element-card-features">
+                    <p class="title-element">Manager</p>
+                    <p class="text-number"><?= $manager_name_must; ?></p>
+                </div>
+                <div class="element-card-features">
+                    <p class="title-element">Points</p>
+                    <p class="text-number"><?= $point_must ?></p>
+                </div>
+                <div class="element-card-features">
+                    <p class="title-element">Valid (days)</p>
+                    <p class="text-number"><?= $valid_must ?></p>
+                </div>
+                <div class="element-card-features">
+                    <p class="title-element">Must be done by</p>
+                    <p class="text-number"><?= $done_must ?></p>
+                </div>
+            </div>
+            <?php
+            endif;
+            endif;
+            ?>
         </div>
     </div>
 </div>
