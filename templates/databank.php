@@ -396,37 +396,36 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         console.log(ids);
     });
 
-        $('#subtopics').on('click', function()
-        {
-            if(ids==null){
-                alert("Please, select some articles!!");
-            }else{
-                const objetIds = Object.assign({}, ids);
-                console.log(objetIds);
-                console.log('data submitted',objetIds);
-                $.ajax({
-                    url: '/livelearn/subtopics',
-                    type: 'POST',
-                    data: objetIds
-                    ,beforeSend:function(){
-                        $('#loader').attr('hidden',true);
-                        $('#select_field').attr('hidden',false);
-                    },error:function(error) {
-                        console.log("error:", error);
-                    },success:function(success){
-                        $('#loader').attr('hidden',true);
-                        document.getElementById('content-back-topics').innerHTML = success
-                        console.log('success');
-                        console.log(success);
-                        console.log('success');
-                    },complete:function(complete){
-                        console.log("complete:",complete);
-                        // $('#loader').attr('hidden',true);
-                        // $('#select_field').attr('hidden',true);
-                    }
-                });
-            }
-        });
+    $('#subtopics').on('click', function()
+    {
+        if(ids==null){
+            alert("Please, select some articles!!");
+        }else{
+            const objetIds = Object.assign({}, ids);
+            console.log(objetIds);
+            console.log('data submitted',objetIds);
+            $.ajax({
+                url: '/subtopics',
+                type: 'POST',
+                data: objetIds,
+                beforeSend:function(){
+                    $('#loader').attr('hidden',false);
+                    $('#select_field').attr('hidden',true);
+                },error:function(error){
+                    console.log("error:", error);
+                },success:function(success){
+                    $('#loader').attr('hidden',true);
+                    document.getElementById('content-back-topics').innerHTML = success;
+                    console.log(success);
+                    location.reload();
+                },complete:function(complete){
+                    console.log("complete:",complete);
+                    $('#loader').attr('hidden',true);
+                    $('#select_field').attr('hidden',true);
+                }
+            });
+        }
+    });
 
     $('.optieAll').click((e)=>{
         // var tr_element = e.target.parentElement.closest("tr");

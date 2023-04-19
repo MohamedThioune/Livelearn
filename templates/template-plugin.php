@@ -1,32 +1,34 @@
 <?php /** Template Name: Get & Save Artikles*/?>
 
 <?php
-global $wpdb;
+  global $wpdb;
 
-extract($_POST);
+  extract($_POST);
 
-function RandomString(){
-  $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  $randstring = '';
-  $rand='';
-  for ($i = 0; $i < 10; $i++) {
-      $rand = $characters[rand(0, strlen($characters))];
-      $randstring .= $rand;  
-  }
-  return $randstring;
-} 
+  function RandomString(){
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randstring = '';
+    $rand='';
+    for ($i = 0; $i < 10; $i++) {
+        $rand = $characters[rand(0, strlen($characters))];
+        $randstring .= $rand;  
+    }
+    return $randstring;
+  } 
 
-$company = null;
+  $company = null;
 
 
-function strip_html_tags($text) {
-  $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
-  $text = preg_replace("/\n{1,}/", "\n", $text); 
-  $text = str_replace("\n","<br>",$text);
-  $text = str_replace(['h1','h3','h4','h5','h6'],'h2',$text);
-  $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
-  return preg_replace($pattern, '', $text);
-} 
+  function strip_html_tags($text) {
+    $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
+    $text = preg_replace("/\n{1,}/", "\n", $text); 
+    $text = str_replace("\n","<br>",$text);
+    $text = str_replace("&lt;","<",$text);
+    $text = str_replace("&gt;",">",$text);
+    $text = str_replace(['h1','h3','h4','h5','h6'],'h2',$text);
+    $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
+    return preg_replace($pattern, '', $text);
+  } 
 
   $table = $wpdb->prefix.'databank';
   
@@ -42,8 +44,7 @@ function strip_html_tags($text) {
       $website = $option['value'];
       $key = $option['text'];
       $author_id=null;
-      foreach($companies as $companie){
-       
+      foreach($companies as $companie){       
         if(strtolower($companie->post_title) == strtolower($key)){
           $company = $companie;
         }else
