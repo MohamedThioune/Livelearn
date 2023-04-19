@@ -309,7 +309,6 @@ foreach ($users as $element) {
                                     //Clock duration
                                     $duration_day = get_field('duration_day', $post->ID) ? get_field('duration_day', $post->ID) . 'days' : 'Unlimited';
 
-
                                     ?>
                                     <tr>
                                         <td>
@@ -477,7 +476,7 @@ foreach ($users as $element) {
                             <div class="cardFavoriteCourses text-left cardAlert">
                                 <div class="d-flex aligncenter justify-content-between">
                                     <h2>My Alerts</h2>
-                                    <input type="search" placeholder="search" class="inputSearchCourse">
+                                    <input type="search" placeholder="search" class="inputSearchCourse" id="search_activity_notification">
                                 </div>
                                 <div class="contentCardListeCourse">
                                     <table class="table table-responsive table-responsive tableNotification">
@@ -491,7 +490,7 @@ foreach ($users as $element) {
                                             <!-- <th scope="col">Optie</th> -->
                                         </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="autocomplete_activity_notification">
                                         <?php
 
                                         foreach($todos as $key => $todo) {
@@ -1609,6 +1608,29 @@ foreach ($users as $element) {
 
     });
 </script>
+
+
+<script>
+    $('#search_activity_notification').keyup(function(){
+        var txt = $(this).val();
+
+        $.ajax({
+
+            url:"/fetch-activity-notification",
+            method:"post",
+            data:{
+                search_activity_notification : txt,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete_activity_notification').html(data);
+            }
+        });
+
+    });
+</script>
+
 
 
 </body>
