@@ -10,6 +10,10 @@ if(isset($_GET['post']))
     if($_GET['post'])
         $post = get_page_by_path($_GET['post'], OBJECT, 'course');
 
+$mandatory= false;
+if(isset($_GET['man']))
+    $mandatory = true;
+
 if($post):
 
 /* * Informations course * */
@@ -84,7 +88,7 @@ foreach($bunch_orders as $order){
     }
 }
 if(!$bool)
-    header('Location: /dashboard/user/activity' );
+    header('Location: /dashboard/user/activity?message=You need to buy this course first !' );
 
 if(!empty($enrolled))
 {
@@ -119,7 +123,7 @@ $favorite = '<button type="button" id="' . $user->ID ."_". $post->ID . '_course"
             </button>';
 $unfavorite = '<button type="button" id="' . $user->ID ."_". $post->ID . '_course" class="btn btnFavorite ">
                     <i class="fa fa-heart-o"></i>
-                    Add to Favorite
+                    Favorite
                </button>';
 
 $raw_saved = get_user_meta($user->ID, 'course');
@@ -255,7 +259,7 @@ if($this_date <= $date_now && !$is_finish)
                         <div>
                             <p class="sub-text-1">Organised by :</p>
                             <p class="sub-text-2"><?= $author_name . ' ' . $author_last_name ?></p>
-                            <a href="" class="sub-text-3">View Profile</a>
+                            <a href="/user-overview?id=<?php echo $author->ID; ?>" class="sub-text-3">View Profile</a>
                         </div>
                     </div>
                     <div class="block-element-detail">
@@ -318,14 +322,60 @@ if($this_date <= $date_now && !$is_finish)
                     ?> 
                 </div>
             </div>
-            <?php endif; ?>
+            <?php endif;
+            if($mandatory): 
+            //Mandatory 
+            $args = array(
+                'post_type' => 'mandatory', 
+                'title' => $post->post_name,
+                'post_status' => 'publish',
+                'author' => $user->ID,
+                'posts_per_page'         => 1,
+                'no_found_rows'          => true,
+                'ignore_sticky_posts'    => true,
+                'update_post_term_cache' => false,
+                'update_post_meta_cache' => false
+            );
+            $mandatorie = get_posts($args); 
+            if(!empty($mandatorie)):
+            //Further informations for mandator
+            $done_must = get_field('done_must', $mandatorie[0]->ID);
+            $valid_must = get_field('valid_must', $mandatorie[0]->ID);
+            $point_must = get_field('point_must', $mandatorie[0]->ID);
+            $manager_must = get_field('manager_must', $mandatorie[0]->ID);
+            $manager_name_must = (isset($manager_must->first_name)) ? $manager_must->first_name : $manager_must->display_name;
+            ?>
+            <div class="card-strat-block card-Course card-feature">
+                <p class="title-card-strat-block">Mandatory</p>
+                <div class="element-card-features">
+                    <p class="title-element">Manager</p>
+                    <p class="text-number"><?= $manager_name_must; ?></p>
+                </div>
+                <div class="element-card-features">
+                    <p class="title-element">Points</p>
+                    <p class="text-number"><?= $point_must ?></p>
+                </div>
+                <div class="element-card-features">
+                    <p class="title-element">Valid (days)</p>
+                    <p class="text-number"><?= $valid_must ?></p>
+                </div>
+                <div class="element-card-features">
+                    <p class="title-element">Must be done by</p>
+                    <p class="text-number"><?= $done_must ?></p>
+                </div>
+            </div>
+            <?php
+            endif;
+            endif;
+            ?>
             <div class="detail-checkout-of">
                 <div class="head-element">
                     <p>Others Course</p>
                 </div>
-
+                
                 <?php
                 $x = 0;
+                $offline = ['Opleidingen', 'Training', 'Workshop', 'Masterclass', 'Event'];
                 foreach($enrolled_courses as $course):
                 if($course->ID == $post->ID)
                     continue;
@@ -333,6 +383,21 @@ if($this_date <= $date_now && !$is_finish)
                 if($x == 4)
                     break;
                 $x++;
+
+
+                //Course Type
+                $course_type = get_field('course_type', $course->ID);
+                
+                //Checkout URL
+                if(in_array($course_type, $offline))
+                    $href_checkout = "/dashboard/user/checkout-offline/?post=" . $course->post_name;
+                else if($course_type == 'Video')
+                    $href_checkout = "/dashboard/user/checkout-video/?post=" . $course->post_name;
+                else if($course_type == 'Podcast')
+                    $href_checkout = "/dashboard/user/checkout-podcast/?post=" . $course->post_name;
+                else
+                    $href_checkout = "#";
+
 
                 // Categories
                 $categories = array();
@@ -347,8 +412,8 @@ if($this_date <= $date_now && !$is_finish)
                 }
 
                 ?>
-                <div class="element-other-course">
-                    <p class="name-other-cours"><?= $course->post_title ?></p>
+                <div href="<?= $href_checkout; ?>" class="element-other-course">
+                    <a href="<?= $href_checkout; ?>" class="name-other-cours"><?= $course->post_title ?></a>
                     <div class="d-flex flex-wrap">
                         <?php
                         $read_category = array();
@@ -360,7 +425,7 @@ if($this_date <= $date_now && !$is_finish)
                                 if(!in_array($item['value'],$read_category)){
                                     $i++;
                                     array_push($read_category,$item['value']);
-                                    echo"<p class='tag-category'>" . (String)get_the_category_by_ID($item['value']) . "</p>";
+                                    echo"<a href='/category-overview?category=" . $item['value'] . "' class='tag-category'>" . (String)get_the_category_by_ID($item['value']) . "</a>";
                                 }
                         }
                         ?>

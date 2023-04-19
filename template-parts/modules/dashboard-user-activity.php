@@ -90,12 +90,6 @@ if(!empty($enrolled))
     //         if($kennis_video[0])
     //             $enrolled_courses = array_merge($kennis_video, $enrolled_courses);
 
-    //Make sure videos put on mandatory is not null before to merge with enrolled
-    if(!empty($mandatory_video))
-        if(isset($mandatory_video[0]))
-            if($mandatory_video[0])
-                $enrolled_courses = array_merge($mandatory_video, $enrolled_courses);
-
     if(!empty($enrolled_courses))
         $your_count_courses = count($enrolled_courses);
 }
@@ -104,6 +98,19 @@ $typo_course = array('Artikel' => 0, 'Opleidingen' => 0, 'Podcast' => 0, 'Video'
 /*
 * * End
 */
+
+/** Mandatories **/
+$args = array(
+    'post_type' => 'mandatory', 
+    'post_status' => 'publish',
+    'author' => $user->ID,
+    'posts_per_page'         => -1,
+    'no_found_rows'          => true,
+    'ignore_sticky_posts'    => true,
+    'update_post_term_cache' => false,
+    'update_post_meta_cache' => false
+);
+$mandatories = get_posts($args);
 
 //Skills
 $topics_external = get_user_meta($user->ID, 'topic');
@@ -206,7 +213,7 @@ foreach ($users as $element) {
             </div>
             <p class="description-course">A courses to help you learn and acquire new skills at your own pace, on your own time</p>
         </div>
-        </div>
+    </div>
 
     <div id="tab-url1">
 
@@ -330,6 +337,131 @@ foreach ($users as $element) {
                                 ?>
                                 </tbody>
                             </table>
+                            <table class="table table-responsive">
+                                <thead>
+                                <tr>
+                                    <th scope="col courseTitle">Mandatories</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                </tr>
+                                <br><?php if($_GET['message']) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span>" ?><br>
+
+                                </thead>
+                                <tbody>
+                                <?php
+                                $offline = ['Opleidingen', 'Training', 'Workshop', 'Masterclass', 'Event'];
+                                foreach($mandatories as $key => $value) :
+                                    $course = get_page_by_path($value->post_title, OBJECT, 'course');
+                                    if(!$course)
+                                        continue;
+
+                                    $bool = true;
+                                    $bool = visibility($course, $visibility_company);
+                                    if(!$bool)
+                                        continue;
+
+                                    //Course Type
+                                    $course_type = get_field('course_type', $course->ID);
+                                    
+                                    //Checkout URL
+                                    if(in_array($course_type, $offline))
+                                        $href_checkout = "/dashboard/user/checkout-offline/?post=" . $course->post_name . "&man=";
+                                    else if($course_type == 'Video')
+                                        $href_checkout = "/dashboard/user/checkout-video/?post=" . $course->post_name . "&man=";
+                                    else if($course_type == 'Podcast')
+                                        $href_checkout = "/dashboard/user/checkout-podcast/?post=" . $course->post_name . "&man=";
+                                    else
+                                        $href_checkout = "#";
+
+                                    // Analytics
+                                    switch ($course_type) {
+                                        case 'Artikel':
+                                            $typo_course['Artikel']++;
+                                            break;
+                                        case 'Opleidingen':
+                                            $typo_course['Opleidingen']++;
+                                            break;
+                                        case 'Podcast':
+                                            $typo_course['Podcast']++;
+                                            break;
+                                        case 'Video':
+                                            $typo_course['Video']++;
+                                            break;
+                                    }
+
+                                    if($key >= 4)
+                                        continue;
+
+                                    //Legend image
+                                    $image_course = get_field('preview', $course->ID)['url'];
+                                    if(!$image_course){
+                                        $image_course = get_the_post_thumbnail_url($course->ID);
+                                        if(!$image_course)
+                                            $image_course = get_field('url_image_xml', $course->ID);
+                                        if(!$image_course)
+                                            $image_course = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                                    }
+
+                                    //Author
+                                    $author = get_user_by('ID', $course->post_author);
+                                    $author_name = $author->first_name ?: $author->display_name;
+                                    $author_image = get_field('profile_img',  'user_' . $author->ID);
+                                    $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
+                                    //Clock duration
+                                    $duration_day = get_field('duration_day', $post->ID) ? get_field('duration_day', $post->ID) . 'days' : 'Unlimited';
+
+                                    //Get read by user 
+                                    $args = array(
+                                        'post_type' => 'progression', 
+                                        'title' => $course->post_name,
+                                        'post_status' => 'publish',
+                                        'author' => $user->ID,
+                                        'posts_per_page'         => 1,
+                                        'no_found_rows'          => true,
+                                        'ignore_sticky_posts'    => true,
+                                        'update_post_term_cache' => false,
+                                        'update_post_meta_cache' => false
+                                    );
+                                    $progressions = get_posts($args);
+                                    $is_finish = 0;
+                                    if(!empty($progressions)){
+                                        $progression_id = $progressions[0]->ID;
+                                        //Finish read
+                                        $is_finish = get_field('state_actual', $progression_id);
+                                    }
+                                    $style_mandatory = "";
+                                    if($is_finish)
+                                        $style_mandatory = '✅';
+
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgCourse">
+                                                    <img src="<?= $image_course ?>" class="" alt="">
+                                                </div>
+                                                <a href="<?= $href_checkout; ?>" class="name-element"><?= $course->post_title; ?>&nbsp;&nbsp;<?= $style_mandatory ?></a>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <p class="name-element"><?= $duration_day ?></p>
+                                        </td>
+                                        <td class=" r-1">
+                                            <div class="d-flex align-items-center">
+                                                <div class="blockImgUser">
+                                                    <img src="<?= $author_image ?>" class="" alt="">
+                                                </div>
+                                                <p class="name-element"><?= $author_name ?></p>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                <?php
+                                endforeach;
+                                ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <div class="blockItemCourse notificationCourseCard">
@@ -344,7 +476,7 @@ foreach ($users as $element) {
                             <div class="cardFavoriteCourses text-left cardAlert">
                                 <div class="d-flex aligncenter justify-content-between">
                                     <h2>My Alerts</h2>
-                                    <input type="search" placeholder="search" class="inputSearchCourse">
+                                    <input type="search" placeholder="search" class="inputSearchCourse" id="search_activity_notification">
                                 </div>
                                 <div class="contentCardListeCourse">
                                     <table class="table table-responsive table-responsive tableNotification">
@@ -358,7 +490,7 @@ foreach ($users as $element) {
                                             <!-- <th scope="col">Optie</th> -->
                                         </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="autocomplete_activity_notification">
                                         <?php
 
                                         foreach($todos as $key => $todo) {
@@ -631,6 +763,9 @@ foreach ($users as $element) {
                         <div class="content-card-skills">
                             <?php
                             foreach($topics as $key=>$value){
+                                if(!$value || is_wp_error(!$value))
+                                    continue;
+
                                 $i = 0;
                                 $topic = get_the_category_by_ID($value);
                                 $note = 0;
@@ -1208,6 +1343,9 @@ foreach ($users as $element) {
                             <div class="content-card-skills">
                                 <?php
                                 foreach($topics as $key=>$value){
+                                    if(!$value || is_wp_error(!$value))
+                                        continue;
+
                                     $i = 0;
                                     $topic = get_the_category_by_ID($value);
                                     $note = 0;
@@ -1470,6 +1608,29 @@ foreach ($users as $element) {
 
     });
 </script>
+
+
+<script>
+    $('#search_activity_notification').keyup(function(){
+        var txt = $(this).val();
+
+        $.ajax({
+
+            url:"/fetch-activity-notification",
+            method:"post",
+            data:{
+                search_activity_notification : txt,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete_activity_notification').html(data);
+            }
+        });
+
+    });
+</script>
+
 
 
 </body>

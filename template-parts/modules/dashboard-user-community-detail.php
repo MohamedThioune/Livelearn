@@ -207,11 +207,11 @@ if($community){
                                                     ?>
                                                 </div>
                                                 <div id="block-input-answer-<?= $key; ?>" class="block-input-answer position-relative">
-                                                    <form action="" method="POST" id="reply_question_community">
-                                                        <input type='hidden' form="reply_question_community" name='id' value='<?= $key ?>' >
-                                                        <input type='hidden' form="reply_question_community" name='community_id' value='<?= $community->ID ?>' >
-                                                        <input name="text_reply" form="reply_question_community" type="text" placeholder="Share your opinion on this question">
-                                                        <button type="submit" form="reply_question_community" name="reply_question_community" class="btn btn-send">Send</button>
+                                                    <form action=""  method="POST">
+                                                        <input type='hidden'  name='id' value='<?= $key ?>' >
+                                                        <input type='hidden' name='community_id' value='<?= $community->ID ?>' >
+                                                        <input type="text" name="txtreply" placeholder="Share your opinion on this question">
+                                                        <button type="submit"  name="reply_question_community" class="btn btn-send">Send</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -627,11 +627,11 @@ if($community){
                                     ?>
                                     </div>
                                     <div id="block-input-answer-1-<?= $key; ?>" class="block-input-answer position-relative">
-                                        <form action="" method="POST">
-                                            <input type='hidden' name='id' value='<?= $key ?>' >
-                                            <input type='hidden' name='community_id' value='<?= $community->ID ?>' >
-                                            <input type="text" name="text_reply" placeholder="Share your opinion on this question">
-                                            <button type="submit" name="reply_question_community" class="btn btn-send">Send</button>
+                                        <form action="" id="reply_form<?= $key; ?>" method="POST">
+                                            <input type='hidden' form="reply_form<?= $key; ?>" name='id' value='<?= $key ?>' >
+                                            <input type='hidden' form="reply_form<?= $key; ?>" name='community_id' value='<?= $community->ID ?>' >
+                                            <input type="text" form="reply_form<?= $key; ?>" name="txtreply" placeholder="Share your opinion on this question">
+                                            <button type="submit" form="reply_form<?= $key; ?>" name="reply_question_community" class="btn btn-send">Send</button>
                                         </form>
                                     </div>
                                 </div>

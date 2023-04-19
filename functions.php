@@ -430,7 +430,7 @@ function custom_post_type() {
 
     );
 
-    register_post_type( 'community', $community_args ); 
+    register_post_type( 'community', $community_args );  
 
     //Progression
     $progression = array(
@@ -473,8 +473,50 @@ function custom_post_type() {
 
     );
 
-
     register_post_type( 'progression', $progression_args );
+
+    //Mandatory
+    $mandatory = array(
+        'name'                => _x( 'Mandatories', 'Mandatories', 'mandatory' ),
+        'singular_name'       => _x( 'Mandatories', 'Mandatory', 'mandatory' ),
+        'menu_name'           => __( 'Mandatories', 'mandatory' ),
+        //'parent_item_colon'   => __( 'Parent Item:', 'fdfd_issue' ),
+        'all_items'           => __( 'All mandatories', 'mandatory' ),
+        'view_item'           => __( 'View mandatory', 'view_mandatory' ),
+        'add_new_item'        => __( 'New mandatory', 'add_new_mandatory' ),
+        'add_new'             => __( 'New mandatory', 'text_domain' ),
+        'edit_item'           => __( 'Edit Item', 'text_domain' ),
+        'update_item'         => __( 'Update Item', 'text_domain' ),
+        'search_items'        => __( 'Search Item', 'text_domain' ),
+        'not_found'           => __( 'Not found', 'text_domain' ),
+        'not_found_in_trash'  => __( 'Not found in Trash', 'text_domain' ),
+    );
+
+    $mandatory_args = array(
+        'label'               => __( 'mandatory', 'text_domain' ),
+        'description'         => __( 'Post type for fdfd issue', 'text_domain' ),
+        'labels'              => $mandatory,
+        'supports'            => array('title', 'editor', 'author', 'custom-fields', 'excerpt'),
+        //'taxonomies'          => array('sales-person', 'sales-margin', 'location' ),
+        'hierarchical'        => false,
+        'public'              => true,
+        'show_ui'             => true,
+        'show_in_rest'        => false,
+        'show_in_menu'        => true,
+        'show_in_nav_menus'   => true,
+        'show_in_admin_bar'   => true,
+        'menu_position'       => 5,
+        'menu_icon'           => '',
+        'can_export'          => true,
+        'rewrite'             => array('slug' => 'mandatory'),
+        'has_archive'         => true,
+        'exclude_from_search' => false,
+        'publicly_queryable'  => true,
+        'capability_type'     => 'page',
+
+    );
+    
+    register_post_type( 'mandatory', $mandatory_args );
 
 }
 add_action( 'init', 'custom_post_type', 0 );
@@ -648,13 +690,13 @@ add_filter( 'rest_authentication_errors', function( $result ) {
         return $result;
     }
 
-    if ( ! is_user_logged_in() ) {
-        return new WP_Error(
-            'rest_not_logged_in',
-            __( 'You are not currently logged in.' ),
-            array( 'status' => 401 )
-        );
-    }
+      if ( ! is_user_logged_in() ) {
+          return new WP_Error(
+              'rest_not_logged_in',
+              __( 'You are not currently logged in.' ),
+              array( 'status' => 401 )
+          );
+      }
     return $result;
 });
 
@@ -1583,6 +1625,12 @@ add_action( 'rest_api_init', function () {
     'callback' => 'answerAssessment',
   ));
 
+
+  register_rest_route ('custom/v1', 'user/assessment/(?P<id>\d+)/validate/score', array(
+    'methods' => 'GET',
+    'callback' => 'getAssessmentValidateScore',
+  ));
+
   register_rest_route ('custom/v1', '/communities', array(
     'methods' => 'GET',
     'callback' => 'getCommunities',
@@ -1595,7 +1643,7 @@ add_action( 'rest_api_init', function () {
 
   register_rest_route ('custom/v1', '/ask/community/', array(
     'methods' => 'PUT',
-    'callback' => 'createQuestion',
+    'callback' => 'askQuestion',
   ));
 
   register_rest_route ('custom/v1', '/reply/community/', array(

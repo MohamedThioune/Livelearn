@@ -787,7 +787,7 @@ if(isset($_GET['message']))
 
                                 $find = true;
                             ?>
-                            <div class="new-card-course">
+                            <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
                                 <div class="head">
                                     <?php
                                     if($youtube_videos && $course_type == 'Video')
@@ -820,12 +820,11 @@ if(isset($_GET['message']))
                                 </div>
                                 <div class="footer-card-course d-flex justify-content-between align-items-center">                            
                                     <div class="d-flex align-items-center">
-                                        <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
-                                        <p class="hours-course"><?= $duration_day ?> days</p>
+                                        <!-- <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
+                                             <p class="hours-course"><?= $duration_day ?> days</p> -->
                                     </div>
-                                    <a href="<?= get_permalink($course->ID); ?>">View Details</a>
                                 </div>
-                            </div>
+                            </a>
                             <?php
                             }
                             else
@@ -898,7 +897,7 @@ if(isset($_GET['message']))
 
                             $find = true;
                             ?>
-                            <div class="new-card-course">
+                            <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
                                 <div class="head">
                                     <?php
                                     if($youtube_videos && $course_type == 'Video')
@@ -931,12 +930,11 @@ if(isset($_GET['message']))
                                 </div>
                                 <div class="footer-card-course d-flex justify-content-between align-items-center">                            
                                     <div class="d-flex align-items-center">
-                                        <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
-                                        <p class="hours-course"><?= $duration_day ?> days</p>
+                                        <!-- <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
+                                             <p class="hours-course"><?= $duration_day ?> days</p> -->
                                     </div>
-                                    <a href="<?= get_permalink($course->ID); ?>">View Details</a>
                                 </div>
-                            </div>
+                            </a>
                             <?php
                             }
                             
@@ -1010,7 +1008,7 @@ if(isset($_GET['message']))
 
                             $find = true;
                             ?>
-                            <div class="new-card-course">
+                            <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
                                 <div class="head">
                                     <?php
                                     if($youtube_videos && $course_type == 'Video')
@@ -1043,12 +1041,11 @@ if(isset($_GET['message']))
                                 </div>
                                 <div class="footer-card-course d-flex justify-content-between align-items-center">                            
                                     <div class="d-flex align-items-center">
-                                        <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
-                                        <p class="hours-course"><?= $duration_day ?> days</p>
+                                        <!-- <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
+                                             <p class="hours-course"><?= $duration_day ?> days</p> -->
                                     </div>
-                                    <a href="<?= get_permalink($course->ID); ?>">View Details</a>
                                 </div>
-                            </div>
+                            </a>
                             <?php
                             }
                             
@@ -1122,7 +1119,7 @@ if(isset($_GET['message']))
 
                             $find = true;
                             ?>
-                            <div class="new-card-course">
+                            <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
                                 <div class="head">
                                     <?php
                                     if($youtube_videos && $course_type == 'Video')
@@ -1155,12 +1152,11 @@ if(isset($_GET['message']))
                                 </div>
                                 <div class="footer-card-course d-flex justify-content-between align-items-center">                            
                                     <div class="d-flex align-items-center">
-                                        <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
-                                        <p class="hours-course"><?= $duration_day ?> days</p>
+                                        <!-- <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
+                                             <p class="hours-course"><?= $duration_day ?> days</p> -->
                                     </div>
-                                    <a href="<?= get_permalink($course->ID); ?>">View Details</a>
                                 </div>
-                            </div>
+                            </a>
                             <?php
                             }
                             
@@ -1234,7 +1230,7 @@ if(isset($_GET['message']))
 
                             $find = true;
                             ?>
-                            <div class="new-card-course">
+                            <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
                                 <div class="head">
                                     <?php
                                     if($youtube_videos && $course_type == 'Video')
@@ -1267,12 +1263,11 @@ if(isset($_GET['message']))
                                 </div>
                                 <div class="footer-card-course d-flex justify-content-between align-items-center">                            
                                     <div class="d-flex align-items-center">
-                                        <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
-                                        <p class="hours-course"><?= $duration_day ?> days</p>
+                                        <!-- <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
+                                             <p class="hours-course"><?= $duration_day ?> days</p> -->
                                     </div>
-                                    <a href="<?= get_permalink($course->ID); ?>">View Details</a>
                                 </div>
-                            </div>
+                            </a>
                             <?php
                             }
                             
@@ -1341,7 +1336,7 @@ if(isset($_GET['message']))
 
                                 $find = true;
                             ?>
-                            <div class="new-card-course">
+                            <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
                                 <div class="head">
                                     <?php
                                     if($youtube_videos && $course_type == 'Video')
@@ -1374,12 +1369,11 @@ if(isset($_GET['message']))
                                 </div>
                                 <div class="footer-card-course d-flex justify-content-between align-items-center">                            
                                     <div class="d-flex align-items-center">
-                                        <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
-                                        <p class="hours-course"><?= $duration_day ?> days</p>
+                                        <!-- <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
+                                             <p class="hours-course"><?= $duration_day ?> days</p> -->
                                     </div>
-                                    <a href="<?= get_permalink($course->ID); ?>">View Details</a>
                                 </div>
-                            </div>
+                            </a>
                             <?php
                             }
                             else
@@ -1541,13 +1535,24 @@ if(isset($_GET['message']))
                 $followers = get_field('follower_community', $value->ID);
                 if(!empty($followers))
                     $max_follower = count($followers);
+                $bool = false;
+                foreach ($followers as $key => $item)
+                    if($item->ID == $user){
+                        $bool = true;
+                        break;
+                    }
+                
+                if($bool)
+                    $access_community = '<a href="/dashboard/user/community-detail/?mu=' . $value->ID . '" class="title">' . $value->post_title . ', Netherlands</a>';
+                else
+                    continue;
             ?>
             <div class="card-Community d-flex align-items-center">
                 <div class="imgCommunity">
                     <img class="calendarImg" src="<?= $community_image ?>" alt="">
                 </div>
                 <div>
-                    <p class="title"><?= $value->post_title ?>, Netherlands</p>
+                    <?= $access_community ?>
                     <p class="number-members"><?= $max_follower ?> Members</p>
                 </div>
             </div>
