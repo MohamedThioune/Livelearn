@@ -2,12 +2,6 @@ body {
     overflow-x: hidden;
     font-family: "Ubuntu" !important;
 }
-
-.az {
-    color: red;
-    font-size: 40px;
-}
-
 .xyz {
     background: #FFFFFF;
     width: 80%;
@@ -21134,12 +21128,17 @@ background: #FFFFFF !important;
         font-weight: 400;
     }
     .Aanmelden-text{
-        color: #023356;
+        color: #023356 !important;
         font-size: 15px;
         font-weight: 400;
     }
-    .Aanmelden-text span{
+    .span-of{
         font-weight: 300;
+        font-size: 15px;
+        margin: 0px 12px;
+    }
+    .group-btn-get-app {
+        margin-bottom: 15px;
     }
     #modalForApp {
         display: block;

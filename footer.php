@@ -24,7 +24,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="button" class="close close-button" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body text-center">
                 <div class="content-modal">
@@ -46,7 +46,7 @@
                             <span class="market-button-title">Google Play</span>
                         </a>
                     </div>
-                    <p class="Aanmelden-text">Aanmelden <span>of</span> registreren</p>
+                    <div class="d-flex justify-content-center"><a href="/inloggen/" class="Aanmelden-text">Aanmelden</a>  <span class="span-of">of</span> <a href="/registreren/" class="Aanmelden-text">registreren</a></div>
                 </div>
             </div>
         </div>
@@ -339,17 +339,15 @@
 <script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
 <script>
 
-
     $(window).on('resize', function() {
         if ($(window).width() < 767) {
             $('#modalForApp').show();
         } else {
             $('#modalForApp').hide();
         }
-        $('#modalForApp .close').click(function() {
-            $('#modalForApp').hide();
-        });
     });
+
+
 </script>
 <!--<script type="text/javascript">
       $(window).on('load', function() {
