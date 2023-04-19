@@ -123,7 +123,7 @@ $favorite = '<button type="button" id="' . $user->ID ."_". $post->ID . '_course"
             </button>';
 $unfavorite = '<button type="button" id="' . $user->ID ."_". $post->ID . '_course" class="btn btnFavorite ">
                     <i class="fa fa-heart-o"></i>
-                    Add to Favorite
+                    Favorite
                </button>';
 
 $raw_saved = get_user_meta($user->ID, 'course');
@@ -259,7 +259,7 @@ if($this_date <= $date_now && !$is_finish)
                         <div>
                             <p class="sub-text-1">Organised by :</p>
                             <p class="sub-text-2"><?= $author_name . ' ' . $author_last_name ?></p>
-                            <a href="" class="sub-text-3">View Profile</a>
+                            <a href="/user-overview?id=<?php echo $author->ID; ?>" class="sub-text-3">View Profile</a>
                         </div>
                     </div>
                     <div class="block-element-detail">
@@ -372,9 +372,10 @@ if($this_date <= $date_now && !$is_finish)
                 <div class="head-element">
                     <p>Others Course</p>
                 </div>
-
+                
                 <?php
                 $x = 0;
+                $offline = ['Opleidingen', 'Training', 'Workshop', 'Masterclass', 'Event'];
                 foreach($enrolled_courses as $course):
                 if($course->ID == $post->ID)
                     continue;
@@ -382,6 +383,21 @@ if($this_date <= $date_now && !$is_finish)
                 if($x == 4)
                     break;
                 $x++;
+
+
+                //Course Type
+                $course_type = get_field('course_type', $course->ID);
+                
+                //Checkout URL
+                if(in_array($course_type, $offline))
+                    $href_checkout = "/dashboard/user/checkout-offline/?post=" . $course->post_name;
+                else if($course_type == 'Video')
+                    $href_checkout = "/dashboard/user/checkout-video/?post=" . $course->post_name;
+                else if($course_type == 'Podcast')
+                    $href_checkout = "/dashboard/user/checkout-podcast/?post=" . $course->post_name;
+                else
+                    $href_checkout = "#";
+
 
                 // Categories
                 $categories = array();
@@ -396,8 +412,8 @@ if($this_date <= $date_now && !$is_finish)
                 }
 
                 ?>
-                <div class="element-other-course">
-                    <p class="name-other-cours"><?= $course->post_title ?></p>
+                <div href="<?= $href_checkout; ?>" class="element-other-course">
+                    <a href="<?= $href_checkout; ?>" class="name-other-cours"><?= $course->post_title ?></a>
                     <div class="d-flex flex-wrap">
                         <?php
                         $read_category = array();
@@ -409,7 +425,7 @@ if($this_date <= $date_now && !$is_finish)
                                 if(!in_array($item['value'],$read_category)){
                                     $i++;
                                     array_push($read_category,$item['value']);
-                                    echo"<p class='tag-category'>" . (String)get_the_category_by_ID($item['value']) . "</p>";
+                                    echo"<a href='/category-overview?category=" . $item['value'] . "' class='tag-category'>" . (String)get_the_category_by_ID($item['value']) . "</a>";
                                 }
                         }
                         ?>
