@@ -690,13 +690,13 @@ add_filter( 'rest_authentication_errors', function( $result ) {
         return $result;
     }
 
-     if ( ! is_user_logged_in() ) {
-         return new WP_Error(
-             'rest_not_logged_in',
-             __( 'You are not currently logged in.' ),
-             array( 'status' => 401 )
-         );
-     }
+      if ( ! is_user_logged_in() ) {
+          return new WP_Error(
+              'rest_not_logged_in',
+              __( 'You are not currently logged in.' ),
+              array( 'status' => 401 )
+          );
+      }
     return $result;
 });
 
@@ -1623,6 +1623,12 @@ add_action( 'rest_api_init', function () {
   register_rest_route ('custom/v1', '/assessment/answer', array(
     'methods' => 'POST',
     'callback' => 'answerAssessment',
+  ));
+
+
+  register_rest_route ('custom/v1', 'user/assessment/(?P<id>\d+)/validate/score', array(
+    'methods' => 'GET',
+    'callback' => 'getAssessmentValidateScore',
   ));
 
   register_rest_route ('custom/v1', '/communities', array(

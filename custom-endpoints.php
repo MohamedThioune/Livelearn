@@ -153,11 +153,11 @@ function allCourses ($data)
           $courses[$i]->shortDescription = get_field('short_description',$courses[$i]->ID);
           $courses[$i]->courseType = get_field('course_type',$courses[$i]->ID);
           //Image - article
-          $image = get_field('preview', $post->ID)['url'];
+          $image = get_field('preview', $courses[$i]->ID)['url'];
           if(!$image){
-              $image = get_the_post_thumbnail_url($post->ID);
+              $image = get_the_post_thumbnail_url($courses[$i]->ID);
               if(!$image)
-                  $image = get_field('url_image_xml', $post->ID);
+                  $image = get_field('url_image_xml', $courses[$i]->ID);
                       if(!$image)
                           $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($courses[$i]->courseType) . '.jpg';
           }
@@ -294,15 +294,15 @@ function get_expert_courses ($data) {
         $course->shortDescription = get_field('short_description',$course->ID);
         $course->courseType = get_field('course_type',$course->ID);
         //Image - article
-        $image = get_field('preview', $post->ID)['url'];
+        $image = get_field('preview', $course->ID)['url'];
         if(!$image){
-            $image = get_the_post_thumbnail_url($post->ID);
+            $image = get_the_post_thumbnail_url($course->ID);
             if(!$image)
-                $image = get_field('url_image_xml', $post->ID);
+                $image = get_field('url_image_xml', $course->ID);
                     if(!$image)
                         $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
         }
-        $courses->pathImage = $image;
+        $course->pathImage = $image;
         $course->price = get_field('price',$course->ID);
         $course->youtubeVideos = get_field('youtube_videos',$course->ID) ? get_field('youtube_videos',$course->ID) : []  ;
         $course->podcasts = get_field('podcasts',$course->ID) ? get_field('podcasts',$course->ID) : [];
@@ -390,16 +390,16 @@ function get_saved_course()
           $course->shortDescription = get_field('short_description',$course->ID);
           $course->courseType = get_field('course_type',$course->ID);
             //Image - article
-          $image = get_field('preview', $post->ID)['url'];
+          $image = get_field('preview', $course->ID)['url'];
           if(!$image)
           {
-              $image = get_the_post_thumbnail_url($post->ID);
+              $image = get_the_post_thumbnail_url($course->ID);
               if(!$image)
-                  $image = get_field('url_image_xml', $post->ID);
+                  $image = get_field('url_image_xml', $course->ID);
                       if(!$image)
                           $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
           }
-          $courses->pathImage = $image;
+          $course->pathImage = $image;
           $course->price = get_field('price',$course->ID) ?? 0;
           $course->youtubeVideos = get_field('youtube_videos',$course->ID) ? get_field('youtube_videos',$course->ID) : []  ;
           $course->podcasts = get_field('podcasts',$course->ID) ? get_field('podcasts',$course->ID) : [];
@@ -469,15 +469,15 @@ function get_course_by_id($data){
           $course->shortDescription = get_field('short_description',$course->ID);
           $course->courseType = get_field('course_type',$course->ID);
             //Image - article
-          $image = get_field('preview', $post->ID)['url'];
+          $image = get_field('preview', $course->ID)['url'];
           if(!$image){
-              $image = get_the_post_thumbnail_url($post->ID);
+              $image = get_the_post_thumbnail_url($course->ID);
               if(!$image)
-                  $image = get_field('url_image_xml', $post->ID);
+                  $image = get_field('url_image_xml', $course->ID);
                       if(!$image)
                           $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
           }
-           $course->pathImage = $image;
+          $course->pathImage = $image;
           $course->price = get_field('price',$course->ID) ?? 0;
           $course->youtubeVideos = get_field('youtube_videos',$course->ID) ? get_field('youtube_videos',$course->ID) : []  ;
           $course->podcasts = get_field('podcasts',$course->ID) ? get_field('podcasts',$course->ID) : [];
@@ -532,15 +532,15 @@ function get_liked_courses()
           $course->longDescription = get_field('long_description',$course->ID);
           $course->shortDescription = get_field('short_description',$course->ID);
             //Image - article
-          $image = get_field('preview', $post->ID)['url'];
+          $image = get_field('preview', $course->ID)['url'];
           if(!$image){
-              $image = get_the_post_thumbnail_url($post->ID);
+              $image = get_the_post_thumbnail_url($course->ID);
               if(!$image)
-                  $image = get_field('url_image_xml', $post->ID);
+                  $image = get_field('url_image_xml', $course->ID);
                       if(!$image)
                           $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
           }
-          $courses->pathImage = $image;
+          $course->pathImage = $image;
           $course->price = get_field('price',$course->ID) ?? 0;
           $course->youtubeVideos = get_field('youtube_videos',$course->ID) ? get_field('youtube_videos',$course->ID) : []  ;
           $course->podcasts = get_field('podcasts',$course->ID) ? get_field('podcasts',$course->ID) : [];
@@ -631,11 +631,12 @@ function get_courses_of_subtopics($data)
           $course->shortDescription = get_field('short_description',$course->ID);
           $course->courseType = get_field('course_type',$course->ID);
             //Image - article
-          $image = get_field('preview', $post->ID)['url'];
-          if(!$image){
-              $image = get_the_post_thumbnail_url($post->ID);
+          $image = get_field('preview', $course->ID)['url'];
+          if(!$image)
+          {
+              $image = get_the_post_thumbnail_url($course->ID);
               if(!$image)
-                  $image = get_field('url_image_xml', $post->ID);
+                  $image = get_field('url_image_xml', $course->ID);
                       if(!$image)
                           $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
           }
@@ -677,11 +678,11 @@ function get_courses_of_subtopics($data)
           $course->shortDescription = get_field('short_description',$course->ID);
           $course->courseType = get_field('course_type',$course->ID);
             //Image - article
-          $image = get_field('preview', $post->ID)['url'];
+          $image = get_field('preview', $course->ID)['url'];
           if(!$image){
-              $image = get_the_post_thumbnail_url($post->ID);
+              $image = get_the_post_thumbnail_url($course->ID);
               if(!$image)
-                  $image = get_field('url_image_xml', $post->ID);
+                  $image = get_field('url_image_xml', $course->ID);
                       if(!$image)
                           $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
           }
@@ -748,11 +749,11 @@ function filter_course(WP_REST_Request $request)
     $course->shortDescription = get_field('short_description', $course->ID);
     $course->courseType = get_field('course_type', $course->ID);
     //Image - article
-    $image = get_field('preview', $post->ID)['url'];
+    $image = get_field('preview', $course->ID)['url'];
     if(!$image){
-        $image = get_the_post_thumbnail_url($post->ID);
+        $image = get_the_post_thumbnail_url($course->ID);
         if(!$image)
-            $image = get_field('url_image_xml', $post->ID);
+            $image = get_field('url_image_xml', $course->ID);
                 if(!$image)
                     $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
     }
@@ -1153,11 +1154,11 @@ function getCommunities()
             $course->shortDescription = get_field('short_description',$course->ID);
             $course->courseType = get_field('course_type',$course->ID);
                 //Image - article
-            $image = get_field('preview', $post->ID)['url'];
+            $image = get_field('preview', $course->ID)['url'];
             if(!$image){
-                $image = get_the_post_thumbnail_url($post->ID);
+                $image = get_the_post_thumbnail_url($course->ID);
                 if(!$image)
-                    $image = get_field('url_image_xml', $post->ID);
+                    $image = get_field('url_image_xml', $course->ID);
                         if(!$image)
                             $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
             }
@@ -1310,5 +1311,35 @@ function replyQuestion(WP_REST_Request $request)
           }
           return ['error' => "This index of question doesn't exist !"];
         }
-      
-}
+      }
+
+  function getAssessmentValidateScore($data)
+  {
+    $user_id = $GLOBALS['user_id'];
+    $idAssessment =  $data['id'] ?? 0;
+    $assessment = get_post($idAssessment) ?? false;
+    if (!$assessment)
+      return ["error" => "This assessment does not exist !"];
+    
+    $args = array(
+      'post_type' => array('response_assessment'),
+      'post_status' => 'publish',
+      'posts_per_page' => -1,
+      'order' => 'DESC',
+      'post_author' => '$user_id' 
+      );
+
+    $responses = get_posts($args) ?? [];
+    if (!empty($responses))
+      foreach ($responses as $key => $response) {
+        $assessment_related = get_field('assessment_id',$response ->ID) ?? 0;
+        if ($assessment_related == $idAssessment)
+        {
+          $response -> score = get_field('score',$response ->ID);
+          $assessment_questions = get_field('question',$assessment->ID) ?? [];
+          $count_questions = count($assessment_questions);
+          $response -> count_question = $count_questions;
+          return $response;
+        }
+      }
+  }
