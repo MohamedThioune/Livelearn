@@ -25,7 +25,7 @@
                 <div class="col-md-7">
                     <div class="content-detail-voor-organisation">
                         <h1>Word onderdeel van het grootste expert & opleidersnetwerk</h1>
-                        <p>Deel jouw kennis met de rest van de wereld.</p>
+                        <p>Via LiveLearn deel je eenvoudig je kennis met de rest van de wereld. Zo bereik je nieuwe klanten en positioneer je je als de absolute expert in het vakgebied.</p>
                         <a href="/overview-organisations-5/" class="btn btnMeerInformation">Meer informatie ?</a>
                     </div>
                     <div class="img-block">

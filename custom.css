@@ -1074,10 +1074,10 @@ ul.sub-menu li a {
 }
 
 .btnNewCourse {
-    color: #FFFFFF !important;
-    background: #023356;
-    font-size: 14px;
-    padding: 4px 20px;
+    color: #023356 !important;
+    border: 1px solid #023356;
+    font-size: 15px;
+    padding: 7px 25px;
     margin-bottom: 0;
     font-weight: bold;
     border-radius: 8px;
@@ -1085,6 +1085,11 @@ ul.sub-menu li a {
     height: fit-content;
 }
 
+.btnNewCourse:hover {
+    background: #023356;
+    text-decoration: none;
+    color: #FFFFFF !important;
+}
 .btnActiviteit {
     color: #FFFFFF;
     background: #00A89D;
@@ -1097,10 +1102,7 @@ ul.sub-menu li a {
     height: fit-content;
 }
 
-.btnNewCourse:hover {
-    color: white;
-    text-decoration: none;
-}
+
 
 .cardListeCourse {
     background: white;
@@ -3525,6 +3527,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 
 .btndoawnloadCv i {
     color: white;
+    margin-right: 10px;
 }
 
 .contentElementHeadCandidat {
@@ -5326,10 +5329,10 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     text-align: center;
 }
 
-.circleNotification img {
-    width: 14px;
-    height: 14px;
-    margin-top: 10px;
+.cardNotification .circleNotification img {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
 }
 
 .feddBackNotification {
@@ -5467,43 +5470,42 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 .globalnotificationBy {
     display: flex;
     justify-content: space-between;
-    width: 95%;
+    width: 100%;
     align-items: center;
     height: fit-content;
-    margin-bottom: 35px;
+    margin-bottom: 25px;
 }
 
 .globalnotificationBy .name {
     font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
+    font-size: 16px;
     margin-bottom: 4px;
-    color: #696969;
+    color: #272727;
 }
 
 .blockType p {
-    font-weight: 600;
     font-size: 18px;
     margin-bottom: 4px;
     color: #000000;
     text-align: center;
 }
 
-.blockType p:last-child {
-    font-weight: 500;
-    color: #F91919;
+.blockType .type{
+    font-size: 14px;
+    color: #00aa9e;
 }
 
 .contentImgName {
     display: flex;
 }
 
+
 .contentImg {
-    width: 75px;
-    height: 75px;
+    width: 50px;
+    height: 50px;
     border-radius: 10px;
     overflow: hidden;
-    margin-right: 25px;
+    margin-right: 20px;
 }
 
 .contentImg img {
@@ -5519,13 +5521,18 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     color: #202124;
 }
 
-.NotificationFeedback {
+.NotificationFeedback .title {
     font-size: 15px;
-    line-height: 26px;
-    color: #696969;
-    padding: 21px 25px;
-    background: #F0F5F7;
-    border-radius: 8px;
+    color: black;
+}
+.NotificationFeedback .title span{
+    color: #033356;
+    font-weight: 500;
+}
+.NotificationFeedback .subTitle{
+    color: #033356;
+    font-size: 15px;
+    font-weight: 500;
 }
 
 #ModalNotification {
@@ -10638,6 +10645,7 @@ select {
     color: white !important;
     font-size: 15px;
     padding: 5px 18px;
+    margin-left: 18px;
 }
 
 .swiper-slide .btnFollowExpert {
@@ -11575,11 +11583,6 @@ select {
 #btn-remove-mesen {
     display: none;
 }
-
-.learningDatabankContent {
-    padding-top: 50px;
-}
-
 .inputSearchZoek {
     background: #F0F5F7;
     border-radius: 8px;
@@ -11827,8 +11830,8 @@ select {
     bottom: 15px;
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    left: 0;
+    justify-content: right;
+    right: 0;
     align-items: center;
     padding: 0 15px;
 }
@@ -12547,7 +12550,7 @@ select {
     text-align: center;
     justify-content: center;
     padding: 1em;
-    width: 10%;
+    width: 3%;
     color: #fff;
     border-radius: 10px;
     position: relative;
@@ -12775,6 +12778,9 @@ select {
     margin-bottom: 12px;
     margin-left: 10px;
     font-size: 14px;
+    background: #47A99E !important;
+    padding: 11px 30px;
+    margin-top: 20px;
 }
 .modal-topics-expert .styled-checkbox + label:before {
     border-radius: 20% !important;
@@ -13485,6 +13491,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 .content-list-amount .table td, .table th {
     padding: 20px 10px !important;
+    text-align: center !important;
 }
 .content-list-amount td .dropdown-menu {
     min-width: 5rem !important;
@@ -15059,6 +15066,10 @@ background: #FFFFFF !important;
     width: 100%;
     padding: 14px;
     margin-top: 20px;
+}
+.btn-more-events:hover{
+    background: #043356;
+    color: #FFFFFF !important;
 }
 .Upcoming-block, .user-community-block{
     margin-bottom: 40px;
@@ -17393,6 +17404,29 @@ background: #FFFFFF !important;
 .newFormSarchBar .group-input-dropdown input{
     margin-bottom: 0;
 }
+.search-bar-block {
+    width: 35%;
+    margin-bottom: 45px;
+}
+.search-bar-block input{
+    color: #023356;
+    border: none;
+    padding: 13px 15px;
+    height: 40px;
+    border-radius: 15px 0px 0px 15px;
+    min-height: 45px;
+}
+.search-bar-block .btn-secondary {
+    color: #fff;
+    background-color: #00a89d !important;
+    border-color: #00a89d !important;
+}
+#block-input-answer-1 .btn-send {
+    top: 4px !important;
+}
+.contentCardGrant table .textTh {
+    text-align: center !important;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -19720,11 +19754,15 @@ background: #FFFFFF !important;
         padding: 50px 15px;
         margin-top: 0;
     }
+    .headFilterCourse form{
+        display: block !important;
+        padding-top: 25px;
+    }
     .headFilterCourse form .textFilter {
         display: none;
     }
     .headFilterCourse form select {
-        width: 80%;
+        width: 100%;
         padding: 10px 10px !important;
         margin-bottom: 30px;
     }
@@ -19733,7 +19771,7 @@ background: #FFFFFF !important;
         display: block;
     }
     .headFilterCourse form .priceFilter input {
-        width: 80%;
+        width: 100%;
         margin: 0 0px 20px;
         font-size: 14px;
         padding: 8px 10px;
@@ -19749,14 +19787,9 @@ background: #FFFFFF !important;
         margin: 0 0px 40px;
     }
     .hideBarFilterBlock {
-        display: block;
+        top: -17px;
         position: absolute;
-        right: 30px;
-        font-size: 20px;
-        color: #043356;
-        font-weight: 300;
-        padding: 0;
-        top: 20px;
+        right: 0;
     }
     .headFilterCourse form .priceFilter {
         display: block;
@@ -21125,6 +21158,14 @@ background: #FFFFFF !important;
     }
     .content-home2 .newFormSarchBar .js-bs-select-dropdown {
         padding: 6px 0px;
+    }
+    .content-list-amount {
+        width: 95%;
+        overflow-y: scroll;
+    }
+    .content-list-amount .table {
+        width: 100%;
+        min-width: 562px;
     }
 
 
