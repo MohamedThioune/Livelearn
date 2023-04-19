@@ -140,7 +140,6 @@
                 <th scope="col">Naam</th>
                 <th scope="col">Manager</th>
                 <th scope="col">Teacher</th>
-                <th scope="col">Learning budget</th>
                 <th scope="col">Optie</th>
             </tr>
             </thead>
@@ -180,7 +179,6 @@
                             <td class="textTh"> <a href="" style="text-decoration:none;"><?= $display ?></a> </td>
                             <td class="textTh"><?= $is_manager ?></td>
                             <td class="textTh"><?= $is_author ?></i></td>
-                            <td class="textTh ">€ <?= $amount_budget; ?></td>
                             <td class="textTh">
                                 <div class="dropdown text-white">
                                     <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">

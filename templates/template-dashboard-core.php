@@ -1074,7 +1074,9 @@ else if(isset($question_community)){
 else if(isset($reply_question_community)){
     $question = array();
     $question_community = get_field('question_community', $community_id);
-
+    if(!empty($question_community))
+        $question_community = array_reverse($question_community);
+    
     foreach($question_community as $key => $item){
         if($key == $id){
             $reply = array();
@@ -1089,10 +1091,11 @@ else if(isset($reply_question_community)){
 
         array_push($question, $item);
     }
+    $question = array_reverse($question);
     update_field('question_community', $question, $community_id);
     var_dump( $_POST['txtreply']);
     $path = "/dashboard/user/community-detail/?mu=" . $community_id . "&message=Reply question applied successfully !";
-    //header("Location: ". $path);
+    header("Location: ". $path);
 }
 
 else if(isset($mandatory_course)){    

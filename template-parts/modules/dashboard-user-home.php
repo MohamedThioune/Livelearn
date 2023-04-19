@@ -664,7 +664,7 @@ if(isset($_GET['message']))
 <div class="content-new-user d-flex">
     <section class="first-section-dashboard">
         <div class="head-block d-flex justify-content-between mb-50">
-            <div class="category-block-course d-flex justify-content-between bg-green">
+            <a href="activity/?tab=Course" class="category-block-course d-flex justify-content-between bg-green">
                 <div>
                     <div class="icone-course">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/symbols_check-box.png" alt="">
@@ -673,8 +673,8 @@ if(isset($_GET['message']))
                     <p class="description">Completed course</p>
                 </div>
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/symbols_check-box-1.png" class="img-bg-categories-course" alt="">
-            </div>
-            <div class="category-block-course d-flex justify-content-between bg-yellow">
+            </a>
+            <a href="activity/?tab=Course"  class="category-block-course d-flex justify-content-between bg-yellow">
                 <div>
                     <div class="icone-course">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/mdi_alarm-light.png" alt="">
@@ -683,8 +683,8 @@ if(isset($_GET['message']))
                     <p class="description">In progress course</p>
                 </div>
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/mdi_alarm-light-1.png" class="img-bg-categories-course" alt="">
-            </div>
-            <div class="category-block-course d-flex justify-content-between bg-bleu-luzien">
+            </a>
+            <a href="activity/?tab=Course"  class="category-block-course d-flex justify-content-between bg-bleu-luzien">
                 <div>
                     <div class="icone-course">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/mdi_folder-file.png" alt="">
@@ -693,7 +693,7 @@ if(isset($_GET['message']))
                     <p class="description">Upcoming course</p>
                 </div>
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/mdi_alarm-light-1.png" class="img-bg-categories-course" alt="">
-            </div>
+            </a>
         </div>
         <!-- 
         <div class="search-filter d-flex justify-content-between align-items-center ">
@@ -787,7 +787,7 @@ if(isset($_GET['message']))
 
                                 $find = true;
                             ?>
-                            <div class="new-card-course">
+                            <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
                                 <div class="head">
                                     <?php
                                     if($youtube_videos && $course_type == 'Video')
@@ -820,12 +820,11 @@ if(isset($_GET['message']))
                                 </div>
                                 <div class="footer-card-course d-flex justify-content-between align-items-center">                            
                                     <div class="d-flex align-items-center">
-                                        <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
-                                        <p class="hours-course"><?= $duration_day ?> days</p>
+                                        <!-- <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
+                                             <p class="hours-course"><?= $duration_day ?> days</p> -->
                                     </div>
-                                    <a href="<?= get_permalink($course->ID); ?>">View Details</a>
                                 </div>
-                            </div>
+                            </a>
                             <?php
                             }
                             else
@@ -898,7 +897,7 @@ if(isset($_GET['message']))
 
                             $find = true;
                             ?>
-                            <div class="new-card-course">
+                            <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
                                 <div class="head">
                                     <?php
                                     if($youtube_videos && $course_type == 'Video')
@@ -931,12 +930,11 @@ if(isset($_GET['message']))
                                 </div>
                                 <div class="footer-card-course d-flex justify-content-between align-items-center">                            
                                     <div class="d-flex align-items-center">
-                                        <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
-                                        <p class="hours-course"><?= $duration_day ?> days</p>
+                                        <!-- <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
+                                             <p class="hours-course"><?= $duration_day ?> days</p> -->
                                     </div>
-                                    <a href="<?= get_permalink($course->ID); ?>">View Details</a>
                                 </div>
-                            </div>
+                            </a>
                             <?php
                             }
                             
@@ -1010,7 +1008,7 @@ if(isset($_GET['message']))
 
                             $find = true;
                             ?>
-                            <div class="new-card-course">
+                            <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
                                 <div class="head">
                                     <?php
                                     if($youtube_videos && $course_type == 'Video')
@@ -1043,12 +1041,11 @@ if(isset($_GET['message']))
                                 </div>
                                 <div class="footer-card-course d-flex justify-content-between align-items-center">                            
                                     <div class="d-flex align-items-center">
-                                        <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
-                                        <p class="hours-course"><?= $duration_day ?> days</p>
+                                        <!-- <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
+                                             <p class="hours-course"><?= $duration_day ?> days</p> -->
                                     </div>
-                                    <a href="<?= get_permalink($course->ID); ?>">View Details</a>
                                 </div>
-                            </div>
+                            </a>
                             <?php
                             }
                             
@@ -1122,7 +1119,7 @@ if(isset($_GET['message']))
 
                             $find = true;
                             ?>
-                            <div class="new-card-course">
+                            <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
                                 <div class="head">
                                     <?php
                                     if($youtube_videos && $course_type == 'Video')
@@ -1155,12 +1152,11 @@ if(isset($_GET['message']))
                                 </div>
                                 <div class="footer-card-course d-flex justify-content-between align-items-center">                            
                                     <div class="d-flex align-items-center">
-                                        <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
-                                        <p class="hours-course"><?= $duration_day ?> days</p>
+                                        <!-- <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
+                                             <p class="hours-course"><?= $duration_day ?> days</p> -->
                                     </div>
-                                    <a href="<?= get_permalink($course->ID); ?>">View Details</a>
                                 </div>
-                            </div>
+                            </a>
                             <?php
                             }
                             
@@ -1234,7 +1230,7 @@ if(isset($_GET['message']))
 
                             $find = true;
                             ?>
-                            <div class="new-card-course">
+                            <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
                                 <div class="head">
                                     <?php
                                     if($youtube_videos && $course_type == 'Video')
@@ -1267,12 +1263,11 @@ if(isset($_GET['message']))
                                 </div>
                                 <div class="footer-card-course d-flex justify-content-between align-items-center">                            
                                     <div class="d-flex align-items-center">
-                                        <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
-                                        <p class="hours-course"><?= $duration_day ?> days</p>
+                                        <!-- <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
+                                             <p class="hours-course"><?= $duration_day ?> days</p> -->
                                     </div>
-                                    <a href="<?= get_permalink($course->ID); ?>">View Details</a>
                                 </div>
-                            </div>
+                            </a>
                             <?php
                             }
                             
@@ -1341,7 +1336,7 @@ if(isset($_GET['message']))
 
                                 $find = true;
                             ?>
-                            <div class="new-card-course">
+                            <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
                                 <div class="head">
                                     <?php
                                     if($youtube_videos && $course_type == 'Video')
@@ -1374,12 +1369,11 @@ if(isset($_GET['message']))
                                 </div>
                                 <div class="footer-card-course d-flex justify-content-between align-items-center">                            
                                     <div class="d-flex align-items-center">
-                                        <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
-                                        <p class="hours-course"><?= $duration_day ?> days</p>
+                                        <!-- <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
+                                             <p class="hours-course"><?= $duration_day ?> days</p> -->
                                     </div>
-                                    <a href="<?= get_permalink($course->ID); ?>">View Details</a>
                                 </div>
-                            </div>
+                            </a>
                             <?php
                             }
                             else
@@ -1606,6 +1600,8 @@ if(isset($_GET['message']))
         </div>
     </section>
 </div>
+
+
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script>
