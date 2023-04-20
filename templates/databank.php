@@ -398,25 +398,30 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
     $('#subtopics').on('click', function()
     {
-        if($ids==null){alert("Please, select some articles!!");}else{
-            $('#loader').attr('hidden',false);
-            $('#select_field').attr('hidden',true);
+        if(ids==null){
+            alert("Please, select some articles!!");
+        }else{
+            const objetIds = Object.assign({}, ids);
+            console.log(objetIds);
+            console.log('data submitted',objetIds);
             $.ajax({
                 url: '/subtopics',
                 type: 'POST',
-                data: {
-                    ids: ids
-                },beforeSend:function(){
+                data: objetIds,
+                beforeSend:function(){
+                    $('#loader').attr('hidden',false);
+                    $('#select_field').attr('hidden',true);
+                },error:function(error){
+                    console.log("error:", error);
+                },success:function(success){
                     $('#loader').attr('hidden',true);
-                    $('#select_field').attr('hidden',false);
-                },error:function(response) {
-                    console.log("error:".response);
-                },success:function(response){
-                    console.log('success',response);
-                },complete:function(response){
-                    console.log("complete:".response);
+                    document.getElementById('content-back-topics').innerHTML = success;
+                    console.log(success);
+                    location.reload();
+                },complete:function(complete){
+                    console.log("complete:",complete);
                     $('#loader').attr('hidden',true);
-                    $('#select_field').attr('hidden',false);
+                    $('#select_field').attr('hidden',true);
                 }
             });
         }

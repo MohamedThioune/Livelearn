@@ -24,12 +24,14 @@ $course = $wpdb->get_results( $sql )[0];
 
  function strip_html_tags($text) {
     $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
-    $text = preg_replace("/\n{2,}/", "\n", $text); 
+    $text = preg_replace("/\n{1,}/", "\n", $text); 
     $text = str_replace("\n","<br>",$text);
+    $text = str_replace("&lt;","<",$text);
+    $text = str_replace("&gt;",">",$text);
     $text = str_replace(['h1','h3','h4','h5','h6'],'h2',$text);
     $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
     return preg_replace($pattern, '', $text);
-}
+  }
 
 /*
 * * Tags *
@@ -130,6 +132,8 @@ $args = array(
     'order' => 'DESC',
 );
 $companies = get_posts($args);
+
+
 
 ?>
 
