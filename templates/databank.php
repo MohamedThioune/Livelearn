@@ -165,7 +165,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                         <br>
                     </center>
                     <table class="table table-responsive">
-                        <form method="POST">
+                        <form method="POST" id="selectSubtopics" >
                             <thead>
                             <tr>
                                 <th scope="col"><input type="checkbox" id="checkAll" onclick='checkUncheck(this);'></th>
