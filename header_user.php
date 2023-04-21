@@ -72,7 +72,6 @@ $see_experts = get_users(
             .nav-pills .nav-link.active {
                 background: #023356 !important;
                 color: white !important;
-
             }
             #bedrijfsprofiel_modal {
                 overflow-y: auto !important;
@@ -200,9 +199,10 @@ $see_experts = get_users(
                                                     continue;
 
                                                 $type = get_field('type_feedback', $todo->ID);
-                                                $manager = get_field('manager_feedback', $todo->ID);
+                                                $value = get_field('manager_feedback', $todo->ID);
+                                                $manager = get_user_by('ID', $value);
                                         ?>
-                                            <a href="/dashboard/user/detail-notification/?todo=<?=$todo->ID;?>" class="modal-content-body">
+                                            <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID;?>" class="modal-content-body">
                                                 <p class="feedbackText"><?=$type;?> : <span><?=$todo->post_title;?></span></p>
                                                 <p class="feedbackText">By: <span> <?php if(!empty($manager->first_name)){echo $manager->first_name;}else{echo $manager->display_name;}?> </span></p>
                                             </a>
@@ -359,10 +359,10 @@ $see_experts = get_users(
                                                 continue;
 
                                             $type = get_field('type_feedback', $todo->ID);
-                                            $manager = get_field('manager_feedback', $todo->ID);
-
+                                            $value = get_field('manager_feedback', $todo->ID);
+                                            $manager = get_user_by('ID', $value);
                                     ?>
-                                        <a href="/dashboard/user/detail-notification/?todo=<?=$todo->ID;?>" class="">
+                                        <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="">
                                             <p class="feedbackText"><?=$type;?> : <span><?=$todo->post_title;?></span></p>
                                             <p class="feedbackText">By: <span> <?php if(!empty($manager->first_name)){echo $manager->first_name;}else{echo $manager->display_name;}?> </span></p>
                                         </a>
@@ -490,7 +490,6 @@ $see_experts = get_users(
                 <div class="modal-body">
                     <div class="head">
                         <!--
-
                         <ul>
                             <li class="selectAll">
                                 <input class="styled-checkbox" id="allExpert" type="checkbox" value="allExpert">
@@ -513,7 +512,6 @@ $see_experts = get_users(
                             <input type="search" placeholder="Search your expert" class="searchSubTopics">
                             <img class="searchImg" src="<?php echo get_stylesheet_directory_uri();?>/img/searchM.png" alt="">
                         </div>
-
                          -->
                     </div>
                     <div class="content-expert">
@@ -548,33 +546,29 @@ $see_experts = get_users(
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <a href="/user-overview?id=<?= $expert->ID ?>">See</a>
-                                        <form id="by_one_form" action="/dashboard/user/" method="POST">
-                                            <input type="hidden" name="meta_value" form='by_one_form' value="<?= $expert->ID; ?>" id="">
-                                            <input type="hidden" id="user_id" form='by_one_form' name="user_id" value="<?= $user->ID ?>" id="">
-                                            <input type="hidden" name="meta_key" form='by_one_form' value="expert" id="">
-                                        </form>
-                                        <div>
-                                            <?php
-                                            if(empty($saves_experts))
-                                                echo "<button type='submit' class='btn btnFollowSubTopic' form='by_one_form' name='interest_push'>Follow</button>";
-                                            else
-                                                if (in_array($expert->ID, $saves_experts))
-                                                    echo "<button type='submit' style='background: red' class='btn btnFollowSubTopic' form='by_one_form' name='delete'>Unfollow</button>";
+                                        <!-- <form id="by_one_form" action="" method="POST"> -->
+                                            <input type="hidden" id="meta_value_expert<?= $key ?>" value="<?= $expert->ID; ?>">
+                                            <input type="hidden" id="user_id_expert<?= $key ?>" value="<?= $user->ID ?>">
+                                            <input type="hidden" id="meta_key_expert<?= $key ?>" value="expert" >
+                                            <div>
+                                                <?php
+                                                if(empty($saves_experts))
+                                                    echo "<button type='button' class='btn btnPushExpert btnFollowExpert' value='" . $key . "'><span id='autocomplete-push-expert" . $key . "'>Follow</span></button>";
                                                 else
-                                                    echo "<button type='submit' class='btn btnFollowSubTopic' form='by_one_form' name='interest_push'>Follow</button>";
-                                            ?>
-                                        </div>
+                                                    if (in_array($expert->ID, $saves_experts))
+                                                        echo "<button type='button' style='background-color: red' class='btn btnPushExpert btnFollowExpert' value='" . $key . "'><span id='autocomplete-push-expert" . $key . "'>Unfollow</span></button>";
+                                                    else
+                                                        echo "<button type='button' class='btn btnPushExpert btnFollowExpert' value='" . $key . "'><span id='autocomplete-push-expert" . $key . "'>Follow</span</button>";
+                                                ?>
+                                            </div>
+                                        <!-- </form> -->
                                     </div>
                                 </div>
                             </form>
                             <?php
                         }
                         ?>
-                        <!--
-                        <div class="mt-3 mb-0">
-                            <button type="submit" form="multiple_form" class="btn btnNext mb-0" name="interest_multiple_push">Follow / Unfollow</button>
-                        </div> 
-                        -->
+                       
                     </div>
                 </div>
 

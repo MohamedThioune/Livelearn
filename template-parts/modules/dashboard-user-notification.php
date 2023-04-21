@@ -26,18 +26,16 @@ $experts = get_user_meta($user->ID, 'expert');
 */
 
 /*
-* * Feedbacks
+* * Feedbacks of these user
 */
 $args = array(
-    'post_type' => 'feedback', 
+    'post_type' => 'feedback',
     'author' => $user->ID,
     'orderby' => 'post_date',
     'order' => 'DESC',
     'posts_per_page' => -1,
 );
-
 $todos = get_posts($args);
-
 /*
 * * End
 */

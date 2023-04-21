@@ -1,4 +1,3 @@
-
 <?php
 
 $mail_became_manager_body = 
@@ -8,7 +7,7 @@ $mail_became_manager_body =
   xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
-  <title>' . $first_name . ', je account op LiveLearn is succesvol aangemaakt</firs-name></title><!--[if !mso]><!-->
+  <title><firs-name>, je hebt een nieuwe rol</firs-name></title><!--[if !mso]><!-->
   <meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -117,7 +116,7 @@ $mail_became_manager_body =
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content"
                             style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
-                            data-testid="Y0h44Pmw76d">Je account is succesvol aangemaakt</p>
+                            data-testid="Y0h44Pmw76d">Je hebt een nieuwe rol.</p>
                         </div>
                       </td>
                     </tr>
@@ -217,12 +216,10 @@ $mail_became_manager_body =
                           <h1 class="text-build-content"
                             style="text-align:center;; margin-top: 10px; font-weight: normal;"
                             data-testid="RJMLrMvA0Rh"><span
-                              style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b>Welcome!</b></span>
-                          </h1>
+                              style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b>Je bent nu een
+                                manager!</b></span></h1>
                           <p class="text-build-content" style="text-align: center; margin: 10px 0; margin-bottom: 10px;"
-                            data-testid="RJMLrMvA0Rh"><span
-                              style="color:#023356;font-family:Arial;font-size:14px;line-height:35px;">De eerste stap in
-                              een leven lang ontwikkelen.</span></p>
+                            data-testid="RJMLrMvA0Rh">Zorg dat je team zich blijft ontwikkelen.</p>
                         </div>
                       </td>
                     </tr>
@@ -233,29 +230,22 @@ $mail_became_manager_body =
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content" data-testid="S_MPaSnC0uI"
                             style="margin: 10px 0; margin-top: 10px;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi ' . $first_name . ' ,
-                              </span></p>
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Hi '. $first_name . '
+                              ,</span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;">&nbsp;</p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Je account is
-                              succesvol aangemaakt en je kan nu onbeperkt gebruik maken van onze leermodules. Inloggen
-                              kan via </span><a class="link-build-content"
-                              style="color:inherit;; text-decoration: none;" target="_blank"
-                              href="https://livelearn.nl/dashboard/company/"><span
-                                style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><u>deze
-                                  link</u></span></a><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">, waarna je
-                              eenvoudig onderwerpen en experts toe voegt aan je persoonlijke leeromgeving.</span></p>
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Je hebt nu de rol
+                              manager binnen ' . $company_connected . '. Dit betekent dat je kennis kan delen met je
+                              teamgenoten, hen feedback kan geven en dat je hen kan stimuleren om aan de slag te gaan
+                              met specifieke onderwerpen.&nbsp;</span><br>&nbsp;</p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Ben je onderdeel
-                              van een organisatie óf wil je je jouw bedrijf op LiveLearn hebben? Neem dan </span><a
-                              class="link-build-content" style="color:inherit;; text-decoration: none;"
-                              href="mailto:contact@livelearn.nl"><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Herken je je niet
+                              in de rol of de organisatie? Neem dan </span><a class="link-build-content"
+                              style="color:inherit;; text-decoration: none;" href="mailto:contact@livelearn.nl"><span
                                 style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"><u>contact</u></span></a><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> met ons op en
-                              binnen 24 uur staat je organisatie live.</span></p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;">&nbsp;</p>
-                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
+                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;"> met ons
+                              op.</span></p>
+                          <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><br><span
                               style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">Succes
                               namens,</span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI" style="margin: 10px 0;"><span
@@ -275,7 +265,7 @@ $mail_became_manager_body =
                             <tr>
                               <td align="center" bgcolor="#023356" role="presentation"
                                 style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#023356;"
-                                valign="middle"><a href="https://livelearn.nl/dashboard/company/"
+                                valign="middle"><a href="https://livelearn.nl/inloggen/"
                                   style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
                                   target="_blank"><span
                                     style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Inloggen</span></a>
@@ -312,153 +302,6 @@ $mail_became_manager_body =
                         style="font-size:0px;padding:10px 25px;padding-top:10px;padding-right:25px;padding-bottom:10px;padding-left:25px;word-break:break-word;">
                         <p style="border-top:dotted 1px #c2c2c2;font-size:1px;margin:0px auto;width:100%;"></p><!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" style="border-top:dotted 1px #c2c2c2;font-size:1px;margin:0px auto;width:550px;" role="presentation" width="550px" ><tr><td style="height:0;line-height:0;"> &nbsp;
 </td></tr></table><![endif]-->
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div><!--[if mso | IE]></td></tr></table><![endif]-->
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <!--[if mso | IE]></td></tr></table><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#FFFFFF" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
-    <div style="background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;">
-      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-        style="background:#FFFFFF;background-color:#FFFFFF;width:100%;">
-        <tbody>
-          <tr>
-            <td
-              style="direction:ltr;font-size:0px;padding:20px 0;padding-bottom:0px;padding-top:0px;text-align:center;">
-              <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
-              <div class="mj-column-per-100 mj-outlook-group-fix"
-                style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;"
-                  width="100%">
-                  <tbody>
-                    <tr>
-                      <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                        <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" ><tr><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#3B5998;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/facebook.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#1DA1F2;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/twitter.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#DD4B39;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/google-plus.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#BD081C;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/pinterest.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#0077B5;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/linkedin.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td><td><![endif]-->
-                        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"
-                          style="float:none;display:inline-table;">
-                          <tbody>
-                            <tr>
-                              <td style="padding:4px;vertical-align:middle;">
-                                <table border="0" cellpadding="0" cellspacing="0" role="presentation"
-                                  style="background:#405DE6;border-radius:3px;width:20px;">
-                                  <tbody>
-                                    <tr>
-                                      <td style="font-size:0;height:20px;vertical-align:middle;width:20px;"><img
-                                          height="20"
-                                          src="https://www.mailjet.com/images/theme/v1/icons/ico-social/instagram.png"
-                                          style="border-radius:3px;display:block;" width="20"></td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table><!--[if mso | IE]></td></tr></table><![endif]-->
                       </td>
                     </tr>
                   </tbody>

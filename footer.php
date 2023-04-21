@@ -17,6 +17,46 @@
   </div>
 </div>
 
+
+<!--modal for app mobile when load page-->
+
+<div id="modalForApp" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close close-button" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="content-modal">
+                    <div class="content-img-logo">
+                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/LiveLearn_logo.png" alt="">
+                    </div>
+                    <p class="title-content-modal">Registreer je gratis om <span>educatieve content</span> te ontvangen van collega’s, vrienden én de experts uit de markt.</p>
+                    <div class="group-btn-get-app">
+
+                        <!-- Google Play button -->
+                        <a href="https://apps.apple.com/nl/app/livelearn/id1666976386"  class="market-btn apple-btn" role="button">
+                            <span class="market-button-subtitle">Download on the</span>
+                            <span class="market-button-title">App Store</span>
+                        </a>
+
+                        <!-- Google Play button -->
+                        <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app&hl=fr" class="market-btn google-btn" role="button">
+                            <span class="market-button-subtitle">Download on the</span>
+                            <span class="market-button-title">Google Play</span>
+                        </a>
+                    </div>
+                    <div class="d-flex justify-content-center"><a href="/inloggen/" class="Aanmelden-text">Aanmelden</a>  <span class="span-of">of</span> <a href="/registreren/" class="Aanmelden-text">registreren</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 <footer class="footer-area footerLive">
     <div class="footer-big">
         <!-- start .container -->
@@ -40,7 +80,7 @@
                         <div class="footer-menu footer-menu--1">
                             <h4 class="footer-widget-title">Voor organisaties</h4>
                             <ul>
-                                <li><a class="" href="/zzpers/"> Voor ZZP’ers</a></li>
+                                <li><a class="" href="/zzpers/"> Voor ZZP'ers</a></li>
                                 <li> <a class="" href="/mkb/">Voor het MKB </a></li>
                                 <li> <a class="" href="/mkb/">Voor Corporates </a></li>
                                 <li> <a class="" href="/pricing/">Pricing </a></li>
@@ -180,16 +220,16 @@
             <div class="imgBlockFooter">
                 <!-- <img src="<?php echo get_stylesheet_directory_uri();?>/img/logoFooter.png" alt="" class="logoFooter"> -->            </div>
             <div class="resauxsociaux">
-                <a href="">
+                <a href="https://www.linkedin.com/company/35716760/admin/" target="_blank">
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/linkedin.png" alt="">
                 </a>
-                <a href="">
+                <a href="#">
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/twitter.png" alt="">
                 </a>
-                <a href="">
+                <a href="https://www.facebook.com/LiveLearnHQ" target="_blank">
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/facebook.png" alt="">
                 </a>
-                <a href="">
+                <a href="https://www.instagram.com/livelearn.nl/ " target="_blank">
                     <img class="insta" src="<?php echo get_stylesheet_directory_uri();?>/img/insta.png" alt="">
                 </a>
             </div>
@@ -205,7 +245,6 @@
         <!-- end /.container -->
     </div>
     <!-- end /.footer-big -->
-
 </footer>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script>
@@ -222,6 +261,7 @@
     });
     //# sourceURL=pen.j
 </script>
+
 <script>
     $('.bntNotification').click((e)=>{
         $.ajax({
@@ -232,6 +272,31 @@
                 success: function(data){
                     // Get the modal
                     console.log(data);
+                }
+        });
+    });
+</script>
+
+<script>
+    $('.btnPushExpert').click((e)=>{
+        var key = e.currentTarget.value;
+        var user_id = $("#user_id_expert" + key).val();
+        var meta_key = $("#meta_key_expert" + key).val();
+        var meta_value = $("#meta_value_expert" + key).val();
+
+        $.ajax({
+                url:"/interest-push",
+                method:"POST",
+                data:{
+                    'user_id': user_id,
+                    'meta_key': meta_key,
+                    'meta_value': meta_value
+                },
+                dataType:"text",
+                success: function(data){
+                    console.log(data);
+                    $('#autocomplete-push-expert' + key).html(data);
+
                 }
         });
     });
@@ -272,7 +337,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/swiper.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
+<script>
 
+    $(window).on('resize', function() {
+        if ($(window).width() < 767) {
+            $('#modalForApp').show();
+        } else {
+            $('#modalForApp').hide();
+        }
+    });
+
+
+</script>
 <!--<script type="text/javascript">
       $(window).on('load', function() {
         $('#myFirstModal').modal('show');
@@ -296,6 +372,7 @@
         });
     });
 </script>-->
+
 <script>
     jQuery(function($){
         $('#header-search').keyup(function(){

@@ -81,7 +81,7 @@ style="overflow-x: hidden !important;">
         </li>
         <li class="elementTextDashboard">
             <a href="/dashboard/user/activity" class="d-flex">
-                <div class="iconeElement"><img src="<?php echo get_stylesheet_directory_uri();?>/img/Statistieken.png"></div>
+                <div class="iconeElement"><img id="dashboard-min" src="<?php echo get_stylesheet_directory_uri();?>/img/dashboard-min.png"></div>
                 <?php
                 if($option_menu[2] == 'activity') echo '<p class="textLiDashboard"><b>Mijn Activiteiten</b></p>'; else echo  '<p class="textLiDashboard">Mijn Activiteiten</p>';
                 ?>
@@ -99,7 +99,7 @@ style="overflow-x: hidden !important;">
         <li class="elementTextDashboard">
             <!-- /community-overview/ -->
             <a href="/dashboard/user/communities" class="d-flex">
-                <div class="iconeElement"><img src="<?php echo get_stylesheet_directory_uri();?>/img/Statistieken.png"></div>
+                <div class="iconeElement"><img id="community-icon" src="<?php echo get_stylesheet_directory_uri();?>/img/community-icon.png"></div>
                 <?php
                 if($option_menu[2] == 'communities') echo '<p class="textLiDashboard"><b>Communities</b></p>'; else echo  '<p class="textLiDashboard">Communities</p>';
                 ?>
@@ -116,6 +116,9 @@ style="overflow-x: hidden !important;">
             <?php
             if(!empty($topics_external))
                 foreach($topics_external as $topic){
+                    if(!$topic || is_wp_error(!$topic))
+                        continue;
+                    
                     $name = (String)get_the_category_by_ID($topic);
                     $image_category = get_field('image', 'category_'. $topic);
                     $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/iconOnderverpen.png';
@@ -130,6 +133,9 @@ style="overflow-x: hidden !important;">
 
             if(!empty($topics_internal))
                 foreach($topics_internal as $topic){
+                    if(!$topic || is_wp_error(!$topic))
+                        continue;
+                       
                     $name = (String)get_the_category_by_ID($topic);
                     $image_category = get_field('image', 'category_'. $topic);
                     $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/iconOnderverpen.png';
@@ -223,11 +229,15 @@ style="overflow-x: hidden !important;">
                 <div class="content-topics">
                     <ul class="unstyled centered">
                         <?php
-                            foreach($topics as $key => $topic)
+                            foreach($topics as $key => $topic){
+                                if(!$topic || is_wp_error(!$topic))
+                                    continue;
+                                
                                 echo '<li>
                                         <input class="styled-checkbox topics" id="styled-checkbox-'. $key .'" type="checkbox" value="' . $topic->cat_ID . '">
                                         <label for="styled-checkbox-'. $key .'">' . $topic->cat_name . '</label>
                                       </li>';
+                            }
                         ?>
                     </ul>
                     <div class="mt-2">

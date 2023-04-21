@@ -84,8 +84,7 @@
                             <div class="blockImgCarLogin">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Groupe8.png" alt="">
                             </div>
-                            <p class="textNog"> Creëer in 5 minuten een gratis leeromgeving voor jouw team of organisatie.
-</p>
+                            <p class="textNog"> Creëer in 5 minuten een gratis leeromgeving voor jouw team of organisatie.</p>
                         </div>
                         <div class="boxLOginCardOne">
                             <div class="blockImgCarLogin">
@@ -100,7 +99,7 @@
                                 <?php if(isset($_GET['success'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>" ?>
                                 <?php if(isset($_GET['danger'])) echo "<span class='alert alert-danger'>" . $_GET['message'] . "</span><br><br>" ?>
                                  -->
-                                <center><p class="TitleForm">Registreren</p></center>
+                                <center><p class="TitleForm">Registreren </p></center>
 
                                 <?php echo (do_shortcode('[user_registration_form id="8477"]')); ?>
                             </form>
@@ -111,6 +110,7 @@
        </div>
     </div>
 </div>
+
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
 

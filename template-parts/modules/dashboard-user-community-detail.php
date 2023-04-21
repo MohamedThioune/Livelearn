@@ -17,17 +17,18 @@
         array_push($other_communities, $community);
     }
 
-    $via_url = get_site_url() . "/community-overview";
-
     //current user
     $user_id = get_current_user_id();
 
-    $no_content_ =  '
-    <center>
-        <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" width="140" height="150" alt="Skill no-content" >
-        <br><span class="text-dark h5 p-1 mt-2" style="color:#033256"> No content found !</span>
-    <center>
-    ';
+    //current user image
+    $user_image = get_field('profile_img',  'user_' . $user_id);
+    $user_image = $user_image ?: get_stylesheet_directory_uri() . '/img/user.png';
+
+    $no_content = "
+    <p class='dePaterneText theme-card-description'> 
+        <span style='color:#033256'> Stay connected, Something big is coming 😊 </span> 
+    </p>
+    ";
 
     $no_content_event =  '
     <center>
@@ -42,14 +43,14 @@
     if(isset($_GET['mu']))
         $community = get_post($_GET['mu']);
 
-    //Calendar don't mind
+    //Calendar don't mind about it
     $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
     
 
 if($community){
 
     $company = get_field('company_author', $community->ID)[0];
-    $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+    $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/group-friends-gathering-together.jpg';
     $community_image = get_field('image_community', $community->ID) ?: $company_image;
 
     foreach ($users as $value) {
@@ -81,7 +82,25 @@ if($community){
     $days = explode(' ', $date)[0];
     $month = $calendar[explode('-', $date)[1]];
     $year = explode('-', $days)[0];
-
+    
+    $user_id = get_current_user_id();
+    $bool = false;
+    //Communities granted
+    foreach($followers as $follower)
+        if($follower->ID == $user_id){
+            $bool = true;
+            break;
+        }
+    
+    //Questions 
+    $max_question = 0;
+    $questions = get_field('question_community', $community->ID);
+    if(!empty($questions)){
+        $max_question = count($questions);
+        $questions = array_reverse($questions);
+    }
+    if(!$bool)
+        header('Location: /dashboard/user/communities/?message=Je moet lid zijn van deze gemeenschap voordat je toegang krijgt');
 ?>
 
 <script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/classic/ckeditor.js"></script>
@@ -108,39 +127,123 @@ if($community){
                     <ul class="filters">
                         <li class="item active">Activity</li>
                         <li class="item position-relative">Members <span><?= $max_follower ?></span></li>
+                        <li class="item item-question position-relative">Questions <span><?= $max_question ?></span></li>
                         <!-- <li class="item position-relative">Courses <span><?= $max_course ?></span></li> -->
                     </ul>
                 </div>
                 <div class="">
                     <div class="tabs__list">
-                        <div class="tab active">
+                        <div class="tab tab-one active">
                             <div class="d-flex flex-wrap">
                                 <div class="group-course-activity first-section-dashboard">
                                     <div class="question-block" data-toggle="modal" data-target="#modalQuestion" type="button">
-                                        <div class="imgUser">
-                                            <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/autor1.png" alt="">
-                                        </div>
+                                        <a href="" class="imgUser">
+                                            <img class="" src="<?= $user_image; ?>" alt="">
+                                        </a>
                                         <p class="text-question">Do you have a question ?</p>
                                     </div>
-
+                                    
+                                    <div class="w-100">
+                                        <?php
+                                        foreach($questions as $key => $question):
+                                        if($key == 2)
+                                            break;
+                                        $user_question = $question['user_question'];
+                                        $user_question_name = $user_question->first_name ?: $user_question->display_name;
+                                        $user_question_image = get_field('profile_img', 'user_' . $user_question->ID);
+                                        $user_question_image = $user_question_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                        $text_question = $question['text_question'];
+                                        $reply_question = $question['reply_question'];
+                                        $reply_question_count = 0;
+                                        if(!empty($reply_question))
+                                            $reply_question_count = count($reply_question);
+                                        ?>
+                                        <div class="interviewer-block d-flex">
+                                            <a href="" class="imgUser">
+                                                <img src="<?= $user_question_image ?>" alt="">
+                                            </a>
+                                            <div class="block-detail-interviewer">
+                                                <div class="d-flex align-items-center">
+                                                    <p class="name-user-answer"><?= $user_question_name; ?></p>
+                                                    <!-- <p class="date-answer">March, 16 2023</p> -->
+                                                </div>
+                                                <p class="text-question"> <?= $text_question ?> </p>
+                                                <div class="d-flex">
+                                                    <button class="btn footer-answer-items" data-target="block<?= $key; ?>" id="answer-item-1">
+                                                        <i class="fa fa-comment"></i>
+                                                        <p><?= $reply_question_count; ?> answers</p>
+                                                    </button>
+                                                    <button class="btn footer-answer-items" data-target="block-input-answer-<?= $key; ?>" id="reply-btn-1">
+                                                        <i class="fa fa-reply" aria-hidden="true"></i>
+                                                        <p>Reply</p>
+                                                    </button>
+                                                </div>
+                                                <!-- <div class="block-all-answer" id="">  -->
+                                                <div class="block-all-answer" id="block<?= $key; ?>">
+                                                    <?php
+                                                        foreach($reply_question as $reply):
+                                                        $user_reply = $reply['user_reply'];
+                                                        $user_reply_name = $user_reply->first_name ?: $user_reply->display_name;
+                                                        $user_reply_image = get_field('profile_img', 'user_' . $user_reply->ID);
+                                                        $user_reply_image = $user_reply_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                                        $text_reply = $reply['text_reply'];
+                                                    ?>
+                                                        <div class="interviewer-block d-flex">
+                                                            <a href="" class="imgUser">
+                                                                <img src="<?= $user_reply_image ?>" alt="">
+                                                            </a>
+                                                            <div class="block-detail-interviewer">
+                                                                <div class="d-flex align-items-center">
+                                                                    <p class="name-user-answer"><?= $user_reply_name ?></p>
+                                                                    <!-- <p class="date-answer">March, 16 2023</p> -->
+                                                                </div>
+                                                                <p class="text-question"><?= $text_reply ?></p>
+                                                            </div>
+                                                        </div>
+                                                    <?php
+                                                        endforeach;
+                                                        if(empty($reply_question))
+                                                            echo '<p>No responses !</p>';
+                                                    ?>
+                                                </div>
+                                                <div id="block-input-answer-<?= $key; ?>" class="block-input-answer position-relative">
+                                                    <form action=""  method="POST">
+                                                        <input type='hidden'  name='id' value='<?= $key ?>' >
+                                                        <input type='hidden' name='community_id' value='<?= $community->ID ?>' >
+                                                        <input type="text" name="txtreply" placeholder="Share your opinion on this question">
+                                                        <button type="submit"  name="reply_question_community" class="btn btn-send">Send</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                        endforeach;
+                                        if(empty($questions))
+                                            echo '<p>No questions !</p>';
+                                        ?>
+                                        <!-- <button class="btn btn-see-all">Seee All</button> -->
+                                    </div> 
+                                   
                                     <!-- Modal -->
                                     <div class="modal fade" id="modalQuestion" tabindex="-1" role="dialog" aria-labelledby="modalQuestionLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel"></h5>
+
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
+
                                                 </div>
                                                 <div class="modal-body text-left">
                                                     <form action="" method="POST" id="question_community">
                                                         <input type='hidden' form="question_community" name='community_id' value='<?= $community->ID ?>' >
-                                                        <textarea form="question_community" name="text_question" id="editor">Write your question......</textarea>
+                                                        <textarea form="question_community" name="text_question" id="editor" placeholder="Write your question..."></textarea>
                                                     </form>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="reset" form="question_community" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="reset" form="question_community" class="btn btn-secondary" data-dismiss="mofdal">Close</button>
                                                     <button type="submit" form="question_community" name="question_community" class="btn btn-send">Send</button>
                                                 </div>
                                             </div>
@@ -161,14 +264,17 @@ if($community){
 
                                             if($i == 9)
                                                 continue;
-                                            
+
                                             //image
-                                            $thumbnail = get_the_post_thumbnail_url($course->ID);
-                                            if(!$thumbnail)
-                                                $thumbnail = get_field('url_image_xml', $course->ID);
-                                            if(!$thumbnail)
-                                                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-                                            
+                                            $thumbnail = get_field('preview', $course->ID)['url'];
+                                            if(!$thumbnail){
+                                                $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                                if(!$thumbnail)
+                                                    $thumbnail = get_field('url_image_xml', $course->ID);
+                                                if(!$thumbnail)
+                                                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                                            }
+                                                                                                
                                             //short-description
                                             $short_description = get_field('short_description',  $course->ID);
 
@@ -250,9 +356,9 @@ if($community){
                                                     $rating = $review['rating'];
                                                     ?>
                                                 <div class="comment-element-block">
-                                                    <div class="imgUserComment">
+                                                    <a class="imgUserComment">
                                                         <img class="" src="<?= $image_author; ?>" alt="">
-                                                    </div>
+                                                    </a>
                                                     <div style="width: 93%;">
                                                         <p class="name-user-comment"><?= $user->display_name; ?></p>
                                                         <p class="date-time-comment"></p>
@@ -304,7 +410,7 @@ if($community){
                                     <?php
                                         }
                                     else
-                                        echo $no_content;
+                                        echo "";
                                     ?>
                                 </div>
                                 <div class="second-section-dashboard">
@@ -312,7 +418,7 @@ if($community){
                                         <h2>Upcoming Schedule</h2>
                                         <?php
                                         if(!empty($events)){
-                                        foreach($events as $key => $course){
+                                            foreach($events as $key => $course){
                                             if($key == 3)
                                                 break;
 
@@ -362,10 +468,10 @@ if($community){
                                                 </div>
                                             </div>
                                         <?php
-                                                }
                                             }
-                                            else
-                                                echo $no_content;
+                                        }
+                                        else
+                                            echo $no_content;
                                         ?> 
                                         <!-- <a href="#" class="btn btn-more-events">More Events</a> -->
                                     </div>
@@ -390,7 +496,7 @@ if($community){
                                             $i++;
 
                                             $company = get_field('company_author', $value->ID)[0];
-                                            $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/business-and-trade.png';
+                                            $company_image = (get_field('company_logo', $company->ID)) ? get_field('company_logo', $company->ID) : get_stylesheet_directory_uri() . '/img/logo_livelearn_white.png';
                                             $community_image = get_field('image_community', $value->ID) ?: $company_image;
 
                                             //Courses through custom field 
@@ -457,6 +563,85 @@ if($community){
                                 ?>
                             </div>
                         </div>
+                        <div class="tab tab-active">
+                            <?php
+                            foreach($questions as $key => $question):
+                            $user_question = $question['user_question'];
+                            $user_question_name = $user_question->first_name ?: $user_question->display_name;
+                            $user_question_image = get_field('profile_img', 'user_' . $user_question->ID);
+                            $user_question_image = $user_question_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                            $text_question = $question['text_question'];
+                            $reply_question = $question['reply_question'];
+                            $reply_question_count = 0;
+                            if(!empty($reply_question))
+                                $reply_question_count = count($reply_question);
+                            ?>
+                            <div class="interviewer-block d-flex">
+                                <a href="" class="imgUser">
+                                    <img src="<?= $user_question_image ?>" alt="">
+                                </a>
+                                <div class="block-detail-interviewer">
+                                   
+                                    <div class="d-flex align-items-center">
+                                        <p class="name-user-answer"><?= $user_question_name; ?></p>
+                                        <!-- <p class="date-answer">March, 16 2023</p> -->
+                                    </div>
+                                    <p class="text-question"><?= $text_question ?> </p>
+                                    <div class="d-flex">
+                                        
+                                        <button class="btn footer-answer-items" data-target="block-all-answer-<?= $key; ?>" id="answer-item-1">
+                                            <i class="fa fa-comment"></i>
+                                            <p><?= $reply_question_count; ?> answers</p>
+                                        </button>
+                                        <button class="btn footer-answer-items" data-target="block-input-answer-1-<?= $key; ?>" id="reply-btn-1">
+                                            <i class="fa fa-reply" aria-hidden="true"></i>
+                                            <p>Reply</p>
+                                        </button>
+                                       
+                                    </div>
+                                    <div class="block-all-answer" id="block-all-answer-<?= $key; ?>">
+                                    <?php
+                                        foreach($reply_question as $reply):
+                                        $user_reply = $reply['user_reply'];
+                                        $user_reply_name = $user_reply->first_name ?: $user_reply->display_name;
+                                        $user_reply_image = get_field('profile_img', 'user_' . $user_reply->ID);
+                                        $user_reply_image = $user_reply_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                        $text_reply = $reply['text_reply'];
+                                    ?>
+                                        <div class="interviewer-block d-flex">
+                                            <a href="" class="imgUser">
+                                                <img src="<?= $user_reply_image ?>" alt="">
+                                            </a>
+                                            <div class="block-detail-interviewer">
+                                                <div class="d-flex align-items-center">
+                                                    <p class="name-user-answer"><?= $user_reply_name ?></p>
+                                                    <!-- <p class="date-answer">March, 16 2023</p> -->
+                                                </div>
+                                                <p class="text-question"><?= $text_reply ?></p>
+                                            </div>
+                                        </div>
+                                    <?php
+                                        endforeach;
+                                        if(empty($reply_question))
+                                            echo '<p>No responses !</p>';
+                                    ?>
+                                    </div>
+                                    <div id="block-input-answer-1-<?= $key; ?>" class="block-input-answer position-relative">
+                                        <form action="" id="reply_form<?= $key; ?>" method="POST">
+                                            <input type='hidden' form="reply_form<?= $key; ?>" name='id' value='<?= $key ?>' >
+                                            <input type='hidden' form="reply_form<?= $key; ?>" name='community_id' value='<?= $community->ID ?>' >
+                                            <input type="text" form="reply_form<?= $key; ?>" name="txtreply" placeholder="Share your opinion on this question">
+                                            <button type="submit" form="reply_form<?= $key; ?>" name="reply_question_community" class="btn btn-send">Send</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+                            endforeach;
+                            if(empty($questions))
+                                echo '<p>No questions !</p>';
+                            ?>
+                        </div>
                         <div class="tab">
                             <div class="group-files-members">
                                <div class="d-flex group-card-head">
@@ -481,7 +666,6 @@ if($community){
                                        <p class="number">33</p>
                                    </div>
                                </div>
-
                                 <div id="parent">
                                     <div class="box all">
                                         <div class="group-files">
@@ -583,6 +767,15 @@ else
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".footer-answer-items").click(function() {
+            var targetId = $(this).data("target"); // Récupération de l'ID cible depuis l'attribut data-target
+            $("#" + targetId).toggle(); // Afficher/Masquer le bloc en fonction de l'ID correspondant
+        });
+    });
+
+</script>
 <script>
     document.querySelectorAll(".filters .item").forEach(function (tab, index) {
         tab.addEventListener("click", function () {
