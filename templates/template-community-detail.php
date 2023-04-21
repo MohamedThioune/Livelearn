@@ -116,10 +116,9 @@
     $user_id = get_current_user_id();
 
     $no_content =  '
-                    <center>
-                        <img src="' . get_stylesheet_directory_uri() . '/img/skill-placeholder-content.png" width="140" height="150" alt="Skill no-content" >
-                        <br><span class="text-dark h5 p-1 mt-2" style="color:#033256"> No content found !</span>
-                    <center>
+                    <p class="dePaterneText theme-card-description"> 
+                    <span style="color:#033256"> Stay connected, Something big is coming 😊 </span> 
+                    </p>
                     ';
     $users = get_users();
     $authors = array();
@@ -143,21 +142,24 @@
         // courses comin through custom field 
         $courses = get_field('course_community', $community->ID);
 
+        // range on community
+        $level = get_field('range', $community->ID);
+
+        // employees of the company on community 
         $max_user = 0;
         if(!empty($authors))
             $max_user = count($authors);
 
+        // courses on community 
         $max_course = 0;
         if(!empty($courses))
             $max_course = count($courses);
 
+        // followers on community
         $max_follower = 0;
         $followers = get_field('follower_community', $community->ID);
         if(!empty($followers))
             $max_follower = count($followers);
-        
-        $level = get_field('range', $community->ID);
-
 ?>
     <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
     <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
@@ -187,7 +189,7 @@
 
 
                     <?php
-                        echo (do_shortcode('[user_registration_form id="8477"]'));
+                        echo (do_shortcode('[user_registration_form id="8477"]')); 
                     ?>
 
                     <div class="text-center">

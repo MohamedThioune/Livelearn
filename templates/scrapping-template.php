@@ -10,7 +10,7 @@ $table = $wpdb->prefix . 'databank';
 if (isset($_POST['action']) && $_POST['action'] == 'reload_data')
  {
     extract($_POST);
-    $articles = scrapeFrom($website);
+    $articles = scrapeFrom(A);
     foreach ($articles as $article){
       persistArticle($article);
     } 

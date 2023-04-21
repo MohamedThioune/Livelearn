@@ -1,10 +1,10 @@
 
-<?php 
+<?php
 
 if (isset ($_POST) && !empty ($_POST))
 {
     extract ($_POST);
-    $questions = array();   
+    $questions = array();
     for ($i = 0; $i < $questionsCount ; $i++)
     {
         if (isset($titles[$i]) && !empty($titles[$i]))
@@ -26,7 +26,7 @@ if (isset ($_POST) && !empty ($_POST))
                         $questions[$i]['correct_response'] = array();
                         for ($k = 0; $k < 4; $k++){
                             if ($responseStates[$k] == "true") 
-                                array_push($questions[$i]['correct_response'],$k+1);
+                                array_push($questions[$i]['correct_response'],$k);
                         }
                         array_splice($responseStates , 0 , 4);
                     }
@@ -47,18 +47,21 @@ if (isset ($_POST) && !empty ($_POST))
                     <h2>2.Vragen</h2>
                 </div>
                 <?php 
-                     
+
                     // acf_form(array(
                     // 'post_id' => $_GET['id'],
                     // 'fields' => array('question'),
                     // 'submit_value'  => __('Opslaan & verder'),
                     // 'return' => '?func=add-add-assessment&id=%post_id%&step=3'
-                    // )); 
+                    // ));
                 ?>
             </div>
-            <div class="new-assessment-form w-100 assessment-container">
-                <div class = "container-question-field" >
-                
+            <div class="new-assessment-form w-100 assessment-container position-relative">
+            <div id = "question_1">
+                    <button type="button" class="btn btn-remove-assessments">
+                        Remove
+                    </button>
+                    <div class = "container-question-field" >
                     <div class="form-group">
                         <label for="exampleInputEmail1">Title</label>
                         <input required type="text" id="title" class="form-control" placeholder="Title of your queestion">
@@ -84,12 +87,15 @@ if (isset ($_POST) && !empty ($_POST))
                         <?php
                             }
                         ?>
-                        
-                            
+
+
                     </div>
-                
+
                 </div>
-                <div class="append"></div>
+            </div>
+                <div id="append">
+
+                </div>
                 <div class="mt-5">
                     <button type="button" id="addQuestion" class="add btn-newDate"> + Add question</button>
                 </div>
@@ -149,17 +155,38 @@ if (isset ($_POST) && !empty ($_POST))
 
 <script>
 
-    // $(".append").click((e) => {
-    // $(e.target).remove()
-    // })
+     
+
+     
+
+
 
     $(document).ready(function() {
     var questionsCount=1;
-    var questionary = $(".container-question-field").html()
-    $("#addQuestion").click(() => {
-        $(".append").append(questionary)
-        questionsCount++
-    })
+    var questionary = $("#question_1").html()
+
+
+$("#addQuestion").click(() => {
+    questionsCount++
+    $('#append').append(jQuery('<div>', {
+      id: "question_"+questionsCount,
+  }).append(questionary))
+})
+
+$("body").on("click", ".btn-remove-assessments", function () {
+            if( questionsCount > 1)
+            {
+                questionsCount--;
+                console.log($(this).attr('class'))
+                $(this).parent().remove();
+                //$(this).parents("#question_1").remove();
+            }
+            else
+                alert('You must have at least one question !')
+        })
+
+
+       
 
     $("#createAssessment").click(() => {
     var  titles =[] ,responsesFields = [] ,responseStates = [] ,timers = []  ;
@@ -180,7 +207,7 @@ if (isset ($_POST) && !empty ($_POST))
                 questionsCount: questionsCount
             },
             success: (result) => {
-                
+
                 let id_post = <?php echo $_GET['id'] ?>;
                 window.location.href = "?func=add-add-assessment&id="+id_post+"&step=3"
             }

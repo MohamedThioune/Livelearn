@@ -26,6 +26,34 @@ jQuery(function($) {
         $(this).find('.yith-wapo-option input').val(dateNameStart);
     });
 
+    $('#modalForApp .close').click(function() {
+        $('#modalForApp').hide();
+    });
+
+/*  //  pour cokkies et modal
+
+// Get the modal and the close icon element
+    const modal = document.getElementById("modalForApp");
+    const closeIcon = modal.querySelector(".close-button");
+
+    // Check if cookie exists
+    if (document.cookie.indexOf("modalShown") == -1) {
+        // If cookie doesn't exist, show modal
+        modal.style.display = "block";
+
+        // Add event listener to close icon to set cookie and hide modal
+        closeIcon.addEventListener("click", () => {
+            modal.style.display = "none";
+
+            // Set cookie with expiration time of 3 hours
+            let d = new Date();
+            d.setTime(d.getTime() + (3*60*60*1000)); // 3 hours in milliseconds
+            let expires = "expires="+ d.toUTCString();
+            document.cookie = "modalShown=true;" + expires + ";path=/";
+        });
+    }*/
+
+
     //scroll down
     $(function() {
         $('.bntStarted').click(function() {
@@ -116,19 +144,19 @@ jQuery(function($) {
 
 
 
-    /*  const elements = document.querySelectorAll('.like-and-comment .element-like-and-comment');
-      const blockComments = document.querySelectorAll('.like-and-comment .first-element');
+  /*  const elements = document.querySelectorAll('.like-and-comment .element-like-and-comment');
+    const blockComments = document.querySelectorAll('.like-and-comment .first-element');
 
-      for (let i = 0; i < elements.length; i++) {
-          elements[i].addEventListener('click', function() {
-              for (let j = 0; j < blockComments.length; j++) {
-                  if (blockComments[j].classList.contains('show-comments')) {
-                      blockComments[j].classList.remove('show-comments');
-                  }
-              }
-              blockComments[i].classList.toggle('show-comments');
-          });
-      }*/
+    for (let i = 0; i < elements.length; i++) {
+        elements[i].addEventListener('click', function() {
+            for (let j = 0; j < blockComments.length; j++) {
+                if (blockComments[j].classList.contains('show-comments')) {
+                    blockComments[j].classList.remove('show-comments');
+                }
+            }
+            blockComments[i].classList.toggle('show-comments');
+        });
+    }*/
 
     // Select all the buttons and content blocks
     var buttons = document.querySelectorAll('.element-like-and-comment');
@@ -404,26 +432,26 @@ jQuery(function($) {
         $(".btnUp").hide();
     });
 
-// strat for nav
     $("#voorOrganisati").click(function() {
-        $("#voorOrganisatiModal , #voorOrganisatiBlock").toggle();
+        $("#voorOrganisatiModal").toggle();
+        $(".activeModalHeader").show();
         $("#voorOpleidersModal").hide();
         $("#OpleidingenModal").hide();
     });
 
     $("#opleiders").click(function() {
         $("#voorOrganisatiModal").hide();
-        $("#voorOpleidingenBlock, #voorOpleidersModal").toggle();
+        $(".activeModalHeader").show();
+        $("#voorOpleidersModal").toggle();
         $("#OpleidingenModal").hide();
     });
 
     $("#Opleidingen").click(function() {
         $("#voorOrganisatiModal").hide();
-        $("#OpleidingenBlock, OpleidingenModal").toggle();
+        $(".activeModalHeader").show();
         $("#voorOpleidersModal").hide();
         $("#OpleidingenModal").toggle();
     });
-
 
     $(".activeModalHeader").click(function() {
         $("#voorOrganisatiModal").hide();
@@ -431,43 +459,6 @@ jQuery(function($) {
         $("#OpleidingenModal").hide();
         $(".activeModalHeader").hide();
     });
-
-
-    // hover
-
-        $("#voorOrganisati").hover(function() {
-            var isHovered = $(this).is(":hover");
-            if (isHovered) {
-
-            }
-            else{
-                $("#voorOrganisatiModal , #voorOrganisatiBlock").toggle();
-                $("#voorOpleidersModal").hide();
-                $("#OpleidingenModal").hide();
-            }
-        });
-        $("#opleiders").hover(function() {
-            var isHovered = $(this).is(":hover");
-            if (isHovered) {
-                $("#voorOrganisatiModal").hide();
-                $("#voorOpleidingenBlock, #voorOpleidersModal").toggle();
-                $("#OpleidingenModal").hide();
-            }
-        });
-        $("#Opleidingen").hover(function() {
-            var isHovered = $(this).is(":hover");
-            if (isHovered) {
-                $("#voorOrganisatiModal").hide();
-                $("#voorOpleidersModal").hide();
-                $("#OpleidingenBlock, #OpleidingenModal").toggle();
-            }
-        });
-
-
-
-// end for nav
-
-
 
     //Filter bar on category page
     $(".filterBlockMobil").click(function() {
@@ -936,6 +927,9 @@ jQuery(function($) {
         document.getElementById("autocomplete").classList.toggle("show");
     }
 
+
+
+
     $('#test').click(function() {
         //   if (!$(this.target).is('#popUpForm')) {
         //     $(".modalDialog").hide();
@@ -943,17 +937,5 @@ jQuery(function($) {
 
         alert("testing close");
     });
-
-    /**
-     * Adding assessment
-     */
-
-    $("body").click(function() {
-        alert('Bonjour')
-    })
-
-    /**
-     * Adding assessment
-     */
 
 });

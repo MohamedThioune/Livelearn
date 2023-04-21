@@ -120,6 +120,9 @@ $type_course = array(
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 <style>
+    body{
+        background: #F5FAFD;
+    }
     .headerdashboard,.navModife {
         background: #deeef3;
         color: #ffffff !important;
@@ -219,7 +222,7 @@ $type_course = array(
         margin-bottom: 20px;
     }
     .contentSix {
-        margin-bottom: 30px;
+        margin-bottom: 68px;
     }
     .titleGroupText {
         font-weight: 500;
@@ -323,9 +326,9 @@ $type_course = array(
         #modalVideo .modal-dialog {
             width: 96% !important;
         }
-        #modalVideo .modal-dialog iframe {
-            width: 100%;
-            height: fit-content;
+        #modalVideo .modal-dialog video{
+            width: 100% !important;
+            height: 100% !important;
         }
         .block-logo-parteners2 .logo-element {
             width: 26.5%;
@@ -992,16 +995,18 @@ $saved = get_user_meta($user_id, 'course');
 
                 <h1 class="wordDeBestText2" >Hét leer- en upskilling platform van- én voor de toekomst</h1>
                 <p class="altijdText2">Onhandig als medewerkers niet optimaal functioneren. LiveLearn zorgt dat jouw workforce altijd op de hoogte is van de laatste kennis en vaardigheden.</p>
-                <form action="/product-search" class="position-relative" method="POST">
+                <form action="/product-search" class="position-relative newFormSarchBar" method="POST">
                     <select class="form-select selectSearchHome" aria-label="search home page" name="search_type" id="course_type">
                         <?php
                             foreach($type_course as $type)
                                 echo '<option value="' . $type . '">' . $type . '</option>';
                         ?>
                     </select>
-                    <input id="search" type="search" class="jAuto searchInputHome form-control"
-                        placeholder="Zoek op naam, experts of onderwerpen " name="search" autocomplete="off">
-                    <button class="btn btn-Zoek elementWeb"><span>Zoek</span></button>
+                    <div class="group-input-dropdown">
+                        <input id="search" type="search" class="jAuto searchInputHome form-control"
+                               placeholder="Zoek op naam, experts of onderwerpen " name="search" autocomplete="off">
+                        <button class="btn btn-Zoek elementWeb"><span>Zoek</span></button>
+                    </div>
 
                     <div class="dropdown-menuSearch" id="list">
                         <div class="list-autocomplete" id="autocomplete">
@@ -1032,25 +1037,30 @@ $saved = get_user_meta($user_id, 'course');
                                     </video>
                                 </div>
                                 <div class="modal-footer">
+                                    <a href="/registreren/" class="btn btn-registreren">Register for free</a>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <hr>
+                    <div class="position-relative">
+                        <p class="bekijk-text">Bekijk wat we doen</p>
+                        <hr>
+                    </div>
+
                 </div>
                 <?php if(!$user_id) { ?>
                 <div class="groupeBtn-Jouw-inloggen groupBtnConnecte">
-                    <a href="http://wp12.influid.nl/login/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
+                    <a href="http://livelearn.nl/login/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/googleImg.png" alt="" />
-                        Sign up with Google
+                        Gratis inloggen met Google
                     </a>
                     <!-- <button class="btn btn-signup">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/linkedin-icon.png" class="" alt="">
                         sign up with Linkedin
                     </button> -->
                     <a href="/inloggen" class="btn btn-signup-email">
-                        <span style="color:white">Sign up with E-mail</span>
+                        <span style="color:white">Gratis inloggen via mail</span>
                     </a>
                 </div>
                 <?php } ?>
@@ -1278,7 +1288,7 @@ $saved = get_user_meta($user_id, 'course');
            <div class="headCollections">
                <div class="dropdown show">
                    <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownHuman" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                       Onze top experts binnen <b>Alle categorieën</b> <b id="name_topic"><?= $name_topic; ?></b>
+                       Onze top experts binnen <b id="complete-categorien">Alle categorieën</b>
                    </a>
                    <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownHuman">
                         <select class="form-select selectSearchHome" name="search_type" id="topic_search" multiple="true">
@@ -1382,9 +1392,8 @@ $saved = get_user_meta($user_id, 'course');
                             <p  class="startGratis theme-card-category">Skill paspoort</p>
                         </div>
                         <div class="textGroup theme-card-body">
-                            <p class="voorText2 theme-card-title">Voor Individuen</p>
-                            <p class="dePaterneText theme-card-description">Direct en gratis je persoonlijke skill paspoort. Blijf groeien gedurende je carrière of vind een
-                                nieuwe uitdaging</p>
+                            <p class="voorText2 theme-card-title">Voor jou!</p>
+                            <p class="dePaterneText theme-card-description">Direct en gratis je persoonlijke leeromgeving. Blijf groeien gedurende je carrière of ontdek je verborgen talenten.</p>
                             <a href="/inloggen-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                         </div>
                     </div>
@@ -1399,8 +1408,7 @@ $saved = get_user_meta($user_id, 'course');
                         </div>
                         <div class="textGroup theme-card-body">
                             <p class="voorText2 theme-card-title">Voor opleiders / experts</p>
-                            <p class="dePaterneText theme-card-description">Word partner van LiveLearn. Bied je training, cursus of e-learning eenvoudig aan en bereik
-                                nieuwe klanten.</p>
+                            <p class="dePaterneText theme-card-description">Word een partner van LiveLearn, deel al je kennis(producten) eenvoudig en bereik nieuwe klanten.</p>
                             <a href="/voor-teacher-2-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                         </div>
                     </div>
@@ -1415,8 +1423,7 @@ $saved = get_user_meta($user_id, 'course');
                         </div>
                         <div class="textGroup theme-card-body">
                             <p class="voorText2 theme-card-title">Voor organisaties</p>
-                            <p class="dePaterneText theme-card-description">Een lerende organisatie binnen een paar klikken. LiveLearn is jouw beste partner voor een
-                                future-proof organisatie.</p>
+                            <p class="dePaterneText theme-card-description">Een lerende organisatie binnen een paar klikken. Krijg inzicht in de ontwikkeling van je medewerkers en blijf groeien.</p>
                             <a href="/voor-organisatie-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                         </div>
                     </div>
@@ -1438,9 +1445,8 @@ $saved = get_user_meta($user_id, 'course');
                                 <p  class="startGratis theme-card-category">Skill paspoort</p>
                             </div>
                             <div class="textGroup theme-card-body">
-                                <p class="voorText2 theme-card-title">Voor Individuen</p>
-                                <p class="dePaterneText theme-card-description">Direct en gratis je persoonlijke skill paspoort. Blijf groeien gedurende je carrière of vind een
-                                    nieuwe uitdaging</p>
+                                <p class="voorText2 theme-card-title">Voor jou!</p>
+                                <p class="dePaterneText theme-card-description">Direct en gratis je persoonlijke leeromgeving. Blijf groeien gedurende je carrière of ontdek je verborgen talenten.</p>
                                 <a href="/inloggen-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                             </div>
                         </div>
@@ -1455,8 +1461,8 @@ $saved = get_user_meta($user_id, 'course');
                             </div>
                             <div class="textGroup theme-card-body">
                                 <p class="voorText2 theme-card-title">Voor opleiders / experts</p>
-                                <p class="dePaterneText theme-card-description">Word partner van LiveLearn. Bied je training, cursus of e-learning eenvoudig aan en bereik
-                                    nieuwe klanten.</p>
+                                <p class="dePaterneText theme-card-description">Word een partner van LiveLearn, deel al je kennis(producten) eenvoudig en bereik nieuwe klanten.
+                                </p>
                                 <a href="/voor-teacher-2-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                             </div>
                         </div>
@@ -1471,8 +1477,7 @@ $saved = get_user_meta($user_id, 'course');
                             </div>
                             <div class="textGroup theme-card-body">
                                 <p class="voorText2 theme-card-title">Voor organisaties</p>
-                                <p class="dePaterneText theme-card-description">Een lerende organisatie binnen een paar klikken. LiveLearn is jouw beste partner voor een
-                                    future-proof organisatie.</p>
+                                <p class="dePaterneText theme-card-description">Een lerende organisatie binnen een paar klikken. Krijg inzicht in de ontwikkeling van je medewerkers en blijf groeien.</p>
                                 <a href="/voor-organisatie-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
                             </div>
                         </div>
@@ -1743,7 +1748,7 @@ $saved = get_user_meta($user_id, 'course');
 
                     //Company
                     $company = get_field('company',  'user_' . $course->post_author);
-
+                    
                     //Short description
                     $short_description = get_field('short_description', $course->ID);
 
@@ -1835,24 +1840,48 @@ $saved = get_user_meta($user_id, 'course');
 
 <div class="container-fluid">
     <div class="doawnloadBlockHome">
-        <h3>Je bent nu ver genoeg naar beneden gescrolled,
+        <h3>Je bent nu ver genoeg naar beneden gescrold,
             je kan de app hier gratis downloaden:</h3>
         <div class="d-flex justify-content-center">
             <a href="" class="btn btnStore">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/e-store.png" alt="">
             </a>
-            <a href="" class="btn btnPlayGoogle">
+            <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app" class="btn btnPlayGoogle">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/playGoogle.png" alt="">
             </a>
         </div>
         <img class="doanloadIllustration" src="<?php echo get_stylesheet_directory_uri();?>/img/happyDoawnload.png" alt="">
     </div>
 </div>
-
-
+<ul class="">
+    <li>Meilleurs emplacements de panneaux d'affichage disponibles dans les régions</li>
+    <li>Simplifiez votre affichage publicitaire</li>
+    <li>Trouvez les bons emplacements pour les panneaux publicitaires</li>
+</ul>
 <script src="<?php echo get_stylesheet_directory_uri();?>/mobapiCity.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="<?php echo get_stylesheet_directory_uri();?>/js/jquery.bsSelectDrop.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    (function($){
+        let classes = ['outline-custom'];
+        let selects = $('.selectSearchHome');
+        selects.each(function(i, e){
+            let randomClass  = classes[Math.floor(Math.random() * classes.length)];
+            $(this).bsSelectDrop({
+                autocomplete: 'one',
+                btnClass: 'btn btn-'+classes[i],
+                btnWidth: 'auto',
+                darkMenu: false,
+                showSelectionAsList: false,
+                showActionMenu: true,
+
+            });
+        })
+    }(jQuery));
+</script>
 
 <script>
     $(function() {
@@ -1955,6 +1984,10 @@ $saved = get_user_meta($user_id, 'course');
 <script>
     $('#topic_search').change(function(){
         var topic_search = $("#topic_search option:selected").val();
+
+        var complete_categorieen = $("#topic_search option:selected").text();
+        $('#complete-categorien').html(complete_categorieen);
+
         $.ajax({
             url:"/fetch-ajax-home2",
             method:"post",

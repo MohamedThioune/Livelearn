@@ -26,9 +26,9 @@
             <div class="row">
                 <div class="col-md-7">
                     <div class="content-detail-voor-organisation">
-                        <h1>Creëer een constant lerende organisatie en trek talent aan</h1>
-                        <p>Stimuleer de in- en doorstroom van jouw (flexibele) werknemers, zodat zij jouw bedrijf naar het volgende niveau kunnen tillen. </p>
-                        <a href="" class="btn btnMeerInformation">Meer informatie ?</a>
+                        <h1>Word onderdeel van het grootste expert / opleidersnetwerk</h1>
+                        <p>Via LiveLearn deel je eenvoudig je kennis met de rest van de wereld. Zo bereik je nieuwe klanten en positioneer je je als de absolute expert in het vakgebied.</p>
+                        <a href="/overview-organisaties/" class="btn btnMeerInformation">Meer informatie ?</a>
                     </div>
                     <div class="img-block">
                         <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/voor-oraganisatie-2.png" class="" alt="">
@@ -87,4 +87,5 @@
 
 
 
+<?php get_footer(); ?>
 <?php wp_footer(); ?>

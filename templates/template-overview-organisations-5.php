@@ -6,6 +6,7 @@
 
 <div class="container-fluid">
 
+
     <!-- -----------------------------------Start Modal Sign In ----------------------------------------------- -->
     <div class="modal modalEcosyteme fade " id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
          style="position: absolute; ">
@@ -21,54 +22,10 @@
                     <div class="text-center" style="color: #043356"><h4>Activeer zakelijke </h4></div>
                     <div class="text-center" style="color: #043356"><h6>Leeromgeving </h6></div> <br>
 
-                    <form>  
-                        <div class="row mb-4">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <input type="   text" id="form3Example1" class="form-control" 
-                                    placeholder="voornaam" style="background: white !important" />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                    <input type="text" id="form3Example2" class="form-control"
-                                     placeholder="Achternaam" style="background: white !important"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <input type="text" id="form3Example1" class="form-control" 
-                                    placeholder="Email" style="background: white !important"/>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                    <input type="text" id="form3Example2" class="form-control" 
-                                    placeholder="Telefoon" style="background: white !important" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mb-4">
-                            <div class="col">
-                                <div class="form-outline">
-                                    <input type="text" id="form3Example1" class="form-control" 
-                                    placeholder="Bedrijsnaam" style="background: white !important"/>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-outline">
-                                    <input type="text" id="form3Example2" class="form-control" 
-                                    placeholder="Aantal mensen" style="background: white !important"/>
-                                </div>
-                            </div>
-                        </div>
+                    <?php
+                        echo do_shortcode("[gravityform id='12' title='false' description='false' ajax='true']");
+                    ?>
 
-                        <!-- Submit button -->
-                        <button type="submit" class="btn btn-block mb-4 fw-bold text-white" style="background: #47A99E">Vraag aan</button>
-
-                    </form>
                 </div>
             </div>
         </div>
@@ -78,9 +35,9 @@
 
     <div class="contentOverviewOrganisatie pt-5">
        <div class="headOverviewOrganisatie">
-           <h1>Deel jouw kennis in een paar klikken</h1>
-           <p class="description">Wij hanteren geen opstartkosten, dus iedereen kan meteen van start </p>
-           <a href="" class="btn btnbtnCreeerJe" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">Creeer je omgeving gratis</a>
+           <h1>Deel jouw kennis(producten) in een paar klikken</h1>
+           <p class="description">Wij hanteren geen opstartkosten, dus je kan meteen van start. Wij doen alleen een snelle check om te kijken wat voor content je gaat aanbieden. Zo weten we zeker dat jij de juiste mensen bereikt.</p>
+           <a href="/voor-teacher-2-2/" class="btn btnbtnCreeerJe" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">Creëer je omgeving gratis</a>
        </div>
         <div class="row">
             <div class="col-md-4">
@@ -91,10 +48,7 @@
                     <div class="bodyCardOverviewOrganisatie">
                         <h3 class="titleCardVoorOrganisatie">Verkopen</h3>
                         <p class="descriptionCardVoorOrganisatie">
-                            Jouw kennisproducten ook direct verkopen via Livelearn? Dat kan eenvoudig, Of dit nu een
-                            opleiding, workshop, podcast of artikel is, wij bieden het format en de tools om dit aan te
-                            bieden. Je betaalt alleen wanneer er ook daadwerkelijk iets gekocht is en je krigt
-                            inzichten in financiën.
+                            Jouw kennis(producten) ook direct verkopen via Livelearn? Dat kan eenvoudig, of dit nu een opleiding, workshop, podcast of artikel is, wij bieden het format en de tools om het aan te bieden. Je betaalt alleen wanneer er ook daadwerkelijk iets gekocht is en je krijgt real-time inzichten in financiële groei.
                         </p>
                         <a href="/verkopen" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">Meer over &nbsp;<strong>verkopen</strong></a>
                     </div>
@@ -108,9 +62,7 @@
                     <div class="bodyCardOverviewOrganisatie">
                         <h3 class="titleCardVoorOrganisatie">Creëren</h3>
                         <p class="descriptionCardVoorOrganisatie">
-                            Kennisproducten maken vanuit onze auteurstool? Vanuit het teacher dashboard
-                            creëer je in een paar klikken jouw kennisproduct en deelt deze gemakkelik met de
-                            rest van de wereld. Dit kan zowel betaalde, als gratis content zijn.
+                            Kennisproducten maken vanuit onze auteurstool? Vanuit het LiveLearn teacher dashboard creëer je in een paar klikken jouw kennisproduct en deel je deze direct met de rest van de wereld. Dit kunnen zowel betaalde als gratis kennisproducten zijn.
                         </p>
                         <a href="/creeren" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">
                             Meer over &nbsp;<strong class="">creëren</strong>
@@ -126,9 +78,7 @@
                     <div class="bodyCardOverviewOrganisatie">
                         <h3 class="titleCardVoorOrganisatie">Uitleggen</h3>
                         <p class="descriptionCardVoorOrganisatie">
-                            Bied ji producten of services waarbij uitleg van toegevoegde waarde is? Dan werken wij graag
-                            met je samen om te zorgen dat jouw {potentiële) klanten altid op de hoogte zijn van
-                            jouw ontwikkelingen.Wij bieden workshops, productvideo's of audio begeleiding.    
+                            Lever je producten of diensten waarbij duidelijke uitleg van toegevoegde waarde is? Dan werken wij graag met je samen om te zorgen dat jouw (potentiële) klanten altijd op de hoogte zijn van jouw ontwikkelingen. Wij bieden workshops, productvideo's of audiobegeleiding direct aan vanuit onze mobiele app.
                         </p>
                         <a href="/uitleggen" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">Meer over&nbsp;<strong>uitleggen</strong> </a>
                     </div>
@@ -137,6 +87,5 @@
         </div>
     </div>
 </div>
-
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
