@@ -26,6 +26,34 @@ jQuery(function($) {
         $(this).find('.yith-wapo-option input').val(dateNameStart);
     });
 
+    $('#modalForApp .close').click(function() {
+        $('#modalForApp').hide();
+    });
+
+/*  //  pour cokkies et modal
+
+// Get the modal and the close icon element
+    const modal = document.getElementById("modalForApp");
+    const closeIcon = modal.querySelector(".close-button");
+
+    // Check if cookie exists
+    if (document.cookie.indexOf("modalShown") == -1) {
+        // If cookie doesn't exist, show modal
+        modal.style.display = "block";
+
+        // Add event listener to close icon to set cookie and hide modal
+        closeIcon.addEventListener("click", () => {
+            modal.style.display = "none";
+
+            // Set cookie with expiration time of 3 hours
+            let d = new Date();
+            d.setTime(d.getTime() + (3*60*60*1000)); // 3 hours in milliseconds
+            let expires = "expires="+ d.toUTCString();
+            document.cookie = "modalShown=true;" + expires + ";path=/";
+        });
+    }*/
+
+
     //scroll down
     $(function() {
         $('.bntStarted').click(function() {

@@ -31,7 +31,7 @@ if (!empty($portfolios))
                     <p><?php echo $country; ?></p>
                     <?php } ?>
                 </div>
-                <div class="contentMap">
+                <a href="" class="contentMap">
                     <i style="color:#696969;font-size: 1.2em" class="fa fa-home"></i>&nbsp;
                     <a href="/dashboard/company/people"><?php echo $company_name; ?></a>
                 </div>
