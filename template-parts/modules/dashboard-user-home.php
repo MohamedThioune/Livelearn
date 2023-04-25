@@ -1599,9 +1599,10 @@ if(isset($_GET['message']))
                     </div>
                 </div>
             </a>
-            <a href="/opleiders" class="btn btn-more-events">See All</a>
             <?php
             }
+            if(!empty($teachers))
+                echo '<a href="/opleiders" class="btn btn-more-events">See All</a>';
             ?>
         </div>
     </section>
