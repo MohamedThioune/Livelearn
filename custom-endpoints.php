@@ -1069,8 +1069,8 @@ function filter_course(WP_REST_Request $request)
                       $image = get_stylesheet_directory_uri().'/img/assessment-1.png'; 
       }
       $assessment ->image = $image;
-     return $assessments;
   }
+  return $assessments;
 }
 
   function answerAssessment (WP_REST_Request $request)
@@ -1166,8 +1166,7 @@ function getCommunities()
             $course->courseType = get_field('course_type',$course->ID);
                 //Image - article
             $image = get_field('preview', $course->ID)['url'];
-            if(!$image)
-            {
+            if(!$image){
                 $image = get_the_post_thumbnail_url($course->ID);
                 if(!$image)
                     $image = get_field('url_image_xml', $course->ID);
