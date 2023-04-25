@@ -25,7 +25,7 @@ $other_communities = array();
                         <li class="item">Your Groups</li>
                         <li class="item">Others Groups</li>
                     </ul>
-                    <!-- <input type="search" class="form-control search" placeholder="search"> -->
+                    <input type="search" class="form-control search" placeholder="search">
                 </div>
                 <div class="tabs__list">
                     <div class="search-bar-block">

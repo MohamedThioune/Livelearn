@@ -2,7 +2,7 @@
 
 <style>
     body {
-        padding-top: 0px !important;
+        padding-top: 35px !important;
     }
 
     /* modal on dashboard-learning-modules */
@@ -247,7 +247,7 @@
         <div class="cardOverviewCours">
             <div class="headListeCourse">
                 <p class="JouwOpleid">Alle opleidingen</p>
-                <input id="search_txt_course" class="form-control InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" >                
+                <input id="search_txt_course" class="InputDropdown1 mr-sm-2 inputSearch2" type="search" placeholder="Zoek" aria-label="Zoek" >
                 <?php
                 if ( in_array( 'author', $user_in->roles ) || in_array( 'hr', $user_in->roles ) || in_array( 'manager', $user_in->roles ) || in_array('administrator', $user_in->roles)) 
                     echo '<a href="/dashboard/teacher/course-selection/" class="btnNewCourse">Nieuwe course</a>';
@@ -357,7 +357,7 @@
                             /*
                             *  Date and Location
                             */ 
-                            $day = "<i class='fas fa-calendar-week'></i>";
+                            $day = "<p class='text-no-date'>no date given</p>";
                             $month = ' ';
                             $location = ' ';
                         

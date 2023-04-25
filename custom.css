@@ -5458,7 +5458,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 }
 
 .descriptionNotification {
-    width: 63%;
+    width: 40%;
 }
 
 .tableAlert .table th,
@@ -10095,6 +10095,8 @@ select {
 .content-button-tabs button {
     width: 24.5%;
     text-align: center;
+    font-size: 15px;
+    padding: 11px 5px;
 }
 
 .b-tab {
@@ -13423,10 +13425,6 @@ ul .selectAll .styled-checkbox:checked + label:after {
     font-size: 23px;
 }
 
-.contentLeaning{
-    margin-top: 20px;
-}
-
 .contentFormSubscription {
     background-color: #fff!important;
     padding: 35px;
@@ -15160,7 +15158,7 @@ background: #FFFFFF !important;
 .tabs-search-block .head .search{
     padding: 24px 20px;
     background: #F4F7FC;
-    border-radius: 5px;
+    border-radius: 11px;
     width: 33%;
 }
 .tabs-search-block .tabs-courses .tabs .filters {
@@ -15913,7 +15911,7 @@ background: #FFFFFF !important;
 .block-input-answer .btn-send{
     position: absolute;
     right: 15px;
-    top: 22px;
+    top: 5px;
     background: #053356;
     color: white;
 }
@@ -15934,6 +15932,7 @@ background: #FFFFFF !important;
     margin-right: 25px;
     margin-bottom: 0;
     border-radius: 8px;
+    background-size: cover;
 }
 .advert-course-Block .advert-one .blockTextAdvert{
     width: 60%;
@@ -17426,6 +17425,23 @@ background: #FFFFFF !important;
 }
 .contentCardGrant table .textTh {
     text-align: center !important;
+}
+.search-teach{
+    min-width: 265px !important;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    background: #F0F5F7;
+    border-radius: 8px;
+    color: #023356;
+    padding: 13px 15px;
+    height: 40px;
+    width: fit-content;
+    max-width: 350px !important;
+    border: 1px solid #c0c0c0;
+    margin-left: 30px;
+}
+.text-no-date{
+    font-size: 14px;
 }
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {

@@ -1515,7 +1515,7 @@ if(isset($_GET['message']))
             <?php
             $i = 0;
             if(!empty($communities))
-                echo '<h2>Community</h2>';
+                echo '<h2>Communities</h2>';
 
             foreach($communities as $key => $value){
 
@@ -1549,11 +1549,11 @@ if(isset($_GET['message']))
                     }
                 
                 if($bool)
-                    $access_community = '<a href="/dashboard/user/community-detail/?mu=' . $value->ID . '" class="title">' . $value->post_title . ', Netherlands</a>';
+                    $access_community = '<p  class="title">' . $value->post_title . ', Netherlands</p>';
                 else
                     continue;
             ?>
-            <div class="card-Community d-flex align-items-center">
+            <a href="/dashboard/user/community-detail/?mu=' . $value->ID . '" class="card-Community d-flex align-items-center">
                 <div class="imgCommunity">
                     <img class="calendarImg" src="<?= $community_image ?>" alt="">
                 </div>
@@ -1561,7 +1561,7 @@ if(isset($_GET['message']))
                     <?= $access_community ?>
                     <p class="number-members"><?= $max_follower ?> Members</p>
                 </div>
-            </div>
+            </a>
             <?php
             }
 
