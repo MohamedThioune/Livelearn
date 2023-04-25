@@ -441,7 +441,10 @@ $see_experts = get_users(
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Maak en keuze :</h5>
+                    <div class="d-flex align-items-center">
+                        <h5 class="modal-title" id="exampleModalLabel">Maak en keuze :</h5>
+                        <input type="search" class="search-teach" placeholder="Zoek">
+                    </div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
