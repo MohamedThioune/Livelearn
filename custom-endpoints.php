@@ -1058,9 +1058,20 @@ function filter_course(WP_REST_Request $request)
       $assessment -> questions = $questions;
       $assessment -> description = get_field('description_assessment',$assessment->ID);
       $assessment -> author = get_user_by( 'ID', $assessment -> post_author  );
-    }
+      $assessment -> author -> profilImg = get_field('profile_img','user_'.$assessment -> post_author) ? get_field('profile_img','user_'.$assessment -> post_author) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+      $image = get_field('image_assessement', $assessment->ID)['url'];
+      if(!$image)
+      {
+          $image = get_the_post_thumbnail_url($assessment->ID) ?? false;
+          if(!$image)
+              $image = get_field('url_image_xml', $assessment->ID);
+                  if(!$image)
+                      $image = get_stylesheet_directory_uri().'/img/assessment-1.png'; 
+      }
+      $assessment ->image = $image;
      return $assessments;
   }
+}
 
   function answerAssessment (WP_REST_Request $request)
   {
@@ -1155,7 +1166,8 @@ function getCommunities()
             $course->courseType = get_field('course_type',$course->ID);
                 //Image - article
             $image = get_field('preview', $course->ID)['url'];
-            if(!$image){
+            if(!$image)
+            {
                 $image = get_the_post_thumbnail_url($course->ID);
                 if(!$image)
                     $image = get_field('url_image_xml', $course->ID);
