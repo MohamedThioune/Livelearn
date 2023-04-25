@@ -333,7 +333,7 @@ $orders = wc_get_orders($order_args);
                         /*
                         *  Date and Location
                         */ 
-                        $day = "<i class='fas fa-calendar-week'></i>";
+                        $day = "<p class='text-no-date'>no date given</p>";
                         $month = ' ';
                         $location = ' ';
                     

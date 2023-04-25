@@ -26,19 +26,9 @@ $other_communities = array();
                         <li class="item">Your Groups</li>
                         <li class="item">Others Groups</li>
                     </ul>
-                    <!-- <input type="search" class="form-control search" placeholder="search"> -->
+                    <input type="search" class="form-control search" placeholder="search">
                 </div>
                 <div class="tabs__list">
-                    <div class="search-bar-block">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search">
-                            <div class="input-group-append">
-                                <button class="btn btn-secondary" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                      <?php if(isset($_GET['message'])) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>"; ?>
                     <div class="tab active">
                         <div class="group-card-communities d-flex flex-wrap">
