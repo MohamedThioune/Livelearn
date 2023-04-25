@@ -10,7 +10,6 @@ $communities = get_posts($args);
 
 $your_communities = array();
 $other_communities = array();
-
 ?>
 <div class="content-communities">
     <div class="head-community">
@@ -31,7 +30,7 @@ $other_communities = array();
                 <div class="tabs__list">
                     <div class="search-bar-block">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search">
+                            <input type="text" class="form-control" id="search" placeholder="Search">
                             <div class="input-group-append">
                                 <button class="btn btn-secondary" type="button">
                                     <i class="fa fa-search"></i>
@@ -41,7 +40,7 @@ $other_communities = array();
                     </div>
                      <?php if(isset($_GET['message'])) echo "<span class='alert alert-info'>" . $_GET['message'] . "</span><br><br>"; ?>
                     <div class="tab active">
-                        <div class="group-card-communities d-flex flex-wrap">
+                        <div class="group-card-communities d-flex flex-wrap" id="autocomplete">
                         <?php
                         foreach($communities as $community){
                             $company = get_field('company_author', $community->ID)[0];
@@ -290,9 +289,32 @@ $other_communities = array();
 </div>
 
 
-
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    $('#search').keyup(function(){
+        var txt = $(this).val();
+        if(txt){
+            $.ajax({
+
+                url:"/fetch-user-communities",
+                method:"post",
+                data:{
+                    search_all:txt,
+                },
+                dataType:"text",
+                success: function(data){
+                    console.log(data);
+                    $('#autocomplete').html(data);
+                }
+            });
+        }
+        else
+            $('#autocomplete').html("<center> <small>Typing ... </small> <center>");
+    });
+</script>
+
 <script>
     document.querySelectorAll(".filters .item").forEach(function (tab, index) {
         tab.addEventListener("click", function () {
