@@ -404,6 +404,11 @@ if (!$is_first_login && get_current_user_id() !=0 )
 
 <?php
 
+$void_content ='<center>
+                <h2>No content found !</h2> 
+                <img src="' . get_stylesheet_directory_uri() . '/img' . '/void-content.gif" alt="content image requirements">
+                </center>';
+
 // Saved courses
 $saved = get_user_meta($user, 'course');
 
@@ -939,7 +944,7 @@ if(isset($_GET['message']))
                             }
                             
                             if(!$find)
-                                echo "None";
+                                echo $void_content;
                             ?>
                         </div>
                     </div>
@@ -1050,7 +1055,7 @@ if(isset($_GET['message']))
                             }
                             
                             if(!$find)
-                                echo "None";
+                                echo $void_content;
                             ?>
                         </div>
                     </div>
@@ -1161,7 +1166,7 @@ if(isset($_GET['message']))
                             }
                             
                             if(!$find)
-                                echo "None";
+                                echo $void_content;
                             ?>
                         </div>
                     </div>
@@ -1170,7 +1175,7 @@ if(isset($_GET['message']))
                             <?php
                             $find = false;
 
-                            if(isset($count['Video']))
+                            if(!isset($count['Video']))
                             if($count['Video'] > 0)
                             foreach($recommended_courses as $course){
                             //Course Type
@@ -1272,7 +1277,7 @@ if(isset($_GET['message']))
                             }
                             
                             if(!$find)
-                                echo "None";
+                                echo $void_content;
                             ?>
                         </div>
                     </div>
@@ -1392,6 +1397,7 @@ if(isset($_GET['message']))
             <h2>Upcoming Schedule</h2>
             <?php
 
+            $i = 0;
             foreach($global_courses as $course){
             $bool = true;
             $bool = visibility($course, $visibility_company);
@@ -1476,7 +1482,7 @@ if(isset($_GET['message']))
                 if(!$thumbnail)
                     $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
             }
-
+                        
             ?>
             <div class="card-Upcoming">
                 <p class="title"><?= $course->post_title; ?></p>
