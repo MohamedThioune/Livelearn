@@ -129,56 +129,56 @@
 
                     <div class="contentCardAssessment">
 
-                        
-
             <?php
 
                     /** Assessment done */
 
                 foreach($assessments_validated as $key => $assessment) {
-                    
-                    $assessment_title = $assessment->post_title;
-                    $description = get_field('description_assessment',$assessment->ID);
-                    $how_it_works = get_field('how_it_works', $assessment->ID);
-                    $level = get_field('difficulty_assessment', $assessment->ID);
-                    $language = get_field('language_assessment', $assessment->ID);
+                    if ($assessment != null)
+                    { 
+                        $assessment_title = $assessment->post_title;
+                        $description = get_field('description_assessment',$assessment->ID);
+                        $how_it_works = get_field('how_it_works', $assessment->ID);
+                        $level = get_field('difficulty_assessment', $assessment->ID);
+                        $language = get_field('language_assessment', $assessment->ID);
 
-                    $timer = 0;
-                    $questions = get_field('question',$assessment->ID);
-                    $number_question = 0;
-                    if(!empty($questions))
-                        $number_question = count($questions);
-                    foreach ($questions as $question)
-                    {
-                        $question_time = $question['timer'];
-                        $timer += timeToSeconds($question_time);
-                    }
-                    /* Get minutes by given string seconds  */
-                    $timer = ceil($timer/60);
+                        $timer = 0;
+                        $questions = get_field('question',$assessment->ID);
+                        $number_question = 0;
+                        if(!empty($questions))
+                            $number_question = count($questions);
+                        foreach ($questions as $question)
+                        {
+                            $question_time = $question['timer'];
+                            $timer += timeToSeconds($question_time);
+                        }
+                        /* Get minutes by given string seconds  */
+                        $timer = ceil($timer/60);
 
-                    //Image
-                    $image = get_field('image_assessement', $assessment->ID)['url'];
-                    if(!$image){
-                        $image = get_the_post_thumbnail_url($assessment->ID);
-                        if(!$image)
-                            $image = get_field('url_image_xml', $assessment->ID);
-                                if(!$image)
-                                    $image = get_stylesheet_directory_uri().'/img/assessment-1.png';
-                    }
+                        //Image
+                        $image = get_field('image_assessement', $assessment->ID)['url'];
+                        if(!$image){
+                            $image = get_the_post_thumbnail_url($assessment->ID);
+                            if(!$image)
+                                $image = get_field('url_image_xml', $assessment->ID);
+                                    if(!$image)
+                                        $image = get_stylesheet_directory_uri().'/img/assessment-1.png';
+                        }
 
-                    //Tags !mportant 
-                    $posttags = get_the_tags();
+                        //Tags !mportant 
+                        $posttags = get_the_tags();
 
-                    if(!$posttags){
-                        $category_default = get_field('categories', $assessment->ID);
-                        $category_xml = get_field('category_xml', $assessment->ID);
-                    }
+                        if(!$posttags){
+                            $category_default = get_field('categories', $assessment->ID);
+                            $category_xml = get_field('category_xml', $assessment->ID);
+                        }
+                }
 
             ?>
 
                         <div class="cardAssessement">
                             <div class="heead-img-block">
-                                <img src=<?= $image ?> >
+                                <img src= <?= $image ?> >
                             </div>
                             <div class="body-card-assessment">
                                 <p class="title-assessment"> <?= $assessment_title ?></p>
