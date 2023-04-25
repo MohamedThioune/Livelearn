@@ -297,23 +297,19 @@ $other_communities = array();
 <script>
     $('#search').keyup(function(){
         var txt = $(this).val();
-        if(txt){
-            $.ajax({
+        $.ajax({
 
-                url:"/fetch-user-communities",
-                method:"post",
-                data:{
-                    search_all:txt,
-                },
-                dataType:"text",
-                success: function(data){
-                    console.log(data);
-                    $('#autocomplete').html(data);
-                }
-            });
-        }
-        else
-            $('#autocomplete').html("<center> <small>Typing ... </small> <center>");
+            url:"/fetch-user-communities",
+            method:"post",
+            data:{
+                search_all:txt,
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete').html(data);
+            }
+        });
     });
 </script>
 
