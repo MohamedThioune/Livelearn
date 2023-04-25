@@ -833,7 +833,7 @@ if(isset($_GET['message']))
                             <?php
                             }
                             else
-                                echo "";
+                                echo $void_content;
                             ?>
                         </div>
                     </div>
@@ -1175,7 +1175,7 @@ if(isset($_GET['message']))
                             <?php
                             $find = false;
 
-                            if(!isset($count['Video']))
+                            if(isset($count['Video']))
                             if($count['Video'] > 0)
                             foreach($recommended_courses as $course){
                             //Course Type
@@ -1382,7 +1382,7 @@ if(isset($_GET['message']))
                             <?php
                             }
                             else
-                                echo "";
+                                echo $void_content;
                             ?>
                         </div>
                     </div>
@@ -1599,10 +1599,10 @@ if(isset($_GET['message']))
                     </div>
                 </div>
             </a>
+            <a href="/opleiders" class="btn btn-more-events">See All</a>
             <?php
             }
             ?>
-            <a href="/opleiders" class="btn btn-more-events">See All</a>
         </div>
     </section>
 </div>
