@@ -10,6 +10,10 @@ if(isset($_GET['post']))
     if($_GET['post'])
         $post = get_page_by_path($_GET['post'], OBJECT, 'course');
 
+$mandatory= false;
+if(isset($_GET['man']))
+    $mandatory = true;
+        
 if($post):
 
 /* * Informations course * */
@@ -100,21 +104,43 @@ foreach($bunch_orders as $order){
 
 $count_enrolled = 0;
 if(!empty($enrolled))
-{
     $count_enrolled = count($enrolled);
-    // $args = array(
-    //     'post_type' => 'course', 
-    //     'posts_per_page' => -1,
-    //     'orderby' => 'post_date',
-    //     'order' => 'DESC',
-    //     'include' => $enrolled,  
-    // );
-    // $enrolled_courses = get_posts($args);
-}
+
 
 $count_podcasts = 0;
 if(!empty($podcasts))
     $count_podcasts = count($podcasts); 
+
+/* * Lesson reads details * */
+//Get read by user 
+$args = array(
+    'post_type' => 'progression', 
+    'title' => $post->post_name,
+    'post_status' => 'publish',
+    'author' => $user->ID,
+    'posts_per_page'         => 1,
+    'no_found_rows'          => true,
+    'ignore_sticky_posts'    => true,
+    'update_post_term_cache' => false,
+    'update_post_meta_cache' => false
+);
+$progressions = get_posts($args);
+if(empty($progressions)){
+    //Create progression
+    $post_data = array(
+        'post_title' => $post->post_name,
+        'post_author' => $user->ID,
+        'post_type' => 'progression',
+        'post_status' => 'publish'
+    );
+    $progression_id = wp_insert_post($post_data);
+}
+else
+    $progression_id = $progressions[0]->ID;
+//Lesson read
+$lesson_reads = get_field('lesson_actual_read', $progression_id);
+$count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
+
 
 ?>
 <body>
@@ -149,7 +175,7 @@ if(!empty($podcasts))
                     <ul class="filters">
                         <li class="item active">Course Overview</li>
                         <li class="item">Course Content</li>
-                        <li class="item">Review</li>
+                        <!-- <li class="item">Review</li> -->
                     </ul>
 
                     <div class="tabs__list">
@@ -196,7 +222,18 @@ if(!empty($podcasts))
                             ?>
                             <div class="list-podcast-checkout">
                                 <?php
+                                $audio_begin = "";
+                                $audio_done = "style='color: #47BFA3'";
+
                                 foreach($podcasts as $key => $podcast):
+                                $status = $audio_begin;
+                                foreach($lesson_reads as $lesson)
+                                    if($lesson['key_lesson'] == $key){
+                                        $status = $audio_done;
+                                        break;
+                                    }
+
+                                $read_lesson = "/dashboard/user/start-podcast?post=" . $post->post_name . "&lesson=" . $key;
                                 ?>
                                 <div class="card-podcast-checkout">
                                     <p class="order-number-episode"><?= $key + 1 ?></p>
@@ -206,8 +243,9 @@ if(!empty($podcasts))
                                             <p class="detail-podcast">by <?= $author_name . ' ' . $author_last_name ?></p>
                                             <!-- <p class="detail-podcast"><?= $podcast['course_podcast_title'] ?></p> -->
                                         </div>
-                                        <p class="title-episode-podcast"><span><?= $key + 1 ?></span> <?= $podcast['course_podcast_title'] ?></p>
-                                        <p class="description-episode"><?= $short_description ?></p>
+                                        <a href="<?= $read_lesson ?>" class="title-episode-podcast" ><span><i class="fa fa-play"></i></span>&nbsp; <slot <?= $status ?>><?= $podcast['course_podcast_title'] ?></slot> </a>
+                                        <p class="description-episode" ><?= $short_description ?></p>
+                                        <!-- 
                                         <div class="audioBlock d-flex">
                                             <div class="ready-player-3 player-with-download">
                                                 <?= 
@@ -227,7 +265,7 @@ if(!empty($podcasts))
                                             </button>
 
 
-                                            <!-- Start Modal -->
+                                            <!-- Start Modal
                                             <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal1Title" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-checkout modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
                                                     <div class="modal-content">
@@ -319,10 +357,10 @@ if(!empty($podcasts))
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- End Modal -->
+                                            <!-- End Modal
 
-
-                                        </div>
+                                        </div> 
+                                        -->
                                     </div>
                                 </div>
                                 <?php endforeach; ?>

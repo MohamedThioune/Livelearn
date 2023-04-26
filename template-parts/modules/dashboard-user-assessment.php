@@ -6,15 +6,21 @@
         if (count($time_array) === 2 && $time_array[0]!='00') {
             return  $time_array[0] * 60 + $time_array[1];
         }
-        return $time_array[1];
+        return (int)$time_array[1];
     }
 
-    $args = array(  
+    $args = array(
         'post_type' => 'assessment',
         'post_status' => 'publish',
         'order' => 'ASC', 
     );
     $assessments = get_posts($args);
+    
+    $assessments_validated = get_user_meta( get_current_user_id(), 'assessment_validated');
+    foreach ($assessments as $key => $assessment) {
+        if (in_array($assessment,$assessments_validated))
+            unset($assessments[$key]);
+    }
 ?>
 
 
@@ -29,7 +35,6 @@
             <div class="head">
                 <ul class="filters">
                     <li class="item active">All</li>
-                    <li class="item">In Progress</li>
                     <li class="item">Done</li>
                     <li class="item">Other assessment</li>
                 </ul>
@@ -108,8 +113,91 @@
                                 <a href= <?= "/detail-assessment/?assessment_id=" . $assessment->ID; ?> class="btn btnDetailsAssessment">Details</a>
                                 <form action="/dashboard/user/answer-assessment" method="post">
                                     <input type="hidden" name="assessment_id" value= <?= $assessment->ID; ?> >
-                                    <button class="btn btnGetStartAssessment" data-target="#ModalBackEnd" data-toggle="modal" id="">Get Started</button>
+                                    <button class="btn btnGetStartAssessment" data-target="" data-toggle="" id="">Get Started</button>
                                 </form>
+                            </div>
+                        </div>
+                        
+
+                        <?php
+                        }
+                        ?>
+                </div>
+                </div>
+
+                <div class="tab">
+                    
+
+                    <div class="contentCardAssessment">
+
+                        
+
+            <?php
+
+                    /** Assessment done */
+
+                foreach($assessments_validated as $key => $assessment) {
+                    
+                    $assessment_title = $assessment->post_title;
+                    $description = get_field('description_assessment',$assessment->ID);
+                    $how_it_works = get_field('how_it_works', $assessment->ID);
+                    $level = get_field('difficulty_assessment', $assessment->ID);
+                    $language = get_field('language_assessment', $assessment->ID);
+
+                    $timer = 0;
+                    $questions = get_field('question',$assessment->ID);
+                    $number_question = 0;
+                    if(!empty($questions))
+                        $number_question = count($questions);
+                    foreach ($questions as $question)
+                    {
+                        $question_time = $question['timer'];
+                        $timer += timeToSeconds($question_time);
+                    }
+                    /* Get minutes by given string seconds  */
+                    $timer = ceil($timer/60);
+
+                    //Image
+                    $image = get_field('image_assessement', $assessment->ID)['url'];
+                    if(!$image){
+                        $image = get_the_post_thumbnail_url($assessment->ID);
+                        if(!$image)
+                            $image = get_field('url_image_xml', $assessment->ID);
+                                if(!$image)
+                                    $image = get_stylesheet_directory_uri() . '/img' . '/backend1.png';
+                    }
+
+                    //Tags !mportant 
+                    $posttags = get_the_tags();
+
+                    if(!$posttags){
+                        $category_default = get_field('categories', $assessment->ID);
+                        $category_xml = get_field('category_xml', $assessment->ID);
+                    }
+
+            ?>
+
+                        <div class="cardAssessement">
+                            <div class="heead-img-block">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/assessment-1.png" alt="">
+                            </div>
+                            <div class="body-card-assessment">
+                                <p class="title-assessment"> <?= $assessment_title ?></p>
+                                <p class="level"> <?= $level ?> </p>
+                                <div class="d-flex justify-content-between flex-wrap">
+                                    <div class="d-flex element-detail-assessment">
+                                        <i class="far fa-clock"></i>
+                                        <p class="text-element-detail"> <?= $timer ?> minutes</p>
+                                    </div>
+                                    <div class="d-flex element-detail-assessment">
+                                        <i class="far fa-clone"></i>
+                                        <p class="text-element-detail">Multiple Choice Quiz</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="footerCardSkillsssessment">
+                                <a href= <?= "/detail-assessment/?assessment_id=" . $assessment->ID; ?> class="btn btnDetailsAssessment">Details</a>
+                                
                             </div>
                         </div>
                         
