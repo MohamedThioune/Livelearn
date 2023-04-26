@@ -1074,10 +1074,10 @@ ul.sub-menu li a {
 }
 
 .btnNewCourse {
-    color: #FFFFFF !important;
-    background: #023356;
-    font-size: 14px;
-    padding: 4px 20px;
+    color: #023356 !important;
+    border: 1px solid #023356;
+    font-size: 15px;
+    padding: 7px 25px;
     margin-bottom: 0;
     font-weight: bold;
     border-radius: 8px;
@@ -1085,6 +1085,11 @@ ul.sub-menu li a {
     height: fit-content;
 }
 
+.btnNewCourse:hover {
+    background: #023356;
+    text-decoration: none;
+    color: #FFFFFF !important;
+}
 .btnActiviteit {
     color: #FFFFFF;
     background: #00A89D;
@@ -1097,10 +1102,7 @@ ul.sub-menu li a {
     height: fit-content;
 }
 
-.btnNewCourse:hover {
-    color: white;
-    text-decoration: none;
-}
+
 
 .cardListeCourse {
     background: white;
@@ -2346,6 +2348,20 @@ input:focus-visible {
     min-height: 51px;
 }
 
+.content-home2 form .searchInputHome {
+    color: #707070;
+    border: none;
+    padding: 11px 20px;
+    background: white;
+    border-radius: 13px;
+    margin: 0 auto 25px;
+    min-height: 51px;
+    height: 100%;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    width: 100%;
+}
+
 .searchContentBlock .deToekomstText {
     color: #707070;
 }
@@ -3511,6 +3527,7 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 
 .btndoawnloadCv i {
     color: white;
+    margin-right: 10px;
 }
 
 .contentElementHeadCandidat {
@@ -5312,10 +5329,10 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     text-align: center;
 }
 
-.circleNotification img {
-    width: 14px;
-    height: 14px;
-    margin-top: 10px;
+.cardNotification .circleNotification img {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
 }
 
 .feddBackNotification {
@@ -5453,43 +5470,42 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 .globalnotificationBy {
     display: flex;
     justify-content: space-between;
-    width: 95%;
+    width: 100%;
     align-items: center;
     height: fit-content;
-    margin-bottom: 35px;
+    margin-bottom: 25px;
 }
 
 .globalnotificationBy .name {
     font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
+    font-size: 16px;
     margin-bottom: 4px;
-    color: #696969;
+    color: #272727;
 }
 
 .blockType p {
-    font-weight: 600;
     font-size: 18px;
     margin-bottom: 4px;
     color: #000000;
     text-align: center;
 }
 
-.blockType p:last-child {
-    font-weight: 500;
-    color: #F91919;
+.blockType .type{
+    font-size: 14px;
+    color: #00aa9e;
 }
 
 .contentImgName {
     display: flex;
 }
 
+
 .contentImg {
-    width: 75px;
-    height: 75px;
+    width: 50px;
+    height: 50px;
     border-radius: 10px;
     overflow: hidden;
-    margin-right: 25px;
+    margin-right: 20px;
 }
 
 .contentImg img {
@@ -5505,13 +5521,18 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     color: #202124;
 }
 
-.NotificationFeedback {
+.NotificationFeedback .title {
     font-size: 15px;
-    line-height: 26px;
-    color: #696969;
-    padding: 21px 25px;
-    background: #F0F5F7;
-    border-radius: 8px;
+    color: black;
+}
+.NotificationFeedback .title span{
+    color: #033356;
+    font-weight: 500;
+}
+.NotificationFeedback .subTitle{
+    color: #033356;
+    font-size: 15px;
+    font-weight: 500;
 }
 
 #ModalNotification {
@@ -8024,6 +8045,9 @@ tbody {
         .cardKraam2 {
             border: 0px solid lightgrey !important;
         }
+        .content-home2 form .searchInputHome, .content-home2 .newFormSarchBar .js-bs-select-dropdown, .content-home2 .newFormSarchBar .group-input-dropdown {
+            height: fit-content !important;
+        }
         .roadpathBlockNumber img {
             width: 30px !important;
             height: 30px !important;
@@ -8105,6 +8129,9 @@ tbody {
         .filterInputBlock select {
             -webkit-appearance: menulist-text !important;
         }
+        .content-inloggen .btnPlayGoogle, .content-inloggen .btnStore {
+            height: 60px !important;
+        }
 
         @media all and (min-width: 300px) and (max-width: 767px){
             .second-block-binnen img {
@@ -8115,6 +8142,10 @@ tbody {
             }
             .btnStore img, .btnPlayGoogle img {
                 max-height: 46px !important;
+            }
+            .content-inloggen .btnPlayGoogle, .content-inloggen .btnStore {
+                height: 60px !important;
+                margin-top: -2px;
             }
         }
     }
@@ -10614,6 +10645,7 @@ select {
     color: white !important;
     font-size: 15px;
     padding: 5px 18px;
+    margin-left: 18px;
 }
 
 .swiper-slide .btnFollowExpert {
@@ -11551,11 +11583,6 @@ select {
 #btn-remove-mesen {
     display: none;
 }
-
-.learningDatabankContent {
-    padding-top: 50px;
-}
-
 .inputSearchZoek {
     background: #F0F5F7;
     border-radius: 8px;
@@ -11803,8 +11830,8 @@ select {
     bottom: 15px;
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    left: 0;
+    justify-content: right;
+    right: 0;
     align-items: center;
     padding: 0 15px;
 }
@@ -12152,7 +12179,7 @@ select {
     margin-top: 40px;
 }
 
-.product-podcat1 .sound-wave {
+.sound-wave {
     display: none;
     height: 320px;
     width: 100%;
@@ -12163,7 +12190,7 @@ select {
     padding-top: 20px;
 }
 
-.product-podcat1 .hide {
+.product-podcat1 .hide, .content-course-strat .hide {
     display: none;
 }
 
@@ -12179,7 +12206,7 @@ select {
     }
 }
 
-.product-podcat1 .bar-scale1 {
+.bar-scale1 {
     animation: scale1 0.6s infinite;
     transform-origin: center;
 }
@@ -12196,7 +12223,7 @@ select {
     }
 }
 
-.product-podcat1 .bar-scale2 {
+.bar-scale2 {
     animation: scale2 0.6s infinite;
     transform-origin: center;
 }
@@ -12213,12 +12240,12 @@ select {
     }
 }
 
-.product-podcat1 .bar-scale3 {
+.bar-scale3 {
     animation: scale3 0.6s infinite;
     transform-origin: center;
 }
 
-.product-podcat1 .stop-animation {
+.stop-animation {
     animation-duration: 0s;
 }
 
@@ -12523,7 +12550,7 @@ select {
     text-align: center;
     justify-content: center;
     padding: 1em;
-    width: 10%;
+    width: 3%;
     color: #fff;
     border-radius: 10px;
     position: relative;
@@ -12751,6 +12778,9 @@ select {
     margin-bottom: 12px;
     margin-left: 10px;
     font-size: 14px;
+    background: #47A99E !important;
+    padding: 11px 30px;
+    margin-top: 20px;
 }
 .modal-topics-expert .styled-checkbox + label:before {
     border-radius: 20% !important;
@@ -13106,10 +13136,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     font-weight: bold;
     max-width: 560px;
 }
-.content-home2 .voorBlock form {
-    width: fit-content;
-    margin: 0 auto;
-}
+
 .content-home2 form .selectSearchHome{
     position: absolute;
     left: 0px;
@@ -13128,23 +13155,47 @@ ul .selectAll .styled-checkbox:checked + label:after {
     width: fit-content;
     background: url("data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+") no-repeat 95% 50% !important;
 }
-.content-home2 form:before {
-    content: "";
-    width: 2px;
-    height: 40px;
-    background-color: #b4b4b4;
-    left: 114px;
-    top: 6px;
-    z-index: 1;
-    position: absolute;
-    display: block;
-}
+
 .content-home2 form .selectSearchHome:focus-visible {
     outline: 0px !important;
 }
-.content-home2 form .searchInputHome {
-    padding-left: 120px;
+.content-home2 .newFormSarchBar{
+    display: flex;
+    justify-content: center;
+    width: 75%;
+    margin: 0 auto;
 }
+.content-home2 .newFormSarchBar .js-bs-select-dropdown, .newFormSarchBar .group-input-dropdown{
+    height: 100%;
+
+}
+.content-home2 .newFormSarchBar .group-input-dropdown{
+    width: 100%;
+}
+
+.content-home2 .newFormSarchBar .js-bs-select-dropdown {
+    width: auto;
+    border: none;
+    padding: 5px 10px;
+    background: white;
+    margin: 0 auto;
+    min-height: 51px;
+    height: 100%;
+    border-radius: 13px 0px 0px 13px;
+    border-right: 1px solid #c2c2c2;
+}
+.content-home2 .newFormSarchBar .dropdown-menu {
+    min-width: unset !important;
+    width: fit-content;
+    left: -11px !important;
+    top: 1px !important;
+    height: 309px;
+    overflow: scroll;
+}
+.content-home2 .newFormSarchBar .dropdown-menu .flex-column {
+    display: none !important;
+}
+
 .content-home2 .btn-Zoek{
     right: 15px;
 }
@@ -13440,6 +13491,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 .content-list-amount .table td, .table th {
     padding: 20px 10px !important;
+    text-align: center !important;
 }
 .content-list-amount td .dropdown-menu {
     min-width: 5rem !important;
@@ -15014,6 +15066,10 @@ background: #FFFFFF !important;
     width: 100%;
     padding: 14px;
     margin-top: 20px;
+}
+.btn-more-events:hover{
+    background: #043356;
+    color: #FFFFFF !important;
 }
 .Upcoming-block, .user-community-block{
     margin-bottom: 40px;
@@ -17327,6 +17383,49 @@ background: #FFFFFF !important;
 }
 .modal-footer a:hover {
     color: white !important;
+}
+.btn-add-mandatory{
+    background: #00aa9e;
+    color: #FFFFFF !important;
+}
+.content-course-strat .imgPadcastCourse, .sound-wave{
+    height: 450px;
+    border-radius: 15px;
+    overflow: hidden;
+}
+.content-course-strat .imgPadcastCourse img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.content-list-course ul li a span{
+    font-weight: 500;
+}
+.newFormSarchBar .group-input-dropdown input{
+    margin-bottom: 0;
+}
+.search-bar-block {
+    width: 35%;
+    margin-bottom: 45px;
+}
+.search-bar-block input{
+    color: #023356;
+    border: none;
+    padding: 13px 15px;
+    height: 40px;
+    border-radius: 15px 0px 0px 15px;
+    min-height: 45px;
+}
+.search-bar-block .btn-secondary {
+    color: #fff;
+    background-color: #00a89d !important;
+    border-color: #00a89d !important;
+}
+#block-input-answer-1 .btn-send {
+    top: 4px !important;
+}
+.contentCardGrant table .textTh {
+    text-align: center !important;
 }
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -19655,11 +19754,15 @@ background: #FFFFFF !important;
         padding: 50px 15px;
         margin-top: 0;
     }
+    .headFilterCourse form{
+        display: block !important;
+        padding-top: 25px;
+    }
     .headFilterCourse form .textFilter {
         display: none;
     }
     .headFilterCourse form select {
-        width: 80%;
+        width: 100%;
         padding: 10px 10px !important;
         margin-bottom: 30px;
     }
@@ -19668,7 +19771,7 @@ background: #FFFFFF !important;
         display: block;
     }
     .headFilterCourse form .priceFilter input {
-        width: 80%;
+        width: 100%;
         margin: 0 0px 20px;
         font-size: 14px;
         padding: 8px 10px;
@@ -19684,14 +19787,9 @@ background: #FFFFFF !important;
         margin: 0 0px 40px;
     }
     .hideBarFilterBlock {
-        display: block;
+        top: -17px;
         position: absolute;
-        right: 30px;
-        font-size: 20px;
-        color: #043356;
-        font-weight: 300;
-        padding: 0;
-        top: 20px;
+        right: 0;
     }
     .headFilterCourse form .priceFilter {
         display: block;
@@ -20963,6 +21061,111 @@ background: #FFFFFF !important;
     }
     .group-list-course .element-list-course .time, .group-list-course .element-list-course .status {
         width: 40% !important;
+    }
+    .content-course-strat .imgPadcastCourse, .sound-wave {
+        height: 250px;
+    }
+    .body-content-strat .content-course-strat {
+        margin-top: 20px !important;
+        min-height: 0vh !important;
+        padding-bottom: 0;
+    }
+    .sound-wave {
+        padding-top: 18%;
+    }
+    #modalForApp .modal-content {
+        height: 100%;
+    }
+    #modalForApp .modal-body{
+        display: flex;
+        align-items: center;
+    }
+    #modalForApp .modal-body .content-img-logo{
+        width: 219px;
+        height: 48px;
+        margin: 0 auto 20px;
+    }
+    #modalForApp .modal-body .content-img-logo img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .market-btn {
+        display: inline-block;
+        padding: 6px 20px;
+        padding-left: 2.8125rem;
+        transition: border-color 0.25s ease-in-out, background-color 0.25s ease-in-out;
+        border: 1px solid #e7e7e7;
+        background-position: center left 0.75rem !important;
+        background-color: #fff !important;
+        border-radius: 13px;
+        text-decoration: none;
+        width: 64%;
+        margin-bottom: 25px;
+        background-size: 34px !important;
+    }
+    .market-btn .market-button-title {
+        display: block;
+        color: #222;
+        font-size: 1.125rem;
+    }
+    .market-btn .market-button-subtitle {
+        display: block;
+        margin-bottom: -0.25rem;
+        color: #888;
+        font-size: 0.75rem;
+    }
+    .apple-btn{
+        background: url("img/apple-icon.svg") no-repeat;
+    }
+    .google-btn{
+        background: url("img/googlePlay-icon.svg") no-repeat;
+    }
+
+    #modalForApp .title-content-modal {
+        color: #707070;
+        font-size: 17px;
+        font-weight: 300;
+        margin-bottom: 30px;
+    }
+    #modalForApp .title-content-modal span{
+        color: #00A89D;
+        font-weight: 400;
+    }
+    .Aanmelden-text{
+        color: #023356;
+        font-size: 15px;
+        font-weight: 400;
+    }
+    .Aanmelden-text span{
+        font-weight: 300;
+    }
+    #modalForApp {
+        display: block;
+        height: 100%;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 11px;
+        width: 100%;
+        padding-top: 35px;
+        opacity: 1 !important;
+    }
+    #modalForApp .modal-dialog {
+        height: 100%;
+        width: 97% !important;
+    }
+    .content-home2 .newFormSarchBar .js-bs-select-dropdown {
+        padding: 6px 0px;
+    }
+    .content-list-amount {
+        width: 95%;
+        overflow-y: scroll;
+    }
+    .content-list-amount .table {
+        width: 100%;
+        min-width: 562px;
     }
 
 

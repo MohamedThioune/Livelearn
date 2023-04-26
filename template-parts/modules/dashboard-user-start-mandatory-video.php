@@ -1,11 +1,19 @@
 <html lang="en">
 
-<?php /** Template Name: start-course-mandatory-online */ ?>
+
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
+<style>
+    .theme-side-menu {
+        display: none !important;
+    }
+    .theme-learning, .theme-form, .theme-content__button-group, .theme-dashboard-blocks {
+        padding: 0 !important;
+    }
+</style>
 <body>
 <div class="content-start-course">
     <div class="headBlock ">

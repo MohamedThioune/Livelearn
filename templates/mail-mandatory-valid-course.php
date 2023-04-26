@@ -1,13 +1,13 @@
 <?php
 
-$mail_mandatored_course_body = 
+$mail_mandatory_validated_course_body = 
 '
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
   xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
-  <title>'. $first_name .', someone want you to see a course.</firs-name></title><!--[if !mso]><!-->
+  <title>Hello, '. $first_name .'.</firs-name></title><!--[if !mso]><!-->
   <meta http-equiv="X-UA-Compatible" content="IE=edge"><!--<![endif]-->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -146,7 +146,7 @@ $mail_mandatored_course_body =
                           style="font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content"
                             style="text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;"
-                            data-testid="Y0h44Pmw76d">A new course for you.</p>
+                            data-testid="Y0h44Pmw76d"></p>
                         </div>
                       </td>
                     </tr>
@@ -246,7 +246,7 @@ $mail_mandatored_course_body =
                           <h1 class="text-build-content"
                             style="text-align:center;; margin-top: 10px; margin-bottom: 10px; font-weight: normal;"
                             data-testid="RJMLrMvA0Rh"><span
-                              style="color:#023356;font-family:Arial;font-size:25px;line-height:35px;"><b>Een van je managers heeft een verplichte cursus met je gedeeld!</b></span></h1>
+                              style="color:#023356;font-family:Arial;font-size:25px;line-height:35px;"><b>Congrulations your employee "' . $employee_name . '" finish the course!</b></span></h1>
                         </div>
                       </td>
                     </tr>
@@ -261,8 +261,8 @@ $mail_mandatored_course_body =
                               ,</span></p>
                           <p class="text-build-content" data-testid="S_MPaSnC0uI"
                             style="margin: 10px 0; margin-bottom: 10px;"><span
-                              style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">The following
-                              learning content is assigned to you for reading by '. $manager->display_name . ' :</span></p>
+                            style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">You assigned this following content to : 
+                            </span></p>
                         </div>
                       </td>
                     </tr>
@@ -358,7 +358,7 @@ $mail_mandatored_course_body =
                                 valign="middle"><a href="/dashboard/user/activity"
                                   style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
                                   target="_blank"><span
-                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Go ahead !
+                                    style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Login !
                                     </span></a></td>
                             </tr>
                           </tbody>

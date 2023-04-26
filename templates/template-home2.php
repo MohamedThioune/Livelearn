@@ -995,16 +995,18 @@ $saved = get_user_meta($user_id, 'course');
 
                 <h1 class="wordDeBestText2" >Hét leer- en upskilling platform van- én voor de toekomst</h1>
                 <p class="altijdText2">Onhandig als medewerkers niet optimaal functioneren. LiveLearn zorgt dat jouw workforce altijd op de hoogte is van de laatste kennis en vaardigheden.</p>
-                <form action="/product-search" class="position-relative" method="POST">
+                <form action="/product-search" class="position-relative newFormSarchBar" method="POST">
                     <select class="form-select selectSearchHome" aria-label="search home page" name="search_type" id="course_type">
                         <?php
                             foreach($type_course as $type)
                                 echo '<option value="' . $type . '">' . $type . '</option>';
                         ?>
                     </select>
-                    <input id="search" type="search" class="jAuto searchInputHome form-control"
-                        placeholder="Zoek op naam, experts of onderwerpen " name="search" autocomplete="off">
-                    <button class="btn btn-Zoek elementWeb"><span>Zoek</span></button>
+                    <div class="group-input-dropdown">
+                        <input id="search" type="search" class="jAuto searchInputHome form-control"
+                               placeholder="Zoek op naam, experts of onderwerpen " name="search" autocomplete="off">
+                        <button class="btn btn-Zoek elementWeb"><span>Zoek</span></button>
+                    </div>
 
                     <div class="dropdown-menuSearch" id="list">
                         <div class="list-autocomplete" id="autocomplete">
@@ -1851,11 +1853,35 @@ $saved = get_user_meta($user_id, 'course');
         <img class="doanloadIllustration" src="<?php echo get_stylesheet_directory_uri();?>/img/happyDoawnload.png" alt="">
     </div>
 </div>
-
-
+<ul class="">
+    <li>Meilleurs emplacements de panneaux d'affichage disponibles dans les régions</li>
+    <li>Simplifiez votre affichage publicitaire</li>
+    <li>Trouvez les bons emplacements pour les panneaux publicitaires</li>
+</ul>
 <script src="<?php echo get_stylesheet_directory_uri();?>/mobapiCity.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="<?php echo get_stylesheet_directory_uri();?>/js/jquery.bsSelectDrop.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    (function($){
+        let classes = ['outline-custom'];
+        let selects = $('.selectSearchHome');
+        selects.each(function(i, e){
+            let randomClass  = classes[Math.floor(Math.random() * classes.length)];
+            $(this).bsSelectDrop({
+                autocomplete: 'one',
+                btnClass: 'btn btn-'+classes[i],
+                btnWidth: 'auto',
+                darkMenu: false,
+                showSelectionAsList: false,
+                showActionMenu: true,
+
+            });
+        })
+    }(jQuery));
+</script>
 
 <script>
     $(function() {

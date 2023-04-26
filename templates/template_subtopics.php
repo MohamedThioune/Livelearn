@@ -22,12 +22,10 @@
             $where = ['id' => $id];
             
             $type = 'Artikel';
-            $tit = strip_tags($artikels->titel);
-            $title = explode(' ',$tit);
-            $descrip =strip_tags($artikels->short_description);
-            $description = explode(' ', $descrip);
-            $long_desc = strip_tags($artikels->long_description);
-            $long_description = explode(' ',$long_desc);    
+
+            $title = explode(' ', $artikels['title']['rendered']);
+            $description = explode(' ', trim(strip_tags($artikels['excerpt']['rendered'])));
+            $long_description = explode(' ',trim(strip_tags($artikels['content']['rendered'])));    
             $keywords = array_merge($title, $description, $long_description);
             foreach ($keywords as $key => $word) {
                 if (strpos($word, ' ') || strpos($word, '/')|| strpos($word, '\\')) {
