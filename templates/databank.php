@@ -206,7 +206,6 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     //Onderwerpen
                                     if($course->onderwerpen != "")
                                         $onderwerpen = explode(',', $course->onderwerpen);
-                                    
                                     $state = $course->course_id ? 'present' : 'missing';
                                     $key = $course->id;
                             ?>
@@ -218,10 +217,19 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     <td class="textTh tdCenter"><?= $course->prijs; ?></td>
                                     <td class="textTh courseOnderwerpen">
                                         <?php
-                                        if(!empty($onderwerpen))
-                                            foreach($onderwerpen as $value)
-                                                if($value)
-                                                    echo (String)get_the_category_by_ID($value) . ','; 
+                                        if(!empty($onderwerpen)){
+                                        $tab = [];
+                                            foreach($onderwerpen as $value1){
+                                                if($value1){
+                                                    $tab[] = (String)get_the_category_by_ID($value1);
+                                                }
+                                            }
+                                            $tab = array_unique($tab);
+                                            foreach ($tab as $key => $value2) {
+                                                if($value2)
+                                                    echo $value2.',';
+                                            }
+                                        }
                                         ?>
                                     </td>
                                     <td class="textTh tdCenter"><?= $course->status; ?></td>
@@ -398,8 +406,10 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
     $('#subtopics').on('click', function()
     {
-        if(ids==null){
+        console.log('click');
+        if(ids.length==0){
             alert("Please, select some articles!!");
+            return;
         }else{
             const objetIds = Object.assign({}, ids);
             console.log(objetIds);
@@ -409,6 +419,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 type: 'POST',
                 data: objetIds,
                 beforeSend:function(){
+                    document.getElementById('content-back-topics').innerHTML = '';
                     $('#loader').attr('hidden',false);
                     $('#select_field').attr('hidden',true);
                 },error:function(error){
@@ -417,7 +428,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     $('#loader').attr('hidden',true);
                     document.getElementById('content-back-topics').innerHTML = success;
                     console.log(success);
-                    location.reload();
+                    // location.reload();
                 },complete:function(complete){
                     console.log("complete:",complete);
                     $('#loader').attr('hidden',true);
