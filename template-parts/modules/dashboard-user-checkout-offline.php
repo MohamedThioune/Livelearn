@@ -298,7 +298,7 @@ if($this_date <= $date_now && !$is_finish)
                         </div>
                         <div>
                             <p class="sub-text-1">EURO</p>
-                            <p class="sub-text-2">€<?= $prijs ?></p>
+                            <p class="sub-text-2"><?= $prijs ?></p>
                         </div>
                     </div>
                 </div>

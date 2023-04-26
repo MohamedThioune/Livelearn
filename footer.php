@@ -19,12 +19,22 @@
 
 
 <!--modal for app mobile when load page-->
+<?php
+global $wp;
 
+$url = home_url( $wp->request );
+$bool_mobile_download = isset($_COOKIE['mobile_download']) ? true : false;
+if(!$bool_mobile_download):
+?> 
 <div id="modalForApp" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <form action="/dashboard/user/" method="post">
+                    <input type="hidden" name="cookie_input_mobile" value="1">
+                    <input type="hidden" name="cookie_input_url" value="<?= $url ?>">
+                    <button type="submit" name='cookie_mobile_download' class="">&times;</button>
+                </form>
             </div>
             <div class="modal-body text-center">
                 <div class="content-modal">
@@ -35,7 +45,7 @@
                     <div class="group-btn-get-app">
 
                         <!-- Google Play button -->
-                        <a href="https://apps.apple.com/nl/app/livelearn/id1666976386"  class="market-btn apple-btn" role="button">
+                        <a href="https://apps.apple.com/nl/app/livelearn/id1666976386" class="market-btn apple-btn" role="button">
                             <span class="market-button-subtitle">Download on the</span>
                             <span class="market-button-title">App Store</span>
                         </a>
@@ -52,9 +62,7 @@
         </div>
     </div>
 </div>
-
-
-
+<?php endif; ?>
 
 
 <footer class="footer-area footerLive">
