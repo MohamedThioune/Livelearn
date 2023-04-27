@@ -951,10 +951,8 @@ function recommended_course($data)
   //Empty courses belong to news user(No topics & Experts followed)
   if(empty($courses)){
     $courses = array_slice($global_courses, 0, 80);
-    $courses = shuffle($courses);
+    shuffle($courses);
   }
-
-  return $courses;
 
   if (!empty($user_post_view))
   {
