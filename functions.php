@@ -954,6 +954,7 @@ function recommended_course($data)
     $courses = shuffle($courses);
   }
 
+  return $courses;
 
   if (!empty($user_post_view))
   {
@@ -1046,8 +1047,6 @@ function recommended_course($data)
         }
     }
   }
-
-  return $courses;
 
   if (empty($recommended_courses))
     $recommended_courses = $courses;
