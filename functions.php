@@ -1044,10 +1044,12 @@ function recommended_course($data)
     }
   }
 
-  $recommended_courses = array_slice($recommended_courses, 0, 50); 
 
   if (empty($recommended_courses))
-      $recommended_courses = $courses;
+    $recommended_courses = $courses;
+  else
+    $recommended_courses = array_slice($recommended_courses, 0, 50); 
+
 
   if (!empty($recommended_courses)) {
     $current_user_id = $GLOBALS['user_id'];
