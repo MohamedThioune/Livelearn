@@ -1058,7 +1058,8 @@ function filter_course(WP_REST_Request $request)
       $assessment -> questions = $questions;
       $assessment -> description = get_field('description_assessment',$assessment->ID);
       $assessment -> author = get_user_by( 'ID', $assessment -> post_author  );
-      $assessment -> author -> profilImg = get_field('profile_img','user_'.$assessment -> post_author) ? get_field('profile_img','user_'.$assessment -> post_author) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+      $author_profilImg = get_field('profile_img','user_'.$assessment -> post_author) ? get_field('profile_img','user_'.$assessment -> post_author) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+      $assessment -> author = new Expert($assessment -> author,$author_profilImg);
       $image = get_field('image_assessement', $assessment->ID)['url'];
       if(!$image)
       {
@@ -1106,7 +1107,7 @@ function filter_course(WP_REST_Request $request)
             update_field('assessment_id',$request['assessment_id'],$id_new_response);
             update_field('score',$score,$id_new_response);
             $percentage = ($score / count ($questions) ) * 100;
-            if ( $percentage >= 60 )
+            if ($percentage >= 60)
               add_user_meta( $user_id, 'assessment_validated',$assessment);
 
       }
@@ -1135,7 +1136,6 @@ function getCommunities()
     $community->questions = array();
     $community->is_connected_user_member = false;
     if (!empty($follower_community))
-
       foreach ($follower_community as $key => $follower) {
         if ($follower -> data -> ID == $user_id)
           $community->is_connected_user_member = true;
