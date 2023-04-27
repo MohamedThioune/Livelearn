@@ -1636,6 +1636,12 @@ add_action( 'rest_api_init', function () {
     'callback' => 'getCommunities',
   ));
 
+  register_rest_route ('custom/v1', '/community/(?P<id>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'getCommunityById',
+  ));
+
+
   register_rest_route ('custom/v1', '/join/community/', array(
     'methods' => 'PUT',
     'callback' => 'joinCommunity',
