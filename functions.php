@@ -953,6 +953,7 @@ function recommended_course($data)
     $courses = shuffle($courses);
   }
 
+  return $courses;
   if (!empty($user_post_view))
   {
     $courses_id = array();
@@ -962,6 +963,7 @@ function recommended_course($data)
     $max_points = 10;
     $recommended_courses = array();
 
+    
     foreach($all_user_views as $key => $view) {
         if(!$view['course'])
             continue;
