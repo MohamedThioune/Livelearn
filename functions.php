@@ -1047,6 +1047,7 @@ function recommended_course($data)
     }
   }
 
+  return $courses;
 
   if (empty($recommended_courses))
     $recommended_courses = $courses;
