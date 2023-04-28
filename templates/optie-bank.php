@@ -7,16 +7,15 @@ global $wpdb;
 $table = $wpdb->prefix . 'databank'; 
 
 extract($_POST);
-
 $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
 $course = $wpdb->get_results( $sql )[0];
 
 $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 
 if($optie == "accept"){
-    //Insert some other course type
-    $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar'];
-    $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Webinar' => 'webinar' ];
+        //Insert some other course type
+        $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar','Artikels' => 'artikels'];
+        $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Webinar' => 'webinar', 'Artikels' => 'artikels'];
 
     //Insert Artikel
     if (strval($course->type) == "Artikel"){
