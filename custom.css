@@ -140,7 +140,7 @@ ul.sub-menu li a {
 .cardCoursGlocal {
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     width: 100%;
     margin-top: 0px;
     align-content: baseline;
@@ -148,7 +148,7 @@ ul.sub-menu li a {
     background: #dfeef3;
     justify-content: space-between;
     padding-left: 0px;
-    padding-bottom: 30px;
+    padding-bottom: 0px;
     padding-right: 5px;
 }
 
@@ -188,6 +188,7 @@ ul.sub-menu li a {
     display: flex;
     justify-content: space-between;
     position: relative;
+    align-items: center;
 }
 
 .cardCours:last-child {
@@ -8395,7 +8396,7 @@ ul#tabs-nav li.active {
 .customTabs ul#tabs-nav li:hover,
 ul#tabs-nav li.active a {
     color: #043356 !important;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 18px;
 }
 
@@ -10320,6 +10321,7 @@ select {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: right;
 }
 
 .elementclone {
@@ -13499,8 +13501,11 @@ ul .selectAll .styled-checkbox:checked + label:after {
     background: #043356;
     min-width: 100px;
     padding: 12px 10px;
-    color: white;
+    color: white !important;
     font-size: 17px;
+}
+.btn-sendSubscrip:hover {
+    color: white !important;
 }
 .checkSubs{
     display: flex;
@@ -14159,13 +14164,14 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 .card-community-overview .head-card .block-img{
     position: relative;
-    width: 110px;
-    height: 110px;
+    width: 95px;
+    height: 95px;
     padding: 15px;
     border-radius: 100%;
     overflow: hidden;
-    background: #F69405;
+    background: #02a89d;
     margin-right: 20px;
+    border: 1px solid #b0b0b0;
 }
 .card-community-overview .head-card .block-img .img-card-community{
     width: 100%;
@@ -14174,8 +14180,8 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 .card-community-overview .head-card .second-img-card-community{
     position: absolute;
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
     border-radius: 100%;
     overflow: hidden;
     left: 80px;
@@ -14235,7 +14241,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
 .card-community-overview .content-card .title{
     color: #023356;
     font-weight: bold;
-    font-size: 27px;
+    font-size: 20px;
     margin-bottom: 20px;
 }
 .card-community-overview .content-card .title:first-child{
@@ -14257,11 +14263,10 @@ ul .selectAll .styled-checkbox:checked + label:after {
     background: #023356;
     color: white !important;
     font-size: 17px;
-    min-width: 125px;
-    padding: 9px 10px;
+    min-width: 100px;
+    padding: 5px 10px;
     margin-right: 20px;
     border-radius: 10px;
-    font-weight: 600;
 }
 
 .card-community-overview .footer-card .tag{
@@ -16311,7 +16316,7 @@ background: #FFFFFF !important;
 .content-title-notification{
     width: 28% !important;
 }
-.tab-certificate table th, .table td {
+.tab-certificate table th, .tab-certificate .table td {
     text-align: center !important;
 }
 .content-assessment-2 .tabs-courses .head {
@@ -17316,9 +17321,9 @@ background: #FFFFFF !important;
 #polarisModal .modal-footer>* {
     margin-bottom: 0 !important;
 }
-.otherModal table th, .table td {
+/*.otherModal table th, .table td {
      text-align: left !important;
-}
+}*/
 .add-people-manualy {
     border: 1px solid #47A99E;
     color: #47A99E !important;
@@ -17442,6 +17447,50 @@ background: #FFFFFF !important;
 }
 .text-no-date{
     font-size: 14px;
+}
+.block-new-card-course center img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.block-new-card-course center h2{
+    font-size: 24px !important;
+}
+#autocomplete_company_people .textTh .dropdown-toggle::after{
+    display: none !important;
+}
+.contentCardGrant .table td {
+    text-align: center !important;
+}
+.Opleiding {
+    width: 90px;
+}
+.acf-form .acf-form-submit {
+    text-align: right;
+}
+.btnSkipCourse{
+    padding: 8px 0;
+    height: fit-content;
+    margin: 0 20px;
+}
+.btn-doawnload-excel {
+    background: #47a99e;
+    color: white;
+}
+.btn-doawnload-excel:hover {
+    color: white !important;
+}
+.liveOverBlock .content-card-skills .card-skills {
+    min-height: 175px;
+}
+.review-info-card .rating > label:before {
+    margin: 5px;
+    font-size: 15px !important;
+}
+.review-info-card .rating {
+    width: fit-content;
+    margin-left: -5px;
+    margin-top: -4px;
 }
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
