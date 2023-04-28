@@ -21,21 +21,23 @@
             // var_dump ($artikels);
             $where = ['id' => $id];
             
-            $type = 'Artikel';
-
-            $title = explode(' ', $artikels['title']['rendered']);
-            $description = explode(' ', trim(strip_tags($artikels['excerpt']['rendered'])));
-            $long_description = explode(' ',trim(strip_tags($artikels['content']['rendered'])));    
+            // $type = 'Artikel';
+            $tit = strip_tags($artikels->titel);
+            $title = explode(' ',$tit);
+            $descrip = strip_tags($artikels->short_description);
+            $description = explode(' ', $descrip);
+            $long_desc = strip_tags($artikels->long_description);
+            $long_description = explode(' ',$long_desc);    
             $keywords = array_merge($title, $description, $long_description);
-            foreach ($keywords as $key => $word) {
-                if (strpos($word, ' ') || strpos($word, '/')|| strpos($word, '\\')) {
-                    unset($keywords[$key]);
-                    $new_words = explode(' ', $word);
-                    // foreach ($new_words as $new_word) {
-                    //     $keywords[] = $new_word;
-                    // }
-                }
-            }
+            // foreach ($keywords as $key => $word) {
+            //     if (strpos($word, ' ') || strpos($word, '/')|| strpos($word, '\\')) {
+            //         unset($keywords[$key]);
+            //         $new_words = explode(' ', $word);
+            //         foreach ($new_words as $new_word) {
+            //             $keywords[] = $new_word;
+            //         }
+            //     }
+            // }
             $tags = array();
             $onderwerpen = "";
             $categories = array(); 
@@ -54,12 +56,11 @@
                 array_push($categories, $cat_id);
             }
             
-            
             $bangerichts = get_categories( array(
                     'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
                     'parent'  => $categories[1],
                     'hide_empty' => 0, // change to 1 to hide categores not having a single post
-                ) 
+                )
             );
             
             $functies = get_categories( array(
@@ -107,22 +108,28 @@
                     $categorys = array_merge($categorys, $tag);      
                 }
             }
-            // $words_not_goods=[];
-            // foreach($categorys as $cat){
-            //     if(str_contains($cat->cat_name,' ')){
-            //         $words_not_goods[]=$cat->cat_name;
-            //     }
-            // }
+            $words_not_goods=[];
+            foreach($categorys as $cat){
+                // var_dump($cat->cat_name);
+                if(str_contains($cat->cat_name,' ')){
+                    $words_not_goods[]=$cat->cat_name;
+                }
+            }
             $occurrence = array_count_values(array_map('strtolower', $keywords));
-            foreach($keywords as $key => $searchword){
-                if ($searchword='')
-                    break;
-                    
-                $searchword = strtolower(strval($searchword));
+        //    foreach($keywords as $wo){
+        //     var_dump($wo);
+        //    }
+        // var_dump($categorys);
+        foreach($keywords as $key => $searchword){
+                $searchword = trim(strtolower(strval($searchword)));
+                if ($searchword=='' || $searchword=='\n' || $searchword==' '|| $searchword=='\t'){    
+                    unset($keywords[$key]);
+                    continue;
+                }
                 foreach($categorys as $i=>$category){
-                    if ($i >20) {
-                        break;
-                    }
+                    // if ($i >20) {
+                        //     break;
+                        // }
                     $cat_slug = $category->slug;
                     $cat_name = $category->cat_name; 
                     if($occurrence[strtolower($category->cat_name)] >= 1)
@@ -139,13 +146,12 @@
                         if(!in_array($value->cat_ID, $tags))
                             array_push($tags, $value->cat_ID);
             }
-            
             $onderwerpen = join(',',$tags);
-            // var_dump($onderwerpen);
-                $articles=array(
-                    'onderwerpen' => $onderwerpen
-                );
-                $updated=$wpdb->update($table,$articles,$where);
+            var_dump($onderwerpen);
+                // $articles=array( 
+                //     'onderwerpen' => $onderwerpen
+                // );
+                // $updated=$wpdb->update($table,$articles,$where);
             }
             //echo ($updated);//0 au lieu de 1
 
