@@ -298,7 +298,9 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 </body>
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-
+<script>
+    var ids=[];
+</script>
 <script id="rendered-js" >
     var list=[];
     var names=[];
@@ -322,19 +324,30 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
 <script type="text/javascript">
     function uncheckAll() {
+        console.log('unchek')
         let checkboxes = document.querySelectorAll('input[type=checkbox]');
         for (let i = 0; i < checkboxes.length; i++) {
             checkboxes[i].checked = false;
+            //console.log('::::::::::::::::::::'.checkboxes[i]);
         }
     }
 
     window.onload = uncheckAll;
 
     function checkUncheck(checkBox) {
+        let regex = /^[0-9]+$/;
         get = document.querySelectorAll('input[type=checkbox]');
         for(var i=0; i<get.length; i++) {
             get[i].checked = checkBox.checked;
+        //    console.log('::::::::::::::::::::',get[i].value);
+           if (regex.test(get[i].value)){
+               ids.push(get[i].value);
+           }
         }
+        if(!checkBox.checked)
+            ids = []
+
+        // console.log(ids);
     }
 
     $(document).ready(function() {
@@ -398,7 +411,6 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             });
     });
 
-    var ids=[];
     $(".checkOne").click((e)=>{
         let tags_id = e.target.value;
         let if_exist = ids.indexOf(tags_id);
@@ -449,8 +461,8 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         var optie = e.target.value;
         if(confirm('Are you sure you want to apply this record ?'))
         {
-            console.log('array sending',ids);
-            console.log('classs',classs);
+            // console.log('array sending',ids);
+            // console.log('classs',classs);
             $.ajax({
                url: '/optieall',
                type: 'POST',
@@ -476,7 +488,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 document.getElementById('content-back-topics').innerHTML = data;
                     for(var i=0;i<ids.length;i++){
                         $("#"+ids[i]).remove();
-                        console.log(ids[i]);
+                        // console.log(ids[i]);
                     }
                     // alert("Record applied successfully");
                     // location.reload();
