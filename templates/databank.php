@@ -166,7 +166,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     </center>
                     <div class="" id="content-back-topics"></div>
                     <table class="table table-responsive">
-                        <form method="POST">
+                        <!-- <form method="POST"> -->
                             <thead>
                             <tr>
                                 <th scope="col"><input type="checkbox" id="checkAll" onclick='checkUncheck(this);'></th>
@@ -204,9 +204,12 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
                                     $onderwerpen = array();
                                     //Onderwerpen
-                                    if($course->onderwerpen != "")
-                                        $onderwerpen = explode(',', $course->onderwerpen);
-                                    
+                                    if($course->onderwerpen != ""){
+                                        $subtopics = explode(',', $course->onderwerpen);
+                                        asort($subtopics);
+                                        $onderwerpen = array_unique($subtopics);
+                                    }
+
                                     $state = $course->course_id ? 'present' : 'missing';
                                     $key = $course->id;
                             ?>
@@ -236,7 +239,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                             }
                             ?>
                             </tbody>
-                        </form>
+                        <!-- </form> -->
                     </table>  
                     <center>
                     <?php
@@ -398,58 +401,67 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
     $('#subtopics').on('click', function()
     {
-        if($ids==null){alert("Please, select some articles!!");}else{
-            $('#loader').attr('hidden',false);
-            $('#select_field').attr('hidden',true);
+        if(ids==null){
+            alert("Please, select some articles!!");
+        }else{
+            const objetIds = Object.assign({}, ids);
+            console.log(objetIds);
+            console.log('data submitted',objetIds);
             $.ajax({
-                url: '/subtopics',
+                url: '/livelearn/subtopics',
                 type: 'POST',
-                data: {
-                    ids: ids
-                },beforeSend:function(){
+                data: objetIds,
+                beforeSend:function(){
+                    $('#loader').attr('hidden',false);
+                    $('#select_field').attr('hidden',true);
+                },error:function(error) {
+                    console.log("error:", error);
+                },success:function(success){
                     $('#loader').attr('hidden',true);
-                    $('#select_field').attr('hidden',false);
-                },error:function(response) {
-                    console.log("error:".response);
-                },success:function(response){
-                    console.log('success',response);
-                },complete:function(response){
-                    console.log("complete:".response);
+                    document.getElementById('content-back-topics').innerHTML = success;
+                    console.log(success);
+                    location.reload();
+                },complete:function(complete){
+                    console.log("complete:",complete);
                     $('#loader').attr('hidden',true);
-                    $('#select_field').attr('hidden',false);
+                    $('#select_field').attr('hidden',true);
                 }
             });
         }
     });
 
     $('.optieAll').click((e)=>{
-        // var tr_element = e.target.parentElement.closest("tr");
-        // var get = document.getElementsByName('checkOne');
+        var tr_element = e.target.parentElement.closest("tr");
+        var ids = tr_element.id;
         var classs = tr_element.className;
-
-        console.log(ids);
-
-        // var optie = e.target.id;
+ 
+        var optie = e.target.id;
 
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-               url: '/optieAll',
+               url: '/livelearn/optieAll',
                type: 'POST',
-               data: {   
-                   class:classs
+               data: {
+                    id: ids,
+                    class:classs,
+                    optie:option
                 },
                error: function() {
                   alert('Something is wrong');
                },
                success: function(data) {
-                    for(var i=0;i<ids.length;i++){
-                        $("#"+ids[i]).remove();
-                        console.log(ids[i]);
+                    for(var i=0;i<objetIds.length;i++){
+                        $("#"+objetIds[i]).remove();
+                        console.log(objetIds[i]);
                     }
-                    alert("Record applied successfully");
-                    location.reload();
+                    document.getElementById('content-back-topics').innerHTML = data;
+                    console.log(data);
+                    // alert("Record applied successfully");
+                    // location.reload();
                     // window.location.href = "/optieAll";
+               },complete: function(data){
+                    console.log(data);
                }
             });
         }
