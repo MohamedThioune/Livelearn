@@ -147,11 +147,11 @@
                             array_push($tags, $value->cat_ID);
             }
             $onderwerpen = join(',',$tags);
-            var_dump($onderwerpen);
-                // $articles=array( 
-                //     'onderwerpen' => $onderwerpen
-                // );
-                // $updated=$wpdb->update($table,$articles,$where);
+            // var_dump($onderwerpen);
+                $articles=array( 
+                    'onderwerpen' => $onderwerpen
+                );
+                $updated=$wpdb->update($table,$articles,$where);
             }
             //echo ($updated);//0 au lieu de 1
 
