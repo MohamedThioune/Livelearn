@@ -40,7 +40,9 @@
     }
     $count = count($members);
     extract($_POST);
-
+    if (isset($nmbrs_username) && isset($nmbrs_password)) {
+        var_dump($nmbrs_username,$nmbrs_password);
+    }
     if(isset($missing_details_user)){
         update_field('telnr', $telnr, 'user_'.$id_user);
         update_field('role', $role_user, 'user_'.$id_user);
@@ -395,14 +397,14 @@
             -->
             <div id="back-nmbrs" class="text-center"></div>
             <div class="modal-body">
-                <form class="needs-validation" novalidate id="data-sending-from-nmbrs" method="POST">
+                <form class="needs-validation" action="/livelearn/dashboard/company/people/" novalidate id="data-sending-from-nmbrs" method="POST">
                     <div class="form-group">
                         <label for="nmbrs-username" class="col-form-label">login</label>
-                        <input type="text" class="form-control" name="nmbrs-username" aria-describedby="inputGroupPrepend" required>
+                        <input type="text" class="form-control" name="nmbrs_username" aria-describedby="inputGroupPrepend" required>
                     </div>
                     <div class="form-group">
                         <label for="nmbrs-password" class="col-form-label">password</label>
-                        <input type="password" class="form-control" name="nmbrs-password" aria-describedby="inputGroupPrepend" required>
+                        <input type="password" class="form-control" name="nmbrs_password" aria-describedby="inputGroupPrepend" required>
                     </div>
                 </form>
             </div>
