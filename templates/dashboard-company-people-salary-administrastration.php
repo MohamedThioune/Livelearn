@@ -1,7 +1,7 @@
 <?php /** Template Name: salary admin system */ ?>
+<?php // /livelearn/salaryadmin ?>
 
 <?php
-var_dump('polaris',$_POST);
-?>
 
-<h1>HELLO POLARIS</h1>
+?>
+<h1>Hello template salary admin</h1>
