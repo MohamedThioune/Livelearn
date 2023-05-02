@@ -15505,6 +15505,10 @@ background: #FFFFFF !important;
     color: #888DA8;
     padding: 0px 10px;
     margin-bottom: 20px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 .group-members-community .card-members .friend-members{
     font-weight: 600;
