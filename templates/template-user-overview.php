@@ -1056,7 +1056,7 @@
                 }
             ?>
 
-            <div class="sousBlockProduct3 ml-md-1 ml-3">
+            <div class="sousBlockProduct3 opleiBlock">
                 <p class="sousBlockTitleProduct">Onderwerpen</p>
                 <div class="blockSousblockTitle">
             
@@ -1089,7 +1089,7 @@
             <?php
             if(!empty($agenda)){
             ?>
-            <div class="sousBlockProduct4">
+            <div class="sousBlockProduct4 opleiBlock">
                 <div class="headsousBlockProduct4">
                     <p class="sousBlockTitleProduct2">Agenda</p>
                     <div class="elementIconeRight">
@@ -1247,7 +1247,7 @@
             <?php
                 if(!empty($workshops)){
             ?>
-            <div class="sousBlockProduct2">
+            <div class="sousBlockProduct2 opleiBlock">
                 <p class="sousBlockTitleProduct">Workshops</p>
                 <div class="blockCardOpleidingen ">
 
@@ -1415,7 +1415,7 @@
             <?php
                 if(!empty($masterclasses)){
             ?>
-            <div class="sousBlockProduct2">
+            <div class="sousBlockProduct2 opleiBlock">
                 <p class="sousBlockTitleProduct">Masterclasses</p>
                 <div class="blockCardOpleidingen ">
 
@@ -1582,7 +1582,7 @@
             <?php
                 if(!empty($events)){
             ?>
-            <div class="sousBlockProduct6">
+            <div class="sousBlockProduct6 opleiBlock">
                 <p class="sousBlockTitleProduct">Events</p>
                 <div class="blockCardOpleidingen">
 
@@ -1727,7 +1727,7 @@
             <?php 
                 if(!empty($e_learnings)){
             ?>
-            <div class="sousBlockProduct2">
+            <div class="sousBlockProduct2 opleiBlock">
                 <p class="sousBlockTitleProduct">E-Learnings</p>
                 <div class="blockCardOpleidingen ">
                                 
@@ -1856,7 +1856,7 @@
             <?php
                 if(!empty($trainings)){
             ?>
-            <div class="sousBlockProduct2">
+            <div class="sousBlockProduct2 opleiBlock">
                 <p class="sousBlockTitleProduct">Trainings</p>
                 <div class="blockCardOpleidingen ">
 

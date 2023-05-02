@@ -48,4 +48,4 @@ else{
 // close curl
 curl_close( $ch );
 
-?>
+?> <span></span>
