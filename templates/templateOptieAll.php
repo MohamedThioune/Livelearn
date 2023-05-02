@@ -17,7 +17,7 @@
                 $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Webinar' => 'webinar', 'Artikels' => 'artikels'];
 
                 //Insert Artikel
-                if (strval($course->type) == "Artikels"){
+                if (strval($course->type) == "Artikel"){
                     //Creation post
                     $args = array(
                         'post_type'   => 'post',
