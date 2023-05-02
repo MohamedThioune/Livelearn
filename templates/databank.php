@@ -454,6 +454,9 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             });
         }
     });
+        // window.addEventListener('load', () => {
+        //     ids=[]
+        // });
 
     $('.optieAll').click((e)=>{
         const state = document.querySelector('.state').className;
@@ -481,6 +484,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 $('#loader').attr('hidden',false)
                 $('#select_field').attr('hidden',true)  
                 // alert('Something is wrong');
+                // location.reload();
                },
                success: function(data) {
                 $('#loader').attr('hidden',true)
@@ -508,7 +512,6 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         // console.log('ids::::::::::',ids);
         // console.log('option choisi',optie);
         // console.log('classs::::::::::',classs);
-
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
@@ -519,7 +522,6 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                    optie: optie,
                    class: classs,
                 },
-                
                 beforeSend:function(){
                     document.getElementById('content-back-topics').innerHTML = '';
                     $('#loader').attr('hidden',false)
@@ -528,18 +530,20 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                error: function(error) {
                 console.log(error);
                 document.getElementById('content-back-topics').innerHTML = error;
-                    $('#loader').attr('hidden',true)
-                    $('#select_field').attr('hidden',false)
-                    document.getElementById('content-back-topics').innerHTML = "<span class='alert alert-alert'>Something is wrong</span>";
+                $('#loader').attr('hidden',true)
+                $('#select_field').attr('hidden',false)
+                document.getElementById('content-back-topics').innerHTML = "<span class='alert alert-alert'>Something is wrong</span>";
                 //   alert('Something is wrong');
+                // location.reload();
                },
                success: function(data) {
-                    $("#"+ids).remove();
-                    console.log(data);
-                    // document.getElementById('content-back-topics').innerHTML = data;
-                    document.getElementById('content-back-topics').innerHTML = "<span class='alert alert-success'>Record applied successfully</span>";
+                    console.log('response ',data);
+                    document.getElementById('content-back-topics').innerHTML = data;
+                    // document.getElementById('content-back-topics').innerHTML = "<span class='alert alert-success'>Record applied successfully</span>";
                     $('#loader').attr('hidden',true)
-                    $('#select_field').attr('hidden',false)
+                    $('#select_field').attr('hidden',false);
+                    $("#"+ids).remove();
+                    // location.reload();
                     // alert("Record applied successfully");  
                }
             });
