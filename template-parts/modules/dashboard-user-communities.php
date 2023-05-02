@@ -118,9 +118,13 @@ $other_communities = array();
                                                     <input type='hidden' name='community_id' value='" . $community->ID . "' >
                                                     <input type='submit' class='btn btn-join-group' name='follow_community' value='Join Group' >
                                               </form>";
-                                    else
+                                    else{
                                         echo " <a href='/dashboard/user/community-detail/?mu=".$community->ID."' class='btn btn-join-group'>Go !</a>";
-
+                                        echo '<form action=""  method="POST">
+                                                    <input type="hidden" name="community_id" value="' . $community->ID . '" >
+                                                    <button type="submit" name="unfollow_community" class="btn btn-danger">Unsubscribe</button>
+                                              </form>';
+                                    }
                                     ?>
                                 </div>
                             </div>
@@ -204,6 +208,10 @@ $other_communities = array();
                                               </form>";
                                     else
                                         echo " <a href='/dashboard/user/community-detail/?mu=".$community->ID."' class='btn btn-join-group'>Go !</a>";
+                                        echo '<form action=""  method="POST">
+                                                <input type="hidden" name="community_id" value="' . $community->ID . '" >
+                                                <button type="submit" name="unfollow_community" class="btn btn-danger">Unsubscribe</button>
+                                              </form>';
                                     ?>
                                 </div>
                             </div>
