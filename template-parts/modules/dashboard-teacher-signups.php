@@ -71,7 +71,7 @@ $inkomsten = count($orders) * $price;
         </div>
     </div>
     <div class="row">
-        <div class="col-md-10 col-lg-8">
+        <div class="col-md-12 col-lg-12">
             <div class="cardCoursGlocal">
                 <div class="w-100">
                     <div class="titleOpleidingstype">
@@ -150,12 +150,13 @@ $inkomsten = count($orders) * $price;
                                 <input type="search" id="<?= $_GET['parse']; ?>" placeholder="Zoek personen" class="inputSearchCourse">
                                 <!-- <a href="" class="btnActiviteit">Actie</a> -->
                             </div>
+                            <button class="btn btn-doawnload-excel" id="export-btn">Download to excel</button>
                         </div>
                         <div class="contentCardListeCourse table-responsive">
                             <?php
                             if(!empty($orders)){
                             ?>
-                            <table class="table">
+                            <table class="table" id="tableExport">
                                 <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -249,7 +250,15 @@ $inkomsten = count($orders) * $price;
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/table2excel@1.0.4/dist/table2excel.min.js'></script>
+<script>
+    document.getElementById("export-btn").addEventListener("click", () => {
+        let table2excel = new Table2Excel();
+        table2excel.export(document.querySelector("#tableExport"));
+    });
 
+
+</script>
 <script>
     var id_course;
     $('.search-signups').keyup(function(){
