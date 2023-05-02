@@ -23,7 +23,7 @@
 global $wp;
 
 $url = home_url( $wp->request );
-if(!isset($_COOKIE['mobile_download']))
+if(isset($_COOKIE['mobile_download']))
 ?> 
 <div id="modalForApp" class="modal fade" role="dialog">
     <div class="modal-dialog">
