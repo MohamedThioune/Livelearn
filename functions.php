@@ -739,7 +739,8 @@ function recommended_course($data)
       'hide_empty' => 0, // change to 1 to hide categores not having a single post
   ) );
 
-  foreach($cats as $category){
+  foreach($cats as $category)
+  {
       $cat_id = strval($category->cat_ID);
       $category = intval($cat_id);
       array_push($categories, $category);
@@ -1053,7 +1054,7 @@ function recommended_course($data)
       if ($course->visibility != [])
         if ($author_company != $current_user_company)
           continue;
-      $author_img = get_field('profile_img', 'user_' . $author->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+      $author_img = get_field('profile_img', 'user_' . $author->ID)!=false ? get_field('profile_img', 'user_' . $author->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
       $course->experts = array();
       $experts = get_field('experts', $course->ID);
       if (!empty($experts))
