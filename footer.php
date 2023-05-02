@@ -18,12 +18,12 @@
 </div>
 
 
-<!--modal for app mobile when load page-->
 <?php
 global $wp;
 
 $url = home_url( $wp->request );
-if(!isset($_COOKIE['mobile_download'])):
+// if(!isset($_COOKIE['mobile_download'])):
+//modal for app mobile when load page
 ?> 
 <div id="modalForApp" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -61,7 +61,7 @@ if(!isset($_COOKIE['mobile_download'])):
         </div>
     </div>
 </div>
-<?php endif; ?>
+<!-- <?php endif; ?> -->
 
 
 <footer class="footer-area footerLive">
