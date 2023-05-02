@@ -20,10 +20,9 @@
 
 <?php
 global $wp;
-
-$url = home_url( $wp->request );
-// if(!isset($_COOKIE['mobile_download'])):
 //modal for app mobile when load page
+$url = home_url( $wp->request );
+if(!isset($_COOKIE['mobile_download'])):
 ?> 
 <div id="modalForApp" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -61,8 +60,7 @@ $url = home_url( $wp->request );
         </div>
     </div>
 </div>
-<!-- <?php endif; ?> -->
-
+<?php endif; ?>
 
 <footer class="footer-area footerLive">
     <div class="footer-big">
