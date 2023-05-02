@@ -739,7 +739,8 @@ function recommended_course($data)
       'hide_empty' => 0, // change to 1 to hide categores not having a single post
   ) );
 
-  foreach($cats as $category){
+  foreach($cats as $category)
+  {
       $cat_id = strval($category->cat_ID);
       $category = intval($cat_id);
       array_push($categories, $category);
