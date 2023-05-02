@@ -85,12 +85,12 @@
 
                         $users = get_users();
                 ?>
-                        <form action="" method="POST">
+                        <!--<form action="" method="POST">
                             <div class="acf-field">
                                 <label for="locate">Geef een gebruiker de rol 'expert' om een team aan te sturen :</label><br>
                                 <div class="form-group">
                                         <?php
-                                        //Get users from company
+/*                                        //Get users from company
                                         foreach($users as $used){
 
                                             if(in_array('administrator', $used->roles) || in_array('hr', $used->roles) || in_array('manager', $used->roles) || in_array('author', $used->roles))
@@ -109,11 +109,11 @@
                                                 } 
                                             }
                                         }
-                                    ?>
+                                    */?>
                                 </div>
                                 <button type="submit" name="granted_push_teacher" class="btn btn-info">Activeer</button>
                             </div>
-                        </form>
+                        </form>-->
                 <?php
                     }
                 }else
@@ -176,10 +176,10 @@
                                     </a>
                                 </div>
                             </td>
-                            <td class="textTh"> <a href="" style="text-decoration:none;"><?= $display ?></a> </td>
-                            <td class="textTh"><?= $is_manager ?></td>
-                            <td class="textTh"><?= $is_author ?></i></td>
-                            <td class="textTh">
+                            <td class="textTh text-center"> <a href="" style="text-decoration:none;"><?= $display ?></a> </td>
+                            <td class="textTh text-center"><?= $is_manager ?></td>
+                            <td class="textTh text-center"><?= $is_author ?></i></td>
+                            <td class="textTh text-center">
                                 <div class="dropdown text-white">
                                     <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
                                         <img  style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
