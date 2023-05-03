@@ -1853,11 +1853,6 @@ $saved = get_user_meta($user_id, 'course');
         <img class="doanloadIllustration" src="<?php echo get_stylesheet_directory_uri();?>/img/happyDoawnload.png" alt="">
     </div>
 </div>
-<ul class="">
-    <li>Meilleurs emplacements de panneaux d'affichage disponibles dans les régions</li>
-    <li>Simplifiez votre affichage publicitaire</li>
-    <li>Trouvez les bons emplacements pour les panneaux publicitaires</li>
-</ul>
 <script src="<?php echo get_stylesheet_directory_uri();?>/mobapiCity.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
