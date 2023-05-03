@@ -444,7 +444,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     $('#loader').attr('hidden',true);
                     document.getElementById('content-back-topics').innerHTML = success;
                     console.log(success);
-                    location.reload();
+                    location.reload(); 
                 },complete:function(complete){
                     console.log("complete:",complete);
                     $('#loader').attr('hidden',true);

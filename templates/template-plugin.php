@@ -26,7 +26,7 @@
     $text = str_replace("&lt;","<",$text);
     $text = str_replace("&gt;",">",$text);
     $text = str_replace("&#8216;","'",$text);
-    $text = str_replace("&#8217;","'",$text);
+    $text = str_replace("&#8217;","'",$text); 
     $text = str_replace("&#8220;","\"",$text);
     $text = str_replace("&#8221;","\"",$text); 
     $text = str_replace("&#8230;","...",$text);
