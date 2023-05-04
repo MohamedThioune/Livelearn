@@ -1,11 +1,11 @@
-PUT http://localhost/wp-json/custom/v1/ask/community
+PUT http://localhost/wp-json/custom/v1/reply/community
 Authorization: Basic bW9oYW1lZC50QGlsbGltaXRpcy5jb206Q2FsbG1lMjAyMi4=
 Content-Type: application/json
 
  {
     "user_id":3,
     "community_id":2156,
-    "text_question": "What is the goal",
+    "text_reply": "Agree",
     "index_question": 2
  }
 
