@@ -1357,7 +1357,6 @@ function askQuestion(WP_REST_Request $request)
       return $question_community;
 
     return ['error' => 'Question not saved successfully !'];
-    
 }
 
 function replyQuestion(WP_REST_Request $request)
