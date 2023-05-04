@@ -1051,9 +1051,10 @@ function recommended_course($data)
   else
     $recommended_courses = array_slice($recommended_courses, 0, 50); 
 
+
   $course_id = array();
   $random_id = array(); 
-  if (empty($recommended_courses)) {
+  if (!empty($recommended_courses)) {
     $current_user_id = $user;
     $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
     $outcomes_recommended_courses = $recommended_courses;
@@ -1097,8 +1098,7 @@ function recommended_course($data)
                 }
 
         $new_course = new Course($course);
-        if(!in_array($course->ID, $random_id)
-        ) {
+        if(!in_array($course->ID, $random_id)) {
             array_push($random_id, $course->ID);
             array_push($outcomes_recommended_courses, $new_course);
         }
