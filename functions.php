@@ -1098,7 +1098,7 @@ function recommended_course($data)
                 }
 
         $new_course = new Course($course);
-        if(!in_array($course->ID, $random_id)){
+        if(!in_array($course->ID, $random_id) && !in_array($course->id, $random_id)) {
             array_push($random_id, $course->ID);
             array_push($outcomes_recommended_courses, $new_course);
         }
