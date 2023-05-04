@@ -1057,7 +1057,7 @@ function recommended_course($data)
   if (!empty($recommended_courses)) {
     $current_user_id = $user;
     $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
-    $outcomes_recommended_courses = $recommended_courses;
+    $outcomes_recommended_courses = array();
 
     foreach ($recommended_courses as $key => $course) {
         $course->visibility = get_field('visibility', $course->ID) ?? [];
