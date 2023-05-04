@@ -1209,7 +1209,7 @@ function getCommunityById($data)
     return ["error" => "You have to fill the id of the community !"];
   $community = get_post($id_community) ?? null;
   if ($community == null)
-  return ["error" => "This community does not exist !"];
+    return ["error" => "This community does not exist !"];
   
     $community-> author_company = get_field('company_author',$community->ID) ? get_field('company_author',$community->ID) : null;
     $community->image_community = get_field('image_community',$community->ID) ? get_field('image_community',$community->ID) : null;
@@ -1223,9 +1223,9 @@ function getCommunityById($data)
       foreach ($follower_community as $key => $follower) {
         if ($follower -> data -> ID == $user_id)
           $community->is_connected_user_member = true;
-        $follower -> data ->profile_image =  get_field('profile_img','user_'.$expert ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-        $follower -> data ->role = get_field('role', 'user_' . (int)$follower -> data ->ID) ? get_field('role', 'user_' . (int)$follower -> data ->ID) : '';
-        array_push($community->followers, $follower -> data);
+          $follower -> data ->profile_image =  get_field('profile_img','user_'.(int)$follower -> data ->ID) != false ? get_field('profile_img','user_'.(int)$follower -> data ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $follower -> data ->role = get_field('role', 'user_' . (int)$follower -> data ->ID) ? get_field('role', 'user_' . (int)$follower -> data ->ID) : '';
+          array_push($community->followers, $follower -> data);
       }
 
     $community -> questions = get_field('question_community',$community->ID) ? get_field('question_community',$community->ID) : [];
@@ -1349,6 +1349,7 @@ function askQuestion(WP_REST_Request $request)
     //New question
     $question_community = get_field('question_community', $community_id) ? get_field('question_community', $community_id) : [] ;
     $question['user_question'] = $user;
+    $question['user_question']->data->profile_image = get_field('profile_img','user_'.(int)$question['user_question']->data->ID) != false ? get_field('profile_img','user_'.(int)$question['user_question']->data->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
     $question['text_question'] = $text_question;
     array_push($question_community, $question);
 
@@ -1393,8 +1394,8 @@ function replyQuestion(WP_REST_Request $request)
             $reply = array();
             $user_reply = $user;
             $reply['user_reply'] = $user_reply;
+            $reply['user_reply']->data->profile_image = get_field('profile_img','user_'.(int)$reply['user_reply']->data->ID) != false ? get_field('profile_img','user_'.(int)$reply['user_reply']->data->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
             $reply['text_reply'] = $text_reply;
-
             if(empty($question_community[$index_question]['reply_question']))
                 $question_community[$index_question]['reply_question'] = array();
 
@@ -1436,3 +1437,5 @@ function replyQuestion(WP_REST_Request $request)
         }
       }
   }
+  /** Views Endpoints */
+  
