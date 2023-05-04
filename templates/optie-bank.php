@@ -80,15 +80,15 @@ if($optie == "✔️"){
             }
         }
         update_field('course_type', $typos[$course->type] , $id_post);
-        update_field($typos[$course->type]."_itself", nl2br($course->long_description), $id_post); // I don't understand give more explications...
     }
+    
     if(is_wp_error($id_post)){
         $error = new WP_Error($id_post);
         echo $error->get_error_message($id_post);
     }
     else{
         // echo "post-id : " . $id_post;
-        echo "<span class='alert alert-success'>validation successfuly ✔️✔️✔️</span>";
+        echo "<span class='alert alert-success'>validation successfuly ✔️</span>";
     }
     $onderwerpen = explode(',', $course->onderwerpen);
     /*
