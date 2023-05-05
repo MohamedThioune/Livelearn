@@ -14945,12 +14945,12 @@ background: #FFFFFF !important;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     text-align: left;
+    text-transform: capitalize;
 }
 .new-card-course .autor{
     font-style: normal;
     font-weight: 400;
-    font-size: 15px;
-    line-height: 19px;
+    font-size: 16px;
     color: #999999;
     margin-bottom: 0;
 }
@@ -14964,7 +14964,7 @@ background: #FFFFFF !important;
     font-size: 17px;
     margin-bottom: 0;
 }
-.new-card-course .title-favorite, .new-card-course .autor-price-block {
+.new-card-course .title-favorite, .new-card-course .categoryDateBlock {
     margin-bottom: 20px;
 }
 .new-card-course .title-favorite button{
@@ -15594,11 +15594,6 @@ background: #FFFFFF !important;
     background: #023356;
     color: white !important;
 }
-
-
-
-
-
 
 .ck-editor__editable {
     min-height: 200px;
@@ -17924,8 +17919,43 @@ background: #FFFFFF !important;
 .block-store-doawnload {
     margin-top: 70px;
 }
-
-
+.new-card-course .blockImgUser {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    overflow: hidden;
+    border: 1px solid #00aa9e24;
+    margin-right: 15px;
+}
+.new-card-course .blockImgUser img{
+    width: 100%;
+    height: 100%;
+    objectif: content;
+}
+.new-card-course .lieuAm {
+    font-weight: 500;
+    font-size: 15px;
+    color: #3D4D59;
+}
+.new-card-course .blockOpein i{
+    color: #3D4D59;
+    font-size: 18px;
+    height: fit-content;
+    margin-right: 6px;
+}
+.owl-item .new-card-course {
+    display: block;
+    height: 100%;
+}
+.productBlock3 .owl-nav{
+    display: none !important;
+}
+.productBlock3 .owl-dots{
+    margin-top: 35px !important;
+}
+.productBlock3 {
+    margin-bottom: 0px;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     .head-ontwikkeladvies h1 {
@@ -21723,6 +21753,9 @@ background: #FFFFFF !important;
     }
     .block-store-doawnload {
         margin-top: 30px;
+    }
+    .doawnloadBlockHome {
+        margin: 70px 0;
     }
 
 
