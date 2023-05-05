@@ -15,6 +15,5 @@
 
 
 <?php get_template_part( 'partials/content-none' ); ?>
-<?php //endif; ?>
 
 <?php get_footer(); ?>
