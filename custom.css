@@ -13260,7 +13260,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     margin: 35px auto;
 }
 .onze-expert-block{
-    margin-top: 85px;
+    margin-top: 50px;
     padding: 35px 0 40px;
     margin-bottom: 65px;
 }
@@ -17858,6 +17858,73 @@ background: #FFFFFF !important;
     border: 1px solid #043356;
     color: #FFFFFF !important;
 }
+.theme-card-gradient{
+    background: linear-gradient(272deg, #043356fc 0%, rgb(2 168 157) 86.98%);
+    border-radius: 10px;
+    color: white;
+    padding: 32px 35px 45px;
+    text-align: center;
+    box-shadow: 0px 0px 3px 3px #ffffff;
+}
+.theme-card-gradient .title-card{
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+.theme-card-gradient .description-card {
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 29px;
+    margin-bottom: 30px;
+}
+.theme-card-gradient a{
+    border: 2px solid white;
+    color: white !important;
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px 10px;
+    font-weight: 700;
+    border-radius: 20px;
+}
+.theme-card-gradient a:hover{
+    background: #FFFFFF !important;
+    color: #04414d !important;
+}
+.img-block-illustration{
+    margin: 40px auto 50px;
+    width: 100%;
+    height: 500px;
+}
+.img-block-illustration img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.block-store-doawnload .title-text{
+    color: #707070;
+    font-size: 21px;
+    font-style: italic;
+    margin-bottom: 22px;
+    font-weight: 300;
+}
+.block-store-doawnload .group-btn-store a{
+    height: 40px;
+}
+.block-store-doawnload .group-btn-store a img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.block-store-doawnload .group-btn-store #googlePlay {
+    height: 60px;
+    margin-top: -10px;
+}
+.block-store-doawnload {
+    margin-top: 70px;
+}
+
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -21637,6 +21704,25 @@ background: #FFFFFF !important;
     }
     .content-404 .btnGoBack, .content-404 .btnHomeP {
         font-size: 15px;
+    }
+    .img-block-illustration {
+        height: 220px;
+    }
+    .theme-card-gradient {
+        padding: 32px 30px 45px;
+        margin: 0px 15px 30px;
+    }
+    .theme-card-gradient .title-card {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    .theme-card-gradient .description-card {
+        font-size: 16px;
+        line-height: 26px;
+        margin-bottom: 23px;
+    }
+    .block-store-doawnload {
+        margin-top: 30px;
     }
 
 

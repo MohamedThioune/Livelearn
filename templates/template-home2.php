@@ -1282,7 +1282,51 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
         </div>
     </div>
-
+    <div class="container-fluid">
+        <div class="img-block-illustration">
+            <img src="<?php echo get_stylesheet_directory_uri();?>/img/illustration-livelearn.png"  alt="">
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="theme-card-gradient">
+                    <p class="title-card">Voor jou!</p>
+                    <p class="description-card">Een altijd gratis leeromgeving om je oneindig door te laten groeien; word de expert in de markt.</p>
+                    <div class="w-100">
+                        <a href="/inloggen-2/">Sign-up!</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="theme-card-gradient">
+                    <p class="title-card">Voor opleiders / experts</p>
+                    <p class="description-card">Ben jij een expert, opleider of coach? Unlock je teacher omgeving en deel / verkoop direct je kennis.</p>
+                    <div class="w-100">
+                        <a href="/voor-teacher-2-2/">Sign-up!</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="theme-card-gradient">
+                    <p class="title-card">Voor werkgevers</p>
+                    <p class="description-card">Je bedrijf oneindig laten groeien, door je personeel te laten excelleren? LiveLearn dé upskilling partner.  </p>
+                    <div class="w-100">
+                        <a href="/voor-organisatie-2/">Sign-up!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block-store-doawnload text-center">
+            <p class="title-text">OF DOWNLOAD ONZE GRATIS APP</p>
+            <div class="group-btn-store d-flex flex-wrap justify-content-center">
+                <a href="">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/e-store.png"  alt="app store">
+                </a>
+                <a href="" id="googlePlay">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/playGoogle.png"  alt="google play">
+                </a>
+            </div>
+        </div>
+    </div>
    <div class="onze-expert-block">
        <div class="container-fluid">
            <div class="headCollections">
@@ -1374,118 +1418,6 @@ $saved = get_user_meta($user_id, 'course');
        </div>
    </div>
 
-<div class="cardVoor">
-    <div class="container-fluid web">
-        <p class="titleblockOnze">Wie zijn dan onze gebruikers?</p>
-        <a href="/about/" class="zelf-block">
-            <p>Lees alles wat wij doen ?</p>
-            <div class="all-expert">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
-            </div>
-        </a>
-        <div class="row paddingElement7">
-            <div class="col-lg-4  col-md-6">
-                <a href="/inloggen-2/">
-                    <div class="cardModife3 theme-card">
-                        <div class="boxImgCard3 theme-card-img">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/phoneHomme.png" alt="">
-                            <p  class="startGratis theme-card-category">Skill paspoort</p>
-                        </div>
-                        <div class="textGroup theme-card-body">
-                            <p class="voorText2 theme-card-title">Voor jou!</p>
-                            <p class="dePaterneText theme-card-description">Direct en gratis je persoonlijke leeromgeving. Blijf groeien gedurende je carrière of ontdek je verborgen talenten.</p>
-                            <a href="/inloggen-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-4  col-md-6">
-                <a href="/voor-teacher-2-2/">
-                    <div class="cardModife3 theme-card ">
-                        <div class="boxImgCard3 theme-card-img">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/hmTableau.png" alt="">
-                            <p class="startGratis theme-card-category">Word partner</p>
-                        </div>
-                        <div class="textGroup theme-card-body">
-                            <p class="voorText2 theme-card-title">Voor opleiders / experts</p>
-                            <p class="dePaterneText theme-card-description">Word een partner van LiveLearn, deel al je kennis(producten) eenvoudig en bereik nieuwe klanten.</p>
-                            <a href="/voor-teacher-2-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-4  col-md-6">
-                <a href="/voor-organisatie-2/">
-                    <div class="cardModife3 theme-card ">
-                        <div class="boxImgCard3 theme-card-img">
-                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/sta.png" alt="">
-                            <p class="startGratis theme-card-category">Start gratis</p>
-                        </div>
-                        <div class="textGroup theme-card-body">
-                            <p class="voorText2 theme-card-title">Voor organisaties</p>
-                            <p class="dePaterneText theme-card-description">Een lerende organisatie binnen een paar klikken. Krijg inzicht in de ontwikkeling van je medewerkers en blijf groeien.</p>
-                            <a href="/voor-organisatie-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </a>
-
-</div>
-    <div class="Mob">
-        <p class="onzeText">Onze gebruikers</p>
-        <div class="swiper-container swipeContaine1">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide swiper-slide3">
-                    <a href="/inloggen-2/">
-                        <div class="cardModife3 theme-card ">
-                            <div class="boxImgCard3 theme-card-img">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/phoneHomme.png" alt="">
-                                <p  class="startGratis theme-card-category">Skill paspoort</p>
-                            </div>
-                            <div class="textGroup theme-card-body">
-                                <p class="voorText2 theme-card-title">Voor jou!</p>
-                                <p class="dePaterneText theme-card-description">Direct en gratis je persoonlijke leeromgeving. Blijf groeien gedurende je carrière of ontdek je verborgen talenten.</p>
-                                <a href="/inloggen-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="swiper-slide swiper-slide3">
-                    <a href="/voor-teacher-2-2/">
-                        <div class="cardModife3 theme-card ">
-                            <div class="boxImgCard3 theme-card-img">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/hmTableau.png" alt="">
-                                <p class="startGratis theme-card-category">Word partner</p>
-                            </div>
-                            <div class="textGroup theme-card-body">
-                                <p class="voorText2 theme-card-title">Voor opleiders / experts</p>
-                                <p class="dePaterneText theme-card-description">Word een partner van LiveLearn, deel al je kennis(producten) eenvoudig en bereik nieuwe klanten.
-                                </p>
-                                <a href="/voor-teacher-2-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="swiper-slide swiper-slide3">
-                    <a href="/voor-organisatie-2/">
-                        <div class="cardModife3 theme-card ">
-                            <div class="boxImgCard3 theme-card-img">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/sta.png" alt="">
-                                <p class="startGratis theme-card-category">Start gratis</p>
-                            </div>
-                            <div class="textGroup theme-card-body">
-                                <p class="voorText2 theme-card-title">Voor organisaties</p>
-                                <p class="dePaterneText theme-card-description">Een lerende organisatie binnen een paar klikken. Krijg inzicht in de ontwikkeling van je medewerkers en blijf groeien.</p>
-                                <a href="/voor-organisatie-2/" class="merrText text-center theme-card-button">Meer Informatie</a>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
 <div class="container-fluid">
     <div class="talent-binnen-block">
         <div class="first-block-binnen">
