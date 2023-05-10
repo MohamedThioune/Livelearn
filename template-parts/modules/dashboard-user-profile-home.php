@@ -33,8 +33,8 @@ if (!empty($portfolios))
                 </div>
                 <a href="" class="contentMap">
                     <i style="color:#696969;font-size: 1.2em" class="fa fa-home"></i>&nbsp;
-                    <p><?php echo $company_name; ?></p>
-                </a>
+                    <a href="/dashboard/company/people"><?php echo $company_name; ?></a>
+                </div>
             </div>
             <?php 
                 if($user->ID == get_current_user_id())

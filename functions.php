@@ -933,7 +933,8 @@ function recommended_course($data)
 
   }
 
-  $courses = array_slice($courses, 0, 150);
+  if(!empty($courses))
+    $courses = array_slice($courses, 0, 250);
 
   //Views
   $user_post_view = get_posts(
@@ -946,144 +947,161 @@ function recommended_course($data)
   )[0];   
   $is_view = false;
 
-  if (!empty($user_post_view))
-  {
-      $courses_id = array();
-      $is_view = true;
   
-      $all_user_views = (get_field('views', $user_post_view->ID));
-      $max_points = 10;
-      $recommended_courses = array();
-
-      foreach($all_user_views as $key => $view) {
-          if(!$view['course'])
-              continue;
-
-          foreach ($courses as $key => $course) {
-              $points = 0;
-              $course->image = "";
-              $course->author_image = "";
-
-              /*
-              * Thumbnails
-              */
-              $course->image = get_field('preview', $course->ID)['url'];
-              if(!$course->image){
-                  $course->image = get_the_post_thumbnail_url($course->ID);
-                  if(!$course->image)
-                      $course->image = get_field('url_image_xml', $course->ID);
-                          if(!$course->image)
-                              $course->image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-              }
-              
-              //Image author
-              $course->author_image = get_field('profile_img', 'user_' . $course->post_author);
-              $course->author_image = $course->author_image ?: get_stylesheet_directory_uri() . '/img/user.png';
-
-              //Read category viewed
-              $read_category_view = array();
-              $category_default = get_field('categories', $view['course']->ID);
-              $category_xml = get_field('category_xml', $view['course']->ID);
-              if(!empty($category_default))
-                  foreach($category_default as $item)
-                      if($item)
-                          if(!in_array($item['value'],$read_category_view))
-                              array_push($read_category_view, $item['value']);
-
-              else if(!empty($category_xml))
-                  foreach($category_xml as $item)
-                      if($item)
-                          if(!in_array($item['value'],$read_category_view))
-                              array_push($read_category_view, $item['value']);
-
-
-              //Read category course
-              $read_category_course = array();
-              $category_default = get_field('categories', $view['course']->ID);
-              $category_xml = get_field('category_xml', $view['course']->ID);
-              if(!empty($category_default))
-                  foreach($category_default as $item)
-                      if($item)
-                          if(!in_array($item['value'],$read_category_course))
-                              array_push($read_category_course, $item['value']);
-
-              else if(!empty($category_xml))
-                  foreach($category_xml as $item)
-                      if($item)
-                          if(!in_array($item['value'],$read_category_course))
-                              array_push($read_category_course, $item['value']);
-
-              //Price view
-              $view_prijs = get_field('price', $view['course']->ID);
-
-              foreach($read_category_view as $value){
-                  if($points == 6)
-                      break;
-                  if(in_array($value, $read_category_course))
-                      $points += 3;
-              }
-              if ($view['course']->post_author == $course->post_author) 
-                  $points += 3;
-              if ($view_prijs <= $course->price)
-                  $points += 1;
-              
-              $percent = abs(($points/$max_points) * 100);
-              if ($percent >= 50)
-                  if(!in_array($course->ID, $random_id)){
-                      array_push($random_id, $course->ID);
-                      array_push($recommended_courses, $course);
-                  }
-          }
-      }
+  //Empty courses belong to news user(No topics & Experts followed)
+  if(empty($courses)){
+    $courses = array_slice($global_courses, 0, 80);
+    shuffle($courses);
   }
 
-  $recommended_courses = array_slice($recommended_courses, 0, 20); 
+  if (!empty($user_post_view))
+  {
+    $courses_id = array();
+    $is_view = true;
 
-  if (empty($recommended_courses))
-      $recommended_courses = $courses;
+    $all_user_views = (get_field('views', $user_post_view->ID));
+    $max_points = 10;
+    $recommended_courses = array();
 
-  if (!empty($recommended_courses)) {
-    $current_user_id = $GLOBALS['user_id'];
-    $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
-    $outcomes_recommended_courses = $recommended_courses;
-    foreach ($recommended_courses as $key => $course) {
-      $course->visibility = get_field('visibility', $course->ID) ?? [];
-      $author = get_user_by('ID', $course->post_author);
-      $author_company = get_field('company', 'user_' . (int) $author->ID)[0];
-      if ($course->visibility != [])
-        if ($author_company != $current_user_company)
-          continue;
-      $author_img = get_field('profile_img', 'user_' . $author->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-      $course->experts = array();
-      $experts = get_field('experts', $course->ID);
-      if (!empty($experts))
-        foreach ($experts as $key => $expert) {
-          $expert = get_user_by('ID', $expert);
-          $experts_img = get_field('profile_img', 'user_' . $expert->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-          array_push($course->experts, new Expert($expert, $experts_img));
-        }
-      $course->author = new Expert($author, $author_img);
-      $course->longDescription = get_field('long_description', $course->ID);
-      $course->shortDescription = get_field('short_description', $course->ID);
-      $course->courseType = get_field('course_type', $course->ID);
-      $course->pathImage = get_field('url_image_xml', $course->ID);
-      $course->price = get_field('price', $course->ID) ?? 0;
-      $course->youtubeVideos = get_field('youtube_videos', $course->ID) ? get_field('youtube_videos', $course->ID) : [];
-      $course->podcasts = get_field('podcasts', $course->ID) ? get_field('podcasts', $course->ID) : [];
+    
+    foreach($all_user_views as $key => $view) {
+        if(!$view['course'])
+            continue;
 
-      $course->connectedProduct = get_field('connected_product', $course->ID);
-      $tags = get_field('categories', $course->ID) ?? [];
-      $course->tags = array();
-      if ($tags)
-        if (!empty($tags))
-          foreach ($tags as $key => $category)
-            if (isset($category['value'])) {
-              $tag = new Tags($category['value'], get_the_category_by_ID($category['value']));
-              array_push($course->tags, $tag);
+        foreach ($courses as $key => $course) {
+            $points = 0;
+            $course->image = "";
+            $course->author_image = "";
+
+            /*
+            * Thumbnails
+            */
+            $course->image = get_field('preview', $course->ID)['url'];
+            if(!$course->image){
+                $course->image = get_the_post_thumbnail_url($course->ID);
+                if(!$course->image)
+                    $course->image = get_field('url_image_xml', $course->ID);
+                        if(!$course->image)
+                            $course->image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
             }
+            
+            //Image author
+            $course->author_image = get_field('profile_img', 'user_' . $course->post_author);
+            $course->author_image = $course->author_image ?: get_stylesheet_directory_uri() . '/img/user.png';
 
-      $new_course = new Course($course);
-      array_push($outcomes_recommended_courses, $new_course);
+            //Read category viewed
+            $read_category_view = array();
+            $category_default = get_field('categories', $view['course']->ID);
+            $category_xml = get_field('category_xml', $view['course']->ID);
+            if(!empty($category_default))
+                foreach($category_default as $item)
+                    if($item)
+                        if(!in_array($item['value'],$read_category_view))
+                            array_push($read_category_view, $item['value']);
+
+            else if(!empty($category_xml))
+                foreach($category_xml as $item)
+                    if($item)
+                        if(!in_array($item['value'],$read_category_view))
+                            array_push($read_category_view, $item['value']);
+
+
+            //Read category course
+            $read_category_course = array();
+            $category_default = get_field('categories', $view['course']->ID);
+            $category_xml = get_field('category_xml', $view['course']->ID);
+            if(!empty($category_default))
+                foreach($category_default as $item)
+                    if($item)
+                        if(!in_array($item['value'],$read_category_course))
+                            array_push($read_category_course, $item['value']);
+
+            else if(!empty($category_xml))
+                foreach($category_xml as $item)
+                    if($item)
+                        if(!in_array($item['value'],$read_category_course))
+                            array_push($read_category_course, $item['value']);
+
+            //Price view
+            $view_prijs = get_field('price', $view['course']->ID);
+
+            foreach($read_category_view as $value){
+                if($points == 6)
+                    break;
+                if(in_array($value, $read_category_course))
+                    $points += 3;
+            }
+            if ($view['course']->post_author == $course->post_author) 
+                $points += 3;
+            if ($view_prijs <= $course->price)
+                $points += 1;
+            
+            $percent = abs(($points/$max_points) * 100);
+            if ($percent >= 50)
+                if(!in_array($course->ID, $random_id)){
+                    array_push($random_id, $course->ID);
+                    array_push($recommended_courses, $course);
+                }
+        }
+    }
+  }
+
+  if(empty($recommended_courses))
+    $recommended_courses = $courses;
+  else
+    $recommended_courses = array_slice($recommended_courses, 0, 50); 
+
+  $course_id = array();
+  $random_id = array(); 
+  if (!empty($recommended_courses)) {
+    $current_user_id = $user;
+    $current_user_company = get_field('company', 'user_' . (int) $current_user_id)[0];
+    //Fix fadel
+    //$outcomes_recommended_courses = $recommended_courses;
+    $outcomes_recommended_courses = array();
+    foreach ($recommended_courses as $key => $course) {
+        $course->visibility = get_field('visibility', $course->ID) ?? [];
+        $author = get_user_by('ID', $course->post_author);
+        $author_company = get_field('company', 'user_' . (int) $author->ID)[0];
+        if ($course->visibility != [])
+            if ($author_company != $current_user_company)
+                continue;
+
+        $author_img = get_field('profile_img',  'user_' . $author->ID);
+        $author_img = $author_img ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+        $course->experts = array();
+        $experts = get_field('experts', $course->ID);
+        if (!empty($experts))
+            foreach ($experts as $key => $expert) {
+                $expert = get_user_by('ID', $expert);
+                $experts_img = get_field('profile_img', 'user_' . $expert->ID) ? get_field('profile_img', 'user_' . $expert->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                array_push($course->experts, new Expert($expert, $experts_img));
+            }
+        $course->author = new Expert($author, $author_img);
+        $course->longDescription = get_field('long_description', $course->ID);
+        $course->shortDescription = get_field('short_description', $course->ID);
+        $course->courseType = get_field('course_type', $course->ID);
+        $course->pathImage = get_field('url_image_xml', $course->ID);
+        $course->price = get_field('price', $course->ID) ?? 0;
+        $course->youtubeVideos = get_field('youtube_videos', $course->ID) ? get_field('youtube_videos', $course->ID) : [];
+        $course->podcasts = get_field('podcasts', $course->ID) ? get_field('podcasts', $course->ID) : [];
+
+        $course->connectedProduct = get_field('connected_product', $course->ID);
+        $tags = get_field('categories', $course->ID) ?? [];
+        $course->tags = array();
+        if ($tags)
+            if (!empty($tags))
+            foreach ($tags as $key => $category)
+                if (isset($category['value'])) {
+                $tag = new Tags($category['value'], get_the_category_by_ID($category['value']));
+                array_push($course->tags, $tag);
+                }
+
+        $new_course = new Course($course);
+        if(!in_array($course->ID, $random_id)) {
+            array_push($random_id, $course->ID);
+            array_push($outcomes_recommended_courses, $new_course);
+        }
     }
     return $outcomes_recommended_courses;
   }
@@ -1636,6 +1654,12 @@ add_action( 'rest_api_init', function () {
     'callback' => 'getCommunities',
   ));
 
+  register_rest_route ('custom/v1', '/community/(?P<id>\d+)', array(
+    'methods' => 'GET',
+    'callback' => 'getCommunityById',
+  ));
+
+
   register_rest_route ('custom/v1', '/join/community/', array(
     'methods' => 'PUT',
     'callback' => 'joinCommunity',
@@ -1650,7 +1674,5 @@ add_action( 'rest_api_init', function () {
     'methods' => 'PUT',
     'callback' => 'replyQuestion',
   ));
-  
-  
 
 });

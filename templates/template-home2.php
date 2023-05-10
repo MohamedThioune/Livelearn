@@ -7,10 +7,10 @@
 $page = 'check_visibility.php';
 require($page);
 
-$user_connected = get_current_user_id();
+$user_connected = wp_get_current_user();
 
-if($user_connected)
-    header('Location: /dashboard/user/');
+/*if($user_connected && !in_array('administrator', $user_connected->roles))
+    header('Location: /dashboard/user/');*/
 
 if(!isset($visibility_company))
     $visibility_company = "";
@@ -1051,7 +1051,7 @@ $saved = get_user_meta($user_id, 'course');
                 </div>
                 <?php if(!$user_id) { ?>
                 <div class="groupeBtn-Jouw-inloggen groupBtnConnecte">
-                    <a href="http://livelearn.nl/login/?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
+                    <a href="http://livelearn.nl/wp-login.php?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/googleImg.png" alt="" />
                         Gratis inloggen met Google
                     </a>
@@ -1767,7 +1767,7 @@ $saved = get_user_meta($user_id, 'course');
 <script src="<?php echo get_stylesheet_directory_uri();?>/mobapiCity.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="<?php echo get_stylesheet_directory_uri();?>/js/jquery.bsSelectDrop.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/js/jquery.bsSelectDrop.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.animate.js"></script>

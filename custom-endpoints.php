@@ -1058,9 +1058,23 @@ function filter_course(WP_REST_Request $request)
       $assessment -> questions = $questions;
       $assessment -> description = get_field('description_assessment',$assessment->ID);
       $assessment -> author = get_user_by( 'ID', $assessment -> post_author  );
-    }
-     return $assessments;
+      $author_profilImg = get_field('profile_img','user_'.$assessment -> post_author) ? get_field('profile_img','user_'.$assessment -> post_author) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+      $assessment -> author = new Expert($assessment -> author,$author_profilImg);
+      $image = get_field('image_assessement', $assessment->ID)['url'];
+      if(!$image)
+      {
+          $image = get_the_post_thumbnail_url($assessment->ID) ?? false;
+          if(!$image)
+              $image = get_field('url_image_xml', $assessment->ID);
+                  if(!$image)
+                      $image = get_stylesheet_directory_uri().'/img/assessment-1.png'; 
+      }
+      $assessment ->image = $image;
   }
+  return $assessments;
+}
+
+
 
   function answerAssessment (WP_REST_Request $request)
   {
@@ -1095,7 +1109,7 @@ function filter_course(WP_REST_Request $request)
             update_field('assessment_id',$request['assessment_id'],$id_new_response);
             update_field('score',$score,$id_new_response);
             $percentage = ($score / count ($questions) ) * 100;
-            if ( $percentage >= 60 )
+            if ($percentage >= 60)
               add_user_meta( $user_id, 'assessment_validated',$assessment);
 
       }
@@ -1124,7 +1138,6 @@ function getCommunities()
     $community->questions = array();
     $community->is_connected_user_member = false;
     if (!empty($follower_community))
-
       foreach ($follower_community as $key => $follower) {
         if ($follower -> data -> ID == $user_id)
           $community->is_connected_user_member = true;
@@ -1184,6 +1197,86 @@ function getCommunities()
   }
   
   return $communities;
+
+}
+
+function getCommunityById($data)
+{
+  $user_id = $GLOBALS['user_id'];
+  //All communities
+  $id_community = $data['id'] ?? null;
+  if ($id_community == null)
+    return ["error" => "You have to fill the id of the community !"];
+  $community = get_post($id_community) ?? null;
+  if ($community == null)
+    return ["error" => "This community does not exist !"];
+  
+    $community-> author_company = get_field('company_author',$community->ID) ? get_field('company_author',$community->ID) : null;
+    $community->image_community = get_field('image_community',$community->ID) ? get_field('image_community',$community->ID) : null;
+    $community->range = get_field('range',$community->ID) ? get_field('range',$community->ID) : null;
+    $follower_community = get_field('follower_community',$community->ID) ? get_field('follower_community',$community->ID) : [];
+    $community->followers = array();
+    $community->courses = array();
+    $community->questions = array();
+    $community->is_connected_user_member = false;
+    if (!empty($follower_community))
+      foreach ($follower_community as $key => $follower) {
+        if ($follower -> data -> ID == $user_id)
+          $community->is_connected_user_member = true;
+          $follower -> data ->profile_image =  get_field('profile_img','user_'.(int)$follower -> data ->ID) != false ? get_field('profile_img','user_'.(int)$follower -> data ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+          $follower -> data ->role = get_field('role', 'user_' . (int)$follower -> data ->ID) ? get_field('role', 'user_' . (int)$follower -> data ->ID) : '';
+          array_push($community->followers, $follower -> data);
+      }
+
+    $community -> questions = get_field('question_community',$community->ID) ? get_field('question_community',$community->ID) : [];
+    if ($community -> questions != [])
+    {
+      foreach ($community -> questions as $key => $question) {
+          if (!$question['reply_question'])
+             $community -> questions[$key]['reply_question'] = [];
+          
+      }
+    }
+    $courses_community = get_field('course_community',$community->ID) ?? [];
+    if (!empty($courses_community))
+
+      foreach ($courses_community as $key => $course)
+      {
+            $author = get_user_by( 'ID', $course -> post_author);
+            $author_img = get_field('profile_img','user_'.$author ->ID) ? get_field('profile_img','user_'.$expert ->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            $course-> author = new Expert ($author , $author_img);
+            $course->longDescription = get_field('long_description',$course->ID);
+            $course->shortDescription = get_field('short_description',$course->ID);
+            $course->courseType = get_field('course_type',$course->ID);
+                //Image - article
+            $image = get_field('preview', $course->ID)['url'];
+            if(!$image){
+                $image = get_the_post_thumbnail_url($course->ID);
+                if(!$image)
+                    $image = get_field('url_image_xml', $course->ID);
+                        if(!$image)
+                            $image = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course->courseType) . '.jpg';
+            }
+            $course->pathImage = $image;
+            $course->price = get_field('price',$course->ID) ?? 0;
+            $course->youtubeVideos = get_field('youtube_videos',$course->ID) ? get_field('youtube_videos',$course->ID) : []  ;
+            $course->podcasts = get_field('podcasts',$course->ID) ? get_field('podcasts',$course->ID) : [];
+            $course->visibility = get_field('visibility',$course->ID);
+            $course->connectedProduct = get_field('connected_product',$course->ID);
+            $tags = get_field('categories',$course->ID) ? get_field('categories',$course->ID) : [];
+            $course->tags= array();
+            if($tags)
+              if (!empty($tags))
+                foreach ($tags as $key => $category) 
+                  if(isset($category['value'])){
+                    $tag = new Tags($category['value'],get_the_category_by_ID($category['value']));
+                    array_push($course->tags,$tag);
+                  }
+            array_push($community->courses,new Course($course));
+          
+      }
+
+  return $community;
 
 }
 
@@ -1256,6 +1349,7 @@ function askQuestion(WP_REST_Request $request)
     //New question
     $question_community = get_field('question_community', $community_id) ? get_field('question_community', $community_id) : [] ;
     $question['user_question'] = $user;
+    $question['user_question']->data->profile_image = get_field('profile_img','user_'.(int)$question['user_question']->data->ID) != false ? get_field('profile_img','user_'.(int)$question['user_question']->data->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
     $question['text_question'] = $text_question;
     array_push($question_community, $question);
 
@@ -1263,7 +1357,6 @@ function askQuestion(WP_REST_Request $request)
       return $question_community;
 
     return ['error' => 'Question not saved successfully !'];
-    
 }
 
 function replyQuestion(WP_REST_Request $request)
@@ -1300,8 +1393,8 @@ function replyQuestion(WP_REST_Request $request)
             $reply = array();
             $user_reply = $user;
             $reply['user_reply'] = $user_reply;
+            $reply['user_reply']->data->profile_image = get_field('profile_img','user_'.(int)$reply['user_reply']->data->ID) != false ? get_field('profile_img','user_'.(int)$reply['user_reply']->data->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
             $reply['text_reply'] = $text_reply;
-
             if(empty($question_community[$index_question]['reply_question']))
                 $question_community[$index_question]['reply_question'] = array();
 
@@ -1343,3 +1436,5 @@ function replyQuestion(WP_REST_Request $request)
         }
       }
   }
+  /** Views Endpoints */
+  

@@ -381,11 +381,8 @@ $url = home_url( $wp->request );
                 <span class="text-dark font-weight-bold h5 pt-2">
 
                 <?php
-                //( followers * 975 -  subtopic nr. )/ 2
-                //( followers * 975 ) -  subtopic nr. / 2
-                    if ($volgers!=null && $volgers!=0) {
+                    if ($volgers!=null && $volgers!=0)
                         echo ceil(($volgers*975) - ($_GET['category']/2));
-                    }
                     else
                         echo '0';
 
