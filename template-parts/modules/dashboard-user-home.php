@@ -566,6 +566,7 @@ if (!empty($user_post_view))
     $all_user_views = (get_field('views', $user_post_view->ID));
     $max_points = 10;
     $recommended_courses = array();
+    $count_recommended_course = 0;
 
     foreach($all_user_views as $key => $view) {
         if(!$view['course'])
@@ -632,6 +633,9 @@ if (!empty($user_post_view))
                     if(!in_array($course->post_author, $teachers))
                         array_push($teachers, $course->post_author);
                 }
+            $count_recommended_course = count($recommended_courses);
+            if($count_recommended_course == 8)
+                break;
         }
     }
 }
@@ -1566,7 +1570,7 @@ if(isset($_GET['message']))
                 else
                     continue;
             ?>
-            <a href="/dashboard/user/community-detail/?mu=' . $value->ID . '" class="card-Community d-flex align-items-center">
+            <a href="/dashboard/user/community-detail/?mu=<?= $value->ID ?>" class="card-Community d-flex align-items-center">
                 <div class="imgCommunity">
                     <img class="calendarImg" src="<?= $community_image ?>" alt="">
                 </div>
@@ -1668,11 +1672,11 @@ if(isset($_GET['message']))
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
 
-<script src=<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>
-<script src=<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.animate.js"></script>
-<script src=<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autoheight.js"></script>
-<script src=<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autorefresh.js"></script>
-<script src=<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.navigation.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.animate.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autoheight.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autorefresh.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.navigation.js"></script>
 
 
 <script>
