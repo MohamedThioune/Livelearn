@@ -1453,7 +1453,164 @@ function replyQuestion(WP_REST_Request $request)
         }
       }
   }
-  /** Views Endpoints */
+/** Views Endpoints */
   
+  function update_view_course(WP_REST_Request $request)
+  {
+      $user_id = (isset($request['user_id'])) ? $request['user_id'] : 0;
+      if(empty($user_id))
+          ["error" => 'You\'ve to fill in the user id!' ];
+
+      $user = get_user_by('ID',$user_id) ?? null;
+      if(empty($user))
+          ["error" => 'This user id does not exist!' ];
+      
+      $course_id = (isset($request['course_id'])) ? $request['course_id'] : 0;
+      if(!$user_id)
+        ["error" => 'You\'ve to fill in the course id!'];
+
+      $course = get_post($course_id) ?? null;
+      if(empty ($course))
+        ["error" => 'This course id does not exist!'];
+
+      $args = array(
+          'post_type' => 'view', 
+          'post_status' => 'publish',
+          'author' => $user_id,
+      );
+
+      $views_stat_user = get_posts($args);
+
+      if(!empty($views_stat_user))
+          $stat_id = $views_stat_user[0]->ID;
+      else{
+          $data = array(
+              'post_type' => 'view',
+              'post_author' => $user_id,
+              'post_status' => 'publish',
+              'post_title' => $user->display_name . ' - View',
+              );
+          
+          $stat_id = wp_insert_post($data);
+      }
+
+      $view = get_field('views', $stat_id);
+      
+      $one_view = array();
+      $one_view['course'] = $course;
+      $one_view['date'] = date('d/m/Y H:i:s');
+
+      if(!empty($view))
+          array_push($view, $one_view);
+      else 
+          $view = array($one_view); 
+      
+      update_field('views', $view, $stat_id);
+
+  }
+
+  function update_view_topic(WP_REST_Request $request)
+  {
+      $user_id = (isset($request['user_id'])) ? $request['user_id'] : 0;
+      if(empty($user_id))
+        return ["error" => 'You\'ve to fill in the user id!' ];
+
+      $user = get_user_by('ID',$user_id) ?? null;
+      if(empty($user))
+        ["error" => 'This user id does not exist' ];
+      
+      $topic_id = (isset($request['topic_id'])) ? $request['topic_id'] : null;
+      if(empty($topic_id))
+          return ["error" => 'You\'ve to fill in the topic id!' ];
+
+      $args = array(
+          'post_type' => 'view', 
+          'post_status' => 'publish',
+          'author' => $user_id,
+      );
+
+      $views_stat_user = get_posts($args);
+
+      if(!empty($views_stat_user))
+          $stat_id = $views_stat_user[0]->ID;
+      else
+      {
+          $data = array(
+              'post_type' => 'view',
+              'post_author' => $user_id,
+              'post_status' => 'publish',
+              'post_title' => $user->display_name . ' - View',
+              );
+          
+          $stat_id = wp_insert_post($data);
+      }
+
+      $view = get_field('views_topic', $stat_id);
+      
+      $one_view = array();
+      $one_view['view_id'] = $topic_id;
+      $one_view['view_name'] = (String)get_the_category_by_ID($topic_id);
+      $one_view['view_date'] = date('d/m/Y H:i:s');
+
+      if(!empty($view))
+          array_push($view, $one_view);
+      else 
+          $view = array($one_view); 
+      
+      update_field('views_topic', $view, $stat_id);
+
+  }
+
+  function update_view_experts(WP_REST_Request $request)
+  {
+    $user_id = (isset($request['user_id'])) ? $request['user_id'] : 0;
+    if(!$user_id)
+      return ["error" => 'You\'ve to fill in the user id!' ];
+
+    $user = get_user_by('ID',$user_id) ?? null;
+    if(empty($user))
+        return ["error" => 'This user id does not exist!' ];
+
+      $expert_id = (isset($request['expert_id'])) ? $request['expert_id'] : 0;
+      if(!$expert_id)
+          return ["error" => 'You\'ve to fill in the expert id!' ];
+      
+      $args = array(
+          'post_type' => 'view', 
+          'post_status' => 'publish',
+          'author' => $user_id,
+      );
+
+      $views_stat_user = get_posts($args);
+
+      if(!empty($views_stat_user))
+          $stat_id = $views_stat_user[0]->ID;
+      else
+      {
+          $data = array(
+              'post_type' => 'view',
+              'post_author' => $user_id,
+              'post_status' => 'publish',
+              'post_title' => $user->display_name . ' - View',
+              );
+          
+          $stat_id = wp_insert_post($data);
+      }
+
+      $view = get_field('views_user', $stat_id);
+      
+      $one_view = array();
+      $one_view['view_id'] = $expert_id;
+      $one_view['view_name'] = get_userdata($expert_id)->display_name;
+      $one_view['view_date'] = date('d/m/Y H:i:s');
+
+      if(!empty($view))
+          array_push($view, $one_view);
+      else 
+          $view = array($one_view); 
+      
+      update_field('views_user', $view, $stat_id);
+
+  }
 
 /** Views Endpoints */
