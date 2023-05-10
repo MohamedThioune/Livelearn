@@ -1,20 +1,20 @@
 <!-- Modal -->
 <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-    <div class="img-cookies-block">
-        <img src="<?php echo get_stylesheet_directory_uri();?>/img/cookies.png" alt="">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="img-cookies-block">
+                <img src="<?php echo get_stylesheet_directory_uri();?>/img/cookies.png" alt="">
+            </div>
+            <div class="modal-body">
+            <p class="title-cookie">Cookie consent</p>
+            <p class="description-cookie">We use necessary cookies to make our site work. We’d like to set additional cookies to understand site usage, make site improvements and to remember your settings. We also use cookies set by other sites to help deliver content from their services.</p>
+                <div class="group-btn-cookie">
+                <button type="button" class="btn btn-accpet-cookies accept_cookies" data-dismiss="modal">Accept & continue</button>
+                <button type="button" class="btn btn-decline-cookies" data-dismiss="modal">Decline cookies</button>
+                </div>      
+            </div>
+        </div>
     </div>
-      <div class="modal-body">
-       <p class="title-cookie">Cookie consent</p>
-       <p class="description-cookie">We use necessary cookies to make our site work. We’d like to set additional cookies to understand site usage, make site improvements and to remember your settings. We also use cookies set by other sites to help deliver content from their services.</p>
-        <div class="group-btn-cookie">
-          <button type="button" class="btn btn-accpet-cookies accept_cookies" data-dismiss="modal">Accept & continue</button>
-          <button type="button" class="btn btn-decline-cookies" data-dismiss="modal">Decline cookies</button>
-        </div>      
-      </div>
-    </div>
-  </div>
 </div>
 
 
