@@ -722,6 +722,10 @@ if(isset($_GET['message']))
             </div>
         </div> 
         -->
+        <div class="btn-group-layouts">
+            <button class="btn gridview active" ><i class="fa fa-th-large"></i>Grid View</button>
+            <button class="btn listview"><i class='fa fa-th-list'></i>List View</button>
+        </div>
         <div class="tabs-courses">
             <div class="tabs">
                 <ul class="filters">
@@ -735,7 +739,7 @@ if(isset($_GET['message']))
 
                 <div class="tabs__list">
                     <div class="tab active">
-                        <div class="block-new-card-course">
+                        <div class="block-new-card-course grid">
                             <?php
                             $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
@@ -809,42 +813,44 @@ if(isset($_GET['message']))
                                         echo '<img src="' . $thumbnail .'" alt="">';
                                     ?>
                                 </div>
-                                <div class="title-favorite d-flex justify-content-between align-items-center">
-                                    <p class="title-course"><?= $course->post_title ?></p>
-                                    <button>
-                                    <?php
-                                        if (in_array($course->ID, $saved))
-                                        {
-                                            ?>
-                                            <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course"><?= $course->post_title ?></p>
+                                        <button>
                                             <?php
-                                        }
-                                        else{
+                                            if (in_array($course->ID, $saved))
+                                            {
+                                                ?>
+                                                <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
+                                                <?php
+                                            }
+                                            else{
+                                                ?>
+                                                <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                                <?php
+                                            }
                                             ?>
-                                            <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                            <?php
-                                        }
-                                        ?>
-                                    </button>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
-                                    <div class="blockOpein d-flex align-items-center">
-                                        <i class="fas fa-graduation-cap"></i>
-                                        <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
+                                        </button>
                                     </div>
-                                    <div class="blockOpein">
-                                        <i class="fas fa-map-marker-alt"></i>
-                                        <p class="lieuAm"><?php echo $location?></p>
-                                    </div>
-                                </div>
-                                <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                    <div class="d-flex align-items-center">
-                                        <div class="blockImgUser">
-                                            <img src="<?= $author_image ?>" class="" alt="">
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
                                         </div>
-                                        <p class="autor"><?= $author_name ?></p>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm"><?php echo $location?></p>
+                                        </div>
                                     </div>
-                                    <p class="price"><?= $price ?></p>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?= $author_image ?>" class="" alt="">
+                                            </div>
+                                            <p class="autor"><?= $author_name ?></p>
+                                        </div>
+                                        <p class="price"><?= $price ?></p>
+                                    </div>
                                 </div>
                             </a>
                             <?php
