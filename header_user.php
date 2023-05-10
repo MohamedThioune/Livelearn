@@ -6,7 +6,6 @@ $user = wp_get_current_user();
 /*
 * * Feedbacks
 */
-
 $args = array(
     'post_type' => 'feedback',
     'author' => $user->ID,
@@ -41,10 +40,6 @@ $see_experts = get_users(
         'posts_per_page' => -1,
     )
 );
-
-/*
-* * End
-*/
 
 ?>
 
@@ -98,7 +93,6 @@ $see_experts = get_users(
             .fa-angle-down-bleu{
                 display: none;
             }
-
         </style>
 
         <title><?php bloginfo('name'); ?></title>

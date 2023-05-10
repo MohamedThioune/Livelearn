@@ -404,6 +404,11 @@ if (!$is_first_login && get_current_user_id() !=0 )
 
 <?php
 
+$void_content ='<center>
+                <h2>No content found !</h2> 
+                <img src="' . get_stylesheet_directory_uri() . '/img' . '/void-content.gif" alt="content image requirements">
+                </center>';
+
 // Saved courses
 $saved = get_user_meta($user, 'course');
 
@@ -561,6 +566,7 @@ if (!empty($user_post_view))
     $all_user_views = (get_field('views', $user_post_view->ID));
     $max_points = 10;
     $recommended_courses = array();
+    $count_recommended_course = 0;
 
     foreach($all_user_views as $key => $view) {
         if(!$view['course'])
@@ -627,6 +633,9 @@ if (!empty($user_post_view))
                     if(!in_array($course->post_author, $teachers))
                         array_push($teachers, $course->post_author);
                 }
+            $count_recommended_course = count($recommended_courses);
+            if($count_recommended_course == 8)
+                break;
         }
     }
 }
@@ -847,7 +856,7 @@ if(isset($_GET['message']))
                             <?php
                             }
                             else
-                                echo "";
+                                echo $void_content;
                             ?>
                         </div>
                     </div>
@@ -958,7 +967,7 @@ if(isset($_GET['message']))
                             }
                             
                             if(!$find)
-                                echo "None";
+                                echo $void_content;
                             ?>
                         </div>
                     </div>
@@ -1069,7 +1078,7 @@ if(isset($_GET['message']))
                             }
                             
                             if(!$find)
-                                echo "None";
+                                echo $void_content;
                             ?>
                         </div>
                     </div>
@@ -1180,7 +1189,7 @@ if(isset($_GET['message']))
                             }
                             
                             if(!$find)
-                                echo "None";
+                                echo $void_content;
                             ?>
                         </div>
                     </div>
@@ -1291,7 +1300,7 @@ if(isset($_GET['message']))
                             }
                             
                             if(!$find)
-                                echo "None";
+                                echo $void_content;
                             ?>
                         </div>
                     </div>
@@ -1396,7 +1405,7 @@ if(isset($_GET['message']))
                             <?php
                             }
                             else
-                                echo "";
+                                echo $void_content;
                             ?>
                         </div>
                     </div>
@@ -1411,6 +1420,7 @@ if(isset($_GET['message']))
             <h2>Upcoming Schedule</h2>
             <?php
 
+            $i = 0;
             foreach($global_courses as $course){
             $bool = true;
             $bool = visibility($course, $visibility_company);
@@ -1495,7 +1505,7 @@ if(isset($_GET['message']))
                 if(!$thumbnail)
                     $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
             }
-
+                        
             ?>
             <div class="card-Upcoming">
                 <p class="title"><?= $course->post_title; ?></p>
@@ -1566,7 +1576,7 @@ if(isset($_GET['message']))
                 else
                     continue;
             ?>
-            <a href="/dashboard/user/community-detail/?mu=' . $value->ID . '" class="card-Community d-flex align-items-center">
+            <a href="/dashboard/user/community-detail/?mu=<?= $value->ID ?>" class="card-Community d-flex align-items-center">
                 <div class="imgCommunity">
                     <img class="calendarImg" src="<?= $community_image ?>" alt="">
                 </div>
@@ -1614,8 +1624,9 @@ if(isset($_GET['message']))
             </a>
             <?php
             }
+            if(!empty($teachers))
+                echo '<a href="/opleiders" class="btn btn-more-events">See All</a>';
             ?>
-            <a href="/opleiders" class="btn btn-more-events">See All</a>
         </div>
     </section>
 </div>
@@ -1640,16 +1651,38 @@ if(isset($_GET['message']))
             tabs[index].classList.add("active");
         });
     });
+</script>
 
+<script>
+    $.ajax({
+        url: '/',
+        type: 'POST',
+        data: {
+        },
+        beforeSend:function(){
+            $('#loader').attr('hidden',false)
+            $('#select_field').attr('hidden',true)
+        },
+        error: function(){
+            alert('Something went wrong!');
+        },
+        complete: function(){
+            $('#loader').attr('hidden',true)
+        },
+        success: function(data){
+            $('#loader').attr('hidden',true)
+            console.log(data);
+        }
+    });
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
 
-<script src=<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>
-<script src=<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.animate.js"></script>
-<script src=<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autoheight.js"></script>
-<script src=<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autorefresh.js"></script>
-<script src=<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.navigation.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.animate.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autoheight.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autorefresh.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.navigation.js"></script>
 
 
 <script>
