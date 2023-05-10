@@ -9,7 +9,8 @@
        <p class="title-cookie">Cookie consent</p>
        <p class="description-cookie">We use necessary cookies to make our site work. We’d like to set additional cookies to understand site usage, make site improvements and to remember your settings. We also use cookies set by other sites to help deliver content from their services.</p>
         <div class="group-btn-cookie">
-          <button type="button" class="btn btn-accpet-cookies" data-dismiss="modal">Accept & continue</button>
+          <input type="hidden" id="set_cookie_general" value="general">
+          <button type="button" class="btn btn-accpet-cookies accept_cookies" data-dismiss="modal">Accept & continue</button>
           <button type="button" class="btn btn-decline-cookies" data-dismiss="modal">Decline cookies</button>
         </div>      
       </div>
@@ -22,17 +23,15 @@
 global $wp;
 //modal for app mobile when load page
 $url = home_url( $wp->request );
+var_dump($_COOKIE['mobile_download']);
 if(!isset($_COOKIE['mobile_download'])):
 ?> 
 <div id="modalForApp" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <form action="/dashboard/user/" method="post">
-                    <input type="hidden" name="cookie_input_mobile" value="1">
-                    <input type="hidden" name="cookie_input_url" value="<?= $url ?>">
-                    <button type="submit" name='cookie_mobile_download' class="">&times;</button>
-                </form>
+                <input type="hidden" id="set_cookie" value="mobile_download">
+                <button type="submit" name='' class="cookie_apply_mobile">x</button>
             </div>
             <div class="modal-body text-center">
                 <div class="content-modal">
@@ -55,6 +54,7 @@ if(!isset($_COOKIE['mobile_download'])):
                         </a>
                     </div>
                     <p class="Aanmelden-text">Aanmelden <span>of</span> registreren</p>
+                    <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status">
                 </div>
             </div>
         </div>
@@ -282,6 +282,68 @@ if(!isset($_COOKIE['mobile_download'])):
     });
 </script>
 
+<?php
+$site_base_url = get_site_url() . "/apply-cookie";
+?>
+
+<script>
+    $('.cookie_apply_mobile').click((e)=>{
+        var set_cookie = $("#set_cookie").val();
+
+        $.ajax({
+            url: '/apply-cookie',
+            type: 'POST',
+            dataType: 'text',
+            data:{
+                'set_cookie': set_cookie,
+            },
+            beforeSend:function(){
+                $('#loader').attr('hidden',false);
+            },
+            error: function(){
+                alert('Something went wrong!');
+                $('#loader').attr('hidden',true);
+                $('#modalForApp').hide();
+            },
+            complete: function(){
+                $('#loader').attr('hidden',true);
+                $('#modalForApp').hide();
+            },
+            success: function(data){
+                $('#loader').attr('hidden',true);
+                window.open("<?php echo $site_base_url; ?>");
+                $('#modalForApp').hide();
+            }
+        });
+    });
+</script>
+
+<script>
+    $('.accept_cookies').click((e)=>{
+        var set_cookie_general = $("#set_cookie_general").val();
+
+        $.ajax({
+            url: '/apply-cookie',
+            type: 'POST',
+            dataType: 'text',
+            data:{
+                'set_cookie': set_cookie_general,
+            },
+            beforeSend:function(){
+                $('#loader').attr('hidden',false);
+            },
+            error: function(){
+                alert('Something went wrong!');
+                // $('#loader').attr('hidden',true);
+            },
+            success: function(data){
+                $('#loader').attr('hidden',true);
+                window.open("<?php echo $site_base_url; ?>");
+            }
+        });
+    });
+</script>
+
 <script>
     $('.btnPushExpert').click((e)=>{
         var key = e.currentTarget.value;
@@ -343,8 +405,6 @@ if(!isset($_COOKIE['mobile_download'])):
 <script src="<?php echo get_stylesheet_directory_uri();?>/swiper.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
 <script>
-
-
     $(window).on('resize', function() {
         if ($(window).width() < 767) {
             $('#modalForApp').show();

@@ -1641,7 +1641,29 @@ if(isset($_GET['message']))
             tabs[index].classList.add("active");
         });
     });
+</script>
 
+<script>
+    $.ajax({
+        url: '/',
+        type: 'POST',
+        data: {
+        },
+        beforeSend:function(){
+            $('#loader').attr('hidden',false)
+            $('#select_field').attr('hidden',true)
+        },
+        error: function(){
+            alert('Something went wrong!');
+        },
+        complete: function(){
+            $('#loader').attr('hidden',true)
+        },
+        success: function(data){
+            $('#loader').attr('hidden',true)
+            console.log(data);
+        }
+    });
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>

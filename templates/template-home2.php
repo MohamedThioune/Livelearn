@@ -7,9 +7,9 @@
 $page = 'check_visibility.php';
 require($page);
 
-$user_connected = get_current_user_id();
+$user_connected = wp_get_current_user();
 
-if($user_connected)
+if($user_connected && !in_array('administrator', $user_connected->roles))
     header('Location: /dashboard/user/');
 
 if(!isset($visibility_company))
