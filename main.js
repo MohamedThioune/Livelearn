@@ -140,7 +140,32 @@ jQuery(function($) {
     });
 
 
-    // show comment
+    // change view list or grid
+
+    var elem=$('.block-new-card-course');
+    $('.btn-group-layouts button').on('click',function(e) {
+        if ($(this).hasClass('gridview')) {
+            elem.fadeOut(250, function () {
+                elem.removeClass('list').addClass('grid');
+                elem.fadeIn(250);
+            });
+        }
+        else if($(this).hasClass('listview')) {
+            elem.fadeOut(250, function () {
+                elem.removeClass('grid').addClass('list');
+                elem.fadeIn(250);
+            });
+        }
+    });
+    $(".gridview").click(function() {
+        $(".listview").removeClass("active");
+        $(".gridview").addClass("active");
+    });
+    $(".listview").click(function() {
+        $(".gridview").removeClass("active");
+        $(".listview").addClass("active");
+    });
+
 
 
 

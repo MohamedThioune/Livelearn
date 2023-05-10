@@ -1026,12 +1026,12 @@ $saved = get_user_meta($user_id, 'course');
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="modalVideoLabel">Welcome</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <button type="button" id="closeModalVideo" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <video width="560" height="315" controls>
+                                    <video width="560" height="315" id="videoFrame" controls>
                                         <source src="<?php echo get_stylesheet_directory_uri();?>/video/livelearn-home.mp4" title="livelearn video presentation"  allow="playsinline;" type="video/mp4" /><!-- Safari / iOS video    -->
                                         <source src="<?php echo get_stylesheet_directory_uri();?>/video/livelearn-home.mp4" title="livelearn video presentation"  allow="playsinline;" type="video/ogg" /><!-- Firefox / Opera / Chrome10 -->
                                     </video>
@@ -1318,10 +1318,10 @@ $saved = get_user_meta($user_id, 'course');
         <div class="block-store-doawnload text-center">
             <p class="title-text">OF DOWNLOAD ONZE GRATIS APP</p>
             <div class="group-btn-store d-flex flex-wrap justify-content-center">
-                <a href="">
+                <a href="https://apps.apple.com/nl/app/livelearn/id1666976386">
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/e-store.png"  alt="app store">
                 </a>
-                <a href="" id="googlePlay">
+                <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app" id="googlePlay">
                     <img src="<?php echo get_stylesheet_directory_uri();?>/img/playGoogle.png"  alt="google play">
                 </a>
             </div>
@@ -1754,7 +1754,7 @@ $saved = get_user_meta($user_id, 'course');
         <h3>Je bent nu ver genoeg naar beneden gescrold,
             je kan de app hier gratis downloaden:</h3>
         <div class="d-flex justify-content-center">
-            <a href="" class="btn btnStore">
+            <a href="https://apps.apple.com/nl/app/livelearn/id1666976386" class="btn btnStore">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/e-store.png" alt="">
             </a>
             <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app" class="btn btnPlayGoogle">
@@ -1821,7 +1821,25 @@ $saved = get_user_meta($user_id, 'course');
         })
     }(jQuery));
 </script>
+    <script>
+        $(document).ready(function() {
+            const video = $('#videoFrame')[0];
+            const modal = $('.modal');
+            const closeBtn = $('.close');
 
+            // Pause video when modal is closed
+            modal.on('hide.bs.modal', function() {
+                video.pause();
+            });
+
+            // Pause video and close modal when close button is clicked
+            closeBtn.on('click', function() {
+                video.pause();
+                modal.modal('hide');
+            });
+        });
+
+    </script>
 <script>
     $(function() {
         var header = $(".navbar");
