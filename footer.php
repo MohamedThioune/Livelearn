@@ -9,7 +9,6 @@
        <p class="title-cookie">Cookie consent</p>
        <p class="description-cookie">We use necessary cookies to make our site work. We’d like to set additional cookies to understand site usage, make site improvements and to remember your settings. We also use cookies set by other sites to help deliver content from their services.</p>
         <div class="group-btn-cookie">
-          <input type="hidden" id="set_cookie_general" value="general">
           <button type="button" class="btn btn-accpet-cookies accept_cookies" data-dismiss="modal">Accept & continue</button>
           <button type="button" class="btn btn-decline-cookies" data-dismiss="modal">Decline cookies</button>
         </div>      
@@ -23,14 +22,13 @@
 global $wp;
 //modal for app mobile when load page
 $url = home_url( $wp->request );
-var_dump($_COOKIE['mobile_download']);
+echo '<input type="hidden" value="' . $_COOKIE['mobile_download'] . '">';
 if(!isset($_COOKIE['mobile_download'])):
 ?> 
 <div id="modalForApp" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <input type="hidden" id="set_cookie" value="mobile_download">
                 <button type="submit" name='' class="cookie_apply_mobile">x</button>
             </div>
             <div class="modal-body text-center">
@@ -288,7 +286,7 @@ $site_base_url = get_site_url() . "/apply-cookie";
 
 <script>
     $('.cookie_apply_mobile').click((e)=>{
-        var set_cookie = $("#set_cookie").val();
+        var set_cookie = "mobile_download";
 
         $.ajax({
             url: '/apply-cookie',
@@ -320,7 +318,7 @@ $site_base_url = get_site_url() . "/apply-cookie";
 
 <script>
     $('.accept_cookies').click((e)=>{
-        var set_cookie_general = $("#set_cookie_general").val();
+        var set_cookie_general = "general";
 
         $.ajax({
             url: '/apply-cookie',
