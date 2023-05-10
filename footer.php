@@ -321,6 +321,11 @@ $site_base_url = get_site_url() . "/apply-cookie";
         });
     });
 </script>
+<script type="text/javascript">
+    $(window).on('load', function() {
+        $('#cookieModal').modal('show');
+    });
+</script>
 <?php
 $site__url = get_site_url() . "/apply-cookie";
 ?>

@@ -735,7 +735,15 @@ ul.sub-menu li a {
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
 }
-
+.descriptionPlatform p{
+    color: #42454D;
+    font-size: 14px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
 .swiper-slide4 {
     width: 346px !important;
     box-shadow: 0px 0px 16px rgb(0 0 0 / 10%);
@@ -6802,7 +6810,9 @@ button:focus {
     border-radius: 10px;
     color: white;
     padding: 5px 16px;
-    float: right;
+    margin: 0 0px 0px auto !important;
+    width: fit-content;
+    display: block;
 }
 
 .btnStratModal:hover {
@@ -6940,10 +6950,10 @@ button:focus {
     position: absolute;
     top: 6px;
     left: 0;
-    height: 18px;
-    width: 18px;
-    background-color: #043356;
-    border: 2px solid white;
+    height: 17px;
+    width: 17px;
+    background-color: unset !important;
+    border: 1px solid #033356;
     border-radius: 5px;
 }
 
@@ -6958,7 +6968,7 @@ button:focus {
 }
 
 .container-checkbox input:checked~.checkmark {
-    background-color: #043356;
+    background-color: #043356 !important;
 }
 
 .checkmark:after {
@@ -6976,7 +6986,7 @@ button:focus {
     top: 1px;
     width: 5px;
     height: 10px;
-    border: solid white;
+    border: solid #ffffff;
     border-width: 0 3px 3px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
@@ -17861,6 +17871,9 @@ background: #FFFFFF !important;
     text-align: center;
     box-shadow: 0px 0px 3px 3px #ffffff;
 }
+.theme-card-gradient:hover{
+    box-shadow: 3px 9px 27px -12px rgb(95 94 94);
+}
 .theme-card-gradient .title-card{
     font-size: 24px;
     font-weight: 600;
@@ -17947,14 +17960,85 @@ background: #FFFFFF !important;
     display: block;
     height: 100%;
 }
-.productBlock3 .owl-nav{
+.productBlock3 .owl-nav, .blockCardOpleidingen .owl-nav{
     display: none !important;
 }
-.productBlock3 .owl-dots{
+.productBlock3 .owl-dots, .blockCardOpleidingen .owl-dots{
     margin-top: 35px !important;
 }
 .productBlock3 {
     margin-bottom: 0px;
+}
+.footerCardSkillsssessment form{
+    margin-bottom: 0;
+}
+.content-assessment{
+    background: #FFFFFF;
+    padding: 40px 35px 30px;
+    border-radius: 8px;
+    width: 90%;
+}
+.btn-group-layouts .btn{
+    border: 1px solid #1a1a1a;
+    padding: 9px 10px;
+    font-size: 13px;
+    margin: 0 10px;
+    color: #04414d;
+}
+.btn-group-layouts .btn:hover, .btn-group-layouts .active{
+    background: #FFFFFF;
+    border: 1px solid #FFFFFF;
+}
+.btn-group-layouts{
+    display: flex;
+    justify-content: end;
+    margin-bottom: 30px;
+}
+.btn-group-layouts .btn i{
+    color: #00aa9e;
+    font-size: 14px;
+    margin-right: 6px;
+}
+.list .new-card-course {
+    width: 100%;
+    display: flex;
+}
+.list .new-card-course .head {
+    height: auto;
+    width: 27%;
+    margin-bottom: 0;
+    margin-right: 20px;
+    max-height: 155px;
+}
+.list .new-card-course .details-card-course{
+    margin: 10px 0;
+    width: 70%;
+}
+.list .new-card-course .details-card-course .categoryDateBlock,
+.list .new-card-course .details-card-course .autor-price-block{
+    justify-content: flex-start !important;
+}
+.list .new-card-course .details-card-course .categoryDateBlock .blockOpein{
+    display: flex;
+    margin-right: 30px;
+}
+.list .new-card-course .lieuAm {
+    font-size: 14px;
+}
+.list .new-card-course .blockImgUser {
+    margin-right: 9px;
+}
+.list .new-card-course .price {
+    margin-left: 30px;
+}
+.blockCardOpleidingen .owl-carousel-card-course .owl-item {
+    max-height: 450px;
+}
+.main-container-assessment{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 95%;
 }
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -21757,7 +21841,24 @@ background: #FFFFFF !important;
     .doawnloadBlockHome {
         margin: 70px 0;
     }
-
+    .list .block-new-card-course .new-card-course {
+        flex-wrap: wrap;
+    }
+    .list .new-card-course .head {
+        width: 100% !important;
+        margin-right: 0px !important;
+        max-height: 155px;
+    }
+    .list .new-card-course .details-card-course {
+        margin: 10px 0 !important;
+        width: 100% !important;
+    }
+    .list .new-card-course .details-card-course .categoryDateBlock, .list .new-card-course .details-card-course .autor-price-block {
+        justify-content: space-between !important;
+    }
+    .btn-group-layouts {
+        display: none;
+    }
 
 
 
@@ -22458,6 +22559,16 @@ background: #FFFFFF !important;
     }
     .group-members-community .card-members {
         width: 31%;
+    }
+    .list .new-card-course .head {
+        height: auto;
+        width: 100%;
+        margin-bottom: 0;
+        margin-right: 20px;
+        max-height: 155px;
+    }
+    .list .new-card-course .head {
+        width: 27% !important;
     }
 
 }
