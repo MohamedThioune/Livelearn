@@ -400,11 +400,11 @@
                 <form class="needs-validation" action="/livelearn/dashboard/company/people/" novalidate id="data-sending-from-nmbrs" method="POST">
                     <div class="form-group">
                         <label for="nmbrs-username" class="col-form-label">login</label>
-                        <input type="text" class="form-control" name="nmbrs_username" aria-describedby="inputGroupPrepend" required>
+                        <input type="text" class="form-control" name="nmbrs_username" aria-describedby="inputGroupPrepend" autocomplete="nope" required>
                     </div>
                     <div class="form-group">
                         <label for="nmbrs-password" class="col-form-label">password</label>
-                        <input type="password" class="form-control" name="nmbrs_password" aria-describedby="inputGroupPrepend" required>
+                        <input type="password" class="form-control" name="nmbrs_password" aria-describedby="inputGroupPrepend" autocomplete="new-password" required>
                     </div>
                 </form>
             </div>
@@ -456,11 +456,11 @@
         <form class="needs-validation" novalidate id="data-sending-from-polaris" method="POST">
           <div class="form-group">
             <label for="polaris-username" class="col-form-label">login</label>
-            <input type="text" class="form-control" id="polaris-username" name="polaris-username" aria-describedby="inputGroupPrepend" required>
+            <input type="text" class="form-control" id="polaris-username" name="polaris-username" aria-describedby="inputGroupPrepend" autocomplete="nope" required>
           </div>
           <div class="form-group">
             <label for="polaris-password" class="col-form-label">password</label>
-            <input type="password" class="form-control" id="polaris-password" name="polaris-password" aria-describedby="inputGroupPrepend" required>
+            <input type="password" class="form-control" id="polaris-password" name="polaris-password" aria-describedby="inputGroupPrepend" autocomplete="new-password" required>
           </div>
         </form>
       </div>
@@ -541,11 +541,11 @@
       <form class="<?= $class ?>" id="from-form-loket" action="/dashboard/company/people/" method="POST">
           <div class="form-group">
             <label for="loket-username" class="col-form-label">client id</label>
-            <input type="text" class="form-control" id="loket-username" name="client_id" require>
+            <input type="text" class="form-control" id="loket-username" name="client_id" autocomplete="nope" require>
           </div>
           <div class="form-group">
             <label for="loket-password" class="col-form-label">client secret</label>
-            <input type="password"  class="form-control " id="loket-password" name="client_secret" require>
+            <input type="password"  class="form-control " id="loket-password" name="client_secret" autocomplete="new-password" require>
           </div>
         </form>
       </div>
