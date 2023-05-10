@@ -383,7 +383,6 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         });
     });
 
-    
     $('#select_field').change((e)=>
     {
         let website= $('#select_field').val();

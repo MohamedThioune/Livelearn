@@ -1409,12 +1409,6 @@ else if(isset($read_action_lesson)){
     header("Location: " . $follow_reads);
 }
 
-else if(isset($cookie_mobile_download)){
-    setcookie('mobile_download', '1', time()+3600 * 24 * 7 , '/', '', true, true);
-
-    header("Location: " . $cookie_input_url);
-}
-    
 ?>
 <?php wp_head(); ?>
 
