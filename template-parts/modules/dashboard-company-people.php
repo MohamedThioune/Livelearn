@@ -730,7 +730,7 @@
         managers = JSON.parse(managers);
         console.log('data sending',managers);
         $.ajax({
-        url:"/livelearn/salaryadmin/",
+        url:"/salaryadmin/",
         method:"post",
         data:{
             managers : managers
