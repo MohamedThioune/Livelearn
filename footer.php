@@ -6,12 +6,13 @@
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/cookies.png" alt="">
             </div>
             <div class="modal-body">
-            <p class="title-cookie">Cookie consent</p>
-            <p class="description-cookie">We use necessary cookies to make our site work. We’d like to set additional cookies to understand site usage, make site improvements and to remember your settings. We also use cookies set by other sites to help deliver content from their services.</p>
+                <p class="title-cookie">Cookie consent</p>
+                <p class="description-cookie">We use necessary cookies to make our site work. We’d like to set additional cookies to understand site usage, make site improvements and to remember your settings. We also use cookies set by other sites to help deliver content from their services.</p>
                 <div class="group-btn-cookie">
-                <button type="button" class="btn btn-accpet-cookies accept_cookies" data-dismiss="modal">Accept & continue</button>
-                <button type="button" class="btn btn-decline-cookies" data-dismiss="modal">Decline cookies</button>
-                </div>      
+                    <button type="button" class="btn btn-accpet-cookies accept_cookies" data-dismiss="modal">Accept & continue</button>
+                    <button type="button" class="btn btn-decline-cookies" data-dismiss="modal">Decline cookies</button>
+                </div> 
+                <div hidden="true" id="loader_cookie" class="spinner-border spinner-border-sm text-primary" role="status"></div>   
             </div>
         </div>
     </div>
@@ -52,7 +53,7 @@ if(!isset($_COOKIE['mobile_download'])):
                         </a>
                     </div>
                     <p class="Aanmelden-text">Aanmelden <span>of</span> registreren</p>
-                    <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status">
+                    <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status"></div>
                 </div>
             </div>
         </div>
@@ -315,7 +316,9 @@ $site_base_url = get_site_url() . "/apply-cookie";
         });
     });
 </script>
-
+<?php
+$site__url = get_site_url() . "/apply-cookie";
+?>
 <script>
     $('.accept_cookies').click((e)=>{
         var set_cookie_general = "general";
@@ -328,14 +331,16 @@ $site_base_url = get_site_url() . "/apply-cookie";
                 'set_cookie': set_cookie_general,
             },
             beforeSend:function(){
-                $('#loader').attr('hidden',false);
+                $('#loader_cookie').attr('hidden',false);
             },
             error: function(){
                 alert('Something went wrong!');
-                // $('#loader').attr('hidden',true);
+                $('#loader_cookie').attr('hidden',true);
+                // $('#modalForApp').hide();
             },
             success: function(data){
-                $('#loader').attr('hidden',true);
+                $('#loader_cookie').attr('hidden',true);
+                // $('#modalForApp').hide();
                 window.open("<?php echo $site_base_url; ?>");
             }
         });
