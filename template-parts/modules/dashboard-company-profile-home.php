@@ -133,7 +133,7 @@
                             Skills
                         </button>
                         <button  data-tab="Mandatory" class="b-nav-tab btn">
-                            Mandatory
+                            Verplichte training
                         </button>
                         <button  data-tab="Certificaten" class="b-nav-tab btn">
                             Certificaten
@@ -251,8 +251,8 @@
                     <div id="Mandatory" class="b-tab contentBlockSetting">
                         <div class="content">
                             <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-add-mandatory" data-toggle="modal" data-target="#MandatoryModal">
-                                Add Mandatory Course
+                            <button type="button" class="btn btnAddToDo" data-toggle="modal" data-target="#MandatoryModal">
+                                Een verplichte cursus toevoegen
                             </button>
 
                             <!-- Modal -->
@@ -260,7 +260,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="MandatoryModalLabel">Mandatory Sharing</h5>
+                                            <h5 class="modal-title" id="MandatoryModalLabel">Verplichte training Sharing</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
@@ -268,7 +268,7 @@
                                         <div class="modal-body">
                                             <form method="post" id="mandatory-form" action="">
                                                 <div class="form-group">
-                                                    <label for="maneMandatory">Name of mandatory Course</label>
+                                                    <label for="maneMandatory">Name</label>
                                                     <input type="text" class="form-control" id="maneMandatory" aria-describedby="maneMandatoryHelp" placeholder="Enter name of the mandatory" form="mandatory-form" name="name_mandatory" required>
                                                 </div>
                                                 <div class="form-group" id="">

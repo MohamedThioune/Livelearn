@@ -274,7 +274,7 @@ if($this_date <= $date_now && !$is_finish)
                                 $hourenr = explode(':', $datenrs[1]);
                                 $startenr = $yearenr .''. $month_calendar .''. $dayenr;
                                 $starthourenr = $hourenr[0] . $hourenr[1] . "00";
-                                $finishourenr = ($hourenr[0] == 24) ? "01" . '' . $hourenr[1] . "00" : "0" . ($hourenr[0] + 1) . '' . $hourenr[1] . "00";
+                                $finishourenr = ($hourenr[0] == 24) ? "01" . '' . $hourenr[1] . "00" : "0" . (intval($hourenr[0]) + 1) . '' . $hourenr[1] . "00";
                                 $date_calendar = $startenr . 'T'. $starthourenr . '/' . $startenr . 'T' . $finishourenr;
 
                                 $informations_calendar = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" . $text_calendar . "&details=" . $short_description . "&dates=" . $date_calendar . "&location=" . $locationenr;
@@ -297,8 +297,8 @@ if($this_date <= $date_now && !$is_finish)
                             <i class="fa fa-credit-card"></i>
                         </div>
                         <div>
-                            <p class="sub-text-1">AUD</p>
-                            <p class="sub-text-2">$<?= $prijs ?></p>
+                            <p class="sub-text-1">EURO</p>
+                            <p class="sub-text-2"><?= $prijs ?></p>
                         </div>
                     </div>
                 </div>
