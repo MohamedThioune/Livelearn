@@ -339,8 +339,8 @@ $site_url = get_site_url() . "/apply-cookie";
 <script>
     $('.accept-cookies').click((e)=>{
         var set_cookie_general = "general";
-        var cookie_value = $(this).attr('id');
-        alert($cookie_value);
+        var cookie_value = e.target.id;
+        alert(cookie_value);
         var openedWindow;
         $.ajax({
             url: '/apply-cookie',
