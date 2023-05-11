@@ -321,11 +321,11 @@ $site_base_url = get_site_url() . "/apply-cookie";
         });
     });
 </script>
-<script type="text/javascript">
+<!--<script type="text/javascript">
     $(window).on('load', function() {
         $('#cookieModal').modal('show');
     });
-</script>
+</script>-->
 <?php
 $site__url = get_site_url() . "/apply-cookie";
 ?>
