@@ -1,8 +1,7 @@
 <!-- Modal -->
 <?php
-var_dump($_COOKIE["general"]);
-print_r($_SERVER['HTTP_COOKIE']);
-if(!isset($_COOKIE["general"])):
+var_dump($_COOKIE["cookie_consent"]);
+if(!isset($_COOKIE["cookie_consent"])):
 ?> 
 <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -337,7 +336,7 @@ $site_url = get_site_url() . "/apply-cookie";
 
 <script>
     $('.accept-cookies').click((e)=>{
-        var set_cookie_general = "general";
+        var set_cookie_general = "cookie_consent";
         var cookie_value = e.target.id;
         var openedWindow;
         $.ajax({
