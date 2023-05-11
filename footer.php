@@ -1,5 +1,6 @@
 <!-- Modal -->
 <?php
+var_dump($_COOKIE['general']);
 if(!isset($_COOKIE['general'])):
 ?> 
 <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -10,7 +11,7 @@ if(!isset($_COOKIE['general'])):
             </div>
             <div class="modal-body">
                 <p class="title-cookie">Cookie consent</p>
-                <p class="description-cookie">We use necessary cookies to make our site work. We’d like to set additional cookies to understand site usage, make site improvements and to remember your settings. We also use cookies set by other sites to help deliver content from their services.</p>
+                <p class="description-cookie">We use necessary cookies to make our site work. We'd like to set additional cookies to understand site usage, make site improvements and to remember your settings. We also use cookies set by other sites to help deliver content from their services.</p>
                 <div class="group-btn-cookie">
                     <button class="btn btn-accpet-cookies accept-cookies" id="1">Accept & continue</button>
                     <button class="btn btn-decline-cookies accept-cookies" id="0">Decline cookies</button>
