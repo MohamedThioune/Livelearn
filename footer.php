@@ -1,7 +1,7 @@
 <!-- Modal -->
 <?php
-var_dump($_COOKIE['general']);
-if(!isset($_COOKIE['general'])):
+var_dump($_COOKIE["general"]);
+if(!isset($_COOKIE["general"])):
 ?> 
 <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
