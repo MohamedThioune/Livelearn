@@ -1,6 +1,6 @@
 <!-- Modal -->
 <?php
-if(!isset($_COOKIE['general'])){
+if(!isset($_COOKIE['general'])):
 ?> 
 <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -21,10 +21,10 @@ if(!isset($_COOKIE['general'])){
     </div>
 </div>
 </div>
-<?php } ?>
+<?php endif; ?>
 
 <?php
-if(!isset($_COOKIE['mobile_download'])){
+if(!isset($_COOKIE['mobile_download'])):
 ?> 
 <div id="modalForApp" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -37,7 +37,7 @@ if(!isset($_COOKIE['mobile_download'])){
                     <div class="content-img-logo">
                         <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/LiveLearn_logo.png" alt="">
                     </div>
-                    <p class="title-content-modal">Registreer je gratis om <span>educatieve content</span> te ontvangen van collega’s, vrienden én de experts uit de markt.</p>
+                    <p class="title-content-modal">Registreer je gratis om <span>educatieve content</span> te ontvangen van collega's, vrienden én de experts uit de markt.</p>
                     <div class="group-btn-get-app">
 
                         <!-- Google Play button -->
@@ -59,7 +59,7 @@ if(!isset($_COOKIE['mobile_download'])){
         </div>
     </div>
 </div>
-<?php } ?>
+<?php endif; ?>
 
 <footer class="footer-area footerLive">
     <div class="footer-big">
