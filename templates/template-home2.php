@@ -1765,12 +1765,12 @@ $saved = get_user_meta($user_id, 'course');
     </div>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
 
 <script src="<?php echo get_stylesheet_directory_uri();?>/mobapiCity.js"></script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/js/jquery.bsSelectDrop.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>
