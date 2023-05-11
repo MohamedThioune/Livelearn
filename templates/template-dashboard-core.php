@@ -21,6 +21,9 @@ $message = "";
 extract($_POST);
 
 $user_data = wp_get_current_user();
+if(empty($user_data->roles))
+    header('Location:/');
+
 
 function RandomString(){
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -70,9 +73,6 @@ function makeApiCall($endpoint, $type) {
     // return data
     return json_decode( $response, true );
 }
-
-if(empty($user_data->roles))
-    header('Location:/');
 
 if(isset($_POST['expert_add']) || isset($_POST['expert_add_artikel'])){
     $bunch = get_field('experts', $_GET['id']);
