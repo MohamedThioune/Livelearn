@@ -341,9 +341,7 @@ $site_url = get_site_url() . "/apply-cookie";
         var set_cookie_general = "general";
         var cookie_value = $(this).attr('id');
         var openedWindow;
-
-        alert('Cookk');
-
+        
         $.ajax({
             url: '/apply-cookie',
             type: 'POST',
