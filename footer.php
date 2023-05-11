@@ -1,7 +1,7 @@
 <!-- Modal -->
 <?php
 echo '<input type="hidden" value="' . $_COOKIE['general'] . '">';
-if(isset($_COOKIE['general'])):
+if(!isset($_COOKIE['general'])):
 ?> 
 <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -363,7 +363,7 @@ alert("cook");
                 $('#cookieModal').modal('hide');
                 console.log(data);
                 // myWindow = window.open("", "MsgWindow", "width=200,height=100");  // Open a new window
-                // openedWindow = window.open("<?php echo $site_url ?>");  // Open a new window
+                // openedWindow = window.open("");  // Open a new window
                 // if (openedWindow && openedWindow.close) 
                 //     openedWindow.close(); // Close a new window    
             }
