@@ -1,7 +1,6 @@
 <!-- Modal -->
 <?php
-echo '<input type="hidden" value="' . $_COOKIE['general'] . '">';
-if(!isset($_COOKIE['general'])):
+if(!isset($_COOKIE['general'])){
 ?> 
 <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -22,14 +21,10 @@ if(!isset($_COOKIE['general'])):
     </div>
 </div>
 </div>
-<?php endif; ?>
+<?php } ?>
 
 <?php
-// global $wp;
-//modal for app mobile when load page
-// $url = home_url( $wp->request );
-echo '<input type="hidden" value="' . $_COOKIE['mobile_download'] . '">';
-if(!isset($_COOKIE['mobile_download'])):
+if(!isset($_COOKIE['mobile_download'])){
 ?> 
 <div id="modalForApp" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -64,7 +59,7 @@ if(!isset($_COOKIE['mobile_download'])):
         </div>
     </div>
 </div>
-<?php endif; ?>
+<?php } ?>
 
 <footer class="footer-area footerLive">
     <div class="footer-big">
