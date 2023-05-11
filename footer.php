@@ -25,6 +25,7 @@ if(!isset($_COOKIE['general'])):
 <?php endif; ?>
 
 <?php
+var_dump($_COOKIE['mobile_download']);
 if(!isset($_COOKIE['mobile_download'])):
 ?> 
 <div id="modalForApp" class="modal fade" role="dialog">
