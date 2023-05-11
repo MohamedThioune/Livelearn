@@ -1,7 +1,7 @@
 <!-- Modal -->
 <?php
 echo '<input type="hidden" value="' . $_COOKIE['general'] . '">';
-if(!isset($_COOKIE['general'])):
+if(isset($_COOKIE['general'])):
 ?> 
 <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -13,8 +13,8 @@ if(!isset($_COOKIE['general'])):
                 <p class="title-cookie">Cookie consent</p>
                 <p class="description-cookie">We use necessary cookies to make our site work. We’d like to set additional cookies to understand site usage, make site improvements and to remember your settings. We also use cookies set by other sites to help deliver content from their services.</p>
                 <div class="group-btn-cookie">
-                    <button class="btn btn-accpet-cookies accept-cookies" id="1" >Accept & continue</button>
-                    <button class="btn btn-decline-cookies accept-cookies" id="0" >Decline cookies</button>
+                    <button class="btn btn-accpet-cookies accept-cookies" id="1">Accept & continue</button>
+                    <button class="btn btn-decline-cookies accept-cookies" id="0">Decline cookies</button>
                     <div hidden="true" id="loader_cookie" class="spinner-border spinner-border-sm text-primary" role="status"></div>
                 </div> 
             </div>
@@ -328,7 +328,7 @@ $site_url = get_site_url() . "/apply-cookie";
             success: function(data){
                 $('#loader').attr('hidden',true);
                 $('#modalForApp').hide();
-                var openedWindow = window.open("<?php echo $site_url ?>");  // Open a new window
+                openedWindow = window.open("<?php echo $site_url ?>");  // Open a new window
                 if (openedWindow && openedWindow.close) 
                     openedWindow.close(); // Close a new window
             }
@@ -341,7 +341,7 @@ $site_url = get_site_url() . "/apply-cookie";
         var set_cookie_general = "general";
         var cookie_value = $(this).attr('id');
         var openedWindow;
-        
+alert("cook");
         $.ajax({
             url: '/apply-cookie',
             type: 'POST',
@@ -361,10 +361,11 @@ $site_url = get_site_url() . "/apply-cookie";
             success: function(data){
                 $('#loader_cookie').attr('hidden',true);
                 $('#cookieModal').modal('hide');
+                console.log(data);
                 // myWindow = window.open("", "MsgWindow", "width=200,height=100");  // Open a new window
-                var openedWindow = window.open("<?php echo $site_url ?>");  // Open a new window
-                if (openedWindow && openedWindow.close) 
-                    openedWindow.close(); // Close a new window    
+                // openedWindow = window.open("<?php echo $site_url ?>");  // Open a new window
+                // if (openedWindow && openedWindow.close) 
+                //     openedWindow.close(); // Close a new window    
             }
         });
     });
