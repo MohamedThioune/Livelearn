@@ -1,4 +1,6 @@
 <?php /** Template Name: apply cookies */ ?>
+<?php wp_head(); ?>
+<?php get_header(); ?>
 
 <?php
     extract($_POST);
