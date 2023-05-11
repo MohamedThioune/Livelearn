@@ -328,9 +328,10 @@ $site_url = get_site_url() . "/apply-cookie";
             success: function(data){
                 $('#loader').attr('hidden',true);
                 $('#modalForApp').hide();
-                openedWindow = window.open("<?php echo $site_url ?>");  // Open a new window
-                if (openedWindow && openedWindow.close) 
-                    openedWindow.close(); // Close a new window
+                console.log(data);
+                // openedWindow = window.open("");  // Open a new window
+                // if (openedWindow && openedWindow.close) 
+                //     openedWindow.close(); // Close a new window
             }
         });
     });
@@ -340,7 +341,6 @@ $site_url = get_site_url() . "/apply-cookie";
     $('.accept-cookies').click((e)=>{
         var set_cookie_general = "general";
         var cookie_value = e.target.id;
-        alert(cookie_value);
         var openedWindow;
         $.ajax({
             url: '/apply-cookie',
