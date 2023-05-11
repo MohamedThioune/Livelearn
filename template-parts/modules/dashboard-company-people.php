@@ -26,7 +26,6 @@
                     array_push($my_managers, $value);
                 }
         }
-
         $user->my_managers = $my_managers;
 
         if($user_connected != $user->ID ){
@@ -41,6 +40,10 @@
     $count = count($members);
     extract($_POST);
 
+    //logique of nmbrs salary administrastion 
+    if (isset($nmbrs_username) && isset($nmbrs_password)) {
+        var_dump($nmbrs_username,$nmbrs_password);
+    }
     if(isset($missing_details_user)){
         update_field('telnr', $telnr, 'user_'.$id_user);
         update_field('role', $role_user, 'user_'.$id_user);
@@ -152,9 +155,6 @@
                         $tab['city'] = $employee['address']['city'];
                         $list_of_all_employees[] = $tab;
                     }
-                }else {
-                var_dump("not list of employee");
-                    $tokenIsValide = true;
                 }
             }
              else {
@@ -231,14 +231,12 @@
                             <td class="textTh elementOnder"><?php echo get_field('role', 'user_'.$user->ID);?></td>
                             <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
                             <td class="textTh thModife">
-
-                                <?php
-                                if(!empty($user->my_managers)):
-                                ?>
-                                <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="#userModal<?= $keyP; ?>">
+                            <?php if(!empty($user->my_managers)): ?>
+                                <?php $encodedTab = htmlspecialchars(json_encode($user->my_managers), ENT_QUOTES, 'UTF-8'); ?>
+                                <button type="button" class="btn manager-picture-block" data-table="<?= htmlspecialchars(json_encode($user->my_managers), ENT_QUOTES, 'UTF-8'); ?>" data-toggle="modal" data-target="#userModal<?= $keyP; ?>">
                                     <?php
                                     foreach ($user->my_managers as $key=> $m) :
-                                        if($key == 2)
+                                        if($key == 3)
                                             break;
                                         $image_manager = get_field('profile_img',  'user_' . $m->ID)?get_field('profile_img',  'user_' . $m->ID):get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                         ?>
@@ -258,6 +256,7 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
+                                            <!-- <div class="text-center" id="back-list-of-user-manager"></div> -->
                                             <div class="modal-body">
                                                 <table class="table table-all-manager">
                                                     <thead>
@@ -267,23 +266,14 @@
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                     </thead>
-
-                                                    <tbody>
-                                                    <?php
-                                                    foreach($user->my_managers as $man):
-                                                        $link = "/dashboard/company/profile/?id=" . $man->ID . '&manager='. $user_connected;
-                                                        $img_manager = get_field('profile_img',  'user_' . $man->ID) ? get_field('profile_img',  'user_' . $man->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                                    ?>
-                                                    <tr>
-                                                        <td> <?php echo $man->first_name!='' ? $man->first_name : $man->display_name ?> </td>
-                                                        <td>
-                                                            <img class="" src="<?= $img_manager ?>" alt="">
-                                                        </td>
-                                                        <td><a href="<?= $link ?>">See</a></td>
-                                                    </tr>
-                                                    <?php endforeach; ?>
+                                                    
+                                                    <tbody  class="back-list-of-user-manager">
+                                                    
                                                     </tbody>
                                                 </table>
+                                                    <div class="text-center loader-manager" role="status">
+                                                        <div class="spinner-border" role="status"></div>
+                                                    </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -395,14 +385,14 @@
             -->
             <div id="back-nmbrs" class="text-center"></div>
             <div class="modal-body">
-                <form class="needs-validation" novalidate id="data-sending-from-nmbrs" method="POST">
+                <form class="needs-validation" action="/livelearn/dashboard/company/people/" novalidate id="data-sending-from-nmbrs" method="POST">
                     <div class="form-group">
                         <label for="nmbrs-username" class="col-form-label">login</label>
-                        <input type="text" class="form-control" name="nmbrs-username" aria-describedby="inputGroupPrepend" required>
+                        <input type="text" class="form-control" name="nmbrs_username" aria-describedby="inputGroupPrepend" autocomplete="nope" required>
                     </div>
                     <div class="form-group">
                         <label for="nmbrs-password" class="col-form-label">password</label>
-                        <input type="password" class="form-control" name="nmbrs-password" aria-describedby="inputGroupPrepend" required>
+                        <input type="password" class="form-control" name="nmbrs_password" aria-describedby="inputGroupPrepend" autocomplete="new-password" required>
                     </div>
                 </form>
             </div>
@@ -454,11 +444,11 @@
         <form class="needs-validation" novalidate id="data-sending-from-polaris" method="POST">
           <div class="form-group">
             <label for="polaris-username" class="col-form-label">login</label>
-            <input type="text" class="form-control" id="polaris-username" name="polaris-username" aria-describedby="inputGroupPrepend" required>
+            <input type="text" class="form-control" id="polaris-username" name="polaris-username" aria-describedby="inputGroupPrepend" autocomplete="nope" required>
           </div>
           <div class="form-group">
             <label for="polaris-password" class="col-form-label">password</label>
-            <input type="password" class="form-control" id="polaris-password" name="polaris-password" aria-describedby="inputGroupPrepend" required>
+            <input type="password" class="form-control" id="polaris-password" name="polaris-password" aria-describedby="inputGroupPrepend" autocomplete="new-password" required>
           </div>
         </form>
       </div>
@@ -539,11 +529,11 @@
       <form class="<?= $class ?>" id="from-form-loket" action="/dashboard/company/people/" method="POST">
           <div class="form-group">
             <label for="loket-username" class="col-form-label">client id</label>
-            <input type="text" class="form-control" id="loket-username" name="client_id" require>
+            <input type="text" class="form-control" id="loket-username" name="client_id" autocomplete="nope" require>
           </div>
           <div class="form-group">
             <label for="loket-password" class="col-form-label">client secret</label>
-            <input type="password"  class="form-control " id="loket-password" name="client_secret" require>
+            <input type="password"  class="form-control " id="loket-password" name="client_secret" autocomplete="new-password" require>
           </div>
         </form>
       </div>
@@ -647,7 +637,7 @@
         // Browse through each child of the <Regel> element and retrieve values
         regel.childNodes.forEach((node) => {
             if (node.nodeType === 1) {
-            row[node.nodeName] = node.textContent;
+                row[node.nodeName] = node.textContent;
             }
         });
         // add object in the array of data
@@ -728,4 +718,41 @@
         $('.btn-choose-company').html($(this).html());
     });
 
+</script>
+<script>
+     $(".manager-picture-block").click(function(e){
+        const backApi = document.querySelector('.back-list-of-user-manager');
+        const loader = document.querySelectorAll('.loader-manager');
+        console.log(loader)
+        // const idUser = e.currentTarget.id
+        // console.log((e.currentTarget.getAttribute('data-table')));
+        var managers =e.currentTarget.getAttribute('data-table');
+        managers = JSON.parse(managers);
+        console.log('data sending',managers);
+        $.ajax({
+        url:"/salaryadmin/",
+        method:"post",
+        data:{
+            managers : managers
+        },
+        // dataType:"text",
+        beforeSend:function(){
+        // loader.classList.remove('d-none');
+        $(".back-list-of-user-manager").html(' ');
+        },error: function(error){
+            loader.forEach(load => {
+                load.className = "text-center loader-manager d-none";
+            });
+            $(".back-list-of-user-manager").html("<span class='alert alert-danger'>Some things are wrong !!!</span>");
+        },success: function(success){
+            loader.forEach(load => {
+                load.className = "text-center loader-manager d-none";
+            });
+            $(".back-list-of-user-manager").html(success);
+            console.log(success,'loader ',loader)
+        },complete: function(complete){
+            console.log('complete',complete);
+        },
+        });
+     });
 </script>

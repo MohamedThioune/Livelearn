@@ -1,25 +1,25 @@
 <?php
 
-/** 
+/**
  *  Handling adding tags to courses v2
 */
     if (isset($_GET['edit']))
     {
-        
+
         $already_linked_tags = array();
         if (get_field('categories',$_GET['id'])!=null)
         {
-            foreach (get_field('categories',$_GET['id']) as $key => $value) 
+            foreach (get_field('categories',$_GET['id']) as $key => $value)
             {
                 array_push($already_linked_tags,$value['value']);
-            } 
+            }
         }
-        
+
     }
-    
+
 
     /*
-    ** Categories - all  * 
+    ** Categories - all  *
     */
 
     $categories = array();
@@ -75,7 +75,7 @@
             array_merge($choosen_categories, explode(',', $choosen['value']));
     }
 
-    $subtopics = array();  
+    $subtopics = array();
     foreach($categories as $categ){
         //Topics
         $topicss = get_categories(
@@ -83,19 +83,19 @@
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
             'parent'  => $categ,
             'hide_empty' => 0, // change to 1 to hide categores not having a single post
-            ) 
+            )
         );
 
         foreach ($topicss as  $value) {
-            $subtopic = get_categories( 
+            $subtopic = get_categories(
                  array(
                  'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
                  'parent'  => $value->cat_ID,
                  'hide_empty' => 0,
                   //  change to 1 to hide categores not having a single post
-                ) 
+                )
             );
-            $subtopics = array_merge($subtopics, $subtopic);      
+            $subtopics = array_merge($subtopics, $subtopic);
         }
     }
 
@@ -103,7 +103,7 @@
 
 
     foreach($bangerichts as $key1=>$tag){
-        
+
         //Topics
         $cats_bangerichts = get_categories( array(
             'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
@@ -117,18 +117,18 @@
             {
                 $selected = '';
                 if(!empty($already_linked_tags))
-                    $selected = in_array($value->cat_ID,$already_linked_tags) ? 'checked' : '' ;   
+                    $selected = in_array($value->cat_ID,$already_linked_tags) ? 'checked' : '' ;
                 $row_bangrichts .= '
                 <input '.$selected.' class="selected" type="checkbox" name="choice_bangrichts_'.$value->cat_ID.'" value= '.$value->cat_ID .' id=subtopics_bangricht_'.$value->cat_ID.' /><label class="labelChoose" for=subtopics_bangricht_'.$value->cat_ID.'>'. $value->cat_name .'</label>';
             }
             $row_bangrichts.= '</div>';
         }
-      
+
     }
 
     foreach($functies as $key1 =>$tag)
     {
-        
+
         //Topics
         $cats_functies = get_categories(
             array(
@@ -141,8 +141,8 @@
             $row_functies.='<div hidden=true class="cb_topics_funct_'.($key1+1).'" '.($key1+1).'">';
             foreach($cats_functies as $key => $value)
             {
-                foreach ($already_linked_tags as $key => $selected_tags) { 
-                    $selected =  $selected_tags['value'] == $value->cat_ID ? true : false ; 
+                foreach ($already_linked_tags as $key => $selected_tags) {
+                    $selected =  $selected_tags['value'] == $value->cat_ID ? true : false ;
                 }
                 $row_functies .= '
                 <input selected='.$selected.' class="selected" type="checkbox" name="choice_functies_'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_funct_'.($value->cat_ID).'" /><label class="labelChoose" for="cb_funct_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
@@ -160,19 +160,19 @@
         ));
         if (count($cats_skills)!=0)
         {
-            
+
             $row_skills.='<div hidden=true class="cb_topics_skills_'.($key1+1).'" '.($key1+1).'">';
             foreach($cats_skills as $key => $value)
             {
-                foreach ($already_linked_tags as $key => $selected_tags) { 
-                    $selected =  $selected_tags['value'] == $value->cat_ID ? false : true ; 
+                foreach ($already_linked_tags as $key => $selected_tags) {
+                    $selected =  $selected_tags['value'] == $value->cat_ID ? false : true ;
                 }
                     $row_skills .= '
                     <input selected='.$selected.' class="selected" type="checkbox" name="choice_skills'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_skills_'.($value->cat_ID).'" /><label class="labelChoose"  for="cb_skills_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
             }
             $row_skills.= '</div>';
         }
-      
+
     }
 
     foreach($interesses as $key1=>$tag) {
@@ -187,19 +187,19 @@
             $row_interesses.='<div hidden=true class="cb_topics_personal_'.($key1+1).'" '.($key1+1).'">';
             foreach($cats_interesses as $key => $value)
             {
-                foreach ($already_linked_tags as $key => $selected_tags) { 
-                    $selected =  $selected_tags['value'] == $value->cat_ID ? false : true ; 
+                foreach ($already_linked_tags as $key => $selected_tags) {
+                    $selected =  $selected_tags['value'] == $value->cat_ID ? false : true ;
                 }
                 $row_interesses .= '
                 <input selected='.$selected.' class="selected" type="checkbox" name="choice_interesses_'.($value->cat_ID).'" value= '.$value->cat_ID .' id="cb_interesses_'.($value->cat_ID).'" /><label class="labelChoose"  for="cb_interesses_'.($value->cat_ID).'">'. $value->cat_name .'</label>';
             }
             $row_interesses.= '</div>';
         }
-      
+
     }
 
-    
-    
+
+
 ?>
 
 
@@ -212,10 +212,10 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
         $already_linked_tags = array();
         if (get_field('categories',$_GET['id'])!=null)
         {
-            foreach (get_field('categories',$_GET['id']) as $key => $value) 
+            foreach (get_field('categories',$_GET['id']) as $key => $value)
             {
                 array_push($already_linked_tags,$value['value']);
-            } 
+            }
         }
         extract($_POST);
         $categories = $already_linked_tags ?? array();
@@ -232,11 +232,11 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
         <div class="col-md-5 col-lg-8">
             <div class="cardCoursGlocal">
                 <div id="basis" class="w-100">
-                   
+
                     <div class="titleOpleidingstype">
                         <h2>TAGS</h2>
                     </div>
-                   
+
                     <!-- <form id="step1">
                         <div class="acf-field">
                             <input type="hidden" id="course_id" value="<?= $_GET['id'] ?>">
@@ -297,7 +297,7 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                                     <?php
                                     //Skills
                                     foreach($skills as $value){
-                                        $displayed = array(); 
+                                        $displayed = array();
                                         $state = false;
                                         $childrens = get_term_children($value->cat_ID, 'course_category');
                                         foreach($choosen_categories as $element)
@@ -334,7 +334,7 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
 
                                             if($state)
                                                 continue;
-                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";                                   
+                                        echo "<option value='" . $value->cat_ID . "'>" . $value->cat_name . "</option>";
                                     }
                                     ?>
                                 </select>
@@ -361,7 +361,7 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                                                     array_push($displayed, $element);
                                                     $state = true;
                                                 }
-    
+
                                                 if($state)
                                                     continue;
                                             echo '<input type="checkbox" value= '.$value->cat_ID .' id="cb_topics_bangricht'.($key+1).'" /><label class="labelChoose btnBaangerichte subtopics_bangricht_'.($key+1).' '.($key+1).'" for="cb_topics_bangricht'.($key+1).'">'. $value->cat_name .'</label>';
@@ -375,13 +375,16 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
 
                                 <div class="hiddenCB">
                                     <p class="pickText">Pick the sub-topics matching with the course you are creating</p>
-                                    
+
                                     <?php
                                     echo $row_bangrichts;
                                     ?>
                                 </div>
 
-                                <button type="button" class="btn btnNext" id="nextblockBaangerichte">Next</button>
+                                <div class="d-flex">
+                                    <button type="button" class="btn btnNext" id="nextblockBaangerichte">Next</button>
+                                    <button type="button" class="btn btnSkipCourse" id="btnSkipTopics1">Skip</button>
+                                </div>
                             </div>
                         </div>
 
@@ -402,12 +405,15 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                             <div class="subtopicFunctiegericht">
                                 <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
                                 <div class="hiddenCB">
-                                    
+
                                     <?php
                                         echo $row_functies;
                                     ?>
                                 </div>
-                                <button type="button" class="btn btnNext" id="nextFunctiegericht">Next</button>
+                                <div class="d-flex">
+                                    <button type="button" class="btn btnNext" id="nextFunctiegericht">Next</button>
+                                    <button type="button" class="btn btnSkipCourse" id="btnSkipTopics2">Skip</button>
+                                </div>
                             </div>
                         </div>
 
@@ -430,12 +436,15 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                             <div class="subtopicSkills">
                                 <div class="hiddenCB">
                                     <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
-                                    
+
                                     <?php
                                         echo $row_skills;
                                     ?>
                                 </div>
-                                <button type="button" class="btn btnNext" id="nextSkills">Next</button>
+                                <div class="d-flex">
+                                    <button type="button" class="btn btnNext" id="nextSkills">Next</button>
+                                    <button type="button" class="btn btnSkipCourse" id="btnSkipTopics3">Skip</button>
+                                </div>
                             </div>
                         </div>
 
@@ -458,7 +467,7 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                             <div class="subtopicPersonal">
                                 <div class="hiddenCB">
                                     <p class="pickText">Pick your favorite sub topics to set up your feeds</p>
-                                    
+
                                     <?php
                                         echo $row_interesses;
                                     ?>
@@ -466,7 +475,7 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                                 <button name="subtopics_first_login" class="btn btnNext" id="nextPersonal">Save</button>
                             </div>
                         </div>
-                    
+
                         </form>
                     </div>
 
@@ -474,7 +483,7 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                         <div class='acf-field' id="autocomplete_ajax">
                         </div>
                     </form>
-                   
+
                 </div>
             </div>
         </div>
@@ -528,7 +537,7 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
                 </div>
             </div>
         </div>
-        
+
     </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -540,11 +549,11 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
         let if_exist = selected_subtopics_id.indexOf(tags_id);
         if (if_exist > 0)
             selected_subtopics_id.splice(if_exist, 1)
-        else 
+        else
         selected_subtopics_id.push(tags_id);
-        
+
     })
-    
+
     $("#nextPersonal").click((e)=>{
         e.preventDefault();
         const queryString = window.location.search;
@@ -566,7 +575,7 @@ if (isset($_POST['add_tags_to_course']) && $_POST['add_tags_to_course']==true)
             }
     })
     });
-    
+
     $("#btn-ajax").click((e)=>
     {
         $(e.preventDefault())

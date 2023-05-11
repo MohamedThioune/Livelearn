@@ -5,18 +5,16 @@
 global $wpdb;
 
 $table = $wpdb->prefix . 'databank'; 
-
+// var_dump($_POST);die; //id,optie,class
 extract($_POST);
-
 $sql = $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}databank WHERE id = %d", $id);
 $course = $wpdb->get_results( $sql )[0];
-
 $where = [ 'id' => $id ]; // NULL value in WHERE clause.
 
-if($optie == "accept"){
-    //Insert some other course type
-    $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar'];
-    $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Webinar' => 'webinar' ];
+if($optie == "✔️"){
+        //Insert some other course type
+        $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar'];
+        $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Webinar' => 'webinar'];
 
     //Insert Artikel
     if (strval($course->type) == "Artikel"){
@@ -28,10 +26,9 @@ if($optie == "accept"){
             'post_title'  => $course->titel
         );
         $id_post = wp_insert_post($args, true);
-
         //Custom
         update_field('course_type', 'article', $id_post);
-        update_field('article_itself', nl2br($course->long_description), $id_post);
+        update_field('article_itself', nl2br($course->long_description), $id_post);        
     }
     //Insert YouTube
     else if (strval($course->type) == "Video"){
@@ -75,25 +72,25 @@ if($optie == "accept"){
             'post_title'  => $course->titel
         );
         $id_post = wp_insert_post($args, true);
-
         //Custom
         $coursetype = "";
-        foreach($typos as $key => $typo)
-            if($course->type == $key)
+        foreach($typos as $key => $typo){
+            if($course->type == $key) {
                 $coursetype == $typo;
-
+            }
+        }
         update_field('course_type', $typos[$course->type] , $id_post);
     }
-
+    
     if(is_wp_error($id_post)){
         $error = new WP_Error($id_post);
         echo $error->get_error_message($id_post);
     }
-    else
-        echo "post-id : " . $id_post;
-        
+    else{
+        // echo "post-id : " . $id_post;
+        echo "<span class='alert alert-success'>validation successfuly ✔️</span>";
+    }
     $onderwerpen = explode(',', $course->onderwerpen);
-    
     /*
     ** UPDATE COMMON FIELDS
     */
@@ -131,18 +128,24 @@ if($optie == "accept"){
     // $data = [ 'course_id' => $id_post]; // NULL value.
     // $wpdb->update( $table, $data, $where );
 }     
-else if($optie == "decline"){
-    if ($operation == 'missing')
+else if($optie == "❌"){
+    if ($class == 'missing'){
+        echo "<span class='alert alert-info'>not deleted because is missing</span>";
         null;
-    else if ($operation == 'present' )
+    }
+    else if ($class == 'present' ){
         wp_trash_post($course->course_id);
+        echo "<span class='alert alert-success'>deleted successfuly ✔️</span>";
+    }
 }
 $data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
 $updated = $wpdb->update( $table, $data, $where );
-
-if($updated === false)
-    return false; 
-else 
-    return true;
+return $updated;
+// if($updated){
+//     return true;
+// }
+// else {
+//     return false;
+// }
 
 ?>

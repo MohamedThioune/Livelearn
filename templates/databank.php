@@ -164,9 +164,8 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                             &nbsp;&nbsp;<a id="bouddha">✔️</a>&nbsp;&nbsp; <a class="btn-default" onclick='$(".multipleSelect2").prop("disabled", false);'  style="background:white" >⚙️</a>
                         <br>
                     </center>
-                    <div class="" id="content-back-topics"></div>
+                    <div class="text-center" id="content-back-topics"></div>
                     <table class="table table-responsive">
-                        <form method="POST">
                             <thead>
                             <tr>
                                 <th scope="col"><input type="checkbox" id="checkAll" onclick='checkUncheck(this);'></th>
@@ -178,7 +177,10 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                 <th scope="col">Status</th>
                                 <th scope="col">Author</th>
                                 <th scope="col">Company</th>
-                                <th class="tdCenter textThBorder"> <input type="submit" class="optieAll btn-default" id="acceptAll" name="submit" style="background:white; border: DEE2E6" value="✔️" />&nbsp;<input type="submit" class="optieAll btn-default" id="declineAll" name="submit" style="background:white" value="❌" /></th>
+                                <th class="tdCenter textThBorder">
+                                    <input type="submit" class="optieAll btn-default" id="acceptAll" name="submit" style="background:white; border: DEE2E6" value="✔️" />&nbsp;
+                                    <input type="submit" class="optieAll btn-default" id="declineAll" name="submit" style="background:white" value="❌" />
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -206,11 +208,10 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     //Onderwerpen
                                     if($course->onderwerpen != "")
                                         $onderwerpen = explode(',', $course->onderwerpen);
-                                    
                                     $state = $course->course_id ? 'present' : 'missing';
                                     $key = $course->id;
                             ?>
-                                <tr id="<?= $key ?>" class="<?= $state ?>">
+                                <tr id="<?= $key ?>" class="<?= $state ?> state">
                                     <td class="textTh"><input type="checkbox" class="checkOne" name="checkOne[]" id="chkBox" value="<?= $course->id ?>"></td>
                                     <td class="textTh"> <img src="<?= $image; ?>" alt="image course" width="50" height="50"></td>
                                     <td class="textTh courseDataBank" style="color:#212529;font-weight:bold"><?php echo $course->titel; ?></td>
@@ -218,16 +219,29 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     <td class="textTh tdCenter"><?= $course->prijs; ?></td>
                                     <td class="textTh courseOnderwerpen">
                                         <?php
-                                        if(!empty($onderwerpen))
-                                            foreach($onderwerpen as $value)
-                                                if($value)
-                                                    echo (String)get_the_category_by_ID($value) . ','; 
+                                        if(!empty($onderwerpen)){
+                                        $tab = [];
+                                            foreach($onderwerpen as $value1){
+                                                if($value1){
+                                                    $tab[] = (String)get_the_category_by_ID($value1);
+                                                }
+                                            }
+                                            $tab = array_unique($tab);
+                                            foreach ($tab as $key => $value2) {
+                                                if($value2)
+                                                    echo $value2.',';
+                                            }
+                                        }
                                         ?>
                                     </td>
                                     <td class="textTh tdCenter"><?= $course->status; ?></td>
                                     <td class="textTh tdCenter <?php if($course->author_id) echo ''; else echo 'author';  ?>"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo '<b>No author</b>'; ?></td>
                                     <td class="textTh tdCenter <?php if(!empty($company)) echo ''; else echo 'company';  ?>"> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo '<b>No company</b>'; ?> </td>
-                                    <td class="tdCenter textThBorder"> <input type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;<input type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp; <a href="/edit-databank?id=<?= $key ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> </td>
+                                    <td class="tdCenter textThBorder">
+                                        <input tittle="edit" type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;
+                                        <input tittle="remove" type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp;
+                                        <a tittle="edit" href="/edit-databank?id=<?= $course->id ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> 
+                                    </td>
                                 </tr>
                             <?php
                                 }
@@ -236,7 +250,6 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                             }
                             ?>
                             </tbody>
-                        </form>
                     </table>  
                     <center>
                     <?php
@@ -285,7 +298,9 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 </body>
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-
+<script>
+    var ids=[];
+</script>
 <script id="rendered-js" >
     var list=[];
     var names=[];
@@ -309,19 +324,30 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
 <script type="text/javascript">
     function uncheckAll() {
+        console.log('unchek')
         let checkboxes = document.querySelectorAll('input[type=checkbox]');
         for (let i = 0; i < checkboxes.length; i++) {
             checkboxes[i].checked = false;
+            //console.log('::::::::::::::::::::'.checkboxes[i]);
         }
     }
 
     window.onload = uncheckAll;
 
     function checkUncheck(checkBox) {
+        let regex = /^[0-9]+$/;
         get = document.querySelectorAll('input[type=checkbox]');
         for(var i=0; i<get.length; i++) {
             get[i].checked = checkBox.checked;
+        //    console.log('::::::::::::::::::::',get[i].value);
+           if (regex.test(get[i].value)){
+               ids.push(get[i].value);
+           }
         }
+        if(!checkBox.checked)
+            ids = []
+
+        // console.log(ids);
     }
 
     $(document).ready(function() {
@@ -357,7 +383,6 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         });
     });
 
-    
     $('#select_field').change((e)=>
     {
         let website= $('#select_field').val();
@@ -385,7 +410,6 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             });
     });
 
-    var ids=[];
     $(".checkOne").click((e)=>{
         let tags_id = e.target.value;
         let if_exist = ids.indexOf(tags_id);
@@ -398,7 +422,8 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
     $('#subtopics').on('click', function()
     {
-        if(ids==null){
+        console.log('click');
+        if(ids.length==0){
             alert("Please, select some articles!!");
         }else{
             const objetIds = Object.assign({}, ids);
@@ -409,10 +434,12 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 type: 'POST',
                 data: objetIds,
                 beforeSend:function(){
+                    document.getElementById('content-back-topics').innerHTML = '';
                     $('#loader').attr('hidden',false);
                     $('#select_field').attr('hidden',true);
                 },error:function(error){
                     console.log("error:", error);
+                    document.getElementById('content-back-topics').innerHTML = error;
                 },success:function(success){
                     $('#loader').attr('hidden',true);
                     document.getElementById('content-back-topics').innerHTML = success;
@@ -426,34 +453,48 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             });
         }
     });
+        // window.addEventListener('load', () => {
+        //     ids=[]
+        // });
 
     $('.optieAll').click((e)=>{
-        // var tr_element = e.target.parentElement.closest("tr");
-        // var get = document.getElementsByName('checkOne');
-        var classs = tr_element.className;
-
-        console.log(ids);
-
-        // var optie = e.target.id;
-
+        const state = document.querySelector('.state').className;
+        var classs = state.split(' ')[0];
+        var optie = e.target.value;
         if(confirm('Are you sure you want to apply this record ?'))
         {
+            // console.log('array sending',ids);
+            // console.log('classs',classs);
             $.ajax({
-               url: '/optieAll',
+               url: '/optieall',
                type: 'POST',
-               data: {   
-                   class:classs
+               data: {
+                   class:classs,
+                   ids:ids,
+                   optie:optie
                 },
-               error: function() {
-                  alert('Something is wrong');
+                beforeSend:function(){
+                    document.getElementById('content-back-topics').innerHTML = '';
+                    $('#loader').attr('hidden',false)
+                    $('#select_field').attr('hidden',true)
+                },
+               error: function(error) {
+                document.getElementById('content-back-topics').innerHTML = error;
+                $('#loader').attr('hidden',false)
+                $('#select_field').attr('hidden',true)  
+                // alert('Something is wrong');
+                // location.reload();
                },
                success: function(data) {
+                $('#loader').attr('hidden',true)
+                $('#select_field').attr('hidden',false)
+                document.getElementById('content-back-topics').innerHTML = data;
                     for(var i=0;i<ids.length;i++){
                         $("#"+ids[i]).remove();
-                        console.log(ids[i]);
+                        // console.log(ids[i]);
                     }
-                    alert("Record applied successfully");
-                    location.reload();
+                    // alert("Record applied successfully");
+                    // location.reload();
                     // window.location.href = "/optieAll";
                }
             });
@@ -464,10 +505,12 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     $('.optie').click((e)=>{
         var tr_element = e.target.parentElement.closest("tr");
         var ids = tr_element.id;
-        var classs = tr_element.className;
- 
-        var optie = e.target.id;
-
+        const state = document.querySelector('.state').className;
+        var classs = state.split(' ')[0];
+        var optie = e.target.value;
+        // console.log('ids::::::::::',ids);
+        // console.log('option choisi',optie);
+        // console.log('classs::::::::::',classs);
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
@@ -478,13 +521,29 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                    optie: optie,
                    class: classs,
                 },
-               error: function() {
-                  alert('Something is wrong');
+                beforeSend:function(){
+                    document.getElementById('content-back-topics').innerHTML = '';
+                    $('#loader').attr('hidden',false)
+                    $('#select_field').attr('hidden',true)
+                },
+               error: function(error) {
+                console.log(error);
+                document.getElementById('content-back-topics').innerHTML = error;
+                $('#loader').attr('hidden',true)
+                $('#select_field').attr('hidden',false)
+                document.getElementById('content-back-topics').innerHTML = "<span class='alert alert-alert'>Something is wrong</span>";
+                //   alert('Something is wrong');
+                // location.reload();
                },
                success: function(data) {
+                    console.log('response ',data);
+                    document.getElementById('content-back-topics').innerHTML = data;
+                    // document.getElementById('content-back-topics').innerHTML = "<span class='alert alert-success'>Record applied successfully</span>";
+                    $('#loader').attr('hidden',true)
+                    $('#select_field').attr('hidden',false);
                     $("#"+ids).remove();
-                    console.log(data);
-                    alert("Record applied successfully");  
+                    // location.reload();
+                    // alert("Record applied successfully");  
                }
             });
         }
