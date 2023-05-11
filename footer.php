@@ -1,4 +1,8 @@
 <!-- Modal -->
+<?php
+echo '<input type="hidden" value="' . $_COOKIE['general'] . '">';
+if(!isset($_COOKIE['general'])):
+?> 
 <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -9,20 +13,21 @@
                 <p class="title-cookie">Cookie consent</p>
                 <p class="description-cookie">We use necessary cookies to make our site work. We’d like to set additional cookies to understand site usage, make site improvements and to remember your settings. We also use cookies set by other sites to help deliver content from their services.</p>
                 <div class="group-btn-cookie">
-                    <button type="button" class="btn btn-accpet-cookies accept_cookies" data-dismiss="modal">Accept & continue</button>
-                    <button type="button" class="btn btn-decline-cookies" data-dismiss="modal">Decline cookies</button>
+                    <button class="btn btn-accpet-cookies accept-cookies" id="1" >Accept & continue</button>
+                    <button class="btn btn-decline-cookies accept-cookies" id="0" >Decline cookies</button>
+                    <div hidden="true" id="loader_cookie" class="spinner-border spinner-border-sm text-primary" role="status"></div>
                 </div> 
-                <div hidden="true" id="loader_cookie" class="spinner-border spinner-border-sm text-primary" role="status"></div>   
             </div>
         </div>
     </div>
 </div>
-
+</div>
+<?php endif; ?>
 
 <?php
-global $wp;
+// global $wp;
 //modal for app mobile when load page
-$url = home_url( $wp->request );
+// $url = home_url( $wp->request );
 echo '<input type="hidden" value="' . $_COOKIE['mobile_download'] . '">';
 if(!isset($_COOKIE['mobile_download'])):
 ?> 
@@ -285,14 +290,21 @@ if(!isset($_COOKIE['mobile_download'])):
         });
     });
 </script>
+ 
+<script type="text/javascript">
+    $(window).on('load', function() {
+        $('#cookieModal').modal('show');
+    });
+</script> 
 
 <?php
-$site_base_url = get_site_url() . "/apply-cookie";
+$site_url = get_site_url() . "/apply-cookie";
 ?>
 
 <script>
     $('.cookie_apply_mobile').click((e)=>{
         var set_cookie = "mobile_download";
+        var openedWindow;
 
         $.ajax({
             url: '/apply-cookie',
@@ -315,23 +327,22 @@ $site_base_url = get_site_url() . "/apply-cookie";
             },
             success: function(data){
                 $('#loader').attr('hidden',true);
-                window.open("<?php echo $site_base_url; ?>");
                 $('#modalForApp').hide();
+                var openedWindow = window.open("<?php echo $site_url ?>");  // Open a new window
+                if (openedWindow && openedWindow.close) 
+                    openedWindow.close(); // Close a new window
             }
         });
     });
 </script>
-<script type="text/javascript">
-    $(window).on('load', function() {
-        $('#cookieModal').modal('show');
-    });
-</script>
-<?php
-$site__url = get_site_url() . "/apply-cookie";
-?>
+
 <script>
-    $('.accept_cookies').click((e)=>{
+    $('.accept-cookies').click((e)=>{
         var set_cookie_general = "general";
+        var cookie_value = $(this).attr('id');
+        var openedWindow;
+
+        alert('Cookk');
 
         $.ajax({
             url: '/apply-cookie',
@@ -339,6 +350,7 @@ $site__url = get_site_url() . "/apply-cookie";
             dataType: 'text',
             data:{
                 'set_cookie': set_cookie_general,
+                'cookie_value': cookie_value,
             },
             beforeSend:function(){
                 $('#loader_cookie').attr('hidden',false);
@@ -346,12 +358,15 @@ $site__url = get_site_url() . "/apply-cookie";
             error: function(){
                 alert('Something went wrong!');
                 $('#loader_cookie').attr('hidden',true);
-                // $('#modalForApp').hide();
+                $('#cookieModal').modal('hide');
             },
             success: function(data){
                 $('#loader_cookie').attr('hidden',true);
-                // $('#modalForApp').hide();
-                window.open("<?php echo $site_base_url; ?>");
+                $('#cookieModal').modal('hide');
+                // myWindow = window.open("", "MsgWindow", "width=200,height=100");  // Open a new window
+                var openedWindow = window.open("<?php echo $site_url ?>");  // Open a new window
+                if (openedWindow && openedWindow.close) 
+                    openedWindow.close(); // Close a new window    
             }
         });
     });

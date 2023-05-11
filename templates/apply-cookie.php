@@ -6,10 +6,7 @@
     if($set_cookie == "mobile_download") 
         setcookie('mobile_download', '1', time()+3600 * 24 * 7 , '/');
     else if($set_cookie == "general") 
-        setcookie('general', '0', time()+3600 * 24 * 7 , '/');
+        setcookie('general', $cookie_value, time()+3600 * 24 * 360 , '/');
 
+    echo '<h1 class="wordDeBestText2">Preferences set correctly</h1>';
 ?>
-
-<script>
-    alert("Preferences set correctly");
-</script>
