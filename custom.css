@@ -8143,6 +8143,20 @@ tbody {
         .content-inloggen .btnPlayGoogle, .content-inloggen .btnStore {
             height: 60px !important;
         }
+        .block-store-doawnload .group-btn-store a {
+            height: 40px;
+            width: 130px;
+        }
+        .block-store-doawnload .group-btn-store a img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain !important;
+        }
+        .block-store-doawnload .group-btn-store #googlePlay {
+            height: 60px;
+            margin-top: -10px;
+            width: 155px;
+        }
 
         @media all and (min-width: 300px) and (max-width: 767px){
             .second-block-binnen img {
@@ -14928,7 +14942,7 @@ background: #FFFFFF !important;
 }
 .new-card-course{
     background: white;
-    padding: 10px 13px;
+    padding: 10px 13px 20px;
     border-radius: 10px;
     margin-bottom: 25px;
 }
@@ -18002,6 +18016,7 @@ background: #FFFFFF !important;
 .list .new-card-course {
     width: 100%;
     display: flex;
+    padding: 10px 13px 10px;
 }
 .list .new-card-course .head {
     height: auto;
