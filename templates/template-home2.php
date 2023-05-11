@@ -1763,6 +1763,10 @@ $saved = get_user_meta($user_id, 'course');
         <img class="doanloadIllustration" src="<?php echo get_stylesheet_directory_uri();?>/img/happyDoawnload.png" alt="">
     </div>
 </div>
+
+<?php get_footer(); ?>
+<?php wp_footer(); ?>
+
 <script src="<?php echo get_stylesheet_directory_uri();?>/mobapiCity.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -1958,5 +1962,3 @@ $saved = get_user_meta($user_id, 'course');
         });
     });
 </script>
-<?php get_footer(); ?>
-<?php wp_footer(); ?>
