@@ -1307,7 +1307,7 @@ $saved = get_user_meta($user_id, 'course');
             <div class="col-md-4">
                 <div class="theme-card-gradient">
                     <p class="title-card">Voor werkgevers</p>
-                    <p class="description-card">Je bedrijf oneindig laten groeien, door je personeel te laten excelleren? LiveLearn dé upskilling partner.  </p>
+                    <p class="description-card">Je bedrijf oneindig laten groeien, door je personeel te laten excelleren? LiveLearn is dé upskilling partner. </p>
                     <div class="w-100">
                         <a href="/voor-organisatie-2/">Sign-up!</a>
                     </div>
