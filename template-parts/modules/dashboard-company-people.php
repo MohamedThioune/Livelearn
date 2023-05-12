@@ -13,20 +13,20 @@
     if(!empty($company))
         $company_connected = $company[0]->post_title;
 
-    $grant = get_field('manager',  'user_' . $user_connected);
+    $grant = get_field('manager','user_' . $user_connected);
     $ismanaged = get_field('managed','user_' . $user_connected);
     $members = array();
     $member_id = [];
     foreach($users as $user){
-        $my_managers = array();
-        foreach ($users as $key => $value) {
-            $users_manageds = get_field('managed',  'user_' . $value->ID);
-            if(!empty($users_manageds))
-                if (in_array($user->ID, $users_manageds)){
-                    array_push($my_managers, $value);
-                }
-        }
-        $user->my_managers = $my_managers;
+        // $my_managers = array();
+        // foreach ($users as $key => $value) {
+        //     $users_manageds = get_field('managed',  'user_' . $value->ID);
+        //     if(!empty($users_manageds))
+        //         if (in_array($user->ID, $users_manageds)){
+        //             array_push($my_managers, $value);
+        //         }
+        // }
+        // $user->my_managers = $my_managers;
 
         if($user_connected != $user->ID ){
             $company = get_field('company',  'user_' . $user->ID);
@@ -231,21 +231,9 @@
                             <td class="textTh elementOnder"><?php echo get_field('role', 'user_'.$user->ID);?></td>
                             <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
                             <td class="textTh thModife">
-                            <?php if(!empty($user->my_managers)): ?>
-                                <?php $encodedTab = htmlspecialchars(json_encode($user->my_managers), ENT_QUOTES, 'UTF-8'); ?>
-                                <button type="button" class="btn manager-picture-block" data-table="<?= htmlspecialchars(json_encode($user->my_managers), ENT_QUOTES, 'UTF-8'); ?>" data-toggle="modal" data-target="#userModal<?= $keyP; ?>">
-                                    <?php
-                                    foreach ($user->my_managers as $key=> $m) :
-                                        if($key == 3)
-                                            break;
-                                        $image_manager = get_field('profile_img',  'user_' . $m->ID)?get_field('profile_img',  'user_' . $m->ID):get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                        ?>
-                                        <div class="ImgUser aq">
-                                            <img src="<?= $image_manager ?>" alt="img">
-                                        </div>
-                                    <?php endforeach; ?>
+                                <button type="button" id ="<?= $user->ID ?>" class="btn btn-choose-company manager-picture-block" data-table="<?= htmlspecialchars(json_encode($user->my_managers), ENT_QUOTES, 'UTF-8'); ?>" data-toggle="modal" data-target="#userModal<?= $keyP; ?>">
+                                    managers
                                 </button>
-                                <?php endif; ?>
                                 <!-- Modal -->
                                 <div class="modal modalAllManager fade" id="userModal<?= $keyP; ?>" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -723,21 +711,23 @@
      $(".manager-picture-block").click(function(e){
         const backApi = document.querySelector('.back-list-of-user-manager');
         const loader = document.querySelectorAll('.loader-manager');
-        console.log(loader)
-        // const idUser = e.currentTarget.id
-        // console.log((e.currentTarget.getAttribute('data-table')));
+        const idUser = e.currentTarget.id
         var managers =e.currentTarget.getAttribute('data-table');
         managers = JSON.parse(managers);
-        console.log('data sending',managers);
+        // console.log('data sending',managers);
+        console.log('user :::::::'+idUser);
         $.ajax({
         url:"/salaryadmin/",
         method:"post",
         data:{
-            managers : managers
+            id : idUser,
+            // managers : managers
         },
         // dataType:"text",
         beforeSend:function(){
-        // loader.classList.remove('d-none');
+        loader.forEach(load => {
+                load.className = "text-center loader-manager";
+            });
         $(".back-list-of-user-manager").html(' ');
         },error: function(error){
             loader.forEach(load => {
@@ -745,14 +735,18 @@
             });
             $(".back-list-of-user-manager").html("<span class='alert alert-danger'>Some things are wrong !!!</span>");
         },success: function(success){
+            if (success.trim()===""){
+                success = "<span class='alert alert-info text-center mt-3'>this user has no managers<span>"
+            }
+            console.log('success',success)
             loader.forEach(load => {
                 load.className = "text-center loader-manager d-none";
             });
             $(".back-list-of-user-manager").html(success);
-            console.log(success,'loader ',loader)
         },complete: function(complete){
             console.log('complete',complete);
         },
         });
      });
 </script>
+
