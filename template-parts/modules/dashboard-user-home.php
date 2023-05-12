@@ -934,32 +934,43 @@ if(isset($_GET['message']))
                                         echo '<img src="' . $thumbnail .'" alt="">';
                                     ?>
                                 </div>
-                                <div class="title-favorite d-flex justify-content-between align-items-center">
-                                    <p class="title-course"><?= $course->post_title ?></p>
-                                    <button>
-                                    <?php
-                                        if (in_array($course->ID, $saved))
-                                        {
-                                            ?>
-                                            <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course"><?= $course->post_title ?></p>
+                                        <button>
                                             <?php
-                                        }
-                                        else{
+                                            if (in_array($course->ID, $saved))
+                                            {
+                                                ?>
+                                                <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
+                                                <?php
+                                            }
+                                            else{
+                                                ?>
+                                                <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                                <?php
+                                            }
                                             ?>
-                                            <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                            <?php
-                                        }
-                                        ?>
-                                    </button>
-                                </div>
-                                <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                    <p class="autor"><b>By</b>: <?= $author_name ?></p>
-                                    <p class="price"><?= $price ?></p>
-                                </div>
-                                <div class="footer-card-course d-flex justify-content-between align-items-center">                            
-                                    <div class="d-flex align-items-center">
-                                        <!-- <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
-                                             <p class="hours-course"><?= $duration_day ?> days</p> -->
+                                        </button>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm"><?php echo $location?></p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?= $author_image ?>" class="" alt="">
+                                            </div>
+                                            <p class="autor"><?= $author_name ?></p>
+                                        </div>
+                                        <p class="price"><?= $price ?></p>
                                     </div>
                                 </div>
                             </a>
@@ -1045,32 +1056,43 @@ if(isset($_GET['message']))
                                         echo '<img src="' . $thumbnail .'" alt="">';
                                     ?>
                                 </div>
-                                <div class="title-favorite d-flex justify-content-between align-items-center">
-                                    <p class="title-course"><?= $course->post_title ?></p>
-                                    <button>
-                                    <?php
-                                        if (in_array($course->ID, $saved))
-                                        {
-                                            ?>
-                                            <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course"><?= $course->post_title ?></p>
+                                        <button>
                                             <?php
-                                        }
-                                        else{
+                                            if (in_array($course->ID, $saved))
+                                            {
+                                                ?>
+                                                <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
+                                                <?php
+                                            }
+                                            else{
+                                                ?>
+                                                <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                                <?php
+                                            }
                                             ?>
-                                            <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                            <?php
-                                        }
-                                        ?>
-                                    </button>
-                                </div>
-                                <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                    <p class="autor"><b>By</b>: <?= $author_name ?></p>
-                                    <p class="price"><?= $price ?></p>
-                                </div>
-                                <div class="footer-card-course d-flex justify-content-between align-items-center">                            
-                                    <div class="d-flex align-items-center">
-                                        <!-- <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
-                                             <p class="hours-course"><?= $duration_day ?> days</p> -->
+                                        </button>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm"><?php echo $location?></p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?= $author_image ?>" class="" alt="">
+                                            </div>
+                                            <p class="autor"><?= $author_name ?></p>
+                                        </div>
+                                        <p class="price"><?= $price ?></p>
                                     </div>
                                 </div>
                             </a>
@@ -1156,32 +1178,43 @@ if(isset($_GET['message']))
                                         echo '<img src="' . $thumbnail .'" alt="">';
                                     ?>
                                 </div>
-                                <div class="title-favorite d-flex justify-content-between align-items-center">
-                                    <p class="title-course"><?= $course->post_title ?></p>
-                                    <button>
-                                    <?php
-                                        if (in_array($course->ID, $saved))
-                                        {
-                                            ?>
-                                            <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course"><?= $course->post_title ?></p>
+                                        <button>
                                             <?php
-                                        }
-                                        else{
+                                            if (in_array($course->ID, $saved))
+                                            {
+                                                ?>
+                                                <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
+                                                <?php
+                                            }
+                                            else{
+                                                ?>
+                                                <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                                <?php
+                                            }
                                             ?>
-                                            <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                            <?php
-                                        }
-                                        ?>
-                                    </button>
-                                </div>
-                                <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                    <p class="autor"><b>By</b>: <?= $author_name ?></p>
-                                    <p class="price"><?= $price ?></p>
-                                </div>
-                                <div class="footer-card-course d-flex justify-content-between align-items-center">                            
-                                    <div class="d-flex align-items-center">
-                                        <!-- <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
-                                             <p class="hours-course"><?= $duration_day ?> days</p> -->
+                                        </button>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm"><?php echo $location?></p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?= $author_image ?>" class="" alt="">
+                                            </div>
+                                            <p class="autor"><?= $author_name ?></p>
+                                        </div>
+                                        <p class="price"><?= $price ?></p>
                                     </div>
                                 </div>
                             </a>
@@ -1267,32 +1300,43 @@ if(isset($_GET['message']))
                                         echo '<img src="' . $thumbnail .'" alt="">';
                                     ?>
                                 </div>
-                                <div class="title-favorite d-flex justify-content-between align-items-center">
-                                    <p class="title-course"><?= $course->post_title ?></p>
-                                    <button>
-                                    <?php
-                                        if (in_array($course->ID, $saved))
-                                        {
-                                            ?>
-                                            <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course"><?= $course->post_title ?></p>
+                                        <button>
                                             <?php
-                                        }
-                                        else{
+                                            if (in_array($course->ID, $saved))
+                                            {
+                                                ?>
+                                                <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
+                                                <?php
+                                            }
+                                            else{
+                                                ?>
+                                                <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                                <?php
+                                            }
                                             ?>
-                                            <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                            <?php
-                                        }
-                                        ?>
-                                    </button>
-                                </div>
-                                <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                    <p class="autor"><b>By</b>: <?= $author_name ?></p>
-                                    <p class="price"><?= $price ?></p>
-                                </div>
-                                <div class="footer-card-course d-flex justify-content-between align-items-center">                            
-                                    <div class="d-flex align-items-center">
-                                        <!-- <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
-                                             <p class="hours-course"><?= $duration_day ?> days</p> -->
+                                        </button>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm"><?php echo $location?></p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?= $author_image ?>" class="" alt="">
+                                            </div>
+                                            <p class="autor"><?= $author_name ?></p>
+                                        </div>
+                                        <p class="price"><?= $price ?></p>
                                     </div>
                                 </div>
                             </a>
@@ -1373,32 +1417,43 @@ if(isset($_GET['message']))
                                         echo '<img src="' . $thumbnail .'" alt="">';
                                     ?>
                                 </div>
-                                <div class="title-favorite d-flex justify-content-between align-items-center">
-                                    <p class="title-course"><?= $course->post_title ?></p>
-                                    <button>
-                                    <?php
-                                        if (in_array($course->ID, $saved))
-                                        {
-                                            ?>
-                                            <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
+                                <div class="details-card-course">
+                                    <div class="title-favorite d-flex justify-content-between align-items-center">
+                                        <p class="title-course"><?= $course->post_title ?></p>
+                                        <button>
                                             <?php
-                                        }
-                                        else{
+                                            if (in_array($course->ID, $saved))
+                                            {
+                                                ?>
+                                                <img class="btn_favourite" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $like_src;?>" alt="">
+                                                <?php
+                                            }
+                                            else{
+                                                ?>
+                                                <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
+                                                <?php
+                                            }
                                             ?>
-                                            <img class="btn_favourite d-none" id="<?php echo $user."_".$course->ID."_course" ?>"  src="<?php echo $dislike_src; ?>" alt="">
-                                            <?php
-                                        }
-                                        ?>
-                                    </button>
-                                </div>
-                                <div class="autor-price-block d-flex justify-content-between align-items-center">
-                                    <p class="autor"><b>By</b>: <?= $author_name ?></p>
-                                    <p class="price"><?= $price ?></p>
-                                </div>
-                                <div class="footer-card-course d-flex justify-content-between align-items-center">                            
-                                    <div class="d-flex align-items-center">
-                                        <!-- <img class=""  src="<?php echo get_stylesheet_directory_uri();?>/img/tabler_clock-hour.png" alt="">
-                                             <p class="hours-course"><?= $duration_day ?> days</p> -->
+                                        </button>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                        <div class="blockOpein d-flex align-items-center">
+                                            <i class="fas fa-graduation-cap"></i>
+                                            <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
+                                        </div>
+                                        <div class="blockOpein">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            <p class="lieuAm"><?php echo $location?></p>
+                                        </div>
+                                    </div>
+                                    <div class="autor-price-block d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div class="blockImgUser">
+                                                <img src="<?= $author_image ?>" class="" alt="">
+                                            </div>
+                                            <p class="autor"><?= $author_name ?></p>
+                                        </div>
+                                        <p class="price"><?= $price ?></p>
                                     </div>
                                 </div>
                             </a>
