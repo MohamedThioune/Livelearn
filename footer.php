@@ -1,6 +1,5 @@
 <!-- Modal -->
 <?php
-var_dump($_COOKIE["cookie_consent"]);
 if(!isset($_COOKIE["cookie_consent"])):
 ?> 
 <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -25,7 +24,6 @@ if(!isset($_COOKIE["cookie_consent"])):
 <?php endif; ?>
 
 <?php
-var_dump($_COOKIE['mobile_download']);
 if(!isset($_COOKIE['mobile_download'])):
 ?> 
 <div id="modalForApp" class="modal fade" role="dialog">
