@@ -128,8 +128,9 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
                        &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
                        &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/artikel.jpg" alt="load subtopics"></button>
-                       
-                    <div class="col-md-3">
+                       <button id="playlist-youtube">playlist</button>
+
+                   <div class="col-md-3">
                         
                         <select class="form form-control" id="select_field">
                             <option value="">Get new contents from</option> 
@@ -692,6 +693,28 @@ $(document).ready(function () {
 });
 //# sourceURL=pen.js
 </script>
+<script>
+    $("#playlist-youtube").click((e)=>{
+        $.ajax({
+            url:"/livelearn/youtube-playlist/",
+            method:"POST",
+            data:{
+                playlist_youtube:"youtube"
+            },
+            beforeSend:function(){
+                document.getElementById('content-back-topics').innerHTML = '';
+                console.log('sending...')
+            },
+            error: function(error){
+               },
+            success: function(success){
+                document.getElementById('content-back-topics').innerHTML = success;
+                console.log('success',success)
+            },complete: function(complete){
 
+            },
+        });
+    })
+</script>
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
