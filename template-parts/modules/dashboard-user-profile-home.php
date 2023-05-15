@@ -31,14 +31,14 @@ if (!empty($portfolios))
                     <p><?php echo $country; ?></p>
                     <?php } ?>
                 </div>
-                <div class="contentMap">
+                <a href="" class="contentMap">
                     <i style="color:#696969;font-size: 1.2em" class="fa fa-home"></i>&nbsp;
-                    <p><?php echo $company_name; ?></p>
+                    <a href="/dashboard/company/people"><?php echo $company_name; ?></a>
                 </div>
             </div>
             <?php 
                 if($user->ID == get_current_user_id())
-                    echo "<a href='/dashboard/user/settings' style='color:white; font-weight:bold; font-size: 1.3em'><button class='btn btndoawnloadCv'><i class='fas fa-user-cog'></i></button></a>";
+                    echo "<a href='/dashboard/user/settings' style='color:white;'><button class='btn btndoawnloadCv'><i class='fa fa-gear'></i>Edit</button></a>";
                 else 
                     echo "<a class='btn btndoawnloadCv' href='#'>Download CV</a>";
             ?>

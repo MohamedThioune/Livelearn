@@ -21,6 +21,9 @@ $message = "";
 extract($_POST);
 
 $user_data = wp_get_current_user();
+if(empty($user_data->roles))
+    header('Location:/');
+
 
 function RandomString(){
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -70,9 +73,6 @@ function makeApiCall($endpoint, $type) {
     // return data
     return json_decode( $response, true );
 }
-
-if(empty($user_data->roles))
-    header('Location:/');
 
 if(isset($_POST['expert_add']) || isset($_POST['expert_add_artikel'])){
     $bunch = get_field('experts', $_GET['id']);
@@ -478,9 +478,12 @@ else if(isset($road_path_created)){
     */
     update_field('road_path', $courses, $post_id);
 
-    foreach($topics as $topic)
+    foreach($topics as $topic){
+        if(is_wp_error(!$topic))
+            continue;
         if($topic != '')
             update_field('topic_road_path', $topic, $post_id);
+    }
 
     $message = "/dashboard/teacher/road-path/?id=". $post_id . "&message=Road path created successfully"; 
     header("Location: ". $message);
@@ -911,8 +914,11 @@ else if (isset($note_skill_new)){
     if(!empty($topics_external))
         $topics = $topics_external;
     if(!empty($topics_internal))
-        foreach($topics_internal as $value)
+        foreach($topics_internal as $value){
+            if(!$value || is_wp_error(!$value))
+                continue;
             array_push($topics, $value);
+        }
 
     //Add topic
     if(!in_array($id, $topics))
@@ -998,12 +1004,28 @@ else if(isset($follow_community)){
 
     update_field('follower_community', $followers, $community_id);
 
-    $path = "/dashboard/user/communities/?mu=" . $community_id . "&message=Successfully subscribed to this community !";
+    $path = "/dashboard/user/community-detail/?mu=" . $community_id . "&message=Successfully subscribed to this community !";
     header("Location: ". $path);
 }
 
 else if(isset($unfollow_community)){
-    $path = "/dashboard/user/communities/?mu=" . $community_id . "&message=Successfully unsubscribed to this community !";
+    $user_id = get_current_user_id();
+    $followers = array();
+    $past_followers = get_field('follower_community', $community_id);
+
+    if(empty($past_followers))
+        $past_followers = array();
+    else
+        foreach($past_followers as $follower){
+            if($follower->ID == $user_id)
+                continue;
+            
+            array_push($followers, $follower);
+        }
+    
+    update_field('follower_community', $followers, $community_id);
+
+    $path = "/dashboard/user/communities/?message=Successfully unsubscribed !";
     header("Location: ". $path);
 }
 
@@ -1068,13 +1090,15 @@ else if(isset($question_community)){
 else if(isset($reply_question_community)){
     $question = array();
     $question_community = get_field('question_community', $community_id);
-
+    if(!empty($question_community))
+        $question_community = array_reverse($question_community);
+    
     foreach($question_community as $key => $item){
         if($key == $id){
             $reply = array();
             $user_reply = wp_get_current_user();
             $reply['user_reply'] = $user_reply;
-            $reply['text_reply'] = $text_reply;
+            $reply['text_reply'] = $_POST['txtreply'];
             if(empty($item['reply_question']))
                 $item['reply_question'] = array();
             
@@ -1083,100 +1107,308 @@ else if(isset($reply_question_community)){
 
         array_push($question, $item);
     }
+    $question = array_reverse($question);
     update_field('question_community', $question, $community_id);
-
+    var_dump( $_POST['txtreply']);
     $path = "/dashboard/user/community-detail/?mu=" . $community_id . "&message=Reply question applied successfully !";
     header("Location: ". $path);
 }
 
 else if(isset($mandatory_course)){    
-    $allocution = get_field('allocation', $course_id);
-    if(!$allocution)
-        $allocution = array();
+    $posts = get_post($course_must);
+    $link = get_permalink($course_must);
 
-    $user_id = get_current_user_id();
-
-    $posts = get_post($course_id);
-    
-    //Create feedback
+    /** Create feedback **/
     $manager = get_user_by('id', get_current_user_id());
-    $title_feedback = $manager->display_name . ' share you a course.';
     $type = 'Verplichte cursus';
-
-    $link = get_permalink($course_id);
-
     $beschrijving_feedback = '<p>' . $manager->display_name . ' heeft de cursus met u gedeeld : <br>
-    <a href="' . $link . '">' . $posts->post_title . '</a><br><br>
+    <a href="/dashboard/user/activity">' . $posts->post_title . '</a><br><br>
     Veel plezier bij het lezen !';
+    //Data to create the feedback
+    $post_data = array(
+        'post_title' => $name_mandatory,
+        'post_author' => $user_must,
+        'post_type' => 'feedback',
+        'post_status' => 'publish'
+    );
+    //Create
+    $post_id = wp_insert_post($post_data);
+    //Add further informations for feedback
+    update_field('type_feedback', $type, $post_id);
+    update_field('manager_feedback', $manager->ID, $post_id);
+    update_field('beschrijving_feedback', nl2br($beschrijving_feedback), $post_id);
 
-    if(!empty($selected_members))
-        foreach($selected_members as $expert){
-            if(!empty($allocution))
-                if(in_array($expert, $allocution))
-                    continue;
+    /** Create mandatory **/
+    $post_data = array(
+        'post_title' => $posts->post_name,
+        'post_author' => $user_must,
+        'post_type' => 'mandatory',
+        'post_status' => 'publish'
+    );
+    //Create
+    $post_id = wp_insert_post($post_data);
+    //Add further informations for mandator
+    update_field('done_must', $done_must, $post_id);
+    update_field('valid_must', $valid_must, $post_id);
+    update_field('point_must', $point_must, $post_id);
+    update_field('message_must', nl2br($message_must), $post_id);
+    update_field('manager_must', $manager, $post_id);
 
-            /*
-            ** Mail expert concerned by the sharing
-            */
+    /** Mail expert concerned by the sharing **/
+    $course_type = get_field('course_type', $posts->ID);
+    //image post
+    $thumbnail = get_field('preview', $posts->ID)['url'];
+    if(!$thumbnail){
+        $thumbnail = get_the_post_thumbnail_url($posts->ID);
+        if(!$thumbnail)
+            $thumbnail = get_field('url_image_xml', $posts->ID);
+        if(!$thumbnail)
+            $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+    }
+    //short_description post
+    $short_description = get_field('short_description', $posts->ID);
+    $expert_shared = get_user_by('id', $user_must);
+    $first_name = $expert_shared->first_name ?: $expert_shared->display_name;
+    $email = $expert_shared->user_email;
+    $mandatory_a_course = 'mail-mandatory-a-course.php';
+    require($mandatory_a_course);
+    $subject = 'Een van je managers heeft een verplichte cursus met je gedeeld!';
+    $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+    wp_mail("mohamed@livelearn.nl", $subject, $mail_mandatored_course_body, $headers, array( '' )) ;
 
-            $course_type = get_field('course_type', $posts->ID);
-            //image post
-            $thumbnail = get_field('preview', $posts->ID)['url'];
-            if(!$thumbnail){
-                $thumbnail = get_the_post_thumbnail_url($posts->ID);
-                if(!$thumbnail)
-                    $thumbnail = get_field('url_image_xml', $posts->ID);
-                if(!$thumbnail)
-                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-            }
-            //short_description post
-            $short_description = get_field('short_description', $posts->ID);
-
-            $expert_shared = get_user_by('id', $expert);
-            $first_name = $expert_shared->first_name ?: $expert_shared->display_name;
-            $email = $expert_shared->user_email;
-            $mandatory_a_course = 'mail-mandatory-a-course.php';
-            require($share_a_course);
-
-            $subject = 'Een van je managers heeft een verplichte cursus met je gedeeld!';
-            $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
-            wp_mail($email, $subject, $mail_mandatored_course_body, $headers, array( '' )) ;
-
-            array_push($allocution, $expert);
-            $posts = get_field('kennis_video', 'user_' . $expert);
-        
-            //Data to create the feedback
-            $post_data = array(
-                'post_title' => $title_feedback,
-                'post_author' => $expert,
-                'post_type' => 'feedback',
-                'post_status' => 'publish'
-            );
-            
-            //Create
-            $post_id = wp_insert_post($post_data);
-            //Add further informations for feedback
-            update_field('type_feedback', $type, $post_id);
-            update_field('manager_feedback', $manager->ID, $post_id);
-            update_field('beschrijving_feedback', nl2br($beschrijving_feedback), $post_id);
-
-            if(!empty($posts))
-                array_push($posts, get_post($course_id));
-
-            update_field('mandatory_video', $posts, 'user_' . $expert);
-        }
-
-    //Adding new subtopics on course
-    update_field('allocation', $allocution, $course_id);
-
-    if($path == "dashboard")
-        $message = '/dashboard/company/learning-modules/?message=Manager deelde een verplichte cursus met succes!'; 
-    else if($path == "course")
-        $message = get_permalink($course_id) . '/?message=Manager deelde een verplichte cursus met succes!'; 
+    $message = "/dashboard/company/profile/?id=" . $user_must . "&manager=" . $manager->ID . "&message=Successfully put on mandatory !"; 
 
     header("Location: ". $message);
 }
+
+else if(isset($valid_offline)){
+    $user = wp_get_current_user();
+
+    //Get read by user 
+    //Get posts searching by title
+    $args = array(
+        'post_type' => 'progression', 
+        'title' => $course_read,
+        'post_status' => 'publish',
+        'author' => $user->ID,
+        'posts_per_page'         => 1,
+        'no_found_rows'          => true,
+        'ignore_sticky_posts'    => true,
+        'update_post_term_cache' => false,
+        'update_post_meta_cache' => false,
+    );
+    $progressions = get_posts($args);
+
+    if(empty($progressions)){
+        //Create progression
+        $post_data = array(
+            'post_title' => $course_read,
+            'post_author' => $user->ID,
+            'post_type' => 'progression',
+            'post_status' => 'publish'
+        );
+        $progression_id = wp_insert_post($post_data);
+    }
+    else
+        $progression_id = $progressions[0]->ID;
+        
+    $post = 0;
+    $post = get_page_by_path($course_read, OBJECT, 'course');
+
+    //Finish 
+    update_field('state_actual', 1, $progression_id);
+    //Get read by user 
+    $args = array(
+        'post_type' => 'mandatory', 
+        'title' => $post->post_name,
+        'post_status' => 'publish',
+        'author' => $user->ID,
+        'posts_per_page'         => 1,
+        'no_found_rows'          => true,
+        'ignore_sticky_posts'    => true,
+        'update_post_term_cache' => false,
+        'update_post_meta_cache' => false
+    );
+    $mandatories = get_posts($args);
+    $is_finish = 0;
+    if(!empty($mandatories)){
+        $manager_must = get_field('manager_must', $mandatories[0]->ID);
+        $first_name = (isset($manager_must->first_name)) ? $manager_must->first_name : $manager_must->display_name;
+        $employee_name = (isset($user->first_name)) ? $user->first_name : $user->display_name;
+        $email = $manager_must->user_email;
+
+        /** Mail to manager */
+        $course_type = get_field('course_type', $post->ID);
+        //image post
+        $thumbnail = get_field('preview', $post->ID)['url'];
+        if(!$thumbnail){
+            $thumbnail = get_the_post_thumbnail_url($post->ID);
+            if(!$thumbnail)
+                $thumbnail = get_field('url_image_xml', $post->ID);
+            if(!$thumbnail)
+                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+        }
+        //short_description post
+        $short_description = get_field('short_description', $post->ID);
+        $mandatory_a_course = 'mail-mandatory-valid-course.php';
+        require($mandatory_a_course);
+        $subject = 'Mandatory course followed successfully by your employee !';
+        $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+        wp_mail($email, $subject, $mail_mandatory_validated_course_body, $headers, array( '' )) ;
+    }
+
+    if($post)
+        $follow_reads = "/dashboard/user/checkout-offline?post=" . $post->post_name;
+    else
+        $follow_reads = "/dashboard/user/activity";
+
+    header("Location: " . $follow_reads);
+}
+
+else if(isset($read_action_lesson)){
+    $user = wp_get_current_user();
+
+    //Get read by user 
+    //Get posts searching by title
+    $args = array(
+        'post_type' => 'progression', 
+        'title' => $course_read,
+        'post_status' => 'publish',
+        'author' => $user->ID,
+        'posts_per_page'         => 1,
+        'no_found_rows'          => true,
+        'ignore_sticky_posts'    => true,
+        'update_post_term_cache' => false,
+        'update_post_meta_cache' => false,
+    );
+    $progressions = get_posts($args);
+
+    if(empty($progressions)){
+        //Create progression
+        $post_data = array(
+            'post_title' => $course_read,
+            'post_author' => $user->ID,
+            'post_type' => 'progression',
+            'post_status' => 'publish'
+        );
+        $progression_id = wp_insert_post($post_data);
+    }
+    else
+        $progression_id = $progressions[0]->ID;
     
+    //Lesson read
+    $lesson_reads = get_field('lesson_actual_read', $progression_id);
+    $lesson_read = array();
+    $lesson_read['key_lesson'] = $lesson_key;
+
+    $bool = true;
+
+    if(!empty($lesson_reads))
+        foreach ($lesson_reads as $key => $item) 
+            if($item['key_lesson'] == $lesson_key){
+                $bool = false;
+                break;
+            }
+
+    if(!$lesson_reads)
+        $lesson_reads = array();
+        
+    if($bool){
+        array_push($lesson_reads, $lesson_read);
+        update_field('lesson_actual_read', $lesson_reads, $progression_id);
+    }
+
+    $next_lesson = false;
+    $post = 0;
+    if($course_read){
+        $post = get_page_by_path($course_read, OBJECT, 'course');
+        //Content count
+        $courses = get_field('data_virtual', $post->ID);
+        $youtube_videos = get_field('youtube_videos', $post->ID);
+        $podcasts = get_field('podcasts', $post->ID);
+        $count_item = 0;
+        if(!empty($courses)){
+            $content = $courses;
+            $count_item = count($courses);
+        }else if(!empty($youtube_videos)){
+            $content = $youtube_videos;
+            $count_item = count($youtube_videos);
+        }
+        else if(!empty($podcasts)){
+            $content = $podcasts;
+            $count_item = count($podcasts);
+        }
+
+        //lesson reads count
+        $lesson_reads = get_field('lesson_actual_read', $progression_id);
+        $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
+
+        if($count_lesson_reads == $count_item){
+            update_field('state_actual', 1 , $progression_id);
+            //Get read by user 
+            $args = array(
+                'post_type' => 'mandatory', 
+                'title' => $post->post_name,
+                'post_status' => 'publish',
+                'author' => $user->ID,
+                'posts_per_page'         => 1,
+                'no_found_rows'          => true,
+                'ignore_sticky_posts'    => true,
+                'update_post_term_cache' => false,
+                'update_post_meta_cache' => false
+            );
+            $mandatories = get_posts($args);
+            $is_finish = 0;
+            if(!empty($mandatories)){
+                $manager_must = get_field('manager_must', $mandatories[0]->ID);
+                $first_name = (isset($manager_must->first_name)) ? $manager_must->first_name : $manager_must->display_name;
+                $employee_name = (isset($user->first_name)) ? $user->first_name : $user->display_name;
+                $email = $manager_must->user_email;
+
+                /** Mail to manager */
+                $course_type = get_field('course_type', $post->ID);
+                //image post
+                $thumbnail = get_field('preview', $post->ID)['url'];
+                if(!$thumbnail){
+                    $thumbnail = get_the_post_thumbnail_url($post->ID);
+                    if(!$thumbnail)
+                        $thumbnail = get_field('url_image_xml', $post->ID);
+                    if(!$thumbnail)
+                        $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                }
+                //short_description post
+                $short_description = get_field('short_description', $post->ID);
+                $mandatory_a_course = 'mail-mandatory-valid-course.php';
+                require($mandatory_a_course);
+                $subject = 'Mandatory course followed successfully by your employee !';
+                $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+                wp_mail($email, $subject, $mail_mandatory_validated_course_body, $headers, array( '' )) ;
+            }
+        }
+
+    }
+
+    //if exists return next lesson
+    //else return checkout video or end chapter
+    if($post)
+        if(isset($content[$lesson_key + 1])){
+            $key = $lesson_key + 1;
+            if(isset($podcast_read))
+                $follow_reads = "/dashboard/user/start-podcast?post=" . $post->post_name . "&lesson=" . $key;
+            else
+                $follow_reads = "/dashboard/user/start-course?post=" . $post->post_name . "&lesson=" . $key;
+        }
+        else
+            if(isset($podcast_read))
+                $follow_reads = "/dashboard/user/checkout-podcast?post=" . $post->post_name;
+            else
+                $follow_reads = "/dashboard/user/checkout-video?post=" . $post->post_name;
+    else
+        $follow_reads = "/dashboard/user/activity";
+
+    header("Location: " . $follow_reads);
+}
+
 ?>
 <?php wp_head(); ?>
 

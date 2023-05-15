@@ -380,9 +380,9 @@ $url = home_url( $wp->request );
             <div class="col-md-2 col-lg-1 col-sm-5 col-5 bg-light border border-dark py-md-3 py-1 border-right-adapt">
                 <span class="text-dark font-weight-bold h5 pt-2">
 
-                <?php 
+                <?php
                     if ($volgers!=null && $volgers!=0)
-                        echo $volgers;
+                        echo ceil(($volgers*975) - ($_GET['category']/2));
                     else
                         echo '0';
 

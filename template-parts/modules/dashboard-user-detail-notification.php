@@ -12,15 +12,14 @@
     );
 
     $todos = get_posts($args);
-
     $user_id = get_current_user_id();
     if($_GET['todo'] > 0 ){
 
-        $value = get_post($_GET['todo']);   
+        $value = get_post($_GET['todo']);  
         if(!empty($value)){
             $type = get_field('type_feedback', $value->ID);
             $manager_id = get_field('manager_feedback', $value->ID);
-            $image = get_field('profile_img',  'user_' . $manager_id);
+            $image = get_field('profile_img', $manager_id);
             if(!$image)
                 $image = get_stylesheet_directory_uri() . '/img/Group216.png';
 
@@ -73,68 +72,66 @@
                         </div>
                         <div class="blockType">
                             <p class="">Type :</p>
-                            <p><?=$type;?> </p>
+                            <p class="type"><?=$type;?> </p>
                         </div>
                     </div>
-                    <div>
-                        <h3 class="titleContentNotification">Content Notification</h3>
-                        <div class="NotificationFeedback">
-                            <?php
-                            switch ($type) {
-                                //Pour afficher les infos de type Beoordeling Gesprek
-                                case 'Beoordeling Gesprek':
-                                    echo '<br> <b>Title:</b> '.$value->post_title;
-                                    echo '<br> <b>Algemene beoordeling:</b> '. get_field('algemene_beoordeling', $value->ID). '<br>';
-                                    $stopics_rates_comment = explode(';',get_field('rate_comments', $value->ID));
-                                    echo '<div class="bloclCijfers inputGroein">';
-                                        for($i=0; $i<count($stopics_rates_comment); $i++)
-                                        {
-                                            $stars = intval($stopics_rates_comment[$i+1]);
-                                            $topics=(String)get_the_category_by_ID(intval($stopics_rates_comment[$i]));
-                                                
-                                                    if($topics!= "")
-                                                        echo '<p>'.$topics.'</p>';
-                                                
-                                            echo '<div class="rate">';
+                    <div class="NotificationFeedback">
+                        <?php
+                        switch ($type) {
+                            //Pour afficher les infos de type Beoordeling Gesprek
+                            case 'Beoordeling Gesprek':
+                                echo '<div class="d-flex"> <p class="title">Title: '. $value->post_title  .' </p>  </div> ' ;
+                                echo '<p class="subTitle">Algemene beoordeling:</p>  <p class="subTitle">'. get_field('algemene_beoordeling', $value->ID).' </p> ' ;
+                                $stopics_rates_comment = explode(';',get_field('rate_comments', $value->ID));
+                                echo '<div class="bloclCijfers inputGroein">';
+                                for($i=0; $i<count($stopics_rates_comment); $i++)
+                                {
+                                    $stars = intval($stopics_rates_comment[$i+1]);
+                                    $topics=(String)get_the_category_by_ID(intval($stopics_rates_comment[$i]));
 
-                                                
-                                            for($in=$stars; $in >= 1; $in--)
-                                                echo "⭐";
-                                                                                            
-                                                      
-                                            echo "</div><br>";
-                                            echo '<div class="mb-0" style="width: 100%;">'. $stopics_rates_comment[$i+2] . '</div>';
-                                            $i = $i + 2;
-                                        }
-                                    echo '</div>';
-                                    break;
-                                //Pour afficher les infos de type Persoonlijk Ontwikkelplan
-                                case 'Persoonlijk Ontwikkelplan' :
+                                    if($topics!= "")
+                                        echo '<p>'.$topics.'</p>';
 
-                                    echo '<br> <b>Title:</b> '. $value->post_title;
+                                    echo '<div class="rate">';
 
-                                    $onderwerp_feedback = get_field('onderwerp_feedback', $value->ID);
-                                    $onderwerp_feedback = explode(';', $onderwerp_feedback);
-                                    $wat_bereiken = get_field('je_bereiken', $value->ID);
-                                    $hoe_bereiken = get_field('je_dit_bereike', $value->ID);
-                                    $hulp_nodig = get_field('hulp_nodig', $value->ID);
-                                    $opmerkingen = get_field('opmerkingen', $value->ID);
-                                    $hulp_nodig_ja = ($hulp_nodig == 'JA') ? 'checked' : ''; 
-                                    $hulp_nodig_nee = ($hulp_nodig == 'NEE') ? 'checked' : ''; 
-                                    echo "<div class='inputGroein'>";
-                                        foreach($onderwerp_feedback as $onderwerp)
-                                        {
-                                            if($onderwerp != "")
-                                                echo '<p>'.(String)get_the_category_by_ID($onderwerp).'</p>';
-                                        }
-                                    echo "</div>";
 
-                                    echo '<br> <b>Wat wil je bereiken ?</b>';
-                                    echo  $wat_bereiken;
-                                    echo '<br> <b>Hoe ga je dit bereiken ?</b>';
-                                    echo  $hoe_bereiken;
-                                    echo '<br> <b>Heb je hierbij hulp nodig ?</b>';
-                                    echo '<div class="group-input-settings">
+                                    for($in=$stars; $in >= 1; $in--)
+                                        echo "⭐";
+
+
+                                    echo "</div><br>";
+                                    echo '<div class="mb-0" style="width: 100%;">'. $stopics_rates_comment[$i+2] . '</div>';
+                                    $i = $i + 2;
+                                }
+                                echo '</div>';
+                                break;
+                            //Pour afficher les infos de type Persoonlijk Ontwikkelplan
+                            case 'Persoonlijk Ontwikkelplan' :
+
+                                echo '<div class="d-flex"> <p class="title">Title: '. $value->post_title  .' </p>  </div> ' ;
+
+                                $onderwerp_feedback = get_field('onderwerp_feedback', $value->ID);
+                                $onderwerp_feedback = explode(';', $onderwerp_feedback);
+                                $wat_bereiken = get_field('je_bereiken', $value->ID);
+                                $hoe_bereiken = get_field('je_dit_bereike', $value->ID);
+                                $hulp_nodig = get_field('hulp_nodig', $value->ID);
+                                $opmerkingen = get_field('opmerkingen', $value->ID);
+                                $hulp_nodig_ja = ($hulp_nodig == 'JA') ? 'checked' : '';
+                                $hulp_nodig_nee = ($hulp_nodig == 'NEE') ? 'checked' : '';
+                                echo "<div class='inputGroein'>";
+                                foreach($onderwerp_feedback as $onderwerp)
+                                {
+                                    if($onderwerp != "")
+                                        echo '<p>'.(String)get_the_category_by_ID($onderwerp).'</p>';
+                                }
+                                echo "</div>";
+
+                                echo '<p>Wat wil je bereiken ?</p>';
+                                echo  $wat_bereiken;
+                                echo '<p>Hoe ga je dit bereiken ?</p>';
+                                echo  $hoe_bereiken;
+                                echo '<p>Heb je hierbij hulp nodig ?</p>';
+                                echo '<div class="group-input-settings">
                                                 <label for="">Heb je hierbij hulp nodig ?</label>
                                                 <div class="d-flex">
                                                     <div class="mr-3">
@@ -147,27 +144,26 @@
                                                     </div>
                                                 </div>
                                             </div>';
-                                    echo '<br> <b>Opmerkingen : </b> <br>' . $opmerkingen;
-                                    break;
-                                    // Pour afficher les infos de type feedback ou compliment vu qu'ils ont le meme format
-                                default :
-                                        echo '<br> <b>Title :</b> '.$value->post_title;
-                                        echo '<br> <b>Beschrijving :</b> '.$beschrijving_feedback;
-                                        $onderwerp_feedback = get_field('onderwerp_feedback', $value->ID);
-                                        $onderwerp_feedback = explode(';',$onderwerp_feedback);
-                                        echo '<br> <b>Topics :</b> <br> ';
+                                echo ' <p>Opmerkingen : </p>' . $opmerkingen;
+                                break;
+                            // Pour afficher les infos de type feedback ou compliment vu qu'ils ont le meme format
+                            default :
+                                echo '<div class="d-flex"> <p class="title"><span>Title</span> : '. $value->post_title  .' </p>  </div> ' ;
+                                echo ' <p class="subTitle">Beschrijving :</p> <p class="content-beschrij">'.$beschrijving_feedback;
+                                $onderwerp_feedback = get_field('onderwerp_feedback', $value->ID);
+                                $onderwerp_feedback = explode(';',$onderwerp_feedback) .' </p> ';
+                                echo '<p>Topics :</p>  ';
 
-                                        echo '<div class="inputGroein">';
-                                        foreach($onderwerp_feedback as $onderwerp)
-                                        {
-                                            if($onderwerp != "")
-                                                echo '<p>'.(String)get_the_category_by_ID($onderwerp). '</p>';
-                                        }
-                                        echo '</div>';
-                                    break;
-                            }       
-                            ?>
-                        </div>
+                                echo '<div class="inputGroein">';
+                                foreach($onderwerp_feedback as $onderwerp)
+                                {
+                                    if($onderwerp != "")
+                                        echo '<p>'.(String)get_the_category_by_ID($onderwerp). '</p>';
+                                }
+                                echo '</div>';
+                                break;
+                        }
+                        ?>
                     </div>
                 </div>
                 </div>

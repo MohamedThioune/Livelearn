@@ -25,7 +25,7 @@
                 <div class="col-md-7">
                     <div class="content-detail-voor-organisation">
                         <h1>Word onderdeel van het grootste expert & opleidersnetwerk</h1>
-                        <p>Deel jouw kennis met de rest van de wereld.</p>
+                        <p>Via LiveLearn deel je eenvoudig je kennis met de rest van de wereld. Zo bereik je nieuwe klanten en positioneer je je als de absolute expert in het vakgebied.</p>
                         <a href="/overview-organisations-5/" class="btn btnMeerInformation">Meer informatie ?</a>
                     </div>
                     <div class="img-block">
@@ -35,27 +35,9 @@
                 <div class="col-md-5">
                     <div class="blockForm2">
                         <p><b>Aanmelden expert of opleider</b></p>
-                        <form action="" class="form-Voor-teacher2">
-                            <div class="input-group">
-                                <input type="text" placeholder="Voornaam*">
-                            </div>
-                            <div class="input-group">
-                                <input type="text" placeholder="Achternaam*">
-                            </div>
-                            <div class="input-group">
-                                <input type="text" placeholder="Bedrijf*">
-                            </div>
-                            <div class="input-group">
-                                <input type="text" placeholder="E-mailadres*">
-                            </div>
-                            <div class="input-group">
-                                <input type="text" placeholder="Telefoonnummer*">
-                            </div>
-                            <div class="input-group">
-                                <input type="text" placeholder="Functie*">
-                            </div>
-                            <button type="submit" class="btn btn-omgeving">Creëer je omgeving</button>
-                        </form>
+                        <?php
+                            echo do_shortcode("[gravityform id='17' title='false' description='false' ajax='true']");
+                        ?>
                     </div>
                 </div>
             </div>

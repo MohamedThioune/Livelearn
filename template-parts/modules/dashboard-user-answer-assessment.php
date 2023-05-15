@@ -7,43 +7,53 @@ function timeToSeconds(string $time): int
     if (count($time_array) === 2 && $time_array[0]!='00') {
         return  $time_array[0] * 60 + $time_array[1];
     }
-    return $time_array[1];
+    return (int)$time_array[1];
 }
 
     if (isset($_POST) && !empty ($_POST))
     {
         extract($_POST);
-        
         $assessment = get_post($assessment_id);
         $questions = get_field('question',$assessment->ID);
-        var_dump($questions);
+        $question_count = count($questions);
+        
     }
 ?>
+<div class="main-container-assessment">
 
- <div class="head3OverviewAssessment">
-                    <p class="assessmentNUmber" id="current-index">Question 1 / <?php echo count($questions); ?></p>
-                    <p class="assessmentTime" id="backendTime"><?php echo $questions[0]['timer'] ?></p>
-                    <p class="assessmentTime" id="backendTime"> </p>
-                </div>
-                <p class="chooseTechnoTitle" id="wording"><?php echo $questions[0]['wording'] ?><span> (Multiple choose posible)</span></p>
-                
-                <div class="listAnswer">
-                    <form id="getAnswer">
-                      <?php
-                        $alphabet = range('A', 'Z');
-                        for ($i=0;$i<4;$i++) { ?>
-                            <label class="container-checkbox">
-                            <span class="numberAssassment"><?= $alphabet[$i]?> </span>
-                                <span class="assassment  <?php echo 'answer_'.($i+1);?>"> <?= $questions[0]["responses"][$i] ?> </span>
-                                <input name="<?php echo "answer_".($i+1); ?>" id=<?php echo "answer_".($i+1); ?> type="checkbox" value="<?php echo $i+1; ?>" >
-                                <span class="checkmark"></span>
-                            </label>
+<div class="content-assessment">
+    <div class="head3OverviewAssessment">
+        <p class="assessmentNUmber" id="current-index">Question 1 / <?php echo count($questions); ?></p>
+        <p class="assessmentTime" id="backendTime"><?php echo $questions[0]['timer'] ?></p>
 
-                        <?php
-                        }
-                    
-                        ?>
-    <button type="button" class="btn btnStratModal" id="btnBackend">Continue</button>
+    </div>
+
+    <p class="chooseTechnoTitle" id="wording"><?php echo $questions[0]['wording'] ?><span> (Multiple choose posible)</span></p>
+
+    <div class="listAnswer">
+        <form id="getAnswer">
+            <?php
+            $alphabet = range('A', 'Z');
+            for ($i=0;$i<4;$i++)
+            {
+
+                ?>
+                <label class="container-checkbox">
+                    <span class="numberAssassment"><?= $alphabet[$i]?> </span>
+                    <span class="assassment  <?php echo 'answer_'.($i+1);?>"> <?= $questions[0]["responses"][$i] ?> </span>
+                    <input name="<?php echo "answer_".($i+1); ?>" id=<?php echo "answer_".($i+1); ?> type="checkbox" value="<?php echo $i; ?>" >
+                    <span class="checkmark"></span>
+                </label>
+
+                <?php
+            }
+
+            ?>
+            <button type="button" class="btn btnStratModal" id="btnBackend">Continue</button>
+
+    </div>
+</div>
+
 </div>
 
 
@@ -51,47 +61,12 @@ function timeToSeconds(string $time): int
 
 <script>
 
-    var id_current_assessment = '2101';
-    var current_index=0;
+    var id_current_assessment = "<?php echo $assessment_id; ?>" ;
+    var current_index = 1;
     var responses = [];
     var cancelled=false;
-    $('#btnBackend').click((e)=>{
-        alert('Bonjour')
-        $.ajax({
-            url:"/answer-assessment",
-            method:"post",
-            data:{
-                id_current_assessment: '2101',
-                current_index:current_index
-            },
-        dataType:"text",
-        success: function(data){ 
-            console.log(data);
-            data=JSON.parse(data);
-            current_index++;
-            $('#wording').html(data.wording+"<span> (Multiple choose posible)</span>");
-            $('#current-index').text("Question "+current_index+" / "+data.count);
-            //console.log(data,current_index);
-            //$('#current-index').text("Question "+current_index+" / "+data.length);
-              let length = data.responses.length;
-              for (let i = 0; i < length; i++) {
-                $('.answer_'+(i+1)).text(data.responses[i]);
-                $('#answer_'+(i+1)).val(i);
-                $('#answer_'+(i+1)).prop('checked',false); 
-              }
-              $('#backendTime').text(data.timer);
 
-              if (current_index==question_count) {
-                $('#btnBackend').text("Finish");
-              }
-              
-            cancelled=true;
-            //console.log($('#backendTime').html());
-            chrono($('#backendTime').html());
-            //$('#test').html(data);
-            }
-        });
-    });
+    chrono($('#backendTime').html());
 
     $("#back1").click(function() {
         $("#secondBlockAssessmentsBackend").hide();
@@ -104,18 +79,17 @@ function timeToSeconds(string $time): int
     function paginate()
     {
         let response=[];
-            //$('#getAnswer').preventDefault();
+            
             for (let index = 1; index <=4; index++) 
         if ($('#answer_'+index).is(":checked"))
             response.push($('#answer_'+index).val());
             responses.push(response);
+         
+         var question_count = "<?php echo $question_count; ?>"
+         if (current_index<question_count)
+         {
+            
             //console.log(responses);
-         var txt=$('#current-index').text()
-            txt=txt.split(" ")
-            //console.log(txt)
-         var current_index=txt[1]
-         var question_count=txt[4]
-         if (current_index<question_count) 
          $.ajax({
             url:"/answer-assessment",
             method:"post",
@@ -124,14 +98,12 @@ function timeToSeconds(string $time): int
                 current_index:current_index
             },
         dataType:"text",
-        success: function(data){ 
-            console.log(data);
+        success: function(data)
+        { 
             data=JSON.parse(data);
             current_index++;
             $('#wording').html(data.wording+"<span> (Multiple choose posible)</span>");
             $('#current-index').text("Question "+current_index+" / "+data.count);
-            //console.log(data,current_index);
-            //$('#current-index').text("Question "+current_index+" / "+data.length);
               let length = data.responses.length;
               for (let i = 0; i < length; i++) {
                 $('.answer_'+(i+1)).text(data.responses[i]);
@@ -150,6 +122,8 @@ function timeToSeconds(string $time): int
             //$('#test').html(data);
             }
         });
+    }
+    
         else if ($('#btnBackend').text()=="Finish") {
             $.ajax({
                 url:"/answer-assessment",
@@ -160,7 +134,7 @@ function timeToSeconds(string $time): int
                 },
                 dataType:"text",
                 success: function(data){ 
-                    $('#step3OverviewAssessmentBackend').html("<p class='titleCategorieAssessment'>" +data+ "</p>");    
+                    $('.main-container').html("<p class='titleCategorieAssessment'>" +data+ "</p>");    
                     }
                 });
         }
@@ -204,6 +178,7 @@ function timeToSeconds(string $time): int
        
         $('#btnBackend').click(()=>{
             paginate();
+            
         });
         });
 </script>

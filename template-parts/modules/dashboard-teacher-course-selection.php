@@ -5,72 +5,111 @@
                 <h2>1. Kies opleidingstype</h2>
             </div>
             <div class="cardCoursGlocal">
-                <a href="?func=add-course&type=course" class="cardCours cardCoursInitial" >
+                <a href="?func=add-course&type=course"  class="cardCours" >
                     <p class="contentText">
                         <b>Opleiding</b>
                     </p>
+                    <div class="blockImgCardCoursGlobal Opleiding">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Opleiding-icon.jpg" alt="">
+                    </div>
                 </a>
-                <a href="?func=add-course&type=training" class="cardCours cardCoursInitial" >
+                <a href="?func=add-course&type=training" class="cardCours" >
                     <p class="contentText">
                         <b>Training</b>
                     </p>
+                    <div class="blockImgCardCoursGlobal Opleiding">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Training-icon.jpg" alt="">
+                    </div>
                 </a>
-                <a href="?func=add-course&type=workshop" class="cardCours cardCoursInitial" >
+                <a href="?func=add-course&type=workshop" class="cardCours" >
                     <p class="contentText">
                         <b>Workshop</b>
                     </p>
+                    <div class="blockImgCardCoursGlobal  Opleiding">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/workshop3D.jpg" alt="">
+                    </div>
                 </a>
-                <a href="?func=add-course&type=masterclass" class="cardCours cardCoursInitial" >
+                <a href="?func=add-course&type=masterclass" class="cardCours" >
                     <p class="contentText">
                         <b>Masterclass</b>
                     </p>
+                    <div class="blockImgCardCoursGlobal  Opleiding">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Masterclass3D.jpg" alt="">
+                    </div>
                 </a>
-                <a href="#" class="cardCours cardCoursInitial" >
+                <a href="#" class="cardCours" >
                     <p class="contentText">
                         <b>E-Learning</b>
                         <small>Coming soon!</small>
                     </p>
+                    <div class="blockImgCardCoursGlobal  Opleiding">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/E-Learning3D.jpg" alt="">
+                    </div>
                 </a>
-                <a href="?func=add-video" class="cardCours cardCoursInitial" >
+                <a href="?func=add-video" class="cardCours" >
                     <p class="contentText">
                         <b>Video</b>
                     </p>
+                    <div class="blockImgCardCoursGlobal  Opleiding">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Video3D.jpg" alt="">
+                    </div>
                 </a>
-                <a href="?func=add-article" class="cardCours cardCoursInitial" >
+                <a href="?func=add-article" class="cardCours" >
                     <p class="contentText">
                         <b>Artikel</b>
                     </p>
+                    <div class="blockImgCardCoursGlobal  Opleiding">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Artikel3D.jpg" alt="">
+                    </div>
                 </a>
-                <a href="?func=add-assessment" class="cardCours cardCoursInitial" >
+                <a href="?func=add-assessment" class="cardCours" >
                     <p class="contentText">
                         <b>Assessment</b>
                     </p>
+                    <div class="blockImgCardCoursGlobal  Opleiding">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Assessment3D.jpg" alt="">
+                    </div>
                 </a>
-                <a href="?func=add-white&type=reading" class="cardCours cardCoursInitial" >
+                <a href="?func=add-white&type=reading" class="cardCours" >
                     <p class="contentText">
                         <b>Lezing</b>
                     </p>
+                    <div class="blockImgCardCoursGlobal  Opleiding">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Lezing3D.jpg" alt="">
+                    </div>
                 </a>
-                <a href="?func=add-white&type=event" class="cardCours cardCoursInitial" >
+                <a href="?func=add-white&type=event" class="cardCours" >
                     <p class="contentText">
                         <b>Event</b>
                     </p>
+                    <div class="blockImgCardCoursGlobal  Opleiding">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Event3D.jpg" alt="">
+                    </div>
                 </a>
-                <a href="#" class="cardCours cardCoursInitial" >
+                <a href="#" class="cardCours" >
                     <p class="contentText">
                         <b>Webinar</b><br />
                         <small>Coming soon!</small>
                     </p>
+                    <div class="blockImgCardCoursGlobal  Opleiding">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Webinar3D.jpg" alt="">
+                    </div>
                 </a>
-                <a href="?func=add-podcast" class="cardCours cardCoursInitial" >
+                <a href="?func=add-podcast" class="cardCours" >
                     <p class="contentText">
                         <b>Podcast</b><br/>
                     </p>
+                    <div class="blockImgCardCoursGlobal  Opleiding">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/Podcast3D.jpg" alt="">
+                    </div>
                 </a>
-                <a href="?func=add-road" class="cardCours cardCoursInitial roadPathBlock" >
+                <a href="?func=add-road" class="cardCours" >
                     <p class="contentText">
                         <b>Leerpad</b>
                     </p>
+                    <div class="blockImgCardCoursGlobal  Opleiding">
+                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/LearningPath3D.jpg" alt="">
+                    </div>
                 </a>
             </div>
         </div>
@@ -99,7 +138,3 @@
         </div>-->
     </div>
 </div>
-
-
-
-

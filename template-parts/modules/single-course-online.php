@@ -76,7 +76,6 @@ extract($_GET);
                 <p class="e-learningTitle"><b><?php echo $post->post_title;?></b></p>
                 <div class="blockImgCour">
                     <?php
-
                     if(!empty($courses) && !empty($youtube_videos) && !empty($podcasts) )
                         echo "<img src='" . $thumbnail . "' alt='preview image'>";
                     else{
@@ -117,7 +116,6 @@ extract($_GET);
                                 </audio>';
                         }
                     }
-
                     ?>
 
                 </div>
@@ -511,7 +509,6 @@ extract($_GET);
             </div>
             <!-- -------------------------------------------------- End Modal Direct contact & Voor wie -------------------------------------- -->
 
-
             <!-- ------------------------------------------Start Modal Sign In ----------------------------------------------- -->
             <div class="modal modalEcosyteme fade" id="SignInWithEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
                 style="position: absolute;height: 150% !important; overflow-y:hidden !important;">
@@ -600,7 +597,6 @@ extract($_GET);
                 </div>
             </div>
             <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
-
 
             <!-- ---------------------------------- Start Right Side Dashboard -------------------------------- -->
             <div class="blockTwoOver">
@@ -909,11 +905,9 @@ extract($_GET);
                 </div> -->
             </div>
             <!-- ---------------------------------- End Right Side Dashboard -------------------------------- -->
-
         </div>
 
-
-        <div class="container-fluid">
+    <div class="container-fluid">
             <div class="bloxkWorldMembre formDirect ">
                 <!-- <p class="wordnuText">Word nu <b>LIFT Member</b> en ontvang persoonlijke korting</p>
                 <a href="" class="btn btnPlan">Planeen 15min afspraak in</a> -->
@@ -947,7 +941,7 @@ extract($_GET);
             </div>
         </div>
 
-    </div>
+</div>
 
 
     <!-- début Modal deel -->
@@ -1022,7 +1016,7 @@ extract($_GET);
     <div class="modal fade modalpaywallVideo" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-             <h5 class="title-paywall" >Get Acces Now </h5>
+             <h5 class="title-paywall">Get Acces Now </h5>
             <div class="modal-body">
                <p class="sub-title-paywall">Please purchase this course to continue</p>
                <p class="price-course"><?= $price ?></p>
@@ -1040,11 +1034,8 @@ extract($_GET);
     <!-- -->
 
 
-</div>
-
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <!-- scritpt for modal -->
 <script>
