@@ -298,10 +298,9 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 </body>
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-<script>
-    var ids=[];
-</script>
+
 <script id="rendered-js" >
+    var ids=[];
     var list=[];
     var names=[];
     window.onload = $(".multipleSelect2").val("");
@@ -324,7 +323,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
 <script type="text/javascript">
     function uncheckAll() {
-        console.log('unchek')
+        console.log('uncheck')
         let checkboxes = document.querySelectorAll('input[type=checkbox]');
         for (let i = 0; i < checkboxes.length; i++) {
             checkboxes[i].checked = false;
@@ -365,20 +364,20 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
 
             // Send selectedValues array via AJAX to PHP file
             $.ajax({
-            type: "POST",
-            url: "/artikels",
-            data: { selectedValues: selectedValues },
-            success: function(response) {
-                console.log(response);
-                // location.reload();
-            },error:function() {
-                console.log('error');
-            },
-            complete:function(){
-                $('#select_field').hide(false,2000);
-                $('#loader').attr('hidden',true);
-                location.reload();
-            }
+                type: "POST",
+                url: "/artikels",
+                data: { selectedValues: selectedValues },
+                success: function(response) {
+                    console.log(response);
+                    // location.reload();
+                },error:function() {
+                    console.log('error');
+                },
+                complete:function(){
+                    $('#select_field').hide(false,2000);
+                    $('#loader').attr('hidden',true);
+                    location.reload();
+                }
             });
         });
     });
@@ -387,37 +386,37 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     $('#select_field').change((e)=>
     {
         let website= $('#select_field').val();
-            $.ajax({
-                url: '/scrapping',
-                type: 'POST',
-                data: {
-                    'website': website ,
-                    'action': 'reload_data'
-                },
-                beforeSend:function(){
-                    $('#loader').attr('hidden',false)
-                    $('#select_field').attr('hidden',true)
-                },
-                error: function(){
-                    alert('Something went wrong!');
-                },
-                complete: function(){},
-                success: function(data){
-                    $('#loader').attr('hidden',true)
-                    $('#select_field').attr('hidden',false)
-                    console.log(data);
-                    location.reload();
-                }
-            });
+        $.ajax({
+            url: '/scrapping',
+            type: 'POST',
+            data: {
+                'website': website ,
+                'action': 'reload_data'
+            },
+            beforeSend:function(){
+                $('#loader').attr('hidden',false)
+                $('#select_field').attr('hidden',true)
+            },
+            error: function(){
+                alert('Something went wrong!');
+            },
+            complete: function(){},
+            success: function(data){
+                $('#loader').attr('hidden',true)
+                $('#select_field').attr('hidden',false)
+                console.log(data);
+                location.reload();
+            }
+        });
     });
 
     $(".checkOne").click((e)=>{
         let tags_id = e.target.value;
         let if_exist = ids.indexOf(tags_id);
         if (!ids.includes(tags_id))
-                ids.push(tags_id);//push the element in array
-            else
-                ids.splice(if_exist, 1) // remove it in array
+            ids.push(tags_id);//push the element in array
+        else
+            ids.splice(if_exist, 1) // remove it in array
         console.log(ids);
     });
 
@@ -445,7 +444,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     $('#loader').attr('hidden',true);
                     document.getElementById('content-back-topics').innerHTML = success;
                     console.log(success);
-                    location.reload();
+                    location.reload(); 
                 },complete:function(complete){
                     console.log("complete:",complete);
                     $('#loader').attr('hidden',true);
@@ -467,17 +466,17 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             // console.log('array sending',ids);
             // console.log('classs',classs);
             $.ajax({
-               url: '/optieall',
-               type: 'POST',
-               data: {
-                   class:classs,
-                   ids:ids,
-                   optie:optie
+                url: '/optieall',
+                type: 'POST',
+                data: {
+                    class:classs,
+                    ids:ids,
+                    optie:optie
                 },
                 beforeSend:function(){
                     document.getElementById('content-back-topics').innerHTML = '';
-                    $('#loader').attr('hidden',false)
-                    $('#select_field').attr('hidden',true)
+                    $('#loader').attr('hidden',false);
+                    $('#select_field').attr('hidden',true);
                 },
                error: function(error) {
                 document.getElementById('content-back-topics').innerHTML = error;
@@ -497,10 +496,12 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     // alert("Record applied successfully");
                     // location.reload();
                     // window.location.href = "/optieAll";
-               }
+                },
+                complete: function(data){
+                    console.log(data);
+                }
             });
         }
-        
     });
 
     $('.optie').click((e)=>{
@@ -515,12 +516,12 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         if(confirm('Are you sure you want to apply this record ?'))
         {
             $.ajax({
-               url: '/optie-bank',
-               type: 'POST',
-               data: {
+                url: '/optie-bank',
+                type: 'POST',
+                data: {
                    id: ids,
                    optie: optie,
-                   class: classs,
+                   class: classs
                 },
                 beforeSend:function(){
                     document.getElementById('content-back-topics').innerHTML = '';
@@ -545,10 +546,9 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     $("#"+ids).remove();
                     // location.reload();
                     // alert("Record applied successfully");  
-               }
+                }
             });
         }
-        
     });
 
     $('.courseDataBank').click((e)=>{
@@ -556,41 +556,40 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         var key = tr_element.id;
 
         $.ajax({
-                url:"/fetch-data-clean-quick",
-                method:"post",
-                data:
-                {
-                    id:key,
-                },
-                dataType:"text",
-                success: function(data){
-                    // Get the modal
-                    console.log(data)
-                    var modal = document.getElementById("myModal");
-                    $('.display-fields-clean').html(data)
-                    // Get the button that opens the modal
+            url:"/fetch-data-clean-quick",
+            method:"post",
+            data:
+            {
+                id:key,
+            },
+            dataType:"text",
+            success: function(data){
+                // Get the modal
+                console.log(data)
+                var modal = document.getElementById("myModal");
+                $('.display-fields-clean').html(data)
+                // Get the button that opens the modal
 
 
-                    // Get the <span> element that closes the modal
-                    var span = document.getElementsByClassName("close")[0];
+                // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
 
-                    // When the user clicks on the button, open the modal
+                // When the user clicks on the button, open the modal
 
-                        modal.style.display = "block";
+                    modal.style.display = "block";
 
-                    // When the user clicks on <span> (x), close the modal
-                    span.onclick = function() {
-                        modal.style.display = "none";
-                    }
-
-                    // When the user clicks anywhere outside of the modal, close it
-                    window.onclick = function(event) {
-                        if (event.target == modal) {
-                        modal.style.display = "none";
-                        }
-                    }
-                            
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function() {
+                    modal.style.display = "none";
                 }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }         
+            }
         });
     });
 
@@ -642,41 +641,40 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         var key = tr_element.id;
 
         $.ajax({
-                url:"/fetch-data-clean-company",
-                method:"post",
-                data:
-                {
-                    id:key,
-                },
-                dataType:"text",
-                success: function(data){
-                    // Get the modal
-                    console.log(data)
-                    var modal = document.getElementById("myModal");
-                    $('.display-fields-clean').html(data)
-                    // Get the button that opens the modal
+            url:"/fetch-data-clean-company",
+            method:"post",
+            data:
+            {
+                id:key,
+            },
+            dataType:"text",
+            success: function(data){
+                // Get the modal
+                console.log(data)
+                var modal = document.getElementById("myModal");
+                $('.display-fields-clean').html(data)
+                // Get the button that opens the modal
 
 
-                    // Get the <span> element that closes the modal
-                    var span = document.getElementsByClassName("close")[0];
+                // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
 
-                    // When the user clicks on the button, open the modal
+                // When the user clicks on the button, open the modal
 
-                        modal.style.display = "block";
+                    modal.style.display = "block";
 
-                    // When the user clicks on <span> (x), close the modal
-                    span.onclick = function() {
-                        modal.style.display = "none";
-                    }
-
-                    // When the user clicks anywhere outside of the modal, close it
-                    window.onclick = function(event) {
-                        if (event.target == modal) {
-                        modal.style.display = "none";
-                        }
-                    }
-                            
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function() {
+                    modal.style.display = "none";
                 }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }           
+            }
         });
     });
     
