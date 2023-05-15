@@ -36,8 +36,6 @@
                <?php
                if(isset($categories)){
                foreach ($categories as $value) {
-
-
                ?>
                <div class="col-md-3 col-lg-3 col-6">
                    <a href="category-overview?category=<?php echo $value->cat_ID ?>" class="text-bero"><?php echo $value->cat_name ?></a>

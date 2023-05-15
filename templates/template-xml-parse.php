@@ -34,7 +34,7 @@
   //Get all users
   $users = get_users(); 
 
-  $website_urls = ['agile-scrum-group-20221021.1902.xml', 'anker-kompas-20221021.1902.xml', 'bhv.nl-20221023.0221.xml', 'bit-academy-20221021.1901.xml'];
+  $website_urls = ['2xplain-b.v-20221018.0222.xml', 'agile-scrum-group-20221021.1902.xml', 'anker-kompas-20221021.1902.xml', 'aeres-tech-20221018.0223.xml', 'academie-voor-arbeidsmarktcommunicatie-b.v-20221018.0223.xml'];
 
   //Start inserting course 
   echo "<h1 class='titleGroupText' style='font-weight:bold'>SCRIPT XML PARSING</h1>";

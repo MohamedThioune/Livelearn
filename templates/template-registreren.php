@@ -1,6 +1,9 @@
 <?php /** Template Name: Registeren */ ?>
 
 <?php 
+
+    $users = get_users();
+
     extract($_POST);
 
     extract($_GET);
@@ -84,8 +87,7 @@
                             <div class="blockImgCarLogin">
                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Groupe8.png" alt="">
                             </div>
-                            <p class="textNog"> Creëer in 5 minuten een gratis leeromgeving voor jouw team of organisatie.
-</p>
+                            <p class="textNog"> Creëer in 5 minuten een gratis leeromgeving voor jouw team of organisatie.</p>
                         </div>
                         <div class="boxLOginCardOne">
                             <div class="blockImgCarLogin">
@@ -103,14 +105,6 @@
                                 <center><p class="TitleForm">Registreren </p></center>
 
                                 <?php echo (do_shortcode('[user_registration_form id="8477"]')); ?>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                                <?php //echo (do_shortcode('[user_registration_form id="59"]')); ?>
->>>>>>> origin/Xadim
-=======
-                                <?php //echo (do_shortcode('[user_registration_form id="59"]')); ?>
->>>>>>> origin/Xadim
                             </form>
                         </div>
                     </div>

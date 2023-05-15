@@ -2,22 +2,19 @@
 <?php
     global $wpdb;
     extract($_POST);
-
+    // var_dump($class, $ids, $optie);
     $table = $wpdb->prefix . 'databank';
 
-    $id=$_POST['checkOne'];
-    $optie=$_POST['submit'];
 
-    if(isset($id)){
-        foreach($id as $key=>$obj){
+    if(isset($ids)){
+        foreach($ids as $key=>$obj){
             $sql=$wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE id = %d",$obj);
             $course = $wpdb->get_results($sql)[0];
-
             $where = ['id' => $obj];
             if($optie == "✔️"){
-                 //Insert some other course type
-                $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar'];
-                $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Webinar' => 'webinar' ];
+                //Insert some other course type
+                $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar','Artikels' => 'artikels'];
+                $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Webinar' => 'webinar', 'Artikels' => 'artikels'];
 
                 //Insert Artikel
                 if (strval($course->type) == "Artikel"){
@@ -149,5 +146,5 @@
                 echo 'succeed';
         }
     }
-    header('location: /databank');
+    // header('location: /databank');
 ?>

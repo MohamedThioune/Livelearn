@@ -1,6 +1,6 @@
 <?php
 
-$mail_shared_course_body = 
+$mail_mandatored_course_body = 
 '
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
@@ -246,8 +246,7 @@ $mail_shared_course_body =
                           <h1 class="text-build-content"
                             style="text-align:center;; margin-top: 10px; margin-bottom: 10px; font-weight: normal;"
                             data-testid="RJMLrMvA0Rh"><span
-                              style="color:#023356;font-family:Arial;font-size:35px;line-height:35px;"><b>Someone was
-                                thinking about you!</b></span></h1>
+                              style="color:#023356;font-family:Arial;font-size:25px;line-height:35px;"><b>Een van je managers heeft een verplichte cursus met je gedeeld!</b></span></h1>
                         </div>
                       </td>
                     </tr>
@@ -263,7 +262,7 @@ $mail_shared_course_body =
                           <p class="text-build-content" data-testid="S_MPaSnC0uI"
                             style="margin: 10px 0; margin-bottom: 10px;"><span
                               style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">The following
-                              learning content is shared with you by '. $manager->display_name . ' :</span></p>
+                              learning content is assigned to you for reading by '. $manager->display_name . ' :</span></p>
                         </div>
                       </td>
                     </tr>
@@ -356,7 +355,7 @@ $mail_shared_course_body =
                             <tr>
                               <td align="center" bgcolor="#023356" role="presentation"
                                 style="border:none;border-radius:5px;cursor:auto;mso-padding-alt:10px 25px 10px 25px;background:#023356;"
-                                valign="middle"><a href="' . get_permalink($posts->ID) . '"
+                                valign="middle"><a href="/dashboard/user/activity"
                                   style="display:inline-block;background:#023356;color:#ffffff;font-family:Ubuntu, Helvetica, Arial, sans-serif;font-size:13px;font-weight:normal;line-height:120%;margin:0;text-decoration:none;text-transform:none;padding:10px 25px 10px 25px;mso-padding-alt:0px;border-radius:5px;"
                                   target="_blank"><span
                                     style="background-color:transparent;color:#ffffff;font-family:Arial;font-size:14px;">Go ahead !

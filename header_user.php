@@ -6,7 +6,6 @@ $user = wp_get_current_user();
 /*
 * * Feedbacks
 */
-
 $args = array(
     'post_type' => 'feedback',
     'author' => $user->ID,
@@ -41,10 +40,6 @@ $see_experts = get_users(
         'posts_per_page' => -1,
     )
 );
-
-/*
-* * End
-*/
 
 ?>
 
@@ -98,7 +93,6 @@ $see_experts = get_users(
             .fa-angle-down-bleu{
                 display: none;
             }
-
         </style>
 
         <title><?php bloginfo('name'); ?></title>
@@ -199,9 +193,10 @@ $see_experts = get_users(
                                                     continue;
 
                                                 $type = get_field('type_feedback', $todo->ID);
-                                                $manager = get_field('manager_feedback', $todo->ID);
+                                                $value = get_field('manager_feedback', $todo->ID);
+                                                $manager = get_user_by('ID', $value);
                                         ?>
-                                            <a href="/dashboard/user/detail-notification/?todo=<?=$todo->ID;?>" class="modal-content-body">
+                                            <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID;?>" class="modal-content-body">
                                                 <p class="feedbackText"><?=$type;?> : <span><?=$todo->post_title;?></span></p>
                                                 <p class="feedbackText">By: <span> <?php if(!empty($manager->first_name)){echo $manager->first_name;}else{echo $manager->display_name;}?> </span></p>
                                             </a>
@@ -358,10 +353,10 @@ $see_experts = get_users(
                                                 continue;
 
                                             $type = get_field('type_feedback', $todo->ID);
-                                            $manager = get_field('manager_feedback', $todo->ID);
-
+                                            $value = get_field('manager_feedback', $todo->ID);
+                                            $manager = get_user_by('ID', $value);
                                     ?>
-                                        <a href="/dashboard/user/detail-notification/?todo=<?=$todo->ID;?>" class="">
+                                        <a href="/dashboard/user/detail-notification/?todo=<?php echo $todo->ID; ?>" class="">
                                             <p class="feedbackText"><?=$type;?> : <span><?=$todo->post_title;?></span></p>
                                             <p class="feedbackText">By: <span> <?php if(!empty($manager->first_name)){echo $manager->first_name;}else{echo $manager->display_name;}?> </span></p>
                                         </a>
@@ -440,7 +435,10 @@ $see_experts = get_users(
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Maak en keuze :</h5>
+                    <div class="d-flex align-items-center">
+                        <h5 class="modal-title" id="exampleModalLabel">Maak en keuze :</h5>
+                        <input type="search" class="search-teach" placeholder="Zoek">
+                    </div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
