@@ -717,11 +717,10 @@
         // console.log('data sending',managers);
         console.log('user :::::::'+idUser);
         $.ajax({
-        url:"/salaryadmin/",
+        url:"/livelearn/salaryadmin/",
         method:"post",
         data:{
             id : idUser,
-            // managers : managers
         },
         // dataType:"text",
         beforeSend:function(){

@@ -548,7 +548,7 @@ foreach ($global_courses as $key => $course) {
 }
 
 //Views
-$user_post_view = get_posts(
+$user_post_view = get_posts( 
     array(
         'post_type' => 'view',
         'post_status' => 'publish',
