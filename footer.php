@@ -249,6 +249,13 @@ if(!isset($_COOKIE["cookie_consent"])):
     });
 </script> 
 
+<script>
+    $(window).on('resize', function() {
+        if ($(window).width() > 767) {
+            $('#cookieModal').hide();
+        }
+    });
+</script>
 <?php
 $site_url = get_site_url() . "/apply-cookie";
 ?>
