@@ -2,7 +2,7 @@
 <?php
 if(!isset($_COOKIE["cookie_consent"])):
 ?> 
-<div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="img-cookies-block">
@@ -20,7 +20,7 @@ if(!isset($_COOKIE["cookie_consent"])):
         </div>
     </div>
 </div>
-</div>
+</div> -->
 <?php endif; ?>
 
 <footer class="footer-area footerLive">
@@ -253,6 +253,7 @@ if(!isset($_COOKIE["cookie_consent"])):
 $site_url = get_site_url() . "/apply-cookie";
 ?>
 
+<!-- 
 <script>
     $('.accept-cookies').click((e)=>{
         var set_cookie_general = "cookie_consent";
@@ -285,7 +286,8 @@ $site_url = get_site_url() . "/apply-cookie";
             }
         });
     });
-</script>
+</script> 
+-->
 
 <?php if ( !is_user_logged_in() ) : ?>
 <!-- Start of HubSpot Embed Code -->
@@ -301,19 +303,19 @@ $site_url = get_site_url() . "/apply-cookie";
         var meta_value = $("#meta_value_expert" + key).val();
 
         $.ajax({
-                url:"/interest-push",
-                method:"POST",
-                data:{
-                    'user_id': user_id,
-                    'meta_key': meta_key,
-                    'meta_value': meta_value
-                },
-                dataType:"text",
-                success: function(data){
-                    console.log(data);
-                    $('#autocomplete-push-expert' + key).html(data);
+            url:"/interest-push",
+            method:"POST",
+            data:{
+                'user_id': user_id,
+                'meta_key': meta_key,
+                'meta_value': meta_value
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete-push-expert' + key).html(data);
 
-                }
+            }
         });
     });
 </script>
