@@ -702,12 +702,16 @@ $(document).ready(function () {
                 playlist_youtube:"youtube"
             },
             beforeSend:function(){
+                $('#loader').attr('hidden',false);
+                $('#select_field').attr('hidden',true);
                 document.getElementById('content-back-topics').innerHTML = '';
                 console.log('sending...')
             },
             error: function(error){
                },
             success: function(success){
+                $('#loader').attr('hidden',true);
+                $('#select_field').attr('hidden',false);
                 document.getElementById('content-back-topics').innerHTML = success;
                 console.log('success',success)
             },complete: function(complete){
