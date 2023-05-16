@@ -339,6 +339,39 @@ $site_url = get_site_url() . "/apply-cookie";
 </script>
 
 <script>
+    $('.cookie_apply_mobile').click((e)=>{
+        var set_cookie = "mobile_download";
+        var openedWindow;
+
+        $.ajax({
+            url: '/apply-cookie',
+            type: 'POST',
+            dataType: 'text',
+            data:{
+                'set_cookie': set_cookie,
+            },
+            beforeSend:function(){
+                $('#loader').attr('hidden',false);
+            },
+            error: function(){
+                alert('Something went wrong!');
+                $('#loader').attr('hidden',true);
+                $('#modalForApp').hide();
+            },
+            complete: function(){
+                $('#loader').attr('hidden',true);
+                $('#modalForApp').hide();
+            },
+            success: function(data){
+                $('#loader').attr('hidden',true);
+                $('#modalForApp').hide();
+                console.log(data);
+            }
+        });
+    });
+</script>
+
+<script>
     $('.btnPushExpert').click((e)=>{
         var key = e.currentTarget.value;
         var user_id = $("#user_id_expert" + key).val();
