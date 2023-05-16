@@ -249,12 +249,7 @@ if(!isset($_COOKIE['mobile_download'])):
         <!-- end /.container -->
     </div>
     <!-- end /.footer-big -->
-</footer>
-<?php if ( !is_user_logged_in() ) : ?>
-    <!-- Start of HubSpot Embed Code -->
-    <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/27242849.js"></script>
-    <!-- End of HubSpot Embed Code -->
-<?php endif ?>    
+</footer>  
 <script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script>
 <script id="rendered-js" >
@@ -292,45 +287,22 @@ if(!isset($_COOKIE['mobile_download'])):
     });
 </script> 
 
-<?php
-$site_url = get_site_url() . "/apply-cookie";
-?>
-
 <script>
-    $('.cookie_apply_mobile').click((e)=>{
-        var set_cookie = "mobile_download";
-        var openedWindow;
-
-        $.ajax({
-            url: '/apply-cookie',
-            type: 'POST',
-            dataType: 'text',
-            data:{
-                'set_cookie': set_cookie,
-            },
-            beforeSend:function(){
-                $('#loader').attr('hidden',false);
-            },
-            error: function(){
-                alert('Something went wrong!');
-                $('#loader').attr('hidden',true);
-                $('#modalForApp').hide();
-            },
-            complete: function(){
-                $('#loader').attr('hidden',true);
-                $('#modalForApp').hide();
-            },
-            success: function(data){
-                $('#loader').attr('hidden',true);
-                $('#modalForApp').hide();
-                console.log(data);
-                // openedWindow = window.open("");  // Open a new window
-                // if (openedWindow && openedWindow.close) 
-                //     openedWindow.close(); // Close a new window
-            }
+    $(window).on('resize', function() {
+        if ($(window).width() < 767) {
+            $('#modalForApp').show();
+        } else {
+            $('#modalForApp').hide();
+        }
+        $('#modalForApp .close').click(function() {
+            $('#modalForApp').hide();
         });
     });
 </script>
+
+<?php
+$site_url = get_site_url() . "/apply-cookie";
+?>
 
 <script>
     $('.accept-cookies').click((e)=>{
@@ -426,18 +398,6 @@ $site_url = get_site_url() . "/apply-cookie";
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/swiper.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
-<script>
-    $(window).on('resize', function() {
-        if ($(window).width() < 767) {
-            $('#modalForApp').show();
-        } else {
-            $('#modalForApp').hide();
-        }
-        $('#modalForApp .close').click(function() {
-            $('#modalForApp').hide();
-        });
-    });
-</script>
 <!--<script type="text/javascript">
       $(window).on('load', function() {
         $('#myFirstModal').modal('show');
