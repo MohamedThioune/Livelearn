@@ -23,10 +23,7 @@ if(!isset($_COOKIE["cookie_consent"])):
 </div>
 <?php endif; ?>
 
-<?php
-if(!isset($_COOKIE['mobile_download'])):
-?> 
-<div id="modalForApp" class="modal fade" role="dialog">
+<div id="modalForAppArchived" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -59,7 +56,6 @@ if(!isset($_COOKIE['mobile_download'])):
         </div>
     </div>
 </div>
-<?php endif; ?>
 
 <footer class="footer-area footerLive">
     <div class="footer-big">
@@ -287,7 +283,7 @@ if(!isset($_COOKIE['mobile_download'])):
     });
 </script> 
 
-<script>
+<!-- <script>
     $(window).on('resize', function() {
         if ($(window).width() < 767) {
             $('#modalForApp').show();
@@ -298,7 +294,7 @@ if(!isset($_COOKIE['mobile_download'])):
             $('#modalForApp').hide();
         });
     });
-</script>
+</script> -->
 
 <?php
 $site_url = get_site_url() . "/apply-cookie";
@@ -338,38 +334,11 @@ $site_url = get_site_url() . "/apply-cookie";
     });
 </script>
 
-<script>
-    $('.cookie_apply_mobile').click((e)=>{
-        var set_cookie = "mobile_download";
-        var openedWindow;
-
-        $.ajax({
-            url: '/apply-cookie',
-            type: 'POST',
-            dataType: 'text',
-            data:{
-                'set_cookie': set_cookie,
-            },
-            beforeSend:function(){
-                $('#loader').attr('hidden',false);
-            },
-            error: function(){
-                alert('Something went wrong!');
-                $('#loader').attr('hidden',true);
-                $('#modalForApp').hide();
-            },
-            complete: function(){
-                $('#loader').attr('hidden',true);
-                $('#modalForApp').hide();
-            },
-            success: function(data){
-                $('#loader').attr('hidden',true);
-                $('#modalForApp').hide();
-                console.log(data);
-            }
-        });
-    });
-</script>
+<?php if ( !is_user_logged_in() ) : ?>
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/27242849.js"></script>
+<!-- End of HubSpot Embed Code -->
+<?php endif; ?>  
 
 <script>
     $('.btnPushExpert').click((e)=>{
