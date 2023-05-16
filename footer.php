@@ -249,19 +249,6 @@ if(!isset($_COOKIE["cookie_consent"])):
     });
 </script> 
 
-<!-- <script>
-    $(window).on('resize', function() {
-        if ($(window).width() < 767) {
-            $('#modalForApp').show();
-        } else {
-            $('#modalForApp').hide();
-        }
-        $('#modalForApp .close').click(function() {
-            $('#modalForApp').hide();
-        });
-    });
-</script> -->
-
 <?php
 $site_url = get_site_url() . "/apply-cookie";
 ?>
