@@ -704,6 +704,7 @@ $(document).ready(function () {
                 console.log('sending...')
             },
             error: function(error){
+                console.log('error',error);
                },
             success: function(success){
                 document.getElementById('content-back-topics').innerHTML = success;
