@@ -1,24 +1,33 @@
 <?php /** Template Name: youtube playlist */ ?>
 <?php
 //youtube-playlist
+global $wpdb;
+
+$table = $wpdb->prefix . 'databank';
+$api_key = "AIzaSyB0J1q8-LdT0994UBb6Q35Ff5ObY-Kqi_0";
+$maxResults = 45;
+
+$users = get_users();
+
+$author_id = 0;
+
 extract($_POST);
 if ($playlist_youtube){
     $fileName = get_stylesheet_directory_uri()."/files/Big-Youtube-list-Correct.csv";
     $file = fopen($fileName, 'r');
     if ($file) {
-        while ($row = fgetcsv($file)){
-            $line1 = $row[0]; //url youtube
-            $line2 = $row[1]; //
-            $line3 = $row[2]; //list Url
-            $line4 = $row[3]; //Type
-            $line5 = $row[4]; // Expert name
-            $line6 = $row[5]; // Company name
-            $line7 = $row[6]; //Sub-topics
-            $line8 = $row[7]; //YouTube account
+        $idPlaylists = array();
+        $urlPlaylist = [];
 
-            echo "line 1 : $line1, line 2 : $line2,line 3 : $line3, line 4 : $line4,line 5 : $line5, line 6 : $line6,line 7 : $line7, line 8 : $line8 <br>";
+        while ($line = fgetcsv($file)){
+            $row = explode(';',$line[0]);
+            $idPlaylists [] = $row[2];
+            //$urlPlaylist [] = $row[0];
         }
         fclose($file);
-    }else
-        echo "Erreur lors de l'ouverture du fichier.";
+    }else {
+        echo "<span class='text-center alert alert-danger'>not possible to read the file</span>";
+    }
+    array_shift($idPlaylists); //remove the tittle of the colone
+    var_dump($idPlaylists);
 }
