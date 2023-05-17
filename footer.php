@@ -23,6 +23,44 @@ if(!isset($_COOKIE["cookie_consent"])):
 </div>
 <?php endif; ?>
 
+<?php
+if(!isset($_COOKIE['mobile_download'])):
+?> 
+<div id="modalForApp" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="submit" name='' class="cookie_apply_mobile">x</button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="content-modal">
+                    <div class="content-img-logo">
+                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/LiveLearn_logo.png" alt="">
+                    </div>
+                    <p class="title-content-modal">Registreer je gratis om <span>educatieve content</span> te ontvangen van collega's, vrienden én de experts uit de markt.</p>
+                    <div class="group-btn-get-app">
+
+                        <!-- Google Play button -->
+                        <a href="https://apps.apple.com/nl/app/livelearn/id1666976386" class="market-btn apple-btn" role="button">
+                            <span class="market-button-subtitle">Download on the</span>
+                            <span class="market-button-title">App Store</span>
+                        </a>
+
+                        <!-- Google Play button -->
+                        <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app&hl=fr" class="market-btn google-btn" role="button">
+                            <span class="market-button-subtitle">Download on the</span>
+                            <span class="market-button-title">Google Play</span>
+                        </a>
+                    </div>
+                    <p class="Aanmelden-text">Aanmelden <span>of</span> registreren</p>
+                    <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
 <footer class="footer-area footerLive">
     <div class="footer-big">
         <!-- start .container -->
@@ -249,16 +287,45 @@ if(!isset($_COOKIE["cookie_consent"])):
     });
 </script> 
 
-<script>
-    $(window).on('resize', function() {
-        if ($(window).width() > 767) {
-            $('#cookieModal').hide();
-        }
-    });
-</script>
 <?php
 $site_url = get_site_url() . "/apply-cookie";
 ?>
+
+<script>
+    $('.cookie_apply_mobile').click((e)=>{
+        var set_cookie = "mobile_download";
+        var openedWindow;
+
+        $.ajax({
+            url: '/apply-cookie',
+            type: 'POST',
+            dataType: 'text',
+            data:{
+                'set_cookie': set_cookie,
+            },
+            beforeSend:function(){
+                $('#loader').attr('hidden',false);
+            },
+            error: function(){
+                alert('Something went wrong!');
+                $('#loader').attr('hidden',true);
+                $('#modalForApp').hide();
+            },
+            complete: function(){
+                $('#loader').attr('hidden',true);
+                $('#modalForApp').hide();
+            },
+            success: function(data){
+                $('#loader').attr('hidden',true);
+                $('#modalForApp').hide();
+                console.log(data);
+                // openedWindow = window.open("");  // Open a new window
+                // if (openedWindow && openedWindow.close) 
+                //     openedWindow.close(); // Close a new window
+            }
+        });
+    });
+</script>
 
 <script>
     $('.accept-cookies').click((e)=>{
@@ -360,6 +427,18 @@ $site_url = get_site_url() . "/apply-cookie";
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/swiper.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
+<script>
+    $(window).on('resize', function() {
+        if ($(window).width() < 767) {
+            $('#modalForApp').show();
+        } else {
+            $('#modalForApp').hide();
+        }
+        $('#modalForApp .close').click(function() {
+            $('#modalForApp').hide();
+        });
+    });
+</script>
 <!--<script type="text/javascript">
       $(window).on('load', function() {
         $('#myFirstModal').modal('show');
