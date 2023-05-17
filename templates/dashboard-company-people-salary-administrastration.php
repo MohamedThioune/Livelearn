@@ -6,7 +6,6 @@
 $users = get_users();
 $data_user = wp_get_current_user();
 $user_connected = $data_user->data->ID;
-$rows = [];
 extract($_POST);
 if (isset($id)) {
     $user_concerned = get_user_by('ID', $id);
@@ -21,12 +20,12 @@ if (isset($id)) {
                     $link = "/dashboard/company/profile/?id=" . $user->ID . '&manager='. $user_connected;
                     $img_manager = get_field('profile_img',  'user_' . $user->ID) ? get_field('profile_img',  'user_' . $user->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                     echo '<tr>
-                            <td>' . $name . '</td>
-                            <td>
-                                <img class="" src="' . $img_manager . '" alt="">
-                            </td>
-                            <td><a href="' . $link . '">See</a></td>
-                        </tr>';
+                                <td>' . $name . '</td>
+                                <td>
+                                    <img class="" src="' . $img_manager . '" alt="">
+                                </td>
+                                <td><a href="' . $link . '">See</a></td>
+                            </tr>';
                 }
                 }
         }
