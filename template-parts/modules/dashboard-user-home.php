@@ -433,7 +433,7 @@ $args = array(
     'post_status' => 'publish',
     'orderby' => 'date',
     'order' => 'DESC',
-    'posts_per_page' => 300
+    'posts_per_page' => 200
 );
 
 $global_courses = get_posts($args);
@@ -549,7 +549,7 @@ foreach ($global_courses as $key => $course) {
 }
 
 //Views
-$user_post_view = get_posts(
+$user_post_view = get_posts( 
     array(
         'post_type' => 'view',
         'post_status' => 'publish',

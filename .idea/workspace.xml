@@ -4,6 +4,64 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
+    <list default="true" id="789c9d68-3fd7-4bee-a7e8-8aab78d7ba13" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.git-ftp.log" beforeDir="false" afterPath="$PROJECT_DIR$/.git-ftp.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/fluidify-child.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/fluidify-child.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom-endpoints.php" beforeDir="false" afterPath="$PROJECT_DIR$/custom-endpoints.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/footer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/header_base.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_base.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/header_user.php" beforeDir="false" afterPath="$PROJECT_DIR$/header_user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/placeholder_user.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/placeholder_user.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/stratBuck.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/stratBuck.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-grant.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-grant.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-databank.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-databank.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-modules.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-learning-modules.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-profile-home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-menu-user.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-assessment-4.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-add-assessment-4.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-5.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection-add-course-5.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-course-selection.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-signups.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-teacher-signups.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-activity.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-activity.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-answer-assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-answer-assessment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-assessment.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-assessment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-checkout-offline.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-checkout-offline.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-communities.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-communities.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-community-detail.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-community-detail.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-profile-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-profile-home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-settings.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-settings.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-offline.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/single-course-online.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/active-subscription.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/active-subscription.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/databank.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/databank.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/edit-databank.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/edit-databank.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/optie-bank.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/optie-bank.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-dashboard-core.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-dashboard-core.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-ecosysteme.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-ecosysteme.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-home2.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-home2.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-plugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-plugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-registreren.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-registreren.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-user-overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-user-overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-xml-parse.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-xml-parse.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-youtube-playlist-logic.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-youtube-playlist-logic.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/templateOptieAll.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templateOptieAll.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/youtube-video-course-playlist.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/youtube-video-course-playlist.php" afterDir="false" />
+=======
     <list default="true" id="f7aeb342-17fe-40ff-93c2-0edca6fafadf" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -11,6 +69,7 @@
       <change beforePath="$PROJECT_DIR$/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/footer.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/template-home2.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-home2.php" afterDir="false" />
+>>>>>>> origin/main
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +114,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Applications/MAMP/htdocs/livelearn/wp-content/themes/fluidify-child&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+=======
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
@@ -69,6 +144,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+>>>>>>> origin/main
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
