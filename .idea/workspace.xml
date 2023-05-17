@@ -63,13 +63,14 @@
       <change beforePath="$PROJECT_DIR$/templates/youtube-video-course-playlist.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/youtube-video-course-playlist.php" afterDir="false" />
 =======
     <list default="true" id="f7aeb342-17fe-40ff-93c2-0edca6fafadf" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/footer.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-user-home.php" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/templates/template-home2.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-home2.php" afterDir="false" />
 >>>>>>> origin/main
+=======
+>>>>>>> origin/front-seydou
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +85,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -115,6 +119,9 @@
     <option name="showLibraryContents" value="true" />
   </component>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> origin/front-seydou
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
@@ -127,6 +134,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+<<<<<<< HEAD
   }
 }</component>
 =======
@@ -145,6 +153,10 @@
   }
 }]]></component>
 >>>>>>> origin/main
+=======
+  }
+}</component>
+>>>>>>> origin/front-seydou
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -154,7 +166,8 @@
       <option name="presentableId" value="Default" />
       <updated>1683529586400</updated>
       <workItem from="1683529592371" duration="21413000" />
-      <workItem from="1683793517115" duration="592000" />
+      <workItem from="1683793517115" duration="849000" />
+      <workItem from="1684137363039" duration="1835000" />
     </task>
     <servers />
   </component>

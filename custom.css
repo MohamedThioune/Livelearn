@@ -16923,7 +16923,7 @@ background: #FFFFFF !important;
     line-height: 19px;
     color: #3D4D59 !important;
     margin: 0 5px;
-    padding: 13px 20px;
+    padding: 13px 18px;
     display: block;
 }
 #tab-url1 .nav li .current {
@@ -21117,13 +21117,12 @@ background: #FFFFFF !important;
         height: 30px;
     }
     .content-new-user{
-        flex-wrap: wrap;
+        display: block !important;
     }
     .content-new-user .first-section-dashboard, .content-new-user .second-section-dashboard {
         width: 100%;
         margin-right: 0px;
         padding: 0 15px;
-
     }
     .head-block {
         flex-wrap: wrap;
@@ -21610,7 +21609,7 @@ background: #FFFFFF !important;
         font-size: 15px;
     }
     #tab-url1 {
-        padding: 0 15px;
+        padding: 0;
     }
     #tab-url1 .cardFavoriteCourses {
         margin-left: 0px;
