@@ -1,6 +1,9 @@
 <?php /** Template Name: Registeren */ ?>
 
 <?php 
+
+    $users = get_users();
+
     extract($_POST);
 
     extract($_GET);

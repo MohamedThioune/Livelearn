@@ -9,7 +9,7 @@ $url = $wp->request;
 $option_menu = explode('/', $url);
 
 if(!isset($_GET['id']))
-    $user = get_users(array('include'=> get_current_user_id()))[0]->data;   
+    $user = get_users(array('include'=> get_current_user_id()))[0]->data;
 
 $image = get_field('profile_img',  'user_' . $user->ID);
 if(!$image)
@@ -30,13 +30,13 @@ $topics_external = get_user_meta($user->ID,'topic');
 $experts = get_user_meta($user->ID, 'expert');
 
 $user_name_display = "";
-if(isset($user->first_name)) 
-    $user_name_display = $user->first_name; 
-else 
+if(isset($user->first_name))
+    $user_name_display = $user->first_name;
+else
     $user_name_display = $user->display_name;
 
 /*
-* * End  
+* * End
 */
 
 /*
@@ -50,7 +50,7 @@ $see_experts = get_users(
 );
 
 /*
-* * End  
+* * End
 */
 
 echo "<input type='hidden' id='user_id' value='" . $user->ID . "'>";
@@ -76,7 +76,7 @@ style="overflow-x: hidden !important;">
                 <?php
                 if(!isset($option_menu[2])) echo '<p class="textLiDashboard"><b>Mijn dashboard</b></p>'; else echo  '<p class="textLiDashboard">Mijn dashboard</p>';
                 ?>
-               
+
             </a>
         </li>
         <li class="elementTextDashboard">
@@ -88,12 +88,11 @@ style="overflow-x: hidden !important;">
             </a>
         </li>
         <li class="elementTextDashboard">
-            <a href="#" class="d-flex">
+            <a href="/dashboard/user/assessment/" class="d-flex">
                 <div class="iconeElement"><img class="iconAssesment1" src="<?php echo get_stylesheet_directory_uri();?>/img/assessment.png" alt=""></div>
                 <?php
                 if($option_menu[2] == 'assessment') echo '<p class="textLiDashboard"><b>Assessments</b></p>'; else echo  '<p class="textLiDashboard">Assessments</p>';
                 ?>
-                <small class="comming-soon">&nbsp;&nbsp; <b>Coming Soon</b> </small>
             </a>
         </li>
         <li class="elementTextDashboard">
@@ -118,7 +117,7 @@ style="overflow-x: hidden !important;">
                 foreach($topics_external as $topic){
                     if(!$topic || is_wp_error(!$topic))
                         continue;
-                    
+
                     $name = (String)get_the_category_by_ID($topic);
                     $image_category = get_field('image', 'category_'. $topic);
                     $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/iconOnderverpen.png';
@@ -135,7 +134,7 @@ style="overflow-x: hidden !important;">
                 foreach($topics_internal as $topic){
                     if(!$topic || is_wp_error(!$topic))
                         continue;
-                       
+
                     $name = (String)get_the_category_by_ID($topic);
                     $image_category = get_field('image', 'category_'. $topic);
                     $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/iconOnderverpen.png';
@@ -156,14 +155,14 @@ style="overflow-x: hidden !important;">
                 <i class="fa fa-plus" aria-hidden="true"></i>
             </button>
         </div>
-        <li class="elementTextDashboard">    
+        <li class="elementTextDashboard">
             <?php
-            
+
             if(!empty($experts))
                 foreach($experts as $expert){
                     if(!$expert)
                         continue;
-                        
+
                     $name = get_userdata($expert)->data->display_name ?: get_userdata($expert)->data->first_name;
                     if(!$name)
                         continue;
@@ -176,81 +175,10 @@ style="overflow-x: hidden !important;">
                             </div>
                             <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
                         </a><br>";
-                    
+
                 }
             ?>
         </li>
     </ul>
 </section>
-
-
-
-<?php
-    $categories = array();
-
-    $cats = get_categories( array(
-        'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-        'orderby'    => 'name',
-        'exclude' => 'Uncategorized',
-        'parent'     => 0,
-        'hide_empty' => 0, // change to 1 to hide categores not having a single post
-    ) );
-
-    foreach($cats as $category){
-        $cat_id = strval($category->cat_ID);
-        $category = intval($cat_id);
-        array_push($categories, $category);
-    }
-
-    //Topics
-    $topics = array();
-    foreach ($categories as $value){
-        $merged = get_categories( array(
-            'taxonomy'   => 'course_category', // Taxonomy to retrieve terms for. We want 'category'. Note that this parameter is default to 'category', so you can omit it
-            'parent'  => $value,
-            'hide_empty' => 0, // change to 1 to hide categores not having a single post
-        ) );
-
-        if(!empty($merged))
-            $topics = array_merge($topics, $merged); 
-    }
-?>
-<!-- Modal add topics and subtopics -->
-<div class="modal fade modalAddTopicsAnd modal-topics-expert" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Maak en keuze :</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="content-topics">
-                    <ul class="unstyled centered">
-                        <?php
-                            foreach($topics as $key => $topic){
-                                if(!$topic || is_wp_error(!$topic))
-                                    continue;
-                                
-                                echo '<li>
-                                        <input class="styled-checkbox topics" id="styled-checkbox-'. $key .'" type="checkbox" value="' . $topic->cat_ID . '">
-                                        <label for="styled-checkbox-'. $key .'">' . $topic->cat_name . '</label>
-                                      </li>';
-                            }
-                        ?>
-                    </ul>
-                    <div class="mt-2">
-                        <button type="button" id="btn-topics" class="btn btnNext">Next</button>
-                    </div>
-                </div>
-                <div class="content-subTopics">
-                    <form action="" method="post" id="autocomplete_tags">
-                    </form>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
 

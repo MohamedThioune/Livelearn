@@ -21,6 +21,9 @@ $message = "";
 extract($_POST);
 
 $user_data = wp_get_current_user();
+if(empty($user_data->roles))
+    header('Location:/');
+
 
 function RandomString(){
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -70,9 +73,6 @@ function makeApiCall($endpoint, $type) {
     // return data
     return json_decode( $response, true );
 }
-
-if(empty($user_data->roles))
-    header('Location:/');
 
 if(isset($_POST['expert_add']) || isset($_POST['expert_add_artikel'])){
     $bunch = get_field('experts', $_GET['id']);
@@ -1004,12 +1004,28 @@ else if(isset($follow_community)){
 
     update_field('follower_community', $followers, $community_id);
 
-    $path = "/dashboard/user/communities/?mu=" . $community_id . "&message=Successfully subscribed to this community !";
+    $path = "/dashboard/user/community-detail/?mu=" . $community_id . "&message=Successfully subscribed to this community !";
     header("Location: ". $path);
 }
 
 else if(isset($unfollow_community)){
-    $path = "/dashboard/user/communities/?mu=" . $community_id . "&message=Successfully unsubscribed to this community !";
+    $user_id = get_current_user_id();
+    $followers = array();
+    $past_followers = get_field('follower_community', $community_id);
+
+    if(empty($past_followers))
+        $past_followers = array();
+    else
+        foreach($past_followers as $follower){
+            if($follower->ID == $user_id)
+                continue;
+            
+            array_push($followers, $follower);
+        }
+    
+    update_field('follower_community', $followers, $community_id);
+
+    $path = "/dashboard/user/communities/?message=Successfully unsubscribed !";
     header("Location: ". $path);
 }
 
@@ -1392,7 +1408,7 @@ else if(isset($read_action_lesson)){
 
     header("Location: " . $follow_reads);
 }
-    
+
 ?>
 <?php wp_head(); ?>
 
