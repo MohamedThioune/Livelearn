@@ -860,7 +860,7 @@ if(isset($_GET['message']))
                                 echo $void_content;
                             ?>
                             <center>
-                                <button class="btn btnNext loading_more">Load all</button><br><br>
+                                <button class="btn btnNext loading_more">Load all</button><br>
                                 <div hidden="true" id="loader_recommendation" class="spinner-border spinner-border-sm text-primary" role="status"></div>
                             </center>
                         </div>
