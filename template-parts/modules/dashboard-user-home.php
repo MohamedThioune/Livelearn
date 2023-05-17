@@ -431,8 +431,9 @@ $experts = get_user_meta($user, 'expert');
 $args = array(
     'post_type' => array('course', 'post'),
     'post_status' => 'publish',
-    'posts_per_page' => -1,
-    'order' => 'DESC'
+    'orderby' => 'date',
+    'order' => 'DESC',
+    'posts_per_page' => 300
 );
 
 $global_courses = get_posts($args);
@@ -739,7 +740,7 @@ if(isset($_GET['message']))
 
                 <div class="tabs__list">
                     <div class="tab active">
-                        <div class="block-new-card-course grid">
+                        <div class="block-new-card-course grid" id="autocomplete_recommendation">
                             <?php
                             $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
@@ -858,6 +859,10 @@ if(isset($_GET['message']))
                             else
                                 echo $void_content;
                             ?>
+                            <center>
+                                <button class="btn btnNext loading_more">Load all</button><br><br>
+                                <div hidden="true" id="loader_recommendation" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                            </center>
                         </div>
                     </div>
                     <div class="tab">
@@ -1709,26 +1714,26 @@ if(isset($_GET['message']))
 </script>
 
 <script>
-    $.ajax({
-        url: '/',
-        type: 'POST',
-        data: {
-        },
-        beforeSend:function(){
-            $('#loader').attr('hidden',false)
-            $('#select_field').attr('hidden',true)
-        },
-        error: function(){
-            alert('Something went wrong!');
-        },
-        complete: function(){
-            $('#loader').attr('hidden',true)
-        },
-        success: function(data){
-            $('#loader').attr('hidden',true)
-            console.log(data);
-        }
-    });
+$(".loading_more").click((e)=>
+    {
+        $.ajax({
+            url: '/loading-more-recommendation',
+            type: 'POST',
+            data: {
+            },
+            beforeSend:function(){
+                $('#loader_recommendation').attr('hidden',false)
+            },
+            error: function(){
+                alert('Something went wrong!');
+            },
+            success: function(data){
+                $('#loader_recommendation').attr('hidden',true)
+                $('#autocomplete_recommendation').html(data);
+                console.log(data);
+            }
+        });
+    })
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
