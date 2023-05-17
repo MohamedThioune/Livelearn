@@ -42,7 +42,12 @@
 
     //logique of nmbrs salary administrastion 
     if (isset($nmbrs_username) && isset($nmbrs_password)) {
-        var_dump($nmbrs_username,$nmbrs_password);
+        $clientId_nmbrs = $nmbrs_username;
+        $clientSecret_nmbrs = $nmbrs_password;
+
+        var_dump("client id :$clientId_nmbrs");
+        var_dump("client secret :$clientSecret_nmbrs");
+
     }
     if(isset($missing_details_user)){
         update_field('telnr', $telnr, 'user_'.$id_user);
@@ -376,11 +381,11 @@
                 <form class="needs-validation" action="/livelearn/dashboard/company/people/" novalidate id="data-sending-from-nmbrs" method="POST">
                     <div class="form-group">
                         <label for="nmbrs-username" class="col-form-label">login</label>
-                        <input type="text" class="form-control" name="nmbrs_username" aria-describedby="inputGroupPrepend" autocomplete="nope" required>
+                        <input type="text" value="PartnerApp_extdev-livelearn_AFEE32B2930D41FA84667196E5515D40" class="form-control" name="nmbrs_username" aria-describedby="inputGroupPrepend" autocomplete="nope" required>
                     </div>
                     <div class="form-group">
                         <label for="nmbrs-password" class="col-form-label">password</label>
-                        <input type="password" class="form-control" name="nmbrs_password" aria-describedby="inputGroupPrepend" autocomplete="new-password" required>
+                        <input type="password" value="https://quickforget.com/s/55b05bf4213e0b1bb24343918e14db5c4bfcf9a3a2bde24a" class="form-control" name="nmbrs_password" aria-describedby="inputGroupPrepend" autocomplete="new-password" required>
                     </div>
                 </form>
             </div>
@@ -748,4 +753,3 @@
         });
      });
 </script>
-
