@@ -26,6 +26,8 @@ $void_content ='<center>
 // Saved courses
 $saved = get_user_meta($user, 'course');
 
+$teachers = array();
+
 /*
 * Get interests courses
 */
@@ -42,6 +44,7 @@ if(!empty($topics_internal))
 
 //Experts
 $experts = get_user_meta($user, 'expert');
+
 $args = array(
     'post_type' => array('course', 'post'),
     'post_status' => 'publish',
@@ -49,9 +52,7 @@ $args = array(
     'order' => 'DESC',
     'posts_per_page' => 200
 );
-
 $global_courses = get_posts($args);
-$teachers = array();
 
 foreach ($global_courses as $key => $course) {
     //Control visibility

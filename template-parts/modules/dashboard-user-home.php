@@ -433,7 +433,7 @@ $args = array(
     'post_status' => 'publish',
     'orderby' => 'date',
     'order' => 'DESC',
-    'posts_per_page' => 300
+    'posts_per_page' => 200
 );
 
 $global_courses = get_posts($args);
