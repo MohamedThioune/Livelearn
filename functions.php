@@ -808,8 +808,9 @@ function recommended_course($data)
   $args = array(
       'post_type' => array('course', 'post'), 
       'post_status' => 'publish',
-      'posts_per_page' => -1,
-      'order' => 'DESC'
+      'orderby' => 'date',
+      'order' => 'DESC',
+      'posts_per_page' => 300
   );
   $global_courses = get_posts($args);
   
@@ -933,9 +934,6 @@ function recommended_course($data)
 
   }
 
-  if(!empty($courses))
-    $courses = array_slice($courses, 0, 250);
-
   //Views
   $user_post_view = get_posts(
       array(
@@ -950,7 +948,7 @@ function recommended_course($data)
   
   //Empty courses belong to news user(No topics & Experts followed)
   if(empty($courses)){
-    $courses = array_slice($global_courses, 0, 80);
+    $courses = array_slice($global_courses, 0, 200);
     shuffle($courses);
   }
 
