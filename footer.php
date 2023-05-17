@@ -429,6 +429,7 @@ $site__url = get_site_url() . "/apply-cookie";
         });
     });
 </script>
+
 <!--<script type="text/javascript">
       $(window).on('load', function() {
         $('#myFirstModal').modal('show');
