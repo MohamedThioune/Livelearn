@@ -62,8 +62,8 @@ if ($playlist_youtube){
                 $meta_xml = explode('~', $value)[0];
                 array_push($meta_xmls, $meta_xml);
             }
-            var_dump($meta_xmls);
-            die();
+            // var_dump($meta_xmls);
+            // die();
 
         //Get the url media image to display on front
         $image = ( isset($playlist['snippet']['thumbnails']['maxres']) ) ? $playlist['snippet']['thumbnails']['maxres']['url'] : $playlist['snippet']['thumbnails']['standard']['url'];
@@ -81,8 +81,8 @@ if ($playlist_youtube){
                 
                 $youtube_videos .= ';' . $youtube_video;
             }
-            var_dump($youtube_videos);
-            die();
+            // var_dump($youtube_videos);
+            // die();
 
             $status = 'extern';
 
