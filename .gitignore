@@ -4,17 +4,8 @@ custom.css
 main-user.js
 main.css
 main.js
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 /vendor/
-=======
+/.idea/
+.vscode
 api.http
->>>>>>> origin/main
-=======
->>>>>>> bc547e14f27b1239cb822c408a29a8afd421222d
-=======
-
-/vendor/
->>>>>>> e0933446348412ece5114c276c50f39978669bcd

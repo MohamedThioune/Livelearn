@@ -1,5 +1,5 @@
  <?php /** Template Name: Optie All*/?>
-<?php
+ <?php
     global $wpdb;
     extract($_POST);
     // var_dump($class, $ids, $optie);
@@ -127,18 +127,16 @@
                 */
                 
                 // $data = [ 'course_id' => $id_post]; // NULL value.
-                // $wpdb->update( $table, $data, $where );   
-            }else if($optie=="❌"){
-                if ($class[$key] == 'missing')
+                // $wpdb->update( $table, $data, $where );
+            }     
+            else if($optie == "❌"){
+                if ($operation == 'missing')
                     null;
-                else if ($class[$key] == 'present' )
-                    // var_dump($artikel->course_id);
+                else if ($operation == 'present' )
                     wp_trash_post($course->course_id);
             }
             $data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
-
             $updated = $wpdb->update( $table, $data, $where );
-            echo $wpdb->last_error;
 
             if($updated === false)
                 echo 'error';
