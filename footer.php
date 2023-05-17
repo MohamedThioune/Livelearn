@@ -249,12 +249,7 @@ if(!isset($_COOKIE['mobile_download'])):
         <!-- end /.container -->
     </div>
     <!-- end /.footer-big -->
-</footer>
-<?php if ( !is_user_logged_in() ) : ?>
-    <!-- Start of HubSpot Embed Code -->
-    <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/27242849.js"></script>
-    <!-- End of HubSpot Embed Code -->
-<?php endif ?>    
+</footer>  
 <script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script>
 <script id="rendered-js" >
@@ -364,7 +359,13 @@ $site_url = get_site_url() . "/apply-cookie";
             }
         });
     });
-</script>
+</script> 
+
+<?php if ( !is_user_logged_in() ) : ?>
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/27242849.js"></script>
+<!-- End of HubSpot Embed Code -->
+<?php endif; ?>  
 
 <script>
     $('.btnPushExpert').click((e)=>{
@@ -374,19 +375,19 @@ $site_url = get_site_url() . "/apply-cookie";
         var meta_value = $("#meta_value_expert" + key).val();
 
         $.ajax({
-                url:"/interest-push",
-                method:"POST",
-                data:{
-                    'user_id': user_id,
-                    'meta_key': meta_key,
-                    'meta_value': meta_value
-                },
-                dataType:"text",
-                success: function(data){
-                    console.log(data);
-                    $('#autocomplete-push-expert' + key).html(data);
+            url:"/interest-push",
+            method:"POST",
+            data:{
+                'user_id': user_id,
+                'meta_key': meta_key,
+                'meta_value': meta_value
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete-push-expert' + key).html(data);
 
-                }
+            }
         });
     });
 </script>

@@ -694,7 +694,7 @@ $(document).ready(function () {
 <script>
     $("#playlist-youtube").click((e)=>{
         $.ajax({
-            url:"/livelearn/youtube-playlist/",
+            url:"/youtube-playlist/",
             method:"POST",
             data:{
                 playlist_youtube:"youtube"
