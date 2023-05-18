@@ -11,19 +11,11 @@ $table = $wpdb->prefix . 'databank';
   $maxResults = 45;
 
   $users = get_users();
-
-  $author_id = 0;
-
-  foreach($users as $user){
-      $name_user = strtolower($user->data->display_name);
-
-      if($name_user == "youtube"){
-        $author_id = intval($user->data->ID);
-        $name_user = $user->display_name;
-        break;
-      }
-  }
-//youtube-playlist from excel
+  $args = array(
+      'post_type' => 'company', 
+      'posts_per_page' => -1,
+  );
+  $companies = get_posts($args);
 
 extract($_POST);
 if ($playlist_youtube){
@@ -89,7 +81,7 @@ if ($playlist_youtube){
             //Data to create the course
             $data = array(
                 'titel' => $playlist['snippet']['title'],
-                'type' => 'Playlist',
+                'type' => substr($playlist_id, 0, 2)=='PL' ? 'Playlist':'Video';,
                 'videos' => $youtube_videos, 
                 'short_description' => $playlist['snippet']['description'],
                 'long_description' => $playlist['snippet']['description'],
