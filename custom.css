@@ -18057,6 +18057,9 @@ background: #FFFFFF !important;
 }
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
+    #cookieModal{
+        display: none !important;
+    }
     .head-ontwikkeladvies h1 {
         font-size: 25px;
         margin-bottom: 20px;
