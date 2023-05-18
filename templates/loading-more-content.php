@@ -279,16 +279,19 @@ shuffle($recommended_courses);
 */
 
 $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+$row_all_recommendation = "";
 
-$row_all_recommendation = 
-    '<div class="tab active">
-        <div class="block-new-card-course grid">';
-
+$find = false;
 if(!empty($recommended_courses))
 foreach($recommended_courses as $course){
     //Course Type
     $course_type = get_field('course_type', $course->ID);
 
+    if(isset($content_type))
+        if($content_type != $course_type)
+            continue;
+
+    $find = true;
     /*
     * Categories
     */
@@ -391,11 +394,8 @@ foreach($recommended_courses as $course){
     ';
 }
 else
-    $row_all_recommendation .= $void_content;
-
-$row_all_recommendation .= '
-        </div>
-    </div>';
+    if(!$find)
+        $row_all_recommendation .= $void_content;
 
 echo $row_all_recommendation;
    

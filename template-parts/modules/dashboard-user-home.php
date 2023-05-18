@@ -731,15 +731,14 @@ if(isset($_GET['message']))
         <div id="tab-url1">
             <ul class="nav">
                 <li class="nav-one"><a href="#All" class="current">All</a></li>
-                <li class="nav-two"><a href="#Artikel" class="load_content_type" id="Artikel">Artikel</a></li>
-                <li class="nav-three"><a href="#E-learning" class="load_content_type" id="E-learning">E-learning</a></li>
-                <li class="nav-four "><a href="#Opleidingen" class="load_content_type" id="Opleidingen">Opleidingen</a></li>
-                <li class="nav-five "><a href="#Video" class="load_content_type" id="Video">Video</a></li>
+                <li class="nav-two"><a href="#Artikel" class="load_content_type">Artikel</a></li>
+                <li class="nav-three"><a href="#E-learning" class="load_content_type">E-learning</a></li>
+                <li class="nav-four "><a href="#Opleidingen" class="load_content_type">Opleidingen</a></li>
+                <li class="nav-five "><a href="#Video" class="load_content_type">Video</a></li>
                 <li class="nav-seven "><a href="#Trends">Trends</a></li>
             </ul>
 
             <div class="list-wrap">
-
                 <ul id="All">
                     <div class="block-new-card-course grid" id="autocomplete_recommendation">
                         <?php
@@ -868,8 +867,9 @@ if(isset($_GET['message']))
                     </div>
                 </ul>
 
-                <ul id="Artikel" class="hide" >
+                <ul id="Artikel" class="hide">
                     <div class="block-new-card-course" id="autocomplete_recommendation_Artikel">
+
                         <?php
                         $find = false;
 
@@ -991,7 +991,7 @@ if(isset($_GET['message']))
                     </div>
                 </ul>
 
-                <ul id="E-learning" class="hide">
+                <ul id="E-learning" class="hide" id="autocomplete_recommendation_E-learning">
                     <div class="block-new-card-course">
                         <?php
                         $find = false;
@@ -1114,7 +1114,7 @@ if(isset($_GET['message']))
                     </div>
                 </ul>
 
-                <ul id="Opleidingen" class="hide">
+                <ul id="Opleidingen" class="hide"  id="autocomplete_recommendation_Opleidingen" >
                     <div class="block-new-card-course">
                         <?php
                         $find = false;
@@ -1237,7 +1237,7 @@ if(isset($_GET['message']))
                     </div>
                 </ul>
 
-                <ul id="Video" class="hide">
+                <ul id="Video" class="hide" id="autocomplete_recommendation_Video">
                     <div class="block-new-card-course">
                         <?php
                         $find = false;
@@ -1479,9 +1479,6 @@ if(isset($_GET['message']))
 
             </div>
         </div>
-    </div>
-
-
     </section>
     <section class="second-section-dashboard">
         <div class="Upcoming-block">
@@ -1756,28 +1753,28 @@ $(".loading_more").click((e)=>
 <script>
 $(".load_content_type").click((e)=>
     {
-        var content_type = e.currentTarget.id;
+        var content_type = e.currentTarget.innerText;
         var autocomplete_register = "autocomplete_recommendation_" + content_type;
-        alert(autocomplete_register);
+        var loader_register = "loader_recommendation_" + content_type;
 
-        // $.ajax({
-        //     url: '/loading-more-recommendation',
-        //     type: 'POST',
-        //     data: {
-        //         'content_type' : content_type
-        //     },
-        //     beforeSend:function(){
-        //         $('#loader_recommendation').attr('hidden',false)
-        //     },
-        //     error: function(){
-        //         alert('Something went wrong!');
-        //     },
-        //     success: function(data){
-        //         $('#loader_recommendation').attr('hidden',true)
-        //         $('#autocomplete_recommendation').html(data);
-        //         console.log(data);
-        //     }
-        // });
+        $.ajax({
+            url: '/loading-more-recommendation',
+            type: 'POST',
+            data: {
+                'content_type' : content_type
+            },
+            beforeSend:function(){
+                $('#loader_recommendation').attr('hidden',false)
+            },
+            error: function(){
+                alert('Something went wrong!');
+            },
+            success: function(data){
+                $(loader_register).attr('hidden',true)
+                $(autocomplete_register).html(data);
+                console.log(data);
+            }
+        });
 
     })
 </script>
