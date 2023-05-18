@@ -5,38 +5,51 @@ global $wpdb;
 
 $table = $wpdb->prefix . 'databank';
 
+$user_connected = wp_get_current_user();
+
 ?>
 <?php
   $api_key = "AIzaSyB0J1q8-LdT0994UBb6Q35Ff5ObY-Kqi_0";
   $maxResults = 45;
 
   $users = get_users();
+
+  $author_id = 0;
   $args = array(
       'post_type' => 'company', 
       'posts_per_page' => -1,
   );
   $companies = get_posts($args);
 
+  foreach($users as $user){
+      $name_user = strtolower($user->data->display_name);
+
+      if($name_user == "youtube"){
+        $author_id = intval($user->data->ID);
+        $name_user = $user->display_name;
+        break;
+      }
+  }
+//youtube-playlist from excel
+
 extract($_POST);
 if ($playlist_youtube){
-    $fileName = get_stylesheet_directory_uri()."/files/Big-Youtube-list-Correct.csv";
+    $fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct-test.csv";
     $file = fopen($fileName, 'r');
     if ($file) {
         $playlists_id = array();
         $urlPlaylist = [];
 
-        while ($line = fgetcsv($file)){
+        while ($line = fgetcsv($file)) {
             $row = explode(';',$line[0]);
-            $playlists_id [] = $row[2];
-            //$urlPlaylist [] = $row[0];
+            $playlists_id[][$row[4]] = $row[2];
         }
         fclose($file);
     }else {
         echo "<span class='text-center alert alert-danger'>not possible to read the file</span>";
     }
     array_shift($playlists_id); //remove the tittle of the colone
-    
-    
+
     if($playlists_id || !empty($playlists_id))
     foreach($playlists_id as $playlist_id){
         $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&id=" . $playlist_id . "&key=" . $api_key; 
@@ -54,8 +67,6 @@ if ($playlist_youtube){
                 $meta_xml = explode('~', $value)[0];
                 array_push($meta_xmls, $meta_xml);
             }
-            // var_dump($meta_xmls);
-            // die();
 
         //Get the url media image to display on front
         $image = ( isset($playlist['snippet']['thumbnails']['maxres']) ) ? $playlist['snippet']['thumbnails']['maxres']['url'] : $playlist['snippet']['thumbnails']['standard']['url'];
@@ -73,15 +84,14 @@ if ($playlist_youtube){
                 
                 $youtube_videos .= ';' . $youtube_video;
             }
-            // var_dump($youtube_videos);
-            // die();
 
             $status = 'extern';
 
             //Data to create the course
+            $type = substr($playlist_id, 0, 2)=='PL' ? 'Playlist':'Video';
             $data = array(
                 'titel' => $playlist['snippet']['title'],
-                'type' => substr($playlist_id, 0, 2)=='PL' ? 'Playlist':'Video';,
+                'type' => $type,
                 'videos' => $youtube_videos, 
                 'short_description' => $playlist['snippet']['description'],
                 'long_description' => $playlist['snippet']['description'],

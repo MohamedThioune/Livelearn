@@ -18,16 +18,6 @@
     $members = array();
     $member_id = [];
     foreach($users as $user){
-        // $my_managers = array();
-        // foreach ($users as $key => $value) {
-        //     $users_manageds = get_field('managed',  'user_' . $value->ID);
-        //     if(!empty($users_manageds))
-        //         if (in_array($user->ID, $users_manageds)){
-        //             array_push($my_managers, $value);
-        //         }
-        // }
-        // $user->my_managers = $my_managers;
-
         if($user_connected != $user->ID ){
             $company = get_field('company',  'user_' . $user->ID);
             if(!empty($company)){
@@ -42,7 +32,21 @@
 
     //logique of nmbrs salary administrastion 
     if (isset($nmbrs_username) && isset($nmbrs_password)) {
-        var_dump($nmbrs_username,$nmbrs_password);
+        $clientId_nmbrs = $nmbrs_username;
+        $clientSecret_nmbrs = $nmbrs_password;
+        $baseurl  =  'https://identityservice.nmbrs.com/connect/authorize';
+        //$redirect_uri = get_site_url()."/dashboard/company/people/";
+        $redirect_uri = "https://livelearn.nl/dashboard/company/people/";
+        $scope= "employee.employment.read";
+        $state = "9e530228-7e2b3ff6dcdd";
+
+        //$authorization_url = "https://api.nmbrs.nl/oauth2/auth?response_type=code&client_id=$clientId_nmbrs&redirect_uri=$redirect_uri&scope=$scope";
+        //$response_type="code";
+        //$url = "$baseurl?$clientId_nmbrs&state=$state&scope=$scope&response_type=$response_type&redirect_uri=$redirect_uri";
+
+        //header("Location: $authorization_url");
+        header("Location: https://identityservice.nmbrs.com/connect/authorize?client_id=$clientId_nmbrs&state=$state&scope=$scope&response_type=code&redirect_uri=$redirect_uri");
+
     }
     if(isset($missing_details_user)){
         update_field('telnr', $telnr, 'user_'.$id_user);
@@ -376,11 +380,11 @@
                 <form class="needs-validation" action="/livelearn/dashboard/company/people/" novalidate id="data-sending-from-nmbrs" method="POST">
                     <div class="form-group">
                         <label for="nmbrs-username" class="col-form-label">login</label>
-                        <input type="text" class="form-control" name="nmbrs_username" aria-describedby="inputGroupPrepend" autocomplete="nope" required>
+                        <input type="text" value="PartnerApp_extdev-livelearn_AFEE32B2930D41FA84667196E5515D40" class="form-control" name="nmbrs_username" aria-describedby="inputGroupPrepend" autocomplete="nope" required>
                     </div>
                     <div class="form-group">
                         <label for="nmbrs-password" class="col-form-label">password</label>
-                        <input type="password" class="form-control" name="nmbrs_password" aria-describedby="inputGroupPrepend" autocomplete="new-password" required>
+                        <input type="password" value="https://quickforget.com/s/55b05bf4213e0b1bb24343918e14db5c4bfcf9a3a2bde24a" class="form-control" name="nmbrs_password" aria-describedby="inputGroupPrepend" autocomplete="new-password" required>
                     </div>
                 </form>
             </div>
@@ -748,4 +752,3 @@
         });
      });
 </script>
-
