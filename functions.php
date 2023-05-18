@@ -804,13 +804,26 @@ function recommended_course($data)
       foreach($topics_internal as $value)
           array_push($topics, $value);
   
+  //Experts
+  $postAuthorSearch = array();
   $experts = get_user_meta($user, 'expert');
+  $postAuthorSearch = $experts;
+
+  //Views expert
+  if (!empty($user_post_view))
+  {
+    $view_my_experts = (get_field('views_user', $user_post_view->ID));
+    $id_view_experts = array_column($view_my_experts, 'view_id');
+    $id_view_experts = array_unique($id_view_experts);
+    $postAuthorSearch = (!empty($id_view_experts)) ? array_merge($experts, $id_view_experts) : $experts;
+  }
   $args = array(
-      'post_type' => array('course', 'post'), 
-      'post_status' => 'publish',
-      'orderby' => 'date',
-      'order' => 'DESC',
-      'posts_per_page' => 300
+    'post_type' => array('course', 'post'),
+    'post_status' => 'publish',
+    'author__in' => $postAuthorSearch, 
+    'orderby' => 'date',
+    'order' => 'DESC',
+    'posts_per_page' => 200
   );
   $global_courses = get_posts($args);
   
@@ -933,24 +946,15 @@ function recommended_course($data)
           }
 
   }
-
-  //Views
-  $user_post_view = get_posts(
-      array(
-          'post_type' => 'view',
-          'post_status' => 'publish',
-          'author' => $user,
-          'order' => 'DESC'
-      )
-  )[0];   
-  $is_view = false;
-
   
   //Empty courses belong to news user(No topics & Experts followed)
   if(empty($courses)){
     $courses = array_slice($global_courses, 0, 200);
     shuffle($courses);
   }
+
+  //Views credentials
+  $is_view = false;
 
   if (!empty($user_post_view))
   {

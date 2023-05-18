@@ -426,16 +426,37 @@ if(!empty($topics_internal))
     foreach($topics_internal as $value)
         array_push($topics, $value);
 
+//Views
+$user_post_view = get_posts( 
+    array(
+        'post_type' => 'view',
+        'post_status' => 'publish',
+        'author' => $user,
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    )
+)[0];
+
 //Experts
+$postAuthorSearch = array();
 $experts = get_user_meta($user, 'expert');
+$postAuthorSearch = $experts;
+//Views expert
+if (!empty($user_post_view))
+{
+    $view_my_experts = (get_field('views_user', $user_post_view->ID));
+    $id_view_experts = array_column($view_my_experts, 'view_id');
+    $id_view_experts = array_unique($id_view_experts);
+    $postAuthorSearch = (!empty($id_view_experts)) ? array_merge($experts, $id_view_experts) : $experts;
+}
 $args = array(
     'post_type' => array('course', 'post'),
     'post_status' => 'publish',
+    'author__in' => $postAuthorSearch, 
     'orderby' => 'date',
     'order' => 'DESC',
     'posts_per_page' => 200
 );
-
 $global_courses = get_posts($args);
 $teachers = array();
 
@@ -541,24 +562,14 @@ foreach ($global_courses as $key => $course) {
                 if(!in_array($course->ID, $course_id)){
                     array_push($course_id, $course->ID);
                     array_push($courses, $course);
-
                     break;
                 }
             }
         }
 }
 
-//Views
-$user_post_view = get_posts( 
-    array(
-        'post_type' => 'view',
-        'post_status' => 'publish',
-        'author' => $user,
-        'order' => 'DESC'
-    )
-)[0];
+// Views credential 
 $is_view = false;
-
 if (!empty($user_post_view))
 {
     $courses_id = array();
