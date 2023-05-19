@@ -875,7 +875,6 @@ if(isset($_GET['message']))
                                 <div hidden="true" id="loader_recommendation" class="spinner-border spinner-border-sm text-primary" role="status"></div>
                             </center>
                         </div>
-                    </div>
                 </ul>
 
                 <ul id="Artikel" class="hide">
@@ -1489,6 +1488,7 @@ if(isset($_GET['message']))
                 </ul>
 
             </div>
+        </div>
     </section>
     <section class="second-section-dashboard">
         <div class="Upcoming-block">
