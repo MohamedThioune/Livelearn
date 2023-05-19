@@ -13,21 +13,20 @@
     if(!empty($company))
         $company_connected = $company[0]->post_title;
 
-    $grant = get_field('manager',  'user_' . $user_connected);
+    $grant = get_field('manager','user_' . $user_connected);
     $ismanaged = get_field('managed','user_' . $user_connected);
     $members = array();
     $member_id = [];
     foreach($users as $user){
-        $my_managers = array();
-        foreach ($users as $key => $value) {
-            $users_manageds = get_field('managed',  'user_' . $value->ID);
-            if(!empty($users_manageds))
-                if (in_array($user->ID, $users_manageds)){
-                    array_push($my_managers, $value);
-                }
-        }
-
-        $user->my_managers = $my_managers;
+        // $my_managers = array();
+        // foreach ($users as $key => $value) {
+        //     $users_manageds = get_field('managed',  'user_' . $value->ID);
+        //     if(!empty($users_manageds))
+        //         if (in_array($user->ID, $users_manageds)){
+        //             array_push($my_managers, $value);
+        //         }
+        // }
+        // $user->my_managers = $my_managers;
 
         if($user_connected != $user->ID ){
             $company = get_field('company',  'user_' . $user->ID);
@@ -40,6 +39,8 @@
     }
     $count = count($members);
     extract($_POST);
+
+    //logique of nmbrs salary administrastion 
     if (isset($nmbrs_username) && isset($nmbrs_password)) {
         var_dump($nmbrs_username,$nmbrs_password);
     }
@@ -154,9 +155,6 @@
                         $tab['city'] = $employee['address']['city'];
                         $list_of_all_employees[] = $tab;
                     }
-                }else {
-                var_dump("not list of employee");
-                    $tokenIsValide = true;
                 }
             }
              else {
@@ -233,23 +231,9 @@
                             <td class="textTh elementOnder"><?php echo get_field('role', 'user_'.$user->ID);?></td>
                             <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
                             <td class="textTh thModife">
-
-                                <?php
-                                if(!empty($user->my_managers)):
-                                ?>
-                                <button type="button" class="btn manager-picture-block" data-toggle="modal" data-target="#userModal<?= $keyP; ?>">
-                                    <?php
-                                    foreach ($user->my_managers as $key=> $m) :
-                                        if($key == 2)
-                                            break;
-                                        $image_manager = get_field('profile_img',  'user_' . $m->ID)?get_field('profile_img',  'user_' . $m->ID):get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                        ?>
-                                        <div class="ImgUser aq">
-                                            <img src="<?= $image_manager ?>" alt="img">
-                                        </div>
-                                    <?php endforeach; ?>
+                                <button type="button" id ="<?= $user->ID ?>" class="btn manager-picture-block-btn" data-table="<?= htmlspecialchars(json_encode($user->my_managers), ENT_QUOTES, 'UTF-8'); ?>" data-toggle="modal" data-target="#userModal<?= $keyP; ?>">
+                                    managers
                                 </button>
-                                <?php endif; ?>
                                 <!-- Modal -->
                                 <div class="modal modalAllManager fade" id="userModal<?= $keyP; ?>" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -260,6 +244,7 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
+                                            <!-- <div class="text-center" id="back-list-of-user-manager"></div> -->
                                             <div class="modal-body">
                                                 <table class="table table-all-manager">
                                                     <thead>
@@ -269,23 +254,14 @@
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                     </thead>
-
-                                                    <tbody>
-                                                    <?php
-                                                    foreach($user->my_managers as $man):
-                                                        $link = "/dashboard/company/profile/?id=" . $man->ID . '&manager='. $user_connected;
-                                                        $img_manager = get_field('profile_img',  'user_' . $man->ID) ? get_field('profile_img',  'user_' . $man->ID) : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-                                                    ?>
-                                                    <tr>
-                                                        <td> <?php echo $man->first_name!='' ? $man->first_name : $man->display_name ?> </td>
-                                                        <td>
-                                                            <img class="" src="<?= $img_manager ?>" alt="">
-                                                        </td>
-                                                        <td><a href="<?= $link ?>">See</a></td>
-                                                    </tr>
-                                                    <?php endforeach; ?>
+                                                    
+                                                    <tbody  class="back-list-of-user-manager">
+                                                    
                                                     </tbody>
                                                 </table>
+                                                    <div class="text-center loader-manager" role="status">
+                                                        <div class="spinner-border" role="status"></div>
+                                                    </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -649,7 +625,7 @@
         // Browse through each child of the <Regel> element and retrieve values
         regel.childNodes.forEach((node) => {
             if (node.nodeType === 1) {
-            row[node.nodeName] = node.textContent;
+                row[node.nodeName] = node.textContent;
             }
         });
         // add object in the array of data
@@ -731,3 +707,46 @@
     });
 
 </script>
+<script>
+     $(".manager-picture-block-btn").click(function(e){
+        const backApi = document.querySelector('.back-list-of-user-manager');
+        const loader = document.querySelectorAll('.loader-manager');
+        const idUser = e.currentTarget.id
+        var managers =e.currentTarget.getAttribute('data-table');
+        managers = JSON.parse(managers);
+        // console.log('data sending',managers);
+        console.log('user :::::::'+idUser);
+        $.ajax({
+        url:"/salaryadmin/",
+        method:"post",
+        data:{
+            id : idUser,
+            // managers : managers
+        },
+        // dataType:"text",
+        beforeSend:function(){
+        loader.forEach(load => {
+                load.className = "text-center loader-manager";
+            });
+        $(".back-list-of-user-manager").html(' ');
+        },error: function(error){
+            loader.forEach(load => {
+                load.className = "text-center loader-manager d-none";
+            });
+            $(".back-list-of-user-manager").html("<span class='alert alert-danger'>Some things are wrong !!!</span>");
+        },success: function(success){
+            if (success.trim()===""){
+                success = "<span class='alert alert-info text-center mt-3'>this user has no managers<span>"
+            }
+            console.log('success',success)
+            loader.forEach(load => {
+                load.className = "text-center loader-manager d-none";
+            });
+            $(".back-list-of-user-manager").html(success);
+        },complete: function(complete){
+            console.log('complete',complete);
+        },
+        });
+     });
+</script>
+

@@ -18219,8 +18219,18 @@ background: #FFFFFF !important;
     font-size: 26px !important;
     margin: 5px 5px 0 !important;
 }
+
+.manager-picture-block-btn {
+    display: flex;
+    border: 1px solid #838383;
+    font-weight: 300;
+}
+
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
+    #cookieModal{
+        display: none !important;
+    }
     .head-ontwikkeladvies h1 {
         font-size: 25px;
         margin-bottom: 20px;

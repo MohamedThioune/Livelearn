@@ -1,11 +1,9 @@
-PUT http://localhost/wp-json/custom/v1/reply/community
+PUT http://localhost/wp-json/custom/v1/user/view/experts
 Authorization: Basic bW9oYW1lZC50QGlsbGltaXRpcy5jb206Q2FsbG1lMjAyMi4=
 Content-Type: application/json
 
  {
     "user_id":3,
-    "community_id":2156,
-    "text_reply": "Agree",
-    "index_question": 2
+    "expert_id":22
  }
 
