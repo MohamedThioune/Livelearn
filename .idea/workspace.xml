@@ -6,9 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="f7aeb342-17fe-40ff-93c2-0edca6fafadf" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api.http" beforeDir="false" afterPath="$PROJECT_DIR$/api.http" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom-endpoints.php" beforeDir="false" afterPath="$PROJECT_DIR$/custom-endpoints.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/custom.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/footer.php" beforeDir="false" afterPath="$PROJECT_DIR$/footer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template-user-overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-user-overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/template-parts/modules/dashboard-company-people.php" beforeDir="false" afterPath="$PROJECT_DIR$/template-parts/modules/dashboard-company-people.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/apply-cookie.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/apply-cookie.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/dashboard-company-people-salary-administrastration.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard-company-people-salary-administrastration.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-category-overview.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-category-overview.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-dashboard-core.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-dashboard-core.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-home.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-home2.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-home2.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template-zzpers.php" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template-zzpers.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +98,9 @@
       <workItem from="1684137363039" duration="4358000" />
       <workItem from="1684225286371" duration="10934000" />
       <workItem from="1684281334315" duration="222000" />
-      <workItem from="1684309266270" duration="9180000" />
+      <workItem from="1684309266270" duration="10439000" />
+      <workItem from="1684400757131" duration="1360000" />
+      <workItem from="1684482197140" duration="191000" />
     </task>
     <servers />
   </component>

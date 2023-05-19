@@ -7,10 +7,10 @@
 $page = 'check_visibility.php';
 require($page);
 
-$user_connected = wp_get_current_user();
+$user_connected_head = get_current_user_id();
 
-/*if($user_connected && !in_array('administrator', $user_connected->roles))
-    header('Location: /dashboard/user/');*/
+// if($user_connected_head)
+//     header('Location: /dashboard/user/');
 
 if(!isset($visibility_company))
     $visibility_company = "";
@@ -993,7 +993,7 @@ $saved = get_user_meta($user_id, 'course');
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/second-group-parteners-logo.png" class="logo-parteners-left " alt="">
                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/first-group-parteners-logo.png" class="logo-parteners-right" alt="">
 
-                <h1 class="wordDeBestText2" >Hét leer- en upskilling platform van- én voor de toekomst</h1>
+                <h1 class="wordDeBestText2">Hét leer- en upskilling platform van- én voor de toekomst</h1>
                 <p class="altijdText2">Onhandig als medewerkers niet optimaal functioneren. LiveLearn zorgt dat jouw workforce altijd op de hoogte is van de laatste kennis en vaardigheden.</p>
                 <form action="/product-search" class="position-relative newFormSarchBar" method="POST">
                     <select class="form-select selectSearchHome" aria-label="search home page" name="search_type" id="course_type">
@@ -1764,9 +1764,13 @@ $saved = get_user_meta($user_id, 'course');
         <img class="doanloadIllustration" src="<?php echo get_stylesheet_directory_uri();?>/img/happyDoawnload.png" alt="">
     </div>
 </div>
-<script src="<?php echo get_stylesheet_directory_uri();?>/mobapiCity.js"></script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<?php get_footer(); ?>
+<?php wp_footer(); ?>
+
+<script src="<?php echo get_stylesheet_directory_uri();?>/mobapiCity.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/js/jquery.bsSelectDrop.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>
@@ -1959,5 +1963,3 @@ $saved = get_user_meta($user_id, 'course');
         });
     });
 </script>
-<?php get_footer(); ?>
-<?php wp_footer(); ?>
