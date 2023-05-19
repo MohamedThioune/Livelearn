@@ -426,15 +426,37 @@ if(!empty($topics_internal))
     foreach($topics_internal as $value)
         array_push($topics, $value);
 
+//Views
+$user_post_view = get_posts( 
+    array(
+        'post_type' => 'view',
+        'post_status' => 'publish',
+        'author' => $user,
+        'order' => 'DESC',
+        'posts_per_page' => -1
+    )
+)[0];
+
 //Experts
+$postAuthorSearch = array();
 $experts = get_user_meta($user, 'expert');
+$postAuthorSearch = $experts;
+//Views expert
+if (!empty($user_post_view))
+{
+    $view_my_experts = (get_field('views_user', $user_post_view->ID));
+    $id_view_experts = array_column($view_my_experts, 'view_id');
+    $id_view_experts = array_unique($id_view_experts);
+    $postAuthorSearch = (!empty($id_view_experts)) ? array_merge($experts, $id_view_experts) : $experts;
+}
 $args = array(
     'post_type' => array('course', 'post'),
     'post_status' => 'publish',
-    'posts_per_page' => -1,
-    'order' => 'DESC'
+    'author__in' => $postAuthorSearch, 
+    'orderby' => 'date',
+    'order' => 'DESC',
+    'posts_per_page' => 200
 );
-
 $global_courses = get_posts($args);
 $teachers = array();
 
@@ -540,24 +562,14 @@ foreach ($global_courses as $key => $course) {
                 if(!in_array($course->ID, $course_id)){
                     array_push($course_id, $course->ID);
                     array_push($courses, $course);
-
                     break;
                 }
             }
         }
 }
 
-//Views
-$user_post_view = get_posts(
-    array(
-        'post_type' => 'view',
-        'post_status' => 'publish',
-        'author' => $user,
-        'order' => 'DESC'
-    )
-)[0];
+// Views credential 
 $is_view = false;
-
 if (!empty($user_post_view))
 {
     $courses_id = array();
@@ -730,17 +742,16 @@ if(isset($_GET['message']))
         <div id="tab-url1">
             <ul class="nav">
                 <li class="nav-one"><a href="#All" class="current">All</a></li>
-                <li class="nav-two"><a href="#Artikel">Artikel</a></li>
-                <li class="nav-three"><a href="#E-learning">E-learning</a></li>
-                <li class="nav-four "><a href="#Opleidingen">Opleidingen</a></li>
-                <li class="nav-five "><a href="#Video">Video</a></li>
+                <li class="nav-two"><a href="#Artikel" class="load_content_type">Artikel</a></li>
+                <li class="nav-three"><a href="#E-learning" class="load_content_type">E-learning</a></li>
+                <li class="nav-four "><a href="#Opleidingen" class="load_content_type">Opleidingen</a></li>
+                <li class="nav-five "><a href="#Video" class="load_content_type">Video</a></li>
                 <li class="nav-seven "><a href="#Trends">Trends</a></li>
             </ul>
 
             <div class="list-wrap">
-
                 <ul id="All">
-                    <div class="block-new-card-course grid">
+                    <div class="block-new-card-course grid" id="autocomplete_recommendation">
                         <?php
                         $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
@@ -856,14 +867,20 @@ if(isset($_GET['message']))
                                 </a>
                                 <?php
                             }
-                        else
-                            echo $void_content;
-                        ?>
+                            else
+                                echo $void_content;
+                            ?>
+                            <center>
+                                <button class="btn btnNext loading_more">Load all</button><br>
+                                <div hidden="true" id="loader_recommendation" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                            </center>
+                        </div>
                     </div>
                 </ul>
 
                 <ul id="Artikel" class="hide">
-                    <div class="block-new-card-course">
+                    <div class="block-new-card-course" id="autocomplete_recommendation_Artikel">
+
                         <?php
                         $find = false;
 
@@ -985,7 +1002,7 @@ if(isset($_GET['message']))
                     </div>
                 </ul>
 
-                <ul id="E-learning" class="hide">
+                <ul id="E-learning" class="hide" id="autocomplete_recommendation_E-learning">
                     <div class="block-new-card-course">
                         <?php
                         $find = false;
@@ -1108,7 +1125,7 @@ if(isset($_GET['message']))
                     </div>
                 </ul>
 
-                <ul id="Opleidingen" class="hide">
+                <ul id="Opleidingen" class="hide"  id="autocomplete_recommendation_Opleidingen" >
                     <div class="block-new-card-course">
                         <?php
                         $find = false;
@@ -1231,7 +1248,7 @@ if(isset($_GET['message']))
                     </div>
                 </ul>
 
-                <ul id="Video" class="hide">
+                <ul id="Video" class="hide" id="autocomplete_recommendation_Video">
                     <div class="block-new-card-course">
                         <?php
                         $find = false;
@@ -1472,9 +1489,6 @@ if(isset($_GET['message']))
                 </ul>
 
             </div>
-        </div>
-
-
     </section>
     <section class="second-section-dashboard">
         <div class="Upcoming-block">
@@ -1724,26 +1738,55 @@ if(isset($_GET['message']))
 </script>
 
 <script>
-    $.ajax({
-        url: '/',
-        type: 'POST',
-        data: {
-        },
-        beforeSend:function(){
-            $('#loader').attr('hidden',false)
-            $('#select_field').attr('hidden',true)
-        },
-        error: function(){
-            alert('Something went wrong!');
-        },
-        complete: function(){
-            $('#loader').attr('hidden',true)
-        },
-        success: function(data){
-            $('#loader').attr('hidden',true)
-            console.log(data);
-        }
-    });
+$(".loading_more").click((e)=>
+    {
+        $.ajax({
+            url: '/loading-more-recommendation',
+            type: 'POST',
+            data: {
+            },
+            beforeSend:function(){
+                $('#loader_recommendation').attr('hidden',false)
+            },
+            error: function(){
+                alert('Something went wrong!');
+            },
+            success: function(data){
+                $('#loader_recommendation').attr('hidden',true)
+                $('#autocomplete_recommendation').html(data);
+                console.log(data);
+            }
+        });
+    })
+</script>
+
+<script>
+$(".load_content_type").click((e)=>
+    {
+        var content_type = e.currentTarget.innerText;
+        var autocomplete_register = "autocomplete_recommendation_" + content_type;
+        var loader_register = "loader_recommendation_" + content_type;
+
+        $.ajax({
+            url: '/loading-more-recommendation',
+            type: 'POST',
+            data: {
+                'content_type' : content_type
+            },
+            beforeSend:function(){
+                $('#loader_recommendation').attr('hidden',false)
+            },
+            error: function(){
+                alert('Something went wrong!');
+            },
+            success: function(data){
+                $(loader_register).attr('hidden',true)
+                $(autocomplete_register).html(data);
+                console.log(data);
+            }
+        });
+
+    })
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
