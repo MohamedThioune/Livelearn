@@ -1694,7 +1694,6 @@ $saved = get_user_meta($user_id, 'course');
                 $duration_day = get_field('duration_day', $post->ID) ? : '-';
 
                 $find = true;
-
                 ?>
 
                 <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
