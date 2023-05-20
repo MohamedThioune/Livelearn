@@ -8,8 +8,8 @@ require($page);
 
 $user_connected_head = get_current_user_id();
 
-// if($user_connected_head)
-//     header('Location: /dashboard/user/');
+if($user_connected_head)
+    header('Location: /dashboard/user/');
 
 if(!isset($visibility_company))
     $visibility_company = "";

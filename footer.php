@@ -1,5 +1,6 @@
 <!-- Modal -->
 <?php
+var_dump($_COOKIE['cookie_consent']);
 if(!isset($_COOKIE["cookie_consent"])):
 ?> 
 <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -249,9 +250,17 @@ if(!isset($_COOKIE['mobile_download'])):
         <!-- end /.container -->
     </div>
     <!-- end /.footer-big -->
-</footer>  
+
 <script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script>
+<?php if ( !is_user_logged_in() ) : ?>
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/27242849.js"></script>
+<!-- End of HubSpot Embed Code -->
+<?php endif; ?>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/swiper.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
 <script id="rendered-js" >
     $(document).ready(function () {
         //Chosen
@@ -269,9 +278,9 @@ if(!isset($_COOKIE['mobile_download'])):
 <script>
     $('.bntNotification').click((e)=>{
         $.ajax({
-                url:"/read-notification",
-                method:"get",
-                data:{},
+                url: "/read-notification",
+                method: "get",
+                data: { },
                 dataType:"text",
                 success: function(data){
                     // Get the modal
@@ -286,6 +295,14 @@ if(!isset($_COOKIE['mobile_download'])):
         $('#cookieModal').modal('show');
     });
 </script> 
+
+<script>
+    $(window).on('resize', function() {
+        if ($(window).width() > 767) {
+            $('#cookieModal').hide();
+        }
+    });
+</script>
 
 <?php
 $site_url = get_site_url() . "/apply-cookie";
@@ -361,12 +378,6 @@ $site_url = get_site_url() . "/apply-cookie";
     });
 </script> 
 
-<?php if ( !is_user_logged_in() ) : ?>
-<!-- Start of HubSpot Embed Code -->
-<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/27242849.js"></script>
-<!-- End of HubSpot Embed Code -->
-<?php endif; ?>  
-
 <script>
     $('.btnPushExpert').click((e)=>{
         var key = e.currentTarget.value;
@@ -424,9 +435,6 @@ $site_url = get_site_url() . "/apply-cookie";
     })
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/swiper.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
 <script>
     $(window).on('resize', function() {
         if ($(window).width() < 767) {
@@ -642,4 +650,4 @@ $site_url = get_site_url() . "/apply-cookie";
         },
     });
 </script>
-
+</footer>  
