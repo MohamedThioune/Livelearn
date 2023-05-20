@@ -1758,7 +1758,7 @@ $(".loading_more").click((e)=>
                 $('#loader_recommendation').attr('hidden',false)
             },
             error: function(){
-                alert('Something went wrong!');
+                console.log('Something went wrong!');
             },
             success: function(data){
                 $('#loader_recommendation').attr('hidden',true)
@@ -1786,7 +1786,7 @@ $(".load_content_type").click((e)=>
                 $(loader_register).attr('hidden',false)
             },
             error: function(){
-                alert('Something went wrong!');
+                console.log('Something went wrong!');
             },
             success: function(data){
                 $(autocomplete_register).html(data);
