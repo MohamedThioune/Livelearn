@@ -1580,8 +1580,6 @@ $saved = get_user_meta($user_id, 'course');
     <div class="productBlock3">
         <p class="TitleWat">Wat je niet mag missen</p>
 
-
-
         <div class="owl-carousel owl-theme owl-carousel-card-course">
 
             <?php
@@ -1695,20 +1693,13 @@ $saved = get_user_meta($user_id, 'course');
                 //Clock duration
                 $duration_day = get_field('duration_day', $post->ID) ? : '-';
 
-                //Other case : youtube
-                $youtube_videos = get_field('youtube_videos', $course->ID);
-
                 $find = true;
-
 
                 ?>
 
                 <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
                     <div class="head">
                         <?php
-                        if($youtube_videos && $course_type == 'Video')
-                            echo '<iframe width="355" height="170" class="lazy img-fluid" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-                        else
                             echo '<img src="' . $thumbnail .'" alt="">';
                         ?>
                     </div>
