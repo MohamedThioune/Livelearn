@@ -9,7 +9,7 @@ require($page);
 
 $user_connected_head = wp_get_current_user();
 
-if(!empty($user_connected_head) && $user_connected_head->roles == 'administrator')
+if(!empty($user_connected_head) && $user_connected_head->roles != 'administrator')
     header('Location: /dashboard/user/');
 
 if(!isset($visibility_company))
