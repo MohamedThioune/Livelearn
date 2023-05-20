@@ -24,7 +24,6 @@ $user_data = wp_get_current_user();
 if(empty($user_data->roles))
     header('Location:/');
 
-
 function RandomString(){
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $randstring = '';
