@@ -29,18 +29,18 @@ $url = home_url( $wp->request );
     @media all and (max-width: 753px) {
         .modal-dialog{
              width: 90% !important;
-        }  
+        }
         .swipeContaineEvens .swiper-wrapper .swiper-slide {
             width: 170px !important;
         }
         .custom_slide{
-            width: 170px !important; 
+            width: 170px !important;
         }
     }
     @media all and (min-width: 753px) and (max-width: 900px) {
         .modal-dialog{
              width: 70% !important;
-        } 
+        }
     }
 
     @media all and (max-width: 764px) {
@@ -55,30 +55,32 @@ $url = home_url( $wp->request );
         opacity: .5;
         display: none;
     }
-    
+
 </style>
-<body>
+
 <?php wp_head(); ?>
 <?php get_header(); ?>
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/css/owl.carousel.css" />
 
-<?php 
+
+<?php
 
     $category = ($_GET['category']) ?: ' ';
     $user_id = get_current_user_id();
 
     view_topic($category, $user_visibility);
 
-    $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
+    $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
     $courses = array();
 
     if($category != ' '){
-        
+
         $args = array(
-            'post_type' => array('course', 'post'), 
+            'post_type' => array('course', 'post'),
             'post_status' => 'publish',
-            'posts_per_page' => -1, 
+            'posts_per_page' => -1,
             'order' => 'DESC',
         );
 
@@ -102,14 +104,14 @@ $url = home_url( $wp->request );
             $bool = visibility($course, $visibility_company);
             if(!$bool)
                 continue;
-    
+
             /*
             * Categories
-            */ 
+            */
 
             $category_id = 0;
             $experts = get_field('experts', $course->ID);
-                        
+
             $category_default = get_field('categories', $course->ID);
             $category_xml = get_field('category_xml', $course->ID);
             $categories = array();
@@ -119,17 +121,17 @@ $url = home_url( $wp->request );
                     if($item)
                         if(!in_array($item['value'], $categories))
                             array_push($categories,$item['value']);
-                        
+
             else if(!empty($category_xml))
                 foreach($category_xml as $item)
                     if($item)
                         if(!in_array($item['value'], $categories))
                             array_push($categories,$item['value']);
-                    
+
             if(!empty($categories))
                 if(in_array($category, $categories)){
                     array_push($courses, $course);
-                    
+
                     if(get_field('course_type', $course->ID) == "Opleidingen")
                         array_push($opleidingen, $course);
                     else if(get_field('course_type', $course->ID) == "Workshop")
@@ -147,15 +149,15 @@ $url = home_url( $wp->request );
                     else if(get_field('course_type', $course->ID) == "Video")
                         array_push($videos, $course);
 
-                    
+
                     if(!in_array($course->post_author, $teachers))
                         array_push($teachers, $course->post_author);
-                        
+
                     if(!empty($experts))
                     foreach($experts as $expertie)
                         if(!in_array($expertie, $teachers))
                             array_push($teachers, $expertie);
-                    
+
                     /*
                     *  Agenda
                     */
@@ -199,7 +201,7 @@ $url = home_url( $wp->request );
                             if($data < $date_now)
                                 continue;
                         }
-                        
+
                     array_push($agenda, $course);
 
             }
@@ -250,14 +252,14 @@ $url = home_url( $wp->request );
                 <div class="modal-body  px-md-4 px-0">
                     <div class="mb-4">
                         <div class="text-center">
-                            <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
-                        </div>  
+                            <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
+                        </div>
                         <h3 class="text-center my-2">Sign Up</h3>
                         <div class="text-center">
                             <p>Already a member? <a href="#" data-dismiss="modal" aria-label="Close" class="text-primary"
                             data-toggle="modal" data-target="#exampleModalCenter">&nbsp; Sign in</a></p>
                         </div>
-                    </div>  
+                    </div>
 
 
                     <?php
@@ -271,7 +273,7 @@ $url = home_url( $wp->request );
 
                 </div>
             </div>
-        
+
         </div>
     </div>
     <!-- -------------------------------------------------- End Modal Sign In-------------------------------------- -->
@@ -292,7 +294,7 @@ $url = home_url( $wp->request );
                 <div class="modal-body  px-md-5 px-4">
                     <div class="mb-4">
                         <div class="text-center">
-                            <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">     
+                            <img style="width: 53px" src="<?php echo get_stylesheet_directory_uri();?>/img/logo_livelearn.png" alt="">
                         </div>
                         <h3 class="text-center my-2">Sign In</h3>
                         <div class="text-center">
@@ -351,20 +353,20 @@ $url = home_url( $wp->request );
                             }else{
                                 echo '<input type="hidden" name="meta_key" value="topic" id="">';
                                 echo "<button type='submit' style='background: #00A89D'
-                                class='btn btn-success rounded-pill text-white font-weight-bold p-1 px-2' name='interest_push' >Toevoegen aan Leeromgeving</button>";   
-                            }    
+                                class='btn btn-success rounded-pill text-white font-weight-bold p-1 px-2' name='interest_push' >Toevoegen aan Leeromgeving</button>";
+                            }
 
                             echo "<img style='height: 30px;' class='rounded-pill' src='" . $logo_livelearn . "' alt=''>";
                         }
-                        
+
                     ?>
                 </div>
-            </form> 
+            </form>
 
                 <?php
-                
+
                 if($user_id == 0){
-                ?> 
+                ?>
                 <div>
                     <button data-toggle='modal' data-target='#SignInWithEmail' aria-label='Close' data-dismiss='modal' class='btn rounded-pill text-white font-weight-bold p-1 px-2'
                         style='background: #00A89D'>Toevoegen aan Leeromgeving</button>
@@ -386,7 +388,7 @@ $url = home_url( $wp->request );
                     else
                         echo '0';
 
-                ?> 
+                ?>
 
                 </span>
                 <p class="text-secondary font-weight-bold m-0">Volgers</p>
@@ -405,7 +407,7 @@ $url = home_url( $wp->request );
              <div class="col-md-2 col-lg-1 col-sm-5 col-5 bg-light border border-dark py-md-3 py-1 border-left-adapt">
                 <span class="text-dark font-weight-bold h5 pt-2">
 
-                <?php 
+                <?php
                     if ($activitiens!=null && $activitiens!=0)
                         echo $activitiens;
                     else
@@ -415,14 +417,14 @@ $url = home_url( $wp->request );
 
                 </span>
                 <p class="text-secondary font-weight-bold m-0">Activiteiten</p>
-            </div>           
+            </div>
         </div>
 
     </div>
     <div>
-       
+
     </div>
-   
+
 </div>
 <!-- ------------------------------------------ end Header -------------------------------------- -->
 
@@ -472,19 +474,19 @@ $url = home_url( $wp->request );
                                 <input type="checkbox" id="event" name="leervom[]" value="Event">
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
-                        </div> 
+                        </div>
                         <div class="checkFilter">
                             <label class="contModifeCheck">Video
                                 <input type="checkbox" id="event" name="leervom[]" value="Video">
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
-                        </div> 
+                        </div>
                         <div class="checkFilter">
                             <label class="contModifeCheck">Training
                                 <input type="checkbox" id="event" name="leervom[]" value="Training">
                                 <span class="checkmark checkmarkUpdated"></span>
                             </label>
-                        </div> 
+                        </div>
                         <div class="checkFilter">
                             <label class="contModifeCheck">Artikel
                                 <input type="checkbox" id="event" name="leervom[]" value="Artikel">
@@ -497,12 +499,12 @@ $url = home_url( $wp->request );
                         <p class="sousProduct1Title" style="color: #043356;">PRIJS</p>
                         <div class="prijsSousBlock" style="color: #043356;">
                             <span class="vanafText" style="color: #043356">Vanaf</span>
-                            <input name="min" style="width:100px;" class="btn btnmin text-left" placeholder="€min">              
+                            <input name="min" style="width:100px;" class="btn btnmin text-left" placeholder="€min">
                         </div>
                         <div class="prijsSousBlock" style="color: #043356;">
                             <span class="vanafText" style="color: #043356">tot</span>
                             &nbsp; &nbsp;&nbsp;&nbsp;
-                            <input name="max" style="width:100px" class="btn btnmin text-left" placeholder="€max">                
+                            <input name="max" style="width:100px" class="btn btnmin text-left" placeholder="€max">
                         </div>
                         <div class="checkFilter">
                             <label class="contModifeCheck">Alleen gratis
@@ -516,12 +518,12 @@ $url = home_url( $wp->request );
                         <div class="inputSearchFilter">
                             <input type="hidden" name="choice" value="3">
                             <input type="search" name="locate" style="width:150px"  class="searchLocFilter" placeholder="&nbsp;Postcode">
-                        </div>    
+                        </div>
                         <div class="inputSearchFilter">
                             <input type="hidden" name="choice" value="3">
                             <input type="search" name="range" style="width:150px"  class="searchLocFilter" placeholder="&nbsp;Afstand(m)">
                             <!-- <input type="search" name="range" class="btb btnSubmitFilter" placeholder="">  -->
-                        </div>               
+                        </div>
                         <div class="checkFilter">
                             <label class="contModifeCheck">Alleen online
                                 <input type="checkbox" id="Alleen-online" name="online" value="0">
@@ -555,12 +557,12 @@ $url = home_url( $wp->request );
                         <?php
                             foreach($teachers as $teacher){
                                 if(!$teacher)
-                                    continue; 
+                                    continue;
 
                                 if($teacher != $user_id)
                                     $name_author = get_userdata($teacher)->data->display_name;
                                 else
-                                    $name_author = "Ikzelf";                                
+                                    $name_author = "Ikzelf";
                         ?>
                                 <div class="checkFilter">
                                     <label class="contModifeCheck"><?php echo $name_author ?>
@@ -572,7 +574,7 @@ $url = home_url( $wp->request );
                             }
                         ?>
 
-                        <br><button type="submit" class="btn btn-default" style="background:#C0E9F4; padding:5px 20px;">Apply</button> 
+                        <br><button type="submit" class="btn btn-default" style="background:#C0E9F4; padding:5px 20px;">Apply</button>
                     </div>
 
 
@@ -586,13 +588,13 @@ $url = home_url( $wp->request );
         </div>
         <!-- ------------------------------------ End  Slide bar ---------------------------------------- -->
        <!-- ------------------------------------------ Start Content ------------------------------------ -->
-        <?php 
+        <?php
             if(isset($courses) && !empty($courses)){
             ?>
         <div class="col-md-9 tabUserOverview">
-            
+
             <?php
-                if(!empty($opleidingen)){                    
+                if(!empty($opleidingen)){
             ?>
             <div class="sousProductTest2 opleiBlock">
                 <div class="sousBlockProduct2">
@@ -603,7 +605,7 @@ $url = home_url( $wp->request );
                             <div class="swiper-wrapper">
                             <?php
                                 foreach($opleidingen as $course){
-                                
+
                                 /*
                                 * Categories
                                 */
@@ -657,16 +659,16 @@ $url = home_url( $wp->request );
                                     $month = explode('/', explode(' ', $data)[0])[1];
                                     $month = $calendar[$month];
                                     $location = $datas[2];
-                                    
+
                                 }
-                            
+
                                 /*
-                                * Price 
+                                * Price
                                 */
                                 $p = get_field('price', $course->ID);
                                 if($p != "0")
                                     $price =  "€" . number_format($p, 2, '.', ',') . ",-";
-                                else 
+                                else
                                     $price = 'Gratis';
 
                                 //Course Type
@@ -683,7 +685,7 @@ $url = home_url( $wp->request );
                                                 $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                                 }
 
-                                //Image author of this post 
+                                //Image author of this post
                                 $image_author = get_field('profile_img',  'user_' . $course->post_author);
                                 $image_author = $image_author ? $image_author : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
@@ -754,7 +756,7 @@ $url = home_url( $wp->request );
             </div>
             <?php
                  }
-            ?>  
+            ?>
 
             <?php
                 if(!empty($workshops)){
@@ -771,7 +773,7 @@ $url = home_url( $wp->request );
                                     $day = '';
                                     $month = '';
                                     $location = 'Virtual';
-        
+
                                     /*
                                     * Categories
                                     */
@@ -787,18 +789,18 @@ $url = home_url( $wp->request );
                                             if(isset($one_category[0]['value']))
                                                 $category_id = intval($one_category[0]['value']);
                                         }
-        
+
                                         if($category_str != 0)
                                             $category = (String)get_the_category_by_ID($category_str);
                                         else if($category_id != 0)
                                             $category = (String)get_the_category_by_ID($category_id);
                                     }
-        
+
                                     /*
                                     *  Date and Location
                                     */
                                     $datas = get_field('data_locaties', $course->ID);
-        
+
                                     if($datas){
                                         $data = $datas[0]['data'][0]['start_date'];
                                         if($data != ""){
@@ -806,35 +808,35 @@ $url = home_url( $wp->request );
                                             $mon = explode('/', explode(' ', $data)[0])[1];
                                             $month = $calendar[$mon];
                                         }
-        
+
                                         $location = $datas[0]['data'][0]['location'];
                                     }else{
                                         $datum = get_field('data_locaties_xml', $course->ID);
-        
+
                                         if($datum)
                                             if(isset($datum[0]['value']))
                                                 $element = $datum[0]['value'];
-        
+
                                         if(!isset($element))
                                             continue;
-        
+
                                         $datas = explode('-', $element);
-        
+
                                         $data = $datas[0];
                                         $day = explode('/', explode(' ', $data)[0])[0];
                                         $month = explode('/', explode(' ', $data)[0])[1];
                                         $month = $calendar[$month];
                                         $location = $datas[2];
-                                        
+
                                     }
-                            
+
                                     /*
-                                    * Price 
+                                    * Price
                                     */
                                     $p = get_field('price', $course->ID);
                                     if($p != "0")
                                         $price =  "€" . number_format($p, 2, '.', ',') . ",-";
-                                    else 
+                                    else
                                         $price = 'Gratis';
 
                                     //Course Type
@@ -851,7 +853,7 @@ $url = home_url( $wp->request );
                                                     $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                                     }
 
-                                    //Image author of this post 
+                                    //Image author of this post
                                     $image_author = get_field('profile_img',  'user_' . $course->post_author);
                                     $image_author = $image_author ? $image_author : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                             ?>
@@ -925,7 +927,7 @@ $url = home_url( $wp->request );
             ?>
 
             <?php
-                if(!empty($artikels)){                    
+                if(!empty($artikels)){
             ?>
             <div class="sousProductTest2 opleiBlock">
                 <div class="sousBlockProduct2">
@@ -938,7 +940,7 @@ $url = home_url( $wp->request );
                             foreach($artikels as $course){
                                 if(!visibility($course, $visibility_company))
                                     continue;
-                
+
                                 /*
                                 * Categories
                                 */
@@ -963,7 +965,7 @@ $url = home_url( $wp->request );
 
                                 /*
                                 *  Date and Location
-                                */ 
+                                */
                                 $day = "<i class='fas fa-calendar-week'></i>";
                                 $month = NULL;
                                 $location = ' ';
@@ -989,14 +991,14 @@ $url = home_url( $wp->request );
                                         $location = $datas[2];
                                     }
                                 }
-                               
+
                                 /*
-                                * Price 
+                                * Price
                                 */
                                 $p = get_field('price', $course->ID);
                                 if($p != "0")
                                     $price =  "€" . number_format($p, 2, '.', ',') . ",-";
-                                else 
+                                else
                                     $price = 'Gratis';
 
                                 //Course Type
@@ -1013,7 +1015,7 @@ $url = home_url( $wp->request );
                                                 $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                                 }
 
-                                //Image author of this post 
+                                //Image author of this post
                                 $image_author = get_field('profile_img',  'user_' . $course->post_author);
                             ?>
                                 <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiper-slide4">
@@ -1154,16 +1156,16 @@ $url = home_url( $wp->request );
                                     $month = explode('/', explode(' ', $data)[0])[1];
                                     $month = $calendar[$month];
                                     $location = $datas[2];
-                                    
+
                                 }
-                            
+
                                 /*
-                                * Price 
+                                * Price
                                 */
                                 $p = get_field('price', $course->ID);
                                 if($p != "0")
                                     $price =  "€" . number_format($p, 2, '.', ',') . ",-";
-                                else 
+                                else
                                     $price = 'Gratis';
 
                                 //Course Type
@@ -1180,7 +1182,7 @@ $url = home_url( $wp->request );
                                                 $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                                 }
 
-                                //Image author of this post 
+                                //Image author of this post
                                 $image_author = get_field('profile_img',  'user_' . $course->post_author);
                                 $image_author = $image_author ? $image_author : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                             ?>
@@ -1234,7 +1236,7 @@ $url = home_url( $wp->request );
                                         </div>
                                         <p class="werkText"><?php echo $course->post_title; ?></p>
                                         <p class="descriptionPlatform">
-                                            <?php echo get_field('short_description', $course->ID);?> 
+                                            <?php echo get_field('short_description', $course->ID);?>
                                         </p>
                                     </div>
                                 </div>
@@ -1268,7 +1270,7 @@ $url = home_url( $wp->request );
                                     $day = '';
                                     $month = '';
                                     $location = 'Virtual';
-                                    
+
                                     /*
                                     * Categories
                                     */
@@ -1322,18 +1324,18 @@ $url = home_url( $wp->request );
                                         $month = explode('/', explode(' ', $data)[0])[1];
                                         $month = $calendar[$month];
                                         $location = $datas[2];
-                                        
-                                    }  
-        
-                                    
+
+                                    }
+
+
 
                                 /*
-                                * Price 
+                                * Price
                                 */
                                 $p = get_field('price', $course->ID);
                                 if($p != "0")
                                     $price =  "€" . number_format($p, 2, '.', ',') . ",-";
-                                else 
+                                else
                                     $price = 'Gratis';
 
                                 //Course Type
@@ -1350,7 +1352,7 @@ $url = home_url( $wp->request );
                                                 $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                                 }
 
-                                //Image author of this post 
+                                //Image author of this post
                                 $image_author = get_field('profile_img',  'user_' . $course->post_author);
                                 $image_author = $image_author ? $image_author : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                             ?>
@@ -1399,18 +1401,18 @@ $url = home_url( $wp->request );
                 }
             ?>
 
-            <?php 
+            <?php
                 if(!empty($e_learnings)){
             ?>
             <div class="sousBlockProduct2">
                 <p class="sousBlockTitleProduct">E-Learnings</p>
                 <div class="blockCardOpleidingen ">
-                                
+
                     <div class="swiper-container swipeContaine4">
                         <div class="swiper-wrapper">
                             <?php
                                 foreach($e_learnings as $course){
-                                
+
                                 /*
                                 * Categories
                                 */
@@ -1434,12 +1436,12 @@ $url = home_url( $wp->request );
                                 }
 
                                 /*
-                                * Price 
+                                * Price
                                 */
                                 $p = get_field('price', $course->ID);
                                 if($p != "0")
                                     $price =  "€" . number_format($p, 2, '.', ',') . ",-";
-                                else 
+                                else
                                     $price = 'Gratis';
 
                                 //Course Type
@@ -1456,7 +1458,7 @@ $url = home_url( $wp->request );
                                                 $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                                 }
 
-                                //Image author of this post 
+                                //Image author of this post
                                 $image_author = get_field('profile_img',  'user_' . $course->post_author);
                                 $image_author = $image_author ? $image_author : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                             ?>
@@ -1523,7 +1525,7 @@ $url = home_url( $wp->request );
 
                 </div>
             </div>
-            <?php 
+            <?php
                 }
             ?>
 
@@ -1542,35 +1544,35 @@ $url = home_url( $wp->request );
                                 /*
                                 * Categories
                                 */
-                                $category = ' '; 
+                                $category = ' ';
 
-                                $tree = get_the_terms($course->ID, 'course_category'); 
+                                $tree = get_the_terms($course->ID, 'course_category');
 
                                 if($tree)
                                     if(isset($tree[2]))
                                         $category = $tree[2]->name;
 
                                 $category_id = 0;
-                            
+
                                 if($category == ' '){
-                                $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]); 
+                                $category_str = intval(explode(',', get_field('categories',  $course->ID)[0]['value'])[0]);
                                 $category_id = intval(get_field('category_xml',  $course->ID)[0]['value']);
                                 if($category_str != 0)
                                     $category = (String)get_the_category_by_ID($category_str);
                                 else if($category_id != 0)
-                                    $category = (String)get_the_category_by_ID($category_id);                                    
+                                    $category = (String)get_the_category_by_ID($category_id);
                             }
 
-                                $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];    
+                                $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
                                 $dates = get_field('dates', $course->ID);
                                 if($dates){
-                                    
+
                                     $day = explode('-', explode(' ', $dates[0]['date'])[0])[2];
                                     $month = explode('-', explode(' ', $dates[0]['date'])[0])[1];
-        
-                                    $month = $calendar[$month]; 
-                                
+
+                                    $month = $calendar[$month];
+
                                 }else{
                                     $data = get_field('data_locaties', $course->ID);
                                     if($data){
@@ -1579,7 +1581,7 @@ $url = home_url( $wp->request );
                                         $day = explode('/', explode(' ', $date)[0])[0];
                                         $month = explode('/', explode(' ', $date)[0])[1];
                                         $month = $calendar[$month];
-                                        
+
                                         $location = $data[0]['data'][0]['location'];
                                     }
                                     else{
@@ -1591,14 +1593,14 @@ $url = home_url( $wp->request );
                                         $location = $data[2];
                                     }
                                 }
-                            
+
                                 /*
-                                * Price 
+                                * Price
                                 */
                                 $p = get_field('price', $course->ID);
                                 if($p != "0")
                                     $price =  "€" . number_format($p, 2, '.', ',') . ",-";
-                                else 
+                                else
                                     $price = 'Gratis';
 
                                 //Course Type
@@ -1615,7 +1617,7 @@ $url = home_url( $wp->request );
                                                 $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                                 }
 
-                                //Image author of this post 
+                                //Image author of this post
                                 $image_author = get_field('profile_img',  'user_' . $course->post_author);
                                 $image_author = $image_author ? $image_author : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                             ?>
@@ -1694,133 +1696,97 @@ $url = home_url( $wp->request );
 
             <div class="sousBlockProduct2">
                 <p class="sousBlockTitleProduct">Videos</p>
-                <div class="blockCardOpleidingen ">
 
-                    <div class="swiper-container swipeContaine4">
-                        <div class="swiper-wrapper">
+                <div class="blockCardOpleidingen  ">
+
+                    <div class="owl-carousel owl-theme owl-carousel-card-course">
                         <?php
-                            if (is_array($videos) || is_object($videos))
+                        if (is_array($videos) || is_object($videos))
                             foreach($videos as $course){
-                            
-                            /*
-                            * Categories
-                            */
-                            $category = ' ';
-                            $category_id = 0;
-                            $category_str = 0;
-                            if($category == ' '){
-                                $one_category = get_field('categories',  $course->ID);
-                                if(isset($one_category[0]['value']))
-                                    $category_str = intval(explode(',', $one_category[0]['value'])[0]);
-                                else{
-                                    $one_category = get_field('category_xml',  $course->ID);
+
+                                /*
+                                * Categories
+                                */
+                                $category = ' ';
+                                $category_id = 0;
+                                $category_str = 0;
+                                if($category == ' '){
+                                    $one_category = get_field('categories',  $course->ID);
                                     if(isset($one_category[0]['value']))
-                                        $category_id = intval($one_category[0]['value']);
+                                        $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                                    else{
+                                        $one_category = get_field('category_xml',  $course->ID);
+                                        if(isset($one_category[0]['value']))
+                                            $category_id = intval($one_category[0]['value']);
+                                    }
+
+                                    if($category_str != 0)
+                                        $category = (String)get_the_category_by_ID($category_str);
+                                    else if($category_id != 0)
+                                        $category = (String)get_the_category_by_ID($category_id);
                                 }
 
-                                if($category_str != 0)
-                                    $category = (String)get_the_category_by_ID($category_str);
-                                else if($category_id != 0)
-                                    $category = (String)get_the_category_by_ID($category_id);
-                            }
-                            
-                        
-                            /*
-                            * Price 
-                            */
-                            $p = get_field('price', $course->ID);
-                            if($p != "0")
-                                $price =  "€" . number_format($p, 2, '.', ',') . ",-";
-                            else 
-                                $price = 'Gratis';
 
-                            //Course Type
-                            $course_type = get_field('course_type', $course->ID);
-                            /*
-                            * Thumbnails
-                            */
-                            $thumbnail = get_field('preview', $course->ID)['url'];
-                            if(!$thumbnail){
-                                $thumbnail = get_the_post_thumbnail_url($course->ID);
-                                if(!$thumbnail)
-                                    $thumbnail = get_field('url_image_xml', $course->ID);
-                                        if(!$thumbnail)
-                                            $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-                            }
+                                /*
+                                * Price
+                                */
+                                $p = get_field('price', $course->ID);
+                                if($p != "0")
+                                    $price =  "€" . number_format($p, 2, '.', ',') . ",-";
+                                else
+                                    $price = 'Gratis';
 
-                            //Image author of this post 
-                            $image_author = get_field('profile_img',  'user_' . $course->post_author);
-                            $image_author = $image_author ? $image_author : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                                //Course Type
+                                $course_type = get_field('course_type', $course->ID);
+                                /*
+                                * Thumbnails
+                                */
+                                $thumbnail = get_field('preview', $course->ID)['url'];
+                                if(!$thumbnail){
+                                    $thumbnail = get_the_post_thumbnail_url($course->ID);
+                                    if(!$thumbnail)
+                                        $thumbnail = get_field('url_image_xml', $course->ID);
+                                    if(!$thumbnail)
+                                        $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                                }
+
+                                //Image author of this post
+                                $image_author = get_field('profile_img',  'user_' . $course->post_author);
+                                $image_author = $image_author ? $image_author : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
 
-                            //Other case : youtube
-                            $youtube_videos = get_field('youtube_videos', $course->ID);
+                                //Other case : youtube
+                                $youtube_videos = get_field('youtube_videos', $course->ID);
 
-                        ?>
-                            <a href="<?php echo get_permalink($course->ID) ?>" class="swiper-slide swiper-slide4">
-                                <div class="cardKraam2">
-                                    <div class="headCardKraam">
-                                        <div class="blockImgCardCour">
-                                        <?php
-                                        if($youtube_videos)
-                                            echo '<iframe width="355" height="170" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-                                        else
-                                            echo '<img src="' . $thumbnail .'" alt="">';
-                                        ?>
-                                        </div>
-                                        <div class="blockgroup7">
-                                            <div class="iconeTextKraa">
-                                                <div class="sousiconeTextKraa">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/kraam.png" class="icon7" alt="">
-                                                    <p class="kraaText"> <?php echo $category ?></p>
-                                                </div>
-                                                <div class="sousiconeTextKraa">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" class="icon7" alt="">
-                                                    <p class="kraaText"> <?php echo get_field('degree', $course->ID);?> </p>
-                                                </div>
-                                            </div>
-                                            <div class="iconeTextKraa">
-                                                <!-- <div class="sousiconeTextKraa">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/calend.png" class="icon7" alt="">
-                                                    <p class="kraaText"> <?php echo $day . " " . $month ?> </p>
-                                                </div> -->
-                                                <div class="sousiconeTextKraa">
-                                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/euro1.png" class="icon7" alt="">
-                                                    <p class="kraaText"> <?php echo $price ?> </p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                ?>
+                            <a href="<?php echo get_permalink($course->ID) ?>" class="new-card-course">
+                                <div class="head">
+                                    <img src="<?php echo $thumbnail ?>" alt="">
+                                </div>
+                                <div class="title-favorite d-flex justify-content-between align-items-center">
+                                    <p class="title-course"><?php echo $course->post_title ?></p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                    <div class="blockOpein d-flex align-items-center">
+                                        <i class="fas fa-graduation-cap"></i>
+                                        <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
                                     </div>
-                                    <div class="contentCardProd">
-                                        <div class="group8">
-                                            <div class="imgTitleCours">
-                                                <div class="imgCoursProd">
-                                                    <img src="<?php echo $image_author ?>" alt="">
-                                                </div>
-                                                <p class="nameCoursProd"> <?php echo(get_userdata($course->post_author)->data->display_name); ?> </p>
-                                            </div>
-                                            <div class="group9">
-                                                <div class="blockOpein">
-                                                    <img class="iconAm" src="<?php echo get_stylesheet_directory_uri();?>/img/graduat.png" alt="">
-                                                    <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
-                                                </div>
-                                                <div class="blockOpein">
-                                                    <img class="iconAm1" src="<?php echo get_stylesheet_directory_uri();?>/img/map.png" alt="">
-                                                    <p class="lieuAm"><?= $location ?></p>
-                                                </div>
-                                            </div>
+                                    <div class="d-flex align-items-center">
+                                        <div class="blockImgUser">
+                                            <img src="<?php echo $image_author ?>" class="" alt="">
                                         </div>
-                                        <p class="werkText"><?php echo $course->post_title ?></p>
-                                        <p class="descriptionPlatform">
-                                            <?php echo get_field('short_description', $course->ID) ?>
-                                        </p>
+                                        <p class="autor"><?php echo(get_userdata($course->post_author)->data->display_name); ?></p>
                                     </div>
                                 </div>
+                                <div class="descriptionPlatform">
+                                    <p> <?php echo get_field('short_description', $course->ID);?></p>
+                                </div>
                             </a>
-                        <?php
-                            }
+
+                            <?php
+                        }
                         ?>
-                        </div>
+
                     </div>
 
                 </div>
@@ -1882,9 +1848,9 @@ $url = home_url( $wp->request );
                         foreach($agenda as $key => $course){
                             if($key == 6)
                                 break;
-                                
+
                             $location = '~';
-                            
+
                             /*
                             * Categories
                             */
@@ -1909,7 +1875,7 @@ $url = home_url( $wp->request );
 
                             /*
                             *  Date and Location
-                            */ 
+                            */
                             $day = "<i class='fas fa-calendar-week'></i>";
                             $month = NULL;
                             $location = ' ';
@@ -1946,14 +1912,14 @@ $url = home_url( $wp->request );
                                     continue;
                             }
 
-                        
+
                             /*
-                            * Price 
+                            * Price
                             */
                             $p = get_field('price', $course->ID);
                             if($p != "0")
                                 $price =  number_format($p, 2, '.', ',') . ",-";
-                            else 
+                            else
                                 $price = 'Gratis';
 
                             //Course Type
@@ -1970,7 +1936,7 @@ $url = home_url( $wp->request );
                                             $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
                             }
 
-                            //Image author of this post 
+                            //Image author of this post
                             $image_author = get_field('profile_img',  'user_' . $course->post_author);
 
                             $bool = true;
@@ -1992,7 +1958,7 @@ $url = home_url( $wp->request );
                                 <p class="platformText"> <?php echo get_field('short_description', $course->ID) ?></p>
                                 <div class="detaiElementAgenda detaiElementAgendaModife">
                                     <div class="janBlock">
-                                        <div class="colorFront"> 
+                                        <div class="colorFront">
                                             <img width="17" src="<?php echo $image_author ?> " alt="" >
                                         </div>
                                         <p class="textJan"> <?php echo(get_userdata($course->post_author)->data->display_name) ?> </p>
@@ -2014,7 +1980,7 @@ $url = home_url( $wp->request );
                         </div>
                     </a>
                     <?php
-                    } 
+                    }
                     if(!$bool)
                         echo "<p class='dePaterneText theme-card-description'> <center style='color:#033256'> Stay connected, Something big is coming 😊 </center> </p>";
                     ?>
@@ -2032,8 +1998,43 @@ $url = home_url( $wp->request );
     </div>
 </div>
 
-<?php get_footer(); ?>
-<?php wp_footer(); ?>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.animate.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autoheight.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.lazyload.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.navigation.js"></script>
+<script>
+    $('.owl-carousel').owlCarousel({
+        loop:true,
+        margin:13,
+        items:2.8,
+        lazyLoad:true,
+        dots:false,
+        responsiveClass:true,
+        autoplayHoverPause:true,
+        nav:false,
+        merge:true,
+        URLhashListener:true,
+        responsive:{
+            0:{
+                items:1.1,
+                nav:true
+            },
+            600:{
+                items:2.2,
+                nav:false
+            },
+            1000:{
+                items:2.8,
+                nav:true,
+                loop:false
+            }
+        }
+    })
+</script>
 
 <script>
     jQuery(document).ready(function(){
@@ -2042,65 +2043,23 @@ $url = home_url( $wp->request );
     });
 </script>
 
-<script>
-    var swiper = new Swiper('.swiper-container', {
-        slidesPerView: '3',
-        spaceBetween: 30,
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-    });
-</script>
-<script>
-    var swiper = new Swiper('.swipeContaineVerkoop', {
-        slidesPerView: '5',
-        spaceBetween: 20,
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-    });
-</script>
-<script>
-    var swiper = new Swiper('.swipeContaineEvens', {
-        slidesPerView: '5',
-        spaceBetween: 20,
-        breakpoints: {
-            780: {
-                slidesPerView: 1,
-                spaceBetween: 40,
-            },
-            1230: {
-                slidesPerView: 3.9,
-                spaceBetween: 20,
-            }
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
 
-    });
-
-</script>
 <script>
 
-// make a border bottom after clicking button 
+    // make a border bottom after clicking button
     $(document).ready(function(){
         $("#btn_click1").click(function(){
-        $(".add_here1").addClass("buttonSelected");
-        $(".add_here2").removeClass("buttonSelected");
+            $(".add_here1").addClass("buttonSelected");
+            $(".add_here2").removeClass("buttonSelected");
         });
     });
     $(document).ready(function(){
         $("#btn_click2").click(function(){
-        $(".add_here2").addClass("buttonSelected");
-        $(".add_here1").removeClass("buttonSelected");
-         });
+            $(".add_here2").addClass("buttonSelected");
+            $(".add_here1").removeClass("buttonSelected");
+        });
     });
 
 </script>
-
-</body>
-</html>
+<?php get_footer(); ?>
+<?php wp_footer(); ?>

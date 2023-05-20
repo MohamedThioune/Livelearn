@@ -236,7 +236,7 @@
                             <td class="textTh elementOnder"><?php echo get_field('role', 'user_'.$user->ID);?></td>
                             <td class="textTh"><?php echo get_field('department', 'user_'.$user->ID);?></td>
                             <td class="textTh thModife">
-                                <button type="button" id ="<?= $user->ID ?>" class="btn btn-choose-company manager-picture-block" data-table="<?= htmlspecialchars(json_encode($user->my_managers), ENT_QUOTES, 'UTF-8'); ?>" data-toggle="modal" data-target="#userModal<?= $keyP; ?>">
+                                <button type="button" id ="<?= $user->ID ?>" class="btn manager-picture-block-btn" data-table="<?= htmlspecialchars(json_encode($user->my_managers), ENT_QUOTES, 'UTF-8'); ?>" data-toggle="modal" data-target="#userModal<?= $keyP; ?>">
                                     managers
                                 </button>
                                 <!-- Modal -->
@@ -713,7 +713,7 @@
 
 </script>
 <script>
-     $(".manager-picture-block").click(function(e){
+     $(".manager-picture-block-btn").click(function(e){
         const backApi = document.querySelector('.back-list-of-user-manager');
         const loader = document.querySelectorAll('.loader-manager');
         const idUser = e.currentTarget.id

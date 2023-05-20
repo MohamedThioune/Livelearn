@@ -14811,7 +14811,6 @@ background: #FFFFFF !important;
 }
 .owl-carousel-card-course .owl-item {
     height: auto !important;
-    max-height: 344px;
 }
 .owl-carousel-card-course .cardKraam {
     height: 100%;
@@ -16923,7 +16922,7 @@ background: #FFFFFF !important;
     line-height: 19px;
     color: #3D4D59 !important;
     margin: 0 5px;
-    padding: 13px 20px;
+    padding: 13px 18px;
     display: block;
 }
 #tab-url1 .nav li .current {
@@ -17972,7 +17971,10 @@ background: #FFFFFF !important;
 }
 .owl-item .new-card-course {
     display: block;
-    height: 100%;
+    max-height: 380px;
+    min-height: 100%;
+    border: 1px solid #e6e3e3 !important;
+    border-radius: 13px;
 }
 .productBlock3 .owl-nav, .blockCardOpleidingen .owl-nav{
     display: none !important;
@@ -18055,6 +18057,175 @@ background: #FFFFFF !important;
     justify-content: center;
     height: 95%;
 }
+.content-img{
+    width: 487px;
+    height: 429px;
+}
+.content-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.content-new-inloggen .carousel {
+    background: linear-gradient(152.57deg, #47A99E 0%, #043356 100%);
+    text-align: center;
+}
+.content-img-connection{
+    width: 430px;
+    height: 430px;
+    margin: 90px auto 0;
+}
+.content-img-connection img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.content-new-inloggen .carousel h1 {
+    color: white;
+    font-weight: 500;
+    font-size: 35px;
+    line-height: 36px;
+    margin-bottom: 30px;
+}
+.content-new-inloggen .carousel .description-connection {
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 27px;
+    color: #FFFFFF;
+    padding: 0 65px;
+    margin-bottom: 45px;
+}
+.content-new-inloggen .carousel{
+    height: 100%;
+}
+.block-connection {
+    padding: 50px 15px 30px;
+}
+.right-block-connection h2{
+    font-size: 25px;
+    line-height: 36px;
+    font-weight: 500;
+    color: #000000;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+.logo-liverlearn-connection{
+    width: 173px;
+    height: 52px;
+}
+.logo-liverlearn-connection img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.back-to-home-text{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    text-decoration-line: underline;
+    color: #22100D;
+}
+.content-new-inloggen form label {
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    color: #2b2b2b;
+    font-weight: 300;
+}
+
+.content-new-inloggen form {
+    border-radius: 5px;
+    padding: 21px 10px !important;
+}
+.content-new-inloggen form .form-check-label {
+    font-weight: 300;
+    font-size: 14px;
+    color: #685F78;
+}
+.content-new-inloggen form .btn-coneection {
+    width: 100%;
+    margin-top: 37px;
+    background: #053356;
+    color: white;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: 5px;
+}
+.content-new-inloggen .right-block-connection .container-fluid {
+    min-height: 500px;
+}
+.group-btn-connection{
+    display: flex;
+    margin: 25px auto 25px;
+    width: fit-content;
+}
+.group-btn-connection img{
+    width: 34px;
+    height: 34px;
+    margin-right: 10px;
+}
+.group-btn-connection .btn-connection{
+    background: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    border-radius: 33px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #000000 !important;
+    padding: 7px 20px;
+    margin: 0 9px;
+}
+.block-social-connection{
+    background: linear-gradient(93.07deg, #043356 2.04%, #47A99E 100.47%);
+    text-align: center;
+    width: 100%;
+    padding: 35px 15px 15px;
+}
+.block-social-connection h3{
+    font-size: 16px;
+    line-height: 21px;
+    color: #FFFFFF;
+    font-weight: 500;
+}
+.block-first-connect, .block-second-connect{
+    width: 50%;
+}
+.new-user-text {
+    color: white !important;
+}
+.new-user-text a {
+    color: white !important;
+    text-decoration: underline;
+}
+.block-connection .input-group-connection{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -25px 0;
+}
+.block-connection .input-group-connection .col-{
+    width: 46%;
+    margin: 0 10px;
+}
+.block-connection input::-webkit-input-placeholder {
+    font-size: 12px !important;
+}
+.tab-content .disabled:after, .hover:after {
+    display: none !important;
+}
+.owl-theme .owl-nav [class*=owl-] {
+    color: #46a99e !important;
+    font-size: 26px !important;
+    margin: 5px 5px 0 !important;
+}
+
+.manager-picture-block-btn {
+    display: flex;
+    border: 1px solid #838383;
+    font-weight: 300;
+}
+
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
@@ -21117,13 +21288,12 @@ background: #FFFFFF !important;
         height: 30px;
     }
     .content-new-user{
-        flex-wrap: wrap;
+        display: block !important;
     }
     .content-new-user .first-section-dashboard, .content-new-user .second-section-dashboard {
         width: 100%;
         margin-right: 0px;
         padding: 0 15px;
-
     }
     .head-block {
         flex-wrap: wrap;
@@ -21610,7 +21780,7 @@ background: #FFFFFF !important;
         font-size: 15px;
     }
     #tab-url1 {
-        padding: 0 15px;
+        padding: 0;
     }
     #tab-url1 .cardFavoriteCourses {
         margin-left: 0px;
@@ -21877,6 +22047,50 @@ background: #FFFFFF !important;
     .btn-group-layouts {
         display: none;
     }
+    .block-first-connect, .block-second-connect {
+        width: 100%;
+    }
+    .content-img-connection {
+        width: 100%;
+        height: 280px;
+        margin: 30px auto 0;
+    }
+    .content-new-inloggen .carousel h1 {
+        font-size: 30px;
+        line-height: 36px;
+        margin-bottom: 15px;
+    }
+    .content-new-inloggen .carousel h1 {
+        font-size: 30px;
+        line-height: 36px;
+        margin-bottom: 15px;
+    }
+    .logo-liverlearn-connection {
+        width: 150px;
+    }
+    .group-btn-connection {
+        flex-wrap: wrap;
+    }
+    .group-btn-connection .btn-connection {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .content-new-inloggen .carousel .description-connection {
+        font-weight: 300;
+        font-size: 13px;
+        line-height: 24px;
+        color: #FFFFFF;
+        padding: 0 30px;
+        margin-bottom: 55px;
+    }
+    .block-connection .input-group-connection .col-{
+        width: 100%;
+        margin: 0;
+    }
+    .block-connection .input-group-connection{
+        margin: 0;
+    }
+
 
 
 

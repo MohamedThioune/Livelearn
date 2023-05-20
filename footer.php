@@ -480,7 +480,6 @@ $site_url = get_site_url() . "/apply-cookie";
 
             if(txt){
                 $.ajax({
-
                     url:"/fetch-ajax",
                     method:"post",
                     data:{
@@ -506,14 +505,11 @@ $site_url = get_site_url() . "/apply-cookie";
             $("#mobile-list").fadeIn("fast");
 
             $(document).click( function(){
-
                 $('#mobile-list').hide();
-
             });
 
             if(txt){
                 $.ajax({
-
                     url:"fetch-ajax",
                     method:"post",
                     data:{
