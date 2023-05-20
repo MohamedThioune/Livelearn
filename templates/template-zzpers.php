@@ -9,7 +9,7 @@ require($page);
 
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-
+<link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/css/owl.carousel.css" />
 <style>
     .headerdashboard,.navModife {
         background: #deeef3;
@@ -291,103 +291,79 @@ require($page);
     <section class="cardCoursZzpers">
         <div class="container-fluid">
             <h3>Artikelen voor ZZP'ers</h3>
-            <div class="block-cardCourse-zzpers">
-            <?php 
-            foreach($blogs as $course) { 
-                $bool = true;
-                $bool = visibility($post, $visibility_company);
-                if(!$bool)
-                    continue;
 
-                // type course
-                $course_type = get_field('course_type', $course->ID);
+            <div class="blockCardOpleidingen  ">
 
-                // image legend
-                $thumbnail = get_field('preview', $course->ID)['url'];
-                if(!$thumbnail){
-                    $thumbnail = get_the_post_thumbnail_url($course->ID);
-                    if(!$thumbnail)
-                    $thumbnail = get_field('url_image_xml', $course->ID);
-                    if(!$thumbnail)
-                    $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-                }
+                <div class="owl-carousel owl-theme owl-carousel-card-course">
+                    <?php
+                    foreach($blogs as $course) {
+                        $bool = true;
+                        $bool = visibility($post, $visibility_company);
+                        if(!$bool)
+                            continue;
 
-                //degree
-                $degree = get_field('degree', $course->ID);
-    
-                // author user : name
-                $user = get_user_by('id',$course->post_author);
-                $name = ($user->first_name=='') ? $user->display_name : $user->first_name;
+                        // type course
+                        $course_type = get_field('course_type', $course->ID);
 
-                //short description
-                $short_description = get_field('short_description' , $course->ID); 
+                        // image legend
+                        $thumbnail = get_field('preview', $course->ID)['url'];
+                        if(!$thumbnail){
+                            $thumbnail = get_the_post_thumbnail_url($course->ID);
+                            if(!$thumbnail)
+                                $thumbnail = get_field('url_image_xml', $course->ID);
+                            if(!$thumbnail)
+                                $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                        }
 
-                // price    
-                $price = get_field('price' , $course->ID);
-                $price = ($price !="0" && $price !=0 ) ? number_format($price, 2, '.', ',') : "Gratis"; 
+                        //degree
+                        $degree = get_field('degree', $course->ID);
 
-                // company
-                $company = get_field('company',  'user_' . $course->post_author);   
-                ?>
-                <a href="<?= get_permalink($course->ID); ?>" class="cardKraam2">
-                    <div class="headCardKraam">
-                        <div class="blockImgCardCour">
-                            <img src="<?php echo $thumbnail;?>" class="" alt="">
-                        </div>
-                        <div class="blockgroup7">
-                            <div class="iconeTextKraa">
-                                <div class="sousiconeTextKraa">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/kraam.png" class="icon7" alt="">
-                                    <p class="kraaText"><?= $course_type ?></p>
+                        // author user : name
+                        $user = get_user_by('id',$course->post_author);
+                        $name = ($user->first_name=='') ? $user->display_name : $user->first_name;
+
+                        //short description
+                        $short_description = get_field('short_description' , $course->ID);
+
+                        // price
+                        $price = get_field('price' , $course->ID);
+                        $price = ($price !="0" && $price !=0 ) ? number_format($price, 2, '.', ',') : "Gratis";
+
+                        // company
+                        $company = get_field('company',  'user_' . $course->post_author);
+                        ?>
+                            <a href="<?php echo get_permalink($course->ID) ?>" class="new-card-course">
+                                <div class="head">
+                                    <img src="<?php echo $thumbnail ?>" alt="">
                                 </div>
-                                <div class="sousiconeTextKraa">
-                                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/mbo3.png" class="icon7" alt="">
-                                    <p class="kraaText"><?= $degree; ?></p>
+                                <div class="title-favorite d-flex justify-content-between align-items-center">
+                                    <p class="title-course"><?php echo $course->post_title ?></p>
                                 </div>
+                                <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                                    <div class="blockOpein d-flex align-items-center">
+                                        <i class="fas fa-graduation-cap"></i>
+                                        <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <div class="blockImgUser">
+                                            <img src="<?php echo $image_author ?>" class="" alt="">
+                                        </div>
+                                        <p class="autor"><?php echo(get_userdata($course->post_author)->data->display_name); ?></p>
+                                    </div>
+                                </div>
+                                <div class="descriptionPlatform">
+                                    <p> <?php echo get_field('short_description', $course->ID);?></p>
+                                </div>
+                            </a>
 
-                            </div>
-                            <div class="iconeTextKraa">
-                                <div class="sousiconeTextKraa">
-                                    <img src="<?php echo get_stylesheet_directory_uri() . '/img/euro1.png'; ?>" class="icon7" alt="">
-                                    <p class="kraaText"><?= $price; ?></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            <?php
+                        }
+                    ?>
 
-                    <div class="contentCardProd">
-                        <div class="group8">
-                            <div class="imgTitleCours">
-                                <div class="imgCoursProd">
-                                    <?php
-                                    if(!empty($company)){
-                                        $company_title = $company[0]->post_title;
-                                        $company_id = $company[0]->ID;
-                                        $company_logo = get_field('company_logo', $company_id);
-                                    }
-                                    ?>
-                                    <img src="<?= $company_logo; ?>" width="25" class="icon7" alt="">
-                                </div>
-                                <p class="nameCoursProd"><?= $company_title; ?></p>
-                            </div>
-                            <div class="group9">
-                                <div class="blockOpein">
-                                    <!-- <img class="iconAm" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/graduat.png" alt=""> -->
-                                    <p class="lieuAm">Artikelen voor <?= $name; ?></p>
-                                </div>
-                                <div class="blockOpein">
-                                    <!-- <img class="iconAm1" src="http://localhost/livelearn/wp-content/themes/fluidify-child/img/map.png" alt=""> -->
-                                </div>
-                            </div>
-                        </div>
-                        <p class="werkText"><?= $course->post_title ?></p>
-                        <p class="descriptionPlatform">
-                            <?= $short_description ?>
-                        </p>
-                    </div>
-                </a>
-            <?php } ?>
+                </div>
+
             </div>
+
         </div>
         
     </section>
@@ -477,14 +453,43 @@ require($page);
 
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.animate.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autoheight.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.lazyload.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.navigation.js"></script>
+<script>
+    $('.owl-carousel').owlCarousel({
+        loop:true,
+        margin:13,
+        items:2.8,
+        lazyLoad:true,
+        dots:false,
+        responsiveClass:true,
+        autoplayHoverPause:true,
+        nav:false,
+        merge:true,
+        URLhashListener:true,
+        responsive:{
+            0:{
+                items:1.1,
+                nav:true
+            },
+            600:{
+                items:2.2,
+                nav:false
+            },
+            1000:{
+                items:2.8,
+                nav:true,
+                loop:false
+            }
+        }
+    })
+</script>
 
-
-<?php get_footer(); ?>
-<?php wp_footer(); ?>
-
-<!-- jQuery CDN -->
-
-<!-- slick Carousel CDN -->
 <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.5.7/slick.min.js"></script>
 
 
@@ -510,7 +515,7 @@ require($page);
                 }
             },
             {
-            breakpoint: 768,
+                breakpoint: 768,
                 settings: {
                     arrows: false,
                     centerMode: true,
@@ -519,7 +524,7 @@ require($page);
                 }
             },
             {
-            breakpoint: 480,
+                breakpoint: 480,
                 settings: {
                     arrows: false,
                     centerMode: true,
@@ -558,4 +563,7 @@ require($page);
     });
 
 </script>
+<?php get_footer(); ?>
+<?php wp_footer(); ?>
+
 
