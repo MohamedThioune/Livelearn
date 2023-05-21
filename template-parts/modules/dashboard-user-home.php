@@ -467,9 +467,7 @@ foreach ($global_courses as $key => $course) {
     if(!$bool)
         continue;
 
-    /*
-    *  Date and Location
-    */
+    // Date and Location
     $data = array();
     $day = '-';
     $month = '';
@@ -879,7 +877,9 @@ if(isset($_GET['message']))
 
                 <ul id="Artikel" class="hide">
                     <div class="block-new-card-course" id="autocomplete_recommendation_Artikel">
-
+                        <center>
+                        <div hidden="true" id="loader_recommendation_Artikel" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </center>
                         <?php
                         $find = false;
 
@@ -1003,6 +1003,9 @@ if(isset($_GET['message']))
 
                 <ul id="E-learning" class="hide" id="autocomplete_recommendation_E-learning">
                     <div class="block-new-card-course">
+                        <center>
+                        <div hidden="true" id="loader_recommendation_E-learning" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </center>
                         <?php
                         $find = false;
 
@@ -1126,6 +1129,9 @@ if(isset($_GET['message']))
 
                 <ul id="Opleidingen" class="hide"  id="autocomplete_recommendation_Opleidingen" >
                     <div class="block-new-card-course">
+                        <center>
+                        <div hidden="true" id="loader_recommendation_Opleidingen" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </center>
                         <?php
                         $find = false;
 
@@ -1249,6 +1255,9 @@ if(isset($_GET['message']))
 
                 <ul id="Video" class="hide" id="autocomplete_recommendation_Video">
                     <div class="block-new-card-course">
+                        <center>
+                        <div hidden="true" id="loader_recommendation_Video" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        </center>
                         <?php
                         $find = false;
 
@@ -1486,7 +1495,7 @@ if(isset($_GET['message']))
                         ?>
                     </div>
                 </ul>
-
+                
             </div>
         </div>
     </section>
@@ -1749,7 +1758,7 @@ $(".loading_more").click((e)=>
                 $('#loader_recommendation').attr('hidden',false)
             },
             error: function(){
-                alert('Something went wrong!');
+                console.log('Something went wrong!');
             },
             success: function(data){
                 $('#loader_recommendation').attr('hidden',true)
@@ -1764,8 +1773,8 @@ $(".loading_more").click((e)=>
 $(".load_content_type").click((e)=>
     {
         var content_type = e.currentTarget.innerText;
-        var autocomplete_register = "autocomplete_recommendation_" + content_type;
-        var loader_register = "loader_recommendation_" + content_type;
+        var autocomplete_register = "#autocomplete_recommendation_" + content_type;
+        var loader_register = "#loader_recommendation_" + content_type;
 
         $.ajax({
             url: '/loading-more-recommendation',
@@ -1774,14 +1783,14 @@ $(".load_content_type").click((e)=>
                 'content_type' : content_type
             },
             beforeSend:function(){
-                $('#loader_recommendation').attr('hidden',false)
+                $(loader_register).attr('hidden',false)
             },
             error: function(){
-                alert('Something went wrong!');
+                console.log('Something went wrong!');
             },
             success: function(data){
-                $(loader_register).attr('hidden',true)
                 $(autocomplete_register).html(data);
+                $(loader_register).hide();
                 console.log(data);
             }
         });
