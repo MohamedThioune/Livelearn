@@ -8,8 +8,8 @@ require($page);
 
 $user_connected_head = wp_get_current_user();
 
-if(!empty($user_connected_head))
-    header('Location: /dashboard/user/');
+// if(!empty($user_connected_head))
+//     header('Location: /dashboard/user/');
 
 if(!isset($visibility_company))
     $visibility_company = "";
