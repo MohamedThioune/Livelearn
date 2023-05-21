@@ -445,7 +445,7 @@ $postAuthorSearch = $experts;
 if (!empty($user_post_view))
 {
     $view_my_experts = (get_field('views_user', $user_post_view->ID));
-    $id_view_experts = array_column($view_my_experts, 'view_id');
+    $id_view_experts = ($view_my_experts) ? array_column($view_my_experts, 'view_id') : array();
     $id_view_experts = array_unique($id_view_experts);
     $postAuthorSearch = (!empty($id_view_experts)) ? array_merge($experts, $id_view_experts) : $experts;
 }
