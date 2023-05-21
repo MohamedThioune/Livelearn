@@ -7,9 +7,9 @@
 $page = 'check_visibility.php';
 require($page);
 
-$user_connected_head = get_current_user_id();
+$user_connected_head = wp_get_current_user();
 
-// if($user_connected_head)
+// if(!empty($user_connected_head))
 //     header('Location: /dashboard/user/');
 
 if(!isset($visibility_company))
@@ -1580,8 +1580,6 @@ $saved = get_user_meta($user_id, 'course');
     <div class="productBlock3">
         <p class="TitleWat">Wat je niet mag missen</p>
 
-
-
         <div class="owl-carousel owl-nav-active owl-theme owl-carousel-card-course">
 
             <?php
@@ -1603,7 +1601,6 @@ $saved = get_user_meta($user_id, 'course');
             $i = 0;
 
             foreach($courses as $course){
-
                 $bool = true;
                 $bool = visibility($course, $visibility_company);
                 if(!$bool)
@@ -1695,20 +1692,12 @@ $saved = get_user_meta($user_id, 'course');
                 //Clock duration
                 $duration_day = get_field('duration_day', $post->ID) ? : '-';
 
-                //Other case : youtube
-                $youtube_videos = get_field('youtube_videos', $course->ID);
-
                 $find = true;
-
-
                 ?>
 
                 <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
                     <div class="head">
                         <?php
-                        if($youtube_videos && $course_type == 'Video')
-                            echo '<iframe width="355" height="170" class="lazy img-fluid" src="https://www.youtube.com/embed/' . $youtube_videos[0]['id'] .'?autoplay=1&mute=1&controls=0&showinfo=0&modestbranding=1" title="' . $youtube_videos[0]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-                        else
                             echo '<img src="' . $thumbnail .'" alt="">';
                         ?>
                     </div>
