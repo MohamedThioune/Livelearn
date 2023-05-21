@@ -1582,7 +1582,7 @@ $saved = get_user_meta($user_id, 'course');
 
 
 
-        <div class="owl-carousel owl-theme owl-carousel-card-course">
+        <div class="owl-carousel owl-nav-active owl-theme owl-carousel-card-course">
 
             <?php
             $author_id = 0;
