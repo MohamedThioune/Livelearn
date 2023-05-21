@@ -8,7 +8,7 @@ require($page);
 
 $user_connected_head = wp_get_current_user();
 
-if(!empty($user_connected_head) && $user_connected_head->roles != 'administrator')
+if(!empty($user_connected_head))
     header('Location: /dashboard/user/');
 
 if(!isset($visibility_company))
@@ -1600,7 +1600,6 @@ $saved = get_user_meta($user_id, 'course');
             $i = 0;
 
             foreach($courses as $course){
-
                 $bool = true;
                 $bool = visibility($course, $visibility_company);
                 if(!$bool)
