@@ -6,9 +6,10 @@
 $page = 'check_visibility.php';
 require($page);
 
+$user_connected_id = get_current_user_id();
 $user_connected_head = wp_get_current_user();
 
-// if(!empty($user_connected_head))
+// if($user_connected_id))
 //     header('Location: /dashboard/user/');
 
 if(!isset($visibility_company))
