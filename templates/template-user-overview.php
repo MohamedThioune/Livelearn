@@ -595,7 +595,7 @@
                     <p class="sousBlockTitleProduct">Opleidingen</p>
 
                     <div class="blockCardOpleidingen ">
-                        <div class="owl-carousel owl-theme owl-carousel-card-course">
+                        <div class="owl-carousel owl-nav-active owl-theme owl-carousel-card-course">
                             <?php
                             foreach($opleidingen as $course){
 
@@ -739,7 +739,7 @@
                     <p class="sousBlockTitleProduct">Artikel</p>
                     <div class="blockCardOpleidingen  ">
 
-                        <div class="owl-carousel owl-theme owl-carousel-card-course">
+                        <div class="owl-carousel owl-nav-active owl-theme owl-carousel-card-course">
                             <?php
                             foreach($artikels as $course){
                                 if(!visibility($course, $visibility_company))
@@ -870,7 +870,7 @@
 
                     <div class="blockCardOpleidingen  ">
 
-                        <div class="owl-carousel owl-theme owl-carousel-card-course">
+                        <div class="owl-carousel owl-nav-active owl-theme owl-carousel-card-course">
                             <?php
                             if (is_array($videos) || is_object($videos))
                                 foreach($videos as $course){
@@ -1165,7 +1165,7 @@
 
                 <div class="blockCardOpleidingen  ">
 
-                    <div class="owl-carousel owl-theme owl-carousel-card-course">
+                    <div class="owl-carousel owl-nav-active owl-theme owl-carousel-card-course">
                         <?php
                         foreach($workshops as $course){
                             $data = array();
@@ -1301,7 +1301,7 @@
                 <p class="sousBlockTitleProduct">Masterclasses</p>
                 <div class="blockCardOpleidingen  ">
 
-                    <div class="owl-carousel owl-theme owl-carousel-card-course">
+                    <div class="owl-carousel owl-nav-active owl-theme owl-carousel-card-course">
                         <?php
                         foreach($masterclasses as $course){
                             $data = array();
@@ -1437,7 +1437,7 @@
 
                         <div class="blockCardOpleidingen  ">
 
-                            <div class="owl-carousel owl-theme owl-carousel-card-course">
+                            <div class="owl-carousel owl-nav-active owl-theme owl-carousel-card-course">
                                 <?php
                                 foreach($events as $course){
                                     $data = array();
@@ -1573,7 +1573,7 @@
 
                 <div class="blockCardOpleidingen  ">
 
-                    <div class="owl-carousel owl-theme owl-carousel-card-course">
+                    <div class="owl-carousel owl-nav-active owl-theme owl-carousel-card-course">
                         <?php
                         foreach($e_learnings as $course){
 
@@ -1671,7 +1671,7 @@
 
                 <div class="blockCardOpleidingen  ">
 
-                    <div class="owl-carousel owl-theme owl-carousel-card-course">
+                    <div class="owl-carousel owl-nav-active owl-theme owl-carousel-card-course">
                         <?php
                         foreach($trainings as $course){
                             /*
