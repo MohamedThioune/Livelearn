@@ -378,7 +378,7 @@
             -->
             <div id="back-nmbrs" class="text-center"></div>
             <div class="modal-body">
-                <form class="needs-validation" action="/livelearn/dashboard/company/people/" novalidate id="data-sending-from-nmbrs" method="POST">
+                <form class="needs-validation" action="/dashboard/company/people" novalidate id="data-sending-from-nmbrs" method="POST">
                     <div class="form-group">
                         <label for="nmbrs-username" class="col-form-label">login</label>
                         <input type="text" value="PartnerApp_extdev-livelearn_AFEE32B2930D41FA84667196E5515D40" class="form-control" name="nmbrs_username" aria-describedby="inputGroupPrepend" autocomplete="nope" required>
@@ -722,7 +722,7 @@
         // console.log('data sending',managers);
         console.log('user :::::::'+idUser);
         $.ajax({
-        url:"/livelearn/salaryadmin/",
+        url:"/salary-admin",
         method:"post",
         data:{
             id : idUser,
