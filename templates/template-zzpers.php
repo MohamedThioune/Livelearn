@@ -294,7 +294,7 @@ require($page);
 
             <div class="blockCardOpleidingen  ">
 
-                <div class="owl-carousel owl-theme owl-carousel-card-course">
+                <div class="owl-carousel owl-nav-active owl-theme owl-carousel-card-course">
                     <?php
                     foreach($blogs as $course) {
                         $bool = true;
