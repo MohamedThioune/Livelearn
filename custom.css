@@ -18225,6 +18225,20 @@ background: #FFFFFF !important;
     border: 1px solid #838383;
     font-weight: 300;
 }
+.owl-nav-active .owl-nav {
+    display: flex !important;
+    position: absolute;
+    top: -55px;
+    width: 100%;
+    right: 30px;
+    justify-content: right;
+}
+.profil-view-statistic .img-user{
+    width: 75px;
+    height: 75px;
+    border-radius: 10px;
+}
+
 
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
