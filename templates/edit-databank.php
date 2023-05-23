@@ -1,4 +1,4 @@
-²<?php /** Template Name: Edit Databank */ ?>
+<?php /** Template Name: Edit Databank */ ?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
@@ -507,6 +507,7 @@ $(document).ready(function () {
     $(".multipleSelect2").select2({
         placeholder: "Maak uw keuze.",
          //placeholder
+
     });
 });
 //# sourceURL=pen.js
