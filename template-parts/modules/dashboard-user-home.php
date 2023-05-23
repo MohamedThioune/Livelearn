@@ -469,38 +469,21 @@ foreach ($global_courses as $key => $course) {
 
     // Date and Location
     $data = array();
-    $day = '-';
-    $month = '';
-    $location = 'Virtual';
 
     $datas = get_field('data_locaties', $course->ID);
 
-    if($datas){
+    if($datas)
         $data = $datas[0]['data'][0]['start_date'];
-        if($data != ""){
-            $day = explode('/', explode(' ', $data)[0])[0];
-            $mon = explode('/', explode(' ', $data)[0])[1];
-            $month = $calendar[$mon];
-        }
-        $location = $datas[0]['data'][0]['location'];
-    }else{
+    else{
         $datum = get_field('data_locaties_xml', $course->ID);
 
         if($datum)
             if(isset($datum[0]['value']))
                 $element = $datum[0]['value'];
-
         if(!isset($element))
             continue;
-
         $datas = explode('-', $element);
-
         $data = $datas[0];
-        $day = explode('/', explode(' ', $data)[0])[0];
-        $month = explode('/', explode(' ', $data)[0])[1];
-        $month = $calendar[$month];
-        $location = $datas[2];
-
     }
 
     //Course Type
@@ -667,9 +650,9 @@ if (empty($recommended_courses)){
     $recommended_courses = $courses;
     $bool = true;
 }
-
 //Activitien
 shuffle($recommended_courses);
+
 /*
 * *
 */
@@ -741,7 +724,7 @@ if(isset($_GET['message']))
             <ul class="nav">
                 <li class="nav-one"><a href="#All" class="current">All</a></li>
                 <li class="nav-two"><a href="#Artikel" class="load_content_type">Artikel</a></li>
-                <li class="nav-three"><a href="#E-learning" class="load_content_type">E-learning</a></li>
+                <li class="nav-three"><a href="#Masterclass" class="load_content_type">Masterclass</a></li>
                 <li class="nav-four "><a href="#Opleidingen" class="load_content_type">Opleidingen</a></li>
                 <li class="nav-five "><a href="#Video" class="load_content_type">Video</a></li>
                 <li class="nav-seven "><a href="#Trends">Trends</a></li>
@@ -755,6 +738,29 @@ if(isset($_GET['message']))
 
                         if(!empty($recommended_courses))
                             foreach($recommended_courses as $course){
+                                //Date and Location
+                                $location = 'Online';
+                            
+                                $data = get_field('data_locaties', $course->ID);
+                                if($data){
+                                    $date = $data[0]['data'][0]['start_date'];
+                                    $location = $data[0]['data'][0]['location'];
+                                }
+                                else{
+                                    $dates = get_field('dates', $course->ID);
+                                    if($dates)
+                                        $day = explode(' ', $dates[0]['date'])[0];
+                                    else{
+                                        $data = get_field('data_locaties_xml', $course->ID);
+                                        if(isset($data[0]['value'])){
+                                            $data = explode('-', $data[0]['value']);
+                                            $date = $data[0];
+                                            $day = explode(' ', $date)[0];
+                                            $location = $data[2];
+                                        }
+                                    }
+                                }
+
                                 //Course Type
                                 $course_type = get_field('course_type', $course->ID);
 
@@ -849,7 +855,7 @@ if(isset($_GET['message']))
                                             </div>
                                             <div class="blockOpein">
                                                 <i class="fas fa-map-marker-alt"></i>
-                                                <p class="lieuAm"><?php echo $location?></p>
+                                                <p class="lieuAm"><?= $location ?></p>
                                             </div>
                                         </div>
                                         <div class="autor-price-block d-flex justify-content-between align-items-center">
@@ -1001,20 +1007,20 @@ if(isset($_GET['message']))
                     </div>
                 </ul>
 
-                <ul id="E-learning" class="hide" id="autocomplete_recommendation_E-learning">
+                <ul id="Masterclass" class="hide" id="autocomplete_recommendation_Masterclass">
                     <div class="block-new-card-course">
                         <center>
-                        <div hidden="true" id="loader_recommendation_E-learning" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                        <div hidden="true" id="loader_recommendation_Masterclass" class="spinner-border spinner-border-sm text-primary" role="status"></div>
                         </center>
                         <?php
                         $find = false;
 
-                        if(isset($count['E-learning']))
-                            if($count['E-learning'] > 0)
+                        if(isset($count['Masterclass']))
+                            if($count['Masterclass'] > 0)
                                 foreach($recommended_courses as $course){
                                     //Course Type
                                     $course_type = get_field('course_type', $course->ID);
-                                    if($course_type != 'E-learning')
+                                    if($course_type != 'Masterclass')
                                         continue;
 
                                     /*
