@@ -21,16 +21,9 @@ $user_connected = wp_get_current_user();
   );
   $companies = get_posts($args);
 
-  foreach($users as $user){
-      $name_user = strtolower($user->data->display_name);
 
-      if($name_user == "youtube"){
-        $author_id = intval($user->data->ID);
-        $name_user = $user->display_name;
-        break;
-      }
-  }
 //youtube-playlist from excel
+
 
 extract($_POST);
 if ($playlist_youtube){
@@ -49,11 +42,29 @@ if ($playlist_youtube){
         echo "<span class='text-center alert alert-danger'>not possible to read the file</span>";
     }
     array_shift($playlists_id); //remove the tittle of the colone
-
+    
     if($playlists_id || !empty($playlists_id))
     foreach($playlists_id as $playlist_id){
         $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&id=" . $playlist_id . "&key=" . $api_key; 
         $playlists = json_decode(file_get_contents($url_playlist),true);
+        $author = array_keys($playlist_id);
+        $author_id = null;
+
+        foreach($users as $user) {
+            $company_user = get_field('company',  'user_' . $user->ID);
+
+            if(isset($company_user[0]->post_title)) 
+            if(strtolower($user->display_name)== strtolower($author) ){
+                $author_id = $user->ID;
+                $company = $company_user[0];
+                $company_id = $company_user[0]->ID;
+                var_dump($author_id);
+            }else {
+                echo 'a problem has occured';
+            }
+            
+        }
+
         foreach($playlists['items'] as $key => $playlist){
             // var_dump($playlist);
             // die();
