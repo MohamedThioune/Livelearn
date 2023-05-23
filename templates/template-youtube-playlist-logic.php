@@ -59,10 +59,10 @@ if ($playlist_youtube){
                 $company = $company_user[0];
                 $company_id = $company_user[0]->ID;
                 var_dump($author_id);
-            }else {
+            }else{
                 echo 'a problem has occured';
             }
-            
+
         }
 
         foreach($playlists['items'] as $key => $playlist){
