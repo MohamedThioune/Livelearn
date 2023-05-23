@@ -45,7 +45,7 @@ if ($playlist_youtube){
     
     if($playlists_id || !empty($playlists_id))
     foreach($playlists_id as $author => $playlist_id){
-        var_dump($author,$playlist_id);
+        //var_dump($author,$playlist_id);
         $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&id=" . $playlist_id . "&key=" . $api_key; 
         $playlists = json_decode(file_get_contents($url_playlist),true);
         $author = array_keys($playlist_id);
@@ -53,19 +53,19 @@ if ($playlist_youtube){
 
         foreach($users as $user) {
             $company_user = get_field('company',  'user_' . $user->ID);
-
             if(isset($company_user[0]->post_title)) 
-            if(strtolower($user->display_name)== strtolower($author) ){
-                $author_id = $user->ID;
-                $company = $company_user[0];
-                $company_id = $company_user[0]->ID;
-                var_dump($author_id);
-            }else {
-                echo 'a problem has occured';
-            }
-            
+                if(strtolower($user->display_name)== strtolower($author) ){
+                    $author_id = $user->ID;
+                    $company = $company_user[0];
+                    $company_id = $company_user[0]->ID;
+                    var_dump($author_id);
+                    //continue;
+                } else {
+                    // insert this new user company in plateform.
+                    var_dump('a problem has occured');
+                }
         }
-
+        die;
         foreach($playlists['items'] as $key => $playlist){
             // var_dump($playlist);
             // die();
