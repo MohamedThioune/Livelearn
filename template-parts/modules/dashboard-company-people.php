@@ -178,7 +178,7 @@
                 <div class="d-flex align-items-center">
                     <a href="../people-mensen" class="btn add-people-manualy">Add people manually</a>
                     <div class="dropdown custom-dropdown-select">
-                        <button class="btn btn-choose-company dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn  salary-administration  btn-choose-company dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                              Salary administration
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -380,11 +380,13 @@
                 <form class="needs-validation" action="/livelearn/dashboard/company/people/" novalidate id="data-sending-from-nmbrs" method="POST">
                     <div class="form-group">
                         <label for="nmbrs-username" class="col-form-label">login</label>
-                        <input type="text" value="PartnerApp_extdev-livelearn_AFEE32B2930D41FA84667196E5515D40" class="form-control" name="nmbrs_username" aria-describedby="inputGroupPrepend" autocomplete="nope" required>
+                        <input type="text" class="form-control" name="nmbrs_username" aria-describedby="inputGroupPrepend" autocomplete="nope" required>
+                        <!-- <input type="text" value="PartnerApp_extdev-livelearn_AFEE32B2930D41FA84667196E5515D40" class="form-control" name="nmbrs_username" aria-describedby="inputGroupPrepend" autocomplete="nope" required> -->
                     </div>
                     <div class="form-group">
                         <label for="nmbrs-password" class="col-form-label">password</label>
-                        <input type="password" value="https://quickforget.com/s/55b05bf4213e0b1bb24343918e14db5c4bfcf9a3a2bde24a" class="form-control" name="nmbrs_password" aria-describedby="inputGroupPrepend" autocomplete="new-password" required>
+                        <input type="password" class="form-control" name="nmbrs_password" aria-describedby="inputGroupPrepend" autocomplete="new-password" required>
+                        <!-- <input type="password" value="https://quickforget.com/s/55b05bf4213e0b1bb24343918e14db5c4bfcf9a3a2bde24a" class="form-control" name="nmbrs_password" aria-describedby="inputGroupPrepend" autocomplete="new-password" required> -->
                     </div>
                 </form>
             </div>
@@ -707,7 +709,7 @@
 </script>
 <script>
    $('.custom-dropdown-select .dropdown-item').on('click', function(){
-        $('.btn-choose-company').html($(this).html());
+        $('.salary-administration').html($(this).html());
     });
 
 </script>

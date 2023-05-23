@@ -46,7 +46,8 @@ if ($playlist_youtube){
     array_shift($playlists_id); //remove the tittle of the colone
 
     if($playlists_id || !empty($playlists_id))
-    foreach($playlists_id as $playlist_id){
+    foreach($playlists_id as $author => $playlist_id){
+        var_dump($author,$playlist_id);
         $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&id=" . $playlist_id . "&key=" . $api_key; 
         $playlists = json_decode(file_get_contents($url_playlist),true);
         foreach($playlists['items'] as $key => $playlist){
@@ -101,8 +102,8 @@ if ($playlist_youtube){
                 'status' => $status
             );
             echo $data;
-            $wpdb->insert($table,$data);
-            $post_id = $wpdb->insert_id;
+            //$wpdb->insert($table,$data);
+            //$post_id = $wpdb->insert_id;
 
             $meta = $meta_value . '~' . $post_id;          
 
