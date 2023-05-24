@@ -1,5 +1,6 @@
 <!-- Modal -->
 <?php
+echo '<input type="hidden" name="" value="' . $_COOKIE["cookie_consent"] . '">';
 if(!isset($_COOKIE["cookie_consent"])):
 ?> 
 <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -24,6 +25,7 @@ if(!isset($_COOKIE["cookie_consent"])):
 <?php endif; ?>
 
 <?php
+echo '<input type="hidden" name="" value="' . $_COOKIE['mobile_download'] . '">';
 if(!isset($_COOKIE['mobile_download'])):
 ?> 
 <div id="modalForApp" class="modal fade" role="dialog">
@@ -647,6 +649,13 @@ $site_url = get_site_url() . "/apply-cookie";
             el: '.swiper-pagination',
             clickable: true,
         },
+    });
+</script>
+<script>
+    $(window).on('resize', function() {
+        if ($(window).width() > 767) {
+            $('#cookieModal').hide();
+        }
     });
 </script>
 </footer>  
