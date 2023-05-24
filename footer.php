@@ -650,4 +650,11 @@ $site_url = get_site_url() . "/apply-cookie";
         },
     });
 </script>
+<script>
+    $(window).on('resize', function() {
+        if ($(window).width() > 767) {
+            $('#cookieModal').hide();
+        }
+    });
+</script>
 </footer>  
