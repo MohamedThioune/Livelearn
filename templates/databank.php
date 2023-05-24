@@ -707,14 +707,14 @@ $(document).ready(function () {
             },
             error: function(error){
                 console.log('error',error);
+                document.getElementById('content-back-topics').innerHTML = error;
                },
             success: function(success){
-                $('#loader').attr('hidden',true);
-                $('#select_field').attr('hidden',false);
                 document.getElementById('content-back-topics').innerHTML = success;
                 console.log('success',success)
             },complete: function(complete){
-
+                $('#loader').attr('hidden',true);
+                $('#select_field').attr('hidden',false);
             },
         });
     })
