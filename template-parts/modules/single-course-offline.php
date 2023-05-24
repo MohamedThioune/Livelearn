@@ -466,7 +466,6 @@
                                                                     <div class="Course-info">
                                                                         <h3>Cursus</h3>
                                                                         <?php
-                                                                        var_dump($year_start);
                                                                         for($i = 0; $i < count($datum['data']); $i++) {
                                                                         $date_start = $datum['data'][$i]['start_date'];
                                                                         $location = $datum['data'][$i]['location'];
