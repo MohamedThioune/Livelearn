@@ -253,12 +253,7 @@ if(!isset($_COOKIE['mobile_download'])):
     <!-- end /.footer-big -->
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script>
-<?php if ( !is_user_logged_in() ) : ?>
-<!-- Start of HubSpot Embed Code -->
-<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/27242849.js"></script>
-<!-- End of HubSpot Embed Code -->
-<?php endif; ?>  
+<script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/swiper.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
@@ -658,4 +653,11 @@ $site_url = get_site_url() . "/apply-cookie";
         }
     });
 </script>
+
+<?php if ( !is_user_logged_in() ) : ?>
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/27242849.js"></script>
+<!-- End of HubSpot Embed Code -->
+<?php endif; ?> 
+
 </footer>  
