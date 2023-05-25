@@ -51,8 +51,8 @@ if ($playlist_youtube){
             $playlists = json_decode(file_get_contents($url_playlist),true);
             $author = array_keys($playlist_id);
             // var_dump("for user ",$author[0]);
+            $author_id = null;
             foreach($users as $user) {
-                $author_id = null;
                 $company_user = get_field('company',  'user_' . $user->ID);
                 if(isset($company_user[0]->post_title)) 
                     if(strtolower($user->display_name)== strtolower($author[0]) ){
@@ -113,13 +113,13 @@ if ($playlist_youtube){
                         'company_id' =>  $company_id,
                         'status' => $status
                     );
-                    var_dump ($data);
-                    //$wpdb->insert($table,$data);
-                    //$post_id = $wpdb->insert_id;
+                    // var_dump ($data);
+                    $wpdb->insert($table,$data);
+                    $post_id = $wpdb->insert_id;
 
                     echo "<span class='textOpleidRight'> Course_ID : " . $playlist['id'] . " - Insertion done successfully <br><br></span>";
                 }else{
-                    var_dump('iciiiii');
+                    // var_dump('iciiiii');
                     continue;
                 }
             
