@@ -1,5 +1,21 @@
 <?php
 
+if(isset($course_id));
+  $posts = get_post($course_id);
+
+$course_type = get_field('course_type', $posts->ID);
+//image post
+$thumbnail = get_field('preview', $posts->ID)['url'];
+if(!$thumbnail){
+    $thumbnail = get_the_post_thumbnail_url($posts->ID);
+    if(!$thumbnail)
+        $thumbnail = get_field('url_image_xml', $posts->ID);
+    if(!$thumbnail)
+        $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+}
+//short_description post
+$short_description = get_field('short_description', $posts->ID);
+
 $mail_shared_course_body = 
 '
 <!doctype html>
@@ -264,7 +280,7 @@ $mail_shared_course_body =
                             style="margin: 10px 0; margin-bottom: 10px;"><span
                               style="color:#787878;font-family:Arial;font-size:14px;line-height:22px;">The following
                               learning content is shared with you by '. $manager->display_name . ' of the person who shared the course with
-                              you&gt;:</span></p>
+                              you</span></p>
                         </div>
                       </td>
                     </tr>
@@ -320,7 +336,7 @@ $mail_shared_course_body =
                         <div
                           style="font-family:Arial, sans-serif;font-size:13px;letter-spacing:normal;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content" data-testid="yb3veC3LzzuKS9DcCsLpD"
-                            style="margin: 10px 0; margin-top: 10px;"><span style="font-family:Arial;"><b>' . $posts->title . '</b></span></p>
+                            style="margin: 10px 0; margin-top: 10px;"><span style="font-family:Arial;"><b>' . $posts->post_title . '</b></span></p>
                           <p class="text-build-content" data-testid="yb3veC3LzzuKS9DcCsLpD"
                             style="margin: 10px 0; margin-bottom: 10px;"><span style="font-family:Arial;">' . $short_description . '</span></p>
                         </div>

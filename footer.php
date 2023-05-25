@@ -3,7 +3,7 @@
 echo '<input type="hidden" name="" value="' . $_COOKIE["cookie_consent"] . '">';
 if(!isset($_COOKIE["cookie_consent"])):
 ?> 
-<div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="img-cookies-block">
@@ -21,11 +21,10 @@ if(!isset($_COOKIE["cookie_consent"])):
         </div>
     </div>
 </div>
-</div>
+</div> -->
 <?php endif; ?>
 
 <?php
-echo '<input type="hidden" name="" value="' . $_COOKIE['mobile_download'] . '">';
 if(!isset($_COOKIE['mobile_download'])):
 ?> 
 <div id="modalForApp" class="modal fade" role="dialog">
@@ -253,12 +252,7 @@ if(!isset($_COOKIE['mobile_download'])):
     <!-- end /.footer-big -->
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script>
-<?php if ( !is_user_logged_in() ) : ?>
-<!-- Start of HubSpot Embed Code -->
-<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/27242849.js"></script>
-<!-- End of HubSpot Embed Code -->
-<?php endif; ?>  
+<script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/swiper.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
@@ -658,4 +652,11 @@ $site_url = get_site_url() . "/apply-cookie";
         }
     });
 </script>
+
+<?php if ( !is_user_logged_in() ) : ?>
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/27242849.js"></script>
+<!-- End of HubSpot Embed Code -->
+<?php endif; ?> 
+
 </footer>  
