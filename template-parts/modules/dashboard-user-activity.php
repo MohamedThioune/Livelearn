@@ -859,7 +859,7 @@ foreach ($users as $element) {
                                     $access_community = '/dashboard/user/community-detail/?mu=' . $value->ID ;
 
                                 ?>
-                                <a href="/<?= $access_community?>"  class="card-communities-activity">
+                                <a href="<?= $access_community?>"  class="card-communities-activity">
                                     <div class="block-img">
                                         <img src="<?= $community_image ?>" class="" alt="">
                                     </div>
