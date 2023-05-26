@@ -1,9 +1,9 @@
 <!-- Modal -->
 <?php
-var_dump($_COOKIE['cookie_consent']);
+echo '<input type="hidden" name="" value="' . $_COOKIE["cookie_consent"] . '">';
 if(!isset($_COOKIE["cookie_consent"])):
-?>
-<div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+?> 
+<!-- <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="img-cookies-block">
@@ -16,12 +16,12 @@ if(!isset($_COOKIE["cookie_consent"])):
                     <button class="btn btn-accpet-cookies accept-cookies" id="1">Accept & continue</button>
                     <button class="btn btn-decline-cookies accept-cookies" id="0">Decline cookies</button>
                     <div hidden="true" id="loader_cookie" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                </div>
+                </div> 
             </div>
         </div>
     </div>
 </div>
-</div>
+</div> -->
 <?php endif; ?>
 
 <?php
@@ -252,12 +252,7 @@ if(!isset($_COOKIE['mobile_download'])):
     <!-- end /.footer-big -->
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script>
-<?php if ( !is_user_logged_in() ) : ?>
-<!-- Start of HubSpot Embed Code -->
-<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/27242849.js"></script>
-<!-- End of HubSpot Embed Code -->
-<?php endif; ?>  
+<script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/swiper.js"></script>
 <script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
@@ -657,4 +652,11 @@ $site_url = get_site_url() . "/apply-cookie";
         }
     });
 </script>
+
+<?php if ( !is_user_logged_in() ) : ?>
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/27242849.js"></script>
+<!-- End of HubSpot Embed Code -->
+<?php endif; ?> 
+
 </footer>  
