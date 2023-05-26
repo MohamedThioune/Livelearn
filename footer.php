@@ -1,8 +1,8 @@
 <!-- Modal -->
 <?php
-echo '<input type="hidden" name="" value="' . $_COOKIE["cookie_consent"] . '">';
+var_dump($_COOKIE['cookie_consent']);
 if(!isset($_COOKIE["cookie_consent"])):
-?> 
+?>
 <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -16,7 +16,7 @@ if(!isset($_COOKIE["cookie_consent"])):
                     <button class="btn btn-accpet-cookies accept-cookies" id="1">Accept & continue</button>
                     <button class="btn btn-decline-cookies accept-cookies" id="0">Decline cookies</button>
                     <div hidden="true" id="loader_cookie" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                </div> 
+                </div>
             </div>
         </div>
     </div>
@@ -25,7 +25,6 @@ if(!isset($_COOKIE["cookie_consent"])):
 <?php endif; ?>
 
 <?php
-echo '<input type="hidden" name="" value="' . $_COOKIE['mobile_download'] . '">';
 if(!isset($_COOKIE['mobile_download'])):
 ?> 
 <div id="modalForApp" class="modal fade" role="dialog">
