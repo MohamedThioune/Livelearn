@@ -82,7 +82,7 @@
                 'post_author' => $user_id,
                 'post_status' => 'publish',
                 'post_title' => $user_visibility->display_name . ' - View',
-                );
+            );
             
             $stat_id = wp_insert_post($data);
         }
