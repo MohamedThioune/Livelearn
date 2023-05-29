@@ -51,21 +51,22 @@ if ($playlist_youtube){
             $playlists = json_decode(file_get_contents($url_playlist),true);
             $author = array_keys($playlist_id);
             // var_dump("for user ",$author[0]);
-            $author_id = null;
+            $author_id = 0;
             foreach($users as $user) {
                 $company_user = get_field('company',  'user_' . $user->ID);
-                if(isset($company_user[0]->post_title)) 
-                    if(strtolower($user->display_name)== strtolower($author[0]) ){
+                if(isset($company_user[0]->post_title))
+                // var_dump(strtolower($user->display_name));
+                    if(strtolower($user->display_name) == strtolower($author[0]) ){
                         $author_id = $user->ID;
                         $company = $company_user[0];
                         $company_id = $company_user[0]->ID;
                         // var_dump($author_id.'->'.$company_id);
-                        // continue;
+                        continue;
                     }
             }
-            //Accord the author a company
-            // if(!is_wp_error($author_id))
-            //     update_field('company', $company, 'user_' . $author_id);
+            // Accord the author a company
+            if(!is_wp_error($author_id))
+                update_field('company', $company, 'user_' . $author_id);
             
             foreach($playlists['items'] as $key => $playlist){
                 
