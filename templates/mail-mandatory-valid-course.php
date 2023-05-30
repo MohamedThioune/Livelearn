@@ -318,7 +318,7 @@ $mail_mandatory_validated_course_body =
                         <div
                           style="font-family:Arial, sans-serif;font-size:13px;letter-spacing:normal;line-height:1;text-align:left;color:#000000;">
                           <p class="text-build-content" data-testid="yb3veC3LzzuKS9DcCsLpD"
-                            style="margin: 10px 0; margin-top: 10px;"><span style="font-family:Arial;"><b>' . $posts->title . '</b></span></p>
+                            style="margin: 10px 0; margin-top: 10px;"><span style="font-family:Arial;"><b>' . $posts->post_title . '</b></span></p>
                           <p class="text-build-content" data-testid="yb3veC3LzzuKS9DcCsLpD"
                             style="margin: 10px 0; margin-bottom: 10px;"><span style="font-family:Arial;">' . $short_description . '</span></p>
                         </div>
