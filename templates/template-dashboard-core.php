@@ -1173,7 +1173,7 @@ else if(isset($mandatory_course)){
     require($mandatory_a_course);
     $subject = 'Een van je managers heeft een verplichte cursus met je gedeeld!';
     $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
-    wp_mail("mohamed@livelearn.nl", $subject, $mail_mandatored_course_body, $headers, array( '' )) ;
+    wp_mail($email, $subject, $mail_mandatored_course_body, $headers, array( '' )) ;
 
     $message = "/dashboard/company/profile/?id=" . $user_must . "&manager=" . $manager->ID . "&message=Successfully put on mandatory !"; 
 
