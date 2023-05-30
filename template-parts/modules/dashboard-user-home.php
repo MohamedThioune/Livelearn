@@ -1713,7 +1713,7 @@ if(isset($_GET['message']))
                         
             ?>
             <div class="card-Upcoming">
-                <p class="title"><?= $course->post_title; ?></p>
+                <a  href="<?php echo get_permalink($course->ID); ?>" class="title"><?= $course->post_title; ?></p>
                 <div class="d-flex align-items-center justify-content-between">
                     <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/bi_calendar-event-fill.png" alt="">
                     <p class="date"><?php echo($month . ' ' . $day . ', ' . $year) ?></p>
