@@ -83,7 +83,7 @@ if ($playlist_youtube){
             foreach($playlists['items'] as $playlist){
                 
                 //define type (Video or Playlist)
-                $type = substr($id_playlist[0], 0, 2)=='PL' ? 'Playlist':'Video';
+                $type = 'Video'
 
                 //Get the url media image to display on front
                 $image = ( isset($playlist['snippet']['thumbnails']['maxres']) ) ? $playlist['snippet']['thumbnails']['maxres']['url'] : $playlist['snippet']['thumbnails']['standard']['url'];
