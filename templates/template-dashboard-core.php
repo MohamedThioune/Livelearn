@@ -15,11 +15,10 @@ if(is_user_logged_in()){
     acf_form_head();
 } 
 
-$user = get_current_user_id();
+$user_connected_id = get_current_user_id();
 $user_data = wp_get_current_user();
 
-var_dump($user);
-if(!$user)
+if(!$user_connected_id)
     header('Location: /');
 
 $message = ""; 
