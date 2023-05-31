@@ -12,22 +12,23 @@
 <?php
 /** Woocommerce API client for php **/
 
-// require __DIR__ . '/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
-// use Automattic\WooCommerce\Client;
+use Automattic\WooCommerce\Client;
 
-// $woocommerce = new Client(
-//   'https://www.livelearn.nl/',
-//   'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
-//   'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
-//   [
-//     'version' => 'wc/v3',
-//   ]
-// );
+$woocommerce = new Client(
+  'https://www.livelearn.nl/',
+  'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
+  'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
+  [
+    'version' => 'wc/v3',
+  ]
+);
 
-// $endpoint = "subscriptions/9260/orders";
-// $subscription_orders = $woocommerce->get($endpoint, $parameters = []);
+$endpoint = "subscriptions/9260/orders";
+$subscription_orders = $woocommerce->get($endpoint, $parameters = []);
 
+var_dump($subscription_orders);
 
 ?>
 
