@@ -220,18 +220,22 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     <td class="textTh tdCenter"><?= $course->prijs; ?></td>
                                     <td class="textTh courseOnderwerpen">
                                         <?php
-                                        if(!empty($onderwerpen)){
-                                        $tab = [];
-                                            foreach($onderwerpen as $value1){
-                                                if($value1){
-                                                    $tab[] = (String)get_the_category_by_ID($value1);
+                                        if ($course->type != 'Playlist' && $course->type != 'Video') {                                        
+                                            if(!empty($onderwerpen)){
+                                            $tab = [];
+                                                foreach($onderwerpen as $value1){
+                                                    if($value1){
+                                                        $tab[] = (String)get_the_category_by_ID($value1);
+                                                    }
+                                                }
+                                                $tab = array_unique($tab);
+                                                foreach ($tab as $key => $value2) {
+                                                    if($value2)
+                                                        echo $value2.',';
                                                 }
                                             }
-                                            $tab = array_unique($tab);
-                                            foreach ($tab as $key => $value2) {
-                                                if($value2)
-                                                    echo $value2.',';
-                                            }
+                                        }else{
+                                            echo $course->onderwerpen;
                                         }
                                         ?>
                                     </td>

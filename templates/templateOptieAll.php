@@ -13,8 +13,8 @@
             $where = ['id' => $obj];
             if($optie == "✔️"){
                 //Insert some other course type
-                $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar','Artikels' => 'artikels'];
-                $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Webinar' => 'webinar', 'Artikels' => 'artikels'];
+                $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar','Artikels','Playlist'];
+                $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Playlist' => 'playlist', 'Webinar' => 'webinar', 'Artikels' => 'artikels'];
 
                 //Insert Artikel
                 if (strval($course->type) == "Artikel"){
