@@ -24,7 +24,6 @@ $user_connected = wp_get_current_user();
 
 //youtube-playlist from excel
 
-
 extract($_POST);
 if ($playlist_youtube){
     $fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct-test.csv";
@@ -83,7 +82,7 @@ if ($playlist_youtube){
             foreach($playlists['items'] as $playlist){
                 
                 //define type (Video or Playlist)
-                $type = 'Video'
+                $type = 'Video';
 
                 //Get the url media image to display on front
                 $image = ( isset($playlist['snippet']['thumbnails']['maxres']) ) ? $playlist['snippet']['thumbnails']['maxres']['url'] : $playlist['snippet']['thumbnails']['standard']['url'];
