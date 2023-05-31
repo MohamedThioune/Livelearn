@@ -25,7 +25,7 @@ $woocommerce = new Client(
   ]
 );
 
-$endpoint = "subscriptions/9260/orders";
+$endpoint = "subscriptions";
 $subscription_orders = $woocommerce->get($endpoint, $parameters = []);
 
 var_dump($subscription_orders);
