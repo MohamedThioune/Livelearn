@@ -16,13 +16,14 @@ if(is_user_logged_in()){
 } 
 
 $user = get_current_user_id();
-$message = ""; 
-
-extract($_POST);
+$user_data = wp_get_current_user();
 
 $user_data = wp_get_current_user();
 if(!$user)
-    header('Location:/');
+    header('Location: /');
+
+$message = ""; 
+extract($_POST);
 
 function RandomString(){
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
