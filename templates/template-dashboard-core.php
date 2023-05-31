@@ -1108,7 +1108,6 @@ else if(isset($reply_question_community)){
     }
     $question = array_reverse($question);
     update_field('question_community', $question, $community_id);
-    var_dump( $_POST['txtreply']);
     $path = "/dashboard/user/community-detail/?mu=" . $community_id . "&message=Reply question applied successfully !";
     header("Location: ". $path);
 }
