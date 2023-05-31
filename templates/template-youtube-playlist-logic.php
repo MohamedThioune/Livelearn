@@ -24,7 +24,6 @@ $user_connected = wp_get_current_user();
 
 //youtube-playlist from excel
 
-
 extract($_POST);
 if ($playlist_youtube){
     $fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct-test.csv";
