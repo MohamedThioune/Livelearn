@@ -32,35 +32,47 @@ if ($playlist_youtube){
     if ($file) {
         $playlists_id = array();
         $urlPlaylist = [];
-
+        $onderwp='';
+        $onderwerpen= array();
         while ($line = fgetcsv($file)) {
+            $subtopics = "";
             $row = explode(';',$line[0]);
             $playlists_id[][$row[4]] = $row[2];
+            $subtopics = $row[6];
+            
+            $temp = explode('/',$subtopics);
+            
+            if($temp[1]!=""){
+                $onderwp = implode(',',$temp);
+                array_push($onderwerpen,$onderwp);
+            }
+            else {
+                $onderwp = $temp[0];
+                array_push($onderwerpen,$onderwp);
+            }
+            
         }
         fclose($file);
     }else {
         echo "<span class='text-center alert alert-danger'>not possible to read the file</span>";
     }
-    array_shift($playlists_id); //remove the tittle of the colone
-    // var_dump($playlists_id);
+    array_shift($playlists_id);
+    
+    $i=1;
     if($playlists_id || !empty($playlists_id)){
         foreach($playlists_id as $playlist_id){
             $id_playlist = array_values($playlist_id);
-            // var_dump($id_playlist[0]);
             $url_playlist = "https://youtube.googleapis.com/youtube/v3/playlists?order=date&part=snippet&id=" . $id_playlist[0] . "&key=" . $api_key; 
             $playlists = json_decode(file_get_contents($url_playlist),true);
             $author = array_keys($playlist_id);
-            // var_dump("for user ",$author[0]);
             $author_id = 0;
             foreach($users as $user) {
                 $company_user = get_field('company',  'user_' . $user->ID);
                 if(isset($company_user[0]->post_title))
-                // var_dump(strtolower($user->display_name));
                     if(strtolower($user->display_name) == strtolower($author[0]) ){
                         $author_id = $user->ID;
                         $company = $company_user[0];
                         $company_id = $company_user[0]->ID;
-                        // var_dump($author_id.'->'.$company_id);
                         continue;
                     }
             }
@@ -68,7 +80,7 @@ if ($playlist_youtube){
             if(!is_wp_error($author_id))
                 update_field('company', $company, 'user_' . $author_id);
             
-            foreach($playlists['items'] as $key => $playlist){
+            foreach($playlists['items'] as $playlist){
                 
                 //define type (Video or Playlist)
                 $type = substr($id_playlist[0], 0, 2)=='PL' ? 'Playlist':'Video';
@@ -82,7 +94,6 @@ if ($playlist_youtube){
                 if(!isset($result_title[0]) && !isset($result_image[0])){  
                     $url_playlist = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=" . $playlist['id'] . "&maxResults=" . $maxResults . "&key=" . $api_key;        
                     
-                    // var_dump('ici');
                     $detail_playlist = json_decode(file_get_contents($url_playlist, true));
                     $youtube_videos = '';
                     foreach($detail_playlist->items as $key => $video){
@@ -107,25 +118,25 @@ if ($playlist_youtube){
                         'prijs' => 0, 
                         'prijs_vat' => 0,
                         'image_xml' => $image, 
-                        'onderwerpen' => null, 
+                        'onderwerpen' => $onderwerpen[$i], 
                         'date_multiple' => null, 
                         'course_id' => null,
                         'author_id' => $author_id,
                         'company_id' =>  $company_id,
                         'status' => $status
                     );
-                    // var_dump ($data);
                     $wpdb->insert($table,$data);
                     $post_id = $wpdb->insert_id;
 
                     echo "<span class='textOpleidRight'> Course_ID : " . $playlist['id'] . " - Insertion done successfully <br><br></span>";
                 }else{
-                    // var_dump('iciiiii');
                     continue;
                 }
             
             }
+            $i++;
         }
+        
     }else
         echo '<h3>No news playlists found</h3>';
 
