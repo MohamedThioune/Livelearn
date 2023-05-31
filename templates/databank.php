@@ -220,7 +220,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     <td class="textTh tdCenter"><?= $course->prijs; ?></td>
                                     <td class="textTh courseOnderwerpen">
                                         <?php
-                                        if ($course->type != 'Playlist' && $course->type != 'Video') {                                        
+                                        if ($course->type != 'Video') {                                        
                                             if(!empty($onderwerpen)){
                                             $tab = [];
                                                 foreach($onderwerpen as $value1){
