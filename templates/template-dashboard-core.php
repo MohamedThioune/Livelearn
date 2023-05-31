@@ -18,7 +18,7 @@ if(is_user_logged_in()){
 $user = get_current_user_id();
 $user_data = wp_get_current_user();
 
-$user_data = wp_get_current_user();
+var_dump($user);
 if(!$user)
     header('Location: /');
 
