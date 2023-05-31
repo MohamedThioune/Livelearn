@@ -27,7 +27,7 @@ $user_connected = wp_get_current_user();
 
 extract($_POST);
 if ($playlist_youtube){
-    $fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct.csv";
+    $fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct-test.csv";
     $file = fopen($fileName, 'r');
     if ($file) {
         $playlists_id = array();
