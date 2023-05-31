@@ -8,7 +8,7 @@ $mollie->setApiKey("test_c5nwVnj42cyscR8TkKp3CWJFd5pHk3");
 
 $payments = $mollie->payments->page(); 
 
-var_dump($payments[0]->ID);
+var_dump($payments[0]->id);
 ?>
 
 <?php
