@@ -8157,7 +8157,22 @@ tbody {
             margin-top: -10px;
             width: 155px;
         }
-
+        #team .card-course .userImg {
+            overflow: hidden;
+            position: relative;
+            display: -webkit-inline-box;
+        }
+       .body-content-view-statistic .subTopics-usage-block .subTopics-card {
+           height: initial !important;
+           overflow: scroll;
+       }
+        .individualContent .subTopics-usage-block .subTopics-card {
+            height: 357px !important;
+            overflow: scroll;
+        }
+        .individualContent .group-card-head {
+            padding-top: 0;
+        }
         @media all and (min-width: 300px) and (max-width: 767px){
             .second-block-binnen img {
                 height: 190px !important;
@@ -18494,7 +18509,7 @@ background: #FFFFFF !important;
 .subTopics-card .element-SubTopics {
     margin-bottom: 15px;
 }
-.usage-block-card{
+.usage-block-card-team{
     background: #FFFFFF;
     box-shadow: 0px 4px 13px rgba(82, 85, 90, 0.05);
     border-radius: 5px;
@@ -18588,7 +18603,7 @@ background: #FFFFFF !important;
     width: 48%;
 }
 .body-content-view-statistic .subTopics-usage-block .subTopics-card {
-    max-height: 386px;
+    height: -webkit-fill-available;
     overflow: scroll;
 }
 .body-content-view-statistic .usage-block-card {
@@ -18597,6 +18612,10 @@ background: #FFFFFF !important;
     border-radius: 5px;
     padding: 20px;
     margin-bottom: 40px;
+    width: 100%;
+}
+.individualContent .group-card-head {
+    padding-top: 0 !important;
 }
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
