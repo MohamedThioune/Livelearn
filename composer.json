@@ -1,4 +1,9 @@
 {
+    "config": {
+
+        "platform-check": false
+    },
+    
     "require": {
         "fabpot/goutte": "^4.0",
         "automattic/woocommerce": "^3.1"
