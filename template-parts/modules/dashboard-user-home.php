@@ -439,6 +439,7 @@ $user_post_view = get_posts(
 
 //Experts
 $postAuthorSearch = array();
+$experts = array();
 $experts = get_user_meta($user, 'expert');
 $postAuthorSearch = $experts;
 //Views expert
