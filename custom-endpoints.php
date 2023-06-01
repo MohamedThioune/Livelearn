@@ -1071,6 +1071,7 @@ function filter_course(WP_REST_Request $request)
                       $image = get_stylesheet_directory_uri().'/img/assessment-1.png'; 
       }
       $assessment ->image = $image;
+      $assessment ->level = get_field('image_assessement', $assessment->ID);
   }
   return $assessments;
 }
