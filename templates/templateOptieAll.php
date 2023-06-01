@@ -1,23 +1,20 @@
  <?php /** Template Name: Optie All*/?>
-<?php
+ <?php
     global $wpdb;
     extract($_POST);
-
+    // var_dump($class, $ids, $optie);
     $table = $wpdb->prefix . 'databank';
 
-    $id=$_POST['checkOne'];
-    $optie=$_POST['submit'];
 
-    if(isset($id)){
-        foreach($id as $key=>$obj){
+    if(isset($ids)){
+        foreach($ids as $key=>$obj){
             $sql=$wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE id = %d",$obj);
             $course = $wpdb->get_results($sql)[0];
-
             $where = ['id' => $obj];
             if($optie == "✔️"){
                 //Insert some other course type
-                $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar'];
-                $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Webinar' => 'webinar' ];
+                $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar','Artikels'];
+                $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Playlist' => 'playlist', 'Webinar' => 'webinar', 'Artikels' => 'artikels'];
 
                 //Insert Artikel
                 if (strval($course->type) == "Artikel"){
@@ -130,18 +127,16 @@
                 */
                 
                 // $data = [ 'course_id' => $id_post]; // NULL value.
-                // $wpdb->update( $table, $data, $where );   
-            }else if($optie=="❌"){
-                if ($class[$key] == 'missing')
+                // $wpdb->update( $table, $data, $where );
+            }     
+            else if($optie == "❌"){
+                if ($operation == 'missing')
                     null;
-                else if ($class[$key] == 'present' )
-                    // var_dump($artikel->course_id);
+                else if ($operation == 'present' )
                     wp_trash_post($course->course_id);
             }
             $data = [ 'state' => 1, 'optie' =>  $optie ]; // NULL value.
-
             $updated = $wpdb->update( $table, $data, $where );
-            echo $wpdb->last_error;
 
             if($updated === false)
                 echo 'error';
@@ -149,5 +144,5 @@
                 echo 'succeed';
         }
     }
-    header('location: /databank');
+    // header('location: /databank');
 ?>

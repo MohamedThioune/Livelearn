@@ -1,4 +1,4 @@
-²<?php /** Template Name: Edit Databank */ ?>
+<?php /** Template Name: Edit Databank */ ?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
 
@@ -9,6 +9,22 @@
 <?php
 
 extract($_GET);
+
+function strip_html_tags($text) {
+    $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
+    $text = preg_replace("/\n{1,}/", "\n", $text); 
+    $text = str_replace("\n","<br>",$text);
+    $text = str_replace("&lt;","<",$text);
+    $text = str_replace("&gt;",">",$text);
+    $text = str_replace("&#8216;","'",$text);
+    $text = str_replace("&#8217;","'",$text);
+    $text = str_replace("&#8220;","\"",$text);
+    $text = str_replace("&#8221;","\"",$text); 
+    $text = str_replace("&#8230;","...",$text); 
+    $text = str_replace(['h1','h3','h4','h5','h6'],'h2',$text);
+    $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
+    return preg_replace($pattern, '', $text);
+  } 
 
 global $wpdb; 
 
@@ -24,12 +40,14 @@ $course = $wpdb->get_results( $sql )[0];
 
  function strip_html_tags($text) {
     $allowed_tags = ['h2', 'br','strong','em','u','blockquote','ul','ol','li'];
-    $text = preg_replace("/\n{2,}/", "\n", $text); 
+    $text = preg_replace("/\n{1,}/", "\n", $text); 
     $text = str_replace("\n","<br>",$text);
+    $text = str_replace("&lt;","<",$text);
+    $text = str_replace("&gt;",">",$text);
     $text = str_replace(['h1','h3','h4','h5','h6'],'h2',$text);
     $pattern = '/<(?!\/?(?:' . implode('|', $allowed_tags) . ')\b)[^>]*>/';
     return preg_replace($pattern, '', $text);
-}
+  }
 
 /*
 * * Tags *
@@ -130,6 +148,8 @@ $args = array(
     'order' => 'DESC',
 );
 $companies = get_posts($args);
+
+
 
 ?>
 
@@ -282,7 +302,7 @@ $companies = get_posts($args);
 
                    <div class="input-group-course">
                        <label for="">Short description</label>
-                       <textarea  name="short_description" id="" cols="30" rows="6"><?= strip_html_tags($course->short_description) ?>
+                       <textarea  name="short_description" id="" cols="30" rows="6"><?= strip_html_tags($short_description) ?>
                        </textarea>
                    </div>
 
@@ -487,6 +507,7 @@ $(document).ready(function () {
     $(".multipleSelect2").select2({
         placeholder: "Maak uw keuze.",
          //placeholder
+
     });
 });
 //# sourceURL=pen.js

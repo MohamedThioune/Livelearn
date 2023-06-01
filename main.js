@@ -26,6 +26,34 @@ jQuery(function($) {
         $(this).find('.yith-wapo-option input').val(dateNameStart);
     });
 
+    $('#modalForApp .close').click(function() {
+        $('#modalForApp').hide();
+    });
+
+/*  //  pour cokkies et modal
+
+// Get the modal and the close icon element
+    const modal = document.getElementById("modalForApp");
+    const closeIcon = modal.querySelector(".close-button");
+
+    // Check if cookie exists
+    if (document.cookie.indexOf("modalShown") == -1) {
+        // If cookie doesn't exist, show modal
+        modal.style.display = "block";
+
+        // Add event listener to close icon to set cookie and hide modal
+        closeIcon.addEventListener("click", () => {
+            modal.style.display = "none";
+
+            // Set cookie with expiration time of 3 hours
+            let d = new Date();
+            d.setTime(d.getTime() + (3*60*60*1000)); // 3 hours in milliseconds
+            let expires = "expires="+ d.toUTCString();
+            document.cookie = "modalShown=true;" + expires + ";path=/";
+        });
+    }*/
+
+
     //scroll down
     $(function() {
         $('.bntStarted').click(function() {
@@ -112,7 +140,32 @@ jQuery(function($) {
     });
 
 
-    // show comment
+    // change view list or grid
+
+    var elem=$('.block-new-card-course');
+    $('.btn-group-layouts button').on('click',function(e) {
+        if ($(this).hasClass('gridview')) {
+            elem.fadeOut(250, function () {
+                elem.removeClass('list').addClass('grid');
+                elem.fadeIn(250);
+            });
+        }
+        else if($(this).hasClass('listview')) {
+            elem.fadeOut(250, function () {
+                elem.removeClass('grid').addClass('list');
+                elem.fadeIn(250);
+            });
+        }
+    });
+    $(".gridview").click(function() {
+        $(".listview").removeClass("active");
+        $(".gridview").addClass("active");
+    });
+    $(".listview").click(function() {
+        $(".gridview").removeClass("active");
+        $(".listview").addClass("active");
+    });
+
 
 
 

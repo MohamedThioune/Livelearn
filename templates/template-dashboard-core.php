@@ -15,12 +15,14 @@ if(is_user_logged_in()){
     acf_form_head();
 } 
 
-$user = get_current_user_id();
-$message = ""; 
-
-extract($_POST);
-
+$user_connected_id = get_current_user_id();
 $user_data = wp_get_current_user();
+
+if(!$user_connected_id)
+    header('Location: /');
+
+$message = ""; 
+extract($_POST);
 
 function RandomString(){
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -70,9 +72,6 @@ function makeApiCall($endpoint, $type) {
     // return data
     return json_decode( $response, true );
 }
-
-if(empty($user_data->roles))
-    header('Location:/');
 
 if(isset($_POST['expert_add']) || isset($_POST['expert_add_artikel'])){
     $bunch = get_field('experts', $_GET['id']);
@@ -1004,12 +1003,28 @@ else if(isset($follow_community)){
 
     update_field('follower_community', $followers, $community_id);
 
-    $path = "/dashboard/user/communities/?mu=" . $community_id . "&message=Successfully subscribed to this community !";
+    $path = "/dashboard/user/community-detail/?mu=" . $community_id . "&message=Successfully subscribed to this community !";
     header("Location: ". $path);
 }
 
 else if(isset($unfollow_community)){
-    $path = "/dashboard/user/communities/?mu=" . $community_id . "&message=Successfully unsubscribed to this community !";
+    $user_id = get_current_user_id();
+    $followers = array();
+    $past_followers = get_field('follower_community', $community_id);
+
+    if(empty($past_followers))
+        $past_followers = array();
+    else
+        foreach($past_followers as $follower){
+            if($follower->ID == $user_id)
+                continue;
+            
+            array_push($followers, $follower);
+        }
+    
+    update_field('follower_community', $followers, $community_id);
+
+    $path = "/dashboard/user/communities/?message=Successfully unsubscribed !";
     header("Location: ". $path);
 }
 
@@ -1093,7 +1108,6 @@ else if(isset($reply_question_community)){
     }
     $question = array_reverse($question);
     update_field('question_community', $question, $community_id);
-    var_dump( $_POST['txtreply']);
     $path = "/dashboard/user/community-detail/?mu=" . $community_id . "&message=Reply question applied successfully !";
     header("Location: ". $path);
 }
@@ -1158,7 +1172,7 @@ else if(isset($mandatory_course)){
     require($mandatory_a_course);
     $subject = 'Een van je managers heeft een verplichte cursus met je gedeeld!';
     $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
-    wp_mail("mohamed@livelearn.nl", $subject, $mail_mandatored_course_body, $headers, array( '' )) ;
+    wp_mail($email, $subject, $mail_mandatored_course_body, $headers, array( '' )) ;
 
     $message = "/dashboard/company/profile/?id=" . $user_must . "&manager=" . $manager->ID . "&message=Successfully put on mandatory !"; 
 
@@ -1392,7 +1406,7 @@ else if(isset($read_action_lesson)){
 
     header("Location: " . $follow_reads);
 }
-    
+
 ?>
 <?php wp_head(); ?>
 

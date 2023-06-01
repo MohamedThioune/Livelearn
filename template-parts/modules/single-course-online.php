@@ -907,7 +907,7 @@ extract($_GET);
             <!-- ---------------------------------- End Right Side Dashboard -------------------------------- -->
         </div>
 
-        <div class="container-fluid">
+    <div class="container-fluid">
             <div class="bloxkWorldMembre formDirect ">
                 <!-- <p class="wordnuText">Word nu <b>LIFT Member</b> en ontvang persoonlijke korting</p>
                 <a href="" class="btn btnPlan">Planeen 15min afspraak in</a> -->
@@ -941,7 +941,7 @@ extract($_GET);
             </div>
         </div>
 
-    </div>
+</div>
 
 
     <!-- début Modal deel -->
@@ -1034,11 +1034,8 @@ extract($_GET);
     <!-- -->
 
 
-</div>
-
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <!-- scritpt for modal -->
 <script>

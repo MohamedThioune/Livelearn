@@ -1,41 +1,48 @@
 <!-- Modal -->
-<div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-    <div class="img-cookies-block">
-        <img src="<?php echo get_stylesheet_directory_uri();?>/img/cookies.png" alt="">
+<?php
+echo '<input type="hidden" name="" value="' . $_COOKIE["cookie_consent"] . '">';
+if(!isset($_COOKIE["cookie_consent"])):
+?> 
+<!-- <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="img-cookies-block">
+                <img src="<?php echo get_stylesheet_directory_uri();?>/img/cookies.png" alt="">
+            </div>
+            <div class="modal-body">
+                <p class="title-cookie">Cookie consent</p>
+                <p class="description-cookie">We use necessary cookies to make our site work. We'd like to set additional cookies to understand site usage, make site improvements and to remember your settings. We also use cookies set by other sites to help deliver content from their services.</p>
+                <div class="group-btn-cookie">
+                    <button class="btn btn-accpet-cookies accept-cookies" id="1">Accept & continue</button>
+                    <button class="btn btn-decline-cookies accept-cookies" id="0">Decline cookies</button>
+                    <div hidden="true" id="loader_cookie" class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                </div> 
+            </div>
+        </div>
     </div>
-      <div class="modal-body">
-       <p class="title-cookie">Cookie consent</p>
-       <p class="description-cookie">We use necessary cookies to make our site work. We’d like to set additional cookies to understand site usage, make site improvements and to remember your settings. We also use cookies set by other sites to help deliver content from their services.</p>
-        <div class="group-btn-cookie">
-          <button type="button" class="btn btn-accpet-cookies" data-dismiss="modal">Accept & continue</button>
-          <button type="button" class="btn btn-decline-cookies" data-dismiss="modal">Decline cookies</button>
-        </div>      
-      </div>
-    </div>
-  </div>
 </div>
+</div> -->
+<?php endif; ?>
 
-
-<!--modal for app mobile when load page-->
-
+<?php
+if(!isset($_COOKIE['mobile_download'])):
+?> 
 <div id="modalForApp" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <button type="submit" name='' class="cookie_apply_mobile">x</button>
             </div>
             <div class="modal-body text-center">
                 <div class="content-modal">
                     <div class="content-img-logo">
                         <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/LiveLearn_logo.png" alt="">
                     </div>
-                    <p class="title-content-modal">Registreer je gratis om <span>educatieve content</span> te ontvangen van collega’s, vrienden én de experts uit de markt.</p>
+                    <p class="title-content-modal">Registreer je gratis om <span>educatieve content</span> te ontvangen van collega's, vrienden én de experts uit de markt.</p>
                     <div class="group-btn-get-app">
 
                         <!-- Google Play button -->
-                        <a href="https://apps.apple.com/nl/app/livelearn/id1666976386"  class="market-btn apple-btn" role="button">
+                        <a href="https://apps.apple.com/nl/app/livelearn/id1666976386" class="market-btn apple-btn" role="button">
                             <span class="market-button-subtitle">Download on the</span>
                             <span class="market-button-title">App Store</span>
                         </a>
@@ -47,15 +54,13 @@
                         </a>
                     </div>
                     <p class="Aanmelden-text">Aanmelden <span>of</span> registreren</p>
+                    <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-
-
+<?php endif; ?>
 
 <footer class="footer-area footerLive">
     <div class="footer-big">
@@ -245,9 +250,12 @@
         <!-- end /.container -->
     </div>
     <!-- end /.footer-big -->
-</footer>
+
 <script src='https://cdnjs.cloudflare.com/ajax/libs/chosen/1.4.2/chosen.jquery.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js'></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/swiper.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
 <script id="rendered-js" >
     $(document).ready(function () {
         //Chosen
@@ -265,9 +273,9 @@
 <script>
     $('.bntNotification').click((e)=>{
         $.ajax({
-                url:"/read-notification",
-                method:"get",
-                data:{},
+                url: "/read-notification",
+                method: "get",
+                data: { },
                 dataType:"text",
                 success: function(data){
                     // Get the modal
@@ -276,6 +284,94 @@
         });
     });
 </script>
+ 
+<script type="text/javascript">
+    $(window).on('load', function() {
+        $('#cookieModal').modal('show');
+    });
+</script> 
+
+<script>
+    $(window).on('resize', function() {
+        if ($(window).width() > 767) {
+            $('#cookieModal').hide();
+        }
+    });
+</script>
+
+<?php
+$site_url = get_site_url() . "/apply-cookie";
+?>
+
+<script>
+    $('.cookie_apply_mobile').click((e)=>{
+        var set_cookie = "mobile_download";
+        var openedWindow;
+
+        $.ajax({
+            url: '/apply-cookie',
+            type: 'POST',
+            dataType: 'text',
+            data:{
+                'set_cookie': set_cookie,
+            },
+            beforeSend:function(){
+                $('#loader').attr('hidden',false);
+            },
+            error: function(){
+                alert('Something went wrong!');
+                $('#loader').attr('hidden',true);
+                $('#modalForApp').hide();
+            },
+            complete: function(){
+                $('#loader').attr('hidden',true);
+                $('#modalForApp').hide();
+            },
+            success: function(data){
+                $('#loader').attr('hidden',true);
+                $('#modalForApp').hide();
+                console.log(data);
+                // openedWindow = window.open("");  // Open a new window
+                // if (openedWindow && openedWindow.close) 
+                //     openedWindow.close(); // Close a new window
+            }
+        });
+    });
+</script>
+
+<script>
+    $('.accept-cookies').click((e)=>{
+        var set_cookie_general = "cookie_consent";
+        var cookie_value = e.target.id;
+        var openedWindow;
+        $.ajax({
+            url: '/apply-cookie',
+            type: 'POST',
+            dataType: 'text',
+            data:{
+                'set_cookie': set_cookie_general,
+                'cookie_value': cookie_value,
+            },
+            beforeSend:function(){
+                $('#loader_cookie').attr('hidden',false);
+            },
+            error: function(){
+                alert('Something went wrong!');
+                $('#loader_cookie').attr('hidden',true);
+                $('#cookieModal').modal('hide');
+            },
+            success: function(data){
+                $('#loader_cookie').attr('hidden',true);
+                $('#cookieModal').modal('hide');
+                console.log(data);
+                // myWindow = window.open("", "MsgWindow", "width=200,height=100");  // Open a new window
+                // openedWindow = window.open("");  // Open a new window
+                // if (openedWindow && openedWindow.close) 
+                //     openedWindow.close(); // Close a new window    
+            }
+        });
+    });
+</script> 
 
 <script>
     $('.btnPushExpert').click((e)=>{
@@ -285,19 +381,19 @@
         var meta_value = $("#meta_value_expert" + key).val();
 
         $.ajax({
-                url:"/interest-push",
-                method:"POST",
-                data:{
-                    'user_id': user_id,
-                    'meta_key': meta_key,
-                    'meta_value': meta_value
-                },
-                dataType:"text",
-                success: function(data){
-                    console.log(data);
-                    $('#autocomplete-push-expert' + key).html(data);
+            url:"/interest-push",
+            method:"POST",
+            data:{
+                'user_id': user_id,
+                'meta_key': meta_key,
+                'meta_value': meta_value
+            },
+            dataType:"text",
+            success: function(data){
+                console.log(data);
+                $('#autocomplete-push-expert' + key).html(data);
 
-                }
+            }
         });
     });
 </script>
@@ -334,12 +430,7 @@
     })
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/swiper.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/font-awsome.js"></script>
 <script>
-
-
     $(window).on('resize', function() {
         if ($(window).width() < 767) {
             $('#modalForApp').show();
@@ -392,7 +483,6 @@
 
             if(txt){
                 $.ajax({
-
                     url:"/fetch-ajax",
                     method:"post",
                     data:{
@@ -418,14 +508,11 @@
             $("#mobile-list").fadeIn("fast");
 
             $(document).click( function(){
-
                 $('#mobile-list').hide();
-
             });
 
             if(txt){
                 $.ajax({
-
                     url:"fetch-ajax",
                     method:"post",
                     data:{
@@ -558,4 +645,18 @@
         },
     });
 </script>
+<script>
+    $(window).on('resize', function() {
+        if ($(window).width() > 767) {
+            $('#cookieModal').hide();
+        }
+    });
+</script>
 
+<?php if ( !is_user_logged_in() ) : ?>
+<!-- Start of HubSpot Embed Code -->
+<script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/27242849.js"></script>
+<!-- End of HubSpot Embed Code -->
+<?php endif; ?> 
+
+</footer>  

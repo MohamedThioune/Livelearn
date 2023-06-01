@@ -219,7 +219,7 @@ foreach ($users as $element) {
 
         <ul class="nav">
             <li class="nav-one"><a href="#All" class="current">All</a></li>
-            <li class="nav-two"><a href="#Course">Course</a></li>
+            <li class="nav-two"><a href="#Course">Courses</a></li>
             <li class="nav-three"><a href="#Notifications">Notifications</a></li>
             <li class="nav-four "><a href="#Data-and-analytics">Data and analytics</a></li>
             <li class="nav-five "><a href="#Certificates">Your certificates</a></li>
@@ -246,6 +246,7 @@ foreach ($users as $element) {
                                 <tr>
                                     <th scope="col courseTitle">Course Title</th>
                                     <th scope="col">Duration</th>
+                                    <th scope="col">Type</th>
                                     <th scope="col">Instructor</th>
                                 </tr>
                                 </thead>
@@ -321,6 +322,9 @@ foreach ($users as $element) {
                                         </td>
                                         <td>
                                             <p class="name-element"><?= $duration_day ?></p>
+                                        </td>
+                                        <td>
+                                            <p class="name-element"><?= $course_type ?></p>
                                         </td>
                                         <td class=" r-1">
                                             <div class="d-flex align-items-center">
@@ -809,7 +813,7 @@ foreach ($users as $element) {
                             $i = 0;
                             if(!empty($communities)){
                                 echo '<p class="title">Communities </p>';
-                                echo '<a href="/?tab=Communities " class="d-flex align-items-center">
+                                echo '<a href="?tab=Communities " class="d-flex align-items-center">
                                                 <p class="seeAllText">See All</p>
                                                 <img src="' . get_stylesheet_directory_uri() . '/img/seeAllIcon.png" class="" alt="">
                                         </a>';
@@ -855,7 +859,7 @@ foreach ($users as $element) {
                                     $access_community = '/dashboard/user/community-detail/?mu=' . $value->ID ;
 
                                 ?>
-                                <a href="/<?= $access_community?>"  class="card-communities-activity">
+                                <a href="<?= $access_community?>"  class="card-communities-activity">
                                     <div class="block-img">
                                         <img src="<?= $community_image ?>" class="" alt="">
                                     </div>
@@ -892,6 +896,7 @@ foreach ($users as $element) {
                                 <thead>
                                 <tr>
                                     <th scope="col courseTitle">Course Title</th>
+                                    <th scope="col courseTitle">Type</th>
                                     <th scope="col">Duration</th>
                                     <th scope="col">Instructor</th>
                                     <th scope="col">Statut</th>
@@ -985,6 +990,7 @@ foreach ($users as $element) {
                                                 <a href="<?= $href_checkout; ?>" class="name-element"><?= $course->post_title ?></>
                                             </div>
                                         </td>
+                                        <td> <p class="name-element"><?= $course_type ?></p> </td>
                                         <td>
                                             <p class="name-element"><?= $duration_day; ?></p>
                                         </td>
