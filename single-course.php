@@ -12,7 +12,17 @@ require($page);
 
 view($post,$user_visibility);
 
+$course_type = get_field('course_type', $post->ID);
+
+$offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
+$online = ['E-learning', 'Video', 'Webinar'];
+
+//Redirection - visibility 
 if(!visibility($post, $visibility_company))
+    header('location: /');
+
+//Redirection - type
+if(!in_array($course_type, $offline) && !in_array($course_type, $online) && $course_type != 'Artikel')
     header('location: /');
 
 //Online
@@ -20,7 +30,6 @@ $courses = get_field('data_virtual', $post->ID);
 $youtube_videos = get_field('youtube_videos', $post->ID);
 $podcasts = get_field('podcasts', $post->ID);
 
-$course_type = get_field('course_type', $post->ID);
 $product = wc_get_product( get_field('connected_product', $post->ID) );
 $long_description = get_field('long_description', $post->ID);
 $short_description = get_field('short_description', $post->ID);
@@ -188,9 +197,6 @@ foreach ($reviews as $review)
 $link_to = get_field('link_to', $post->ID);
 
 $share_txt = "Hello, i share this course with ya *" . $post->post_title . "* \n Link : " . get_permalink($post->ID) . "\nHope you'll like it.";
-
-$offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
-$online = ['E-learning', 'Video', 'Webinar'];
 
 if(in_array($course_type, $offline))
     include_once('template-parts/modules/single-course-offline.php');

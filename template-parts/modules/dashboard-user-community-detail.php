@@ -242,10 +242,8 @@ if($community){
                                                         <textarea form="question_community" name="text_question" id="editor" placeholder="Write your question..."></textarea>
                                                     </form>
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <button type="reset" form="question_community" class="btn btn-secondary" data-dismiss="mofdal">Close</button>
-                                                    <button type="submit" form="question_community" name="question_community" class="btn btn-send">Send</button>
-                                                </div>
+                                                <button type="submit" form="question_community" name="question_community" class="btn btn-send">Send</button>
+
                                             </div>
                                         </div>
                                     </div>

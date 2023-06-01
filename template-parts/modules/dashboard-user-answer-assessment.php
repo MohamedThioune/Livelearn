@@ -19,40 +19,42 @@ function timeToSeconds(string $time): int
         
     }
 ?>
-<div class="main-container"> 
- 
-            <div class="head3OverviewAssessment">
-                    <p class="assessmentNUmber" id="current-index">Question 1 / <?php echo count($questions); ?></p>
-                    <p class="assessmentTime" id="backendTime"><?php echo $questions[0]['timer'] ?></p>
-                
-            </div>
+<div class="main-container-assessment">
 
-                <p class="chooseTechnoTitle" id="wording"><?php echo $questions[0]['wording'] ?><span> (Multiple choose posible)</span></p>
-                
-                <div class="listAnswer">
-                    <form id="getAnswer">
-                      <?php
-                        $alphabet = range('A', 'Z');
-                        for ($i=0;$i<4;$i++) 
-                        { 
-                            
-                            ?>
-                            <label class="container-checkbox">
-                            <span class="numberAssassment"><?= $alphabet[$i]?> </span>
-                                <span class="assassment  <?php echo 'answer_'.($i+1);?>"> <?= $questions[0]["responses"][$i] ?> </span>
-                                <input name="<?php echo "answer_".($i+1); ?>" id=<?php echo "answer_".($i+1); ?> type="checkbox" value="<?php echo $i; ?>" >
-                                <span class="checkmark"></span>
-                            </label>
-
-                        <?php
-                        }
-                    
-                        ?>
-    <button type="button" class="btn btnStratModal" id="btnBackend">Continue</button>
-
-            </div>
+<div class="content-assessment">
+    <div class="head3OverviewAssessment">
+        <p class="assessmentNUmber" id="current-index">Question 1 / <?php echo count($questions); ?></p>
+        <p class="assessmentTime" id="backendTime"><?php echo $questions[0]['timer'] ?></p>
 
     </div>
+
+    <p class="chooseTechnoTitle" id="wording"><?php echo $questions[0]['wording'] ?><span> (Multiple choose posible)</span></p>
+
+    <div class="listAnswer">
+        <form id="getAnswer">
+            <?php
+            $alphabet = range('A', 'Z');
+            for ($i=0;$i<4;$i++)
+            {
+
+                ?>
+                <label class="container-checkbox">
+                    <span class="numberAssassment"><?= $alphabet[$i]?> </span>
+                    <span class="assassment  <?php echo 'answer_'.($i+1);?>"> <?= $questions[0]["responses"][$i] ?> </span>
+                    <input name="<?php echo "answer_".($i+1); ?>" id=<?php echo "answer_".($i+1); ?> type="checkbox" value="<?php echo $i; ?>" >
+                    <span class="checkmark"></span>
+                </label>
+
+                <?php
+            }
+
+            ?>
+            <button type="button" class="btn btnStratModal" id="btnBackend">Continue</button>
+
+    </div>
+</div>
+
+</div>
 
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>

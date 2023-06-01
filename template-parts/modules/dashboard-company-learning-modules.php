@@ -333,7 +333,7 @@ $orders = wc_get_orders($order_args);
                         /*
                         *  Date and Location
                         */ 
-                        $day = "<i class='fas fa-calendar-week'></i>";
+                        $day = "<p class='text-no-date'>no date given</p>";
                         $month = ' ';
                         $location = ' ';
                     
@@ -432,7 +432,7 @@ $orders = wc_get_orders($order_args);
                                     <li class="my-1"><i class="fa fa-ellipsis-vertical"></i><i class="fa fa-eye px-2"></i><a href="<?php echo $link; ?>" target="_blank">Bekijk</a></li>
                                     <?php
                                     if($course->post_author == $user_in->ID || in_array('hr', $user_in->roles) || in_array('administrator', $user_in->roles) ){
-                                        echo '<li class="my-2"><i class="fa fa-gear px-2"></i><a href="' . $path_edit . '" target="_blank">Pas aan</a></li>';
+                                        echo '<li class="my-2"><i class="fa fa-gear px-2"></i><a href="' . $path_edit . '">Pas aan</a></li>';
                                         echo '<li class="my-1 remove_opleidingen" id="live"><i class="fa fa-trash px-2 "></i><input type="button" id="" value="Verwijderen"/></li>';
                                     }
                                     ?>

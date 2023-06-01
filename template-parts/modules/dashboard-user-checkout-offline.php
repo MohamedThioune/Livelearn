@@ -61,7 +61,7 @@ else
 /* * Informations reservation * */
 //Orders - enrolled courses 
 $datenr = 0; 
-$calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Juni', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+$calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'Mei', '06' => 'Juni', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
 $enrolled = array();
 $enrolled_courses = array();
@@ -237,19 +237,37 @@ if($this_date <= $date_now && !$is_finish)
                 <div class="head-element">
                     <p>Event Details</p>
                 </div>
+                <?php
+                    $countdown_day = 0;
+                    $countdown_hour = 0;
+                    $countdown_minute = 0;
+                    $countdown_second = 0;
+
+                    $draw_time = $dayenr .'/'. $month_calendar . '/' . $yearenr;
+                    $date = DateTime::createFromFormat("d/m/Y", $draw_time);
+                    $currentDateTime = new DateTime('now');
+
+                    if($date){
+                        $countdown_day = $date->diff($currentDateTime)->format("%a");
+                        $countdown_hour = $date->diff($currentDateTime)->format("%H");
+                        $countdown_minute = $date->diff($currentDateTime)->format("%i");
+                        $countdown_second = $date->diff($currentDateTime)->format("%s");
+                        echo $date->diff($currentDateTime)->format("%a days and %H hours and %i minutes and %s seconds");
+                    }
+                ?>
                 <div class="content">
                     <div id="countdown-timer">
                         <div class="element-contdown">
-                            <strong id="days" class="bold-number">118 </strong> <span class="slim-countdown-text">D<span class="hide-words">ays</span><span class="timer"></span></span>
+                            <strong id="days" class="bold-number"><?= $countdown_day ?> </strong> <span class="slim-countdown-text">D<span class="hide-words">ays</span><span class="timer"></span></span>
                         </div>
                         <div class="element-contdown">
-                            <strong id="hours" class="bold-number"> 14 </strong> <span class="slim-countdown-text">H<span class="hide-words">ours</span><span class="timer"></span></span>
+                            <strong id="hours" class="bold-number"> <?= $countdown_hour ?>  </strong> <span class="slim-countdown-text">H<span class="hide-words">ours</span><span class="timer"></span></span>
                         </div>
                         <div class="element-contdown">
-                            <strong id="mins" class="bold-number"> 36 </strong> <span class="slim-countdown-text">M<span class="hide-words">inutes</span><span class="timer"></span></span>
+                            <strong id="mins" class="bold-number"> <?= $countdown_minute ?>  </strong> <span class="slim-countdown-text">M<span class="hide-words">inutes</span><span class="timer"></span></span>
                         </div>
                         <div class="element-contdown">
-                            <strong id="seconds" class="bold-number"> 24 </strong> <span class="slim-countdown-text">S<span class="hide-words">econds</span></span><span class="timer"></span></span>
+                            <strong id="seconds" class="bold-number"> <?= $countdown_second ?>  </strong> <span class="slim-countdown-text">S<span class="hide-words">econds</span></span><span class="timer"></span></span>
                         </div>
                     </div>
                     <div class="block-element-detail">
@@ -274,7 +292,7 @@ if($this_date <= $date_now && !$is_finish)
                                 $hourenr = explode(':', $datenrs[1]);
                                 $startenr = $yearenr .''. $month_calendar .''. $dayenr;
                                 $starthourenr = $hourenr[0] . $hourenr[1] . "00";
-                                $finishourenr = ($hourenr[0] == 24) ? "01" . '' . $hourenr[1] . "00" : "0" . ($hourenr[0] + 1) . '' . $hourenr[1] . "00";
+                                $finishourenr = ($hourenr[0] == 24) ? "01" . '' . $hourenr[1] . "00" : "0" . (intval($hourenr[0]) + 1) . '' . $hourenr[1] . "00";
                                 $date_calendar = $startenr . 'T'. $starthourenr . '/' . $startenr . 'T' . $finishourenr;
 
                                 $informations_calendar = "https://calendar.google.com/calendar/render?action=TEMPLATE&text=" . $text_calendar . "&details=" . $short_description . "&dates=" . $date_calendar . "&location=" . $locationenr;
@@ -297,8 +315,8 @@ if($this_date <= $date_now && !$is_finish)
                             <i class="fa fa-credit-card"></i>
                         </div>
                         <div>
-                            <p class="sub-text-1">AUD</p>
-                            <p class="sub-text-2">$<?= $prijs ?></p>
+                            <p class="sub-text-1">EURO</p>
+                            <p class="sub-text-2"><?= $prijs ?></p>
                         </div>
                     </div>
                 </div>

@@ -466,7 +466,6 @@
                                                                     <div class="Course-info">
                                                                         <h3>Cursus</h3>
                                                                         <?php
-                                                                        var_dump($year_start);
                                                                         for($i = 0; $i < count($datum['data']); $i++) {
                                                                         $date_start = $datum['data'][$i]['start_date'];
                                                                         $location = $datum['data'][$i]['location'];
@@ -1332,7 +1331,6 @@
 
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script id="rendered-js" >
     $(document).ready(function () {
@@ -1531,5 +1529,5 @@
 
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
- </div>
+
 
