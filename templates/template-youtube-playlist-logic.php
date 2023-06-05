@@ -57,14 +57,13 @@ if ($playlist_youtube){
                         $author_id = $user->ID;
                         $company = $company_user[0];
                         $company_id = $company_user[0]->ID;
-                        var_dump($author_id);
+                        //var_dump($author_id);
                     } else {
                         // insert this new user company in plateform.
                         //var_dump('a problem has occured');
                         //continue;
                     }
                 }else {
-                    //var_dump('ffffffffffffffffff');
                     continue;
                 }
                 if($playlists['items']) {
@@ -116,7 +115,6 @@ if ($playlist_youtube){
                                 'author_id' => $author_id,
                                 'status' => $status
                             );
-                            var_dump($data);
                             $wpdb->insert($table, $data);
                             $post_id = $wpdb->insert_id;
 
