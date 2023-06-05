@@ -511,7 +511,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search">
+                                        <a href="/product-search?filter=header&opleidin=Training">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Trainingen.jpg" alt="">
                                             </div>
@@ -591,7 +591,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=header&opleidin=">
+                                        <a href="/product-search?filter=header&opleidin=Podcast">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Podcasts-header.jpg" alt="">
                                             </div>
