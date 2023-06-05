@@ -32,8 +32,6 @@
 
 // var_dump($subscription_orders);
 
-echo wp_create_nonce( 'wc_store_api' );
-
 ?>
 
 <body>
