@@ -21,9 +21,8 @@ $message = "";
 extract($_POST);
 
 $user_data = wp_get_current_user();
-if(empty($user_data->roles))
+if(!$user)
     header('Location:/');
-
 
 function RandomString(){
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

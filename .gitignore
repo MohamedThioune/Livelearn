@@ -8,3 +8,4 @@ main.js
 /vendor/
 /.idea/
 .vscode
+api.http
