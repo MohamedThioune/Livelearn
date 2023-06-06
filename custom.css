@@ -3420,7 +3420,6 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 }
 
 .contentPassport {
-    margin: -30px 0;
     background: white;
 }
 
@@ -3519,7 +3518,6 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 
 .contentMapMember {
     display: flex;
-    margin-left: 140px;
 }
 
 .btndoawnloadCv {
@@ -3530,8 +3528,6 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     font-size: 15px;
     border-radius: 8px;
     height: fit-content;
-    margin-right: 52px;
-    margin-top: -13px;
 }
 
 .btndoawnloadCv i {
@@ -3541,7 +3537,6 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 
 .contentElementHeadCandidat {
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
@@ -10162,6 +10157,7 @@ select {
 
 #Portfolio {
     padding: 30px 40px;
+    background: white;
 }
 
 #Password {
@@ -15287,14 +15283,21 @@ background: #FFFFFF !important;
     margin: 0 20px;
 }
 .card-communities .body-card-community .group-detail {
-    margin: 18px 0;
+    margin: 18px 0 25px;
 }
 .card-communities .body-card-community .btn-join-group{
-    background: #F4F7FC;
+    background: #043356;
     border: 1px solid #D9DFE6;
     border-radius: 5px;
-    padding: 10px 30px;
-    margin: 14px auto 32px;
+    padding: 7px 25px;
+    color: white !important;
+    height: fit-content;
+    font-size: 18px;
+    margin: 10px 8px 25px;
+}
+.body-card-community .btn-danger {
+    font-size: 13px;
+    margin: 10px 8px 25px;
 }
 .content-detail-community .head-detail-community{
     display: flex;
@@ -18616,6 +18619,19 @@ background: #FFFFFF !important;
 }
 .individualContent .group-card-head {
     padding-top: 0 !important;
+}
+.sousBlockProduct2 {
+    padding-top: 25px;
+}
+.custom-url-tabs .contentBlockSetting{
+    border: none !important;
+}
+.custom-url-tabs .list-wrap{
+    background: white;
+    height: fit-content !important;
+}
+.custom-url-tabs .list-wrap ul{
+    padding: 30px 15px !important;
 }
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
