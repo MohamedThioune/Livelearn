@@ -121,7 +121,7 @@ extract($_GET);
                 </div>
 
                 <?php
-                    if($price != "Gratis")
+                    if(!$bool_link)
                         echo '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="startTextBtn btn">Start nu voor ' . $price . '</a>';
                     else
                         echo '<a href="?topic=0&lesson=0" class="startTextBtn btn">Start nu voor ' . $price . '</a>';
@@ -636,8 +636,12 @@ extract($_GET);
                                         if(isset($lesson))
                                             if($lesson == $key)
                                                 $style = "color:#F79403";
-                                        echo '  
-                                        <a href="?topic=0&lesson=' . $key . '"  class="d-flex contentListVidoeCourse">
+
+                                        $link = '#';
+                                        if($bool_link)
+                                            $link = '?topic=0&lesson=' . $key;
+                                        echo '
+                                        <a href="' . $link . '"  class="d-flex contentListVidoeCourse">
                                             <img class="" width="35px" height="20px" src="'. $thumbnail .'" alt="">
                                             <span style="' .$style . '" class="textChapitreCours">' . $video['course_lesson_title'] . '</span>
                                         </a>';
@@ -702,6 +706,7 @@ extract($_GET);
                             <?php
                             }
                             ?>
+
                             <div class="CardpriceLive">
                                 <?php
                                 if(!empty($company)){
@@ -1011,7 +1016,7 @@ extract($_GET);
 
     <!-- Start Modal  -->
     <?php
-    if($price !== 'Gratis'){
+    if(!$bool_link){
     ?>
     <div class="modal fade modalpaywallVideo" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -1023,7 +1028,7 @@ extract($_GET);
                <?php
                echo '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-paywall">Buying Now <img src="<?php echo get_stylesheet_directory_uri();?>/img/arrowhead.png" alt=""></a>';
                ?>
-               <p class="text-not-sure-which">Not Sure which is right now for you ? <a href="">Discover the benefits of taking this course now </a></p>
+               <!-- <p class="text-not-sure-which">Not Sure which is right now for you ? <a href="">Discover the benefits of taking this course now </a></p> -->
             </div>
             </div>
         </div>
