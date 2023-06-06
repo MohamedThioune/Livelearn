@@ -75,7 +75,7 @@
         $data = [
             'data_type'=> $type,
             'data_id'=> $corse_id,
-            'data_name'=> $type, //to change with @Mouhamed
+            'data_name'=> $data_name, //to change with @Mouhamed
             'user_id'=> $user_id,
             'platform'=> 'web',
             'occurence'=> $occurence
