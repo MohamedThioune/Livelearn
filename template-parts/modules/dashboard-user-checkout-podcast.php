@@ -104,7 +104,6 @@ $count_enrolled = 0;
 if(!empty($enrolled))
     $count_enrolled = count($enrolled);
 
-
 $count_podcasts = 0;
 if(!empty($podcasts))
     $count_podcasts = count($podcasts); 
