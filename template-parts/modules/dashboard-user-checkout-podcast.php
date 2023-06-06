@@ -138,7 +138,6 @@ else
 $lesson_reads = get_field('lesson_actual_read', $progression_id);
 $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
 
-
 ?>
 <body>
 <div class="content-buying-course-1">
