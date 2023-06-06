@@ -442,6 +442,7 @@ $postAuthorSearch = array();
 $experts = array();
 $experts = get_user_meta($user, 'expert');
 $postAuthorSearch = $experts;
+$teachers = array();
 //Views expert
 if (!empty($user_post_view))
 {
@@ -459,8 +460,7 @@ $args = array(
     'posts_per_page' => 200
 );
 $global_courses = get_posts($args);
-$teachers = array();
-
+shuffle($global_courses);
 foreach ($global_courses as $key => $course) {
     //Control visibility
     $bool = true;
