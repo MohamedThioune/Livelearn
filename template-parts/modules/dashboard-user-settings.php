@@ -244,378 +244,495 @@ if(!empty($bunch)){
     <h1 class="titleSetting">Profiel Informatie</h1>
     <?php if(isset($_GET['message'])) echo "<span class='alert alert-success'>" . $_GET['message'] . "</span><br><br>" ; ?>
 
-    <div class="content-tab">
-        <div class="content-button-tabs">
-            <button  data-tab="general" class="b-nav-tab btn active">
-                General
-            </button>
-            <button  data-tab="Portfolio" class="b-nav-tab btn">
-                Portfolio
-            </button>
-            <button  data-tab="Skills" class="b-nav-tab btn">
-                Skills
-            </button>
-            <button  data-tab="badge" class="b-nav-tab btn">
-                Badges
-            </button>
-            <button  data-tab="social" class="b-nav-tab btn">
-                Social Network
-            </button>
-            <button  data-tab="Password" class="b-nav-tab btn">
-                Password
-            </button>
-        </div>
 
-        <div id="general" class="b-tab active contentBlockSetting">
-            <?php $options = array(
-                'post_id' => 'user_'. get_current_user_id(),
-                'form' => true,
-                'fields' => array('first_name','user_email', 'profile_img', 'function', 'telnr', 'experience', 'country', 'date_born', 'gender', 'education_level', 'language', 'biographical_info'),
-                'html_before_fields' => '',
-                'html_after_fields' => '',
-                'html_updated_message'  => '<div id="message" class="alert alert-success updated">Informations user updated<p></p></div>',
+    <div id="tab-url1" class="custom-url-tabs">
 
-                'submit_value' => 'SAVE'
-            );
-            acf_form( $options );
-            ?>
-        </div>
-        <div id="Portfolio" class="b-tab contentBlockSetting">
-            <div class="group-input-settings">
-                <label for="">Education</label>
-                <button class="btn btnAddEdu" data-toggle="modal" data-target="#exampleModalEdu"> Add Education
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/plus.png" alt="">
-                </button>
-                <br>
-                <div class="categorieDetailCandidat">
-                    <?php
-                    if($educations)
-                        if(!empty($educations))
-                            foreach($educations as $key => $value) {
-                                if($value != null){
-                                    $value = explode(";", $value);
-                                    if(isset($value[2]))
-                                        $year = explode("-", $value[2])[0];
-                                    if(isset($value[3]))
-                                        if(intval($value[2]) != intval($value[3])) 
-                                            $year = $year . "-" .  explode("-", $value[3])[0];
-                                    ?>
-                                    <div class="contentEducationCandidat">
-                                        <div class="titleDateEducation">
-                                            <p class="titleCoursCandiddat"><?php echo $value[1]; ?></p>
-                                            <?php if($year) { ?>
-                                                <p class="dateCourCandidat"><?php echo $year; ?></p>
-                                            <?php } ?>
-                                        </div>
-                                        <p class="schoolCandidat"><?php echo $value[0]; ?></p>
-                                        <p class="textDetailCategorie"><?php echo $value[4]?: ''; ?></p>
+        <ul class="nav">
+            <li class="nav-one"><a href="#General" class="current">General</a></li>
+            <li class="nav-two"><a href="#Portfolio">Portfolio</a></li>
+            <li class="nav-three"><a href="#Skills">Skills</a></li>
+            <li class="nav-four "><a href="#Badges">Badges</a></li>
+            <li class="nav-five "><a href="#Social-Network">Social Network</a></li>
+            <li class="nav-seven "><a href="#Password">Password</a></li>
+        </ul>
 
-                                        <form action="" method="POST">
-                                            <input type="hidden" name="id" value="<?php echo $key; ?>">
-                                            <button class="btn btn-danger" style="color:white" name="delete_education" type="submit"><i class="fa fa-trash"></i></button>
-                                        </form>
-                                        <button class="btn btn-warning" style="color:white" data-toggle="modal" data-target="#editModalEdu<?php echo $key; ?>"><i class="fas fa-edit"></i></button>
-                                    </div>
-                                    <br>
+        <div class="list-wrap">
 
-                                    <div class="elementInputImgSetting">
-                                        <!-- Modal edit - education -->
-                                        <div class="modal modalEdu fade" id="editModalEdu<?php echo $key; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel">Edit Education</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <form action="" method="POST">
-                                                        <input type="hidden" name="id" value="<?php echo $key; ?>">
-                                                        <div class="modal-body">
-                                                            <div class="row">
-                                                                <div class="col-lg-12 col-md-12">
-                                                                    <div class="group-input-settings">
-                                                                        <label for="">School</label>
-                                                                        <input name="school" type="text" placeholder="Sonatel Academy" value="<?php echo $value[1] ?>" required>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12 col-md-12">
-                                                                    <div class="group-input-settings">
-                                                                        <label for="">Degree</label>
-                                                                        <input name="degree" type="text" value="<?php echo $value[0] ?>" placeholder="Master">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12 col-md-12">
-                                                                    <div class="group-input-settings">
-                                                                        <label for="">Start Date</label>
-                                                                        <input name="start_date" type="date" placeholder="" value="<?php echo $value[2] ?>" required>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12 col-md-12">
-                                                                    <div class="group-input-settings">
-                                                                        <label for="">End Date</label>
-                                                                        <input name="end_date" type="date" value="<?php echo $value[3] ?>" placeholder="">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-lg-12 col-md-12">
-                                                                    <div class="group-input-settings">
-                                                                        <label for="">Comment</label>
-                                                                        <textarea name="commentary" id="" rows="4"><?php echo $value[4] ?></textarea>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button class="btn btnSaveSetting" type="submit" name="edit_education" >Save</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <?php
-                                }
-                            }
+            <ul id="General">
+                <div class="contentBlockSetting">
+                    <?php $options = array(
+                        'post_id' => 'user_'. get_current_user_id(),
+                        'form' => true,
+                        'fields' => array('first_name','user_email', 'profile_img', 'function', 'telnr', 'experience', 'country', 'date_born', 'gender', 'education_level', 'language', 'biographical_info'),
+                        'html_before_fields' => '',
+                        'html_after_fields' => '',
+                        'html_updated_message'  => '<div id="message" class="alert alert-success updated">Informations user updated<p></p></div>',
+
+                        'submit_value' => 'SAVE'
+                    );
+                    acf_form( $options );
                     ?>
                 </div>
+            </ul>
 
-                <div class="elementInputImgSetting">
-                    <!-- Modal education -->
-                    <div class="modal modalEdu fade" id="exampleModalEdu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Add New Education</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form action="" method="POST">
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="group-input-settings">
-                                                    <label for="">School</label>
-                                                    <input name="school" type="text" placeholder="Sonatel Academy" required>
+            <ul id="Portfolio" class="hide">
+                <div class="contentBlockSetting">
+                    <div class="group-input-settings">
+                        <label for="">Education</label>
+                        <button class="btn btnAddEdu" data-toggle="modal" data-target="#exampleModalEdu"> Add Education
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/plus.png" alt="">
+                        </button>
+                        <br>
+                        <div class="categorieDetailCandidat">
+                            <?php
+                            if($educations)
+                                if(!empty($educations))
+                                    foreach($educations as $key => $value) {
+                                        if($value != null){
+                                            $value = explode(";", $value);
+                                            if(isset($value[2]))
+                                                $year = explode("-", $value[2])[0];
+                                            if(isset($value[3]))
+                                                if(intval($value[2]) != intval($value[3]))
+                                                    $year = $year . "-" .  explode("-", $value[3])[0];
+                                            ?>
+                                            <div class="contentEducationCandidat">
+                                                <div class="titleDateEducation">
+                                                    <p class="titleCoursCandiddat"><?php echo $value[1]; ?></p>
+                                                    <?php if($year) { ?>
+                                                        <p class="dateCourCandidat"><?php echo $year; ?></p>
+                                                    <?php } ?>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="group-input-settings">
-                                                    <label for="">Degree</label>
-                                                    <input name="degree" type="text" placeholder="Master">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="group-input-settings">
-                                                    <label for="">Start Date</label>
-                                                    <input name="start_date" type="date" placeholder="" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="group-input-settings">
-                                                    <label for="">End Date</label>
-                                                    <input name="end_date" type="date" placeholder="">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="group-input-settings">
-                                                    <label for="">Comment</label>
-                                                    <textarea name="commentary" id="" rows="4"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btnSaveSetting" type="submit" name="add_education" >Save</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                                <p class="schoolCandidat"><?php echo $value[0]; ?></p>
+                                                <p class="textDetailCategorie"><?php echo $value[4]?: ''; ?></p>
 
-            <div class="group-input-settings">
-                <label for="">Work Experience</label>
-                <button class="btn btnAddEdu" data-toggle="modal" data-target="#exampleModalWork"> Add Work Experience
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/plus.png" alt="">
-                </button>
-
-                <div class="categorieDetailCandidat workExperiece">
-                    <?php
-                    if($experiences)
-                        if(!empty($experiences))
-                            foreach($experiences as $key=>$value) {
-                                $value = explode(";", $value);
-                                if(isset($value[2]))
-                                    $year = explode("-", $value[2])[0];
-                                if(isset($value[3]))
-                                    if(intval($value[2]) != intval($value[3])) 
-                                        $year = $year . "-" .  explode("-", $value[3])[0];
-                                ?>
-                                <div class="contentEducationCandidat">
-                                    <div class="titleDateEducation">
-                                        <p class="titleCoursCandiddat"><?php echo $value[1]; ?></p>
-                                        <?php if($year) { ?>
-                                            <p class="dateCourCandidat"><?php echo $year; ?></p>
-                                        <?php } ?>
-                                    </div>
-                                    <p class="schoolCandidat"><?php echo $value[0]; ?></p>
-                                    <p class="textDetailCategorie"><?php echo $value[4]?: '' ?> </p>
-                                    <form action="" method="POST">
-                                        <input type="hidden" name="id" value="<?php echo $key; ?>">
-                                        <button class="btn btn-danger" style="color:white" name="delete_experience" type="submit"><i class="fa fa-trash"></i></button>
-                                    </form>
-                                    <button class="btn btn-warning" style="color:white" data-toggle="modal" data-target="#editModalWork<?php echo $key; ?>"><i class="fas fa-edit"></i></button>
-                                </div>
-                                <br>
-
-                                <div class="elementInputImgSetting">
-                                    <!-- Modal Work Experience -->
-                                    <div class="modal modalEdu fade show" id="editModalWork<?php echo $key; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Edit Work/Experience</h5>
-                                                    <button type="button" class="close"  aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
                                                 <form action="" method="POST">
                                                     <input type="hidden" name="id" value="<?php echo $key; ?>">
-                                                    <div class="modal-body">
-                                                        <div class="row">
-                                                            <div class="col-lg-12 col-md-12">
-                                                                <div class="group-input-settings">
-                                                                    <label for="">Job</label>
-                                                                    <input name="job" type="text" value="<?php echo $value[0] ?>" placeholder="Engineer">
-                                                                </div>
+                                                    <button class="btn btn-danger" style="color:white" name="delete_education" type="submit"><i class="fa fa-trash"></i></button>
+                                                </form>
+                                                <button class="btn btn-warning" style="color:white" data-toggle="modal" data-target="#editModalEdu<?php echo $key; ?>"><i class="fas fa-edit"></i></button>
+                                            </div>
+                                            <br>
+
+                                            <div class="elementInputImgSetting">
+                                                <!-- Modal edit - education -->
+                                                <div class="modal modalEdu fade" id="editModalEdu<?php echo $key; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Edit Education</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
                                                             </div>
-                                                            <div class="col-lg-12 col-md-12">
-                                                                <div class="group-input-settings">
-                                                                    <label for="">Company</label>
-                                                                    <input name="companie" type="text" value="<?php echo $value[1] ?>" placeholder="LiveLearn">
+                                                            <form action="" method="POST">
+                                                                <input type="hidden" name="id" value="<?php echo $key; ?>">
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12 col-md-12">
+                                                                            <div class="group-input-settings">
+                                                                                <label for="">School</label>
+                                                                                <input name="school" type="text" placeholder="Sonatel Academy" value="<?php echo $value[1] ?>" required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-12 col-md-12">
+                                                                            <div class="group-input-settings">
+                                                                                <label for="">Degree</label>
+                                                                                <input name="degree" type="text" value="<?php echo $value[0] ?>" placeholder="Master">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-12 col-md-12">
+                                                                            <div class="group-input-settings">
+                                                                                <label for="">Start Date</label>
+                                                                                <input name="start_date" type="date" placeholder="" value="<?php echo $value[2] ?>" required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-12 col-md-12">
+                                                                            <div class="group-input-settings">
+                                                                                <label for="">End Date</label>
+                                                                                <input name="end_date" type="date" value="<?php echo $value[3] ?>" placeholder="">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-12 col-md-12">
+                                                                            <div class="group-input-settings">
+                                                                                <label for="">Comment</label>
+                                                                                <textarea name="commentary" id="" rows="4"><?php echo $value[4] ?></textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-lg-12 col-md-12">
-                                                                <div class="group-input-settings">
-                                                                    <label for="">Start Date</label>
-                                                                    <input name="start_date" type="date" value="<?php echo $value[2] ?>"  placeholder="">
+                                                                <div class="modal-footer">
+                                                                    <button class="btn btnSaveSetting" type="submit" name="edit_education" >Save</button>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-lg-12 col-md-12">
-                                                                <div class="group-input-settings">
-                                                                    <label for="">End Date</label>
-                                                                    <input name="end_date" type="date" value="<?php echo $value[3] ?>"  placeholder="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-lg-12 col-md-12">
-                                                                <div class="group-input-settings">
-                                                                    <label for="">Comment</label>
-                                                                    <textarea name="commentary" id="" rows="4"> <?php echo $value[4] ?> </textarea>
-                                                                </div>
-                                                            </div>
+                                                            </form>
                                                         </div>
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button class="btn btnSaveSetting" name="edit_work" >Save</button>
+                                                </div>
+                                            </div>
+                                            <?php
+                                        }
+                                    }
+                            ?>
+                        </div>
+
+                        <div class="elementInputImgSetting">
+                            <!-- Modal education -->
+                            <div class="modal modalEdu fade" id="exampleModalEdu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Add New Education</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form action="" method="POST">
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="group-input-settings">
+                                                            <label for="">School</label>
+                                                            <input name="school" type="text" placeholder="Sonatel Academy" required>
+                                                        </div>
                                                     </div>
-                                                </form>
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="group-input-settings">
+                                                            <label for="">Degree</label>
+                                                            <input name="degree" type="text" placeholder="Master">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="group-input-settings">
+                                                            <label for="">Start Date</label>
+                                                            <input name="start_date" type="date" placeholder="" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="group-input-settings">
+                                                            <label for="">End Date</label>
+                                                            <input name="end_date" type="date" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="group-input-settings">
+                                                            <label for="">Comment</label>
+                                                            <textarea name="commentary" id="" rows="4"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btnSaveSetting" type="submit" name="add_education" >Save</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-                            <?php } ?>
-                </div>
-                <div class="elementInputImgSetting">
-                    <!-- Modal Work Experience -->
-                    <div class="modal modalEdu fade show" id="exampleModalWork" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Add New Work & Experience</h5>
-                                    <button type="button" class="close"  aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form action="" method="POST">
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="group-input-settings">
-                                                    <label for="">Job</label>
-                                                    <input name="job" type="text" placeholder="Engineer">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="group-input-settings">
-                                                    <label for="">Company</label>
-                                                    <input name="companie" type="text" placeholder="LiveLearn">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="group-input-settings">
-                                                    <label for="">Start Date</label>
-                                                    <input name="start_date" type="date" placeholder="">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="group-input-settings">
-                                                    <label for="">End Date</label>
-                                                    <input name="end_date" type="date" placeholder="">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="group-input-settings">
-                                                    <label for="">Comment</label>
-                                                    <textarea name="commentary" id="" rows="4"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btnSaveSetting" name="add_work" >Save</button>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>
 
-                </div>
-            </div>
+                    <div class="group-input-settings">
+                        <label for="">Work Experience</label>
+                        <button class="btn btnAddEdu" data-toggle="modal" data-target="#exampleModalWork"> Add Work Experience
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/plus.png" alt="">
+                        </button>
 
-            <div class="group-input-settings">
-                <label for="">Projects</label>
-                <button class="btn btnAddEdu" data-toggle="modal" data-target="#exampleModalProject"> Add Projects
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/plus.png" alt="">
-                </button>
-                <br>
-                <div class="categorieDetailCandidat workExperiece">
-                    <?php
-                    if($portfolios)
-                    if(!empty($portfolios))
-                        foreach($portfolios as $value) {
-                            $value = explode(";", $value);
-                            ?>
-                            <div class="contentEducationCandidat">
-                                <p class="titleCoursCandiddat"><?php echo $value[0]; ?> </p>
-                                <p class="textDetailCategorie"><?php echo $value[1]; ?> </p>
-                                <a href="" class="seeProject">See project</a>
-                                <form action="" method="POST">
-                                    <input type="hidden" name="id" value="<?php echo $key; ?>">
-                                    <button class="btn btn-danger" style="color:white" name="delete_portfolio" type="submit"><i class="fa fa-trash"></i></button>
-                                </form>
-                                <button class="btn btn-warning" style="color:white" data-toggle="modal" data-target="#editModalProject<?php echo $key; ?>"><i class="fas fa-edit"></i></button>
+                        <div class="categorieDetailCandidat workExperiece">
+                            <?php
+                            if($experiences)
+                                if(!empty($experiences))
+                                    foreach($experiences as $key=>$value) {
+                                        $value = explode(";", $value);
+                                        if(isset($value[2]))
+                                            $year = explode("-", $value[2])[0];
+                                        if(isset($value[3]))
+                                            if(intval($value[2]) != intval($value[3]))
+                                                $year = $year . "-" .  explode("-", $value[3])[0];
+                                        ?>
+                                        <div class="contentEducationCandidat">
+                                            <div class="titleDateEducation">
+                                                <p class="titleCoursCandiddat"><?php echo $value[1]; ?></p>
+                                                <?php if($year) { ?>
+                                                    <p class="dateCourCandidat"><?php echo $year; ?></p>
+                                                <?php } ?>
+                                            </div>
+                                            <p class="schoolCandidat"><?php echo $value[0]; ?></p>
+                                            <p class="textDetailCategorie"><?php echo $value[4]?: '' ?> </p>
+                                            <form action="" method="POST">
+                                                <input type="hidden" name="id" value="<?php echo $key; ?>">
+                                                <button class="btn btn-danger" style="color:white" name="delete_experience" type="submit"><i class="fa fa-trash"></i></button>
+                                            </form>
+                                            <button class="btn btn-warning" style="color:white" data-toggle="modal" data-target="#editModalWork<?php echo $key; ?>"><i class="fas fa-edit"></i></button>
+                                        </div>
+                                        <br>
+
+                                        <div class="elementInputImgSetting">
+                                            <!-- Modal Work Experience -->
+                                            <div class="modal modalEdu fade show" id="editModalWork<?php echo $key; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Edit Work/Experience</h5>
+                                                            <button type="button" class="close"  aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form action="" method="POST">
+                                                            <input type="hidden" name="id" value="<?php echo $key; ?>">
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 col-md-12">
+                                                                        <div class="group-input-settings">
+                                                                            <label for="">Job</label>
+                                                                            <input name="job" type="text" value="<?php echo $value[0] ?>" placeholder="Engineer">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-12 col-md-12">
+                                                                        <div class="group-input-settings">
+                                                                            <label for="">Company</label>
+                                                                            <input name="companie" type="text" value="<?php echo $value[1] ?>" placeholder="LiveLearn">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-12 col-md-12">
+                                                                        <div class="group-input-settings">
+                                                                            <label for="">Start Date</label>
+                                                                            <input name="start_date" type="date" value="<?php echo $value[2] ?>"  placeholder="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-12 col-md-12">
+                                                                        <div class="group-input-settings">
+                                                                            <label for="">End Date</label>
+                                                                            <input name="end_date" type="date" value="<?php echo $value[3] ?>"  placeholder="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-12 col-md-12">
+                                                                        <div class="group-input-settings">
+                                                                            <label for="">Comment</label>
+                                                                            <textarea name="commentary" id="" rows="4"> <?php echo $value[4] ?> </textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button class="btn btnSaveSetting" name="edit_work" >Save</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                        </div>
+                        <div class="elementInputImgSetting">
+                            <!-- Modal Work Experience -->
+                            <div class="modal modalEdu fade show" id="exampleModalWork" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Add New Work & Experience</h5>
+                                            <button type="button" class="close"  aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form action="" method="POST">
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="group-input-settings">
+                                                            <label for="">Job</label>
+                                                            <input name="job" type="text" placeholder="Engineer">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="group-input-settings">
+                                                            <label for="">Company</label>
+                                                            <input name="companie" type="text" placeholder="LiveLearn">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="group-input-settings">
+                                                            <label for="">Start Date</label>
+                                                            <input name="start_date" type="date" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="group-input-settings">
+                                                            <label for="">End Date</label>
+                                                            <input name="end_date" type="date" placeholder="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="group-input-settings">
+                                                            <label for="">Comment</label>
+                                                            <textarea name="commentary" id="" rows="4"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btnSaveSetting" name="add_work" >Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
-                            <br>
 
-                            <div class="elementInputImgSetting">
-                                <!-- Modal Project Experience -->
-                                <div class="modal modalEdu fade show" id="editModalProject<?php echo $key; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        </div>
+                    </div>
+
+                    <div class="group-input-settings">
+                        <label for="">Projects</label>
+                        <button class="btn btnAddEdu" data-toggle="modal" data-target="#exampleModalProject"> Add Projects
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/plus.png" alt="">
+                        </button>
+                        <br>
+                        <div class="categorieDetailCandidat workExperiece">
+                            <?php
+                            if($portfolios)
+                                if(!empty($portfolios))
+                                    foreach($portfolios as $value) {
+                                        $value = explode(";", $value);
+                                        ?>
+                                        <div class="contentEducationCandidat">
+                                            <p class="titleCoursCandiddat"><?php echo $value[0]; ?> </p>
+                                            <p class="textDetailCategorie"><?php echo $value[1]; ?> </p>
+                                            <a href="" class="seeProject">See project</a>
+                                            <form action="" method="POST">
+                                                <input type="hidden" name="id" value="<?php echo $key; ?>">
+                                                <button class="btn btn-danger" style="color:white" name="delete_portfolio" type="submit"><i class="fa fa-trash"></i></button>
+                                            </form>
+                                            <button class="btn btn-warning" style="color:white" data-toggle="modal" data-target="#editModalProject<?php echo $key; ?>"><i class="fas fa-edit"></i></button>
+                                        </div>
+                                        <br>
+
+                                        <div class="elementInputImgSetting">
+                                            <!-- Modal Project Experience -->
+                                            <div class="modal modalEdu fade show" id="editModalProject<?php echo $key; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Edit Project</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form action="" method="POST">
+                                                            <div class="modal-body">
+                                                                <div class="row">
+
+                                                                    <div class="col-lg-12 col-md-12">
+                                                                        <div class="group-input-settings">
+                                                                            <label for="">Title</label>
+                                                                            <input type="text" name="title" value="<?php echo $value[0] ?>" placeholder="Engineer">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-12 col-md-12">
+                                                                        <div class="group-input-settings">
+                                                                            <label for="">Description</label>
+                                                                            <textarea name="description" id="" rows="4"> <?php echo $value[1] ?></textarea>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button class="btn btnSaveSetting" type="submit" name="edit_portfolio" >Save</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    <?php } ?>
+                        </div>
+
+                        <div class="elementInputImgSetting">
+                            <!-- Modal education -->
+                            <div class="modal modalEdu fade" id="exampleModalProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Add New Project</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form action="" method="POST">
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="group-input-settings">
+                                                            <label for="">Title</label>
+                                                            <input name="title" type="text" placeholder="" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="group-input-settings">
+                                                            <label for="">Description</label>
+                                                            <textarea name="description" id="" rows="4"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button class="btn btnSaveSetting" type="submit" name="add_project" >Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </ul>
+
+            <ul id="Skills" class="hide">
+                <div class="contentBlockSetting" >
+                    <div class="group-input-settings">
+
+                        <button class="btn btnAddEdu addSkills" data-toggle="modal" data-target="#exampleModalAddSkills"> Add Skills
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/plus.png" alt="">
+                        </button>
+
+                        <div class="content-card-skills">
+                            <?php
+                            foreach($topics as $key=>$value){
+                                $i = 0;
+                                $topic = get_the_category_by_ID($value);
+                                $note = 0;
+                                if(!$topic)
+                                    continue;
+                                if(!empty($skills_note))
+                                    foreach($skills_note as $skill)
+                                        if($skill['id'] == $value){
+                                            $note = $skill['note'];
+                                            break;
+                                        }
+                                $name_topic = (String)$topic;
+                                ?>
+                                <div class="card-skills">
+                                    <div class="group position-relative">
+                                        <span class="donut-chart has-big-cente"><?= $note ?></span>
+                                    </div>
+                                    <p class="name-course"><?= $name_topic ?></p>
+                                    <div class="footer-card-skills">
+                                        <button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills<?= $key ?>">Edit <i class="fa fa-edit"></i></a>
+                                            <!-- <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Start modal edit skills-->
+                                <div class="modal modalEdu fade" id="exampleModalSkills<?= $key ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Edit Project</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Edit Skills</h5>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
@@ -623,235 +740,118 @@ if(!empty($bunch)){
                                             <form action="" method="POST">
                                                 <div class="modal-body">
                                                     <div class="row">
-
                                                         <div class="col-lg-12 col-md-12">
                                                             <div class="group-input-settings">
-                                                                <label for="">Title</label>
-                                                                <input type="text" name="title" value="<?php echo $value[0] ?>" placeholder="Engineer">
+                                                                <label for="">Name</label>
+                                                                <input name="" type="text" placeholder="<?= $name_topic ?>" disabled>
+                                                                <input name="id" type="hidden" value="<?= $value ?>">
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-12 col-md-12">
+                                                        <div class="col-lg-12 col-md-12 skillBar-col">
                                                             <div class="group-input-settings">
-                                                                <label for="">Description</label>
-                                                                <textarea name="description" id="" rows="4"> <?php echo $value[1] ?></textarea>
+                                                                <label for="">Kies uw vaardigheidsniveau in percentage</label>
+                                                                <div class="slider-wrapper">
+                                                                    <div class="edit"></div>
+                                                                </div>
+                                                                <div class="rangeslider-wrap">
+                                                                    <input name="note" type="range" min="0" max="100" step="10" labels="0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100" value="<?= $note ?>" onChange="rangeSlide(this.value)">
+                                                                </div>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button class="btn btnSaveSetting" type="submit" name="edit_portfolio" >Save</button>
+                                                    <button class="btn btnSaveSetting" type="submit" name="note_skill_edit">Save</button>
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
+                                <!--  End modal edit skills-->
+                                <?php
+                                $i++;
+                            }
+                            ?>
 
-                            </div>
-                    <?php } ?>
-                </div>
-
-                <div class="elementInputImgSetting">
-                    <!-- Modal education -->
-                    <div class="modal modalEdu fade" id="exampleModalProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Add New Project</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form action="" method="POST">
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="group-input-settings">
-                                                    <label for="">Title</label>
-                                                    <input name="title" type="text" placeholder="" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="group-input-settings">
-                                                    <label for="">Description</label>
-                                                    <textarea name="description" id="" rows="4"></textarea>
-                                                </div>
-                                            </div>
+                            <!-- Start add skills-->
+                            <div class="modal modalEdu fade" id="exampleModalAddSkills" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Beoordeel jouw skills</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btnSaveSetting" type="submit" name="add_project" >Save</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                        <form action="" method="POST">
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="group-input-settings">
+                                                            <label for="">Name Skill</label>
+                                                            <div class="form-group formModifeChoose">
+                                                                <select name="id" id="autocomplete" class="form-control multipleSelect2">
+                                                                    <?php
+                                                                    foreach($tags as $tag) {
+                                                                        if(in_array($tag->cat_ID, $topics))
+                                                                            continue;
 
-
-        </div>
-
-        <div id="Skills" class="b-tab contentBlockSetting" >
-            <div class="group-input-settings">
-
-                <button class="btn btnAddEdu addSkills" data-toggle="modal" data-target="#exampleModalAddSkills"> Add Skills
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/plus.png" alt="">
-                </button>
-
-                <div class="content-card-skills">
-                    <?php
-                    foreach($topics as $key=>$value){
-                        $i = 0;
-                        $topic = get_the_category_by_ID($value);
-                        $note = 0;
-                        if(!$topic)
-                            continue;
-                        if(!empty($skills_note))
-                            foreach($skills_note as $skill)
-                                if($skill['id'] == $value){
-                                    $note = $skill['note'];
-                                    break;
-                                }
-                        $name_topic = (String)$topic;
-                    ?>   
-                        <div class="card-skills">
-                            <div class="group position-relative">
-                                <span class="donut-chart has-big-cente"><?= $note ?></span>
-                            </div>
-                            <p class="name-course"><?= $name_topic ?></p>
-                            <div class="footer-card-skills">
-                                <button class="btn btn-dote dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >. . .</button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="btnEdit dropdown-item" type="button" href="#" data-toggle="modal" data-target="#exampleModalSkills<?= $key ?>">Edit <i class="fa fa-edit"></i></a>
-                                    <!-- <a class="dropdown-item trash" href="#">Remove <i class="fa fa-trash"></i></a> -->
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Start modal edit skills-->
-                        <div class="modal modalEdu fade" id="exampleModalSkills<?= $key ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Edit Skills</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <form action="" method="POST">
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-lg-12 col-md-12">
-                                                    <div class="group-input-settings">
-                                                        <label for="">Name</label>  
-                                                        <input name="" type="text" placeholder="<?= $name_topic ?>" disabled>
-                                                        <input name="id" type="hidden" value="<?= $value ?>">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12 col-md-12 skillBar-col">
-                                                    <div class="group-input-settings">
-                                                        <label for="">Kies uw vaardigheidsniveau in percentage</label>
-                                                        <div class="slider-wrapper">
-                                                            <div class="edit"></div>
-                                                        </div>
-                                                        <div class="rangeslider-wrap">
-                                                            <input name="note" type="range" min="0" max="100" step="10" labels="0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100" value="<?= $note ?>" onChange="rangeSlide(this.value)">
+                                                                        echo "<option value='" . $tag->cat_ID  ."'>" . $tag->cat_name . "</option>";
+                                                                    }
+                                                                    ?>
+                                                                </select>
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-lg-12 col-md-12 skillBar-col">
+                                                        <div class="group-input-settings">
+                                                            <label for="">Kies uw vaardigheidsniveau in percentage</label>
+                                                            <div class="slider-wrapper">
+                                                                <div id="skilsPercentage"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12 col-md-12">
+                                                        <div class="group-input-settings">
+                                                            <!-- <label for="">Uw procentuele vaardigheden</label> -->
+                                                            <input type="hidden" id="SkillBar" name="note" placeholder="">
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button class="btn btnSaveSetting" type="submit" name="note_skill_edit">Save</button>
-                                        </div>
-                                    </form>
+                                            <div class="modal-footer">
+                                                <button class="btn btnSaveSetting" type="submit" name="note_skill_new" >Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!--  End modal edit skills-->
-                    <?php
-                        $i++;
-                        }
-                    ?>
+                            <!--  End add edit skills-->
 
-                    <!-- Start add skills-->
-                    <div class="modal modalEdu fade" id="exampleModalAddSkills" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Beoordeel jouw skills</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form action="" method="POST">
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="group-input-settings">
-                                                    <label for="">Name Skill</label>
-                                                    <div class="form-group formModifeChoose">
-                                                        <select name="id" id="autocomplete" class="form-control multipleSelect2">
-                                                            <?php 
-                                                                foreach($tags as $tag) {
-                                                                    if(in_array($tag->cat_ID, $topics))
-                                                                        continue;
-                                                                         
-                                                                    echo "<option value='" . $tag->cat_ID  ."'>" . $tag->cat_name . "</option>";
-                                                                }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12 skillBar-col">
-                                                <div class="group-input-settings">
-                                                    <label for="">Kies uw vaardigheidsniveau in percentage</label>
-                                                    <div class="slider-wrapper">
-                                                        <div id="skilsPercentage"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-md-12">
-                                                <div class="group-input-settings">
-                                                    <!-- <label for="">Uw procentuele vaardigheden</label> -->
-                                                    <input type="hidden" id="SkillBar" name="note" placeholder="">
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btnSaveSetting" type="submit" name="note_skill_new" >Save</button>
-                                    </div>
-                                </form>
-                            </div>
                         </div>
                     </div>
-                    <!--  End add edit skills-->
-
                 </div>
-            </div>
-        </div>
+            </ul>
 
-        <div id="badge" class="b-tab contentBlockSetting">
-            <label class="label-badge" for="">Badges</label>
-            <div class="content-badges">
-                <a href="#" class="card">
-                    <div class="block-icons">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/validate-badge.png" alt="">
-                    </div>
+            <ul id="Badges" class="hide">
+                <div class="contentBlockSetting">
+                    <label class="label-badge" for="">Badges</label>
+                    <div class="content-badges">
+                        <a href="#" class="card">
+                            <div class="block-icons">
+                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/validate-badge.png" alt="">
+                            </div>
 
-                    <?php 
-                        $strotime_date = strtotime($user->user_registered);
-                        $date_registered = date("d M Y", $strotime_date);
-                    ?>
-                    <p class="title">You created an account sucessfully !</p>
-                    <p class="awarded">Award for : <span> <?php echo $user->display_name ?> </span></p>
-                    <p class="date-awarded"><span>Date Award : </span><?= $date_registered ?></p>
-                </a>
-                <!-- <a href="" class="card">
+                            <?php
+                            $strotime_date = strtotime($user->user_registered);
+                            $date_registered = date("d M Y", $strotime_date);
+                            ?>
+                            <p class="title">You created an account sucessfully !</p>
+                            <p class="awarded">Award for : <span> <?php echo $user->display_name ?> </span></p>
+                            <p class="date-awarded"><span>Date Award : </span><?= $date_registered ?></p>
+                        </a>
+                        <!-- <a href="" class="card">
                     <div class="block-icons">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/dashicons_awards.png" alt="">
                     </div>
@@ -894,50 +894,71 @@ if(!empty($bunch)){
                     <p class="awarded">Awarded for : <span> Profil Livelearn </span></p>
                     <p class="date-awarded"><span>Date Awarded :</span> 06 Jul 2022</p>
                 </a> -->
-            </div>
-        </div>
+                    </div>
+                </div>
+            </ul>
 
-        <div id="social" class="b-tab contentBlockSetting">
-            <?php $options = array(
-                'post_id' => 'user_'. get_current_user_id(),
-                'form' => true,
-                'fields' => array('stackoverflow','github','facebook', 'twitter', 'linkedin', 'instagram', 'discord', 'tik_tok'),
-                'html_before_fields' => '',
-                'html_after_fields' => '',
-                'updated_message' => false,
-                'submit_value' => 'SAVE'
-            );
-            acf_form( $options );
-            ?>
-        </div>
+            <ul id="Social-Network" class="hide">
+                <div class="contentBlockSetting">
+                    <?php $options = array(
+                        'post_id' => 'user_'. get_current_user_id(),
+                        'form' => true,
+                        'fields' => array('stackoverflow','github','facebook', 'twitter', 'linkedin', 'instagram', 'discord', 'tik_tok'),
+                        'html_before_fields' => '',
+                        'html_after_fields' => '',
+                        'updated_message' => false,
+                        'submit_value' => 'SAVE'
+                    );
+                    acf_form( $options );
+                    ?>
+                </div>
+            </ul>
 
-        <div id="Password" class="b-tab contentBlockSetting">
-            <div> <?php if(isset($_GET['message_password'])) echo "<span class='alert alert-info'>" . $_GET['message_password'] . "</span>" ; ?><div><br>
-                    <form action="" method="POST">
-                        <div class="group-input-settings">
-                            <div class="input-group-user">
-                                <label for="">Enter your current password :</label>
-                                <input name="old_password" type="password" required>
-                            </div>
-                            <div class="input-group-user">
-                                <label for="">Define your new password :</label>
-                                <input name="password" type="password" required>
-                            </div>
-                            <div class="input-group-user">
-                                <label for="">Confirm the new password :</label>
-                                <input name="password_confirmation" type="password" required>
-                            </div>
+            <ul id="Password" class="hide">
+                <div class="contentBlockSetting">
+                    <div> <?php if(isset($_GET['message_password'])) echo "<span class='alert alert-info'>" . $_GET['message_password'] . "</span>" ; ?><div><br>
+                            <form action="" method="POST">
+                                <div class="group-input-settings">
+                                    <div class="input-group-user">
+                                        <label for="">Enter your current password :</label>
+                                        <input name="old_password" type="password" required>
+                                    </div>
+                                    <div class="input-group-user">
+                                        <label for="">Define your new password :</label>
+                                        <input name="password" type="password" required>
+                                    </div>
+                                    <div class="input-group-user">
+                                        <label for="">Confirm the new password :</label>
+                                        <input name="password_confirmation" type="password" required>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <button type="submit" name="change_password" class="btn btn-save-user">SAVE</button>
+                                </div>
+                            </form>
                         </div>
+                    </div>
+                </div>
+            </ul>
 
-                        <div>
-                            <button type="submit" name="change_password" class="btn btn-save-user">SAVE</button>
-                        </div>
-                    </form>
-        </div>
+        </div> <!-- END List Wrap -->
+
     </div>
-</div></div></div>
+
+</div>
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+
+<script src="<?php echo get_stylesheet_directory_uri();?>/organictabs.jquery.js"></script>
+<script>
+    $(function() {
+        // Calling the plugin
+        $("#tab-url1").organicTabs();
+
+    });
+</script>
+
 
 <script>
     'use strict';
