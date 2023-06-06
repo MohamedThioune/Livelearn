@@ -92,12 +92,11 @@ $url = home_url( $wp->request );
         <!-- get bootstrap icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
-        <!-- meta property 
-        <meta property="og:title" content="Livelearn">
-        <meta property="og:description" content="Ontdek, ontwikkel en maak carriere">
-        <meta property="og:image" content="">
-        <meta property="og:url" content="">
-        -->
+        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id=%27+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-5NTJ5Z4');</script>
 
         <title><?php bloginfo('name'); ?></title>
         <?php wp_head(); ?>
@@ -164,6 +163,8 @@ $url = home_url( $wp->request );
         $logo_livelearn = get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
 
         ?>
+
+
 
 
         <div>

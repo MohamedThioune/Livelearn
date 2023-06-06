@@ -738,10 +738,10 @@
             loader.forEach(load => {
                 load.className = "text-center loader-manager d-none";
             });
-            $(".back-list-of-user-manager").html("<span class='alert alert-danger'>Some things are wrong !!!</span>");
+            $(".back-list-of-user-manager").html("<p class='alert alert-danger'>Some things are wrong !!!</p>");
         },success: function(success){
             if (success.trim()===""){
-                success = "<span class='alert alert-info text-center mt-3'>this user has no managers<span>"
+                success = "<p class='alert alert-info text-center mt-3'>this user has no managers</p>"
             }
             console.log('success',success)
             loader.forEach(load => {

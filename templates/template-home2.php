@@ -984,7 +984,9 @@ $saved = get_user_meta($user_id, 'course');
 ?>
 
 
-
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5NTJ5Z4"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div class="contentOne content-home2">
 
@@ -999,8 +1001,8 @@ $saved = get_user_meta($user_id, 'course');
                 <form action="/product-search" class="position-relative newFormSarchBar" method="POST">
                     <select class="form-select selectSearchHome" aria-label="search home page" name="search_type" id="course_type">
                         <?php
-                            foreach($type_course as $type)
-                                echo '<option value="' . $type . '">' . $type . '</option>';
+                        foreach($type_course as $type)
+                            echo '<option value="' . $type . '">' . $type . '</option>';
                         ?>
                     </select>
                     <div class="group-input-dropdown">
@@ -1011,7 +1013,7 @@ $saved = get_user_meta($user_id, 'course');
 
                     <div class="dropdown-menuSearch" id="list">
                         <div class="list-autocomplete" id="autocomplete">
-                        <center> <i class='hasNoResults'>No matching results ... </i> </center>
+                            <center> <i class='hasNoResults'>No matching results ... </i> </center>
                         </div>
                     </div>
                 </form>
@@ -1051,19 +1053,19 @@ $saved = get_user_meta($user_id, 'course');
 
                 </div>
                 <?php if(!$user_id) { ?>
-                <div class="groupeBtn-Jouw-inloggen groupBtnConnecte">
-                    <a href="http://livelearn.nl/wp-login.php?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
-                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/googleImg.png" alt="" />
-                        Gratis inloggen met Google
-                    </a>
-                    <!-- <button class="btn btn-signup">
+                    <div class="groupeBtn-Jouw-inloggen groupBtnConnecte">
+                        <a href="http://livelearn.nl/wp-login.php?loginSocial=google" data-plugin="nsl" data-action="connect" data-redirect="current" data-provider="google" data-popupwidth="600" data-popupheight="600" class="btn btn-signup">
+                            <img src="<?php echo get_stylesheet_directory_uri();?>/img/googleImg.png" alt="" />
+                            Gratis inloggen met Google
+                        </a>
+                        <!-- <button class="btn btn-signup">
                         <img src="<?php echo get_stylesheet_directory_uri();?>/img/linkedin-icon.png" class="" alt="">
                         sign up with Linkedin
                     </button> -->
-                    <a href="/inloggen" class="btn btn-signup-email">
-                        <span style="color:white">Gratis inloggen via mail</span>
-                    </a>
-                </div>
+                        <a href="/inloggen" class="btn btn-signup-email">
+                            <span style="color:white">Gratis inloggen via mail</span>
+                        </a>
+                    </div>
                 <?php } ?>
             </div>
         </div>
@@ -1120,304 +1122,304 @@ $saved = get_user_meta($user_id, 'course');
                             </div>
                         </div>
 
-                            <div class="step1SkillsPasspoort">
-                                <p class="titleBlockStepSkills">Wat is jouw hoogst afgeronde opleiding ?</p>
-                                <div class="blockInputRadio">
-                                    <?= $input_degrees; ?>
-                                </div>
-                                <div class="text-center w-100 groupBtnStepSkillsP">
-                                    <button type="button" class="btn btnSkip" id="btnSkip">Skip</button>
-                                    <button type="button" class="btn btn-volgende" id="btnStep1SkillsPasspoort">Volgende</button>
-                                </div>
+                        <div class="step1SkillsPasspoort">
+                            <p class="titleBlockStepSkills">Wat is jouw hoogst afgeronde opleiding ?</p>
+                            <div class="blockInputRadio">
+                                <?= $input_degrees; ?>
                             </div>
+                            <div class="text-center w-100 groupBtnStepSkillsP">
+                                <button type="button" class="btn btnSkip" id="btnSkip">Skip</button>
+                                <button type="button" class="btn btn-volgende" id="btnStep1SkillsPasspoort">Volgende</button>
+                            </div>
+                        </div>
 
-                            <div class="step2SkillsPasspoort stepSkillpasspoort">
-                                <p class="titleBlockStepSkills">In welk vakgebied ben je werkzaam of ben je geïnteresseerd ?
-                                    <br><span>(Meerdere mogelijk)</span></p>
-                                <div class="hiddenCB">
-                                    <div>
-                                        <?php
-                                        foreach($bangerichts as $bangericht){
+                        <div class="step2SkillsPasspoort stepSkillpasspoort">
+                            <p class="titleBlockStepSkills">In welk vakgebied ben je werkzaam of ben je geïnteresseerd ?
+                                <br><span>(Meerdere mogelijk)</span></p>
+                            <div class="hiddenCB">
+                                <div>
+                                    <?php
+                                    foreach($bangerichts as $bangericht){
                                         $image_category = get_field('image', 'category_'. $bangericht->cat_ID);
                                         $image_category = $image_category ? $image_category : get_stylesheet_directory_uri() . '/img/Image-79.png';
                                         ?>
                                         <div class="blockInputCheck">
                                             <input type="checkbox" name="bangerichtsChoice[]" value=<?php echo $bangericht->cat_ID ?> id="<?php echo $bangericht->cat_ID ?>" /><label class="labelChoose btnBaangerichte" for="<?php echo $bangericht->cat_ID ?>"><?php echo $bangericht->cat_name ?></label>
                                         </div>
-                                            <?php
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
-                                <div class="text-center w-100 groupBtnStepSkillsP">
-                                    <button type="button" class="btn btnTerug" id="btnTerug1SkillsPasspoort">Terug</button>
-                                    <button type="button" class="btn btn-volgende" id="btnStep2SkillsPasspoort">Volgende stap</button>
+                                        <?php
+                                    }
+                                    ?>
                                 </div>
                             </div>
+                            <div class="text-center w-100 groupBtnStepSkillsP">
+                                <button type="button" class="btn btnTerug" id="btnTerug1SkillsPasspoort">Terug</button>
+                                <button type="button" class="btn btn-volgende" id="btnStep2SkillsPasspoort">Volgende stap</button>
+                            </div>
+                        </div>
 
-                            <div class="step3SkillsPasspoort stepSkillpasspoort">
-                                <p class="titleBlockStepSkills">Geef de locatie(s) aan waar jij woont of werkt</p>
-                                <div class="input-group-locaties">
-                                    <div class="inputGroupLocaties">
-                                        <p class="priveBlockTitle">Privé:</p>
-                                        <!-- country -->
-                                        <div class='row align-items-center'>
-                                            <div class='col-md-3 col-xs-3'>
-                                                <p><b>Country</b></p>
-                                            </div>
-                                            <div class='col-md-9 col-xs-9'>
-                                                <select id="country" class='form-control' required><option value="">-- Country --</option></select>
-                                            </div>
+                        <div class="step3SkillsPasspoort stepSkillpasspoort">
+                            <p class="titleBlockStepSkills">Geef de locatie(s) aan waar jij woont of werkt</p>
+                            <div class="input-group-locaties">
+                                <div class="inputGroupLocaties">
+                                    <p class="priveBlockTitle">Privé:</p>
+                                    <!-- country -->
+                                    <div class='row align-items-center'>
+                                        <div class='col-md-3 col-xs-3'>
+                                            <p><b>Country</b></p>
                                         </div>
-                                        <!-- end country row -->
-
-                                        <!-- region -->
-                                        <div class='row align-items-center'>
-                                            <div class='col-md-3 col-xs-3'>
-                                                <p><b>Region</b></p>
-                                            </div>
-                                            <div class='col-md-9 col-xs-9'>
-                                                <select id="region" class='form-control' required><option value="">-- Region --</option></select>
-                                            </div>
+                                        <div class='col-md-9 col-xs-9'>
+                                            <select id="country" class='form-control' required><option value="">-- Country --</option></select>
                                         </div>
-                                        <!-- end region row -->
                                     </div>
+                                    <!-- end country row -->
 
-                                    <div class="inputGroupLocaties">
-                                        <p class="priveBlockTitle">Werk:</p>
-                                        <!-- country -->
-                                        <div class='row align-items-center'>
-                                            <div class='col-md-3 col-xs-3'>
-                                                <p><b>Country</b></p>
-                                            </div>
-                                            <div class='col-md-9 col-xs-9'>
-                                                <select id="countryBiss" class='form-control' required><option value="">-- Country --</option></select>
-                                            </div>
+                                    <!-- region -->
+                                    <div class='row align-items-center'>
+                                        <div class='col-md-3 col-xs-3'>
+                                            <p><b>Region</b></p>
                                         </div>
-                                        <!-- end country row -->
-
-                                        <!-- region -->
-                                        <div class='row align-items-center'>
-                                            <div class='col-md-3 col-xs-3'>
-                                                <p><b>Region</b></p>
-                                            </div>
-                                            <div class='col-md-9 col-xs-9'>
-                                                <select id="regionBiss" class='form-control' required><option value="">-- Region --</option></select>
-                                            </div>
+                                        <div class='col-md-9 col-xs-9'>
+                                            <select id="region" class='form-control' required><option value="">-- Region --</option></select>
                                         </div>
-                                        <!-- end region row -->
                                     </div>
+                                    <!-- end region row -->
                                 </div>
-                                <div class="text-center w-100 groupBtnStepSkillsP">
-                                    <button type="button" class="btn btnTerug" id="btnTerug2SkillsPasspoort">Terug</button>
-                                    <button type="button" class="btn btn-volgende" id="btnStep3SkillsPasspoort">Volgende stap</button>
+
+                                <div class="inputGroupLocaties">
+                                    <p class="priveBlockTitle">Werk:</p>
+                                    <!-- country -->
+                                    <div class='row align-items-center'>
+                                        <div class='col-md-3 col-xs-3'>
+                                            <p><b>Country</b></p>
+                                        </div>
+                                        <div class='col-md-9 col-xs-9'>
+                                            <select id="countryBiss" class='form-control' required><option value="">-- Country --</option></select>
+                                        </div>
+                                    </div>
+                                    <!-- end country row -->
+
+                                    <!-- region -->
+                                    <div class='row align-items-center'>
+                                        <div class='col-md-3 col-xs-3'>
+                                            <p><b>Region</b></p>
+                                        </div>
+                                        <div class='col-md-9 col-xs-9'>
+                                            <select id="regionBiss" class='form-control' required><option value="">-- Region --</option></select>
+                                        </div>
+                                    </div>
+                                    <!-- end region row -->
                                 </div>
                             </div>
+                            <div class="text-center w-100 groupBtnStepSkillsP">
+                                <button type="button" class="btn btnTerug" id="btnTerug2SkillsPasspoort">Terug</button>
+                                <button type="button" class="btn btn-volgende" id="btnStep3SkillsPasspoort">Volgende stap</button>
+                            </div>
+                        </div>
 
-                            <div class="step4SkillsPasspoort stepSkillpasspoort">
-                                <p class="titleBlockStepSkills">Hoe leer jij het liefst ?</p>
-                                <div class="hiddenCB">
-                                    <div>
-                                        <?= $input_course_type; ?>
-                                    </div>
-
-                                </div>
-
-                                    <div class="text-center w-100 groupBtnStepSkillsP">
-                                        <button type="button" class="btn btnTerug" id="btnTerug3SkillsPasspoort">Terug</button>
-                                        <button type="button" class="btn btn-volgende" id="btnStep4SkillsPasspoort">Volgende stap</button>
-                                    </div>
-                                </div>
-
-                            <div class="step5SkillsPasspoort stepSkillpasspoort">
-                                    <p class="titleBlockStepSkills">Tot welke generatie behoor je ?</p>
-                                    <div class="blockInputRadio" id="groupBtnChoice2">
-                                        <?=  $input_generaties; ?>
-                                    </div>
-                                    <div class="text-center w-100 groupBtnStepSkillsP">
-                                        <button type="button" class="btn btnTerug" id="btnTerug4SkillsPasspoort">Terug</button>
-                                        <button type="button" class="btn btn-volgende" id="btnStep5SkillsPasspoort">Volgende stap</button>
-                                    </div>
-                                </div>
-
-                            <div class="step6SkillsPasspoort stepSkillpasspoort">
-                                    <p class="titleBlockStepSkills">Vul je gegevens in en je hebt direct toegang tot je skills paspoort </p>
-                                    <div class="hiddenCB">
-                                        <div class="input-group-register">
-                                            <div class="form-group-skills">
-                                                <label for="">Voornaam</label>
-                                                <input name="first_name"  type="text" placeholder="Voorman">
-                                            </div>
-                                            <div class="form-group-skills">
-                                                <label for="">Achternaam</label>
-                                                <input name="last_name" type="text" placeholder="Achternaam">
-                                            </div>
-                                            <div class="form-group-skills">
-                                                <label for="">Bedrijf</label>
-                                                <input name="companie" type="text" placeholder="Bedrijf">
-                                            </div>
-                                            <!-- <div class="form-group-skills">
-                                                <label for="">Wachtwoord</label>
-                                                <input type="text" placeholder="Wachtwoord">
-                                            </div> -->
-                                            <div class="form-group-skills">
-                                                <label for="">Email</label>
-                                                <input name="email" type="text" placeholder="Email">
-                                            </div>
-                                            <div class="form-group-skills">
-                                                <label for="">Telefoonnummer</label>
-                                                <input name="telefoonnummer" type="text" placeholder="Telefoonnummer">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="text-center w-100 groupBtnStepSkillsP">
-                                        <button type="button" class="btn btnTerug" id="btnTerug5SkillsPasspoort">Terug</button>
-                                        <button type="submit" class="btn btn-volgende">Maak je skills paspoort</button>
-                                    </div>
+                        <div class="step4SkillsPasspoort stepSkillpasspoort">
+                            <p class="titleBlockStepSkills">Hoe leer jij het liefst ?</p>
+                            <div class="hiddenCB">
+                                <div>
+                                    <?= $input_course_type; ?>
                                 </div>
 
                             </div>
 
-                    </div>
-                </form>
+                            <div class="text-center w-100 groupBtnStepSkillsP">
+                                <button type="button" class="btn btnTerug" id="btnTerug3SkillsPasspoort">Terug</button>
+                                <button type="button" class="btn btn-volgende" id="btnStep4SkillsPasspoort">Volgende stap</button>
+                            </div>
+                        </div>
+
+                        <div class="step5SkillsPasspoort stepSkillpasspoort">
+                            <p class="titleBlockStepSkills">Tot welke generatie behoor je ?</p>
+                            <div class="blockInputRadio" id="groupBtnChoice2">
+                                <?=  $input_generaties; ?>
+                            </div>
+                            <div class="text-center w-100 groupBtnStepSkillsP">
+                                <button type="button" class="btn btnTerug" id="btnTerug4SkillsPasspoort">Terug</button>
+                                <button type="button" class="btn btn-volgende" id="btnStep5SkillsPasspoort">Volgende stap</button>
+                            </div>
+                        </div>
+
+                        <div class="step6SkillsPasspoort stepSkillpasspoort">
+                            <p class="titleBlockStepSkills">Vul je gegevens in en je hebt direct toegang tot je skills paspoort </p>
+                            <div class="hiddenCB">
+                                <div class="input-group-register">
+                                    <div class="form-group-skills">
+                                        <label for="">Voornaam</label>
+                                        <input name="first_name"  type="text" placeholder="Voorman">
+                                    </div>
+                                    <div class="form-group-skills">
+                                        <label for="">Achternaam</label>
+                                        <input name="last_name" type="text" placeholder="Achternaam">
+                                    </div>
+                                    <div class="form-group-skills">
+                                        <label for="">Bedrijf</label>
+                                        <input name="companie" type="text" placeholder="Bedrijf">
+                                    </div>
+                                    <!-- <div class="form-group-skills">
+                                        <label for="">Wachtwoord</label>
+                                        <input type="text" placeholder="Wachtwoord">
+                                    </div> -->
+                                    <div class="form-group-skills">
+                                        <label for="">Email</label>
+                                        <input name="email" type="text" placeholder="Email">
+                                    </div>
+                                    <div class="form-group-skills">
+                                        <label for="">Telefoonnummer</label>
+                                        <input name="telefoonnummer" type="text" placeholder="Telefoonnummer">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center w-100 groupBtnStepSkillsP">
+                                <button type="button" class="btn btnTerug" id="btnTerug5SkillsPasspoort">Terug</button>
+                                <button type="submit" class="btn btn-volgende">Maak je skills paspoort</button>
+                            </div>
+                        </div>
+
                 </div>
+
+            </div>
+            </form>
         </div>
     </div>
+</div>
+<div class="container-fluid">
+    <div class="img-block-illustration">
+        <img src="<?php echo get_stylesheet_directory_uri();?>/img/illustration-livelearn.png"  alt="">
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="theme-card-gradient">
+                <p class="title-card">Voor jou!</p>
+                <p class="description-card">Een altijd gratis leeromgeving om je oneindig door te laten groeien; word de expert in de markt.</p>
+                <div class="w-100">
+                    <a href="/inloggen-2/">Sign-up!</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="theme-card-gradient">
+                <p class="title-card">Voor opleiders / experts</p>
+                <p class="description-card">Ben jij een expert, opleider of coach? Unlock je teacher omgeving en deel / verkoop direct je kennis.</p>
+                <div class="w-100">
+                    <a href="/voor-teacher-2-2/">Sign-up!</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="theme-card-gradient">
+                <p class="title-card">Voor werkgevers</p>
+                <p class="description-card">Je bedrijf oneindig laten groeien, door je personeel te laten excelleren? LiveLearn is dé upskilling partner. </p>
+                <div class="w-100">
+                    <a href="/voor-organisatie-2/">Sign-up!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-store-doawnload text-center">
+        <p class="title-text">OF DOWNLOAD ONZE GRATIS APP</p>
+        <div class="group-btn-store d-flex flex-wrap justify-content-center">
+            <a href="https://apps.apple.com/nl/app/livelearn/id1666976386">
+                <img src="<?php echo get_stylesheet_directory_uri();?>/img/e-store.png"  alt="app store">
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app" id="googlePlay">
+                <img src="<?php echo get_stylesheet_directory_uri();?>/img/playGoogle.png"  alt="google play">
+            </a>
+        </div>
+    </div>
+</div>
+<div class="onze-expert-block">
     <div class="container-fluid">
-        <div class="img-block-illustration">
-            <img src="<?php echo get_stylesheet_directory_uri();?>/img/illustration-livelearn.png"  alt="">
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="theme-card-gradient">
-                    <p class="title-card">Voor jou!</p>
-                    <p class="description-card">Een altijd gratis leeromgeving om je oneindig door te laten groeien; word de expert in de markt.</p>
-                    <div class="w-100">
-                        <a href="/inloggen-2/">Sign-up!</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="theme-card-gradient">
-                    <p class="title-card">Voor opleiders / experts</p>
-                    <p class="description-card">Ben jij een expert, opleider of coach? Unlock je teacher omgeving en deel / verkoop direct je kennis.</p>
-                    <div class="w-100">
-                        <a href="/voor-teacher-2-2/">Sign-up!</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="theme-card-gradient">
-                    <p class="title-card">Voor werkgevers</p>
-                    <p class="description-card">Je bedrijf oneindig laten groeien, door je personeel te laten excelleren? LiveLearn is dé upskilling partner. </p>
-                    <div class="w-100">
-                        <a href="/voor-organisatie-2/">Sign-up!</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="block-store-doawnload text-center">
-            <p class="title-text">OF DOWNLOAD ONZE GRATIS APP</p>
-            <div class="group-btn-store d-flex flex-wrap justify-content-center">
-                <a href="https://apps.apple.com/nl/app/livelearn/id1666976386">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/e-store.png"  alt="app store">
+        <div class="headCollections">
+            <div class="dropdown show">
+                <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownHuman" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Onze top experts binnen <b id="complete-categorien">Alle categorieën</b>
                 </a>
-                <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app" id="googlePlay">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/playGoogle.png"  alt="google play">
-                </a>
-            </div>
-        </div>
-    </div>
-   <div class="onze-expert-block">
-       <div class="container-fluid">
-           <div class="headCollections">
-               <div class="dropdown show">
-                   <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownHuman" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                       Onze top experts binnen <b id="complete-categorien">Alle categorieën</b>
-                   </a>
-                   <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownHuman">
-                        <select class="form-select selectSearchHome" name="search_type" id="topic_search" multiple="true">
-                            <?php
-                                foreach($topics as $category)
-                                    echo '<option value="' . $category->cat_ID . '">' . $category->cat_name . '</option>';
-                            ?>
-                        </select>
-                   </div>
-               </div>
-               <!--
-                <div class="dropdown show">
-                   <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                       Over de <b>laatste 7 dagen</b>
-                   </a>
-                   <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownMenuLink">
-                       <a class="dropdown-item" href="#">Last 7 days</a>
-                       <a class="dropdown-item" href="#">Last 1 month</a>
-                       <a class="dropdown-item" href="#">Last 1 year</a>
-                       <a class="dropdown-item" href="#">All time</a>
-                   </div>
+                <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownHuman">
+                    <select class="form-select selectSearchHome" name="search_type" id="topic_search" multiple="true">
+                        <?php
+                        foreach($topics as $category)
+                            echo '<option value="' . $category->cat_ID . '">' . $category->cat_name . '</option>';
+                        ?>
+                    </select>
                 </div>
-                -->
-               <a href="/voor-teacher-2-2/" class="zelf-block">
-                   <p class="mr-2">Zelf ook een expert? </p>
-                   <div class="all-expert">
-                       <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
-                   </div>
-               </a>
-           </div>
-           <div class="row" id="autocomplete_categorieen">
-               <?php
-               $num = 1;
-               if(!empty($most_active_members)){
-                   foreach($most_active_members as $user) {
-                       $image_user = get_field('profile_img',  'user_' . $user->ID);
-                       $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+            </div>
+            <!--
+             <div class="dropdown show">
+                <a class="btn btn-collection dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Over de <b>laatste 7 dagen</b>
+                </a>
+                <div class="dropdown-menu dropdownModifeEcosysteme" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="#">Last 7 days</a>
+                    <a class="dropdown-item" href="#">Last 1 month</a>
+                    <a class="dropdown-item" href="#">Last 1 year</a>
+                    <a class="dropdown-item" href="#">All time</a>
+                </div>
+             </div>
+             -->
+            <a href="/voor-teacher-2-2/" class="zelf-block">
+                <p class="mr-2">Zelf ook een expert? </p>
+                <div class="all-expert">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
+                </div>
+            </a>
+        </div>
+        <div class="row" id="autocomplete_categorieen">
+            <?php
+            $num = 1;
+            if(!empty($most_active_members)){
+                foreach($most_active_members as $user) {
+                    $image_user = get_field('profile_img',  'user_' . $user->ID);
+                    $image_user = $image_user ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
-                       $company = get_field('company',  'user_' . $user->ID);
-                       $company_title = $company[0]->post_title;
-                       $company_logo = get_field('company_logo', $company[0]->ID);
+                    $company = get_field('company',  'user_' . $user->ID);
+                    $company_title = $company[0]->post_title;
+                    $company_logo = get_field('company_logo', $company[0]->ID);
 
-                        if(isset($user->first_name) || isset($user->last_name))
-                            $display_name = $user->first_name . ' ' . $user->last_name;
-                        else
-                            $display_name = $user->display_name;
+                    if(isset($user->first_name) || isset($user->last_name))
+                        $display_name = $user->first_name . ' ' . $user->last_name;
+                    else
+                        $display_name = $user->display_name;
 
-                        if(!$display_name || $display_name == " ")
-                            $display_name = "Anonym";
-                       ?>
-                       <a href="/dashboard/user-overview/?id=<?php echo $user->ID; ?>" target="_blank" class="col-md-4">
-                           <div class="boxCollections">
-                               <p class="numberList"><?php echo $num++ ; ?></p>
-                               <div class="circleImgCollection">
-                                   <img src="<?php echo $image_user ?>" alt="">
-                               </div>
-                               <div class="secondBlockElementCollection">
-                                   <p class="nameListeCollection"><?= $display_name ?></p>
-                                  <!-- <div class="iconeTextListCollection">
+                    if(!$display_name || $display_name == " ")
+                        $display_name = "Anonym";
+                    ?>
+                    <a href="/dashboard/user-overview/?id=<?php echo $user->ID; ?>" target="_blank" class="col-md-4">
+                        <div class="boxCollections">
+                            <p class="numberList"><?php echo $num++ ; ?></p>
+                            <div class="circleImgCollection">
+                                <img src="<?php echo $image_user ?>" alt="">
+                            </div>
+                            <div class="secondBlockElementCollection">
+                                <p class="nameListeCollection"><?= $display_name ?></p>
+                                <!-- <div class="iconeTextListCollection">
                                        <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/ethereum.png" alt="">
                                        <p><?php /*echo number_format(rand(0,100000), 2, '.', ','); */?></p>
                                    </div>-->
-                                   <div class="blockDetailCollection">
-                                       <div class="iconeTextListCollection">
-                                           <img src="<?= $company_logo ?>" alt="">
-                                           <p><?= $company_title; ?></p>
-                                       </div>
-                                       <div class="iconeTextListCollection">
-                                           <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-brain.png" alt="">
-                                           <p class="number-brain"><?php echo number_format(rand(0,100000), 2, '.', ',');?></p>
-                                       </div>
-                                   </div>
+                                <div class="blockDetailCollection">
+                                    <div class="iconeTextListCollection">
+                                        <img src="<?= $company_logo ?>" alt="">
+                                        <p><?= $company_title; ?></p>
+                                    </div>
+                                    <div class="iconeTextListCollection">
+                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-brain.png" alt="">
+                                        <p class="number-brain"><?php echo number_format(rand(0,100000), 2, '.', ',');?></p>
+                                    </div>
+                                </div>
 
-                               </div>
-                               <p class="pourcentageCollection"><?php echo number_format(rand(0,100), 2, '.', ','); ?>%</p>
-                           </div>
-                       </a>
-                   <?php }
-               }else
-                   echo '<p class="verkop"> Geen deskundigen beschikbaar </p>';
-               ?>
-           </div>
-       </div>
-   </div>
+                            </div>
+                            <p class="pourcentageCollection"><?php echo number_format(rand(0,100), 2, '.', ','); ?>%</p>
+                        </div>
+                    </a>
+                <?php }
+            }else
+                echo '<p class="verkop"> Geen deskundigen beschikbaar </p>';
+            ?>
+        </div>
+    </div>
+</div>
 
 <div class="container-fluid">
     <div class="talent-binnen-block">
@@ -1425,10 +1427,10 @@ $saved = get_user_meta($user_id, 'course');
             <h3>Als bedrijf beheer je in <span>1 minuut</span> al je <span>talent</span> binnen de organisatie </h3>
             <p class="description ">In ons speciaal ontwikkelde learning management systeem houd je als manager precies bij hoe jouw talent zich ontwikkelt. Daarnaast deel je eenvoudig content, trainingen en andere kennisproducten met hen. </p>
             <div class="jij-element">
-               <div class="d-flex">
-                   <p class="jij-text">JIJ</p>
-                   <img class="imgArrowRight" src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-long-arrow-alt-right.png" alt="">
-               </div>
+                <div class="d-flex">
+                    <p class="jij-text">JIJ</p>
+                    <img class="imgArrowRight" src="<?php echo get_stylesheet_directory_uri();?>/img/awesome-long-arrow-alt-right.png" alt="">
+                </div>
                 <p class="text-description-jij">Een manager dashboard</p>
             </div>
             <div class="jij-element">
@@ -1472,302 +1474,302 @@ $saved = get_user_meta($user_id, 'course');
     </div>
 </div>
 <div class="block9">
-<div class="block9">
-    <div class="container-fluid">
-        <p class="titleblockOnze">De onderwerpen waarin wij jou kunnen helpen</p>
-        <a href="/onderwer" class="zelf-block">
-            <p>Bekijk alle onderwerp</p>
-            <div  class="all-expert">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
-            </div>
-        </a>
-        <div class="blockGroupText">
-            <p class="titleGroupText">Opleiden richting een baan </p>
+    <div class="block9">
+        <div class="container-fluid">
+            <p class="titleblockOnze">De onderwerpen waarin wij jou kunnen helpen</p>
+            <a href="/onderwer" class="zelf-block">
+                <p>Bekijk alle onderwerp</p>
+                <div  class="all-expert">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/finger.png" alt="">
+                </div>
+            </a>
+            <div class="blockGroupText">
+                <p class="titleGroupText">Opleiden richting een baan </p>
 
-            <div class="sousBlockGroupText">
-                <?php
+                <div class="sousBlockGroupText">
+                    <?php
                     foreach($bangerichts as $bangericht){
-                ?>
-                    <a href="sub-topic?subtopic=<?php echo $bangericht->cat_ID ?>" class="TextZorg"><?php echo $bangericht->cat_name ?></a>
-                <?php
+                        ?>
+                        <a href="sub-topic?subtopic=<?php echo $bangericht->cat_ID ?>" class="TextZorg"><?php echo $bangericht->cat_name ?></a>
+                        <?php
                     }
-                ?>
+                    ?>
+                </div>
             </div>
-        </div>
-        <div class="blockGroupText">
-            <p class="titleGroupText">Groeien binnen je functie </p>
+            <div class="blockGroupText">
+                <p class="titleGroupText">Groeien binnen je functie </p>
 
-            <div class="sousBlockGroupText">
-                <?php
+                <div class="sousBlockGroupText">
+                    <?php
                     foreach($functies as $functie){
-                ?>
-                    <a href="sub-topic?subtopic=<?php echo $functie->cat_ID ?>" class="TextZorg"><?php echo $functie->cat_name ?></a>
-                <?php
+                        ?>
+                        <a href="sub-topic?subtopic=<?php echo $functie->cat_ID ?>" class="TextZorg"><?php echo $functie->cat_name ?></a>
+                        <?php
                     }
-                ?>
+                    ?>
+                </div>
             </div>
-        </div>
-        <div class="blockGroupText">
-            <p class="titleGroupText">Relevante skills ontwikkelen:</p>
+            <div class="blockGroupText">
+                <p class="titleGroupText">Relevante skills ontwikkelen:</p>
 
-            <div class="sousBlockGroupText">
-                <?php
+                <div class="sousBlockGroupText">
+                    <?php
                     foreach($skills as $skill){
-                ?>
-                    <a href="sub-topic?subtopic=<?php echo $skill->cat_ID ?>" class="TextZorg"><?php echo $skill->cat_name ?></a>
-                <?php
+                        ?>
+                        <a href="sub-topic?subtopic=<?php echo $skill->cat_ID ?>" class="TextZorg"><?php echo $skill->cat_name ?></a>
+                        <?php
                     }
-                ?>
+                    ?>
+                </div>
             </div>
-        </div>
-        <div class="blockGroupText">
-            <p class="titleGroupText">Persoonlijke interesses & vrije tijd</p>
+            <div class="blockGroupText">
+                <p class="titleGroupText">Persoonlijke interesses & vrije tijd</p>
 
-            <div class="sousBlockGroupText">
-                <?php
+                <div class="sousBlockGroupText">
+                    <?php
                     foreach($interesses as $interesse){
-                ?>
-                    <a href="sub-topic?subtopic=<?php echo $interesse->cat_ID ?>" class="TextZorg"><?php echo $interesse->cat_name ?></a>
+                        ?>
+                        <a href="sub-topic?subtopic=<?php echo $interesse->cat_ID ?>" class="TextZorg"><?php echo $interesse->cat_name ?></a>
+                        <?php
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="block-contact-calendy text-center">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-center">
+                <div class="img-Direct-een">
+                    <img id="firstImg-direct-contact" src="<?php echo get_stylesheet_directory_uri();?>/img/Direct-een.png" alt="">
+                </div>
+                <div class="img-Direct-een">
+                    <img id="secondImg-direct-contact" src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der-Kolk.png" alt="">
+                </div>
+            </div>
+            <h3 class="title-Direct-een"><strong>Direct een afspraak inplannen?</strong><br> Hulp nodig of heb je vragen over LiveLearn? Wij zijn er om je te helpen.</h3>
+            <button class="btn btn-kies" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/livelearn/overleg-pilot'});return false;">Kies een datum</button>
+
+        </div>
+    </div>
+    <div class="blockCardBleu3">
+        <div class="container-fluid">
+            <div class="contentSix">
+                <a href="/opleiders" class="cardBoxSix">
+                    <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/alle-opleiders.png" alt="">
+                    <p class="textAlloOP">Alle opleiders</p>
+                    <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
+                </a>
+                <a href="/onderwer" class="cardBoxSix">
+                    <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/all-onderwerpen.png" alt="">
+                    <p class="textAlloOP">Alle onderwerpen</p>
+                    <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
+                </a>
+                <a href="/product-search" class="cardBoxSix">
+                    <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/all-opleidegen.png" alt="">
+                    <p class="textAlloOP">Alle opleidingen</p>
+                    <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
+                </a>
+                <a href="/static-education-advice" class="cardBoxSix">
+                    <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/skills-passport.png" alt="">
+                    <p class="textAlloOP">Skills paspoort</p>
+                    <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="productBlock3">
+            <p class="TitleWat">Wat je niet mag missen</p>
+
+            <div class="owl-carousel owl-nav-active owl-theme owl-carousel-card-course">
+
                 <?php
+                $author_id = 0;
+                foreach($users as $user){
+                    $name_user = strtolower($user->data->display_name);
+                    if($name_user == "Livelean" || $name_user == "livelean"){
+                        $author_id = intval($user->data->ID);
+                        $name_user = $user->display_name;
+                        $featured = get_field('featured', 'user_' . $author_id);
+                        if($featured)
+                            break;
                     }
-                ?>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="block-contact-calendy text-center">
-    <div class="container-fluid">
-        <div class="d-flex justify-content-center">
-            <div class="img-Direct-een">
-                <img id="firstImg-direct-contact" src="<?php echo get_stylesheet_directory_uri();?>/img/Direct-een.png" alt="">
-            </div>
-            <div class="img-Direct-een">
-                <img id="secondImg-direct-contact" src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der-Kolk.png" alt="">
-            </div>
-        </div>
-        <h3 class="title-Direct-een"><strong>Direct een afspraak inplannen?</strong><br> Hulp nodig of heb je vragen over LiveLearn? Wij zijn er om je te helpen.</h3>
-        <button class="btn btn-kies" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/livelearn/overleg-pilot'});return false;">Kies een datum</button>
-
-    </div>
-</div>
-<div class="blockCardBleu3">
-    <div class="container-fluid">
-        <div class="contentSix">
-            <a href="/opleiders" class="cardBoxSix">
-                <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/alle-opleiders.png" alt="">
-                <p class="textAlloOP">Alle opleiders</p>
-                <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
-            </a>
-            <a href="/onderwer" class="cardBoxSix">
-                <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/all-onderwerpen.png" alt="">
-                <p class="textAlloOP">Alle onderwerpen</p>
-                <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
-            </a>
-            <a href="/product-search" class="cardBoxSix">
-                <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/all-opleidegen.png" alt="">
-                <p class="textAlloOP">Alle opleidingen</p>
-                <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
-            </a>
-            <a href="/static-education-advice" class="cardBoxSix">
-                <img class="imgCategoryCard" src="<?php echo get_stylesheet_directory_uri();?>/img/skills-passport.png" alt="">
-                <p class="textAlloOP">Skills paspoort</p>
-                <img class="imgPolygone" src="<?php echo get_stylesheet_directory_uri();?>/img/Polygone.png" alt="">
-            </a>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid">
-    <div class="productBlock3">
-        <p class="TitleWat">Wat je niet mag missen</p>
-
-        <div class="owl-carousel owl-nav-active owl-theme owl-carousel-card-course">
-
-            <?php
-            $author_id = 0;
-            foreach($users as $user){
-                $name_user = strtolower($user->data->display_name);
-                if($name_user == "Livelean" || $name_user == "livelean"){
-                    $author_id = intval($user->data->ID);
-                    $name_user = $user->display_name;
-                    $featured = get_field('featured', 'user_' . $author_id);
-                    if($featured)
-                        break;
                 }
-            }
 
-            if(!empty($featured))
-                $courses = $featured;
+                if(!empty($featured))
+                    $courses = $featured;
 
-            $i = 0;
+                $i = 0;
 
-            foreach($courses as $course){
-                $bool = true;
-                $bool = visibility($course, $visibility_company);
-                if(!$bool)
-                    continue;
+                foreach($courses as $course){
+                    $bool = true;
+                    $bool = visibility($course, $visibility_company);
+                    if(!$bool)
+                        continue;
 
-                //Course type
-                $course_type = get_field('course_type', $course->ID);
+                    //Course type
+                    $course_type = get_field('course_type', $course->ID);
 
-                /*
-                * Categories
-                */
-                $category = '';
-                $category_id = 0;
-                $category_str = 0;
-                if($category == ''){
-                    $one_category = get_field('categories',  $course->ID);
-                    if(isset($one_category[0]['value']))
-                        $category_str = intval(explode(',', $one_category[0]['value'])[0]);
-                    else{
-                        $one_category = get_field('category_xml',  $course->ID);
+                    /*
+                    * Categories
+                    */
+                    $category = '';
+                    $category_id = 0;
+                    $category_str = 0;
+                    if($category == ''){
+                        $one_category = get_field('categories',  $course->ID);
                         if(isset($one_category[0]['value']))
-                            $category_id = intval($one_category[0]['value']);
+                            $category_str = intval(explode(',', $one_category[0]['value'])[0]);
+                        else{
+                            $one_category = get_field('category_xml',  $course->ID);
+                            if(isset($one_category[0]['value']))
+                                $category_id = intval($one_category[0]['value']);
+                        }
+
+                        if($category_str != 0)
+                            $category = (String)get_the_category_by_ID($category_str);
+                        else if($category_id != 0)
+                            $category = (String)get_the_category_by_ID($category_id);
                     }
 
-                    if($category_str != 0)
-                        $category = (String)get_the_category_by_ID($category_str);
-                    else if($category_id != 0)
-                        $category = (String)get_the_category_by_ID($category_id);
-                }
+                    /*
+                    *  Date and Location
+                    */
+                    $day = "-";
+                    $month = 'Virtual';
+                    $location = "Not defined";
 
-                /*
-                *  Date and Location
-                */
-                $day = "-";
-                $month = 'Virtual';
-                $location = "Not defined";
-
-                $data = get_field('data_locaties', $course->ID);
-                if($data){
-                    $date = $data[0]['data'][0]['start_date'];
-                    $day = explode(' ', $date)[0];
-                }
-                else{
-                    $dates = get_field('dates', $course->ID);
-                    if($dates)
-                        $day = explode(' ', $dates[0]['date'])[0];
+                    $data = get_field('data_locaties', $course->ID);
+                    if($data){
+                        $date = $data[0]['data'][0]['start_date'];
+                        $day = explode(' ', $date)[0];
+                    }
                     else{
-                        $data = get_field('data_locaties_xml', $course->ID);
-                        if(isset($data[0]['value'])){
-                            $data = explode('-', $data[0]['value']);
-                            $date = $data[0];
-                            $day = explode(' ', $date)[0];
+                        $dates = get_field('dates', $course->ID);
+                        if($dates)
+                            $day = explode(' ', $dates[0]['date'])[0];
+                        else{
+                            $data = get_field('data_locaties_xml', $course->ID);
+                            if(isset($data[0]['value'])){
+                                $data = explode('-', $data[0]['value']);
+                                $date = $data[0];
+                                $day = explode(' ', $date)[0];
+                            }
                         }
                     }
-                }
 
-                /*
-                * Price
-                */
-                $p = get_field('price', $course->ID);
-                if($p != "0")
-                    $price =  number_format($p, 2, '.', ',');
-                else
-                    $price = 'Gratis';
+                    /*
+                    * Price
+                    */
+                    $p = get_field('price', $course->ID);
+                    if($p != "0")
+                        $price =  number_format($p, 2, '.', ',');
+                    else
+                        $price = 'Gratis';
 
-                /*
-                * Image
-                */
-                $thumbnail = get_field('preview', $course->ID)['url'];
-                if(!$thumbnail){
-                    $thumbnail = get_the_post_thumbnail_url($course->ID);
-                    if(!$thumbnail)
-                        $thumbnail = get_field('url_image_xml', $course->ID);
-                    if(!$thumbnail)
-                        $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
-                }
+                    /*
+                    * Image
+                    */
+                    $thumbnail = get_field('preview', $course->ID)['url'];
+                    if(!$thumbnail){
+                        $thumbnail = get_the_post_thumbnail_url($course->ID);
+                        if(!$thumbnail)
+                            $thumbnail = get_field('url_image_xml', $course->ID);
+                        if(!$thumbnail)
+                            $thumbnail = get_stylesheet_directory_uri() . '/img' . '/' . strtolower($course_type) . '.jpg';
+                    }
 
-                //Company
-                $company = get_field('company',  'user_' . $course->post_author);
+                    //Company
+                    $company = get_field('company',  'user_' . $course->post_author);
 
-                //Short description
-                $short_description = get_field('short_description', $course->ID);
-                //Author
-                $author = get_user_by('ID', $course->post_author);
-                $author_name = $author->display_name ?: $author->first_name;
-                $author_image = get_field('profile_img',  'user_' . $author_object->ID);
-                $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+                    //Short description
+                    $short_description = get_field('short_description', $course->ID);
+                    //Author
+                    $author = get_user_by('ID', $course->post_author);
+                    $author_name = $author->display_name ?: $author->first_name;
+                    $author_image = get_field('profile_img',  'user_' . $author_object->ID);
+                    $author_image = $author_image ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
-                //Clock duration
-                $duration_day = get_field('duration_day', $post->ID) ? : '-';
+                    //Clock duration
+                    $duration_day = get_field('duration_day', $post->ID) ? : '-';
 
-                $find = true;
-                ?>
+                    $find = true;
+                    ?>
 
-                <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
-                    <div class="head">
-                        <?php
+                    <a href="<?= get_permalink($course->ID); ?>" class="new-card-course">
+                        <div class="head">
+                            <?php
                             echo '<img src="' . $thumbnail .'" alt="">';
-                        ?>
-                    </div>
-                    <div class="title-favorite d-flex justify-content-between align-items-center">
-                        <p class="title-course"><?= $course->post_title ?></p>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
-                        <div class="blockOpein d-flex align-items-center">
-                            <i class="fas fa-graduation-cap"></i>
-                            <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
+                            ?>
                         </div>
-                        <div class="blockOpein">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <p class="lieuAm"><?php echo $location?></p>
+                        <div class="title-favorite d-flex justify-content-between align-items-center">
+                            <p class="title-course"><?= $course->post_title ?></p>
                         </div>
-                    </div>
-                    <div class="autor-price-block d-flex justify-content-between align-items-center">
-                        <div class="d-flex align-items-center">
-                            <div class="blockImgUser">
-                                <img src="<?= $author_image ?>" class="" alt="">
+                        <div class="d-flex justify-content-between align-items-center w-100 categoryDateBlock">
+                            <div class="blockOpein d-flex align-items-center">
+                                <i class="fas fa-graduation-cap"></i>
+                                <p class="lieuAm"><?php echo get_field('course_type', $course->ID) ?></p>
                             </div>
-                            <p class="autor"><?= $author_name ?></p>
+                            <div class="blockOpein">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <p class="lieuAm"><?php echo $location?></p>
+                            </div>
                         </div>
-                        <p class="price"><?= $price ?></p>
-                    </div>
+                        <div class="autor-price-block d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <div class="blockImgUser">
+                                    <img src="<?= $author_image ?>" class="" alt="">
+                                </div>
+                                <p class="autor"><?= $author_name ?></p>
+                            </div>
+                            <p class="price"><?= $price ?></p>
+                        </div>
 
+                    </a>
+
+                    <?php
+                    $i++;
+                    if($i == 5)
+                        break;
+                }?>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="doawnloadBlockHome">
+            <h3>Je bent nu ver genoeg naar beneden gescrold,
+                je kan de app hier gratis downloaden:</h3>
+            <div class="d-flex justify-content-center">
+                <a href="https://apps.apple.com/nl/app/livelearn/id1666976386" class="btn btnStore">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/e-store.png" alt="">
                 </a>
-
-                <?php
-                $i++;
-                if($i == 5)
-                    break;
-            }?>
-
+                <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app" class="btn btnPlayGoogle">
+                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/playGoogle.png" alt="">
+                </a>
+            </div>
+            <img class="doanloadIllustration" src="<?php echo get_stylesheet_directory_uri();?>/img/happyDoawnload.png" alt="">
         </div>
-
-
     </div>
-</div>
 
-<div class="container-fluid">
-    <div class="doawnloadBlockHome">
-        <h3>Je bent nu ver genoeg naar beneden gescrold,
-            je kan de app hier gratis downloaden:</h3>
-        <div class="d-flex justify-content-center">
-            <a href="https://apps.apple.com/nl/app/livelearn/id1666976386" class="btn btnStore">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/e-store.png" alt="">
-            </a>
-            <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app" class="btn btnPlayGoogle">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/playGoogle.png" alt="">
-            </a>
-        </div>
-        <img class="doanloadIllustration" src="<?php echo get_stylesheet_directory_uri();?>/img/happyDoawnload.png" alt="">
-    </div>
-</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <?php get_footer(); ?>
+    <?php wp_footer(); ?>
 
-<?php get_footer(); ?>
-<?php wp_footer(); ?>
-
-<script src="<?php echo get_stylesheet_directory_uri();?>/mobapiCity.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/js/jquery.bsSelectDrop.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.animate.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autoheight.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.lazyload.js"></script>
-<script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.navigation.js"></script>
+    <script src="<?php echo get_stylesheet_directory_uri();?>/mobapiCity.js"></script>
+    <script src="<?php echo get_stylesheet_directory_uri();?>/js/jquery.bsSelectDrop.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.carousel.js"></script>
+    <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.animate.js"></script>
+    <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.autoheight.js"></script>
+    <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.lazyload.js"></script>
+    <script src="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/js/owl.navigation.js"></script>
     <script>
         $('.owl-carousel').owlCarousel({
             loop:true,
@@ -1797,24 +1799,24 @@ $saved = get_user_meta($user_id, 'course');
         })
     </script>
 
-<script>
-    (function($){
-        let classes = ['outline-custom'];
-        let selects = $('.selectSearchHome');
-        selects.each(function(i, e){
-            let randomClass  = classes[Math.floor(Math.random() * classes.length)];
-            $(this).bsSelectDrop({
-                autocomplete: 'one',
-                btnClass: 'btn btn-'+classes[i],
-                btnWidth: 'auto',
-                darkMenu: false,
-                showSelectionAsList: false,
-                showActionMenu: true,
+    <script>
+        (function($){
+            let classes = ['outline-custom'];
+            let selects = $('.selectSearchHome');
+            selects.each(function(i, e){
+                let randomClass  = classes[Math.floor(Math.random() * classes.length)];
+                $(this).bsSelectDrop({
+                    autocomplete: 'one',
+                    btnClass: 'btn btn-'+classes[i],
+                    btnWidth: 'auto',
+                    darkMenu: false,
+                    showSelectionAsList: false,
+                    showActionMenu: true,
 
-            });
-        })
-    }(jQuery));
-</script>
+                });
+            })
+        }(jQuery));
+    </script>
     <script>
         $(document).ready(function() {
             const video = $('#videoFrame')[0];
@@ -1834,71 +1836,71 @@ $saved = get_user_meta($user_id, 'course');
         });
 
     </script>
-<script>
-    $(function() {
-        var header = $(".navbar");
-        $(window).scroll(function() {
-            var scroll = $(window).scrollTop();
-            if (scroll >= 61) {
-                header.addClass("scrolled");
-            } else {
-                header.removeClass("scrolled");
-            }
-        });
-
-    });
-</script>
-
-<script src="<?php echo get_stylesheet_directory_uri();?>/city.js"></script>
-
-<script>
-
-    $('.bangricht').click(()=>{
-        alert('bangricht');
-    });
-
-    $('#search').keyup(function(){
-        var txt = $(this).val();
-        var typo = $("#course_type option:selected").val();
-        event.stopPropagation();
-
-        $("#list").fadeIn("fast");
-
-        $(document).click( function(){
-
-            $('#list').hide();
-
-        });
-
-        if(txt){
-            $.ajax({
-
-                url:"/fetch-ajax",
-                method:"post",
-                data:{
-                    search:txt,
-                    typo: typo,
-                },
-                dataType:"text",
-                success: function(data){
-                    console.log(data);
-                    $('#autocomplete').html(data);
+    <script>
+        $(function() {
+            var header = $(".navbar");
+            $(window).scroll(function() {
+                var scroll = $(window).scrollTop();
+                if (scroll >= 61) {
+                    header.addClass("scrolled");
+                } else {
+                    header.removeClass("scrolled");
                 }
             });
-        }
-        else
-            $('#autocomplete').html("<center> <small>Typing ... </small> <center>");
-    });
-</script>
 
-<script>
-    $('.bntNotification').click((e)=>{
-        $.ajax({
+        });
+    </script>
+
+    <script src="<?php echo get_stylesheet_directory_uri();?>/city.js"></script>
+
+    <script>
+
+        $('.bangricht').click(()=>{
+            alert('bangricht');
+        });
+
+        $('#search').keyup(function(){
+            var txt = $(this).val();
+            var typo = $("#course_type option:selected").val();
+            event.stopPropagation();
+
+            $("#list").fadeIn("fast");
+
+            $(document).click( function(){
+
+                $('#list').hide();
+
+            });
+
+            if(txt){
+                $.ajax({
+
+                    url:"/fetch-ajax",
+                    method:"post",
+                    data:{
+                        search:txt,
+                        typo: typo,
+                    },
+                    dataType:"text",
+                    success: function(data){
+                        console.log(data);
+                        $('#autocomplete').html(data);
+                    }
+                });
+            }
+            else
+                $('#autocomplete').html("<center> <small>Typing ... </small> <center>");
+        });
+    </script>
+
+    <script>
+        $('.bntNotification').click((e)=>{
+            $.ajax({
                 url:"/read-notification",
                 method:"get",
                 data:
-                {
-                },
+                    {
+                    },
                 dataType:"text",
                 success: function(data){
                     // Get the modal
@@ -1913,7 +1915,7 @@ $saved = get_user_meta($user_id, 'course');
 
                     // When the user clicks on the button, open the modal
 
-                        modal.style.display = "block";
+                    modal.style.display = "block";
 
                     // When the user clicks on <span> (x), close the modal
                     // span.onclick = function() {
@@ -1923,33 +1925,36 @@ $saved = get_user_meta($user_id, 'course');
                     // When the user clicks anywhere outside of the modal, close it
                     window.onclick = function(event) {
                         if (event.target == modal) {
-                        modal.style.display = "none";
+                            modal.style.display = "none";
                         }
                     }
 
                 }
+            });
         });
-    });
-</script>
+    </script>
 
-<script>
-    $('#topic_search').change(function(){
-        var topic_search = $("#topic_search option:selected").val();
+    <script>
+        $('#topic_search').change(function(){
+            var topic_search = $("#topic_search option:selected").val();
 
-        var complete_categorieen = $("#topic_search option:selected").text();
-        $('#complete-categorien').html(complete_categorieen);
+            var complete_categorieen = $("#topic_search option:selected").text();
+            $('#complete-categorien').html(complete_categorieen);
 
-        $.ajax({
-            url:"/fetch-ajax-home2",
-            method:"post",
-            data:{
-                topic_search: topic_search,
-            },
-            dataType: "text",
-            success: function(data){
-                console.log(data);
-                $('#autocomplete_categorieen').html(data);
-            }
+            $.ajax({
+                url:"/fetch-ajax-home2",
+                method:"post",
+                data:{
+                    topic_search: topic_search,
+                },
+                dataType: "text",
+                success: function(data){
+                    console.log(data);
+                    $('#autocomplete_categorieen').html(data);
+                }
+            });
         });
-    });
-</script>
+    </script>
+
+</body>
+
