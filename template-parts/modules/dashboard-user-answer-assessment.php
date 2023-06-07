@@ -1,6 +1,4 @@
 <?php
-
-
 function timeToSeconds(string $time): int
 {
     $time_array = explode(':', $time);
@@ -9,7 +7,6 @@ function timeToSeconds(string $time): int
     }
     return (int)$time_array[1];
 }
-
     if (isset($_POST) && !empty ($_POST))
     {
         extract($_POST);
@@ -21,36 +18,63 @@ function timeToSeconds(string $time): int
 ?>
 <div class="main-container-assessment">
 
-<div class="content-assessment">
-    <div class="head3OverviewAssessment">
-        <p class="assessmentNUmber" id="current-index">Question 1 / <?php echo count($questions); ?></p>
-        <p class="assessmentTime" id="backendTime"><?php echo $questions[0]['timer'] ?></p>
+<div class="d-block">
+    <div class="content-assessment">
+        <div class="head3OverviewAssessment">
+            <p class="assessmentNUmber" id="current-index">Question 1 / <?php echo count($questions); ?></p>
+            <p class="assessmentTime" id="backendTime"><?php echo $questions[0]['timer'] ?></p>
 
-    </div>
+        </div>
 
-    <p class="chooseTechnoTitle" id="wording"><?php echo $questions[0]['wording'] ?><span> (Multiple choose posible)</span></p>
+        <p class="chooseTechnoTitle" id="wording"><?php echo $questions[0]['wording'] ?><span> (Multiple choose posible)</span></p>
 
-    <div class="listAnswer">
-        <form id="getAnswer">
-            <?php
-            $alphabet = range('A', 'Z');
-            for ($i=0;$i<4;$i++)
-            {
+        <div class="listAnswer">
+            <form id="getAnswer">
+                <?php
+                $alphabet = range('A', 'Z');
+                for ($i=0;$i<4;$i++)
+                {
+
+                    ?>
+                    <label class="container-checkbox">
+                        <span class="numberAssassment"><?= $alphabet[$i]?> </span>
+                        <span class="assassment  <?php echo 'answer_'.($i+1);?>"> <?= $questions[0]["responses"][$i] ?> </span>
+                        <input name="<?php echo "answer_".($i+1); ?>" id=<?php echo "answer_".($i+1); ?> type="checkbox" value="<?php echo $i; ?>" >
+                        <span class="checkmark"></span>
+                    </label>
+
+                    <?php
+                }
 
                 ?>
-                <label class="container-checkbox">
-                    <span class="numberAssassment"><?= $alphabet[$i]?> </span>
-                    <span class="assassment  <?php echo 'answer_'.($i+1);?>"> <?= $questions[0]["responses"][$i] ?> </span>
-                    <input name="<?php echo "answer_".($i+1); ?>" id=<?php echo "answer_".($i+1); ?> type="checkbox" value="<?php echo $i; ?>" >
-                    <span class="checkmark"></span>
-                </label>
+                <button type="button" class="btn btnStratModal" id="btnBackend">Continue</button>
 
-                <?php
-            }
-
-            ?>
-            <button type="button" class="btn btnStratModal" id="btnBackend">Continue</button>
-
+        </div>
+    </div>
+    <div class="content-assessment mt-5">
+        <div class="block-img-response">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/badge-assessment-sucess.png" alt="">
+        </div>
+        <p class="congrat-text">Congratulations</p>
+        <p class="congrat-description">Congratulations! You have successfully completed your assessment. Well done! Your hard work and dedication have paid off. You should be proud of your accomplishment. Keep up the excellent work and continue to strive for success in all your endeavors.</p>
+        <p class="title-scrore">YOUR SCORE</p>
+        <p class="score">20 / 20</p>
+        <div class="d-flex justify-content-center">
+            <a href="" class="btn btn-other-assessment">Other Assessment</a>
+        </div>
+    </div>
+    <div class="content-assessment mt-5">
+        <div class="block-img-response">
+            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/badge-assessment-failed.png" alt="">
+        </div>
+        <p class="congrat-text">Fail</p>
+        <p class="congrat-description">ai le regret de vous informer que votre quiz d'évaluation n'a pas répondu aux critères requis. Bien que vous ayez fait des efforts, certains points n'ont pas atteint les normes attendues. Ne vous découragez pas, car les évaluations ont pour but d'aider à identifier les domaines à améliorer</p>
+        <p class="title-scrore">YOUR SCORE</p>
+        <p class="score">10 / 20</p>
+        <div class="d-flex justify-content-center">
+            <a href="" class="btn btn-other-assessment">Other Assessment</a>
+            <a href="" class="btn btn-retry">Retry</a>
+        </div>
     </div>
 </div>
 
