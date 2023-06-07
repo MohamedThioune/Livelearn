@@ -1016,7 +1016,7 @@ extract($_GET);
 
     <!-- Start Modal  -->
     <?php
-    if(!$bool_link){
+    if($price !== 'Gratis' && !$bool_link){
     ?>
     <div class="modal fade modalpaywallVideo" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
