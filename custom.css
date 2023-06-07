@@ -18012,6 +18012,8 @@ background: #FFFFFF !important;
     padding: 40px 35px 30px;
     border-radius: 8px;
     width: 90%;
+    margin: 0 auto;
+
 }
 .btn-group-layouts .btn{
     border: 1px solid #1a1a1a;
@@ -18632,6 +18634,78 @@ background: #FFFFFF !important;
 }
 .custom-url-tabs .list-wrap ul{
     padding: 30px 15px !important;
+}
+.block-img-response {
+    width: 169px;
+    height: 169px;
+    margin: 25px auto 35px;
+}
+.block-img-response img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.content-assessment .congrat-text {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 500;
+    color: #033356;
+    margin-bottom: 20px;
+}
+.congrat-description {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 16px;
+    color: #161719;
+    line-height: 30px;
+    padding: 0 100px;
+}
+.title-scrore{
+    color: #00a89d;
+    text-align: center;
+    font-weight: 500;
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+.score {
+    text-align: center;
+    color: red;
+    font-size: 21px;
+    font-weight: 500;
+    margin-top: 6px;
+    margin-bottom: 35px;
+}
+.congrat-description {
+    margin: 0 auto 30px;
+    text-align: center;
+    font-size: 16px;
+    color: #161719;
+    line-height: 30px;
+    padding: 0 100px;
+}
+.btn-retry {
+    border: 1px solid #47A99E;
+    min-width: 100px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    color: #47A99E !important;
+    margin: 0 15px;
+}
+.btn-other-assessment {
+    border: 1px solid #033356;
+    min-width: 100px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    color: #033356 !important;
+    margin: 0 15px;
+}
+.btn-other-assessment:hover{
+    background: #033356;
+    color: #FFFFFF !important;
+}
+.btn-retry:hover {
+    background: #47A99E;
+    color: #FFFFFF !important;
 }
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
