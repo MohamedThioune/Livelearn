@@ -68,10 +68,10 @@ function timeToSeconds(string $time): int
             <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/badge-assessment-failed.png" alt="">
         </div>
         <p class="congrat-text">Fail</p>
-        <p class="congrat-description">ai le regret de vous informer que votre quiz d'évaluation n'a pas répondu aux critères requis. Bien que vous ayez fait des efforts, certains points n'ont pas atteint les normes attendues. Ne vous découragez pas, car les évaluations ont pour but d'aider à identifier les domaines à améliorer</p>
+        <p class="congrat-description">sorry to inform you that your assessment quiz did not meet the required criteria. While you put in effort, there were some areas that fell short of the expected standards. Don't be discouraged, as assessments are meant to help identify areas for improvement</p>
         <p class="title-scrore">YOUR SCORE</p>
         <p class="score">10 / 20</p>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center group-btn-assessment">
             <a href="" class="btn btn-other-assessment">Other Assessment</a>
             <a href="" class="btn btn-retry">Retry</a>
         </div>

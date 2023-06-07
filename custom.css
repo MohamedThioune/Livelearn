@@ -18707,6 +18707,7 @@ background: #FFFFFF !important;
     background: #47A99E;
     color: #FFFFFF !important;
 }
+
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
@@ -22630,6 +22631,25 @@ background: #FFFFFF !important;
     }
     .usage-block-card {
         width: 100%;
+    }
+    .congrat-description {
+        font-size: 15px;
+        line-height: 30px;
+        padding: 0 5px;
+    }
+    .content-assessment .congrat-text {
+        font-size: 27px;
+        margin-bottom: 15px;
+    }
+    .btn-other-assessment {
+        margin-bottom: 35px;
+    }
+    .group-btn-assessment{
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+    }
+    .group-btn-assessment .btn-other-assessment {
+        margin-bottom: 40px;
     }
 
 
