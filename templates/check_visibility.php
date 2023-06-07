@@ -21,134 +21,18 @@ if(!empty($company_visibility))
         return $bool;
     }
 
-    function view($course, $user_visibility){
+    //function view($course, $user_visibility){
+    function view($course){
         save_view($course->ID);
-        /*
-            $user_id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;
-            if(!$user_id)
-                return false;
-
-            $args = array(
-                'post_type' => 'view',
-                'post_status' => 'publish',
-                'author' => $user_id,
-            );
-
-            $views_stat_user = get_posts($args);
-
-            if(!empty($views_stat_user))
-                $stat_id = $views_stat_user[0]->ID;
-            else{
-                $data = array(
-                    'post_type' => 'view',
-                    'post_author' => $user_id,
-                    'post_status' => 'publish',
-                    'post_title' => $user_visibility->display_name . ' - View',
-                    );
-
-                $stat_id = wp_insert_post($data);
-            }
-            // je pense que l'appel peux se faire ici
-            $view = get_field('views', $stat_id);
-
-            $one_view = array();
-            $one_view['course'] = $course;
-            $one_view['date'] = date('d/m/Y H:i:s');
-
-            if(!empty($view))
-                array_push($view, $one_view);
-            else
-                $view = array($one_view);
-
-            update_field('views', $view, $stat_id);
-    */
     }
     //first test in view topic
-    function view_topic($topic_id, $user_visibility){
-        /*        $user_id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;
-                if(!$user_id)
-                    return false;
-
-                $args = array(
-                    'post_type' => 'view',
-                    'post_status' => 'publish',
-                    'author' => $user_id,
-                );
-
-                $views_stat_user = get_posts($args);
-
-                if(!empty($views_stat_user))
-                    $stat_id = $views_stat_user[0]->ID;
-                else{
-                    $data = array(
-                        'post_type' => 'view',
-                        'post_author' => $user_id,
-                        'post_status' => 'publish',
-                        'post_title' => $user_visibility->display_name . ' - View',
-                    );
-
-                    $stat_id = wp_insert_post($data);
-                }
-        */
-        var_dump(save_view($topic_id,'topic'));
-        //$stat_id = save_view($topic_id,'topic');
-        /*;
-        $view = get_field('views_topic', $stat_id);
-        
-        $one_view = array();
-        $one_view['view_id'] = $topic_id;
-        $one_view['view_name'] = (String)get_the_category_by_ID($topic_id);
-        $one_view['view_date'] = date('d/m/Y H:i:s');
-
-        if(!empty($view))
-            array_push($view, $one_view);
-        else 
-            $view = array($one_view); 
-        
-        update_field('views_topic', $view, $stat_id);
-*/
+    //function view_topic($topic_id, $user_visibility){
+    function view_topic($topic_id){
+        save_view($topic_id,'topic');
     }
-    function view_user($expert_id, $user_visibility){
+    //function view_user($expert_id, $user_visibility){
+    function view_user($expert_id){
         save_view($expert_id,'expert');
-        /* $user_id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;
-         if(!$user_id)
-             return false;
-
-         $args = array(
-             'post_type' => 'view',
-             'post_status' => 'publish',
-             'author' => $user_id,
-         );
-
-         $views_stat_user = get_posts($args);
-
-         if(!empty($views_stat_user))
-             $stat_id = $views_stat_user[0]->ID;
-         else{
-             $data = array(
-                 'post_type' => 'view',
-                 'post_author' => $user_id,
-                 'post_status' => 'publish',
-                 'post_title' => $user_visibility->display_name . ' - View',
-                 );
-
-             $stat_id = wp_insert_post($data);
-         }
-
-         $view = get_field('views_user', $stat_id);
-
-         $one_view = array();
-         $one_view['view_id'] = $expert_id;
-         $one_view['view_name'] = get_userdata($expert_id)->display_name;
-         $one_view['view_date'] = date('d/m/Y H:i:s');
-
-         if(!empty($view))
-             array_push($view, $one_view);
-         else
-             $view = array($one_view);
-
-         update_field('views_user', $view, $stat_id);
- */
     }
 
 
@@ -157,12 +41,23 @@ if(!empty($company_visibility))
         global $wpdb;
         $table_tracker_views = $wpdb->prefix . 'tracker_views';
         $user_id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;
+        $data_name = "";
         if(!$user_id)
             return;
         $occurence = 1;
         //testing wheither data_id exist ?
         $sql = $wpdb->prepare( "SELECT occurence FROM $table_tracker_views  WHERE data_id = $corse_id");
         $occurence_id = $wpdb->get_results( $sql)[0]->occurence;
+
+        if($type == 'course'){
+            $course = get_post($corse_id);
+            $data_name = (!empty($course)) ? $course->post_name : null;
+        }elseif($type == 'expert'){
+            $expert_infos = get_user_by('id', $corse_id);
+            $data_name = ($expert_infos->last_name) ? $expert_infos->first_name : $expert_infos->display_name;
+        }else if($type == 'topic')
+            $data_name = (String)get_the_category_by_ID($corse_id);
+
         if ($occurence_id) {
             $occurence = intval($occurence_id) + 1;
             $data=[
@@ -176,7 +71,7 @@ if(!empty($company_visibility))
         $data = [
             'data_type'=>$type,
             'data_id'=>$corse_id,
-            'data_name'=>$type, //to change with @Mouhamed
+            'data_name'=>$data_name, //to change with @Mouhamed
             'user_id'=>$user_id,
             'platform'=>'web',
             'occurence'=>$occurence
@@ -184,9 +79,5 @@ if(!empty($company_visibility))
         $wpdb->insert($table_tracker_views, $data);
         return $wpdb->insert_id;
     }
-
-
-
-
 
 
