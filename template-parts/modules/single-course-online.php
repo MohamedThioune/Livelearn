@@ -1,5 +1,6 @@
 <?php
 extract($_GET);
+var_dump($statut_bool);
 ?>
 <style>
     .swiper {
