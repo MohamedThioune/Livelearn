@@ -984,8 +984,6 @@ $saved = get_user_meta($user_id, 'course');
 
 
 <body>
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5NTJ5Z4"
-                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div class="contentOne content-home2">
 
