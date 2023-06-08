@@ -228,12 +228,12 @@ foreach($bunch_orders as $order){
     }
 }
 
-$boolBall = 0;
+$bool_link = 0;
 if($price !== 'Gratis')
     if($statut_bool)
-        $boolBall = 1;
-else
-    $boolBall = 1;
+        $bool_link = 1;
+else if(($price == 'Gratis'))
+    $bool_link = 1;
 
 var_dump($boolBall);
 
