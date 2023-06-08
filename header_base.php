@@ -104,8 +104,19 @@ $url = home_url( $wp->request );
         <title><?php bloginfo('name'); ?></title>
         <?php wp_head(); ?>
     </head>
-    <body class="body">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-625166739%22%3E"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
+    gtag('config', 'AW-625166739');
+    </script>
+    <!-- End Google tag (gtag.js) -->
+
+    <body class="body">
+        <?php if ( function_exists( 'gtm4wp_the_gtm_tag' ) ) { gtm4wp_the_gtm_tag(); } ?>
         <!-- Google Tag Manager (noscript) 
         <noscript>
             <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5NTJ5Z4"
