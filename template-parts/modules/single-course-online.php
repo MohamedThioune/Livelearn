@@ -315,8 +315,8 @@ extract($_GET);
                             echo '<h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Leeg tot nu toe ...</b></h6>';
                         
                         $href_checkout = "/dashboard/user/checkout-video/?post=" . $post->post_name;
-                        if($price !== 'Gratis' && !$bool_link)
-                            echo '<a href="' . $href_checkout . '" class="btn btn-lg mb-5 mt-3 w-md-25 px-4 border border-3 border-dark">Proceed to concent !</a>';
+                        if($price !== 'Gratis' && $bool_link)
+                            echo '<br><a href="' . $href_checkout . '" class="btn btnKoop">Proceed to concent !</a>';
                     ?>
 
                 </div>
