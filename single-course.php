@@ -231,8 +231,7 @@ foreach($bunch_orders as $order){
 }
 
 if($price !== 'Gratis')
-    if($statut_bool)
-        $bool_link = 1;
+    echo '2';
 else
     $bool_link = 1;
 

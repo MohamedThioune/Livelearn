@@ -121,8 +121,7 @@ extract($_GET);
                 </div>
 
                 <?php
-                    var_dump($bool_link);
-                    if( !$bool_link)
+                    if(!$bool_link)
                         echo '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="startTextBtn btn">Start nu voor ' . $price . '</a>';
                     else
                         echo '<a href="?topic=0&lesson=0" class="startTextBtn btn">Start nu voor ' . $price . '</a>';
