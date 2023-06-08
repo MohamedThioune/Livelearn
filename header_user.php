@@ -107,6 +107,18 @@ $see_experts = get_users(
         <title><?php bloginfo('name'); ?></title>
         <?php wp_head(); ?>
     </head>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-625166739%22%3E"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-625166739');
+    </script>
+    <!-- End Google tag (gtag.js) -->
+
     <body class="header-user canhas">
     <!-- Google Tag Manager (noscript)
     <noscript>
