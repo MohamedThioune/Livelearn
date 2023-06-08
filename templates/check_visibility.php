@@ -46,9 +46,9 @@ if(!empty($company_visibility))
             return;
         $occurence = 1;
         //testing wheither data_id exist ?
-        $sql = $wpdb->prepare( "SELECT occurence FROM $table_tracker_views  WHERE data_id = $corse_id");
+        $sql = $wpdb->prepare( "SELECT occurence,id FROM $table_tracker_views  WHERE data_id = $corse_id");
         $occurence_id = $wpdb->get_results( $sql)[0]->occurence;
-
+        $id_tracker_founded = $wpdb->get_results( $sql)[0]->id;
         if($type == 'course'){
             $course = get_post($corse_id);
             $data_name = (!empty($course)) ? $course->post_name : null;
@@ -60,18 +60,19 @@ if(!empty($company_visibility))
 
         if ($occurence_id) {
             $occurence = intval($occurence_id) + 1;
-            $data=[
-                'occurence' => $occurence
+            $data_modified=[
+                'occurence' => $occurence,
             ];
             $where=[
-                'data_id'=>$corse_id,
+                //'data_id'=>$corse_id,
+                'id'=>$id_tracker_founded
             ];
-            return $wpdb->update($table_tracker_views,$data,$where);
+            return $wpdb->update($table_tracker_views,$data_modified,$where);
         }
         $data = [
             'data_type'=>$type,
             'data_id'=>$corse_id,
-            'data_name'=>$data_name, //to change with @Mouhamed
+            'data_name'=>$data_name,
             'user_id'=>$user_id,
             'platform'=>'web',
             'occurence'=>$occurence
