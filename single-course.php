@@ -230,7 +230,7 @@ foreach($bunch_orders as $order){
     }
 }
 
-if($price != 'Gratis')
+if($price !== 'Gratis')
     if($statut_bool)
         $bool_link = 1;
 else
