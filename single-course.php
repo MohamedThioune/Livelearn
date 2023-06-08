@@ -232,11 +232,11 @@ foreach($bunch_orders as $order){
 
 if($price !== 'Gratis')
     if($statut_bool)
-        echo "super";
+        $bool_link = 1;
 else
     $bool_link = 1;
 
-// var_dump($statut_bool);
+var_dump($bool_link);
 
 if(in_array($course_type, $offline))
     include_once('template-parts/modules/single-course-offline.php');
