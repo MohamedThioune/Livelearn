@@ -228,14 +228,14 @@ foreach($bunch_orders as $order){
     }
 }
 
-$bool_link = 0;
+$boolBall = 0;
 if($price !== 'Gratis')
     if($statut_bool)
-        $bool_link = 1;
+        $boolBall = 1;
 else
-    $bool_link = 1;
+    $boolBall = 1;
 
-var_dump($bool_link);
+var_dump($boolBall);
 
 if(in_array($course_type, $offline))
     include_once('template-parts/modules/single-course-offline.php');
