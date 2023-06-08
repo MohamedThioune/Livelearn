@@ -74,7 +74,7 @@ $url = home_url( $wp->request );
 </style>
 <html>
     <head>
-        <!-- Google Tag Manager -->
+        <!-- Google Tag Manager 
         <script>
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -82,6 +82,7 @@ $url = home_url( $wp->request );
             'https://www.googletagmanager.com/gtm.js?id=%27+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','GTM-5NTJ5Z4');
         </script>
+        End Google Tag Manager -->
         <meta name="description" content="Fluidify">
         <meta name='keywords' content="fluidify">
         <meta charset="utf-8">
@@ -104,13 +105,13 @@ $url = home_url( $wp->request );
         <?php wp_head(); ?>
     </head>
     <body class="body">
-        
-        <!-- Google Tag Manager (noscript) -->
+
+        <!-- Google Tag Manager (noscript) 
         <noscript>
             <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5NTJ5Z4"
             height="0" width="0" style="display:none;visibility:hidden"></iframe>
         </noscript>
-        <!-- End Google Tag Manager (noscript) -->
+        End Google Tag Manager (noscript) -->
         <?php
         $sub_categories = array('Gezondheid','Leven');
 
