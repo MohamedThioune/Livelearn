@@ -46,7 +46,7 @@ $see_experts = get_users(
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- Google Tag Manager -->
+        <!-- Google Tag Manager 
         <script>
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -54,7 +54,7 @@ $see_experts = get_users(
             'https://www.googletagmanager.com/gtm.js?id=%27+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','GTM-5NTJ5Z4');
         </script>
-        <!-- End Google Tag Manager -->
+        End Google Tag Manager -->
         <meta name="description" content="Fluidify">
         <meta name='keywords' content="fluidify">
         <meta charset="utf-8">
@@ -108,12 +108,12 @@ $see_experts = get_users(
         <?php wp_head(); ?>
     </head>
     <body class="header-user canhas">
-    <!-- Google Tag Manager (noscript) -->
+    <!-- Google Tag Manager (noscript)
     <noscript>
         <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5NTJ5Z4"
         height="0" width="0" style="display:none;visibility:hidden"></iframe>
     </noscript>
-    <!-- End Google Tag Manager (noscript) -->
+    End Google Tag Manager (noscript) -->
     
     <!-- Modal -->
     <div class="modal fade  modal-dialog-scrollable" id="bedrijfsprofiel_modal" tabindex="-1" role="dialog" aria-labelledby="bedrijfsprofiel_modalModalLabel" aria-hidden="true">
