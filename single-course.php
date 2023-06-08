@@ -201,8 +201,6 @@ $share_txt = "Hello, i share this course with ya *" . $post->post_title . "* \n 
 
 /* * Informations reservation * */
 //Orders - enrolled courses 
-$statut_bool = 0;
-$bool_link = 0;
 $datenr = 0; 
 $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
@@ -230,6 +228,7 @@ foreach($bunch_orders as $order){
     }
 }
 
+$bool_link = 0;
 if($price !== 'Gratis')
     if($statut_bool)
         $bool_link = 1;
