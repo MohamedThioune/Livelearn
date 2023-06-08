@@ -983,9 +983,6 @@ $saved = get_user_meta($user_id, 'course');
 
 ?>
 
-
-<body>
-
 <div class="contentOne content-home2">
 
     <div class="boxOne3">
@@ -1954,5 +1951,4 @@ $saved = get_user_meta($user_id, 'course');
         });
     </script>
 
-</body>
 
