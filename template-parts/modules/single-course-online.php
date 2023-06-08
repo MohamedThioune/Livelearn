@@ -317,7 +317,6 @@ extract($_GET);
                         $href_checkout = "/dashboard/user/checkout-video/?post=" . $post->post_name;
                         if($price !== 'Gratis' && !$bool_link)
                             echo '<a href="' . $href_checkout . '" class="btn btn-lg mb-5 mt-3 w-md-25 px-4 border border-3 border-dark">Proceed to concent !</button>';
-
                     ?>
 
                 </div>
