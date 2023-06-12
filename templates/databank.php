@@ -104,7 +104,41 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         'The Real Deal'=>'https://therealdeal.com/',
         'HousingWire'=>'https://www.housingwire.com/',
         'AfterSales'=>'https://aftersalesmagazine.nl/',
-        'CRS Consulting'=>'https://crsconsultants.nl/'
+        'CRS Consulting'=>'https://crsconsultants.nl/',
+        'Pro Builder'=>'https://www.probuilder.com/',
+        'Building Design + Construction'=>'https://www.bdcnetwork.com/',
+        'Commercial Construction & Renovation'=>'https://www.ccr-mag.com/',
+        'Talent Management'=>'https://www.talentmgt.com/',
+        'HR News'=>'https://www.hrnews.com/',
+        'Training Magazine'=>'https://www.trainingmag.com/',
+        'MedCity News'=>'https://www.medcitynews.com/',
+        'Health Data Management'=>'https://www.healthdatamanagement.com/',
+        'Cocktail Enthusiast'=>'https://www.cocktailenthusiast.com/',
+        'Legal Times'=>'https://www.law.com/legaltimes/',
+        'Advocatenkantoor Mulder'=>'https://www.advocaatmulder.nl/',
+        'Van der Steenhoven Advocaten'=>'https://www.vandersteenhoven.nl/',
+        'Advocatenkantoor Böer'=>'https://www.advocaatboer.nl/',
+        'Mr. Online'=>'https://www.mronline.nl/',
+        'Juridisch Nieuws'=>'https://www.juridischnieuws.nl/',
+        'Cash'=>'https://www.cash.nl/',
+        'Bloomberg M&A News'=>'https://www.bloomberg.com/topic/mergers-and-acquisitions/',
+        'Beleggers Belangen'=>'https://www.beleggersbelangen.nl/',
+        'Kookles thuis'=>'https://www.kooklesthuis.com/',
+        'Mediabistro'=>'https://www.mediabistro.com/',
+        'ProBlogger'=>'https://problogger.com/',
+        'Media Shift'=>'https://www.mediashift.org/',
+        'TopDesk'=>'https://blog.topdesk.com/',
+        'Warehouse Totaal'=>'https://www.warehousetotaal.nl/',
+        'CS digital'=>'https://csdm.online/',
+        'Analytics Insight'=>'https://www.analyticsinsight.net/',
+        'Eyecare Business'=>'https://www.eyecarebusiness.com/',
+        'Wissenraet'=>'https://www.vanspaendonck-wispa.nl/',
+        '9to5Mac'=>'https://9to5mac.com/',
+        'Invest International'=>'https://investinternational.nl/',
+        'Racefiets Blog'=>'https://racefietsblog.nl/',
+        'Darts actueel'=>'https://www.dartsactueel.nl/',
+        'Hockey.nl'=>'https://hockey.nl/',
+        'Hockeykrant'=>'https://hockeykrant.nl/'
     ];
 ?>
 
@@ -698,7 +732,7 @@ $(document).ready(function () {
 <script>
     $("#playlist-youtube").click((e)=>{
         $.ajax({
-            url:"/youtube-playlist/",
+            url:"/livelearn/youtube-playlist/",
             method:"POST",
             data:{
                 playlist_youtube:"youtube"
@@ -718,7 +752,7 @@ $(document).ready(function () {
                 document.getElementById('content-back-topics').innerHTML = success;
                 console.log('success',success)
             },complete: function(complete){
-                location.reload();
+                // location.reload();
             },
         });
     })
