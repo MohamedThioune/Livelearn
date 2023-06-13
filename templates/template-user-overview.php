@@ -12,7 +12,8 @@
     $user = ($_GET['id']) ? get_userdata($_GET['id'])->data : ' ';
     $user_id = get_current_user_id();
 
-    view_user($user->ID, $user_visibility);
+    //view_user($user->ID, $user_visibility);
+    view_user($user->ID);
 
     $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 

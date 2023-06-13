@@ -163,6 +163,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                        &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
                        &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/artikel.jpg" alt="load subtopics"></button>
                        <button id="playlist-youtube">playlist</button>
+                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#audios-api">API AUDIOS</button>
 
                    <div class="col-md-3">
                         
@@ -328,12 +329,55 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                     <div class="d-flex justify-content-end">
                     </div>
                     </form>
-
                 </div>
             </div>
         </div>
     </div> 
     <!-- -->
+
+
+<!--begin modal audios -->
+    <div class="modal fade" id="audios-api" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="navbar-brand d-flex align-items-center">
+                        <img src="https://api.podcastindex.org/images/pci_avatar.jpg" width="48" height="48">
+                        <span class="ml-2"><strong>Podcastindex</strong></span>
+                    <div id="spinner-search-audio" class="d-none">
+                        <div class="spinner-grow m-1" style="width: 1rem; height: 1rem;" role="alert">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow m-1" style="width: 0.8rem; height: 0.8rem;" role="alert">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow m-1" style="width: 0.6rem; height: 0.6rem;" role="alert">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+
+                    </div>
+
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="content-back-audio"></div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">zoek : </label>
+                        <input type="search" placeholder="zoek" class="form-control" id="search_audio" name="search_audio">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-success" id="get-audios">Get Audios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--end modal audios -->
 </body>
 
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
@@ -356,8 +400,36 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         });
         
     });
- 
     //# sourceURL=pen.js
+</script>
+<script type="text/javascript">
+    $('#search_audio').on('input', function(e) {
+        search = e.target.value;
+        console.log(search)
+        $.ajax({
+           url : "/livelearn/audio-api/",
+            method : "POST",
+            data : {
+               audio_search : search
+            },
+            beforeSend:function(){
+                $('#spinner-search-audio').removeClass('d-none');
+                document.getElementById('content-back-audio').innerHTML = '';
+                console.log('sending...')
+            },
+            error: function(error){
+                console.log('error',error);
+                document.getElementById('content-back-audio').innerHTML = error;
+            },
+            success: function(success){
+                document.getElementById('content-back-audio').innerHTML = success;
+                console.log('success',success)
+            },complete: function(complete){
+                $('#spinner-search-audio').addClass('d-none');
+                console.log('complete');
+            },
+        });
+    })
 </script>
 
 <script type="text/javascript">
@@ -384,7 +456,6 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         }
         if(!checkBox.checked)
             ids = []
-
         // console.log(ids);
     }
 
