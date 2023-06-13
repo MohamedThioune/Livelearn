@@ -258,7 +258,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                             if(!empty($onderwerpen)){
                                             $tab = [];
                                                 foreach($onderwerpen as $value1){
-                                                    if($value1){
+                                                    if($value1 && !is_wp_error(get_the_category_by_ID($value1))){
                                                         $tab[] = (String)get_the_category_by_ID($value1);
                                                     }
                                                 }
