@@ -227,8 +227,8 @@ if ($playlist_youtube){
                         'status' => $status
                     );
                     // // var_dump($data);
-                    // $wpdb->insert($table,$data);
-                    // $post_id = $wpdb->insert_id;
+                    $wpdb->insert($table,$data);
+                    $post_id = $wpdb->insert_id;
 
                     echo "<span class='textOpleidRight'> Course_ID : " . $playlist['id'] . " - Insertion done successfully <br><br></span>";
                 }else{
