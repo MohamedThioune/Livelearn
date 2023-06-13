@@ -82,7 +82,7 @@
             ];
             $where=[
                 //'data_id'=>$corse_id,
-                'id'=>$id_tracker_founded
+                'id' => $id_tracker_founded
             ];
             return $wpdb->update($table_tracker_views,$data_modified,$where);
         }
