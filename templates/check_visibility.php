@@ -86,14 +86,16 @@
             ];
             return $wpdb->update($table_tracker_views,$data_modified,$where);
         }
+
         $data = [
-            'data_type'=>$type,
-            'data_id'=>$corse_id,
-            'data_name'=>$data_name,
-            'user_id'=>$user_id,
-            'platform'=>'web',
-            'occurence'=>$occurence
+            'data_type' => $type,
+            'data_id' => $corse_id,
+            'data_name' => $data_name,
+            'user_id' => $user_id,
+            'platform' => 'web',
+            'occurence' => $occurence
         ];
+        
         $wpdb->insert($table_tracker_views, $data);
         return $wpdb->insert_id;
     }
