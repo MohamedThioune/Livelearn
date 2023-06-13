@@ -21,16 +21,18 @@
         return $bool;
     }
 
-    function view($course, $user_visibility){
+    //function view($course, $user_visibility){
+    function view($course){
         save_view($course->ID);
     }
 
     //first test in view topic
-    function view_topic($topic_id, $user_visibility){
-        var_dump(save_view($topic_id,'topic'));
+    //function view_topic($topic_id, $user_visibility){
+    function view_topic($topic_id){
+        save_view($topic_id,'topic');
     }
-
-    function view_user($expert_id, $user_visibility){
+    //function view_user($expert_id, $user_visibility){
+    function view_user($expert_id){
         save_view($expert_id,'expert');
     }
 
@@ -40,6 +42,7 @@
         global $wpdb;
         $table_tracker_views = $wpdb->prefix . 'tracker_views';
         $user_id = (isset($user_visibility->ID)) ? $user_visibility->ID : 0;
+        $data_name = "";
         if(!$user_id)
             return;
         $occurence = 1;
@@ -60,32 +63,41 @@
         //     return;
 
         //testing wheither data_id exist ?
-        $sql = $wpdb->prepare( "SELECT occurence FROM $table_tracker_views  WHERE data_id = $corse_id");
+        $sql = $wpdb->prepare( "SELECT occurence,id FROM $table_tracker_views  WHERE data_id = $corse_id");
         $occurence_id = $wpdb->get_results( $sql)[0]->occurence;
+        $id_tracker_founded = $wpdb->get_results( $sql)[0]->id;
+        if($type == 'course'){
+            $course = get_post($corse_id);
+            $data_name = (!empty($course)) ? $course->post_name : null;
+        }elseif($type == 'expert'){
+            $expert_infos = get_user_by('id', $corse_id);
+            $data_name = ($expert_infos->last_name) ? $expert_infos->first_name : $expert_infos->display_name;
+        }else if($type == 'topic')
+            $data_name = (String)get_the_category_by_ID($corse_id);
+
         if ($occurence_id) {
             $occurence = intval($occurence_id) + 1;
-            $data=[
-                'occurence' => $occurence
+            $data_modified=[
+                'occurence' => $occurence,
             ];
             $where=[
-                'data_id'=> $corse_id,
+                //'data_id'=>$corse_id,
+                'id' => $id_tracker_founded
             ];
-            return $wpdb->update($table_tracker_views,$data,$where);
+            return $wpdb->update($table_tracker_views,$data_modified,$where);
         }
+
         $data = [
-            'data_type'=> $type,
-            'data_id'=> $corse_id,
-            'data_name'=> $data_name, //to change with @Mouhamed
-            'user_id'=> $user_id,
-            'platform'=> 'web',
-            'occurence'=> $occurence
+            'data_type' => $type,
+            'data_id' => $corse_id,
+            'data_name' => $data_name,
+            'user_id' => $user_id,
+            'platform' => 'web',
+            'occurence' => $occurence
         ];
+        
         $wpdb->insert($table_tracker_views, $data);
         return $wpdb->insert_id;
     }
-
-
-
-
 
 
