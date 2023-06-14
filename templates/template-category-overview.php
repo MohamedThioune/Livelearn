@@ -568,8 +568,9 @@ $url = home_url( $wp->request );
                                     $name_author = "Ikzelf";
 
                                 if($teacher_data->first_name == "")
-                                    $name_author = "USER-" . $name_author;
-                        ?>
+                                    continue;
+
+                                ?>
                                 <div class="checkFilter">
                                     <label class="contModifeCheck"><?php echo $name_author ?>
                                         <input type="checkbox" id="sales" name="experties[]" value="<?php echo $teacher; ?>">
@@ -1648,7 +1649,7 @@ $url = home_url( $wp->request );
                                     $name_author = "Ikzelf";
 
                                 if($teacher_data->first_name == "")
-                                    $name_author = "USER-" . $name_author;
+                                    continue;
 
                                 ?>
                                 <div class="swiper-slide swipeExpert custom_slide" style="width: 170px !important;">

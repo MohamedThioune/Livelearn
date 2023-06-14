@@ -572,7 +572,8 @@
                                     $name = "Ikzelf";
 
                                 if($teacher_data->first_name == "")
-                                    $name = "USER-" . $name;
+                                    continue;
+
                         ?>
                         <div class="checkFilter">
                             <label class="contModifeCheck"><?php echo $name ?>
