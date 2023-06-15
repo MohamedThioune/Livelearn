@@ -210,8 +210,7 @@ $enrolled_courses = array();
 $statut_bool = 0;
 $args = array(
     'customer_id' => $user_id,
-    'post_status' => array_keys(wc_get_order_statuses()),
-    'post_status' => array('wc-processing'),
+    'post_status' => array('wc-processing', 'wc-completed'),
     'orderby' => 'date',
     'order' => 'DESC',
     'limit' => -1,
@@ -235,8 +234,6 @@ if($price !== 'Gratis')
         $bool_link = 1;
 else if(($price == 'Gratis'))
     $bool_link = 1;
-
-// var_dump($bool_link);
 
 if(in_array($course_type, $offline))
     include_once('template-parts/modules/single-course-offline.php');
