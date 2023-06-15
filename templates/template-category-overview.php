@@ -69,7 +69,8 @@ $url = home_url( $wp->request );
     $category = ($_GET['category']) ?: ' ';
     $user_id = get_current_user_id();
 
-    view_topic($category, $user_visibility);
+    //view_topic($category, $user_visibility);
+    view_topic($category);
 
     $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
 
@@ -567,8 +568,9 @@ $url = home_url( $wp->request );
                                     $name_author = "Ikzelf";
 
                                 if($teacher_data->first_name == "")
-                                    $name_author = "USER-" . $name_author;
-                        ?>
+                                    continue;
+
+                                ?>
                                 <div class="checkFilter">
                                     <label class="contModifeCheck"><?php echo $name_author ?>
                                         <input type="checkbox" id="sales" name="experties[]" value="<?php echo $teacher; ?>">
@@ -1647,7 +1649,7 @@ $url = home_url( $wp->request );
                                     $name_author = "Ikzelf";
 
                                 if($teacher_data->first_name == "")
-                                    $name_author = "USER-" . $name_author;
+                                    continue;
 
                                 ?>
                                 <div class="swiper-slide swipeExpert custom_slide" style="width: 170px !important;">

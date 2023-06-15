@@ -26,7 +26,7 @@ $user_connected = wp_get_current_user();
 
 extract($_POST);
 if ($playlist_youtube){
-    $fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct-test.csv";
+    $fileName = get_stylesheet_directory_uri() . "/files/Big-Youtube-list-Correct.csv";
     $file = fopen($fileName, 'r');
     if ($file) {
         $playlists_id = array();
@@ -153,17 +153,11 @@ if ($playlist_youtube){
                     $words_not_goods[]=$cat->cat_name;
                 }
             }
-            
+            var_dump($keywords[$key]);
             // $occurrence = array_count_values(array_map('strtolower', $keywords));
             foreach($keywords as $searchword){
                 $searchword = trim(strtolower(strval($searchword)));
                 foreach($categorys as $category){
-                    // var_dump($category->cat_name);
-                    // var_dump($category);
-                    // die();
-                    // if ($i >20) {
-                        //     break;
-                        // }
                     $cat_slug = $category->slug;
                     $cat_name = $category->cat_name; 
                     if(strpos(strtolower($keywords[$key]), strtolower($cat_slug)) !== false || trim(strtolower($keywords[$key])) == trim(strtolower($cat_name)))
@@ -173,12 +167,9 @@ if ($playlist_youtube){
             }
 
             if(empty($tags)){
-                // $occurrence = array_count_values(array_map('strtolower', $keywords));
-                // arsort($occurrence);
                 foreach($categorys as $value)
-                    // if($occurrence[strtolower($value->cat_name)] >= 1)
-                        if(!in_array($value->cat_ID, $tags))
-                            array_push($tags, $value->cat_ID);
+                    if(!in_array($value->cat_ID, $tags))
+                        array_push($tags, $value->cat_ID);
             }
 
             $onderwerpen = join(',',$tags);

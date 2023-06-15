@@ -197,8 +197,7 @@ $enrolled_courses = array();
 //Orders - enrolled courses  
 $args = array(
     'customer_id' => $user,
-    'post_status' => array_keys(wc_get_order_statuses()),
-    'post_status' => array('wc-processing'),
+    'post_status' => array('wc-processing', 'wc-completed'),
     'orderby' => 'date',
     'order' => 'DESC',
     'limit' => -1,
