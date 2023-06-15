@@ -181,7 +181,7 @@ if ($playlist_youtube){
                         continue;
                     }
             }
-            if(sizeof($tags)<10)
+            if(sizeof($tags)<20)
                 $onderwerpen = join(',',$tags);
             else
                 $onderwerpen = "";
@@ -232,12 +232,8 @@ if ($playlist_youtube){
                         'status' => $status
                     );
                     // // var_dump($data);
-                    try {
-                        $wpdb->insert($table,$data);
-                        $post_id = $wpdb->insert_id;
-                    } catch (\Throwable $th) {
-                        echo $th;
-                    }
+                    $wpdb->insert($table,$data);
+                    $post_id = $wpdb->insert_id;
 
                     echo "<span class='textOpleidRight'> Course_ID : " . $playlist['id'] . " - Insertion done successfully <br><br></span>";
                 }else{
