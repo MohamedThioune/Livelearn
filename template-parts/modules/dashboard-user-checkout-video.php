@@ -222,7 +222,11 @@ $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
                                        <p> 
                                         <!-- Buying 22/02/2023 -->
                                         </p>
-                                       <p>Category: <?= (String)get_the_category_by_ID($categories[0]['value']) ?> </p>
+                                        <?php
+                                        if($categories[0]['value']):
+                                            echo "<p>Category: " . (String)get_the_category_by_ID($categories[0]['value']) ." </p>";
+                                        endif;
+                                       ?>
                                    </div>
                                </div>
                                <div class="block-element-list">
@@ -255,7 +259,7 @@ $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
                                                 </div>
                                                 <div>
                                                     <a href="' . $read_lesson . '">
-                                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/arrow-right-alt.png" alt="">
+                                                        <img src="' . get_stylesheet_directory_uri() . '/img/arrow-right-alt.png" alt="">
                                                     </a>
                                                 </div>
                                             </div>';

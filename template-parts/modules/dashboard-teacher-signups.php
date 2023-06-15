@@ -106,21 +106,23 @@ $inkomsten = count($orders) * $price;
                             }
                             else{
                                 $data = get_field('dates', $post->ID);
-                                $number = count($data) - 1;
-                                $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];
-                                $date_start = explode(' ', $data[0]['date']);
-                                $date_end = explode(' ', $data[$number]['date']);
-                                $d_start = explode('-', $date_start[0]);
-                                $d_end = explode('-', $date_end[0]);
+                                if($data){
+                                    $number = count($data) - 1;
+                                    $calendar = ['01' => 'Jan',  '02' => 'Febr',  '03' => 'Maar', '04' => 'Apr', '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Aug', '09' => 'Sept', '10' => 'Okto',  '11' => 'Nov', '12' => 'Dec'];
+                                    $date_start = explode(' ', $data[0]['date']);
+                                    $date_end = explode(' ', $data[$number]['date']);
+                                    $d_start = explode('-', $date_start[0]);
+                                    $d_end = explode('-', $date_end[0]);
 
-                                $timer_s = explode(':', $date_start[1]);
-                                $h_start = $timer_s[0] . ':' . $timer_s[1];
+                                    $timer_s = explode(':', $date_start[1]);
+                                    $h_start = $timer_s[0] . ':' . $timer_s[1];
 
-                                $timer_e = explode(':', $date_end[1]);
-                                $h_end =  $timer_e[0] . ':' . $timer_e[1];
+                                    $timer_e = explode(':', $date_end[1]);
+                                    $h_end =  $timer_e[0] . ':' . $timer_e[1];
 
-                                $agenda_start = $d_start[2] . ' ' . $calendar[$d_start[1]];
-                                $agenda_end = $d_end[2] . ' ' . $calendar[$d_end[1]];
+                                    $agenda_start = $d_start[2] . ' ' . $calendar[$d_start[1]];
+                                    $agenda_end = $d_end[2] . ' ' . $calendar[$d_end[1]];
+                                }
                             }
                         ?>
                     <h2><?php echo $post->post_title ?></h2>
