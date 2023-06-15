@@ -425,6 +425,8 @@ if(!empty($topics_internal))
     foreach($topics_internal as $value)
         array_push($topics, $value);
 
+//SQL Request : "select * from tracker_views where user_id = %user_id"
+//$user_informations
 //Views
 $user_post_view = get_posts( 
     array(
@@ -435,8 +437,6 @@ $user_post_view = get_posts(
         'posts_per_page' => -1
     )
 )[0];
-//SQL Request : "select * from tracker_views where user_id = %user_id"
-//$user_informations
 
 
 //Experts
@@ -575,8 +575,8 @@ if (!empty($user_post_view))
     $count_recommended_course = 0;
 
     foreach($all_user_views as $key => $view) {
-        $view['course'] = get_post($view->data_id); 
         //Get course viewed 
+        //$view['course'] = get_post($view->data_id); 
         if(!$view['course'])
             continue;
 
