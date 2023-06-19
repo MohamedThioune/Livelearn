@@ -46,9 +46,9 @@ $podcast_single = "Podcast";
                 <tbody>
                     <?php 
                     foreach($courses as $key => $course){
-                        if(!visibility($course, $visibility_company))
-                            continue;  
-
+                        // if(!visibility($course, $visibility_company))
+                        //     continue;  
+                        
                         /*
                         * Categories
                         */
