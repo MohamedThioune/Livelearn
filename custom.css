@@ -18707,7 +18707,9 @@ background: #FFFFFF !important;
     background: #47A99E;
     color: #FFFFFF !important;
 }
-
+.acf-file-uploader .file-info {
+    overflow: hidden !important;
+}
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
     #cookieModal{
