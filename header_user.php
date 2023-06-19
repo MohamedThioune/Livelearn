@@ -547,10 +547,10 @@ $see_experts = get_users(
                             if($user->ID == $expert->ID)
                                 continue;
 
-                            $user_data_plus = get_user_by('id', $expert);
+                            $user_data_plus = get_user_by('id', $expert->ID);
                         
                             $user_id = get_current_user_id();
-                            if($expert != $user_id)
+                            if($expert->ID != $user_id)
                                 $name = ($user_data_plus->last_name) ? $user_data_plus->first_name : $user_data_plus->display_name;
                             else
                                 $name = "Ikzelf";
