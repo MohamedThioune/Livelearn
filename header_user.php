@@ -547,6 +547,17 @@ $see_experts = get_users(
                             if($user->ID == $expert->ID)
                                 continue;
 
+                            $user_data_plus = get_user_by('id', $expert);
+                        
+                            $user_id = get_current_user_id();
+                            if($expert != $user_id)
+                                $name = ($user_data_plus->last_name) ? $user_data_plus->first_name : $user_data_plus->display_name;
+                            else
+                                $name = "Ikzelf";
+
+                            if($user_data_plus->first_name == "")
+                                continue;
+
                             $image_author = get_field('profile_img',  'user_' . $expert->ID);
                             $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/placeholder_user.png';
 
