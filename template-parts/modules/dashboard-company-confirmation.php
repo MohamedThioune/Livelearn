@@ -18,7 +18,7 @@
         <h2>Your subscription is currently active</h2>
         <div class="head-content-subscription">
             <div class="detail">
-                <div class="element-detail">
+                <div class="element-detail"> 
                     <p class="subtitel-detail">Team <b>x <?= $team ?></b></p>
                     <p class="product-detail"> <?= $abonnement->total ?> euros</p>
                 </div>
