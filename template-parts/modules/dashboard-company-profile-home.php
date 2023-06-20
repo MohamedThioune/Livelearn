@@ -17,15 +17,13 @@
     ) 
     );
 
-
-    
     foreach($cats as $category){
         $cat_id = strval($category->cat_ID);
         $category = intval($cat_id);
         array_push($categories, $category);
     }
 
-     $subtopics = array();
+    $subtopics = array();
      
     foreach($categories as $categ){
         //Topics
