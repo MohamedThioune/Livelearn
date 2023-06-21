@@ -124,7 +124,10 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         'Racefiets Blog'=>'https://racefietsblog.nl/',
         'Darts actueel'=>'https://www.dartsactueel.nl/',
         'Hockey.nl'=>'https://hockey.nl/',
-        'Hockeykrant'=>'https://hockeykrant.nl/'
+        'Hockeykrant'=>'https://hockeykrant.nl/',
+        'Tata Nexarc'=>'https://blog.tatanexarc.com/',
+        'Inodocs'=>'https://incodocs.com/blog/',
+        'Recruitement Tech'=>'https://www.recruitmenttech.nl/'
     ];
 ?>
 
@@ -148,7 +151,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
                        &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
                        &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/artikel.jpg" alt="load subtopics"></button>
-                       <button id="playlist-youtube">playlist</button>
+                       &nbsp;&nbsp;<button id="playlist-youtube" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/playlist_icon.png" alt="load playlist"></button>
 
                    <div class="col-md-3">
                         
