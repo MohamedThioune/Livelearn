@@ -126,7 +126,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         'Hockey.nl'=>'https://hockey.nl/',
         'Hockeykrant'=>'https://hockeykrant.nl/',
         'Tata Nexarc'=>'https://blog.tatanexarc.com/',
-        'Inodocs'=>'https://incodocs.com/blog/',
+        'Incodocs'=>'https://incodocs.com/blog/',
         'Recruitement Tech'=>'https://www.recruitmenttech.nl/'
     ];
 ?>
