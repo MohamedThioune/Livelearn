@@ -363,7 +363,9 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                 <span class="sr-only">Loading...</span>
                             </div>
                         </div>
-
+                        <div class="spinner-border d-none" id="spinner-saving-podcast" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
                     </div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -451,6 +453,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     function savePodcastPlaylistInPlatform(e){
         //console.log('value',e.target);
         const data = e.target.dataset
+        const loaderSaving = document.getElementById("spinner-saving-podcast");
         console.log('information',data)
         $.ajax({
             url : "/audio-api/",
@@ -460,6 +463,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             },
             beforeSend:function(){
                 console.log('saving...')
+                $('#spinner-saving-podcast').removeClass('d-none');
             },
             success: function(success){
                 alert(success);
@@ -470,7 +474,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             },error: function(error,status){
 
             },complete: function(complete){
-
+                $('#spinner-saving-podcast').addClass('d-none');
             },
         });
     }
