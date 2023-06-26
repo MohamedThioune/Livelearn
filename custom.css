@@ -3420,7 +3420,6 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 }
 
 .contentPassport {
-    margin: -30px 0;
     background: white;
 }
 
@@ -3519,7 +3518,6 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 
 .contentMapMember {
     display: flex;
-    margin-left: 140px;
 }
 
 .btndoawnloadCv {
@@ -3530,8 +3528,6 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
     font-size: 15px;
     border-radius: 8px;
     height: fit-content;
-    margin-right: 52px;
-    margin-top: -13px;
 }
 
 .btndoawnloadCv i {
@@ -3541,7 +3537,6 @@ div.nsl-container .nsl-button-default div.nsl-button-label-container {
 
 .contentElementHeadCandidat {
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
@@ -8157,7 +8152,22 @@ tbody {
             margin-top: -10px;
             width: 155px;
         }
-
+        #team .card-course .userImg {
+            overflow: hidden;
+            position: relative;
+            display: -webkit-inline-box;
+        }
+       .body-content-view-statistic .subTopics-usage-block .subTopics-card {
+           height: initial !important;
+           overflow: scroll;
+       }
+        .individualContent .subTopics-usage-block .subTopics-card {
+            height: 357px !important;
+            overflow: scroll;
+        }
+        .individualContent .group-card-head {
+            padding-top: 0;
+        }
         @media all and (min-width: 300px) and (max-width: 767px){
             .second-block-binnen img {
                 height: 190px !important;
@@ -10147,6 +10157,7 @@ select {
 
 #Portfolio {
     padding: 30px 40px;
+    background: white;
 }
 
 #Password {
@@ -12578,7 +12589,7 @@ select {
     text-align: center;
     justify-content: center;
     padding: 1em;
-    width: 3%;
+    min-width: 3%;
     color: #fff;
     border-radius: 10px;
     position: relative;
@@ -12931,6 +12942,7 @@ ul .selectAll .styled-checkbox:checked + label:after {
     background: #e0eff4;
     width: 100%;
     border-radius: 10px;
+    top: 0;
 }
 .content-error{
     background: #e0eff4;
@@ -14811,7 +14823,6 @@ background: #FFFFFF !important;
 }
 .owl-carousel-card-course .owl-item {
     height: auto !important;
-    max-height: 344px;
 }
 .owl-carousel-card-course .cardKraam {
     height: 100%;
@@ -15272,14 +15283,21 @@ background: #FFFFFF !important;
     margin: 0 20px;
 }
 .card-communities .body-card-community .group-detail {
-    margin: 18px 0;
+    margin: 18px 0 25px;
 }
 .card-communities .body-card-community .btn-join-group{
-    background: #F4F7FC;
+    background: #043356;
     border: 1px solid #D9DFE6;
     border-radius: 5px;
-    padding: 10px 30px;
-    margin: 14px auto 32px;
+    padding: 7px 25px;
+    color: white !important;
+    height: fit-content;
+    font-size: 18px;
+    margin: 10px 8px 25px;
+}
+.body-card-community .btn-danger {
+    font-size: 13px;
+    margin: 10px 8px 25px;
 }
 .content-detail-community .head-detail-community{
     display: flex;
@@ -16923,7 +16941,7 @@ background: #FFFFFF !important;
     line-height: 19px;
     color: #3D4D59 !important;
     margin: 0 5px;
-    padding: 13px 20px;
+    padding: 13px 18px;
     display: block;
 }
 #tab-url1 .nav li .current {
@@ -17972,7 +17990,10 @@ background: #FFFFFF !important;
 }
 .owl-item .new-card-course {
     display: block;
-    height: 100%;
+    max-height: 380px;
+    min-height: 100%;
+    border: 1px solid #e6e3e3 !important;
+    border-radius: 13px;
 }
 .productBlock3 .owl-nav, .blockCardOpleidingen .owl-nav{
     display: none !important;
@@ -18054,6 +18075,563 @@ background: #FFFFFF !important;
     align-items: center;
     justify-content: center;
     height: 95%;
+}
+.content-img{
+    width: 487px;
+    height: 429px;
+}
+.content-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.content-new-inloggen .carousel {
+    background: linear-gradient(152.57deg, #47A99E 0%, #043356 100%);
+    text-align: center;
+}
+.content-img-connection{
+    width: 430px;
+    height: 430px;
+    margin: 90px auto 0;
+}
+.content-img-connection img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.content-new-inloggen .carousel h1 {
+    color: white;
+    font-weight: 500;
+    font-size: 35px;
+    line-height: 36px;
+    margin-bottom: 30px;
+}
+.content-new-inloggen .carousel .description-connection {
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 27px;
+    color: #FFFFFF;
+    padding: 0 65px;
+    margin-bottom: 45px;
+}
+.content-new-inloggen .carousel{
+    height: 100%;
+}
+.block-connection {
+    padding: 50px 15px 30px;
+}
+.right-block-connection h2{
+    font-size: 25px;
+    line-height: 36px;
+    font-weight: 500;
+    color: #000000;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+.logo-liverlearn-connection{
+    width: 173px;
+    height: 52px;
+}
+.logo-liverlearn-connection img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.back-to-home-text{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    text-decoration-line: underline;
+    color: #22100D;
+}
+.content-new-inloggen form label {
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    color: #2b2b2b;
+    font-weight: 300;
+}
+
+.content-new-inloggen form {
+    border-radius: 5px;
+    padding: 21px 10px !important;
+}
+.content-new-inloggen form .form-check-label {
+    font-weight: 300;
+    font-size: 14px;
+    color: #685F78;
+}
+.content-new-inloggen form .btn-coneection {
+    width: 100%;
+    margin-top: 37px;
+    background: #053356;
+    color: white;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: 5px;
+}
+.content-new-inloggen .right-block-connection .container-fluid {
+    min-height: 500px;
+}
+.group-btn-connection{
+    display: flex;
+    margin: 25px auto 25px;
+    width: fit-content;
+}
+.group-btn-connection img{
+    width: 34px;
+    height: 34px;
+    margin-right: 10px;
+}
+.group-btn-connection .btn-connection{
+    background: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    border-radius: 33px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    color: #000000 !important;
+    padding: 7px 20px;
+    margin: 0 9px;
+}
+.block-social-connection{
+    background: linear-gradient(93.07deg, #043356 2.04%, #47A99E 100.47%);
+    text-align: center;
+    width: 100%;
+    padding: 35px 15px 15px;
+}
+.block-social-connection h3{
+    font-size: 16px;
+    line-height: 21px;
+    color: #FFFFFF;
+    font-weight: 500;
+}
+.block-first-connect, .block-second-connect{
+    width: 50%;
+}
+.new-user-text {
+    color: white !important;
+}
+.new-user-text a {
+    color: white !important;
+    text-decoration: underline;
+}
+.block-connection .input-group-connection{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -25px 0;
+}
+.block-connection .input-group-connection .col-{
+    width: 46%;
+    margin: 0 10px;
+}
+.block-connection input::-webkit-input-placeholder {
+    font-size: 12px !important;
+}
+.tab-content .disabled:after, .hover:after {
+    display: none !important;
+}
+.owl-theme .owl-nav [class*=owl-] {
+    color: #46a99e !important;
+    font-size: 26px !important;
+    margin: 5px 5px 0 !important;
+}
+
+.manager-picture-block-btn {
+    display: flex;
+    border: 1px solid #838383;
+    font-weight: 300;
+}
+.owl-nav-active .owl-nav {
+    display: flex !important;
+    position: absolute;
+    top: -55px;
+    width: 100%;
+    right: 30px;
+    justify-content: right;
+}
+.profil-view-statistic .img-user{
+    width: 65px;
+    height: 65px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-right: 15px;
+}
+.profil-view-statistic .img-user img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.profil-view-statistic .name-profil-view{
+    color: #233D63;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+.profil-view-statistic .date-register{
+    color: #233D63;
+    font-style: normal;
+    font-size: 16px;
+    margin-bottom: 0;
+}
+.group-card-head {
+    padding-top: 30px;
+}
+.group-card-head .card-element-company{
+    width: 32%;
+    padding: 25px 20px;
+    box-shadow: 0px 0px 13px rgba(82, 63, 105, 0.05);
+    border-radius: 4px;
+    position: relative;
+}
+.group-card-head .card-element-company .form-select{
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    width: fit-content;
+    padding: 9px 10px !important;
+}
+.group-card-head .bg-bleu-c, .card-element-company .bg-bleu-c{
+    background: #1367C8 !important;
+}
+.group-card-head .bg-yellow-c, .card-element-company .bg-yellow-c{
+    background: #FFAA16 !important;
+}
+.group-card-head .bg-purple-c, .card-element-company .bg-purple-c{
+    background: #673BB7 !important;
+}
+.card-element-company .bg-green-c{
+    background: #47A99E !important;
+}
+.card-element-company .bg-bleuLight-c{
+    background: #0EA5E9D9 !important;
+}
+.card-element-company .bg-dark-c{
+    background: #515365 !important;
+}
+.group-card-head .card-element-company .content-fa{
+    width: 50px;
+    height: 50px;
+    background: #F5F7FB;
+    border: 1px solid #E6E8ED;
+    border-radius: 100%;
+    margin-right: 15px;
+    padding: 11px;
+}
+.group-card-head .card-element-company .content-fa img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.group-card-head .card-element-company .total-member{
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+}
+.group-card-head .card-element-company .number-members{
+    font-weight: 500;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    margin-bottom: 5px;
+}
+.select-statistic {
+    width: auto;
+    padding: 13px 5px !important;
+    margin: 25px 0;
+    border-radius: 3px;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 19px;
+    color: #000000 !important;
+}
+.card-statistic{
+    background: #FFFFFF;
+    box-shadow: 0px 4px 13px rgba(82, 85, 90, 0.05);
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 40px;
+}
+.statistic-bar{
+    position: relative;
+    display: flex;
+    margin: 0px 0px 19px 15px;
+}
+.statistic-bar label{
+    width: 8%;
+    color: #5f646b;
+    text-align: left;
+    margin-bottom: 0;
+}
+.statistic-bar .content-bar{
+    width: 90%;
+    position: relative;
+}
+.statistic-bar .horizontal {
+    background-color: unset !important;
+    width: 100%;
+}
+.statistic-bar .horizontal .progress-bar {
+    grid-column-start: 2;
+    height: 45px;
+    width: 100%;
+    padding: 12px 0;
+}
+.statistic-bar .horizontal .progress-track {
+    background: #ebebeb;
+    width: 90%;
+    height: fit-content;
+    margin: 0 10px;
+}
+.statistic-bar .horizontal .progress-fill {
+    background: #666;
+    height: 7px;
+}
+.progress-element{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.statistic-bar .progress-fill span {
+    opacity: 0;
+}
+.text-percentage {
+    margin-bottom: 0;
+    color: #233D63;
+    font-weight: 500;
+    font-size: 15px;
+}
+.block-circular-bar {
+    display: flex;
+    justify-content: space-between;
+}
+.block-circular-bar .card-circular-bar{
+    background: #FFFFFF;
+    box-shadow: 0px 4px 13px rgba(82, 85, 90, 0.05);
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 40px;
+    width: 32.5%;
+}
+.body-content-view-statistic .form-select {
+    width: fit-content;
+    padding: 8px 10px !important;
+}
+.body-content-view-statistic h2 {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    margin-bottom: 28px;
+    color: #233D63;
+    margin-top: 12px;
+}
+.subTopics-usage-block .subTopics-card .title{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: 28px;
+    color: #233D63;
+    margin-top: 12px;
+}
+.subTopics-usage-block .subTopics-card .title{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    margin-bottom: 10px;
+    color: #233D63;
+    margin-top: 12px;
+}
+.subTopics-usage-block .sub-title{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    margin-bottom: 28px;
+    color: #233D63;
+    margin-top: 12px;
+}
+.subTopics-usage-block .imgTopics{
+    width: 24px;
+    height: 24px;
+}
+.element-SubTopics .text-subTopics{
+    font-weight: 400;
+    font-size: 16px;
+    color: #64748B;
+    margin-bottom: 0;
+}
+.body-content-view-statistic .subTopics-usage-block .subTopics-card {
+    background: #FFFFFF;
+    box-shadow: 0px 4px 13px rgba(82, 85, 90, 0.05);
+    border-radius: 5px;
+    padding: 20px 20px 15px;
+    margin-bottom: 40px;
+    width: 35%;
+    max-height: 430px;
+    overflow: scroll;
+}
+.body-content-view-statistic .subTopics-usage-block .imgTopics{
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.body-content-view-statistic .subTopics-usage-block .imgTopics img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.subTopics-usage-block .number {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 17px;
+    color: #334155;
+    margin-bottom: 0;
+}
+.subTopics-usage-block .sub-title-topics {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    color: #64748B;
+    margin-bottom: 23px;
+}
+.subTopics-usage-block .number-subTopcis{
+    font-weight: 400;
+    font-size: 27px;
+    color: #334155;
+    margin-bottom: 0;
+}
+.subTopics-card .element-SubTopics {
+    margin-bottom: 15px;
+}
+.usage-block-card-team{
+    background: #FFFFFF;
+    box-shadow: 0px 4px 13px rgba(82, 85, 90, 0.05);
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 40px;
+    width: 64%;
+}
+.body-content-view-statistic .card-course{
+    background: #FFFFFF;
+    box-shadow: 0px 4px 13px rgba(82, 85, 90, 0.05);
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 40px;
+}
+.body-content-view-statistic table th, #Company .card-course .table td {
+    text-align: center !important;
+}
+.body-content-view-statistic .table td, .table th {
+    padding: 22px 10px !important;
+    border-top: 1px solid #dee2e699;
+}
+#team .group-card-head .card-element-company {
+    background: white;
+    margin-bottom: 25px;
+}
+#team .group-card-head .card-element-company .total-member {
+    color: #7F8897;
+    margin-bottom: 10px;
+}
+#team .group-card-head .card-element-company .number-members {
+    color: #233D63;
+    margin-bottom: 0px;
+}
+#team .group-card-head .card-element-company .content-fa {
+    padding: 14px;
+}
+#team .group-card-head {
+    padding-top: 30px;
+    margin-bottom: 40px;
+}
+#team .card-course .userImg{
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+}
+#team .card-course .userImg img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.body-content-view-statistic .card-user-team .table td, .table th {
+    padding: 22px 10px !important;
+    border-top: 1px solid #dee2e699;
+    text-align: center !important;
+    position: relative;
+}
+.body-content-view-statistic .card-user-team .dropdown-toggle::after{
+    display: none !important;
+}
+.body-content-view-statistic .card-user-team .actif p{
+    color: #10B981;
+    padding-left: 12px;
+}
+.body-content-view-statistic .card-user-team .inactif p{
+    color: #FF0000;
+    padding-left: 12px;
+}
+.body-content-view-statistic .card-user-team .actif span{
+    width: 8px;
+    height: 8px;
+    background: #10B981;
+    border-radius: 100%;
+}
+.body-content-view-statistic .card-user-team .inactif span{
+    background: #FF0000;
+}
+.body-content-view-statistic .card-user-team .actif{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.body-content-view-statistic .bg-2yellow-c{
+    background: #FFDC5D !important;
+}
+.body-content-view-statistic .block-individual-element{
+    width: 64%;
+}
+.block-individual-element .group-card-head .card-element-company {
+    width: 48%;
+}
+.body-content-view-statistic .subTopics-usage-block .subTopics-card {
+    height: -webkit-fill-available;
+    overflow: scroll;
+}
+.body-content-view-statistic .usage-block-card {
+    background: #FFFFFF;
+    box-shadow: 0px 4px 13px rgba(82, 85, 90, 0.05);
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 40px;
+    width: 100%;
+}
+.individualContent .group-card-head {
+    padding-top: 0 !important;
+}
+.sousBlockProduct2 {
+    padding-top: 25px;
+}
+.custom-url-tabs .contentBlockSetting{
+    border: none !important;
+}
+.custom-url-tabs .list-wrap{
+    background: white;
+    height: fit-content !important;
+}
+.custom-url-tabs .list-wrap ul{
+    padding: 30px 15px !important;
 }
 /*responsive mobile*/
 @media all and (min-width: 300px) and (max-width: 767px) {
@@ -21117,13 +21695,12 @@ background: #FFFFFF !important;
         height: 30px;
     }
     .content-new-user{
-        flex-wrap: wrap;
+        display: block !important;
     }
     .content-new-user .first-section-dashboard, .content-new-user .second-section-dashboard {
         width: 100%;
         margin-right: 0px;
         padding: 0 15px;
-
     }
     .head-block {
         flex-wrap: wrap;
@@ -21610,7 +22187,7 @@ background: #FFFFFF !important;
         font-size: 15px;
     }
     #tab-url1 {
-        padding: 0 15px;
+        padding: 0;
     }
     #tab-url1 .cardFavoriteCourses {
         margin-left: 0px;
@@ -21877,6 +22454,110 @@ background: #FFFFFF !important;
     .btn-group-layouts {
         display: none;
     }
+    .block-first-connect, .block-second-connect {
+        width: 100%;
+    }
+    .content-img-connection {
+        width: 100%;
+        height: 280px;
+        margin: 30px auto 0;
+    }
+    .content-new-inloggen .carousel h1 {
+        font-size: 30px;
+        line-height: 36px;
+        margin-bottom: 15px;
+    }
+    .content-new-inloggen .carousel h1 {
+        font-size: 30px;
+        line-height: 36px;
+        margin-bottom: 15px;
+    }
+    .logo-liverlearn-connection {
+        width: 150px;
+    }
+    .group-btn-connection {
+        flex-wrap: wrap;
+    }
+    .group-btn-connection .btn-connection {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .content-new-inloggen .carousel .description-connection {
+        font-weight: 300;
+        font-size: 13px;
+        line-height: 24px;
+        color: #FFFFFF;
+        padding: 0 30px;
+        margin-bottom: 55px;
+    }
+    .block-connection .input-group-connection .col-{
+        width: 100%;
+        margin: 0;
+    }
+    .block-connection .input-group-connection{
+        margin: 0;
+    }
+    .content-new-statistic .tab-element{
+        padding: 15px 15px !important;
+        margin-top: 25px;
+    }
+    .content-new-statistic .nav {
+        border: none !important;
+        padding: 0px !important;
+        margin-top: 0px !important;
+        margin-bottom: 5px !important;
+    }
+    .content-new-statistic .nav li {
+        margin: 0 3px 4px 0 !important;
+        width: 32%;
+        min-width: unset !important;
+    }
+    .content-new-statistic .nav li .current {
+        font-size: 13px !important;
+    }
+    .content-new-statistic .group-card-head {
+        padding: 0;
+    }
+    .group-card-head .card-element-company {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    .content-new-statistic {
+        padding: 15px !important;
+        margin-top: 25px;
+    }
+    .group-card-head .card-element-company .total-member {
+        margin-bottom: 6px;
+    }
+    .body-content-view-statistic h2 {
+        font-size: 15px;
+        margin-top: 6px;
+        line-height: 23px;
+    }
+    .statistic-bar {
+        margin: 0px;
+    }
+    .statistic-bar label {
+        width: 27%;
+        font-size: 12px;
+    }
+    .text-percentage {
+        font-size: 13px;
+    }
+    .block-circular-bar {
+        flex-wrap: wrap;
+    }
+    .block-circular-bar .card-circular-bar {
+        width: 100%;
+    }
+    .body-content-view-statistic .subTopics-usage-block .subTopics-card {
+        width: 100%;
+        max-height: 378px;
+    }
+    .usage-block-card {
+        width: 100%;
+    }
+
 
 
 
@@ -22587,6 +23268,9 @@ background: #FFFFFF !important;
     }
     .list .new-card-course .head {
         width: 27% !important;
+    }
+    .group-card-head .card-element-company {
+        width: 48%;
     }
 
 }

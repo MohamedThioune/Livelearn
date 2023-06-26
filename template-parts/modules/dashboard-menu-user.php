@@ -157,17 +157,29 @@ style="overflow-x: hidden !important;">
         </div>
         <li class="elementTextDashboard">
             <?php
-
+            $read_experts = array();
             if(!empty($experts))
                 foreach($experts as $expert){
                     if(!$expert)
                         continue;
-
-                    $name = get_userdata($expert)->data->display_name ?: get_userdata($expert)->data->first_name;
-                    if(!$name)
+                    
+                    if(in_array($expert, $read_experts))
                         continue;
+
                     $image_author = get_field('profile_img',  'user_' . $expert);
                     $image_author = $image_author ?: get_stylesheet_directory_uri() . '/img/iconeExpert.png';
+
+                    $user_data_plus = get_user_by('id', $expert);
+                        
+                    $user_id = get_current_user_id();
+                    if($expert != $user_id)
+                        $name = ($user_data_plus->last_name) ? $user_data_plus->first_name : $user_data_plus->display_name;
+                    else
+                        $name = "Ikzelf";
+
+                    if($user_data_plus->first_name == "")
+                        continue;
+
                     echo "
                         <a href='/user-overview/?id=". $expert ."' class='d-flex'>
                             <div class='iconeElement'>
@@ -176,6 +188,7 @@ style="overflow-x: hidden !important;">
                             <p class='textLiDashboard' style='margin-left:10px'>" . $name . "</p>
                         </a><br>";
 
+                    array_push($read_experts, $expert);
                 }
             ?>
         </li>

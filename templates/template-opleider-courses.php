@@ -334,11 +334,17 @@
                             foreach($teachers as $teacher){
                                 if(!$teacher)
                                     continue;
-                                    
+
+                                $teacher_data = get_user_by('id', $teacher);
+                                
                                 if($teacher != $user_id)
-                                    $name = get_userdata($teacher)->data->display_name;
+                                    $name = ($teacher_data->last_name) ? $teacher_data->first_name : $teacher_data->display_name;
                                 else
-                                    $name = "Ikzelf";                                
+                                    $name = "Ikzelf";
+
+                                if($teacher_data->first_name == "")
+                                    continue;
+
                         ?>
                         <div class="checkFilter">
                             <label class="contModifeCheck"><?php echo $name ?>
@@ -541,16 +547,22 @@
                                     foreach($teachers as $teacher){
                                         if(!$teacher)
                                             continue;
+
+                                        $teacher_data = get_user_by('id', $teacher);
                                             
                                         $image = get_field('profile_img',  'user_' . $teacher);
                                         $path = "../user-overview?id=" . $teacher;
                                         if(!$image)
                                             $image = get_stylesheet_directory_uri() . '/img/placeholder_user.png';
-
+                                            $teacher_data = get_user_by('id', $teacher);
+                                
                                         if($teacher != $user_id)
-                                            $name = get_userdata($teacher)->data->display_name;
+                                            $name = ($teacher_data->last_name) ? $teacher_data->first_name : $teacher_data->display_name;
                                         else
                                             $name = "Ikzelf";
+        
+                                        if($teacher_data->first_name == "")
+                                            continue;
                                     ?>
                                     <div class="swiper-slide swipeExpert">
                                         <div class="cardblockOnder cardExpert">

@@ -690,13 +690,13 @@ add_filter( 'rest_authentication_errors', function( $result ) {
         return $result;
     }
 
-       if ( ! is_user_logged_in() ) {
-           return new WP_Error(
-               'rest_not_logged_in',
-               __( 'You are not currently logged in.' ),
-               array( 'status' => 401 )
-           );
-       }
+    //    if ( ! is_user_logged_in() ) {
+    //        return new WP_Error(
+    //            'rest_not_logged_in',
+    //            __( 'You are not currently logged in.' ),
+    //            array( 'status' => 401 )
+    //        );
+    //    }
     return $result;
 });
 
@@ -708,6 +708,10 @@ function filter_woocommerce_api_product_response( $product_data, $product, $fiel
 
 };      
 add_filter( 'woocommerce_api_product_response', 'filter_woocommerce_api_product_response', 10, 4 ); 
+
+//Hide product page 
+remove_action( 'woocommerce_before_shop_loop_item', 'woocommerce_template_loop_product_link_open', 10 );
+remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_product_link_close', 5 );
 
 /*
 ** Endpoints - API
@@ -804,15 +808,29 @@ function recommended_course($data)
       foreach($topics_internal as $value)
           array_push($topics, $value);
   
+  //Experts
+  $postAuthorSearch = array();
   $experts = get_user_meta($user, 'expert');
+  $postAuthorSearch = $experts;
+
+  //Views expert
+  if (!empty($user_post_view))
+  {
+    $view_my_experts = (get_field('views_user', $user_post_view->ID));
+    $id_view_experts = array_column($view_my_experts, 'view_id');
+    $id_view_experts = array_unique($id_view_experts);
+    $postAuthorSearch = (!empty($id_view_experts)) ? array_merge($experts, $id_view_experts) : $experts;
+  }
   $args = array(
-      'post_type' => array('course', 'post'), 
-      'post_status' => 'publish',
-      'posts_per_page' => -1,
-      'order' => 'DESC'
+    'post_type' => array('course', 'post'),
+    'post_status' => 'publish',
+    'author__in' => $postAuthorSearch, 
+    'orderby' => 'date',
+    'order' => 'DESC',
+    'posts_per_page' => 200
   );
   $global_courses = get_posts($args);
-  
+  shuffle($global_courses);
   foreach ($global_courses as $key => $course) {    
       /*
       *  Date and Location
@@ -932,27 +950,15 @@ function recommended_course($data)
           }
 
   }
-
-  if(!empty($courses))
-    $courses = array_slice($courses, 0, 250);
-
-  //Views
-  $user_post_view = get_posts(
-      array(
-          'post_type' => 'view',
-          'post_status' => 'publish',
-          'author' => $user,
-          'order' => 'DESC'
-      )
-  )[0];   
-  $is_view = false;
-
   
   //Empty courses belong to news user(No topics & Experts followed)
   if(empty($courses)){
-    $courses = array_slice($global_courses, 0, 80);
+    $courses = array_slice($global_courses, 0, 200);
     shuffle($courses);
   }
+
+  //Views credentials
+  $is_view = false;
 
   if (!empty($user_post_view))
   {
@@ -1681,19 +1687,13 @@ add_action( 'rest_api_init', function () {
   ));
 
   register_rest_route ('custom/v1', '/user/view/topics', array(
-    'methods' => 'PUT',
+    'methods' => 'GET',
     'callback' => 'update_view_topic',
   ));
 
-  register_rest_route ('custom/v1', '/user/view/experts', array(
-    'methods' => 'PUT',
-    'callback' => 'update_view_experts',
+  register_rest_route ('custom/v1', '/user/view/save', array(
+    'methods' => 'POST',
+    'callback' => 'save_user_views',
   ));
-
   
-
-  
-  
-  
-
 });

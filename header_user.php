@@ -46,6 +46,15 @@ $see_experts = get_users(
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Google Tag Manager 
+        <script>
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id=%27+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-5NTJ5Z4');
+        </script>
+        End Google Tag Manager -->
         <meta name="description" content="Fluidify">
         <meta name='keywords' content="fluidify">
         <meta charset="utf-8">
@@ -98,9 +107,26 @@ $see_experts = get_users(
         <title><?php bloginfo('name'); ?></title>
         <?php wp_head(); ?>
     </head>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-625166739%22%3E"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-625166739');
+    </script>
+    <!-- End Google tag (gtag.js) -->
+
     <body class="header-user canhas">
-
-
+    <!-- Google Tag Manager (noscript)
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5NTJ5Z4"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    End Google Tag Manager (noscript) -->
+    
     <!-- Modal -->
     <div class="modal fade  modal-dialog-scrollable" id="bedrijfsprofiel_modal" tabindex="-1" role="dialog" aria-labelledby="bedrijfsprofiel_modalModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -437,7 +463,7 @@ $see_experts = get_users(
                 <div class="modal-header">
                     <div class="d-flex align-items-center">
                         <h5 class="modal-title" id="exampleModalLabel">Maak en keuze :</h5>
-                        <input type="search" class="search-teach" placeholder="Zoek">
+                        <!-- <input type="search" class="search-teach" placeholder="Zoek"> -->
                     </div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -519,6 +545,17 @@ $see_experts = get_users(
                                 continue;
 
                             if($user->ID == $expert->ID)
+                                continue;
+
+                            $user_data_plus = get_user_by('id', $expert->ID);
+                        
+                            $user_id = get_current_user_id();
+                            if($expert->ID != $user_id)
+                                $name = ($user_data_plus->last_name) ? $user_data_plus->first_name : $user_data_plus->display_name;
+                            else
+                                $name = "Ikzelf";
+
+                            if($user_data_plus->first_name == "")
                                 continue;
 
                             $image_author = get_field('profile_img',  'user_' . $expert->ID);

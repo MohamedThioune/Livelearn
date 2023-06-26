@@ -55,8 +55,7 @@ $expenses = 0;
 //Orders - enrolled courses  
 $args = array(
     'customer_id' => $user->ID,
-    'post_status' => array_keys(wc_get_order_statuses()),
-    'post_status' => array('wc-processing'),
+    'post_status' => array('wc-processing', 'wc-completed'),
     'orderby' => 'date',
     'order' => 'DESC',
     'limit' => -1,
@@ -859,7 +858,7 @@ foreach ($users as $element) {
                                     $access_community = '/dashboard/user/community-detail/?mu=' . $value->ID ;
 
                                 ?>
-                                <a href="/<?= $access_community?>"  class="card-communities-activity">
+                                <a href="<?= $access_community?>"  class="card-communities-activity">
                                     <div class="block-img">
                                         <img src="<?= $community_image ?>" class="" alt="">
                                     </div>
