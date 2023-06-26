@@ -149,6 +149,7 @@ if ($audio_search){
     if ($isCourseInPlateform) {
         $message = "$title is already saved in platform";
     }else {
+
         $data = array(
             'titel' => $title,
             'type' => 'podcast',
