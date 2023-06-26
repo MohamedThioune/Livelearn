@@ -62,6 +62,7 @@ if(!empty($company_visibility))
             $occurence = intval($occurence_id) + 1;
             $data_modified=[
                 'occurence' => $occurence,
+                'updated_at'=> date("Y-m-d H:i:s")
             ];
             $where=[
                 //'data_id'=>$corse_id,
@@ -80,5 +81,3 @@ if(!empty($company_visibility))
         $wpdb->insert($table_tracker_views, $data);
         return $wpdb->insert_id;
     }
-
-
