@@ -74,6 +74,15 @@ $url = home_url( $wp->request );
 </style>
 <html>
     <head>
+        <!-- Google Tag Manager 
+        <script>
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id=%27+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-5NTJ5Z4');
+        </script>
+        End Google Tag Manager -->
         <meta name="description" content="Fluidify">
         <meta name='keywords' content="fluidify">
         <meta charset="utf-8">
@@ -92,17 +101,28 @@ $url = home_url( $wp->request );
         <!-- get bootstrap icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
-        <!-- meta property 
-        <meta property="og:title" content="Livelearn">
-        <meta property="og:description" content="Ontdek, ontwikkel en maak carriere">
-        <meta property="og:image" content="">
-        <meta property="og:url" content="">
-        -->
-
         <title><?php bloginfo('name'); ?></title>
         <?php wp_head(); ?>
     </head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-625166739%22%3E"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-625166739');
+    </script>
+    <!-- End Google tag (gtag.js) -->
+
     <body class="body">
+        <?php if ( function_exists( 'gtm4wp_the_gtm_tag' ) ) { gtm4wp_the_gtm_tag(); } ?>
+        <!-- Google Tag Manager (noscript) 
+        <noscript>
+            <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5NTJ5Z4"
+            height="0" width="0" style="display:none;visibility:hidden"></iframe>
+        </noscript>
+        End Google Tag Manager (noscript) -->
         <?php
         $sub_categories = array('Gezondheid','Leven');
 
@@ -164,6 +184,8 @@ $url = home_url( $wp->request );
         $logo_livelearn = get_stylesheet_directory_uri() . '/img/logo_livelearn.png';
 
         ?>
+
+
 
 
         <div>
@@ -511,7 +533,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search">
+                                        <a href="/product-search?filter=header&opleidin=Training">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Trainingen.jpg" alt="">
                                             </div>
@@ -591,7 +613,7 @@ $url = home_url( $wp->request );
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/product-search?filter=header&opleidin=">
+                                        <a href="/product-search?filter=header&opleidin=Podcast">
                                             <div class="blockImg">
                                                 <img src="<?php echo get_stylesheet_directory_uri();?>/img/Podcasts-header.jpg" alt="">
                                             </div>

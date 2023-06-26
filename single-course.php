@@ -10,9 +10,20 @@ $page = dirname(__FILE__) . '/templates/check_visibility.php';
  
 require($page); 
 
-view($post,$user_visibility);
+//view($post,$user_visibility);
+view($post);
 
+$course_type = get_field('course_type', $post->ID);
+
+$offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
+$online = ['E-learning', 'Video', 'Webinar'];
+
+//Redirection - visibility 
 if(!visibility($post, $visibility_company))
+    header('location: /');
+
+//Redirection - type
+if(!in_array($course_type, $offline) && !in_array($course_type, $online) && $course_type != 'Artikel')
     header('location: /');
 
 //Online
@@ -20,7 +31,6 @@ $courses = get_field('data_virtual', $post->ID);
 $youtube_videos = get_field('youtube_videos', $post->ID);
 $podcasts = get_field('podcasts', $post->ID);
 
-$course_type = get_field('course_type', $post->ID);
 $product = wc_get_product( get_field('connected_product', $post->ID) );
 $long_description = get_field('long_description', $post->ID);
 $short_description = get_field('short_description', $post->ID);
@@ -189,8 +199,41 @@ $link_to = get_field('link_to', $post->ID);
 
 $share_txt = "Hello, i share this course with ya *" . $post->post_title . "* \n Link : " . get_permalink($post->ID) . "\nHope you'll like it.";
 
-$offline = ['Event', 'Lezing', 'Masterclass', 'Training' , 'Workshop', 'Opleidingen', 'Cursus'];
-$online = ['E-learning', 'Video', 'Webinar'];
+
+/* * Informations reservation * */
+//Orders - enrolled courses 
+$datenr = 0; 
+$calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+
+$enrolled = array();
+$enrolled_courses = array();
+$statut_bool = 0;
+$args = array(
+    'customer_id' => $user_id,
+    'post_status' => array('wc-processing', 'wc-completed'),
+    'orderby' => 'date',
+    'order' => 'DESC',
+    'limit' => -1,
+);
+$bunch_orders = wc_get_orders($args);
+
+foreach($bunch_orders as $order){
+    foreach ($order->get_items() as $item_id => $item ) {
+        $course_id = intval($item->get_product_id()) - 1;
+        if($course_id == $post->ID)
+            $statut_bool = 1;
+        //Get woo orders from user
+        if(!in_array($course_id, $enrolled))
+            array_push($enrolled, $course_id);
+    }
+}
+
+$bool_link = 0;
+if($price !== 'Gratis')
+    if($statut_bool)
+        $bool_link = 1;
+else if(($price == 'Gratis'))
+    $bool_link = 1;
 
 if(in_array($course_type, $offline))
     include_once('template-parts/modules/single-course-offline.php');
