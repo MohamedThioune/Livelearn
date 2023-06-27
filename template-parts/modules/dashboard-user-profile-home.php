@@ -11,39 +11,44 @@ if (!empty($portfolios))
         </div>
         <p class="nameCandidat"><?php if(isset($user->first_name) && isset($user->last_name)) echo $user->first_name . ' ' . $user->last_name; else echo $user->display_name; ?></p>
         <p class="professionCandidat"><?php echo $function; ?></p>
-        <div class="contentElementHeadCandidat">
-            <div class="contentTag">
-                <!-- <?php foreach($topics as $topic){ 
-                    $name = (String)get_the_category_by_ID($topic);
-                ?>
+           <div class="d-flex justify-content-between align-items-center w-100">
+               <div class="contentElementHeadCandidat">
+                   <div class="contentTag">
+                       <!-- <?php foreach($topics as $topic){
+                           $name = (String)get_the_category_by_ID($topic);
+                           ?>
                     <p class="tagElement"></p>
                 <?php }?>
-                <?php foreach($experts as $expert){ 
-                    $expert = get_userdata($expert)->data->display_name;
-                    ?>
+                <?php foreach($experts as $expert){
+                           $expert = get_userdata($expert)->data->display_name;
+                           ?>
                     <p class="tagElement"></p>
                 <?php }?> -->
-            </div>
-            <div class="contentMapMember">
-                <div class="contentMap">
-                    <?php if($country) { ?>
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/iconsMap.png" alt="">
-                    <p><?php echo $country; ?></p>
-                    <?php } ?>
-                </div>
-                <a href="" class="contentMap">
-                    <i style="color:#696969;font-size: 1.2em" class="fa fa-home"></i>&nbsp;
-                    <a href="/dashboard/company/people"><?php echo $company_name; ?></a>
-                </div>
-            </div>
-            <?php 
-                if($user->ID == get_current_user_id())
-                    echo "<a href='/dashboard/user/settings' style='color:white;'><button class='btn btndoawnloadCv'><i class='fa fa-gear'></i>Edit</button></a>";
-                else 
-                    echo "<a class='btn btndoawnloadCv' href='#'>Download CV</a>";
-            ?>
+                   </div>
+                   <div class="contentMapMember">
+                       <div class="contentMap">
+                           <?php if($country) { ?>
+                               <img src="<?php echo get_stylesheet_directory_uri();?>/img/iconsMap.png" alt="">
+                               <p><?php echo $country; ?></p>
+                           <?php } ?>
+                       </div>
+                       <div href="" class="">
+                           <i style="color:#696969;font-size: 1.2em" class="fa fa-home"></i>&nbsp;
+                           <a href="/dashboard/company/people"><?php echo $company_name; ?></a>
+                       </div>
+                   </div>
+               </div>
+               <?php
+               if($user->ID == get_current_user_id())
+                   echo "<a href='/dashboard/user/settings' class='btn btndoawnloadCv' style='color:white;'><i class='fa fa-gear'></i>Edit</a>";
+               else
+                   echo "<a class='btn btndoawnloadCv' href='#'>Download CV</a>";
+               ?>
+           </div>
 
         </div>
+
+
     </div>
     <div class="detailContentCandidat">
         <div class="fistBlock">

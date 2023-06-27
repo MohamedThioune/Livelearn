@@ -560,11 +560,17 @@ $url = home_url( $wp->request );
                                 if(!$teacher)
                                     continue;
 
+                                $teacher_data = get_user_by('id', $teacher);
+                                
                                 if($teacher != $user_id)
-                                    $name_author = get_userdata($teacher)->data->display_name;
+                                    $name_author = ($teacher_data->last_name) ? $teacher_data->first_name : $teacher_data->display_name;
                                 else
                                     $name_author = "Ikzelf";
-                        ?>
+
+                                if($teacher_data->first_name == "")
+                                    continue;
+
+                                ?>
                                 <div class="checkFilter">
                                     <label class="contModifeCheck"><?php echo $name_author ?>
                                         <input type="checkbox" id="sales" name="experties[]" value="<?php echo $teacher; ?>">
@@ -1634,12 +1640,17 @@ $url = home_url( $wp->request );
 
                                 $image = get_field('profile_img',  'user_' . $teacher);
                                 $path = "../user-overview?id=" . $teacher;
+                                $teacher_data = get_user_by('id', $teacher);
                                 if(!$image)
                                     $image = get_stylesheet_directory_uri() . '/img/placeholder_user.png';
                                 if($teacher != $user_id)
-                                    $name_author = get_userdata($teacher)->data->display_name;
+                                    $name_author = ($teacher_data->last_name) ? $teacher_data->first_name : $teacher_data->display_name;
                                 else
                                     $name_author = "Ikzelf";
+
+                                if($teacher_data->first_name == "")
+                                    continue;
+
                                 ?>
                                 <div class="swiper-slide swipeExpert custom_slide" style="width: 170px !important;">
                                     <div class="cardblockOnder cardExpert">
