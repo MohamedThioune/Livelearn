@@ -53,6 +53,10 @@
                 "api",
                 "woocommerce"
             ],
+            "support": {
+                "issues": "https://github.com/woocommerce/wc-api-php/issues",
+                "source": "https://github.com/woocommerce/wc-api-php/tree/3.1.0"
+            },
             "time": "2022-03-18T21:46:17+00:00"
         },
         {
@@ -1352,5 +1356,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.3.0"
 }

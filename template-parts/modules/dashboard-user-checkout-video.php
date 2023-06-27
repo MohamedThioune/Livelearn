@@ -77,9 +77,7 @@ $share_txt = "Hello, i share this course with ya *" . $post->post_title . "* \n 
 
 /* * Informations reservation * */
 //Orders - enrolled courses 
-$datenr = 0; 
-$calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
-
+$bool = 0;
 $enrolled = array();
 $enrolled_courses = array();
 $args = array(
@@ -96,15 +94,15 @@ foreach($bunch_orders as $order){
     foreach ($order->get_items() as $item_id => $item ) {
         $course_id = intval($item->get_product_id()) - 1;
         if($course_id == $post->ID)
-            $bool = true;
+            $bool = 1;
         //Get woo orders from user
         if(!in_array($course_id, $enrolled))
             array_push($enrolled, $course_id);
     }
 }
 
-// if(!$bool)
-//     header('Location: /dashboard/user/activity' );
+if(!$bool)
+    header('Location: /dashboard/user/activity?message=You need to buy this course first !' );
 
 $count_enrolled = 0;
 if(!empty($enrolled))
@@ -224,7 +222,11 @@ $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
                                        <p> 
                                         <!-- Buying 22/02/2023 -->
                                         </p>
-                                       <p>Category: <?= (String)get_the_category_by_ID($categories[0]['value']) ?> </p>
+                                        <?php
+                                        if($categories[0]['value']):
+                                            echo "<p>Category: " . (String)get_the_category_by_ID($categories[0]['value']) ." </p>";
+                                        endif;
+                                       ?>
                                    </div>
                                </div>
                                <div class="block-element-list">
@@ -257,7 +259,7 @@ $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
                                                 </div>
                                                 <div>
                                                     <a href="' . $read_lesson . '">
-                                                        <img src="<?php echo get_stylesheet_directory_uri();?>/img/arrow-right-alt.png" alt="">
+                                                        <img src="' . get_stylesheet_directory_uri() . '/img/arrow-right-alt.png" alt="">
                                                     </a>
                                                 </div>
                                             </div>';

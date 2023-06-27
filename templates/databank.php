@@ -102,7 +102,41 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         'The Real Deal'=>'https://therealdeal.com/',
         'HousingWire'=>'https://www.housingwire.com/',
         'AfterSales'=>'https://aftersalesmagazine.nl/',
-        'CRS Consulting'=>'https://crsconsultants.nl/'
+        'CRS Consulting'=>'https://crsconsultants.nl/',
+        'Pro Builder'=>'https://www.probuilder.com/',
+        'Building Design + Construction'=>'https://www.bdcnetwork.com/',
+        'Commercial Construction & Renovation'=>'https://www.ccr-mag.com/',
+        'Talent Management'=>'https://www.talentmgt.com/',
+        'HR News'=>'https://www.hrnews.com/',
+        'Training Magazine'=>'https://www.trainingmag.com/',
+        'MedCity News'=>'https://www.medcitynews.com/',
+        'Health Data Management'=>'https://www.healthdatamanagement.com/',
+        'Cocktail Enthusiast'=>'https://www.cocktailenthusiast.com/',
+        'Legal Times'=>'https://www.law.com/legaltimes/',
+        'Advocatenkantoor Mulder'=>'https://www.advocaatmulder.nl/',
+        'Van der Steenhoven Advocaten'=>'https://www.vandersteenhoven.nl/',
+        'Advocatenkantoor Böer'=>'https://www.advocaatboer.nl/',
+        'Mr. Online'=>'https://www.mronline.nl/',
+        'Juridisch Nieuws'=>'https://www.juridischnieuws.nl/',
+        'Cash'=>'https://www.cash.nl/',
+        'Bloomberg M&A News'=>'https://www.bloomberg.com/topic/mergers-and-acquisitions/',
+        'Beleggers Belangen'=>'https://www.beleggersbelangen.nl/',
+        'Kookles thuis'=>'https://www.kooklesthuis.com/',
+        'Mediabistro'=>'https://www.mediabistro.com/',
+        'ProBlogger'=>'https://problogger.com/',
+        'Media Shift'=>'https://www.mediashift.org/',
+        'TopDesk'=>'https://blog.topdesk.com/',
+        'Warehouse Totaal'=>'https://www.warehousetotaal.nl/',
+        'CS digital'=>'https://csdm.online/',
+        'Analytics Insight'=>'https://www.analyticsinsight.net/',
+        'Eyecare Business'=>'https://www.eyecarebusiness.com/',
+        'Wissenraet'=>'https://www.vanspaendonck-wispa.nl/',
+        '9to5Mac'=>'https://9to5mac.com/',
+        'Invest International'=>'https://investinternational.nl/',
+        'Racefiets Blog'=>'https://racefietsblog.nl/',
+        'Darts actueel'=>'https://www.dartsactueel.nl/',
+        'Hockey.nl'=>'https://hockey.nl/',
+        'Hockeykrant'=>'https://hockeykrant.nl/'
     ];
 ?>
 
@@ -224,19 +258,23 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     <td class="textTh tdCenter"><?= $course->prijs; ?></td>
                                     <td class="textTh courseOnderwerpen">
                                         <?php
-                                        if(!empty($onderwerpen)){
-                                        $tab = [];
-                                            foreach($onderwerpen as $value1){
-                                                if($value1){
-                                                    $tab[] = (String)get_the_category_by_ID($value1);
+                                        // if ($course->type != 'Video') {                                        
+                                            if(!empty($onderwerpen)){
+                                            $tab = [];
+                                                foreach($onderwerpen as $value1){
+                                                    if($value1 && !is_wp_error(get_the_category_by_ID($value1))){
+                                                        $tab[] = (String)get_the_category_by_ID($value1);
+                                                    }
+                                                }
+                                                $tab = array_unique($tab);
+                                                foreach ($tab as $key => $value2) {
+                                                    if($value2)
+                                                        echo $value2.',';
                                                 }
                                             }
-                                            $tab = array_unique($tab);
-                                            foreach ($tab as $key => $value2) {
-                                                if($value2)
-                                                    echo $value2.',';
-                                            }
-                                        }
+                                        // }else{
+                                        //     echo $course->onderwerpen;
+                                        // }
                                         ?>
                                     </td>
                                     <td class="textTh tdCenter"><?= $course->status; ?></td>
@@ -884,7 +922,7 @@ $(document).ready(function () {
          //placeholder
     });
 });
-//# sourceURL=pen.js
+//# sourceURL=pen.js 
 </script>
 <script>
     $("#playlist-youtube").click((e)=>{
@@ -908,8 +946,7 @@ $(document).ready(function () {
                 document.getElementById('content-back-topics').innerHTML = success;
                 console.log('success',success)
             },complete: function(complete){
-                $('#loader').attr('hidden',true);
-                $('#select_field').attr('hidden',false);
+                location.reload();
             },
         });
     })

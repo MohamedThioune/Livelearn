@@ -598,7 +598,6 @@
                                                             <div class="detailSummary">
                                                                 <div class="Course-info">
                                                                     <h3>Cursus</h3>
-                                                                    <?php var_dump($year_start); ?>
                                                                     <?php
                                                                     if(!empty($infos))
                                                                         $x = 0;
@@ -721,7 +720,6 @@
                                                             <div class="detailSummary">
                                                                 <div class="Course-info">
                                                                     <h3>Cursus</h3>
-                                                                    <?php var_dump($year_start); ?>
                                                                     <div class="blockDateEvens">
                                                                         <p class="dateEvens"><?php echo $agenda_start . ', ' . $h_start ?></p>
                                                                     </div>

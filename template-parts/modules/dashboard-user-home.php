@@ -197,8 +197,7 @@ $enrolled_courses = array();
 //Orders - enrolled courses  
 $args = array(
     'customer_id' => $user,
-    'post_status' => array_keys(wc_get_order_statuses()),
-    'post_status' => array('wc-processing'),
+    'post_status' => array('wc-processing', 'wc-completed'),
     'orderby' => 'date',
     'order' => 'DESC',
     'limit' => -1,
@@ -436,19 +435,29 @@ $user_post_view = get_posts(
         'posts_per_page' => -1
     )
 )[0];
+//SQL Request : "select * from tracker_views where user_id = %user_id"
+//$user_informations
+
 
 //Experts
 $postAuthorSearch = array();
+$experts = array();
 $experts = get_user_meta($user, 'expert');
 $postAuthorSearch = $experts;
+$teachers = array();
+
+//SQL Request:
+// * Get authors from course already viewed
+//Get experts already viewed "select * from tracker_views where and data_type = 'expert' and user_id = %user_id ad" : Equivalent $view_my_experts
 //Views expert
 if (!empty($user_post_view))
 {
     $view_my_experts = (get_field('views_user', $user_post_view->ID));
     $id_view_experts = ($view_my_experts) ? array_column($view_my_experts, 'view_id') : array();
-    $id_view_experts = array_unique($id_view_experts);
-    $postAuthorSearch = (!empty($id_view_experts)) ? array_merge($experts, $id_view_experts) : $experts;
+    $id_view_experts = (!empty($id_view_experts)) ? array_unique($id_view_experts) : array();
+    $postAuthorSearch = (!empty($id_view_experts) && !empty($experts)) ? array_merge($experts, $id_view_experts) : $experts;
 }
+
 $args = array(
     'post_type' => array('course', 'post'),
     'post_status' => 'publish',
@@ -458,8 +467,7 @@ $args = array(
     'posts_per_page' => 200
 );
 $global_courses = get_posts($args);
-$teachers = array();
-
+shuffle($global_courses);
 foreach ($global_courses as $key => $course) {
     //Control visibility
     $bool = true;
@@ -549,26 +557,33 @@ foreach ($global_courses as $key => $course) {
         }
 }
 
-// Views credential 
+// $user_informations
+// Views credential
 $is_view = false;
 if (!empty($user_post_view))
 {
     $courses_id = array();
     $is_view = true;
 
+    //SQL Request:
+    //Get courses already viewed "select * from tracker_views where and data_type = 'course' and user_id = %user_id "
+    //Equivalent 'all_user-views'
     $all_user_views = (get_field('views', $user_post_view->ID));
+
     $max_points = 10;
     $recommended_courses = array();
     $count_recommended_course = 0;
 
     foreach($all_user_views as $key => $view) {
+        $view['course'] = get_post($view->data_id); 
+        //Get course viewed 
         if(!$view['course'])
             continue;
 
         foreach ($courses as $key => $course) {
             $points = 0;
 
-            //Read category viewed
+            //Read category viewed - get categories from course view
             $read_category_view = array();
             $category_default = get_field('categories', $view['course']->ID);
             $category_xml = get_field('category_xml', $view['course']->ID);
@@ -585,10 +600,10 @@ if (!empty($user_post_view))
                             array_push($read_category_view, $item['value']);
 
 
-            //Read category course
+            //Read category course - get categories from course
             $read_category_course = array();
-            $category_default = get_field('categories', $view['course']->ID);
-            $category_xml = get_field('category_xml', $view['course']->ID);
+            $category_default = get_field('categories', $course->ID);
+            $category_xml = get_field('category_xml', $course->ID);
             if(!empty($category_default))
                 foreach($category_default as $item)
                     if($item)
@@ -632,6 +647,8 @@ if (!empty($user_post_view))
         }
     }
 }
+
+//Must be the end
 
 arsort($count);
 $count_trend = array_slice($count, 5, 4, true);
@@ -1713,7 +1730,7 @@ if(isset($_GET['message']))
                         
             ?>
             <div class="card-Upcoming">
-                <p class="title"><?= $course->post_title; ?></p>
+                <a  href="<?php echo get_permalink($course->ID); ?>" class="title"><?= $course->post_title; ?></p>
                 <div class="d-flex align-items-center justify-content-between">
                     <img class="calendarImg" src="<?php echo get_stylesheet_directory_uri();?>/img/bi_calendar-event-fill.png" alt="">
                     <p class="date"><?php echo($month . ' ' . $day . ', ' . $year) ?></p>

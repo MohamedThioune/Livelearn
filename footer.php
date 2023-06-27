@@ -1,13 +1,13 @@
 <!-- Modal -->
 <?php
-echo '<input type="hidden" name="" value="' . $_COOKIE["cookie_consent"] . '">';
+/*echo '<input type="hidden" name="" value="' . $_COOKIE["cookie_consent"] . '">';
 if(!isset($_COOKIE["cookie_consent"])):
-?> 
-<!-- <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+*/?><!--
+<div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="img-cookies-block">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/cookies.png" alt="">
+                <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/cookies.png" alt="">
             </div>
             <div class="modal-body">
                 <p class="title-cookie">Cookie consent</p>
@@ -21,46 +21,8 @@ if(!isset($_COOKIE["cookie_consent"])):
         </div>
     </div>
 </div>
-</div> -->
-<?php endif; ?>
-
-<?php
-if(!isset($_COOKIE['mobile_download'])):
-?> 
-<div id="modalForApp" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="submit" name='' class="cookie_apply_mobile">x</button>
-            </div>
-            <div class="modal-body text-center">
-                <div class="content-modal">
-                    <div class="content-img-logo">
-                        <img class="" src="<?php echo get_stylesheet_directory_uri();?>/img/LiveLearn_logo.png" alt="">
-                    </div>
-                    <p class="title-content-modal">Registreer je gratis om <span>educatieve content</span> te ontvangen van collega's, vrienden én de experts uit de markt.</p>
-                    <div class="group-btn-get-app">
-
-                        <!-- Google Play button -->
-                        <a href="https://apps.apple.com/nl/app/livelearn/id1666976386" class="market-btn apple-btn" role="button">
-                            <span class="market-button-subtitle">Download on the</span>
-                            <span class="market-button-title">App Store</span>
-                        </a>
-
-                        <!-- Google Play button -->
-                        <a href="https://play.google.com/store/apps/details?id=com.livelearn.livelearn_mobile_app&hl=fr" class="market-btn google-btn" role="button">
-                            <span class="market-button-subtitle">Download on the</span>
-                            <span class="market-button-title">Google Play</span>
-                        </a>
-                    </div>
-                    <p class="Aanmelden-text">Aanmelden <span>of</span> registreren</p>
-                    <div hidden="true" id="loader" class="spinner-border spinner-border-sm text-primary" role="status"></div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
-<?php endif; ?>
+--><?php /*endif; */?>
 
 <footer class="footer-area footerLive">
     <div class="footer-big">

@@ -73,9 +73,7 @@ $share_txt = "Hello, i share this course with ya *" . $post->post_title . "* \n 
 
 /* * Informations reservation * */
 //Orders - enrolled courses 
-$datenr = 0; 
-$calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
-
+$bool = 0;
 $enrolled = array();
 $enrolled_courses = array();
 $args = array(
@@ -92,20 +90,19 @@ foreach($bunch_orders as $order){
     foreach ($order->get_items() as $item_id => $item ) {
         $course_id = intval($item->get_product_id()) - 1;
         if($course_id == $post->ID)
-            $bool = true;
+            $bool = 1;
         //Get woo orders from user
         if(!in_array($course_id, $enrolled))
             array_push($enrolled, $course_id);
     }
 }
 
-// if(!$bool)
-//     header('Location: /dashboard/user/activity' );
+if(!$bool)
+    header('Location: /dashboard/user/activity?message=You need to buy this course first !' );
 
 $count_enrolled = 0;
 if(!empty($enrolled))
     $count_enrolled = count($enrolled);
-
 
 $count_podcasts = 0;
 if(!empty($podcasts))
@@ -140,7 +137,6 @@ else
 //Lesson read
 $lesson_reads = get_field('lesson_actual_read', $progression_id);
 $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
-
 
 ?>
 <body>
@@ -265,7 +261,7 @@ $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
                                             </button>
 
 
-                                            <!-- Start Modal
+                                           Start Modal
                                             <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal1Title" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-checkout modal-dialog-course modal-dialog modal-dialog-course-deel" role="document">
                                                     <div class="modal-content">
@@ -357,7 +353,7 @@ $count_lesson_reads = ($lesson_reads) ? count($lesson_reads) : 0;
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- End Modal
+                                           End Modal
 
                                         </div> 
                                         -->

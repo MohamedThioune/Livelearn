@@ -31,11 +31,20 @@
                                     <select name="experts[]" id="autocomplete" class="multipleSelect2" multiple="true">
                                         <?php 
                                             foreach($members as $member) {
-                                                if(in_array($member->ID,$experts)){
-                                                    echo "<option selected value='" . $member->ID ."'>" . $member->display_name . "</option>";
+
+                                                if($teacher != $user_id)
+                                                    $name = ($member->last_name) ? $member->first_name : $member->display_name;
+                                                else
+                                                    $name = "Ikzelf";
+                
+                                                if($member->first_name == "")
                                                     continue;
-                                                }
-                                                echo "<option value='" . $member->ID ."'>" . $member->display_name . "</option>";
+
+                                                if(in_array($member->ID,$experts)){
+                                                    echo "<option selected value='" . $member->ID ."'>" . $name . "</option>";
+                                                    continue;
+                                                } 
+                                                echo "<option value='" . $member->ID ."'>" . $name . "</option>";
                                             }
                                         ?>
                                     </select>
