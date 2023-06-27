@@ -13734,8 +13734,10 @@ ul .selectAll .styled-checkbox:checked + label:after {
 }
 .content-detail-voor-organisation p{
     color: #023356;
-    font-size: 19px;
+    font-size: 20px;
     margin-bottom: 25px;
+    padding-right: 40px;
+    line-height: 28px;
 }
 
 .form-Voor-teacher2 .input-group {
@@ -19651,6 +19653,24 @@ background: #FFFFFF !important;
     font-weight: 700;
     line-height: 21.6px;
     margin-bottom: 25px;
+}
+.title-form-organisatie{
+    font-size: 20px;
+    font-weight: 700;
+    width: 233px;
+    margin: 0 auto 40px;
+    line-height: 28px;
+}
+.gratis-text{
+    position: absolute;
+    top: 35px;
+    right: 0;
+    background: #F69405;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
 }
 
 
