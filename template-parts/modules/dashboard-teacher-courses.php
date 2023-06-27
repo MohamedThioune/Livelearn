@@ -3,13 +3,6 @@
 $id = get_current_user_id();
 
 if($id != 0){
-    $args = array(
-        'post_type' => array('course','post','leerpad','assessment'),
-        'posts_per_page' => -1,
-        'author' => $id,  
-    );
-
-    $courses = get_posts($args);
     $artikel_single = "Artikel";
     $white_type_array =  ['Lezing', 'Event'];
     $course_type_array = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'Cursus'];
@@ -20,6 +13,51 @@ if($id != 0){
 }
 
 $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' => 'May', '06' => 'Jun', '07' => 'Jul', '08' => 'Aug', '09' => 'Sept', '10' => 'Oct',  '11' => 'Nov', '12' => 'Dec'];
+
+/*
+* * Courses dedicated of t
+*/
+
+$enrolled = array();
+$courses = array();
+
+//Orders - enrolled courses  
+$args = array(
+    'post_status' => array('wc-processing', 'wc-completed'),
+    'orderby' => 'date',
+    'order' => 'DESC',
+    'limit' => -1,
+);
+$bunch_orders = wc_get_orders($args);
+
+foreach($bunch_orders as $order){
+    foreach ($order->get_items() as $item_id => $item ) {
+        //Get woo orders from user
+        $course_id = intval($item->get_product_id()) - 1;
+        $prijs = get_field('price', $course_id);
+        $expenses += $prijs; 
+        if(!in_array($course_id, $enrolled))
+            array_push($enrolled, $course_id);
+    }
+}
+if(!empty($enrolled))
+{
+    $args = array(
+        'post_type' => array('post', 'course'),
+        'posts_per_page' => -1,
+        'orderby' => 'post_date',
+        'order' => 'DESC',
+        'include' => $enrolled,
+        'author' => $id
+    );
+    $courses = get_posts($args);
+
+    // if(!empty($enrolled_courses))
+    //     $your_count_courses = count($enrolled_courses);
+}
+
+// var_dump($courses);
+
 ?>
 <div class="contentListeCourse">
     <div class="cardOverviewCours">
@@ -44,8 +82,8 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
                     <?php
                     $i = 1; 
                     foreach($courses as $key => $course){
-                        if(!visibility($course, $visibility_company))
-                            continue;
+                        // if(!visibility($course, $visibility_company))
+                        //     continue;
 
                         /*
                         * Categories
@@ -104,8 +142,8 @@ $calendar = ['01' => 'Jan',  '02' => 'Feb',  '03' => 'Mar', '04' => 'Avr', '05' 
                             }
                         }
 
-                        if($day == "<i class='fas fa-calendar-week'></i>")
-                            continue;
+                        // if($day == "<i class='fas fa-calendar-week'></i>")
+                        //     continue;
 
                         $course_type = get_field('course_type', $course->ID);
                         $path_edit  = "";

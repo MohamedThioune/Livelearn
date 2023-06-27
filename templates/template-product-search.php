@@ -563,7 +563,17 @@
                                 if(!$profe)
                                     continue;
                                     
-                                $name = get_userdata($profe)->data->display_name;
+                                $teacher_data = get_user_by('id', $profe);
+                            
+                                $user_id = get_current_user_id();
+                                if($teacher != $user_id)
+                                    $name = ($teacher_data->last_name) ? $teacher_data->first_name : $teacher_data->display_name;
+                                else
+                                    $name = "Ikzelf";
+
+                                if($teacher_data->first_name == "")
+                                    continue;
+
                         ?>
                         <div class="checkFilter">
                             <label class="contModifeCheck"><?php echo $name ?>
