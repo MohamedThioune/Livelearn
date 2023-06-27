@@ -27,9 +27,7 @@ else
 
 $user = wp_get_current_user();
 $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandrinks','sportnext','nbvt','vsbnetwerk','tvvl','nedverbak','tnw','changeINC','--------------------------','nvab','vbw','kndb','fgz','cvah','nbov','nuvo','CBD','Hoorzaken','Knvvn','Nvtl','stiba','Nfofruit','Iro','Lto','cbm','tuinbranche','jagersvereniging','Wapned','Dansbelang','Pictoright','Ngb','Griffiers','Nob','Bijenhouders','BBKnet','AuteursBond','ovfd','Adfiz','nvvr','Veneca','Sloopaannemers','Noa'];
-?>
 
-<?php 
     $urls=[
         'WorkPlace Academy'=>'https://workplaceacademy.nl/',
         'Ynno'=>'https://www.ynno.com/',
@@ -418,7 +416,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         const backAudioApiPlaylist = document.getElementById('content-back-audio-playlist');
         console.log(search_playlist);
         $.ajax({
-            url : "/audio-api/",
+            url : "/livelearn/audio-api/",
             method : "POST",
             data : {
                 audio_search_playlist : search_playlist
@@ -456,7 +454,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         const loaderSaving = document.getElementById("spinner-saving-podcast");
         console.log('information',data)
         $.ajax({
-            url : "/audio-api/",
+            url : "/livelearn/audio-api/",
             method : "POST",
             data : {
                 playlist_audio : data
@@ -489,7 +487,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         const backAudioApi = document.getElementById('content-back-audio');
         console.log(search);
         $.ajax({
-           url : "/audio-api/",
+           url : "/livelearn/audio-api/",
             method : "POST",
             data : {
                audio_search : search
@@ -614,6 +612,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
             ids.push(tags_id);//push the element in array
         else
             ids.splice(if_exist, 1) // remove it in array
+
         console.log(ids);
     });
 

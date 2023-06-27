@@ -116,7 +116,7 @@ if ($audio_search){
                                 echo "<button class = 'btn btn-info m-1' disabled >$category</button>";
                          echo"
                         <br>
-                          <button class='mt-4 play btn btn-outline-success' data-categories='". json_encode($categories) ."' data-language='".$language."' data-author ='".$author."' data-title='".$title."' data-image='".$image."' data-description='".$description."' data-api='".$url."' data-id='".$id."' onclick='savePodcastPlaylistInPlatform(event)'>
+                          <button class='mt-4 play btn btn-outline-success' data-categories='". json_encode($categories) ."' data-language='".$language."' data-author ='".$author."' data-title='".$title."' data-image='".$image."' data-description='".$description."' data-url='".$url."' data-id='".$id."' onclick='savePodcastPlaylistInPlatform(event)'>
                             save
                         </button>
                       </div>
@@ -148,12 +148,12 @@ if ($audio_search){
     $isCourseInPlateform = $wpdb->get_results( $sql)[0]->course_id;
     if ($isCourseInPlateform) {
         $message = "$title is already saved in platform";
-    }else {
-
+    }else{
+        //wich table will I do the request to show the list of podcast ?
         $data = array(
             'titel' => $title,
             'type' => 'podcast',
-            'videos' => null, //asking @Mouhamed
+            'videos' => $url, //asking @Mouhamed about where I save the link of API playlist podcast
             'short_description' => $description,
             'long_description' => $description,
             'duration' => null,
@@ -166,7 +166,6 @@ if ($audio_search){
             'author_id' => $user_id,
             'status' => 'extern'
         );
-        //var_dump($data);
         $wpdb->insert($table, $data);
         $post_id = $wpdb->insert_id;
         if ($post_id) {
