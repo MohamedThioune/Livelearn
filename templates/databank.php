@@ -416,7 +416,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         const backAudioApiPlaylist = document.getElementById('content-back-audio-playlist');
         console.log(search_playlist);
         $.ajax({
-            url : "/livelearn/audio-api/",
+            url : "/audio-api/",
             method : "POST",
             data : {
                 audio_search_playlist : search_playlist
@@ -454,7 +454,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         const loaderSaving = document.getElementById("spinner-saving-podcast");
         console.log('information',data)
         $.ajax({
-            url : "/livelearn/audio-api/",
+            url : "/audio-api/",
             method : "POST",
             data : {
                 playlist_audio : data
@@ -487,7 +487,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         const backAudioApi = document.getElementById('content-back-audio');
         console.log(search);
         $.ajax({
-           url : "/livelearn/audio-api/",
+           url : "/audio-api/",
             method : "POST",
             data : {
                audio_search : search
