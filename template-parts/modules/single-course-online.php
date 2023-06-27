@@ -1,5 +1,8 @@
 <?php
 extract($_GET);
+if(isset($lesson))
+    if(!$bool_link)
+        header('Location: ' . get_permalink($post->ID));
 ?>
 <style>
     .swiper {
@@ -121,7 +124,7 @@ extract($_GET);
                 </div>
 
                 <?php
-                    if($price != "Gratis")
+                    if(!$bool_link)
                         echo '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="startTextBtn btn">Start nu voor ' . $price . '</a>';
                     else
                         echo '<a href="?topic=0&lesson=0" class="startTextBtn btn">Start nu voor ' . $price . '</a>';
@@ -313,6 +316,10 @@ extract($_GET);
                             echo '<button type="button" class="btn btn-lg lees_alles mb-5 mt-3 w-md-25 px-4 border border-3 border-dark read-more-btn">Lees alles</button>';
                         else
                             echo '<h6 class="textDirect p-0 mt-3" style="text-align: left"><b>Leeg tot nu toe ...</b></h6>';
+                        
+                        $href_checkout = "/dashboard/user/checkout-video/?post=" . $post->post_name;
+                        if($statut_bool)
+                            echo '<br><a href="' . $href_checkout . '" class="btn btnKoop">Proceed to checkout page, payment success !</a>';
                     ?>
 
                 </div>
@@ -636,8 +643,12 @@ extract($_GET);
                                         if(isset($lesson))
                                             if($lesson == $key)
                                                 $style = "color:#F79403";
-                                        echo '  
-                                        <a href="?topic=0&lesson=' . $key . '"  class="d-flex contentListVidoeCourse">
+
+                                        $link = '#';
+                                        if($bool_link)
+                                            $link = '?topic=0&lesson=' . $key;
+                                        echo '
+                                        <a href="' . $link . '"  class="d-flex contentListVidoeCourse">
                                             <img class="" width="35px" height="20px" src="'. $thumbnail .'" alt="">
                                             <span style="' .$style . '" class="textChapitreCours">' . $video['course_lesson_title'] . '</span>
                                         </a>';
@@ -702,6 +713,7 @@ extract($_GET);
                             <?php
                             }
                             ?>
+
                             <div class="CardpriceLive">
                                 <?php
                                 if(!empty($company)){
@@ -1011,19 +1023,19 @@ extract($_GET);
 
     <!-- Start Modal  -->
     <?php
-    if($price !== 'Gratis'){
+    if($price !== 'Gratis' && !$bool_link){
     ?>
     <div class="modal fade modalpaywallVideo" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-             <h5 class="title-paywall">Get Acces Now </h5>
+             <h5 class="title-paywall">Get access to these content</h5>
             <div class="modal-body">
                <p class="sub-title-paywall">Please purchase this course to continue</p>
                <p class="price-course"><?= $price ?></p>
                <?php
-               echo '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-paywall">Buying Now <img src="<?php echo get_stylesheet_directory_uri();?>/img/arrowhead.png" alt=""></a>';
+               echo '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-paywall">Pay Now <img src="' . get_stylesheet_directory_uri() . '/img/arrowhead.png" alt=""></a>';
                ?>
-               <p class="text-not-sure-which">Not Sure which is right now for you ? <a href="">Discover the benefits of taking this course now </a></p>
+               <!-- <p class="text-not-sure-which">Not Sure which is right now for you ? <a href="">Discover the benefits of taking this course now </a></p> -->
             </div>
             </div>
         </div>

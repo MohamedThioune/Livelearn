@@ -830,7 +830,7 @@ function recommended_course($data)
     'posts_per_page' => 200
   );
   $global_courses = get_posts($args);
-  
+  shuffle($global_courses);
   foreach ($global_courses as $key => $course) {    
       /*
       *  Date and Location
