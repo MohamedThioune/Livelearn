@@ -171,14 +171,14 @@ $see_experts = get_users(
 
                     <div class="pills-tabContent" >
                         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                            <?php echo do_shortcode("[gravityform id='14' title='false' description='false' ajax='true']"); ?>
+                            <?php echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true']"); ?>
                             <p class="description pt-2 text-center">
                                 Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je
                                 direct toegang tot je bedrijfs leeromgeving
                             </p>
                         </div>
                         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                            <?php echo do_shortcode("[gravityform id='15' title='false' description='false' ajax='true']"); ?>
+                            <?php echo do_shortcode("[gravityform id='6' title='false' description='false' ajax='true']"); ?>
                             <p class="description pt-2 text-center">
                                 Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je
                                 direct toegang tot je bedrijfs leeromgeving
