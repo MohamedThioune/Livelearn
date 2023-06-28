@@ -4,9 +4,19 @@
             $last_order = array_reverse($abonnement->invoices)[0];
             $last_order_date_created = explode('T', $last_order->date_created)[0];
         endif;
-    $abonnement_date_created = $abonnement->date_created;
-    $abonnement_date_created = explode('T',$abonnement_date_created);
-    $price_constant = 5;
+    if(isset($abonnement->date_created)){
+        $abonnement_date_created = $abonnement->date_created;
+        $abonnement_date_created = explode('T',$abonnement_date_created);
+        $abonnement_date_next_payment = $abonnement->next_payment_date_gmt;
+        $abonnement_date_next_payment = explode('T',$abonnement_date_next_payment)[0];
+        $abonnement->total = $global_price * $abonnement->line_items[0]->quantity;
+    }else if(isset($abonnement->createdAt)){
+        $abonnement_date_created = $abonnement->createdAt;
+        $abonnement_date_created = explode('T',$abonnement_date_created);
+        $abonnement_date_next_payment = $abonnement->nextPaymentDate;
+        $abonnement->total = $global_price * $abonnement->metadata->quantity;
+    }
+    $global_price = 5;
 ?>
 <div class="contentProfil ">
 
@@ -29,7 +39,7 @@
                 </div>
                 <div class="element-detail">
                     <p class="subtitel-detail">Next payment</p>
-                    <p class="product-detail">xxxx</p>
+                    <p class="product-detail"><?= $abonnement_date_next_payment ?></p>
                 </div>
             </div>
             <?php
@@ -75,7 +85,7 @@
             <thead>
             <tr>
                 <th scope="col">Date</th>
-                <th scope="col">Instrument/Account</th>
+                <th scope="col">Instrument</th>
                 <th scope="col">Amount</th>
                 <th scope="col">Situation</th>
                 <!-- <th scope="col">Action</th> -->
@@ -88,13 +98,41 @@
                 $order_date_created = $order->date_created;
                 $order_date_created = explode('T', $order_date_created);
 
-                $payment_method_title = ($order->payment_method_title || $order->payment_method_title != "" ) ? $order->payment_method_title  : "N/D";
+                // $payment_method_title = ($order->payment_method_title || $order->payment_method_title != "" ) ? $order->payment_method_title  : "N/D";
 
                 $situation = ($order->needs_payment) ? '<span class="hold">On hold</span>' : '<span class="done">Done</span>';
                 ?> 
                 <tr>
                     <td><?= $order_date_created[0] ?></td>
-                    <td><?= $payment_method_title ?></td>
+                    <td><?= "Invoice" ?></td>
+                    <td><?= $order->total ?> €</td>
+                    <td><?= $situation ?></td>
+                    <!-- 
+                    <td>
+                        <div class="dropdown text-white">
+                            <p class="dropdown-toggle mb-0" type="" data-toggle="dropdown">
+                                <img style="width:20px" src="https://cdn-icons-png.flaticon.com/128/61/61140.png" alt="" srcset="">
+                            </p>
+                            <ul class="dropdown-menu">
+                                <li class="my-1"><i class="fa fa-money px-2"></i><a href="" target="_blank">Pay</a></li>
+                            </ul>
+                        </div>
+                    </td> 
+                    -->
+                </tr>
+                <?php endforeach; ?>
+                <?php 
+                foreach($abonnement->cards as $order):
+                // $order_date_created = $order->date_created;
+                // $order_date_created = explode('T', $order_date_created);
+
+                // // $payment_method_title = ($order->payment_method_title || $order->payment_method_title != "" ) ? $order->payment_method_title  : "N/D";
+
+                // $situation = ($order->needs_payment) ? '<span class="hold">On hold</span>' : '<span class="done">Done</span>';
+                ?> 
+                <tr>
+                    <td><?= $order_date_created[0] ?></td>
+                    <td><?= "Invoice" ?></td>
                     <td><?= $order->total ?> €</td>
                     <td><?= $situation ?></td>
                     <!-- 
