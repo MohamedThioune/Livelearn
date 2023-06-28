@@ -1,14 +1,21 @@
 <!-- Modal -->
+<<<<<<< HEAD
  <?php
 echo '<input type="hidden" name="" value="' . $_COOKIE["cookie_consent"] . '">';
 if(!isset($_COOKIE["cookie_consent"])):
 ?> 
 <!-- 
+=======
+<?php
+/*echo '<input type="hidden" name="" value="' . $_COOKIE["cookie_consent"] . '">';
+if(!isset($_COOKIE["cookie_consent"])):
+*/?><!--
+>>>>>>> origin/front-seydou
 <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="img-cookies-block">
-                <img src="<?php echo get_stylesheet_directory_uri();?>/img/cookies.png" alt="">
+                <img src="<?php /*echo get_stylesheet_directory_uri();*/?>/img/cookies.png" alt="">
             </div>
             <div class="modal-body">
                 <p class="title-cookie">Cookie consent</p>
@@ -22,9 +29,14 @@ if(!isset($_COOKIE["cookie_consent"])):
         </div>
     </div>
 </div>
+<<<<<<< HEAD
 </div> 
 -->
 <?php endif; ?> 
+=======
+</div>
+--><?php /*endif; */?>
+>>>>>>> origin/front-seydou
 
 <footer class="footer-area footerLive">
     <div class="footer-big">
