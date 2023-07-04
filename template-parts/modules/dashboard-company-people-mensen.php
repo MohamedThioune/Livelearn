@@ -1,45 +1,45 @@
 <?php 
 extract($_POST);
-if($_POST){
-if (!isset($multiple_add_people) && !isset($multiple_add_people)) {
-    $response = "";
-    foreach ($_POST as $json => $value) {
-        $decoded = json_decode($json, true);
-        $first_name = str_replace('_',' ',$decoded['first_name']);
-        $last_name = str_replace('_',' ',$decoded['last_name']);
-        $email = str_replace('_','.',$decoded['email']);
+if($_POST)
+    if (!isset($multiple_add_people) && !isset($single_add_people)) {
+        $response = "";
+        foreach ($_POST as $json => $value) {
+            $decoded = json_decode($json, true);
+            $first_name = str_replace('_',' ',$decoded['first_name']);
+            $last_name = str_replace('_',' ',$decoded['last_name']);
+            $email = str_replace('_','.',$decoded['email']);
 
-        $login = RandomString();
-        $password = "Livelearn2023";
-        $userdata = array(
-            'user_pass' => $password,
-            'user_login' => $login,
-            'user_email' => $email,
-            'user_url' => 'https://livelearn.nl/inloggen/',
-            'display_name' => $first_name,
-            'first_name' => $first_name,
-            'last_name' => $last_name,
-            'role' => 'subscriber'
-        );
-        $user_id = wp_insert_user(wp_slash($userdata));
-        if(is_wp_error($user_id)){
-            $response ="<span class='alert alert-danger'>". $user_id->get_error_message()."</span>";
-        }
-        else{
-                $guest = wp_get_current_user();
-                $company = get_field('company',  'user_' . $guest->ID);
-                update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
-                update_field('company', $company[0], 'user_'.$user_id);
-                $subject = 'Je LiveLearn inschrijving is binnen! ✨';
-                $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
-                wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )) ; 
-                $response = "<span class='alert alert-success'>U heeft met succes een nieuwe werknemer aangemaakt ✔️</span>";
+            $login = RandomString();
+            $password = "Livelearn2023";
+            $userdata = array(
+                'user_pass' => $password,
+                'user_login' => $login,
+                'user_email' => $email,
+                'user_url' => 'https://livelearn.nl/inloggen/',
+                'display_name' => $first_name,
+                'first_name' => $first_name,
+                'last_name' => $last_name,
+                'role' => 'subscriber'
+            );
+            $user_id = wp_insert_user(wp_slash($userdata));
+            if(is_wp_error($user_id)){
+                $response ="<span class='alert alert-danger'>". $user_id->get_error_message()."</span>";
             }
+            else{
+                    $guest = wp_get_current_user();
+                    $company = get_field('company',  'user_' . $guest->ID);
+                    update_field('degree_user', $choiceDegrees, 'user_' . $user_id);
+                    update_field('company', $company[0], 'user_'.$user_id);
+                    $subject = 'Je LiveLearn inschrijving is binnen! ✨';
+                    $headers = array( 'Content-Type: text/html; charset=UTF-8','From: Livelearn <info@livelearn.nl>' );  
+                    wp_mail($email, $subject, $mail_invitation_body, $headers, array( '' )) ; 
+                    $response = "<span class='alert alert-success'>U heeft met succes een nieuwe werknemer aangemaakt ✔️</span>";
+                }
+        }
+        echo $response;
+        return 1;
     }
-    echo $response;
-    return 1;
-}
-}
+
 $user = get_users(array('include'=> get_current_user_id()))[0]->data;
 $image = get_field('profile_img',  'user_' . $user->ID);
 $company = get_field('company',  'user_' . $user->ID);
@@ -47,10 +47,8 @@ $company = get_field('company',  'user_' . $user->ID);
 $mail_notification_invitation = '/../../templates/mail-notification-invitation.php';
 require(__DIR__ . $mail_notification_invitation); 
 
-if(isset($single_add_people)){
-    
-    if($email != null)
-    {
+if(isset($single_add_people))
+    if($email != null){
         if($first_name == null)
             $first_name = "ANONYM";
         
@@ -93,8 +91,6 @@ if(isset($single_add_people)){
     }
     else
         header("Location: /dashboard/company/people-mensen/?message=Vul de e-mail in, alsjeblieft");
-
-}
 else if(isset($multiple_add_people)){
     $indicator = "Al uw gebruikers zijn succesvol toegevoegd"; 
     if(!empty($emails)){
