@@ -523,9 +523,9 @@ add_action( 'init', 'custom_post_type', 0 );
 
 
 function add_custom_roles(){
-    add_role( 'teacher', 'Teacher', get_role( 'subscriber' )->capabilities );
+    // add_role( 'teacher', 'Teacher', get_role( 'subscriber' )->capabilities );
     add_role( 'manager', 'Manager', get_role( 'subscriber' )->capabilities );
-    add_role( 'hr', 'HR', get_role( 'subscriber' )->capabilities );
+    add_role( 'hr', 'HR', get_role( 'author' )->capabilities );
 }
 add_action('init', 'add_custom_roles');
 
