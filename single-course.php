@@ -235,6 +235,8 @@ if($price !== 'Gratis')
 else if(($price == 'Gratis'))
     $bool_link = 1;
 
+// include_once('template-parts/modules/single-new-course-video.php');
+
 if(in_array($course_type, $offline))
     include_once('template-parts/modules/single-course-offline.php');
 else if(in_array($course_type, $online))

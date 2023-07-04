@@ -50,21 +50,22 @@
                 break;                
             } 
     }
-    
+
     if(!$access_granted){
         $instrument = 'card';
-        $customer_id = get_field('mollie_customer_id', 'user_' . $user->ID);
-        if($customer_id)
-            $mollie_subscriptions = $mollie->customers->get($customer_id)->subscriptions();
-        foreach($mollie_subscriptions as $row)
-            if($row->metadata->company == $company_connected && $row->status == 'active'){
-                $access_granted = 1;
-                $abonnement = $row;
-                //Payment subs
-                $customer = $mollie->customers->get($customer_id);
-                $abonnement->cards = $customer->getSubscription($abonnement->id)->payments();
-                break;                
-            } 
+        $mollie_subscriptions = $mollie->subscriptions->page();
+        if($mollie_subscriptions)
+            foreach($mollie_subscriptions as $row)
+                if($row->metadata->company == $company_connected && $row->status == 'active'){
+                    $access_granted = 1;
+                    $abonnement = $row;
+                    // var_dump($row);
+                    //Payment subs
+                    $customer = $mollie->customers->get($row->customerId);
+                    $abonnement->cards = $customer->getSubscription($abonnement->id)->payments();
+                    break;                
+                } 
+            
     }   
 
     if ( !in_array( 'hr', $user->roles ) && !in_array( 'manager', $user->roles ) && !in_array( 'administrator', $user->roles ) && $user->roles != 'administrator') 
@@ -78,7 +79,7 @@
     //     header('Location: /dashboard/company/profile-company');
 
     if (!$access_granted)
-    header('Location: /dashboard/company/profile-company');
+        header('Location: /dashboard/company/profile-company');
 
     //Pricing changes
     $price = $global_price * $team;

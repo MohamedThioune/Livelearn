@@ -138,8 +138,10 @@ if(isset($lesson))
                             <input type="hidden" id="course_id" value="<?php echo $post->ID; ?>">
                             <!-- <img class="iconeCours" src="<?php echo get_stylesheet_directory_uri();?>/img/love.png" alt=""> -->
                             <button id="btn_favorite" style="background:white; border:none">
-                                <img class="like1" src="<?php echo get_stylesheet_directory_uri();?>/img/like1.png" alt="">
-                                <img class="like2" src="<?php echo get_stylesheet_directory_uri();?>/img/like2.png" alt="">
+                                <?php
+                                    echo '<img class="like1" src="' . get_stylesheet_directory_uri() . '/img/like1.png" alt="">';
+                                    echo '<img class="like2" src="' . get_stylesheet_directory_uri() . '/img/like2.png" alt="">';
+                                ?>
                             </button>
                             <span class="textIconeLearning mt-1" id="autocomplete_favoured"><?php echo $favoured; ?></span>
                         </div>
