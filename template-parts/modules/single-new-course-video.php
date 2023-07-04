@@ -8,12 +8,29 @@
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/css/owl.carousel.css" />
 
+<?php
+extract($_GET);
+if(isset($lesson))
+    if(!$bool_link)
+        if($lesson != 0)
+            header('Location: ' . get_permalink($post->ID));
+
+//Long description             
+$long_description = ($long_description) ? : "No long description found for this course ";
+
+//Author
+$author = get_user_by('id', $post->post_author);
+$author_name = ($author->last_name) ? $author->first_name : $author->display_name;
+$author_image = get_field('profile_img',  'user_' . $post->post_author);
+$author_image = $author_image ? $author_image : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+
+?>
 <body>
 <div class="content-new-Courses video-content-course">
     <div class="content-head">
         <div class="container-fluid">
             <div class="d-flex align-items-center justify-content-center">
-                <p class="reviews-text">333 Students</p>
+                <p class="reviews-text">0 Students</p>
                 <div class="d-flex">
                     <i class="fa fa-star checked"></i>
                     <i class="fa fa-star checked"></i>
@@ -21,14 +38,14 @@
                     <i class="fa fa-star checked"></i>
                     <i class="fa fa-star checked"></i>
                 </div>
-                <p class="reviews-text">9.45 (9.8k+ reviews)</p>
+                <p class="reviews-text">0 (0 reviews)</p>
             </div>
-            <h1 class="title-course text-center">8 Most Common Cybersecurity Threats and how to protect from them</h1>
+            <h1 class="title-course text-center"><?= $post->post_title ?></h1>
             <div class="content-autors-detail">
                 <div class="blockImg">
-                    <img src="<?php echo get_stylesheet_directory_uri();?>/img/Daniel-van-der.png" alt="">
+                    <img src="<?= $author_image ?>" alt="">
                 </div>
-                <p class="name-autors">Daniel veer Klok</p>
+                <p class="name-autors"><?= $author_name; ?></p>
             </div>
             <div class="block-review-calendar">
                 <div class="d-flex align-items-center">
@@ -66,12 +83,9 @@
                                     <div class="section-tabs section-tabs-learn" >
                                         <div class="block-description">
                                             <h2>Description</h2>
-                                            <p class="text-tabs">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by
-                                                injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of lorem
-                                                ipsum, you need to be sure there isn't anything embarrassing.</p>
-                                            <p class="text-tabs">hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary,
-                                                making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of
-                                                model sentence structures, to generate lorem ipsum which looks reasonable.</p>
+                                            <p class="text-tabs">
+                                                <?= $long_description; ?>
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="section-tabs" >
