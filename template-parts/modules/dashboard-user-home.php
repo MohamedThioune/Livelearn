@@ -425,16 +425,46 @@ if(!empty($topics_internal))
     foreach($topics_internal as $value)
         array_push($topics, $value);
 
-//Views
+
+/*         Views beginning      */
+
+
+$table_tracker_views = $wpdb->prefix . 'tracker_views';
+
+$sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user AND data_type = 'course' ");
+    
+$all_user_views = $wpdb->get_results($sql_request);
+
+$id_courses = array_column($all_user_views,'data_id');
+
+print_r($id_courses);
+
+
 $user_post_view = get_posts( 
     array(
-        'post_type' => 'view',
+        'post_type' => array('course', 'post'),
         'post_status' => 'publish',
-        'author' => $user,
         'order' => 'DESC',
+        'include' => $id_courses,
         'posts_per_page' => -1
     )
 )[0];
+
+//var_dump($user_post_view);
+
+
+
+
+
+// $user_post_view = get_posts( 
+//     array(
+//         'post_type' => 'view',
+//         'post_status' => 'publish',
+//         'author' => $user,
+//         'order' => 'DESC',
+//         'posts_per_page' => -1
+//     )
+// )[0];
 //SQL Request : "select * from tracker_views where user_id = %user_id"
 //$user_informations
 
@@ -565,9 +595,9 @@ if (!empty($user_post_view))
     $courses_id = array();
     $is_view = true;
 
-    //SQL Request:
-    //Get courses already viewed "select * from tracker_views where and data_type = 'course' and user_id = %user_id "
-    //Equivalent 'all_user-views'
+    
+    
+
     $all_user_views = (get_field('views', $user_post_view->ID));
 
     $max_points = 10;
