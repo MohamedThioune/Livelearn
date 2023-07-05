@@ -127,7 +127,16 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         'Hockeykrant'=>'https://hockeykrant.nl/',
         'Tata Nexarc'=>'https://blog.tatanexarc.com/',
         'Incodocs'=>'https://incodocs.com/blog/',
-        'Recruitement Tech'=>'https://www.recruitmenttech.nl/'
+        'Recruitement Tech'=>'https://www.recruitmenttech.nl/',
+        'Healthcare Weekly'=>'https://healthcareweekly.com/',
+        'Wellness Mama'=>'https://wellnessmama.com/',
+        'Logistics Business'=>'https://www.logisticsbusiness.com/',
+        '20Cube'=>'https://www.20cube.com/',
+        'Outside'=>'https://velo.outsideonline.com/',
+        'Trainer Road'=>'https://www.trainerroad.com/blog/',
+        'AllOver Media'=>'https://allovermedia.com/',
+        'The Partially Examined Life'=>'https://partiallyexaminedlife.com/',
+        'The Future Organization'=>'https://thefutureorganization.com/'
     ];
 ?>
 
