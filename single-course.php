@@ -23,7 +23,7 @@ if(!visibility($post, $visibility_company))
     header('location: /');
 
 //Redirection - type
-if(!in_array($course_type, $offline) && !in_array($course_type, $online) && $course_type != 'Artikel')
+if(!in_array($course_type, $offline) && !in_array($course_type, $online) && $course_type != 'Artikel' && $course_type != 'Podcast')
     header('location: /');
 
 //Online
@@ -37,7 +37,11 @@ $short_description = get_field('short_description', $post->ID);
 $for_who = get_field('for_who', $post->ID) ?: "No content !";
 $language = get_field('language', $post->ID);
 
-$count_videos = (!empty($courses)) ? count($courses) : count($youtube_videos);
+$count_videos = 0;
+if(!empty($courses))
+    $count_videos = count($courses);
+else if(!empty($youtube_videos))
+$count_videos = count($youtube_videos);
 
 $dagdeel = array();
 $data = get_field('data_locaties', $post->ID);
@@ -244,7 +248,7 @@ if(in_array($course_type, $offline))
 else if(in_array($course_type, $online))
     include_once('template-parts/modules/single-new-course-video.php');
 else if($course_type == 'Podcast')
-    include_once('template-parts/modules/single-course-podcast.php');
+    include_once('template-parts/modules/single-new-course-podcast.php');
 
 ?>  
  

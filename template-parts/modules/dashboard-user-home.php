@@ -439,8 +439,6 @@ $sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE u
 $all_user_views = $wpdb->get_results($sql_request);
 $id_courses_viewed = array_column($all_user_views,'data_id');
 
-
-
 /** 
  *  Get courses viewed from db
  */
@@ -455,9 +453,6 @@ $user_post_view = get_posts(
 )[0];
 
 
-
-
-
 //Experts
 $postAuthorSearch = array();
 $experts = array();
@@ -465,16 +460,13 @@ $experts = get_user_meta($user, 'expert');
 $postAuthorSearch = $experts;
 $teachers = array();
 
-
-
 // Get id of experts viewed from db
 $sql_request = $wpdb->prepare("SELECT data_id FROM $table_tracker_views  WHERE user_id = $user AND data_type = 'expert'");
 $all_expert_viewed = $wpdb->get_results($sql_request);
 
-if (!empty($user_post_view))
-{
-    $postAuthorSearch = array_column($all_expert_viewed,'data_id');
-}
+//truncate $postAuthorSearch to avoid
+if (!empty($user_post_view) || !empty($postAuthorSearch))
+    $postAuthorSearch = (empty($all_expert_viewed)) ? $postAuthorSearch : array_merge(array_column($all_expert_viewed, 'data_id'), $postAuthorSearch);
 
 // Get the courses of experts viewed from db 
 $args = array(
@@ -587,9 +579,7 @@ if (!empty($user_post_view))
     $recommended_courses = array();
     $count_recommended_course = 0;
 
-
-    // browse the array os post type as courses obtaine via database views
-    
+    // browse the array os post type as courses obtain via database views
     foreach($user_post_view as $key => $post_viewed) {
         if(!$post_viewed)
             continue;
