@@ -147,12 +147,12 @@ if ($audio_search){
     $sql = $wpdb->prepare( "SELECT course_id FROM $table  WHERE course_id = $id");
     $isCourseInPlateform = $wpdb->get_results( $sql)[0]->course_id;
     if ($isCourseInPlateform) {
-        $message = "$title is already saved in platform";
+        $message = "$title is already saved in platform ❌❌❌";
     }else{
         //wich table will I do the request to show the list of podcast ?
         $data = array(
             'titel' => $title,
-            'type' => 'podcast',
+            'type' => 'Podcast',
             'videos' => $url, //asking @Mouhamed about where I save the link of API playlist podcast
             'short_description' => $description,
             'long_description' => $description,
@@ -169,7 +169,7 @@ if ($audio_search){
         $wpdb->insert($table, $data);
         $post_id = $wpdb->insert_id;
         if ($post_id) {
-            $message = "$title saved in platform success ...";
+            $message = "$title saved in platform success ✅✅✅";
         }
     }
     echo $message;
