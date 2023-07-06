@@ -1,12 +1,17 @@
 <?php /** Template Name: new course podcast */ ?>
-
 <?php wp_head(); ?>
 <?php get_header(); ?>
-
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/template.css" />
 <!-- Calendly link widget begin -->
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 <link rel="stylesheet" href="<?php echo get_stylesheet_directory_uri();?>/owl-carousel/css/owl.carousel.css" />
+
+<?php
+//$url = "https://anchor.fm/s/3e496ce8/podcast/rss";
+//$url = "https://anchor.fm/s/878cadd4/podcast/rss";
+$url = "https://feeds.buzzsprout.com/2145970.rss";
+$xml = simplexml_load_file($url);
+?>
 
 <body>
 <div class="content-new-Courses video-content-course content-course-podcast">
@@ -106,16 +111,25 @@
 
                             <ul id="Course">
                                 <div class="list-content-podcast">
+                                <?php
+                                //$counter = count($xml->channel[0]);
+                                $counter = 1;
+                                foreach($xml->channel[0] as $key => $pod) {
+                                    $description = (string) $pod->description;
+                                    $title = (string) $pod->title;
+                                    if($pod->enclosure) {
+                                    //var_dump($pod->enclosure->attributes()->url); //url,length,type
+                                    ?>
                                     <div class="elemnt-list-podcast">
-                                        <p class="number-list">1</p>
+                                        <p class="number-list"><?= $counter++ ?></p>
                                         <div class="detail-block-podcast">
-                                            <p class="title-podcast">Episode 01: 6 Powerful Tips To Creating Testimonials That Sell Your</p>
+                                            <p class="title-podcast"><?=$title?></p>
                                             <div class="audio">
                                                 <div class="cp-audioquote">
                                                     <div class="cp-audioquote__player">
                                                         <!-- src -->
-                                                        <audio class="cp-audioquote__player__src" src="https://www.denisbouquet.com/pens/audioquotes/fightclub.mp3">
-                                                            <p>Your browser does not support the audio element</p>
+                                                        <audio class="cp-audioquote__player__src" src="<?=$pod->enclosure->attributes()->url?>">
+                                                            <p><?= $description ?></p>
                                                         </audio>
                                                         <div class="cp-audioquote__player--playBtn"></div>
                                                         <div class="cp-audioquote__player--display">
@@ -131,81 +145,8 @@
                                         </div>
 <!--                                        <img class="blocked-img" src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/blocked.svg" alt="">-->
                                     </div>
-                                    <div class="elemnt-list-podcast">
-                                        <p class="number-list">1</p>
-                                        <div class="detail-block-podcast">
-                                            <p class="title-podcast">Episode 01: 6 Powerful Tips To Creating Testimonials That Sell Your</p>
-                                            <div class="audio">
-                                                <div class="cp-audioquote">
-                                                    <div class="cp-audioquote__player">
-                                                        <!-- src -->
-                                                        <audio class="cp-audioquote__player__src" src="https://www.denisbouquet.com/pens/audioquotes/fightclub.mp3">
-                                                            <p>Your browser does not support the audio element</p>
-                                                        </audio>
-                                                        <div class="cp-audioquote__player--playBtn"></div>
-                                                        <div class="cp-audioquote__player--display">
-                                                            <div class="cp-audioquote__player--progress">
-                                                                <span class="cp-audioquote__player--track"></span>
-                                                                <span class="cp-audioquote__player--playhead"></span>
-                                                            </div>
-                                                            <p class="cp-audioquote__player--timestamp playhead">0:00</p><p class="cp-audioquote__player--timestamp duration">0:00</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img class="blocked-img" src="<?php echo get_stylesheet_directory_uri();?>/img/blocked.svg" alt="">
-                                    </div>
-                                    <div class="elemnt-list-podcast">
-                                        <p class="number-list">1</p>
-                                        <div class="detail-block-podcast">
-                                            <p class="title-podcast">Episode 01: 6 Powerful Tips To Creating Testimonials That Sell Your</p>
-                                            <div class="audio">
-                                                <div class="cp-audioquote">
-                                                    <div class="cp-audioquote__player">
-                                                        <!-- src -->
-                                                        <audio class="cp-audioquote__player__src" src="https://www.denisbouquet.com/pens/audioquotes/fightclub.mp3">
-                                                            <p>Your browser does not support the audio element</p>
-                                                        </audio>
-                                                        <div class="cp-audioquote__player--playBtn"></div>
-                                                        <div class="cp-audioquote__player--display">
-                                                            <div class="cp-audioquote__player--progress">
-                                                                <span class="cp-audioquote__player--track"></span>
-                                                                <span class="cp-audioquote__player--playhead"></span>
-                                                            </div>
-                                                            <p class="cp-audioquote__player--timestamp playhead">0:00</p><p class="cp-audioquote__player--timestamp duration">0:00</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img class="blocked-img" src="<?php echo get_stylesheet_directory_uri();?>/img/blocked.svg" alt="">
-                                    </div>
-                                    <div class="elemnt-list-podcast">
-                                        <p class="number-list">1</p>
-                                        <div class="detail-block-podcast">
-                                            <p class="title-podcast">Episode 01: 6 Powerful Tips To Creating Testimonials That Sell Your</p>
-                                            <div class="audio">
-                                                <div class="cp-audioquote">
-                                                    <div class="cp-audioquote__player">
-                                                        <!-- src -->
-                                                        <audio class="cp-audioquote__player__src" src="https://www.denisbouquet.com/pens/audioquotes/fightclub.mp3">
-                                                            <p>Your browser does not support the audio element</p>
-                                                        </audio>
-                                                        <div class="cp-audioquote__player--playBtn"></div>
-                                                        <div class="cp-audioquote__player--display">
-                                                            <div class="cp-audioquote__player--progress">
-                                                                <span class="cp-audioquote__player--track"></span>
-                                                                <span class="cp-audioquote__player--playhead"></span>
-                                                            </div>
-                                                            <p class="cp-audioquote__player--timestamp playhead">0:00</p><p class="cp-audioquote__player--timestamp duration">0:00</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <img class="blocked-img" src="<?php echo get_stylesheet_directory_uri();?>/img/blocked.svg" alt="">
-                                    </div>
+                                    <?php }
+                                } ?>
                                 </div>
                             </ul>
 
@@ -928,7 +869,6 @@
         // Add a listener for the timeupdate event so we can update the progress bar
         player.addEventListener('timeupdate', updateProgressBar, false);
 
-
         $this.find('.cp-audioquote__player--track').on('click', function(e){
             if (player.src) {
                 const percent = e.offsetX / this.offsetWidth;
@@ -940,9 +880,6 @@
 
     });
 </script>
-
-
 <?php get_footer(); ?>
 <?php wp_footer(); ?>
-
 </body>
