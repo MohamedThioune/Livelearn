@@ -248,5 +248,5 @@ if ($playlist_youtube){
 
   //Empty youtube channels after parse
  
- update_field('youtube_playlists', null , 'user_'. $author_id);    
+ update_field('youtube_playlists', null , 'user_'. $author_id);
 }
