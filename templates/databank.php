@@ -281,7 +281,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                     <td class="textTh tdCenter <?php if($course->author_id) echo ''; else echo 'author';  ?>"> <?php if($course->author_id) echo '<img src="' .$image_author. '" alt="image course" width="25" height="25">'; else echo '<b>No author</b>'; ?></td>
                                     <td class="textTh tdCenter <?php if(!empty($company)) echo ''; else echo 'company';  ?>"> <?php if(!empty($company)) echo '<img src="' .$company_logo. '" alt="image course" width="25" height="25">'; else echo '<b>No company</b>'; ?> </td>
                                     <td class="tdCenter textThBorder">
-                                        <input tittle="edit" type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔️" />&nbsp;&nbsp;
+                                        <input tittle="edit" type="button" class="optie btn-default" id="accept" style="background:white; border: DEE2E6" value="✔" />&nbsp;&nbsp;
                                         <input tittle="remove" type="button" class="optie btn-default" id="decline" style="background:white" value="❌" />&nbsp;&nbsp;
                                         <a tittle="edit" href="/edit-databank?id=<?= $course->id ?>" class="btn-default" target="_blank"  style="background:white" >⚙️</a> 
                                     </td>
@@ -399,9 +399,6 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                 <span class="sr-only">Loading...</span>
                             </div>
                         </div>
-                        <div class="spinner-border d-none" id="spinner-saving-podcast" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
                     </div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -489,8 +486,10 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
     function savePodcastPlaylistInPlatform(e){
         //console.log('value',e.target);
         const data = e.target.dataset
+        console.log('elt',e.target)
         const loaderSaving = document.getElementById("spinner-saving-podcast");
-        console.log('information',data)
+        //console.log('information to save',data)
+        const spinner = e.target.nextElementSibling
         $.ajax({
             url : "/audio-api/",
             method : "POST",
@@ -498,19 +497,20 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 playlist_audio : data
             },
             beforeSend:function(){
-                console.log('saving...')
-                $('#spinner-saving-podcast').removeClass('d-none');
+                console.log('saving podcast...');
+               // $('#spinner-saving-podcast').removeClass('d-none');
+                spinner.className = ""
             },
             success: function(success){
                 alert(success);
+                console.log('result',success)
                 //document.getElementById('content-back-audio-playlist').innerHTML = success;
-                //setTimeout(function(){
-                //    location.reload();
-                //},800)
             },error: function(error,status){
-
+                console.log('error',error)
+                console.log('status',status)
             },complete: function(complete){
-                $('#spinner-saving-podcast').addClass('d-none');
+                spinner.className = "d-none"
+                //$('#spinner-saving-podcast').addClass('d-none');
             },
         });
     }
