@@ -17,7 +17,7 @@ use Automattic\WooCommerce\Client;
    ]
  );
 
- $mail_notification_invitation = 'mail-notification-invitation.php';
+ $mail_notification_invitation = '/mail-notification-invitation.php';
  require(__DIR__ . $mail_notification_invitation); 
 
 global $wpdb;
@@ -548,7 +548,7 @@ else if(isset($road_course_add)){
 else if(isset($review_post)){        
     $reviews = get_field('reviews', $course_id);
     $review = array();
-    $review['user'] = get_user_by('ID',$user_id);
+    $review['user'] = wp_get_current_user();
     $review['rating'] = $rating;
     $review['feedback'] = $feedback_content;
     if($review['user']){ 
