@@ -248,7 +248,7 @@ if(in_array($course_type, $offline))
 else if(in_array($course_type, $online))
     include_once('template-parts/modules/single-new-course-video.php');
 else if($course_type == 'Podcast')
-    include_once('template-parts/modules/single-new-course-podcast.php');
+    include_once('template-parts/modules/single-course-podcast.php');
 
 ?>  
  
