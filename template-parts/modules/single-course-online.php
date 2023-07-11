@@ -120,7 +120,6 @@ if(isset($lesson))
                         }
                     }
                     ?>
-
                 </div>
 
                 <?php
@@ -684,35 +683,6 @@ if(isset($lesson))
                                     ?>
                                 </div>
                                 <?php
-                            }
-                            else if(!empty($podcasts)){
-                            ?>
-                                <div class="sousBlockCours">
-                                    <?php
-                                    if(isset($topic))
-                                        if($topic == $key) {
-                                            echo '<img class="playElement" src="'.  get_stylesheet_directory_uri() . '/img/play.png" alt="">';
-                                        }
-                                    ?>
-                                    <a style="color:#F79403" href="?topic=<?php echo (int)$key; ?>" class="textChapitreCours"><?php echo $post->post_title; ?></a>
-                                    <?php
-                                        if(!isset($lesson))
-                                            $lesson = 0;
-                                        foreach($podcasts as $key => $podcast){
-                                        $style = "";
-                                        if(isset($lesson))
-                                            if($lesson == $key)
-                                                $style = "color:#F79403";
-                                        echo '  
-                                        <a href="?topic=0&lesson=' . $key . '"  class="d-flex contentListVidoeCourse">
-                                            <img class="" width="35px" height="20px" src="'. $thumbnail .'" alt="">
-                                            <span style="' .$style . '" class="textChapitreCours">' . $podcast['course_podcast_title'] . '</span>
-                                        </a>';
-                                    }
-                                    ?>
-                                </div>
-
-                            <?php
                             }
                             ?>
 
