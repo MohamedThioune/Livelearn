@@ -75,9 +75,9 @@ if($optie == "✔"){
         foreach ($podcasts as $item) {
             $podcasts_playlist = [];
             $podcast = explode('~', $item);
-            $podcasts_playlist['audio'] = $podcast[0];
-            $podcasts_playlist['thumbnail_url'] = $course->image_xml;
-            $podcasts_playlist['tittle'] = $podcast[1];
+            $podcasts_playlist['podcast_url'] = $podcast[0];
+            $podcasts_playlist['podcast_image'] = $course->image_xml;
+            $podcasts_playlist['podcast_title'] = $podcast[1];
 
             $podcasts_playlists [] = $podcasts_playlist;
         }
