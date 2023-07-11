@@ -72,7 +72,13 @@ if ($playlist_youtube){
                     }
             }
 
-            //tags
+            // Accord the author a company
+            if(!is_wp_error($author_id))
+                update_field('company', $company, 'user_' . $author_id);
+             
+            foreach($playlists['items'] as $playlist){
+                
+                //tags
             $tags = array();
             $onderwerpen = "";
             $categories = array();
@@ -153,7 +159,7 @@ if ($playlist_youtube){
                     $words_not_goods[]=$cat->cat_name;
                 }
             }
-            var_dump($keywords[$key]);
+            // var_dump($keywords[$key]);
             // $occurrence = array_count_values(array_map('strtolower', $keywords));
             foreach($keywords as $searchword){
                 $searchword = trim(strtolower(strval($searchword)));
@@ -170,17 +176,16 @@ if ($playlist_youtube){
                 foreach($categorys as $value)
                     if(!in_array($value->cat_ID, $tags))
                         array_push($tags, $value->cat_ID);
+                    else {
+                        continue;
+                    }
             }
-
-            $onderwerpen = join(',',$tags);
+            if(sizeof($tags)<20)
+                $onderwerpen = join(',',$tags);
+            else
+                $onderwerpen = "";
             // var_dump($onderwerpen);
 
-            // Accord the author a company
-            if(!is_wp_error($author_id))
-                update_field('company', $company, 'user_' . $author_id);
-             
-            foreach($playlists['items'] as $playlist){
-                
                 //define type
                 $type = 'Video';
 
@@ -243,5 +248,5 @@ if ($playlist_youtube){
 
   //Empty youtube channels after parse
  
- update_field('youtube_playlists', null , 'user_'. $author_id);    
+ update_field('youtube_playlists', null , 'user_'. $author_id);
 }
