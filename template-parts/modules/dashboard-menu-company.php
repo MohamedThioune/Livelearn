@@ -1,11 +1,14 @@
 <?php
     global $wp;
+    $global_product_id = 9873;
+    $global_price = 5;
+    $global_mollie_key = "test_SFMrurF62JkBVuzK9gxa3b72eJQhxu";
 
     $url = $wp->request;
     
     $option_menu = explode('/', $url);
 
-    $access_granted = false;
+    $access_granted = 0;
 
     //User informations
     $user = wp_get_current_user();
@@ -15,61 +18,120 @@
         $company_connected = $company->post_title;
     }
 
-    /*
-    ** List subscriptions
-    */ 
-    $endpoint = 'https://livelearn.nl/wp-json/wc/v3/subscriptions';
+    //Team members
+    $users = get_users();
+    $team = 0;
+    foreach($users as $infos){
+        $company_value = get_field('company',  'user_' . $infos->ID);
+        if(!empty($company_value)){
+            $company_value_title = $company_value[0]->post_title;
+            if($company_value_title == $company_connected)
+                $team += 1;
+        }
+    }
 
-    $params = array( // login url params required to direct user to facebook and promt them with a login dialog
-        'consumer_key' => 'ck_f11f2d16fae904de303567e0fdd285c572c1d3f1',
-        'consumer_secret' => 'cs_3ba83db329ec85124b6f0c8cef5f647451c585fb',
-    );
+    /** Woocommerce API client for php - list subscriptions **/
+    $endpoint = "subscriptions";
+    $subscriptions = $woocommerce->get($endpoint, $parameters = []);
 
-    // create endpoint with params
-    $api_endpoint = $endpoint . '?' . http_build_query( $params );
+    //Credit cards 
+    $mollie = new \Mollie\Api\MollieApiClient();
+    $mollie->setApiKey($global_mollie_key);
 
-    // initialize curl
-    $ch = curl_init();
-    
-    // set other curl options customer
-    curl_setopt($ch, CURLOPT_URL, $api_endpoint);
-    curl_setopt($ch, CURLOPT_POST, false);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
+    if(!empty($subscriptions)){
+        $instrument = 'invoice';
+        foreach($subscriptions as $row)
+            if($row->billing->company == $company_connected && $row->status == 'active'){
+                $access_granted = 1;
+                $abonnement = $row;
+                //Invoice orders
+                $endpoint_order_invoice = "subscriptions/" . $row->id . "/orders";
+                $abonnement->invoices = $woocommerce->get($endpoint_order_invoice, $parameters = []);
+                break;                
+            } 
+    }
 
-    $httpCode = curl_getinfo($ch , CURLINFO_HTTP_CODE); // this results 0 every time
+    if(!$access_granted){
+        $instrument = 'card';
+        $mollie_subscriptions = $mollie->subscriptions->page();
+        if($mollie_subscriptions)
+            foreach($mollie_subscriptions as $row)
+                if($row->metadata->company == $company_connected && $row->status == 'active'){
+                    $access_granted = 1;
+                    $abonnement = $row;
+                    // var_dump($row);
+                    //Payment subs
+                    $customer = $mollie->customers->get($row->customerId);
+                    $abonnement->cards = $customer->getSubscription($abonnement->id)->payments();
+                    break;                
+                } 
+            
+    }   
 
-    // get responses
-    // $response = curl_exec($ch);
-    // if ($response === false) {
-    //     $response = curl_error($ch);
-    //     $error = true;
-    //     //echo stripslashes($response);
-    //     $access_granted = false;
-    // }
-    // else{
-    //     $data_response = json_decode( $response, true );
-    //     if(!empty($data_response))
-    //         foreach($data_response as $subscription)
-    //             if( strval($subscription['billing']['company']) == $company_connected && $subscription['status'] == "active"){
-    //                 $access_granted = true;
-    //                 break;
-    //             }                    
-    // }
+    if ( !in_array( 'hr', $user->roles ) && !in_array( 'manager', $user->roles ) && !in_array( 'administrator', $user->roles ) && $user->roles != 'administrator') 
+        header('Location: /dashboard/user');
 
-    // if ( !in_array( 'hr', $user->roles ) && !in_array( 'manager', $user->roles ) && !in_array( 'administrator', $user->roles ) && $user->roles != 'administrator') 
-    //     header('Location: /dashboard/user');
-
-    // if(isset($option_menu[2])) 
-    //     if($option_menu[2] == 'profile-company')
-    //         $access_granted = true;
+    if(isset($option_menu[2])) 
+        if($option_menu[2] == 'profile-company')
+            $access_granted = 1;
 
     // if (!$access_granted && !in_array( 'administrator', $user->roles ))
     //     header('Location: /dashboard/company/profile-company');
 
-    
+    if (!$access_granted)
+        header('Location: /dashboard/company/profile-company');
 
+    //Pricing changes
+    $price = $global_price * $team;
+    $tax_price = $price * (20/100);
+    $total = $price + $tax_price;
+    
+    $quantity = (isset($abonnement->line_items[0]->quantity)) ? $abonnement->line_items[0]->quantity : $abonnement->metadata->quantity;
+    var_dump($quantity);
+    var_dump($team);
+    if($team != $quantity && !empty($abonnement) && $instrument == 'invoice'){
+        /** Woocommerce API client for php - update subscription **/
+        $endpoint_put = "subscriptions/" . $abonnement->id;
+        $data_put = [
+            "line_items" => [
+                [
+                    "id" => $abonnement->line_items[0]->id,
+                    "product_id" => $global_product_id,
+                    "quantity"   => $team,
+                    "tax_class" => "",
+                    "subtotal" => strval($total),
+                    "subtotal_tax" => strval($tax_price),
+                    "total" => strval($total),
+                    "total_tax" => strval($tax_price),           
+                    "sku" => "",
+                    "price" => $global_price
+                ],
+            ],
+        ];
+        $abonnement = $woocommerce->put($endpoint_put, $data_put);
+    }
+    else if($team != $quantity && !empty($abonnement) && $instrument == 'card'){
+        $customer_id = get_field('mollie_customer_id', 'user_' . $user->ID);
+        if($customer_id){            
+            $amount_pay = $global_price * $team;
+            $amount_pay_vat = $amount_pay + ($amount_pay * 20/100); 
+            $amount_pay_vat = strval(number_format($amount_pay_vat, 2, '.', ','));
+            $data_put = [
+                'amount' => [
+                    'currency' => 'EUR',
+                    'value' => $amount_pay_vat,
+                ],
+                'metadata' => [
+                    'user_id' => $user->ID,
+                    'company' => $company_connected,
+                    'quantity' => $team
+                ]
+            ];
+            // var_dump($data_put);
+            $endpoint_pay = "https://api.mollie.com/v2/customers/" . $customer_id . "/subscriptions" . "/" . $abonnement->id ;
+            $abonnement = (Object)makeApiCallMollie($endpoint_pay, $data_put, "POST");
+        }
+    }
 ?>
 <section id="sectionDashboard1" class="sidBarDashboard sidBarDashboardIndividual" name="section1"
     style="overflow-x: hidden !important;">

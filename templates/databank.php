@@ -103,40 +103,38 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
         'HousingWire'=>'https://www.housingwire.com/',
         'AfterSales'=>'https://aftersalesmagazine.nl/',
         'CRS Consulting'=>'https://crsconsultants.nl/',
-        'Pro Builder'=>'https://www.probuilder.com/',
-        'Building Design + Construction'=>'https://www.bdcnetwork.com/',
         'Commercial Construction & Renovation'=>'https://www.ccr-mag.com/',
-        'Talent Management'=>'https://www.talentmgt.com/',
-        'HR News'=>'https://www.hrnews.com/',
         'Training Magazine'=>'https://www.trainingmag.com/',
         'MedCity News'=>'https://www.medcitynews.com/',
-        'Health Data Management'=>'https://www.healthdatamanagement.com/',
         'Cocktail Enthusiast'=>'https://www.cocktailenthusiast.com/',
-        'Legal Times'=>'https://www.law.com/legaltimes/',
-        'Advocatenkantoor Mulder'=>'https://www.advocaatmulder.nl/',
-        'Van der Steenhoven Advocaten'=>'https://www.vandersteenhoven.nl/',
-        'Advocatenkantoor Böer'=>'https://www.advocaatboer.nl/',
         'Mr. Online'=>'https://www.mronline.nl/',
-        'Juridisch Nieuws'=>'https://www.juridischnieuws.nl/',
         'Cash'=>'https://www.cash.nl/',
-        'Bloomberg M&A News'=>'https://www.bloomberg.com/topic/mergers-and-acquisitions/',
-        'Beleggers Belangen'=>'https://www.beleggersbelangen.nl/',
         'Kookles thuis'=>'https://www.kooklesthuis.com/',
         'Mediabistro'=>'https://www.mediabistro.com/',
         'ProBlogger'=>'https://problogger.com/',
         'Media Shift'=>'https://www.mediashift.org/',
-        'TopDesk'=>'https://blog.topdesk.com/',
         'Warehouse Totaal'=>'https://www.warehousetotaal.nl/',
         'CS digital'=>'https://csdm.online/',
         'Analytics Insight'=>'https://www.analyticsinsight.net/',
-        'Eyecare Business'=>'https://www.eyecarebusiness.com/',
         'Wissenraet'=>'https://www.vanspaendonck-wispa.nl/',
         '9to5Mac'=>'https://9to5mac.com/',
         'Invest International'=>'https://investinternational.nl/',
         'Racefiets Blog'=>'https://racefietsblog.nl/',
         'Darts actueel'=>'https://www.dartsactueel.nl/',
         'Hockey.nl'=>'https://hockey.nl/',
-        'Hockeykrant'=>'https://hockeykrant.nl/'
+        'Hockeykrant'=>'https://hockeykrant.nl/',
+        'Tata Nexarc'=>'https://blog.tatanexarc.com/',
+        'Incodocs'=>'https://incodocs.com/blog/',
+        'Recruitement Tech'=>'https://www.recruitmenttech.nl/',
+        'Healthcare Weekly'=>'https://healthcareweekly.com/',
+        'Wellness Mama'=>'https://wellnessmama.com/',
+        'Logistics Business'=>'https://www.logisticsbusiness.com/',
+        '20Cube'=>'https://www.20cube.com/',
+        'Outside'=>'https://velo.outsideonline.com/',
+        'Trainer Road'=>'https://www.trainerroad.com/blog/',
+        'AllOver Media'=>'https://allovermedia.com/',
+        'The Partially Examined Life'=>'https://partiallyexaminedlife.com/',
+        'The Future Organization'=>'https://thefutureorganization.com/'
     ];
 ?>
 
@@ -160,7 +158,7 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                        <a href="/youtube-v3-playlist" target="_blank"  class="JouwOpleid youtubeCourse"><img src="<?= get_stylesheet_directory_uri(); ?>/img/youtube.png" alt="youtube image"></a>
                        &nbsp;&nbsp;<a href="/xml-parse" target="_blank"  class="JouwOpleid youtubeCourse" style="border: #FF802B solid;"><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/xml-orange.jpg" alt="xml image"></a>
                        &nbsp;&nbsp;<button id="subtopics" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/artikel.jpg" alt="load subtopics"></button>
-                       <button id="playlist-youtube">playlist</button>
+                       &nbsp;&nbsp;<button id="playlist-youtube" class="JouwOpleid youtubeCourse" style="border: #FF802B solid;" ><img style="width: 35px;" width="15" src="<?= get_stylesheet_directory_uri(); ?>/img/playlist_icon.png" alt="load playlist"></button>
                        <button type="button" class="btn btn-primary mt-4" data-toggle="modal" data-target="#audios-api">
                            <img src="https://api.podcastindex.org/images/pci_avatar.jpg" width="35" height="35">
                        </button>
@@ -260,11 +258,14 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                         <?php
                                         // if ($course->type != 'Video') {                                        
                                             if(!empty($onderwerpen)){
-                                            $tab = [];
+                                                $tab = [];
                                                 foreach($onderwerpen as $value1){
                                                     if($value1 && !is_wp_error(get_the_category_by_ID($value1))){
                                                         $tab[] = (String)get_the_category_by_ID($value1);
-                                                    }
+                                                    }elseif (!$value1) {
+                                                        $tab[] = null;
+                                                    } 
+                                                        
                                                 }
                                                 $tab = array_unique($tab);
                                                 foreach ($tab as $key => $value2) {
@@ -272,9 +273,6 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                                                         echo $value2.',';
                                                 }
                                             }
-                                        // }else{
-                                        //     echo $course->onderwerpen;
-                                        // }
                                         ?>
                                     </td>
                                     <td class="textTh tdCenter"><?= $course->status; ?></td>

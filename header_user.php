@@ -1,5 +1,18 @@
 <?php
+//Global constant 
 global $wp;
+
+global $global_price;
+global $global_product_id;
+global $global_mollie_key;
+
+$global_price = 5;
+$global_product_id = 9873;
+$global_mollie_key = "test_SFMrurF62JkBVuzK9gxa3b72eJQhxu";
+
+/** Mollie API client for php **/
+$mollie = new \Mollie\Api\MollieApiClient();
+$mollie->setApiKey($global_mollie_key);
 
 $user = wp_get_current_user();
 
@@ -158,14 +171,14 @@ $see_experts = get_users(
 
                     <div class="pills-tabContent" >
                         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                            <?php echo do_shortcode("[gravityform id='14' title='false' description='false' ajax='true']"); ?>
+                            <?php echo do_shortcode("[gravityform id='5' title='false' description='false' ajax='true']"); ?>
                             <p class="description pt-2 text-center">
                                 Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je
                                 direct toegang tot je bedrijfs leeromgeving
                             </p>
                         </div>
                         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                            <?php echo do_shortcode("[gravityform id='15' title='false' description='false' ajax='true']"); ?>
+                            <?php echo do_shortcode("[gravityform id='6' title='false' description='false' ajax='true']"); ?>
                             <p class="description pt-2 text-center">
                                 Ons team doet een snelle check of het bedrijf en gegevens kloppen en dan krijg je
                                 direct toegang tot je bedrijfs leeromgeving
@@ -545,6 +558,17 @@ $see_experts = get_users(
                                 continue;
 
                             if($user->ID == $expert->ID)
+                                continue;
+
+                            $user_data_plus = get_user_by('id', $expert->ID);
+                        
+                            $user_id = get_current_user_id();
+                            if($expert->ID != $user_id)
+                                $name = ($user_data_plus->last_name) ? $user_data_plus->first_name : $user_data_plus->display_name;
+                            else
+                                $name = "Ikzelf";
+
+                            if($user_data_plus->first_name == "")
                                 continue;
 
                             $image_author = get_field('profile_img',  'user_' . $expert->ID);
