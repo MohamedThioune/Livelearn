@@ -20,7 +20,9 @@ $headers = [
     "X-Auth-Date: $time",
     "Authorization: $hash"
 ];
+
 extract($_POST);
+//var_dump($_POST);
 $staticImg = get_stylesheet_directory_uri() . '/img/Image-79.png';
 if ($audio_search){
 
@@ -117,8 +119,19 @@ if ($audio_search){
                          echo"
                         <br>
                           <button class='mt-4 play btn btn-outline-success' data-categories='". json_encode($categories) ."' data-language='".$language."' data-author ='".$author."' data-title='".$title."' data-image='".$image."' data-description='".$description."' data-url='".$url."' data-id='".$id."' onclick='savePodcastPlaylistInPlatform(event)'>
-                            save
+                            SAVE
                         </button>
+                            <div class='d-none'>
+                                <div class='spinner-grow m-1' style='width: 0.5rem; height: 0.6rem;' role='alert'>
+                                    <span class='sr-only'>Loading...</span>
+                                </div>
+                                <div class='spinner-grow m-1' style='width: 0.4rem; height: 0.6rem;' role='alert'>
+                                    <span class='sr-only'>Loading...</span>
+                                </div>
+                                <div class='spinner-grow m-1' style='width: 0.3rem; height: 0.6rem;' role='alert'>
+                                    <span class='sr-only'>Loading...</span>
+                                </div>
+                            </div>
                       </div>
                     </div>
                   </div>
@@ -147,13 +160,29 @@ if ($audio_search){
     $sql = $wpdb->prepare( "SELECT course_id FROM $table  WHERE course_id = $id");
     $isCourseInPlateform = $wpdb->get_results( $sql)[0]->course_id;
     if ($isCourseInPlateform) {
-        $message = "$title is already saved in platform";
+        $message = "$title is already saved in platform ❌❌❌";
     }else{
+        $xml = simplexml_load_file($url);
+        $podcasts="";
+        //var_dump($xml->channel[0]);
+        foreach($xml->channel[0] as $key => $pod) {
+            if($pod->enclosure->attributes()->url) {
+                //$description_podcast = (string)$pod->description;
+                $title_podcast = (string)$pod->title;
+                $mp3 = $pod->enclosure->attributes()->url;
+                $podcasts .= "$mp3~$title_podcast|";
+            }
+        }
+        //var_dump($podcasts);die();
+        //echo "<br>nember caracters : ".strlen($podcasts);
+        //echo "<br>nember caracters : ".strlen(strip_tags($podcasts));
+
         //wich table will I do the request to show the list of podcast ?
         $data = array(
             'titel' => $title,
-            'type' => 'podcast',
-            'videos' => $url, //asking @Mouhamed about where I save the link of API playlist podcast
+            'type' => 'Podcast',
+            'podcasts' => substr($podcasts,0,-1), //remove the last char | before saving
+            //'podcasts' => strip_tags($podcasts),
             'short_description' => $description,
             'long_description' => $description,
             'duration' => null,
@@ -169,7 +198,7 @@ if ($audio_search){
         $wpdb->insert($table, $data);
         $post_id = $wpdb->insert_id;
         if ($post_id) {
-            $message = "$title saved in platform success ...";
+            $message = "$title saved in platform success ✅✅✅";
         }
     }
     echo $message;
