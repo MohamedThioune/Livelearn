@@ -462,7 +462,8 @@ $websites = ['smartwp','DeZZP','fmn','duurzaamgebouwd','adformatie','morethandri
                 console.log('sending...')
             },
             success: function(success){
-                if (!success) {
+                if (success==='') {
+                    console.log('no result for'+success)
                     backAudioApiPlaylist.innerHTML = "<span class='text-center'>no result for '" + search + "'</span>";
                 } else {
                     backAudioApiPlaylist.innerHTML = success;
