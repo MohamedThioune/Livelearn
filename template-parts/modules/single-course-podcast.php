@@ -1,4 +1,5 @@
 <?php /** Template Name: product podcast */ ?>
+<?php var_dump($_REQUEST); ?>
 <?php wp_head(); ?>
 <?php get_header(); ?>
 <?php extract($_GET); ?>
@@ -207,6 +208,7 @@
                             <button class="previous round livecast-play">&#8249;</button>
                             <button class="next round livecast-play">&#8250;</button>
                         </div>
+                        <?php var_dump($podcasts); ?>
                         <div class="codeless-player-content">
                             <h4><?php echo $podcasts[$lesson]['course_podcast_title']; ?> </h4>
                             <?php
