@@ -14,16 +14,77 @@ $url = "https://feeds.buzzsprout.com/2145970.rss";
 $xml = simplexml_load_file($url);
 ?>
 
+<?php
+extract($_GET);
+if(empty($podcast_index))
+    if(isset($lesson))
+        if(!$bool_link)
+            if($lesson != 0)
+                header('Location: ' . get_permalink($post->ID));
+
+//Long description             
+$long_description = ($long_description) ? : "No long description found for this course ";
+
+//Author
+$author = get_user_by('id', $post->post_author);
+$author_name = ($author->last_name) ? $author->first_name . ' ' . $author->last_name : $author->display_name; 
+$author_image = get_field('profile_img',  'user_' . $post->post_author);
+$author_image = $author_image ? $author_image : get_stylesheet_directory_uri() . '/img/placeholder_user.png';
+$author_bio =  get_field('biographical_info',  'user_' . $post->post_author);
+$author_role =  get_field('role',  'user_' . $post->post_author);
+$post_date = new DateTimeImmutable($post->post_date);
+
+//Read audio
+// $read_audio = "";
+// if(!empty($podcasts))
+//     if(isset($topic) && isset($lesson))
+//         $read_audio =  '<audio controls id="myAudioID">
+//                             <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/ogg">
+//                             <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/mpeg">
+//                             <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aac">
+//                             <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/wav">
+//                             <source src="' . $podcasts[$lesson]['course_podcast_data'] . '" type="audio/aiff">
+//                             Your browser does not support the audio element.
+//                         </audio>';
+//     else if(!empty($podcast_index))
+//         if(isset($lesson))
+//         $read_video = '<iframe src="https://www.youtube.com/embed/' . $youtube_videos[$lesson]['id'] .'?autoplay=1&mute=1&controls=1" title="' . $youtube_videos[$lesson]['title'] . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+
+//Start or Buy
+$startorbuy = (!$bool_link) ? '<a href="/cart/?add-to-cart=' . get_field('connected_product', $post->ID) . '" class="btn btn-buy-now">Buy Now</a>' : '<a href=""/dashboard/user/checkout-video/?post=" ' . $post->post_name . '" class="btn btn-stratNow">Start Now</a>';
+
+//Similar course
+$similar_course = array();
+$args = array(
+    'post_type' => 'course',
+    'post_status' => 'publish',
+    'orderby' => 'date',
+    'post_author' => $post->post_author,
+    'order' => 'DESC',
+    'posts_per_page' => -1
+);
+$author_courses = get_posts($args);
+foreach ($author_courses as $key => $course) {
+    $type_course = get_field('course_type', $post->ID);
+    if($type_course == $course_type)
+        array_push($similar_course, $course);
+        
+    if(count($similar_course) == 6)
+        break;
+} 
+?>
+
+
 <body>
 <div class="content-new-Courses video-content-course content-course-podcast">
     <div class="container-fluid">
         <div class="content-head-podcast">
            <div class="block-img">
-               <img src="<?php echo get_stylesheet_directory_uri();?>/img/1.jpg" alt="">
+               <img src="<?= $thumbnail ?>" alt="">
            </div>
             <div class="block-detail-podcast">
-                <h1>Learn Figma: User Interface Design Essentials - UI/UX Design</h1>
-                <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. accusantium doloremque laudantiuExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.</p>
+                <h1><?= $post->post_title ?></h1>
+                <p class="description"><?= $short_description ?></p>
                 <div class="d-flex">
                     <div class="block-sub-detail">
                         <p class="category-text-title">Categories</p>
@@ -39,7 +100,7 @@ $xml = simplexml_load_file($url);
                                 <i class="fa fa-star checked"></i>
                                 <i class="fa fa-star checked"></i>
                             </div>
-                            <p class="category-text">9.45 (9.8k+ reviews)</p>
+                            <p class="category-text">0 (0 reviews)</p>
                         </div>
                     </div>
                 </div>
@@ -62,15 +123,12 @@ $xml = simplexml_load_file($url);
                                     <div class="section-tabs section-tabs-learn" >
                                         <div class="block-description">
                                             <h2>Description</h2>
-                                            <p class="text-tabs">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by
-                                                injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of lorem
-                                                ipsum, you need to be sure there isn't anything embarrassing.</p>
-                                            <p class="text-tabs">hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary,
-                                                making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of
-                                                model sentence structures, to generate lorem ipsum which looks reasonable.</p>
+                                            <p class="text-tabs">
+                                                <?= $long_description ?>
+                                            </p>
                                         </div>
                                     </div>
-                                    <div class="section-tabs" >
+                                    <!-- <div class="section-tabs" >
                                         <h2>What You'll Learn</h2>
                                         <ul class="d-flex flex-wrap list what-you-learn">
                                             <li>
@@ -106,7 +164,7 @@ $xml = simplexml_load_file($url);
                                                 <span class="text-tabs">Discover how to find trends</span>
                                             </li>
                                         </ul>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </ul>
 
@@ -144,7 +202,7 @@ $xml = simplexml_load_file($url);
                                                 </div>
                                             </div>
                                         </div>
-<!--                                        <img class="blocked-img" src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/blocked.svg" alt="">-->
+<!--                                    <img class="blocked-img" src="--><?php //echo get_stylesheet_directory_uri();?><!--/img/blocked.svg" alt="">-->
                                     </div>
                                     <?php }
                                 } ?>
@@ -431,7 +489,7 @@ $xml = simplexml_load_file($url);
                     <div class="right-block-detail-course">
                         <div class="card-detail-course">
                             <div class="head">
-                                <img src="<?php echo get_stylesheet_directory_uri();?>/img/event.jpg" alt="">
+                                <img src="<?= $thumbnail ?>" alt="">
                             </div>
                             <p class="title-course">Course Includes</p>
                             <ul>

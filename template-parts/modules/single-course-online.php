@@ -625,7 +625,7 @@ if(isset($lesson))
 
                         <div>
                             <?php
-                            if(!empty($courses) && !empty($youtube_videos) && !empty($podcasts))
+                            if(!empty($courses) && !empty($youtube_videos))
                                 echo "<div class='sousBlockCours'>
                                         <span> No lesson as far, soon available </span>
                                      </div>";
