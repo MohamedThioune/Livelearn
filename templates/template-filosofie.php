@@ -1,4 +1,4 @@
-<?php /** Template Name: about */ ?>
+<?php /** Template Name: filosofie */ ?>
 
 <?php
 /** Mollie API client for php **/
@@ -154,25 +154,20 @@
     <section class="boxOne3-1">
         <div class="container">
             <div class="BaangerichteBlock">
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Probeer.png" class="img-head-about" alt="">
-                <h1 class="wordDeBestText2">Over LiveLearn</h1>
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/filosofie.png" class="img-head-about" alt="">
+                <h1 class="wordDeBestText2">Onze Filosofie</h1>
             </div>
         </div>
     </section>
     <div class="container-fluid">
-        <section class="block-about">
-            <div class="frist-block-about">
-                <div class="Ons-verhaal-block">
-                    <h2 class="subTitle-about">Ons verhaal</h2>
-                    <p class="description-about">LiveLearn is opgericht in 2019 door Daniel van der Kolk met als doel om leren en ontwikkelen toegankelijk te maken voor iedereen. Dit omdat organisaties en vooral het midden-klein-bedrijf een uitdaging heeft om talent aan te trekken en vast te houden, maar ook omdat organisaties vaak moeite hebben om hun personeel voldoende op te leiden.</p>
-                    <p class="description-about">Door het individu centraal te stellen en managers inzicht te geven in de ontwikkeling van hun team(s) wordt talent-ontwikkeling voor elke organisatie mogelijk.  LiveLearn hoort bij één van de meest innovatieve partners voor organisaties om hun personeel op te leiden.  </p>
-                    <a href="" class="btn btn-doe-jij">Doe jij mee?</a>
-                </div>
-                <div class="block-img-about">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/For-individuals.png" class="img-head-about" alt="">
-                </div>
-            </div>
+
+        <section class="section-ontedek text-center">
+            <h2>Ontdek het geheim achter het <span>ideale team </span>! </h2>
+            <p class="description">Bij LiveLearn geloven we in een skills gedreven aanpak, waar afkomst er niet toe doet. We waarderen voortdurend het leren en ontwikkelen, omdat het helpt bij het samenstellen van het ideale team. </p>
+            <p class="description">We stimuleren individuele groei en bieden gelijke kansen voor iedereen om hun vaardigheden te ontwikkelen. Met onze tools en inzichten kun je de juiste talenten identificeren, competenties versterken en teamprestaties optimaliseren. Verander de manier waarop je naar talent kijkt en omarm een cultuur van continu leren voor ongekend succes!</p>
+            <a href="" class="btn btn-doe-jij">Doe jij mee?</a>
         </section>
+
         <section class="section-category">
             <h2 class="subTitle-about">Onze aanpak</h2>
             <p class="description-about">De LiveLearn methode is net anders dan de traditionele learning & development partijen. Bij LiveLearn combineren we persoonlijke begeleiding en technologie om onze partners de beste ervaring te bieden. Wij begrijpen ook dat het ontwikkelen van talent niet altijd op de eerste plaats staat binnen een organisatie. Daarom maken wij onze software zo eenvoudig mogelijk, zodat er geen tijd verloren gaat. </p>
@@ -204,62 +199,29 @@
                 <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/icon-data-gedreven.png" class="" alt="">
                 <p class="description">Compleet data gedreven, beveiligd en met de medewerker centraal.</p>
             </div>
-            <div class="frist-block-about">
-                <div class="Ons-verhaal-block">
-                    <h2 class="subTitle-about">MVO en opleiden talent</h2>
-                    <p class="description-about">Het LiveLearn team is gevestigd in Nederland en heeft een deel van haar IT capaciteiten gevestigd in Senegal, West-Afrika. Wij geloven dat het niet uit maakt waar talent gevestigd is en door hen de juiste handvatten te geven een wereldwijde workforce gerealiseerd kan worden. </p>
-                    <p class="description-about">Onze samenwerking met Orange maakt het mogelijk om een grote pool van talent aan te trekken en verder op te leiden. Zo implementeren wij onze filosofie ook binnen de eigen organisatie. </p>
-                </div>
-                <div class="block-img-about">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/teams.png" class="img-head-about" alt="">
-                </div>
+        </section>
+
+        <section class="section-app-store">
+            <div class="block-app-mobile">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/mobile-app.png" class="" alt="">
+            </div>
+            <div class="d-flex justify-content-center">
+                <a href="" class="btn btn-store">
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/btn-app-store.png" class="" alt="">
+                </a>
+                <a href="" class="btn btn-store">
+                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/btn-google-play.png" class="" alt="">
+                </a>
             </div>
         </section>
-        <section class="team-section">
-            <h2>The LiveLearn Team</h2>
-            <div class="team-block">
-                <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Fadel.png" class="" alt="">
-                    <p class="name">FADEL</p>
-                </div>
-                <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Maurice.png" class="" alt="">
-                    <p class="name">MAURICE</p>
-                </div>
-                <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Seydou.png" class="" alt="">
-                    <p class="name">SEYDOU</p>
-                </div>
-                <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Daniel-van-der.png" class="" alt="">
-                    <p class="name">DANIEL</p>
-                </div>
-                <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/KHADIM.png" class="" alt="">
-                    <p class="name">KHADIM</p>
-                </div>
-                <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Xander.png" class="" alt="">
-                    <p class="name">XANDER</p>
-                </div>
-                <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/MOHAMED.png" class="" alt="">
-                    <p class="name">MOHAMED</p>
-                </div>
-                <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Oumou.png" class="" alt="">
-                    <p class="name">OUMOU</p>
-                </div>
-                <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Ibrahima.png" class="" alt="">
-                    <p class="name">IBRAHIMA</p>
-                </div>
-                <div class="one-element">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/You-next.png" class="" alt="">
-                    <p class="name">YOU?</p>
-                </div>
-            </div>
+
+        <section class="section-ontedek text-center">
+            <h2>Ontdek het geheim achter het <span>ideale team </span>! </h2>
+            <p class="description">Bij LiveLearn geloven we in een skills gedreven aanpak, waar afkomst er niet toe doet. We waarderen voortdurend het leren en ontwikkelen, omdat het helpt bij het samenstellen van het ideale team. </p>
+            <p class="description">We stimuleren individuele groei en bieden gelijke kansen voor iedereen om hun vaardigheden te ontwikkelen. Met onze tools en inzichten kun je de juiste talenten identificeren, competenties versterken en teamprestaties optimaliseren. Verander de manier waarop je naar talent kijkt en omarm een cultuur van continu leren voor ongekend succes!</p>
+            <a href="" class="btn btn-doe-jij">Doe jij mee?</a>
         </section>
+
         <section class="uiteindelijke-section">
             <h3>Ons uiteindelijke doel</h3>
             <p class="description">Mensen toegang geven tot kennis én vaardigheden om hen een eerlijke kans op de wereldwijde arbeidsmarkt te geven.</p>

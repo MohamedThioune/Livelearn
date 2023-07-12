@@ -462,6 +462,7 @@ jQuery(function($) {
         $(".activeModalHeader").show();
         $("#voorOpleidersModal").hide();
         $("#OpleidingenModal").hide();
+        $("#OverOnsModal").hide();
     });
 
     $("#opleiders").click(function() {
@@ -469,6 +470,7 @@ jQuery(function($) {
         $(".activeModalHeader").show();
         $("#voorOpleidersModal").toggle();
         $("#OpleidingenModal").hide();
+        $("#OverOnsModal").hide();
     });
 
     $("#Opleidingen").click(function() {
@@ -476,6 +478,15 @@ jQuery(function($) {
         $(".activeModalHeader").show();
         $("#voorOpleidersModal").hide();
         $("#OpleidingenModal").toggle();
+        $("#OverOnsModal").hide();
+    });
+
+    $("#OverOns").click(function() {
+        $("#voorOrganisatiModal").hide();
+        $(".activeModalHeader").show();
+        $("#voorOpleidersModal").hide();
+        $("#OpleidingenModal").hide();
+        $("#OverOnsModal").toggle();
     });
 
     $(".activeModalHeader").click(function() {
@@ -483,6 +494,7 @@ jQuery(function($) {
         $("#voorOpleidersModal").hide();
         $("#OpleidingenModal").hide();
         $(".activeModalHeader").hide();
+        $("#OverOnsModal").hide();
     });
 
     //Filter bar on category page
