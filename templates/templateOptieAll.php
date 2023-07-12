@@ -11,10 +11,10 @@
             $sql=$wpdb->prepare("SELECT * FROM {$wpdb->prefix}databank WHERE id = %d",$obj);
             $course = $wpdb->get_results($sql)[0];
             $where = ['id' => $obj];
-            if($optie == "✔️"){
+            if($optie == "✔"){
                 //Insert some other course type
-                $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar','Artikels'];
-                $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Webinar' => 'webinar', 'Artikels' => 'artikels'];
+                $type = ['Opleidingen', 'Workshop', 'Training', 'Masterclass', 'E-learning', 'Lezing', 'Event', 'Webinar','Artikels','Podcast'];
+                $typos = ['Opleidingen' => 'course', 'Workshop' => 'workshop', 'Training' => 'training', 'Masterclass' => 'masterclass', 'E-learning' => 'elearning', 'reading' => 'Lezing', 'event' => 'Event', 'Video' => 'video', 'Webinar' => 'webinar', 'Artikels' => 'artikels','Podcast'=>'podcast'];
 
                 //Insert Artikel
                 if (strval($course->type) == "Artikel"){
@@ -62,6 +62,31 @@
 
                     update_field('course_type', 'video', $id_post);
                     update_field('youtube_videos', $youtube_videos, $id_post);
+
+                }
+                else if (strval($course->type) == 'Podcast'){
+                    //Creation course
+                    $args = array(
+                        'post_type'   => 'course',
+                        'post_author' => $course->author_id,
+                        'post_status' => 'publish',
+                        'post_title'  => $course->titel
+                    );
+                    $id_post = wp_insert_post($args, true);
+                    //var_dump($course->podcasts);
+                    $podcasts = explode('|', $course->podcasts);
+                    $podcasts_playlists = [];
+                    foreach ($podcasts as $item) {
+                        $podcasts_playlist = [];
+                        $podcast = explode('~', $item);
+                        $podcasts_playlist['podcast_url'] = $podcast[0];
+                        $podcasts_playlist['podcast_image'] = $course->image_xml;
+                        $podcasts_playlist['podcast_title'] = $podcast[1];
+
+                        $podcasts_playlists [] = $podcasts_playlist;
+                    }
+                    update_field('course_type', 'podcast', $id_post);
+                    update_field('podcasts_index', $podcasts_playlists, $id_post);
                 }
                 //Insert Others
                 else if(in_array(strval($course->type), $type)){
