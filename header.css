@@ -126,83 +126,387 @@
 .blockdropdownnHeader ul li a{
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 7px;
+    border-radius: 18px;
+    padding: 7px 9px 9px;
+}
+.blockdropdownnHeader ul li a:hover{
+    background: #E0EFF4;
 }
 .blockdropdownnHeader ul li:last-child a{
     margin-bottom: 0px;
 }
 .blockdropdownnHeader ul li a .blockImg{
-    width: 45px;
-    height: 45px;
+    width: 35px;
+    height: 35px;
     margin-right: 15px;
     text-align: center;
-    border-radius: 100%;
+    /* border-radius: 100%; */
     overflow: hidden;
-    background: #e0eff4;
-    border: 1px solid #b5dad6;
+/* background: #e0eff4; */
+/* border: 1px solid #b5dad6; */
 
 }
 .blockdropdownnHeader ul li a .blockImg img{
-    width: 100%;
-    margin-top: 0;
-    height: 100%;
-    object-fit: cover;
+width: 100%;
+margin-top: 0;
+height: 100%;
+object-fit: cover;
 }
 .subtitleSousElementHeader{
-    color: #043356;
-    font-size: 14px;
-    margin-bottom: 0;
+color: #043356;
+font-size: 14px;
+margin-bottom: 0;
 }
 form {
-    position: relative;
+position: relative;
 }
 .searchInputHedear input{
-    color: #707070;
-    border: none;
-    padding: 5px 10px;
-    width: 100%;
-    background: white;
-    border-radius: 13px;
-    font-size: 14px;
-    margin: 25px 0px 10px;
+color: #707070;
+border: none;
+padding: 5px 10px;
+width: 100%;
+background: white;
+border-radius: 13px;
+font-size: 14px;
+margin: 25px 0px 10px;
 }
 .searchInputHedear input::placeholder{
-    color: #707070;
+color: #707070;
 }
 .headerDrop{
+left: 0;
+width: 100%;
+}
+.dropdown-menuSearch{
+display: none;
+}
+.dropdown-menuSearch {
+position: absolute;
+left: 30px;
+background: white;
+color: #043356;
+width: 91%;
+text-align: left;
+padding: 20px 0px;
+z-index: 99;
+top: 36px;
+border-radius: 15px;
+font-size: 16px;
+}
+.voorBlock .dropdown-menuSearch {
+width: 40%;
+left: 115px;
+top: 52px;
+}
+.hasNoResults{
+margin-left: 30px;
+color: #043356;
+}
+.navMobile {
+display: none;
+}
+.headSousMobilePrincipale {
+display: none;
+}
+.btnElementSousMenu {
+padding: 0;
+display: flex;
+width: 100%;
+position: relative;
+color: #023356;
+font-size: 15px;
+justify-content: space-between;
+margin-bottom: 7px;
+text-transform: none !important;
+}
+.headSousMobileProfile{
+display: none;
+}
+
+#croieProfil{
+display: none;
+padding: 0;
+margin: 4px 0px -4px 3px !important;
+}
+#profilView{
+display: block;
+padding: 0;
+}
+#croieProfil img {
+margin-top: -9px;
+width: 15px;
+}
+.logoMobile{
+display: none;
+}
+.second-element-mobile{
+display: none;
+}
+#croieSearch{
+display: none;
+margin-top: -7px;
+width: 19px;
+padding: 0 !important;
+margin-right: 10px;
+}
+#croieSearch img{
+width: 100%;
+}
+#burgerCroie{
+display: none ;
+}
+.searchInputHedear{
+display: none;
+}
+.headSousMobilePrincipale{
+display: none;
+}
+.navbar-expand-lg .navbar-nav .nav-link {
+padding-right: 4px !important;
+padding-left: 4px !important;
+}
+.nav-link {
+font-size: 15px;
+}
+.navbar-nav li {
+position: relative;
+}
+.navModife4:focus {
+outline: 0;
+-webkit-box-shadow: unset !important;
+box-shadow: unset !important;
+}
+
+.navModife {
+background: #023356;
+color: #ffffff !important;
+border-bottom: 1px solid #7070706e;
+padding: 0 !important;
+}
+.worden {
+background: #00A89D;
+font-weight: bold;
+border-radius: 30px;
+padding: 8px 15px !important;
+margin: 0 0px !important;
+}
+
+.inputSearch {
+min-width: 345px;
+padding-left: 15px;
+font-size: 14px
+}
+
+
+@media all and (min-width: 300px) and (max-width: 767px){
+.dropdown-menuSearch {
     left: 0;
     width: 100%;
 }
-.dropdown-menuSearch{
-    display: none;
-}
 .dropdown-menuSearch {
-    position: absolute;
-    left: 30px;
-    background: white;
-    color: #043356;
-    width: 91%;
-    text-align: left;
-    padding: 20px 0px;
-    z-index: 99;
-    top: 36px;
-    border-radius: 15px;
-    font-size: 16px;
-}
-.voorBlock .dropdown-menuSearch {
-    width: 40%;
-    left: 115px;
-    top: 52px;
-}
-.hasNoResults{
-    margin-left: 30px;
-    color: #043356;
+    left: 0;
+    width: 100%;
 }
 .navMobile {
-    display: none;
+    display: block;
+    background: #023356;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+    top: 0;
+    padding: 15px 15px 8px !important;
+    height: auto !important;
 }
-.headSousMobilePrincipale {
-    display: none;
+.navMobile-custom{
+    padding: 0px 0 8px !important;
+}
+.ProfilGraduatioBlock {
+    align-items: center;
+    margin-top: -7px;
+    display: flex;
+    justify-content: space-between;
+}
+.navMobile-custom .ProfilGraduatioBlock {
+    padding: 0px 15px!important;
+}
+.sousNav1 {
+    display: flex;
+    width: 30%;
+}
+.first-element-mobile {
+    width: 43px;
+}
+#profilView {
+    display: block;
+    padding: 0;
+}
+.boxImgNav2 {
+    width: 32px;
+    padding-top: 1px;
+    position: relative;
+}
+.notification {
+    top: -10px !important;
+    right: -8px !important;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #DE5A5A;
+    color: #FFFFFF;
+    border-radius: 100%;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+.logoMobile{
+    width: 35px !important;
+    margin: 0 auto;
+    display: block;
+}
+.logoMobile img{
+    width: 100%;
+}
+.sousNav3 {
+    width: 30%;
+    display: flex;
+    justify-content: flex-end;
+}
+.second-element-mobile {
+    width: 25px;
+    display: block;
+}
+#searchIcone {
+    margin-top: 0px !important;
+    width: 22px !important;
+    padding: 0 !important;
+    height: 22px;
+}
+#searchIcone img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.boxSousNav3-2 {
+    width: 28px;
+    padding: 0 !important;
+}
+#burgerCroie {
+    height: 35px;
+    width: 21px;
+    padding: 0 !important;
+    margin-top: 0px !important;
+}
+#burgerCroie img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.searchInputHedear {
+    margin-top: 0px !important;
+}
+.sousMenuNavMobil {
+    top: 48px !important;
+    padding-top: 10px;
+    width: 100%;
+    float: right;
+    background: #E0EFF4;
+    position: fixed;
+    z-index: 999999999;
+    right: 0;
+    min-height: 100vh;
+    overflow-y: scroll;
+}
+.body-custom .sousMenuNavMobil{
+    top: 120px !important;
+    overflow-y: scroll;
+    position: fixed;
+    height: 90%;
+    min-height: unset;
+}
+.elementGroupGroeien {
+    margin-bottom: 20px;
+}
+.btnElementSousMenu{
+    padding: 0;
+    display: flex;
+    width: 100%;
+    position: relative;
+    color: #023356;
+    font-size: 15px;
+    justify-content: space-between;
+    margin-bottom: 7px;
+    text-transform: none !important;
+}
+.btnElementSousMenu img{
+    width: 11px;
+    float: right;
+}
+.sousMenuNavMobil .accordion .element-nav-accordion:last-child {
+    border-bottom: 0px solid #02335680;
+    margin-bottom: 20px;
+}
+.navMobile-custom {
+    padding: 0px 0 8px !important;
+}
+
+}
+
+@media screen and (max-width: 1079px) and (min-width: 768px){
+.first-element-mobile {
+    width: 43px;
+}
+.sousNav1 {
+    display: flex;
+    width: 30%;
+}
+.notification {
+    top: -8px;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #DE5A5A;
+    color: #FFFFFF;
+    border-radius: 100%;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+.logoMobile {
+    width: 35px !important;
+    margin: 0 auto;
+    display: block;
+}
+.logoMobile img {
+    width: 100%;
+}
+.second-element-mobile {
+    display: block;
+    width: 25px;
+}
+.second-element-mobile .croie {
+    margin-top: 0;
+    width: 28px;
+    padding: 0 !important;
+}
+.searchInputHedear {
+    margin-top: 0px !important;
+}
+.sousMenuNavMobil {
+    top: 66px !important;
+    padding-top: 10px;
+    width: 100%;
+    float: right;
+    background: #E0EFF4;
+    position: fixed;
+    z-index: 999999999;
+    right: 0;
+    min-height: 100vh;
+    overflow-y: scroll;
+}
+.btnElementSousMenu img {
+    width: 11px;
+    float: right;
 }
 .btnElementSousMenu {
     padding: 0;
@@ -215,307 +519,8 @@ form {
     margin-bottom: 7px;
     text-transform: none !important;
 }
-.headSousMobileProfile{
-    display: none;
+.navMobile-custom{
+    top: 126px !important;
 }
-
-#croieProfil{
-    display: none;
-    padding: 0;
-    margin: 4px 0px -4px 3px !important;
-}
-#profilView{
-    display: block;
-    padding: 0;
-}
-#croieProfil img {
-    margin-top: -9px;
-    width: 15px;
-}
-.logoMobile{
-    display: none;
-}
-.second-element-mobile{
-    display: none;
-}
-#croieSearch{
-    display: none;
-    margin-top: -7px;
-    width: 19px;
-    padding: 0 !important;
-    margin-right: 10px;
-}
-#croieSearch img{
-    width: 100%;
-}
-#burgerCroie{
-    display: none ;
-}
-.searchInputHedear{
-    display: none;
-}
-.headSousMobilePrincipale{
-    display: none;
-}
-.navbar-expand-lg .navbar-nav .nav-link {
-    padding-right: 4px !important;
-    padding-left: 4px !important;
-}
-.nav-link {
-    font-size: 15px;
-}
-.navbar-nav li {
-    position: relative;
-}
-.navModife4:focus {
-    outline: 0;
-    -webkit-box-shadow: unset !important;
-    box-shadow: unset !important;
-}
-
-.navModife {
-    background: #023356;
-    color: #ffffff !important;
-    border-bottom: 1px solid #7070706e;
-    padding: 0 !important;
-}
-.worden {
-    background: #00A89D;
-    font-weight: bold;
-    border-radius: 30px;
-    padding: 8px 15px !important;
-    margin: 0 0px !important;
-}
-
-.inputSearch {
-    min-width: 345px;
-    padding-left: 15px;
-    font-size: 14px
-}
-
-
-@media all and (min-width: 300px) and (max-width: 767px){
-    .dropdown-menuSearch {
-        left: 0;
-        width: 100%;
-    }
-    .dropdown-menuSearch {
-        left: 0;
-        width: 100%;
-    }
-    .navMobile {
-        display: block;
-        background: #023356;
-        position: fixed;
-        width: 100%;
-        z-index: 999;
-        top: 0;
-        padding: 15px 15px 8px !important;
-        height: auto !important;
-    }
-    .navMobile-custom{
-        padding: 0px 0 8px !important;
-    }
-    .ProfilGraduatioBlock {
-        align-items: center;
-        margin-top: -7px;
-        display: flex;
-        justify-content: space-between;
-    }
-    .navMobile-custom .ProfilGraduatioBlock {
-        padding: 0px 15px!important;
-    }
-    .sousNav1 {
-        display: flex;
-        width: 30%;
-    }
-    .first-element-mobile {
-        width: 43px;
-    }
-    #profilView {
-        display: block;
-        padding: 0;
-    }
-    .boxImgNav2 {
-        width: 32px;
-        padding-top: 1px;
-        position: relative;
-    }
-    .notification {
-        top: -10px !important;
-        right: -8px !important;
-        position: absolute;
-        width: 15px;
-        height: 15px;
-        background: #DE5A5A;
-        color: #FFFFFF;
-        border-radius: 100%;
-        font-size: 10px;
-        font-weight: bold;
-        text-align: center;
-    }
-    .logoMobile{
-        width: 35px !important;
-        margin: 0 auto;
-        display: block;
-    }
-    .logoMobile img{
-        width: 100%;
-    }
-    .sousNav3 {
-        width: 30%;
-        display: flex;
-        justify-content: flex-end;
-    }
-    .second-element-mobile {
-        width: 25px;
-        display: block;
-    }
-    #searchIcone {
-        margin-top: 0px !important;
-        width: 22px !important;
-        padding: 0 !important;
-        height: 22px;
-    }
-    #searchIcone img{
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-    .boxSousNav3-2 {
-        width: 28px;
-        padding: 0 !important;
-    }
-    #burgerCroie {
-        height: 35px;
-        width: 21px;
-        padding: 0 !important;
-        margin-top: 0px !important;
-    }
-    #burgerCroie img{
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-    .searchInputHedear {
-        margin-top: 0px !important;
-    }
-    .sousMenuNavMobil {
-        top: 48px !important;
-        padding-top: 10px;
-        width: 100%;
-        float: right;
-        background: #E0EFF4;
-        position: fixed;
-        z-index: 999999999;
-        right: 0;
-        min-height: 100vh;
-        overflow-y: scroll;
-    }
-    .body-custom .sousMenuNavMobil{
-        top: 120px !important;
-        overflow-y: scroll;
-        position: fixed;
-        height: 90%;
-        min-height: unset;
-    }
-    .elementGroupGroeien {
-        margin-bottom: 20px;
-    }
-    .btnElementSousMenu{
-        padding: 0;
-        display: flex;
-        width: 100%;
-        position: relative;
-        color: #023356;
-        font-size: 15px;
-        justify-content: space-between;
-        margin-bottom: 7px;
-        text-transform: none !important;
-    }
-    .btnElementSousMenu img{
-        width: 11px;
-        float: right;
-    }
-    .sousMenuNavMobil .accordion .element-nav-accordion:last-child {
-        border-bottom: 0px solid #02335680;
-        margin-bottom: 20px;
-    }
-    .navMobile-custom {
-        padding: 0px 0 8px !important;
-    }
-
-}
-
-@media screen and (max-width: 1079px) and (min-width: 768px){
-    .first-element-mobile {
-        width: 43px;
-    }
-    .sousNav1 {
-        display: flex;
-        width: 30%;
-    }
-    .notification {
-        top: -8px;
-        position: absolute;
-        width: 15px;
-        height: 15px;
-        background: #DE5A5A;
-        color: #FFFFFF;
-        border-radius: 100%;
-        font-size: 10px;
-        font-weight: bold;
-        text-align: center;
-    }
-    .logoMobile {
-        width: 35px !important;
-        margin: 0 auto;
-        display: block;
-    }
-    .logoMobile img {
-        width: 100%;
-    }
-    .second-element-mobile {
-        display: block;
-        width: 25px;
-    }
-    .second-element-mobile .croie {
-        margin-top: 0;
-        width: 28px;
-        padding: 0 !important;
-    }
-    .searchInputHedear {
-        margin-top: 0px !important;
-    }
-    .sousMenuNavMobil {
-        top: 66px !important;
-        padding-top: 10px;
-        width: 100%;
-        float: right;
-        background: #E0EFF4;
-        position: fixed;
-        z-index: 999999999;
-        right: 0;
-        min-height: 100vh;
-        overflow-y: scroll;
-    }
-    .btnElementSousMenu img {
-        width: 11px;
-        float: right;
-    }
-    .btnElementSousMenu {
-        padding: 0;
-        display: flex;
-        width: 100%;
-        position: relative;
-        color: #023356;
-        font-size: 15px;
-        justify-content: space-between;
-        margin-bottom: 7px;
-        text-transform: none !important;
-    }
-    .navMobile-custom{
-        top: 126px !important;
-    }
 
 }

@@ -1,4 +1,4 @@
-<?php /** Template Name: template Creëren  */ ?>
+<?php /** Template Name: template Ontwikkelen */ ?>
 
 <?php wp_head(); ?>
 <?php get_header(); ?>
@@ -12,20 +12,19 @@
                 <div class="row d-flex justify-content-center my-md-5">
                     <div class="col-md-8 col-10  text-center">
                         <h2 class="wordDeBestText2 fw-bold" >
-                            <span>Maak Indrukwekkende Kennisproducten:</span> Vereenvoudigd Creëren met Onze Krachtige Auteurstool!
+                            <span>Verhelderende Inzichten:</span> Effectieve Uitleg van Nieuwe Producten en Diensten via Ons Platform.
                         </h2>
                         <p class="krijgText">
-                            Met onze gebruiksvriendelijke auteurstool kunt u eenvoudig kennisproducten creëren en delen. Of het nu gaat om e-books, cursussen, handleidingen of andere waardevolle content, onze tool biedt intuïtieve functies en sjablonen om uw ideeën tot leven te brengen.
+                            Met ons platform kunt u niet alleen kennisproducten delen, maar ook nieuwe producten of diensten effectief uitleggen. Met behulp van interactieve cursussen, video’s, infographics en andere visuele tools kunt u uw publiek stap voor stap begeleiden en hen betrekken bij het begrijpen en waarderen van uw nieuwe aanbod.
                             <br>
-                            Voeg tekst, afbeeldingen, video’s en interactieve elementen toe om boeiende leerervaringen te creëren. Met de flexibiliteit en kracht van onze auteur tool kunt u snel en efficiënt hoogwaardige kennisproducten ontwikkelen die uw publiek inspireren en informeren.
-                        </p>
+                            Dit stelt u in staat om op een boeiende en educatieve manier informatie te verstrekken, potentiële klanten te informeren en uw conversiepercentages te verhogen.                        </p>
                         <a data-toggle="modal" data-target="#exampleModalCenter"  aria-label="Close" data-dismiss="modal"  class="btn rounded rounded-pill fw-bold px-4 text-white" style="background: #00A89D">
                             <strong>Meld je aan</strong>
                         </a>
 
                         <div class="my-3">
                             <img class="img-fluid w-50" style=""
-                                 src="<?php echo get_stylesheet_directory_uri();?>/img/photo_5897718936634506184_y.jpeg" alt="">
+                                 src="<?php echo get_stylesheet_directory_uri();?>/img/Ontwikkelen.png" alt="">
                         </div>
                     </div>
                 </div>
@@ -72,13 +71,13 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="content-Ontdek">
-                            <h2 class="title-section">De Kracht van Continu Leren: Innovatie in Kennisproducten voor een Evoluerende Wereld</h2>
-                            <p class="description-section">In een voortdurend evoluerende wereld is het creëren van nieuwe kennisproducten van essentieel belang. Nieuwe ontwikkelingen, technologieën en inzichten vereisen voortdurende innovatie en kennisdeling. Door voortdurend nieuwe kennisproducten te creëren, blijft u relevant, kunt u anticiperen op veranderingen en waardevolle informatie aanbieden aan uw publiek, wat resulteert in groei en concurrentievoordeel.</p>
+                            <h2 class="title-section">Klantbetrokkenheid via Learnings: De Sleutel tot Succesvolle Ontwikkelingen</h2>
+                            <p class="description-section">Het is essentieel om klanten constant bij je ontwikkelingen te betrekken via learnings. Het bevordert klantgerichtheid en voortdurende verbetering, waardoor je producten en diensten kunt afstemmen op hun behoeften. Door feedback te verzamelen en knelpunten aan te pakken, kun je een betere ervaring bieden en klantloyaliteit opbouwen.</p>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="block-img-skills">
-                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/careen1.png" class="" alt="">
+                            <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/Learnings.png" class="" alt="">
                         </div>
                     </div>
                 </div>

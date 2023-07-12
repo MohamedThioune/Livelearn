@@ -33,10 +33,10 @@
     <!-- -------------------------------------------------- End Modal Sign Up-------------------------------------- -->
 
 
-    <div class="contentOverviewOrganisatie pt-5">
+    <div class="contentOverviewOrganisatie OverviewOrganisatie5">
        <div class="headOverviewOrganisatie">
-           <h1>Deel jouw kennis(producten) in een paar klikken</h1>
-           <p class="description">Wij hanteren geen opstartkosten, dus je kan meteen van start. Wij doen alleen een snelle check om te kijken wat voor content je gaat aanbieden. Zo weten we zeker dat jij de juiste mensen bereikt.</p>
+           <h1>Deel jouw kennis in een paar klikken</h1>
+           <p class="description">Wij hanteren geen opstartkosten, dus iedereen kan meteen van start. </p>
            <a href="/voor-teacher-2-2/" class="btn btnbtnCreeerJe" data-toggle="modal" data-target="#SignInWithEmail"  aria-label="Close" data-dismiss="modal">Creëer je omgeving gratis</a>
        </div>
         <div class="row">
@@ -48,8 +48,7 @@
                     <div class="bodyCardOverviewOrganisatie">
                         <h3 class="titleCardVoorOrganisatie">Verkopen</h3>
                         <p class="descriptionCardVoorOrganisatie">
-                            Jouw kennis(producten) ook direct verkopen via Livelearn? Dat kan eenvoudig, of dit nu een opleiding, workshop, podcast of artikel is, wij bieden het format en de tools om het aan te bieden. Je betaalt alleen wanneer er ook daadwerkelijk iets gekocht is en je krijgt real-time inzichten in financiële groei.
-                        </p>
+                            Jouw kennisproducten ook direct verkopen via Livelearn? Dat kan eenvoudig. Of dit nu een opleiding, workshop, podcast of artikel is, wij bieden het format en de tools om dit aan te bieden. Je betaalt alleen wanneer er ook daadwerkelijk iets gekocht is en je krijgt inzichten in financiën.                        </p>
                         <a href="/verkopen" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">Meer over &nbsp;<strong>verkopen</strong></a>
                     </div>
                 </div>
@@ -62,8 +61,7 @@
                     <div class="bodyCardOverviewOrganisatie">
                         <h3 class="titleCardVoorOrganisatie">Creëren</h3>
                         <p class="descriptionCardVoorOrganisatie">
-                            Kennisproducten maken vanuit onze auteurstool? Vanuit het LiveLearn teacher dashboard creëer je in een paar klikken jouw kennisproduct en deel je deze direct met de rest van de wereld. Dit kunnen zowel betaalde als gratis kennisproducten zijn.
-                        </p>
+                            Kennisproducten maken vanuit onze auteurstool? Vanuit het teacher dashboard creëer je in een paar klikken jouw kennisproduct en deelt deze gemakkelijk met de rest van de wereld. Dit kan zowel betaalde, als gratis content zijn.                          </p>
                         <a href="/creeren" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">
                             Meer over &nbsp;<strong class="">creëren</strong>
                         </a>
@@ -78,8 +76,7 @@
                     <div class="bodyCardOverviewOrganisatie">
                         <h3 class="titleCardVoorOrganisatie">Uitleggen</h3>
                         <p class="descriptionCardVoorOrganisatie">
-                            Lever je producten of diensten waarbij duidelijke uitleg van toegevoegde waarde is? Dan werken wij graag met je samen om te zorgen dat jouw (potentiële) klanten altijd op de hoogte zijn van jouw ontwikkelingen. Wij bieden workshops, productvideo's of audiobegeleiding direct aan vanuit onze mobiele app.
-                        </p>
+                            Bied jij producten of services waarbij uitleg van toegevoegde waarde is? Dan werken wij graag met je samen om te zorgen dat jouw (potentiële) klanten altijd op de hoogte zijn van jouw ontwikkelingen. Wij bieden workshops, productvideo’s of audio begeleiding.                        </p>
                         <a href="/uitleggen" class="btn btnCardOverviewOrganisatie mx-auto d-flex justify-content-center">Meer over&nbsp;<strong>uitleggen</strong> </a>
                     </div>
                 </div>
