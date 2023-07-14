@@ -29,7 +29,9 @@ if(!in_array($course_type, $offline) && !in_array($course_type, $online) && $cou
 //Online
 $courses = get_field('data_virtual', $post->ID);
 $youtube_videos = get_field('youtube_videos', $post->ID);
+
 $podcasts = get_field('podcasts', $post->ID);
+$podcast_index = get_field('podcasts_index', $post->ID);
 
 $product = wc_get_product( get_field('connected_product', $post->ID) );
 $long_description = get_field('long_description', $post->ID);
@@ -248,7 +250,7 @@ if(in_array($course_type, $offline))
 else if(in_array($course_type, $online))
     include_once('template-parts/modules/single-new-course-video.php');
 else if($course_type == 'Podcast')
-    include_once('template-parts/modules/single-course-podcast.php');
+    include_once('template-parts/modules/single-new-course-podcast.php');
 
 ?>  
  
